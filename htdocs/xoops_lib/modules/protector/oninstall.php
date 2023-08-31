@@ -79,7 +79,7 @@ if (!function_exists('protector_oninstall_base')) {
         if (is_dir($tpl_path)) {
             // Try to open the directory
             $handler = opendir($tpl_path . '/');
-            if ($handler) {
+            if (false !== $handler) {
                 while (($file = readdir($handler)) !== false) {
                     if (substr($file, 0, 1) === '.') {
                         continue;
