@@ -21,7 +21,7 @@
  * @param $value string
  * @return string
  */
-function installerHtmlSpecialChars($value)
+function installerHtmlSpecialChars($value='')
 {
     return htmlspecialchars($value, ENT_QUOTES, _INSTALL_CHARSET, true);
 }
