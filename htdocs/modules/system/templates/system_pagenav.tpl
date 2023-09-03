@@ -11,8 +11,8 @@
 			...
 		<{/if}>
 		<{if ($itemNavigation.option == 'show')}>
-			<a class="xo-counterpage" href="<{$itemNavigation.url}>"><{$itemNavigation.value}></a> 
-		<{/if}>	
+			<a class="xo-counterpage" href="<{$itemNavigation.url}>"><{$itemNavigation.value}></a>
+		<{/if}>
 		<{if ($itemNavigation.option == 'last')}>
 			<a class="xo-pagarrow" href="<{$itemNavigation.url}>"><u>&raquo;</u></a>
 		<{/if}>
@@ -60,7 +60,7 @@
 				<td class="paginact">
 					<a href="<{$itemNavigation.url}>"><{$itemNavigation.value}></a>
 				</td>
-			<{/if}>	
+			<{/if}>
 			<{if ($itemNavigation.option == 'last')}>
 				<td>
 					<img src="<{$xoops_url}>/images/blank.gif" width="6" alt="" />
@@ -73,10 +73,10 @@
 				<td>
 					<img src="<{$xoops_url}>/images/blank.gif" width="6" alt="" />
 				</td>
-				<td class="pagno">					
+				<td class="pagno">
 				</td>
 			<{/if}>
-		 <{/foreach}>			
+		 <{/foreach}>
 		</tr>
 	</table>
 <{/if}>

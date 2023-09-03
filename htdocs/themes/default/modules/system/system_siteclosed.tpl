@@ -16,17 +16,17 @@
     <{/if}>
 
     <!-- path favicon -->
-    <link rel="shortcut icon" type="image/ico" href="<{xoImgUrl icons/favicon.ico}>"/>
-    <link rel="icon" type="image/png" href="<{xoImgUrl icons/favicon.png}>"/>
+    <link rel="shortcut icon" type="image/ico" href="<{xoImgUrl 'icons/favicon.ico'}>"/>
+    <link rel="icon" type="image/png" href="<{xoImgUrl 'icons/favicon.png'}>"/>
 
     <!-- include xoops.js and others via header.php -->
     <{$xoops_module_header|default:''}>
 
     <!-- Xoops style sheet -->
-    <link rel="stylesheet" type="text/css" media="screen" href="<{xoAppUrl xoops.css}>"/>
+    <link rel="stylesheet" type="text/css" media="screen" href="<{xoAppUrl 'xoops.css'}>"/>
 
     <!-- Theme style sheets -->
-    <link rel="stylesheet" type="text/css" media="screen" title="Color" href="<{xoImgUrl style.css}>"/>
+    <link rel="stylesheet" type="text/css" media="screen" title="Color" href="<{xoImgUrl 'style.css'}>"/>
 </head>
 <body>
 
@@ -41,12 +41,12 @@
             <!-- Start Header -->
             <table cellspacing="0">
                 <tr id="header">
-                    <td id="headerlogo"><a href="<{xoAppUrl /}>" title="<{$xoops_sitename}>"><img src="<{xoImgUrl xoops-logo.png}>"
+                    <td id="headerlogo"><a href="<{xoAppUrl '/'}>" title="<{$xoops_sitename}>"><img src="<{xoImgUrl 'xoops-logo.png'}>"
                                                                                                   alt="<{$xoops_sitename}>"/></a></td>
                     <td id="headerbanner"><{$xoops_banner}></td>
                     <td id="xo-userbar_siteclosed">
                         <!-- menu in anonymous mode  -->
-                        <form method="post" action="<{xoAppUrl /user.php op=login}>">
+                        <form method="post" action="<{xoAppUrl '/user.php?op=login'}>">
                             <input name="uname" type="text" title=""/>
                             <input name="pass" type="password" title=""/>
                             <input type="hidden" name="xoops_redirect" value="<{$smarty.server.REQUEST_URI}>"/>

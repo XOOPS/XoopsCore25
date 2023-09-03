@@ -804,7 +804,7 @@ function xoops_module_update($dirname)
     // Save current version for use in the update function
     $prev_version = $module->getVar('version');
     $clearTpl     = new XoopsTpl();
-    $clearTpl->clearCache($dirname);
+    $clearTpl->xoopsClearCache($dirname);
 
     // we don't want to change the module name set by admin
     $temp_name = $module->getVar('name');

@@ -8,11 +8,11 @@
                 <br><span><{$op.title}></span>
             </a>
         <{/foreach}>
-        <a class="tooltip" href="<{xoAppUrl modules/system/admin.php}>" title="<{$smarty.const._AM_SYSTEM_CONFIG}>">
+        <a class="tooltip" href="<{xoAppUrl 'modules/system/admin.php'}>" title="<{$smarty.const._AM_SYSTEM_CONFIG}>">
             <img src='<{"$theme_icons/configuration.png"}>'/>
             <span><{$smarty.const._AM_SYSTEM_CONFIG}></span>
         </a>
-        <a class="tooltip" href="<{xoAppUrl modules/system/help.php}>" title="<{$smarty.const._AM_SYSTEM_HELP}>">
+        <a class="tooltip" href="<{xoAppUrl 'modules/system/help.php'}>" title="<{$smarty.const._AM_SYSTEM_HELP}>">
             <img src='<{"$theme_icons/help.png"}>'/>
             <span><{$smarty.const._AM_SYSTEM_HELP}></span>
         </a>

@@ -1,14 +1,14 @@
 <!-- Breadcrumb Header -->
 <{include file="db:system_header.tpl"}>
 <script type="text/javascript">
-    IMG_ON = '<{xoAdminIcons success.png}>';
-    IMG_OFF = '<{xoAdminIcons cancel.png}>';
+    IMG_ON = "<{xoAdminIcons 'success.png'}>";
+    IMG_OFF = "<{xoAdminIcons 'cancel.png'}>";
 </script>
 <{if $filterform|default:false}>
     <div class="floatright">
         <div class="xo-buttons">
             <button id="xo-add-btn" class="ui-corner-all" onclick="self.location.href='admin.php?fct=blocksadmin&amp;op=add';">
-                <img src="<{xoAdminIcons add.png}>" alt="<{$smarty.const._AM_SYSTEM_BLOCKS_ADD}>"/>
+                <img src="<{xoAdminIcons 'add.png'}>" alt="<{$smarty.const._AM_SYSTEM_BLOCKS_ADD}>"/>
                 <{$smarty.const._AM_SYSTEM_BLOCKS_ADD}>
             </button>
         </div>

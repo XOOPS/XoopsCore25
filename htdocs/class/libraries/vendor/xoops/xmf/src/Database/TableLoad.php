@@ -133,7 +133,6 @@ class TableLoad
             /* @var  \CriteriaCompo $criteria */
             $sql .= $criteria->renderWhere();
         }
-
         $result = $db->query($sql);
         $row = $db->fetchArray($result);
         $count = $row['count'];

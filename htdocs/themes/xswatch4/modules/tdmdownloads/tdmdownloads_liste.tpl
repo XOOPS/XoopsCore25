@@ -15,8 +15,8 @@
             <th scope="col"><{$smarty.const._MD_TDMDOWNLOADS_SEARCH_TITLE}></th>
             <th scope="col" class="d-none d-lg-table-cell"> </th>
             <th scope="col"><{$smarty.const._MD_TDMDOWNLOADS_SEARCH_CATEGORIES}></th>
-            <{foreach item=field from=$field}>
-                <th scope="col" class="d-none d-lg-table-cell"><{$field}></th>
+            <{foreach item=fielditem from=$field}>
+                <th scope="col" class="d-none d-lg-table-cell"><{$fielditem}></th>
             <{/foreach}>
             <th scope="col" class="d-none d-sm-table-cell"><{$smarty.const._MD_TDMDOWNLOADS_SEARCH_DATE}></th>
             <th scope="col" class="d-none d-md-table-cell"><{$smarty.const._MD_TDMDOWNLOADS_SEARCH_NOTE}></th>

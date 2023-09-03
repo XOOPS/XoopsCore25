@@ -50,7 +50,7 @@ if (strlen($_SERVER['REMOTE_ADDR']) > 15) {
     $_SERVER['REMOTE_ADDR'] = '::1';
 }
 
-include_once 'checkmainfile.php';
+include_once __DIR__ . '/checkmainfile.php';
 defined('XOOPS_ROOT_PATH') or die('Bad installation: please add this folder to the XOOPS install you want to upgrade');
 
 $reporting = 0;
@@ -63,9 +63,9 @@ $xoopsLogger->enableRendering();
 xoops_loadLanguage('logger');
 set_exception_handler('fatalPhpErrorHandler'); // should have been changed by now, reset to ours
 
-require './class/abstract.php';
-require './class/patchstatus.php';
-require './class/control.php';
+require __DIR__ . '/class/abstract.php';
+require __DIR__ . '/class/patchstatus.php';
+require __DIR__ . '/class/control.php';
 
 $GLOBALS['error'] = false;
 $GLOBALS['upgradeControl'] = new UpgradeControl();
@@ -77,7 +77,12 @@ $upgradeControl->buildUpgradeQueue();
 ob_start();
 global $xoopsUser;
 if (!$xoopsUser || !$xoopsUser->isAdmin()) {
-    include_once 'login.php';
+    if (file_exists(__DIR__ . "../language/{$upgradeControl->upgradeLanguage}/user.php")) {
+        include_once __DIR__ . "../language/{$upgradeControl->upgradeLanguage}/user.php";
+    } else {
+        include_once __DIR__ . '../language/english/user.php';
+    }
+    include_once __DIR__ . '/login.php';
 } else {
     $op = Xmf\Request::getCmd('action', '');
     if (!$upgradeControl->needUpgrade) {
@@ -124,4 +129,4 @@ if (!$xoopsUser || !$xoopsUser->isAdmin()) {
 $content = ob_get_contents();
 ob_end_clean();
 
-include_once 'upgrade_tpl.php';
+include_once __DIR__ . '/upgrade_tpl.php';

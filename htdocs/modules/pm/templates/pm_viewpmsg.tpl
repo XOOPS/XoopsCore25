@@ -41,7 +41,7 @@
 
             <tr class='txtcenter alignmiddle'>
                 <th><input name='allbox' id='allbox' onclick='xoopsCheckAll("<{$pmform.name}>", "allbox");' type='checkbox' value='Check All'/></th>
-                <th><img class='bnone' src='<{xoAppUrl images/download.gif}>' alt=''/></th>
+                <th><img class='bnone' src='<{xoAppUrl 'images/download.gif'}>' alt=''/></th>
                 <th>&nbsp;</th>
                 <{if $op|default:'' == "out"}>
                     <th><{$smarty.const._PM_TO}></th>
@@ -63,9 +63,9 @@
                         <input type='checkbox' id='msg_id_<{$message.msg_id}>' name='msg_id[]' value='<{$message.msg_id}>'/>
                     </td>
                     <{if $message.read_msg == 1}>
-                        <td class='aligntop width5 txtcenter'><img src='<{xoModuleIcons16 mail_read.png}>' alt='<{$smarty.const._PM_READ}>'title='<{$smarty.const._PM_READ}>'/></td>
+                        <td class='aligntop width5 txtcenter'><img src='<{xoModuleIcons16 'mail_read.png'}>' alt='<{$smarty.const._PM_READ}>'title='<{$smarty.const._PM_READ}>'/></td>
                     <{else}>
-                        <td class='aligntop width5 txtcenter'><img src='<{xoModuleIcons16 mail_notread.png}>' alt='<{$smarty.const._PM_NOTREAD}>'title='<{$smarty.const._PM_NOTREAD}>'/></td>
+                        <td class='aligntop width5 txtcenter'><img src='<{xoModuleIcons16 'mail_notread.png'}>' alt='<{$smarty.const._PM_NOTREAD}>'title='<{$smarty.const._PM_NOTREAD}>'/></td>
                     <{/if}>
                     <td class='aligntop width5 txtcenter'>
                         <{if $message.msg_image != ""}>

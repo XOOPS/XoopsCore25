@@ -728,8 +728,6 @@ class XoopsBlock extends XoopsObject
      * @param  mixed $moduleid
      * @param  mixed $asobject
      * @return array
-     *
-     * @deprecated (This also appears, dead, in XoopsBlockHandler)
      */
     public static function getByModule($moduleid, $asobject = true)
     {

@@ -26,7 +26,7 @@ include_once $GLOBALS['xoops']->path('class/template.php');
 $tpl                 = new XoopsTpl();
 $tpl->caching        = 2;
 $tpl->cache_lifetime = 3600;
-if (!$tpl->is_cached('db:system_rss.tpl')) {
+if (!$tpl->isCached('db:system_rss.tpl')) {
     xoops_load('XoopsLocal');
     $tpl->assign('channel_title', XoopsLocal::convert_encoding(htmlspecialchars($xoopsConfig['sitename'], ENT_QUOTES)));
     $tpl->assign('channel_link', XOOPS_URL . '/');
