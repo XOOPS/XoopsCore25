@@ -14,7 +14,7 @@ XOOPS 2.5.x Changelog (Language changes: see: /docs/lang_diff.txt)
 - Incorrect language checking in install tablesfill step
 
 Updated libraries and assets:
-- jQuery to 3.7.0 (mamba)
+- jQuery to 3.7.1 (mamba)
 
 ===================================
 2.5.11-RC2               2023/05/02
