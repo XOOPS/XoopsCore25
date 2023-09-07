@@ -58,7 +58,7 @@
             </tr>
             <tr class='foot'>
                 <td class='width20 txtleft' colspan='2'>
-                    <{foreach item=element from=$pmform.elements}>
+                    <{foreach item=element from=$pmform.elements|default:null}>
                         <{$element.body}>
                     <{/foreach}>
                 </td>

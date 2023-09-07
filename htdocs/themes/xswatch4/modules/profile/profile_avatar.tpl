@@ -13,7 +13,7 @@
 <form name="<{$uploadavatar.name}>" action="<{$uploadavatar.action}>" method="<{$uploadavatar.method}>" <{$uploadavatar.extra}>>
 	<div class="form-group row">
 		<!-- start of form elements loop -->
-		<{foreach item=element from=$uploadavatar.elements}>
+		<{foreach item=element from=$uploadavatar.elements|default:null}>
 			<{if !$element.hidden|default:false}>
 				<label class="col-2 col-form-label">
 					<span class='caption-text'><{$element.caption|default:''}></span>
@@ -42,7 +42,7 @@
 <form name="<{$chooseavatar.name}>" action="<{$chooseavatar.action}>" method="<{$chooseavatar.method}>" <{$chooseavatar.extra}>>
 	<div class="form-group">
 		<!-- start of form elements loop -->
-		<{foreach item=element from=$chooseavatar.elements}>
+		<{foreach item=element from=$chooseavatar.elements|default:null}>
 			<{if !$element.hidden}>
 				<label class="col-sm-2 col-form-label">
 					<span class='caption-text'><{$element.caption|default:''}></span>

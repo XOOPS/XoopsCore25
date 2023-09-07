@@ -13,16 +13,16 @@
 			</tr>
 			</thead>
 			<tbody>
-			<{foreach item=module from=$modules}>
+			<{foreach item=module from=$modules|default:null}>
 				<tr class="table-warning">
 					<th class="head"><input name="del_mod[<{$module.id}>]" id="del_mod[]"
 											onclick="xoopsCheckGroup('notificationlist', 'del_mod[<{$module.id}>]', 'del_not[<{$module.id}>][]');"
 											type="checkbox" value="<{$module.id}>"/></th>
 					<th class="head" colspan="4"><{$lang_module}>: <{$module.name}></th>
 				</tr>
-				<{foreach item=category from=$module.categories}>
-				<{foreach item=item from=$category.items}>
-				<{foreach item=notification from=$item.notifications}>
+				<{foreach item=category from=$module.categories|default:null}>
+				<{foreach item=item from=$category.items|default:null}>
+				<{foreach item=notification from=$item.notifications|default:null}>
 				<tr>
 					<td><input type="checkbox" name="del_not[<{$module.id}>][]" id="del_not[<{$module.id}>]" value="<{$notification.id}>"/>
 					</td>

@@ -5,7 +5,7 @@
         <div class='card-header wgg-imgindex-header'><{$smarty.const._CO_WGGALLERY_IMAGES_TITLE}> <{$alb_name}></div>
         <div class='card-body'>
             <{if $images}>
-                <{foreach item=image from=$images}>
+                <{foreach item=image from=$images|default:null}>
                     <div id='imglist_<{$image.id}>' class='row wgg-img-panel wgg-image-list'>
                         <div class='wgg-img-panel-row col-sm-8'>
                             <{if $image.medium}>
@@ -164,7 +164,7 @@
 
 <{if $showModal}>
     <!-- Create Modals -->
-    <{foreach item=image from=$images}>
+    <{foreach item=image from=$images|default:null}>
 <!-- Modal 4 -->
     <div class="modal"  id='myModalImagePicker<{$image.id}>' tabindex="-1" role="dialog">
         <div class="modal-dialog modal-lg" role="document">

@@ -3,7 +3,7 @@
         <{$modname}>
     </div>
     <div id="xo-toolbar">
-        <{foreach item=op from=$mod_options}>
+        <{foreach item=op from=$mod_options|default:null}>
             <a class="tooltip" href="<{$op.link}>" title="<{$op.title}>">
                 <img src='<{$op.icon|default:"$theme_icons/icon_options.png"}>' alt="<{$op.title}>"/>
             </a>

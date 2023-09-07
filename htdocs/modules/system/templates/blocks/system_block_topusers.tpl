@@ -1,5 +1,5 @@
 <table cellspacing="1" class="outer">
-    <{foreach item=user from=$block.users}>
+    <{foreach item=user from=$block.users|default:null}>
         <tr class="<{cycle values='even,odd'}> alignmiddle">
             <td><{$user.rank}></td>
             <td class="txtcenter">

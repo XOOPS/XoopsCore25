@@ -47,7 +47,7 @@
             <{/if}>
         </tr>
         <!-- Start item loop -->
-        <{foreach item=item from=$items}>
+        <{foreach item=item from=$items|default:null}>
             <tr>
                 <td class="even" align="left">
                     <strong><{$item.titlelink}></strong>

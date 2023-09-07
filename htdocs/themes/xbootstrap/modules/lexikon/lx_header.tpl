@@ -6,7 +6,7 @@
             <div class="letters">
                 <a href="<{$xoops_url}>/modules/<{$lang_moduledirname}>/letter.php"
                    title="[ <{$publishedwords}> ]"><{$smarty.const._MD_LEXIKON_ALL}></a> |
-                <{foreach item=letterlinks from=$alpha.initial}>
+                <{foreach item=letterlinks from=$alpha.initial|default:null}>
                     <{if $letterlinks.total > 0}> <a href="<{$xoops_url}>/modules/<{$lang_moduledirname}>/letter.php?init=<{$letterlinks.id}>" title="[ <{$letterlinks.total}> ]" ><{/if}><{$letterlinks.linktext}>
                     <{if $letterlinks.total > 0}></a><{/if}> |<{/foreach}>
                 <{if $totalother > 0}><a
@@ -23,7 +23,7 @@
         <fieldset class="item" style="border:1px solid #778;margin:1em 0;text-align:left;background-color:trans;">
             <legend><{$smarty.const._MD_LEXIKON_BROWSECAT}></legend>
             <div class="letters" style="margin:1em 0;width:100%;padding:0;text-align:center;line-height:1.3em;">
-                <{foreach item=catlinks from=$block0.categories}>
+                <{foreach item=catlinks from=$block0.categories|default:null}>
                     <{if $catlinks.image != "" && $show_screenshot == '1'}>
                         <a href="<{$xoops_url}>/modules/<{$lang_moduledirname}>/category.php?categoryID=<{$category.id}>"
                            target="_parent">

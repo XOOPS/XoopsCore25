@@ -35,7 +35,7 @@
 
                             <{if $topic_post.poster.groups}>
                                 <li><{$smarty.const._MD_NEWBB_GROUP}>
-                                <{foreach item=group from=$topic_post.poster.groups}>
+                                <{foreach item=group from=$topic_post.poster.groups|default:null}>
                                 <{$group}>
                                 <{/foreach}></li>
                             <{/if}>
@@ -124,7 +124,7 @@
 <div class="row clearfix newbb-links mb10">
     <div class="col-3 mr-auto d-none d-sm-block">
     <{if $topic_post.thread_action}>
-        <{foreach item=btn from=$topic_post.thread_action}>
+        <{foreach item=btn from=$topic_post.thread_action|default:null}>
             <a href="<{$btn.link}>&amp;post_id=<{$topic_post.post_id}>" title="<{$btn.name}>" <{if $btn.target}>target="<{$btn.target}>"<{/if}>>
                 <{$btn.image|default:''}>
             </a>
@@ -151,7 +151,7 @@
                 <{assign var='bantext' value=`$smarty.const._MD_NEWBB_SUSPEND_MANAGEMENT`}>
                 <{assign var='banprompt' value=">$bantext<"}>
 
-                <{foreach item=btn from=$topic_post.thread_buttons}>
+                <{foreach item=btn from=$topic_post.thread_buttons|default:null}>
                    <a class="btn btn-primary btn-xs" href="<{$btn.link}>&amp;post_id=<{$topic_post.post_id}>" title="<{$btn.name}>"><{$btn.image|replace:$banprompt:'><span class="fa fa-ban" aria-hidden="true"><'|replace:forum_button:xforum_button}></a>
                 <{/foreach}>
         <{/if}>

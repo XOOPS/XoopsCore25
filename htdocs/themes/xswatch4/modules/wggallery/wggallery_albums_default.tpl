@@ -4,7 +4,7 @@
 	<div class='panel panel-<{$panel_type}>'>
 		<div class='panel-heading'><{$smarty.const._CO_WGGALLERY_ALBUMS_TITLE}></div>
 		<div class='panel-body'>
-			<{foreach item=album from=$albums_list}>
+			<{foreach item=album from=$albums_list|default:null}>
 				<div class='row wgg-album-list'>
 					<div class='col-sm-4'>
 						<img id='album_<{$album.id}>' class='img-fluid wgg-album-img' src='<{$album.image}>?<{$force}>' alt='<{$smarty.const._CO_WGGALLERY_ALBUM_IMAGE}> <{$album.name}>'>
@@ -116,7 +116,7 @@
                     <h4 class="modal-title" id="myModalLabel"><{$smarty.const._CO_WGGALLERY_IMAGES_TITLE}></h4>
                 </div>
                 <div class="modal-body">
-                    <{foreach item=image from=$images}>
+                    <{foreach item=image from=$images|default:null}>
                         <{if $image.alb_name}><h4 class="modal-title"><{$image.alb_name}></h4><{/if}>
                         <input class="img <{if $image.selected}>wgg-modal-selected<{/if}>" type="image" src="<{$image.medium}>" alt="<{$image.title}>"
                                style="padding:3px;max-height:150px;max-width:200px" value="<{$image.name}>">

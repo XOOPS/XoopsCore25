@@ -2,7 +2,7 @@
     <div class="breadcrumb"><a href="<{$xoops_url}>/modules/<{$xoops_dirname}>/"><{$xoops_pagetitle}></a></div>
     <{if count($categories) gt 0}>
     <div class="tdm-category row">
-        <{foreach item=category from=$categories}>
+        <{foreach item=category from=$categories|default:null}>
         <div class="card col-8 col-sm-6 col-md-4 col-xl-3">
             <h5 class="card-title"><{$category.title}></h5>
             <{if !empty($category.image)}>
@@ -30,7 +30,7 @@
                 <div class="col-sm-4 col-md-4">
                     <h3 class="tdm-title"><span class="fa fa-calendar"></span> <{$smarty.const._MD_TDMDOWNLOADS_INDEX_BLDATE}></h3>
                     <ul class="list-unstyled">
-                        <{foreach item=bl_dateitem from=$bl_date}>
+                        <{foreach item=bl_dateitem from=$bl_date|default:null}>
                             <li>
                                 <a title="<{$bl_dateitem.title}>"
                                    href="<{$xoops_url}>/modules/tdmdownloads/singlefile.php?cid=<{$bl_dateitem.cid}>&amp;lid=<{$bl_dateitem.id}>"><{$bl_dateitem.title}></a>
@@ -45,7 +45,7 @@
                 <div class="col-sm-4 col-md-4">
                     <h3 class="tdm-title"><span class="fa fa-star"></span> <{$smarty.const._MD_TDMDOWNLOADS_INDEX_BLPOP}></h3>
                     <ul class="list-unstyled">
-                        <{foreach item=bl_popitem from=$bl_pop}>
+                        <{foreach item=bl_popitem from=$bl_pop|default:null}>
                             <li>
                                 <a title="<{$bl_popitem.title}>" href="<{$xoops_url}>/modules/tdmdownloads/singlefile.php?cid=<{$bl_popitem.cid}>&amp;lid=<{$bl_popitem.id}>"><{$bl_popitem.title}></a>
                                 (<{$bl_popitem.hits}>)
@@ -59,7 +59,7 @@
                 <div class="col-sm-4 col-md-4">
                     <h3 class="tdm-title"><span class="fa fa-thumbs-o-up"></span> <{$smarty.const._MD_TDMDOWNLOADS_INDEX_BLRATING}></h3>
                     <ul class="list-unstyled">
-                        <{foreach item=bl_ratingitem from=$bl_rating}>
+                        <{foreach item=bl_ratingitem from=$bl_rating|default:null}>
                             <li>
                                 <a title="<{$bl_ratingitem.title}>"
                                    href="<{$xoops_url}>/modules/tdmdownloads/singlefile.php?cid=<{$bl_ratingitem.cid}>&amp;lid=<{$bl_ratingitem.id}>"><{$bl_ratingitem.title}></a>

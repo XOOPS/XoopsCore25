@@ -8,7 +8,7 @@
 <div class="extcalform mb10 text-center">
     <form action="<{$navigSelectBox.action}>" method="<{$navigSelectBox.method}>">
         <ul class="list-inline">
-            <{foreach item=element from=$navigSelectBox.elements}>
+            <{foreach item=element from=$navigSelectBox.elements|default:null}>
             <li><{$element.body}></li>
             <{/foreach}>
         </ul>
@@ -29,7 +29,7 @@
                         href="<{$xoops_url}>/modules/extcal/view_week.php?<{$navig.next.uri}>"><{$navig.next.name}>&nbsp;&nbsp;&gt;&gt;</a>
             </td>
         </tr>
-        <{foreach item=event from=$events}>
+        <{foreach item=event from=$events|default:null}>
             <tr>
                 <td colspan="3" class="odd" style="vertical-align:middle;">
                     <div style="height:20px; width:5px; background-color:#<{$event.cat.cat_color|default:''}>; border:1px solid black; float:left; margin-right:5px;"></div>
@@ -42,7 +42,7 @@
         <{/foreach}>
         <tr>
             <th colspan="3">
-                <{foreach item=cat from=$cats}>
+                <{foreach item=cat from=$cats|default:null}>
                     <div style="float:left; margin-left:5px;">
                         <div style="float:left; background-color:#<{$cat.cat_color|default:''}>; border:1px solid white; margin-right:5px;">
                             &nbsp;

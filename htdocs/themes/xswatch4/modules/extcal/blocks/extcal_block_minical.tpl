@@ -45,13 +45,13 @@
         </tr>
     <{/if}>
     <tr style="font-weight:bold;">
-        <{foreach item=day from=$block.weekdayNames}>
+        <{foreach item=day from=$block.weekdayNames|default:null}>
             <td><{$day}></td>
         <{/foreach}>
     </tr>
-    <{foreach item=weeks from=$block.tableRows}>
+    <{foreach item=weeks from=$block.tableRows|default:null}>
         <tr>
-            <{foreach item=day from=$weeks.week}>
+            <{foreach item=day from=$weeks.week|default:null}>
                 <td <{if $day.isSelected}> style="border:1px solid #0099FF;"<{/if}> >
                     <{if !$day.isEmpty}>
                         <{if $day.haveEvents}>

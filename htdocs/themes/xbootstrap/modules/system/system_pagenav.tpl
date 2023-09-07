@@ -1,6 +1,6 @@
 <{if ($pageNavType == 'Nav')}>
 	<ul class="pagination pagination-sm justify-content-end">
-	 <{foreach item=itemNavigation from=$pageNavigation}>
+	 <{foreach item=itemNavigation from=$pageNavigation|default:null}>
 		<{if ($itemNavigation.option == 'first')}>
 			<li class="page-item">
 				<a class="page-link" href="<{$itemNavigation.url}>">
@@ -46,7 +46,7 @@
 <{if ($pageNavType == 'Image')}>
 	<table>
 		<tr>
-		 <{foreach item=itemNavigation from=$pageNavigation}>
+		 <{foreach item=itemNavigation from=$pageNavigation|default:null}>
 			<{if ($itemNavigation.option == 'first')}>
 				<td class="pagneutral">
 					<a href="<{$itemNavigation.url}>"><u>&lt;</u></a>
@@ -94,4 +94,3 @@
 		</tr>
 	</table>
 <{/if}>
-  

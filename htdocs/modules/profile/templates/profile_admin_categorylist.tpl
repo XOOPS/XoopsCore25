@@ -5,7 +5,7 @@
         <th><{$smarty.const._PROFILE_AM_WEIGHT}></th>
         <th><{$smarty.const._PROFILE_AM_ACTION}></th>
     </tr>
-    <{foreach item=category from=$categories}>
+    <{foreach item=category from=$categories|default:null}>
         <tr class="<{cycle values='odd, even'}>">
             <td><{$category.cat_title}></td>
             <td><{$category.cat_description}></td>

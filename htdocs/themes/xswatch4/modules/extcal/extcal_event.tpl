@@ -134,7 +134,7 @@
         </tr>
         </thead>
         <tbody>
-        <{foreach item=eventFile from=$event_attachement}>
+        <{foreach item=eventFile from=$event_attachement|default:null}>
         <tr>
             <td><a href="download_attachement.php?file=<{$eventFile.file_id}>"><{$eventFile.file_nicename}></a></td>
             <td><{$eventFile.formated_file_size}></td>
@@ -213,7 +213,7 @@
     </div>
 </table>
 <p style="text-align:right;">
-    <{foreach item=eventFile from=$event_attachement}>
+    <{foreach item=eventFile from=$event_attachement|default:null}>
         <a href="download_attachement.php?file=<{$eventFile.file_id}>"><{$eventFile.file_nicename}>
             (<i><{$eventFile.file_mimetype}></i>) <{$eventFile.formated_file_size}></a>
         <br>

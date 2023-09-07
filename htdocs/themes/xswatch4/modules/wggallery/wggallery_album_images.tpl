@@ -63,7 +63,7 @@
                 <div class="row">
                 <div class="col-12 col-md-6">
                     <div class="row">
-                    <{foreach item=image from=$images name=fe_image}>
+                    <{foreach item=image from=$images|default:null name=fe_image}>
                         <{if $image.alb_name}>
                             <div class="clear"></div>
                             <div class="selimages col-12 col-md-12"><h5 class="modal-title" style="width:100%"><{$image.alb_name}></h5></div>
@@ -280,7 +280,7 @@
 <div class="clear">&nbsp;</div>
 
 <!-- Create Modals -->
-<{foreach item=m from=$nbModals}>
+<{foreach item=m from=$nbModals|default:null}>
     <div class="modal fade" id="myModalImagePicker<{$m}>" tabindex="-1" role="dialog">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
@@ -291,7 +291,7 @@
                     </button>
                 </div>
                 <div class="modal-body">
-                    <{foreach item=image from=$images}>
+                    <{foreach item=image from=$images|default:null}>
                     <{if $image.alb_name}><h4 class="modal-title"><{$image.alb_name}></h4><{/if}>
                     <input class="imgGrid<{$m}>" type="image" src="<{$image.thumb}>" alt="<{$image.title}>"
                        style="padding:3px;max-height:150px;max-width:200px" value="<{$image.name}>" onclick="selectGridImage(this, <{$m}>)">

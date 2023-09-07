@@ -11,7 +11,7 @@
 		<{$nomatch}>
 		<br>
 	<{else}>
-		<{foreach item=searchitem from=$search}>
+		<{foreach item=searchitem from=$search|default:null}>
 			<div class="card my-3">
 				<div class="card-header">
 					<h5>
@@ -25,7 +25,7 @@
 
 				<div class="card-body">
 					<ul class="list-group list-group-flush">
-						<{foreach item=data from=$searchitem.module_data}>
+						<{foreach item=data from=$searchitem.module_data|default:null}>
 							<li class="list-group-item list-group-item-action">
 	<!-- Alain01 -->
 								<{assign var="url_image_overloaded" value=$xoops_imageurl|cat:$data.image_link}>
@@ -93,7 +93,7 @@
 			</div>
 			<div class="card-body">
 				<ul class="list-group list-group-flush">
-					<{foreach item=data from=$results_arr}>
+					<{foreach item=data from=$results_arr|default:null}>
 						<li class="list-group-item list-group-item-action">
 	<!-- Alain01 -->
 							<{assign var="url_image_overloaded" value=$xoops_imageurl|cat:$data.image_link}>

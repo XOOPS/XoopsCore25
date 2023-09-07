@@ -3,7 +3,7 @@
 <{$xoForm.javascript}>
 <form id="<{$xoForm.name}>" name="<{$xoForm.name}>" action="<{$xoForm.action}>" method="<{$xoForm.method}>" <{$xoForm.extra}> >
 	<div class="form-group">
-		<{foreach item=element from=$xoForm.elements}>
+		<{foreach item=element from=$xoForm.elements|default:null}>
             <{if !$element.hidden|default:false}>
 				<label>
 					<div class='xoops-form-element-caption<{if $element.required|default:false}>-required<{/if}>'>
@@ -20,7 +20,7 @@
 			<{/if}>
         <{/foreach}>
 	</div>
-	<{foreach item=element from=$xoForm.elements}>
+	<{foreach item=element from=$xoForm.elements|default:null}>
         <{if $element.hidden|default:false}>
             <{$element.body}>
         <{/if}>
