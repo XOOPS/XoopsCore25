@@ -48,9 +48,16 @@ class xos_kernel_Xoops2
      */
     public function path($url, $virtual = false)
     {
-        // removed , $error_type = E_USER_WARNING
         $path = '';
-        @list($root, $path) = explode('/', $url, 2);
+        $parts = explode('/', $url, 2);
+
+        if (count($parts) < 2) {
+            $root = 'www'; // Default root
+            $path = $url;  // Entire URL is treated as the path
+        } else {
+            list($root, $path) = $parts;
+        }
+
         if (!isset($this->paths[$root])) {
             list($root, $path) = array('www', $url);
         }
