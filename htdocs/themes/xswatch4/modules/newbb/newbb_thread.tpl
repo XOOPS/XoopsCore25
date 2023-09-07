@@ -60,7 +60,7 @@
                                 <li><{$topic_post.poster.level}></li>
                             <{/if}>
 
-                            <{if $topic_post.poster.status}>
+                            <{if !empty($topic_post.poster.status)}>
                                 <li><{$topic_post.poster.status}></li>
                             <{/if}>
                         </ul>
@@ -148,7 +148,7 @@
             <input type="checkbox" name="post_id[]" id="post_id[<{$topic_post.post_id}>]" value="<{$topic_post.post_id}>">
     <{else}>
         <{if $topic_post.thread_buttons}>
-                <{assign var='bantext' value=`$smarty.const._MD_NEWBB_SUSPEND_MANAGEMENT`}>
+                <{assign var='bantext' value=$smarty.const._MD_NEWBB_SUSPEND_MANAGEMENT}>
                 <{assign var='banprompt' value=">$bantext<"}>
 
                 <{foreach item=btn from=$topic_post.thread_buttons|default:null}>

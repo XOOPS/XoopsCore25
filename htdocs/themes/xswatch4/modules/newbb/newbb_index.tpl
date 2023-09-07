@@ -53,9 +53,9 @@
 
                     <{if $report_post|default:''}>
                     <a href="<{$xoops_url}>/modules/<{$xoops_dirname}>/admin/admin_report.php" title="_MD_NEWBB_REPORT" class="btn btn-primary">
-                        <span class="fa fa-thumbs-o-down" aria-hidden="true"></span> <span class="badge badge-light badge-pill"><{$reported_coun badge-pillt}></span>
+                        <span class="fa fa-thumbs-o-down" aria-hidden="true"></span> <span class="badge badge-light badge-pill"><{$reported_count}></span><{/if}>
                     </a>
-                    <{/if}>
+
 
                     <a href="<{$xoops_url}>/modules/<{$xoops_dirname}>/moderate.php" title="<{$smarty.const._MD_NEWBB_TYPE_SUSPEND}>" class="btn btn-primary">
                         <span class="fa fa-ban" aria-hidden="true">
@@ -200,7 +200,7 @@
             </div>
         <{/if}>
 
-        <{if $online}>
+    <{if !empty($online)}>
             <{include file="db:newbb_online.tpl"}>
         <{/if}>
 
