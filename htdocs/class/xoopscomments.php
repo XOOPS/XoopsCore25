@@ -214,7 +214,7 @@ class XoopsComments extends XoopsObject
     {
         $ret         = array();
         $where_query = '';
-        if (is_array($criteria) && count($criteria) > 0) {
+        if ($criteria && \is_array($criteria)) {
             $where_query = ' WHERE';
             foreach ($criteria as $c) {
                 $where_query .= " $c AND";

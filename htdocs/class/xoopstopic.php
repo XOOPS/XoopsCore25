@@ -295,7 +295,7 @@ class XoopsTopic
         $ret       = array();
         $xt        = new XoopsTree($this->table, 'topic_id', 'topic_pid');
         $topic_arr = $xt->getFirstChild($this->topic_id, 'topic_title');
-        if (is_array($topic_arr) && count($topic_arr)) {
+        if ($topic_arr && \is_array($topic_arr)) {
             foreach ($topic_arr as $topic) {
                 $ret[] = new XoopsTopic($this->table, $topic);
             }
@@ -312,7 +312,7 @@ class XoopsTopic
         $ret       = array();
         $xt        = new XoopsTree($this->table, 'topic_id', 'topic_pid');
         $topic_arr = $xt->getAllChild($this->topic_id, 'topic_title');
-        if (is_array($topic_arr) && count($topic_arr)) {
+        if ($topic_arr && \is_array($topic_arr)) {
             foreach ($topic_arr as $topic) {
                 $ret[] = new XoopsTopic($this->table, $topic);
             }
@@ -329,7 +329,7 @@ class XoopsTopic
         $ret       = array();
         $xt        = new XoopsTree($this->table, 'topic_id', 'topic_pid');
         $topic_arr = $xt->getChildTreeArray($this->topic_id, 'topic_title');
-        if (is_array($topic_arr) && count($topic_arr)) {
+        if ($topic_arr && \is_array($topic_arr)) {
             foreach ($topic_arr as $topic) {
                 $ret[] = new XoopsTopic($this->table, $topic);
             }
