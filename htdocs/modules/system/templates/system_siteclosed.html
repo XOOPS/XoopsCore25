@@ -19,7 +19,7 @@
 <body>
 <table class="collapse">
     <tr id="header">
-        <td class="alignmiddle txtcenter" style="width: 150px; background-color: #2F5376;"><a href="<{xoAppUrl ''}>" title=""><img
+        <td class="alignmiddle txtcenter" style="width: 150px; background-color: #2F5376;"><a href="<{xoAppUrl }>" title=""><img
                         src="<{xoAppUrl 'images/logo.gif'}>" alt=""/></a></td>
         <td class="width100 alignmiddle txtcenter" style="background-color: #2F5376;">&nbsp;</td>
     </tr>
