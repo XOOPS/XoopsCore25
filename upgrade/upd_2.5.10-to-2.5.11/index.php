@@ -27,6 +27,7 @@ class Upgrade_2511 extends XoopsUpgrade
             'rmindexhtml',
             'textsanitizer',
             'xoopsconfig',
+            'templates',
         );
         $this->usedFiles = array();
         $this->pathsToCheck = array(
@@ -555,6 +556,50 @@ class Upgrade_2511 extends XoopsUpgrade
 
         return true;
     }
+
+    /**
+     * @return bool
+     */
+    public function check_templates()
+    {
+        $sql = 'SELECT COUNT(*) FROM `' . $GLOBALS['xoopsDB']->prefix('tplfile') . "` WHERE `tpl_file` IN ('system_confirm.tpl') AND `tpl_type` = 'module'";
+        $result = $GLOBALS['xoopsDB']->queryF($sql);
+        if (!$GLOBALS['xoopsDB']->isResultSet($result)) {
+            return false;
+        }
+        list($count) = $GLOBALS['xoopsDB']->fetchRow($result);
+
+        return ($count != 0);
+    }
+
+
+    /**
+     * @return bool
+     */
+    public function apply_templates()
+    {
+        $modversion = array();
+        include_once XOOPS_ROOT_PATH . '/modules/system/xoops_version.php';
+
+        $dbm = new Db_manager();
+        $time = time();
+        foreach ($modversion['templates'] as $tplfile) {
+            if ((isset($tplfile['type']) && $tplfile['type'] === 'module') || !isset($tplfile['type'])) {
+
+                $filePath = XOOPS_ROOT_PATH . '/modules/system/templates/' . $tplfile['file'];
+                if ($fp = fopen($filePath, 'r')) {
+                    $newtplid = $dbm->insert('tplfile', " VALUES (0, 1, 'system', 'default', '" . addslashes($tplfile['file']) . "', '" . addslashes($tplfile['description']) . "', " . $time . ', ' . $time . ", 'module')");
+                    $tplsource = fread($fp, filesize($filePath));
+                    fclose($fp);
+                    $dbm->insert('tplsource', ' (tpl_id, tpl_source) VALUES (' . $newtplid . ", '" . addslashes($tplsource) . "')");
+                }
+            }
+        }
+
+        return true;
+    }
+
+
 }
 
 return new Upgrade_2511();
