@@ -111,6 +111,7 @@ class XoopsLogger
      */
     public function microtime()
     {
+        /** @var array $now */
         $now = explode(' ', microtime());
 
         return (float)$now[0] + (float)$now[1];
@@ -213,24 +214,27 @@ class XoopsLogger
      * @param string  $errstr
      * @param string  $errfile
      * @param string  $errline
+     * @param array|null $trace
      */
-    public function handleError($errno, $errstr, $errfile, $errline)
+    public function handleError($errno, $errstr, $errfile, $errline,$trace=null)
     {
         if ($this->activated && ($errno & error_reporting())) {
             // NOTE: we only store relative pathnames
             $this->errors[] = compact('errno', 'errstr', 'errfile', 'errline');
         }
         if ($errno == E_USER_ERROR) {
-            $trace = true;
+            $includeTrace = true;
             if (substr($errstr, 0, '8') === 'notrace:') {
-                $trace  = false;
+                $includeTrace  = false;
                 $errstr = substr($errstr, 8);
             }
             echo sprintf(_XOOPS_FATAL_MESSAGE, $errstr);
-            if ($trace && function_exists('debug_backtrace')) {
+            if ($includeTrace) {
                 echo "<div style='color:#f0f0f0;background-color:#f0f0f0;'>" . _XOOPS_FATAL_BACKTRACE . ':<br>';
-                $trace = debug_backtrace();
-                array_shift($trace);
+                if ($trace === null && function_exists('debug_backtrace')) {
+                    $trace = \debug_backtrace();
+                    array_shift($trace);  // Remove the first element, which is this function itself
+                }
                 foreach ($trace as $step) {
                     if (isset($step['file'])) {
                         echo $this->sanitizePath($step['file']);
@@ -254,7 +258,7 @@ class XoopsLogger
     {
         if ($this->isThrowable($e)) {
             $msg = get_class($e) . ': ' . $this->sanitizePath($this->sanitizeDbMessage($e->getMessage()));
-            $this->handleError(E_USER_ERROR, $msg, $e->getFile(), $e->getLine());
+            $this->handleError(E_USER_ERROR, $msg, $e->getFile(), $e->getLine(), $e->getTrace());
         }
     }
 
@@ -374,7 +378,7 @@ class XoopsLogger
      * @param  string  $errStr
      * @param  string  $errFile
      * @param  string  $errLine
-     * @param  integer $errNo
+     * @param  int $errNo
      * @return void
      */
     public function triggerError($errkey = 0, $errStr = '', $errFile = '', $errLine = '', $errNo = 0)
