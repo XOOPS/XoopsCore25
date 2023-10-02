@@ -129,6 +129,10 @@ function writeConfigurationFile($vars, $path, $sourceName, $fileName)
             fclose($file);
 
             foreach ($vars as $key => $val) {
+                if ($key === 'XOOPS_URL') {
+                    $content = preg_replace("/(define\()([\"'])(XOOPS_{$key})\\2,\s*([\"'])(.*?)\\4\s*\)/", "define('XOOPS_{$key}', XOOPS_PROT . {$val})", $content);
+                    continue;
+                }
                 if (is_int($val) && preg_match("/(define\()([\"'])(XOOPS_{$key})\\2,\s*(\d+)\s*\)/", $content)) {
                     $content = preg_replace("/(define\()([\"'])(XOOPS_{$key})\\2,\s*(\d+)\s*\)/", "define('XOOPS_{$key}', {$val})", $content);
                 } elseif (preg_match("/(define\()([\"'])(XOOPS_{$key})\\2,\s*([\"'])(.*?)\\4\s*\)/", $content)) {
