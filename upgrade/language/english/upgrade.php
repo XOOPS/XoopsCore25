@@ -29,7 +29,7 @@ define('_UPDATE_SYSTEM_MODULE', 'update system module');
 define('_LANGUAGE', 'Language');
 define('_SUPPORT', 'Support');
 define('_XOOPS_SOURCE_CODE', 'XOOPS on GitHub');
-define('_PATCH_COUNT', 'Patches Sets');
+define('_PATCH_COUNT', 'Patch Sets');
 define('_USERNAME_PLACEHOLDER', 'Your Username');
 define('_PASSWORD_PLACEHOLDER', 'Your Password');
 define('_CONTINUE', 'Continue');
