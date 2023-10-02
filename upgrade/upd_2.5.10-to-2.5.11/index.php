@@ -5,7 +5,7 @@ use Xmf\Database\Tables;
 /**
  * Upgrade from 2.5.10 to 2.5.11
  *
- * @copyright    (c) 2000-2022 XOOPS Project (https://xoops.org)
+ * @copyright    (c) 2000-2023 XOOPS Project (https://xoops.org)
  * @license          GNU GPL 2 (https://www.gnu.org/licenses/gpl-2.0.html)
  * @package          Upgrade
  * @since            2.5.11
@@ -20,8 +20,10 @@ class Upgrade_2511 extends XoopsUpgrade
     {
         parent::__construct(basename(__DIR__));
         $this->tasks = array(
+            'cleancache',
             'bannerintsize',
             'captchadata',
+            'configkey',
             'modulesvarchar',
             'qmail',
             'rmindexhtml',
@@ -53,6 +55,37 @@ class Upgrade_2511 extends XoopsUpgrade
         );
     }
 
+    protected $cleanCacheKey = 'cache-cleaned';
+
+    /**
+     * We must remove stale template caches and compiles
+     *
+     * @return bool true if patch IS applied, false if NOT applied
+     */
+    public function check_cleancache()
+    {
+        if (!array_key_exists($this->cleanCacheKey, $_SESSION)
+            || $_SESSION[$this->cleanCacheKey]===false) {
+            return false;
+        }
+        return true;
+    }
+
+    /**
+     * Remove  all caches and compiles
+     *
+     * @return bool true if applied, false if failed
+     */
+    public function apply_cleancache()
+    {
+        require_once XOOPS_ROOT_PATH . '/modules/system/class/maintenance.php';
+        $maintenance = new SystemMaintenance();
+        $result  = $maintenance->CleanCache(array(1,2,3));
+        if ($result===true) {
+            $_SESSION[$this->cleanCacheKey] = true;
+        }
+        return $result;
+    }
 
     /**
      * Determine if columns are declared mediumint, and if
@@ -253,6 +286,63 @@ class Upgrade_2511 extends XoopsUpgrade
 
         return $returnResult;
     }
+
+    //config
+    /**
+     * Increase primary key columns from smallint to int
+     *
+     * @return bool true if patch IS applied, false if NOT applied
+     */
+    public function check_configkey()
+    {
+        $tableName = 'config';
+        $columnName = 'conf_id';
+
+        $migrate = new Tables();
+        $migrate->useTable($tableName);
+        $count = 0;
+        $attributes = $migrate->getColumnAttributes($tableName, $columnName);
+        if (0 === strpos(trim($attributes), 'smallint')) {
+            $count++;
+            $migrate->alterColumn($tableName, $columnName, 'int(10) UNSIGNED NOT NULL');
+        }
+
+        return $count==0;
+    }
+
+    /**
+     * Increase primary key columns from smallint to int
+     *
+     * @return bool true if applied, false if failed
+     */
+    public function apply_configkey()
+    {
+        $tableName = 'config';
+        $columnName = 'conf_id';
+
+        $migrate = new Tables();
+        $migrate->useTable($tableName);
+        $count = 0;
+        $attributes = $migrate->getColumnAttributes($tableName, $columnName);
+        if (0 === strpos(trim($attributes), 'smallint')) {
+            $count++;
+            $migrate->alterColumn($tableName, $columnName, 'int(10) UNSIGNED NOT NULL');
+        }
+
+        $result = $migrate->executeQueue(true);
+        if (false === $result) {
+            $this->logs[] = sprintf(
+                'Migration of %s table failed. Error: %s - %s' .
+                $tableName,
+                $migrate->getLastErrNo(),
+                $migrate->getLastError()
+            );
+            return false;
+        }
+
+        return $count!==0;
+    }
+    //configend
 
     /**
      * Do we need to create a xoops_data/configs/xoopsconfig.php?
