@@ -29,7 +29,7 @@ class Smarty3TemplateChecks extends ScannerProcess
 {
     protected $patterns = array(
         'varname' => '/<{foreach[[:space:]]+item=([a-zA-Z0-9\-_.]+)[[:space:]]from=\$([a-zA-Z0-9\-_.]+) *}>/',
-        'noquotes' => '/(<{[a-zA-Z0-1_\-]+[[:space:]]+[a-zA-Z.]+}>)/',
+        'noquotes' =>'/(<{xo[a-zA-Z\d]*\b[^}>]*?)\s*([^\'"}]+)(}>)/',
         'includeq' => '/(<{includeq[[:space:]]+[ -=\.\/_\'\"\$a-zA-Z0-9]+}>)/',
         'foreachq' => '/(<{foreachq[[:space:]]+[ -=\.\/_\'\"\$a-zA-Z0-9]+}>)/',
     );
@@ -63,7 +63,7 @@ class Smarty3TemplateChecks extends ScannerProcess
         $rule = 'varname';
         $pattern = $this->patterns[$rule];
         $results = preg_match_all($pattern, $contents, $matches, PREG_PATTERN_ORDER, 0);
-        if ((false !== $results) && @is_string($matches[0][0])) {
+        if ((0 < (int)$results) && isset($matches[0][0]) && is_string($matches[0][0])) {
             if ($matches[1][0] == $matches[2][0]) {
                 $file = str_replace(XOOPS_ROOT_PATH, '', $fileInfo->getPathname());
                 $match = $matches[0][0];
@@ -76,13 +76,13 @@ class Smarty3TemplateChecks extends ScannerProcess
         $rule = 'noquotes';
         $pattern = $this->patterns[$rule];
         $results = preg_match_all($pattern, $contents, $matches, PREG_PATTERN_ORDER, 0);
-        if (false !== $results) {
-            @$match = $matches[0][0];
-            if (!is_null($match)
-                && '<{if false}>' != $match // oddball case
-            ) {
-                $file = str_replace(XOOPS_ROOT_PATH, '', $fileInfo->getPathname());
-                $output->outputIssue($output->makeOutputIssue($rule, $file, $match, $writable));
+        if (0 < (int)$results) {
+            for ($i = 0; $i < (int)$results; $i++) {
+                $match = isset($matches[0][$i]) ? $matches[0][$i] : null;
+                if (null !== $match && '<{if false}>' !== $match) { // oddball case
+                    $file = str_replace(XOOPS_ROOT_PATH, '', $fileInfo->getPathname());
+                    $output->outputIssue($output->makeOutputIssue($rule, $file, $match, $writable));
+                }
             }
         }
         unset($matches);
@@ -91,9 +91,9 @@ class Smarty3TemplateChecks extends ScannerProcess
         $rule = 'includeq';
         $pattern = $this->patterns[$rule];
         $results = preg_match_all($pattern, $contents, $matches, PREG_PATTERN_ORDER, 0);
-        if (false !== $results) {
-            @$match = $matches[0][0];
-            if (!is_null($match)) {
+        if (0 < (int)$results) {
+            $match = isset($matches[0][0]) ? $matches[0][0] : null;
+            if (null !== $match) {
                 $file = str_replace(XOOPS_ROOT_PATH, '', $fileInfo->getPathname());
                 $output->outputIssue($output->makeOutputIssue($rule, $file, $match, $writable));
             }
@@ -104,9 +104,9 @@ class Smarty3TemplateChecks extends ScannerProcess
         $rule = 'foreachq';
         $pattern = $this->patterns[$rule];
         $results = preg_match_all($pattern, $contents, $matches, PREG_PATTERN_ORDER, 0);
-        if (false !== $results) {
-            @$match = $matches[0][0];
-            if (!is_null($match)) {
+        if (0 < (int)$results) {
+            $match = isset($matches[0][0]) ? $matches[0][0] : null;
+            if (null !== $match) {
                 $file = str_replace(XOOPS_ROOT_PATH, '', $fileInfo->getPathname());
                 $output->outputIssue($output->makeOutputIssue($rule, $file, $match, $writable));
             }

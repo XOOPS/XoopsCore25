@@ -55,7 +55,7 @@ class Smarty3RepairOutput extends ScannerOutput
      */
     public function addToCount($count)
     {
-        $this->issueCounts += $count;
+        $this->issueCounts += (int)$count;
     }
 
     /**
@@ -102,7 +102,7 @@ class Smarty3RepairOutput extends ScannerOutput
     public function outputIssue(ArrayObject $args)
     {
         $filename = $args['filename'];
-        $count  = $args['count'];
+        $count  = (int)$args['count'];
         $this->outputAppend("<tr><td>{$filename}</td><td>{$count}</td></tr>");
 
         $this->addToCount($count);

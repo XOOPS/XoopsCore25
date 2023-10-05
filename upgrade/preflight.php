@@ -33,7 +33,7 @@ function fatalPhpErrorHandler($e = null)
     $throwableClass = '\Throwable';
     if ($e === null) {
         $lastError = error_get_last();
-        if ($lastError['type'] === E_ERROR) {
+        if (null !== $lastError && $lastError['type'] === E_ERROR) {
             // fatal error
             printf($messageFormat, 'Error', $lastError['message'], $lastError['file'], $lastError['line']);
         }
@@ -100,7 +100,7 @@ $upgradeControl->determineLanguage();
 if (file_exists(__DIR__ . "../language/{$upgradeControl->upgradeLanguage}/user.php")) {
     include_once __DIR__ . "../language/{$upgradeControl->upgradeLanguage}/user.php";
 } else {
-    include_once __DIR__ . "../language/english/user.php";
+    include_once XOOPS_ROOT_PATH . "/language/english/user.php";
 }
 if (file_exists(__DIR__ . "/language/{$upgradeControl->upgradeLanguage}/smarty3.php")) {
     include_once __DIR__ . "/language/{$upgradeControl->upgradeLanguage}/smarty3.php";
