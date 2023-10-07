@@ -64,10 +64,12 @@ class Smarty3TemplateChecks extends ScannerProcess
         $pattern = $this->patterns[$rule];
         $results = preg_match_all($pattern, $contents, $matches, PREG_PATTERN_ORDER, 0);
         if ((0 < (int)$results) && isset($matches[0][0]) && is_string($matches[0][0])) {
-            if ($matches[1][0] == $matches[2][0]) {
-                $file = str_replace(XOOPS_ROOT_PATH, '', $fileInfo->getPathname());
-                $match = $matches[0][0];
-                $output->outputIssue($output->makeOutputIssue($rule, $file, $match, $writable));
+            for ($i = 0; $i < (int)$results; $i++) {
+                if ($matches[1][$i] == $matches[2][$i]) {
+                    $file = str_replace(XOOPS_ROOT_PATH, '', $fileInfo->getPathname());
+                    $match = $matches[0][$i];
+                    $output->outputIssue($output->makeOutputIssue($rule, $file, $match, $writable));
+                }
             }
         }
         unset($matches);
