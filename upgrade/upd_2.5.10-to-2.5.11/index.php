@@ -329,7 +329,7 @@ class Upgrade_2511 extends XoopsUpgrade
         $attributes = $migrate->getColumnAttributes($tableName, $columnName);
         if (0 === strpos(trim($attributes), 'smallint')) {
             $count++;
-            $migrate->alterColumn($tableName, $columnName, 'int(10) UNSIGNED NOT NULL');
+            $migrate->alterColumn($tableName, $columnName, 'int(10) UNSIGNED NOT NULL AUTO_INCREMENT');
         }
 
         $result = $migrate->executeQueue(true);
