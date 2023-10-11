@@ -31,6 +31,7 @@ class Upgrade_2511 extends XoopsUpgrade
             'textsanitizer',
             'xoopsconfig',
             'templates',
+            'templatesadmin',
             'zapsmarty',
         );
         $this->usedFiles = array();
@@ -691,6 +692,41 @@ class Upgrade_2511 extends XoopsUpgrade
         return true;
     }
 
+    /**
+     * @return bool
+     */
+    public function check_templatesadmin()
+    {
+        $sql = 'SELECT COUNT(*) FROM `' . $GLOBALS['xoopsDB']->prefix('tplfile') . "` WHERE `tpl_file` IN ('system_modules.tpl') AND `tpl_type` = 'admin'";
+        $result = $GLOBALS['xoopsDB']->queryF($sql);
+        if (!$GLOBALS['xoopsDB']->isResultSet($result)) {
+            return false;
+        }
+        list($count) = $GLOBALS['xoopsDB']->fetchRow($result);
+
+        return ($count != 0);
+    }
+
+    /**
+     * @return bool
+     */
+    public function apply_templatesadmin()
+    {
+        include XOOPS_ROOT_PATH . '/modules/system/xoops_version.php';
+        $dbm  = new Db_manager();
+        $time = time();
+        foreach ($modversion['templates'] as $tplfile) {
+            // Admin templates
+            if (isset($tplfile['type']) && $tplfile['type'] === 'admin' && $fp = fopen('../modules/system/templates/admin/' . $tplfile['file'], 'r')) {
+                $newtplid  = $dbm->insert('tplfile', " VALUES (0, 1, 'system', 'default', '" . addslashes($tplfile['file']) . "', '" . addslashes($tplfile['description']) . "', " . $time . ', ' . $time . ", 'admin')");
+                $tplsource = fread($fp, filesize('../modules/system/templates/admin/' . $tplfile['file']));
+                fclose($fp);
+                $dbm->insert('tplsource', ' (tpl_id, tpl_source) VALUES (' . $newtplid . ", '" . addslashes($tplsource) . "')");
+            }
+        }
+
+        return true;
+    }
 
     //modules/system/themes/legacy/legacy.php
     /**
