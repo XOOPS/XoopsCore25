@@ -15,6 +15,8 @@
  * @since               2.0.0
  */
 
+use Xmf\Request;
+
 $xoopsOption['pagetype'] = 'notification';
 include __DIR__ . '/mainfile.php';
 
@@ -26,9 +28,9 @@ $uid = $xoopsUser->getVar('uid');
 
 $op = 'list';
 if (isset($_POST['op'])) {
-    $op = trim($_POST['op']);
+    $op = Request::getString('op', '', 'POST');
 } elseif (isset($_GET['op'])) {
-    $op = trim($_GET['op']);
+    $op = Request::getString('op', '', 'GET');
 }
 if (isset($_POST['delete'])) {
     $op = 'delete';

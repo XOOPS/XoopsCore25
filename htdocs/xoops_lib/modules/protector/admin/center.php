@@ -1,4 +1,7 @@
 <?php
+
+use Xmf\Request;
+
 //require_once XOOPS_ROOT_PATH.'/include/cp_header.php' ;
 include_once __DIR__ . '/admin_header.php'; //mb problem: it shows always the same "Center" tab
 xoops_cp_header();
@@ -15,8 +18,8 @@ $myts = \MyTextSanitizer::getInstance();
 $db   = XoopsDatabaseFactory::getDatabaseConnection();
 
 // GET vars
-$pos = empty($_GET['pos']) ? 0 : (int)$_GET['pos'];
-$num = empty($_GET['num']) ? 20 : (int)$_GET['num'];
+$pos = Request::getInt('pos', 0, 'GET');
+$num = Request::getInt('num', 20, 'GET');
 
 // Table Name
 $log_table = $db->prefix($mydirname . '_log');

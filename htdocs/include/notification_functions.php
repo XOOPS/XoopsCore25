@@ -16,6 +16,9 @@
  * @since               2.0.0
  * @author              Kazumi Ono (AKA onokazu) http://www.myweb.ne.jp/, http://jp.xoops.org/
  */
+
+use Xmf\Request;
+
 defined('XOOPS_ROOT_PATH') || exit('Restricted access');
 
 // RMV-NOTIFY
@@ -373,7 +376,7 @@ function &notificationSubscribableCategoryInfo($module_id = null)
             $sub_categories[]      = $category;
         } else {
             $item_name = $category['item_name'];
-            $id        = ($item_name != '' && isset($_GET[$item_name])) ? (int)$_GET[$item_name] : 0;
+            $id        = ($item_name != '' && isset($_GET[$item_name])) ? Request::getInt($item_name, 0, 'GET'): 0;
             if ($id > 0) {
                 $category['item_id'] = $id;
                 $sub_categories[]    = $category;
