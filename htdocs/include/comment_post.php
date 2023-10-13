@@ -171,7 +171,7 @@ if (!empty($_POST)) {
         // End added by voltan
     }
 
-    $com_mode   = htmlspecialchars(Request::getString('com_mode', 'flat', 'POST'), ENT_QUOTES | ENT_HTML5);
+    $com_mode   = htmlspecialchars(Request::getString('com_mode', 'flat', 'POST'), ENT_QUOTES);
     $com_order  = Request::getInt('com_order', XOOPS_COMMENT_OLD1ST, 'POST') ;
     $com_itemid = Request::getInt('com_itemid', 0, 'POST');
     $com_pid    = Request::getInt('com_pid', 0, 'POST');

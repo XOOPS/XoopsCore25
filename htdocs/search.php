@@ -200,7 +200,7 @@ switch ($action) {
                     if ($count >= 5) {
                         $search_url = XOOPS_URL . '/search.php?query=' . urlencode(stripslashes(implode(' ', $queries)));
                         $search_url .= "&mid={$mid}&action=showall&andor={$andor}";
-						$search_arr['module_show_all'] = htmlspecialchars($search_url, ENT_QUOTES | ENT_HTML5);
+						$search_arr['module_show_all'] = htmlspecialchars($search_url, ENT_QUOTES);
                     }
 					$search_arr['module_name'] = $module_name;
 					$search_arr['module_data'] = $results_arr;
@@ -240,10 +240,10 @@ switch ($action) {
 				$keywords = '';
                 if ($andor !== 'exact') {
                     foreach ($queries as $q) {
-						$keywords .= htmlspecialchars(stripslashes($q), ENT_QUOTES | ENT_HTML5);
+						$keywords .= htmlspecialchars(stripslashes($q), ENT_QUOTES);
                     }
                 } else {
-					$keywords .= htmlspecialchars(stripslashes($queries[0]), ENT_QUOTES | ENT_HTML5);
+					$keywords .= htmlspecialchars(stripslashes($queries[0]), ENT_QUOTES);
                 }
 				$xoopsTpl->assign('keywords', $keywords);
             }

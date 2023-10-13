@@ -156,7 +156,7 @@ if (empty($mode) || $mode === 'extra') {
     $ret .= '<table id="xo-logger-extra" class="outer"><tr><th colspan="2">' . _LOGGER_EXTRA . '</th></tr>';
     foreach ($this->extra as $ex) {
         $ret .= '<tr><td class="' . $class . '"><strong>';
-        $ret .= htmlspecialchars($ex['name'], ENT_QUOTES | ENT_HTML5) . ':</strong> ' . htmlspecialchars($ex['msg'], ENT_QUOTES | ENT_HTML5);
+        $ret .= htmlspecialchars($ex['name'], ENT_QUOTES | ENT_HTML5) . ':</strong> ' . htmlspecialchars($ex['msg'], ENT_QUOTES);
         $ret .= '</td></tr>';
         $class = ($class === 'odd') ? 'even' : 'odd';
     }
