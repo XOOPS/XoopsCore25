@@ -22,11 +22,11 @@ if (!defined('FRAMEWORKS_ART_FUNCTIONS_CACHE')):
     {
         global $xoopsUser;
 
-        if (!empty($groups) && is_array($groups)) {
+        if (!empty($groups) && \is_array($groups)) {
         } elseif (is_object($xoopsUser)) {
             $groups = $xoopsUser->getGroups();
         }
-        if (!empty($groups) && is_array($groups)) {
+        if (!empty($groups) && \is_array($groups)) {
             sort($groups);
             $contentCacheId = substr(md5(implode(',', $groups) . XOOPS_DB_PASS . XOOPS_DB_NAME), 0, strlen(XOOPS_DB_USER) * 2);
         } else {

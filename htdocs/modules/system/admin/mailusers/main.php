@@ -295,7 +295,7 @@ switch ($op) {
                     $form->addElement($op_hidden);
                     $form->addElement($start_hidden);
                     $form->addElement($mail_mailok_hidden);
-                    if (isset($_POST['mail_send_to']) && is_array($_POST['mail_send_to'])) {
+                    if (isset($_POST['mail_send_to']) && \is_array($_POST['mail_send_to'])) {
                         foreach ($_POST['mail_send_to'] as $v) {
                             $form->addElement(new XoopsFormHidden('mail_send_to[]', $v));
                         }

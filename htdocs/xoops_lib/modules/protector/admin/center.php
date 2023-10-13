@@ -71,7 +71,7 @@ if (!empty($_POST['action'])) {
         $redirect_msg = $error_msg ? : _AM_MSG_IPFILESUPDATED;
         redirect_header('center.php?page=center', 2, $redirect_msg);
         exit;
-    } elseif ($_POST['action'] === 'delete' && isset($_POST['ids']) && is_array($_POST['ids'])) {
+    } elseif ($_POST['action'] === 'delete' && isset($_POST['ids']) && \is_array($_POST['ids'])) {
         // remove selected records
         foreach ($_POST['ids'] as $lid) {
             $lid = (int)$lid;
@@ -79,7 +79,7 @@ if (!empty($_POST['action'])) {
         }
         redirect_header('center.php?page=center', 2, _AM_MSG_REMOVED);
         exit;
-    } elseif ($_POST['action'] === 'banbyip' && isset($_POST['ids']) && is_array($_POST['ids'])) {
+    } elseif ($_POST['action'] === 'banbyip' && isset($_POST['ids']) && \is_array($_POST['ids'])) {
         // remove selected records
         foreach ($_POST['ids'] as $lid) {
             $lid = (int)$lid;

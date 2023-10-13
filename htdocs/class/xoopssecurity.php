@@ -152,7 +152,7 @@ class XoopsSecurity
     public function garbageCollection($name = 'XOOPS_TOKEN')
     {
         $sessionName = $name . '_SESSION';
-        if (!empty($_SESSION[$sessionName]) && is_array($_SESSION[$sessionName])) {
+        if (!empty($_SESSION[$sessionName]) && \is_array($_SESSION[$sessionName])) {
             $_SESSION[$sessionName] = array_filter($_SESSION[$sessionName], array($this, 'filterToken'));
         }
     }

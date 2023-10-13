@@ -215,7 +215,7 @@ class MyTextSanitizer
     {
         if (is_array($config_custom)) {
             foreach ($config_custom as $key => $val) {
-                if (isset($config_default[$key]) && is_array($config_default[$key])) {
+                if (isset($config_default[$key]) && \is_array($config_default[$key])) {
                     $config_default[$key] = $this->mergeConfig($config_default[$key], $config_custom[$key]);
                 } else {
                     $config_default[$key] = $val;
