@@ -18,10 +18,10 @@
 
 /**
  * call htmlspecialchars with standard arguments
- * @param $value string
+ * @param string $value
  * @return string
  */
-function installerHtmlSpecialChars($value)
+function installerHtmlSpecialChars($value = '')
 {
     return htmlspecialchars($value, ENT_QUOTES, _INSTALL_CHARSET, true);
 }
@@ -69,9 +69,9 @@ function install_finalize($installer_modified)
 }
 
 /**
- * @param        $name
- * @param        $value
- * @param        $label
+ * @param string $name
+ * @param string $value
+ * @param string $label
  * @param string $help
  */
 function xoFormField($name, $value, $label, $help = '')

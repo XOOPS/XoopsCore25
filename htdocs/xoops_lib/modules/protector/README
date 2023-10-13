@@ -2,7 +2,7 @@
 [xlang:en]
 = SUMMARY =
 
-Protector is a module to defend your CMS origined from XOOPS2 from various and malicious attacks.
+Protector is a module to defend your XOOPS CMS from various and malicious attacks.
 
 This module can protect a various kind of attacks like:
 
@@ -57,50 +57,13 @@ If you try this option, set writable XOOPS_ROOT_PATH/.htaccess
 Before installing this, you should compare it to the security risks which .htaccess is writable.
 
 
-= How to rescue =
+= How to recover from banning =
 
 If you've been banned from Protector, just delete files under XOOPS_TRUST_PATH/modules/protector/configs/
 
 The setting and controller of "rescue password" has been eliminated.
 
-
-= How to install it into XOOPS Cube Legacy 2.1 =
-
-Almost the same as installing into XOOPS 2.0.x.
-There is just a different with the patching point in mainfile.php.
-Refer this.
-[code]
-    if (!defined('_LEGACY_PREVENT_LOAD_CORE_') && XOOPS_ROOT_PATH != '') {
-        include XOOPS_TRUST_PATH.'/modules/protector/include/precheck.inc.php' ;
-        @include_once XOOPS_ROOT_PATH.'/include/cubecore_init.php';
-        if (!isset($xoopsOption['nocommon']) && !defined('_LEGACY_PREVENT_EXEC_COMMON_')) {
-            include XOOPS_ROOT_PATH.'/include/common.php';
-        }
-        include XOOPS_TRUST_PATH.'/modules/protector/include/postcheck.inc.php' ;
-    }
-[/code]
-
-
-= How to install it into ImpressCMS =
-
-You need not patch to mainfile.php.
-Just copy extras/ImpressCMS/preload/protector.php in the archive into your preload/ of ImpressCMS.
-
-I thank vaughan about releasing the preload.
-
-original usage written by vaughan:
 ----------------------------------
-Install the module the same way as any other module.
-
-You do not need to edit mainfile.php when using ImpressCMS, instead locate the ImpressCMS_Extras directory
-inside the protector package, and copy the preload directory to your root ImpressCMS directory, so that your
-ImpressCMS preload folder contains the file protector.php
-
-your root ImpressCMS directory is the directory on your server where mainfile.php is located.
-
-example: htdocs/preload/protector.php
-----------------------------------
-
 
 = UPGRADE from Protector 2.x =
 

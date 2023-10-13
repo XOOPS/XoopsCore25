@@ -96,6 +96,6 @@ if (!$wizard->xoInit()) {
     exit();
 }
 
-if (!@is_array($_SESSION['settings'])) {
+if (!isset($_SESSION['settings']) || !is_array($_SESSION['settings'])) {
     $_SESSION['settings'] = array();
 }
