@@ -18,7 +18,7 @@
 
     <ul class="pagination pagination-sm">
       <li><a href="<{$xoops_url}>/modules/<{$lang_moduledirname}>/letter.php" title="[ <{$publishedwords}> ]"><{$smarty.const._MD_LEXIKON_ALL}></a></li>
-      <{foreach item=letterlinks from=$alpha.initial}>
+      <{foreach item=letterlinks from=$alpha.initial|default:null}>
           <{if $letterlinks.total > 0}>
             <li><a href="<{$xoops_url}>/modules/<{$lang_moduledirname}>/letter.php?init=<{$letterlinks.id}>" title="[ <{$letterlinks.total}> ]" >
               <{$letterlinks.linktext}>
@@ -64,7 +64,7 @@
                       [<{$publishedwords}>]
                    </td>
                    <!-- Start category loop -->
-                   <{foreach item=catlinks from=$block0.categories}>
+                   <{foreach item=catlinks from=$block0.categories|default:null}>
                    <td>
                     <{if $catlinks.image != "" && $show_screenshot == true}>
                         <a href="<{$xoops_url}>/modules/<{$lang_moduledirname}>/category.php?categoryID=<{$catlinks.id}>" target="_parent">
@@ -105,7 +105,7 @@
           <tbody>
               <tr>
                    <!-- Start category loop -->
-                   <{foreach item=catlinks from=$block0.categories}>
+                   <{foreach item=catlinks from=$block0.categories|default:null}>
                    <td>
                     <{if $catlinks.image != "" && $show_screenshot == true}>
                         <a href="<{$xoops_url}>/modules/<{$lang_moduledirname}>/category.php?categoryID=<{$catlinks.id}>" target="_parent">
@@ -152,7 +152,7 @@
 <div class="col-md-12">
 <{if $pagetype == '0'}>
     <h3><{$smarty.const._MD_LEXIKON_ALLCATS}></h3>
-    <{foreach item=eachcat from=$catsarray.single}>
+    <{foreach item=eachcat from=$catsarray.single|default:null}>
         <table class="table table-responsive">
             <thead>
                 <tr><th><a href="<{$xoops_url}>/modules/<{$eachcat.dir}>/category.php?categoryID=<{$eachcat.id}>"><{$eachcat.name}></a></th></tr>
@@ -203,7 +203,7 @@
 <hr>
 
 
-    <{foreach item=eachentry from=$entriesarray.single}>
+    <{foreach item=eachentry from=$entriesarray.single|default:null}>
     <span style="display:block; margin-bottom: 15px;">
             <h4>
                 <a href="<{$xoops_url}>/modules/<{$eachentry.dir}>/entry.php?entryID=<{$eachentry.id}>"><{$eachentry.term}></a>

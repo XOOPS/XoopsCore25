@@ -13,7 +13,7 @@
         <th><{$smarty.const._BANNERS_FUNCTIONS}></th>
     </tr>
     <{if $bcount}>
-        <{foreach item=banner from=$banners}>
+        <{foreach item=banner from=$banners|default:null}>
             <tr class="even txtcenter">
                 <td><{$banner.bid}></td>
                 <td><{$banner.impmade}></td>
@@ -49,7 +49,7 @@
         <th><{$smarty.const._BANNERS_ENDED}></th>
     </tr>
     <{if $bcount}>
-        <{foreach item=ebanner from=$ebanners}>
+        <{foreach item=ebanner from=$ebanners|default:null}>
             <tr class="even txtcenter">
                 <td><{$ebanner.bid}></td>
                 <td><{$ebanner.impressions}></td>

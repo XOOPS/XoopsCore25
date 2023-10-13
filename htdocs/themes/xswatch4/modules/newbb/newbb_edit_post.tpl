@@ -8,7 +8,7 @@
 
     <!-- If is subforum-->
     <{if $parentforum}>
-    <{foreach item=forum from=$parentforum}>
+    <{foreach item=forum from=$parentforum|default:null}>
     <li class="breadcrumb-item"><a href="<{$xoops_url}>/modules/<{$xoops_dirname}>/viewforum.php?forum=<{$forum.forum_id}>"><{$forum.forum_name}></a></li>
     <{/foreach}>
     <{/if}>
@@ -49,7 +49,7 @@
 <form name="<{$form_post.name}>" id="<{$form_post.name}>" action="<{$form_post.action}>"
       method="<{$form_post.method}>" <{$form_post.extra}> >
 	  <div class="form-group row">
-        <{foreach item=element from=$form_post.elements}>
+        <{foreach item=element from=$form_post.elements|default:null}>
         <{if isset($element.hidden) && $element.hidden != true}>
 			<label class="col-xs-12 col-sm-2 col-form-label text-sm-right">
 				<{$element.caption|default:''}>
@@ -64,7 +64,7 @@
         <{/if}>
         <{/foreach}>
 		</div>
-    <{foreach item=element from=$form_post.elements}>
+    <{foreach item=element from=$form_post.elements|default:null}>
     <{if isset($element.hidden) && $element.hidden == true}>
         <{$element.body}>
     <{/if}>
@@ -76,7 +76,7 @@
 
 <{if isset($posts_context)}>
     <table width='100%' class='outer' cellspacing='1'>
-        <{foreach item=post from=$posts_context}>
+        <{foreach item=post from=$posts_context|default:null}>
         <tr valign="top">
             <td class="head"><{$post.subject}></td>
         </tr>

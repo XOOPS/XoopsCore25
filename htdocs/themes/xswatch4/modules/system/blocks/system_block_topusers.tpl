@@ -1,4 +1,4 @@
-<{foreach item=user from=$block.users}>
+<{foreach item=user from=$block.users|default:null}>
     <ul class="userblock list-unstyled">
 
         <{if $user.avatar != ""}>

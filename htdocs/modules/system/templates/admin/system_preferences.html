@@ -4,7 +4,7 @@
 <!--Preferences-->
 <{if $menu|default:false}>
     <div class="xo-catsetting">
-        <{foreach item=preference from=$preferences}>
+        <{foreach item=preference from=$preferences|default:null}>
             <a class="tooltip" href="admin.php?fct=preferences&amp;op=show&amp;confcat_id=<{$preference.id}>" title="<{$preference.name}>">
                 <img src="<{$preference.image}>" alt="<{$preference.name}>"/>
                 <span><{$preference.name}></span>

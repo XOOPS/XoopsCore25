@@ -5,16 +5,16 @@
             <{if $help|default:false}>
                 <div class="xo-help-menu">
                     <h2 class="head"><{$modname}></h2>
-                    <{foreach item=helpitem from=$help}>
+                    <{foreach item=helpitem from=$help|default:null}>
                         <div class="<{cycle values='odd, even'}>"><a href="<{$helpitem.link}>"><{$helpitem.name}></a></div>
                     <{/foreach}>
                 </div>
             <{/if}>
             <{if $list_mods|default:false}>
                 <div class="xo-help-menu">
-                    <{foreach item=row from=$list_mods}>
+                    <{foreach item=row from=$list_mods|default:null}>
                         <h2 class="head"><{$row.name}></h2>
-                        <{foreach item=list from=$row.help_page}>
+                        <{foreach item=list from=$row.help_page|default:null}>
                             <div class="<{cycle values='odd, even'}>" title="<{$list.name}>"><a href="<{$list.link}>"><{$list.name}></a></div>
                         <{/foreach}>
                     <{/foreach}>

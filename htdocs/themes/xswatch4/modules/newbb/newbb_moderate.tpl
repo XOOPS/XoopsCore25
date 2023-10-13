@@ -16,7 +16,7 @@
     <table class="table table-hover">
     <thead>
     <tr>
-    <{foreach item=colHead from=$columnHeaders}>
+    <{foreach item=colHead from=$columnHeaders|default:null}>
         <th>
             <{if $colHead.url}>
             <a href="<{$colHead.url}>" title="<{$colHead.title}>"><{$colHead.header}> <span class="fa fa-sort" aria-hidden="true"></span></a>
@@ -28,7 +28,7 @@
     </tr>
     </thead>
     <tbody>
-    <{foreach item=row from=$columnRows}>
+    <{foreach item=row from=$columnRows|default:null}>
         <tr>
             <td><{$row.uid}></td>
             <td><{$row.start}></td>

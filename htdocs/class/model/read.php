@@ -38,7 +38,7 @@ class XoopsModelRead extends XoopsModelAbstract
      */
     public function &getAll(CriteriaElement $criteria = null, $fields = null, $asObject = true, $id_as_key = true)
     {
-        if (is_array($fields) && count($fields) > 0) {
+        if ($fields && \is_array($fields)) {
             if (!in_array($this->handler->keyName, $fields)) {
                 $fields[] = $this->handler->keyName;
             }

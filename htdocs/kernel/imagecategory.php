@@ -371,7 +371,7 @@ class XoopsImagecategoryHandler extends XoopsObjectHandler
     public function getList($groups = array(), $perm = 'imgcat_read', $display = null, $storetype = null)
     {
         $criteria = new CriteriaCompo();
-        if (is_array($groups) && !empty($groups)) {
+        if ($groups && \is_array($groups)) {
             $criteriaTray = new CriteriaCompo();
             foreach ($groups as $gid) {
                 $criteriaTray->add(new Criteria('gperm_groupid', $gid), 'OR');

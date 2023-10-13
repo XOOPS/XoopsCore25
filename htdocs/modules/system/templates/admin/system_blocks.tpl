@@ -21,7 +21,7 @@
                     <form name="<{$filterform.name}>" id="<{$filterform.name}>" action="<{$filterform.action}>" method="<{$filterform.method}>"
                             <{$filterform.extra}> >
                         <div class="xo-blocksfilter">
-                            <{foreach item=element from=$filterform.elements}>
+                            <{foreach item=element from=$filterform.elements|default:null}>
                                 <{if $element.hidden != true}>
                                     <div class="xo-caption"><{$element.caption}></div>
                                     <div class="xo-element"><{$element.body}></div>

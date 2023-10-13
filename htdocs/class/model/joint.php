@@ -79,7 +79,7 @@ class XoopsModelJoint extends XoopsModelAbstract
             return null;
         }
 
-        if (is_array($fields) && count($fields)) {
+        if ($fields && \is_array($fields)) {
             if (!in_array('o.' . $this->handler->keyName, $fields)) {
                 $fields[] = 'o.' . $this->handler->keyName;
             }

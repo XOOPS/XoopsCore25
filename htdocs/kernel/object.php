@@ -1383,7 +1383,7 @@ class XoopsPersistableObjectHandler extends XoopsObjectHandler
 
             return $object;
         }
-        if (is_array($fields) && count($fields) > 0) {
+        if ($fields && \is_array($fields)) {
             $select = implode(',', $fields);
             if (!in_array($this->keyName, $fields)) {
                 $select .= ', ' . $this->keyName;
