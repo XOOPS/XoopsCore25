@@ -20,7 +20,7 @@
 <{* Category block *}>
 <{if $multicats == 1}>
     <div class="clearer">
-        <fieldset class="item" style="border:1px solid #778;margin:1em 0;text-align:left;background-color:trans;">
+        <fieldset class="item" style="border:1px solid #778;margin:1em 0;text-align:left;background-color:transparent;">
             <legend><{$smarty.const._MD_LEXIKON_BROWSECAT}></legend>
             <div class="letters" style="margin:1em 0;width:100%;padding:0;text-align:center;line-height:1.3em;">
                 <{foreach item=catlinks from=$block0.categories|default:null}>

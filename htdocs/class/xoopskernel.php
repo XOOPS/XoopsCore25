@@ -61,6 +61,7 @@ class xos_kernel_Xoops2
         if (!isset($this->paths[$root])) {
             list($root, $path) = array('www', $url);
         }
+
         if (!$virtual) { // Returns a physical path
             $path = $this->paths[$root][0] . '/' . $path;
             $path = str_replace('/', DS, $path);

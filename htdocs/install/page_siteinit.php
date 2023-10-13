@@ -30,6 +30,7 @@ defined('XOOPS_INSTALL') || die('XOOPS Installation wizard die');
 
 $pageHasForm = true;
 $pageHasHelp = false;
+$isadmin     = false;
 
 $vars =& $_SESSION['siteconfig'];
 
@@ -106,14 +107,15 @@ if ($isadmin) {
 
         <?php
         echo '<div class="row"><div class="col-md-9">';
-        echo xoFormField('adminname', $vars['adminname'], ADMIN_LOGIN_LABEL);
+        xoFormField('adminname', isset($vars['adminname']) ? $vars['adminname'] : '', ADMIN_LOGIN_LABEL);
+
         if (isset($error['name'])) {
             foreach ($error['name'] as $errmsg) {
                 echo '<div class="alert alert-danger"><span class="fa fa-ban text-danger"></span> ' . $errmsg . '</div>';
             }
         }
 
-        echo xoFormField('adminmail', $vars['adminmail'], ADMIN_EMAIL_LABEL);
+        xoFormField('adminmail', isset($vars['adminmail']) ? $vars['adminmail'] : '', ADMIN_EMAIL_LABEL);
         if (isset($error['email'])) {
             foreach ($error['email'] as $errmsg) {
                 echo '<div class="alert alert-danger"><span class="fa fa-ban text-danger"></span> ' . $errmsg . '</div>';
