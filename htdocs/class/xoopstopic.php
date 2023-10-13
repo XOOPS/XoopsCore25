@@ -150,7 +150,7 @@ class XoopsTopic
             }
             $xt            = new XoopsTree($this->table, 'topic_id', 'topic_pid');
             $parent_topics = $xt->getAllParentId($this->topic_id);
-            if (!empty($this->m_groups) && is_array($this->m_groups)) {
+            if (!empty($this->m_groups) && \is_array($this->m_groups)) {
                 foreach ($this->m_groups as $m_g) {
                     $moderate_topics = XoopsPerms::getPermitted($this->mid, 'ModInTopic', $m_g);
                     $add             = true;
@@ -171,7 +171,7 @@ class XoopsTopic
                     }
                 }
             }
-            if (!empty($this->s_groups) && is_array($this->s_groups)) {
+            if (!empty($this->s_groups) && \is_array($this->s_groups)) {
                 foreach ($s_groups as $s_g) {
                     $submit_topics = XoopsPerms::getPermitted($this->mid, 'SubmitInTopic', $s_g);
                     $add           = true;
@@ -191,7 +191,7 @@ class XoopsTopic
                     }
                 }
             }
-            if (!empty($this->r_groups) && is_array($this->r_groups)) {
+            if (!empty($this->r_groups) && \is_array($this->r_groups)) {
                 foreach ($r_groups as $r_g) {
                     $read_topics = XoopsPerms::getPermitted($this->mid, 'ReadInTopic', $r_g);
                     $add         = true;
@@ -295,7 +295,7 @@ class XoopsTopic
         $ret       = array();
         $xt        = new XoopsTree($this->table, 'topic_id', 'topic_pid');
         $topic_arr = $xt->getFirstChild($this->topic_id, 'topic_title');
-        if ($topic_arr && \is_array($topic_arr)) {
+        if (!empty($topic_arr) && \is_array($topic_arr)) {
             foreach ($topic_arr as $topic) {
                 $ret[] = new XoopsTopic($this->table, $topic);
             }
@@ -312,7 +312,7 @@ class XoopsTopic
         $ret       = array();
         $xt        = new XoopsTree($this->table, 'topic_id', 'topic_pid');
         $topic_arr = $xt->getAllChild($this->topic_id, 'topic_title');
-        if ($topic_arr && \is_array($topic_arr)) {
+        if (!empty($topic_arr) && \is_array($topic_arr)) {
             foreach ($topic_arr as $topic) {
                 $ret[] = new XoopsTopic($this->table, $topic);
             }
@@ -329,7 +329,7 @@ class XoopsTopic
         $ret       = array();
         $xt        = new XoopsTree($this->table, 'topic_id', 'topic_pid');
         $topic_arr = $xt->getChildTreeArray($this->topic_id, 'topic_title');
-        if ($topic_arr && \is_array($topic_arr)) {
+        if (!empty($topic_arr) && \is_array($topic_arr)) {
             foreach ($topic_arr as $topic) {
                 $ret[] = new XoopsTopic($this->table, $topic);
             }

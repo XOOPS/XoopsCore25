@@ -50,7 +50,7 @@
                                 0
                             <{/if}>
                             </li>
-                                <{if isset($topic_post.poster.digests) && is_array($topic_post.poster.digests) && $topic_post.poster.digests gt 0}>
+                                <{if isset($topic_post.poster.digests) && \is_array($topic_post.poster.digests) && $topic_post.poster.digests gt 0}>
                             <li>
                                 <{$smarty.const._MD_NEWBB_DIGESTS}>: <{$topic_post.poster.digests}>
                             </li>

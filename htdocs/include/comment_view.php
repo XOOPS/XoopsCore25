@@ -90,7 +90,7 @@ if (XOOPS_COMMENT_APPROVENONE != $xoopsModuleConfig['com_rule']) {
         } elseif ($com_mode === 'thread') {
             // RMV-FIX... added extraParam stuff here
             $comment_url = $comment_config['pageName'] . '?';
-            if (isset($comment_config['extraParams']) && is_array($comment_config['extraParams'])) {
+            if (isset($comment_config['extraParams']) && \is_array($comment_config['extraParams'])) {
                 $extra_params = '';
                 foreach ($comment_config['extraParams'] as $extra_param) {
                     // This page is included in the module hosting page -- param could be from anywhere
@@ -181,7 +181,7 @@ if (XOOPS_COMMENT_APPROVENONE != $xoopsModuleConfig['com_rule']) {
         $commentBarHidden .= '<input type="hidden" name="' . $comment_config['itemName']
             . '" value="' . $com_itemid . '" />';
         $link_extra = '';
-        if (isset($comment_config['extraParams']) && is_array($comment_config['extraParams'])) {
+        if (isset($comment_config['extraParams']) && \is_array($comment_config['extraParams'])) {
             foreach ($comment_config['extraParams'] as $extra_param) {
                 if (isset(${$extra_param})) {
                     $link_extra .= '&amp;' . $extra_param . '=' . ${$extra_param};
@@ -268,7 +268,7 @@ if (XOOPS_COMMENT_APPROVENONE != $xoopsModuleConfig['com_rule']) {
             // add module specific extra params
             if ('system' !== $xoopsModule->getVar('dirname')) {
                 $comment_config = $xoopsModule->getInfo('comments');
-                if (isset($comment_config['extraParams']) && is_array($comment_config['extraParams'])) {
+                if (isset($comment_config['extraParams']) && \is_array($comment_config['extraParams'])) {
                     $myts = \MyTextSanitizer::getInstance();
                     foreach ($comment_config['extraParams'] as $extra_param) {
                         // This routine is included from forms accessed via both GET and POST
