@@ -22,14 +22,14 @@ include_once XOOPS_ROOT_PATH . '/mainfile.php';
 include_once XOOPS_ROOT_PATH . '/include/cp_header.php';
 include_once XOOPS_ROOT_PATH . '/include/cp_functions.php';
 
-//include __DIR__ . '/../../../include/cp_header.php';
+//include XOOPS_ROOT_PATH . '/include/cp_header.php';
 //require_once XOOPS_ROOT_PATH . '/modules/' . $GLOBALS['xoopsModule']->getVar('dirname') . '/include/functions.php';
 
 if (file_exists($GLOBALS['xoops']->path('/Frameworks/moduleclasses/moduleadmin/moduleadmin.php'))) {
     include_once $GLOBALS['xoops']->path('/Frameworks/moduleclasses/moduleadmin/moduleadmin.php');
     //return true;
 } else {
-    redirect_header('../../../admin.php', 5, _AM_MODULEADMIN_MISSING, false);
+    redirect_header(XOOPS_ROOT_PATH . '/admin.php', 5, _AM_MODULEADMIN_MISSING, false);
     //return false;
 }
 
