@@ -6,7 +6,7 @@
 
         <li class="breadcrumb-item"><a href="<{$xoops_url}>/modules/<{$xoops_dirname}>/index.php?cat=<{$category.id}>"><{$category.title}></a></li>
         <{if $parentforum}>
-            <{foreach item=forum from=$parentforum}>
+            <{foreach item=forum from=$parentforum|default:null}>
                 <li class="breadcrumb-item"><a href="<{$xoops_url}>/modules/<{$xoops_dirname}>/viewforum.php?forum=<{$forum.forum_id}>"><{$forum.forum_name}></a></li>
             <{/foreach}>
         <{/if}>
@@ -20,11 +20,11 @@
         </div>
     <{/if}>
 
-    <{if $online}>
+    <{if !empty($online)}>
         <div class="newbb-online-users row mb10">
             <div class="col-md-12">
                 <strong><{$smarty.const._MD_NEWBB_BROWSING}> </strong>
-                <{foreach item=user from=$online.users}>
+                <{foreach item=user from=$online.users|default:null}>
                     <a href="<{$user.link}>">
                         <{if $user.level eq 2}><!-- If is admin -->
                             <label class="label label-success"><{$user.uname}></label>
@@ -155,14 +155,14 @@
             <select class="form-control mb-2" name="topicoption" id="topicoption" onchange="if(this.options[this.selectedIndex].value.length >0 ) { window.document.location=this.options[this.selectedIndex].value;}">
                 <option value=""><{$smarty.const._MD_NEWBB_TOPICOPTION}></option>
                 <{if $viewer_level > 1}>
-                <{foreach item=act from=$admin_actions}>
+                <{foreach item=act from=$admin_actions|default:null}>
                 <option value="<{$act.link}>"><{$act.name}></option>
                 <{/foreach}>
                 <{/if}>
                 <{if isset($adminpoll_actions) && $adminpoll_actions|is_array && count($adminpoll_actions) > 0 }>
                 <option value="">--------</option>
                 <option value=""><{$smarty.const._MD_NEWBB_POLLOPTIONADMIN}></option>
-                <{foreach item=actpoll from=$adminpoll_actions}>
+                <{foreach item=actpoll from=$adminpoll_actions|default:null}>
                 <option value="<{$actpoll.link}>"><{$actpoll.name}></option>
                 <{/foreach}>
                 <{/if}>
@@ -183,7 +183,7 @@
         <div class="col">
             <select class="form-control mb-2" name="viewmode" id="viewmode" onchange="if(this.options[this.selectedIndex].value.length >0 ) { window.location=this.options[this.selectedIndex].value;}">
                 <option value=""><{$smarty.const._MD_NEWBB_VIEWMODE}></option>
-                <{foreach item=act from=$viewmode_options}>
+                <{foreach item=act from=$viewmode_options|default:null}>
                 <option value="<{$act.link}>"><{$act.title}></option>
                 <{/foreach}>
             </select>
@@ -194,7 +194,7 @@
         <{$smarty.const._MD_NEWBB_TOPICLOCK}>
     <{/if}>
 
-    <{foreach item=topic_post from=$topic_posts}>
+    <{foreach item=topic_post from=$topic_posts|default:null}>
         <{include file="db:newbb_thread.tpl" topic_post=$topic_post mode=$mode}>
     <{foreachelse}>
         <div class="alert alert-warning" role="alert"><{$smarty.const._MD_NEWBB_NOTOPIC}></div>

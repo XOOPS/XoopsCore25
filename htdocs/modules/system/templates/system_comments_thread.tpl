@@ -23,7 +23,7 @@
                 <th class="width20 txtcenter"><{$lang_poster}></th>
                 <th class="txtright"><{$lang_posted}></th>
             </tr>
-            <{foreach item=reply from=$comments[i].replies}>
+            <{foreach item=reply from=$comments[i].replies|default:null}>
                 <tr>
                     <td class="even"><{$reply.prefix}> <a href="<{$comment_url}>&amp;com_id=<{$reply.id}>&amp;com_rootid=<{$reply.root_id}>" title=""><{$reply.title}></a>
                     </td>

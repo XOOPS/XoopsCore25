@@ -8,7 +8,7 @@
     </tr>
     </thead>
     <tbody>
-    <{foreach item=item from=$block.items}>
+    <{foreach item=item from=$block.items|default:null}>
         <tr>
             <td><{$item.itemlink}></td>
             <td align="left"><{$item.categorylink}></td>

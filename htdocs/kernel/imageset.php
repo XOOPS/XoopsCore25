@@ -246,7 +246,7 @@ class XoopsImageSetHandler extends XoopsObjectHandler
      *
      * @param  int    $imgset_id
      * @param  string $tplset_name
-     * @return array
+     * @return array|bool
      */
     public function linkThemeset($imgset_id, $tplset_name)
     {
@@ -272,7 +272,7 @@ class XoopsImageSetHandler extends XoopsObjectHandler
      *
      * @param  int    $imgset_id
      * @param  string $tplset_name
-     * @return array
+     * @return array|bool
      */
     public function unlinkThemeset($imgset_id, $tplset_name)
     {

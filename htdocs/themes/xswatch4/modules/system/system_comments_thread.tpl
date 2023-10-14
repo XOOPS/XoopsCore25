@@ -25,7 +25,7 @@
                     <strong><{$lang_posted}></strong>
                 </div>
             </div>
-            <{foreach item=reply from=$comments[i].replies}>
+            <{foreach item=reply from=$comments[i].replies|default:null}>
                 <div class="row">
                     <div class="col-md-4">
                         <{$reply.prefix}> <a href="<{$comment_url}>&amp;com_id=<{$reply.id}>&amp;com_rootid=<{$reply.root_id}>" title=""><{$reply.title}></a>

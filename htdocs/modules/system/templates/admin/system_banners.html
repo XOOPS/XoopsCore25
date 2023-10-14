@@ -36,7 +36,7 @@
         </tr>
         </thead>
         <tbody>
-        <{foreach item=bannerdetail from=$banner}>
+        <{foreach item=bannerdetail from=$banner|default:null}>
             <tr class="<{cycle values='even,odd'}>">
                 <td class="txtcenter"><{$bannerdetail.impmade}></td>
                 <td class="txtcenter"><{$bannerdetail.left}></td>
@@ -63,7 +63,7 @@
         <div class="clear spacer"></div>
     <{/if}>
     <!--Pop-pup-->
-    <{foreach item=banner from=$popup_banner}>
+    <{foreach item=banner from=$popup_banner|default:null}>
         <div id="dialog<{$banner.bid}>" title="<{$banner.name}>" style='display:none;'>
             <{$banner.imageurl}>
         </div>
@@ -87,7 +87,7 @@
         </tr>
         </thead>
         <tbody>
-        <{foreach item=finished_banner from=$banner_finish}>
+        <{foreach item=finished_banner from=$banner_finish|default:null}>
             <tr class="<{cycle values='even,odd'}>">
                 <td class="txtcenter"><{$finished_banner.impressions}></td>
                 <td class="txtcenter"><{$finished_banner.clicks}></td>
@@ -125,7 +125,7 @@
         </tr>
         </thead>
         <tbody>
-        <{foreach item=banner_client_detail from=$banner_client}>
+        <{foreach item=banner_client_detail from=$banner_client|default:null}>
             <tr class="<{cycle values='even,odd'}>">
                 <td class="txtcenter"><{$banner_client_detail.name}></td>
                 <td class="txtcenter"><{$banner_client_detail.banner_active}></td>

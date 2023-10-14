@@ -226,6 +226,9 @@ class PublicSuffixList
         $cacheFile = $this->getCacheFileName($url);
         if (file_exists($cacheFile)) {
             $cachedTree = file_get_contents($cacheFile);
+            if((int) PHP_VERSION_ID < 70000) {
+                return unserialize($cachedTree);
+            }
             return unserialize($cachedTree, array('allowed_classes' => false));
         }
         return false;

@@ -115,16 +115,16 @@
         },
         {
             "name": "geekwright/regdom",
-            "version": "v1.0.7",
+            "version": "v1.0.9",
             "source": {
                 "type": "git",
                 "url": "https://github.com/geekwright/RegDom.git",
-                "reference": "612f44ec78d04c23107731b89494285caf73e324"
+                "reference": "5948ac178650fd93d6e847893aa52fc964627683"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/geekwright/RegDom/zipball/612f44ec78d04c23107731b89494285caf73e324",
-                "reference": "612f44ec78d04c23107731b89494285caf73e324",
+                "url": "https://api.github.com/repos/geekwright/RegDom/zipball/5948ac178650fd93d6e847893aa52fc964627683",
+                "reference": "5948ac178650fd93d6e847893aa52fc964627683",
                 "shasum": ""
             },
             "require": {
@@ -163,9 +163,9 @@
             ],
             "support": {
                 "issues": "https://github.com/geekwright/RegDom/issues",
-                "source": "https://github.com/geekwright/RegDom/tree/v1.0.7"
+                "source": "https://github.com/geekwright/RegDom/tree/v1.0.9"
             },
-            "time": "2022-04-08T21:58:34+00:00"
+            "time": "2023-05-01T00:09:34+00:00"
         },
         {
             "name": "ircmaxell/password-compat",

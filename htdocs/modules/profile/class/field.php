@@ -76,7 +76,7 @@ class ProfileField extends XoopsObject
      */
     public function setVar($key, $value, $not_gpc = false)
     {
-        if ($key === 'field_options' && is_array($value)) {
+        if ($key === 'field_options' && \is_array($value)) {
             foreach (array_keys($value) as $idx) {
                 $value[$idx] = base64_encode($value[$idx]);
             }

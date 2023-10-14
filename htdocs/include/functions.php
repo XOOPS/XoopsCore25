@@ -415,11 +415,11 @@ function xoops_confirm($hiddens, $action, $msg, $submit = '', $addtoken = true)
     foreach ($hiddens as $name => $value) {
         if (is_array($value)) {
             foreach ($value as $caption => $newvalue) {
-                $tempHiddens .= '<input type="radio" name="' . $name . '" value="' . htmlspecialchars($newvalue, ENT_QUOTES | ENT_HTML5) . '" /> ' . $caption;
+                $tempHiddens .= '<input type="radio" name="' . $name . '" value="' . htmlspecialchars($newvalue, ENT_QUOTES) . '" /> ' . $caption;
             }
             $tempHiddens .= '<br>';
         } else {
-            $tempHiddens .= '<input type="hidden" name="' . $name . '" value="' . htmlspecialchars($value, ENT_QUOTES | ENT_HTML5) . '" />';
+            $tempHiddens .= '<input type="hidden" name="' . $name . '" value="' . htmlspecialchars($value, ENT_QUOTES) . '" />';
         }
     }
 	$confirmTpl->assign('hiddens', $tempHiddens);
@@ -439,11 +439,11 @@ function xoops_confirm($hiddens, $action, $msg, $submit = '', $addtoken = true)
 		foreach ($hiddens as $name => $value) {
 			if (is_array($value)) {
 				foreach ($value as $caption => $newvalue) {
-					echo '<input type="radio" name="' . $name . '" value="' . htmlspecialchars($newvalue, ENT_QUOTES | ENT_HTML5) . '" /> ' . $caption;
+					echo '<input type="radio" name="' . $name . '" value="' . htmlspecialchars($newvalue, ENT_QUOTES) . '" /> ' . $caption;
 				}
 				echo '<br>';
 			} else {
-				echo '<input type="hidden" name="' . $name . '" value="' . htmlspecialchars($value, ENT_QUOTES | ENT_HTML5) . '" />';
+				echo '<input type="hidden" name="' . $name . '" value="' . htmlspecialchars($value, ENT_QUOTES) . '" />';
 			}
 		}
 		if ($addtoken != false) {
@@ -1288,6 +1288,25 @@ function xoops_getUrlDomain($url)
     }
 
     return $domain;
+}
+
+/**
+ * Check that the variable passed as $name is set, and if not, set with the specified $default.
+ *
+ * Note that $name is passed by reference, so it will be established in the caller's context
+ * if not already set. The value of $name is returned for convenience as well.
+ *
+ * @param mixed $name    Passed by reference variable. Will be created if is not set.
+ * @param mixed $default The default to use if $name is not set
+ *
+ * @return mixed the value in $name
+ */
+function makeSet(&$name, $default)
+{
+    if (!isset($name)) {
+        $name = $default;
+    }
+    return $name;
 }
 
 include_once __DIR__ . '/functions.encoding.php';

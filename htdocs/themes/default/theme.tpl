@@ -53,7 +53,7 @@
         <!-- Start left blocks loop -->
         <{if $xoops_showlblock}>
         <td id="leftcolumn">
-            <{foreach item=block from=$xoBlocks.canvas_left}>
+            <{foreach item=block from=$xoBlocks.canvas_left|default:null}>
             <{include file="$theme_name/theme_blockleft.tpl"}>
             <{/foreach}>
         </td>
@@ -67,7 +67,7 @@
                 <tr>
                     <td id="centerCcolumn" colspan="2">
                         <!-- Start center-center blocks loop -->
-                        <{foreach item=block from=$xoBlocks.page_topcenter}>
+                        <{foreach item=block from=$xoBlocks.page_topcenter|default:null}>
                         <{include file="$theme_name/theme_blockcenter_c.tpl"}>
                         <{/foreach}>
                         <!-- End center-center blocks loop -->
@@ -76,14 +76,14 @@
                 <tr>
                     <td id="centerLcolumn">
                         <!-- Start center-left blocks loop -->
-                        <{foreach item=block from=$xoBlocks.page_topleft}>
+                        <{foreach item=block from=$xoBlocks.page_topleft|default:null}>
                         <{include file="$theme_name/theme_blockcenter_l.tpl"}>
                         <{/foreach}>
                         <!-- End center-left blocks loop -->
                     </td>
                     <td id="centerRcolumn">
                         <!-- Start center-right blocks loop -->
-                        <{foreach item=block from=$xoBlocks.page_topright}>
+                        <{foreach item=block from=$xoBlocks.page_topright|default:null}>
                         <{include file="$theme_name/theme_blockcenter_r.tpl"}>
                         <{/foreach}>
                         <!-- End center-right blocks loop -->
@@ -135,7 +135,7 @@
         <!-- Start right blocks loop -->
         <{if $xoops_showrblock}>
         <td id="rightcolumn">
-            <{foreach item=block from=$xoBlocks.canvas_right}>
+            <{foreach item=block from=$xoBlocks.canvas_right|default:null}>
             <{include file="$theme_name/theme_blockright.tpl"}>
             <{/foreach}>
         </td>

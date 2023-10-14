@@ -17,10 +17,12 @@
  * @author              Taiwen Jiang <phppp@users.sourceforge.net>
  */
 
+use Xmf\Request;
+
 include __DIR__ . '/header.php';
 include_once $GLOBALS['xoops']->path('modules/system/constants.php');
 
-$uid = isset($_GET['uid']) ? (int)$_GET['uid'] : 0;
+$uid = Request::getInt('uid', 0, 'GET') ;
 if ($uid <= 0) {
     if (is_object($GLOBALS['xoopsUser'])) {
         $uid = $GLOBALS['xoopsUser']->getVar('uid');

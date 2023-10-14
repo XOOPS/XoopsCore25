@@ -25,7 +25,7 @@
  * @author           DuGris (aka L. JEN) <dugris@frxoops.org>
  **/
 
-require_once './include/common.inc.php';
+require_once __DIR__ . '/include/common.inc.php';
 defined('XOOPS_INSTALL') || die('XOOPS Installation wizard die');
 
 $pageHasForm = true;
@@ -67,7 +67,7 @@ if (@empty($vars['DB_HOST'])) {
 ob_start();
 ?>
 <?php if (!empty($error)) {
-    echo '<div class="alert alert-danger"><span class="fa fa-ban text-danger"></span> ' . htmlspecialchars($error, ENT_QUOTES | ENT_HTML5) . "</div>\n";
+    echo '<div class="alert alert-danger"><span class="fa fa-ban text-danger"></span> ' . htmlspecialchars($error, ENT_QUOTES) . "</div>\n";
 } ?>
     <div class="panel panel-info">
     <div class="panel-heading"><?php echo LEGEND_CONNECTION; ?></div>
@@ -90,4 +90,4 @@ ob_start();
 <?php
 $content = ob_get_contents();
 ob_end_clean();
-include './include/install_tpl.php';
+include __DIR__ . '/include/install_tpl.php';

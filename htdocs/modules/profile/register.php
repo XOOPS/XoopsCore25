@@ -18,6 +18,8 @@
  * @author              trabis <lusopoemas@gmail.com>
  */
 
+use Xmf\Request;
+
 include __DIR__ . '/header.php';
 
 if ($GLOBALS['xoopsUser']) {
@@ -55,8 +57,8 @@ if (isset($_SESSION[$opkey])) {
     $current_opname = 'op'; // does not matter, it isn't there
 }
 
-$op           = !isset($_POST[$current_opname]) ? 'register' : $_POST[$current_opname];
-$current_step = isset($_POST['step']) ? (int)$_POST['step'] : 0;
+$op           = !isset($_POST[$current_opname]) ? 'register' : Request::getString($current_opname, '', 'POST');
+$current_step = Request::getInt('step', 0, 'POST');
 
 // The newly introduced variable $_SESSION['profile_post'] is contaminated by $_POST, thus we use an old vaiable to hold uid parameter
 $uid = !empty($_SESSION['profile_register_uid']) ? (int)$_SESSION['profile_register_uid'] : 0;
@@ -133,7 +135,7 @@ $fieldnames[] = '_message_';
 $postfields = array();
 foreach ($fieldnames as $fieldname) {
     if (isset($_POST[$fieldname])) {
-        $postfields[$fieldname] = $_POST[$fieldname];
+        $postfields[$fieldname] = Request::getString($fieldname, '', 'POST');
     }
 }
 
@@ -174,12 +176,13 @@ if (isset($_POST['step']) && isset($_SESSION['profile_required'])) {
 
 // Check user data at first step
 if ($current_step == 1) {
-    $uname      = isset($_POST['uname']) ? $myts->stripSlashesGPC(trim($_POST['uname'])) : '';
-    $email      = isset($_POST['email']) ? $myts->stripSlashesGPC(trim($_POST['email'])) : '';
-    $url        = isset($_POST['url']) ? $myts->stripSlashesGPC(trim($_POST['url'])) : '';
-    $pass       = isset($_POST['pass']) ? $myts->stripSlashesGPC(trim($_POST['pass'])) : '';
-    $vpass      = isset($_POST['vpass']) ? $myts->stripSlashesGPC(trim($_POST['vpass'])) : '';
+    $uname      = Request::getString('uname', '', 'POST'); //isset($_POST['uname']) ? $myts->stripSlashesGPC(trim($_POST['uname'])) : '';
+    $email      = Request::getEmail('email', '', 'POST'); //isset($_POST['email']) ? $myts->stripSlashesGPC(trim($_POST['email'])) : '';
+    $url        = Request::getUrl('url', '', 'POST'); //isset($_POST['url']) ? $myts->stripSlashesGPC(trim($_POST['url'])) : '';
+    $pass       = Request::getString('pass', '', 'POST'); //isset($_POST['pass']) ? $myts->stripSlashesGPC(trim($_POST['pass'])) : '';
+    $vpass      = Request::getString('vpass', '', 'POST'); //isset($_POST['vpass']) ? $myts->stripSlashesGPC(trim($_POST['vpass'])) : '';
     $agree_disc = (isset($_POST['agree_disc']) && (int)$_POST['agree_disc']) ? 1 : 0;
+
 
     if ($GLOBALS['xoopsConfigUser']['reg_dispdsclmr'] != 0 && $GLOBALS['xoopsConfigUser']['reg_disclaimer'] !== '') {
         if (empty($agree_disc)) {
@@ -214,10 +217,10 @@ if ($current_step > 0 && empty($stop) && (!empty($steps[$current_step - 1]['step
 
         //Did you create a user already? If not, then let us set some extra info
         if ($isNew) {
-            $uname = isset($_POST['uname']) ? $myts->stripSlashesGPC(trim($_POST['uname'])) : '';
-            $email = isset($_POST['email']) ? $myts->stripSlashesGPC(trim($_POST['email'])) : '';
-            $url   = isset($_POST['url']) ? $myts->stripSlashesGPC(trim($_POST['url'])) : '';
-            $pass  = isset($_POST['pass']) ? $myts->stripSlashesGPC(trim($_POST['pass'])) : '';
+            $uname = Request::getString('uname', '', 'POST'); //isset($_POST['uname']) ? $myts->stripSlashesGPC(trim($_POST['uname'])) : '';
+            $email = Request::getEmail('email', '', 'POST'); //isset($_POST['email']) ? $myts->stripSlashesGPC(trim($_POST['email'])) : '';
+            $url   = Request::getUrl('url', '', 'POST'); //isset($_POST['url']) ? $myts->stripSlashesGPC(trim($_POST['url'])) : '';
+            $pass  = Request::getString('pass', '', 'POST'); //isset($_POST['pass']) ? $myts->stripSlashesGPC(trim($_POST['pass'])) : '';
             $newuser->setVar('uname', $uname);
             $newuser->setVar('email', $email);
             $newuser->setVar('pass', $pass ? password_hash($pass, PASSWORD_DEFAULT) : '');
@@ -273,7 +276,7 @@ if ($current_step > 0 && empty($stop) && (!empty($steps[$current_step - 1]['step
                             $xoopsMailer->assign('SITENAME', $GLOBALS['xoopsConfig']['sitename']);
                             $xoopsMailer->assign('ADMINMAIL', $GLOBALS['xoopsConfig']['adminmail']);
                             $xoopsMailer->assign('SITEURL', XOOPS_URL . '/');
-                            $xoopsMailer->assign('X_UPASS', $_POST['vpass']);
+                            $xoopsMailer->assign('X_UPASS', Request::getString('vpass', '', 'POST')); //i$_POST['vpass']);
                             $xoopsMailer->setToUsers($newuser);
                             $xoopsMailer->setFromEmail($GLOBALS['xoopsConfig']['adminmail']);
                             $xoopsMailer->setFromName($GLOBALS['xoopsConfig']['sitename']);
@@ -331,7 +334,7 @@ if (!empty($stop) || isset($steps[$current_step])) {
     if ($GLOBALS['xoopsConfigUser']['activation_type'] == 1 && !empty($_SESSION['profile_post']['pass'])) {
         $GLOBALS['xoopsTpl']->assign('finish_login', _PROFILE_MA_FINISH_LOGIN);
         $GLOBALS['xoopsTpl']->assign('finish_uname', $newuser->getVar('uname'));
-        $GLOBALS['xoopsTpl']->assign('finish_pass', htmlspecialchars($_SESSION['profile_post']['pass'], ENT_QUOTES | ENT_HTML5));
+        $GLOBALS['xoopsTpl']->assign('finish_pass', htmlspecialchars($_SESSION['profile_post']['pass'], ENT_QUOTES));
     }
     if (isset($_SESSION['profile_post']['_message_'])) {
         //todo, if user is activated by admin, then we should inform it along with error messages.  _US_YOURREGMAILNG is not enough

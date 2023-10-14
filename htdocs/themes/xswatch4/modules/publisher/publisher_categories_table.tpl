@@ -1,6 +1,6 @@
 <{assign var=temp value=0}>
 <div class="row">
-<{foreach item=category from=$categories}>
+<{foreach item=category from=$categories|default:null}>
     <div class="media col-12 col-md-6">
         <{if !empty($category.image_path)}>
         <{if $category.categoryurl|default:false}><a href="<{$category.categoryurl}>"><{/if}>
@@ -12,7 +12,7 @@
             <{$category.description}>
         <{if $category.subcats|default:false}>
         <br>
-        <{foreach item=subcat from=$category.subcats}>
+        <{foreach item=subcat from=$category.subcats|default:null}>
         <small><{$subcat.categorylink}> &nbsp;</small>
         <{/foreach}>
         <{/if}>

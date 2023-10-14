@@ -16,13 +16,13 @@
 
 $xoopsOption['checkadmin'] = true;
 $xoopsOption['hascommon']  = true;
-require_once './include/common.inc.php';
+require_once __DIR__ . '/include/common.inc.php';
 defined('XOOPS_INSTALL') || die('XOOPS Installation wizard die');
-if (!@include_once "../modules/system/language/{$wizard->language}/admin.php") {
-    include_once '../modules/system/language/english/admin.php';
+if (!@include_once __DIR__ . "/../modules/system/language/{$wizard->language}/admin.php") {
+    include_once __DIR__ . '/../modules/system/language/english/admin.php';
 }
-if (!@include_once "../modules/system/language/{$wizard->language}/admin/preferences.php") {
-    include_once '../modules/system/language/english/admin/preferences.php';
+if (!@include_once __DIR__ . "/../modules/system/language/{$wizard->language}/admin/preferences.php") {
+    include_once __DIR__ . '/../modules/system/language/english/admin/preferences.php';
 }
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
@@ -55,8 +55,8 @@ $criteria->add(new Criteria('conf_name', 'theme_set'));
 
 $tempConfig = $config_handler->getConfigs($criteria);
 $config = array_pop($tempConfig);
-include './include/createconfigform.php';
+include __DIR__ . '/include/createconfigform.php';
 $wizard->form = createThemeform($config);
 $content      = $wizard->CreateForm();
 
-include './include/install_tpl.php';
+include __DIR__ . '/include/install_tpl.php';

@@ -16,6 +16,8 @@
  * @author              Kazumi Ono (AKA onokazu) http://www.myweb.ne.jp/, http://jp.xoops.org/
  */
 
+use Xmf\Request;
+
 if (!defined('XOOPS_ROOT_PATH') || !is_object($xoopsModule)) {
     die('Restricted access');
 }
@@ -134,15 +136,15 @@ $cform->addElement(new XoopsFormHidden('com_mode', $com_mode));
 // add module specific extra params
 if ('system' !== $xoopsModule->getVar('dirname')) {
     $comment_config = $xoopsModule->getInfo('comments');
-    if (isset($comment_config['extraParams']) && is_array($comment_config['extraParams'])) {
+    if (isset($comment_config['extraParams']) && \is_array($comment_config['extraParams'])) {
         $myts = \MyTextSanitizer::getInstance();
         foreach ($comment_config['extraParams'] as $extra_param) {
             // This routine is included from forms accessed via both GET and POST
             $hidden_value = '';
             if (isset($_POST[$extra_param])) {
-                $hidden_value = $myts->stripSlashesGPC($_POST[$extra_param]);
+                $hidden_value = $myts->stripSlashesGPC(Request::getString($extra_param, '', 'POST'));
             } elseif (isset($_GET[$extra_param])) {
-                $hidden_value = $myts->stripSlashesGPC($_GET[$extra_param]);
+                $hidden_value = $myts->stripSlashesGPC(Request::getString($extra_param, '', 'GET'));
             }
             $cform->addElement(new XoopsFormHidden($extra_param, $hidden_value));
         }

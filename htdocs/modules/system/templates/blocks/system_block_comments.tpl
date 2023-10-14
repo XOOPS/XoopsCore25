@@ -1,5 +1,5 @@
 <table cellspacing="1" class="outer width100">
-    <{foreach item=comment from=$block.comments}>
+    <{foreach item=comment from=$block.comments|default:null}>
         <tr class="<{cycle values='even,odd'}>">
             <td class="txtcenter"><img src="<{$xoops_url}>/images/subject/<{$comment.icon}>" alt=""/></td>
             <td><{$comment.title}></td>

@@ -20,7 +20,7 @@
 <div class="container">
     <h4 class="pub_last_articles_full"><span class="fa fa-newspaper-o"></span>&nbsp;<{$lang_items_title}></h4>
     <div class="row mb-3">
-        <{foreach item=item from=$items}>
+        <{foreach item=item from=$items|default:null}>
         <div class="card col-12 col-md-6 mt-2">
             <{if $item.image_path}>
             <a href="<{$item.itemurl}>" title="<{$item.title}>">

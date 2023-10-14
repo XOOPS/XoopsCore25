@@ -30,7 +30,7 @@ include __DIR__ . '/mainfile.php';
 function clientlogin()
 {
     global $xoopsDB, $xoopsLogger, $xoopsConfig;
-    include 'header.php';
+    include __DIR__ . '/header.php';
     $GLOBALS['xoTheme']->addStylesheet(null, null, '
         #login_window  {
             max-width:                          480px;
@@ -165,7 +165,7 @@ function bannerstats()
         }
         echo "</table>
               <br><br>
-              <h4 class='content_title'>" . _BANNERS_FOW_IN . htmlspecialchars($xoopsConfig['sitename'], ENT_QUOTES | ENT_HTML5) . '</h4><hr />';
+              <h4 class='content_title'>" . _BANNERS_FOW_IN . htmlspecialchars($xoopsConfig['sitename'], ENT_QUOTES) . '</h4><hr />';
 
         $sql = 'SELECT bid, imageurl, clickurl, htmlbanner, htmlcode FROM ' . $xoopsDB->prefix('banner') . " WHERE cid={$cid}";
         $result = $xoopsDB->query($sql);

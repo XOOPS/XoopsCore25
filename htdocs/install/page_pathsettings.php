@@ -25,18 +25,20 @@
  * @author           DuGris (aka L. JEN) <dugris@frxoops.org>
  **/
 
-require_once './include/common.inc.php';
+use Xmf\Request;
+
+require_once __DIR__ . '/include/common.inc.php';
 defined('XOOPS_INSTALL') || die('XOOPS Installation wizard die');
 
-include_once './class/pathcontroller.php';
-include_once '../include/functions.php';
+include_once __DIR__ . '/class/pathcontroller.php';
+include_once __DIR__ . '/../include/functions.php';
 
 $pageHasForm = true;
 $pageHasHelp = true;
 
 $ctrl = new PathStuffController($wizard->configs['xoopsPathDefault'], $wizard->configs['dataPath']);
 
-if ($_SERVER['REQUEST_METHOD'] === 'GET' && @$_GET['var'] && @$_GET['action'] === 'checkpath') {
+if ($_SERVER['REQUEST_METHOD'] === 'GET' && @$_GET['var'] && @Request::getString('action', '', 'GET') === 'checkpath') {
     $path                   = $_GET['var'];
     $ctrl->xoopsPath[$path] = htmlspecialchars(trim($_GET['path']), ENT_QUOTES);
     echo genPathCheckHtml($path, $ctrl->checkPath($path));
@@ -154,4 +156,4 @@ ob_start();
 $content = ob_get_contents();
 ob_end_clean();
 
-include './include/install_tpl.php';
+include __DIR__ . '/include/install_tpl.php';

@@ -83,7 +83,7 @@
                 onchange="if(this.options[this.selectedIndex].value.length >0 )    { window.document.location=this.options[this.selectedIndex].value;}"
         >
             <option value=""><{$smarty.const._MD_NEWBB_VIEWMODE}></option>
-            <{foreach item=act from=$viewmode_options}>
+            <{foreach item=act from=$viewmode_options|default:null}>
             <option value="<{$act.link}>"><{$act.title}></option>
             <{/foreach}>
         </select>
@@ -98,7 +98,7 @@
 <br>
 <br>
 
-<{foreach item=post from=$posts}>
+<{foreach item=post from=$posts|default:null}>
 <{include file="db:newbb_thread.tpl" topic_post=$post}>
 <!-- irmtfan hardcode removed style="padding: 5px;float: right; text-align:right;" -->
 <div class="pagenav">
