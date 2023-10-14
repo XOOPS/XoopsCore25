@@ -403,15 +403,15 @@ function xoops_result($msg, $title = '')
  */
 function xoops_confirm($hiddens, $action, $msg, $submit = '', $addtoken = true)
 {
-	if (!isset($GLOBALS['xoTheme']) || !is_object($GLOBALS['xoTheme'])) {
-		include_once $GLOBALS['xoops']->path('/class/theme.php');
-		$GLOBALS['xoTheme'] = new \xos_opal_Theme();
-	}
-	require_once $GLOBALS['xoops']->path('/class/template.php');
-	$confirmTpl = new \XoopsTpl();
-	$confirmTpl->assign('msg', $msg);
-	$confirmTpl->assign('action', $action);
-	$tempHiddens = '';
+    if (!isset($GLOBALS['xoTheme']) || !is_object($GLOBALS['xoTheme'])) {
+        include_once $GLOBALS['xoops']->path('/class/theme.php');
+        $GLOBALS['xoTheme'] = new \xos_opal_Theme();
+    }
+    require_once $GLOBALS['xoops']->path('/class/template.php');
+    $confirmTpl = new \XoopsTpl();
+    $confirmTpl->assign('msg', $msg);
+    $confirmTpl->assign('action', $action);
+    $tempHiddens = '';
     foreach ($hiddens as $name => $value) {
         if (is_array($value)) {
             foreach ($value as $caption => $newvalue) {
@@ -422,11 +422,11 @@ function xoops_confirm($hiddens, $action, $msg, $submit = '', $addtoken = true)
             $tempHiddens .= '<input type="hidden" name="' . $name . '" value="' . htmlspecialchars($value, ENT_QUOTES) . '" />';
         }
     }
-	$confirmTpl->assign('hiddens', $tempHiddens);
-	$confirmTpl->assign('addtoken', $addtoken);
-	if ($addtoken != false) {
-		$confirmTpl->assign('token', $GLOBALS['xoopsSecurity']->getTokenHTML());
-	}
+    $confirmTpl->assign('hiddens', $tempHiddens);
+    $confirmTpl->assign('addtoken', $addtoken);
+    if ($addtoken != false) {
+        $confirmTpl->assign('token', $GLOBALS['xoopsSecurity']->getTokenHTML());
+    }
     $submit = ($submit != '') ? trim($submit) : _SUBMIT;
 	$confirmTpl->assign('submit', $submit);
 	$html = $confirmTpl->fetch("db:system_confirm.tpl");
