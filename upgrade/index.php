@@ -79,7 +79,7 @@ $GLOBALS['upgradeControl'] = new UpgradeControl();
 if (file_exists(__DIR__ . "../language/{$upgradeControl->upgradeLanguage}/user.php")) {
     include_once __DIR__ . "../language/{$upgradeControl->upgradeLanguage}/user.php";
 } else {
-    include_once __DIR__ . '/../language/english/user.php';
+    include_once XOOPS_ROOT_PATH . '/language/english/user.php';
 }
 
 if (file_exists(__DIR__ . "/language/{$upgradeControl->upgradeLanguage}/smarty3.php")) {

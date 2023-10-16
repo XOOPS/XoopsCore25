@@ -64,14 +64,13 @@ class Smarty3TemplateRepair extends ScannerProcess
         $this->patterns[] = '/(<{foreachq[[:space:]]+)/';
         $this->replacements[] = '<{foreach ';
 
-        $this->patterns[] = '/("<{[a-zA-Z0-9_\-]+)\s+([a-zA-Z\/\.][\/\.a-zA-Z0-9]*)\s?}>/';
+// For double quotes
+        $this->patterns[] = '/("<{xo[a-zA-Z\d]*\b[^}>]*?)\s*([^\'"}=]+(?:=[^\'"}=]*)*)\s?}>/';
         $this->replacements[] = "$1 '$2'}>";
 
-        $this->patterns[] = "/('<{[a-zA-Z0-9_\-]+)\s+([a-zA-Z\/\.][\/\.a-zA-Z0-9]*)\s?}>/";
+// For single quotes
+        $this->patterns[] = "/(\'<{xo[a-zA-Z\d]*\b[^}>]*?)\s*([^\'\"=]+(?:=[^\'\"=]*)*)\s?}>/";
         $this->replacements[] = '$1 "$2"}>';
-
-        $this->patterns[] = '/(<{[a-zA-Z0-9_\-]+)\s+([a-zA-Z\/\.][\/\.a-zA-Z0-9]*)\s?}>/';
-        $this->replacements[] = "$1 '$2'}>";
     }
 
     /**
