@@ -91,7 +91,7 @@ if (isset($_GET['imgcat_id'])) {
 if (isset($imgcat_id)) {
     $imgcat_id = (int)$imgcat_id;
 }
-$target = htmlspecialchars($target);
+$target = htmlspecialchars($target, ENT_QUOTES);
 
 if ($isadmin || ($catreadcount > 0) || ($catwritecount > 0)) {
 

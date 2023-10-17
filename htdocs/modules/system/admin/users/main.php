@@ -93,9 +93,9 @@ switch ($op) {
             $xoBreadCrumb->addLink(_AM_SYSTEM_USERS_NAV_DELETE_USER);
             $xoBreadCrumb->render();
             xoops_confirm(array(
-                              'ok'  => 1,
-                              'uid' => $uid,
-                              'op'  => 'users_delete'), $_SERVER['REQUEST_URI'], sprintf(_AM_SYSTEM_USERS_FORM_SURE_DEL, $user->getVar('uname')));
+                'ok'  => 1,
+                'uid' => $uid,
+                'op'  => 'users_delete'), $_SERVER['REQUEST_URI'], sprintf(_AM_SYSTEM_USERS_FORM_SURE_DEL, $user->getVar('uname')));
         }
         break;
 
@@ -108,7 +108,7 @@ switch ($op) {
         if (Request::hasVar('memberslist_id')) {
             $xoBreadCrumb->render();
             $error = '';
-            foreach (Request::getArray('memberslist_id', array()) as $del)
+            foreach (Request::getArray('memberslist_id', array()) as $del) {
                 $del    = (int)$del;
                 $user   = $member_handler->getUser($del);
                 $groups = $user->getGroups();
@@ -206,6 +206,8 @@ switch ($op) {
                         global $xoopsUser;
                         $oldgroups = $edituser->getGroups();
                         //If the edited user is the current user and the current user WAS in the webmaster's group and is NOT in the new groups array
+                        if ($edituser->getVar('uid') == $xoopsUser->getVar('uid') && in_array(XOOPS_GROUP_ADMIN, $oldgroups) && !in_array(XOOPS_GROUP_ADMIN, $_REQUEST['groups'])) {
+                            //Add the webmaster's group to the groups array to prevent accidentally removing oneself from the webmaster's group
                         $groups[] = XOOPS_GROUP_ADMIN;
                         $_REQUEST['groups'] = $groups;  // Update the global variable
                         }
@@ -321,7 +323,7 @@ switch ($op) {
     case 'users_synchronize':
         if (Request::hasVar('status') && Request::getString('status') == 1) {
             synchronize($uid, 'user');
-        } elseif (isset($_REQUEST['status']) && $_REQUEST['status'] == 2) {
+        } elseif (Request::hasVar('status') && Request::getString('status')== 2) {
             synchronize('', 'all users');
         }
         redirect_header('admin.php?fct=users', 1, _AM_SYSTEM_DBUPDATED);
@@ -407,21 +409,21 @@ switch ($op) {
             $posts_less   = new XoopsFormText(_AM_SYSTEM_USERS_POSTSLESS, 'user_posts_less', 10, 5);
             $mailok_radio = new XoopsFormRadio(_AM_SYSTEM_USERS_SHOWMAILOK, 'user_mailok', 'both');
             $mailok_radio->addOptionArray(array(
-                                              'mailok' => _AM_SYSTEM_USERS_MAILOK,
-                                              'mailng' => _AM_SYSTEM_USERS_MAILNG,
-                                              'both' => _AM_SYSTEM_USERS_BOTH));
+                'mailok' => _AM_SYSTEM_USERS_MAILOK,
+                'mailng' => _AM_SYSTEM_USERS_MAILNG,
+                'both' => _AM_SYSTEM_USERS_BOTH));
             $type_radio = new XoopsFormRadio(_AM_SYSTEM_USERS_SHOWTYPE, 'user_type', 'actv');
             $type_radio->addOptionArray(array(
-                                            'actv' => _AM_SYSTEM_USERS_ACTIVE,
-                                            'inactv' => _AM_SYSTEM_USERS_INACTIVE,
-                                            'both' => _AM_SYSTEM_USERS_BOTH));
+                'actv' => _AM_SYSTEM_USERS_ACTIVE,
+                'inactv' => _AM_SYSTEM_USERS_INACTIVE,
+                'both' => _AM_SYSTEM_USERS_BOTH));
             $sort_select = new XoopsFormSelect(_AM_SYSTEM_USERS_SORT, 'user_sort');
             $sort_select->addOptionArray(array(
-                                             'uname' => _AM_SYSTEM_USERS_UNAME,
-                                             'email' => _AM_SYSTEM_USERS_EMAIL,
-                                             'last_login' => _AM_SYSTEM_USERS_LASTLOGIN,
-                                             'user_regdate' => _AM_SYSTEM_USERS_REGDATE,
-                                             'posts' => _AM_SYSTEM_USERS_POSTS));
+                'uname' => _AM_SYSTEM_USERS_UNAME,
+                'email' => _AM_SYSTEM_USERS_EMAIL,
+                'last_login' => _AM_SYSTEM_USERS_LASTLOGIN,
+                'user_regdate' => _AM_SYSTEM_USERS_REGDATE,
+                'posts' => _AM_SYSTEM_USERS_POSTS));
             $order_select = new XoopsFormSelect(_AM_SYSTEM_USERS_ORDER, 'user_order');
             $order_select->addOptionArray(array('ASC' => _AM_SYSTEM_USERS_ASC, 'DESC' => _AM_SYSTEM_USERS_DESC));
             $limit_text    = new XoopsFormText(_AM_SYSTEM_USERS_LIMIT, 'user_limit', 6, 2, 20);
@@ -474,7 +476,7 @@ switch ($op) {
             $user_uname = Request::getString('user_uname');
             $user_uname_match = Request::getInt('user_uname_match', 0);
 
-                       $criteria = new CriteriaCompo();
+            $criteria = new CriteriaCompo();
             if (!empty($user_uname)) {
                 $match = (!empty($user_uname_match)) ? $user_uname_match: XOOPS_MATCH_START;
                 switch ($match) {
@@ -802,7 +804,7 @@ switch ($op) {
             $xoopsTpl->assign('users_count', $users_count);
             $xoopsTpl->assign('users_display', true);
 
-             //User limit
+            //User limit
             $user_limit = Request::getInt('user_limit',  20);
             //User type
             $user_type = Request::getString('user_type');

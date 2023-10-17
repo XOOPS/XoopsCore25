@@ -76,7 +76,7 @@ switch ($op) {
                         $file_no_valid = array('.svn', 'icons', 'img', 'images', 'language');
 
                         if (!in_array($file, $file_no_valid)) {
-                            echo "<li class=\"directory collapsed\"><a href=\"#\" rel=\"" . htmlentities($_REQUEST['dir'] . $file) . "/\">" . htmlentities($file) . '</a></li>';
+                            echo "<li class=\"directory collapsed\"><a href=\"#\" rel=\"" . htmlentities($_REQUEST['dir'] . $file, ENT_QUOTES) . "/\">" . htmlentities($file, ENT_QUOTES) . '</a></li>';
                         }
                     }
                 }
@@ -89,7 +89,7 @@ switch ($op) {
                         $extension_verif = strrchr($file, '.');
 
                         if (in_array($extension_verif, $extensions)) {
-                            echo "<li class=\"file ext_$ext\"><a href=\"#\" onclick=\"tpls_edit_file('" . htmlentities($_REQUEST['dir'] . $file) . "', '" . htmlentities($_REQUEST['dir']) . "', '" . htmlentities($file) . "', '" . $ext . "');\" rel=\"tpls_edit_file('" . htmlentities($_REQUEST['dir'] . $file) . "', '" . htmlentities($_REQUEST['dir']) . "', '" . htmlentities($file) . "', '" . $ext . "');\">" . htmlentities($file) . '</a></li>';
+                            echo "<li class=\"file ext_$ext\"><a href=\"#\" onclick=\"tpls_edit_file('" . htmlentities($_REQUEST['dir'] . $file, ENT_QUOTES) . "', '" . htmlentities($_REQUEST['dir'], ENT_QUOTES) . "', '" . htmlentities($file, ENT_QUOTES) . "', '" . $ext . "');\" rel=\"tpls_edit_file('" . htmlentities($_REQUEST['dir'] . $file, ENT_QUOTES) . "', '" . htmlentities($_REQUEST['dir'], ENT_QUOTES) . "', '" . htmlentities($file, ENT_QUOTES) . "', '" . $ext . "');\">" . htmlentities($file, ENT_QUOTES) . '</a></li>';
                         } else {
                             //echo "<li class=\"file ext_$ext\">" . htmlentities($file) . "</li>";
                         }
