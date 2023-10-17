@@ -108,10 +108,23 @@ if (!function_exists('protector_oninstall_base')) {
                         if (!xoops_template_touch($tplid)) {
                             $ret[] = '<span style="color:#ff0000;">ERROR: Failed compiling template <b>' . htmlspecialchars($mydirname . '_' . $file) . '</b>.</span><br>';
                         } else {
-                            $ret[] = 'Template <b>' . htmlspecialchars($mydirname . '_' . $file) . '</b> compiled.</span><br>';
+                            $tplid = $tplfile->getVar('tpl_id');
+                            $ret[] = 'Template <b>' . htmlspecialchars($mydirname . '_' . $file) . '</b> added to the database. (ID: <b>' . $tplid . '</b>)<br>';
+                            // generate compiled file
+                            include_once XOOPS_ROOT_PATH . '/class/xoopsblock.php';
+                            include_once XOOPS_ROOT_PATH . '/class/template.php';
+                            if (!xoops_template_touch($tplid)) {
+                                $ret[] = '<span style="color:#ff0000;">ERROR: Failed compiling template <b>' . htmlspecialchars($mydirname . '_' . $file) . '</b>.</span><br>';
+                            } else {
+                                $ret[] = 'Template <b>' . htmlspecialchars($mydirname . '_' . $file) . '</b> compiled.</span><br>';
+                            }
                         }
                     }
                 }
+                closedir($handler);
+            } else {
+                // Handle the error condition when opendir fails
+                $ret[] = '<span style="color:#ff0000;">ERROR: Could not open the directory:  <b>' . htmlspecialchars($tpl_path) . '</b>.</span><br>';
             }
             closedir($handler);
             } else {

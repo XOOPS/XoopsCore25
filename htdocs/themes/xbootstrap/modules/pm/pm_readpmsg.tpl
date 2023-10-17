@@ -56,7 +56,7 @@
             <div class="col-xs-4 col-md-4">
             </div>
             <div class="col-xs-8 col-md-8">
-                <{foreach item=element from=$pmform.elements}>
+                <{foreach item=element from=$pmform.elements|default:null}>
                 <{$element.body}>
                 <{/foreach}>
                 <br>

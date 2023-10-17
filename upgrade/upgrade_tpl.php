@@ -27,12 +27,6 @@ global $upgradeControl;
     <!-- Custom Fonts -->
     <link href="../media/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
 
-    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
-    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
-    <!--[if lt IE 9]>
-    <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
-    <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
-    <![endif]-->
     <?php
     if (!empty($extraSources)) {
         echo $extraSources;
@@ -118,6 +112,26 @@ global $upgradeControl;
 
         <div class="container-fluid">
             <div class="row">
+                <?php if (!isset($_SESSION['preflight']) ||  $_SESSION['preflight'] != 'complete') { ?>
+                <div class="col-lg-3 col-md-6">
+                    <div class="panel panel-red">
+                        <div class="panel-heading">
+                            <div class="row">
+                                <div class="col-xs-3">
+                                    <span class="fa fa fa-hand-paper-o fa-5x"></span>
+                                </div>
+                                <div class="col-xs-9 text-right">
+                                    <div class="huge">Smarty3</div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="panel-footer text-primary">
+                            <?php echo _XOOPS_SMARTY3_MIGRATION; ?>
+                            <div class="clearfix"></div>
+                        </div>
+                    </div>
+                </div>
+                <?php } ?>
                 <?php if (!empty($error)) { ?>
                 <div class="col-lg-3 col-md-6">
                     <div class="panel panel-red">
@@ -137,8 +151,8 @@ global $upgradeControl;
                             <div class="clearfix"></div>
                         </div>
                     </div>
-                    <?php } ?>
                 </div>
+                <?php } ?>
                 <div class="col-lg-3 col-md-6">
                     <div class="panel panel-primary">
                         <div class="panel-heading">

@@ -412,7 +412,7 @@ class XoopsForm
      */
     public function setElementValues($values)
     {
-        if (is_array($values) && !empty($values)) {
+        if (!empty($values) && \is_array($values)) {
             // will not use getElementByName() for performance..
             $elements = &$this->getElements(true);
             $count    = count($elements);

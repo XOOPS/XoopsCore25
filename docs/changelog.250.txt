@@ -1,6 +1,28 @@
 XOOPS 2.5.x Changelog (Language changes: see: /docs/lang_diff.txt)
 
 ===================================
+2.5.11-RC3               NOT RELEASED
+===================================
+- Fix uncaught exception during upgrade login
+- Add core language/*/user.php for login
+- Update system_siteclosed.tpl
+- missing quotes
+- fix for {$wizard->language}/english/global.php"
+- Adjust sanitization on exception
+- Replace smarty/xoops_plugins with smarty3_plugins
+- fix smarty 3
+- Incorrect language checking in install tablesfill step
+
+Updated libraries and assets:
+- jQuery to 3.7.1 (mamba)
+
+===================================
+2.5.11-RC2               2023/05/02
+===================================
+- Security fixes
+- XOOPS uses Smarty 3 natively, but provides Smarty 2 backward compatility layer for modules
+
+===================================
 2.5.11-RC1               2023/04/02
 ===================================
 - Update to Smarty v3.1.48

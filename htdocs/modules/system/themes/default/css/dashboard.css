@@ -20,8 +20,6 @@
     background-color: #F7F7F7;
     border: 2px solid #ccc;
     padding: 8px;
-    -moz-border-radius: 6px;
-    -webkit-border-radius: 6px;
     border-radius: 6px;
     margin: 20px !important;
 }

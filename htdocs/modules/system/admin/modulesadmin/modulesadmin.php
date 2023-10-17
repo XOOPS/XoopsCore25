@@ -402,7 +402,7 @@ function xoops_module_install($dirname)
                         $confobj->setConfValueForInput($config['default'], true);
                         $confobj->setVar('conf_order', $order);
                         $confop_msgs = '';
-                        if (isset($config['options']) && is_array($config['options'])) {
+                        if (isset($config['options']) && \is_array($config['options'])) {
                             foreach ($config['options'] as $key => $value) {
                                 $confop = $config_handler->createConfigOption();
                                 $confop->setVar('confop_name', $key, true);
@@ -701,7 +701,7 @@ function xoops_module_uninstall($dirname)
 
             // delete tables used by this module
             $modtables = $module->getInfo('tables');
-            if ($modtables !== false && is_array($modtables)) {
+            if ($modtables !== false && \is_array($modtables)) {
                 $msgs[] = _AM_SYSTEM_MODULES_DELETE_MOD_TABLES;
                 foreach ($modtables as $table) {
                     // prevent deletion of reserved core tables!
@@ -1255,7 +1255,7 @@ function xoops_module_update($dirname)
                     }
                     $confobj->setVar('conf_order', $order);
                     $confop_msgs = '';
-                    if (isset($config['options']) && is_array($config['options'])) {
+                    if (isset($config['options']) && \is_array($config['options'])) {
                         foreach ($config['options'] as $key => $value) {
                             $confop = $config_handler->createConfigOption();
                             $confop->setVar('confop_name', $key, true);

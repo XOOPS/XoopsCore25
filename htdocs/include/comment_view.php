@@ -20,6 +20,8 @@
 
 use Xmf\Request;
 
+use Xmf\Request;
+
 if (!defined('XOOPS_ROOT_PATH') || !is_object($xoopsModule)) {
     die('Restricted access');
 }

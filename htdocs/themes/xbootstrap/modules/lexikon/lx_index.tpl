@@ -47,7 +47,7 @@
 
     <ul class="pagination pagination-sm">
       <li><a href="<{$xoops_url}>/modules/<{$lang_moduledirname}>/letter.php" title="[ <{$publishedwords}> ]"><{$smarty.const._MD_LEXIKON_ALL}></a></li>
-      <{foreach item=letterlinks from=$alpha.initial}>
+      <{foreach item=letterlinks from=$alpha.initial|default:null}>
           <{if $letterlinks.total > 0}>
             <li><a href="<{$xoops_url}>/modules/<{$lang_moduledirname}>/letter.php?init=<{$letterlinks.id}>" title="[ <{$letterlinks.total}> ]" >
               <{$letterlinks.linktext}>
@@ -89,7 +89,7 @@
                       [<{$publishedwords}>]
                    </td>
                    <!-- Start category loop -->
-                   <{foreach item=catlinks from=$block0.categories}>
+                   <{foreach item=catlinks from=$block0.categories|default:null}>
                    <td>
                     <{if $catlinks.image != "" && $show_screenshot == true}>
                         <a href="<{$xoops_url}>/modules/<{$lang_moduledirname}>/category.php?categoryID=<{$catlinks.id}>" target="_parent">
@@ -130,7 +130,7 @@
           <tbody>
               <tr>
                    <!-- Start category loop -->
-                   <{foreach item=catlinks from=$block0.categories}>
+                   <{foreach item=catlinks from=$block0.categories|default:null}>
                    <td>
                     <{if $catlinks.image != "" && $show_screenshot == true}>
                         <a href="<{$xoops_url}>/modules/<{$lang_moduledirname}>/category.php?categoryID=<{$catlinks.id}>" target="_parent">

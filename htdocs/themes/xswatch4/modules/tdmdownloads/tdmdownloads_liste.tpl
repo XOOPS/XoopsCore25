@@ -15,7 +15,7 @@
             <th scope="col"><{$smarty.const._MD_TDMDOWNLOADS_SEARCH_TITLE}></th>
             <th scope="col" class="d-none d-lg-table-cell"> </th>
             <th scope="col"><{$smarty.const._MD_TDMDOWNLOADS_SEARCH_CATEGORIES}></th>
-            <{foreach item=fielditem from=$field}>
+            <{foreach item=fielditem from=$field|default:null}>
                 <th scope="col" class="d-none d-lg-table-cell"><{$fielditem}></th>
             <{/foreach}>
             <th scope="col" class="d-none d-sm-table-cell"><{$smarty.const._MD_TDMDOWNLOADS_SEARCH_DATE}></th>
@@ -25,7 +25,7 @@
         </tr>
         </thead>
         <tbody>
-        <{foreach item=download from=$search_list}>
+        <{foreach item=download from=$search_list|default:null}>
             <tr>
                 <td>
                     <a href="<{$xoops_url}>/modules/tdmdownloads/singlefile.php?cid=<{$download.cid}>&amp;lid=<{$download.lid}>" title="<{$download.title}>"><{$download.title}></a>
@@ -36,7 +36,7 @@
                 <td>
                     <a href="<{$xoops_url}>/modules/tdmdownloads/viewcat.php?cid=<{$download.cid}>" target="_blank" title="<{$download.cat}>"><{$download.cat}></a>
                 </td>
-                <{foreach item=fielddata from=$download.fielddata}>
+                <{foreach item=fielddata from=$download.fielddata|default:null}>
                     <td class="d-none d-lg-table-cell"><{$fielddata}></td>
                 <{/foreach}>
                 <td class="d-none d-sm-table-cell"><{$download.date}></td>

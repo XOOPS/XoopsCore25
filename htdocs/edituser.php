@@ -263,7 +263,7 @@ if ($op === 'avatarupload') {
     }
     $xoops_upload_file = array();
     $uid               = 0;
-    if (!empty($_POST['xoops_upload_file']) && is_array($_POST['xoops_upload_file'])) {
+    if (!empty($_POST['xoops_upload_file']) && \is_array($_POST['xoops_upload_file'])) {
         $xoops_upload_file = $_POST['xoops_upload_file'];
     }
     if (!empty($_POST['uid'])) {
@@ -328,6 +328,7 @@ if ($op === 'avatarchoose') {
         redirect_header('index.php', 3, _US_NOEDITRIGHT);
     }
     $user_avatar = '';
+    /** @var \XoopsAvatarHandler $avt_handler */
     $avt_handler = xoops_getHandler('avatar');
     if (!empty($_POST['user_avatar'])) {
         $user_avatar     = $myts->addSlashes(trim($_POST['user_avatar']));

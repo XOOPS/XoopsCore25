@@ -61,7 +61,7 @@ if ('system' === $xoopsModule->getVar('dirname')) {
     $com_modid             = $xoopsModule->getVar('mid');
     $redirect_page         = $comment_config['pageName'] . '?';
     $comment_confirm_extra = array();
-    if (isset($comment_config['extraParams']) && is_array($comment_config['extraParams'])) {
+    if (isset($comment_config['extraParams']) && \is_array($comment_config['extraParams'])) {
         foreach ($comment_config['extraParams'] as $extra_param) {
             if (isset(${$extra_param})) {
                 $redirect_page .= $extra_param . '=' . ${$extra_param} . '&amp;';
@@ -277,7 +277,7 @@ switch ($op) {
             'op'        => array(
                 _CM_DELETEONE => 'delete_one',
                 _CM_DELETEALL => 'delete_all'));
-        if (!empty($comment_confirm_extra) && is_array($comment_confirm_extra)) {
+        if (!empty($comment_confirm_extra) && \is_array($comment_confirm_extra)) {
             $comment_confirm += $comment_confirm_extra;
         }
         xoops_confirm($comment_confirm, 'comment_delete.php', _CM_DELETESELECT);

@@ -3,7 +3,7 @@
 <{if $steps|@count > 1 AND $current_step >= 0}>
     <div class='register-steps'>
         <span class='caption'><{$lang_register_steps}></span>
-        <{foreach item=step from=$steps key=stepno name=steploop}>
+        <{foreach item=step from=$steps|default:null key=stepno name=steploop}>
             <{if $stepno == $current_step}>
                 <span class='item current'><{$step.step_name}></span>
             <{else}>
@@ -23,7 +23,7 @@
 <{/if}>
 
 <{if $confirm}>
-    <{foreach item=msg from=$confirm}>
+    <{foreach item=msg from=$confirm|default:null}>
         <div class="alert alert-info" role="alert">
 			<{$msg}>
 		</div>

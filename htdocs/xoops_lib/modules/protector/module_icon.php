@@ -1,4 +1,8 @@
 <?php
+
+use Xmf\Request;
+
+
 // start hack by Trabis
 if (!class_exists('ProtectorRegistry')) {
     exit('Registry not found');
@@ -22,7 +26,7 @@ header('Content-type: image/png');
 // file name
 $file_base = 'module_icon';
 if (!empty($_GET['file'])) {
-    $file_base = preg_replace('/[^0-9a-z_]/', '', $_GET['file']);
+    $file_base = preg_replace('/[^0-9a-z_]/', '', Request::getString('file', '', 'GET'));
 }
 
 $draw_dirname = true;

@@ -38,7 +38,7 @@
                     <td><{$smarty.const._MD_LEXIKON_WWW}></td>
                 <{/if}>
             </tr>
-            <{foreach item=author from=$authors}>
+            <{foreach item=author from=$authors|default:null}>
                 <tr class="<{cycle values="even,odd"}>">
                     <td align="center"><{$author.id}></td>
                     <{if $authorlistext}>

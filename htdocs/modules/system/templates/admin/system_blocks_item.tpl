@@ -1,4 +1,4 @@
-<{foreach item=item from=$blocks}>
+<{foreach item=item from=$blocks|default:null}>
     <{if $item.side == $side}>
         <div id="blk_<{$item.bid}>" bid="<{$item.bid}>" side="<{$item.side}>" order="<{$item.weight}>"
              class="xo-block ui-widget ui-widget-content ui-corner-all">

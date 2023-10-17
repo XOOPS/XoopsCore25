@@ -9,7 +9,7 @@
 
 <div class="pad5">
     <table style="width:100%;" cellspacing="1" class="outer">
-        <{foreach item=online from=$onlineUserInfo}>
+        <{foreach item=online from=$onlineUserInfo|default:null}>
             <tr>
                 <td align="center"><img src="<{$upload_url}><{$online.avatar}>" alt="<{$lang_avatar}>" /><br><br></td>
                 <td align="center">

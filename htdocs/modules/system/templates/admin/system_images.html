@@ -89,7 +89,7 @@
 <{if $images|default:false}>
     <!-- Image list -->
     <div id="xo-category-add" class="">
-        <{foreach item=img from=$images}>
+        <{foreach item=img from=$images|default:null}>
             <div class="floatleft">
                 <div class="ui-corner-all xo-thumb txtcenter">
                     <div class="xo-thumbimg">
@@ -148,7 +148,7 @@
             <tr>
                 <th colspan="2"><{$image_form.title}></th>
             </tr>
-            <{foreach item=element from=$image_form.elements}>
+            <{foreach item=element from=$image_form.elements|default:null}>
                 <{if $element.hidden|default:false != true && $element.body != ''}>
                     <tr>
                         <td class="odd aligntop">
@@ -176,7 +176,7 @@
             <tr>
                 <th colspan="2"><{$imagecat_form.title}></th>
             </tr>
-            <{foreach item=element from=$imagecat_form.elements}>
+            <{foreach item=element from=$imagecat_form.elements|default:null}>
                 <{if $element.hidden|default:false != true && $element.body != ''}>
                     <tr>
                         <td class="odd aligntop">
@@ -274,7 +274,7 @@
                 <tr>
                     <th colspan="2"><{$edit_form.title}></th>
                 </tr>
-                <{foreach item=element from=$edit_form.elements}>
+                <{foreach item=element from=$edit_form.elements|default:null}>
                     <{if $element.hidden|default:false != true && $element.body != ''}>
                         <tr>
                             <td class="odd aligntop">

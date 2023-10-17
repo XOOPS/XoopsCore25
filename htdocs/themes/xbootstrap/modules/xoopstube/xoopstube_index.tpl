@@ -27,7 +27,7 @@
     <{if count($categories) gt 0}>
         <h1 class="xoops-default-title"><{$smarty.const._MD_XOOPSTUBE_MAINLISTING}></h1>
         <div class="row">
-            <{foreach item=category from=$categories}>
+            <{foreach item=category from=$categories|default:null}>
                 <div class="col-sm-4 col-md-4 category-titles">
                     <a href="<{$xoops_url}>/modules/<{$module_dir}>/viewcat.php?cid=<{$category.id}>" title="<{$category.title}>"
                        class="btn btn-primary btn-block">

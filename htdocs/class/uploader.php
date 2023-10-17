@@ -233,7 +233,7 @@ class XoopsMediaUploader
             $index           = (int)$index;
             $this->mediaName = @get_magic_quotes_gpc() ? stripslashes($_FILES[$media_name]['name'][$index]) : $_FILES[$media_name]['name'][$index];
             if ($this->randomFilename) {
-                $unique          = uniqid();
+                $unique          = uniqid('', true);
                 $this->targetFileName = '' . $unique . '--' . $this->mediaName;
             }
             $this->mediaType    = $_FILES[$media_name]['type'][$index];
@@ -248,7 +248,7 @@ class XoopsMediaUploader
             $media_name      =& $_FILES[$media_name];
             $this->mediaName = @get_magic_quotes_gpc() ? stripslashes($media_name['name']) : $media_name['name'];
             if ($this->randomFilename) {
-                $unique          = uniqid();
+                $unique          = uniqid('', true);
                 $this->targetFileName = '' . $unique . '--' . $this->mediaName;
             }
             $this->mediaType    = $media_name['type'];
@@ -464,7 +464,7 @@ class XoopsMediaUploader
         if (isset($this->targetFileName)) {
             $this->savedFileName = $this->targetFileName;
         } elseif (isset($this->prefix)) {
-            $this->savedFileName = uniqid($this->prefix) . '.' . strtolower($matched[1]);
+            $this->savedFileName = uniqid($this->prefix, true) . '.' . strtolower($matched[1]);
         } else {
             $this->savedFileName = strtolower($this->mediaName);
         }
@@ -624,7 +624,7 @@ class XoopsMediaUploader
         $patterns = array();
         $replaces = array();
         foreach ($this->extensionsToBeSanitized as $ext) {
-            $patterns[] = "/\." . preg_quote($ext) . "\./i";
+            $patterns[] = "/\." . preg_quote($ext, '/') . "\./i";
             $replaces[] = '_' . $ext . '.';
         }
         $this->mediaName = preg_replace($patterns, $replaces, $this->mediaName);

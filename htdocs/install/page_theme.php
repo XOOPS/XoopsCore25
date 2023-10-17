@@ -55,7 +55,7 @@ $criteria->add(new Criteria('conf_name', 'theme_set'));
 
 $tempConfig = $config_handler->getConfigs($criteria);
 $config = array_pop($tempConfig);
-include __DIR__ . '/includecreateconfigform.php';
+include __DIR__ . '/include/createconfigform.php';
 $wizard->form = createThemeform($config);
 $content      = $wizard->CreateForm();
 

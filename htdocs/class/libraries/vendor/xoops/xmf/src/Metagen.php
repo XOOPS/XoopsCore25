@@ -59,7 +59,7 @@ class Metagen
      */
     public static function assignKeywords($keywords)
     {
-        if (!empty($keywords) && is_array($keywords)) {
+        if (!empty($keywords) && \is_array($keywords)) {
             $keyword_tag = implode(', ', $keywords);
             static::assignThemeMeta('keywords', $keyword_tag);
         }

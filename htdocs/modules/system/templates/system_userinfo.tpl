@@ -163,7 +163,7 @@
     <br class="clear"/>
     <h4><{$module.name}></h4>
     <!-- start results item loop -->
-    <{foreach item=result from=$module.results}>
+    <{foreach item=result from=$module.results|default:null}>
         <img src="<{$result.image}>" alt="<{$module.name}>"/>
         <strong><a href="<{$result.link}>" title="<{$result.title}>"><{$result.title}></a></strong>
         <br>

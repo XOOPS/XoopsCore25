@@ -35,7 +35,7 @@
 
                             <{if $topic_post.poster.groups}>
                                 <li><{$smarty.const._MD_NEWBB_GROUP}>
-                                <{foreach item=group from=$topic_post.poster.groups}>
+                                <{foreach item=group from=$topic_post.poster.groups|default:null}>
                                 <{$group}>
                                 <{/foreach}></li>
                             <{/if}>
@@ -50,7 +50,7 @@
                                 0
                             <{/if}>
                             </li>
-                                <{if isset($topic_post.poster.digests) && is_array($topic_post.poster.digests) && $topic_post.poster.digests gt 0}>
+                                <{if isset($topic_post.poster.digests) && \is_array($topic_post.poster.digests) && $topic_post.poster.digests gt 0}>
                             <li>
                                 <{$smarty.const._MD_NEWBB_DIGESTS}>: <{$topic_post.poster.digests}>
                             </li>
@@ -60,7 +60,7 @@
                                 <li><{$topic_post.poster.level}></li>
                             <{/if}>
 
-                            <{if $topic_post.poster.status}>
+                            <{if !empty($topic_post.poster.status)}>
                                 <li><{$topic_post.poster.status}></li>
                             <{/if}>
                         </ul>
@@ -124,7 +124,7 @@
 <div class="row clearfix newbb-links mb10">
     <div class="col-3 mr-auto d-none d-sm-block">
     <{if $topic_post.thread_action}>
-        <{foreach item=btn from=$topic_post.thread_action}>
+        <{foreach item=btn from=$topic_post.thread_action|default:null}>
             <a href="<{$btn.link}>&amp;post_id=<{$topic_post.post_id}>" title="<{$btn.name}>" <{if $btn.target}>target="<{$btn.target}>"<{/if}>>
                 <{$btn.image|default:''}>
             </a>
@@ -148,10 +148,10 @@
             <input type="checkbox" name="post_id[]" id="post_id[<{$topic_post.post_id}>]" value="<{$topic_post.post_id}>">
     <{else}>
         <{if $topic_post.thread_buttons}>
-                <{assign var='bantext' value=`$smarty.const._MD_NEWBB_SUSPEND_MANAGEMENT`}>
+                <{assign var='bantext' value=$smarty.const._MD_NEWBB_SUSPEND_MANAGEMENT}>
                 <{assign var='banprompt' value=">$bantext<"}>
 
-                <{foreach item=btn from=$topic_post.thread_buttons}>
+                <{foreach item=btn from=$topic_post.thread_buttons|default:null}>
                    <a class="btn btn-primary btn-xs" href="<{$btn.link}>&amp;post_id=<{$topic_post.post_id}>" title="<{$btn.name}>"><{$btn.image|replace:$banprompt:'><span class="fa fa-ban" aria-hidden="true"><'|replace:forum_button:xforum_button}></a>
                 <{/foreach}>
         <{/if}>

@@ -14,7 +14,7 @@
 
     <ul class="pagination pagination-sm">
       <li><a href="<{$xoops_url}>/modules/<{$lang_moduledirname}>/letter.php" title="[ <{$publishedwords}> ]"><{$smarty.const._MD_LEXIKON_ALL}></a></li>
-      <{foreach item=letterlinks from=$alpha.initial}>
+      <{foreach item=letterlinks from=$alpha.initial|default:null}>
           <{if $letterlinks.total > 0}>
             <li><a href="<{$xoops_url}>/modules/<{$lang_moduledirname}>/letter.php?init=<{$letterlinks.id}>" title="[ <{$letterlinks.total}> ]" >
               <{$letterlinks.linktext}>
@@ -44,7 +44,7 @@
        <h2 style="text-align: center"><{$smarty.const._MD_LEXIKON_ALL}></h2>
         <div class="letters"><{$smarty.const._MD_LEXIKON_WEHAVE}> <{$totalentries}> <{$smarty.const._MD_LEXIKON_INALLGLOSSARIES}></div>
         <br>
-        <{foreach item=eachentry from=$entriesarray.single}>
+        <{foreach item=eachentry from=$entriesarray.single|default:null}>
             <h4 class="term" style="clear:both;">
                 <a href="<{$xoops_url}>/modules/<{$eachentry.dir}>/entry.php?entryID=<{$eachentry.id}>"><{$eachentry.term}></a> 
                 <{if $multicats == 1}>
@@ -67,7 +67,7 @@
         <h2 style="text-align: center"><{$firstletter}></h2>
         <div class="letters"><{$smarty.const._MD_LEXIKON_WEHAVE}> <{$totalentries}> <{$smarty.const._MD_LEXIKON_BEGINWITHLETTER}></div>
         <br>
-        <{foreach item=eachentry from=$entriesarray2.single}>
+        <{foreach item=eachentry from=$entriesarray2.single|default:null}>
             <h4 class="term" style="clear:both;">
                 <a href="<{$xoops_url}>/modules/<{$eachentry.dir}>/entry.php?entryID=<{$eachentry.id}>"><{$eachentry.term}></a> 
                 <{if $multicats == 1}>

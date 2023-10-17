@@ -49,7 +49,7 @@ class XoopsTpl extends SmartyBC
         $this->setCacheDir(XOOPS_VAR_PATH . '/caches/smarty_cache');
         $this->setCompileDir(XOOPS_VAR_PATH . '/caches/smarty_compile');
         $this->compile_check   = \Smarty::COMPILECHECK_ON; // ($xoopsConfig['theme_fromfile'] == 1);
-        $this->addPluginsDir(XOOPS_ROOT_PATH . '/class/smarty/xoops_plugins');
+        $this->addPluginsDir(XOOPS_ROOT_PATH . '/class/smarty3_plugins');
         if ($xoopsConfig['debug_mode']) {
             $this->debugging_ctrl = 'URL';
             // $this->debug_tpl = XOOPS_ROOT_PATH . '/class/smarty/xoops_tpl/debug.tpl';
@@ -105,8 +105,8 @@ class XoopsTpl extends SmartyBC
      */
     public function xoopsTouch($resourceName)
     {
-		//$result = $this->compileAllTemplates($resourceName, true); // May be necessary?
-		$this->clearCache($resourceName);
+        //$result = $this->compileAllTemplates($resourceName, true); // May be necessary?
+        $this->clearCache($resourceName);
         return true;
     }
 

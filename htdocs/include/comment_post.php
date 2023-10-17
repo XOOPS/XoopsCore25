@@ -48,7 +48,7 @@ if ('system' === $xoopsModule->getVar('dirname')) {
     $comment_config = $xoopsModule->getInfo('comments');
     $com_modid      = $xoopsModule->getVar('mid');
     $redirect_page  = $comment_config['pageName'] . '?';
-    if (isset($comment_config['extraParams']) && is_array($comment_config['extraParams'])) {
+    if (isset($comment_config['extraParams']) && \is_array($comment_config['extraParams'])) {
         $extra_params = '';
         foreach ($comment_config['extraParams'] as $extra_param) {
             $extraVar = Request::getString($extra_param, 'POST', '');
@@ -474,7 +474,7 @@ switch ($op) {
                 if (!isset($comment_url)) {
                     $com_config  =& $not_module->getInfo('comments');
                     $comment_url = $com_config['pageName'] . '?';
-                    if (isset($com_config['extraParams']) && is_array($com_config['extraParams'])) {
+                    if (isset($com_config['extraParams']) && \is_array($com_config['extraParams'])) {
                         $extra_params = '';
                         foreach ($com_config['extraParams'] as $extra_param) {
                             $extra_params .= isset($_POST[$extra_param]) ? $extra_param . '=' . htmlspecialchars($_POST[$extra_param]) . '&amp;' : $extra_param . '=&amp;';

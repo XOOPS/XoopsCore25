@@ -77,7 +77,7 @@
                             &nbsp;<{$smarty.const._MD_NEWBB_NEWPOSTS}></option>
                         <!-- irmtfan add a separator -->
                         <option value="">--------</option>
-                        <{foreach item=filter from=$filters}>
+                        <{foreach item=filter from=$filters|default:null}>
                             <option value="<{$filter.link}>"><{$filter.title}></option>
                         <{/foreach}>
                         <option value="">--------</option>
@@ -225,7 +225,7 @@
                 <{$selection.sort}>&nbsp;
                 <{$selection.order}>&nbsp;
                 <{$selection.since}>&nbsp;
-                <{foreach item=hidval key=hidvar from=$selection.vars}>
+                <{foreach item=hidval from=$selection.vars|default:null key=hidvar }>
                     <{if $hidval && $hidvar neq "sort" && $hidvar neq "order" && $hidvar neq "since"}>
                         <!-- irmtfan correct name="$hidvar" -->
                         <input type="hidden" name="<{$hidvar}>" value="<{$hidval}>">
@@ -262,7 +262,7 @@
     <div class="icon_right">
         <form action="<{$xoops_url}>/modules/<{$xoops_dirname}>/search.php" method="get">
             <input name="term" id="term" type="text" size="15">
-            <{foreach item=hidval key=hidvar from=$search}>
+            <{foreach item=hidval from=$search|default:null key=hidvar }>
                 <{if $hidval }>
                     <!-- irmtfan correct name="$hidvar" -->
                     <input type="hidden" name="<{$hidvar}>" value="<{$hidval}>">
@@ -276,7 +276,7 @@
         <{if $forum_jumpbox }>
             <form method="get" action="<{$selection.action}>">
                 <{$selection.forum}>&nbsp;
-                <{foreach item=hidval key=hidvar from=$selection.vars}>
+                <{foreach item=hidval from=$selection.vars|default:null key=hidvar }>
                     <{if $hidval && $hidvar neq "forum"}>
                         <input type="hidden" name="<{$hidvar}>" value="<{$hidval}>">
                     <{/if}>
