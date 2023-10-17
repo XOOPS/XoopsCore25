@@ -130,7 +130,7 @@ class SystemMaintenance
                 }
                 closedir($dirHandle);
             }
-			file_put_contents($dir . 'index.php', '<?php' . PHP_EOL  . 'header(\'HTTP/1.0 404 Not Found\');' . PHP_EOL);
+            file_put_contents($dir . 'index.php', '<?php' . PHP_EOL  . 'header("HTTP/1.0 404 Not Found");' . PHP_EOL);
         }
     }
 
@@ -288,7 +288,7 @@ class SystemMaintenance
             $module         = $module_handler->getByDirname($modules[$i]);
             $ret[1] .= '<tr><th colspan="3" align="left">' . ucfirst($modules[$i]) . '</th></tr>';
             $modtables = $module->getInfo('tables');
-            if ($modtables !== false && is_array($modtables)) {
+            if ($modtables !== false && \is_array($modtables)) {
                 foreach ($modtables as $table) {
                     //structure
                     $ret = $this->dump_table_structure($ret, $this->prefix . $table, $drop, $class);
