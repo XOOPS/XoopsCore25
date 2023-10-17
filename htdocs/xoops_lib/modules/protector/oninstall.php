@@ -23,20 +23,13 @@ if (!function_exists('protector_oninstall_base')) {
     function protector_oninstall_base($module, $mydirname)
     {
         /** @var XoopsModule $module */
-        // transations on module install
+        // translations on module install
 
         global $ret; // TODO :-D
 
-        // for Cube 2.1
-        if (defined('XOOPS_CUBE_LEGACY')) {
-            $root =& XCube_Root::getSingleton();
-            $root->mDelegateManager->add('Legacy.Admin.Event.ModuleInstall.' . ucfirst($mydirname) . '.Success', 'protector_message_append_oninstall');
-            $ret = array();
-        } else {
             if (!is_array($ret)) {
                 $ret = array();
             }
-        }
 
         $db  = XoopsDatabaseFactory::getDatabaseConnection();
         $mid = $module->getVar('mid');
@@ -50,13 +43,8 @@ if (!function_exists('protector_oninstall_base')) {
         if (file_exists($sql_file_path)) {
             $ret[] = 'SQL file found at <b>' . htmlspecialchars($sql_file_path) . '</b>.<br> Creating tables...';
 
-            if (file_exists(XOOPS_ROOT_PATH . '/class/database/oldsqlutility.php')) {
-                include_once XOOPS_ROOT_PATH . '/class/database/oldsqlutility.php';
-                $sqlutil = new OldSqlUtility; //old code is -> $sqlutil =& new OldSqlUtility ; //hack by Trabis
-            } else {
                 include_once XOOPS_ROOT_PATH . '/class/database/sqlutility.php';
                 $sqlutil = new SqlUtility; //old code is -> $sqlutil =& new SqlUtility ; //hack by Trabis
-            }
 
             $sql_query = trim(file_get_contents($sql_file_path));
             $sqlutil->splitMySqlFile($pieces, $sql_query);
@@ -87,7 +75,11 @@ if (!function_exists('protector_oninstall_base')) {
         // TEMPLATES
         $tplfile_handler = xoops_getHandler('tplfile');
         $tpl_path        = __DIR__ . '/templates';
-        if ($handler = @opendir($tpl_path . '/')) {
+        // Check if the directory exists
+        if (is_dir($tpl_path)) {
+            // Try to open the directory
+            $handler = opendir($tpl_path . '/');
+            if (false !== $handler) {
             while (($file = readdir($handler)) !== false) {
                 if (substr($file, 0, 1) === '.') {
                     continue;
@@ -122,7 +114,15 @@ if (!function_exists('protector_oninstall_base')) {
                 }
             }
             closedir($handler);
+            } else {
+                // Handle the error condition when opendir fails
+                $ret[] = '<span style="color:#ff0000;">ERROR: Could not open the directory:  <b>' . htmlspecialchars($tpl_path) . '</b>.</span><br>';
+            }
+        } else {
+            // Directory does not exist; handle this condition
+            $ret[] = '<span style="color:#ff0000;">ERROR: Directory does not exist: <b>' . htmlspecialchars($tpl_path) . '</b>.</span><br>';
         }
+
         include_once XOOPS_ROOT_PATH . '/class/xoopsblock.php';
         include_once XOOPS_ROOT_PATH . '/class/template.php';
         xoops_template_clear_module_cache($mid);
