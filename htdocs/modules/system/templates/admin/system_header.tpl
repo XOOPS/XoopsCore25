@@ -12,7 +12,7 @@
             <{/if}>
         <{/if}>
     <{/foreach}>
-    <{if !empty($xo_sys_help)}>
+    <{if !empty($xo_sys_help)|default:false}>
         <li class="xo-help">
             <a class="cursorhelp tooltip help_view" title="<{$smarty.const._AM_SYSTEM_HELP_VIEW}>"
                style="background-image:url('<{xoAdminNav}>bc_separator_end.png'); display: inline;"><img src="<{xoAdminIcons 'help.png'}>"
@@ -23,12 +23,12 @@
         </li>
     <{/if}>
 </ul>
-<{if !empty($help_content)}>
+<{if !empty($help_content)|default:false}>
     <div class="hide" id="xo-system-help">
         <{include file="$help_content"}>
     </div>
 <{/if}>
-<{if !empty($xo_sys_tips)}>
+<{if !empty($xo_sys_tips)|default:false}>
     <div class="tips ui-corner-all">
         <img class="floatleft tooltip" src="<{xoAdminIcons 'tips.png'}>" alt="<{$smarty.const._AM_SYSTEM_TIPS}>" title="<{$smarty.const._AM_SYSTEM_TIPS}>"/>
 
