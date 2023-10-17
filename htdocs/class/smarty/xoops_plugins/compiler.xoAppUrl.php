@@ -7,10 +7,10 @@
  *
  * @copyright   (c) 2000-2022 XOOPS Project (https://xoops.org)
  * @license     GNU GPL 2 or later (https://www.gnu.org/licenses/gpl-2.0.html)
- * @author           Skalpa Keo <skalpa@xoops.org>
- * @package          xos_opal
- * @subpackage       xos_opal_Smarty
- * @since            2.0.14
+ * @author      Skalpa Keo <skalpa@xoops.org>
+ * @package     xos_opal
+ * @subpackage  xos_opal_Smarty
+ * @since       2.0.14
  */
 
 /**
