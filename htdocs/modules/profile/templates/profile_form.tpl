@@ -1,7 +1,7 @@
 <{$xoForm.javascript}>
 <form id="<{$xoForm.name}>" name="<{$xoForm.name}>" action="<{$xoForm.action}>" method="<{$xoForm.method}>" <{$xoForm.extra}> >
     <table class="profile-form" id="profile-form-<{$xoForm.name}>">
-        <{foreach item=element from=$xoForm.elements}>
+        <{foreach item=element from=$xoForm.elements|default:null}>
             <{if !$element.hidden|default:false}>
                 <tr>
                     <td class="head">
@@ -20,7 +20,7 @@
             <{/if}>
         <{/foreach}>
     </table>
-    <{foreach item=element from=$xoForm.elements}>
+    <{foreach item=element from=$xoForm.elements|default:null}>
         <{if $element.hidden|default:false}>
             <{$element.body}>
         <{/if}>

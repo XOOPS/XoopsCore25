@@ -3,7 +3,7 @@
         <{$search_info}>
     </div>
     <{if $results}>
-        <{foreach item=result from=$results}>
+        <{foreach item=result from=$results|default:null}>
         <div class="item" style="font-size: 12px;">
             <h4 style="margin-bottom: 1px; padding-bottom: 0;"><a href="<{$result.link|default:''}>"><{$result.title|default:''}></a></h4>
             <{$result.author}> <{$result.datesub}>

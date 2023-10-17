@@ -5,7 +5,7 @@ if (empty($_POST['uname']) || empty($_POST['pass'])) {
     ?>
     <h2><?php echo _USER_LOGIN; ?></h2>
 
-    <form action="index.php" method="post">
+    <form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post">
         <label for="uname"><?php echo _USERNAME; ?></label>
         <div class="input-group">
             <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
@@ -39,9 +39,13 @@ if (empty($_POST['uname']) || empty($_POST['pass'])) {
 
     // For XOOPS 2.2*
     if (!is_object($user)) {
-        $criteria = new CriteriaCompo(new Criteria('loginname', $uname));
-        $criteria->add(new Criteria('pass', md5($pass)));
-        list($user) = $member_handler->getUsers($criteria);
+        try {
+            $criteria = new CriteriaCompo(new Criteria('loginname', $uname));
+            $criteria->add(new Criteria('pass', md5($pass)));
+            list($user) = $member_handler->getUsers($criteria);
+        } catch (\RuntimeException $e) {
+            $user = false;
+        }
     }
 
     $isAllowed = false;

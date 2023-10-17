@@ -1,6 +1,5 @@
 <h4><{$smarty.const._PM_PRIVATEMESSAGE}></h4>
-<{if $op}>
-
+<{if $op|default:'' != ''}>
 	<{if $msg|default:false}>
 		<div class="alert alert-success alert-dismissable">
 			<button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
@@ -73,8 +72,6 @@
 								<input type='checkbox' id='msg_id_<{$message.msg_id}>' name='msg_id[]' value='<{$message.msg_id}>' />
 							</td>
 							<td class='d-table-cell d-sm-none aligntop text-center'>
-								<input type='checkbox' id='msg_id_<{$message.msg_id}>' name='msg_id[]' value='<{$message.msg_id}>' />
-								<br />
 								<{if $message.read_msg == 1}>
 									<span class="fa fa-envelope-open fa-2x text-secondary"></span>
 								<{else}>
@@ -141,7 +138,7 @@
 			<{$pmform.elements.delete_messages.body|replace:'formButton':'btn btn-secondary'|replace:'" >':'" ><span class="fa fa-times fa-2x"></span><br />'}>
 			<{$pmform.elements.empty_messages.body|replace:'formButton':'btn btn-secondary'|replace:'" >':'" ><span class="fa fa-trash fa-2x"></span><br />'}>
 		<{/if}>
-		<{foreach item=element from=$pmform.elements}>
+		<{foreach item=element from=$pmform.elements|default:null}>
 			<{if $element.hidden == 1}>
 				<{$element.body}>
 			<{/if}>

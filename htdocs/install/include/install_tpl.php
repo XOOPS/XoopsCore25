@@ -94,7 +94,7 @@ include_once __DIR__ . '/../../language/' . $wizard->language . '/global.php';
                 <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-book"></i> <?php echo SUPPORT; ?> <b class="caret"></b></a>
                 <ul class="dropdown-menu">
                     <?php
-                    @include_once __DIR__ . '/language/' . $wizard->language . '/support.php';
+                    @include_once __DIR__ . '/../language/' . $wizard->language . '/support.php';
                     foreach ($supports as $lang => $support) {
                         echo '<li><a href="' . $support['url'] . '" target="_blank">' . $support['title'] . '</a></li>';
                     }

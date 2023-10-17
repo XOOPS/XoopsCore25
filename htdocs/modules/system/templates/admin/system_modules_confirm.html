@@ -10,7 +10,7 @@
             </tr>
             </thead>
             <tbody>
-            <{foreach item=row from=$modifs_mods}>
+            <{foreach item=row from=$modifs_mods|default:null}>
                 <tr class="txtcenter <{cycle values='odd, even'}>">
                     <td>
                         <{$row.oldname}>
@@ -64,7 +64,7 @@
     <div id="xo-module-log">
         <{if $result}>
             <div class="logger">
-                <{foreach item=row from=$result}>
+                <{foreach item=row from=$result|default:null}>
                     <div class="spacer"><{$row}></div>
                 <{/foreach}>
             </div>

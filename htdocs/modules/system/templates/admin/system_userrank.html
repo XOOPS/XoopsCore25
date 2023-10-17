@@ -25,7 +25,7 @@
         </tr>
         </thead>
         <tbody>
-        <{foreach item=rankinfo from=$userrank}>
+        <{foreach item=rankinfo from=$userrank|default:null}>
             <tr class="<{cycle values='even,odd'}> alignmiddle">
                 <td class="txtcenter"><{$rankinfo.rank_image}></td>
                 <td class="txtcenter"><{$rankinfo.rank_title}></td>

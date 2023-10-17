@@ -50,7 +50,7 @@
 <{/if}>
 <!-- Display Avatar list for each category -->
 <{if $avatars_list|default:false}>
-    <{foreach item=avatar from=$avatars_list}>
+    <{foreach item=avatar from=$avatars_list|default:null}>
         <div class="floatleft">
             <div class="ui-corner-all xo-thumb txtcenter">
                 <div class="xo-thumbimg">

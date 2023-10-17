@@ -81,7 +81,7 @@ class MetaWeblogApi extends XoopsXmlRpcApi
                         unset($value);
                     }
                     $newparams[3]['xoops_text'] = $this->params[3]['description'];
-                    if (isset($this->params[3]['categories']) && is_array($this->params[3]['categories'])) {
+                    if (isset($this->params[3]['categories']) && \is_array($this->params[3]['categories'])) {
                         foreach ($this->params[3]['categories'] as $k => $v) {
                             $newparams[3]['categories'][$k] = $v;
                         }
@@ -134,7 +134,7 @@ class MetaWeblogApi extends XoopsXmlRpcApi
                         $newparams[3][$key] =& $value;
                         unset($value);
                     }
-                    if (isset($this->params[3]['categories']) && is_array($this->params[3]['categories'])) {
+                    if (isset($this->params[3]['categories']) && \is_array($this->params[3]['categories'])) {
                         foreach ($this->params[3]['categories'] as $k => $v) {
                             $newparams[3]['categories'][$k] = $v;
                         }

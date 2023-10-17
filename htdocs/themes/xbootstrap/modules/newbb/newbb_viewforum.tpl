@@ -8,7 +8,7 @@
 
     <!-- If is subforum-->
     <{if $parentforum}>
-        <{foreach item=forum from=$parentforum}>
+        <{foreach item=forum from=$parentforum|default:null}>
              <li><a href="<{$xoops_url}>/modules/<{$xoops_dirname}>/viewforum.php?forum=<{$forum.forum_id}>"><{$forum.forum_name}></a></li>
         <{/foreach}>
     <{/if}>
@@ -224,7 +224,7 @@
 
 <div class="row collapse" id="forum-info">
     <div class="col-sm-6 col-md-6">
-        <{foreach item=perm from=$permission_table|default:''}>
+        <{foreach item=perm from=$permission_table|default:null}>
             <{$perm}>
         <{/foreach}>
     </div>

@@ -20,7 +20,7 @@
         </tr>
         </thead>
         <tbody>
-        <{foreach item=groupdetail from=$groups}>
+        <{foreach item=groupdetail from=$groups|default:null}>
             <tr class="<{cycle values='odd, even'}> alignmiddle">
                 <td class="txtcenter"><{$groupdetail.groups_id}></td>
                 <td class="txtleft">

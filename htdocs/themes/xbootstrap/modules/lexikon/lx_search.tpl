@@ -36,7 +36,7 @@
 
 <div class="row">
   <div class="col-md-12">
-    <{foreach item=eachresult from=$resultset.match}>
+    <{foreach item=eachresult from=$resultset.match|default:null}>
         <h4><img src="<{$xoops_url}>/modules/<{$eachresult.dir}>/assets/images/lx.png"/>&nbsp;
           <a href="<{$xoops_url}>/modules/<{$eachresult.dir}>/entry.php?entryID=<{$eachresult.id}><{if $highlight == 1}><{$eachresult.keywords}><{/if}>">
             <{$eachresult.term}>

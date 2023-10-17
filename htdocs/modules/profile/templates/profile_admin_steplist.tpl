@@ -3,7 +3,7 @@
     <th><{$smarty.const._PROFILE_AM_STEPORDER}></th>
     <th><{$smarty.const._PROFILE_AM_STEPSAVE}></th>
     <th><{$smarty.const._PROFILE_AM_ACTION}></th>
-    <{foreach item=step from=$steps}>
+    <{foreach item=step from=$steps|default:null}>
         <tr class="<{cycle values='odd, even'}>">
             <td><{$step.step_name}></td>
             <td align="center"><{$step.step_order}></td>

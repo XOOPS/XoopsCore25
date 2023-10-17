@@ -58,11 +58,11 @@
     </div><!-- .col-md-6 -->
 </div><!-- .row -->
 
-<{foreach item=category from=$categories}>
+<{foreach item=category from=$categories|default:null}>
     <{if isset($category.fields)}>
         <ul id="profile-category-<{$category.cat_id}>" class="profile-values list-unstyled">
             <li class="profile-category-title"><{$category.cat_title}></li>
-            <{foreach item=field from=$category.fields}>
+            <{foreach item=field from=$category.fields|default:null}>
                 <li><strong><{$field.title}>:</strong> <{$field.value}></li>
             <{/foreach}>
         </ul>
@@ -72,9 +72,9 @@
 <{if $modules|default:false}>
     <ul class="profile-values list-unstyled">
         <li class="profile-category-title"><{$recent_activity}></li>
-        <{foreach item=module from=$modules}>
+        <{foreach item=module from=$modules|default:null}>
             <li><strong><{$module.name}></strong></li>
-            <{foreach item=result from=$module.results}>
+            <{foreach item=result from=$module.results|default:null}>
                 <li><img src="<{$result.image}>" alt="<{$module.name}>"> <a href="<{$result.link}>"><{$result.title}></a> (<{$result.time}>)</li>
             <{/foreach}>
             <{$module.showall_link}>

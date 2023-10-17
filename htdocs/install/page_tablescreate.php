@@ -33,8 +33,8 @@ $pageHasHelp = false;
 
 $vars =& $_SESSION['settings'];
 
-include_once __DIR__ . '/../mainfile.php';
-include_once __DIR__ . '/class/dbmanager.php';
+require_once __DIR__ . '/../mainfile.php';
+require_once __DIR__ . '/class/dbmanager.php';
 $dbm = new Db_manager();
 
 if (!$dbm->isConnectable()) {

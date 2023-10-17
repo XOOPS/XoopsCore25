@@ -34,7 +34,7 @@ function xoops_setcookie()
     $rawArgs = func_get_args();
     $args = array();
     foreach ($rawArgs as $key => $value) {
-        if (2 === $key && is_array($value)) {
+        if (2 === $key && \is_array($value)) {
             // modern call
             $args['options'] = array();
             foreach ($value as $optionKey => $optionValue) {

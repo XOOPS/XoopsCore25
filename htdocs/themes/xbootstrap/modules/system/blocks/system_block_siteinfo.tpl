@@ -2,7 +2,7 @@
 	<table style="background-color: inherit;">
 
         <!-- start group loop -->
-        <{foreach item=group from=$block.groups}>
+        <{foreach item=group from=$block.groups|default:null}>
 
 			<{if $group.name|default:'' != ''}>
 				<thead> 
@@ -13,7 +13,7 @@
             <{/if}>
 
             <!-- start group member loop -->
-            <{foreach item=user from=$group.users}>
+            <{foreach item=user from=$group.users|default:null}>
                 <tr>
                     <td class="even txtcenter alignmiddle">
                         <img style="width:48px;" src="<{$user.avatar}>" alt="<{$user.name}>"/><br>

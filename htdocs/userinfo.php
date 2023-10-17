@@ -21,6 +21,9 @@
  * @since               2.0.0
  * @author              Kazumi Ono <webmaster@myweb.ne.jp>
  */
+
+use Xmf\Request;
+
 include __DIR__ . '/mainfile.php';
 $xoopsPreload = XoopsPreload::getInstance();
 $xoopsPreload->triggerEvent('core.userinfo.start');
@@ -29,7 +32,7 @@ xoops_loadLanguage('user');
 include_once $GLOBALS['xoops']->path('class/module.textsanitizer.php');
 include_once $GLOBALS['xoops']->path('modules/system/constants.php');
 
-$uid = (int)$_GET['uid'];
+$uid = Request::getInt('uid', 0, 'GET');
 if ($uid <= 0) {
     redirect_header('index.php', 3, _US_SELECTNG);
 }

@@ -70,7 +70,7 @@
 		<div class="row">
 			<div class="col-md-8">
 				<br>
-				<{foreach item=element from=$pmform.elements}>
+				<{foreach item=element from=$pmform.elements|default:null}>
 					<{$element.body}>
 				<{/foreach}>
 			</div>
