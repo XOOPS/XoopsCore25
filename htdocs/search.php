@@ -23,6 +23,9 @@
  * @author              Taiwen Jiang <phppp@users.sourceforge.net>
  * @todo                Modularize; Both search algorithms and interface will be redesigned
  */
+
+use Xmf\Request;
+
 include __DIR__ . '/mainfile.php';
 
 xoops_loadLanguage('search');
@@ -36,37 +39,37 @@ if ($xoopsConfigSearch['enable_search'] != 1) {
 }
 $action = 'search';
 if (!empty($_GET['action'])) {
-    $action = trim(strip_tags($_GET['action']));
+    $action = trim(strip_tags(Request::getString('action', '', 'GET')));
 } elseif (!empty($_POST['action'])) {
-    $action = trim(strip_tags($_POST['action']));
+    $action = trim(strip_tags(Request::getString('action', '', 'POST')));
 }
 $query = '';
 if (!empty($_GET['query'])) {
-    $query = trim(strip_tags($_GET['query']));
+    $query = trim(strip_tags(Request::getString('query', '', 'GET')));
 } elseif (!empty($_POST['query'])) {
-    $query = trim(strip_tags($_POST['query']));
+    $query = trim(strip_tags(Request::getString('query', '', 'POST')));
 }
 $andor = 'AND';
 if (!empty($_GET['andor'])) {
-    $andor = trim(strip_tags($_GET['andor']));
+    $andor = trim(strip_tags(Request::getString('andor', '', 'GET')));
 } elseif (!empty($_POST['andor'])) {
-    $andor = trim(strip_tags($_POST['andor']));
+    $andor = trim(strip_tags(Request::getString('andor', '', 'POST')));
 }
 $mid = $uid = $start = 0;
 if (!empty($_GET['mid'])) {
-    $mid = (int)$_GET['mid'];
+    $mid = Request::getInt('mid', 0, 'GET');
 } elseif (!empty($_POST['mid'])) {
-    $mid = (int)$_POST['mid'];
+    $mid = Request::getInt('mid', 0, 'POST');
 }
 if (!empty($_GET['uid'])) {
-    $uid = (int)$_GET['uid'];
+    $uid = Request::getInt('uid', 0, 'GET');
 } elseif (!empty($_POST['uid'])) {
-    $uid = (int)$_POST['uid'];
+    $uid = Request::getInt('uid', 0, 'POST');
 }
 if (!empty($_GET['start'])) {
-    $start = (int)$_GET['start'];
+    $start = Request::getInt('start', 0, 'GET');
 } elseif (!empty($_POST['start'])) {
-    $start = (int)$_POST['start'];
+    $start = Request::getInt('start', 0, 'POST');
 }
 
 $queries = array();
@@ -146,16 +149,16 @@ switch ($action) {
 		$error_keywords = '';
         if ($andor !== 'exact') {
             foreach ($queries as $q) {
-				$keywords .= htmlspecialchars(stripslashes($q)) . ' ';
+				$keywords .= htmlspecialchars(stripslashes($q), ENT_QUOTES) . ' ';
             }
             if (!empty($ignored_queries)) {
 				$error_length = sprintf(_SR_IGNOREDWORDS, $xoopsConfigSearch['keyword_min']);
                 foreach ($ignored_queries as $q) {
-					$error_keywords .= htmlspecialchars(stripslashes($q)) . ' ';
+					$error_keywords .= htmlspecialchars(stripslashes($q), ENT_QUOTES) . ' ';
                 }
             }
         } else {
-			$keywords .= '"' . htmlspecialchars(stripslashes($queries[0])) . '"';
+			$keywords .= '"' . htmlspecialchars(stripslashes($queries[0]), ENT_QUOTES) . '"';
         }
 		$xoopsTpl->assign('keywords', $keywords);
 		$xoopsTpl->assign('error_length', $error_length);
@@ -200,7 +203,7 @@ switch ($action) {
                     if ($count >= 5) {
                         $search_url = XOOPS_URL . '/search.php?query=' . urlencode(stripslashes(implode(' ', $queries)));
                         $search_url .= "&mid={$mid}&action=showall&andor={$andor}";
-						$search_arr['module_show_all'] = htmlspecialchars($search_url);
+						$search_arr['module_show_all'] = htmlspecialchars($search_url, ENT_QUOTES);
                     }
 					$search_arr['module_name'] = $module_name;
 					$search_arr['module_data'] = $results_arr;
@@ -240,10 +243,10 @@ switch ($action) {
 				$keywords = '';
                 if ($andor !== 'exact') {
                     foreach ($queries as $q) {
-						$keywords .= htmlspecialchars(stripslashes($q));
+						$keywords .= htmlspecialchars(stripslashes($q), ENT_QUOTES);
                     }
                 } else {
-					$keywords .= htmlspecialchars(stripslashes($queries[0]));
+					$keywords .= htmlspecialchars(stripslashes($queries[0]), ENT_QUOTES);
                 }
 				$xoopsTpl->assign('keywords', $keywords);
             }
@@ -282,12 +285,12 @@ switch ($action) {
             if ($start > 0) {
                 $prev = $start - 20;
                 $search_url_prev = $search_url . "&start={$prev}";
-				$xoopsTpl->assign('previous', htmlspecialchars($search_url_prev));
+				$xoopsTpl->assign('previous', htmlspecialchars($search_url_prev, ENT_QUOTES));
             }
             if (false !== $has_next) {
                 $next            = $start + 20;
                 $search_url_next = $search_url . "&start={$next}";
-				$xoopsTpl->assign('next', htmlspecialchars($search_url_next));
+				$xoopsTpl->assign('next', htmlspecialchars($search_url_next, ENT_QUOTES));
             }
         } else {
 			$xoopsTpl->assign('nomatch', true);

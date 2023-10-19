@@ -31,7 +31,7 @@
             </tr>
             </thead>
             <tbody>
-            <{foreach item=row from=$install_mods}>
+            <{foreach item=row from=$install_mods|default:null}>
                 <{if $row.dirname == 'system'}>
                     <tr class="txtcenter foot">
                         <td>
@@ -77,7 +77,7 @@
             </tr>
             </tbody>
             <tbody class="xo-module">
-            <{foreach item=row from=$install_mods}>
+            <{foreach item=row from=$install_mods|default:null}>
                 <{if $row.dirname != 'system' && $row.hasmain}>
                     <tr id="mod_<{$row.mid}>" class="<{if $row.dirname == 'system'}>xo-system <{/if}>txtcenter <{cycle values='odd, even'}>">
                         <td>
@@ -153,7 +153,7 @@
             <tr class="head">
                 <td colspan="6"></td>
             </tr>
-            <{foreach item=row from=$install_mods}>
+            <{foreach item=row from=$install_mods|default:null}>
                 <{if $row.dirname != 'system' && !$row.hasmain}>
                     <tr class="txtcenter foot">
                         <td>
@@ -236,7 +236,7 @@
         </tr>
         </thead>
         <tbody>
-        <{foreach item=row from=$toinstall_mods}>
+        <{foreach item=row from=$toinstall_mods|default:null}>
             <tr class="txtcenter <{cycle values='odd, even'}>">
                 <td>
                     <img class="xo-logonormal" src="<{$xoops_url}>/modules/<{$row.dirname}>/<{$row.image}>" alt="<{$row.name}>" title="<{$row.name}>"/>
@@ -265,7 +265,7 @@
     </table>
 <{/if}>
 <!--Pop-pup-->
-<{foreach item=row from=$mods_popup}>
+<{foreach item=row from=$mods_popup|default:null}>
     <div id="dialog<{$row.mid}>" title="<{$row.name}>" style='display:none;'>
         <table>
             <tr>

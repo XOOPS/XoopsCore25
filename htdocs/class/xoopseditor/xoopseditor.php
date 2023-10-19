@@ -45,7 +45,7 @@ class XoopsEditor extends XoopsFormTextArea
                 }
                 ++$i;
             }
-            $configs = (isset($args[$i]) && is_array($args[$i])) ? array_merge($configs, $args[$i]) : $configs;
+            $configs = (isset($args[$i]) && \is_array($args[$i])) ? array_merge($configs, $args[$i]) : $configs;
         } else {
             $configs = $args[0];
         }

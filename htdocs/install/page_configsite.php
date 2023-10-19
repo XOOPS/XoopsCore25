@@ -55,7 +55,7 @@ $criteria->add($criteria2);
 $criteria->setSort('conf_catid ASC, conf_order ASC');
 $configs = $config_handler->getConfigs($criteria);
 
-include __DIR__ . '/include/createconfigform.php';
+require __DIR__ . '/include/createconfigform.php';
 $wizard->form = createConfigform($configs);
 $content      = $wizard->CreateForm();
 include __DIR__ . '/include/install_tpl.php';

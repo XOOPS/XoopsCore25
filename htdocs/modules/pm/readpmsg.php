@@ -17,6 +17,8 @@
  * @author              Taiwen Jiang <phppp@users.sourceforge.net>
  */
 
+use Xmf\Request;
+
 include_once dirname(dirname(__DIR__)) . '/mainfile.php';
 
 if (!is_object($GLOBALS['xoopsUser'])) {
@@ -91,10 +93,10 @@ if (is_object($pm) && !empty($_POST['action'])) {
         }
     }
     $res_message = isset($res_message) ? $res_message : ($res ? _PM_ACTION_DONE : _PM_ACTION_ERROR);
-    redirect_header('viewpmsg.php?op=' . htmlspecialchars($_REQUEST['op']), 2, $res_message);
+    redirect_header('viewpmsg.php?op=' . htmlspecialchars($_REQUEST['op'], ENT_QUOTES), 2, $res_message);
 }
-$start                        = !empty($_GET['start']) ? (int)$_GET['start'] : 0;
-$total_messages               = !empty($_GET['total_messages']) ? (int)$_GET['total_messages'] : 0;
+$start                        = Request::getInt('start', 0, 'GET');
+$total_messages               = Request::getInt('total_messages', 0, 'GET');
 $GLOBALS['xoopsOption']['template_main'] = 'pm_readpmsg.tpl';
 include $GLOBALS['xoops']->path('header.php');
 

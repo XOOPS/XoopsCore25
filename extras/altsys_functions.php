@@ -6,6 +6,7 @@ function altsys_set_module_config()
 {
     global $altsysModuleConfig, $altsysModuleId;
 
+    /** @var \XoopsModuleHandler $module_handler */
     $module_handler = xoops_getHandler('module');
     /** @var \XoopsModule $module */
     $module = $module_handler->getByDirname('altsys');

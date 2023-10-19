@@ -11,9 +11,9 @@
 		<{$nomatch}>
 		<br>
 	<{else}>
-		<{foreach item=searchitem from=$search}>
+		<{foreach item=searchitem from=$search|default:null}>
 			<h4><{$searchitem.module_name}></h4>
-			<{foreach item=data from=$searchitem.module_data}>
+			<{foreach item=data from=$searchitem.module_data|default:null}>
 				<img src="<{$data.image_link}>" title="<{$data.image_title}>" alt="<{$data.image_title}>"/> <a href="<{$data.link}>"><{$data.link_title}></a>
 				<br>
 			<{if isset($data.uname)}>
@@ -43,7 +43,7 @@
 		<{/if}>
 		<{$showing}>
 		<h4><{$module_name}></h4>
-		<{foreach item=data from=$results_arr}>
+		<{foreach item=data from=$results_arr|default:null}>
 			<img src="<{$data.image_link}>" title="<{$data.image_title}>" alt="<{$data.image_title}>"/> <a href="<{$data.link}>"><{$data.link_title}></a>
 			<br>
 			<{if $data.uname}>

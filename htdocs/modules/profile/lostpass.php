@@ -17,9 +17,11 @@
  * @author              Taiwen Jiang <phppp@users.sourceforge.net>
  */
 
+use Xmf\Request;
+
 include __DIR__ . '/header.php';
-$email = isset($_GET['email']) ? trim($_GET['email']) : '';
-$email = isset($_POST['email']) ? trim($_POST['email']) : $email;
+$email = Request::getEmail('email', '', 'GET');
+$email = Request::getEmail('email', $email, 'POST');
 
 xoops_loadLanguage('user');
 
@@ -36,7 +38,7 @@ if (empty($user)) {
     $msg = _US_SORRYNOTFOUND;
     redirect_header('user.php', 2, $msg, false);
 } else {
-    $code   = isset($_GET['code']) ? trim($_GET['code']) : '';
+    $code   = Request::getString('code', '', 'GET');
     $areyou = substr(md5($user->getVar('pass')), 0, 5);
     if ($code != '' && $areyou == $code) {
         $newpass     = xoops_makepass();

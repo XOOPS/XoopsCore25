@@ -16,6 +16,8 @@
  * @author              trabis <lusopoemas@gmail.com>
  */
 
+use Xmf\Request;
+
 // defined('XOOPS_ROOT_PATH') || exit('XOOPS root path not defined');
 
 /**
@@ -34,9 +36,9 @@ class ProfileCorePreload extends XoopsPreloadItem
     {
         $op = 'main';
         if (isset($_POST['op'])) {
-            $op = trim($_POST['op']);
+            $op = Request::getString('op', '', 'POST');
         } elseif (isset($_GET['op'])) {
-            $op = trim($_GET['op']);
+            $op = Request::getString('op', '', 'GET');
         }
         if ($op !== 'login' && (empty($_GET['from']) || 'profile' !== $_GET['from'])) {
             header('location: ./modules/profile/user.php' . (empty($_SERVER['QUERY_STRING']) ? '' : '?' . $_SERVER['QUERY_STRING']));
@@ -58,9 +60,9 @@ class ProfileCorePreload extends XoopsPreloadItem
      */
     public static function eventCoreLostpassStart($args)
     {
-        $email = isset($_GET['email']) ? trim($_GET['email']) : '';
-        $email = isset($_POST['email']) ? trim($_POST['email']) : $email;
-        header("location: ./modules/profile/lostpass.php?email={$email}" . (empty($_GET['code']) ? '' : '&code=' . $_GET['code']));
+        $email = Request::getEmail('email', '', 'GET');
+        $email = Request::getEmail('email', $email, 'POST');
+        header("location: ./modules/profile/lostpass.php?email={$email}" . (empty($_GET['code']) ? '' : '&code=' . Request::getString('code', '', 'GET')));
         exit();
     }
 

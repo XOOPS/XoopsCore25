@@ -87,7 +87,7 @@ class XoopsModelFactory
             $handlers[$name] = $handler;
         }
         $handlers[$name]->setHandler($ohandler);
-        if (!empty($args) && is_array($args) && is_a($handlers[$name], 'XoopsModelAbstract')) {
+        if (!empty($args) && \is_array($args) && is_a($handlers[$name], 'XoopsModelAbstract')) {
             $handlers[$name]->setVars($args);
         }
 
@@ -152,7 +152,7 @@ class XoopsModelAbstract
      */
     public function setVars($args)
     {
-        if (!empty($args) && is_array($args)) {
+        if (!empty($args) && \is_array($args)) {
             foreach ($args as $key => $value) {
                 $this->$key = $value;
             }

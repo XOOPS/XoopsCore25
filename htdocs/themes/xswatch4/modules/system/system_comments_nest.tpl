@@ -7,7 +7,7 @@
     </div>
     <{include file="db:system_comment.tpl" comment=$comments[i]}>
     <!-- start comment replies -->
-    <{foreach item=reply from=$comments[i].replies}>
+    <{foreach item=reply from=$comments[i].replies|default:null}>
     <{assign var="indent" value="`$reply.prefix/25`"}>
     <{assign var="fullcolwidth" value="12"}>
 

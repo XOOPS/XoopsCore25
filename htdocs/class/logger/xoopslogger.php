@@ -185,9 +185,9 @@ class XoopsLogger
     /**
      * Log messages for deprecated functions
      *
-     * @deprecated
+     * this was deprecated, but is still in broad use?
      *
-     * @param int $msg text message for the entry
+     * @param string $msg text message for the entry
      *
      */
     public function addDeprecated($msg)
@@ -253,7 +253,7 @@ class XoopsLogger
     public function handleException($e)
     {
         if ($this->isThrowable($e)) {
-            $msg = get_class($e) . ': ' . $e->getMessage();
+            $msg = get_class($e) . ': ' . $this->sanitizePath($this->sanitizeDbMessage($e->getMessage()));
             $this->handleError(E_USER_ERROR, $msg, $e->getFile(), $e->getLine());
         }
     }
@@ -284,6 +284,23 @@ class XoopsLogger
         $path = str_replace(array('\\', XOOPS_ROOT_PATH, str_replace('\\', '/', realpath(XOOPS_ROOT_PATH))), array('/', '', ''), $path);
 
         return $path;
+    }
+
+    /**
+     * sanitizeDbMessage
+     * @access protected
+     *
+     * @param string $message
+     *
+     * @return string
+     */
+    protected function sanitizeDbMessage($message)
+    {
+        // XOOPS_DB_PREFIX  XOOPS_DB_NAME
+        $message = str_replace(XOOPS_DB_PREFIX.'_', '', $message);
+        $message = str_replace(XOOPS_DB_NAME.'.', '', $message);
+
+        return $message;
     }
 
     /**

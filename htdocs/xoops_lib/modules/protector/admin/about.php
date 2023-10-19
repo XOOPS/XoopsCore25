@@ -16,8 +16,8 @@
  * @author              Mage, Mamba
  **/
 
-include __DIR__ . '/../../../include/cp_header.php';
-include __DIR__ . '/../../../class/xoopsformloader.php';
+include XOOPS_ROOT_PATH . '/include/cp_header.php';
+include XOOPS_ROOT_PATH . '/class/xoopsformloader.php';
 include __DIR__ . '/admin_header.php';
 xoops_cp_header();
 

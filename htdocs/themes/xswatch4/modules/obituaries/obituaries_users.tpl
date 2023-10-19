@@ -9,7 +9,7 @@
         <a href="<{$xoops_url}>/modules/obituaries/index.php"><img src="<{$xoops_url}>/modules/obituaries/assets/images/logoModule.png" alt="<{$module.name}>" class="img-thumbnail"/></a>
     </p>
 <div class="row">
-        <{foreach item=obituaries_user from=$obituaries_users}>
+        <{foreach item=obituaries_user from=$obituaries_users|default:null}>
     <div class="card col-8 col-sm-6 col-md-4 col-xl-3">
         <{if trim($obituaries_user.obituaries_full_imgurl) != ''}>
          <img class="card-img-top img-fluid" src="<{$obituaries_user.obituaries_full_imgurl}>" alt="<{$obituaries_user.obituaries_href_title}>">

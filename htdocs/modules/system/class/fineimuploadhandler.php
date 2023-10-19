@@ -56,7 +56,7 @@ class SystemFineImUploadHandler extends SystemFineUploadHandler
 
         $pathParts = pathinfo($this->getName());
 
-        $imageName = uniqid('img') . '.' . strtolower($pathParts['extension']);
+        $imageName = uniqid('img', true) . '.' . strtolower($pathParts['extension']);
         $imageNicename = str_replace(array('_','-'), ' ', $pathParts['filename']);
         $imagePath = XOOPS_ROOT_PATH . '/uploads/images/' . $imageName;
 

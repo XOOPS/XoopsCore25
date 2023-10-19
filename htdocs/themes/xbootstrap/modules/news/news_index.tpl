@@ -17,7 +17,7 @@
 
     <div id="xoopsgrid" class="row">
         <{section name=i loop=$columns}>
-            <{foreach item=story from=$columns[i]}>
+            <{foreach item=story from=$columns[i]|default:null}>
                 <div class="col-xs-12 col-md-6 home-news-loop">
                     <{if $story.picture != ""}>
                         <div class="home-thumbnails">

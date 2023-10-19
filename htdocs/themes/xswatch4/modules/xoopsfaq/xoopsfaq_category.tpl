@@ -26,7 +26,7 @@
 </ol>
 
 <div class="accordion" id="accordionExample">
-<{foreach item=question from=$questions}>
+<{foreach item=question from=$questions|default:null}>
     <div id="q<{$question.id}>" class="card">
         <div class="card-header" id="faqheading<{$question.id}>">
             <h2 class="mb-0">

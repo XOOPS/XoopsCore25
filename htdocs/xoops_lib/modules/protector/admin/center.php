@@ -1,4 +1,7 @@
 <?php
+
+use Xmf\Request;
+
 //require_once XOOPS_ROOT_PATH.'/include/cp_header.php' ;
 include_once __DIR__ . '/admin_header.php'; //mb problem: it shows always the same "Center" tab
 xoops_cp_header();
@@ -15,8 +18,8 @@ $myts = \MyTextSanitizer::getInstance();
 $db   = XoopsDatabaseFactory::getDatabaseConnection();
 
 // GET vars
-$pos = empty($_GET['pos']) ? 0 : (int)$_GET['pos'];
-$num = empty($_GET['num']) ? 20 : (int)$_GET['num'];
+$pos = Request::getInt('pos', 0, 'GET');
+$num = Request::getInt('num', 20, 'GET');
 
 // Table Name
 $log_table = $db->prefix($mydirname . '_log');
@@ -68,7 +71,7 @@ if (!empty($_POST['action'])) {
         $redirect_msg = $error_msg ? : _AM_MSG_IPFILESUPDATED;
         redirect_header('center.php?page=center', 2, $redirect_msg);
         exit;
-    } elseif ($_POST['action'] === 'delete' && isset($_POST['ids']) && is_array($_POST['ids'])) {
+    } elseif ($_POST['action'] === 'delete' && isset($_POST['ids']) && \is_array($_POST['ids'])) {
         // remove selected records
         foreach ($_POST['ids'] as $lid) {
             $lid = (int)$lid;
@@ -76,7 +79,7 @@ if (!empty($_POST['action'])) {
         }
         redirect_header('center.php?page=center', 2, _AM_MSG_REMOVED);
         exit;
-    } elseif ($_POST['action'] === 'banbyip' && isset($_POST['ids']) && is_array($_POST['ids'])) {
+    } elseif ($_POST['action'] === 'banbyip' && isset($_POST['ids']) && \is_array($_POST['ids'])) {
         // remove selected records
         foreach ($_POST['ids'] as $lid) {
             $lid = (int)$lid;
@@ -200,7 +203,7 @@ echo "
     <td class='even'>
       <textarea name='bad_ips' id='bad_ips' style='width:360px;height:60px;' spellcheck='false'>$bad_ips4disp</textarea>
       <br>
-      " . htmlspecialchars($protector->get_filepath4badips()) . "
+      " . htmlspecialchars($protector->get_filepath4badips(), ENT_QUOTES) . "
     </td>
   </tr>
   <tr valign='top' align='left'>
@@ -210,7 +213,7 @@ echo "
     <td class='even'>
       <textarea name='group1_ips' id='group1_ips' style='width:360px;height:60px;' spellcheck='false'>$group1_ips4disp</textarea>
       <br>
-      " . htmlspecialchars($protector->get_filepath4group1ips()) . "
+      " . htmlspecialchars($protector->get_filepath4group1ips(), ENT_QUOTES) . "
     </td>
   </tr>
   <tr valign='top' align='left'>

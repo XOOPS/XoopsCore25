@@ -53,6 +53,12 @@ if (strlen($_SERVER['REMOTE_ADDR']) > 15) {
 include_once __DIR__ . '/checkmainfile.php';
 defined('XOOPS_ROOT_PATH') or die('Bad installation: please add this folder to the XOOPS install you want to upgrade');
 
+if (!isset($_SESSION['preflight']) || (isset($_SESSION['preflight']) && $_SESSION['preflight']!=='complete')) {
+    $_SESSION['preflight'] = 'active';
+    header("Location: ./preflight.php");
+    exit;
+}
+
 $reporting = 0;
 if (isset($_GET['debug'])) {
     $reporting = -1;
@@ -69,6 +75,19 @@ require __DIR__ . '/class/control.php';
 
 $GLOBALS['error'] = false;
 $GLOBALS['upgradeControl'] = new UpgradeControl();
+
+if (file_exists(__DIR__ . "../language/{$upgradeControl->upgradeLanguage}/user.php")) {
+    include_once __DIR__ . "../language/{$upgradeControl->upgradeLanguage}/user.php";
+} else {
+    include_once XOOPS_ROOT_PATH . '/language/english/user.php';
+}
+
+if (file_exists(__DIR__ . "/language/{$upgradeControl->upgradeLanguage}/smarty3.php")) {
+    include_once __DIR__ . "/language/{$upgradeControl->upgradeLanguage}/smarty3.php";
+} else {
+    include_once __DIR__ . "/language/english/smarty3.php";
+}
+
 
 $upgradeControl->storeMainfileCheck($needMainfileRewrite, $mainfileKeys);
 $upgradeControl->determineLanguage();

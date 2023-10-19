@@ -59,14 +59,14 @@
 
 <br class="clear"/>
 
-<{foreach item=category from=$categories}>
+<{foreach item=category from=$categories|default:null}>
     <{if isset($category.fields)}>
         <div class="profile-list-category" id="profile-category-<{$category.cat_id}>">
             <table class="outer" cellpadding="4" cellspacing="1">
                 <tr>
                     <th class="txtcenter" colspan="2"><{$category.cat_title}></th>
                 </tr>
-                <{foreach item=field from=$category.fields}>
+                <{foreach item=field from=$category.fields|default:null}>
                     <tr>
                         <td class="head"><{$field.title}></td>
                         <td class="even"><{$field.value}></td>
@@ -82,10 +82,10 @@
     <div class="profile-list-activity">
         <h2><{$recent_activity}></h2>
         <!-- start module search results loop -->
-        <{foreach item=module from=$modules}>
+        <{foreach item=module from=$modules|default:null}>
             <h4><{$module.name}></h4>
             <!-- start results item loop -->
-            <{foreach item=result from=$module.results}>
+            <{foreach item=result from=$module.results|default:null}>
                 <img src="<{$result.image}>" alt="<{$module.name}>"/>
                 &nbsp;
                 <strong><a href="<{$result.link}>"><{$result.title}></a></strong>

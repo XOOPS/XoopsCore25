@@ -16,6 +16,9 @@
  * @author              Jan Pedersen
  * @author              Taiwen Jiang <phppp@users.sourceforge.net>
  */
+
+use Xmf\Request;
+
 include_once __DIR__ . '/admin_header.php';
 xoops_cp_header();
 $indexAdmin = new ModuleAdmin();
@@ -86,9 +89,9 @@ switch ($op) {
 
     case 'toggle':
         if (isset($_GET['step_id'])) {
-            $field_id = (int)$_GET['step_id'];
+            $field_id = Request::getInt('step_id', 0, 'GET');
             if (isset($_GET['step_save'])) {
-                $step_save = (int)$_GET['step_save'];
+                $step_save = Request::getInt('step_save', 0, 'GET');
                 profile_stepsave_toggle($step_id, $step_save);
             }
         }

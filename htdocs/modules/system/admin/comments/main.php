@@ -173,7 +173,7 @@ switch ($op) {
             $verif = true;
         }
         if (isset($_POST['commentslist_id'])) {
-            $commentslist_count = (!empty($_POST['commentslist_id']) && is_array($_POST['commentslist_id'])) ? count($_POST['commentslist_id']) : 0;
+            $commentslist_count = (!empty($_POST['commentslist_id']) && \is_array($_POST['commentslist_id'])) ? count($_POST['commentslist_id']) : 0;
             if ($commentslist_count > 0) {
                 for ($i = 0; $i < $commentslist_count; ++$i) {
                     $criteria->add(new Criteria('com_id', $_REQUEST['commentslist_id'][$i]), 'OR');

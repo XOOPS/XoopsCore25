@@ -1,6 +1,6 @@
 <{if ($pageNavType == 'Nav')}>
 	<div id="xo-pagenav">
-	 <{foreach item=itemNavigation from=$pageNavigation}>
+	 <{foreach item=itemNavigation from=$pageNavigation|default:null}>
 		<{if ($itemNavigation.option == 'first')}>
 			<a class="xo-pagarrow" href="<{$itemNavigation.url}>"><u>&laquo;</u></a>
 		<{/if}>
@@ -32,7 +32,7 @@
 <{if ($pageNavType == 'Image')}>
 	<table>
 		<tr>
-		 <{foreach item=itemNavigation from=$pageNavigation}>
+		 <{foreach item=itemNavigation from=$pageNavigation|default:null}>
 			<{if ($itemNavigation.option == 'first')}>
 				<td class="pagneutral">
 					<a href="<{$itemNavigation.url}>"><u>&lt;</u></a>

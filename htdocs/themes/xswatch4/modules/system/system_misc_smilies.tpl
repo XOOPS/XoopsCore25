@@ -21,7 +21,7 @@
         </tr>
     </thead>
     <tbody>
-        <{foreach item=smile from=$smilies}>
+        <{foreach item=smile from=$smilies|default:null}>
             <tr>
                 <td class="text-center"><{$smile.code}></td>
                 <td class="text-center"><{$smile.emotion}></td>

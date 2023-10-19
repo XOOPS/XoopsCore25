@@ -2,7 +2,7 @@
 
 <{if $attached_files_count>0}>
     <{$lang_attached_files}>
-    <{foreach item=onefile from=$attached_files}>
+    <{foreach item=onefile from=$attached_files|default:null}>
         <a href="<{$onefile.visitlink}>" target="_blank"><{$onefile.file_realname}></a>
     <{/foreach}>
 <{/if}>
@@ -56,7 +56,7 @@
 
 <{if $showsummary == true && $summary_count>0}>
     <{$lang_other_story}>
-    <{foreach item=onesummary from=$summary}>
+    <{foreach item=onesummary from=$summary|default:null}>
         <{$onesummary.story_published}>
         <a href="<{$xoops_url}>/modules/news/article.php?storyid=<{$onesummary.story_id}>" title="<{$onesummary.tpltitle}>">
             <{$onesummary.story_title}>

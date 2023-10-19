@@ -41,7 +41,7 @@ if (!function_exists('protector_oninstall_base')) {
         $sql_file_path = __DIR__ . '/sql/mysql.sql';
         $prefix_mod    = $db->prefix() . '_' . $mydirname;
         if (file_exists($sql_file_path)) {
-            $ret[] = 'SQL file found at <b>' . htmlspecialchars($sql_file_path) . '</b>.<br> Creating tables...';
+            $ret[] = 'SQL file found at <b>' . htmlspecialchars($sql_file_path, ENT_QUOTES) . '</b>.<br> Creating tables...';
 
                 include_once XOOPS_ROOT_PATH . '/class/database/sqlutility.php';
                 $sqlutil = new SqlUtility; //old code is -> $sqlutil =& new SqlUtility ; //hack by Trabis
@@ -52,21 +52,21 @@ if (!function_exists('protector_oninstall_base')) {
             foreach ($pieces as $piece) {
                 $prefixed_query = $sqlutil->prefixQuery($piece, $prefix_mod);
                 if (!$prefixed_query) {
-                    $ret[] = 'Invalid SQL <b>' . htmlspecialchars($piece) . '</b><br>';
+                    $ret[] = 'Invalid SQL <b>' . htmlspecialchars($piece, ENT_QUOTES) . '</b><br>';
 
                     return false;
                 }
                 if (!$db->query($prefixed_query[0])) {
-                    $ret[] = '<b>' . htmlspecialchars($db->error()) . '</b><br>';
+                    $ret[] = '<b>' . htmlspecialchars($db->error(), ENT_QUOTES) . '</b><br>';
 
                     //var_dump( $db->error() ) ;
                     return false;
                 } else {
                     if (!in_array($prefixed_query[4], $created_tables)) {
-                        $ret[]            = 'Table <b>' . htmlspecialchars($prefix_mod . '_' . $prefixed_query[4]) . '</b> created.<br>';
+                        $ret[]            = 'Table <b>' . htmlspecialchars($prefix_mod . '_' . $prefixed_query[4], ENT_QUOTES) . '</b> created.<br>';
                         $created_tables[] = $prefixed_query[4];
                     } else {
-                        $ret[] = 'Data inserted to table <b>' . htmlspecialchars($prefix_mod . '_' . $prefixed_query[4]) . '</b>.</br />';
+                        $ret[] = 'Data inserted to table <b>' . htmlspecialchars($prefix_mod . '_' . $prefixed_query[4], ENT_QUOTES) . '</b>.</br />';
                     }
                 }
             }
@@ -98,17 +98,17 @@ if (!function_exists('protector_oninstall_base')) {
                     $tplfile->setVar('tpl_lastimported', 0);
                     $tplfile->setVar('tpl_type', 'module');
                     if (!$tplfile_handler->insert($tplfile)) {
-                        $ret[] = '<span style="color:#ff0000;">ERROR: Could not insert template <b>' . htmlspecialchars($mydirname . '_' . $file) . '</b> to the database.</span><br>';
+                        $ret[] = '<span style="color:#ff0000;">ERROR: Could not insert template <b>' . htmlspecialchars($mydirname . '_' . $file, ENT_QUOTES) . '</b> to the database.</span><br>';
                     } else {
                         $tplid = $tplfile->getVar('tpl_id');
-                        $ret[] = 'Template <b>' . htmlspecialchars($mydirname . '_' . $file) . '</b> added to the database. (ID: <b>' . $tplid . '</b>)<br>';
+                        $ret[] = 'Template <b>' . htmlspecialchars($mydirname . '_' . $file, ENT_QUOTES) . '</b> added to the database. (ID: <b>' . $tplid . '</b>)<br>';
                         // generate compiled file
                         include_once XOOPS_ROOT_PATH . '/class/xoopsblock.php';
                         include_once XOOPS_ROOT_PATH . '/class/template.php';
                         if (!xoops_template_touch($tplid)) {
-                            $ret[] = '<span style="color:#ff0000;">ERROR: Failed compiling template <b>' . htmlspecialchars($mydirname . '_' . $file) . '</b>.</span><br>';
+                            $ret[] = '<span style="color:#ff0000;">ERROR: Failed compiling template <b>' . htmlspecialchars($mydirname . '_' . $file, ENT_QUOTES) . '</b>.</span><br>';
                         } else {
-                            $ret[] = 'Template <b>' . htmlspecialchars($mydirname . '_' . $file) . '</b> compiled.</span><br>';
+                            $ret[] = 'Template <b>' . htmlspecialchars($mydirname . '_' . $file, ENT_QUOTES) . '</b> compiled.</span><br>';
                         }
                     }
                 }
@@ -122,7 +122,6 @@ if (!function_exists('protector_oninstall_base')) {
             // Directory does not exist; handle this condition
             $ret[] = '<span style="color:#ff0000;">ERROR: Directory does not exist: <b>' . htmlspecialchars($tpl_path) . '</b>.</span><br>';
         }
-
         include_once XOOPS_ROOT_PATH . '/class/xoopsblock.php';
         include_once XOOPS_ROOT_PATH . '/class/template.php';
         xoops_template_clear_module_cache($mid);

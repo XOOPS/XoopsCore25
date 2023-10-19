@@ -275,7 +275,7 @@ function createThemeform($config)
         }
         if (file_exists(XOOPS_ROOT_PATH . "/themes/$theme/theme.ini")) {
             $theme_ini = parse_ini_file(XOOPS_ROOT_PATH . "/themes/$theme/theme.ini");
-            if ($theme_ini['screenshot'] == '') {
+            if (isset($theme_ini['screenshot']) && $theme_ini['screenshot'] == '') {
                 $theme_ini['screenshot'] = 'screenshot.png';
                 $theme_ini['thumbnail']  = 'thumbnail.png';
             }
@@ -283,9 +283,9 @@ function createThemeform($config)
         if (!empty($theme_ini['Description'])) {
             $label_content .= '<div class="alert alert-info" role="alert">' . $theme_ini['Description'] . '</div>';
         }
-        if ($theme_ini['screenshot'] !== '' && file_exists(XOOPS_ROOT_PATH . '/themes/' . $theme . '/' . $theme_ini['screenshot'])) {
+        if (isset($theme_ini['screenshot']) && $theme_ini['screenshot'] !== '' && file_exists(XOOPS_ROOT_PATH . '/themes/' . $theme . '/' . $theme_ini['screenshot'])) {
             $label_content .= '<img class="img-responsive" src="' . XOOPS_URL . '/themes/' . $theme . '/' . $theme_ini['screenshot'] . '" alt="Screenshot" />';
-        } elseif ($theme_ini['thumbnail'] !== '' && file_exists(XOOPS_ROOT_PATH . '/themes/' . $theme .'/' . $theme_ini['thumbnail'])) {
+        } elseif (isset($theme_ini['thumbnail']) && $theme_ini['thumbnail'] !== '' && file_exists(XOOPS_ROOT_PATH . '/themes/' . $theme .'/' . $theme_ini['thumbnail'])) {
             $label_content .= '<img class="img-responsive" src="' . XOOPS_URL . '/themes/' . $theme . '/' . $theme_ini['thumbnail'] . '" alt="$theme" />';
         } else {
             $label_content .= THEME_NO_SCREENSHOT;

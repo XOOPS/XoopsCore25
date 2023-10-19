@@ -182,6 +182,7 @@ a.navbar-brand.xlogo {
     position: absolute;
     z-index: +30;
     opacity: 0.8;
+    -webkit-box-shadow: 2px 2px 2px #222222;
     box-shadow: 2px 2px 2px #222222;
     display: none;
 }
@@ -269,16 +270,14 @@ strong.hit-counter {
     padding: 5px 10px 5px 10px;
     color: #EEE;
     border-radius: 50px;
-    -moz-border-radius: 50px;
-    -webkit-border-radius: 50px;
     letter-spacing: 0.5px;
-    transition: all linear 300ms;
-    -moz-transition: all linear 300ms;
     -webkit-transition: all linear 300ms;
+    transition: all linear 300ms;
 }
 
 .xoops-news-navigation a:hover {
     background: #EEE;
+    -webkit-box-shadow: 0 0 5px #222;
     box-shadow: 0 0 5px #222;
     color: #333;
 }
@@ -429,8 +428,6 @@ ul.userblock > li span.badge {
     color: #404040;
     padding: 10px;
     border-radius: 5px;
-    -moz-border-radius: 5px;
-    -webkit-border-radius: 5px;
     position: relative;
 }
 
@@ -456,8 +453,6 @@ ul.userblock > li span.badge {
     border: 1px solid #DDD;
     margin-bottom: 10px;
     border-radius: 5px;
-    -moz-border-radius: 5px;
-    -webkit-border-radius: 5px;
 }
 
 .xoops-comment-form input[type=text]:focus, div.xoops-comment-form textarea:focus {
@@ -475,8 +470,6 @@ ul.userblock > li span.badge {
     padding: 5px;
     color: #FFF;
     border-radius: 5px;
-    -moz-border-radius: 5px;
-    -webkit-border-radius: 5px;
     float: right;
 }
 
@@ -518,8 +511,7 @@ ul.userblock > li span.badge {
     background: #FFF;
     padding: 10px;
     border-radius: 5px;
-    -moz-border-radius: 5px;
-    -webkit-border-radius: 5px;
+    -webkit-box-shadow: 0 0 10px #333, 0 0 10px #333;
     box-shadow: 0 0 10px #333, 0 0 10px #333;
 }
 
@@ -560,8 +552,6 @@ ul.profile-values > li.profile-category-title {
     max-height: 250px;
     margin-bottom: 10px;
     border-radius: 5px;
-    -moz-border-radius: 5px;
-    -webkit-border-radius: 5px;
 }
 
 .contact-module input[type=text]:focus,
@@ -675,7 +665,6 @@ ul.adminlinks {
     top: 0;
     right: -300px;
     height: 100%;
-    -moz-transition: all linear 300ms;
     -webkit-transition: all linear 300ms;
     transition: all linear 300ms;
 }
@@ -713,8 +702,6 @@ ul.adminlinks > li > a {
     color: #FFF;
     font-weight: bold;
     border-radius: 5px 5px 0 0;
-    -moz-border-radius: 5px 5px 0 0;
-    -webkit-border-radius: 5px 5px 0 0;
     margin: 0;
     overflow: hidden;
 }
@@ -774,8 +761,6 @@ ul.form-send-e-card input, ul.form-send-e-card textarea {
     border: 1px solid #E6E6E6;
     padding: 5px;
     border-radius: 5px;
-    -moz-border-radius: 5px;
-    -webkit-border-radius: 5px;
 }
 
 ul.form-send-e-card input:focus, ul.form-send-e-card textarea:focus {
@@ -1290,7 +1275,7 @@ div.order-by a {
 .pub_article_t_top h2 a.titlelink { color: inherit; }
 .pub_article_extras a img {  display: inline; }
 
-#xo-logger-output {padding-bottom: 6rem;}
+#xo-logger-output {padding-bottom: 96px;padding-bottom: 96px;padding-bottom: 6rem;}
 
 .jumbotron p {
     margin-left: 0.5em;
@@ -1315,7 +1300,7 @@ img.avatar {
     color: whitesmoke;
     text-shadow: 1em 0.5em 0.5em black;
     margin: 1em;
-    background: rgba(25, 25, 25, 0.4);
+    background: rgba(25, 25, 25, .4);
 }
 
 
@@ -1328,6 +1313,8 @@ img.avatar {
 }
 
 .xo-jumbotron {
+    padding-bottom: 8px;
+    padding-bottom: 8px;
     padding-bottom: 0.5rem;
 }
 
@@ -1357,7 +1344,7 @@ img.avatar {
 .vert .carousel-item-next,
 .vert .active.carousel-item-right {
     -webkit-transform: translate3d(0, 100%, 0);
-    transform: translate3d(0, 100% 0);
+    transform: translate3d(0, 100%, 0);
 }
 
 .vert .carousel-item-prev,
@@ -1385,6 +1372,7 @@ img.avatar {
     color: #999999;
     padding: 4px 8px;
     text-decoration: none;
+    -webkit-transition: background-color .3s;
     transition: background-color .3s;
     border: 1px solid #dfdfdf;
 }

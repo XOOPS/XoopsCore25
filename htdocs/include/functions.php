@@ -415,11 +415,11 @@ function xoops_confirm($hiddens, $action, $msg, $submit = '', $addtoken = true)
     foreach ($hiddens as $name => $value) {
         if (is_array($value)) {
             foreach ($value as $caption => $newvalue) {
-                $tempHiddens .= '<input type="radio" name="' . $name . '" value="' . htmlspecialchars($newvalue) . '" /> ' . $caption;
+                $tempHiddens .= '<input type="radio" name="' . $name . '" value="' . htmlspecialchars($newvalue, ENT_QUOTES) . '" /> ' . $caption;
             }
             $tempHiddens .= '<br>';
         } else {
-            $tempHiddens .= '<input type="hidden" name="' . $name . '" value="' . htmlspecialchars($value) . '" />';
+            $tempHiddens .= '<input type="hidden" name="' . $name . '" value="' . htmlspecialchars($value, ENT_QUOTES) . '" />';
         }
     }
     $confirmTpl->assign('hiddens', $tempHiddens);
@@ -428,33 +428,33 @@ function xoops_confirm($hiddens, $action, $msg, $submit = '', $addtoken = true)
         $confirmTpl->assign('token', $GLOBALS['xoopsSecurity']->getTokenHTML());
     }
     $submit = ($submit != '') ? trim($submit) : _SUBMIT;
-    $confirmTpl->assign('submit', $submit);
-    $html = $confirmTpl->fetch("db:system_confirm.tpl");
-    if (!empty($html)) {
-        echo $html;
-    } else {
-        $submit = ($submit != '') ? trim($submit) : _SUBMIT;
-        echo '<div class="confirmMsg">' . $msg . '<br>
-              <form method="post" action="' . $action . '">';
-        foreach ($hiddens as $name => $value) {
-            if (is_array($value)) {
-                foreach ($value as $caption => $newvalue) {
-                    echo '<input type="radio" name="' . $name . '" value="' . htmlspecialchars($newvalue) . '" /> ' . $caption;
-                }
-                echo '<br>';
-            } else {
-                echo '<input type="hidden" name="' . $name . '" value="' . htmlspecialchars($value) . '" />';
-            }
-        }
-        if ($addtoken != false) {
-            echo $GLOBALS['xoopsSecurity']->getTokenHTML();
-        }
-        // TODO - these buttons should go through formRenderer
-        echo '<input type="submit" class="btn btn-default btn-secondary" name="confirm_submit" value="' . $submit . '" title="' . $submit . '"/>
-              <input type="button" class="btn btn-default btn-secondary" name="confirm_back" value="' . _CANCEL . '" onclick="history.go(-1);" title="' . _CANCEL . '" />
-              </form>
-              </div>';
-    }
+	$confirmTpl->assign('submit', $submit);
+	$html = $confirmTpl->fetch("db:system_confirm.tpl");
+	if (!empty($html)) {
+		echo $html;
+	} else {
+		$submit = ($submit != '') ? trim($submit) : _SUBMIT;
+		echo '<div class="confirmMsg">' . $msg . '<br>
+			  <form method="post" action="' . $action . '">';
+		foreach ($hiddens as $name => $value) {
+			if (is_array($value)) {
+				foreach ($value as $caption => $newvalue) {
+					echo '<input type="radio" name="' . $name . '" value="' . htmlspecialchars($newvalue, ENT_QUOTES) . '" /> ' . $caption;
+				}
+				echo '<br>';
+			} else {
+				echo '<input type="hidden" name="' . $name . '" value="' . htmlspecialchars($value, ENT_QUOTES) . '" />';
+			}
+		}
+		if ($addtoken != false) {
+			echo $GLOBALS['xoopsSecurity']->getTokenHTML();
+		}
+		// TODO - these buttons should go through formRenderer
+		echo '<input type="submit" class="btn btn-default btn-secondary" name="confirm_submit" value="' . $submit . '" title="' . $submit . '"/>
+			  <input type="button" class="btn btn-default btn-secondary" name="confirm_back" value="' . _CANCEL . '" onclick="history.go(-1);" title="' . _CANCEL . '" />
+			  </form>
+			  </div>';
+	}
 }
 
 /**

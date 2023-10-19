@@ -462,19 +462,30 @@ class Protector
     public function get_group1_ips($with_info = false)
     {
         //        list($group1_ips_serialized) = @file(Protector::get_filepath4group1ips());
-        $filepath4group1ips = @file(Protector::get_filepath4group1ips());
+        $group1_ips = [];
+        // Check if the file exists before attempting to read it
+        $filepath = Protector::get_filepath4group1ips();
+        if (file_exists($filepath)) {
+            $filepath4group1ips = file($filepath);
+            if ($filepath4group1ips === false) {
+                // Handle the error condition when file reading fails
+            } else {
+                // Proceed with your logic here
+                if (is_array($filepath4group1ips) && isset($filepath4group1ips[0])) {
+                    list($group1_ips_serialized) = $filepath4group1ips;
+                }
 
-        if (is_array($filepath4group1ips) && isset($filepath4group1ips[0])) {
-            list($group1_ips_serialized) = $filepath4group1ips;
-        }
+                $group1_ips = empty($group1_ips_serialized) ? array() : @unserialize($group1_ips_serialized, array('allowed_classes' => false));
+                if (!is_array($group1_ips)) {
+                    $group1_ips = array();
+                }
 
-        $group1_ips = empty($group1_ips_serialized) ? array() : @unserialize($group1_ips_serialized, array('allowed_classes' => false));
-        if (!is_array($group1_ips)) {
-            $group1_ips = array();
-        }
-
-        if ($with_info) {
-            $group1_ips = array_flip($group1_ips);
+                if ($with_info) {
+                    $group1_ips = array_flip($group1_ips);
+                }
+            }
+        } else {
+            // File does not exist; handle this condition
         }
 
         return $group1_ips;

@@ -214,7 +214,7 @@ switch ($op) {
         $criteria->setSort('image_weight ASC, image_id');
         $criteria->setOrder('DESC');
         $imgcount = $image_handler->getCount($criteria);
-        $start    = isset($_GET['start']) ? (int)$_GET['start'] : 0;
+        $start    = Request::getInt('start', 0, 'GET');
         $criteria->setStart($start);
         $criteria->setLimit(xoops_getModuleOption('images_pager', 'system'));
         $images = $image_handler->getObjects($criteria, true, false);

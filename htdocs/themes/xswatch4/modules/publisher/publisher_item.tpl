@@ -39,7 +39,7 @@
                     </div>
                     <{assign var=active value=''}>
                     <{/if}>
-                    <{foreach item=image from=$item.images name=foo}>
+                    <{foreach item=image from=$item.images|default:null name=foo}>
                     <div class="carousel-item<{$active}>">
                         <img class="d-block w-100" src="<{$image.path}>" alt="<{$image.name}>"/>
                         <div class="carousel-caption d-none d-md-block">
@@ -114,7 +114,7 @@
         </tr>
         </thead>
         <tbody>
-        <{foreach item=file from=$item.files}>
+        <{foreach item=file from=$item.files|default:null}>
             <tr>
                 <td>
                     <{if $file.mod}>
@@ -190,7 +190,7 @@
         </thead>
         <tbody>
         <!-- Start item loop -->
-        <{foreach item=item from=$items}>
+        <{foreach item=item from=$items|default:null}>
             <tr>
                 <td class="even" align="left"><{$item.titlelink}></td>
                 <{if $display_date_col == 1}>

@@ -5,7 +5,7 @@
             <th><{$smarty.const._MB_NEWBB_AUTHOR}></th>
             <th><{$smarty.const._MB_NEWBB_COUNT}></th>
         </tr>
-        <{foreach item=author key=uid from=$block.authors}>
+        <{foreach item=author from=$block.authors|default:null key=uid }>
         <tr>
             <td><a href="<{$xoops_url}>/userinfo.php?uid=<{$uid}>"><{$author.name}></a></td>
             <td align="center"><{$author.count}></td>
@@ -14,7 +14,7 @@
 
     <{elseif $block.disp_mode == 1}>
 
-        <{foreach item=author key=uid from=$block.authors}>
+        <{foreach item=author from=$block.authors|default:null key=uid }>
         <tr>
             <td><a href="<{$xoops_url}>/userinfo.php?uid=<{$uid}>"><{$author.name}></a> <{$author.count}></td>
         </tr>

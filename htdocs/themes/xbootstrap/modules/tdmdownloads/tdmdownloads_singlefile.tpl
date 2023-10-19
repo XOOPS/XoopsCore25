@@ -39,7 +39,7 @@
                     <{/if}>
 
                     <{if $sup_aff == true}>
-                    <{foreach item=champ from=$champ_sup}>
+                    <{foreach item=champ from=$champ_sup|default:null}>
                 <li><{$champ.data}></li>
                 <{/foreach}>
                 <{/if}>

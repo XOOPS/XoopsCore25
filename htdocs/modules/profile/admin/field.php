@@ -196,7 +196,7 @@ switch ($op) {
             }
             $options = $obj->getVar('field_options');
 
-            if (isset($_REQUEST['removeOptions']) && is_array($_REQUEST['removeOptions'])) {
+            if (isset($_REQUEST['removeOptions']) && \is_array($_REQUEST['removeOptions'])) {
                 foreach ($_REQUEST['removeOptions'] as $index) {
                     unset($options[$index]);
                 }
@@ -260,7 +260,7 @@ switch ($op) {
                     $criteria = new CriteriaCompo(new Criteria('gperm_name', $perm));
                     $criteria->add(new Criteria('gperm_itemid', (int)$obj->getVar('field_id')));
                     $criteria->add(new Criteria('gperm_modid', (int)$GLOBALS['xoopsModule']->getVar('mid')));
-                    if (isset($_REQUEST[$perm]) && is_array($_REQUEST[$perm])) {
+                    if (isset($_REQUEST[$perm]) && \is_array($_REQUEST[$perm])) {
                         $perms = $groupperm_handler->getObjects($criteria);
                         if (count($perms) > 0) {
                             foreach (array_keys($perms) as $i) {

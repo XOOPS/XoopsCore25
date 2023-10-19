@@ -20,7 +20,7 @@
   <{$storyform.javascript}>
   <h3><{$storyform.title}></h3>
   <form id="sub-lex" name="<{$storyform.name}>" action="<{$storyform.action}>" method="<{$storyform.method}>" <{$storyform.extra}>>
-    <{foreach item=element from=$storyform.elements}>
+    <{foreach item=element from=$storyform.elements|default:null}>
       <{if $element.hidden|default:false != true}>
       <div class="form-group">
         <label><{$element.caption|default:'' }></label>

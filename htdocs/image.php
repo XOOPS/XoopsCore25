@@ -40,6 +40,8 @@
  *
  */
 
+use Xmf\Request;
+
 /* @example         image.php
  * Resizing a JPEG:
  * <img src="/image.php?url=image-name.jpg&width=100&height=100" alt="Don't forget your alt text" />
@@ -256,8 +258,9 @@ function imageFilenameCheck($imageUrl)
  * Get image
  */
 // Get id (Xoops image) or url or src (standard image)
-$imageId = isset($_GET['id']) ? (int)$_GET['id'] : false;
-$imageUrl = isset($_GET['url']) ? (string)$_GET['url'] : (isset($_GET['src']) ? (string)$_GET['src'] : false);
+$imageId = Request::getInt('id', 0, 'GET');
+$imageUrl = Request::getUrl('url', Request::getString('src', '', 'GET'), 'GET');
+
 if (!empty($imageId)) {
     // If image is a Xoops image
     /** @var XoopsImageHandler $imageHandler */
@@ -363,8 +366,8 @@ if (!isset($_GET['nocache']) && !isset($_GET['noservercache']) && !empty($cached
  * Get/check editing parameters
  */
 // width, height
-$max_width = isset($_GET['width']) ? (int)$_GET['width'] : false;
-$max_height = isset($_GET['height']) ? (int)$_GET['height'] : false;
+$max_width = Request::getInt('width', 0, 'GET');
+$max_height = Request::getInt('height', 0, 'GET');
 // If either a max width or max height are not specified, we default to something large so the unspecified
 // dimension isn't a constraint on our resized image.
 // If neither are specified but the color is, we aren't going to be resizing at all, just coloring.
@@ -381,14 +384,18 @@ if (!$max_width && $max_height) {
 $color = isset($_GET['color']) ? preg_replace('/[^0-9a-fA-F]/', '', (string)$_GET['color']) : false;
 
 // filter, radius, angle
-$filter = isset($_GET['filter']) ? $_GET['filter'] : false;
-$radius = isset($_GET['radius']) ? (string)$_GET['radius'] : false;
-$angle = isset($_GET['angle']) ? (float)$_GET['angle'] : false;
+$filter = Request::getArray('filter', [], 'GET'); //isset($_GET['filter']) ? $_GET['filter'] : false;
+$radius =  Request::getString('radius', '', 'GET'); //isset($_GET['radius']) ? (string)$_GET['radius'] : false;
+$angle = Request::getFloat('angle', 0, 'GET');// isset($_GET['angle']) ? (float)$_GET['angle'] : false;
 
 // If we don't have a width or height or color or filter or radius or rotate we simply output the original
 // image and exit
-if (empty($_GET['width']) && empty($_GET['height']) && empty($_GET['color']) && empty($_GET['filter'])
-    && empty($_GET['radius']) && empty($_GET['angle'])) {
+if (empty($width)
+    && empty($height)
+    && empty($color)
+    && empty($filter)
+    && empty($radius)
+    && empty($angle)) {
     $last_modified_string = gmdate('D, d M Y H:i:s', $imageCreatedTime) . ' GMT';
     $etag = md5($imageData);
     doConditionalGet($etag, $last_modified_string);
@@ -402,7 +409,7 @@ if (empty($_GET['width']) && empty($_GET['height']) && empty($_GET['color']) && 
 $offset_x = 0;
 $offset_y = 0;
 if (isset($_GET['cropratio'])) {
-    $crop_ratio = explode(':', (string)$_GET['cropratio']);
+    $crop_ratio = explode(':', Request::getString('cropratio', '', 'GET'));
     if (count($crop_ratio) == 2) {
         $ratio_computed = $imageWidth / $imageHeight;
         $crop_radio_computed = (float)$crop_ratio[0] / (float)$crop_ratio[1];
@@ -434,7 +441,7 @@ if ($xRatio * $imageHeight < $max_height) {
 }
 
 // quality
-$quality = isset($_GET['quality']) ? (int)$_GET['quality'] : DEFAULT_IMAGE_QUALITY;
+$quality = Request::getInt('quality', DEFAULT_IMAGE_QUALITY, 'GET') ;
 
 /*
  * Start image editing

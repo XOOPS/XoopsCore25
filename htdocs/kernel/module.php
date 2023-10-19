@@ -96,7 +96,7 @@ class XoopsModule extends XoopsObject
         $hasmain     = (isset($this->modinfo['hasMain']) && $this->modinfo['hasMain'] == 1) ? 1 : 0;
         $hasadmin    = (isset($this->modinfo['hasAdmin']) && $this->modinfo['hasAdmin'] == 1) ? 1 : 0;
         $hassearch   = (isset($this->modinfo['hasSearch']) && $this->modinfo['hasSearch'] == 1) ? 1 : 0;
-        $hasconfig   = ((isset($this->modinfo['config']) && is_array($this->modinfo['config'])) || !empty($this->modinfo['hasComments'])) ? 1 : 0;
+        $hasconfig   = ((isset($this->modinfo['config']) && \is_array($this->modinfo['config'])) || !empty($this->modinfo['hasComments'])) ? 1 : 0;
         $hascomments = (isset($this->modinfo['hasComments']) && $this->modinfo['hasComments'] == 1) ? 1 : 0;
         // RMV-NOTIFY
         $hasnotification = (isset($this->modinfo['hasNotification']) && $this->modinfo['hasNotification'] == 1) ? 1 : 0;
@@ -228,7 +228,7 @@ class XoopsModule extends XoopsObject
     public function subLink()
     {
         $ret = array();
-        if ($this->getInfo('sub') && is_array($this->getInfo('sub'))) {
+        if ($this->getInfo('sub') && \is_array($this->getInfo('sub'))) {
             foreach ($this->getInfo('sub') as $submenu) {
                 $ret[] = array(
                     'name' => $submenu['name'],

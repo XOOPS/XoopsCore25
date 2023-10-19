@@ -15,7 +15,7 @@
     <th colspan="2"><{$uploadavatar.title}></th>
     </tr>
     <!-- start of form elements loop -->
-    <{foreach item=element from=$uploadavatar.elements}>
+    <{foreach item=element from=$uploadavatar.elements|default:null}>
       <{if $element.hidden|default:false != true}>
       <tr>
         <td class="head"><{$element.caption|default:''}>
@@ -43,7 +43,7 @@
     <th colspan="2"><{$chooseavatar.title}></th>
     </tr>
     <!-- start of form elements loop -->
-    <{foreach item=element from=$chooseavatar.elements}>
+    <{foreach item=element from=$chooseavatar.elements|default:null}>
       <{if $element.hidden|default:false != true}>
       <tr>
         <td class="head"><{$element.caption|default:''}>

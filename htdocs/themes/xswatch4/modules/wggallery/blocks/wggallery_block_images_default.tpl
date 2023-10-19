@@ -2,7 +2,7 @@
     <div id="wgBlockImagesCarouselSlides" class="carousel slide" data-ride="carousel">
         <div class="carousel-inner">
             <{assign var=active value=' active'}>
-            <{foreach item=image from=$images_list}>
+            <{foreach item=image from=$images_list|default:null}>
             <div class="carousel-item<{$active}>">
                 <a href="<{$wggallery_url}>/images.php?op=show&amp;img_id=<{$image.id}>&amp;alb_id=<{$image.albid}>&alb_pid=<{$image.albpid}>" title="<{$smarty.const._CO_WGGALLERY_IMAGE_SHOW}>" target="<{$image_target}>">
                 <img class="img-fluid wgg-album-img center" src="<{$image.medium}>" alt="<{$image.title}>">

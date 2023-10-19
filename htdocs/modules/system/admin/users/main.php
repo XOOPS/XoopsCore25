@@ -108,7 +108,7 @@ switch ($op) {
         if (Request::hasVar('memberslist_id')) {
             $xoBreadCrumb->render();
             $error = '';
-            foreach (Request::getArray('memberslist_id', array()) as $del)
+            foreach (Request::getArray('memberslist_id', array()) as $del) {
                 $del    = (int)$del;
                 $user   = $member_handler->getUser($del);
                 $groups = $user->getGroups();
@@ -129,6 +129,7 @@ switch ($op) {
             } else {
                 redirect_header('admin.php?fct=users', 1, _AM_SYSTEM_DBUPDATED);
             }
+        }
         break;
 
     // Save user
@@ -205,9 +206,9 @@ switch ($op) {
                         global $xoopsUser;
                         $oldgroups = $edituser->getGroups();
                         //If the edited user is the current user and the current user WAS in the webmaster's group and is NOT in the new groups array
-                        if ($edituser->getVar('uid') == $xoopsUser->getVar('uid') && in_array(XOOPS_GROUP_ADMIN, $oldgroups) && !in_array(XOOPS_GROUP_ADMIN, $_REQUEST['groups'])) {
+                        if ($edituser->getVar('uid') == $xoopsUser->getVar('uid') && in_array(XOOPS_GROUP_ADMIN, $oldgroups) && !in_array(XOOPS_GROUP_ADMIN, $groups)) {
                             //Add the webmaster's group to the groups array to prevent accidentally removing oneself from the webmaster's group
-                        $groups[] = XOOPS_GROUP_ADMIN;
+                            $groups[] = XOOPS_GROUP_ADMIN;
                         $_REQUEST['groups'] = $groups;  // Update the global variable
                         }
                          /** @var XoopsMemberHandler $member_handler */
@@ -284,11 +285,11 @@ switch ($op) {
                         $groups = Request::getArray('groups', array());
                         if (!empty($groups)) {
                             foreach ($groups as $group) {
-                                $group = (int)$group;
-                                if (!$member_handler->addUserToGroup($group, $newuser->getVar('uid'))) {
-                                    $groups_failed[] = $group;
-                                }
+                            $group = (int)$group;
+                            if (!$member_handler->addUserToGroup($group, $newuser->getVar('uid'))) {
+                                $groups_failed[] = $group;
                             }
+                        }
                         }
                         if (!empty($groups_failed)) {
                             $group_names      = $member_handler->getGroupList(new Criteria('groupid', '(' . implode(', ', $groups_failed) . ')', 'IN'));
@@ -323,7 +324,7 @@ switch ($op) {
     case 'users_synchronize':
         if (Request::hasVar('status') && Request::getString('status') == 1) {
             synchronize($uid, 'user');
-        } elseif (isset($_REQUEST['status']) && $_REQUEST['status'] == 2) {
+        } elseif (Request::hasVar('status') && Request::getString('status')== 2) {
             synchronize('', 'all users');
         }
         redirect_header('admin.php?fct=users', 1, _AM_SYSTEM_DBUPDATED);
@@ -673,7 +674,7 @@ switch ($op) {
 
             if (Request::hasVar('user_reg_more') && is_numeric(Request::getString('user_reg_more'))) {
                 $f_user_reg_more = (int)Request::getString('user_reg_more');
-                $time = time() - (60 * 60 * 24 * $f_user_reg_more);
+                $time            = time() - (60 * 60 * 24 * $f_user_reg_more);
                 if ($time > 0) {
                     $criteria->add(new Criteria('user_regdate', $time, '<'));
                 }
@@ -745,7 +746,6 @@ switch ($op) {
                 $requete_search .= 'order by : ' . $sort . '<br>';
             }
 
-
             $order = 'DESC';
             if (Request::hasVar('user_order') && Request::getString('user_order') === 'ASC') {
                 $requete_pagenav .= '&amp;user_order=ASC';
@@ -767,7 +767,7 @@ switch ($op) {
             }
 
             $start = Request::getInt('start');
-            $groups = array();
+                $groups = array();
             if (Request::hasVar('selgroups')) {
                 $selgroups = Request::getArray('selgroups', array()); // Default to an empty array if 'selgroups' is not set
                 if (empty($selgroups)) {
@@ -775,13 +775,12 @@ switch ($op) {
                     $selgroupsInt = Request::getInt('selgroups', 0);
                     if ($selgroupsInt != 0) {
                         $groups = array($selgroupsInt);
-                    }
-                } else {
+                }
+            } else {
                     $groups = array_map('intval', $selgroups);
                 }
                 $requete_pagenav .= '&amp;selgroups=' . htmlspecialchars(implode(',', $selgroups), ENT_QUOTES);
             }
-
             //print_r($groups);
             /** @var XoopsMemberHandler $member_handler */
             $member_handler = xoops_getHandler('member');
@@ -804,7 +803,7 @@ switch ($op) {
             $xoopsTpl->assign('users_count', $users_count);
             $xoopsTpl->assign('users_display', true);
 
-             //User limit
+            //User limit
             $user_limit = Request::getInt('user_limit',  20);
             //User type
             $user_type = Request::getString('user_type');
@@ -813,13 +812,13 @@ switch ($op) {
             $user_uname = Request::getString('user_uname');
 
             //Form tris
-            $form = '<form action="admin.php?fct=users" method="post">
+            $form          = '<form action="admin.php?fct=users" method="post">
                     ' . _AM_SYSTEM_USERS_SEARCH_USER . '<input type="text" name="user_uname" value="' . $myts->htmlSpecialChars($user_uname) . '" size="15">
                     <select name="selgroups">
                         <option value="" selected>' . _AM_SYSTEM_USERS_ALLGROUP . '</option>';
             /* @var XoopsGroupHandler $group_handler */
             $group_handler = xoops_getHandler('group');
-            $group_arr = $group_handler->getObjects();
+            $group_arr     = $group_handler->getObjects();
             foreach (array_keys($group_arr) as $i) {
                 if ($group_arr[$i]->getVar('groupid') != XOOPS_GROUP_ANONYMOUS) {
                     $form .= '<option value="' . $group_arr[$i]->getVar('groupid') . '"  ' . ($selgroups == $group_arr[$i]->getVar('groupid') ? ' selected' : '') . '>' . $group_arr[$i]->getVar('name') . '</option>';

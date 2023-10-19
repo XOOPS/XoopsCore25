@@ -17,8 +17,8 @@
 // Translator: XOOPS Translation Team
 define('SHOW_HIDE_HELP', 'Show/hide help text');
 // License
-define('LICENSE_NOT_WRITEABLE', 'License file "%s" is NOT writable!');
-define('LICENSE_IS_WRITEABLE', '%s License is writable.');
+//define('LICENSE_NOT_WRITEABLE', 'License file "%s" is NOT writable!');
+//define('LICENSE_IS_WRITEABLE', '%s License is writable.');
 // Configuration check page
 define('SERVER_API', 'Server API');
 define('PHP_EXTENSION', '%s extension');

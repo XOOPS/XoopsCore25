@@ -75,7 +75,7 @@ if (empty($xoopsOption['hascommon'])) {
 
 }
 
-@include __DIR__ . '/../mainfile.php';
+@include __DIR__ . '/../../mainfile.php';
 if (!defined('XOOPS_ROOT_PATH')) {
     define('XOOPS_ROOT_PATH', str_replace("\\", '/', realpath('../')));
 }
@@ -96,6 +96,6 @@ if (!$wizard->xoInit()) {
     exit();
 }
 
-if (!@is_array($_SESSION['settings'])) {
+if (!isset($_SESSION['settings']) || !is_array($_SESSION['settings'])) {
     $_SESSION['settings'] = array();
 }
