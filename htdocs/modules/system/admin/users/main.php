@@ -129,7 +129,6 @@ switch ($op) {
             } else {
                 redirect_header('admin.php?fct=users', 1, _AM_SYSTEM_DBUPDATED);
             }
-        }
         break;
 
     // Save user
@@ -206,6 +205,8 @@ switch ($op) {
                         global $xoopsUser;
                         $oldgroups = $edituser->getGroups();
                         //If the edited user is the current user and the current user WAS in the webmaster's group and is NOT in the new groups array
+                        if ($edituser->getVar('uid') == $xoopsUser->getVar('uid') && in_array(XOOPS_GROUP_ADMIN, $oldgroups) && !in_array(XOOPS_GROUP_ADMIN, $_REQUEST['groups'])) {
+                            //Add the webmaster's group to the groups array to prevent accidentally removing oneself from the webmaster's group
                         $groups[] = XOOPS_GROUP_ADMIN;
                         $_REQUEST['groups'] = $groups;  // Update the global variable
                         }
@@ -223,7 +224,8 @@ switch ($op) {
             }
             exit();
         } else {
-            //Add user            if (!$GLOBALS['xoopsSecurity']->check()) {
+            //Add user
+            if (!$GLOBALS['xoopsSecurity']->check()) {
                 redirect_header('admin.php?fct=users', 3, implode('<br>', $GLOBALS['xoopsSecurity']->getErrors()));
             }
             if (!Request::getString('username') || !Request::getString('email') || !Request::getString('password')) {
@@ -474,7 +476,7 @@ switch ($op) {
             $user_uname = Request::getString('user_uname');
             $user_uname_match = Request::getInt('user_uname_match', 0);
 
-                       $criteria = new CriteriaCompo();
+            $criteria = new CriteriaCompo();
             if (!empty($user_uname)) {
                 $match = (!empty($user_uname_match)) ? $user_uname_match: XOOPS_MATCH_START;
                 switch ($match) {
