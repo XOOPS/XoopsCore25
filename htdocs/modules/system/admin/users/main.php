@@ -93,9 +93,9 @@ switch ($op) {
             $xoBreadCrumb->addLink(_AM_SYSTEM_USERS_NAV_DELETE_USER);
             $xoBreadCrumb->render();
             xoops_confirm(array(
-                              'ok'  => 1,
-                              'uid' => $uid,
-                              'op'  => 'users_delete'), $_SERVER['REQUEST_URI'], sprintf(_AM_SYSTEM_USERS_FORM_SURE_DEL, $user->getVar('uname')));
+                'ok'  => 1,
+                'uid' => $uid,
+                'op'  => 'users_delete'), $_SERVER['REQUEST_URI'], sprintf(_AM_SYSTEM_USERS_FORM_SURE_DEL, $user->getVar('uname')));
         }
         break;
 
@@ -209,7 +209,7 @@ switch ($op) {
                         if ($edituser->getVar('uid') == $xoopsUser->getVar('uid') && in_array(XOOPS_GROUP_ADMIN, $oldgroups) && !in_array(XOOPS_GROUP_ADMIN, $groups)) {
                             //Add the webmaster's group to the groups array to prevent accidentally removing oneself from the webmaster's group
                             $groups[] = XOOPS_GROUP_ADMIN;
-                        $_REQUEST['groups'] = $groups;  // Update the global variable
+                            $_REQUEST['groups'] = $groups;  // Update the global variable
                         }
                          /** @var XoopsMemberHandler $member_handler */
                         $member_handler = xoops_getHandler('member');
@@ -285,11 +285,11 @@ switch ($op) {
                         $groups = Request::getArray('groups', array());
                         if (!empty($groups)) {
                             foreach ($groups as $group) {
-                            $group = (int)$group;
-                            if (!$member_handler->addUserToGroup($group, $newuser->getVar('uid'))) {
-                                $groups_failed[] = $group;
+                                $group = (int)$group;
+                                if (!$member_handler->addUserToGroup($group, $newuser->getVar('uid'))) {
+                                    $groups_failed[] = $group;
+                                }
                             }
-                        }
                         }
                         if (!empty($groups_failed)) {
                             $group_names      = $member_handler->getGroupList(new Criteria('groupid', '(' . implode(', ', $groups_failed) . ')', 'IN'));
@@ -410,21 +410,21 @@ switch ($op) {
             $posts_less   = new XoopsFormText(_AM_SYSTEM_USERS_POSTSLESS, 'user_posts_less', 10, 5);
             $mailok_radio = new XoopsFormRadio(_AM_SYSTEM_USERS_SHOWMAILOK, 'user_mailok', 'both');
             $mailok_radio->addOptionArray(array(
-                                              'mailok' => _AM_SYSTEM_USERS_MAILOK,
-                                              'mailng' => _AM_SYSTEM_USERS_MAILNG,
-                                              'both' => _AM_SYSTEM_USERS_BOTH));
+                'mailok' => _AM_SYSTEM_USERS_MAILOK,
+                'mailng' => _AM_SYSTEM_USERS_MAILNG,
+                'both' => _AM_SYSTEM_USERS_BOTH));
             $type_radio = new XoopsFormRadio(_AM_SYSTEM_USERS_SHOWTYPE, 'user_type', 'actv');
             $type_radio->addOptionArray(array(
-                                            'actv' => _AM_SYSTEM_USERS_ACTIVE,
-                                            'inactv' => _AM_SYSTEM_USERS_INACTIVE,
-                                            'both' => _AM_SYSTEM_USERS_BOTH));
+                'actv' => _AM_SYSTEM_USERS_ACTIVE,
+                'inactv' => _AM_SYSTEM_USERS_INACTIVE,
+                'both' => _AM_SYSTEM_USERS_BOTH));
             $sort_select = new XoopsFormSelect(_AM_SYSTEM_USERS_SORT, 'user_sort');
             $sort_select->addOptionArray(array(
-                                             'uname' => _AM_SYSTEM_USERS_UNAME,
-                                             'email' => _AM_SYSTEM_USERS_EMAIL,
-                                             'last_login' => _AM_SYSTEM_USERS_LASTLOGIN,
-                                             'user_regdate' => _AM_SYSTEM_USERS_REGDATE,
-                                             'posts' => _AM_SYSTEM_USERS_POSTS));
+                'uname' => _AM_SYSTEM_USERS_UNAME,
+                'email' => _AM_SYSTEM_USERS_EMAIL,
+                'last_login' => _AM_SYSTEM_USERS_LASTLOGIN,
+                'user_regdate' => _AM_SYSTEM_USERS_REGDATE,
+                'posts' => _AM_SYSTEM_USERS_POSTS));
             $order_select = new XoopsFormSelect(_AM_SYSTEM_USERS_ORDER, 'user_order');
             $order_select->addOptionArray(array('ASC' => _AM_SYSTEM_USERS_ASC, 'DESC' => _AM_SYSTEM_USERS_DESC));
             $limit_text    = new XoopsFormText(_AM_SYSTEM_USERS_LIMIT, 'user_limit', 6, 2, 20);
@@ -477,7 +477,7 @@ switch ($op) {
             $user_uname = Request::getString('user_uname');
             $user_uname_match = Request::getInt('user_uname_match', 0);
 
-            $criteria = new CriteriaCompo();
+                       $criteria = new CriteriaCompo();
             if (!empty($user_uname)) {
                 $match = (!empty($user_uname_match)) ? $user_uname_match: XOOPS_MATCH_START;
                 switch ($match) {
@@ -674,7 +674,7 @@ switch ($op) {
 
             if (Request::hasVar('user_reg_more') && is_numeric(Request::getString('user_reg_more'))) {
                 $f_user_reg_more = (int)Request::getString('user_reg_more');
-                $time            = time() - (60 * 60 * 24 * $f_user_reg_more);
+                $time = time() - (60 * 60 * 24 * $f_user_reg_more);
                 if ($time > 0) {
                     $criteria->add(new Criteria('user_regdate', $time, '<'));
                 }
@@ -746,6 +746,7 @@ switch ($op) {
                 $requete_search .= 'order by : ' . $sort . '<br>';
             }
 
+
             $order = 'DESC';
             if (Request::hasVar('user_order') && Request::getString('user_order') === 'ASC') {
                 $requete_pagenav .= '&amp;user_order=ASC';
@@ -767,7 +768,7 @@ switch ($op) {
             }
 
             $start = Request::getInt('start');
-                $groups = array();
+            $groups = array();
             if (Request::hasVar('selgroups')) {
                 $selgroups = Request::getArray('selgroups', array()); // Default to an empty array if 'selgroups' is not set
                 if (empty($selgroups)) {
@@ -775,12 +776,13 @@ switch ($op) {
                     $selgroupsInt = Request::getInt('selgroups', 0);
                     if ($selgroupsInt != 0) {
                         $groups = array($selgroupsInt);
-                }
-            } else {
+                    }
+                } else {
                     $groups = array_map('intval', $selgroups);
                 }
                 $requete_pagenav .= '&amp;selgroups=' . htmlspecialchars(implode(',', $selgroups), ENT_QUOTES);
             }
+
             //print_r($groups);
             /** @var XoopsMemberHandler $member_handler */
             $member_handler = xoops_getHandler('member');
@@ -812,13 +814,13 @@ switch ($op) {
             $user_uname = Request::getString('user_uname');
 
             //Form tris
-            $form          = '<form action="admin.php?fct=users" method="post">
+            $form = '<form action="admin.php?fct=users" method="post">
                     ' . _AM_SYSTEM_USERS_SEARCH_USER . '<input type="text" name="user_uname" value="' . $myts->htmlSpecialChars($user_uname) . '" size="15">
                     <select name="selgroups">
                         <option value="" selected>' . _AM_SYSTEM_USERS_ALLGROUP . '</option>';
             /* @var XoopsGroupHandler $group_handler */
             $group_handler = xoops_getHandler('group');
-            $group_arr     = $group_handler->getObjects();
+            $group_arr = $group_handler->getObjects();
             foreach (array_keys($group_arr) as $i) {
                 if ($group_arr[$i]->getVar('groupid') != XOOPS_GROUP_ANONYMOUS) {
                     $form .= '<option value="' . $group_arr[$i]->getVar('groupid') . '"  ' . ($selgroups == $group_arr[$i]->getVar('groupid') ? ' selected' : '') . '>' . $group_arr[$i]->getVar('name') . '</option>';
