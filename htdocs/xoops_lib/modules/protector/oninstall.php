@@ -22,7 +22,7 @@ if (!function_exists('protector_oninstall_base')) {
      */
     function protector_oninstall_base($module, $mydirname)
     {
-        /* @var XoopsModule $module */
+        /** @var XoopsModule $module */
         // translations on module install
 
         global $ret; // TODO :-D
@@ -112,6 +112,11 @@ if (!function_exists('protector_oninstall_base')) {
                         }
                     }
                 }
+            }
+            closedir($handler);
+            } else {
+                // Handle the error condition when opendir fails
+                $ret[] = '<span style="color:#ff0000;">ERROR: Could not open the directory:  <b>' . htmlspecialchars($tpl_path) . '</b>.</span><br>';
             }
             closedir($handler);
             } else {

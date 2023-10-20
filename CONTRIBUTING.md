@@ -1,6 +1,6 @@
 # Contributing to XOOPS CMS Project
 
-We welcome your contributions to [XOOPS CMS Project](http://xoops.org) on [GitHub](https://github.com/XOOPS)!
+We welcome your contributions to [XOOPS CMS Project](https://xoops.org) on [GitHub](https://github.com/XOOPS)!
 
 We use a [fork and pull](https://www.atlassian.com/git/tutorials/comparing-workflows/forking-workflow) workflow on GitHub that allows anyone to contribute changes. You don't need any special permissions, just a GitHub account. This is a lot easier to manage if you follow these basic steps:
 

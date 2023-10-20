@@ -18,7 +18,7 @@ namespace Xmf;
  * @package   Xmf
  * @author    trabis <lusopoemas@gmail.com>
  * @copyright 2018-2021 XOOPS Project (https://xoops.org)
- * @license   GNU GPL 2 or later (http://www.gnu.org/licenses/gpl-2.0.html)
+ * @license   GNU GPL 2.0 or later (https://www.gnu.org/licenses/gpl-2.0.html)
  * @link      https://xoops.org
  */
 class IPAddress

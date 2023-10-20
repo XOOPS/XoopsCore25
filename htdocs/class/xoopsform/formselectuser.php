@@ -11,7 +11,7 @@
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  *
- * @copyright       The XOOPS Project (http://xoops.org)
+ * @copyright       The XOOPS Project (https://xoops.org)
  * @license         GNU GPL 2 (https://www.gnu.org/licenses/gpl-2.0.html)
  * @package         kernel
  * @subpackage      form
@@ -71,7 +71,7 @@ class XoopsFormSelectUser extends XoopsFormElementTray
         if ($includeAnonymous) {
             $select_element->addOption(0, $GLOBALS['xoopsConfig']['anonymous']);
         }
-        /* @var XoopsMemberHandler $member_handler */
+        /** @var XoopsMemberHandler $member_handler */
         $member_handler = xoops_getHandler('member');
         $value          = is_array($value) ? $value : (empty($value) ? array() : array($value));
         $selectedUsers = array();

@@ -12,7 +12,7 @@
  * Modules Javascript
  *
  * @copyright   (c) 2000-2015 XOOPS Project (www.xoops.org)
- * @license     GNU GPL 2 or later (https://www.gnu.org/licenses/gpl-2.0.html)
+ * @license     GNU GPL 2.0 or later (https://www.gnu.org/licenses/gpl-2.0.html)
  * @author      Andricq Nicolas (AKA MusS)
  */
 

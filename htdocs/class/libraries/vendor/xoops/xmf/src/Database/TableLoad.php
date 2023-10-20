@@ -22,7 +22,7 @@ use Xmf\Yaml;
  * @package   Xmf
  * @author    Richard Griffith <richard@geekwright.com>
  * @copyright 2013-2018 XOOPS Project (https://xoops.org)
- * @license   GNU GPL 2 or later (http://www.gnu.org/licenses/gpl-2.0.html)
+ * @license   GNU GPL 2.0 or later (https://www.gnu.org/licenses/gpl-2.0.html)
  * @link      https://xoops.org
  */
 class TableLoad
@@ -130,7 +130,7 @@ class TableLoad
         $prefixedTable = $db->prefix($table);
         $sql = 'SELECT COUNT(*) as `count` FROM ' . $prefixedTable . ' ';
         if (isset($criteria) && is_subclass_of($criteria, '\CriteriaElement')) {
-            /* @var  \CriteriaCompo $criteria */
+            /** @var  \CriteriaCompo $criteria */
             $sql .= $criteria->renderWhere();
         }
         $result = $db->query($sql);
@@ -157,7 +157,7 @@ class TableLoad
         $prefixedTable = $db->prefix($table);
         $sql = 'SELECT * FROM ' . $prefixedTable . ' ';
         if (isset($criteria) && is_subclass_of($criteria, '\CriteriaElement')) {
-            /* @var  \CriteriaCompo $criteria */
+            /** @var  \CriteriaCompo $criteria */
             $sql .= $criteria->renderWhere();
         }
         $rows = array();

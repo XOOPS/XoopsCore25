@@ -17,7 +17,7 @@ xoops_load('gui', 'system');
  * Xoops Cpanel default GUI class
  *
  * @copyright   (c) 2000-2016 XOOPS Project (www.xoops.org)
- * @license     GNU GPL 2 or later (https://www.gnu.org/licenses/gpl-2.0.html)
+ * @license     GNU GPL 2.0 or later (https://www.gnu.org/licenses/gpl-2.0.html)
  * @package     system
  * @usbpackage  GUI
  * @since       2.4
@@ -177,7 +177,7 @@ class XoopsGuiDark extends XoopsSystemGui
         $tpl->assign('moddir', $moddir);
 
         // add MODULES  Menu items
-        /* @var XoopsModuleHandler $module_handler */
+        /** @var XoopsModuleHandler $module_handler */
         $module_handler = xoops_getHandler('module');
         $criteria       = new CriteriaCompo();
         $criteria->add(new Criteria('hasadmin', 1));
@@ -186,7 +186,7 @@ class XoopsGuiDark extends XoopsSystemGui
         $mods = $module_handler->getObjects($criteria);
 
         $menu               = array();
-        /* @var XoopsGroupPermHandler $moduleperm_handler */
+        /** @var XoopsGroupPermHandler $moduleperm_handler */
         $moduleperm_handler = xoops_getHandler('groupperm');
         foreach ($mods as $mod) {
             $rtn        = array();
@@ -289,21 +289,21 @@ class XoopsGuiDark extends XoopsSystemGui
         //add OPTIONS/Links Menu Items
         $menu   = array();
         $menu[] = array(
-            'link'     => 'http://xoops.org',
+            'link'     => 'https://xoops.org',
             'title'    => _OXYGEN_XOOPSPROJECT,
             'absolute' => 1);
         $menu[] = array(
-            'link'     => 'http://xoops.org',
+            'link'     => 'https://xoops.org',
             'title'    => _OXYGEN_WEBSITE,
             'absolute' => 1,
             'icon'     => XOOPS_ADMINTHEME_URL . '/dark/images/xoops.png');
         $menu[] = array(
-            'link'     => 'http://www.xoops.org/modules/repository/',
+            'link'     => 'https://xoops.org/modules/repository/',
             'title'    => _OXYGEN_XOOPSMODULES,
             'absolute' => 1,
             'icon'     => XOOPS_ADMINTHEME_URL . '/dark/images/xoops.png');
         $menu[] = array(
-            'link'     => 'http://www.xoops.org/modules/extgallery/',
+            'link'     => 'https://xoops.org/modules/extgallery/',
             'title'    => _OXYGEN_XOOPSTHEMES,
             'absolute' => 1,
             'icon'     => XOOPS_ADMINTHEME_URL . '/dark/images/tweb.png');

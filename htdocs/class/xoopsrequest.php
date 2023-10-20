@@ -22,8 +22,8 @@
  * @author              trabis <lusopoemas@gmail.com>
  * @author              Joomla!
  * @copyright       (c) 2000-2016 XOOPS Project (www.xoops.org)
- * @license             GNU GPL 2 or later (https://www.gnu.org/licenses/gpl-2.0.html)
- * @link                http://xoops.org
+ * @license             GNU GPL 2.0 or later (https://www.gnu.org/licenses/gpl-2.0.html)
+ * @link                https://xoops.org
  * @since               2.5.7
  */
 class XoopsRequest extends \Xmf\Request

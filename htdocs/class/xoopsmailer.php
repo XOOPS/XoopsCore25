@@ -566,7 +566,7 @@ class XoopsMailer
     {
         if (!is_array($group)) {
             if (strtolower(get_class($group)) === 'xoopsgroup') {
-                /* @var XoopsMemberHandler $member_handler */
+                /** @var XoopsMemberHandler $member_handler */
                 $member_handler = xoops_getHandler('member');
                 $this->setToUsers($member_handler->getUsersByGroup($group->getVar('groupid'), true));
             }

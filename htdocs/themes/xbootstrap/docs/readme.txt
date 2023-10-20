@@ -1,4 +1,4 @@
-xBootstrap is a powerful theme for XOOPS (http://xoops.org/)!
+xBootstrap is a powerful theme for XOOPS (https://xoops.org/)!
 
 Built with:
 - Bootstrap 3:      http://getbootstrap.com/

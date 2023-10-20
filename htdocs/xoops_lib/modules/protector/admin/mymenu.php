@@ -39,7 +39,7 @@ if (file_exists(XOOPS_TRUST_PATH . '/libs/altsys/myblocksadmin.php')) {
 }
 
 // preferences
-/* @var XoopsConfigHandler $config_handler */
+/** @var XoopsConfigHandler $config_handler */
 $config_handler = xoops_getHandler('config');
 if (count($config_handler->getConfigs(new Criteria('conf_modid', $xoopsModule->mid()))) > 0) {
     if (file_exists(XOOPS_TRUST_PATH . '/libs/altsys/mypreferences.php')) {
