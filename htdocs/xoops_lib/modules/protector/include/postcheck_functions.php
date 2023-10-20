@@ -130,7 +130,11 @@ function protector_postcommon()
 
     // check session hi-jacking
     $masks = isset($conf['session_fixed_topbit']) ? $conf['session_fixed_topbit'] : null;
-    $maskArray = explode('/', $masks);
+    if (is_string($masks)) {
+        $maskArray = explode('/', $masks);
+    } else {
+        $maskArray = array(); // Or some default value that makes sense for your application
+    }
     $ipv4Mask = empty($maskArray[0]) ? 24 : $maskArray[0];
     $ipv6Mask = (!isset($maskArray[1])) ? 56 : $maskArray[1];
     $ip = \Xmf\IPAddress::fromRequest();
@@ -146,7 +150,7 @@ function protector_postcommon()
     $_SESSION['protector_last_ip'] = $ip->asReadable();
 
     // SQL Injection "Isolated /*"
-    if (!$protector->check_sql_isolatedcommentin(isset($conf['isocom_action']) ? $conf['isocom_action'] & 1 : 0)) {
+    if (!$protector->check_sql_isolatedcommentin((bool)(isset($conf['isocom_action']) ? $conf['isocom_action'] & 1 : 0))) {
         if (($conf['isocom_action'] & 8) && $can_ban) {
             $protector->register_bad_ips();
         } elseif (($conf['isocom_action'] & 4) && $can_ban) {
@@ -159,7 +163,7 @@ function protector_postcommon()
     }
 
     // SQL Injection "UNION"
-    if (!$protector->check_sql_union(isset($conf['union_action']) ? $conf['union_action'] & 1 : 0)) {
+    if (!$protector->check_sql_union((bool)(isset($conf['union_action']) ? $conf['union_action'] & 1 : 0))) {
         if (($conf['union_action'] & 8) && $can_ban) {
             $protector->register_bad_ips();
         } elseif (($conf['union_action'] & 4) && $can_ban) {
