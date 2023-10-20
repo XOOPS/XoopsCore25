@@ -13,12 +13,12 @@
 
 <div id="extgallery-carousel" class="carousel slide" data-ride="carousel">
     <ol id="ext-ind" class="carousel-indicators">
-        <{foreach item=photo from=$block.photos}>
+        <{foreach item=photo from=$block.photos|default:null}>
             <li data-target="#extgallery-carousel"></li>
         <{/foreach}>
     </ol>
     <div class="carousel-inner" role="listbox">
-        <{foreach item=photo from=$block.photos}>
+        <{foreach item=photo from=$block.photos|default:null}>
             <div class="item">
                 <img src="<{$xoops_url}>/uploads/extgallery/public-photo/medium/<{$photo.photo_name}>" alt="<{$photo.photo_title}>">
 

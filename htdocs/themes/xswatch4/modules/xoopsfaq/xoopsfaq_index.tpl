@@ -7,7 +7,7 @@
 <{else}>
 <div class="alert alert-primary"><{$smarty.const._MD_XOOPSFAQ_CAT_LISTING}></div>
 <ul class="list-group">
-    <{foreach item=category from=$categories}>
+    <{foreach item=category from=$categories|default:null}>
     <li class="list-group-item d-flex justify-content-between align-items-center">
         <a href="index.php?cat_id=<{$category.id}>"><{$category.name}></a>
         <span class="badge badge-primary badge-pill"><{$category.questions|@count}></span>

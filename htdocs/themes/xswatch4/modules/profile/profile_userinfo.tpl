@@ -56,11 +56,11 @@
     </div><!-- .col-md-6 -->
 </div><!-- .row -->
 
-<{foreach item=category from=$categories}>
+<{foreach item=category from=$categories|default:null}>
     <{if isset($category.fields)}>
         <ul id="profile-category-<{$category.cat_id}>" class="profile-values list-unstyled">
             <li class="profile-category-title"><{$category.cat_title}></li>
-            <{foreach item=field from=$category.fields}>
+            <{foreach item=field from=$category.fields|default:null}>
                 <li><strong><{$field.title}>:</strong> <{$field.value}></li>
             <{/foreach}>
         </ul>
@@ -70,13 +70,13 @@
 <{if $modules|default:false}>
     <ul class="profile-values list-unstyled">
         <li class="profile-category-title"><{$recent_activity}></li>
-        <{foreach item=module from=$modules}>
+        <{foreach item=module from=$modules|default:null}>
 <!-- alain01 -->
             <div class="card my-3">
                 <div class="card-header"><h5><{$module.name}> <{if $module.showall_link}><span class="x-small">| <{$module.showall_link}></span><{/if}></h5></div>
                 <div class="card-body">
                     <ul class="list-group list-group-flush">
-                        <{foreach item=result from=$module.results}>
+                        <{foreach item=result from=$module.results|default:null}>
                         <li class="list-group-item list-group-item-action">
                             <{assign var="url_image_overloaded" value=$xoops_imageurl|cat:"modules/"|cat:$result.image|replace:"$xoops_url/modules/":''}>
                             <{assign var="path_image_overloaded" value=$xoops_rootpath|cat:"/themes/"|cat:$xoops_theme|cat:"/"|cat:$url_image_overloaded|replace:$xoops_imageurl:''}>

@@ -7,7 +7,7 @@
 
 <ul class="list-group">
     <!-- start question loop -->
-    <{foreach item=question from=$questions}>
+    <{foreach item=question from=$questions|default:null}>
         <li class="list-group-item"><a href="#q<{$question.id}>"><span class="glyphicon glyphicon-hand-right"></span>&nbsp;&nbsp;<{$question.title}></a>
         </li>
     <{/foreach}>
@@ -16,7 +16,7 @@
 
 
 <!-- start question and answer loop -->
-<{foreach item=question from=$questions}>
+<{foreach item=question from=$questions|default:null}>
     <div class="panel panel-default">
         <div class="panel-heading"><a id="q<{$question.id}>" name="q<{$question.id}>"></a><span class="label label-danger"><{$question.title}></span>
         </div>

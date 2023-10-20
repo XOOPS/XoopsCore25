@@ -23,7 +23,7 @@
 
 
             <{if $images}>
-                <{foreach item=image from=$images}>
+                <{foreach item=image from=$images|default:null}>
                     <div class='row wgg-img-panel wgg-image-list'>
                         <div class='wgg-img-panel-row col-sm-8'>
                             <{if $image.medium}>

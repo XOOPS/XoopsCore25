@@ -5,7 +5,7 @@
             <th class="head"><{$smarty.const._MB_NEWBB_TITLE}></th>
             <th class="head"><{$smarty.const._MB_NEWBB_AUTHOR}></th>
         </tr>
-        <{foreach item=topic from=$block.topics}>
+        <{foreach item=topic from=$block.topics|default:null}>
         <tr>
             <td><a href="<{$topic.seo_forum_url}>"><{$topic.forum_name}></a></td>
             <td><a href="<{$topic.seo_url}>"><{$topic.title}></a></td>
@@ -18,7 +18,7 @@
             <th class="head"><{$smarty.const._MB_NEWBB_TOPIC}></th>
             <th class="head"><{$smarty.const._MB_NEWBB_AUTHOR}></th>
         </tr>
-        <{foreach item=topic from=$block.topics}>
+        <{foreach item=topic from=$block.topics|default:null}>
         <tr>
             <td><a href="<{$topic.seo_url}>"><{$topic.title}></a></td>
             <td><{$topic.topic_poster}> <{$topic.time}></td>
@@ -27,14 +27,14 @@
 
     <{elseif $block.disp_mode == 2}>
 
-        <{foreach item=topic from=$block.topics}>
+        <{foreach item=topic from=$block.topics|default:null}>
         <tr>
             <td><a href="<{$topic.seo_url}>"><{$topic.title}></a></td>
         </tr>
     <{/foreach}>
 
     <{else}>
-                <{foreach item=topic from=$block.topics}>
+                <{foreach item=topic from=$block.topics|default:null}>
         <tr class="d-flex">
             <td class="col-4">
                 <strong><a href="<{$topic.seo_url}>"><{$topic.title}></a></strong>

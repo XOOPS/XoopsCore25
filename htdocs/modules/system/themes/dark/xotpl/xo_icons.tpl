@@ -2,7 +2,7 @@
 <{*start system icons*}>
 <div id="xo-system-icons">
     <div id="xo-icon">
-        <{foreach item=op from=$mod_options}>
+        <{foreach item=op from=$mod_options|default:null}>
             <a class="tooltip" href="<{$op.link}>" title="<{$op.desc}>">
                 <img src='<{$op.icon|default:"$theme_icons/icon_options.png"}>' alt="<{$op.desc}>"/>
                 <br><span><{$op.title}></span>

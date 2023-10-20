@@ -5,7 +5,7 @@ if (empty($_POST['uname']) || empty($_POST['pass'])) {
     ?>
     <h2><?php echo _USER_LOGIN; ?></h2>
 
-    <form action="index.php" method="post">
+    <form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post">
         <label for="uname"><?php echo _USERNAME; ?></label>
         <div class="input-group">
             <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>

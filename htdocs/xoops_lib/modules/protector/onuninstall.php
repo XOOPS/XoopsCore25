@@ -22,19 +22,12 @@ if (!function_exists('protector_onuninstall_base')) {
      */
     function protector_onuninstall_base($module, $mydirname)
     {
-        // transations on module uninstall
+        // translations on module uninstall
 
         global $ret; // TODO :-D
 
-        // for Cube 2.1
-        if (defined('XOOPS_CUBE_LEGACY')) {
-            $root =& XCube_Root::getSingleton();
-            $root->mDelegateManager->add('Legacy.Admin.Event.ModuleUninstall.' . ucfirst($mydirname) . '.Success', 'protector_message_append_onuninstall');
+        if (!is_array($ret)) {
             $ret = array();
-        } else {
-            if (!is_array($ret)) {
-                $ret = array();
-            }
         }
 
         $db  = XoopsDatabaseFactory::getDatabaseConnection();
@@ -47,15 +40,15 @@ if (!function_exists('protector_onuninstall_base')) {
         $sql_file_path = __DIR__ . '/sql/mysql.sql';
         $prefix_mod    = $db->prefix() . '_' . $mydirname;
         if (file_exists($sql_file_path)) {
-            $ret[]     = 'SQL file found at <b>' . htmlspecialchars($sql_file_path) . '</b>.<br  /> Deleting tables...<br>';
+            $ret[]     = 'SQL file found at <b>' . htmlspecialchars($sql_file_path, ENT_QUOTES) . '</b>.<br  /> Deleting tables...<br>';
             $sql_lines = file($sql_file_path);
             foreach ($sql_lines as $sql_line) {
                 if (preg_match('/^CREATE TABLE \`?([a-zA-Z0-9_-]+)\`? /i', $sql_line, $regs)) {
                     $sql = 'DROP TABLE ' . addslashes($prefix_mod . '_' . $regs[1]);
                     if (!$db->query($sql)) {
-                        $ret[] = '<span style="color:#ff0000;">ERROR: Could not drop table <b>' . htmlspecialchars($prefix_mod . '_' . $regs[1]) . '<b>.</span><br>';
+                        $ret[] = '<span style="color:#ff0000;">ERROR: Could not drop table <b>' . htmlspecialchars($prefix_mod . '_' . $regs[1], ENT_QUOTES) . '<b>.</span><br>';
                     } else {
-                        $ret[] = 'Table <b>' . htmlspecialchars($prefix_mod . '_' . $regs[1]) . '</b> dropped.<br>';
+                        $ret[] = 'Table <b>' . htmlspecialchars($prefix_mod . '_' . $regs[1], ENT_QUOTES) . '</b> dropped.<br>';
                     }
                 }
             }

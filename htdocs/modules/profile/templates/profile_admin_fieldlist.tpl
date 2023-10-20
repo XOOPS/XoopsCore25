@@ -8,8 +8,8 @@
         <th><{$smarty.const._PROFILE_AM_WEIGHT}></th>
         <th><{$smarty.const._PROFILE_AM_REQUIRED}></th>
         <th><{$smarty.const._PROFILE_AM_ACTION}></th>
-        <{foreach item=category from=$fieldcategories}>
-            <{foreach item=field from=$category}>
+        <{foreach item=category from=$fieldcategories|default:null}>
+            <{foreach item=field from=$category|default:null}>
                 <tr class="<{cycle values='odd, even'}>">
                     <td><{$field.field_name}></td>
                     <td><{$field.field_title}></td>

@@ -55,7 +55,7 @@ if (!$tpl->isCached('db:system_rss.tpl')) {
         include $fileinc;
         $sarray = NewsStory::getAllPublished(10, 0, true);
     }
-    if (!empty($sarray) && is_array($sarray)) {
+    if (!empty($sarray) && \is_array($sarray)) {
         foreach ($sarray as $story) {
             $tpl->append('items', array(
                 'title'       => XoopsLocal::convert_encoding(htmlspecialchars($story->title(), ENT_QUOTES)),

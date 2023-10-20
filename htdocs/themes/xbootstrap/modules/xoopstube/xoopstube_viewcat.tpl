@@ -16,7 +16,7 @@
 
     <{if $subcategories|default:''}>
         <{$smarty.const._MD_XOOPSTUBE_SUBCATLISTING}>
-        <{foreach item=subcat from=$subcategories}>
+        <{foreach item=subcat from=$subcategories|default:null}>
             <a href="viewcat.php?cid=<{$subcat.id}>" title="<{$subcat.alttext}>"><img src="<{$subcat.image}>" alt="<{$subcat.alttext}>"></a>
             <a href="viewcat.php?cid=<{$subcat.id}>"><{$subcat.title}></a>
             (<{$subcat.totalvideos}>)

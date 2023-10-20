@@ -5,7 +5,7 @@
 	<div>
 		<div class="row alert alert-info border wgg-cats-header" role="alert"><{$index_alb_title}></div>
 		<div class="row">
-			<{foreach item=album from=$albums}>
+			<{foreach item=album from=$albums|default:null}>
                 <{include file="db:wggallery_albumitem_bcards.tpl" album=$album}>
 			<{/foreach}>
 		</div>
@@ -22,7 +22,7 @@
 	<div>
 		<div class="row alert alert-info border wgg-cats-header" role="alert"><{$index_cats_title}></div>
 		<div class="row">
-			<{foreach item=category from=$categories}>
+			<{foreach item=category from=$categories|default:null}>
 			<{include file="db:wggallery_categoryitem_bcards.tpl" category=$category}>
 			<{/foreach}>
 		</div>

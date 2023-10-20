@@ -22,7 +22,7 @@
                 <height><{$image_height}></height>
             </image>
         <{/if}>
-        <{foreach item=item from=$items}>
+        <{foreach item=item from=$items|default:null}>
             <item>
                 <title><{$item.title}></title>
                 <link>

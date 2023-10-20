@@ -24,7 +24,7 @@
         </tr>
         </thead>
         <tbody>
-        <{foreach item=smiley from=$smilies}>
+        <{foreach item=smiley from=$smilies|default:null}>
             <tr class="<{cycle values='even,odd'}> alignmiddle">
                 <td class="txtcenter width5"><{$smiley.code}></td>
                 <td class="txtcenter width5"><{$smiley.image}></td>

@@ -49,7 +49,7 @@
             <td><{$smarty.const._MD_LEXIKON_HITS}></td>
         </tr>
         <{if $nothing==false}>
-            <{foreach item=d from=$entries}>
+            <{foreach item=d from=$entries|default:null}>
                 <tr class="<{cycle values="even,odd"}>">
                     <td align="center" style="font-size:11px;"><{$d.date}></td>
                     <td align="left"><a href="entry.php?entryID=<{$d.id}>"><{$d.name}></a></td>

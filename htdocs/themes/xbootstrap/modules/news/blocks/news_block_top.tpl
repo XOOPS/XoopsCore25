@@ -1,5 +1,5 @@
 <ul class="list-unstyled">
-    <{foreach item=news from=$block.stories}>
+    <{foreach item=news from=$block.stories|default:null}>
         <li>
             <{if $block.sort=='counter'}>
                 [<{$news.hits}>]

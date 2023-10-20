@@ -14,7 +14,7 @@
                 <th scope="col"><{$smarty.const._MD_NEWBB_LASTPOST}></th>
             </tr>
             </thead>
-            <{foreach item=sforum from=$subforum}>
+            <{foreach item=sforum from=$subforum|default:null}>
             <tbody>
                 <tr>
                     <td><{$sforum.forum_folder}></td>

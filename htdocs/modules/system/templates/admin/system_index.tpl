@@ -14,7 +14,7 @@
     </thead>
 
     <tbody>
-    <{foreach item=menuitem from=$menu}>
+    <{foreach item=menuitem from=$menu|default:null}>
         <{if $menuitem.title}>
             <tr class="<{cycle values='even,odd'}>">
                 <td class="bold width15">

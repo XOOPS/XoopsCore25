@@ -9,7 +9,7 @@
                HREF="<{$xoops_url}>/modules/<{$lang_moduledirname}>/category.php?categoryID=<{$syndication.id}>"><{$syndication.categoryname}></A>
         </div>
     <{/if}>
-    <h4 style='margin: 0;text-align:left;font-family:verdana,arial, sans-serif; font-size:normal;'><{$syndication.term}></h4>
+    <h4 style='margin: 0;text-align:left;font-family:verdana,arial, sans-serif; font-size: 1.2em;'><{$syndication.term}></h4>
     <p style='text-align:left;font-family:verdana,arial, sans-serif; font-size:small;'><{$syndication.definition}></p>
     <div style='min-width:100%;border-top: 1px dotted #ccc;width=100%;position:absolute; right:3px; bottom:6px; padding-top: 12px; text-align:right;font-family:verdana,arial, sans-serif; font-size:x-small;'>
         <A

@@ -127,7 +127,7 @@ class UpgradeControl
 
         foreach ($dirs as $dir) {
             if (strpos($dir, '-to-')) {
-                $upgrader = include_once "{$dir}/index.php";
+                $upgrader = include "{$dir}/index.php";
                 if (is_object($upgrader)) {
                     $results[$dir] = $upgrader->isApplied();
                     if (!($results[$dir]->applied)) {

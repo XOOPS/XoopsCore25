@@ -1,6 +1,6 @@
 <nav aria-label="breadcrumb">
     <ol class="breadcrumb">
-	<{foreach item=itm from=$xoBreadcrumbs name=bcloop}>
+	<{foreach item=itm from=$xoBreadcrumbs|default:null name=bcloop}>
         <{if !empty($itm.title)}>
         <{if $itm.link|default:false}>
 		<li class="breadcrumb-item">

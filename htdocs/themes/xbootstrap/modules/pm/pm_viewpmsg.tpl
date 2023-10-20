@@ -137,7 +137,7 @@
             <{$pmform.elements.empty_messages.body}>
         <{/if}>
 
-        <{foreach item=element from=$pmform.elements}>
+        <{foreach item=element from=$pmform.elements|default:null}>
             <{if $element.hidden == 1}>
                 <{$element.body}>
             <{/if}>

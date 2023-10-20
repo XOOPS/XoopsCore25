@@ -1275,7 +1275,7 @@ input[type=text], input[type=password], input[type=checkbox], input[type=radio],
     color: #CCCCFF;
 }
 
-input[type=text]:focus, input[type=password]:focus, input[type=checkbox]:focus, input[type=radio]:focus, input[type=file]:focus, textarea:focus, select:focus, textarea.form-control:focus, select.form-control[size]:focus, select.form-control[multiple]:focus, .form-control:focus, .xo-formbuttons:focus, .formButton:focus, {
+input[type=text]:focus, input[type=password]:focus, input[type=checkbox]:focus, input[type=radio]:focus, input[type=file]:focus, textarea:focus, select:focus, textarea.form-control:focus, select.form-control[size]:focus, select.form-control[multiple]:focus, .form-control:focus, .xo-formbuttons:focus, .formButton:focus {
     background-color: #CCCCCC;
     color: #3333CC;
 }

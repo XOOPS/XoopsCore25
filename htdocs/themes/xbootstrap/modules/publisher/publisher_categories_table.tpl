@@ -1,6 +1,6 @@
 <{assign var=temp value=0}>
 <div class="row clearfix">
-    <{foreach item=category from=$categories}>
+    <{foreach item=category from=$categories|default:null}>
     <{assign var=temp value=$temp+1}>
     <{if !$indexpage|default:false}>
     <div class="col-sm-12 col-md-12" style="margin-bottom: 10px;">
@@ -23,7 +23,7 @@
 
             <{if $category.subcats}>
                 <div style="height: 1px; background: #F5F5F5; margin: 5px 0;"></div>
-                <{foreach item=subcat from=$category.subcats}>
+                <{foreach item=subcat from=$category.subcats|default:null}>
                     <small><{$subcat.categorylink}> &nbsp;</small>
                 <{/foreach}>
             <{/if}>

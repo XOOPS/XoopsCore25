@@ -53,9 +53,9 @@
 
                     <{if $report_post|default:''}>
                     <a href="<{$xoops_url}>/modules/<{$xoops_dirname}>/admin/admin_report.php" title="_MD_NEWBB_REPORT" class="btn btn-primary">
-                        <span class="fa fa-thumbs-o-down" aria-hidden="true"></span> <span class="badge badge-light badge-pill"><{$reported_coun badge-pillt}></span>
+                        <span class="fa fa-thumbs-o-down" aria-hidden="true"></span> <span class="badge badge-light badge-pill"><{$reported_count}></span><{/if}>
                     </a>
-                    <{/if}>
+
 
                     <a href="<{$xoops_url}>/modules/<{$xoops_dirname}>/moderate.php" title="<{$smarty.const._MD_NEWBB_TYPE_SUSPEND}>" class="btn btn-primary">
                         <span class="fa fa-ban" aria-hidden="true">
@@ -71,7 +71,7 @@
     </div>
 
     <table class="table table-hover">
-        <{foreach item=category from=$categories}><!-- Forum categories -->
+        <{foreach item=category from=$categories|default:null}><!-- Forum categories -->
         <thead>
         <tr class="thead-light">
             <th scope="col" colspan="5">
@@ -89,7 +89,7 @@
         </tr>
         </thead>
         <tbody>
-        <{foreach item=forum from=$category.forums}>
+        <{foreach item=forum from=$category.forums|default:null}>
         <tr>
             <td><{$forum.forum_folder|default:''}></td>
             <td><a href="<{$xoops_url}>/modules/<{$xoops_dirname}>/viewforum.php?forum=<{$forum.forum_id}>" title="<{$forum.forum_name}>"><{$forum.forum_name}></a>
@@ -109,7 +109,7 @@
                 <{/if}>
                 <{if isset($forum.subforum)}>
                 <br><{$smarty.const._MD_NEWBB_SUBFORUMS}> <i class="fa fa-chevron-down" aria-hidden="true"></i>
-                <{foreach item=subforum from=$forum.subforum|default:false}><br>
+                <{foreach item=subforum from=$forum.subforum|default:null}><br>
                 [<a href="<{$xoops_url}>/modules/<{$xoops_dirname}>/viewforum.php?forum=<{$subforum.forum_id}>"><{$subforum.forum_name}></a>]
                 <{/foreach}>
                 <{/if}>
@@ -200,7 +200,7 @@
             </div>
         <{/if}>
 
-        <{if $online}>
+    <{if !empty($online)}>
             <{include file="db:newbb_online.tpl"}>
         <{/if}>
 

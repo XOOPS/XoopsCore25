@@ -137,8 +137,6 @@ div.jGrowl div.jGrowl-notification, div.jGrowl div.jGrowl-closer {
     border: 1px solid #c5e6f8;
     display: none;
     border-radius: 5px;
-    -moz-border-radius: 5px;
-    -webkit-border-radius: 5px;
 }
 
 div.jGrowl div.jGrowl-notification {
@@ -702,26 +700,18 @@ div.jGrowl div.jGrowl-closer {
 /*========  others radius class ======== */
 .bradius3 {
     border-radius: 3px;
-    -moz-border-radius: 3px;
-    -webkit-border-radius: 3px;
 }
 
 .bradius5 {
     border-radius: 5px;
-    -moz-border-radius: 5px;
-    -webkit-border-radius: 5px;
 }
 
 .bradius10 {
     border-radius: 10px;
-    -moz-border-radius: 10px;
-    -webkit-border-radius: 10px;
 }
 
 .bradius15 {
     border-radius: 15px;
-    -moz-border-radius: 15px;
-    -webkit-border-radius: 15px;
 }
 
 /*========  border class ======== */
@@ -1120,93 +1110,89 @@ div.jGrowl div.jGrowl-closer {
 }
 
 .boxshadow {
-    box-shadow: 1px 2px 3px rgba(0, 0, 0, 0.5);
-    -moz-box-shadow: 1px 2px 3px rgba(0, 0, 0, 0.5);
-    -webkit-box-shadow: 1px 2px 3px rgba(0, 0, 0, 0.5);
+    -webkit-box-shadow: 1px 2px 3px rgba(0, 0, 0, .5);
+            box-shadow: 1px 2px 3px rgba(0, 0, 0, .5);
 }
 
 .boxshadow1 {
-    box-shadow: 0 0 20px #787878;
     -webkit-box-shadow: 0 0 20px #787878;
-    -moz-box-shadow: 0 0 20px #787878;
+    box-shadow: 0 0 20px #787878;
     filter: progid:DXImageTransform.Microsoft.Shadow(color='#bbbbbb', Direction=135, Strength=5);
     zoom: 1;
 }
 
 .boxrelief {
-    box-shadow: 0 20px 10px -10px rgba(255, 255, 255, 0.3) inset;
-    -moz-box-shadow: 0 20px 10px -10px rgba(255, 255, 255, 0.3) inset;
-    -webkit-box-shadow: 0 20px 10px -10px rgba(255, 255, 255, 0.3) inset;
+    -webkit-box-shadow: 0 20px 10px -10px rgba(255, 255, 255, .3) inset;
+            box-shadow: 0 20px 10px -10px rgba(255, 255, 255, .3) inset;
 }
 
 .boxinset {
+    -webkit-box-shadow: 0 3px 8px rgba(0, 0, 0, .24) inset;
     box-shadow: 0 3px 8px rgba(0, 0, 0, .24) inset;
-    -moz-box-shadow: 0 3px 8px rgba(0, 0, 0, .4) inset;
-    -webkit-box-shadow: 0 3px 8px rgba(0, 0, 0, .4) inset;
 }
 
 /*========  multiple columns content ======== */
 .twocolumn {
-    column-count: 2;
-    column-gap: 1.5em;
-    -moz-column-count: 2;
-    -moz-column-gap: 1.5em;
     -webkit-column-count: 2;
+       -moz-column-count: 2;
+    column-count: 2;
     -webkit-column-gap: 1.5em;
+       -moz-column-gap: 1.5em;
+    column-gap: 1.5em;
 }
 
 .threecolumn {
-    column-count: 3;
-    column-gap: 1.2em;
-    -moz-column-count: 3;
-    -moz-column-gap: 1.2em;
     -webkit-column-count: 3;
+       -moz-column-count: 3;
+    column-count: 3;
     -webkit-column-gap: 1.2em;
+       -moz-column-gap: 1.2em;
+    column-gap: 1.2em;
 }
 
 .forcolumn {
-    column-count: 4;
-    column-gap: 1.2em;
-    -moz-column-count: 4;
-    -moz-column-gap: 1.2em;
     -webkit-column-count: 4;
+       -moz-column-count: 4;
+    column-count: 4;
     -webkit-column-gap: 1.2em;
+       -moz-column-gap: 1.2em;
+    column-gap: 1.2em;
 }
 
 .column10 {
-    column-width: 10em;
-    column-gap: 1.2em;
-    -moz-column-width: 10em;
-    -moz-column-gap: 1.2em;
     -webkit-column-width: 10em;
+       -moz-column-width: 10em;
+    column-width: 10em;
     -webkit-column-gap: 1.2em;
+       -moz-column-gap: 1.2em;
+    column-gap: 1.2em;
 }
 
 .column15 {
-    column-width: 15em;
-    column-gap: 1.2em;
-    -moz-column-width: 15em;
-    -moz-column-gap: 1.2em;
     -webkit-column-width: 15em;
+       -moz-column-width: 15em;
+    column-width: 15em;
     -webkit-column-gap: 1.2em;
+       -moz-column-gap: 1.2em;
+    column-gap: 1.2em;
 }
 
 .column20 {
-    column-width: 20em;
-    column-gap: 1.2em;
-    -moz-column-width: 20em;
-    -moz-column-gap: 1.2em;
     -webkit-column-width: 20em;
+       -moz-column-width: 20em;
+    column-width: 20em;
     -webkit-column-gap: 1.2em;
+       -moz-column-gap: 1.2em;
+    column-gap: 1.2em;
 }
 
 .column25 {
-    column-width: 25em;
-    column-gap: 1.2em;
-    -moz-column-width: 25em;
-    -moz-column-gap: 1.2em;
     -webkit-column-width: 25em;
+       -moz-column-width: 25em;
+    column-width: 25em;
     -webkit-column-gap: 1.2em;
+       -moz-column-gap: 1.2em;
+    column-gap: 1.2em;
 }
 
 #xswatch-popup-body {

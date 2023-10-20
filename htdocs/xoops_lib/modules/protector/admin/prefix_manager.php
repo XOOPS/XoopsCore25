@@ -1,5 +1,5 @@
 <?php
-include __DIR__ . '/../../../include/cp_header.php';
+include XOOPS_ROOT_PATH . '/include/cp_header.php';
 include __DIR__ . '/admin_header.php';
 require_once dirname(__DIR__) . '/class/gtickets.php';
 $db = XoopsDatabaseFactory::getDatabaseConnection();

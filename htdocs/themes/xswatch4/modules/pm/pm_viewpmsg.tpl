@@ -138,7 +138,7 @@
 			<{$pmform.elements.delete_messages.body|replace:'formButton':'btn btn-secondary'|replace:'" >':'" ><span class="fa fa-times fa-2x"></span><br />'}>
 			<{$pmform.elements.empty_messages.body|replace:'formButton':'btn btn-secondary'|replace:'" >':'" ><span class="fa fa-trash fa-2x"></span><br />'}>
 		<{/if}>
-		<{foreach item=element from=$pmform.elements}>
+		<{foreach item=element from=$pmform.elements|default:null}>
 			<{if $element.hidden == 1}>
 				<{$element.body}>
 			<{/if}>

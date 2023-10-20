@@ -33,13 +33,14 @@ function langDropdown()
         if (is_object($xlanguage) && $xlanguage->getVar('isactive')) {
             include_once(XOOPS_ROOT_PATH . '/modules/xlanguage/include/vars.php');
             include_once(XOOPS_ROOT_PATH . '/modules/xlanguage/include/functions.php');
+            /** @var LanguageHandler $xlanguage_handler */
             $xlanguage_handler = xoops_getModuleHandler('language', 'xlanguage');
             $xlanguage_handler->loadConfig();
             $lang_list =& $xlanguage_handler->getAllList();
 
             $content .= '<select name="mlanguages" id="mlanguages">';
             $content .= '<option value="">{#xoopsmlcontent_dlg.sellang}</option>';
-            if (is_array($lang_list) && count($lang_list) > 0) {
+            if (!empty($lang_list) && \is_array($lang_list)) {
                 foreach (array_keys($lang_list) as $lang_name) {
                     $lang =& $lang_list[$lang_name];
                     $content .= '<option value="' . $lang['base']->getVar('lang_code') . '">' . $lang['base']->getVar('lang_name') . '</option>';

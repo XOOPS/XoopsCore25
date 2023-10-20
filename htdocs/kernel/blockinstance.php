@@ -63,7 +63,7 @@ class XoopsBlockInstance
     {
         trigger_error("Class '" . __CLASS__ . "' is deprecated" . (empty($name) ? '' : " thus the variable '{$name}' is not set") . '!', E_USER_WARNING);
 
-        return false;
+        return null;
     }
 
     /**
@@ -126,7 +126,7 @@ class XoopsBlockInstanceHandler
     {
         trigger_error("Class '" . __CLASS__ . "' is deprecated" . (empty($name) ? '' : " thus the variable '{$name}' is not set") . '!', E_USER_WARNING);
 
-        return false;
+        return null;
     }
 
     /**

@@ -38,7 +38,7 @@
         <{if $users_count == true}>
             <form name='memberslist' id='memberslist' action='<{xoAppUrl "modules/system/admin.php?fct=users"}>' method='POST'>
                 <tbody>
-                <{foreach item=user from=$users}>
+                <{foreach item=user from=$users|default:null}>
                     <tr class="<{cycle values='even,odd'}> alignmiddle">
                         <td class="txtcenter"><{if $user.checkbox_user}><input type='checkbox' name='memberslist_id[]' id='memberslist_id[]'
                                                                                 value='<{$user.uid}>'/><{/if}>
@@ -115,7 +115,7 @@
     </table>
     <!--Pop-pup-->
     <{if $users_count|default:false == true}>
-        <{foreach item=users from=$users_popup}>
+        <{foreach item=users from=$users_popup|default:null}>
             <div id="dialog<{$users.uid}>" title="<{$users.uname}>" style='display:none;'>
                 <table>
                     <tr>
