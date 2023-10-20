@@ -99,7 +99,7 @@ class XoopsForm
     public $_required = array();
 
     /**
-     * additional serialised object checksum (ERM Analysis - Requirement)
+     * additional serialized object checksum (ERM Analysis - Requirement)
      * @deprecated
      * @access private
      */
@@ -142,87 +142,55 @@ class XoopsForm
     }
     /**
      * *#@+
-     * retrieves object serialisation/identification id (sha1 used)
+     * retrieves object serialization/identification id (sha1 used)
      *
-     * each object has serialisation<br>
+     * each object has serialization<br>
      * - legal requirement of enterprise relational management (ERM)
      *
      * @deprecated
      * @access public
-     * @param         $object
-     * @param  string $hashinfo
-     * @return string
+     * @param mixed  $object   The object or value to serialize
+     * @param string $hashinfo Hashing algorithm to use (default 'sha1')
+     * @return string         The serialization ID
      */
     public function getObjectID($object, $hashinfo = 'sha1')
     {
+        // Initialize $var
+        $var = array(
+            'name' => '',
+            'value' => '',
+            'func' => ''
+        );
+
+        // Check if $object is an object; if not, use $this
         if (!is_object($object)) {
             $object = $this;
         }
 
-        switch ($hashinfo) {
-            case 'md5':
+        // Switch hash method based on $hashinfo
+        $hashMethod = ('md5' === $hashinfo) ? 'md5' : 'sha1';
 
-                if (!isset($var['name'])) {
-                    $var['name'] = '';
-                }
-                $var['name'] = md5(get_class($object));
+        // Hash the class name
+        $var['name'] = $hashMethod(get_class($object));
 
-                foreach (get_object_vars($object) as $key => $value) {
-                    if ($key !== '_objid') {
-                        if (!isset($var['value'])) {
-                            $var['value'] = '';
-                        }
-                        $var['value'] = $this->getArrayID($value, $key, $var['value'], $hashinfo);
-                    }
-                }
-
-                foreach (get_class_methods($object) as $key => $value) {
-                    if (!isset($var['func'])) {
-                        $var['func'] = '';
-                    }
-                    $var['func'] = $this->getArrayID($value, $key, $var['func'], $hashinfo);
-                }
-
-                if (!isset($this->_objid)) {
-                    $this->_objid = '';
-                }
-                $this->_objid = md5($var['name'] . ':' . $var['func'] . ':' . $var['value']);
-
-                return $this->_objid;
-                break;
-
-            default:
-
-                if (!isset($var['name'])) {
-                    $var['name'] = '';
-                }
-                $var['name'] = sha1(get_class($object));
-
-                foreach (get_object_vars($object) as $key => $value) {
-                    if ($key !== '_objid') {
-                        if (!isset($var['value'])) {
-                            $var['value'] = '';
-                        }
-                        $var['value'] = $this->getArrayID($value, $key, $var['value'], $hashinfo);
-                    }
-                }
-
-                foreach (get_class_methods($object) as $key => $value) {
-                    if (!isset($var['func'])) {
-                        $var['func'] = '';
-                    }
-                    $var['func'] = $this->getArrayID($value, $key, $var['func'], $hashinfo);
-                }
-
-                if (!isset($this->_objid)) {
-                    $this->_objid = '';
-                }
-                $this->_objid = sha1($var['name'] . ':' . $var['func'] . ':' . $var['value']);
-
-                return $this->_objid;
-
+        // Hash the object variables
+        foreach (get_object_vars($object) as $key => $value) {
+            if ($key !== '_objid') {
+                $var['value'] = $this->getArrayID($value, $key, $var['value'], $hashinfo);
+            }
         }
+
+        // Hash the class methods
+        foreach (get_class_methods($object) as $key => $value) {
+            $var['func'] = $this->getArrayID($value, $key, $var['func'], $hashinfo);
+        }
+
+        // Generate the final hash
+        $this->_objid = $hashMethod(implode(':', $var));
+
+        return $this->_objid;
     }
+
 
     /**
      * @param        $value
