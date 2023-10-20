@@ -86,7 +86,7 @@ class XoopsCaptchaImageHandler
     }
 
     /**
-     * @return string|void
+     * @return string|bool
      */
     public function createImage()
     {
