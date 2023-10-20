@@ -55,7 +55,7 @@ class XoopsLocalAbstract
      */
     public static function utf8_encode($text)
     {
-        if (XOOPS_USE_MULTIBYTES == 1) {
+        if (defined('XOOPS_USE_MULTIBYTES') && XOOPS_USE_MULTIBYTES === 1) {
             if (function_exists('mb_convert_encoding')) {
                 return mb_convert_encoding($text, 'UTF-8', 'auto');
             }
@@ -73,7 +73,7 @@ class XoopsLocalAbstract
      */
     public static function utf8_decode($text)
     {
-        if (XOOPS_USE_MULTIBYTES == 1) {
+        if (defined('XOOPS_USE_MULTIBYTES') && XOOPS_USE_MULTIBYTES === 1) {
             if (function_exists('mb_convert_encoding')) {
                 return mb_convert_encoding($text, 'ISO-8859-1', 'auto');
             }
