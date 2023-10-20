@@ -397,7 +397,7 @@ class XoopsModelWrite extends XoopsModelAbstract
             $set_clause .= $this->handler->db->quote($fieldvalue);
         }
         $sql = 'UPDATE `' . $this->handler->table . '` SET ' . $set_clause;
-        if (isset($criteria) && is_subclass_of($criteria, 'CriteriaElement')) {
+        if (isset($criteria) && \method_exists($criteria, 'renderWhere')) {
             $sql .= ' ' . $criteria->renderWhere();
         }
         $queryFunc = empty($force) ? 'query' : 'queryF';

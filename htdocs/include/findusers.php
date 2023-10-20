@@ -146,7 +146,7 @@ class XoopsRankHandler extends XoopsObjectHandler
         }
 
         $sql = 'SELECT rank_id, rank_title FROM ' . $this->db->prefix('ranks');
-        if (isset($criteria) && is_subclass_of($criteria, 'CriteriaElement')) {
+        if (isset($criteria) && \method_exists($criteria, 'renderWhere')) {
             $sql .= ' ' . $criteria->renderWhere();
             if ($criteria->getSort() != '') {
                 $sql .= ' ORDER BY ' . $criteria->getSort() . ' ' . $criteria->getOrder();
