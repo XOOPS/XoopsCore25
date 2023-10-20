@@ -196,7 +196,7 @@ class XoopsAuthLdap extends XoopsAuth
      */
     public function cp1252_to_utf8($str)
     {
-        return strtr(utf8_encode($str), $this->cp1252_map);
+        return strtr(xoops_utf8_encode($str), $this->cp1252_map);
     }
 
     /**

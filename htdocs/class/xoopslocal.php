@@ -46,7 +46,7 @@ class XoopsLocalAbstract
 
         return $str;
     }
-    // Each local language should define its own equalient utf8_encode
+    // Each local language should define its own equivalent utf8_encode
     /**
      * XoopsLocalAbstract::utf8_encode()
      *
@@ -64,6 +64,24 @@ class XoopsLocalAbstract
         return utf8_encode($text);
     }
 
+    // Each local language should define its own equivalent utf8_encode
+    /**
+     * XoopsLocalAbstract::utf8_decode()
+     *
+     * @param  mixed $text
+     * @return string
+     */
+    public static function utf8_decode($text)
+    {
+        if (XOOPS_USE_MULTIBYTES == 1) {
+            if (function_exists('mb_convert_encoding')) {
+                return mb_convert_encoding($text, 'ISO-8859-1', 'auto');
+            }
+        }
+
+        return utf8_decode($text);
+    }
+
     /**
      * XoopsLocalAbstract::convert_encoding()
      *
@@ -74,26 +92,51 @@ class XoopsLocalAbstract
      */
     public static function convert_encoding($text, $to = 'utf-8', $from = '')
     {
+        // Early exit if the text is empty
         if (empty($text)) {
             return $text;
         }
+
+        // Set default $from encoding if not provided
         if (empty($from)) {
             $from = empty($GLOBALS['xlanguage']['charset_base']) ? _CHARSET : $GLOBALS['xlanguage']['charset_base'];
         }
+
+        // If $to and $from are the same, no conversion is needed
         if (empty($to) || !strcasecmp($to, $from)) {
             return $text;
         }
 
-        if (XOOPS_USE_MULTIBYTES && function_exists('mb_convert_encoding')) {
-            $converted_text = @mb_convert_encoding($text, $to, $from);
-        } elseif (function_exists('iconv')) {
-            $converted_text = @iconv($from, $to . '//TRANSLIT', $text);
-        } elseif ('utf-8' === $to) {
-            $converted_text = utf8_encode($text);
-        }
-        $text = empty($converted_text) ? $text : $converted_text;
+        // Initialize a variable to store the converted text
+        $convertedText = '';
 
+        // Try to use mb_convert_encoding if available
+        if (XOOPS_USE_MULTIBYTES && function_exists('mb_convert_encoding')) {
+            $convertedText = mb_convert_encoding($text, $to, $from);
+            if (false !== $convertedText) {
+                return $convertedText;
+            }
+        }
+
+        // Try to use iconv if available
+        if (function_exists('iconv')) {
+            $convertedText = iconv($from, $to . '//TRANSLIT', $text);
+            if (false !== $convertedText) {
+                return $convertedText;
+            }
+        }
+
+        // Try to use utf8_encode if target encoding is 'utf-8'
+        if ('utf-8' === $to) {
+            $convertedText = utf8_encode($text);
+            if (false !== $convertedText) {
+                return $convertedText;
+            }
+        }
+
+        // If all conversions fail, return the original text
         return $text;
+        
     }
 
     /**

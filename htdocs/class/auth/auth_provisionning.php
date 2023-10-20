@@ -140,7 +140,7 @@ class XoopsAuthProvisionning
         foreach ($tab_mapping as $mapping) {
             $fields = explode('=', trim($mapping));
             if ($fields[0] && $fields[1]) {
-                $newuser->setVar(trim($fields[0]), utf8_decode($datas[trim($fields[1])][0]));
+                $newuser->setVar(trim($fields[0]), xoops_utf8_decode($datas[trim($fields[1])][0]));
             }
         }
         if ($member_handler->insertUser($newuser)) {
@@ -176,7 +176,7 @@ class XoopsAuthProvisionning
         foreach ($tab_mapping as $mapping) {
             $fields = explode('=', trim($mapping));
             if ($fields[0] && $fields[1]) {
-                $xoopsUser->setVar(trim($fields[0]), utf8_decode($datas[trim($fields[1])][0]));
+                $xoopsUser->setVar(trim($fields[0]), xoops_utf8_decode($datas[trim($fields[1])][0]));
             }
         }
         if ($member_handler->insertUser($xoopsUser)) {
