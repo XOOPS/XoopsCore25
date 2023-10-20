@@ -488,7 +488,7 @@ function profile_getUserForm(XoopsUser $user, ProfileProfile $profile = null, $a
         $elements[0][] = array('element' => $pwd_tray, 'required' => 0); //cannot set an element tray required
         $weights[0][]  = 0;
 
-        $level_radio = new XoopsFormRadio(_PROFILE_MA_USERLEVEL, 'level', $user->getVar('level'));
+        $level_radio = new XoopsFormRadio(_PROFILE_MA_USERLEVEL, 'level', (string)$user->getVar('level'));
         $level_radio->addOption(1, _PROFILE_MA_ACTIVE);
         $level_radio->addOption(0, _PROFILE_MA_INACTIVE);
         //$level_radio->addOption(-1, _PROFILE_MA_DISABLED);
