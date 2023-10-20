@@ -30,6 +30,7 @@ if (!function_exists('protector_onupdate_base')) {
             $msgs = array();
         }
 
+        /** @var XoopsMySQLDatabase $db */
         $db  = XoopsDatabaseFactory::getDatabaseConnection();
         $mid = $module->getVar('mid');
 

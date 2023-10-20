@@ -112,7 +112,6 @@ class XoopsCaptchaImageHandler
      */
     public function getList($name, $extension = '')
     {
-        $items = array();
         xoops_load('XoopsCache');
         if ($items = XoopsCache::read("captcha_captcha_{$name}")) {
             return $items;
@@ -121,6 +120,7 @@ class XoopsCaptchaImageHandler
         require_once XOOPS_ROOT_PATH . '/class/xoopslists.php';
         $file_path = XOOPS_ROOT_PATH . "/class/captcha/image/{$name}";
         $files     = XoopsLists::getFileListAsArray($file_path);
+        $items = array();
         foreach ($files as $item) {
             if (empty($extension) || preg_match("/(\.{$extension})$/i", $item)) {
                 $items[] = $item;
@@ -185,8 +185,17 @@ class XoopsCaptchaImageHandler
         $this->drawCode();
 
         header('Content-type: image/jpeg');
-        imagejpeg($this->oImage);
-        imagedestroy($this->oImage);
+        if (!imagejpeg($this->oImage)) {
+            // Log or handle the error as you see fit
+            return false;
+        }
+
+        if (!imagedestroy($this->oImage)) {
+            // Log or handle the error as you see fit
+            return false;
+        }
+
+        return true;
     }
 
     public function loadFont()
