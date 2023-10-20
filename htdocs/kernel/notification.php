@@ -532,7 +532,7 @@ class XoopsNotificationHandler extends XoopsObjectHandler
                 $this->insert($notification);
             }
         }
-        return null;
+        return true;
     }
 
     // TODO: this will be to provide a list of everything a particular
