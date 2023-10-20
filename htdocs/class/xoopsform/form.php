@@ -216,7 +216,6 @@ class XoopsForm
                 }
 
                 return $ret;
-                break;
             default:
                 if (!isset($ret)) {
                     $ret = '';
@@ -230,7 +229,6 @@ class XoopsForm
                 }
 
                 return $ret;
-                break;
         }
     }
 

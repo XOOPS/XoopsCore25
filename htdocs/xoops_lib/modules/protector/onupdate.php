@@ -72,6 +72,7 @@ if (!function_exists('protector_onupdate_base')) {
         }
 
         // TEMPLATES (all templates have been already removed by modulesadmin)
+        /** @var XoopsTplfileHandler $tplfile_handler */
         $tplfile_handler = xoops_getHandler('tplfile');
         $tpl_path        = __DIR__ . '/templates';
         if ($handler = @opendir($tpl_path . '/')) {
@@ -100,7 +101,7 @@ if (!function_exists('protector_onupdate_base')) {
                         // generate compiled file
                         include_once XOOPS_ROOT_PATH . '/class/xoopsblock.php';
                         include_once XOOPS_ROOT_PATH . '/class/template.php';
-                        if (!xoops_template_touch($tplid)) {
+                        if (!xoops_template_touch((string)$tplid)) {
                             $msgs[] = '<span style="color:#ff0000;">ERROR: Failed compiling template <b>' . htmlspecialchars($mydirname . '_' . $file, ENT_QUOTES) . '</b>.</span>';
                         } else {
                             $msgs[] = 'Template <b>' . htmlspecialchars($mydirname . '_' . $file, ENT_QUOTES) . '</b> compiled.</span>';

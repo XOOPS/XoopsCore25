@@ -147,9 +147,9 @@ class XoopsCaptchaImageHandler
         $this->loadFont();
         $this->setImageSize();
 
-        $this->oImage = imagecreatetruecolor($this->width, $this->height);
+        $this->oImage = imagecreatetruecolor((int)$this->width, (int)$this->height);
         $background   = imagecolorallocate($this->oImage, 255, 255, 255);
-        imagefilledrectangle($this->oImage, 0, 0, $this->width, $this->height, $background);
+        imagefilledrectangle($this->oImage, 0, 0, (int)$this->width, (int)$this->height, $background);
 
         switch ($this->config['background_type']) {
             default:
@@ -293,7 +293,7 @@ class XoopsCaptchaImageHandler
             $posX = ($this->spacing / 2) + ($i * $this->spacing);
             $posY = 2 + ($this->height / 2) + ($CharHeight / 4);
 
-            imagefttext($this->oImage, $FontSize, $Angle, $posX, $posY, $text_color, $this->font, $this->code[$i], array());
+            imagefttext($this->oImage, $FontSize, $Angle, (int)$posX, (int)$posY, $text_color, $this->font, $this->code[$i], array());
         }
     }
 
@@ -347,12 +347,12 @@ class XoopsCaptchaImageHandler
     {
         for ($i = 0; $i <= $this->height;) {
             $randomcolor = imagecolorallocate($this->oImage, mt_rand(190, 255), mt_rand(190, 255), mt_rand(190, 255));
-            imageline($this->oImage, 0, $i, $this->width, $i, $randomcolor);
+            imageline($this->oImage, 0, (int)$i, (int)$this->width, (int)$i, (int)$randomcolor);
             $i += 2.5;
         }
         for ($i = 0; $i <= $this->width;) {
             $randomcolor = imagecolorallocate($this->oImage, mt_rand(190, 255), mt_rand(190, 255), mt_rand(190, 255));
-            imageline($this->oImage, $i, 0, $i, $this->height, $randomcolor);
+            imageline($this->oImage, (int)$i, 0, (int)$i, (int)$this->height, (int)$randomcolor);
             $i += 2.5;
         }
     }
