@@ -15,22 +15,22 @@
         <h3><a href="<{$xoops_url}>/modules/<{$xoops_dirname}>/index.php"><{$forum_index_title}></a></h3>
     </div>
     <div class="col-md-6 col-xs-12 pull-right">
-        <{if $mode > 1}>
+        <{if isset($mode) && $mode > 1}>
         <form name="form_topics_admin" action="<{$xoops_url}>/modules/<{$xoops_dirname}>/action.topic.php" method="POST" onsubmit="if(window.document.form_topics_admin.op.value &lt; 1){return false;}">
         <{/if}>
         <{if $viewer_level > 1}>
             <!-- irmtfan hardcode removed style="padding: 5px;float: right; text-align:right;" -->
             <div class="pagenav" id="admin">
-                <{if $mode > 1}>
+                <{if isset($mode) && $mode > 1}>
                     <{$smarty.const._ALL}>:
                     <input type="checkbox" name="topic_check1" id="topic_check1" value="1" onclick="xoopsCheckAll('form_topics_admin', 'topic_check1');">
                     <select class="form-control" name="op">
                         <option value="0"><{$smarty.const._SELECT}></option>
                         <option value="delete"><{$smarty.const._DELETE}></option>
-                        <{if $status == "pending"}>
+                        <{if isset($status) &&  $status == "pending"}>
                             <option value="approve"><{$smarty.const._MD_NEWBB_APPROVE}></option>
                             <option value="move"><{$smarty.const._MD_NEWBB_MOVE}></option>
-                        <{elseif $status == "deleted"}>
+                        <{elseif isset($status) &&  $status == "deleted"}>
                             <option value="restore"><{$smarty.const._MD_NEWBB_RESTORE}></option>
                         <{else}>
                             <option value="move"><{$smarty.const._MD_NEWBB_MOVE}></option>
@@ -153,7 +153,7 @@
         <div class="clear"></div>
         <br>
         <br>
-    <{if $mode > 1}>
+    <{if isset($mode) && $mode > 1}>
     </form>
     <{/if}>
 
@@ -164,7 +164,7 @@
     <thead>
     <tr class="head" class="align_left">
         <th width="5%" colspan="2">
-            <{if $mode > 1}>
+            <{if isset($mode) && $mode > 1}>
                 <{$smarty.const._ALL}>:
                 <input type="checkbox" name="topic_check" id="topic_check" value="1" onclick="xoopsCheckAll('form_topics_admin', 'topic_check');">
             <{else}>
@@ -185,7 +185,7 @@
     <tr class="<{cycle values="even,odd"}>">
         <!-- irmtfan add topic-read/topic-new smarty variable  -->
         <td width="4%" align="center" class="<{if $topic.topic_read == 1 }>topic-read<{else}>topic-new<{/if}>">
-        <{if $mode > 1}>
+        <{if isset($mode) && $mode > 1}>
             <input type="checkbox" name="topic_id[]" id="topic_id[<{$topic.topic_id}>]" value="<{$topic.topic_id}>">
         <{else}>
         <!-- irmtfan add lock -->
