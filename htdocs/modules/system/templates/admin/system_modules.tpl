@@ -1,5 +1,5 @@
 <{include file="db:system_header.tpl"}>
-<{if $install_mods|default:false}>
+<{if !empty($install_mods)}>
     <script type="text/javascript">
         IMG_ON = "<{xoAdminIcons 'success.png'}>";
         IMG_OFF = "<{xoAdminIcons 'cancel.png'}>";

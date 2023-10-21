@@ -20,7 +20,7 @@
     </div>
 <{/foreach}>
 </div>
-    <{if $catnavbar|default:false}>
+    <{if !empty($catnavbar)}>
     <div class=""row">
         <div class="generic-pagination col text-right mt-2">
         <{$catnavbar|replace:'form':'div'|replace:'id="xo-pagenav"':''|replace:' //':'/'}>

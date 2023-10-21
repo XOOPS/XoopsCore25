@@ -18,7 +18,7 @@
                     <{$smarty.const._AM_SYSTEM_IMAGES_ADDIMG}>
                 </button>
             <{/if}>
-            <{if $listimg|default:false}>
+            <{if !empty($listimg)}>
                 <button id="xo-addavatar-btn" class="ui-corner-all tooltip" onclick='location="admin.php?fct=images&amp;op=multiupload&amp;imgcat_id=<{$imgcat_id}>"'
                         title="<{$smarty.const._AM_SYSTEM_IMAGES_MULTIUPLOAD}>">
                     <img src="<{xoAdminIcons 'add.png'}>" alt="<{$smarty.const._AM_SYSTEM_IMAGES_MULTIUPLOAD}>"/>
@@ -81,12 +81,12 @@
         </tbody>
     </table>
     <!-- Nav menu -->
-    <{if $nav_menu|default:false}>
+    <{if !empty($nav_menu)}>
         <div class="xo-avatar-pagenav floatright"><{$nav_menu}></div>
         <div class="clear spacer"></div>
     <{/if}>
 <{/if}>
-<{if $images|default:false}>
+<{if !empty($images)}>
     <!-- Image list -->
     <div id="xo-category-add" class="">
         <{foreach item=img from=$images|default:null}>
@@ -127,7 +127,7 @@
         <{/foreach}>
         <div class="clear"></div>
     </div>
-    <{if $nav_menu|default:false}>
+    <{if !empty($nav_menu)}>
         <div class="xo-avatar-pagenav floatright"><{$nav_menu}></div>
         <div class="clear spacer"></div>
     <{/if}>
@@ -138,7 +138,7 @@
 <{/if}>
 
 <!-- Add Image form -->
-<{if $image_form|default:false}>
+<{if !empty($image_form)}>
 <div id="xo-images-add" class="hide">
     <br>
     <{$image_form.javascript}>
@@ -166,7 +166,7 @@
 </div>
 <{/if}>
 <!-- Add Category form -->
-<{if $imagecat_form|default:false}>
+<{if !empty($imagecat_form)}>
 <div id="xo-category-add" class="hide">
     <br>
     <{$imagecat_form.javascript}>
@@ -193,7 +193,7 @@
     </form>
 </div>
 <{/if}>
-<{if $multiupload|default:false}>
+<{if !empty($multiupload)}>
     <div class="clear">&nbsp;</div>
     <{include file="db:system_trigger_uploads.tpl"}>
     <h2><{$imgcat_name}></h2>
@@ -263,7 +263,7 @@
     </script>
 <{/if}>
 <!-- Edit form image -->
-<{if $edit_form|default:false}>
+<{if !empty($edit_form)}>
     <div id="xo-images-add" class="">
         <{$edit_thumbs}>
         <br>

@@ -14,7 +14,7 @@
         <li class="breadcrumb-item active"><{$topic_title|strip_tags}> <{if $topicstatus}><{$topicstatus}><{/if}></li>
     </ol>
 
-    <{if $tagbar|default:false}>
+    <{if !empty($tagbar)}>
         <div class="newbb-tagbar">
             <{include file="db:tag_bar.tpl"}>
         </div>
@@ -91,7 +91,7 @@
 
     <{if $mode <= 1}>
         <{if isset($topic_poll)}>
-            <{if $topic_pollresult|default:''}>
+            <{if !empty($topic_pollresult)}>
                 <{include file="db:newbb_poll_results.tpl" poll=$poll|default:''}>
             <{else}>
                 <{include file="db:newbb_poll_view.tpl" poll=$poll|default:''}>

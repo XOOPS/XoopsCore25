@@ -14,7 +14,7 @@
 
     <{$category_path}>
 
-    <{if $subcategories|default:''}>
+    <{if !empty($subcategories)}>
         <{$smarty.const._MD_XOOPSTUBE_SUBCATLISTING}>
         <{foreach item=subcat from=$subcategories|default:null}>
             <a href="viewcat.php?cid=<{$subcat.id}>" title="<{$subcat.alttext}>"><img src="<{$subcat.image}>" alt="<{$subcat.alttext}>"></a>

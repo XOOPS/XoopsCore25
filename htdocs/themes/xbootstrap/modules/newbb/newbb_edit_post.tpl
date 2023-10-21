@@ -22,19 +22,19 @@
 <div class="clear"></div>
 <br>
 
-<{if $disclaimer|default:''}>
+<{if !empty($disclaimer)}>
     <div class="confirmMsg"><{$disclaimer}></div>
     <div class="clear"></div>
     <br>
 <{/if}>
 
-<{if $error_message|default:''}>
+<{if !empty($error_message)}>
     <div class="errorMsg"><{$error_message}></div>
     <div class="clear"></div>
     <br>
 <{/if}>
 
-<{if $post_preview|default:''}>
+<{if !empty($post_preview)}>
     <table width='100%' class='outer' cellspacing='1'>
         <tr valign="top">
             <td class="head"><{$post_preview.subject}></td>
@@ -78,7 +78,7 @@
 <div class="clear"></div>
 <br>
 
-<{if $posts_context|default:''}>
+<{if !empty($posts_context)}>
     <table width='100%' class='outer' cellspacing='1'>
         <{foreach item=post from=$posts_context|default:null}>
         <tr valign="top">

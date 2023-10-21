@@ -2,7 +2,7 @@
 <{include file="db:system_header.tpl"}>
 <!-- Display mailusers form  -->
 <br>
-<{if $form_maintenance|default:false}>
+<{if !empty($form_maintenance)}>
     <div class="spacer"><{$form_maintenance}></div>
     <br>
     <div class="spacer"><{$form_dump}></div>
@@ -45,7 +45,7 @@
         </table>
         <br>
     <{/if}>
-    <{if $verif_maintenance|default:false}>
+    <{if !empty($verif_maintenance)}>
         <{$result_maintenance}>
     <{/if}>
 <{else}>

@@ -22,7 +22,7 @@
                 </td>
                 <td align="center">
                     <{$online.module_name}>
-                    <{if $isadmin|default:false}>
+                    <{if !empty($isadmin)}>
                         <br>(<{$online.ip}>)<br><{$online.updated}>
                     <{/if}>
                 </td>

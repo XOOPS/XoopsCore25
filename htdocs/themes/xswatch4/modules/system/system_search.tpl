@@ -1,4 +1,4 @@
-<{if $results|default:false}>
+<{if !empty($results)}>
 	<h3><{$smarty.const._SR_SEARCHRESULTS}></h3>
 	<{$smarty.const._SR_KEYWORDS}>: <mark><{$keywords}></mark>
 	<br>
@@ -6,7 +6,7 @@
 		<{$error_length}> <strong><{$error_keywords}></strong>
 		<br>
 	<{/if}>
-	<{if $nomatch|default:false}>
+	<{if !empty($nomatch)}>
 		<br>
 		<{$nomatch}>
 		<br>
@@ -55,10 +55,10 @@
 		<{/foreach}>
 	<{/if}>
 <{/if}>
-<{if $showallbyuser|default:false}>
+<{if !empty($showallbyuser)}>
 	<h3><{$smarty.const._SR_SEARCHRESULTS}></h3>
 	<{if $nomatch|default:false != true}>
-		<{if $showall|default:false}>
+		<{if !empty($showall)}>
 			<{$smarty.const._SR_KEYWORDS}>: <mark><{$keywords}></mark>
 			<br>
 		<{/if}>
@@ -156,7 +156,7 @@
 		</p>
 	<{/if}>
 <{/if}>
-<{if $form|default:''}>
+<{if !empty($form)}>
 	<hr>
 	<{$form}>
 <{/if}>

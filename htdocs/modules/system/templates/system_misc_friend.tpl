@@ -5,9 +5,9 @@
 </head>
 <body>
 <{/if}>
-<{if $successMessage|default:false}><h4><{$successMessage}></h4>
+<{if !empty($successMessage)}><h4><{$successMessage}></h4>
 <{else}>
-<{if $errorMessage|default:false}><div class='errorMsg'><{$errorMessage}></div><{/if}>
+<{if !empty($errorMessage)}><div class='errorMsg'><{$errorMessage}></div><{/if}>
 
 <{$recommendus.rendered|default:''}>
 <{/if}>

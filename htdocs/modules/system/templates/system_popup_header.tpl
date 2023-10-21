@@ -7,7 +7,7 @@
     <{section name=item loop=$headItems}>
     <{$headItems[item]}>
     <{/section}>
-<{if $closeHead|default:false}>
+<{if !empty($closeHead)}>
 </head>
 <body>
 <{/if}>

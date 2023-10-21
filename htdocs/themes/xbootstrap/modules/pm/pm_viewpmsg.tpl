@@ -46,21 +46,21 @@
         <{/if}>
     </div><!-- .message-current-tab -->
 
-    <{if $msg|default:false}>
+    <{if !empty($msg)}>
         <div class="alert alert-info alert-dismissable">
             <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
             <strong><{$msg}></strong>
         </div>
     <{/if}>
 
-    <{if $errormsg|default:false}>
+    <{if !empty($errormsg)}>
         <div class="alert alert-danger alert-dismissable">
             <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
             <strong><{$errormsg}></strong>
         </div>
     <{/if}>
 
-    <{if $pagenav|default:false}>
+    <{if !empty($pagenav)}>
         <{$pagenav}>
     <{/if}>
 
@@ -144,7 +144,7 @@
         <{/foreach}>
     </form>
 
-    <{if $pagenav|default:false}>
+    <{if !empty($pagenav)}>
         <{$pagenav}>
     <{/if}>
 <{/if}>

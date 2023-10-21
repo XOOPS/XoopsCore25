@@ -34,7 +34,7 @@
                 <{if $display_whowhen_link}>
                 <p class="card-text"><small class="text-muted"><{$item.who_when}> (<{$item.counter}> <{$smarty.const._MD_PUBLISHER_READS}>)</small></p>
                 <{/if}>
-                <{if $indexpage|default:false}>
+                <{if !empty($indexpage)}>
                 <p class="card-text"><{$item.summary}></p>
                 <{else}>
                 <p class="card-text"><{$item.summary|truncateHtml:80}></p>
@@ -47,7 +47,7 @@
         </div>
         <{/foreach}>
     </div>
-    <{if $navbar|default:false}>
+    <{if !empty($navbar)}>
     <div class="generic-pagination col text-right mt-2">
         <{$navbar|replace:'form':'div'|replace:'id="xo-pagenav"':''|replace:' //':'/'}>
     </div>

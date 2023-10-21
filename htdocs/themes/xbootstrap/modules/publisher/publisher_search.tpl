@@ -1,4 +1,4 @@
-<{if $search_info|default:''}>
+<{if !empty($search_info)}>
     <div class="alert alert-success">
         <{$search_info}>
     </div>

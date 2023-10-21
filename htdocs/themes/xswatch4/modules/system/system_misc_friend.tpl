@@ -5,10 +5,10 @@
 </head>
 <body>
 <{/if}>
-<{if $successMessage|default:false}>
+<{if !empty($successMessage)}>
     <h4 class="text-center"><{$successMessage}></h4>
 <{else}>
-    <{if $errorMessage|default:false}>
+    <{if !empty($errorMessage)}>
         <div class='errorMsg'><{$errorMessage}></div>
     <{/if}>
     <div class="mx-2"><{$recommendus.rendered|default:''}></div>

@@ -11,7 +11,7 @@
     <meta name="author" content="<{$xoops_meta_author}>"/>
     <meta name="copyright" content="<{$xoops_meta_copyright}>"/>
     <meta name="generator" content="XOOPS"/>
-    <{if $url|default:false}>
+    <{if !empty($url)}>
         <meta http-equiv="Refresh" content="<{$time}>; url=<{$url}>"/>
     <{/if}>
 
@@ -40,7 +40,7 @@
         <div class="notreload">
             <{$lang_ifnotreload}>
         </div>
-        <{if $xoops_logdump|default:false}>
+        <{if !empty($xoops_logdump)}>
         <div><{$xoops_logdump}></div>
         <{/if}>
     </div>

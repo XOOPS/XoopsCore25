@@ -5,7 +5,7 @@
             <{if $module_home}>
                 <li class="breadcrumb-item<{if !$categoryPath|default:false}> active<{/if}>"><{$module_home}></li>
             <{/if}>
-            <{if $categoryPath|default:false}>
+            <{if !empty($categoryPath)}>
                 <{if !$categoryPath|strstr:'<li>'}>
                     <{assign var=categoryPath value="<li>$categoryPath</li>"}>
                 <{/if}>

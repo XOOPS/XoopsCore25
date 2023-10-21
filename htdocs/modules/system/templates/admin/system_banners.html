@@ -58,7 +58,7 @@
         </tbody>
     </table>
     <div class="clear spacer"></div>
-    <{if $nav_menu_banner|default:false}>
+    <{if !empty($nav_menu_banner)}>
         <div class="xo-avatar-pagenav floatright"><{$nav_menu_banner}></div>
         <div class="clear spacer"></div>
     <{/if}>
@@ -105,7 +105,7 @@
         </tbody>
     </table>
     <div class="clear spacer"></div>
-    <{if $nav_menu_bannerF|default:false}>
+    <{if !empty($nav_menu_bannerF)}>
         <div class="xo-avatar-pagenav floatright"><{$nav_menu_bannerF}></div>
         <div class="clear spacer"></div>
     <{/if}>
@@ -144,13 +144,13 @@
         </tbody>
     </table>
     <div class="clear spacer"></div>
-    <{if $nav_menu_client|default:false}>
+    <{if !empty($nav_menu_client)}>
         <div class="xo-avatar-pagenav floatright"><{$nav_menu_client}></div>
         <div class="clear spacer"></div>
     <{/if}>
 <{/if}>
 <br>
 <!-- Display Avatar form (add,edit) -->
-<{if $form|default:false}>
+<{if !empty($form)}>
     <div class="spacer"><{$form}></div>
 <{/if}>

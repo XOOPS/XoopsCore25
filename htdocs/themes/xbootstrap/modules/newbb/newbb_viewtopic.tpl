@@ -14,7 +14,7 @@
         <li class="active"><{$topic_title|strip_tags}> <{if $topicstatus}><{$topicstatus}><{/if}></li>
     </ol>
 
-    <{if $tagbar|default:false}>
+    <{if !empty($tagbar)}>
         <div class="newbb-tagbar">
             <{include file="db:tag_bar.tpl"}>
         </div><!-- .newbb-tagbar -->
@@ -74,7 +74,7 @@
     </div>
 
     <{if isset($mode) && $mode <= 1}>
-        <{if $topic_poll|default:''}>
+        <{if !empty($topic_poll)}>
             <{if isset($topic_pollresult)}>
                 <{include file="db:newbb_poll_results.tpl" poll=$poll|default:''}>
             <{else}>

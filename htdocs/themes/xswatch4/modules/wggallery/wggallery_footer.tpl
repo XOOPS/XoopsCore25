@@ -1,4 +1,4 @@
-<{if $error|default:false}>
+<{if !empty($error)}>
 	<div class='errorMsg'><strong><{$error}></strong></div>
 <{/if}>
 <div class='clear spacer'></div>

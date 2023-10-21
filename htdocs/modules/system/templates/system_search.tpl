@@ -6,7 +6,7 @@
 		<{$error_length}> <strong><{$error_keywords}></strong>
 		<br>
 	<{/if}>
-	<{if $nomatch|default:false}>
+	<{if !empty($nomatch)}>
 		<br>
 		<{$nomatch}>
 		<br>
@@ -34,7 +34,7 @@
 		<{/foreach}>
 	<{/if}>
 <{/if}>
-<{if $showallbyuser|default:false}>
+<{if !empty($showallbyuser)}>
 	<h3><{$smarty.const._SR_SEARCHRESULTS}></h3>
 	<{if isset($nomatch) && $nomatch != true}>
 		<{if isset($showall)}>

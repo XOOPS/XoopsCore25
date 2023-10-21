@@ -26,11 +26,11 @@
                         </a>
 
                         <a href="<{$xoops_url}>/modules/<{$xoops_dirname}>/list.topic.php?status=pending#admin" title="<{$smarty.const._MD_NEWBB_TYPE_PENDING}>" class="btn btn-primary">
-                            <span class="fa fa-check-square-o" aria-hidden="true"></span> <{if $wait_new_topic|default:''}><span class="badge badge-light badge-pill"><{$wait_new_topic}></span><{/if}>
+                            <span class="fa fa-check-square-o" aria-hidden="true"></span> <{if !empty($wait_new_topic)}><span class="badge badge-light badge-pill"><{$wait_new_topic}></span><{/if}>
                         </a>
 
                         <a href="<{$xoops_url}>/modules/<{$xoops_dirname}>/list.topic.php?status=deleted#admin" title="<{$smarty.const._MD_NEWBB_TYPE_DELETED}>" class="btn btn-danger">
-                            <span class="fa fa-trash-o" aria-hidden="true"></span> <{if $delete_topic|default:''}><span class="badge badge-light badge-pill"><{$delete_topic}></span><{/if}>
+                            <span class="fa fa-trash-o" aria-hidden="true"></span> <{if !empty($delete_topic)}><span class="badge badge-light badge-pill"><{$delete_topic}></span><{/if}>
                         </a>
                 </div>
             </div>
@@ -44,11 +44,11 @@
                     </a>
 
                     <a href="<{$xoops_url}>/modules/<{$xoops_dirname}>/viewpost.php?status=pending#admin" title="<{$smarty.const._MD_NEWBB_TYPE_PENDING}>" class="btn btn-primary">
-                        <span class="fa fa-check-square-o" aria-hidden="true"></span> <{if $wait_new_post|default:''}><span class="badge badge-light badge-pill"><{$wait_new_post}></span><{/if}>
+                        <span class="fa fa-check-square-o" aria-hidden="true"></span> <{if !empty($wait_new_post)}><span class="badge badge-light badge-pill"><{$wait_new_post}></span><{/if}>
                     </a>
 
                     <a href="<{$xoops_url}>/modules/<{$xoops_dirname}>/viewpost.php?status=deleted#admin" title="<{$smarty.const._MD_NEWBB_TYPE_DELETED}>" class="btn btn-primary">
-                        <span class="fa fa-trash-o" aria-hidden="true"></span> <{if $delete_post|default:''}><span class="badge badge-light badge-pill"><{$delete_post}></span><{/if}>
+                        <span class="fa fa-trash-o" aria-hidden="true"></span> <{if !empty($delete_post)}><span class="badge badge-light badge-pill"><{$delete_post}></span><{/if}>
                     </a>
 
                     <{if !empty($report_post)}>

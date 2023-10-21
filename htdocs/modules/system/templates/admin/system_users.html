@@ -165,6 +165,6 @@
 <{/if}>
 <br>
 <!-- Display Avatar form (add,edit) -->
-<{if $form|default:false}>
+<{if !empty($form)}>
     <div class="spacer"><{$form}></div>
 <{/if}>

@@ -14,7 +14,7 @@
 
     <p><{$lang_ifnotreload}></p>
 </div>
-<{if $xoops_logdump|default:false}>
+<{if !empty($xoops_logdump)}>
     <div><{$xoops_logdump}></div>
 <{/if}>
 </body>

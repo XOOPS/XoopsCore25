@@ -77,7 +77,7 @@
 <{/if}>
 <div class="clearfix"></div>
 <div class="pub_article_extras">
-    <{if $rating_enabled|default:false}>
+    <{if !empty($rating_enabled)}>
         <div class="pull-left">
             <small><{$item.ratingbar}></small>
         </div>
@@ -156,7 +156,7 @@
 <!-- Other articles in the category -->
 <{if $other_items == "previous_next"}>
     <{if $previous_item_link|default:'' || $next_item_link|default:''}>
-        <{if $previous_item_link|default:''}>
+        <{if !empty($previous_item_link)}>
             <div class="pull-left">
                 <a href="<{$previous_item_url}>">
                     <img style="vertical-align: middle;" src="<{$publisher_images_url}>/links/previous.gif" title="<{$smarty.const._MD_PUBLISHER_PREVIOUS_ITEM}>"
@@ -165,7 +165,7 @@
                 <{$previous_item_link}>
             </div>
         <{/if}>
-        <{if $next_item_link|default:''}>
+        <{if !empty($next_item_link)}>
             <div class="text-right">
                 <{$next_item_link}>
                 <a href="<{$next_item_url}>">
@@ -207,7 +207,7 @@
 <{/if}>
 <!-- END Other articles in the category -->
 
-<{if $tagbar|default:false}>
+<{if !empty($tagbar)}>
     <p><{include file="db:tag_bar.tpl"}></p>
 <{/if}>
 

@@ -13,7 +13,7 @@
     <script src="<{$xoops_url}>/browse.php?Frameworks/jquery/jquery.js"></script>
     <script src="<{$themeUrl}>js/bootstrap.min.js"></script>
 
-    <{if $closeHead|default:false}>
+    <{if !empty($closeHead)}>
 </head>
 <body style="margin:1em;">
 <{/if}>

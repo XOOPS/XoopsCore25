@@ -41,7 +41,7 @@
     <script src="<{$xoops_url}>/browse.php?Frameworks/jquery/jquery.js"></script>
     <script src="<{xoImgUrl 'js/bootstrap.bundle.min.js'}>"></script>
     <{include file="$theme_name/tpl/cookieConsent.tpl"}>
-    <{if $xoops_isadmin|default:false}>
+    <{if !empty($xoops_isadmin)}>
     <script src="<{xoImgUrl}>js/js.cookie.min.js"></script>
     <{/if}>
     <link rel="alternate" type="application/rss+xml" title="" href="<{xoAppUrl 'backend.php'}>">
@@ -122,8 +122,8 @@
         <img src="<{xoImgUrl}>images/favicon.png" alt="Design by: XOOPS UI/UX Team">
     </a>
 </footer>
-<{if $xoops_isadmin|default:false}><{include file="$theme_name/tpl/nav-admin.tpl"}><{/if}>
+<{if !empty($xoops_isadmin)}><{include file="$theme_name/tpl/nav-admin.tpl"}><{/if}>
 <!-- Inbox alert -->
-<{if $xoops_isuser|default:false}><{include file="$theme_name/tpl/inboxAlert.tpl"}><{/if}>
+<{if !empty($xoops_isuser)}><{include file="$theme_name/tpl/inboxAlert.tpl"}><{/if}>
 </body>
 </html>

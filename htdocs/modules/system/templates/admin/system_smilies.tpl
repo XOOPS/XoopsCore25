@@ -51,12 +51,12 @@
     </table>
     <!-- Display smilies navigation -->
     <div class="clear spacer"></div>
-    <{if $nav_menu|default:false}>
+    <{if !empty($nav_menu)}>
         <div class="xo-avatar-pagenav floatright"><{$nav_menu}></div>
         <div class="clear spacer"></div>
     <{/if}>
 <{/if}>
 <!-- Display smilies form (add,edit) -->
-<{if $form|default:false}>
+<{if !empty($form)}>
     <div class="spacer"><{$form}></div>
 <{/if}>

@@ -33,7 +33,7 @@
             <{if $online.module_name <> "" }>
                 <h5 class="text-center text-sm-left font-weight-bold"><{$online.module_name}></h5>
             <{/if}>
-            <{if $isadmin|default:false}>
+            <{if !empty($isadmin)}>
                 <div class="ml-5 ml-sm-0">
                     <span class="fa fa-map-marker fa-fw "></span> <{$online.ip}>
                     <br>

@@ -1,6 +1,6 @@
 <{include file="db:system_header.tpl"}>
 <!--Comments-->
-<{if $form|default:false}>
+<{if !empty($form)}>
     <div class="spacer"><{$form}></div>
 <{else}>
     <div class="floatleft"><{$form_sort}></div>
