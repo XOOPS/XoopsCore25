@@ -49,7 +49,7 @@ class XoopsModelRead extends XoopsModelAbstract
         $limit = null;
         $start = null;
         $sql   = "SELECT {$select} FROM `{$this->handler->table}`";
-        if (isset($criteria) && is_subclass_of($criteria, 'CriteriaElement')) {
+        if (isset($criteria) && \method_exists($criteria, 'renderWhere')) {
             $sql .= ' ' . $criteria->renderWhere();
             if ($groupby = $criteria->getGroupby()) {
                 $sql .= $groupby;
@@ -134,7 +134,7 @@ class XoopsModelRead extends XoopsModelAbstract
             $sql .= ", `{$this->handler->identifierName}`";
         }
         $sql .= " FROM `{$this->handler->table}`";
-        if (isset($criteria) && is_subclass_of($criteria, 'CriteriaElement')) {
+        if (isset($criteria) && \method_exists($criteria, 'renderWhere')) {
             $sql .= ' ' . $criteria->renderWhere();
             if ($sort = $criteria->getSort()) {
                 $sql .= ' ORDER BY ' . $sort . ' ' . $criteria->getOrder();
@@ -169,7 +169,7 @@ class XoopsModelRead extends XoopsModelAbstract
         $ret   = array();
         $sql   = "SELECT `{$this->handler->keyName}` FROM `{$this->handler->table}`";
         $limit = $start = null;
-        if (isset($criteria) && is_subclass_of($criteria, 'CriteriaElement')) {
+        if (isset($criteria) && \method_exists($criteria, 'renderWhere')) {
             $sql .= ' ' . $criteria->renderWhere();
             $limit = $criteria->getLimit();
             $start = $criteria->getStart();

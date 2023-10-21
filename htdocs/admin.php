@@ -36,7 +36,7 @@ xoops_cp_header();
 $xoTheme->addStylesheet(XOOPS_URL . '/modules/system/css/admin.css');
 if (!isset($xoopsConfig['admin_warnings_enable']) || $xoopsConfig['admin_warnings_enable']) {
     // recommend the lowest security supported version at time of XOOPS release
-    // see: http://php.net/supported-versions.php
+    // see: https://php.net/supported-versions.php
     $minRecommendedPHP = '7.3.0';
     if (version_compare(PHP_VERSION, $minRecommendedPHP) < 0) {
         xoops_error(sprintf(_AD_WARNING_OLD_PHP, $minRecommendedPHP));
@@ -47,8 +47,8 @@ if (!isset($xoopsConfig['admin_warnings_enable']) || $xoopsConfig['admin_warning
     if (!empty($installDirs)) {
         foreach ($installDirs as $installDir) {
             xoops_error(sprintf(_AD_WARNINGINSTALL, $installDir));
-			echo '<br>';
-        }
+        echo '<br>';
+    }
     }
 
     if (is_writable(XOOPS_ROOT_PATH . '/mainfile.php')) {

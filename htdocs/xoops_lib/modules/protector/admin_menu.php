@@ -10,7 +10,7 @@ $mydirpath = $registry->getEntry('mydirpath');
 $language  = $registry->getEntry('language');
 // end hack by Trabis
 
-/* @var XoopsModuleHandler $module_handler */
+/** @var XoopsModuleHandler $module_handler */
 $module_handler = xoops_getHandler('module');
 $xoopsModule    = XoopsModule::getByDirname($mydirname);
 /** @var XoopsModule $moduleInfo */

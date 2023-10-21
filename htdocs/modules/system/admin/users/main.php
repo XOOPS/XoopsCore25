@@ -10,14 +10,14 @@
  */
 
 /**
- * @copyright    XOOPS Project http://xoops.org/
- * @license      GNU GPL 2 or later (https://www.gnu.org/licenses/gpl-2.0.html)
+ * @copyright    XOOPS Project https://xoops.org/
+ * @license      GNU GPL 2.0 or later (https://www.gnu.org/licenses/gpl-2.0.html)
  * @package
  * @since
  * @author       XOOPS Development Team, Kazumi Ono (AKA onokazu)
  */
-/* @var XoopsUser $xoopsUser */
-/* @var XoopsModule $xoopsModule */
+/** @var XoopsUser $xoopsUser */
+/** @var XoopsModule $xoopsModule */
 use Xmf\Request;
 
 // Check users rights
@@ -28,7 +28,7 @@ if (!is_object($xoopsUser) || !is_object($xoopsModule) || !$xoopsUser->isAdmin($
 include_once XOOPS_ROOT_PATH . '/modules/system/admin/users/users.php';
 // Get Action type
 $op = Request::getString('op', 'default');
-/* @var XoopsMemberHandler $member_handler */
+/** @var XoopsMemberHandler $member_handler */
 $member_handler = xoops_getHandler('member');
 // Define main template
 $GLOBALS['xoopsOption']['template_main'] = 'system_users.tpl';
@@ -80,7 +80,7 @@ switch ($op) {
             } elseif (!$member_handler->deleteUser($user)) {
                 xoops_error(sprintf(_AM_SYSTEM_USERS_NO_SUPP, $user->getVar('uname')));
             } else {
-                /* @var XoopsOnlineHandler $online_handler */
+                /** @var XoopsOnlineHandler $online_handler */
                 $online_handler = xoops_getHandler('online');
                 $online_handler->destroy($uid);
                 // RMV-NOTIFY
@@ -117,7 +117,7 @@ switch ($op) {
                 } elseif (!$member_handler->deleteUser($user)) {
                     $error .= sprintf(_AM_SYSTEM_USERS_NO_SUPP, $user->getVar('uname'));
                 } else {
-                    /* @var XoopsOnlineHandler $online_handler */
+                    /** @var XoopsOnlineHandler $online_handler */
                     $online_handler = xoops_getHandler('online');
                     $online_handler->destroy($del);
                     // RMV-NOTIFY
@@ -151,9 +151,9 @@ switch ($op) {
             }
 
             $edituser = $member_handler->getUser($uid);
-            if ($edituser->getVar('uname', 'n') != Request::getString('username') && $member_handler->getUserCount(new Criteria('uname', $myts->addSlashes(Request::getString('user_uname', '')))) > 0) {
+            if ($edituser->getVar('uname', 'n') != Request::getString('username') && $member_handler->getUserCount(new Criteria('uname', $myts->addSlashes(Request::getString('user_uname')))) > 0) {
                 xoops_cp_header();
-                xoops_error(sprintf(_AM_SYSTEM_USERS_PSEUDO_ERROR, htmlspecialchars(Request::getString('username'), ENT_QUOTES)));
+                xoops_error(sprintf(_AM_SYSTEM_USERS_PSEUDO_ERROR, htmlspecialchars(Request::getString('user_uname'), ENT_QUOTES)));
                 xoops_cp_footer();
             } elseif ($edituser->getVar('email', 'n') != Request::getEmail('email') && $member_handler->getUserCount(new Criteria('email', $myts->addSlashes(Request::getEmail('email')))) > 0) {
                 xoops_cp_header();
@@ -163,7 +163,8 @@ switch ($op) {
                 $edituser->setVar('name', Request::getString('name'));
                 $edituser->setVar('uname', Request::getString('user_uname'));
                 $edituser->setVar('email', Request::getEmail('email'));
-                $edituser->setVar('url', formatURL(trim(Request::getUrl('url', ''))));
+                $url = formatURL(Request::getUrl('url'));
+                $edituser->setVar('url', $url);
                 $edituser->setVar('user_icq', Request::getString('user_icq'));
                 $edituser->setVar('user_from', Request::getString('user_from'));
                 $edituser->setVar('user_sig', Request::getString('user_sig'));
@@ -210,7 +211,7 @@ switch ($op) {
                             $groups[] = XOOPS_GROUP_ADMIN;
                             $_REQUEST['groups'] = $groups;  // Update the global variable
                         }
-                        /* @var XoopsMemberHandler $member_handler */
+                         /** @var XoopsMemberHandler $member_handler */
                         $member_handler = xoops_getHandler('member');
                         foreach ($oldgroups as $groupid) {
                             $member_handler->removeUsersFromGroup($groupid, array($edituser->getVar('uid')));
@@ -351,7 +352,7 @@ switch ($op) {
 
             //$group_select = new XoopsFormSelectGroup(_AM_SYSTEM_USERS_GROUPS, "selgroups", null, false, 1, false);
             $group_select = new XoopsFormSelect(_AM_SYSTEM_USERS_GROUPS, 'selgroups');
-            /* @var XoopsGroupHandler $group_handler */
+            /** @var XoopsGroupHandler $group_handler */
             $group_handler = xoops_getHandler('group');
             $group_arr     = $group_handler->getObjects();
             $group_select->addOption('', '--------------');
@@ -476,7 +477,7 @@ switch ($op) {
             $user_uname = Request::getString('user_uname');
             $user_uname_match = Request::getInt('user_uname_match', 0);
 
-            $criteria = new CriteriaCompo();
+                       $criteria = new CriteriaCompo();
             if (!empty($user_uname)) {
                 $match = (!empty($user_uname_match)) ? $user_uname_match: XOOPS_MATCH_START;
                 switch ($match) {
@@ -781,7 +782,7 @@ switch ($op) {
                 $requete_pagenav .= '&amp;selgroups=' . htmlspecialchars(implode(',', $selgroups), ENT_QUOTES);
             }
             //print_r($groups);
-            /* @var XoopsMemberHandler $member_handler */
+            /** @var XoopsMemberHandler $member_handler */
             $member_handler = xoops_getHandler('member');
 
             if (empty($groups)) {

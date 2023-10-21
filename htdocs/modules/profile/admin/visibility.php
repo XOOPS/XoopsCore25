@@ -64,7 +64,7 @@ $criteria->setOrder('DESC');
 
 $visibilities = $visibility_handler->getAllByFieldId($criteria);
 
-/* @var XoopsMemberHandler $member_handler */
+/** @var XoopsMemberHandler $member_handler */
 $member_handler = xoops_getHandler('member');
 $groups         = $member_handler->getGroupList();
 $groups[0]      = _PROFILE_AM_FIELDVISIBLETOALL;

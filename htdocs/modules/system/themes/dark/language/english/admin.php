@@ -16,7 +16,7 @@ define('_OXYGEN_VERSION_MYSQL', 'MySQL Version');
 define('_OXYGEN_Server_API', 'Server API');
 define('_OXYGEN_OS', 'OS');
 define('_OXYGEN_ABOUT', 'About XOOPS');
-define('_OXYGEN_ABOUT_TEXT', 'Read the <a href="http://www.xoops.org/modules/wfchannel/" rel="external">All about XOOPS</a> page for more details.');
+define('_OXYGEN_ABOUT_TEXT', 'Read the <a href="https://xoops.org/modules/wfchannel/" rel="external">All about XOOPS</a> page for more details.');
 define('_OXYGEN_XOOPS_LINKS', 'XOOPS Links');
 define('_OXYGEN_XOOPSPROJECT', 'XOOPS Project');
 define('_OXYGEN_XOOPSCORE', 'XOOPS Core');
@@ -51,4 +51,4 @@ define('_OXYGEN_HELP_DESC_1', 'To create content, you must first install a conte
 define('_OXYGEN_HELP_2', 'What is the Block?');
 define('_OXYGEN_HELP_DESC_2', 'Blocks can provide additional/specific content from the installed modules. There can be and custom blocks which can contain text, JS Code, HTML formatted text, pictures, etc. The content in these blocks may be formatted individually or can inherit formatting from the Website. (<a href="modules/system/help.php?mid=1&page=blocksadmin">more ...</a>)');
 define('_OXYGEN_HELP_3', 'How I can find more help?');
-define('_OXYGEN_HELP_DESC_3', 'If you need more help and information to using XOOPS you can use <a href="modules/system/help.php">Help pages </a> in system module or use <a href="http://www.xoops.org/modules/xoopspartners/" rel="external">XOOPS Local support sites </a>');
+define('_OXYGEN_HELP_DESC_3', 'If you need more help and information to using XOOPS you can use <a href="modules/system/help.php">Help pages </a> in system module or use <a href="https://xoops.org/modules/xoopspartners/" rel="external">XOOPS Local support sites </a>');

@@ -32,7 +32,7 @@ if (!function_exists('protector_notify_base')) {
 
         $db = XoopsDatabaseFactory::getDatabaseConnection();
 
-        /* @var XoopsModuleHandler $module_handler */
+        /** @var XoopsModuleHandler $module_handler */
         $module_handler = xoops_getHandler('module');
         $module         = $module_handler->getByDirname($mydirname);
 

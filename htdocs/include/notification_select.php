@@ -28,7 +28,7 @@ if ($xoops_notification['show']) {
     $categories  =& notificationSubscribableCategoryInfo();
     $event_count = 0;
     if (!empty($categories)) {
-        /* @var  XoopsNotificationHandler $notification_handler */
+        /** @var  XoopsNotificationHandler $notification_handler */
         $notification_handler = xoops_getHandler('notification');
         foreach ($categories as $category) {
             $section['name']        = $category['name'];

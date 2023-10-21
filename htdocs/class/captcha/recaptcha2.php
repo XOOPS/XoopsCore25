@@ -18,9 +18,9 @@ use Xmf\IPAddress;
  * @package     class
  * @subpackage  CAPTCHA
  * @author      Grégory Mage
- * @copyright   2016 XOOPS Project (http://xoops.org)
- * @license     GNU GPL 2 or later (https://www.gnu.org/licenses/gpl-2.0.html)
- * @link        http://xoops.org
+ * @copyright   2016 XOOPS Project (https://xoops.org)
+ * @license     GNU GPL 2.0 or later (https://www.gnu.org/licenses/gpl-2.0.html)
+ * @link        https://xoops.org
  */
 
 defined('XOOPS_ROOT_PATH') || exit('Restricted access');

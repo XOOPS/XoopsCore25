@@ -19,9 +19,9 @@ use Xmf\Request;
  * @author              Maxime Cointin (AKA Kraven30)
  * @package             system
  */
-/* @var XoopsUser $xoopsUser */
-/* @var XoopsModule $xoopsModule */
-/* @var XoopsConfigItem $xoopsConfig */
+/** @var XoopsUser $xoopsUser */
+/** @var XoopsModule $xoopsModule */
+/** @var XoopsConfigItem $xoopsConfig */
 
 include dirname(dirname(__DIR__)) . '/header.php';
 

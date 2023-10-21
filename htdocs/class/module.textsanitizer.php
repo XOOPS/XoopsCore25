@@ -251,7 +251,7 @@ class MyTextSanitizer
     public function getSmileys($isAll = true)
     {
         if (count($this->smileys) == 0) {
-            /* @var XoopsMySQLDatabase $xoopsDB */
+            /** @var XoopsMySQLDatabase $xoopsDB */
             $xoopsDB = XoopsDatabaseFactory::getDatabaseConnection();
             $sql     = 'SELECT * FROM ' . $xoopsDB->prefix('smiles');
             $result  = $xoopsDB->query($sql);

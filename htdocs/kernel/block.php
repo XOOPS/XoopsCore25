@@ -1143,7 +1143,7 @@ class XoopsBlockHandler extends XoopsObjectHandler
         $limit = $start = 0;
         $sql   = 'SELECT DISTINCT(b.bid), b.* FROM ' . $this->db->prefix('newblocks') . ' b LEFT JOIN '
             . $this->db->prefix('block_module_link') . ' l ON b.bid=l.block_id';
-        if (isset($criteria) && is_subclass_of($criteria, 'CriteriaElement')) {
+        if (isset($criteria) && \method_exists($criteria, 'renderWhere')) {
             $sql .= ' ' . $criteria->renderWhere();
             $limit = $criteria->getLimit();
             $start = $criteria->getStart();

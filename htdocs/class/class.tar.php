@@ -34,7 +34,7 @@
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
  * Lesser General Public License for more details at:
- * http://www.gnu.org/copyleft/lesser.html
+ * https://www.gnu.org/copyleft/lesser.html
  *
  * If you use this script in your application/website, please
  * send me an e-mail letting me know about it :)

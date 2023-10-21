@@ -48,7 +48,7 @@ class XoopsAuthXoops extends XoopsAuth
      */
     public function authenticate($uname, $pwd = null)
     {
-        /* @var XoopsMemberHandler $member_handler */
+        /** @var XoopsMemberHandler $member_handler */
         $member_handler = xoops_getHandler('member');
         $user           = $member_handler->loginUser($uname, $pwd);
         if ($user == false) {

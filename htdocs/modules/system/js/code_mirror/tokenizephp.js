@@ -9,8 +9,8 @@
  Tokenizer for PHP code
 
  References:
- + http://php.net/manual/en/reserved.php
- + http://php.net/tokens
+ + https://php.net/manual/en/reserved.php
+ + https://php.net/tokens
  + get_defined_constants(), get_defined_functions(), get_declared_classes()
  executed on a realistic (not vanilla) PHP installation with typical LAMP modules.
  Specifically, the PHP bundled with the Uniform Web Server (www.uniformserver.com).
@@ -97,7 +97,7 @@ var tokenizePHP = (function () {
             result[element] = token("namespace", "php-keyword");
         });
 
-        // reserved "language constructs"... http://php.net/manual/en/reserved.php
+        // reserved "language constructs"... https://php.net/manual/en/reserved.php
         ["die", "echo", "empty", "exit", "eval", "include", "include_once", "isset",
             "list", "require", "require_once", "return", "print", "unset",
             "array" // a keyword rather, but mandates a parenthesized parameter list
@@ -111,7 +111,7 @@ var tokenizePHP = (function () {
         result["catch"] = token("catch", "php-keyword");
         result["function"] = token("function", "php-keyword");
 
-        // http://php.net/manual/en/control-structures.alternative-syntax.php must be followed by a ':'
+        // https://php.net/manual/en/control-structures.alternative-syntax.php must be followed by a ':'
         ["endif", "endwhile", "endfor", "endforeach", "endswitch", "enddeclare"].forEach(function (element, index, array) {
             result[element] = token("default", "php-keyword");
         });
@@ -465,7 +465,7 @@ var tokenizePHP = (function () {
             result[element] = token("t_string", "php-predefined-function");
         });
 
-        // output of get_defined_constants(). Differs significantly from http://php.net/manual/en/reserved.constants.php
+        // output of get_defined_constants(). Differs significantly from https://php.net/manual/en/reserved.constants.php
         ["E_ERROR", "E_RECOVERABLE_ERROR", "E_WARNING", "E_PARSE", "E_NOTICE",
             "E_STRICT", "E_CORE_ERROR", "E_CORE_WARNING", "E_COMPILE_ERROR",
             "E_COMPILE_WARNING", "E_USER_ERROR", "E_USER_WARNING", "E_USER_NOTICE",
@@ -722,7 +722,7 @@ var tokenizePHP = (function () {
             result[element] = token("atom", "php-predefined-constant");
         });
 
-        // PHP declared classes - output of get_declared_classes(). Differs from http://php.net/manual/en/reserved.classes.php
+        // PHP declared classes - output of get_declared_classes(). Differs from https://php.net/manual/en/reserved.classes.php
         ["stdClass", "Exception", "ErrorException", "COMPersistHelper", "com_exception",
             "com_safearray_proxy", "variant", "com", "dotnet", "ReflectionException",
             "Reflection", "ReflectionFunctionAbstract", "ReflectionFunction",
@@ -894,7 +894,7 @@ var tokenizePHP = (function () {
             };
         }
 
-        // http://php.net/manual/en/language.types.string.php#language.types.string.syntax.heredoc
+        // https://php.net/manual/en/language.types.string.php#language.types.string.syntax.heredoc
         // See also 'nowdoc' on the page. Heredocs are not interrupted by the '?>' token.
         function readHeredoc(identifier) {
             var token = {};

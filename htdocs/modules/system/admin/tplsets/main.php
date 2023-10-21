@@ -10,8 +10,8 @@
  */
 
 /**
- * @copyright    XOOPS Project http://xoops.org/
- * @license      GNU GPL 2 or later (https://www.gnu.org/licenses/gpl-2.0.html)
+ * @copyright    XOOPS Project https://xoops.org/
+ * @license      GNU GPL 2.0 or later (https://www.gnu.org/licenses/gpl-2.0.html)
  * @package
  * @since
  * @author       XOOPS Development Team, Kazumi Ono (AKA onokazu)
@@ -57,7 +57,7 @@ switch ($op) {
         $form = new XoopsThemeForm(_AM_SYSTEM_TEMPLATES_GENERATE, 'form', 'admin.php?fct=tplsets', 'post', true);
 
         $ele            = new XoopsFormSelect(_AM_SYSTEM_TEMPLATES_SET, 'tplset', $GLOBALS['xoopsConfig']['template_set']);
-        /* @var  XoopsTplsetHandler $tplset_handler */
+        /** @var  XoopsTplsetHandler $tplset_handler */
         $tplset_handler = xoops_getHandler('tplset');
         $tplsetlist     = $tplset_handler->getList();
         asort($tplsetlist);
@@ -69,7 +69,7 @@ switch ($op) {
         $form->addElement(new XoopsFormRadioYN(_AM_SYSTEM_TEMPLATES_FORCE_GENERATED, 'force_generated', 0, _YES, _NO), true);
 
         $modules        = new XoopsFormSelect(_AM_SYSTEM_TEMPLATES_SELECT_MODULES, 'select_modules');
-        /* @var XoopsModuleHandler $module_handler */
+        /** @var XoopsModuleHandler $module_handler */
         $module_handler = xoops_getHandler('module');
         $criteria       = new CriteriaCompo(new Criteria('isactive', 1));
         $moduleslist    = $module_handler->getList($criteria, true);
@@ -116,11 +116,11 @@ switch ($op) {
                 $tplset = Request::getString('tplset', 'default');
 
                 //on crée uniquement les templates qui n'existent pas
-                /* @var XoopsModuleHandler $module_handler */
+                /** @var XoopsModuleHandler $module_handler */
                 $module_handler = xoops_getHandler('module');
-                /* @var  XoopsTplsetHandler $tplset_handler */
+                /** @var  XoopsTplsetHandler $tplset_handler */
                 $tplset_handler = xoops_getHandler('tplset');
-                /* @var  XoopsTplfileHandler $tpltpl_handler */
+                /** @var  XoopsTplfileHandler $tpltpl_handler */
                 $tpltpl_handler = xoops_getHandler('tplfile');
 
                 $criteria = new CriteriaCompo();
@@ -373,7 +373,8 @@ switch ($op) {
             // Save modif
             if (isset($_REQUEST['templates'])) {
                 $open = fopen('' . $path_file . '', 'w+');
-                if (!fwrite($open, utf8_encode(stripslashes($_REQUEST['templates'])))) {
+                $temp = stripslashes($_REQUEST['templates']);
+                if (!fwrite($open, xoops_utf8_encode($temp))) {
                     redirect_header('admin.php?fct=tplsets', 2, _AM_SYSTEM_TEMPLATES_ERROR);
                 }
                 fclose($open);
