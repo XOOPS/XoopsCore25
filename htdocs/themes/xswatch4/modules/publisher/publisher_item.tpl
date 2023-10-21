@@ -84,10 +84,10 @@
     <{/if}>
     <div class="pull-right text-right">
 
-        <{if $display_print_link|default:0 !=0}>
+        <{if isset($display_print_link) && $display_print_link !=0}>
             <{$item.printlink}>
         <{/if}>
-        <{if $display_pdf_button|default:0 !=0}>
+        <<{if isset($display_pdf_button) && $display_pdf_button !=0}>
             <{$item.pdfbutton}>
         <{/if}>
 
@@ -154,8 +154,8 @@
 <!-- END Items by same Author -->
 
 <!-- Other articles in the category -->
-<{if $other_items == "previous_next"}>
-    <{if $previous_item_link|default:'' || $next_item_link|default:''}>
+<{if isset($other_items) && $other_items == "previous_next"}>
+    <{if !empty($previous_item_link) || !empty($next_item_link)}>
         <{if !empty($previous_item_link)}>
             <div class="pull-left">
                 <a href="<{$previous_item_url}>">
@@ -175,7 +175,7 @@
             </div>
         <{/if}>
     <{/if}>
-<{elseif $other_items == 'all'}>
+<{elseif isset($other_items) && $other_items == 'all'}>
     <table class="table table-bordered table-sm" style="margin: 15px 0;">
         <thead>
         <tr>

@@ -2,24 +2,29 @@
  <{if !empty($op)}>
     <br>
     <div class="floatright txtright" style="width: 18%;">
-        <{if $op|default:'' == "out"}>
-            <a href='viewpmsg.php?op=in' title='<{$smarty.const._PM_INBOX}>'><{$smarty.const._PM_INBOX}></a>
-            |
-            <a href='viewpmsg.php?op=save' title='<{$smarty.const._PM_SAVEBOX}>'><{$smarty.const._PM_SAVEBOX}></a>
-        <{elseif $op == "save"}>
-            <a href='viewpmsg.php?op=in' title='<{$smarty.const._PM_INBOX}>'><{$smarty.const._PM_INBOX}></a>
-            |
-            <a href='viewpmsg.php?op=out' title='<{$smarty.const._PM_OUTBOX}>'><{$smarty.const._PM_OUTBOX}></a>
-        <{elseif $op == "in"}>
-            <a href='viewpmsg.php?op=out' title='<{$smarty.const._PM_OUTBOX}>'><{$smarty.const._PM_OUTBOX}></a>
-            |
-            <a href='viewpmsg.php?op=save' title='<{$smarty.const._PM_SAVEBOX}>'><{$smarty.const._PM_SAVEBOX}></a>
+        <{if isset($op)}>
+            <{if $op == "out"}>
+                <a href='viewpmsg.php?op=in' title='<{$smarty.const._PM_INBOX}>'><{$smarty.const._PM_INBOX}></a>
+                |
+                <a href='viewpmsg.php?op=save' title='<{$smarty.const._PM_SAVEBOX}>'><{$smarty.const._PM_SAVEBOX}></a>
+            <{elseif $op == "save"}>
+                <a href='viewpmsg.php?op=in' title='<{$smarty.const._PM_INBOX}>'><{$smarty.const._PM_INBOX}></a>
+                |
+                <a href='viewpmsg.php?op=out' title='<{$smarty.const._PM_OUTBOX}>'><{$smarty.const._PM_OUTBOX}></a>
+            <{elseif $op == "in"}>
+                <a href='viewpmsg.php?op=out' title='<{$smarty.const._PM_OUTBOX}>'><{$smarty.const._PM_OUTBOX}></a>
+                |
+                <a href='viewpmsg.php?op=save' title='<{$smarty.const._PM_SAVEBOX}>'><{$smarty.const._PM_SAVEBOX}></a>
+            <{/if}>
         <{/if}>
     </div>
     <div class="floatleft width80">
-        <{if $op|default:'' == "out"}><{$smarty.const._PM_OUTBOX}>
-        <{elseif $op == "save"}><{$smarty.const._PM_SAVEBOX}>
-        <{else}><{$smarty.const._PM_INBOX}><{/if}>
+        <{if isset($op)}>
+            <{if $op == "out"}><{$smarty.const._PM_OUTBOX}>
+            <{elseif $op == "save"}><{$smarty.const._PM_SAVEBOX}>
+            <{/if}>
+        <{else}><{$smarty.const._PM_INBOX}>
+        <{/if}>
     </div>
     <br>
     <br>
@@ -43,7 +48,7 @@
                 <th><input name='allbox' id='allbox' onclick='xoopsCheckAll("<{$pmform.name}>", "allbox");' type='checkbox' value='Check All'/></th>
                 <th><img class='bnone' src='<{xoAppUrl 'images/download.gif'}>' alt=''/></th>
                 <th>&nbsp;</th>
-                <{if $op|default:'' == "out"}>
+                <{if isset($op) && $op == "out"}>
                     <th><{$smarty.const._PM_TO}></th>
                 <{else}>
                     <th><{$smarty.const._PM_FROM}></th>

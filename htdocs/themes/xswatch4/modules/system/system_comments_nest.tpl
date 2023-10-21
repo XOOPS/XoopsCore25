@@ -1,5 +1,5 @@
 <div class="xoops-comment-body">
-    <{if ($comments|default:false) }>
+    <{if !empty($comments) }>
     <{section name=i loop=$comments}>
     <div class="row">
         <div class="col-2 col-md-2"><strong><{$lang_poster}></strong></div>

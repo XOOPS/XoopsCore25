@@ -4,14 +4,14 @@
 <div style="height: 30px;">
     <div class="floatright">
         <div class="xo-buttons">
-            <{if !$edit_form|default:false && !$listimg|default:false && !$multiupload|default:false}>
+            <{if empty($edit_form) && empty($listimg) && empty($multiupload)}>
                 <button id="xo-addcat-btn" class="ui-corner-all tooltip" onclick="xo_toggle('div#xo-category-add');"
                         title="<{$smarty.const._AM_SYSTEM_IMAGES_ADDCAT}>">
                     <img src="<{xoAdminIcons 'add.png'}>" alt="<{$smarty.const._AM_SYSTEM_IMAGES_ADDCAT}>"/>
                     <{$smarty.const._AM_SYSTEM_IMAGES_ADDCAT}>
                 </button>
             <{/if}>
-            <{if $cat_img|default:false || $listimg|default:false}>
+            <{if !empty($cat_img) || !empty($listimg)}>
                 <button id="xo-addimg-btn" class="ui-corner-all tooltip" onclick="xo_toggle('div#xo-images-add');"
                         title="<{$smarty.const._AM_SYSTEM_IMAGES_ADDIMG}>">
                     <img src="<{xoAdminIcons 'add.png'}>" alt="<{$smarty.const._AM_SYSTEM_IMAGES_ADDIMG}>"/>
@@ -29,7 +29,7 @@
     </div>
 </div>
 <!-- Category List -->
-<{if !$edit_form|default:false && !$listimg|default:false && !$multiupload|default:false}>
+<{if empty($edit_form) && empty($listimg) && empty($multiupload)}>
     <table class="outer" cellspacing="1">
         <thead>
         <tr>
@@ -73,7 +73,7 @@
                 </td>
             </tr>
         <{/foreach}>
-        <{if !$cat_img|default:false}>
+        <{if empty($cat_img)}>
             <tr>
                 <td class="txtcenter bold odd" colspan="7"><{$smarty.const._AM_SYSTEM_IMAGES_NOCAT}></td>
             </tr>
@@ -103,7 +103,7 @@
 							onclick="system_setStatus( { fct: 'images', op: 'display_img', image_id: <{$img.image_id}> }, 'img<{$img.image_id}>', 'admin.php' )"
 							src="<{if $img.image_display}><{xoAdminIcons 'success.png'}><{else}><{xoAdminIcons 'cancel.png'}><{/if}>"
 							alt="<{$smarty.const._IMGDISPLAY}>" title="<{$smarty.const._IMGDISPLAY}>"/>
-						<{if !$db_store|default:false}>
+						<{if empty($db_store)}>
 							<a class="lightbox tooltip" href="<{$xoops_upload_url}>/<{$img.image_name}>" title="<{$smarty.const._PREVIEW}>">
 						<{else}>
 							<a class="lightbox tooltip" href="<{$xoops_url}>/image.php?id=<{$img.image_id}>" title="<{$smarty.const._PREVIEW}>">
@@ -117,7 +117,7 @@
             </div>
             <div id="dialog<{$img.image_id}>" title="<{$img.image_nicename}>" style='display:none;'>
                 <div class="center">
-                    <{if !$db_store|default:false}>
+                    <{if empty($db_store)}>
                         <{$xoops_upload_url}>/<{$img.image_name}>
                     <{else}>
                         <{$xoops_url}>/image.php?id=<{$img.image_id}>
@@ -149,7 +149,7 @@
                 <th colspan="2"><{$image_form.title}></th>
             </tr>
             <{foreach item=element from=$image_form.elements|default:null}>
-                <{if $element.hidden|default:false != true && $element.body != ''}>
+                <{if isset($element.hidden) && $element.hidden != true && !empty($element.body)}>
                     <tr>
                         <td class="odd aligntop">
                             <div class="spacer bold"><{$element.caption|default:''}><{if !empty($element.required)}><span class="red">&nbsp;*</span><{/if}></div>
@@ -177,7 +177,7 @@
                 <th colspan="2"><{$imagecat_form.title}></th>
             </tr>
             <{foreach item=element from=$imagecat_form.elements|default:null}>
-                <{if $element.hidden|default:false != true && $element.body != ''}>
+                <{if isset($element.hidden) && $element.hidden != true && !empty($element.body)}>
                     <tr>
                         <td class="odd aligntop">
                             <div class="spacer bold"><{$element.caption|default:''}><{if !empty($element.required)}><span class="red">&nbsp;*</span><{/if}></div>
@@ -275,7 +275,7 @@
                     <th colspan="2"><{$edit_form.title}></th>
                 </tr>
                 <{foreach item=element from=$edit_form.elements|default:null}>
-                    <{if $element.hidden|default:false != true && $element.body != ''}>
+                    <{if isset($element.hidden) && $element.hidden != true && !empty($element.body)}>
                         <tr>
                             <td class="odd aligntop">
                                 <div class="spacer bold"><{$element.caption|default:''}><{if !empty($element.required)}><span class="red">&nbsp;*</span><{/if}></div>

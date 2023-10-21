@@ -53,13 +53,13 @@
       method="<{$form_post.method}>" <{$form_post.extra}> >
     <table width='100%' class='outer' cellspacing='1'>
         <{foreach item=element from=$form_post.elements|default:null}>
-        <{if $element.hidden|default:false != true}>
+        <{if isset($element.hidden) ? $element.hidden!= true : true}>
             <tr valign="top">
                 <td class="head">
                     <div class="xoops-form-element-caption<{if !empty($element.required)}>-required<{/if}>"><span
                                 class="caption-text"><{$element.caption|default:''}></span><span class="caption-marker">*</span>
                     </div>
-                    <{if $element.description|default:'' != ''}>
+                    <{if !empty($element.description)}>
                         <div class="xoops-form-element-help"><{$element.description}></div>
                     <{/if}>
                 </td>
@@ -92,3 +92,5 @@
         <{/foreach}>
     </table>
 <{/if}>
+
+

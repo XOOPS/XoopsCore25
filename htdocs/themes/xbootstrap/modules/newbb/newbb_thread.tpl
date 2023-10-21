@@ -1,12 +1,12 @@
 <div class="newbb-thread clearfix">
-    <{if $forum_post_prefix|default:'' === null }>
+    <{if !isset($forum_post_prefix) || $forum_post_prefix === null }>
         <{assign var=forum_post_prefix value="forumpost"}>
         <div id="<{$forum_post_prefix}>0"></div>
     <{/if}>
 <div class="col-sm-3 col-md-3 text-center newbb-user-data">
     <{$topic_post.poster.link}>
 
-    <{if $topic_post.poster.uid|default:'' > -1}>
+    <{if isset($topic_post.poster.uid) && $topic_post.poster.uid > -1}>
         <{if isset($topic_post.poster.uid) && $topic_post.poster.uid != 0}>
             <{if $topic_post.poster.avatar != "blank.gif"}>
                     <img src="<{$xoops_upload_url}>/<{$topic_post.poster.avatar}>" alt="<{$topic_post.poster.name}>" class="img-circle img-thumbnail">
@@ -77,7 +77,7 @@
                 <li>IP: <a href="https://www.whois.sc/<{$topic_post.poster_ip}>" target="_blank"><{$topic_post.poster_ip}></a></li>
             <{/if}>
 
-            <{if $topic_post.poster.uid|default:'' > 0}>
+            <{if isset($topic_post.poster.uid) && $topic_post.poster.uid > 0}>
                 <li><{$smarty.const._MD_NEWBB_POSTEDON}><{$topic_post.post_date}></li>
             <{/if}>
         </ul>

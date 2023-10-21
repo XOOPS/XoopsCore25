@@ -1,4 +1,4 @@
-<{if ($comments|default:false) }>
+<{if !empty($comments) }>
     <table class="outer" cellpadding="5" cellspacing="1">
         <tr>
             <th class="width20"><{$lang_poster}></th>

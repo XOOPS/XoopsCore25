@@ -1,6 +1,6 @@
 <{include file="db:system_header.tpl"}>
 
-<{if $users_display|default:false == true}>
+<{if isset($users_display) && $users_display == true}>
     <!--Display form sort-->
     <div class="xo-headercontent">
         <div class="floatleft"><{$form_sort}></div>
@@ -107,14 +107,14 @@
             </form>
         <{/if}>
         <!--No found-->
-        <{if $users_no_found|default:false == true}>
+        <{if isset($users_no_found) && $users_no_found == true}>
             <tr class="<{cycle values='even,odd'}> alignmiddle">
                 <td colspan='8' class="txtcenter"><{$smarty.const._AM_SYSTEM_USERS_NO_FOUND}></td>
             </tr>
         <{/if}>
     </table>
     <!--Pop-pup-->
-    <{if $users_count|default:false == true}>
+    <{if isset($users_count) && $users_count == true}>
         <{foreach item=users from=$users_popup|default:null}>
             <div id="dialog<{$users.uid}>" title="<{$users.uname}>" style='display:none;'>
                 <table>
@@ -127,7 +127,7 @@
                                 /></a>
                             <a href='javascript:openWithSelfMain("<{$xoops_url}>/pmlite.php?send2=1&amp;to_userid=<{$users.uid}>","pmlite",565,500);'><img
                                         src="<{xoAdminIcons 'pm.png'}>" alt="" title="<{$smarty.const._AM_SYSTEM_USERS_PM}>"></a>
-                            <{if $users.url|default:'' != ''}><a href='<{$users.url}>' rel='external'><img src="<{xoAdminIcons 'url.png'}>" alt="" title="<{$smarty.const._AM_SYSTEM_USERS_URL}>"></a><{/if}>
+                            <{if !empty($users.url)}><a href='<{$users.url}>' rel='external'><img src="<{xoAdminIcons 'url.png'}>" alt="" title="<{$smarty.const._AM_SYSTEM_USERS_URL}>"></a><{/if}>
                         </td>
                     </tr>
                     <tr>

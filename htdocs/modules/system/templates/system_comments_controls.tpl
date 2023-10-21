@@ -5,7 +5,7 @@
                 <{$commentModeSelect->render()|replace:'id="com_mode"':''}>
                 <{$commentOrderSelect->render()|replace:'id="com_order"':''}>
                 <{$commentRefreshButton->render()}>
-                <{if ($commentPostButton|default:false) }>
+                <{if !empty($commentPostButton) }>
                 <{$commentPostButton->render()}>
                 <{/if}>
                 <{$commentPostHidden}>

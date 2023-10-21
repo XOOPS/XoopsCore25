@@ -89,7 +89,7 @@
         <{$pagenav}>
     <{/if}>
 
-    <{if $moderate|default:false == true}>
+    <{if isset($moderate) ? $moderate!= true : true}>
         <{$smarty.const._MD_XOOPSTUBE_MODERATOR_OPTIONS}>
 
         <{section name=a loop=$mod_arr}>

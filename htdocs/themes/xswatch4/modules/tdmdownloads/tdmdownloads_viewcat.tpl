@@ -2,7 +2,7 @@
     <div class="breadcrumb"><{$category_path|replace:'<img src="assets/images/deco/arrow.gif" alt="arrow">':'&nbsp;/&nbsp;'}></div>
 
     <div>
-        <{if false!==$category.title|default:false}>
+        <{if !empty($category.title)}>
         <h3><{$category.title}></h3>
         <{/if}>
         <p>
@@ -11,7 +11,7 @@
     </div>
 
     <div class="row">
-    <{if $category.image|default:'' != ""}>
+    <{if !empty($category.image)}>
         <div class="col-6">
         <a title="<{$category.title}>" href="<{$xoops_url}>/modules/tdmdownloads/viewcat.php?cid=<{$category.id}>">
             <img class="img-fluid" src="<{$category.image}>" alt="<{$category.title}>">

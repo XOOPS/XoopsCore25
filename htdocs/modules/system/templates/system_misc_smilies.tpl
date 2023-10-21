@@ -1,5 +1,5 @@
 <{* smilies selector popup *}>
-<{if $closeHead|default:true}>
+<{if isset($closeHead) ? $closeHead : true}>
 <{$headContents|default:''}>
 <script>window.resizeTo(300, 475)</script>
 </head>
@@ -15,6 +15,6 @@
 </table>
 </div>
 <p><{$lang_clicksmile}></p>
-<{if $closeButton|default:true}>
+<{if isset($closeButton) ? $closeButton : true}>
     <div style="text-align:center;"><input class="formButton" value="<{$lang_close}>" type="button" onclick="window.close();" /></div>
 <{/if}>

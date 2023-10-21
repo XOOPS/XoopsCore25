@@ -14,7 +14,7 @@
 	<div class="form-group row">
 		<!-- start of form elements loop -->
 		<{foreach item=element from=$uploadavatar.elements|default:null}>
-			<{if !$element.hidden|default:false}>
+			<{if empty($element.hidden)}>
 				<label class="col-2 col-form-label">
 					<span class='caption-text'><{$element.caption|default:''}></span>
 				</label>
@@ -24,7 +24,7 @@
 		    <{else}>
 			<{$element.body}>
 			<{/if}>
-			<{if $element.description|default:'' != ''}>
+			<{if !empty($element.description)}>
 				<small id="passwordHelpBlock" class="form-text text-muted">
 					<{$element.description}>
 				</small>
@@ -53,7 +53,7 @@
 			<{else}>
 			<{$element.body}>
 			<{/if}>
-			<{if $element.description|default:'' != ''}>
+			<{if !empty($element.description)}>
 				<small id="passwordHelpBlock" class="form-text text-muted">
 					<{$element.description}>
 				</small>

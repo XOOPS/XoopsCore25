@@ -6,7 +6,7 @@
     <div class="spacer"><{$form_maintenance}></div>
     <br>
     <div class="spacer"><{$form_dump}></div>
-<{elseif $maintenance|default:false}>
+<{elseif !empty($maintenance)}>
     <{if $verif_cache || $verif_session || $verif_avatar}>
         <table class="outer ui-corner-all" cellspacing="1">
             <tr>

@@ -4,7 +4,7 @@
     IMG_ON = "<{xoAdminIcons 'success.png'}>";
     IMG_OFF = "<{xoAdminIcons 'cancel.png'}>";
 </script>
-<{if $smilies_count|default:false == true}>
+<{if isset($smilies_count) && $smilies_count == true}>
     <div class="floatright">
         <div class="xo-buttons">
             <a class="ui-corner-all tooltip" href="admin.php?fct=smilies&amp;op=new_smilie" title="<{$smarty.const._AM_SYSTEM_SMILIES_ADD}>">

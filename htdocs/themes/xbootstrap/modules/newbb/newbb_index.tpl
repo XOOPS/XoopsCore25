@@ -141,11 +141,11 @@
                         <div class="row newbb-list-foruns mb10">
                             <div class="col-sm-6 col-md-6">
                                 <{if !empty($forum.subforum)}>
-                                    <div class="<{if $forum.forum_read|default:0 == 1 }>forum-read<{else}>forum-new2<{/if}> pull-left">
+                                    <div class="<{if isset($forum.forum_read) && $forum.forum_read == 1 }>forum-read<{else}>forum-new2<{/if}> pull-left">
                                         <{$forum.forum_folder|default:'' }>
                                     </div>
                                 <{else}>
-                                    <div class="<{if $forum.forum_read|default:0 == 1 }>forum-read<{else}>forum-new2<{/if}> pull-left">
+                                    <div class="<{if isset($forum.forum_read) && $forum.forum_read == 1}>forum-read<{else}>forum-new2<{/if}> pull-left">
                                         <{$forum.forum_folder|default:'' }>
                                     </div>
                                 <{/if}>

@@ -1,4 +1,4 @@
-<table class="outer" <{if !empty($block.bgColor)|default:false}>bgcolor="<{$block.bgColor}>"<{/if}>
+<table class="outer" <{if !empty($block.bgColor)}>bgcolor="<{$block.bgColor}>"<{/if}>
        style="width:100%; text-align:center; vertical-align:middle;">
     <{if !empty($block.horloge.display)}>
         <tr>

@@ -1,43 +1,45 @@
 <h4><{$smarty.const._PM_PRIVATEMESSAGE}></h4>
-<{if $op|default:'' != ''}>
+<{if !empty($op)}>
     <div class="current-tab">
         <div class="row">
-            <{if $op|default:'' == "out"}>
-                <div class="col-xs-6 col-md-6">
-                    <a class="btn btn-info btn-block" href="viewpmsg.php?op=in" title="<{$smarty.const._PM_INBOX}>"><{$smarty.const._PM_INBOX}></a>
-                </div>
-                <div class="col-xs-6 col-md-6">
-                    <a class="btn btn-info btn-block" href="viewpmsg.php?op=save" title="<{$smarty.const._PM_SAVEBOX}>"><{$smarty.const._PM_SAVEBOX}></a>
-                </div>
-            <{elseif $op == "save"}>
-                <div class="col-xs-6 col-md-6">
-                    <a class="btn btn-info btn-block" href="viewpmsg.php?op=in" title="<{$smarty.const._PM_INBOX}>"><{$smarty.const._PM_INBOX}></a>
-                </div>
-                <div class="col-xs-6 col-md-6">
-                    <a class="btn btn-info btn-block" href="viewpmsg.php?op=out" title="<{$smarty.const._PM_OUTBOX}>"><{$smarty.const._PM_OUTBOX}></a>
-                </div>
-            <{elseif $op == "in"}>
-                <div class="col-xs-6 col-md-6">
-                    <a class="btn btn-info btn-block" href="viewpmsg.php?op=out" title="<{$smarty.const._PM_OUTBOX}>"><{$smarty.const._PM_OUTBOX}></a>
-                </div>
-                <div class="col-xs-6 col-md-6">
-                    <a class="btn btn-info btn-block" href="viewpmsg.php?op=save" title="<{$smarty.const._PM_SAVEBOX}>"><{$smarty.const._PM_SAVEBOX}></a>
-                </div>
-            <{/if}>
+                <{if $op == "out"}>
+                    <div class="col-xs-6 col-md-6">
+                        <a class="btn btn-info btn-block" href="viewpmsg.php?op=in" title="<{$smarty.const._PM_INBOX}>"><{$smarty.const._PM_INBOX}></a>
+                    </div>
+                    <div class="col-xs-6 col-md-6">
+                        <a class="btn btn-info btn-block" href="viewpmsg.php?op=save" title="<{$smarty.const._PM_SAVEBOX}>"><{$smarty.const._PM_SAVEBOX}></a>
+                    </div>
+                <{elseif $op == "save"}>
+                    <div class="col-xs-6 col-md-6">
+                        <a class="btn btn-info btn-block" href="viewpmsg.php?op=in" title="<{$smarty.const._PM_INBOX}>"><{$smarty.const._PM_INBOX}></a>
+                    </div>
+                    <div class="col-xs-6 col-md-6">
+                        <a class="btn btn-info btn-block" href="viewpmsg.php?op=out" title="<{$smarty.const._PM_OUTBOX}>"><{$smarty.const._PM_OUTBOX}></a>
+                    </div>
+                <{elseif $op == "in"}>
+                    <div class="col-xs-6 col-md-6">
+                        <a class="btn btn-info btn-block" href="viewpmsg.php?op=out" title="<{$smarty.const._PM_OUTBOX}>"><{$smarty.const._PM_OUTBOX}></a>
+                    </div>
+                    <div class="col-xs-6 col-md-6">
+                        <a class="btn btn-info btn-block" href="viewpmsg.php?op=save" title="<{$smarty.const._PM_SAVEBOX}>"><{$smarty.const._PM_SAVEBOX}></a>
+                    </div>
+                <{/if}>
         </div>
     </div><!-- .current-tab -->
 
     <div class="message-current-tab">
-        <{if $op|default:'' == "out"}>
-            <div class="alert alert-success alert-dismissable">
-                <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
-                <strong><{$smarty.const._PM_OUTBOX}></strong>
-            </div>
-        <{elseif $op == "save"}>
-            <div class="alert alert-success alert-dismissable">
-                <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
-                <strong><{$smarty.const._PM_SAVEBOX}></strong>
-            </div>
+        <{if isset($op)}>
+            <{if $op == "out"}>
+                <div class="alert alert-success alert-dismissable">
+                    <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                    <strong><{$smarty.const._PM_OUTBOX}></strong>
+                </div>
+            <{elseif $op == "save"}>
+                <div class="alert alert-success alert-dismissable">
+                    <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                    <strong><{$smarty.const._PM_SAVEBOX}></strong>
+                </div>
+            <{/if}>
         <{else}>
             <div class="alert alert-success alert-dismissable">
                 <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
@@ -73,7 +75,7 @@
                     <span class="glyphicon glyphicon-circle-arrow-down btn btn-xs btn-primary"></span>
                 </div>
 
-                <{if $op|default:'' == "out"}>
+                <{if isset($op) && $op == "out"}>
                     <div class="col-xs-2 col-md-2"><strong><{$smarty.const._PM_TO}></strong></div>
                 <{else}>
                     <div class="col-xs-2 col-md-2"><strong><{$smarty.const._PM_FROM}></strong></div>

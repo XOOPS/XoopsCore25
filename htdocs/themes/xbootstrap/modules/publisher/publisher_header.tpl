@@ -10,7 +10,7 @@
     <{/if}>
 <{/if}>
 
-<{if $title_and_welcome|default:0 && $lang_mainintro != ''}>
+<{if !empty($title_and_welcome) && !empty($lang_mainintro)}>
     <div class="well">
         <{$lang_mainintro}>
     </div>

@@ -1,5 +1,5 @@
 <{* avatar selector popup *}>
-<{if $closeHead|default:true}>
+<{if isset($closeHead) ? $closeHead : true}>
 <{$headContents|default:''}>
 <script>window.resizeTo(600, 400)</script>
 </head>
@@ -7,7 +7,7 @@
 <{/if}>
 <h4 class="text-center"><{$lang_avavatars}></h4>
 
-<{if $closeButton|default:true}>
+<{if isset($closeButton) ? $closeButton : true}>
     <div class="text-center m-3"><input class="btn btn-primary btn-block" value="<{$lang_close}>" type="button" onclick="window.close();" /></div>
 <{/if}>
 
@@ -31,6 +31,6 @@
 <{/foreach}>
 </div>
 
-<{if $closeButton|default:true}>
+<{if isset($closeButton) ? $closeButton : true}>
     <div class="text-center mx-3 mb-3"><input class="btn btn-primary btn-block" value="<{$lang_close}>" type="button" onclick="window.close();" /></div>
 <{/if}>

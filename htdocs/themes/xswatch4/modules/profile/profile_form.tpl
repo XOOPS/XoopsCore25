@@ -4,7 +4,7 @@
 <form id="<{$xoForm.name}>" name="<{$xoForm.name}>" action="<{$xoForm.action}>" method="<{$xoForm.method}>" <{$xoForm.extra}> >
 	<div class="form-group">
 		<{foreach item=element from=$xoForm.elements|default:null}>
-            <{if !$element.hidden|default:false}>
+            <{if empty($element.hidden)}>
 				<label>
 					<div class='xoops-form-element-caption<{if !empty($element.required)}>-required<{/if}>'>
 						<span class='caption-text'><{$element.caption|default:''}></span>

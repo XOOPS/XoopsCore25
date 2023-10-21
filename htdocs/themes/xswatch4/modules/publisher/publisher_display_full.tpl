@@ -3,7 +3,7 @@
 <!-- if we are on the index page OR inside a category that has subcats OR (inside a category with no subcats
     AND $display_category_summary is set to TRUE), let's display the summary table ! //-->
 
-<{if $indexpage|default:false || $category.subcats || ($category && $display_category_summary)}>
+<{if !empty($indexpage) || !empty($category.subcats) || (!empty($category) && !empty($display_category_summary))}>
 
     <{* if $display_category_summary && $category}>
         <div class="well well-sm">

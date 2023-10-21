@@ -5,7 +5,7 @@
     IMG_OFF = '<{xoAdminIcons 'cancel.png'}>';
 </script>
 <!-- Buttons -->
-<{if $type|default:false == 's'}>
+<{if isset($type) && $type == 's'}>
     <div style="height: 30px;">
         <div class="floatright">
             <div class="xo-buttons" >

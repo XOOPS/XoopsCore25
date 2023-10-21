@@ -30,7 +30,7 @@
             <td class='head'>&nbsp;</td>
             <td class='even'>
                 <{foreach item=element from=$pmform.elements|default:null}>
-                    <{if $element.hidden|default:false == 1}>
+                    <{if isset($element.hidden) && $element.hidden == 1}>
                         <{$element.body}>
                     <{/if}>
                 <{/foreach}>
