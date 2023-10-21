@@ -31,7 +31,7 @@
                         <span class="glyphicon glyphicon-comment"></span>&nbsp;<{$item.comments}>
                     </span>
                 </div>
-                <{if $item.image_path|default:''}>
+                <{if !empty($item.image_path)}>
                     <div class="spot_article_wf_img">
                         <img src="<{$item.image_path}>" alt="<{$item.title}>">
                     </div>

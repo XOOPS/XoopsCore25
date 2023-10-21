@@ -26,7 +26,7 @@
 					<br>
 				<{/if}>
 			<{/foreach}>
-			<{if $searchitem.module_show_all|default:false}>
+			<{if !empty($searchitem.module_show_all)}>
 				<p>
 					<a href="<{$searchitem.module_show_all}>"><{$smarty.const._SR_SHOWALLR}></a>
 				</p>

@@ -164,7 +164,7 @@
                             <a href="<{$xoops_url}>/modules/<{$xoops_dirname}>/viewpost.php" title="<{$smarty.const._MD_NEWBB_ALLPOSTS}>">
                                 <{$stats[0].post.total|default:''}>
                             </a></li>
-                        <{if $stats[0].digest.total|default:''}>
+                        <{if !empty($stats[0].digest.total)}>
                             <li><{$smarty.const._MD_NEWBB_TOTALDIGESTSC}>
                                 <a href="<{$xoops_url}>/modules/<{$xoops_dirname}>/list.topic.php?status=digest" title="<{$smarty.const._MD_NEWBB_TOTALDIGESTSC}>">
                                     <{$stats[0].digest.total}>

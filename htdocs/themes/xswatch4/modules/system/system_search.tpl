@@ -16,7 +16,7 @@
 				<div class="card-header">
 					<h5>
 						<{$searchitem.module_name}>
-						<{if $searchitem.module_show_all|default:false}>
+						<{if !empty($searchitem.module_show_all)}>
 							<span class="d-none d-sm-inline"><span class="x-small">| <a href="<{$searchitem.module_show_all}>"><{$smarty.const._SR_SHOWALLR}></a></span></span>
 							<span class="d-inline d-sm-none">| <span class="ml-2"></span><a href="<{$searchitem.module_show_all}>"><span class="fa fa-search-plus fa-flip-horizontal fa-lg"></span></a></span>
 						<{/if}>
@@ -36,7 +36,7 @@
 									<div class="d-inline"><img src="<{$data.image_link}>" title="<{$data.image_title}>" alt="<{$data.image_title}>"/> <a href="<{$data.link}>"><{$data.link_title}></a></div>
 								<{/if}>
 
-								<{if $data.uname|default:''}>
+								<{if !empty($data.uname)}>
 
 									<div class="d-none d-md-inline">
 										<br />

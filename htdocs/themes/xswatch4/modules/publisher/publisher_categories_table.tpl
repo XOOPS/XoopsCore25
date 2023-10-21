@@ -3,14 +3,14 @@
 <{foreach item=category from=$categories|default:null}>
     <div class="media col-12 col-md-6">
         <{if !empty($category.image_path)}>
-        <{if $category.categoryurl|default:false}><a href="<{$category.categoryurl}>"><{/if}>
+        <{if !empty($category.categoryurl)}><a href="<{$category.categoryurl}>"><{/if}>
         <img class="mr-3 mb-2 xswatch-media-img" src="<{$category.image_path}>" alt="<{$category.name}>">
-        <{if $category.categoryurl|default:false}></a><{/if}>
+        <{if !empty($category.categoryurl)}></a><{/if}>
         <{/if}>
         <div class="media-body">
             <h5 class="mt-0 mb-1"><{if $selected_category|default:false == $category.categoryid}><{$category.name}><{else}><{$category.categorylink}><{/if}></h5>
             <{$category.description}>
-        <{if $category.subcats|default:false}>
+        <{if !empty($category.subcats)}>
         <br>
         <{foreach item=subcat from=$category.subcats|default:null}>
         <small><{$subcat.categorylink}> &nbsp;</small>

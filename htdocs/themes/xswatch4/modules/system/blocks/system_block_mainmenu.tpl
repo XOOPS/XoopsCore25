@@ -4,7 +4,7 @@
     <!-- start module menu loop -->
     <{foreach item=module from=$block.modules|default:null}>
         <li class="nav-item<{if !empty($module.highlight)}> active<{/if}>">
-            <a class="nav-link" href="<{$xoops_url}>/modules/<{$module.directory}>/" title="<{$module.name}>"><span class="fa fa-check<{if $module.highlight|default:false}>-square-o<{/if}>"></span>
+            <a class="nav-link" href="<{$xoops_url}>/modules/<{$module.directory}>/" title="<{$module.name}>"><span class="fa fa-check<{if !empty($module.highlight)}>-square-o<{/if}>"></span>
                 <{$module.name}>
             </a>
             <ul>

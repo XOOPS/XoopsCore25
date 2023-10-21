@@ -7,7 +7,7 @@
     </li>
     <!-- start module menu loop -->
     <{foreach item=module from=$block.modules|default:null}>
-        <li class="<{if $module.highlight|default:false}>active<{/if}>">
+        <li class="<{if !empty($module.highlight)}>active<{/if}>">
             <a href="<{$xoops_url}>/modules/<{$module.directory}>/" title="<{$module.name}>"><span class="glyphicon glyphicon-ok"></span>
                 <{$module.name}>
             </a>

@@ -133,12 +133,12 @@
                     <tr>
                         <td colspan="2">
                             <ul style="border: 1px solid #666; padding: 8px;">
-                                <{if $users.user_name|default:false}>
+                                <{if !empty($users.user_name)}>
                                     <li><span class="bold"><{$smarty.const._AM_SYSTEM_USERS_NAME}></span>&nbsp;:&nbsp;<{$users.name}></li>
                                 <{/if}>
                                 <li><span class="bold"><{$smarty.const._AM_SYSTEM_USERS_UNAME}></span>&nbsp;:&nbsp;<{$users.uname}></li>
                                 <li><span class="bold"><{$smarty.const._AM_SYSTEM_USERS_EMAIL}></span>&nbsp;:&nbsp;<{$users.email}></li>
-                                <{if $users.user_url|default:false}>
+                                <{if !empty($users.user_url)}>
                                     <li><span class="bold"><{$smarty.const._AM_SYSTEM_USERS_URL}></span>&nbsp;:&nbsp;<{$users.url}></li>
                                 <{/if}>
                                 <{if $users.user_icq}>

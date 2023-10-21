@@ -9,7 +9,7 @@
     <ul class="list-group list-group-flush">
       <li class="list-group-item"><{$faq.ans}>
       <{* requires xoopsfaq 2.0 addition of id and cid in faq variable for link support *}>
-      <{if $faq.id|default:false}>
+      <{if !empty($faq.id)}>
       <a class="card-link stretched-link" href="<{$xoops_url}>/modules/xoopsfaq/index.php?cat_id=<{$faq.cid}>#q<{$faq.id}>">
         <i class="fa fa-forward alignright" aria-hidden="true"></i>
       </a>

@@ -56,7 +56,7 @@
         <{if $element.hidden|default:false != true}>
             <tr valign="top">
                 <td class="head">
-                    <div class="xoops-form-element-caption<{if $element.required|default:''}>-required<{/if}>"><span
+                    <div class="xoops-form-element-caption<{if !empty($element.required)}>-required<{/if}>"><span
                                 class="caption-text"><{$element.caption|default:''}></span><span class="caption-marker">*</span>
                     </div>
                     <{if $element.description|default:'' != ''}>

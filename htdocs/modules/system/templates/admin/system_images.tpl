@@ -152,7 +152,7 @@
                 <{if $element.hidden|default:false != true && $element.body != ''}>
                     <tr>
                         <td class="odd aligntop">
-                            <div class="spacer bold"><{$element.caption|default:''}><{if $element.required|default:false}><span class="red">&nbsp;*</span><{/if}></div>
+                            <div class="spacer bold"><{$element.caption|default:''}><{if !empty($element.required)}><span class="red">&nbsp;*</span><{/if}></div>
                             <div class="spacer"><{$element.description|default:''}></div>
                         </td>
                         <td class="even"><{$element.body}></td>
@@ -180,7 +180,7 @@
                 <{if $element.hidden|default:false != true && $element.body != ''}>
                     <tr>
                         <td class="odd aligntop">
-                            <div class="spacer bold"><{$element.caption|default:''}><{if $element.required|default:false}><span class="red">&nbsp;*</span><{/if}></div>
+                            <div class="spacer bold"><{$element.caption|default:''}><{if !empty($element.required)}><span class="red">&nbsp;*</span><{/if}></div>
                             <div class="spacer"><{$element.description|default:''}></div>
                         </td>
                         <td class="even"><{$element.body}></td>
@@ -278,7 +278,7 @@
                     <{if $element.hidden|default:false != true && $element.body != ''}>
                         <tr>
                             <td class="odd aligntop">
-                                <div class="spacer bold"><{$element.caption|default:''}><{if $element.required|default:false}><span class="red">&nbsp;*</span><{/if}></div>
+                                <div class="spacer bold"><{$element.caption|default:''}><{if !empty($element.required)}><span class="red">&nbsp;*</span><{/if}></div>
                                 <div class="spacer"><{$element.description|default:''}></div>
                             </td>
                             <td class="even"><{$element.body}></td>
