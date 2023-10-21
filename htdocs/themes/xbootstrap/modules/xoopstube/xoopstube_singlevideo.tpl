@@ -108,12 +108,14 @@
 
 <{$commentsnav}> <{$lang_notice}>
 
-<{if $comment_mode == "flat"}>
-    <{include file="db:system_comments_flat.tpl"}>
-<{elseif $comment_mode == "thread"}>
-    <{include file="db:system_comments_thread.tpl"}>
-<{elseif $comment_mode == "nest"}>
-    <{include file="db:system_comments_nest.tpl"}>
+<{if isset($comment_mode)}>
+    <{if $comment_mode == "flat"}>
+        <{include file="db:system_comments_flat.tpl"}>
+    <{elseif $comment_mode == "thread"}>
+        <{include file="db:system_comments_thread.tpl"}>
+    <{elseif $comment_mode == "nest"}>
+        <{include file="db:system_comments_nest.tpl"}>
+    <{/if}>
 <{/if}>
 
 <{include file="db:system_notification_select.tpl"}>

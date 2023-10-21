@@ -17,7 +17,7 @@
     </ol>
     <div class="row">
         <div class="col-xs-12">
-        <{if $viewer_level gt 1}>
+        <{if $viewer_level > 1}>
             <a href="<{$xoops_url}>/modules/<{$xoops_dirname}>/newtopic.php?forum=<{$forum_id}>" title="<{$smarty.const.THEME_FORUM_NEWTOPIC}>" class="btn btn-success"><{$smarty.const.THEME_FORUM_NEWTOPIC}></a>
         <{else}>
             <{if $xoops_isuser}>
@@ -72,22 +72,22 @@
     <div class="col-sm-12">
         <div class="row">
             <div class="col-md-8 col-xs-12">
-                <{if $mode gt 1}>
+                <{if $mode > 1}>
                     <form name="form_topics_admin" action="<{$xoops_url}>/modules/<{$xoops_dirname}>/action.topic.php" method="POST" onsubmit="if(window.document.form_topics_admin.op.value &lt; 1){return false;}">
                 <{/if}>
 
-                <{if $viewer_level gt 1}>
+                <{if $viewer_level > 1}>
                     <a class="btn btn-xs btn-info" href="<{$xoops_url}>/modules/<{$xoops_dirname}>/newtopic.php?op=add&forum=<{$forum_id}>" title="<{$smarty.const.THEME_ADD_POLL}>"><{$smarty.const.THEME_ADD_POLL}></a>
-                <{if $mode gt 1}>
+                <{if $mode > 1}>
                     <{$smarty.const._ALL}>:
                     <input type="checkbox" name="topic_check1" id="topic_check1" value="1" onclick="xoopsCheckAll('form_topics_admin', 'topic_check1');">
                     <select name="op">
                         <option value="0"><{$smarty.const._SELECT}></option>
                         <option value="delete"><{$smarty.const._DELETE}></option>
-                        <{if $status eq "pending"}>
+                        <{if $status == "pending"}>
                         <option value="approve"><{$smarty.const._MD_NEWBB_APPROVE}></option>
                         <option value="move"><{$smarty.const._MD_NEWBB_MOVE}></option>
-                        <{elseif $status eq "deleted"}>
+                        <{elseif $status == "deleted"}>
                         <option value="restore"><{$smarty.const._MD_NEWBB_RESTORE}></option>
                         <{else}>
                         <option value="move"><{$smarty.const._MD_NEWBB_MOVE}></option>
@@ -112,7 +112,7 @@
                 <{include file="db:newbb_viewforum_menu.tpl"}>
             </div>
         </div>
-        <{if $mode gt 1}>
+        <{if $mode > 1}>
             <{$smarty.const._ALL}>:
             <input type="checkbox" name="topic_check" id="topic_check" value="1" onclick="xoopsCheckAll('form_topics_admin', 'topic_check');">
         <{else}>
@@ -148,7 +148,7 @@
             <{/if}>
         <{/if}>
 
-    <{foreach name=loop item=topic from=$topics}>
+    <{foreach item=topic from=$topics|default:null name=loop}>
     <div class="clearfix newbb-topiclist-itens <{cycle values="even,odd"}>">
 <!--
         <{if $topic.stick AND $smarty.foreach.loop.iteration == $sticky+1}>
@@ -161,7 +161,7 @@
 -->
         <div class="col-xs-6 col-sm-6 col-md-3">
         <span>
-            <{if $mode gt 1}>
+            <{if $mode > 1}>
                 <input type="checkbox" name="topic_id[]" id="topic_id[<{$topic.topic_id}>]" value="<{$topic.topic_id}>">
             <{else}>
                 <{$topic.topic_folder}>
@@ -169,7 +169,7 @@
             <{$topic.topic_icon}>
         </span>
 
-        <a class="<{if $topic.topic_read eq 1 }>read-topic<{else}>new-topic<{/if}>" href="<{$xoops_url}>/modules/<{$xoops_dirname}>/<{$topic.topic_link}>" title="<{$topic.topic_excerpt}>">
+        <a class="<{if $topic.topic_read == 1 }>read-topic<{else}>new-topic<{/if}>" href="<{$xoops_url}>/modules/<{$xoops_dirname}>/<{$topic.topic_link}>" title="<{$topic.topic_excerpt}>">
             <{$topic.topic_title}>
         </a></div>
 
@@ -187,7 +187,7 @@
 
     </div><!-- .newbb-topiclist-loop -->
 
-    <{if $mode gt 1}>
+    <{if $mode > 1}>
         </form>
     <{/if}>
 

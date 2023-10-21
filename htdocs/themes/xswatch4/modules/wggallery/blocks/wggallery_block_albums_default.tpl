@@ -1,6 +1,6 @@
 <i id='gallery'></i>
 <{if $balbums_list}>
-    <{foreach name=album item=album from=$balbums_list}>
+    <{foreach item=album from=$balbums_list|default:null name=album}>
         <{if $album.newrow}><div class="row wgg-row-block"><{/if}>
         <{if $bnbAlbumsRow == 2}><div class='col-xs-12 col-sm-6'>
         <{elseif $bnbAlbumsRow == 3}><div class='col-xs-12 col-sm-4'>

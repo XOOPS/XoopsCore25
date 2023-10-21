@@ -7,7 +7,7 @@
                 <ul>
                     <{foreach item=sub from=$item.menu|default:null}>
                         <li>
-                            <{if isset($sub.options) && $sub.options|default:0 != 0}>
+                            <{if isset($sub.options) && $sub.options != 0}>
                                 <a class="sub" href="<{$sub.link}>" title="<{$sub.title|strip_tags:false}>"><{$sub.title}></a>
                                 <ul>
                                     <{foreach item=option from=$sub.options|default:null}>

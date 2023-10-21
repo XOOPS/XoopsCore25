@@ -16,7 +16,7 @@
                 </div>
             </div>
 
-            <{if $viewer_level gt 1}>
+            <{if isset($viewer_level) &&  $viewer_level > 1}>
             <br>
             <div class="row">
                 <div class="col">
@@ -51,10 +51,11 @@
                         <span class="fa fa-trash-o" aria-hidden="true"></span> <{if $delete_post|default:''}><span class="badge badge-light badge-pill"><{$delete_post}></span><{/if}>
                     </a>
 
-                    <{if $report_post|default:''}>
+                    <{if !empty($report_post)}>
                     <a href="<{$xoops_url}>/modules/<{$xoops_dirname}>/admin/admin_report.php" title="_MD_NEWBB_REPORT" class="btn btn-primary">
-                        <span class="fa fa-thumbs-o-down" aria-hidden="true"></span> <span class="badge badge-light badge-pill"><{$reported_count}></span><{/if}>
+                        <span class="fa fa-thumbs-o-down" aria-hidden="true"></span> <span class="badge badge-light badge-pill"><{$reported_count}></span>
                     </a>
+                    <{/if}>
 
 
                     <a href="<{$xoops_url}>/modules/<{$xoops_dirname}>/moderate.php" title="<{$smarty.const._MD_NEWBB_TYPE_SUSPEND}>" class="btn btn-primary">
@@ -97,7 +98,7 @@
             <td class="d-none d-sm-table-cell"><{$forum.forum_topics}></td>
             <td class="d-none d-sm-table-cell"><{$forum.forum_posts}></td>
             <td>
-                <{if isset($forum.forum_lastpost_subject)}>
+                <{if !empty($forum.forum_lastpost_subject)}>
                 <{$forum.forum_lastpost_time}> <{$smarty.const._MD_NEWBB_BY}> <{$forum.forum_lastpost_user}>
                 <br>
                 <a href="<{$xoops_url}>/modules/<{$xoops_dirname}>/viewtopic.php?post_id=<{$forum.forum_lastpost_id}>">
@@ -107,7 +108,7 @@
                 <{else}>
                 <{$smarty.const._MD_NEWBB_NOTOPIC}>
                 <{/if}>
-                <{if isset($forum.subforum)}>
+                <{if !empty($forum.subforum)}>
                 <br><{$smarty.const._MD_NEWBB_SUBFORUMS}> <i class="fa fa-chevron-down" aria-hidden="true"></i>
                 <{foreach item=subforum from=$forum.subforum|default:null}><br>
                 [<a href="<{$xoops_url}>/modules/<{$xoops_dirname}>/viewforum.php?forum=<{$subforum.forum_id}>"><{$subforum.forum_name}></a>]
@@ -146,7 +147,7 @@
             </div>
         </div>
 
-        <{if $currenttime}>
+        <{if !empty($currenttime)}>
             <div class="row">
                 <div class="col-lg-12"><h3 class="nompl"><{$online.statistik}> <{$smarty.const._MD_NEWBB_STATS}></h3></div>
                 <div class="col-sm-6 col-md-6">
@@ -179,7 +180,7 @@
 
                 <div class="col-sm-6 col-md-6">
                     <ul class="list-unstyled lw30">
-                        <{if $userstats}>
+                        <{if !empty($userstats)}>
                             <li><{*$userstats.lastvisit*}>
                                 <{$userstats.lastpost}>
                             </li>
@@ -188,9 +189,9 @@
                         <li><{$smarty.const._MD_NEWBB_TODAYTOPICSC}> <{$stats[0].topic.day|default:0}></li>
                         <li><{$smarty.const._MD_NEWBB_TODAYPOSTSC}> <{$stats[0].post.day|default:0}></li>
 
-                        <{if $userstats}>
+                        <{if !empty($userstats)}>
                             <li><{$userstats.topics}> | <{$userstats.posts}></li>
-                            <{if $userstats.digests}>
+                            <{if !empty($userstats.digests)}>
                                 <li><{$userstats.digests}></li>
                             <{/if}>
                         <{/if}>
@@ -205,7 +206,7 @@
         <{/if}>
 
         <a title="NewBB" href="https://xoops.org" class="btn btn-success">NewBB Version <{$version}></a>
-        <{if $rss_button}>
+        <{if !empty($rss_button)}>
             <div class="text-right">
                 <a href="<{$xoops_url}>/modules/<{$xoops_dirname}>/rss.php?c=<{$viewcat}>" target="_blank" title="RSS FEED">
                     <{$rss_button}>

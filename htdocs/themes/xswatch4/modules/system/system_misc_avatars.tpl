@@ -16,7 +16,7 @@
 <{assign var=tdcnt value=1}>
 
 <div class="d-flex flex-wrap align-items-end justify-content-center">
-<{foreach from=$avatars key=file item=name}>
+<{foreach item=name from=$avatars|default:null key=file}>
     <div class="px-1">  
         <figure class="figure">
             <img src="<{$upload_url}><{$file}>" alt="<{$name}>" title="<{$name}>" class="figure-img img-fluid rounded">

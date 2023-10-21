@@ -1,6 +1,6 @@
 <div class="tdmdownloads">
     <div class="breadcrumb"><a href="<{$xoops_url}>/modules/<{$xoops_dirname}>/"><{$xoops_pagetitle}></a></div>
-    <{if count($categories) gt 0}>
+    <{if count($categories) > 0}>
     <div class="tdm-category row">
         <{foreach item=category from=$categories|default:null}>
         <div class="card col-8 col-sm-6 col-md-4 col-xl-3">

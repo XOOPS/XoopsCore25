@@ -15,7 +15,7 @@
 
                 <{foreach item=icon from=$radio_icons|default:null}>
                 <input type='radio' name='icon' id='<{$icon}>' value='<{$icon}>'/><label name='xolb_icon' for='<{$icon}>'><img
-                            src='<{xoAppUrl}>images/subject/<{$icon}>' alt=""/></label>
+                            src='<{xoAppUrl "images/subject/"}><{$icon}>' alt=""/></label>
                 <{/foreach}>  </td>
         </tr>
         <tr class='aligntop'>

@@ -11,7 +11,7 @@
         <div class="row">
 
             <div class="newbb-header-icons hidden-xs">
-                <{if $viewer_level gt 1}>
+                <{if $viewer_level > 1}>
                     <div class="col-md-6 mb10">
                         <strong><{$smarty.const._MD_NEWBB_TOPIC}>:</strong>
                         <a href="<{$xoops_url}>/modules/<{$xoops_dirname}>/list.topic.php?status=active#admin" title="<{$smarty.const._MD_NEWBB_TYPE_ADMIN}>" class="btn btn-xs btn-primary">
@@ -28,9 +28,9 @@
                     </div>
                 <{/if}>
 
-                <div class="<{if $viewer_level gt 1}>col-md-6<{else}>col-md-12<{/if}> text-right"><{include file="db:newbb_index_menu.tpl"}></div>
+                <div class="<{if $viewer_level > 1}>col-md-6<{else}>col-md-12<{/if}> text-right"><{include file="db:newbb_index_menu.tpl"}></div>
 
-                <{if $viewer_level gt 1}>
+                <{if $viewer_level > 1}>
                     <div class="col-md-12">
                         <strong><{$smarty.const._MD_NEWBB_POST2}>:</strong>
                         <a href="<{$xoops_url}>/modules/<{$xoops_dirname}>/viewpost.php?status=active#admin" title="<{$smarty.const._MD_NEWBB_TYPE_ADMIN}>" class="btn btn-xs btn-primary">
@@ -141,11 +141,11 @@
                         <div class="row newbb-list-foruns mb10">
                             <div class="col-sm-6 col-md-6">
                                 <{if $forum.subforum|default:false}>
-                                    <div class="<{if $forum.forum_read|default:0  eq 1 }>forum-read<{else}>forum-new2<{/if}> pull-left">
+                                    <div class="<{if $forum.forum_read|default:0 == 1 }>forum-read<{else}>forum-new2<{/if}> pull-left">
                                         <{$forum.forum_folder|default:'' }>
                                     </div>
                                 <{else}>
-                                    <div class="<{if $forum.forum_read|default:0  eq 1 }>forum-read<{else}>forum-new2<{/if}> pull-left">
+                                    <div class="<{if $forum.forum_read|default:0 == 1 }>forum-read<{else}>forum-new2<{/if}> pull-left">
                                         <{$forum.forum_folder|default:'' }>
                                     </div>
                                 <{/if}>
@@ -284,7 +284,7 @@
                         <{if isset($stats[0].digest.total)}>
                             <li><{$smarty.const._MD_NEWBB_TOTALDIGESTSC}>
                                 <a href="<{$xoops_url}>/modules/<{$xoops_dirname}>/list.topic.php?status=digest" title="<{$smarty.const._MD_NEWBB_TOTALDIGESTSC}>">
-                                    <{$stats[0].digest.total}>
+                                    <{$stats[0].digest.total|default:''}>
                                 </a></li>
                         <{/if}>
 

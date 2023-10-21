@@ -17,7 +17,7 @@
     </ol>
     <div>
         <div class="col-xs-12">
-        <{if $viewer_level gt 1}>
+        <{if isset($viewer_level) && $viewer_level > 1}>
             <a href="<{$xoops_url}>/modules/<{$xoops_dirname}>/newtopic.php?forum=<{$forum_id}>" title="<{$smarty.const.THEME_FORUM_NEWTOPIC}>" class="btn btn-success"><{$smarty.const.THEME_FORUM_NEWTOPIC}></a>
         <{else}>
             <{if $xoops_isuser}>
@@ -74,12 +74,12 @@
     <div class="col-sm-12">
         <div class="row">
             <div class="col-md-8 col-xs-12">
-                <{if $mode gt 1}>
+                <{if isset($mode) && $mode > 1}>
                     <form class="form-inline" name="form_topics_admin" action="<{$xoops_url}>/modules/<{$xoops_dirname}>/action.topic.php" method="POST" onsubmit="if(window.document.form_topics_admin.op.value &lt; 1){return false;}">
                 <{/if}>
 
-                <{if $viewer_level gt 1}>
-                <{if $mode gt 1}>
+                <{if isset($viewer_level) && $viewer_level > 1}>
+                <{if isset($mode) && $mode > 1}>
                         <div class="form-row align-items-center">
                             <div class="col-auto">
                                 <div class="form-check mb-2">
@@ -92,10 +92,10 @@
                             <div class="col-auto">
                                 <select name="op" class="custom-select mb-2">                        <option value="0"><{$smarty.const._SELECT}></option>
                                     <option value="delete"><{$smarty.const._DELETE}></option>
-                                    <{if $status eq "pending"}>
+                                     <{if isset($status) && $status == "pending"}>
                                     <option value="approve"><{$smarty.const._MD_NEWBB_APPROVE}></option>
                                     <option value="move"><{$smarty.const._MD_NEWBB_MOVE}></option>
-                                    <{elseif $status eq "deleted"}>
+                                    <{elseif isset($status) && $status == "deleted"}>
                                     <option value="restore"><{$smarty.const._MD_NEWBB_RESTORE}></option>
                                     <{else}>
                                     <option value="move"><{$smarty.const._MD_NEWBB_MOVE}></option>
@@ -143,11 +143,11 @@
         <tbody>
         <{foreach item=topic from=$topics|default:null}>
             <tr>
-                <{if $mode gt 1}>
+                <{if isset($mode) && $mode > 1}>
                 <td><input type="checkbox" name="topic_id[]" id="topic_id[<{$topic.topic_id}>]" value="<{$topic.topic_id}>"></td>
                 <{/if}>
                 <td class="d-none d-sm-table-cell"><{$topic.topic_folder}></td>
-                <td><a class="<{if $topic.topic_read eq 1 }>read-topic<{else}>new-topic<{/if}>" href="<{$xoops_url}>/modules/<{$xoops_dirname}>/<{$topic.topic_link}>" title="<{$topic.topic_excerpt}>"><{$topic.topic_title}></a></td>
+                <td><a class="<{if isset($topic.topic_read) && $topic.topic_read == 1 }>read-topic<{else}>new-topic<{/if}>" href="<{$xoops_url}>/modules/<{$xoops_dirname}>/<{$topic.topic_link}>" title="<{$topic.topic_excerpt}>"><{$topic.topic_title}></a></td>
                 <td class="d-none d-sm-table-cell"><span class="fa fa-user"></span> <{$topic.topic_poster}></td>
                 <td><{$topic.topic_time}></td>
                 <td class="d-none d-sm-table-cell"><{$topic.topic_replies}></td>
@@ -163,7 +163,7 @@
         </tbody>
         <thead>
         <tr>
-        <{if $mode gt 1}>
+        <{if isset($mode) && $mode > 1}>
             <th> </th>
         <{/if}>
         <th class="d-none d-sm-table-cell"> </th>
@@ -182,7 +182,7 @@
     <{if empty($topics)}>
     <div class="alert alert-warning" role="alert"><{$smarty.const._MD_NEWBB_NOTOPIC}></div>
     <{/if}>
-    <{if $mode gt 1}>
+    <{if isset($mode) && $mode > 1}>
         </form>
     <{/if}>
 
@@ -231,7 +231,7 @@
     </div>
 </div>
 
-<{if $online}>
+<{if !empty($online)}>
     <{include file="db:newbb_online.tpl"}>
 <{/if}>
 

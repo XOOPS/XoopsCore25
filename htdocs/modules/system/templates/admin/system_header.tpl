@@ -1,10 +1,10 @@
 <ul id="xo-breadcrumb" class="ui-corner-all" style="background-image:url('<{xoAdminNav}>bc_bg.png');">
     <{foreach item=breadcrumb from=$xo_sys_breadcrumb|default:null}>
-        <{if $breadcrumb.home}>
+        <{if !empty($breadcrumb.home)}>
             <li><a class="tooltip" href="<{$breadcrumb.link}>" title="<{$breadcrumb.title}>" style="background-image:url('<{xoAdminNav}>bc_separator.png');"><img
                             class="home" src="<{xoAdminNav}>home.png" alt="<{$breadcrumb.title}>"/></a></li>
         <{else}>
-            <{if $breadcrumb.link}>
+            <{if !empty($breadcrumb.link)}>
                 <li><a class="tooltip" href="<{$breadcrumb.link}>" title="<{$breadcrumb.title}>" style="background-image:url('<{xoAdminNav}>bc_separator.png');"><{$breadcrumb.title}></a>
                 </li>
             <{else}>

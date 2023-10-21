@@ -1,6 +1,6 @@
 <{if !empty($block)}>
 <div>
-  <{foreach from=$block.faq item=faq}>
+  <{foreach item=faq from=$block.faq|default:null}>
   <div class="card">
     <div class="card-header">
       <{$faq.title}>

@@ -6,7 +6,7 @@
 <div class="col-sm-3 col-md-3 text-center newbb-user-data">
     <{$topic_post.poster.link}>
 
-    <{if $topic_post.poster.uid|default:'' gt -1}>
+    <{if $topic_post.poster.uid|default:'' > -1}>
         <{if isset($topic_post.poster.uid) && $topic_post.poster.uid != 0}>
             <{if $topic_post.poster.avatar != "blank.gif"}>
                     <img src="<{$xoops_upload_url}>/<{$topic_post.poster.avatar}>" alt="<{$topic_post.poster.name}>" class="img-circle img-thumbnail">
@@ -40,7 +40,7 @@
 
                             <li>
                             <{$smarty.const._MD_NEWBB_POSTS}>:
-                            <{if $topic_post.poster.posts gt 0}>
+                            <{if $topic_post.poster.posts > 0}>
                                 <a href="<{$xoops_url}>/modules/<{$xoops_dirname}>/viewpost.php?uid=<{$topic_post.poster.uid}>" title="<{$smarty.const._ALL}>">
                                     <{$topic_post.poster.posts}>
                                 </a>
@@ -49,7 +49,7 @@
                             <{/if}>
                             </li>
 
-                            <{if isset($topic_post.poster.digests) && $topic_post.poster.digests gt 0}>
+                            <{if isset($topic_post.poster.digests) && $topic_post.poster.digests > 0}>
                             <li>
                                 <{$smarty.const._MD_NEWBB_DIGESTS}>: <{$topic_post.poster.digests}>
                             </li>
@@ -77,7 +77,7 @@
                 <li>IP: <a href="https://www.whois.sc/<{$topic_post.poster_ip}>" target="_blank"><{$topic_post.poster_ip}></a></li>
             <{/if}>
 
-            <{if $topic_post.poster.uid|default:'' gt 0}>
+            <{if $topic_post.poster.uid|default:'' > 0}>
                 <li><{$smarty.const._MD_NEWBB_POSTEDON}><{$topic_post.post_date}></li>
             <{/if}>
         </ul>
@@ -129,7 +129,7 @@
     </div>
 
     <div class="col-md-6 text-right nompl">
-    <{if $mode gt 1 && $topic_post.poster.uid gt -1}>
+    <{if $mode > 1 && $topic_post.poster.uid > -1}>
         <a href="<{$xoops_url}>/modules/<{$xoops_dirname}>/action.post.php?post_id=<{$topic_post.post_id}>&amp;op=split&amp;mode=1" title="<{$smarty.const._MD_NEWBB_SPLIT_ONE}>">
             <{$smarty.const._MD_NEWBB_SPLIT_ONE}>
         </a>

@@ -36,7 +36,7 @@
         <div id="xo-bgstatic" class="<{$xoops_dirname}>"></div>
         <div id="xo-header" class="<{$xoops_dirname}>">
             <div id="xo-top">
-                <!-- include du bloc Utilisateur dans le header -->
+                <!-- include the User block in the header -->
             </div>
             <!-- Start Header -->
             <table cellspacing="0">

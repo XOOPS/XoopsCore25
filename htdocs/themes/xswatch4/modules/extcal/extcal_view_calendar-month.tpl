@@ -38,25 +38,21 @@
         </tr>
         <{foreach item=row from=$tableRows|default:null}>
         <tr>
-            <th style="text-align:center; vertical-align:middle;"><a
-                        href="view_calendar-week.php?year=<{$row.weekInfo.year}>&amp;month=<{$row.weekInfo.month}>&amp;day=<{$row.weekInfo.day}>"><{$row.weekInfo.week}></a>
+            <th style="text-align:center; vertical-align:middle;">
+                <a href="view_calendar-week.php?year=<{$row.weekInfo.year}>&amp;month=<{$row.weekInfo.month}>&amp;day=<{$row.weekInfo.day}>"><{$row.weekInfo.week}></a>
             </th>
             <{foreach item=cell from=$row.week|default:null}>
-            <td class="<{if $cell.isEmpty}>even<{else}>odd<{/if}>"
-                style="width:14%; height:80px; vertical-align:top;<{if $cell.isSelected}> background-color:#B6CDE4;<{/if}>">
-                <{if $cell.isEmpty}>&nbsp;<{else}><a
-                href="<{$xoops_url}>/modules/extcal/view_day.php?year=<{$year}>&amp;month=<{$month}>&amp;day=<{$cell.number}>"><{$cell.number}></a><{/if}><br/>
+            <td class="<{if !empty($cell.isEmpty)}>even<{else}>odd<{/if}>"
+                style="width:14%; height:80px; vertical-align:top;
+                <{if !empty($cell.isSelected)}> background-color:#B6CDE4;<{/if}>">
+                <{if !empty($cell.isEmpty)}>&nbsp;<{else}><a href="<{$xoops_url}>/modules/extcal/view_day.php?year=<{$year}>&amp;month=<{$month}>&amp;day=<{$cell.number}>"><{$cell.number}></a><{/if}><br/>
                 <{foreach item=event from=$cell.events|default:null}>
-                    <{if $event}>
-                        <div style="font-size:0.8em; margin-top:5px;"><img
-                                    src="assets/images/icons/event-<{$event.status}>.gif"/> <a
-                                    href="<{$xoops_url}>/modules/extcal/event.php?event=<{$event.event_id}>"
-                                    class="extcalTips"
-                                    title="<{$event.event_title}> :: <{$lang.start}> <{$event.formated_event_start}> <{$lang.end}> <{$event.formated_event_end}>"><{$event.event_title}></a>
+                    <{if !empty($event)}>
+                        <div style="font-size:0.8em; margin-top:5px;"><img src="assets/images/icons/event-<{$event.status}>.gif"/>
+                            <a href="<{$xoops_url}>/modules/extcal/event.php?event=<{$event.event_id}>"
+                                    class="extcalTips" title="<{$event.event_title}> :: <{$lang.start}> <{$event.formated_event_start}> <{$lang.end}> <{$event.formated_event_end}>"><{$event.event_title}></a>
                         </div>
-                        <div style="background-color:#<{$event.cat.cat_color|default:''}>; height:2px; font-size:2px;">
-                            &nbsp;
-                        </div>
+                        <div style="background-color:#<{$event.cat.cat_color|default:''}>; height:2px; font-size:2px;"></div>
                     <{/if}>
                 <{/foreach}>
             </td>
@@ -78,7 +74,7 @@
     </table>
 </div>
 
-<div style="text-align:right;"><a
-            href="<{$xoops_url}>/modules/extcal/rss.php?cat=<{$selectedCat|default:''}>"><img
-                src="assets/images/icons/rss.gif" alt="RSS Feed"/></a></div>
+<div style="text-align:right;"><a href="<{$xoops_url}>/modules/extcal/rss.php?cat=<{$selectedCat|default:''}>">
+        <img src="assets/images/icons/rss.gif" alt="RSS Feed"/>
+    </a></div>
 <{include file='db:system_notification_select.tpl'}>

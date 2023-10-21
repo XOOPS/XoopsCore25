@@ -33,7 +33,7 @@
 
         <link rel="stylesheet" media="(prefers-color-scheme: dark)" href="<{xoImgUrl}><{#xswatchDarkCss#}>/xoops.css">
         <link rel="stylesheet" media="(prefers-color-scheme: dark)" href="<{xoImgUrl}><{#xswatchDarkCss#}>/bootstrap.min.css">
-        <link rel="stylesheet" media="(prefers-color-scheme: dark)" href="<{xoImgUrl}><{#xswatchDarkCss#}>cookieconsent.css">
+        <link rel="stylesheet" media="(prefers-color-scheme: dark)" href="<{xoImgUrl}><{#xswatchDarkCss#}>/cookieconsent.css">
         <{* Edit css/my_xoops_dark.css to customize your css definitions and override Bootstrap definitions for the dark variant *}>
         <link rel="stylesheet" media="(prefers-color-scheme: dark)" href="<{xoImgUrl}>css/my_xoops_dark.css">
     <{/if}>
@@ -56,11 +56,11 @@
 
 <{include file="$theme_name/tpl/nav-menu.tpl"}>
 
-<{* un-comment to enable slider
-<{if $xoops_page == "index"}>
-    <{include file="$theme_name/tpl/slider.tpl"}>
-<{/if}>
-*}>
+<{* un-comment to enable slider*}>
+<{*<{if $xoops_page == "index"}>*}>
+<{*    <{include file="$theme_name/tpl/slider.tpl"}>*}>
+<{*<{/if}>*}>
+
 
 <div class="container maincontainer">
 

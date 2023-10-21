@@ -11,7 +11,7 @@
     <{counter name=loopid start=0 print=false}>
     <{assign var=tdcnt value=1}>
     <tr>
-    <{foreach from=$avatars key=file item=name}>
+    <{foreach item=name from=$avatars|default:null key=file }>
         <td align="center" valign="center">
             <img src="<{$upload_url}><{$file}>" alt="<{$name}>" title="<{$name}>" /><br>
             <{$name}><br>

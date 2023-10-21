@@ -18,9 +18,9 @@
     </div>
 </div>
 <div class="clear"></div>
-<{if $viewer_level gt 1}>
+<{if $viewer_level > 1}>
     <div class="right" id="admin">
-        <{if $mode gt 1}>
+        <{if $mode > 1}>
         <!-- irmtfan mistype forum_posts_admin => form_posts_admin  -->
         <form name="form_posts_admin" action="action.post.php" method="POST" onsubmit="if(window.document.form_posts_admin.op.value &lt; 1){return false;}">
             <{$smarty.const._ALL}>:
@@ -28,9 +28,9 @@
             <select name="op">
                 <option value="0"><{$smarty.const._SELECT}></option>
                 <option value="delete"><{$smarty.const._DELETE}></option>
-                <{if $status eq "pending"}>
+                <{if $status == "pending"}>
                     <option value="approve"><{$smarty.const._MD_NEWBB_APPROVE}></option>
-                <{elseif $status eq "deleted"}>
+                <{elseif $status == "deleted"}>
                     <option value="restore"><{$smarty.const._MD_NEWBB_RESTORE}></option>
                 <{/if}>
             </select>
@@ -113,7 +113,7 @@
 <br>
 <{/foreach}>
 
-<{if $mode gt 1}>
+<{if $mode > 1}>
     </form>
 <{/if}>
 

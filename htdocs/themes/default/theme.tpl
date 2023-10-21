@@ -26,7 +26,7 @@
     <!-- Sheet Css -->
     <link rel="stylesheet" type="text/css" media="all" title="Style sheet" href="<{xoAppUrl 'xoops.css'}>"/>
     <link rel="stylesheet" type="text/css" media="all" title="Style sheet" href="<{xoImgUrl 'style.css'}>"/>
-    <!--[if lte IE 8]>
+    <!--[if <= IE 8]>
     <link rel="stylesheet" href="<{xoImgUrl 'styleIE8.css'}>" type="text/css"/>
     <![endif]-->
 
@@ -62,7 +62,7 @@
 
         <td id="centercolumn">
             <!-- Display center blocks if any -->
-            <{if $xoBlocks.page_topleft or $xoBlocks.page_topcenter or $xoBlocks.page_topright}>
+            <{if $xoBlocks.page_topleft || $xoBlocks.page_topcenter || $xoBlocks.page_topright}>
             <table cellspacing="0">
                 <tr>
                     <td id="centerCcolumn" colspan="2">
@@ -105,7 +105,7 @@
                 <{if $xoBlocks.page_bottomcenter}>
                 <tr>
                     <td id="bottomCcolumn" colspan="2">
-                        <{foreach from=$xoBlocks.page_bottomcenter item=block}>
+                        <{foreach item=block from=$xoBlocks.page_bottomcenter|default:null}>
                         <{include file="$theme_name/theme_blockcenter_c.tpl"}>
                         <{/foreach}>
                     </td>
@@ -115,13 +115,13 @@
                 <{if $xoBlocks.page_bottomleft or $xoBlocks.page_bottomright}>
                 <tr>
                     <td id="bottomLcolumn">
-                        <{foreach from=$xoBlocks.page_bottomleft item=block}>
+                        <{foreach item=block from=$xoBlocks.page_bottomleft|default:null}>
                         <{include file="$theme_name/theme_blockcenter_l.tpl"}>
                         <{/foreach}>
                     </td>
 
                     <td id="bottomRcolumn">
-                        <{foreach from=$xoBlocks.page_bottomright item=block}>
+                        <{foreach item=block from=$xoBlocks.page_bottomright|default:null}>
                         <{include file="$theme_name/theme_blockcenter_r.tpl"}>
                         <{/foreach}>
                     </td>
@@ -150,7 +150,7 @@
             <tr>
                 <{if $xoBlocks.footer_left}>
                 <td id="footerLeft">
-                    <{foreach from=$xoBlocks.footer_left item=block}>
+                    <{foreach item=block from=$xoBlocks.footer_left|default:null}>
                     <{include file="$theme_name/theme_blockfooter_l.tpl"}>
                     <{/foreach}>
                 </td>
@@ -159,7 +159,7 @@
 
                 <{if $xoBlocks.footer_center}>
                 <td id="footerCenter">
-                    <{foreach from=$xoBlocks.footer_center item=block}>
+                    <{foreach item=block from=$xoBlocks.footer_center|default:null}>
                     <{include file="$theme_name/theme_blockfooter_c.tpl"}>
                     <{/foreach}>
                 </td>
@@ -167,7 +167,7 @@
 
                 <{if $xoBlocks.footer_right}>
                 <td id="footerRight">
-                    <{foreach from=$xoBlocks.footer_right item=block}>
+                    <{foreach item=block from=$xoBlocks.footer_right|default:null}>
                     <{include file="$theme_name/theme_blockfooter_r.tpl"}>
                     <{/foreach}>
                 </td>

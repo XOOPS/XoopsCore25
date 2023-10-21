@@ -5,7 +5,7 @@
 	<div class='card panel-<{$panel_type}>'>
 		<div class='card-header wgg-cats-header'><{$index_alb_title}></div>
 		<div class='card-body'>
-			<{foreach name=album item=album from=$albums}>
+			<{foreach item=album from=$albums|default:null name=album}>
                 <{include file='db:wggallery_albumitem_hovereffectideas.tpl' album=$album}>
 			<{/foreach}>
 		</div>
@@ -22,7 +22,7 @@
 	<div class='card panel-<{$panel_type}>'>
 		<div class='card-header wgg-cats-header'><{$index_cats_title}></div>
 		<div class='card-body'>
-			<{foreach name=category item=category from=$categories}>
+			<{foreach item=category from=$categories|default:null name=category}>
                 <{if $category.newrow}><div class="grid"><{/if}>
                 <{include file='db:wggallery_categoryitem_hovereffectideas.tpl' category=$category}>
                 <{if $category.linebreak}></div><div class='clear'>&nbsp;</div><{/if}>

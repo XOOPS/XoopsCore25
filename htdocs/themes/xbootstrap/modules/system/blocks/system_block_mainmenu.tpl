@@ -1,7 +1,7 @@
 <ul class="nav nav-pills nav-stacked">
-    <li class="<{if !$block.nothome|default:false}>active<{/if}>">
-        <a href="<{xoAppUrl}>" title="<{$block.lang_home}>"><span
-                    class="glyphicon glyphicon-home"></span>
+    <li class="<{if empty($block.nothome)}>active<{/if}>">
+        <a href="<{xoAppUrl}>" title="<{$block.lang_home}>">
+        <span class="glyphicon glyphicon-home"></span>
             <{$block.lang_home}>
         </a>
     </li>

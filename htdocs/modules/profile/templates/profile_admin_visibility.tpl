@@ -14,7 +14,7 @@
             <td>
                 <{if isset($visibilities.$field_id)}>
                     <ul>
-                        <{foreach item=visibility from=$visibilities|default:null.$field_id}>
+                        <{foreach item=visibility from=$visibilities.$field_id|default:null}>
                             <{assign var=user_gid value=$visibility.user_group}>
                             <{assign var=profile_gid value=$visibility.profile_group}>
                             <li>
