@@ -76,7 +76,7 @@
                     <li><{include file="db:tag_bar.tpl"}></li>
                 <{/if}>
 
-                <{if $xoops_isadmin}>
+                <{if isset($xoops_isadmin)}>
                     <li><{$video.adminvideo}></li>
                 <{/if}>
             </ul>

@@ -72,7 +72,7 @@
             <td class="even"><{$show_search_radio}></td>
         </tr>
         <!-- START irmtfan add show search -->
-        <{if $search_rule}>
+        <{if isset($search_rule)}>
         <tr>
             <!-- irmtfan hardcode removed align="right" -->
             <td class="head" id="align_right"><strong><{$smarty.const._SR_SEARCHRULE}></strong>&nbsp;</td>

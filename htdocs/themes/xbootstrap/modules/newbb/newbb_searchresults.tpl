@@ -1,6 +1,6 @@
 <div class="alert alert-success"> <{$search_info}> </div>
 <br>
-<{if $results}>
+<{if isset($results)}>
     <table class="table" border="0" cellpadding="0" cellspacing="0" align="center" width="95%">
         <thead>
         <tr class="head" align="center">

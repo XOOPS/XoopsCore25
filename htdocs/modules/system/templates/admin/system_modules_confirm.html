@@ -1,5 +1,5 @@
 <{include file="db:system_header.tpl"}>
-<{if $modifs_mods}>
+<{if isset($modifs_mods)}>
     <form action="admin.php" method="post">
         <table class="outer" cellspacing="1">
             <thead>
@@ -62,7 +62,7 @@
     </form>
 <{else}>
     <div id="xo-module-log">
-        <{if $result}>
+        <{if isset($result)}>
             <div class="logger">
                 <{foreach item=row from=$result|default:null}>
                     <div class="spacer"><{$row}></div>

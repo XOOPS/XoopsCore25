@@ -3,7 +3,7 @@
         <ol class="breadcrumb">
             <li class="breadcrumb-item"><a href="<{$xoops_url}>/modules/obituaries/index.php">Obituaries</a></li>
             <li class="breadcrumb-item active" aria-current="page"><{$obituaries_user.obituaries_lastname}>, <{$obituaries_user.obituaries_firstname}></li>
-            <{if $xoops_isadmin}>
+            <{if isset($xoops_isadmin)}>
             <a title="<{$smarty.const._EDIT}>" class="ml-2" href="<{$xoops_url}>/modules/obituaries/admin/main.php?op=edit&id=<{$obituaries_user.obituaries_id}>"><span class="fa fa-edit"></span></a>
             <{/if}>
         </ol>

@@ -1,5 +1,5 @@
 <div id="usermenu">
-    <{if $xoops_isadmin}>
+    <{if isset($xoops_isadmin)}>
         <a class="menuTop" href="<{xoAppUrl 'admin.php'}>" title="<{$block.lang_adminmenu}>"><{$block.lang_adminmenu}></a>
         <a href="<{xoAppUrl 'user.php'}>" title="<{$block.lang_youraccount}>"><{$block.lang_youraccount}></a>
     <{else}>

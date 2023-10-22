@@ -51,7 +51,7 @@
 <table cellspacing="0">
     <tr>
         <!-- Start left blocks loop -->
-        <{if $xoops_showlblock}>
+        <{if isset($xoops_showlblock)}>
         <td id="leftcolumn">
             <{foreach item=block from=$xoBlocks.canvas_left|default:null}>
             <{include file="$theme_name/theme_blockleft.tpl"}>
@@ -133,7 +133,7 @@
         </td>
 
         <!-- Start right blocks loop -->
-        <{if $xoops_showrblock}>
+        <{if isset($xoops_showrblock)}>
         <td id="rightcolumn">
             <{foreach item=block from=$xoBlocks.canvas_right|default:null}>
             <{include file="$theme_name/theme_blockright.tpl"}>

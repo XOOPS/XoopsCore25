@@ -6,7 +6,7 @@
     <{elseif !empty($forum_name)}>
         <li class="breadcrumb-item"><a href="<{$xoops_url}>/modules/<{$xoops_dirname}>/viewforum.php?forum=<{$forum_id}>"><{$forum_name}></a></li>
     <{/if}>
-    <{if $current}>
+    <{if isset($current)}>
         <li class="breadcrumb-item active"><{$current.title}></li>
     <{/if}>
 </ol>
@@ -243,7 +243,7 @@
 </table>
 <!-- end forum main table -->
 
-<{if $pagenav}>
+<{if isset($pagenav)}>
     <!-- irmtfan hardcode removed style="padding: 5px;float: right; text-align:right;" -->
     <div class="generic-pagination col text-right"><{$pagenav|replace:'form':'div'|replace:'id="xo-pagenav"':''|replace:' //':'/'}>
         <!-- irmtfan to solve nested forms and id="xo-pagenav" issue --></div>

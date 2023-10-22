@@ -5,13 +5,13 @@
         <li class="breadcrumb-item"><a href="<{$xoops_url}>/modules/<{$xoops_dirname}>/index.php"><{$smarty.const._MD_NEWBB_FORUMHOME}></a></li>
 
         <li class="breadcrumb-item"><a href="<{$xoops_url}>/modules/<{$xoops_dirname}>/index.php?cat=<{$category.id}>"><{$category.title}></a></li>
-        <{if $parentforum}>
+        <{if isset($parentforum)}>
             <{foreach item=forum from=$parentforum|default:null}>
                 <li class="breadcrumb-item"><a href="<{$xoops_url}>/modules/<{$xoops_dirname}>/viewforum.php?forum=<{$forum.forum_id}>"><{$forum.forum_name}></a></li>
             <{/foreach}>
         <{/if}>
         <li class="breadcrumb-item"><a href="<{$xoops_url}>/modules/<{$xoops_dirname}>/viewforum.php?forum=<{$forum_id}>"><{$forum_name}></a></li>
-        <li class="breadcrumb-item active"><{$topic_title|strip_tags}> <{if $topicstatus}><{$topicstatus}><{/if}></li>
+        <li class="breadcrumb-item active"><{$topic_title|strip_tags}> <{if isset($topicstatus)}><{$topicstatus}><{/if}></li>
     </ol>
 
     <{if !empty($tagbar)}>

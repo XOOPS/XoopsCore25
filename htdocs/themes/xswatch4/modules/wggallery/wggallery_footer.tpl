@@ -2,10 +2,10 @@
 	<div class='errorMsg'><strong><{$error}></strong></div>
 <{/if}>
 <div class='clear spacer'></div>
-<{if $copyright}>
+<{if isset($copyright)}>
     <div class="pull-right"><{$copyright}></div>
 <{/if}>
-<{if $xoops_isadmin}>
+<{if isset($xoops_isadmin)}>
     <div class='clear spacer'></div>
     <div class="text-center bold"><a href="<{$admin}>"><{$smarty.const._MA_WGGALLERY_ADMIN}></a></div><br>
 <{/if}>

@@ -1,7 +1,7 @@
 <{if isset($obituaries_user)}>
     <ol class="breadcrumb">
         <li><a href="index.php"><{$breadcrumb}></a></li>
-        <{if $xoops_isadmin}>
+        <{if isset($xoops_isadmin)}>
             <li>[ <a href="<{$xoops_url}>/modules/obituaries/admin/main.php?op=edit&id=<{$obituaries_user.obituaries_id}>"><{$smarty.const._EDIT}></a> ]</li>
         <{/if}>
     </ol>

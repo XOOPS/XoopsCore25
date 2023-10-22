@@ -56,7 +56,7 @@
 				<br>
 			<{/if}>
 		<{/foreach}>
-		<{if $nomatch}>
+		<{if isset($nomatch)}>
 			<p>
 				<{$smarty.const._SR_NOMATCH}>
 			</p>
@@ -65,12 +65,12 @@
 			<br>
 			<table>
 				<tr>
-				<{if $previous}>
+				<{if isset($previous)}>
 					<td align="left">
 						<a href="<{$previous}>"><{$smarty.const._SR_PREVIOUS}></a>
 					</td>
 				<{/if}>
-				<{if $next}>
+				<{if isset($next)}>
 					<td align="right">
 						<a href="<{$next}>"><{$smarty.const._SR_NEXT}></a>
 					</td>

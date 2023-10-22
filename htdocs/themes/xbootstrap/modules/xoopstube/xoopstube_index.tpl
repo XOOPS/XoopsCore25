@@ -53,13 +53,13 @@
 
     <{if !empty($showlatest)}>
         <{$smarty.const._MD_XOOPSTUBE_LATESTLIST}>
-        <{if $pagenav}>
+        <{if isset($pagenav)}>
             <{$pagenav}>
         <{/if}>
         <{section name=i loop=$video}>
             <{include file="db:xoopstube_videoload.tpl" video=$video[i]}>
         <{/section}>
-        <{if $pagenav}>
+        <{if isset($pagenav)}>
             <{$pagenav}>
         <{/if}>
     <{/if}>

@@ -154,7 +154,7 @@
                                     <{$forum.forum_name}>
                                 </a>
 
-                                <{if $rss_enable}>
+                                <{if isset($rss_enable)}>
                                     <a href="<{$xoops_url}>/modules/<{$xoops_dirname}>/rss.php?f=<{$forum.forum_id}>" target="_blank" title="RSS feed"
                                        class="pull-right btn btn-xs btn-warning">
                                         RSS
@@ -264,7 +264,7 @@
             </div>
         </div>
 
-        <{if $currenttime}>
+        <{if isset($currenttime)}>
             <div class="row">
                 <div class="col-lg-12"><h3 class="nompl"><{$online.statistik}> <{$smarty.const._MD_NEWBB_STATS}></h3></div>
                 <div class="col-sm-6 col-md-6">
@@ -297,7 +297,7 @@
 
                 <div class="col-sm-6 col-md-6">
                     <ul class="list-unstyled lw30">
-                        <{if $userstats}>
+                        <{if isset($userstats)}>
                             <li><{*$userstats.lastvisit*}>
                                 <{$userstats.lastpost}>
                             </li>
@@ -306,7 +306,7 @@
                         <li><{$smarty.const._MD_NEWBB_TODAYTOPICSC}> <{$stats[0].topic.day|default:0}></li>
                         <li><{$smarty.const._MD_NEWBB_TODAYPOSTSC}> <{$stats[0].post.day|default:0}></li>
 
-                        <{if $userstats}>
+                        <{if isset($userstats)}>
                             <li><{$userstats.topics}> | <{$userstats.posts}></li>
                             <{if $userstats.digests}>
                                 <li><{$userstats.digests}></li>
@@ -318,12 +318,12 @@
             </div>
         <{/if}>
 
-        <{if $online}>
+        <{if isset($online)}>
             <{include file="db:newbb_online.tpl"}>
         <{/if}>
 
         <a title="NewBB" href="https://xoops.org" class="btn btn-xs btn-success">NewBB Version <{$version}></a>
-        <{if $rss_button}>
+        <{if isset($rss_button)}>
             <div class="text-right">
                 <a href="<{$xoops_url}>/modules/<{$xoops_dirname}>/rss.php?c=<{$viewcat}>" target="_blank" title="RSS FEED">
                     <{$rss_button}>

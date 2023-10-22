@@ -6,7 +6,7 @@
     <{elseif !empty($forum_name)}>
         <li><a href="<{$xoops_url}>/modules/<{$xoops_dirname}>/viewforum.php?forum=<{$forum_id}>"><{$forum_name}></a></li>
     <{/if}>
-    <{if $current}>
+    <{if isset($current)}>
         <li><a href="<{$current.link}>"><{$current.title}></a></li>
     <{/if}>
 </ol>
@@ -241,7 +241,7 @@
 </table>
 <!-- end forum main table -->
 
-<{if $pagenav}>
+<{if isset($pagenav)}>
     <!-- irmtfan hardcode removed style="padding: 5px;float: right; text-align:right;" -->
     <div class="pagenav"><{$pagenav|replace:'form':'div'|replace:'id="xo-pagenav"':''|replace:' //':'/'}>
         <!-- irmtfan to solve nested forms and id="xo-pagenav" issue --></div>
@@ -292,6 +292,6 @@
 <div class="clear"></div>
 <br>
 
-<{if $online}><{include file="db:newbb_online.tpl"}><{/if}>
+<{if isset($online)}><{include file="db:newbb_online.tpl"}><{/if}>
 <{include file='db:newbb_notification_select.tpl'}>
 <!-- end module contents -->

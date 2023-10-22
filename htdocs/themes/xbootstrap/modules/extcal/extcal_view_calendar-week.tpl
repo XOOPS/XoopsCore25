@@ -41,7 +41,7 @@
                     <{if $day.isEmpty}>&nbsp;<{else}><a
                     href="<{$xoops_url}>/modules/extcal/view_day.php?year=<{$day.year}>&amp;month=<{$day.month}>&amp;day=<{$day.dayNumber}>"><{$day.dayNumber}></a><{/if}><br/>
                     <{foreach item=event from=$day.events|default:null}>
-                        <{if $event}>
+                        <{if isset($event)}>
                             <div style="font-size:0.8em; margin-top:5px;"><img
                                         src="assets/images/icons/event-<{$event.status}>.gif"/> <a
                                         href="<{$xoops_url}>/modules/extcal/event.php?event=<{$event.event_id}>"

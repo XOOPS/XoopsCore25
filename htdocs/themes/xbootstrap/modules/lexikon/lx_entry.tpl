@@ -16,7 +16,7 @@
     -->
 </style>
 <{* needed for baloon tips*}>
-<{if $balloontips}>
+<{if isset($balloontips)}>
     <div id="bubble_tooltip">
         <div class="bubble_top"><span></span></div>
         <div class="bubble_middle">

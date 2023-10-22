@@ -73,7 +73,7 @@
                     </li>
                 <{/if}>
 
-                <{if $adminlink}>
+                <{if isset($adminlink)}>
                     <li class="text-center"><{$adminlink}></li>
                 <{/if}>
             </ul>
@@ -87,15 +87,15 @@
         <{$description}>
     </div>
 
-    <{if $paypal}>
+    <{if isset($paypal)}>
         <{$paypal}>
     <{/if}>
 
-    <{if $tags}>
+    <{if isset($tags)}>
         <{include file="db:tag_bar.tpl"}>
     <{/if}>
 
-    <{if $show_social}>
+    <{if isset($show_social)}>
         <div class='shareaholic-canvas' data-app='share_buttons' data-app-id=''></div>
     <{/if}>
 </div><!-- .tdmdownloads -->

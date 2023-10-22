@@ -46,7 +46,7 @@
                 <{if $cell.isEmpty}>&nbsp;<{else}><a
                 href="<{$xoops_url}>/modules/extcal/view_day.php?year=<{$year}>&amp;month=<{$month}>&amp;day=<{$cell.number}>"><{$cell.number}></a><{/if}><br/>
                 <{foreach item=event from=$cell.events|default:null}>
-                    <{if $event}>
+                    <{if isset($event)}>
                         <div style="font-size:0.8em; margin-top:5px;"><img
                                     src="assets/images/icons/event-<{$event.status}>.gif"/> <a
                                     href="<{$xoops_url}>/modules/extcal/event.php?event=<{$event.event_id}>"

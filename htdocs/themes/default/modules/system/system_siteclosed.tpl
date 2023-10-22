@@ -50,7 +50,7 @@
                             <input name="uname" type="text" title=""/>
                             <input name="pass" type="password" title=""/>
                             <input type="hidden" name="xoops_redirect" value="<{$smarty.server.REQUEST_URI}>"/>
-                            <{if $lang_siteclosemsg}>
+                            <{if isset($lang_siteclosemsg)}>
                                 <input type="hidden" name="xoops_login" value="1"/>
                             <{/if}>
                             <input type="hidden" name="op" value="login"/>

@@ -39,7 +39,7 @@
         <{/if}>
 	</div>
 </div>
-<{if $message}>
+<{if isset($message)}>
 	<form name="<{$pmform.name}>" id="<{$pmform.name}>" action="<{$pmform.action}>" method="<{$pmform.method}>" <{$pmform.extra}>>
 		<div class="container-fluid">
 			<div class="row border p-2">

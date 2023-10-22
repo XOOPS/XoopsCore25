@@ -9,6 +9,6 @@
         <{/foreach}>
     </table>
 <{/if}>
-<{if $commentform}>
+<{if isset($commentform)}>
     <div class="commentform"><{$commentform}></div>
 <{/if}>

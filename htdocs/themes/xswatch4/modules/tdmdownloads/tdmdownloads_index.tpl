@@ -80,7 +80,7 @@
         <{/if}>
     </div><!-- .downloads-info -->
 
-    <{if $show_latest_files}>
+    <{if isset($show_latest_files)}>
             <{if $file != ""}>
             <h1><{$smarty.const._MD_TDMDOWNLOADS_INDEX_LATESTLIST}>:</h1>
             <div class="row">

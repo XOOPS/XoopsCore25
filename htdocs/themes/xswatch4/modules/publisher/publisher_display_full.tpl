@@ -16,7 +16,7 @@
     <!-- End of if !$category || $category.subcats || ($category && $display_category_summary) //-->
 <{/if}>
 
-<{if $items}>
+<{if isset($items)}>
 <div class="container">
     <h4 class="pub_last_articles_full"><span class="fa fa-newspaper-o"></span>&nbsp;<{$lang_items_title}></h4>
     <div class="row mb-3">
@@ -31,7 +31,7 @@
                 <{if $show_subtitle && $item.subtitle}>
                 <p class="text-muted"><{$item.subtitle}></p>
                 <{/if}>
-                <{if $display_whowhen_link}>
+                <{if isset($display_whowhen_link)}>
                 <p class="card-text"><small class="text-muted"><{$item.who_when}> (<{$item.counter}> <{$smarty.const._MD_PUBLISHER_READS}>)</small></p>
                 <{/if}>
                 <{if !empty($indexpage)}>

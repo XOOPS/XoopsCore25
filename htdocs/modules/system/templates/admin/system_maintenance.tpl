@@ -13,30 +13,30 @@
                 <th><{$smarty.const._AM_SYSTEM_MAINTENANCE}></th>
                 <th><{$smarty.const._AM_SYSTEM_MAINTENANCE_RESULT}></th>
             </tr>
-            <{if $verif_cache}>
+            <{if isset($verif_cache)}>
                 <tr>
                     <td class="aligntop txtcenter"><{$smarty.const._AM_SYSTEM_MAINTENANCE_RESULT_CACHE}></td>
-                    <td class="aligntop txtcenter"><{if $result_cache}><img width="16" src="<{xoAdminIcons 'success.png'}>"/><{else}><img style="width:16px;"
+                    <td class="aligntop txtcenter"><{if isset($result_cache)}><img width="16" src="<{xoAdminIcons 'success.png'}>"/><{else}><img style="width:16px;"
                                                                                                                                         src="<{xoAdminIcons 'cancel.png'}>"
                                                                                                                                         alt="Cancel"/><{/if}>
                     </td>
                 </tr>
             <{/if}>
 
-            <{if $verif_session}>
+            <{if isset($verif_session)}>
                 <tr>
                     <td class="aligntop" align="center"><{$smarty.const._AM_SYSTEM_MAINTENANCE_RESULT_SESSION}></td>
-                    <td class="aligntop" align="center"><{if $result_session}><img style="width:16px;" src="<{xoAdminIcons 'success.png'}>"
+                    <td class="aligntop" align="center"><{if isset($result_session)}><img style="width:16px;" src="<{xoAdminIcons 'success.png'}>"
                                                                                    alt="Success"/><{else}><img style="width:16px;"
                                                                                                                src="<{xoAdminIcons 'cancel.png'}>" alt="Cancel"/><{/if}>
                     </td>
                 </tr>
             <{/if}>
 
-            <{if $verif_avatar}>
+            <{if isset($verif_avatar)}>
                 <tr>
                     <td class="aligntop" align="center"><{$smarty.const._AM_SYSTEM_MAINTENANCE_RESULT_AVATAR}></td>
-                    <td class="aligntop" align="center"><{if $result_avatar}><img style="width:16px;" src="<{xoAdminIcons 'success.png'}>"
+                    <td class="aligntop" align="center"><{if isset($result_avatar)}><img style="width:16px;" src="<{xoAdminIcons 'success.png'}>"
                                                                                   alt="Success"/><{else}><img style="width:16px;"
                                                                                                               src="<{xoAdminIcons 'cancel.png'}>" alt="Cancel"/><{/if}>
                     </td>

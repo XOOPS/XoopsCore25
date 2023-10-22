@@ -97,7 +97,7 @@
             <tr class='bg2 txtleft'>
                 <td class='txtleft' colspan='6'>
                     <{$pmform.elements.send.body}>
-                    <{if $display}>
+                    <{if isset($display)}>
                         &nbsp;<{$pmform.elements.move_messages.body}>
                         &nbsp;<{$pmform.elements.delete_messages.body}>
                         &nbsp;<{$pmform.elements.empty_messages.body}>

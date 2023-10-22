@@ -63,7 +63,7 @@
     </div>
 
 </div>
-<{if $pagenav}>
+<{if isset($pagenav)}>
     <div class="pub_pagenav text-right">
         <{$pagenav}>
     </div>
@@ -81,7 +81,7 @@
     <div class="clearfix"></div>
 </div>
 
-<{if $itemfooter}>
+<{if isset($itemfooter)}>
     <div class="panel-footer">
         <small><{$itemfooter}></small>
     </div>

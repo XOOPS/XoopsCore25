@@ -24,7 +24,7 @@
     <{/foreach}>
     <{/section}>
     <{/if}>
-    <{if $commentform}>
+    <{if isset($commentform)}>
     <div class="aligncenter">
         <button class="btn-comment btn btn-primary btn-md" data-toggle="modal" data-target="#comments-form">
             <span class="fa fa-comment"></span> <{$smarty.const.THEME_COMMENT_ADD}>

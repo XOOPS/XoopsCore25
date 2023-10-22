@@ -1,8 +1,8 @@
-<{if $publisher_display_breadcrumb}>
+<{if isset($publisher_display_breadcrumb)}>
     <!-- Do not display breadcrumb if you are on indexpage, or you do not want to display the module name -->
     <{if $module_home or $categoryPath}>
         <ol class="breadcrumb">
-            <{if $module_home}>
+            <{if isset($module_home)}>
                 <li class="breadcrumb-item<{if empty($categoryPath)}> active<{/if}>"><{$module_home}></li>
             <{/if}>
             <{if !empty($categoryPath)}>

@@ -113,7 +113,7 @@
         <{/if}>
     </div><!-- .downloads-info -->
 
-    <{if $show_latest_files}>
+    <{if isset($show_latest_files)}>
         <div class="row">
             <{if $file != ""}>
                 <div class="col-md-12">

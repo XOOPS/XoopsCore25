@@ -15,7 +15,7 @@
     <span class="glyphicon glyphicon-chevron-right"></span>&nbsp;<{$lang_items_title}>
 </h4>
 <div class="publisher_items_list_">
-    <{if $items}>
+    <{if isset($items)}>
     <{foreach item=item from=$items|default:null}>
         <div class="article_wf">
             <div class="article_wf_title">

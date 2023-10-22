@@ -44,7 +44,7 @@
         <{/if}>
     <{/section}>
 
-    <{if $commentform}>
+    <{if isset($commentform)}>
         <div class="aligncenter">
             <button class="btn-comment btn btn-primary btn-md" data-toggle="modal" data-target="#comments-form">
                 <span class="glyphicon glyphicon-comment"></span> Add Comment

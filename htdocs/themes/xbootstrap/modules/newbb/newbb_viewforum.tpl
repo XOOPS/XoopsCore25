@@ -7,7 +7,7 @@
         <li><a href="<{$xoops_url}>/modules/<{$xoops_dirname}>/index.php?cat=<{$category.id}>"><{$category.title}></a></li>
 
     <!-- If is subforum-->
-    <{if $parentforum}>
+    <{if isset($parentforum)}>
         <{foreach item=forum from=$parentforum|default:null}>
              <li><a href="<{$xoops_url}>/modules/<{$xoops_dirname}>/viewforum.php?forum=<{$forum.forum_id}>"><{$forum.forum_name}></a></li>
         <{/foreach}>
@@ -20,7 +20,7 @@
         <{if $viewer_level > 1}>
             <a href="<{$xoops_url}>/modules/<{$xoops_dirname}>/newtopic.php?forum=<{$forum_id}>" title="<{$smarty.const.THEME_FORUM_NEWTOPIC}>" class="btn btn-success"><{$smarty.const.THEME_FORUM_NEWTOPIC}></a>
         <{else}>
-            <{if $xoops_isuser}>
+            <{if isset($xoops_isuser)}>
                 <a href="<{$xoops_url}>/modules/<{$xoops_dirname}>/newtopic.php?forum=<{$forum_id}>" title="<{$smarty.const.THEME_FORUM_NEWTOPIC}>" class="btn btn-success"><{$smarty.const.THEME_FORUM_NEWTOPIC}></a>
             <{else}>
                 <a href="<{$xoops_url}>/user.php" title="<{$smarty.const.THEME_FORUM_REGISTER}>" class="btn btn-success"><{$smarty.const.THEME_FORUM_REGISTER}></a>
@@ -29,7 +29,7 @@
 
         <{if !empty($forum_topictype)}><{$forum_topictype}><{/if}>
 
-        <{if $forum_topicstatus}>
+        <{if isset($forum_topicstatus)}>
             <span class="btn btn-info"><{$forum_topicstatus}></span>
         <{else}>
             <a href="<{$xoops_url}>/modules/<{$xoops_dirname}>/viewforum.php?forum=<{$forum_id}>&amp;status=digest" title="<{$smarty.const._MD_NEWBB_DIGEST}>" class="btn btn-info">
@@ -133,15 +133,15 @@
         <div class="col-md-1 visible-lg visible-md"><a href="<{$h_reply_link}>" title="<{$smarty.const._MD_NEWBB_REPLIES}>"><{$smarty.const._MD_NEWBB_REPLIES}></a></div>
         <div class="col-md-1 visible-lg visible-md"><a href="<{$h_views_link}>" title="<{$smarty.const._MD_NEWBB_VIEWS}>"><{$smarty.const._MD_NEWBB_VIEWS}></a></div>
 
-        <{if $rating_enable}>
+        <{if isset($rating_enable)}>
             <div class="col-md-1 visible-lg"><a href="<{$h_rating_link}>" title="<{$smarty.const._MD_NEWBB_RATINGS}>"><{$smarty.const._MD_NEWBB_RATINGS}></a></div>
         <{/if}>
 
-        <div class="<{if $rating_enable}>col-xs-6 col-sm-6 col-md-2<{else}>col-xs-6 col-sm-6 col-md-3<{/if}>"><a href="<{$h_date_link}>" title="<{$smarty.const._MD_NEWBB_LASTPOSTTIME}>"><{$smarty.const._MD_NEWBB_LASTPOSTTIME}></a></div>
+        <div class="<{if isset($rating_enable)}>col-xs-6 col-sm-6 col-md-2<{else}>col-xs-6 col-sm-6 col-md-3<{/if}>"><a href="<{$h_date_link}>" title="<{$smarty.const._MD_NEWBB_LASTPOSTTIME}>"><{$smarty.const._MD_NEWBB_LASTPOSTTIME}></a></div>
         </div><!-- .newbb-topiclist-header -->
 
         <{if $sticky > 0}>
-            <{if $rating_enable}>
+            <{if isset($rating_enable)}>
                 <{$smarty.const._MD_NEWBB_IMTOPICS}>
             <{else}>
                 <{$smarty.const._MD_NEWBB_IMTOPICS}>
@@ -152,7 +152,7 @@
     <div class="clearfix newbb-topiclist-itens <{cycle values="even,odd"}>">
 <!--
         <{if $topic.stick AND $smarty.foreach.loop.iteration == $sticky+1}>
-            <{if $rating_enable}>
+            <{if isset($rating_enable)}>
                 <{$smarty.const._MD_NEWBB_NOTIMTOPICS}>
             <{else}>
                 <{$smarty.const._MD_NEWBB_NOTIMTOPICS}>
@@ -179,8 +179,8 @@
         <div class="col-md-2 visible-lg visible-md"><{$topic.topic_time}></div>
         <div class="col-md-1 visible-lg visible-md text-center"><{$topic.topic_replies}></div>
         <div class="col-md-1 visible-lg visible-md text-center"><{$topic.topic_views}></div>
-        <{if $rating_enable}><div class="col-md-1 visible-lg"><{$topic.rating_img}></div><{/if}>
-        <div class="<{if $rating_enable}>col-xs-6 col-sm-6 col-md-2<{else}>col-xs-6 col-sm-6 col-md-3<{/if}>"><{$topic.topic_last_posttime}> <{$smarty.const._MD_NEWBB_BY}> <{$topic.topic_last_poster}> <{$topic.topic_page_jump_icon}></div>
+        <{if isset($rating_enable)}><div class="col-md-1 visible-lg"><{$topic.rating_img}></div><{/if}>
+        <div class="<{if isset($rating_enable)}>col-xs-6 col-sm-6 col-md-2<{else}>col-xs-6 col-sm-6 col-md-3<{/if}>"><{$topic.topic_last_posttime}> <{$smarty.const._MD_NEWBB_BY}> <{$topic.topic_last_poster}> <{$topic.topic_page_jump_icon}></div>
 
     </div><!-- .newbb-topiclist-itens -->
     <{/foreach}>
@@ -191,7 +191,7 @@
         </form>
     <{/if}>
 
-    <{if $rating_enable}>
+    <{if isset($rating_enable)}>
         <!-- do something -->
     <{else}>
         <!-- do something -->
@@ -241,12 +241,12 @@
     </div>
 </div>
 
-<{if $online}>
+<{if isset($online)}>
     <{include file="db:newbb_online.tpl"}>
 <{/if}>
 
 <a title="NewBB" href="https://xoops.org" class="btn btn-xs btn-success">NewBB Version  <{$version}></a>
-<{if $rss_button}>
+<{if isset($rss_button)}>
     <a href="<{$xoops_url}>/modules/<{$xoops_dirname}>/rss.php?f=<{$forum_id}>" target="_blank" title="RSS FEED">
         <{$rss_button}>
     </a>

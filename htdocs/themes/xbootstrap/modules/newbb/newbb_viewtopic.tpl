@@ -5,13 +5,13 @@
         <li><a href="<{$xoops_url}>/modules/<{$xoops_dirname}>/index.php"><{$smarty.const._MD_NEWBB_FORUMHOME}></a></li>
 
         <li><a href="<{$xoops_url}>/modules/<{$xoops_dirname}>/index.php?cat=<{$category.id}>"><{$category.title}></a></li>
-        <{if $parentforum}>
+        <{if isset($parentforum)}>
             <{foreach item=forum from=$parentforum|default:null}>
                 <li><a href="<{$xoops_url}>/modules/<{$xoops_dirname}>/viewforum.php?forum=<{$forum.forum_id}>"><{$forum.forum_name}></a></li>
             <{/foreach}>
         <{/if}>
         <li><a href="<{$xoops_url}>/modules/<{$xoops_dirname}>/viewforum.php?forum=<{$forum_id}>"><{$forum_name}></a></li>
-        <li class="active"><{$topic_title|strip_tags}> <{if $topicstatus}><{$topicstatus}><{/if}></li>
+        <li class="active"><{$topic_title|strip_tags}> <{if isset($topicstatus)}><{$topicstatus}><{/if}></li>
     </ol>
 
     <{if !empty($tagbar)}>
@@ -20,7 +20,7 @@
         </div><!-- .newbb-tagbar -->
     <{/if}>
 
-    <{if $online}>
+    <{if isset($online)}>
         <div class="newbb-online-users row mb10">
             <div class="col-md-12">
                 <strong><{$smarty.const._MD_NEWBB_BROWSING}> </strong>
@@ -135,7 +135,7 @@
     </div>
 
     <div class="row mb10">
-        <div class="<{if $rating_enable}>col-sm-4 col-md-4<{else}>col-sm-8 col-md-8<{/if}>">
+        <div class="<{if isset($rating_enable)}>col-sm-4 col-md-4<{else}>col-sm-8 col-md-8<{/if}>">
             <select class="form-control" name="topicoption" id="topicoption" onchange="if(this.options[this.selectedIndex].value.length >0 ) { window.document.location=this.options[this.selectedIndex].value;}">
                 <option value=""><{$smarty.const._MD_NEWBB_TOPICOPTION}></option>
                 <{if isset($viewer_level) && $viewer_level > 1}>
