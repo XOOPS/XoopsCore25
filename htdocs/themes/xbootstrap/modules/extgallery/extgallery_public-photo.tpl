@@ -16,7 +16,7 @@
         <!-- Start Admin link -->
         <div class="row photo-nav-controls">
             <div class="col-xs-6 col-sm-6 col-md-6">
-                <{if $xoops_isadmin}>
+                <{if isset($xoops_isadmin)}>
                     <div class="pull-left">
                         <a title="edit" class="btn btn-success btn-xs"
                            href="<{xoAppUrl 'modules/extgallery/'}>public-modify.php?op=edit&id=<{$photo.photo_id}>"><span
@@ -67,7 +67,7 @@
             <{$photo.photo_desc}>
         </div>
 
-        <{if $enableExtra}>
+        <{if isset($enableExtra)}>
             <!-- Start extra field -->
             <div class="col-md-12">
                 <{$photo.photo_extra}>
@@ -82,7 +82,7 @@
         <{/foreach}>
 
         <!-- Start XOOPS Tag -->
-        <{if $tags}>
+        <{if isset($tags)}>
             <div class="col-md-12">
                 <{include file="db:tag_bar.tpl"}>
             </div>
@@ -95,7 +95,7 @@
     </div><!-- .gallery-image-details -->
 
     <!-- Start Rating part -->
-    <{if $canRate}>
+    <{if isset($canRate)}>
         <div class="col-md-12">
             <h3 class="gallerytitle"><{$lang.voteFor}></h3>
 
@@ -118,7 +118,7 @@
 
             <h3 class="gallerytitle aligncenter"><{$lang.photoInfo}></h3>
             <ul class="list-unstyled photo-info">
-                <{if $enable_submitter_lnk}>
+                <{if isset($enable_submitter_lnk)}>
                     <li><{$lang.submitter}> : <a title="<{$photo.user.uname}>" href="<{$xoops_url}>/userinfo.php?uid=<{$photo.user.uid}>"><{$photo.user.uname}></a>
                         <a title="<{$lang.allPhotoBy}> <{$photo.user.uname}>"
                            href="<{xoAppUrl 'modules/extgallery/'}>public-useralbum.php?id=<{$photo.user.uid}>">
@@ -127,21 +127,21 @@
                     </li>
                 <{/if}>
 
-                <{if $enable_photo_hits}>
+                <{if isset($enable_photo_hits)}>
                     <li><{$lang.view}> : <{$photo.photo_hits}> <{$lang.hits}></li>
                 <{/if}>
 
-                <{if $enable_resolution}>
+                <{if isset($enable_resolution)}>
                     <li><{$lang.resolution}> : <{$photo.photo_res_x}> x <{$photo.photo_res_y}> <{$lang.pixels}> | <{$lang.fileSize}> : <{$photo.photo_size}>
                         Kb
                     </li>
                 <{/if}>
 
-                <{if $enable_date}>
+                <{if isset($enable_date)}>
                     <li><{$lang.added}> : <{$photo.photo_date}></li>
                 <{/if}>
 
-                <{if $canRate}>
+                <{if isset($canRate)}>
                     <li><{$lang.score}> : <img src="assets/images/rating_<{$rating}>.gif" alt="rating"> | <{$photo.photo_nbrating}> <{$lang.votes}></li>
                 <{/if}>
 
@@ -160,7 +160,7 @@
         </div>
     <{/if}>
 
-    <{if $show_rss}>
+    <{if isset($show_rss)}>
         <div id="rss">
             <a href="<{xoAppUrl 'modules/extgallery/public-rss.php'}>" title="<{$smarty.const._MD_EXTGALLERY_RSS}>">
                 <img src="<{xoAppUrl 'modules/extgallery/assets/images/feed.png'}>" alt="<{$smarty.const._MD_EXTGALLERY_RSS}>"/>
@@ -174,12 +174,14 @@
 
 <{$lang_notice}>
 
-<{if $comment_mode == "flat"}>
-    <{include file="db:system_comments_flat.tpl"}>
-<{elseif $comment_mode == "thread"}>
-    <{include file="db:system_comments_thread.tpl"}>
-<{elseif $comment_mode == "nest"}>
-    <{include file="db:system_comments_nest.tpl"}>
+<{if isset($comment_mode)}>
+    <{if $comment_mode == "flat"}>
+        <{include file="db:system_comments_flat.tpl"}>
+    <{elseif $comment_mode == "thread"}>
+        <{include file="db:system_comments_thread.tpl"}>
+    <{elseif $comment_mode == "nest"}>
+        <{include file="db:system_comments_nest.tpl"}>
+    <{/if}>
 <{/if}>
 
 <{include file='db:system_notification_select.tpl'}>

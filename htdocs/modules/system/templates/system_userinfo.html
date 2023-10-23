@@ -41,25 +41,25 @@
                 <tr>
                     <th colspan="2" class="txtcenter"><{$lang_allaboutuser}></th>
                 </tr>
-                <{if $user_avatarurl}>
+                <{if isset($user_avatarurl)}>
                     <tr class="aligntop">
                         <td class="head"><{$lang_avatar}></td>
                         <td class="even txt center"><img src="<{$user_avatarurl}>" alt="Avatar"/></td>
                     </tr>
                 <{/if}>
-                <{if $user_realname}>
+                <{if isset($user_realname)}>
                     <tr>
                         <td class="head"><{$lang_realname}></td>
                         <td class="odd center"><{$user_realname}></td>
                     </tr>
                 <{/if}>
-                <{if $user_websiteurl}>
+                <{if isset($user_websiteurl)}>
                     <tr>
                         <td class="head"><{$lang_website}></td>
                         <td class="even"><{$user_websiteurl}></td>
                     </tr>
                 <{/if}>
-                <{if $user_email}>
+                <{if isset($user_email)}>
                     <tr class="aligntop">
                         <td class="head"><{$lang_email}></td>
                         <td class="odd"><{$user_email}></td>
@@ -71,49 +71,49 @@
                         <td class="even"><{$user_pmlink}></td>
                     </tr>
                 <{/if}>
-                <{if $user_icq}>
+                <{if isset($user_icq)}>
                     <tr class="aligntop">
                         <td class="head"><{$lang_icq}></td>
                         <td class="odd"><{$user_icq}></td>
                     </tr>
                 <{/if}>
-                <{if $user_aim}>
+                <{if isset($user_aim)}>
                     <tr class="aligntop">
                         <td class="head"><{$lang_aim}></td>
                         <td class="even"><{$user_aim}></td>
                     </tr>
                 <{/if}>
-                <{if $user_yim}>
+                <{if isset($user_yim)}>
                     <tr class="aligntop">
                         <td class="head"><{$lang_yim}></td>
                         <td class="odd"><{$user_yim}></td>
                     </tr>
                 <{/if}>
-                <{if $user_msnm}>
+                <{if isset($user_msnm)}>
                     <tr class="aligntop">
                         <td class="head"><{$lang_msnm}></td>
                         <td class="even"><{$user_msnm}></td>
                     </tr>
                 <{/if}>
-                <{if $user_location}>
+                <{if isset($user_location)}>
                     <tr class="aligntop">
                         <td class="head"><{$lang_location}></td>
                         <td class="odd"><{$user_location}></td>
                     </tr>
                 <{/if}>
-                <{if $user_occupation}>
+                <{if isset($user_occupation)}>
                     <tr class="aligntop">
                         <td class="head"><{$lang_occupation}></td>
                         <td class="even"><{$user_occupation}></td>
                     </tr>
                 <{/if}>
-                <{if $user_interest}>
+                <{if isset($user_interest)}>
                     <tr class="aligntop">
                         <td class="head"><{$lang_interest}></td>
                         <td class="odd"><{$user_interest}></td>
                     </tr>
                 <{/if}>
-                <{if $user_extrainfo}>
+                <{if isset($user_extrainfo)}>
                     <tr class="aligntop">
                         <td class="head"><{$lang_extrainfo}></td>
                         <td class="even"><{$user_extrainfo}></td>
@@ -143,7 +143,7 @@
                     <td class="odd center"><{$user_lastlogin}></td>
                 </tr>
             </table>
-            <{if $user_signature}>
+            <{if isset($user_signature)}>
                 <br>
                 <table class="outer width100" cellpadding="4" cellspacing="1">
                     <tr class="aligntop">

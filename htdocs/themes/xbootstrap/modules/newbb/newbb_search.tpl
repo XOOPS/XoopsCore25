@@ -2,7 +2,7 @@
     <li><a href="<{$xoops_url}>/modules/<{$xoops_dirname}>/index.php"><{$forumindex}></a></li>
     <li class="active"><a href="<{$xoops_url}>/modules/<{$xoops_dirname}>/search.php"><{$smarty.const._SR_SEARCH}></a></li>
 </ol>
-<{if $search_info|default:''}>
+<{if !empty($search_info)}>
     <{include file="db:newbb_searchresults.tpl" results=$results}>
 <{/if}>
 
@@ -72,7 +72,7 @@
             <td class="even"><{$show_search_radio}></td>
         </tr>
         <!-- START irmtfan add show search -->
-        <{if $search_rule}>
+        <{if isset($search_rule)}>
         <tr>
             <!-- irmtfan hardcode removed align="right" -->
             <td class="head" id="align_right"><strong><{$smarty.const._SR_SEARCHRULE}></strong>&nbsp;</td>

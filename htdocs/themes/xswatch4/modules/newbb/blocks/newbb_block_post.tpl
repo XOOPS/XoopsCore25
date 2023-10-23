@@ -1,5 +1,5 @@
 <table class="table table-hover">
-    <{if $block.disp_mode == 0}>
+    <{if isset($block.disp_mode) &&  $block.disp_mode == 0}>
         <tr>
             <th class="head"><{$smarty.const._MB_NEWBB_FORUM}></th>
             <th class="head"><{$smarty.const._MB_NEWBB_TITLE}></th>
@@ -50,7 +50,7 @@
 
 </table>
 
-<{if $block.indexNav}>
+<{if !empty($block.indexNav)}>
     <div class="pagenav">
         <a class="btn btn-secondary" href="<{$block.seo_top_allposts}>"><{$smarty.const._MB_NEWBB_ALLPOSTS}></a>
         <a class="btn btn-secondary" href="<{$block.seo_top_allforums}>"><{$smarty.const._MB_NEWBB_VSTFRMS}></a>

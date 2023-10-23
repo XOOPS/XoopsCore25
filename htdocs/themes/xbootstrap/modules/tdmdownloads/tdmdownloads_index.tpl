@@ -1,5 +1,5 @@
 <div class="tdmdownloads">
-    <{if count($categories) gt 0}>
+    <{if count($categories) > 0}>
 
     <div class="tdm-category row">
         <{foreach item=category from=$categories|default:null}>
@@ -113,7 +113,7 @@
         <{/if}>
     </div><!-- .downloads-info -->
 
-    <{if $show_latest_files}>
+    <{if isset($show_latest_files)}>
         <div class="row">
             <{if $file != ""}>
                 <div class="col-md-12">

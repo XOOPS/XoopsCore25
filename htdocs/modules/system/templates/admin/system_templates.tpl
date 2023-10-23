@@ -1,6 +1,6 @@
 <{include file="db:system_header.tpl"}>
 
-<{if $index}>
+<{if isset($index)}>
     <br class="clear"/>
     <div class="spacer">
         <table class="outer ui-corner-all" cellspacing="1">
@@ -26,7 +26,7 @@
     </div>
 <{else}>
     <br>
-    <{if $verif}>
+    <{if isset($verif)}>
         <{$infos}>
     <{else}>
         <div class="txtcenter"><{$smarty.const._AM_SYSTEM_TEMPLATES_NOT_CREATED}></div>

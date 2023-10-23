@@ -13,8 +13,8 @@
                                         value="<{$lang_checkall}>"/></td>
                 <th class="head"><{$lang_events}></th>
             </tr>
-            <{foreach name=outer item=category from=$xoops_notification.categories}>
-                <{foreach name=inner item=event from=$category.events}>
+            <{foreach item=category from=$xoops_notification.categories|default:null name=outer}>
+                <{foreach item=event from=$category.events|default:null name=inner}>
                     <tr>
                         <{if $smarty.foreach.inner.first}>
                             <td class="even" rowspan="<{$smarty.foreach.inner.total}>"><{$category.title}></td>

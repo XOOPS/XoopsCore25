@@ -5,7 +5,7 @@
     IMG_OFF = '<{xoAdminIcons 'cancel.png'}>';
 </script>
 <!-- Buttons -->
-<{if $type|default:false == 's'}>
+<{if isset($type) && $type == 's'}>
     <div style="height: 30px;">
         <div class="floatright">
             <div class="xo-buttons" >
@@ -18,7 +18,7 @@
         </div>
     </div>
 <{/if}>
-<{if $view_cat|default:false}>
+<{if !empty($view_cat)}>
     <!-- Display Avatar header for switch between system & custom category -->
     <table class="outer" cellspacing="1">
         <thead>
@@ -49,7 +49,7 @@
     <br>
 <{/if}>
 <!-- Display Avatar list for each category -->
-<{if $avatars_list|default:false}>
+<{if !empty($avatars_list)}>
     <{foreach item=avatar from=$avatars_list|default:null}>
         <div class="floatleft">
             <div class="ui-corner-all xo-thumb txtcenter">
@@ -84,13 +84,13 @@
     <{/foreach}>
     <!-- Display Avatars navigation -->
     <div class="clear">&nbsp;</div>
-    <{if $nav_menu|default:false}>
+    <{if !empty($nav_menu)}>
         <div class="xo-pagenav floatright"><{$nav_menu}></div>
         <div class="clear spacer"></div>
     <{/if}>
 <{/if}>
 
-<{if $multiupload|default:false}>
+<{if !empty($multiupload)}>
     <div class="floatright">
         <div class="xo-buttons">
             <button id="xo-addavatar-btn" class="ui-corner-all tooltip" onclick='location="admin.php?fct=avatars&amp;op=listavt&amp;type=s"'
@@ -171,7 +171,7 @@
 <{/if}>
 
 <!-- Display Avatar form (add,edit) -->
-<{if $form|default:false}>
+<{if !empty($form)}>
     <div class="spacer"><{$form}></div>
 <{/if}>
 <!-- Display Avatar images on edit page -->

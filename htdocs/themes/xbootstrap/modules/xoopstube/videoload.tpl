@@ -7,7 +7,7 @@
 </a>
 <{$video.icons}>
 
-<{if $xoops_isadmin}>
+<{if isset($xoops_isadmin)}>
 <{$video.adminvideo}>
 <{/if}>
 

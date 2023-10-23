@@ -37,7 +37,7 @@
     <{/foreach}>
 </div>
 
-<{if $tag_addon}>
+<{if isset($tag_addon)}>
     <div class="tag-item-meta" style="padding-top: 10px;">
         <{$tag_addon.title}>:
         <{foreach item=addon from=$tag_addon.addons|default:null}> <{$addon}><{/foreach}>

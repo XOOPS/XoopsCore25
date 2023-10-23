@@ -24,7 +24,7 @@
         <{$catarray.letters}>
     </div><!-- .xoopstube-navigation -->
 
-    <{if count($categories) gt 0}>
+    <{if count($categories) > 0}>
         <h1 class="xoops-default-title"><{$smarty.const._MD_XOOPSTUBE_MAINLISTING}></h1>
         <div class="row">
             <{foreach item=category from=$categories|default:null}>
@@ -51,15 +51,15 @@
         <{$catarray.indexfooter}>
     </div><!-- .xoopstube-footer -->
 
-    <{if $showlatest|default:''}>
+    <{if !empty($showlatest)}>
         <{$smarty.const._MD_XOOPSTUBE_LATESTLIST}>
-        <{if $pagenav}>
+        <{if isset($pagenav)}>
             <{$pagenav}>
         <{/if}>
         <{section name=i loop=$video}>
             <{include file="db:xoopstube_videoload.tpl" video=$video[i]}>
         <{/section}>
-        <{if $pagenav}>
+        <{if isset($pagenav)}>
             <{$pagenav}>
         <{/if}>
     <{/if}>

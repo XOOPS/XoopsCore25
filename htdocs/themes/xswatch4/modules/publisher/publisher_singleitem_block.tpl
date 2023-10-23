@@ -12,14 +12,14 @@
     <{/if}>
     <div style="padding: 10px;">
         <h4><{$item.titlelink}></h4>
-        <{if $display_whowhen_link|default:false}>
+        <{if !empty($display_whowhen_link)}>
             <small><{$item.who_when}> (<{$item.counter}> <{$lang_reads}>)</small>
         <{/if}>
         <div style="margin-top:10px;">
             <{$item.summary}>
         </div>
         <div class="pull-left" style="margin-top: 15px;">
-             <{if $op|default:'' != 'preview'}>
+             <{if isset($op) && $op != 'preview'}>
                 <span style="float: right; text-align: right;"><{$item.adminlink}></span>
             <{else}>
                 <span style="float: right;">&nbsp;</span>

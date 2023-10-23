@@ -103,7 +103,7 @@ class MyTextSanitizerExtension
      */
     public function encode($textarea_id)
     {
-        return array();
+        return array(array(), array());
     }
 
     /**

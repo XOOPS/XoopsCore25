@@ -18,7 +18,7 @@
     <{/if}>
 </div>
 
-<{if $message}>
+<{if isset($message)}>
 <blockquote>
     <p><{$message.subject}></p>
 </blockquote>

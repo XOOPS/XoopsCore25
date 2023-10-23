@@ -29,7 +29,7 @@
                 </h3>
             </li>
 
-            <{if $xoops_isadmin}>
+            <{if isset($xoops_isadmin)}>
                 <li><{$video.adminvideo}></li>
             <{/if}>
 

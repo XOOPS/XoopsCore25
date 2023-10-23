@@ -1,4 +1,4 @@
-<{if $images_list}>
+<{if isset($images_list)}>
     <div id="wgBlockImagesCarouselSlides" class="carousel slide" data-ride="carousel">
         <div class="carousel-inner">
             <{assign var=active value=' active'}>
@@ -8,7 +8,7 @@
                 <img class="img-fluid wgg-album-img center" src="<{$image.medium}>" alt="<{$image.title}>">
                 </a>
                 <div class="carousel-caption">
-                    <{if $bi_showTitle}>
+                    <{if isset($bi_showTitle)}>
                         <{if $image.title_limited}>
                             <p class="wgg-block-ititle slidetext-trans center"><{$image.title_limited}><p>
                         <{else}>
@@ -29,7 +29,7 @@
             </a>
         </div>
     </div>
-    <{if $show_more_images}>
+    <{if isset($show_more_images)}>
     <div class="wgg-b-album-more center">
         <a class="btn wgfxg-more-btn" href="<{$wggallery_url}>/index.php" title="<{$smarty.const._CO_WGGALLERY_ALBUMS_SHOW}>"><{$smarty.const._CO_WGGALLERY_ALBUMS_SHOW}></a>
     </div>

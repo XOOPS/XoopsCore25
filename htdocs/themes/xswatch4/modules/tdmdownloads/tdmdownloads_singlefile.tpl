@@ -73,7 +73,7 @@
                     </li>
                 <{/if}>
 
-                <{if $adminlink}>
+                <{if isset($adminlink)}>
                     <li class="text-center"><{$adminlink}></li>
                 <{/if}>
             </ul>
@@ -84,15 +84,15 @@
         <{$description}>
     </div>
 
-    <{if $paypal}>
+    <{if isset($paypal)}>
         <{$paypal}>
     <{/if}>
 
-    <{if $tags}>
+    <{if isset($tags)}>
         <{include file="db:tag_bar.tpl"}>
     <{/if}>
 
-    <{if $show_social}>
+    <{if isset($show_social)}>
         <div class='shareaholic-canvas' data-app='share_buttons' data-app-id=''></div>
     <{/if}>
 </div><!-- .tdmdownloads -->
@@ -100,12 +100,14 @@
 <{$commentsnav}>
 <div class="row d-flex justify-content-center"><{$lang_notice}></div>
 
-<{if $comment_mode == "flat"}>
-    <{include file="db:system_comments_flat.tpl"}>
-<{elseif $comment_mode == "thread"}>
-    <{include file="db:system_comments_thread.tpl"}>
-<{elseif $comment_mode == "nest"}>
-    <{include file="db:system_comments_nest.tpl"}>
+<{if isset($comment_mode)}>
+    <{if $comment_mode == "flat"}>
+        <{include file="db:system_comments_flat.tpl"}>
+    <{elseif $comment_mode == "thread"}>
+        <{include file="db:system_comments_thread.tpl"}>
+    <{elseif $comment_mode == "nest"}>
+        <{include file="db:system_comments_nest.tpl"}>
+    <{/if}>
 <{/if}>
 
 <{include file="db:system_notification_select.tpl"}>

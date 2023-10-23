@@ -1,4 +1,4 @@
-<{if ($comments|default:false) }>
+<{if !empty($comments) }>
     <table class="outer" cellpadding="5" cellspacing="1">
         <tr>
             <th class="width20"><{$lang_poster}></th>
@@ -9,6 +9,6 @@
         <{/foreach}>
     </table>
 <{/if}>
-<{if $commentform}>
+<{if isset($commentform)}>
     <div class="commentform"><{$commentform}></div>
 <{/if}>

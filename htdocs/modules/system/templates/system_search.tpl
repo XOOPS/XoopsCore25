@@ -6,7 +6,7 @@
 		<{$error_length}> <strong><{$error_keywords}></strong>
 		<br>
 	<{/if}>
-	<{if $nomatch|default:false}>
+	<{if !empty($nomatch)}>
 		<br>
 		<{$nomatch}>
 		<br>
@@ -26,7 +26,7 @@
 					<br>
 				<{/if}>
 			<{/foreach}>
-			<{if $searchitem.module_show_all|default:false}>
+			<{if !empty($searchitem.module_show_all)}>
 				<p>
 					<a href="<{$searchitem.module_show_all}>"><{$smarty.const._SR_SHOWALLR}></a>
 				</p>
@@ -34,7 +34,7 @@
 		<{/foreach}>
 	<{/if}>
 <{/if}>
-<{if $showallbyuser|default:false}>
+<{if !empty($showallbyuser)}>
 	<h3><{$smarty.const._SR_SEARCHRESULTS}></h3>
 	<{if isset($nomatch) && $nomatch != true}>
 		<{if isset($showall)}>
@@ -56,7 +56,7 @@
 				<br>
 			<{/if}>
 		<{/foreach}>
-		<{if $nomatch}>
+		<{if isset($nomatch)}>
 			<p>
 				<{$smarty.const._SR_NOMATCH}>
 			</p>
@@ -65,12 +65,12 @@
 			<br>
 			<table>
 				<tr>
-				<{if $previous}>
+				<{if isset($previous)}>
 					<td align="left">
 						<a href="<{$previous}>"><{$smarty.const._SR_PREVIOUS}></a>
 					</td>
 				<{/if}>
-				<{if $next}>
+				<{if isset($next)}>
 					<td align="right">
 						<a href="<{$next}>"><{$smarty.const._SR_NEXT}></a>
 					</td>

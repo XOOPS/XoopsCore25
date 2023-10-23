@@ -37,12 +37,13 @@
         </tr>
         <tr>
             <{foreach item=day from=$week|default:null}>
-                <td class="<{if $day.isEmpty}>even<{else}>odd<{/if}>"
-                    style="width:14%; height:80px; vertical-align:top;<{if $day.isSelected}> background-color:#B6CDE4;<{/if}>">
-                    <{if $day.isEmpty}>&nbsp;<{else}><a
+                <td class="<{if !empty($day.isEmpty}>even<{else}>odd<{/if}>"
+                    style="width:14%; height:80px; vertical-align:top;
+                    <{if !empty($day.isSelected)}> background-color:#B6CDE4;<{/if}>">
+                    <{if !empty($day.isEmpty)}>&nbsp;<{else}><a
                     href="<{$xoops_url}>/modules/extcal/view_day.php?year=<{$day.year}>&amp;month=<{$day.month}>&amp;day=<{$day.dayNumber}>"><{$day.dayNumber}></a><{/if}><br/>
                     <{foreach item=event from=$day.events|default:null}>
-                        <{if $event}>
+                        <{if !empty($event)}>
                             <div style="font-size:0.8em; margin-top:5px;"><img
                                         src="assets/images/icons/event-<{$event.status}>.gif"/> <a
                                         href="<{$xoops_url}>/modules/extcal/event.php?event=<{$event.event_id}>"

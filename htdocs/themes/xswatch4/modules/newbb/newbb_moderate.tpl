@@ -5,7 +5,7 @@
     </ul>
 </div>
 
-<{if $error_message}>
+<{if !empty($error_message)}>
     <div class="errorMsg"><{$error_message}></div>
     <div class="clear"></div>
     <br>
@@ -18,7 +18,7 @@
     <tr>
     <{foreach item=colHead from=$columnHeaders|default:null}>
         <th>
-            <{if $colHead.url}>
+            <{if !empty($colHead.url)}>
             <a href="<{$colHead.url}>" title="<{$colHead.title}>"><{$colHead.header}> <span class="fa fa-sort" aria-hidden="true"></span></a>
             <{else}>
             <{$colHead.header}>
