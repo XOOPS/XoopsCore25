@@ -639,7 +639,7 @@ function checkEmail($email, $antispam = false)
         if (count($domain_array) < 2) {
             return false; // Not enough parts to domain
         }
-        for ($i = 0; $i < count($domain_array); ++$i) {
+        for ($i = 0, $iMax = count($domain_array); $i < $iMax; ++$i) {
             if (!preg_match("/^(([A-Za-z0-9][A-Za-z0-9-]{0,61}[A-Za-z0-9])|([A-Za-z0-9]+))$/", $domain_array[$i])) {
                 return false;
             }
