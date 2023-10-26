@@ -20,19 +20,19 @@ function protector_postcommon()
     if (defined('XOOPS_VERSION') && substr(XOOPS_VERSION, 6, 3) > 2.0) {
         $requestUri = $request->getString('REQUEST_URI', '', 'SERVER');  // Fetch the REQUEST_URI from the server superglobal
         if (false !== stripos($requestUri, 'modules/system/admin.php?fct=preferences')) {
-            /** @var XoopsModuleHandler $module_handler */
-            $module_handler = xoops_getHandler('module');
+        /** @var XoopsModuleHandler $module_handler */
+        $module_handler = xoops_getHandler('module');
 
             // Fetch the 'mod' parameter from the GET request and cast it to an integer
             $mod = $request->getInt('mod', null, 'GET');
 
-            /** @var XoopsModule $module */
-            $module = null !== $mod ? $module_handler->get($mod) : null;
+        /** @var XoopsModule $module */
+        $module = null !== $mod ? $module_handler->get($mod) : null;
 
-            if (is_object($module)) {
-                $module->getInfo();
-            }
+        if (is_object($module)) {
+            $module->getInfo();
         }
+    }
     }
 
     // configs writable check
@@ -82,6 +82,7 @@ function protector_postcommon()
     // reliable ips
     $remoteAddr = $request->getString('REMOTE_ADDR', '', 'SERVER');
     $reliable_ips = isset($conf['reliable_ips']) ? unserialize($conf['reliable_ips'], array('allowed_classes' => false)) : null;
+
     if (is_array($reliable_ips)) {
         foreach ($reliable_ips as $reliable_ip) {
             if (!empty($reliable_ip) && preg_match('/' . $reliable_ip . '/', $remoteAddr)) {
@@ -95,7 +96,7 @@ function protector_postcommon()
     $uid = 0;
 
     if (isset($xoopsUser) && is_object($xoopsUser)) {
-        $uid = $xoopsUser->getVar('uid');
+        $uid     = $xoopsUser->getVar('uid');
         $userGroups = $xoopsUser->getGroups();
         $bip_except = isset($conf['bip_except']) ? unserialize($conf['bip_except'], array('allowed_classes' => false)) : [];
 
@@ -106,7 +107,6 @@ function protector_postcommon()
             $protector->check_brute_force();
         }
     }
-
 
     // CHECK for spammers IPS/EMAILS during POST Actions
     if (isset($conf['stopforumspam_action']) && $conf['stopforumspam_action'] !== 'none') {
