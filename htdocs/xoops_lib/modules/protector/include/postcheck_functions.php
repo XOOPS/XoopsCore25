@@ -9,22 +9,21 @@ function protector_postcommon()
 {
     global $xoopsUser, $xoopsModule;
 
-    $request = Xmf\Request::getInstance();  // Initialize a request object
-    $uname = $request->getString('uname', '', 'POST');
-    $pass = $request->getString('pass', '', 'POST');
-    $autologin_uname = $request->getString('autologin_uname', '', 'COOKIE');
-    $autologin_pass = $request->getString('autologin_pass', '', 'COOKIE');
+    $uname = Request::getString('uname', '', 'POST');
+    $pass = Request::getString('pass', '', 'POST');
+    $autologin_uname = Request::getString('autologin_uname', '', 'COOKIE');
+    $autologin_pass = Request::getString('autologin_pass', '', 'COOKIE');
 
 
     // patch for 2.2.x from xoops.org (I know this is not so beautiful...)
     if (defined('XOOPS_VERSION') && substr(XOOPS_VERSION, 6, 3) > 2.0) {
-        $requestUri = $request->getString('REQUEST_URI', '', 'SERVER');  // Fetch the REQUEST_URI from the server superglobal
+        $requestUri = Request::getString('REQUEST_URI', '', 'SERVER');  // Fetch the REQUEST_URI from the server superglobal
         if (false !== stripos($requestUri, 'modules/system/admin.php?fct=preferences')) {
         /** @var XoopsModuleHandler $module_handler */
         $module_handler = xoops_getHandler('module');
 
             // Fetch the 'mod' parameter from the GET request and cast it to an integer
-            $mod = $request->getInt('mod', null, 'GET');
+            $mod = Request::getInt('mod', null, 'GET');
 
         /** @var XoopsModule $module */
         $module = null !== $mod ? $module_handler->get($mod) : null;
@@ -36,7 +35,7 @@ function protector_postcommon()
     }
 
     // configs writable check
-    $requestUriForWritableCheck = $request->getString('REQUEST_URI', '', 'SERVER');
+    $requestUriForWritableCheck = Request::getString('REQUEST_URI', '', 'SERVER');
     if ($requestUriForWritableCheck === '/admin.php' && !is_writable(dirname(__DIR__) . '/configs')) {
         trigger_error('You should turn the directory ' . dirname(__DIR__) . '/configs writable', E_USER_WARNING);
     }
@@ -80,7 +79,7 @@ function protector_postcommon()
     }
 
     // reliable ips
-    $remoteAddr = $request->getString('REMOTE_ADDR', '', 'SERVER');
+    $remoteAddr = Request::getString('REMOTE_ADDR', '', 'SERVER');
     $reliable_ips = isset($conf['reliable_ips']) ? unserialize($conf['reliable_ips'], array('allowed_classes' => false)) : null;
 
     if (is_array($reliable_ips)) {
@@ -212,8 +211,8 @@ function protector_postcommon()
 
     // register.php Protection - both core and profile module have a register.php
     // There should be an event to trigger this check instead of filename sniffing.
-    $scriptFilename = $request->getString('SCRIPT_FILENAME', '', 'SERVER');
-    if (basename('register.php' == $scriptFilename)) {
+    $scriptFilename = Request::getString('SCRIPT_FILENAME', '', 'SERVER');
+    if (basename($scriptFilename) == 'register.php') {
         $protector->call_filter('postcommon_register');
     }
 

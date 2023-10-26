@@ -39,13 +39,13 @@ if (!function_exists('protector_onupdate_base')) {
         // configs (Though I know it is not a recommended way...)
         $sql = 'SHOW COLUMNS FROM ' . $db->prefix('config') . " LIKE 'conf_title'";
         $result = $db->query($sql);
-        if ($db->isResultSet($result) && ($myrow = $db->fetchArray($result)) && isset($myrow['Type']) && $myrow['Type'] === 'varchar(30)') {
+        if ($result !== false && $db->isResultSet($result) && ($myrow = $db->fetchArray($result)) && isset($myrow['Type']) && $myrow['Type'] === 'varchar(30)') {
             $db->queryF('ALTER TABLE ' . $db->prefix('config') . " MODIFY `conf_title` varchar(255) NOT NULL default '', MODIFY `conf_desc` varchar(255) NOT NULL default ''");
         }
 
         $sql = 'SHOW CREATE TABLE ' . $db->prefix('config');
         $result = $db->query($sql);
-        if (!$db->isResultSet($result)) {
+        if ($result === false  || !$db->isResultSet($result)) {
             throw new \RuntimeException(
                 \sprintf(_DB_QUERY_ERROR, $sql) . $db->error(), E_USER_ERROR
             );
