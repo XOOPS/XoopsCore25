@@ -14,24 +14,23 @@ function protector_postcommon()
     $autologin_uname = Request::getString('autologin_uname', '', 'COOKIE');
     $autologin_pass = Request::getString('autologin_pass', '', 'COOKIE');
 
-
     // patch for 2.2.x from xoops.org (I know this is not so beautiful...)
     if (defined('XOOPS_VERSION') && substr(XOOPS_VERSION, 6, 3) > 2.0) {
         $requestUri = Request::getString('REQUEST_URI', '', 'SERVER');  // Fetch the REQUEST_URI from the server superglobal
         if (false !== stripos($requestUri, 'modules/system/admin.php?fct=preferences')) {
-        /** @var XoopsModuleHandler $module_handler */
-        $module_handler = xoops_getHandler('module');
+            /** @var XoopsModuleHandler $module_handler */
+            $module_handler = xoops_getHandler('module');
 
             // Fetch the 'mod' parameter from the GET request and cast it to an integer
-            $mod = Request::getInt('mod', null, 'GET');
+            $mod = Request::getInt('mod', 0, 'GET');
 
-        /** @var XoopsModule $module */
-        $module = null !== $mod ? $module_handler->get($mod) : null;
+            /** @var XoopsModule $module */
+            $module = 0 !== $mod ? $module_handler->get($mod) : null;
 
-        if (is_object($module)) {
-            $module->getInfo();
+            if (is_object($module)) {
+                $module->getInfo();
+            }
         }
-    }
     }
 
     // configs writable check

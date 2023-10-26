@@ -39,18 +39,22 @@ if (!function_exists('protector_onupdate_base')) {
         // configs (Though I know it is not a recommended way...)
         $sql = 'SHOW COLUMNS FROM ' . $db->prefix('config') . " LIKE 'conf_title'";
         $result = $db->query($sql);
-        if ($result !== false && $db->isResultSet($result) && ($myrow = $db->fetchArray($result)) && isset($myrow['Type']) && $myrow['Type'] === 'varchar(30)') {
-            $db->queryF('ALTER TABLE ' . $db->prefix('config') . " MODIFY `conf_title` varchar(255) NOT NULL default '', MODIFY `conf_desc` varchar(255) NOT NULL default ''");
+        if ($result !== false && $db->isResultSet($result)) {
+            if ($result instanceof mysqli_result && ($myrow = $db->fetchArray($result)) && isset($myrow['Type']) && $myrow['Type'] === 'varchar(30)') {
+                $db->queryF('ALTER TABLE ' . $db->prefix('config') . " MODIFY `conf_title` varchar(255) NOT NULL default '', MODIFY `conf_desc` varchar(255) NOT NULL default ''");
+            }
         }
 
         $sql = 'SHOW CREATE TABLE ' . $db->prefix('config');
         $result = $db->query($sql);
-        if ($result === false  || !$db->isResultSet($result)) {
+        if (false === $result || !($result instanceof mysqli_result) || !$db->isResultSet($result)) {
             throw new \RuntimeException(
                 \sprintf(_DB_QUERY_ERROR, $sql) . $db->error(), E_USER_ERROR
             );
+        } else {
+            list(, $create_string) = $db->fetchRow($result);
         }
-        list(, $create_string) = $db->fetchRow($result);
+
 
         foreach (explode('KEY', $create_string) as $line) {
             if (preg_match('/(\`conf\_title_\d+\`) \(\`conf\_title\`\)/', $line, $regs)) {
@@ -62,12 +66,16 @@ if (!function_exists('protector_onupdate_base')) {
         // 2.x -> 3.0
         $sql = 'SHOW CREATE TABLE ' . $db->prefix($mydirname . '_log');
         $result = $db->query($sql);
-        if (!$db->isResultSet($result)) {
+
+        if (false === $result || !($result instanceof mysqli_result) || !$db->isResultSet($result)) {
             throw new \RuntimeException(
                 \sprintf(_DB_QUERY_ERROR, $sql) . $db->error(), E_USER_ERROR
             );
+        } else {
+            list(, $create_string) = $db->fetchRow($result);
         }
-        list(, $create_string) = $db->fetchRow($result);
+
+
         if (preg_match('/timestamp\(/i', $create_string)) {
             $db->query('ALTER TABLE ' . $db->prefix($mydirname . '_log') . ' MODIFY `timestamp` DATETIME');
         }
