@@ -16,7 +16,7 @@
     -->
 </style>
 <{* needed for baloon tips*}>
-<{if $balloontips}>
+<{if isset($balloontips)}>
     <div id="bubble_tooltip">
         <div class="bubble_top"><span></span></div>
         <div class="bubble_middle">
@@ -127,7 +127,7 @@
         <{if $bookmarkme == 2}>
             <{include file="db:lx_bookmark.tpl"}>
         <{/if}>
-        <{if $tagbar|default:false}>
+        <{if !empty($tagbar)}>
             <div class="letters">
                 <{include file="db:lx_tag_bar.tpl"}>
             </div>
@@ -144,12 +144,14 @@
 
         <div style="margin: 3px; padding: 3px;">
             <!-- start comments loop -->
-            <{if $comment_mode == "flat"}>
-                <{include file="db:system_comments_flat.tpl"}>
-            <{elseif $comment_mode == "thread"}>
-                <{include file="db:system_comments_thread.tpl"}>
-            <{elseif $comment_mode == "nest"}>
-                <{include file="db:system_comments_nest.tpl"}>
+            <{if isset($comment_mode)}>
+                <{if $comment_mode == "flat"}>
+                    <{include file="db:system_comments_flat.tpl"}>
+                <{elseif $comment_mode == "thread"}>
+                    <{include file="db:system_comments_thread.tpl"}>
+                <{elseif $comment_mode == "nest"}>
+                    <{include file="db:system_comments_nest.tpl"}>
+                <{/if}>
             <{/if}>
             <!-- end comments loop -->
             <!-- end comments -->

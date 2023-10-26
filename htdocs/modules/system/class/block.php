@@ -49,16 +49,16 @@ class SystemBlock extends XoopsBlock
             $op = 'save';
         } else {
             // Search modules
-            /* @var  SystemBlockLinkModuleHandler $blocklinkmodule_handler */
+            /** @var  SystemBlockLinkModuleHandler $blocklinkmodule_handler */
             $blocklinkmodule_handler = xoops_getModuleHandler('blocklinkmodule');
             $criteria                = new CriteriaCompo(new Criteria('block_id', $this->getVar('bid')));
             $blocklinkmodule         = $blocklinkmodule_handler->getObjects($criteria);
             foreach ($blocklinkmodule as $link) {
-                /* @var  SystemBlockLinkModule $link */
+                /** @var  SystemBlockLinkModule $link */
                 $modules[] = $link->getVar('module_id');
             }
             // Search perms
-            /* @var XoopsGroupPermHandler $groupperm_handler */
+            /** @var XoopsGroupPermHandler $groupperm_handler */
             $groupperm_handler = xoops_getHandler('groupperm');
             $groups            = $groupperm_handler->getGroupIds('block_read', $this->getVar('bid'));
             switch ($mode) {
@@ -103,7 +103,7 @@ class SystemBlock extends XoopsBlock
         $form->addElement(new XoopsFormRadioYN(_AM_SYSTEM_BLOCKS_VISIBLE, 'visible', $this->getVar('visible')));
         // Visible In
         $mod_select     = new XoopsFormSelect(_AM_SYSTEM_BLOCKS_VISIBLEIN, 'modules', $modules, 5, true);
-        /* @var XoopsModuleHandler $module_handler */
+        /** @var XoopsModuleHandler $module_handler */
         $module_handler = xoops_getHandler('module');
         $criteria       = new CriteriaCompo(new Criteria('hasmain', 1));
         $criteria->add(new Criteria('isactive', 1));
@@ -339,7 +339,7 @@ class SystemBlockHandler extends XoopsPersistableObjectHandler
         $ret   = array();
         $limit = $start = 0;
         $sql   = 'SELECT DISTINCT(b.bid), b.* FROM ' . $this->db->prefix('newblocks') . ' b LEFT JOIN ' . $this->db->prefix('block_module_link') . ' l ON b.bid=l.block_id';
-        if (isset($criteria) && is_subclass_of($criteria, 'CriteriaElement')) {
+        if (isset($criteria) && \method_exists($criteria, 'renderWhere')) {
             $sql .= ' ' . $criteria->renderWhere();
             $limit = $criteria->getLimit();
             $start = $criteria->getStart();
@@ -397,7 +397,7 @@ class SystemBlockHandler extends XoopsPersistableObjectHandler
      */
     public function getAllBlocksByGroup($groupid, $asobject = true, $side = null, $visible = null, $orderby = 'b.weight,b.bid', $isactive = 1)
     {
-        /* @var XoopsMySQLDatabase $db */
+        /** @var XoopsMySQLDatabase $db */
         $db  = XoopsDatabaseFactory::getDatabaseConnection();
         $ret = array();
         $sql = 'SELECT b.* ';
@@ -654,7 +654,7 @@ class SystemBlockHandler extends XoopsPersistableObjectHandler
             // invalid query
             return 0;
         }
-        /* @var XoopsMySQLDatabase $db */
+        /** @var XoopsMySQLDatabase $db */
         $db = XoopsDatabaseFactory::getDatabaseConnection();
         if (isset($showFunc)) {
             // showFunc is set for more strict comparison

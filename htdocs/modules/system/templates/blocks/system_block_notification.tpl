@@ -1,7 +1,7 @@
 <form action="<{$block.target_page}>" method="post">
     <table class="outer">
         <{foreach item=category from=$block.categories|default:null}>
-            <{foreach name=inner item=event from=$category.events}>
+            <{foreach item=event from=$category.events|default:null name=inner}>
                 <{if $smarty.foreach.inner.first}>
                     <tr>
                         <td class="head" colspan="2"><{$category.title}></td>

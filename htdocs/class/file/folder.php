@@ -22,7 +22,7 @@
  *
  * PHP versions 4 and 5
  *
- * CakePHP(tm) :  Rapid Development Framework <http://www.cakephp.org/>
+ * CakePHP(tm) :  Rapid Development Framework <https://www.cakephp.org/>
  * Copyright 2005-2008, Cake Software Foundation, Inc.
  *                                     1785 E. Sahara Avenue, Suite 490-204
  *                                     Las Vegas, Nevada 89104
@@ -32,13 +32,13 @@
  *
  * @filesource
  * @copyright  Copyright 2005-2008, Cake Software Foundation, Inc.
- * @link       http://www.cakefoundation.org/projects/info/cakephp CakePHP(tm) Project
+ * @link       https://www.cakefoundation.org/projects/info/cakephp CakePHP(tm) Project
  * @package    cake
  * @subpackage cake.cake.libs
  * @since      CakePHP(tm) v 0.2.9
  * @modifiedby $LastChangedBy: beckmi $
  * @lastmodified $Date: 2015-06-06 17:59:41 -0400 (Sat, 06 Jun 2015) $
- * @license    http://www.opensource.org/licenses/mit-license.php The MIT License
+ * @license    https://www.opensource.org/licenses/mit-license.php The MIT License
  */
 
 /**
@@ -89,7 +89,7 @@ class XoopsFolderHandler
      * @var array
      * @access private
      */
-    public $errors = false;
+    public $errors = array();
 
     /**
      * holds array of complete directory paths.
@@ -271,7 +271,11 @@ class XoopsFolderHandler
         $start = $this->path;
         foreach ($dirs as $dir) {
             $this->cd($this->addPathElement($start, $dir));
-            $found = array_merge($found, $this->findRecursive($pattern));
+            $newFound = $this->findRecursive($pattern);
+
+            foreach ($newFound as $item) {
+                $found[] = $item;
+            }
         }
 
         return $found;
@@ -665,12 +669,11 @@ class XoopsFolderHandler
     }
 
     /**
-     * Recursive directory copy.
+     * Copies files and directories from one directory to another
      *
-     * @param array|string $options (to, from, chmod, skip)
-     *
-     * @return bool
-     * @access public
+     * @param array|string $options An array of options or a string representing the target directory
+     *                              If a string is provided, it will be used as the target directory and other options will be set to their default values
+     * @return bool Returns true on success, false on failure
      */
     public function copy($options = array())
     {
@@ -720,16 +723,23 @@ class XoopsFolderHandler
                             $this->errors[] = sprintf('%s NOT copied to %s', $from, $to);
                         }
                     }
-                    if (is_dir($from) && !file_exists($to)) {
-                        if (mkdir($to, intval($mode, 8))) {
-                            chmod($to, intval($mode, 8));
-                            $this->messages[] = sprintf('%s created', $to);
-                            $options          = array_merge($options, array(
-                                                                        'to'   => $to,
-                                                                        'from' => $from));
-                            $this->copy($options);
-                        } else {
-                            $this->errors[] = sprintf('%s not created', $to);
+
+                    if (is_dir($from)) {
+                        if (!is_dir($to)) {
+                            if (mkdir($to, intval($mode, 8)) || is_dir($to)) {
+                                chmod($to, intval($mode, 8));
+                                $this->messages[] = sprintf('%s created', $to);
+
+                                $options['to'] = $to;
+                                $options['from'] = $from;
+
+                                $this->copy($options);
+                            } else {
+                                // Ensure $this->errors is an array before adding an element
+                                if (is_array($this->errors)) {
+                                    $this->errors[] = sprintf('%s not created', $to);
+                                }
+                            }
                         }
                     }
                 }

@@ -12,8 +12,8 @@
 <{/if}>
 	<div class='center'>
 		<{if $album.nb_images}>
-			<{if $gallery}>
-				<a class='' href='<{$wggallery_url}>/gallery.php?op=show&amp;alb_id=<{$album.id}><{if $subm_id|default:false}>&amp;subm_id=<{$subm_id}><{/if}>' title='<{$smarty.const._CO_WGGALLERY_IMAGES_ALBUMSHOW}>' target='<{$gallery_target}>' >
+			<{if isset($gallery)}>
+				<a class='' href='<{$wggallery_url}>/gallery.php?op=show&amp;alb_id=<{$album.id}><{if !empty($subm_id)}>&amp;subm_id=<{$subm_id}><{/if}>' title='<{$smarty.const._CO_WGGALLERY_IMAGES_ALBUMSHOW}>' target='<{$gallery_target}>' >
 			<{else}>
 				<a class='' href='<{$wggallery_url}>/images.php?op=list&amp;alb_id=<{$album.id}>&amp;alb_pid=<{$album.pid}>' title='<{$smarty.const._CO_WGGALLERY_IMAGES_INDEX}>'>
 			<{/if}>
@@ -22,8 +22,8 @@
 		<div class="simpleContainer">
 			<{if $album.image}><img class="img-fluid" src="<{$album.image}>" alt="<{$album.name}>" title="<{$album.name}>"><{/if}>
 			<div class="simpleContent">
-				<{if $showTitle}><p><{$album.name}></p><{/if}>
-				<{if $showDesc}><p><{$album.desc}></p><{/if}>
+				<{if isset($showTitle)}><p><{$album.name}></p><{/if}>
+				<{if isset($showDesc)}><p><{$album.desc}></p><{/if}>
 			</div>
 		</div>
 		<{if $album.nb_images}></a><{/if}>

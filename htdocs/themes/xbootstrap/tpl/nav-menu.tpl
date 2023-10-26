@@ -38,7 +38,7 @@
                     <li><a href="<{$xoops_url}>/modules/newbb"><{$smarty.const.THEME_MODULE3}></a></li>
                     <li><a href="<{$xoops_url}>/modules/contact"><{$smarty.const.THEME_MODULE4}></a></li>
                 </ul>
-                <{if $xoops_search|default:false}>
+                <{if !empty($xoops_search)}>
                 <form class="navbar-form navbar-right" role="search" action="<{xoAppUrl 'search.php'}>" method="get">
                     <div class="form-group">
                         <input type="text" name="query" class="form-control" placeholder="<{$smarty.const.THEME_SEARCH_TEXT}>">

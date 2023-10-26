@@ -498,7 +498,7 @@ class xos_opal_Theme
             $GLOBALS['xoopsOption']['xoops_pagetitle']     = $content['xoops_pagetitle'];
             $GLOBALS['xoopsOption']['xoops_module_header'] = $content['header'];
         }
-        /* if cache was not found, define $content[] */
+        /** if cache was not found, define $content[] */
         if (!isset($content) || false === $content) {
             $content = array();
         }

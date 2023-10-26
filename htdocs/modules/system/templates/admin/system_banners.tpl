@@ -2,7 +2,7 @@
 <!--Banner-->
 <table class='width100 bnone' cellspacing='1'>
     <tr>
-        <{if $banner_count|default:false == true}>
+        <{if isset($banner_count) && $banner_count == true}>}>
             <td>
                 <h4><{$smarty.const._AM_SYSTEM_BANNERS_CURACTBNR}></h4>
             </td>
@@ -23,7 +23,7 @@
         </td>
     </tr>
 </table>
-<{if $banner_count|default:false == true}>
+<{if isset($banner_count) && $banner_count == true}>
     <table id="xo-bannerslist-sorter" cellspacing="1" class="outer tablesorter">
         <thead>
         <tr>
@@ -58,7 +58,7 @@
         </tbody>
     </table>
     <div class="clear spacer"></div>
-    <{if $nav_menu_banner|default:false}>
+    <{if !empty($nav_menu_banner)}>
         <div class="xo-avatar-pagenav floatright"><{$nav_menu_banner}></div>
         <div class="clear spacer"></div>
     <{/if}>
@@ -72,7 +72,7 @@
 <{/if}>
 
 <!--Banner Finish-->
-<{if $banner_finish_count|default:false == true}>
+<{if isset($banner_finish_count) && $banner_finish_count == true}>
     <h4><{$smarty.const._AM_SYSTEM_BANNERS_FINISHBNR}></h4>
     <table id="xo-bannersfinish-sorter" cellspacing="1" class="outer tablesorter">
         <thead>
@@ -105,14 +105,14 @@
         </tbody>
     </table>
     <div class="clear spacer"></div>
-    <{if $nav_menu_bannerF|default:false}>
+    <{if !empty($nav_menu_bannerF)}>
         <div class="xo-avatar-pagenav floatright"><{$nav_menu_bannerF}></div>
         <div class="clear spacer"></div>
     <{/if}>
 
 <{/if}>
 <!--Banner Client-->
-<{if $banner_client_count|default:false == true}>
+<{if isset($banner_client_count) && $banner_client_count == true}>
     <h4><{$smarty.const._AM_SYSTEM_BANNERS_ADVCLI}></h4>
     <table id="xo-bannersclient-sorter" cellspacing="1" class="outer tablesorter">
         <thead>
@@ -144,13 +144,13 @@
         </tbody>
     </table>
     <div class="clear spacer"></div>
-    <{if $nav_menu_client|default:false}>
+    <{if !empty($nav_menu_client)}>
         <div class="xo-avatar-pagenav floatright"><{$nav_menu_client}></div>
         <div class="clear spacer"></div>
     <{/if}>
 <{/if}>
 <br>
 <!-- Display Avatar form (add,edit) -->
-<{if $form|default:false}>
+<{if !empty($form)}>
     <div class="spacer"><{$form}></div>
 <{/if}>

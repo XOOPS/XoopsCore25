@@ -108,7 +108,7 @@ if (false === strpos($handler, '\\')) {
     XoopsLoad::load($handler, $moddir);
     $className = $moddir . $handler;
 }
-/* @var SystemFineUploadHandler $uploader */
+/** @var SystemFineUploadHandler $uploader */
 $uploader = new $className($claims);
 
 $method = get_request_method();

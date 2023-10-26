@@ -1,10 +1,10 @@
 <{include file='db:wggallery_header.tpl'}>
 
-<{if $form}>
+<{if isset($form)}>
 	<{$form}>
 <{/if}>
 
-<{if $multiupload}>
+<{if isset($multiupload)}>
     <div class="clear">&nbsp;</div>
     <{include file="db:wggallery_trigger_uploads.tpl"}>
     <h2><{$img_albname}></h2>
@@ -100,14 +100,14 @@
 <{/if}>
 <div class="clear">&nbsp;</div>
 <div class='multiupload-footer'>
-	<{if $albId}>
+	<{if isset($albId)}>
 		<div class='col-xs-12 col-sm-12 right'>
-			<a class='btn btn-secondary wgg-btn' href='images.php?op=list&amp;ref=albums&amp;alb_id=<{$albId}>&amp;alb_pid=<{$albPid}><{if $subm_id}>&amp;subm_id=<{$subm_id}><{/if}>' title='<{$smarty.const._CO_WGGALLERY_IMAGES_INDEX}>'>
-                <img class='wgg-btn-icon' src='<{$wggallery_icon_url_16}>photos.png' alt='<{$smarty.const._CO_WGGALLERY_IMAGES_INDEX}>' title='<{$smarty.const._CO_WGGALLERY_IMAGES_INDEX}>'><{if $displayButtonText}><{$smarty.const._CO_WGGALLERY_IMAGES_INDEX}><{/if}></a>
+			<a class='btn btn-secondary wgg-btn' href='images.php?op=list&amp;ref=albums&amp;alb_id=<{$albId}>&amp;alb_pid=<{$albPid}><{if isset($subm_id)}>&amp;subm_id=<{$subm_id}><{/if}>' title='<{$smarty.const._CO_WGGALLERY_IMAGES_INDEX}>'>
+                <img class='wgg-btn-icon' src='<{$wggallery_icon_url_16}>photos.png' alt='<{$smarty.const._CO_WGGALLERY_IMAGES_INDEX}>' title='<{$smarty.const._CO_WGGALLERY_IMAGES_INDEX}>'><{if isset($displayButtonText)}><{$smarty.const._CO_WGGALLERY_IMAGES_INDEX}><{/if}></a>
             <a class='btn btn-secondary wgg-btn' href='albums.php?op=edit&amp;alb_id=<{$albId}>' title='<{$smarty.const._CO_WGGALLERY_ALBUM_EDIT}>'>
-				<span class="wgg-btn-icon"><img class='' src='<{$wggallery_icon_url_16}>edit.png' alt='<{$smarty.const._CO_WGGALLERY_ALBUM_EDIT}>'></span><{if $displayButtonText}><{$smarty.const._CO_WGGALLERY_ALBUM_EDIT}><{/if}></a>
+				<span class="wgg-btn-icon"><img class='' src='<{$wggallery_icon_url_16}>edit.png' alt='<{$smarty.const._CO_WGGALLERY_ALBUM_EDIT}>'></span><{if isset($displayButtonText)}><{$smarty.const._CO_WGGALLERY_ALBUM_EDIT}><{/if}></a>
 			<a class='btn btn-secondary wgg-btn' href='album_images.php?op=list&amp;alb_id=<{$albId}>' title='<{$smarty.const._CO_WGGALLERY_ALBUM_IH_IMAGE_EDIT}>'>
-				<span class="wgg-btn-icon"><img class='' src='<{$wggallery_icon_url_16}>album_images.png' alt='<{$smarty.const._CO_WGGALLERY_ALBUM_IH_IMAGE_EDIT}>'></span><{if $displayButtonText}><{$smarty.const._CO_WGGALLERY_ALBUM_IH_IMAGE_EDIT}><{/if}></a>
+				<span class="wgg-btn-icon"><img class='' src='<{$wggallery_icon_url_16}>album_images.png' alt='<{$smarty.const._CO_WGGALLERY_ALBUM_IH_IMAGE_EDIT}>'></span><{if isset($displayButtonText)}><{$smarty.const._CO_WGGALLERY_ALBUM_IH_IMAGE_EDIT}><{/if}></a>
 		</div>
 	<{/if}>
 </div>

@@ -13,7 +13,7 @@
  * Near drop-in replacement for PHP's setcookie()
  *
  * @copyright       Copyright 2021 The XOOPS Project https://xoops.org
- * @license         GNU GPL 2 or later (https://www.gnu.org/licenses/gpl-2.0.html)
+ * @license         GNU GPL 2.0 or later (https://www.gnu.org/licenses/gpl-2.0.html)
  * @author          Richard Griffith <richard@geekwright.com>
  *
  * This exists to bring samesite support to php versions before 7.3, and
@@ -58,7 +58,7 @@ function xoops_setcookie()
     }
     // after php 7.3 we just let php do it
     if (PHP_VERSION_ID >= 70300) {
-        return setcookie($args['name'], $args['value'], $args['options']);
+        return setcookie($args['name'], (string)$args['value'], $args['options']);
     }
     // render and send our own headers below php 7.3
     header(xoops_buildCookieHeader($args), false);

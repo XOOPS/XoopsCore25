@@ -1,6 +1,6 @@
 <div class="usermenu">
     <ul class="nav nav-pills nav-stacked">
-        <{if $xoops_isadmin}>
+        <{if isset($xoops_isadmin)}>
             <li><a href="<{xoAppUrl 'admin.php'}>" title="<{$block.lang_adminmenu}>"><span class="glyphicon glyphicon-wrench"></span><{$block.lang_adminmenu}></a></li>
             <li><a href="<{xoAppUrl 'user.php'}>" title="<{$block.lang_youraccount}>"><span class="glyphicon glyphicon-user"></span><{$block.lang_youraccount}></a></li>
         <{else}>

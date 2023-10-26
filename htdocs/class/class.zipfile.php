@@ -12,10 +12,10 @@
  *
  * Based on :
  *
- *       http://www.zend.com/codex.php?id=535&single=1
+ *       https://www.zend.com/codex.php?id=535&single=1
  *       By Eric Mueller <eric@themepark.com>
  *
- *       http://www.zend.com/codex.php?id=470&single=1
+ *       https://www.zend.com/codex.php?id=470&single=1
  *       by Denis125 <webmaster@atlant.ru>
  *
  *       a patch from Peter Listiak <mlady@users.sourceforge.net> for last modified

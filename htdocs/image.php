@@ -263,7 +263,7 @@ $imageUrl = Request::getUrl('url', Request::getString('src', '', 'GET'), 'GET');
 
 if (!empty($imageId)) {
     // If image is a Xoops image
-    /* @var XoopsImageHandler $imageHandler */
+    /** @var XoopsImageHandler $imageHandler */
     $imageHandler = xoops_getHandler('image');
     $criteria = new CriteriaCompo(new Criteria('i.image_display', true));
     $criteria->add(new Criteria('i.image_id', $imageId));

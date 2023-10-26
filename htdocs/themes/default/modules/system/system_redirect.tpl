@@ -1,5 +1,5 @@
-<!DOCTYPE html PUBLIC '-//W3C//DTD XHTML 1.0 Transitional//EN' 'http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd'>
-<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="<{$xoops_langcode}>" lang="<{$xoops_langcode}>">
+<!DOCTYPE html PUBLIC '-//W3C//DTD XHTML 1.0 Transitional//EN' 'https://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd'>
+<html xmlns="https://www.w3.org/1999/xhtml" xml:lang="<{$xoops_langcode}>" lang="<{$xoops_langcode}>">
 <head>
     <!-- title and metas -->
     <title><{if $xoops_pagetitle !=''}><{$xoops_pagetitle}> : <{/if}><{$xoops_sitename}></title>
@@ -11,7 +11,7 @@
     <meta name="author" content="<{$xoops_meta_author}>"/>
     <meta name="copyright" content="<{$xoops_meta_copyright}>"/>
     <meta name="generator" content="XOOPS"/>
-    <{if $url|default:false}>
+    <{if !empty($url)}>
         <meta http-equiv="Refresh" content="<{$time}>; url=<{$url}>"/>
     <{/if}>
 
@@ -40,7 +40,7 @@
         <div class="notreload">
             <{$lang_ifnotreload}>
         </div>
-        <{if $xoops_logdump|default:false}>
+        <{if !empty($xoops_logdump)}>
         <div><{$xoops_logdump}></div>
         <{/if}>
     </div>

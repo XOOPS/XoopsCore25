@@ -16,7 +16,7 @@
             <a class="stretched-link" href="<{$xoops_url}>/modules/tdmdownloads/singlefile.php?cid=<{$down.cid}>&amp;lid=<{$down.id}>" title="<{$down.title}>"><span class="fa fa-forward"></span></a>
         </p>
     </div>
-    <{if false}> <{**$down.perm_download != ""**}>
+    <{if !empty($down.perm_download)}>
     <div class="position-static">
         <{if $down.new}><{$down.new}><{/if}><{if $down.pop}><{$down.pop}><{/if}>
         <a title="<{$smarty.const._MD_TDMDOWNLOADS_INDEX_DLNOW}>" href="visit.php?cid=<{$down.cid}>&amp;lid=<{$down.id}>"

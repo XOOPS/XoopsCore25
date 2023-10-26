@@ -1,4 +1,4 @@
-<{if $xoops_rsscss}>
+<{if isset($xoops_rsscss)}>
 <?xml-stylesheet type="text/css" href="<{$xoops_themecss}>"?>
 <{/if}>
 <rss version="2.0">

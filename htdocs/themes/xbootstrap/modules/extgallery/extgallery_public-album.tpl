@@ -78,23 +78,23 @@
 
                 <{if $photos[photo].photo_id}>
                     <ul class="adminlinks list-unstyled">
-                        <{if $xoops_isadmin}>
+                        <{if isset($xoops_isadmin)}>
                             <li><a title="edit" href="<{xoAppUrl 'modules/extgallery/'}>public-modify.php?op=edit&id=<{$photos[photo].photo_id}>"><span
                                             class="glyphicon glyphicon-edit"></span></a></li>
                             <li><a title="delete" href="<{xoAppUrl 'modules/extgallery/'}>public-modify.php?op=delete&id=<{$photos[photo].photo_id}>"><span
                                             class="glyphicon glyphicon-trash"></span></a></li>
                         <{/if}>
 
-                        <{if $enable_show_comments}>
+                        <{if isset($enable_show_comments)}>
                             <li><{$photos[photo].photo_comment}> <{$lang.comments}></li>
                         <{/if}>
-                        <{if $enable_photo_hits}>
+                        <{if isset($enable_photo_hits)}>
                             <li><{$photos[photo].photo_hits}> <{$lang.hits}></li>
                         <{/if}>
-                        <{if $enable_date}>
+                        <{if isset($enable_date)}>
                             <li><span class="glyphicon glyphicon-calendar"></span> <{$photos[photo].photo_date}></li>
                         <{/if}>
-                        <{if $enable_submitter_lnk}>
+                        <{if isset($enable_submitter_lnk)}>
                             <li><a title="<{$photos[photo].user.uname}>" href="<{$xoops_url}>/userinfo.php?uid=<{$photos[photo].user.uid}>"><{$photos[photo].user.uname}></a>
                             </li>
                         <{/if}>
@@ -110,7 +110,7 @@
                         </a>
                     <{/if}>
 
-                    <{if $enableRating}>
+                    <{if isset($enableRating)}>
                         <div class="photoRating"><img src="<{xoAppUrl 'modules/extgallery/'}>assets/images/rating_<{$photos[photo].photo_rating}>.gif"
                                                       alt="<{$lang.rate_score}> : <{$photos[photo].photo_rating}>" title="<{$lang.rate_score}>"></div>
                     <{/if}>
@@ -131,14 +131,12 @@
     <{$pageNav}>
 </div>
 
-<{if $show_rss}>
+<{if isset($show_rss)}>
     <div id="rss">
-        <a href="<{xoAppUrl 'modules/extgallery/'public-rss.php?id=}><{$extgalleryID}>" title="<{$smarty.const._MD_EXTGALLERY_ALBUMRSS}>">
-            <img src="<{xoAppUrl 'modules/extgallery/'assets/images/feedblue.png}>" alt="<{$smarty.const._MD_EXTGALLERY_ALBUMRSS}>"/>
-        </a>
-        <a href="<{xoAppUrl 'modules/extgallery/'public-rss.php}>" title="<{$smarty.const._MD_EXTGALLERY_RSS}>">
-            <img src="<{xoAppUrl 'modules/extgallery/'assets/images/feed.png}>" alt="<{$smarty.const._MD_EXTGALLERY_RSS}>"/>
-        </a>
+        <a href="<{xoAppUrl 'modules/extgallery/public-rss.php?id='}><{$extgalleryID}>" title="<{$smarty.const._MD_EXTGALLERY_ALBUMRSS}>">
+            <img src="<{xoAppUrl 'modules/extgallery/assets/images/feedblue.png'}>" alt="<{$smarty.const._MD_EXTGALLERY_ALBUMRSS}>"/></a>
+        <a href="<{xoAppUrl 'modules/extgallery/public-rss.php'}>" title="<{$smarty.const._MD_EXTGALLERY_RSS}>">
+            <img src="<{xoAppUrl 'modules/extgallery/assets/images/feed.png'}>" alt="<{$smarty.const._MD_EXTGALLERY_RSS}>"/></a>
     </div>
 <{/if}>
 

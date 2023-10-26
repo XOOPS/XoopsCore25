@@ -48,7 +48,7 @@ if ($com_itemid > 0) {
     }
     $com_mode = htmlspecialchars(Request::getString('com_mode', '', 'GET'), ENT_QUOTES);
 
-    /* @var  XoopsUser $xoopsUser */
+    /** @var  XoopsUser $xoopsUser */
     if ($com_mode == '') {
         if (is_object($xoopsUser)) {
             $com_mode = $xoopsUser->getVar('umode');

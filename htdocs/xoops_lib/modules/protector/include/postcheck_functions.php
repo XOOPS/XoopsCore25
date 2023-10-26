@@ -9,19 +9,35 @@ function protector_postcommon()
 {
     global $xoopsUser, $xoopsModule;
 
+    $request = Xmf\Request::getInstance();  // Initialize a request object
+    $uname = $request->getString('uname', '', 'POST');
+    $pass = $request->getString('pass', '', 'POST');
+    $autologin_uname = $request->getString('autologin_uname', '', 'COOKIE');
+    $autologin_pass = $request->getString('autologin_pass', '', 'COOKIE');
+
+
     // patch for 2.2.x from xoops.org (I know this is not so beautiful...)
-    if (defined('XOOPS_VERSION') && substr(XOOPS_VERSION, 6, 3) > 2.0 && isset($_SERVER['REQUEST_URI']) && false !== stripos($_SERVER['REQUEST_URI'], 'modules/system/admin.php?fct=preferences')) {
-        /** @var XoopsModuleHandler $module_handler */
-        $module_handler = xoops_getHandler('module');
-        /** @var XoopsModule $module */
-        $module = (isset($_GET['mod'])) ? $module_handler->get((int)$_GET['mod']) : null;
-        if (is_object($module)) {
-            $module->getInfo();
+    if (defined('XOOPS_VERSION') && substr(XOOPS_VERSION, 6, 3) > 2.0) {
+        $requestUri = $request->getString('REQUEST_URI', '', 'SERVER');  // Fetch the REQUEST_URI from the server superglobal
+        if (false !== stripos($requestUri, 'modules/system/admin.php?fct=preferences')) {
+            /** @var XoopsModuleHandler $module_handler */
+            $module_handler = xoops_getHandler('module');
+
+            // Fetch the 'mod' parameter from the GET request and cast it to an integer
+            $mod = $request->getInt('mod', null, 'GET');
+
+            /** @var XoopsModule $module */
+            $module = null !== $mod ? $module_handler->get($mod) : null;
+
+            if (is_object($module)) {
+                $module->getInfo();
+            }
         }
     }
 
     // configs writable check
-    if (isset($_SERVER['REQUEST_URI']) && $_SERVER['REQUEST_URI'] === '/admin.php' && !is_writable(dirname(__DIR__) . '/configs')) {
+    $requestUriForWritableCheck = $request->getString('REQUEST_URI', '', 'SERVER');
+    if ($requestUriForWritableCheck === '/admin.php' && !is_writable(dirname(__DIR__) . '/configs')) {
         trigger_error('You should turn the directory ' . dirname(__DIR__) . '/configs writable', E_USER_WARNING);
     }
 
@@ -39,7 +55,7 @@ function protector_postcommon()
     // phpmailer vulnerability
     // http://larholm.com/2007/06/11/phpmailer-0day-remote-execution/
     if (in_array(substr(XOOPS_VERSION, 0, 12), array('XOOPS 2.0.16', 'XOOPS 2.0.13', 'XOOPS 2.2.4'))) {
-        /* @var XoopsConfigHandler $config_handler */
+        /** @var XoopsConfigHandler $config_handler */
         $config_handler    = xoops_getHandler('config');
         $xoopsMailerConfig = $config_handler->getConfigsByCat(XOOPS_CONF_MAILER);
         if ($xoopsMailerConfig['mailmethod'] === 'sendmail' && md5_file(XOOPS_ROOT_PATH . '/class/mail/phpmailer/class.phpmailer.php') === 'ee1c09a8e579631f0511972f929fe36a') {
@@ -64,33 +80,38 @@ function protector_postcommon()
     }
 
     // reliable ips
+    $remoteAddr = $request->getString('REMOTE_ADDR', '', 'SERVER');
     $reliable_ips = isset($conf['reliable_ips']) ? unserialize($conf['reliable_ips'], array('allowed_classes' => false)) : null;
-
     if (is_array($reliable_ips)) {
         foreach ($reliable_ips as $reliable_ip) {
-            if (!empty($reliable_ip) && preg_match('/' . $reliable_ip . '/', $_SERVER['REMOTE_ADDR'])) {
+            if (!empty($reliable_ip) && preg_match('/' . $reliable_ip . '/', $remoteAddr)) {
                 return true;
             }
         }
     }
 
     // user information (uid and can be banned)
+    $can_ban = true;
+    $uid = 0;
+
     if (isset($xoopsUser) && is_object($xoopsUser)) {
-        $uid     = $xoopsUser->getVar('uid');
-        $can_ban = count(array_intersect($xoopsUser->getGroups(), unserialize($conf['bip_except'], array('allowed_classes' => false)))) ? false : true;
+        $uid = $xoopsUser->getVar('uid');
+        $userGroups = $xoopsUser->getGroups();
+        $bip_except = isset($conf['bip_except']) ? unserialize($conf['bip_except'], array('allowed_classes' => false)) : [];
+
+        $can_ban = (!empty($userGroups) && !empty($bip_except)) ? (count(array_intersect($userGroups, $bip_except)) ? false : true) : true;
     } else {
         // login failed check
-        if ((!empty($_POST['uname']) && !empty($_POST['pass'])) || (!empty($_COOKIE['autologin_uname']) && !empty($_COOKIE['autologin_pass']))) {
+        if ((!empty($uname) && !empty($pass)) || (!empty($autologin_uname) && !empty($autologin_pass))) {
             $protector->check_brute_force();
         }
-        $uid     = 0;
-        $can_ban = true;
     }
+
+
     // CHECK for spammers IPS/EMAILS during POST Actions
     if (isset($conf['stopforumspam_action']) && $conf['stopforumspam_action'] !== 'none') {
         $protector->stopforumspam($uid);
     }
-
 
     // If precheck has already judged that they should be banned
     if ($can_ban && $protector->_should_be_banned) {
@@ -191,8 +212,10 @@ function protector_postcommon()
 
     // register.php Protection - both core and profile module have a register.php
     // There should be an event to trigger this check instead of filename sniffing.
-    if (basename($_SERVER['SCRIPT_FILENAME']) == 'register.php') {
+    $scriptFilename = $request->getString('SCRIPT_FILENAME', '', 'SERVER');
+    if (basename('register.php' == $scriptFilename)) {
         $protector->call_filter('postcommon_register');
     }
+
     return null;
 }

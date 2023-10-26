@@ -1,4 +1,4 @@
-<{if $results|default:false}>
+<{if !empty($results)}>
 	<h3><{$smarty.const._SR_SEARCHRESULTS}></h3>
 	<{$smarty.const._SR_KEYWORDS}>: <mark><{$keywords}></mark>
 	<br>
@@ -6,7 +6,7 @@
 		<{$error_length}> <strong><{$error_keywords}></strong>
 		<br>
 	<{/if}>
-	<{if $nomatch|default:false}>
+	<{if !empty($nomatch)}>
 		<br>
 		<{$nomatch}>
 		<br>
@@ -16,7 +16,7 @@
 				<div class="card-header">
 					<h5>
 						<{$searchitem.module_name}>
-						<{if $searchitem.module_show_all|default:false}>
+						<{if !empty($searchitem.module_show_all)}>
 							<span class="d-none d-sm-inline"><span class="x-small">| <a href="<{$searchitem.module_show_all}>"><{$smarty.const._SR_SHOWALLR}></a></span></span>
 							<span class="d-inline d-sm-none">| <span class="ml-2"></span><a href="<{$searchitem.module_show_all}>"><span class="fa fa-search-plus fa-flip-horizontal fa-lg"></span></a></span>
 						<{/if}>
@@ -36,7 +36,7 @@
 									<div class="d-inline"><img src="<{$data.image_link}>" title="<{$data.image_title}>" alt="<{$data.image_title}>"/> <a href="<{$data.link}>"><{$data.link_title}></a></div>
 								<{/if}>
 
-								<{if $data.uname|default:''}>
+								<{if !empty($data.uname)}>
 
 									<div class="d-none d-md-inline">
 										<br />
@@ -55,13 +55,14 @@
 		<{/foreach}>
 	<{/if}>
 <{/if}>
-<{if $showallbyuser|default:false}>
-	<h3><{$smarty.const._SR_SEARCHRESULTS}></h3>
-	<{if $nomatch|default:false != true}>
-		<{if $showall|default:false}>
-			<{$smarty.const._SR_KEYWORDS}>: <mark><{$keywords}></mark>
-			<br>
-		<{/if}>
+<{if !empty($showallbyuser)}>
+    <h3><{$smarty.const._SR_SEARCHRESULTS}></h3>
+    <{if isset($nomatch) ? $nomatch!= true : true}>
+        <{if !empty($showall)}>
+            <{$smarty.const._SR_KEYWORDS}>:
+            <mark><{$keywords}></mark>
+            <br>
+        <{/if}>
 
 		<div class="card my-3">
 			<div class="card-header">
@@ -72,7 +73,7 @@
 					</div>
 					<{if $previous || $next}>
 						<div>
-						<{if $previous}>
+						<{if isset($previous)}>
 							<span class="d-none d-sm-inline"><a class="btn btn-secondary" href="<{$previous}>" role="button"><{$smarty.const._SR_PREVIOUS|replace:"<<":"<span class='fa fa-chevron-left fa-lg'></span>"}></a></span>
 							<span class="d-inline d-sm-none"><a class="btn btn-secondary" href="<{$previous}>" role="button"><span class="fa fa-chevron-left"></span></a></span>
 						<{else}>
@@ -80,7 +81,7 @@
 							<span class="d-inline d-sm-none"><a class="btn btn-secondary disabled" role="button" tabindex="-1" aria-disabled="true"><span class="text-muted"><span class="fa fa-chevron-left"></span></span></a></span>
 						<{/if}>
 						<span class="mx-1"></span>
-						<{if $next}>
+						<{if isset($next)}>
 							<span class="d-none d-sm-inline"><a class="btn btn-secondary" href="<{$next}>" role="button"><{$smarty.const._SR_NEXT|replace:">>":"<span class='fa fa-chevron-right fa-lg'></span>"}></a></span>
 							<span class="d-inline d-sm-none"><a class="btn btn-secondary" href="<{$next}>" role="button"><span class="fa fa-chevron-right"></span></a></span>
 						<{else}>
@@ -127,9 +128,9 @@
 						<h5><{$module_name}></h5>
 						<{$showing|replace:"-":"- "}>
 					</div>
-					<{if $previous || $next}>
+					<{if !empty($previous) || !empty($next)}>
 						<div>
-						<{if $previous}>
+						<{if !empty($previous)}>
 							<span class="d-none d-sm-inline"><a class="btn btn-secondary" href="<{$previous}>" role="button"><{$smarty.const._SR_PREVIOUS|replace:"<<":"<span class='fa fa-chevron-left fa-lg'></span>"}></a></span>
 							<span class="d-inline d-sm-none"><a class="btn btn-secondary" href="<{$previous}>" role="button"><span class="fa fa-chevron-left"></span></a></span>
 						<{else}>
@@ -137,7 +138,7 @@
 							<span class="d-inline d-sm-none"><a class="btn btn-secondary disabled" role="button" tabindex="-1" aria-disabled="true"><span class="text-muted"><span class="fa fa-chevron-left"></span></span></a></span>
 						<{/if}>
 						<span class="mx-1"></span>
-						<{if $next}>
+						<{if !empty($next)}>
 							<span class="d-none d-sm-inline"><a class="btn btn-secondary" href="<{$next}>" role="button"><{$smarty.const._SR_NEXT|replace:">>":"<span class='fa fa-chevron-right fa-lg'></span>"}></a></span>
 							<span class="d-inline d-sm-none"><a class="btn btn-secondary" href="<{$next}>" role="button"><span class="fa fa-chevron-right"></span></a></span>
 						<{else}>
@@ -156,7 +157,7 @@
 		</p>
 	<{/if}>
 <{/if}>
-<{if $form|default:''}>
+<{if !empty($form)}>
 	<hr>
 	<{$form}>
 <{/if}>

@@ -35,7 +35,7 @@ $com_mode = htmlspecialchars(Request::getString('com_mode', '', 'GET'), ENT_QUOT
 
 if ($com_mode == '') {
     if (is_object($xoopsUser)) {
-        /* @var  XoopsUser $xoopsUser */
+        /** @var  XoopsUser $xoopsUser */
         $com_mode = $xoopsUser->getVar('umode');
     } else {
         $com_mode = $xoopsConfig['com_mode'];

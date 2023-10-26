@@ -1,5 +1,5 @@
 <{include file="db:system_header.tpl"}>
-<{if $install_mods}>
+<{if isset($install_mods)}>
 <script type="text/javascript">
     IMG_ON = "<{xoAdminIcons 'success.png'}>";
     IMG_OFF = "<{xoAdminIcons 'cancel.png'}>";
@@ -219,7 +219,7 @@
     </form>
 <{/if}>
 
-<{if $toinstall_mods|default:false}>
+<{if !empty($toinstall_mods)}>
     <div class="floatleft">
         <img class="cursorpointer tooltip" onclick="system_moduleLargeView();" src="<{xoAdminIcons 'view_large.png'}>"
              alt="<{$smarty.const._AM_SYSTEM_MODULES_VIEWLARGE}>" title="<{$smarty.const._AM_SYSTEM_MODULES_VIEWLARGE}>"/>
@@ -242,7 +242,7 @@
                     <img class="xo-logonormal" src="<{$xoops_url}>/modules/<{$row.dirname}>/<{$row.image}>" alt="<{$row.name}>" title="<{$row.name}>"/>
 
                     <div class="spacer xo-modsimages">
-                        <{if $row.hasadmin|default:0 == 1 && $row.isactive|default:0 == 1}>
+                        <{if (!empty($row.hasadmin) && $row.hasadmin == 1) && (!empty($row.isactive) && $row.isactive == 1)}>
                             <a class="tooltip" href="<{$xoops_url}>/modules/<{$row.dirname}>/<{$row.adminindex}>" title="<{$row.name}>">
                                 <img class="xo-mods hide" src="<{xoAdminIcons 'applications.png'}>" alt="<{$row.name}>" title="<{$row.name}>"/></a>
                         <{else}>

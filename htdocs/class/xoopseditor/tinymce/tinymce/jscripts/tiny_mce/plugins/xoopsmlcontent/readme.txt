@@ -13,6 +13,6 @@ You MUST have "THE EASIEST MULTILANGUAGE HACK" by GIJOE applied to your xoops in
 enabling and using this plugin.
 
 The hack "THE EASIEST MULTILANGUAGE HACK" by GIJOE can be found at http://www.peak.ne.jp/xoops/
-The "Xlanguage" mudule can be found at http://xoops.org.cn/modules/wfdownloads/singlefile.php?cid=8&lid=517
+The "Xlanguage" mudule can be found at https://xoops.org.cn/modules/wfdownloads/singlefile.php?cid=8&lid=517
 
 That's all!

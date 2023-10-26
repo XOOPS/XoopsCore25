@@ -71,7 +71,7 @@
     <{/foreach}>
 </div>
 
-<{if $show_rss}>
+<{if isset($show_rss)}>
     <div class="row">
         <div class="col-md-12">
             <a href="<{xoAppUrl 'modules/extgallery/public-rss.php'}>" title="<{$smarty.const._MD_EXTGALLERY_RSS}>">

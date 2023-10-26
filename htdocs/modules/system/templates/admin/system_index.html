@@ -26,7 +26,7 @@
                 <td class=""><{$menuitem.desc}></td>
                 <td class="width15"><{$menuitem.infos|default:''}></td>
                 <td class="xo-actions width2">
-                    <{if $menuitem.used|default:false}>
+                    <{if !empty($menuitem.used)}>
                         <img id="loading_<{$menuitem.file}>" src="images/spinner.gif" style="display:none;" alt="<{$smarty.const._AM_SYSTEM_LOADING}>"/>
                         <img class="tooltip" id="<{$menuitem.file}>"
                              onclick="system_setStatus( { op: 'system_activate', type: '<{$menuitem.file}>' }, '<{$menuitem.file}>', 'admin.php' )"

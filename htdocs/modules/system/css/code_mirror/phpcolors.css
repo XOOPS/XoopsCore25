@@ -43,19 +43,19 @@ span.php-operator {
     color: blue;
 }
 
-/* __FILE__ etc.; http://php.net/manual/en/reserved.php */
+/* __FILE__ etc.; https://php.net/manual/en/reserved.php */
 span.php-compile-time-constant {
     color: #776088;
     font-weight: bold;
 }
 
-/* output of get_defined_constants(). Differs from http://php.net/manual/en/reserved.constants.php */
+/* output of get_defined_constants(). Differs from https://php.net/manual/en/reserved.constants.php */
 span.php-predefined-constant {
     color: darkgreen;
     font-weight: bold;
 }
 
-/* PHP reserved "language constructs"... echo() etc.; http://php.net/manual/en/reserved.php */
+/* PHP reserved "language constructs"... echo() etc.; https://php.net/manual/en/reserved.php */
 span.php-reserved-language-construct {
     color: green;
     font-weight: bold;
@@ -66,7 +66,7 @@ span.php-predefined-function {
     color: green;
 }
 
-/* PHP predefined classes: PDO, Exception etc.; output of get_declared_classes() and different from http://php.net/manual/en/reserved.classes.php */
+/* PHP predefined classes: PDO, Exception etc.; output of get_declared_classes() and different from https://php.net/manual/en/reserved.classes.php */
 span.php-predefined-class {
     color: green;
 }

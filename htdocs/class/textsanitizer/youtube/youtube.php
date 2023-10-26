@@ -26,7 +26,7 @@ class MytsYoutube extends MyTextSanitizerExtension
      */
     public function encode($textarea_id)
     {
-        $config = parent::loadConfig(__DIR__);
+//        $config = parent::loadConfig(__DIR__);
         $code = "<button type='button' class='btn btn-default btn-sm' onclick='xoopsCodeYoutube(\"{$textarea_id}\",\""
             . htmlspecialchars(_XOOPS_FORM_ENTERYOUTUBEURL, ENT_QUOTES) . "\",\""
             . htmlspecialchars(_XOOPS_FORM_ALT_ENTERHEIGHT, ENT_QUOTES) . "\",\""
@@ -88,10 +88,10 @@ EOH;
     public static function decode($url, $width, $height)
     {
         // modernized responsive YouTube handling suggested by XOOPS user xd9527 -- thanks!
-        // http://xoops.org/modules/newbb/viewtopic.php?post_id=359913
+        // https://xoops.org/modules/newbb/viewtopic.php?post_id=359913
 
         // match known youtube urls
-        // from: http://stackoverflow.com/questions/2936467/parse-youtube-video-id-using-preg-match/6382259#6382259
+        // from: https://stackoverflow.com/questions/2936467/parse-youtube-video-id-using-preg-match/6382259#6382259
         $youtubeRegex = '%(?:youtube(?:-nocookie)?\.com/(?:[^/]+/.+/|(?:v|e(?:mbed)?)/|.*[?&]v=)|youtu\.be/)'
             .'([^"&?/ ]{11})%i';
 

@@ -10,7 +10,7 @@ $uid = Xmf\Request::getInt('uid', 0);
 if ($uid === 0) {
     redirect_header('index.php', 2, _PROFILE_AM_NOSELECTION);
 }
-/* @var XoopsMemberHandler $member_handler */
+/** @var XoopsMemberHandler $member_handler */
 $member_handler = xoops_getHandler('member');
 $user           = $member_handler->getUser($uid);
 if (!$user || $user->isNew()) {

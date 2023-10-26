@@ -1,7 +1,7 @@
 <?php
 /**
  * @copyright       (c) 2000-2016 XOOPS Project (www.xoops.org)
- * @license         GNU GPL 2 or later (https://www.gnu.org/licenses/gpl-2.0.html)
+ * @license         GNU GPL 2.0 or later (https://www.gnu.org/licenses/gpl-2.0.html)
  * _LANGCODE    en
  * _CHARSET     UTF-8
  */

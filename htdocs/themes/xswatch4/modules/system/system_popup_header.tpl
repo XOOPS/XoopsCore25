@@ -24,7 +24,7 @@
     <script src="<{$xoops_url}>/browse.php?Frameworks/jquery/jquery.js"></script>
     <script src="<{$themeUrl}>js/bootstrap.bundle.min.js"></script>
 
-    <{if $closeHead|default:false}>
+    <{if !empty($closeHead)}>
 </head>
 <body id="xswatch-popup-body">
 <{/if}>

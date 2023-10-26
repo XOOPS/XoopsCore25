@@ -1,5 +1,5 @@
 <{* online details popup *}>
-<{if $closeHead|default:true}>
+<{if isset($closeHead) ? $closeHead : true}>
     <{$headContents|default:''}>
     <script>window.resizeTo(400, 560)</script>
     </head>
@@ -22,7 +22,7 @@
                 </td>
                 <td align="center">
                     <{$online.module_name}>
-                    <{if $isadmin|default:false}>
+                    <{if !empty($isadmin)}>
                         <br>(<{$online.ip}>)<br><{$online.updated}>
                     <{/if}>
                 </td>
@@ -31,6 +31,6 @@
     </table>
 </div>
 
-<{if $closeButton|default:true}>
+<{if isset($closeButton) ? $closeButton : true}>
     <div style="text-align:center;"><input class="btn btn-secondary btn-default formButton" value="<{$lang_close}>" type="button" onclick="window.close();" /></div>
 <{/if}>
