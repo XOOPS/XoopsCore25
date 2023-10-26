@@ -1533,7 +1533,7 @@ class Protector
     }
 
     /**
-     * @param        $type
+     * @param string $type
      * @param string $dying_message
      *
      * @return int|mixed

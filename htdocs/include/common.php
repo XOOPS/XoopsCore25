@@ -265,7 +265,9 @@ if (!empty($_SESSION['xoopsUserId'])) {
             try {
                 $xoopsDB->queryF($sql);
             } catch (Exception $e) {
-                // Handle the exception or log the error message
+                throw new \RuntimeException(
+                    \sprintf(_DB_QUERY_ERROR, $sql) . $db->error(), E_USER_ERROR
+                );
             }
         }
 

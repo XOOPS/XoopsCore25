@@ -20,7 +20,8 @@ class ProtectorFilterAbstract
         if (file_exists($file_to_include)) {
             include_once $file_to_include;
         } else {
-            // Handle the case when the file doesn't exist or log an error message
+            trigger_error('File Path Error: ' . $file_to_include . ' does not exist.');
+            throw new \RuntimeException('File Path Error: ' . $file_to_include . ' does not exist.');
         }
 
         if (!defined('_MD_PROTECTOR_YOUAREBADIP')) {
@@ -81,7 +82,7 @@ class ProtectorFilterHandler
 
     // return: false : execute default action
     /**
-     * @param $type
+     * @param string $type
      *
      * @return int|mixed
      */
