@@ -47,7 +47,7 @@
       <{if isset($element.hidden) && $element.hidden != true}>
       <tr>
         <td class="head"><{$element.caption|default:''}>
-        <{if !empty($element.description}>
+        <{if !empty($element.description)}>
             <div style="font-weight: normal;"><{$element.description}></div>
         <{/if}>
         </td>

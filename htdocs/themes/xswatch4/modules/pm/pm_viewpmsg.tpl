@@ -90,7 +90,7 @@
 							<td class='text-center'>
 								<{if isset($message.postername) && $message.postername!= ""}>
 									<{assign var="tempPosteruid" value=$message.posteruid}>
-									<{xoUserInfo uid=$message.posteruid}>
+									<{xoUserInfo 'uid=$message.posteruid'}>
 									<a href='<{$xoops_url}>/userinfo.php?uid=<{$message.posteruid}>' alt="<{$message.postername}>" title='<{$message.postername}>'>
 										<{if isset($userInfo.user_avatar) && $userInfo.user_avatar != "blank.gif"}>
 											<img src="<{$xoops_url}>/uploads/<{$userInfo.user_avatar}>" alt="<{$message.postername}>" class="img-rounded img-thumbnail" width="128">
