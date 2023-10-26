@@ -11,7 +11,7 @@ function protector_postcommon()
 
     // patch for 2.2.x from xoops.org (I know this is not so beautiful...)
     if (defined('XOOPS_VERSION') && substr(XOOPS_VERSION, 6, 3) > 2.0 && isset($_SERVER['REQUEST_URI']) && false !== stripos($_SERVER['REQUEST_URI'], 'modules/system/admin.php?fct=preferences')) {
-        /* @var XoopsModuleHandler $module_handler */
+        /** @var XoopsModuleHandler $module_handler */
         $module_handler = xoops_getHandler('module');
         /** @var XoopsModule $module */
         $module = (isset($_GET['mod'])) ? $module_handler->get((int)$_GET['mod']) : null;

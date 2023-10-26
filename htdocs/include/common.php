@@ -266,7 +266,7 @@ if (!empty($_SESSION['xoopsUserId'])) {
                 $xoopsDB->queryF($sql);
             } catch (Exception $e) {
                 // Handle the exception or log the error message
-        }
+            }
         }
 
         //$sess_handler->update_cookie();

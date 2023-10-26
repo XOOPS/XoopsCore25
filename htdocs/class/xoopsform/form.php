@@ -193,9 +193,9 @@ class XoopsForm
 
 
     /**
-     * @param        $value
-     * @param        $key
-     * @param        $ret
+     * @param mixed  $value
+     * @param mixed  $key
+     * @param string $ret
      * @param string $hashinfo
      *
      * @return string
