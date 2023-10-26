@@ -1,8 +1,8 @@
 <section role="main" class="news-item">
     <article role="article">
-        <{if $story.picture != ""}>
+        <{if !empty($story.picture)'}>
             <div class="news-header">
-                <{if $story.poster != ""}><em><strong><{$lang_postedby}>: </strong><{$story.poster}><{/if}> <{$lang_on}> <{$story.posttime}></em>
+                <{if !empty($story.poster)}><em><strong><{$lang_postedby}>: </strong><{$story.poster}><{/if}> <{$lang_on}> <{$story.posttime}></em>
 
                 <strong class="pull-right hit-counter"><{$story.hits}> <{$lang_reads}></strong>
 
@@ -13,11 +13,11 @@
             </div>
         <{else}>
             <h2 role="heading" class="news-no-image"><{$story.topic_title}>: <{$story.news_title}></h2>
-            <{if $story.poster != ""}>
+            <{if !empty($story.poster)}>
                 <em><strong><{$lang_postedby}>: </strong><{$story.poster}><{/if}><{$lang_on}> <{$story.posttime}></em>
             <strong class="pull-right hit-counter"><{$story.hits}> <{$lang_reads}></strong>
         <{/if}>
-        <{if $story.files_attached}>
+        <{if !empty($story.files_attached)}>
             <{$story.attached_link}>
         <{/if}>
         <{$story.text}>

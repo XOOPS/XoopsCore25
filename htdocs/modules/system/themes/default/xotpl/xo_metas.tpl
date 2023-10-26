@@ -1,7 +1,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=EmulateIE7"/>
 
 <!-- title and metas -->
-<title><{if $xoops_pagetitle !=''}><{$xoops_pagetitle}> : <{/if}><{$xoops_sitename}></title>
+<title><{if !empty($xoops_pagetitle)}><{$xoops_pagetitle}> : <{/if}><{$xoops_sitename}></title>
 <meta http-equiv="content-language" content="<{$xoops_langcode}>"/>
 <meta http-equiv="content-type" content="text/html; charset=<{$xoops_charset}>"/>
 <meta name="robots" content="<{$xoops_meta_robots}>"/>
@@ -11,7 +11,7 @@
 <meta name="author" content="<{$xoops_meta_author}>"/>
 <meta name="copyright" content="<{$xoops_meta_copyright}>"/>
 <meta name="generator" content="XOOPS"/>
-<{if $url|default:false}>
+<{if !empty($url)}>
     <meta http-equiv="Refresh" content="<{$time}>; url=<{$url}>"/>
 <{/if}>
 

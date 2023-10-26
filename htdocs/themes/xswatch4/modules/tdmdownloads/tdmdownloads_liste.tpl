@@ -49,7 +49,7 @@
                     <a href="<{$xoops_url}>/modules/tdmdownloads/singlefile.php?cid=<{$download.cid}>&amp;lid=<{$download.lid}>" title="<{$download.title}>">
                         <img src="<{$pathModIcon16}>/view_mini.png" alt="<{$smarty.const._PREVIEW}><{$download.title}>" title="<{$smarty.const._PREVIEW}>">
                     </a>
-                    <{if $perm_submit}>
+                    <{if isset($perm_submit)}>
                         <a href="<{$xoops_url}>/modules/tdmdownloads/modfile.php?lid=<{$download.lid}>" title="<{$download.title}>">
                             <img src="<{$pathModIcon16}>/edit.png" alt="<{$smarty.const._EDIT}><{$download.title}>" title="<{$smarty.const._EDIT}>">
                         </a>

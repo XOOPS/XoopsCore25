@@ -89,7 +89,7 @@ class XoopsFolderHandler
      * @var array
      * @access private
      */
-    public $errors = false;
+    public $errors = array();
 
     /**
      * holds array of complete directory paths.
@@ -271,7 +271,11 @@ class XoopsFolderHandler
         $start = $this->path;
         foreach ($dirs as $dir) {
             $this->cd($this->addPathElement($start, $dir));
-            $found = array_merge($found, $this->findRecursive($pattern));
+            $newFound = $this->findRecursive($pattern);
+
+            foreach ($newFound as $item) {
+                $found[] = $item;
+            }
         }
 
         return $found;
@@ -665,12 +669,11 @@ class XoopsFolderHandler
     }
 
     /**
-     * Recursive directory copy.
+     * Copies files and directories from one directory to another
      *
-     * @param array|string $options (to, from, chmod, skip)
-     *
-     * @return bool
-     * @access public
+     * @param array|string $options An array of options or a string representing the target directory
+     *                              If a string is provided, it will be used as the target directory and other options will be set to their default values
+     * @return bool Returns true on success, false on failure
      */
     public function copy($options = array())
     {
@@ -720,16 +723,23 @@ class XoopsFolderHandler
                             $this->errors[] = sprintf('%s NOT copied to %s', $from, $to);
                         }
                     }
-                    if (is_dir($from) && !file_exists($to)) {
-                        if (mkdir($to, intval($mode, 8))) {
-                            chmod($to, intval($mode, 8));
-                            $this->messages[] = sprintf('%s created', $to);
-                            $options          = array_merge($options, array(
-                                                                        'to'   => $to,
-                                                                        'from' => $from));
-                            $this->copy($options);
-                        } else {
-                            $this->errors[] = sprintf('%s not created', $to);
+
+                    if (is_dir($from)) {
+                        if (!is_dir($to)) {
+                            if (mkdir($to, intval($mode, 8)) || is_dir($to)) {
+                                chmod($to, intval($mode, 8));
+                                $this->messages[] = sprintf('%s created', $to);
+
+                                $options['to'] = $to;
+                                $options['from'] = $from;
+
+                                $this->copy($options);
+                            } else {
+                                // Ensure $this->errors is an array before adding an element
+                                if (is_array($this->errors)) {
+                                    $this->errors[] = sprintf('%s not created', $to);
+                                }
+                            }
                         }
                     }
                 }

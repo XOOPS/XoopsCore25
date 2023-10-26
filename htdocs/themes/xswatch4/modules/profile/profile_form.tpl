@@ -4,9 +4,9 @@
 <form id="<{$xoForm.name}>" name="<{$xoForm.name}>" action="<{$xoForm.action}>" method="<{$xoForm.method}>" <{$xoForm.extra}> >
 	<div class="form-group">
 		<{foreach item=element from=$xoForm.elements|default:null}>
-            <{if !$element.hidden|default:false}>
+            <{if empty($element.hidden)}>
 				<label>
-					<div class='xoops-form-element-caption<{if $element.required|default:false}>-required<{/if}>'>
+					<div class='xoops-form-element-caption<{if !empty($element.required)}>-required<{/if}>'>
 						<span class='caption-text'><{$element.caption|default:''}></span>
 						<span class='caption-marker'>*</span>
 					</div>
@@ -21,7 +21,7 @@
         <{/foreach}>
 	</div>
 	<{foreach item=element from=$xoForm.elements|default:null}>
-        <{if $element.hidden|default:false}>
+        <{if !empty($element.hidden)}>
             <{$element.body}>
         <{/if}>
     <{/foreach}>

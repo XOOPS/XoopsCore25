@@ -5,16 +5,16 @@
         <li class="breadcrumb-item"><a href="<{$xoops_url}>/modules/<{$xoops_dirname}>/index.php"><{$smarty.const._MD_NEWBB_FORUMHOME}></a></li>
 
         <li class="breadcrumb-item"><a href="<{$xoops_url}>/modules/<{$xoops_dirname}>/index.php?cat=<{$category.id}>"><{$category.title}></a></li>
-        <{if $parentforum}>
+        <{if isset($parentforum)}>
             <{foreach item=forum from=$parentforum|default:null}>
                 <li class="breadcrumb-item"><a href="<{$xoops_url}>/modules/<{$xoops_dirname}>/viewforum.php?forum=<{$forum.forum_id}>"><{$forum.forum_name}></a></li>
             <{/foreach}>
         <{/if}>
         <li class="breadcrumb-item"><a href="<{$xoops_url}>/modules/<{$xoops_dirname}>/viewforum.php?forum=<{$forum_id}>"><{$forum_name}></a></li>
-        <li class="breadcrumb-item active"><{$topic_title|strip_tags}> <{if $topicstatus}><{$topicstatus}><{/if}></li>
+        <li class="breadcrumb-item active"><{$topic_title|strip_tags}> <{if isset($topicstatus)}><{$topicstatus}><{/if}></li>
     </ol>
 
-    <{if $tagbar|default:false}>
+    <{if !empty($tagbar)}>
         <div class="newbb-tagbar">
             <{include file="db:tag_bar.tpl"}>
         </div>
@@ -26,9 +26,9 @@
                 <strong><{$smarty.const._MD_NEWBB_BROWSING}> </strong>
                 <{foreach item=user from=$online.users|default:null}>
                     <a href="<{$user.link}>">
-                        <{if $user.level eq 2}><!-- If is admin -->
+                        <{if $user.level == 2}><!-- If is admin -->
                             <label class="label label-success"><{$user.uname}></label>
-                        <{elseif $user.level eq 1}><!-- If is moderator -->
+                        <{elseif $user.level == 1}><!-- If is moderator -->
                             <label class="label label-warning"><{$user.uname}></label>
                         <{else}>
                             <label class="label label-info"><{$user.uname}></label>
@@ -44,9 +44,9 @@
     <{/if}>
 
     <div class="row mb10">
-        <{if $viewer_level gt 1}>
+        <{if $viewer_level > 1}>
             <div class="col-sm-8 col-md-8">
-                <{if $mode gt 1}>
+                <{if isset($mode) && $mode > 1}>
                 <form class="form-inline" name="form_posts_admin" action="action.post.php" method="POST" onsubmit="if(window.document.form_posts_admin.op.value &lt; 1){return false;}">
                     <div class="form-row align-items-center">
                         <div class="col-auto">
@@ -61,9 +61,9 @@
                             <select name="op" class="custom-select mb-2">
                                 <option value="0"><{$smarty.const._SELECT}></option>
                                 <option value="delete"><{$smarty.const._DELETE}></option>
-                                <{if $status eq "pending"}>
+                                <{if isset($status) &&  $status == "pending"}>
                                 <option value="approve"><{$smarty.const._MD_NEWBB_APPROVE}></option>
-                                <{elseif $status eq "deleted"}>
+                                <{elseif isset($status) &&  $status == "deleted"}>
                                 <option value="restore"><{$smarty.const._MD_NEWBB_RESTORE}></option>
                                 <{/if}>
                             </select>
@@ -84,14 +84,14 @@
                 <{/if}>
             </div>
         <{/if}>
-        <div class="<{if $viewer_level gt 1}>col-sm-4 col-md-4<{else}>col-sm-12 col-md-12<{/if}> generic-pagination text-right">
+        <div class="<{if $viewer_level > 1}>col-sm-4 col-md-4<{else}>col-sm-12 col-md-12<{/if}> generic-pagination text-right">
             <{$forum_page_nav|replace:'form':'div'|replace:'id="xo-pagenav"':''}>
         </div>
     </div>
 
-    <{if $mode lte 1}>
+    <{if $mode <= 1}>
         <{if isset($topic_poll)}>
-            <{if $topic_pollresult|default:''}>
+            <{if !empty($topic_pollresult)}>
                 <{include file="db:newbb_poll_results.tpl" poll=$poll|default:''}>
             <{else}>
                 <{include file="db:newbb_poll_view.tpl" poll=$poll|default:''}>
@@ -103,7 +103,7 @@
         <div class="col-sm-6 col-md-6">
             <a href="<{$xoops_url}>/modules/<{$xoops_dirname}>/reply.php?topic_id=<{$topic_id}>" title="<{$smarty.const.THEME_FORUM_REPLY}>" class="btn btn-primary"><{$smarty.const.THEME_FORUM_REPLY}></a>
 
-            <{if $viewer_level gt 1}>
+            <{if $viewer_level > 1}>
                 <a href="<{$xoops_url}>/modules/<{$xoops_dirname}>/newtopic.php?forum=<{$forum_id}>" title="<{$smarty.const.THEME_FORUM_NEWTOPIC}>" class="btn btn-primary"><{$smarty.const.THEME_FORUM_NEWTOPIC}></a>
             <{elseif !$xoops_isuser}>
                 <a href="<{$xoops_url}>/user.php" title="<{$smarty.const.THEME_FORUM_REGISTER}>" class="btn btn-success"><{$smarty.const.THEME_FORUM_REGISTER}></a>
@@ -133,7 +133,7 @@
 
     <div class="row collapse mb10" id="forum-search">
         <div class="col-sm-12 col-md-12">
-            <{if $mode lte 1}>
+            <{if $mode <= 1}>
                 <form class="input-group" id="search-topic" action="<{$xoops_url}>/modules/<{$xoops_dirname}>/search.php" method="get" role="search">
                     <input name="term" id="term" type="text" class="form-control" placeholder="<{$smarty.const.THEME_NEWBB_SEARCH_TOPIC}>">
                     <input type="hidden" name="forum" id="forum" value="<{$forum_id}>">
@@ -190,7 +190,7 @@
         </div>
     </div>
 
-    <{if $viewer_level gt 1 && $topic_status == 1}>
+    <{if $viewer_level > 1 && $topic_status == 1}>
         <{$smarty.const._MD_NEWBB_TOPICLOCK}>
     <{/if}>
 
@@ -200,7 +200,7 @@
         <div class="alert alert-warning" role="alert"><{$smarty.const._MD_NEWBB_NOTOPIC}></div>
     <{/foreach}>
 
-    <{if $mode gt 1}>
+    <{if isset($mode) && $mode > 1}>
     </form>
     <{/if}>
 
@@ -209,7 +209,7 @@
         <div class="col-sm-6 col-md-6 hidden-xs">
             <a href="<{$xoops_url}>/modules/<{$xoops_dirname}>/reply.php?topic_id=<{$topic_id}>" title="<{$smarty.const.THEME_FORUM_REPLY}>" class="btn btn-primary"><{$smarty.const.THEME_FORUM_REPLY}></a>
 
-            <{if $viewer_level gt 1}>
+            <{if $viewer_level > 1}>
                 <a href="<{$xoops_url}>/modules/<{$xoops_dirname}>/newtopic.php?forum=<{$forum_id}>" title="<{$smarty.const.THEME_FORUM_NEWTOPIC}>" class="btn btn-primary"><{$smarty.const.THEME_FORUM_NEWTOPIC}></a>
             <{else}>
                 <a href="<{$xoops_url}>/user.php" title="<{$smarty.const.THEME_FORUM_REGISTER}>" class="btn btn-success"><{$smarty.const.THEME_FORUM_REGISTER}></a>

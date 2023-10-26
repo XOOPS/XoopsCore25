@@ -57,7 +57,7 @@
     </table>
 </form>
 <div id="pagenav"><{$pagenav|default:''}></div>
-<{if $image_total|default:0 > 0}>
+<{if isset($image_total) && $image_total > 0}>
     <table cellspacing="0" id="imagemain">
         <tr>
             <th><{$lang_imagename}></th>

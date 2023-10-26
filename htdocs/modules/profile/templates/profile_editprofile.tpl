@@ -1,7 +1,7 @@
 <{include file="db:profile_breadcrumbs.tpl"}>
 
 
-<{if $stop|default:false}>
+<{if !empty($stop)}>
     <div class='errorMsg txtleft'><{$stop}></div>
     <br class='clear'/>
 <{/if}>

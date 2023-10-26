@@ -1,6 +1,6 @@
 <div class="usermenu">
     <ul class="nav flex-column">
-        <{if $xoops_isadmin}>
+        <{if isset($xoops_isadmin)}>
             <li class="nav-item"><a class="nav-link" href="<{xoAppUrl 'admin.php'}>" title="<{$block.lang_adminmenu}>"><span class="fa fa-wrench"></span><{$block.lang_adminmenu}></a>
             </li>
             <li class="nav-item"><a class="nav-link" href="<{xoAppUrl 'user.php'}>" title="<{$block.lang_youraccount}>"><span class="fa fa-user-o"></span><{$block.lang_youraccount}></a>

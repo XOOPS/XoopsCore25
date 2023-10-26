@@ -16,24 +16,24 @@
                     <td><{$field.field_description}></td>
                     <td><{$field.fieldtype}></td>
                     <td>
-                        <{if $field.canEdit}>
+                        <{if !empty($field.canEdit)}>
                             <select name="category[<{$field.field_id}>]"><{html_options options=$categories selected=$field.cat_id}></select>
                         <{/if}>
                     </td>
                     <td>
-                        <{if $field.canEdit}>
+                        <{if !empty($field.canEdit)}>
                             <input type="text" name="weight[<{$field.field_id}>]" size="5" maxlength="5" value="<{$field.field_weight}>"/>
                         <{/if}>
                     </td>
                     <td align="center">
-                        <{if $field.canEdit}>
+                        <{if !empty($field.canEdit)}>
                             <a href="field.php?op=toggle&amp;field_required=<{$field.field_required}>&amp;field_id=<{$field.field_id}>"><img
                                         src="<{xoModuleIcons16}><{$field.field_required}>.png" title="<{$smarty.const._PROFILE_AM_REQUIRED_TOGGLE}>"
                                         alt="<{$smarty.const._PROFILE_AM_REQUIRED_TOGGLE}>"/></a>
                         <{/if}>
                     </td>
                     <td align="center">
-                        <{if $field.canEdit}>
+                        <{if !empty($field.canEdit)}>
                             <input type="hidden" name="oldweight[<{$field.field_id}>]" value="<{$field.field_weight}>"/>
                             <input type="hidden" name="oldcat[<{$field.field_id}>]" value="<{$field.cat_id}>"/>
                             <input type="hidden" name="field_ids[]" value="<{$field.field_id}>"/>
@@ -41,7 +41,7 @@
                                                                                                             alt="<{$smarty.const._EDIT}>"
                                                                                                             title="<{$smarty.const._EDIT}>"/></a>
                         <{/if}>
-                        <{if $field.canDelete}>
+                        <{if !empty($field.canDelete)}>
                             &nbsp;
                             <a href="field.php?op=delete&amp;id=<{$field.field_id}>" title="<{$smarty.const._DELETE}>"><img
                                         src="<{xoModuleIcons16 'delete.png'}>" alt="<{$smarty.const._DELETE}>" title="<{$smarty.const._DELETE}>"</a>

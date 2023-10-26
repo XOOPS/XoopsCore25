@@ -1,10 +1,10 @@
 <ul id="xo-breadcrumb" class="ui-corner-all" style="background-image:url('<{xoAdminNav}>bc_bg.png');">
     <{foreach item=breadcrumb from=$xo_sys_breadcrumb|default:null}>
-        <{if $breadcrumb.home}>
+        <{if !empty($breadcrumb.home)}>
             <li><a class="tooltip" href="<{$breadcrumb.link}>" title="<{$breadcrumb.title}>" style="background-image:url('<{xoAdminNav}>bc_separator.png');"><img
                             class="home" src="<{xoAdminNav}>home.png" alt="<{$breadcrumb.title}>"/></a></li>
         <{else}>
-            <{if $breadcrumb.link}>
+            <{if !empty($breadcrumb.link)}>
                 <li><a class="tooltip" href="<{$breadcrumb.link}>" title="<{$breadcrumb.title}>" style="background-image:url('<{xoAdminNav}>bc_separator.png');"><{$breadcrumb.title}></a>
                 </li>
             <{else}>
@@ -12,7 +12,7 @@
             <{/if}>
         <{/if}>
     <{/foreach}>
-    <{if $xo_sys_help|default:false}>
+    <{if !empty($xo_sys_help)}>
         <li class="xo-help">
             <a class="cursorhelp tooltip help_view" title="<{$smarty.const._AM_SYSTEM_HELP_VIEW}>"
                style="background-image:url('<{xoAdminNav}>bc_separator_end.png'); display: inline;"><img src="<{xoAdminIcons 'help.png'}>"
@@ -23,12 +23,12 @@
         </li>
     <{/if}>
 </ul>
-<{if $help_content|default:false}>
+<{if !empty($help_content)}>
     <div class="hide" id="xo-system-help">
         <{include file="$help_content"}>
     </div>
 <{/if}>
-<{if $xo_sys_tips|default:false}>
+<{if !empty($xo_sys_tips)}>
     <div class="tips ui-corner-all">
         <img class="floatleft tooltip" src="<{xoAdminIcons 'tips.png'}>" alt="<{$smarty.const._AM_SYSTEM_TIPS}>" title="<{$smarty.const._AM_SYSTEM_TIPS}>"/>
 

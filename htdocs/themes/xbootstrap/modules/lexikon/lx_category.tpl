@@ -48,7 +48,7 @@
 <{* Category block *}>
 <!-- $layout 0 and 1 are the same. if you want to change first change CONFIG_CATEGORY_LAYOUT_PLAIN in inlcude/common.inc.php -->
 <{if $layout == '0'}> 
-    <{if $multicats == 1 && count($block0.categories) gt 0 }>
+    <{if $multicats == 1 && count($block0.categories) > 0 }>
         <div class="row" style="margin-bottom: 20px">
             <div class="col-md-12">
                 <h3> <{$smarty.const._MD_LEXIKON_BROWSECAT}> </h3>

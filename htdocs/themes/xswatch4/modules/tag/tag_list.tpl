@@ -29,7 +29,7 @@
     <{/foreach}>
 </div>
 
-<{if $pagenav|default:false}>
+<{if !empty($pagenav)}>
 <div id="pagenav" style="padding-top: 10px;">
     <{$pagenav}>
 </div>

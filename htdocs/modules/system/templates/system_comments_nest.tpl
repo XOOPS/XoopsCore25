@@ -27,5 +27,5 @@
     <{/foreach}>
     <!-- end comment tree -->
 <{/section}>
-<{if $commentform}>
+<{if isset($commentform)}>
     <div class="commentform"><{$commentform}></div><{/if}>

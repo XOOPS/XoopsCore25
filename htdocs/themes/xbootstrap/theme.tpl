@@ -43,7 +43,7 @@
     <script src="<{xoImgUrl}>js/jquery.scrollUp.min.js"></script>
     <script src="<{xoImgUrl}>js/imagesloaded.pkgd.min.js"></script>
 
-<!--[if lt IE 9]>
+<!--[if < IE 9]>
     <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
     <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
     <script src="<{xoImgUrl}>js/selectivizr-min.js"></script>

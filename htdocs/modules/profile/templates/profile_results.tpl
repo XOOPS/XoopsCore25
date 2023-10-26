@@ -1,6 +1,6 @@
 <{include file="db:profile_breadcrumbs.tpl"}>
 <div>( <{$total_users}> )</div>
-<{if $users}>
+<{if !empty($users)}>
     <table>
         <tr>
             <{foreach item=caption from=$captions|default:null}>

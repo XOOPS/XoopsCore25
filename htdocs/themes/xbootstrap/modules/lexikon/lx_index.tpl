@@ -4,7 +4,7 @@
   <li><{$lang_modulename}></li>
 </ol>
 
-<{if $empty|default:0 == 1}>
+<{if isset($empty) && $empty == 1}>
     <div class="alert alert-warning" role="alert"><{$smarty.const._MD_LEXIKON_STILLNOTHINGHERE}></div>
 <{/if}>
 
@@ -73,7 +73,7 @@
 <{* Category block *}>
 <!-- $layout 0 and 1 are the same. if you want to change first change CONFIG_CATEGORY_LAYOUT_PLAIN in inlcude/common.inc.php -->
 <{if $layout == '0'}> 
-    <{if $multicats == 1 && count($block0.categories) gt 0 }>
+    <{if $multicats == 1 && count($block0.categories) > 0 }>
         <div class="row" style="margin-bottom: 20px">
             <div class="col-md-12">
                 <h3> <{$smarty.const._MD_LEXIKON_BROWSECAT}> </h3>
@@ -200,7 +200,7 @@
     <div class="col-md-4 col-sm-12">
         <h3><{$smarty.const._MD_LEXIKON_RANDOMTERM}></h3>
         <{if $multicats == 1}>
-            <{if $empty|default:0 != 1}>
+            <{if isset($empty) && $empty == 1}>
                 <div class="catname"><a
                             href="<{$xoops_url}>/modules/<{$lang_moduledirname}>/category.php?categoryID=<{$random.categoryID}>"><{$random.categoryname}></a>
                 </div>

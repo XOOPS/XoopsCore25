@@ -1,4 +1,4 @@
-<{if $show_breadcrumbs}>
+<{if isset($show_breadcrumbs)}>
     <{include file='db:wggallery_breadcrumbs.tpl'}>
 <{/if}>
 

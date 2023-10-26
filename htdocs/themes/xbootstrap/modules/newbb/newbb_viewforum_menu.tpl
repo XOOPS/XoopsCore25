@@ -12,7 +12,7 @@
     <option value="<{$unread_link}>"><{$smarty.const._MD_NEWBB_VIEW}>&nbsp;<{$smarty.const._MD_NEWBB_UNREAD}></option>
 </select>
 
-<{if $typeOptions}>
+<{if isset($typeOptions)}>
     <select class="form-control" name="type" id="type" onchange="if(this.options[this.selectedIndex].value.length >0 )    { window.location=this.options[this.selectedIndex].value;}">
         <option value=""><{$smarty.const._MD_NEWBB_TYPE}></option>
         <{foreach item=opt from=$typeOptions|default:null}>

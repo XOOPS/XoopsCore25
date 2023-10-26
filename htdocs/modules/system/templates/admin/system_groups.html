@@ -1,6 +1,6 @@
 <!--groups-->
 <{include file="db:system_header.tpl"}>
-<{if $groups_count|default:false == true}>
+<{if isset($groups_count) && $groups_count == true}>
     <div class="floatright">
         <div class="xo-buttons">
             <button class="ui-corner-all" onclick="self.location.href='admin.php?fct=groups&amp;op=groups_add'">
@@ -37,7 +37,7 @@
                     <a class="tooltip" href="admin.php?fct=groups&amp;op=groups_edit&amp;groups_id=<{$groupdetail.groups_id}>"
                        title="<{$smarty.const._AM_SYSTEM_GROUPS_EDIT}>">
                         <img src="<{xoAdminIcons 'edit.png'}>" alt="<{$smarty.const._AM_SYSTEM_GROUPS_EDIT}>"/></a>
-                    <{if $groupdetail.delete|default:false}>
+                    <{if !empty($groupdetail.delete)}>
                         <a class="tooltip" href="admin.php?fct=groups&amp;op=groups_delete&amp;groups_id=<{$groupdetail.groups_id}>"
                            title="<{$smarty.const._AM_SYSTEM_GROUPS_DELETE}>">
                             <img src="<{xoAdminIcons 'delete.png'}>" alt="<{$smarty.const._AM_SYSTEM_GROUPS_DELETE}>"/></a>
@@ -49,12 +49,12 @@
     </table>
     <!-- Display groups navigation -->
     <div class="clear spacer"></div>
-    <{if $nav_menu|default:false}>
+    <{if !empty($nav_menu)}>
         <div class="xo-avatar-pagenav floatright"><{$nav_menu}></div>
         <div class="clear spacer"></div>
     <{/if}>
 <{/if}>
 <!-- Display groups form (add,edit) -->
-<{if $form|default:false}>
+<{if !empty($form)}>
     <div class="spacer"><{$form}></div>
 <{/if}>

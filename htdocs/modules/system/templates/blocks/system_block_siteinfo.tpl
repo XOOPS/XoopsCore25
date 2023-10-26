@@ -5,7 +5,7 @@
         <!-- start group loop -->
         <{foreach item=group from=$block.groups|default:null}>
 
-			<{if $group.name|default:'' != ''}>
+			<{if !empty($group.name)}>
 				<thead> 
 					<tr>
 						<th colspan="2"><{$group.name}></th>

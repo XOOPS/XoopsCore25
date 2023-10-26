@@ -26,7 +26,7 @@
                     <div class="form-group">
                     <{$commentRefreshButton->render()}>
                     </div>
-                    <{if ($commentPostButton|default:false) }>
+                    <{if !empty($commentPostButton)}>
                     <div class="form-group">
                     <{$commentPostButton->render()}>
                     </div>

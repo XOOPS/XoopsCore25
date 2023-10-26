@@ -1,12 +1,12 @@
 <{include file="db:profile_breadcrumbs.tpl"}>
 <div class="row">
     <div class="col-md-6 text-center">
-        <{if $avatar}>
+        <{if isset($avatar)}>
             <img src="<{$avatar}>" alt="<{$uname}>" class="img-responsive img-rounded img-thumbnail">
         <{/if}>
             <ul class="list-unstyled">
                 <li><span class="label label-info"><{$uname}></span></li>
-                <{if $email}>
+                <{if isset($email)}>
                     <li><span class="label label-info"><{$email}></span></li>
                 <{/if}>
             </ul>
@@ -26,7 +26,7 @@
                        onclick="location='<{$xoops_url}>/modules/<{$xoops_dirname}>/edituser.php'">
                 <input class="btn btn-primary btn-xs btn-block" type="button" value="<{$lang_changepassword}>"
                        onclick="location='<{$xoops_url}>/modules/<{$xoops_dirname}>/changepass.php'">
-                <{if $user_changeemail}>
+                <{if isset($user_changeemail)}>
                     <input class="btn btn-primary btn-xs btn-block" type="button" value="<{$smarty.const._PROFILE_MA_CHANGEMAIL}>"
                            onclick="location='<{$xoops_url}>/modules/<{$xoops_dirname}>/changemail.php'">
                 <{/if}>
@@ -67,7 +67,7 @@
     <{/if}>
 <{/foreach}>
 
-<{if $modules|default:false}>
+<{if !empty($modules)}>
     <ul class="profile-values list-unstyled">
         <li class="profile-category-title"><{$recent_activity}></li>
         <{foreach item=module from=$modules|default:null}>

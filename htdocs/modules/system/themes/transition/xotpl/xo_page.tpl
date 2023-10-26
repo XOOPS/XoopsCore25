@@ -7,7 +7,7 @@
         </div>
         <{/if}>
 
-        <{if $xoops_contents}>
+        <{if isset($xoops_contents)}>
             <div id="xo-content">
                 <{*Display Admin menu*}>
                 <{if !empty($xo_system_menu)}><{$xo_system_menu}><{/if}>

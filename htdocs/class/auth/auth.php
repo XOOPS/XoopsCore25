@@ -31,6 +31,7 @@ class XoopsAuth
 {
     public $_dao;
     public $_errors;
+    public $auth_method;
 
     /**
      * Authentication Service constructor
