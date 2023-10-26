@@ -104,7 +104,7 @@ if (false !== $user) {
         } else {
             $url .= $_SERVER['HTTP_HOST'];
         }
-        if (isset($parsed['path'])) {
+        if (isset($parsed['path']) && $parsed['path']) {
             if (strncmp($parsed['path'], $xoops_redirect, strlen($parsed['path']))) {
                 $url .= $parsed['path'];
             }

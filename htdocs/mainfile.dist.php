@@ -49,7 +49,7 @@ if (!defined('XOOPS_MAINFILE_INCLUDED')) {
     // Shall be handled later, don't forget!
     define('XOOPS_CHECK_PATH', 0);
     // Protect against external scripts execution if safe mode is not enabled
-    if (XOOPS_CHECK_PATH && !@ini_get('safe_mode')) {
+    if (XOOPS_CHECK_PATH) {
         if (function_exists('debug_backtrace')) {
             $xoopsScriptPath = debug_backtrace();
             if (!count($xoopsScriptPath)) {

@@ -214,7 +214,7 @@ include_once __DIR__ . '/../../language/' . $wizard->language . '/global.php';
                         </div>
 
                         <div id="buttons">
-                            <?php if (@$pageHasForm) { ?>
+                            <?php if (!empty($pageHasForm)) { ?>
                             <button class="btn btn-lg btn-success" type="submit">
                             <?php } else { ?>
                             <button class="btn btn-lg btn-success" type="button" accesskey="n" onclick="location.href='<?php echo $wizard->pageURI('+1'); ?>'">

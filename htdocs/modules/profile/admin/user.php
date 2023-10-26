@@ -119,7 +119,7 @@ switch ($op) {
         $password = $vpass = null;
         if (!empty($_POST['password'])) {
             $password = $myts->stripSlashesGPC(trim($_POST['password']));
-            $vpass    = @$myts->stripSlashesGPC(trim($_POST['vpass']));
+            $vpass = isset($_POST['vpass']) ? $myts->stripSlashesGPC(trim($_POST['vpass'])) : '';
             $user->setVar('pass', password_hash($password, PASSWORD_DEFAULT));
         } elseif ($user->isNew()) {
             $password = $vpass = '';

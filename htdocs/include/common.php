@@ -262,8 +262,15 @@ if (!empty($_SESSION['xoopsUserId'])) {
         if (((int)$xoopsUser->getVar('last_login') + 60 * 5) < time()) {
             $sql = 'UPDATE ' . $xoopsDB->prefix('users') . " SET last_login = '" . time()
                    . "' WHERE uid = " . $_SESSION['xoopsUserId'];
-            @$xoopsDB->queryF($sql);
+            try {
+                $xoopsDB->queryF($sql);
+            } catch (Exception $e) {
+                throw new \RuntimeException(
+                    \sprintf(_DB_QUERY_ERROR, $sql) . $db->error(), E_USER_ERROR
+                );
+            }
         }
+
         //$sess_handler->update_cookie();
         if (isset($_SESSION['xoopsUserGroups'])) {
             $xoopsUser->setGroups($_SESSION['xoopsUserGroups']);

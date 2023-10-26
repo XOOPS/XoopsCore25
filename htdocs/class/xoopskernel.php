@@ -174,6 +174,7 @@ class xos_kernel_Xoops2
             if (!(isset($_SERVER['PHP_SELF']) && ($_SERVER['REQUEST_URI'] = $_SERVER['PHP_SELF']))) {
                 $_SERVER['REQUEST_URI'] = $_SERVER['SCRIPT_NAME'];
             }
+
             if (isset($_SERVER['QUERY_STRING'])) {
                 $_SERVER['REQUEST_URI'] .= '?' . $_SERVER['QUERY_STRING'];
             }

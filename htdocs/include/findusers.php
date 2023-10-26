@@ -383,7 +383,7 @@ if (!Request::hasVar('user_submit', 'POST')) {
             'both' => _MA_USER_BOTH
         ));
 
-        $level_radio = new XoopsFormRadio(_MA_USER_LEVEL, 'level', @$_POST['level']);
+        $level_radio = new XoopsFormRadio(_MA_USER_LEVEL, 'level', Request::getString('level', '', 'POST'));
         $levels      = array(
             0 => _ALL,
             1 => _MA_USER_LEVEL_ACTIVE,
@@ -425,14 +425,14 @@ if (!Request::hasVar('user_submit', 'POST')) {
         }
     }
 
-    $sort_select = new XoopsFormSelect(_MA_USER_SORT, 'user_sort', @$_POST['user_sort']);
+    $sort_select = new XoopsFormSelect(_MA_USER_SORT, 'user_sort', Request::getString('user_sort', '', 'POST'));
     $sort_select->addOptionArray(array(
         'uname' => _MA_USER_UNAME,
         'last_login' => _MA_USER_LASTLOGIN,
         'user_regdate' => _MA_USER_REGDATE,
         'posts' => _MA_USER_POSTS
     ));
-    $order_select = new XoopsFormSelect(_MA_USER_ORDER, 'user_order', @$_POST['user_order']);
+    $order_select = new XoopsFormSelect(_MA_USER_ORDER, 'user_order', Request::getString('user_order', '', 'POST'));
     $order_select->addOptionArray(array(
         'ASC' => _MA_USER_ASC,
         'DESC' => _MA_USER_DESC
@@ -563,7 +563,7 @@ if (!Request::hasVar('user_submit', 'POST')) {
             }
         }
     }
-    $total     = $user_handler->getCount($criteria, @$_POST['groups']);
+    $total     = $user_handler->getCount($criteria, Request::getArray('groups', [], 'POST'));
     $validsort = array(
         'uname',
         'email',

@@ -27,7 +27,7 @@ function langDropdown()
     $content = '';
 
     $time = time();
-    if (!isset($_SESSION['XoopsMLcontent']) && @$_SESSION['XoopsMLcontent_expire'] < $time) {
+    if (!isset($_SESSION['XoopsMLcontent']) && (isset($_SESSION['XoopsMLcontent_expire']) && $_SESSION['XoopsMLcontent_expire'] < $time)) {
         include_once XOOPS_ROOT_PATH . '/kernel/module.php';
         $xlanguage = XoopsModule::getByDirname('xlanguage');
         if (is_object($xlanguage) && $xlanguage->getVar('isactive')) {

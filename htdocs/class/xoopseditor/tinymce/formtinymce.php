@@ -115,7 +115,7 @@ class XoopsFormTinymce extends XoopsEditor
             $this->config['fonts'] = constant('_XOOPS_EDITOR_TINYMCE_FONTS');
         }
 
-        return @$this->config['fonts'];
+        return isset($this->config['fonts']) ? $this->config['fonts'] : null;
     }
 
     /**

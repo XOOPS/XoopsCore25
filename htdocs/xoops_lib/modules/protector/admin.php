@@ -28,7 +28,7 @@ $xoopsModuleConfig = $config_handler->getConfigsByCat(0, $xoopsModule->getVar('m
 // check permission of 'module_admin' of this module
 /** @var XoopsGroupPermHandler $moduleperm_handler */
 $moduleperm_handler = xoops_getHandler('groupperm');
-if (!is_object(@$xoopsUser) || !$moduleperm_handler->checkRight('module_admin', $xoopsModule->getVar('mid'), $xoopsUser->getGroups())) {
+if (!isset($xoopsUser) || !is_object($xoopsUser) || !$moduleperm_handler->checkRight('module_admin', $xoopsModule->getVar('mid'), $xoopsUser->getGroups())) {
     die('only admin can access this area');
 }
 
@@ -64,7 +64,7 @@ if (file_exists("$mydirpath/language/$language/main.php")) {
 if (!empty($_GET['lib'])) {
     // common libs (eg. altsys)
     $lib  = preg_replace('/[^a-zA-Z0-9_-]/', '', Request::getString('lib', '', 'GET'));
-    $page = preg_replace('/[^a-zA-Z0-9_-]/', '', @Request::getString('page', '', 'GET'));
+    $page = preg_replace('/[^a-zA-Z0-9_-]/', '', Request::getString('page', '', 'GET'));
 
     if (file_exists(XOOPS_TRUST_PATH . '/libs/' . $lib . '/' . $page . '.php')) {
         include XOOPS_TRUST_PATH . '/libs/' . $lib . '/' . $page . '.php';
@@ -75,7 +75,7 @@ if (!empty($_GET['lib'])) {
     }
 } else {
     // fork each pages of this module
-    $page = preg_replace('/[^a-zA-Z0-9_-]/', '', @Request::getString('page', '', 'GET'));
+    $page = preg_replace('/[^a-zA-Z0-9_-]/', '', Request::getString('page', '', 'GET'));
 
     if (file_exists("$mytrustdirpath/admin/$page.php")) {
         include "$mytrustdirpath/admin/$page.php";

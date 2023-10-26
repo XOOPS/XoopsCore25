@@ -407,11 +407,13 @@ EOJS;
 
         $fontStr .= "&nbsp;{$styleStr}&nbsp;{$alignStr}&nbsp;\n";
 
+        $maxlength = isset($element->configs['maxlength']) ? $element->configs['maxlength'] : 0;
         $fontStr .= "<button type='button' class='btn btn-default btn-sm' onclick=\"XoopsCheckLength('"
-            . $element->getName() . "', '" . @$element->configs['maxlength'] . "', '"
-            . _XOOPS_FORM_ALT_LENGTH . "', '" . _XOOPS_FORM_ALT_LENGTH_MAX . "');\" title='"
-            . _XOOPS_FORM_ALT_CHECKLENGTH . "'><span class='fa fa-check-square-o' aria-hidden='true'></span></button>";
+                    . $element->getName() . "', '" . $maxlength . "', '"
+                    . _XOOPS_FORM_ALT_LENGTH . "', '" . _XOOPS_FORM_ALT_LENGTH_MAX . "');\" title='"
+                    . _XOOPS_FORM_ALT_CHECKLENGTH . "'><span class='fa fa-check-square-o' aria-hidden='true'></span></button>";
         $fontStr .= "</div></div>";
+
 
         return $fontStr;
     }

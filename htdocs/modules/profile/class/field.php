@@ -168,7 +168,7 @@ class ProfileField extends XoopsObject
                 break;
 
             case 'radio':
-                $element = new XoopsFormRadio($caption, $name, $value);
+                $element = new XoopsFormRadio($caption, $name, (string)$value);
                 $element->addOptionArray($options);
                 break;
 

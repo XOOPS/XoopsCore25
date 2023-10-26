@@ -488,7 +488,7 @@ function profile_getUserForm(XoopsUser $user, ProfileProfile $profile = null, $a
         $elements[0][] = array('element' => $pwd_tray, 'required' => 0); //cannot set an element tray required
         $weights[0][]  = 0;
 
-        $level_radio = new XoopsFormRadio(_PROFILE_MA_USERLEVEL, 'level', $user->getVar('level'));
+        $level_radio = new XoopsFormRadio(_PROFILE_MA_USERLEVEL, 'level', (string)$user->getVar('level'));
         $level_radio->addOption(1, _PROFILE_MA_ACTIVE);
         $level_radio->addOption(0, _PROFILE_MA_INACTIVE);
         //$level_radio->addOption(-1, _PROFILE_MA_DISABLED);
@@ -524,10 +524,10 @@ function profile_getUserForm(XoopsUser $user, ProfileProfile $profile = null, $a
             $fieldinfo['element']  = $fields[$i]->getEditElement($user, $profile);
             $fieldinfo['required'] = $fields[$i]->getVar('field_required');
 
-            $key              = @$all_categories[$fields[$i]->getVar('cat_id')]['cat_weight'] * $count_fields + $fields[$i]->getVar('cat_id');
+            $key              = isset($all_categories[$fields[$i]->getVar('cat_id')]['cat_weight']) ? (int)($all_categories[$fields[$i]->getVar('cat_id')]['cat_weight'] * $count_fields) + $fields[$i]->getVar('cat_id') : 0;
             $elements[$key][] = $fieldinfo;
             $weights[$key][]  = $fields[$i]->getVar('field_weight');
-            $categories[$key] = @$all_categories[$fields[$i]->getVar('cat_id')];
+            $categories[$key] = isset($all_categories[$fields[$i]->getVar('cat_id')]) ? $all_categories[$fields[$i]->getVar('cat_id')] : null;
         }
     }
 

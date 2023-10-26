@@ -32,7 +32,7 @@ function smarty_function_xoInboxCount($params, $smarty)
     }
 
     $time = time();
-    if (isset($_SESSION['xoops_inbox_count']) && @$_SESSION['xoops_inbox_count_expire'] > $time) {
+    if (isset($_SESSION['xoops_inbox_count']) && (isset($_SESSION['xoops_inbox_count_expire']) && $_SESSION['xoops_inbox_count_expire'] > $time)) {
         $totals['assign'] = (int)$_SESSION['xoops_inbox_count'];
         $totals['total'] = (int)$_SESSION['xoops_inbox_total'];
     } else {

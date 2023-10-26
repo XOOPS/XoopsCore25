@@ -91,7 +91,7 @@ class Protector_postcommon_register_insert_js_check extends ProtectorFilterAbstr
      */
     public function checkValidate()
     {
-        $user_md5 = trim(@$_POST['antispam_md5']);
+        $user_md5 = isset($_POST['antispam_md5']) ? trim($_POST['antispam_md5']) : '';
 
         // 2-3 hour margin
         if ($user_md5 != $this->getMd5() && $user_md5 != $this->getMd5(time() - 3600) && $user_md5 != $this->getMd5(time() - 7200)) {
