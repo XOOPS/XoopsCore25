@@ -292,6 +292,7 @@ class XoopsMailer
             $this->setBody(fread($fd, filesize($path)));
         }
         // for sending mail only
+        $headers = '';
         if ($this->isMail || !empty($this->toEmails)) {
             if (!empty($this->priority)) {
                 $this->headers[] = 'X-Priority: ' . $this->priority;
