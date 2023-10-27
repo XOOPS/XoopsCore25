@@ -594,7 +594,7 @@ class XoopsUser extends XoopsObject
      */
     public function getProfile()
     {
-        trigger_error(__CLASS__ . '::' . __FUNCTION__ . ' is deprecated', E_USER_WARNING);
+        $GLOBALS['xoopsLogger']->addDeprecated(__METHOD__ . ' is deprecated');
 
         return false;
     }
@@ -649,7 +649,7 @@ class XoopsUserHandler extends XoopsPersistableObjectHandler
      */
     public function loginUser($uname, $pwd, $md5 = false)
     {
-        trigger_error(__CLASS__ . '::' . __FUNCTION__ . ' is deprecated', E_USER_WARNING);
+        $GLOBALS['xoopsLogger']->addDeprecated(__METHOD__ . ' is deprecated');
 
         return false;
     }
@@ -663,7 +663,7 @@ class XoopsUserHandler extends XoopsPersistableObjectHandler
      */
     public function updateUserByField($fieldName, $fieldValue, $uid)
     {
-        trigger_error(__CLASS__ . '::' . __FUNCTION__ . ' is deprecated', E_USER_WARNING);
+        $GLOBALS['xoopsLogger']->addDeprecated(__METHOD__ . ' is deprecated');
 
         return false;
     }

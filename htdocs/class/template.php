@@ -173,7 +173,7 @@ class XoopsTpl extends SmartyBC
      */
     public function xoops_setTemplateDir($dirname)
     {
-        $GLOBALS['xoopsLogger']->addDeprecated('\'$xoopsTpl->xoops_setTemplateDir($value)\' is deprecated since XOOPS 2.5.4, please use \'$xoopsTpl->template_dir=$value;\' instead.');
+        $GLOBALS['xoopsLogger']->addDeprecated(__METHOD__ . '($value) is deprecated since XOOPS 2.5.4, please use \'$xoopsTpl->template_dir=$value;\' instead.');
 
         $this->template_dir = $dirname;
     }
@@ -184,7 +184,7 @@ class XoopsTpl extends SmartyBC
      */
     public function xoops_getTemplateDir()
     {
-        $GLOBALS['xoopsLogger']->addDeprecated('\'$xoopsTpl->xoops_getTemplateDir()\' is deprecated since XOOPS 2.5.4, please use \'$xoopsTpl->template_dir;\' instead.');
+        $GLOBALS['xoopsLogger']->addDeprecated(__METHOD__ . '() is deprecated since XOOPS 2.5.4, please use \'$xoopsTpl->template_dir;\' instead.');
 
         return $this->template_dir;
     }
@@ -195,7 +195,7 @@ class XoopsTpl extends SmartyBC
      */
     public function xoops_setDebugging($flag = false)
     {
-        $GLOBALS['xoopsLogger']->addDeprecated('\'$xoopsTpl->xoops_setDebugging($value)\' is deprecated since XOOPS 2.5.4, please use \'$xoopsTpl->debugging=$value;\' instead.');
+        $GLOBALS['xoopsLogger']->addDeprecated(__METHOD__ . '($value) is deprecated since XOOPS 2.5.4, please use \'$xoopsTpl->debugging=$value;\' instead.');
 
         $this->debugging = is_bool($flag) ? $flag : false;
     }
@@ -206,7 +206,7 @@ class XoopsTpl extends SmartyBC
      */
     public function xoops_setCaching($num = 0)
     {
-        $GLOBALS['xoopsLogger']->addDeprecated('\'$xoopsTpl->xoops_setCaching($value)\' is deprecated since XOOPS 2.5.4, please use \'$xoopsTpl->caching=$value;\' instead.');
+        $GLOBALS['xoopsLogger']->addDeprecated(__METHOD__ . '($value) is deprecated since XOOPS 2.5.4, please use \'$xoopsTpl->caching=$value;\' instead.');
 
         $this->caching = (int)$num;
     }
@@ -217,7 +217,7 @@ class XoopsTpl extends SmartyBC
      */
     public function xoops_setCompileDir($dirname)
     {
-        $GLOBALS['xoopsLogger']->addDeprecated('\'$xoopsTpl->xoops_setCompileDir($value)\' is deprecated since XOOPS 2.5.4, please use \'$xoopsTpl->compile_dir=$value;\' instead.');
+        $GLOBALS['xoopsLogger']->addDeprecated(__METHOD__ . '($value) is deprecated since XOOPS 2.5.4, please use \'$xoopsTpl->compile_dir=$value;\' instead.');
 
         $this->compile_dir = $dirname;
     }
@@ -228,7 +228,7 @@ class XoopsTpl extends SmartyBC
      */
     public function xoops_setCacheDir($dirname)
     {
-        $GLOBALS['xoopsLogger']->addDeprecated('\'$xoopsTpl->xoops_setCacheDir($value)\' is deprecated since XOOPS 2.5.4, please use \'$xoopsTpl->cache_dir=$value;\' instead.');
+        $GLOBALS['xoopsLogger']->addDeprecated(__METHOD__ . '($value) is deprecated since XOOPS 2.5.4, please use \'$xoopsTpl->cache_dir=$value;\' instead.');
 
         $this->cache_dir = $dirname;
     }
@@ -239,7 +239,7 @@ class XoopsTpl extends SmartyBC
      */
     public function xoops_canUpdateFromFile()
     {
-        $GLOBALS['xoopsLogger']->addDeprecated('\'$xoopsTpl->xoops_canUpdateFromFile()\' is deprecated since XOOPS 2.5.4, please use \'$xoopsTpl->compile_check;\' instead.');
+        $GLOBALS['xoopsLogger']->addDeprecated(__METHOD__ . '($value) is deprecated since XOOPS 2.5.4, please use \'$xoopsTpl->compile_check;\' instead.');
 
         return $this->compile_check;
     }
@@ -252,7 +252,7 @@ class XoopsTpl extends SmartyBC
      */
     public function xoops_fetchFromData($data)
     {
-        $GLOBALS['xoopsLogger']->addDeprecated('\'$xoopsTpl->xoops_fetchFromData($value)\' is deprecated since XOOPS 2.5.4, please use \'$xoopsTpl->fetchFromData($value);\' instead.');
+        $GLOBALS['xoopsLogger']->addDeprecated(__METHOD__ . '($value) is deprecated since XOOPS 2.5.4, please use \'$xoopsTpl->fetchFromData($value);\' instead.');
 
         return $this->fetchFromData($data);
     }
@@ -263,7 +263,7 @@ class XoopsTpl extends SmartyBC
      */
     public function xoops_setCacheTime($num = 0)
     {
-        $GLOBALS['xoopsLogger']->addDeprecated('\'$xoopsTpl->xoops_setCacheTime($value)\' is deprecated since XOOPS 2.5.4, please use \'$xoopsTpl->cache_lifetime=$value;\' instead.');
+        $GLOBALS['xoopsLogger']->addDeprecated(__METHOD__ . '($value) is deprecated since XOOPS 2.5.4, please use \'$xoopsTpl->cache_lifetime=$value;\' instead.');
 
         if (($num = (int)$num) <= 0) {
             $this->caching = 0;

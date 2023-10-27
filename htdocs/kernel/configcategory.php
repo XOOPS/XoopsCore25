@@ -253,7 +253,7 @@ class XoopsConfigCategoryHandler extends XoopsObjectHandler
      */
     public function getCatByModule($modid = 0)
     {
-        trigger_error(__CLASS__ . '::' . __FUNCTION__ . ' is deprecated', E_USER_WARNING);
+        $GLOBALS['xoopsLogger']->addDeprecated(__METHOD__ . ' is deprecated');
 
         return false;
     }

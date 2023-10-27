@@ -26,7 +26,7 @@
  */
 function system_CleanVars(&$global, $key, $default = '', $type = 'int')
 {
-	$GLOBALS['xoopsLogger']->addDeprecated("system_CleanVars() is deprecated since XOOPS 2.5.11, please use 'Xmf\Request' instead");
+	$GLOBALS['xoopsLogger']->addDeprecated('Function ' . __FUNCTION__ . " is deprecated since XOOPS 2.5.11, please use 'Xmf\Request' instead");
 	switch ($type) {
         case 'array':
             $ret = (isset($global[$key]) && \is_array($global[$key])) ? $global[$key] : $default;

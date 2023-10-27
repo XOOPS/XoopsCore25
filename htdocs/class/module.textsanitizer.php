@@ -769,7 +769,7 @@ class MyTextSanitizer
      */
     public function codeSanitizer($str, $image = 1)
     {
-        $GLOBALS['xoopsLogger']->addDeprecated(__CLASS__ . '::' . __FUNCTION__ . ' is deprecated');
+        $GLOBALS['xoopsLogger']->addDeprecated(__METHOD__ . ' is deprecated');
         $str = $this->htmlSpecialChars(str_replace('\"', '"', base64_decode($str)));
         $str =& $this->xoopsCodeDecode($str, $image);
 
@@ -788,7 +788,7 @@ class MyTextSanitizer
      */
     public function sanitizeForDisplay($text, $allowhtml = 0, $smiley = 1, $bbcode = 1)
     {
-        $GLOBALS['xoopsLogger']->addDeprecated(__CLASS__ . '::' . __FUNCTION__ . ' is deprecated');
+        $GLOBALS['xoopsLogger']->addDeprecated(__METHOD__ . ' is deprecated');
         if ($allowhtml == 0) {
             $text = $this->htmlSpecialChars($text);
         } else {
@@ -820,7 +820,7 @@ class MyTextSanitizer
      */
     public function sanitizeForPreview($text, $allowhtml = 0, $smiley = 1, $bbcode = 1)
     {
-        $GLOBALS['xoopsLogger']->addDeprecated(__CLASS__ . '::' . __FUNCTION__ . ' is deprecated');
+        $GLOBALS['xoopsLogger']->addDeprecated(__METHOD__ . ' is deprecated');
         $text = $this->oopsStripSlashesGPC($text);
         if ($allowhtml == 0) {
             $text = $this->htmlSpecialChars($text);
@@ -850,7 +850,7 @@ class MyTextSanitizer
      */
     public function makeTboxData4Save($text)
     {
-        $GLOBALS['xoopsLogger']->addDeprecated(__CLASS__ . '::' . __FUNCTION__ . ' is deprecated');
+        $GLOBALS['xoopsLogger']->addDeprecated(__METHOD__ . ' is deprecated');
 
         // $text = $this->undoHtmlSpecialChars($text);
         return $this->addSlashes($text);
@@ -866,7 +866,7 @@ class MyTextSanitizer
      */
     public function makeTboxData4Show($text, $smiley = 0)
     {
-        $GLOBALS['xoopsLogger']->addDeprecated(__CLASS__ . '::' . __FUNCTION__ . ' is deprecated');
+        $GLOBALS['xoopsLogger']->addDeprecated(__METHOD__ . ' is deprecated');
         $text = $this->htmlSpecialChars($text);
 
         return $text;
@@ -881,7 +881,7 @@ class MyTextSanitizer
      */
     public function makeTboxData4Edit($text)
     {
-        $GLOBALS['xoopsLogger']->addDeprecated(__CLASS__ . '::' . __FUNCTION__ . ' is deprecated');
+        $GLOBALS['xoopsLogger']->addDeprecated(__METHOD__ . ' is deprecated');
 
         return $this->htmlSpecialChars($text);
     }
@@ -896,7 +896,7 @@ class MyTextSanitizer
      */
     public function makeTboxData4Preview($text, $smiley = 0)
     {
-        $GLOBALS['xoopsLogger']->addDeprecated(__CLASS__ . '::' . __FUNCTION__ . ' is deprecated');
+        $GLOBALS['xoopsLogger']->addDeprecated(__METHOD__ . ' is deprecated');
         $text = $this->stripSlashesGPC($text);
         $text = $this->htmlSpecialChars($text);
 
@@ -912,7 +912,7 @@ class MyTextSanitizer
      */
     public function makeTboxData4PreviewInForm($text)
     {
-        $GLOBALS['xoopsLogger']->addDeprecated(__CLASS__ . '::' . __FUNCTION__ . ' is deprecated');
+        $GLOBALS['xoopsLogger']->addDeprecated(__METHOD__ . ' is deprecated');
         $text = $this->stripSlashesGPC($text);
 
         return $this->htmlSpecialChars($text);
@@ -927,7 +927,7 @@ class MyTextSanitizer
      */
     public function makeTareaData4Save($text)
     {
-        $GLOBALS['xoopsLogger']->addDeprecated(__CLASS__ . '::' . __FUNCTION__ . ' is deprecated');
+        $GLOBALS['xoopsLogger']->addDeprecated(__METHOD__ . ' is deprecated');
 
         return $this->addSlashes($text);
     }
@@ -944,7 +944,7 @@ class MyTextSanitizer
      */
     public function &makeTareaData4Show(&$text, $html = 1, $smiley = 1, $xcode = 1)
     {
-        $GLOBALS['xoopsLogger']->addDeprecated(__CLASS__ . '::' . __FUNCTION__ . ' is deprecated');
+        $GLOBALS['xoopsLogger']->addDeprecated(__METHOD__ . ' is deprecated');
         $text =& $this->displayTarea($text, $html, $smiley, $xcode);
 
         return $text;
@@ -959,7 +959,7 @@ class MyTextSanitizer
      */
     public function makeTareaData4Edit($text)
     {
-        $GLOBALS['xoopsLogger']->addDeprecated(__CLASS__ . '::' . __FUNCTION__ . ' is deprecated');
+        $GLOBALS['xoopsLogger']->addDeprecated(__METHOD__ . ' is deprecated');
 
         return $this->htmlSpecialChars($text);
     }
@@ -976,7 +976,7 @@ class MyTextSanitizer
      */
     public function &makeTareaData4Preview(&$text, $html = 1, $smiley = 1, $xcode = 1)
     {
-        $GLOBALS['xoopsLogger']->addDeprecated(__CLASS__ . '::' . __FUNCTION__ . ' is deprecated');
+        $GLOBALS['xoopsLogger']->addDeprecated(__METHOD__ . ' is deprecated');
         $text =& $this->previewTarea($text, $html, $smiley, $xcode);
 
         return $text;
@@ -991,7 +991,7 @@ class MyTextSanitizer
      */
     public function makeTareaData4PreviewInForm($text)
     {
-        $GLOBALS['xoopsLogger']->addDeprecated(__CLASS__ . '::' . __FUNCTION__ . ' is deprecated');
+        $GLOBALS['xoopsLogger']->addDeprecated(__METHOD__ . ' is deprecated');
         // if magic_quotes_gpc is on, do stipslashes
         $text = $this->stripSlashesGPC($text);
 
@@ -1007,7 +1007,7 @@ class MyTextSanitizer
      */
     public function makeTareaData4InsideQuotes($text)
     {
-        $GLOBALS['xoopsLogger']->addDeprecated(__CLASS__ . '::' . __FUNCTION__ . ' is deprecated');
+        $GLOBALS['xoopsLogger']->addDeprecated(__METHOD__ . ' is deprecated');
 
         return $this->htmlSpecialChars($text);
     }
@@ -1021,7 +1021,7 @@ class MyTextSanitizer
      */
     public function oopsStripSlashesGPC($text)
     {
-        $GLOBALS['xoopsLogger']->addDeprecated(__CLASS__ . '::' . __FUNCTION__ . ' is deprecated');
+        $GLOBALS['xoopsLogger']->addDeprecated(__METHOD__ . ' is deprecated');
 
         return $this->stripSlashesGPC($text);
     }
@@ -1035,7 +1035,7 @@ class MyTextSanitizer
      */
     public function oopsStripSlashesRT($text)
     {
-        $GLOBALS['xoopsLogger']->addDeprecated(__CLASS__ . '::' . __FUNCTION__ . ' is deprecated');
+        $GLOBALS['xoopsLogger']->addDeprecated(__METHOD__ . ' is deprecated');
         if (get_magic_quotes_runtime()) {
             $text = stripslashes($text);
         }
@@ -1052,7 +1052,7 @@ class MyTextSanitizer
      */
     public function oopsAddSlashes($text)
     {
-        $GLOBALS['xoopsLogger']->addDeprecated(__CLASS__ . '::' . __FUNCTION__ . ' is deprecated');
+        $GLOBALS['xoopsLogger']->addDeprecated(__METHOD__ . ' is deprecated');
 
         return $this->addSlashes($text);
     }
@@ -1066,7 +1066,7 @@ class MyTextSanitizer
      */
     public function oopsHtmlSpecialChars($text)
     {
-        $GLOBALS['xoopsLogger']->addDeprecated(__CLASS__ . '::' . __FUNCTION__ . ' is deprecated');
+        $GLOBALS['xoopsLogger']->addDeprecated(__METHOD__ . ' is deprecated');
 
         return $this->htmlSpecialChars($text);
     }
@@ -1080,7 +1080,7 @@ class MyTextSanitizer
      */
     public function oopsNl2Br($text)
     {
-        $GLOBALS['xoopsLogger']->addDeprecated(__CLASS__ . '::' . __FUNCTION__ . ' is deprecated');
+        $GLOBALS['xoopsLogger']->addDeprecated(__METHOD__ . ' is deprecated');
 
         return $this->nl2Br($text);
     }

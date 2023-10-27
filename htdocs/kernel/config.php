@@ -302,7 +302,7 @@ class XoopsConfigHandler
      */
     public function deleteConfigOption(&$criteria)
     {
-        trigger_error(__CLASS__ . '::' . __FUNCTION__ . ' is deprecated', E_USER_WARNING);
+        $GLOBALS['xoopsLogger']->addDeprecated(__METHOD__ . ' is deprecated');
 
         return false;
     }

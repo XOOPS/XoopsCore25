@@ -113,7 +113,7 @@ class XoopsMailer
     public function XoopsMailer()
     {
         $trace = debug_backtrace(DEBUG_BACKTRACE_IGNORE_ARGS, 1);
-        trigger_error("Should call parent::__construct in {$trace[0]['file']} line {$trace[0]['line']},");
+        trigger_error("Should call parent::__construct in {$trace[0]['file']} line {$trace[0]['line']},", E_USER_DEPRECATED);
         self::__construct();
     }
 
@@ -278,19 +278,27 @@ class XoopsMailer
             if ($debug) {
                 $this->errors[] = _MAIL_MSGBODY;
             }
-
             return false;
         } elseif ($this->template != '') {
             $path = $this->getTemplatePath();
-            if (!($fd = @fopen($path, 'r'))) {
+            if (!file_exists($path) || !is_readable($path)) {
                 if ($debug) {
                     $this->errors[] = _MAIL_FAILOPTPL;
                 }
+                return false;
+            }
 
+            $fd = fopen($path, 'rb');
+            if ($fd === false) {
+                if ($debug) {
+                    $this->errors[] = _MAIL_FAILOPTPL;
+                }
                 return false;
             }
             $this->setBody(fread($fd, filesize($path)));
+            fclose($fd);
         }
+
         // for sending mail only
         $headers = '';
         if ($this->isMail || !empty($this->toEmails)) {

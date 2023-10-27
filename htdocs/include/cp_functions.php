@@ -108,7 +108,7 @@ function xoopsfwrite()
  */
 function xoops_module_get_admin_menu()
 {
-    $GLOBALS['xoopsLogger']->addDeprecated(__FUNCTION__ . ' is deprecated, should not be used any longer');
+    $GLOBALS['xoopsLogger']->addDeprecated('Function ' . __FUNCTION__ . ' is deprecated, should not be used any longer');
     /************************************************************
      * Based on:
      * - PHP Layers Menu 1.0.7(c)2001,2002 Marco Pratesi <pratesi@telug.it>
@@ -192,7 +192,7 @@ function xoops_module_get_admin_menu()
  */
 function xoops_module_write_admin_menu($content)
 {
-    $GLOBALS['xoopsLogger']->addDeprecated(__FUNCTION__ . ' is deprecated, should not be used any longer');
+    $GLOBALS['xoopsLogger']->addDeprecated('Function ' . __FUNCTION__ . ' is deprecated, should not be used any longer');
     if (!xoopsfwrite()) {
         return false;
     }

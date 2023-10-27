@@ -379,7 +379,7 @@ class XoopsLogger
      */
     public function triggerError($errkey = 0, $errStr = '', $errFile = '', $errLine = '', $errNo = 0)
     {
-        $GLOBALS['xoopsLogger']->addDeprecated('\'$xoopsLogger->triggerError();\' is deprecated since XOOPS 2.5.4');
+        $GLOBALS['xoopsLogger']->addDeprecated(__METHOD__ . '  is deprecated since XOOPS 2.5.4');
 
         if (!empty($errStr)) {
             $errStr = sprintf($errStr, $errkey);
@@ -395,7 +395,7 @@ class XoopsLogger
      */
     public function dumpAll()
     {
-        $GLOBALS['xoopsLogger']->addDeprecated('\'$xoopsLogger->dumpAll();\' is deprecated since XOOPS 2.5.4, please use \'$xoopsLogger->dump(\'\');\' instead.');
+        $GLOBALS['xoopsLogger']->addDeprecated(__METHOD__ . '  is deprecated since XOOPS 2.5.4, please use \'$xoopsLogger->dump(\'\');\' instead.');
 
         return $this->dump('');
     }
@@ -407,7 +407,7 @@ class XoopsLogger
      */
     public function dumpBlocks()
     {
-        $GLOBALS['xoopsLogger']->addDeprecated('\'$xoopsLogger->dumpBlocks();\' is deprecated since XOOPS 2.5.4, please use \'$xoopsLogger->dump(\'blocks\');\' instead.');
+        $GLOBALS['xoopsLogger']->addDeprecated(__METHOD__ . '  is deprecated since XOOPS 2.5.4, please use \'$xoopsLogger->dump(\'blocks\');\' instead.');
 
         return $this->dump('blocks');
     }
@@ -419,7 +419,7 @@ class XoopsLogger
      */
     public function dumpExtra()
     {
-        $GLOBALS['xoopsLogger']->addDeprecated('\'$xoopsLogger->dumpExtra();\' is deprecated since XOOPS 2.5.4, please use \'$xoopsLogger->dump(\'extra\');\' instead.');
+        $GLOBALS['xoopsLogger']->addDeprecated(__METHOD__ . '  is deprecated since XOOPS 2.5.4, please use \'$xoopsLogger->dump(\'extra\');\' instead.');
 
         return $this->dump('extra');
     }
@@ -431,7 +431,7 @@ class XoopsLogger
      */
     public function dumpQueries()
     {
-        $GLOBALS['xoopsLogger']->addDeprecated('\'$xoopsLogger->dumpQueries();\' is deprecated since XOOPS 2.5.4, please use \'$xoopsLogger->dump(\'queries\');\' instead.');
+        $GLOBALS['xoopsLogger']->addDeprecated(__METHOD__ . '  is deprecated since XOOPS 2.5.4, please use \'$xoopsLogger->dump(\'queries\');\' instead.');
 
         return $this->dump('queries');
     }
