@@ -222,7 +222,7 @@ switch ($op) {
             } else {
                 $msgs[] = _CM_COMDELETED . ' (ID: ' . $child_comments[$i]->getVar('com_id') . ')';
                 // store poster ID and deleted post number into array for later use
-                $poster_id = $child_comments[$i]->getVar('com_uid');
+                $poster_id = (int)$child_comments[$i]->getVar('com_uid');
                 if ($poster_id > 0) {
                     $deleted_num[$poster_id] = !isset($deleted_num[$poster_id]) ? 1 : ($deleted_num[$poster_id] + 1);
                 }
