@@ -355,13 +355,10 @@ class XoopsBlock extends XoopsObject
 
                     return $myts->displayTarea($content, 0, 0);
                 }
-                break;
             case 'e':
                 return $this->getVar('content', 'e');
-                break;
             default:
                 return $this->getVar('content', 'n');
-                break;
         }
     }
 
