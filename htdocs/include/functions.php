@@ -30,7 +30,8 @@ defined('XOOPS_ROOT_PATH') || exit('Restricted access');
 function xoops_getHandler($name, $optional = false)
 {
     static $handlers;
-    $name = strtolower(trim($name));
+    $class = '';
+    $name  = strtolower(trim($name));
     if (!isset($handlers[$name])) {
         if (file_exists($hnd_file = XOOPS_ROOT_PATH . '/kernel/' . $name . '.php')) {
             require_once $hnd_file;
