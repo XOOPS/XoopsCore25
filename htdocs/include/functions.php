@@ -152,7 +152,7 @@ function xoops_loadLanguage($name, $domain = '', $language = null)
             return false;
         }
     }
-    $ret = include_once $fileinc;
+    $ret = include $fileinc;
 
     return $ret;
 }
