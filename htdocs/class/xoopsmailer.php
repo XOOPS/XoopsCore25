@@ -281,7 +281,7 @@ class XoopsMailer
             return false;
         } elseif ($this->template != '') {
             $path = $this->getTemplatePath();
-            if (!file_exists($path) || !is_readable($path)) {
+            if (!is_string($path) || !file_exists($path) || !is_readable($path)) {
                 if ($debug) {
                     $this->errors[] = _MAIL_FAILOPTPL;
                 }
