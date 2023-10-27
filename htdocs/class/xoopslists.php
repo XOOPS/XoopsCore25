@@ -258,7 +258,7 @@ if (!defined('XOOPS_LISTS_INCLUDED')) {
             $dirlist = XoopsLists::getDirListAsArray(XOOPS_ROOT_PATH . '/images/avatar/');
             if (count($dirlist) > 0) {
                 foreach ($dirlist as $dir) {
-                    $avatars[$dir] = &XoopsLists::getImgListAsArray(XOOPS_ROOT_PATH . '/images/avatar/' . $dir . '/', $dir . '/');
+                    $avatars[$dir] = XoopsLists::getImgListAsArray(XOOPS_ROOT_PATH . '/images/avatar/' . $dir . '/', $dir . '/');
                 }
             } else {
                 return false;

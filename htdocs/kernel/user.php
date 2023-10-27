@@ -647,7 +647,7 @@ class XoopsUserHandler extends XoopsPersistableObjectHandler
      * @param bool $md5
      * @return bool|object
      */
-    public function &loginUser($uname, $pwd, $md5 = false)
+    public function loginUser($uname, $pwd, $md5 = false)
     {
         trigger_error(__CLASS__ . '::' . __FUNCTION__ . ' is deprecated', E_USER_WARNING);
 

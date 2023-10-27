@@ -218,9 +218,12 @@ class XoopsObject
             switch ($this->vars[$key]['data_type']) {
                 case XOBJ_DTYPE_UNICODE_ARRAY:
                     if (is_array($value)) {
-                        $this->vars[$key]['value'] =& array_walk($value, 'xoops_aw_decode');
+                        $temp = $value;
+                        array_walk($temp, 'xoops_aw_decode');
+                        $value = $temp;
+                        $this->vars[$key]['value'] = $value;
                     } else {
-                        $this->vars[$key]['value'] =& xoops_convert_decode($value);
+                        $this->vars[$key]['value'] = xoops_convert_decode($value);
                     }
                     break;
                 case XOBJ_DTYPE_UNICODE_URL:
@@ -792,7 +795,7 @@ class XoopsObject
                             $cleanv = XOOPS_PROT . $cleanv;
                         }
                         if (!$v['not_gpc']) {
-                            $cleanv =& $myts->stripSlashesGPC($cleanv);
+                            $cleanv = $myts->stripSlashesGPC($cleanv);
                         }
                         break;
                     case XOBJ_DTYPE_ARRAY:
@@ -868,7 +871,7 @@ class XoopsObject
                         }
                         $cleanv = xoops_convert_encode($cleanv);
                         if (!$v['not_gpc']) {
-                            $cleanv =& $myts->stripSlashesGPC($cleanv);
+                            $cleanv = $myts->stripSlashesGPC($cleanv);
                         }
                         break;
                     case XOBJ_DTYPE_UNICODE_ARRAY:
