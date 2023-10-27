@@ -487,6 +487,7 @@ class XoopsCommentHandler extends XoopsObjectHandler
         if (!$this->db->isResultSet($result)) {
             return $ret;
         }
+        /** @var array $myrow */
         while (false !== ($myrow = $this->db->fetchArray($result))) {
             $comment = new XoopsComment();
             $comment->assignVars($myrow);

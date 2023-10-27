@@ -1152,6 +1152,7 @@ class XoopsBlockHandler extends XoopsObjectHandler
         if (!$this->db->isResultSet($result)) {
             return $ret;
         }
+        /** @var array $myrow */
         while (false !== ($myrow = $this->db->fetchArray($result))) {
             $block = new XoopsBlock();
             $block->assignVars($myrow);

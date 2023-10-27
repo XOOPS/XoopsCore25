@@ -861,6 +861,7 @@ class XoopsModuleHandler extends XoopsObjectHandler
         $result = $this->db->query($sql);
         if ($this->db->isResultSet($result)) {
             $block_id_arr = array();
+            /** @var array $myrow */
             while (false !== ($myrow = $this->db->fetchArray($result))) {
                 $block_id_arr[] = $myrow['block_id'];
             }
@@ -886,11 +887,14 @@ class XoopsModuleHandler extends XoopsObjectHandler
             }
         }
 
-        if (!empty($this->_cachedModule_dirname[$module->getVar('dirname')])) {
-            unset($this->_cachedModule_dirname[$module->getVar('dirname')]);
+        $dirname = (string) $module->getVar('dirname');
+        $mid = (int) $module->getVar('mid');
+
+        if (!empty($this->_cachedModule_dirname[$dirname])) {
+            unset($this->_cachedModule_dirname[$dirname]);
         }
-        if (!empty($this->_cachedModule_mid[$module->getVar('mid')])) {
-            unset($this->_cachedModule_mid[$module->getVar('mid')]);
+        if (!empty($this->_cachedModule_mid[$mid])) {
+            unset($this->_cachedModule_mid[$mid]);
         }
 
         return true;
@@ -918,6 +922,7 @@ class XoopsModuleHandler extends XoopsObjectHandler
         if (!$this->db->isResultSet($result)) {
             return $ret;
         }
+        /** @var array $myrow */
         while (false !== ($myrow = $this->db->fetchArray($result))) {
             $module = new XoopsModule();
             $module->assignVars($myrow);

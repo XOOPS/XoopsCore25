@@ -364,6 +364,7 @@ class XoopsNotificationHandler extends XoopsObjectHandler
         if (!$this->db->isResultSet($result)) {
             return $ret;
         }
+        /** @var array $myrow */
         while (false !== ($myrow = $this->db->fetchArray($result))) {
             $notification = new XoopsNotification();
             $notification->assignVars($myrow);

@@ -507,6 +507,7 @@ class XoopsMemberHandler
         if (!$this->userHandler->db->isResultSet($result)) {
             return $ret;
         }
+        /** @var array $myrow */
         while (false !== ($myrow = $this->userHandler->db->fetchArray($result))) {
             if ($asobject) {
                 $user = new XoopsUser();
