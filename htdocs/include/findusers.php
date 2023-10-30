@@ -24,13 +24,14 @@ include_once dirname(__DIR__) . '/mainfile.php';
 xoops_header(false);
 
 $denied = true;
-if (Request::hasVar('token')) {
+if (Request::hasVar('token') && is_object($xoopsUser)) {
     if ($GLOBALS['xoopsSecurity']->validateToken(Request::getString('token'), false)) {
         $denied = false;
     }
 } elseif (is_object($xoopsUser) && $xoopsUser->isAdmin()) {
     $denied = false;
 }
+
 if ($denied) {
     xoops_error(_NOPERM);
     exit();
