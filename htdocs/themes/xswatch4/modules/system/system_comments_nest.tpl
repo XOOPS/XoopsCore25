@@ -11,7 +11,7 @@
     <{assign var="indent" value="`$reply.prefix/25`"}>
     <{assign var="fullcolwidth" value="12"}>
 
-    <{if $indent>3}>
+    <{if isset($indent) && $indent > 3}>
     <{assign var="indent" value="3"}>
     <{/if}>
     <{assign var="replyspace" value="`$fullcolwidth-$indent`"}>

@@ -1,4 +1,4 @@
-<{if $xoops_page == "index"}>
+<{if isset($xoops_page) && $xoops_page == "index"}>
     <!-- remove "vert" class for standard horizontal scroll -->
     <div id="sliderCarousel" class="vert carousel slide mb-4" data-ride="carousel">
         <ol class="carousel-indicators">

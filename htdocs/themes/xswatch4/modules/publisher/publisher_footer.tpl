@@ -1,4 +1,4 @@
-<{if $isAdmin == 1}>
+<{if isset($isAdmin) && $isAdmin == 1}>
     <div class="publisher_adminlinks"><{$publisher_adminpage}></div><{/if}>
 
 <{if (!empty($commentatarticlelevel) && !empty($item.cancomment)) || isset($com_rule) && $com_rule != 0}>

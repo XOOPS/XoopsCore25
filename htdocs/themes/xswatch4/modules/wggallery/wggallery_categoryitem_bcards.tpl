@@ -1,8 +1,10 @@
 <{assign var='cols' value='col-12'}>
-<{if     $number_cols_album == 6}><{assign var='cols' value='col-12 col-md-2'}>
-<{elseif $number_cols_album == 4}><{assign var='cols' value='col-12 col-md-3'}>
-<{elseif $number_cols_album == 3}><{assign var='cols' value='col-12 col-md-4'}>
-<{elseif $number_cols_album == 2}><{assign var='cols' value='col-12 col-md-6'}>
+<{if isset($number_cols_album)}>
+    <{if $number_cols_album == 6}><{assign var='cols' value='col-12 col-md-2'}>
+    <{elseif $number_cols_album == 4}><{assign var='cols' value='col-12 col-md-3'}>
+    <{elseif $number_cols_album == 3}><{assign var='cols' value='col-12 col-md-4'}>
+    <{elseif $number_cols_album == 2}><{assign var='cols' value='col-12 col-md-6'}>
+    <{/if}>
 <{/if}>
 <div class="card <{$cols}>">
     <{if $category.image}>

@@ -12,7 +12,7 @@
 
     <{include file="$themePath/tpl/xswatchCss.tpl" assign="xswatchCss"}>
     <{include file="$themePath/tpl/xswatchDarkCss.tpl" assign="xswatchDarkCss"}>
-    <{if $xswatchDarkCss == ''}>
+    <{if isset($xswatchDarkCss) && $xswatchDarkCss == ''}>
         <link rel="stylesheet" type="text/css" href="<{$themeUrl}><{$xswatchCss}>/xoops.css">
         <link rel="stylesheet" type="text/css" href="<{$themeUrl}><{$xswatchCss}>/bootstrap.min.css">
     <{else}>

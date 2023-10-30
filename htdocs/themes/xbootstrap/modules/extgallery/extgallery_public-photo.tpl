@@ -30,7 +30,7 @@
 
             <div class="col-xs-6 col-sm-6 col-md-6">
                 <ul class="pull-right list-unstyled">
-                    <{if $prevId != 0}>
+                    <{if isset($prevId) && $prevId != 0}>
                         <li class="nav-btn"><a href="<{xoAppUrl 'modules/extgallery/'}>public-photo.php?photoId=<{$prevId}>"><span
                                         class="glyphicon glyphicon-circle-arrow-left"></span></a><{else}>
                         </li>
@@ -38,7 +38,7 @@
                     <li class="small"><{$currentPhoto}></li>
                     <li class="small"><{$lang.of}></li>
                     <li class="small"><{$totalPhoto}></li>
-                    <{if $nextId != 0}>
+                    <{if isset($nextId) && $nextId != 0}>
                         <li class="nav-btn"><a href="<{xoAppUrl 'modules/extgallery/'}>public-photo.php?photoId=<{$nextId}>"><span
                                         class="glyphicon glyphicon-circle-arrow-right"></span></a><{else}>
                         </li>

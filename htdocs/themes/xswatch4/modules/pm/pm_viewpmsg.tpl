@@ -1,20 +1,20 @@
 <h4><{$smarty.const._PM_PRIVATEMESSAGE}></h4>
-<{if !empty($op)}>
-	<{if !empty($msg)}>
+<{if isset($op)}>
+	<{if isset($msg)}>
 		<div class="alert alert-success alert-dismissable">
 			<button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
 			<strong><{$msg}></strong>
 		</div>
 	<{/if}>
 
-	<{if !empty($errormsg)}>
+	<{if isset($errormsg)}>
 		<div class="alert alert-danger alert-dismissable">
 			<button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
 			<strong><{$errormsg}></strong>
 		</div>
 	<{/if}>
 
-	<{if !empty($pagenav)}>
+	<{if isset($pagenav)}>
 	<div class="generic-pagination col text-right mb-2">
 		<{$pagenav|replace:'form':'div'|replace:'id="xo-pagenav"':''}>
 	</div>
@@ -90,7 +90,7 @@
 							<td class='text-center'>
 								<{if isset($message.postername) && $message.postername!= ""}>
 									<{assign var="tempPosteruid" value=$message.posteruid}>
-									<{xoUserInfo 'uid=$message.posteruid'}>
+									<{xoUserInfo uid=$message.posteruid}>
 									<a href='<{$xoops_url}>/userinfo.php?uid=<{$message.posteruid}>' alt="<{$message.postername}>" title='<{$message.postername}>'>
 										<{if isset($userInfo.user_avatar) && $userInfo.user_avatar != "blank.gif"}>
 											<img src="<{$xoops_url}>/uploads/<{$userInfo.user_avatar}>" alt="<{$message.postername}>" class="img-rounded img-thumbnail" width="128">
@@ -106,7 +106,7 @@
 							</td>
 
 							<td class='d-none d-sm-table-cell'>
-								<{if !empty($message.msg_image)}>
+								<{if isset($message.msg_image)}>
 									<img src='<{$xoops_url}>/images/subject/<{$message.msg_image}>' alt='' />
 								<{/if}>
 								<a href='readpmsg.php?msg_id=<{$message.msg_id}>&amp;start=<{$message.msg_no}>&amp;total_messages=<{$total_messages}>&amp;op=<{$op}>' title=''>
@@ -114,7 +114,7 @@
 								</a>
 							</td>
 							<td class='d-table-cell d-sm-none'>
-								<{if !empty($message.msg_image)}>
+								<{if isset($message.msg_image)}>
 									<img src='<{$xoops_url}>/images/subject/<{$message.msg_image}>' alt='' />
 								<{/if}>
 								<a href='readpmsg.php?msg_id=<{$message.msg_id}>&amp;start=<{$message.msg_no}>&amp;total_messages=<{$total_messages}>&amp;op=<{$op}>' title=''>
@@ -133,7 +133,7 @@
 			</div>
 		</div>
 		<hr />
-		<{if !empty($display)}>
+		<{if isset($display)}>
 			<{$pmform.elements.move_messages.body|replace:'formButton':'btn btn-success'|replace:'" >':'" ><span class="fa fa-sign-in fa-2x"></span><br />'}>
 			<{$pmform.elements.delete_messages.body|replace:'formButton':'btn btn-secondary'|replace:'" >':'" ><span class="fa fa-times fa-2x"></span><br />'}>
 			<{$pmform.elements.empty_messages.body|replace:'formButton':'btn btn-secondary'|replace:'" >':'" ><span class="fa fa-trash fa-2x"></span><br />'}>
@@ -146,7 +146,7 @@
 		</div>
 	</form>
 
-	<{if !empty($pagenav)}>
+	<{if isset($pagenav)}>
 	<div class="generic-pagination col text-right mt-2">
 		<{$pagenav|replace:'form':'div'|replace:'id="xo-pagenav"':''}>
 	</div>

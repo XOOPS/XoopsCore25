@@ -11,7 +11,7 @@
         <div class="row">
 
             <div class="newbb-header-icons hidden-xs">
-                <{if $viewer_level > 1}>
+                <{if isset($viewer_level) && $viewer_level > 1}>
                     <div class="col-md-6 mb10">
                         <strong><{$smarty.const._MD_NEWBB_TOPIC}>:</strong>
                         <a href="<{$xoops_url}>/modules/<{$xoops_dirname}>/list.topic.php?status=active#admin" title="<{$smarty.const._MD_NEWBB_TYPE_ADMIN}>" class="btn btn-xs btn-primary">
@@ -28,9 +28,9 @@
                     </div>
                 <{/if}>
 
-                <div class="<{if $viewer_level > 1}>col-md-6<{else}>col-md-12<{/if}> text-right"><{include file="db:newbb_index_menu.tpl"}></div>
+                <div class="<{if isset($viewer_level) && $viewer_level > 1}>col-md-6<{else}>col-md-12<{/if}> text-right"><{include file="db:newbb_index_menu.tpl"}></div>
 
-                <{if $viewer_level > 1}>
+                <{if isset($viewer_level) && $viewer_level > 1}>
                     <div class="col-md-12">
                         <strong><{$smarty.const._MD_NEWBB_POST2}>:</strong>
                         <a href="<{$xoops_url}>/modules/<{$xoops_dirname}>/viewpost.php?status=active#admin" title="<{$smarty.const._MD_NEWBB_TYPE_ADMIN}>" class="btn btn-xs btn-primary">
@@ -123,11 +123,11 @@
                     <{/if}>
                 </div><!-- .panel-heading -->
 
-                <div id="<{$category.cat_element_id}>" class="panel-collapse collapse <{if $subforum_display == 'expand'}>in<{/if}>">
+                <div id="<{$category.cat_element_id}>" class="panel-collapse collapse <{if isset($subforum_display) && $subforum_display == 'expand'}>in<{/if}>">
                     <div class="panel-body">
                         <{if $category.forums}>
                             <div class="row hidden-xs">
-                                <{if $subforum_display == "expand"}>
+                                <{if isset($subforum_display) && $subforum_display == "expand"}>
                                     <div class="col-sm-6 col-md-6"><strong><{$smarty.const._MD_NEWBB_FORUM}></strong></div>
                                 <{else}>
                                     <div class="col-sm-6 col-md-6"><strong><{$smarty.const._MD_NEWBB_FORUM}></strong></div>

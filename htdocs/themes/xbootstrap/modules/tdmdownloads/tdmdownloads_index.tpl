@@ -15,7 +15,7 @@
 
                 <!-- Category Description -->
                 <div class="aligncenter">
-                    <{if $category.description_main != ""}>
+                    <{if !empty($category.description_main)}>
                         <button class="btn btn-success btn-xs" data-toggle="modal" data-target="#tdmDesc-<{$category.id}>">+</button>
                     <{else}>
                         <button class="btn btn-xs disabled" data-toggle="modal">+</button>
@@ -41,7 +41,7 @@
                 </div>
                 <!-- End Category Description -->
 
-                <{if $category.subcategories != ""}>
+                <{if !empty($category.subcategories)}>
                     <{$smarty.const._MD_TDMDOWNLOADS_INDEX_SCAT}>
                     <ul><{$category.subcategories}></ul>
                 <{/if}>
@@ -57,9 +57,9 @@
     </div>
 
     <div class="tdm-downloads-info row">
-        <{if $bl_affichage==1}>
+        <{if isset($bl_affichage) && $bl_affichage == 1}>
             <div class="col-md-12"><h3><{$smarty.const._MD_TDMDOWNLOADS_INDEX_BLNAME}>:</h3></div>
-            <{if $bl_date != ""}>
+            <{if !empty($bl_date)}>
                 <div class="col-sm-4 col-md-4">
                     <h3 class="tdm-title"><span class="glyphicon glyphicon-calendar"></span> <{$smarty.const._MD_TDMDOWNLOADS_INDEX_BLDATE}></h3>
                     <ul class="list-unstyled">
@@ -74,7 +74,7 @@
                 </div>
             <{/if}>
 
-            <{if $bl_pop != ""}>
+            <{if !empty($bl_pop)}>
                 <div class="col-sm-4 col-md-4">
                     <h3 class="tdm-title"><span class="glyphicon glyphicon-star"></span> <{$smarty.const._MD_TDMDOWNLOADS_INDEX_BLPOP}></h3>
                     <ul class="list-unstyled">
@@ -88,7 +88,7 @@
                 </div>
             <{/if}>
 
-            <{if $bl_rating != ""}>
+            <{if !empty($bl_rating)}>
                 <div class="col-sm-4 col-md-4">
                     <h3 class="tdm-title"><span class="glyphicon glyphicon-thumbs-up"></span> <{$smarty.const._MD_TDMDOWNLOADS_INDEX_BLRATING}></h3>
                     <ul class="list-unstyled">
@@ -115,7 +115,7 @@
 
     <{if isset($show_latest_files)}>
         <div class="row">
-            <{if $file != ""}>
+            <{if !empty($file)}>
                 <div class="col-md-12">
                     <h1><{$smarty.const._MD_TDMDOWNLOADS_INDEX_LATESTLIST}>:</h1>
                 </div>

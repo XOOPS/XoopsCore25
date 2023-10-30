@@ -1,5 +1,5 @@
 <div class="xoopstube">
-    <{if $catarray.imageheader != ""}>
+    <{if !empty($catarray.imageheader)}>
         <div class="xoopstube-header text-center">
             <{$catarray.imageheader}>
         </div>
@@ -28,7 +28,7 @@
 
 
     <div class="order-by">
-        <{if $show_videos == true}>
+        <{if isset($show_videos) && $show_videos == true}>
             <h3 class="xoops-default-title"><{$smarty.const._MD_XOOPSTUBE_SORTBY}></h3>
             <div class="row">
                 <div class="col-sm-3 col-md-3">
@@ -77,7 +77,7 @@
         <{/if}>
     </div><!-- .order-by -->
 
-    <{if $page_nav == true}>
+    <{if isset($page_nav) && $page_nav == true}>
         <{$pagenav}>
     <{/if}>
 
@@ -85,7 +85,7 @@
         <{include file="db:xoopstube_videoload.tpl" video=$video[i]}>
     <{/section}>
 
-    <{if $page_nav == true}>
+    <{if isset($page_nav) && $page_nav == true}>
         <{$pagenav}>
     <{/if}>
 

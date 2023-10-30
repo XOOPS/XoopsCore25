@@ -14,7 +14,7 @@
                    <img src="<{$xoops_imageurl}>images/newbb-noavatar.png" alt="<{$topic_post.poster.name}>" class="img-circle img-thumbnail">
             <{/if}>
 
-            <{if $topic_post.poster.rank.title !=""}>
+            <{if !empty($topic_post.poster.rank.title)}>
                 <ul class="list-unstyled">
                     <li><{$topic_post.poster.rank.title}></li>
                     <li><img src="<{$xoops_upload_url}>/<{$topic_post.poster.rank.image}>" alt="<{$topic_post.poster.rank.title}>"></li>

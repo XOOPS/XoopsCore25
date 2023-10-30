@@ -14,7 +14,7 @@
         <li class="nav-item"><a class="nav-link" href="<{xoAppUrl 'notifications.php'}>" title="<{$block.lang_notifications}>"><span class="fa fa-info"></span><{$block.lang_notifications}></a>
         </li>
         <{xoInboxCount assign='unread_count'}>
-        <{if $unread_count > 0}>
+        <{if isset($unread_count) && $unread_count > 0}>
             <li class="nav-item"><a class="nav-link info" href="<{xoAppUrl 'viewpmsg.php'}>" title="<{$block.lang_inbox}>"><span class="fa fa-envelope-o"></span><{$block.lang_inbox}>
                     <span class="badge badge-primary badge-pill"><{$unread_count}></span></a></li>
         <{else}>

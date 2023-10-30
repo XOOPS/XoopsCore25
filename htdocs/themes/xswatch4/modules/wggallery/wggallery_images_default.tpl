@@ -39,7 +39,7 @@
                             <{if $image.com_show}>
 								<p class='wgg-comcount'><img class='wgg-btn-icon' src='<{$wggallery_icon_url_16}>comments.png' alt='<{$smarty.const._CO_WGGALLERY_COMMENTS}>' title='<{$smarty.const._CO_WGGALLERY_COMMENTS}>'><{$image.com_count_text}></p>
                             <{/if}>
-                            <{if $rating > 0}>
+                            <{if isset($rating) && $rating > 0}>
                                 <{if $rating_5stars || $rating_10stars || $rating_10num}>
                                     <p><img class='wgg-btn-icon' src='<{$wggallery_icon_url_16}>rate.png' alt='<{$smarty.const._CO_WGGALLERY_IMAGE_RATINGLIKES}>' title='<{$smarty.const._CO_WGGALLERY_IMAGE_RATINGLIKES}>'><{$image.rating.shorttext}></p>
                                 <{/if}>

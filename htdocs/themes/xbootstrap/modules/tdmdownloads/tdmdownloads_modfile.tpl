@@ -2,7 +2,7 @@
 
     <div class="breadcrumb"><{$navigation}></div>
 
-    <{if $message_erreur != ''}>
+    <{if !empty($message_erreur)}>
         <div class="alert alert-error"><{$message_erreur}></div>
     <{/if}>
 

@@ -1,14 +1,11 @@
-
-<{if $number_cols_album == 6}>
-	<div class='col-12 col-md-2'>
-<{elseif $number_cols_album == 4}>
-	<div class='col-12 col-md-3'>
-<{elseif $number_cols_album == 3}>
-	<div class='col-12 col-md-4'>
-<{elseif $number_cols_album == 2}>
-	<div class='col-12 col-md-6'>
+<{if isset($number_cols_album)}>
+    <{if $number_cols_album == 6}>	<div class='col-12 col-md-2'>
+    <{elseif $number_cols_album == 4}>	<div class='col-12 col-md-3'>
+    <{elseif $number_cols_album == 3}>	<div class='col-12 col-md-4'>
+    <{elseif $number_cols_album == 2}>	<div class='col-12 col-md-6'>
+    <{/if}>
 <{else}>
-	<div class='col-12 col-md-12'>
+   <div class='col-12 col-md-12'>
 <{/if}>
 	<div class='center'>
 		<{if $album.nb_images}>

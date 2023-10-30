@@ -2,7 +2,7 @@
 
     <div class="breadcrumb"><{$navigation|replace:'<img src="assets/images/deco/arrow.gif" alt="arrow">':'&nbsp;/&nbsp;'}></div>
 
-    <{if $message_erreur != ''}>
+    <{if !empty($message_erreur)}>
         <div class="alert alert-error"><{$message_erreur}></div>
     <{/if}>
 

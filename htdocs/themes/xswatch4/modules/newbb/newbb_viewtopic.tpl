@@ -44,7 +44,7 @@
     <{/if}>
 
     <div class="row mb10">
-        <{if $viewer_level > 1}>
+        <{if isset($viewer_level) && $viewer_level > 1}>
             <div class="col-sm-8 col-md-8">
                 <{if isset($mode) && $mode > 1}>
                 <form class="form-inline" name="form_posts_admin" action="action.post.php" method="POST" onsubmit="if(window.document.form_posts_admin.op.value &lt; 1){return false;}">
@@ -84,12 +84,12 @@
                 <{/if}>
             </div>
         <{/if}>
-        <div class="<{if $viewer_level > 1}>col-sm-4 col-md-4<{else}>col-sm-12 col-md-12<{/if}> generic-pagination text-right">
+        <div class="<{if isset($viewer_level) && $viewer_level > 1}>col-sm-4 col-md-4<{else}>col-sm-12 col-md-12<{/if}> generic-pagination text-right">
             <{$forum_page_nav|replace:'form':'div'|replace:'id="xo-pagenav"':''}>
         </div>
     </div>
 
-    <{if $mode <= 1}>
+    <{if isset($mode) && $mode <= 1}>
         <{if isset($topic_poll)}>
             <{if !empty($topic_pollresult)}>
                 <{include file="db:newbb_poll_results.tpl" poll=$poll|default:''}>
@@ -103,7 +103,7 @@
         <div class="col-sm-6 col-md-6">
             <a href="<{$xoops_url}>/modules/<{$xoops_dirname}>/reply.php?topic_id=<{$topic_id}>" title="<{$smarty.const.THEME_FORUM_REPLY}>" class="btn btn-primary"><{$smarty.const.THEME_FORUM_REPLY}></a>
 
-            <{if $viewer_level > 1}>
+            <{if isset($viewer_level) && $viewer_level > 1}>
                 <a href="<{$xoops_url}>/modules/<{$xoops_dirname}>/newtopic.php?forum=<{$forum_id}>" title="<{$smarty.const.THEME_FORUM_NEWTOPIC}>" class="btn btn-primary"><{$smarty.const.THEME_FORUM_NEWTOPIC}></a>
             <{elseif !$xoops_isuser}>
                 <a href="<{$xoops_url}>/user.php" title="<{$smarty.const.THEME_FORUM_REGISTER}>" class="btn btn-success"><{$smarty.const.THEME_FORUM_REGISTER}></a>
@@ -133,7 +133,7 @@
 
     <div class="row collapse mb10" id="forum-search">
         <div class="col-sm-12 col-md-12">
-            <{if $mode <= 1}>
+            <{if isset($mode) && $mode <= 1}>
                 <form class="input-group" id="search-topic" action="<{$xoops_url}>/modules/<{$xoops_dirname}>/search.php" method="get" role="search">
                     <input name="term" id="term" type="text" class="form-control" placeholder="<{$smarty.const.THEME_NEWBB_SEARCH_TOPIC}>">
                     <input type="hidden" name="forum" id="forum" value="<{$forum_id}>">
@@ -154,7 +154,7 @@
         <div class="col">
             <select class="form-control mb-2" name="topicoption" id="topicoption" onchange="if(this.options[this.selectedIndex].value.length >0 ) { window.document.location=this.options[this.selectedIndex].value;}">
                 <option value=""><{$smarty.const._MD_NEWBB_TOPICOPTION}></option>
-                <{if $viewer_level > 1}>
+                <{if isset($viewer_level) && $viewer_level > 1}>
                 <{foreach item=act from=$admin_actions|default:null}>
                 <option value="<{$act.link}>"><{$act.name}></option>
                 <{/foreach}>
@@ -209,7 +209,7 @@
         <div class="col-sm-6 col-md-6 hidden-xs">
             <a href="<{$xoops_url}>/modules/<{$xoops_dirname}>/reply.php?topic_id=<{$topic_id}>" title="<{$smarty.const.THEME_FORUM_REPLY}>" class="btn btn-primary"><{$smarty.const.THEME_FORUM_REPLY}></a>
 
-            <{if $viewer_level > 1}>
+            <{if isset($viewer_level) && $viewer_level > 1}>
                 <a href="<{$xoops_url}>/modules/<{$xoops_dirname}>/newtopic.php?forum=<{$forum_id}>" title="<{$smarty.const.THEME_FORUM_NEWTOPIC}>" class="btn btn-primary"><{$smarty.const.THEME_FORUM_NEWTOPIC}></a>
             <{else}>
                 <a href="<{$xoops_url}>/user.php" title="<{$smarty.const.THEME_FORUM_REGISTER}>" class="btn btn-success"><{$smarty.const.THEME_FORUM_REGISTER}></a>

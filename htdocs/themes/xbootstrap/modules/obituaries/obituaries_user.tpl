@@ -62,7 +62,7 @@
         <div class="alert alert-warning"><b><{$smarty.const._AM_OBITUARIES_SERVICE}></b> :</div>
         <div class="well well-lg"><{$obituaries_user.obituaries_service}></div>
 
-        <{if $obituaries_user.obituaries_memorial != ""}>
+        <{if !empty($obituaries_user.obituaries_memorial)}>
             <div class="alert alert-danger"><b><{$smarty.const._AM_OBITUARIES_MEMORIAL}></b> :</div>
             <div class="well well-lg"><{$obituaries_user.obituaries_memorial}></div>
         <{/if}>

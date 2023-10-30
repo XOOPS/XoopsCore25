@@ -29,7 +29,7 @@
                             <a class="dropdown-item" href="<{xoAppUrl 'modules/system/admin.php?fct=tplsets'}>"><span class="fa fa-file"></span> <{$smarty.const.THEME_TOOLBAR_TEMPLATES}></a>
                             <a class="dropdown-item" href="<{xoAppUrl 'modules/system/admin.php?fct=maintenance'}>"><span class="fa fa-wrench"></span> <{$smarty.const.THEME_TOOLBAR_MAINTENANCE}></a>
                             <a class="dropdown-item" href="<{xoAppUrl 'modules/system/admin.php?fct=preferences&op=show&confcat_id=1#debug_mode'}>"><span class="fa fa-terminal"></span> <{$smarty.const.THEME_TOOLBAR_DEBUGMODE}></a>
-                            <{if $xoops_dirname!='system'}>
+                            <{if isset($xoops_dirname) && $xoops_dirname != 'system'}>
                             <a class="dropdown-item" href="<{$xoops_url}>/modules/<{$xoops_dirname}>/admin/index.php"><span class="fa fa-hand-o-up"></span> <{$smarty.const.THEME_TOOLBAR_THIS_MODULE}></a>
                             <{/if}>
                         </div>

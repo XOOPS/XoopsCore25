@@ -18,7 +18,7 @@
 
     <{include file="$theme_name/tpl/xswatchCss.tpl" assign="xswatchCss"}>
     <{include file="$theme_name/tpl/xswatchDarkCss.tpl" assign="xswatchDarkCss"}>
-    <{if $xswatchDarkCss == ''}>
+    <{if isset($xswatchDarkCss) && $xswatchDarkCss == ''}>
         <link rel="stylesheet" type="text/css" href="<{$xoops_imageurl}><{$xswatchCss}>/xoops.css">
         <link rel="stylesheet" type="text/css" href="<{$xoops_imageurl}><{$xswatchCss}>/bootstrap.min.css">
     <{else}>
@@ -34,8 +34,7 @@
     <script src="<{$xoops_imageurl}>js/bootstrap.bundle.min.js"></script>
     <link rel="alternate" type="application/rss+xml" title="" href="<{xoAppUrl 'backend.php'}>">
 
-    <title><{if $xoops_dirname == "system"}><{$xoops_sitename}><{if $xoops_pagetitle !=''}> - <{$xoops_pagetitle}><{/if}><{else}><{if $xoops_pagetitle
-        !=''}><{$xoops_pagetitle}> - <{$xoops_sitename}><{/if}><{/if}></title>
+    <title><{if isset($xoops_dirname) && $xoops_dirname == "system"}><{$xoops_sitename}><{if !empty($xoops_pagetitle)}> - <{$xoops_pagetitle}><{/if}><{else}><{if !empty($xoops_pagetitle)}><{$xoops_pagetitle}> - <{$xoops_sitename}><{/if}><{/if}></title>
     <{$xoops_module_header|default:''}>
 </head>
 <body class="site-closed-body">

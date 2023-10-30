@@ -2,7 +2,7 @@
 <html xmlns="https://www.w3.org/1999/xhtml" xml:lang="<{$xoops_langcode}>" lang="<{$xoops_langcode}>">
 <head>
     <!-- title and metas -->
-    <title><{if $xoops_pagetitle !=''}><{$xoops_pagetitle}> : <{/if}><{$xoops_sitename}></title>
+    <title><{if !empty($xoops_pagetitle)}><{$xoops_pagetitle}> : <{/if}><{$xoops_sitename}></title>
     <meta http-equiv="content-type" content="text/html; charset=<{$xoops_charset}>"/>
     <meta name="robots" content="<{$xoops_meta_robots}>"/>
     <meta name="keywords" content="<{$xoops_meta_keywords}>"/>

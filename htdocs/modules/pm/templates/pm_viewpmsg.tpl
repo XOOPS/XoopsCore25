@@ -57,7 +57,7 @@
                 <th class='txtcenter'><{$smarty.const._PM_DATE}></th>
             </tr>
 
-            <{if $total_messages == 0}>
+            <{if isset($total_messages) && $total_messages == 0}>
                 <tr>
                     <td class='even txtcenter' colspan='6'><{$smarty.const._PM_YOUDONTHAVE}></td>
                 </tr>
@@ -73,12 +73,12 @@
                         <td class='aligntop width5 txtcenter'><img src='<{xoModuleIcons16 'mail_notread.png'}>' alt='<{$smarty.const._PM_NOTREAD}>'title='<{$smarty.const._PM_NOTREAD}>'/></td>
                     <{/if}>
                     <td class='aligntop width5 txtcenter'>
-                        <{if $message.msg_image != ""}>
+                        <{if !empty($message.msg_image)}>
                             <img src='<{$xoops_url}>/images/subject/<{$message.msg_image}>' alt=''/>
                         <{/if}>
                     </td>
                     <td class='alignmiddle width10'>
-                        <{if $message.postername != ""}>
+                        <{if !empty($message.postername)}>
                             <a href='<{$xoops_url}>/userinfo.php?uid=<{$message.posteruid}>' title=''><{$message.postername}></a>
                         <{else}>
                             <{$anonymous}>

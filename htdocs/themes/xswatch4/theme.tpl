@@ -46,7 +46,7 @@
     <{/if}>
     <link rel="alternate" type="application/rss+xml" title="" href="<{xoAppUrl 'backend.php'}>">
 
-    <title><{if $xoops_dirname == "system"}><{$xoops_sitename}><{if $xoops_pagetitle !=''}> - <{$xoops_pagetitle}><{/if}><{else}><{if $xoops_pagetitle !=''}><{$xoops_pagetitle}> - <{$xoops_sitename}><{/if}><{/if}></title>
+    <title><{if isset($xoops_dirname) && $xoops_dirname == "system"}><{$xoops_sitename}><{if !empty($xoops_pagetitle)}> - <{$xoops_pagetitle}><{/if}><{else}><{if !empty($xoops_pagetitle)}><{$xoops_pagetitle}> - <{$xoops_sitename}><{/if}><{/if}></title>
 
 <{$xoops_module_header}>
     <link rel="stylesheet" type="text/css" media="all" href="<{$xoops_themecss}>">
@@ -57,14 +57,14 @@
 <{include file="$theme_name/tpl/nav-menu.tpl"}>
 
 <{* un-comment to enable slider*}>
-<{*<{if $xoops_page == "index"}>*}>
+<{*<{if isset($xoops_page) && $xoops_page == "index"}>*}>
 <{*    <{include file="$theme_name/tpl/slider.tpl"}>*}>
 <{*<{/if}>*}>
 
 
 <div class="container maincontainer">
 
-<{if $xoops_page == "index"}>
+<{if isset($xoops_page) && $xoops_page == "index"}>
     <{include file="$theme_name/tpl/jumbotron.tpl"}>
 <{/if}>
 

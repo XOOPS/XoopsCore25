@@ -44,8 +44,8 @@
 		<div class="container-fluid">
 			<div class="row border p-2">
 				<div class="col-md-4 text-center">
-					<{if $op=='out'}><b><{$smarty.const._PM_TO}></b><br> <{else}><b><{$smarty.const._PM_FROM}></b><br> <{/if}>
-					<{if ( $poster != false ) }>
+					<{if isset($op) && $op == 'out'}><b><{$smarty.const._PM_TO}></b><br> <{else}><b><{$smarty.const._PM_FROM}></b><br> <{/if}>
+					<{if $poster != false }>
 						<a href="<{$xoops_url}>/userinfo.php?uid=<{$poster->getVar('uid')}>">
 							<h5><{$poster->getVar('uname')}></h5>
 							<{if ($poster->getVar("user_avatar") != "blank.gif")}>
@@ -65,7 +65,7 @@
 					<{/if}>
 				</div>
 				<div class="col-md-8">
-					<h5><{if $message.msg_image != ""}><img src='<{$xoops_url}>/images/subject/<{$message.msg_image}>' alt='' /><{/if}>
+					<h5><{if !empty($message.msg_image)}><img src='<{$xoops_url}>/images/subject/<{$message.msg_image}>' alt='' /><{/if}>
 						<{$message.subject}>
 					</h5>
 					<div class="text-muted text-left"><small><i class="fa fa-calendar-o"></i>&nbsp;<{$smarty.const._PM_SENTC}>&nbsp;<{$message.msg_time}></small></div>

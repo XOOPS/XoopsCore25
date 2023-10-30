@@ -1,6 +1,6 @@
 <{* enable adhesive menus by setting value to 'yes', disable using 'no' *}>
 <{assign var='stickyHeader' value='yes'}>
-<{if $stickyHeader === 'yes'}><header class="adhesiveHeader"><{/if}>
+<{if isset($stickyHeader) && $stickyHeader === 'yes'}><header class="adhesiveHeader"><{/if}>
 <div class="navbar-wrapper">
     <div class="navbar navbar-inverse navbar-static-top global-nav">
         <div class="container">
@@ -51,4 +51,4 @@
         </div>
     </div>
 </div><!-- .navbar-wrapper -->
-<{if $stickyHeader === 'yes'}></header><{/if}>
+<{if isset($stickyHeader) && $stickyHeader === 'yes'}></header><{/if}>
