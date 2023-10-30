@@ -11,6 +11,9 @@ CHANGED FILES:
 upgrade/language/english/upgrade.php
 upgrade/language/english/smarty3.php
 
+htdocs/class/xoopseditor/tinymce/language/english.php
+- added define('_FAILGETIMG', 'Failed to get image %s');
+
 ================================
 2023/03/19: Version 2.5.11-RC1
 ================================
