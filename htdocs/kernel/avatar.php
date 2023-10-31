@@ -311,6 +311,7 @@ class XoopsAvatarHandler extends XoopsObjectHandler
                 \sprintf(_DB_QUERY_ERROR, $sql) . $this->db->error(), E_USER_ERROR
             );
         }
+        /** @var array $myrow */
         while (false !== ($myrow = $this->db->fetchArray($result))) {
             $avatar = new XoopsAvatar();
             $avatar->assignVars($myrow);
@@ -394,6 +395,7 @@ class XoopsAvatarHandler extends XoopsObjectHandler
         if (!$this->db->isResultSet($result)) {
             return $ret;
         }
+        /** @var array $myrow */
         while (false !== ($myrow = $this->db->fetchArray($result))) {
             $ret[] = &$myrow['user_id'];
         }

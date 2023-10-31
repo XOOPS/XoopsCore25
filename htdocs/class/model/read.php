@@ -200,7 +200,7 @@ class XoopsModelRead extends XoopsModelAbstract
      */
     public function &getByLimit($limit = 0, $start = 0, CriteriaElement $criteria = null, $fields = null, $asObject = true)
     {
-        $GLOBALS['xoopsLogger']->addDeprecated(__CLASS__ . '::' . __FUNCTION__ . '() is deprecated, please use getAll instead.');
+        $GLOBALS['xoopsLogger']->addDeprecated(__METHOD__ . '() is deprecated, please use getAll instead.');
         if (isset($criteria) && is_subclass_of($criteria, 'CriteriaElement')) {
             $criteria->setLimit($limit);
             $criteria->setStart($start);
@@ -224,7 +224,7 @@ class XoopsModelRead extends XoopsModelAbstract
      */
     public function convertResultSet($result, $id_as_key = false, $as_object = true)
     {
-        $GLOBALS['xoopsLogger']->addDeprecated(__CLASS__ . '::' . __FUNCTION__ . '() is deprecated.');
+        $GLOBALS['xoopsLogger']->addDeprecated(__METHOD__ . '() is deprecated.');
         $ret = array();
         while (false !== ($myrow = $this->handler->db->fetchArray($result))) {
             $obj = $this->handler->create(false);

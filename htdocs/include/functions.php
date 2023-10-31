@@ -30,7 +30,8 @@ defined('XOOPS_ROOT_PATH') || exit('Restricted access');
 function xoops_getHandler($name, $optional = false)
 {
     static $handlers;
-    $name = strtolower(trim($name));
+    $class = '';
+    $name  = strtolower(trim($name));
     if (!isset($handlers[$name])) {
         if (file_exists($hnd_file = XOOPS_ROOT_PATH . '/kernel/' . $name . '.php')) {
             require_once $hnd_file;
@@ -639,7 +640,7 @@ function checkEmail($email, $antispam = false)
         if (count($domain_array) < 2) {
             return false; // Not enough parts to domain
         }
-        for ($i = 0; $i < count($domain_array); ++$i) {
+        for ($i = 0, $iMax = count($domain_array); $i < $iMax; ++$i) {
             if (!preg_match("/^(([A-Za-z0-9][A-Za-z0-9-]{0,61}[A-Za-z0-9])|([A-Za-z0-9]+))$/", $domain_array[$i])) {
                 return false;
             }

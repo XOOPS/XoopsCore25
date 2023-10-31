@@ -350,6 +350,7 @@ class SystemBlockHandler extends XoopsPersistableObjectHandler
         }
 
         if ($as_object) {
+            /** @var array $myrow */
             while (false !== ($myrow = $this->db->fetchArray($result))) {
                 $object = $this->create(false);
                 $object->assignVars($myrow);
@@ -362,6 +363,7 @@ class SystemBlockHandler extends XoopsPersistableObjectHandler
             }
         } else {
             $object = $this->create(false);
+            /** @var array $myrow */
             while (false !== ($myrow = $this->db->fetchArray($result))) {
                 $object->assignVars($myrow);
                 if ($id_as_key) {
@@ -479,6 +481,7 @@ class SystemBlockHandler extends XoopsPersistableObjectHandler
                 );
             }
             $blockids = array();
+            /** @var array $myrow */
             while (false !== ($myrow = $this->db->fetchArray($result))) {
                 $blockids[] = $myrow['gperm_itemid'];
             }

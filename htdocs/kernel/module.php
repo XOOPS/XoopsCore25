@@ -497,7 +497,7 @@ class XoopsModule extends XoopsObject
      */
     public function checkAccess()
     {
-        trigger_error(__CLASS__ . '::' . __FUNCTION__ . ' is deprecated', E_USER_WARNING);
+        $GLOBALS['xoopsLogger']->addDeprecated(__METHOD__ . ' is deprecated');
 
         return false;
     }
@@ -509,7 +509,7 @@ class XoopsModule extends XoopsObject
      */
     public function loadLanguage($type = 'main')
     {
-        trigger_error(__CLASS__ . '::' . __FUNCTION__ . ' is deprecated', E_USER_WARNING);
+        $GLOBALS['xoopsLogger']->addDeprecated(__METHOD__ . ' is deprecated');
 
         return false;
     }
@@ -519,7 +519,7 @@ class XoopsModule extends XoopsObject
      */
     public function loadErrorMessages()
     {
-        trigger_error(__CLASS__ . '::' . __FUNCTION__ . ' is deprecated', E_USER_WARNING);
+        $GLOBALS['xoopsLogger']->addDeprecated(__METHOD__ . ' is deprecated');
 
         return false;
     }
@@ -529,7 +529,7 @@ class XoopsModule extends XoopsObject
      */
     public function getCurrentPage()
     {
-        trigger_error(__CLASS__ . '::' . __FUNCTION__ . ' is deprecated', E_USER_WARNING);
+        $GLOBALS['xoopsLogger']->addDeprecated(__METHOD__ . ' is deprecated');
 
         return false;
     }
@@ -542,7 +542,7 @@ class XoopsModule extends XoopsObject
      */
     public function install($admingroups = array(), $accessgroups = array())
     {
-        trigger_error(__CLASS__ . '::' . __FUNCTION__ . ' is deprecated', E_USER_WARNING);
+        $GLOBALS['xoopsLogger']->addDeprecated(__METHOD__ . ' is deprecated');
 
         return false;
     }
@@ -552,7 +552,7 @@ class XoopsModule extends XoopsObject
      */
     public function update()
     {
-        trigger_error(__CLASS__ . '::' . __FUNCTION__ . ' is deprecated', E_USER_WARNING);
+        $GLOBALS['xoopsLogger']->addDeprecated(__METHOD__ . ' is deprecated');
 
         return false;
     }
@@ -562,7 +562,7 @@ class XoopsModule extends XoopsObject
      */
     public function insert()
     {
-        trigger_error(__CLASS__ . '::' . __FUNCTION__ . ' is deprecated', E_USER_WARNING);
+        $GLOBALS['xoopsLogger']->addDeprecated(__METHOD__ . ' is deprecated');
 
         return false;
     }
@@ -572,7 +572,7 @@ class XoopsModule extends XoopsObject
      */
     public function executeSQL()
     {
-        trigger_error(__CLASS__ . '::' . __FUNCTION__ . ' is deprecated', E_USER_WARNING);
+        $GLOBALS['xoopsLogger']->addDeprecated(__METHOD__ . ' is deprecated');
 
         return false;
     }
@@ -582,7 +582,7 @@ class XoopsModule extends XoopsObject
      */
     public function insertTemplates()
     {
-        trigger_error(__CLASS__ . '::' . __FUNCTION__ . ' is deprecated', E_USER_WARNING);
+        $GLOBALS['xoopsLogger']->addDeprecated(__METHOD__ . ' is deprecated');
 
         return false;
     }
@@ -595,7 +595,7 @@ class XoopsModule extends XoopsObject
      */
     public function gettemplate($template, $block = false)
     {
-        trigger_error(__CLASS__ . '::' . __FUNCTION__ . ' is deprecated', E_USER_WARNING);
+        $GLOBALS['xoopsLogger']->addDeprecated(__METHOD__ . ' is deprecated');
 
         return false;
     }
@@ -605,7 +605,7 @@ class XoopsModule extends XoopsObject
      */
     public function insertBlocks()
     {
-        trigger_error(__CLASS__ . '::' . __FUNCTION__ . ' is deprecated', E_USER_WARNING);
+        $GLOBALS['xoopsLogger']->addDeprecated(__METHOD__ . ' is deprecated');
 
         return false;
     }
@@ -615,7 +615,7 @@ class XoopsModule extends XoopsObject
      */
     public function insertConfigCategories()
     {
-        trigger_error(__CLASS__ . '::' . __FUNCTION__ . ' is deprecated', E_USER_WARNING);
+        $GLOBALS['xoopsLogger']->addDeprecated(__METHOD__ . ' is deprecated');
 
         return false;
     }
@@ -625,7 +625,7 @@ class XoopsModule extends XoopsObject
      */
     public function insertConfig()
     {
-        trigger_error(__CLASS__ . '::' . __FUNCTION__ . ' is deprecated', E_USER_WARNING);
+        $GLOBALS['xoopsLogger']->addDeprecated(__METHOD__ . ' is deprecated');
 
         return false;
     }
@@ -635,7 +635,7 @@ class XoopsModule extends XoopsObject
      */
     public function insertProfileFields()
     {
-        trigger_error(__CLASS__ . '::' . __FUNCTION__ . ' is deprecated', E_USER_WARNING);
+        $GLOBALS['xoopsLogger']->addDeprecated(__METHOD__ . ' is deprecated');
 
         return false;
     }
@@ -648,7 +648,7 @@ class XoopsModule extends XoopsObject
      */
     public function executeScript($type, $state = 2)
     {
-        trigger_error(__CLASS__ . '::' . __FUNCTION__ . ' is deprecated', E_USER_WARNING);
+        $GLOBALS['xoopsLogger']->addDeprecated(__METHOD__ . ' is deprecated');
 
         return false;
     }
@@ -661,7 +661,7 @@ class XoopsModule extends XoopsObject
      */
     public function insertGroupPermissions($groups, $type)
     {
-        trigger_error(__CLASS__ . '::' . __FUNCTION__ . ' is deprecated', E_USER_WARNING);
+        $GLOBALS['xoopsLogger']->addDeprecated(__METHOD__ . ' is deprecated');
 
         return false;
     }
@@ -861,6 +861,7 @@ class XoopsModuleHandler extends XoopsObjectHandler
         $result = $this->db->query($sql);
         if ($this->db->isResultSet($result)) {
             $block_id_arr = array();
+            /** @var array $myrow */
             while (false !== ($myrow = $this->db->fetchArray($result))) {
                 $block_id_arr[] = $myrow['block_id'];
             }
@@ -886,11 +887,14 @@ class XoopsModuleHandler extends XoopsObjectHandler
             }
         }
 
-        if (!empty($this->_cachedModule_dirname[$module->getVar('dirname')])) {
-            unset($this->_cachedModule_dirname[$module->getVar('dirname')]);
+        $dirname = (string) $module->getVar('dirname');
+        $mid = (int) $module->getVar('mid');
+
+        if (!empty($this->_cachedModule_dirname[$dirname])) {
+            unset($this->_cachedModule_dirname[$dirname]);
         }
-        if (!empty($this->_cachedModule_mid[$module->getVar('mid')])) {
-            unset($this->_cachedModule_mid[$module->getVar('mid')]);
+        if (!empty($this->_cachedModule_mid[$mid])) {
+            unset($this->_cachedModule_mid[$mid]);
         }
 
         return true;
@@ -918,6 +922,7 @@ class XoopsModuleHandler extends XoopsObjectHandler
         if (!$this->db->isResultSet($result)) {
             return $ret;
         }
+        /** @var array $myrow */
         while (false !== ($myrow = $this->db->fetchArray($result))) {
             $module = new XoopsModule();
             $module->assignVars($myrow);

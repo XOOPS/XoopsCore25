@@ -122,7 +122,7 @@ class XoopsObject
     public function XoopsObject()
     {
         $trace = debug_backtrace(DEBUG_BACKTRACE_IGNORE_ARGS, 1);
-        trigger_error("Should call parent::__construct in {$trace[0]['file']} line {$trace[0]['line']},");
+        trigger_error("Should call parent::__construct in {$trace[0]['file']} line {$trace[0]['line']},", E_USER_DEPRECATED);
         self::__construct();
     }
 
@@ -218,9 +218,12 @@ class XoopsObject
             switch ($this->vars[$key]['data_type']) {
                 case XOBJ_DTYPE_UNICODE_ARRAY:
                     if (is_array($value)) {
-                        $this->vars[$key]['value'] =& array_walk($value, 'xoops_aw_decode');
+                        $temp = $value;
+                        array_walk($temp, 'xoops_aw_decode');
+                        $value = $temp;
+                        $this->vars[$key]['value'] = $value;
                     } else {
-                        $this->vars[$key]['value'] =& xoops_convert_decode($value);
+                        $this->vars[$key]['value'] = xoops_convert_decode($value);
                     }
                     break;
                 case XOBJ_DTYPE_UNICODE_URL:
@@ -340,7 +343,7 @@ class XoopsObject
     public function destoryVars($var)
     {
         $trace = debug_backtrace(DEBUG_BACKTRACE_IGNORE_ARGS, 1);
-        trigger_error("XoopsObject::destoryVars() is deprecated, called from {$trace[0]['file']} line {$trace[0]['line']}");
+        $GLOBALS['xoopsLogger']->addDeprecated(__METHOD__ . "() is deprecated, called from {$trace[0]['file']}line {$trace[0]['line']}");
         return $this->destroyVars($var);
     }
 
@@ -362,7 +365,7 @@ class XoopsObject
     public function setFormVars($var_arr = null, $pref = 'xo_', $not_gpc = false)
     {
         $trace = debug_backtrace(DEBUG_BACKTRACE_IGNORE_ARGS, 1);
-        trigger_error("XoopsObject::setFormVars() is deprecated, called from {$trace[0]['file']} line {$trace[0]['line']}");
+        $GLOBALS['xoopsLogger']->addDeprecated(__METHOD__ . "() is deprecated, called from {$trace[0]['file']}line {$trace[0]['line']}");
 
         $len = strlen($pref);
         if (is_array($var_arr)) {
@@ -792,7 +795,7 @@ class XoopsObject
                             $cleanv = XOOPS_PROT . $cleanv;
                         }
                         if (!$v['not_gpc']) {
-                            $cleanv =& $myts->stripSlashesGPC($cleanv);
+                            $cleanv = $myts->stripSlashesGPC($cleanv);
                         }
                         break;
                     case XOBJ_DTYPE_ARRAY:
@@ -868,7 +871,7 @@ class XoopsObject
                         }
                         $cleanv = xoops_convert_encode($cleanv);
                         if (!$v['not_gpc']) {
-                            $cleanv =& $myts->stripSlashesGPC($cleanv);
+                            $cleanv = $myts->stripSlashesGPC($cleanv);
                         }
                         break;
                     case XOBJ_DTYPE_UNICODE_ARRAY:
@@ -903,7 +906,7 @@ class XoopsObject
     public function registerFilter($filtername)
     {
         $trace = debug_backtrace(DEBUG_BACKTRACE_IGNORE_ARGS, 1);
-        trigger_error("XoopsObject::registerFilter() is deprecated, called from {$trace[0]['file']} line {$trace[0]['line']}");
+        $GLOBALS['xoopsLogger']->addDeprecated(__METHOD__ . "() is deprecated, called from {$trace[0]['file']}line {$trace[0]['line']}");
         $this->_filters[] = $filtername;
     }
 
@@ -947,7 +950,7 @@ class XoopsObject
     public function loadFilters($method)
     {
         $trace = debug_backtrace(DEBUG_BACKTRACE_IGNORE_ARGS, 1);
-        trigger_error("XoopsObject::loadFilters() is deprecated, called from {$trace[0]['file']} line {$trace[0]['line']}");
+        $GLOBALS['xoopsLogger']->addDeprecated(__METHOD__ . "() is deprecated, called from {$trace[0]['file']}line {$trace[0]['line']}");
 
         $this->_loadFilters();
 
@@ -1103,7 +1106,7 @@ class XoopsObjectHandler
     public function XoopsObjectHandler($db)
     {
         $trace = debug_backtrace(DEBUG_BACKTRACE_IGNORE_ARGS, 1);
-        trigger_error("Should call parent::__construct in {$trace[0]['file']} line {$trace[0]['line']},");
+        trigger_error("Should call parent::__construct in {$trace[0]['file']} line {$trace[0]['line']},", E_USER_DEPRECATED);
         self::__construct($db);
     }
 
@@ -1260,7 +1263,7 @@ class XoopsPersistableObjectHandler extends XoopsObjectHandler
     public function XoopsPersistableObjectHandler(XoopsDatabase $db = null, $table = '', $className = '', $keyName = '', $identifierName = '')
     {
         $trace = debug_backtrace(DEBUG_BACKTRACE_IGNORE_ARGS, 1);
-        trigger_error("Should call parent::__construct in {$trace[0]['file']} line {$trace[0]['line']},");
+        trigger_error("Should call parent::__construct in {$trace[0]['file']} line {$trace[0]['line']},", E_USER_DEPRECATED);
         self::__construct($db, $table, $className, $keyName, $identifierName);
     }
 
@@ -1724,7 +1727,7 @@ class XoopsPersistableObjectHandler extends XoopsObjectHandler
      */
     public function convertResultSet($result, $id_as_key = false, $as_object = true)
     {
-        trigger_error(__CLASS__ . '::' . __FUNCTION__ . ' is deprecated', E_USER_WARNING);
+        $GLOBALS['xoopsLogger']->addDeprecated(__METHOD__ . ' is deprecated');
 
         return false;
     }

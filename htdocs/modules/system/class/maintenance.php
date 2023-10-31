@@ -100,6 +100,7 @@ class SystemMaintenance
             );
         }
 
+        /** @var array $myrow */
         while (false !== ($myrow = $this->db->fetchArray($result))) {
             //delete file
             @unlink(XOOPS_UPLOAD_PATH . '/' . $myrow['avatar_file']);

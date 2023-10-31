@@ -245,6 +245,7 @@ class XoopsGroupHandler extends XoopsObjectHandler
          if (!$this->db->isResultSet($result)) {
             return $ret;
         }
+        /** @var array $myrow */
         while (false !== ($myrow = $this->db->fetchArray($result))) {
             $group = new XoopsGroup();
             $group->assignVars($myrow);
@@ -436,6 +437,7 @@ class XoopsMembershipHandler extends XoopsObjectHandler
         if (!$this->db->isResultSet($result)) {
             return $ret;
         }
+        /** @var array $myrow */
         while (false !== ($myrow = $this->db->fetchArray($result))) {
             $mship = new XoopsMembership();
             $mship->assignVars($myrow);
@@ -508,6 +510,7 @@ class XoopsMembershipHandler extends XoopsObjectHandler
         if (!$this->db->isResultSet($result)) {
             return $ret;
         }
+        /** @var array $myrow */
         while (false !== ($myrow = $this->db->fetchArray($result))) {
             $ret[] = $myrow['groupid'];
         }
@@ -533,6 +536,7 @@ class XoopsMembershipHandler extends XoopsObjectHandler
         if (!$this->db->isResultSet($result)) {
             return $ret;
         }
+        /** @var array $myrow */
         while (false !== ($myrow = $this->db->fetchArray($result))) {
             $ret[] = $myrow['uid'];
         }

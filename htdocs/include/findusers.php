@@ -160,6 +160,7 @@ class XoopsRankHandler extends XoopsObjectHandler
             return $ret;
         }
         $myts = \MyTextSanitizer::getInstance();
+        /** @var array $myrow */
         while (false !== ($myrow = $this->db->fetchArray($result))) {
             $ret[$myrow['rank_id']] = $myts->htmlSpecialChars($myrow['rank_title']);
         }
@@ -304,6 +305,7 @@ class XoUserHandler extends XoopsObjectHandler
             );
         }
         $ret    = array();
+        /** @var array $myrow */
         while (false !== ($myrow = $this->db->fetchArray($result))) {
             $object = $this->create(false);
             $object->assignVars($myrow);

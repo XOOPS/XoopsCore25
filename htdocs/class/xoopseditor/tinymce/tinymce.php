@@ -79,9 +79,12 @@ class TinyMCE
         $configured = array();
 
         // Load default settings
-        if (!($this->setting = @include($GLOBALS['xoops']->path('var/configs/tinymce.php')))) {
+        if (file_exists($GLOBALS['xoops']->path('var/configs/tinymce.php')) && is_readable($GLOBALS['xoops']->path('var/configs/tinymce.php'))) {
+            $this->setting = include($GLOBALS['xoops']->path('var/configs/tinymce.php'));
+        } else {
             $this->setting = include __DIR__ . '/settings.php';
         }
+
 
         // get editor language (from ...)
         if (isset($this->config['language']) && is_readable(XOOPS_ROOT_PATH . $this->rootpath . '/langs/' . $this->config['language'] . '.js')) {

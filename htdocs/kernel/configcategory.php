@@ -231,6 +231,7 @@ class XoopsConfigCategoryHandler extends XoopsObjectHandler
         if (!$this->db->isResultSet($result)) {
             return $ret;
         }
+        /** @var array $myrow */
         while (false !== ($myrow = $this->db->fetchArray($result))) {
             $confcat = new XoopsConfigCategory();
             $confcat->assignVars($myrow);
@@ -252,7 +253,7 @@ class XoopsConfigCategoryHandler extends XoopsObjectHandler
      */
     public function getCatByModule($modid = 0)
     {
-        trigger_error(__CLASS__ . '::' . __FUNCTION__ . ' is deprecated', E_USER_WARNING);
+        $GLOBALS['xoopsLogger']->addDeprecated(__METHOD__ . ' is deprecated');
 
         return false;
     }

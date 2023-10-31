@@ -229,6 +229,7 @@ class XoopsComments extends XoopsObject
                     \sprintf(_DB_QUERY_ERROR, $sql) . $this->db->error(), E_USER_ERROR
                 );
             }
+            /** @var array $myrow */
             while (false !== ($myrow = $this->db->fetchArray($result))) {
                 $ret[] = $myrow['comment_id'];
             }
@@ -240,6 +241,7 @@ class XoopsComments extends XoopsObject
                     \sprintf(_DB_QUERY_ERROR, $sql) . $this->db->error(), E_USER_ERROR
                 );
             }
+            /** @var array $myrow */
             while (false !== ($myrow = $this->db->fetchArray($result))) {
                 $ret[] = new XoopsComments($this->ctable, $myrow);
             }

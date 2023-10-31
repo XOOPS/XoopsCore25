@@ -264,6 +264,7 @@ class XoopsGroupPermHandler extends XoopsObjectHandler
         if (!$this->db->isResultSet($result)) {
             return $ret;
         }
+        /** @var array $myrow */
         while (false !== ($myrow = $this->db->fetchArray($result))) {
             $perm = new XoopsGroupPerm();
             $perm->assignVars($myrow);

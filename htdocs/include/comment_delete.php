@@ -156,10 +156,10 @@ switch ($op) {
         }
 
         // get all comments posted later within the same thread
-        $thread_comments =& $comment_handler->getThread($comment->getVar('com_rootid'), $com_id);
+        $thread_comments = $comment_handler->getThread($comment->getVar('com_rootid'), $com_id);
         include_once $GLOBALS['xoops']->path('class/tree.php');
         $xot            = new XoopsObjectTree($thread_comments, 'com_id', 'com_pid', 'com_rootid');
-        $child_comments =& $xot->getFirstChild($com_id);
+        $child_comments = $xot->getFirstChild($com_id);
         // now set new parent ID for direct child comments
         $new_pid = $comment->getVar('com_pid');
         $errs    = array();
@@ -173,7 +173,7 @@ switch ($op) {
                     $errs[] = 'Could not change comment parent ID from <strong>' . $com_id . '</strong> to <strong>' . $new_pid . '</strong>. (ID: ' . $new_rootid . ')';
                 } else {
                     // need to change root id for all its child comments as well
-                    $c_child_comments = &$xot->getAllChild($new_rootid);
+                    $c_child_comments = $xot->getAllChild($new_rootid);
                     $cc_count         = count($c_child_comments);
                     foreach (array_keys($c_child_comments) as $j) {
                         $c_child_comments[$j]->setVar('com_rootid', $new_rootid);
@@ -204,12 +204,12 @@ switch ($op) {
         $com_rootid      = $comment->getVar('com_rootid');
 
         // get all comments posted later within the same thread
-        $thread_comments =& $comment_handler->getThread($com_rootid, $com_id);
+        $thread_comments = $comment_handler->getThread($com_rootid, $com_id);
 
         // construct a comment tree
         include_once $GLOBALS['xoops']->path('class/tree.php');
         $xot            = new XoopsObjectTree($thread_comments, 'com_id', 'com_pid', 'com_rootid');
-        $child_comments =& $xot->getAllChild($com_id);
+        $child_comments = $xot->getAllChild($com_id);
         // add itself here
         $child_comments[$com_id] = &$comment;
         $msgs                    = array();
@@ -222,7 +222,7 @@ switch ($op) {
             } else {
                 $msgs[] = _CM_COMDELETED . ' (ID: ' . $child_comments[$i]->getVar('com_id') . ')';
                 // store poster ID and deleted post number into array for later use
-                $poster_id = $child_comments[$i]->getVar('com_uid');
+                $poster_id = (int)$child_comments[$i]->getVar('com_uid');
                 if ($poster_id > 0) {
                     $deleted_num[$poster_id] = !isset($deleted_num[$poster_id]) ? 1 : ($deleted_num[$poster_id] + 1);
                 }
