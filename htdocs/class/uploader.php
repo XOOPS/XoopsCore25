@@ -47,7 +47,7 @@ defined('XOOPS_ROOT_PATH') || exit('Restricted access');
  * Example of usage (multiple file):
  * <code>
  * include_once __DIR__ . '/uploader.php';
- * $allowed_mimetypes = array('image/gif', 'image/jpeg', 'image/pjpeg', 'image/x-png');
+ * $allowed_mimetypes = array('image/gif', 'image/jpeg', 'image/pjpeg', 'image/x-png', 'image/webp');
  * $maxfilesize = 50000;
  * $maxfilewidth = 120;
  * $maxfileheight = 120;
@@ -125,7 +125,8 @@ class XoopsMediaUploader
         13 => 'swc',
         14 => 'iff',
         15 => 'wbmp',
-        16 => 'xbm');
+        16 => 'xbm',
+        17 => 'webp');
     public $randomFilename  = false;
 
     /**
