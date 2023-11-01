@@ -2,6 +2,7 @@
 <{if !empty($op)}>
     <div class="current-tab">
         <div class="row">
+            <{if isset($op)}>
                 <{if $op == "out"}>
                     <div class="col-xs-6 col-md-6">
                         <a class="btn btn-info btn-block" href="viewpmsg.php?op=in" title="<{$smarty.const._PM_INBOX}>"><{$smarty.const._PM_INBOX}></a>
@@ -24,6 +25,7 @@
                         <a class="btn btn-info btn-block" href="viewpmsg.php?op=save" title="<{$smarty.const._PM_SAVEBOX}>"><{$smarty.const._PM_SAVEBOX}></a>
                     </div>
                 <{/if}>
+            <{/if}>
         </div>
     </div><!-- .current-tab -->
 
@@ -87,7 +89,7 @@
 
             </div><!-- .xoops-message-header -->
 
-            <{if $total_messages == 0}>
+            <{if isset($total_messages) && $total_messages == 0}>
                 <div class="col-md-12">
                     <div class="alert alert-warning">
                         <{$smarty.const._PM_YOUDONTHAVE}>
@@ -106,12 +108,12 @@
                 <{else}>
                     <span class="glyphicon glyphicon-envelope btn btn-xs btn-warning" title="<{$smarty.const._PM_NOTREAD}>"></span>
                 <{/if}>
-                <{if $message.msg_image != ""}>
+                <{if !empty($message.msg_image)}>
                     <img src="<{$xoops_url}>/images/subject/<{$message.msg_image}>" alt="">
                 <{/if}>
                 </div>
                 <div class="col-xs-2 col-md-2">
-                <{if $message.postername != ""}>
+                <{if !empty($message.postername)}>
                     <a href="<{$xoops_url}>/userinfo.php?uid=<{$message.posteruid}>" title=""><{$message.postername}></a>
                 <{else}>
                     <{$anonymous}>

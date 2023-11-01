@@ -26,7 +26,7 @@
                             <td class="<{$class}>"><{$notification.event_title}></td>
                             <td class="<{$class}>"><{$notification.category_title}></td>
                             <td class="<{$class}>"><{if $item.id != 0}><{$item.id}><{/if}></td>
-                            <td class="<{$class}>"><{if $item.id != 0}><{if $item.url != ''}><a href="<{$item.url}>" title="<{$item.name}>"><{/if}><{$item.name}><{if
+                            <td class="<{$class}>"><{if $item.id != 0}><{if !empty($item.url)}><a href="<{$item.url}>" title="<{$item.name}>"><{/if}><{$item.name}><{if
                                 $item.url != ''}></a><{/if}><{/if}>
                             </td>
                         </tr>

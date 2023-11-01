@@ -7,8 +7,8 @@
     <h1 class="tdm-title"><{$title}> <label class="label label-success">v <{$version}></label></h1>
 
     <div class="tdm-download-data row">
-        <{if $show_screenshot == true}>
-            <{if $logourl != ""}>
+        <{if isset($show_screenshot) && $show_screenshot == true}>
+            <{if !empty($logourl)}>
                 <div class="tdm-screenshot-single col-xs-8 col-sm-8 col-md-8">
                     <img src="<{$logourl}>" alt="<{$title}>">
                 </div>
@@ -33,24 +33,24 @@
                 <li><{$smarty.const._MD_TDMDOWNLOADS_SINGLEFILE_RATING}>: <{$rating}> <{$votes}>
                 </li}>
 
-                    <{if $commentsnav != ""}>
+                    <{if !empty($commentsnav)}>
                 <li><{$nb_comments}>
                 </li}>
                     <{/if}>
 
-                    <{if $sup_aff == true}>
+                    <{if isset($sup_aff) && $sup_aff == true}>
                     <{foreach item=champ from=$champ_sup|default:null}>
                 <li><{$champ.data}></li>
                 <{/foreach}>
                 <{/if}>
 
 
-                <{if $perm_vote != ""}>
+                <{if !empty($perm_vote)}>
                     <li><a class="btn btn-xs btn-primary" href="<{$xoops_url}>/modules/tdmdownloads/ratefile.php?lid=<{$lid}>"
                            title="<{$smarty.const._MD_TDMDOWNLOADS_SINGLEFILE_RATHFILE}>"><{$smarty.const._MD_TDMDOWNLOADS_SINGLEFILE_RATHFILE}></a></li>
                 <{/if}>
 
-                <{if $perm_modif != ""}>
+                <{if !empty($perm_modif)}>
                     <li><a class="btn btn-xs btn-primary" href="<{$xoops_url}>/modules/tdmdownloads/modfile.php?lid=<{$lid}>"
                            title="<{$smarty.const._MD_TDMDOWNLOADS_SINGLEFILE_MODIFY}>"><{$smarty.const._MD_TDMDOWNLOADS_SINGLEFILE_MODIFY}></a></li>
                 <{/if}>
@@ -61,7 +61,7 @@
 
                 <!--<li><{$tellafriend_texte}></li>-->
 
-                <{if $perm_download != ""}>
+                <{if !empty($perm_download)}>
                     <li><a class="btn btn-md btn-success" href="visit.php?cid=<{$cid}>&amp;lid=<{$lid}>" target="_blank" title="Download"><{$smarty.const._MD_TDMDOWNLOADS_INDEX_DLNOW}></a>
                     </li>
                 <{else}>

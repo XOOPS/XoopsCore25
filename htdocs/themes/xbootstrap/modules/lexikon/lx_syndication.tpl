@@ -3,7 +3,7 @@
         <A STYLE='color:#000;font-weight:bold;text-decoration:none;' TARGET='_blank'
            HREF=<{$xoops_url}>><{$lang_modulename}> - <{$smarty.const._MD_LEXIKON_TERMOFTHEDAY}></A>
     </div>
-    <{if $multicats == 1}>
+    <{if isset($multicats) && $multicats == 1}>
         <div style='padding-bottom: 10px;text-align:left;font-family:verdana,arial, sans-serif; font-size:small;'><{$smarty.const._MD_LEXIKON_ENTRYCATEGORY}>
             <A STYLE='color:#000;font-weight:bold;text-decoration:none;' TARGET='_blank'
                HREF="<{$xoops_url}>/modules/<{$lang_moduledirname}>/category.php?categoryID=<{$syndication.id}>"><{$syndication.categoryname}></A>

@@ -48,7 +48,7 @@
                 <input type="submit" value="<{$lang_go}>"/>
             </td>
 
-            <{if $show_cat > 0}>
+            <{if isset($show_cat) && $show_cat > 0}>
                 <td id="addimage" class="txtright"><a href="<{$xoops_url}>/imagemanager.php?target=<{$target}>&op=upload&imgcat_id=<{$show_cat}>"
                                                       title="<{$lang_addimage}>"><{$lang_addimage}></a></td>
             <{/if}>

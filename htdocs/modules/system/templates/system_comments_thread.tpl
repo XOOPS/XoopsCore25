@@ -7,7 +7,7 @@
         </tr>
         <{include file="db:system_comment.tpl" comment=$comments[i]}>
     </table>
-    <{if $show_threadnav == true}>
+    <{if isset($show_threadnav) && $show_threadnav == true}>
         <div class="txtleft marg3 pad5">
             <a href="<{$comment_url}>" title="<{$lang_top}>"><{$lang_top}></a> | <a
                     href="<{$comment_url}>&amp;com_id=<{$comments[i].pid}>&amp;com_rootid=<{$comments[i].rootid}>#newscomment<{$comments[i].pid}>"><{$lang_parent}></a>

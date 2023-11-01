@@ -39,7 +39,7 @@
 
     <div class="row">
         <div class="col-xs-12 col-md-12 alignright">
-            <{if $xoops_iscommentadmin == true}>
+            <{if isset($xoops_iscommentadmin) && $xoops_iscommentadmin == true}>
                 <a href="<{$editcomment_link}>&amp;com_id=<{$comment.id}>" title="<{$lang_edit}>" class="btn btn-success btn-xs">
                     <span class="glyphicon glyphicon-edit"></span>
                 </a>

@@ -35,7 +35,7 @@
         </tr>
         </thead>
         <!--Display data-->
-        <{if $users_count == true}>
+        <{if isset($users_count) && $users_count == true}>
             <form name='memberslist' id='memberslist' action='<{xoAppUrl "modules/system/admin.php?fct=users"}>' method='POST'>
                 <tbody>
                 <{foreach item=user from=$users|default:null}>

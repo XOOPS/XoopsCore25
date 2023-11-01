@@ -1,6 +1,6 @@
 <div class="col-sm-4 col-md-4 tdm-minibox">
-    <{if $show_screenshot == true}>
-        <{if $down.logourl != ''}>
+    <{if isset($show_screenshot) && $show_screenshot == true}>
+        <{if !empty($down.logourl)}>
             <div class="tdm-download-logo">
                 <img src="<{$down.logourl}>" alt="<{$down.title}>">
             </div>

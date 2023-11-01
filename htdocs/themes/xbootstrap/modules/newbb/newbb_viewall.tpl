@@ -18,7 +18,7 @@
         <{if isset($mode) && $mode > 1}>
         <form name="form_topics_admin" action="<{$xoops_url}>/modules/<{$xoops_dirname}>/action.topic.php" method="POST" onsubmit="if(window.document.form_topics_admin.op.value &lt; 1){return false;}">
         <{/if}>
-        <{if $viewer_level > 1}>
+        <{if isset($viewer_level) && $viewer_level > 1}>
             <!-- irmtfan hardcode removed style="padding: 5px;float: right; text-align:right;" -->
             <div class="pagenav" id="admin">
                 <{if isset($mode) && $mode > 1}>
@@ -68,7 +68,7 @@
 
         <div>
             <div>
-                <{if $menumode == 0}>
+                <{if isset($menumode) && $menumode == 0}>
                     <select class="form-control menu" name="topicoption" id="topicoption" onchange="if(this.options[this.selectedIndex].value.length >0 )    { window.document.location=this.options[this.selectedIndex].value;}">
                         <option value=""><{$smarty.const._MD_NEWBB_TOPICOPTION}></option>
                         <option value="<{$post_link}>"><{$smarty.const._MD_NEWBB_VIEW}>

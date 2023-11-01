@@ -30,17 +30,17 @@
         <div class="mt-2 alert alert-success"><b><{$smarty.const._AM_OBITUARIES_DESCRIPTION}></b> :</div>
         <div class="mb-3 ml-2"><{$obituaries_user.obituaries_description}></div>
 
-        <{if $obituaries_user.obituaries_survivors != ""}>
+        <{if !empty($obituaries_user.obituaries_survivors)}>
         <div class="alert alert-info"><b><{$smarty.const._AM_OBITUARIES_SURVIVORS}></b> :</div>
         <div class="mb-3 ml-2"><{$obituaries_user.obituaries_survivors}></div>
         <{/if}>
 
-        <{if $obituaries_user.obituaries_service != ""}>
+        <{if !empty($obituaries_user.obituaries_service)}>
         <div class="alert alert-warning"><b><{$smarty.const._AM_OBITUARIES_SERVICE}></b> :</div>
         <div class="mb-3 ml-2"><{$obituaries_user.obituaries_service}></div>
         <{/if}>
 
-        <{if $obituaries_user.obituaries_memorial != ""}>
+        <{if !empty($obituaries_user.obituaries_memorial)}>
             <div class="alert alert-danger"><b><{$smarty.const._AM_OBITUARIES_MEMORIAL}></b> :</div>
             <div class="mb-3 ml-2"><{$obituaries_user.obituaries_memorial}></div>
         <{/if}>

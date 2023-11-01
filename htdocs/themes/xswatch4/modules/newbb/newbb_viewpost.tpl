@@ -13,7 +13,7 @@
     </ol>
 </div>
 <div class="clear"></div>
-<{if $viewer_level > 1}>
+<{if isset($viewer_level) && $viewer_level > 1}>
     <div class="right" id="admin">
         <{if isset($mode) && $mode > 1}>
         <form class="form-inline" name="form_posts_admin" action="action.post.php" method="POST" onsubmit="if(window.document.form_posts_admin.op.value &lt; 1){return false;}">

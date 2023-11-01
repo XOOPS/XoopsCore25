@@ -13,7 +13,7 @@
                             </h4>
 
                             <p>
-                                <{if $item.item_image != ''}>
+                                <{if !empty($item.item_image)}>
                                     <img src="<{$item.item_image}>" alt="<{$item.item_cleantitle}>" align="left" width="120">
                                 <{/if}>
                                 <{$item.item_summary}>
@@ -51,7 +51,7 @@
                     <div style="float:right; width:60%;">
 
                         <div class="publisher-content clearfix">
-                            <{if $item.item_image != ''}>
+                            <{if !empty($item.item_image)}>
                                 <img src="<{$item.item_image}>" alt="<{$item.item_cleantitle}>" align="right" width="100">
                             <{/if}>
                             <p><{$item.item_summary}></p>

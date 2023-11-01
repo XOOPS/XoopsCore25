@@ -60,7 +60,7 @@
         </tbody>
     </table>
 
-    <{if $pagenav != ''}>
+    <{if !empty($pagenav)}>
     <div class="generic-pagination col text-right mt-2">
         <{$pagenav|replace:'form':'div'|replace:'id="xo-pagenav"':''}>
     </div>

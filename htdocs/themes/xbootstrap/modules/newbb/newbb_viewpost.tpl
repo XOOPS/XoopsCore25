@@ -18,7 +18,7 @@
     </div>
 </div>
 <div class="clear"></div>
-<{if $viewer_level > 1}>
+<{if isset($viewer_level) && $viewer_level > 1}>
     <div class="right" id="admin">
         <{if isset($mode) && $mode > 1}>
         <!-- irmtfan mistype forum_posts_admin => form_posts_admin  -->

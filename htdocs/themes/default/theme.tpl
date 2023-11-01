@@ -7,7 +7,7 @@
     <!-- Title and meta -->
     <meta http-equiv="content-language" content="<{$xoops_langcode}>"/>
     <meta http-equiv="content-type" content="text/html; charset=<{$xoops_charset}>"/>
-    <title><{if $xoops_pagetitle !=''}><{$xoops_pagetitle}> - <{/if}><{$xoops_sitename}></title>
+    <title><{if !empty($xoops_pagetitle)}><{$xoops_pagetitle}> - <{/if}><{$xoops_sitename}></title>
     <meta name="robots" content="<{$xoops_meta_robots}>"/>
     <meta name="keywords" content="<{$xoops_meta_keywords}>"/>
     <meta name="description" content="<{$xoops_meta_description}>"/>

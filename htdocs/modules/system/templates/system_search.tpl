@@ -2,7 +2,7 @@
 	<h3><{$smarty.const._SR_SEARCHRESULTS}></h3>
 	<{$smarty.const._SR_KEYWORDS}>: <strong><{$keywords}></strong>
 	<br>
-	<{if $error_length != ''}>
+	<{if !empty($error_length)}>
 		<{$error_length}> <strong><{$error_keywords}></strong>
 		<br>
 	<{/if}>

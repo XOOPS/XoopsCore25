@@ -23,7 +23,7 @@
 		<div class='card-header wgg-cats-header'><{$index_cats_title}></div>
 		<div class='row card-body'>
 			<{foreach item=category from=$categories|default:null}>
-                <{if $number_cols_cat == 6}>
+                <{if isset($number_cols_cat) && $number_cols_cat == 6}>
                     <div class='col-12 col-md-2'>
                 <{elseif $number_cols_cat == 4}>
                     <div class='col-12 col-md-3'>

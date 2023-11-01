@@ -14,7 +14,7 @@
 
 <{else}>
     <{foreach item=item from=$block.items|default:null name=spotlight}>
-        <{if $item.summary != ''}>
+        <{if !empty($item.summary)}>
             <div class="spot_publisher_items_list">
                 <div class="article_wf_title">
                     <h3><{$item.titlelink}></h3>

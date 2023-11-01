@@ -1,4 +1,4 @@
-<{if $user_ownpage == true}>
+<{if isset($user_ownpage) && $user_ownpage == true}>
     <form name="usernav" action="user.php" method="post">
 
         <br><br>
@@ -9,7 +9,7 @@
                     <input type="button" value="<{$lang_avatar}>" onclick="location='edituser.php?op=avatarform'"/>
                     <input type="button" value="<{$lang_inbox}>" onclick="location='viewpmsg.php'"/>
 
-                    <{if $user_candelete == true}>
+                    <{if isset($user_candelete) && $user_candelete == true}>
                         <input type="button" value="<{$lang_deleteaccount}>" onclick="location='user.php?op=delete'"/>
                     <{/if}>
 

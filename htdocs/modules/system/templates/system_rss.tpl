@@ -12,7 +12,7 @@
         <managingEditor><{$channel_editor}></managingEditor>
         <webMaster><{$channel_webmaster}></webMaster>
         <language><{$channel_language}></language>
-        <{if $image_url != ""}>
+        <{if !empty($image_url)}>
             <image>
                 <title><{$channel_title}></title>
                 <url><{$image_url}></url>

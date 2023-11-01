@@ -17,7 +17,7 @@
     </ol>
     <div class="row">
         <div class="col-xs-12">
-        <{if $viewer_level > 1}>
+        <{if isset($viewer_level) && $viewer_level > 1}>
             <a href="<{$xoops_url}>/modules/<{$xoops_dirname}>/newtopic.php?forum=<{$forum_id}>" title="<{$smarty.const.THEME_FORUM_NEWTOPIC}>" class="btn btn-success"><{$smarty.const.THEME_FORUM_NEWTOPIC}></a>
         <{else}>
             <{if isset($xoops_isuser)}>
@@ -76,7 +76,7 @@
                     <form name="form_topics_admin" action="<{$xoops_url}>/modules/<{$xoops_dirname}>/action.topic.php" method="POST" onsubmit="if(window.document.form_topics_admin.op.value &lt; 1){return false;}">
                 <{/if}>
 
-                <{if $viewer_level > 1}>
+                <{if isset($viewer_level) && $viewer_level > 1}>
                     <a class="btn btn-xs btn-info" href="<{$xoops_url}>/modules/<{$xoops_dirname}>/newtopic.php?op=add&forum=<{$forum_id}>" title="<{$smarty.const.THEME_ADD_POLL}>"><{$smarty.const.THEME_ADD_POLL}></a>
                 <{if isset($mode) && $mode > 1}>
                     <{$smarty.const._ALL}>:
@@ -140,7 +140,7 @@
         <div class="<{if isset($rating_enable)}>col-xs-6 col-sm-6 col-md-2<{else}>col-xs-6 col-sm-6 col-md-3<{/if}>"><a href="<{$h_date_link}>" title="<{$smarty.const._MD_NEWBB_LASTPOSTTIME}>"><{$smarty.const._MD_NEWBB_LASTPOSTTIME}></a></div>
         </div><!-- .newbb-topiclist-header -->
 
-        <{if $sticky > 0}>
+        <{if isset($sticky) && $sticky > 0}>
             <{if isset($rating_enable)}>
                 <{$smarty.const._MD_NEWBB_IMTOPICS}>
             <{else}>
