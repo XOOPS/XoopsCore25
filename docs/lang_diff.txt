@@ -14,6 +14,16 @@ upgrade/language/english/smarty3.php
 htdocs/class/xoopseditor/tinymce/language/english.php
 - added define('_FAILGETIMG', 'Failed to get image %s');
 
+/htdocs/modules/system/language/english/modinfo.php
+- added define('_MI_DEFAULT_NOTIFICATION_METHOD_DISABLE', 'Temporarily disable');
+- added define('_MI_DEFAULT_NOTIFICATION_METHOD_EMAIL', 'Email');
+- added define('_MI_DEFAULT_NOTIFICATION_METHOD_PM', 'Private message');
+
+/htdocs/modules/system/language/english/admin/preferences.php
+- added define('_MD_AM_DEFAULT_NOTIFICATION_METHOD', 'Default notification method');
+- added define('_MD_AM_DEFAULT_NOTIFICATION_METHOD_DESC', 'For new users when they subscribe to notifications from, e.g., a forum.');
+- added define('_MD_AM_MODULEPREF', 
+
 ================================
 2023/03/19: Version 2.5.11-RC1
 ================================
@@ -90,6 +100,12 @@ htdocs/modules/system/language/english/admin/images.php
 
 htdocs/modules/system/language/english/admin/modulesadmin.php
 - added define('_AM_SYSTEM_MODULES_INSTALL_THISMODULE', 'This Module Admin');
+
+DELETED FILES:
+htdocs/modules/system/language/english/admin/users.php
+- deleted define('_AM_SYSTEM_USERS_MODIFYUSER', 'Modify User');
+- deleted define('_AM_SYSTEM_USERS_DELUSER', 'Delete User');
+- deleted define('_AM_SYSTEM_USERS_GO', 'Go!');
 
 ================================
 2019/04/29: Version 2.5.10 Final
