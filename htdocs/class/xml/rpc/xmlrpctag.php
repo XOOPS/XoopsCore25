@@ -34,7 +34,7 @@ class XoopsXmlRpcDocument
     /**
      * @param $tagobj
      */
-    public function add(&$tagobj)
+    public function add($tagobj)
     {
         $this->_tags[] =& $tagobj;
     }
