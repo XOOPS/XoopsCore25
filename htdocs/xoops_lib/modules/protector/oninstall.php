@@ -123,10 +123,6 @@ if (!function_exists('protector_oninstall_base')) {
                 // Handle the error condition when opendir fails
                 $ret[] = '<span style="color:#ff0000;">ERROR: Could not open the directory:  <b>' . htmlspecialchars($tpl_path) . '</b>.</span><br>';
             }
-        } else {
-            // Directory does not exist; handle this condition
-            $ret[] = '<span style="color:#ff0000;">ERROR: Directory does not exist: <b>' . htmlspecialchars($tpl_path) . '</b>.</span><br>';
-        }
         include_once XOOPS_ROOT_PATH . '/class/xoopsblock.php';
         include_once XOOPS_ROOT_PATH . '/class/template.php';
         xoops_template_clear_module_cache($mid);
