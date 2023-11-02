@@ -1,4 +1,5 @@
 <?php
+
 // start hack by Trabis
 if (!class_exists('ProtectorRegistry')) {
     exit('Registry not found');
@@ -13,7 +14,6 @@ $language  = $registry->getEntry('language');
 eval(' function xoops_module_install_' . $mydirname . '( $module ) { return protector_oninstall_base( $module , "' . $mydirname . '" ) ; } ');
 
 if (!function_exists('protector_oninstall_base')) {
-
     /**
      * @param $module
      * @param $mydirname
@@ -27,9 +27,9 @@ if (!function_exists('protector_oninstall_base')) {
 
         global $ret; // TODO :-D
 
-            if (!is_array($ret)) {
-                $ret = array();
-            }
+        if (!is_array($ret)) {
+            $ret = array();
+        }
 
         $db  = XoopsDatabaseFactory::getDatabaseConnection();
         $mid = $module->getVar('mid');
@@ -43,8 +43,8 @@ if (!function_exists('protector_oninstall_base')) {
         if (file_exists($sql_file_path)) {
             $ret[] = 'SQL file found at <b>' . htmlspecialchars($sql_file_path, ENT_QUOTES) . '</b>.<br> Creating tables...';
 
-                include_once XOOPS_ROOT_PATH . '/class/database/sqlutility.php';
-                $sqlutil = new SqlUtility; //old code is -> $sqlutil =& new SqlUtility ; //hack by Trabis
+            include_once XOOPS_ROOT_PATH . '/class/database/sqlutility.php';
+            $sqlutil = new SqlUtility; //old code is -> $sqlutil =& new SqlUtility ; //hack by Trabis
 
             $sql_query = trim(file_get_contents($sql_file_path));
             $sqlutil->splitMySqlFile($pieces, $sql_query);
@@ -74,7 +74,7 @@ if (!function_exists('protector_oninstall_base')) {
 
         // TEMPLATES
         $tplfile_handler = xoops_getHandler('tplfile');
-        $tpl_path = __DIR__ . '/templates';
+        $tpl_path        = __DIR__ . '/templates';
         // Check if the directory exists
         if (is_dir($tpl_path)) {
             // Try to open the directory
@@ -86,7 +86,7 @@ if (!function_exists('protector_oninstall_base')) {
                     }
                     $file_path = $tpl_path . '/' . $file;
                     if (is_file($file_path) && in_array(strrchr($file, '.'), array('.html', '.css', '.js'))) {
-                        $mtime = (int)(@filemtime($file_path));
+                        $mtime   = (int)(filemtime($file_path));
                         $tplfile = $tplfile_handler->create();
                         $tplfile->setVar('tpl_source', file_get_contents($file_path), true);
                         $tplfile->setVar('tpl_refid', $mid);
@@ -140,7 +140,6 @@ if (!function_exists('protector_oninstall_base')) {
                 $log->add(strip_tags($message));
             }
         }
-
         // use mLog->addWarning() or mLog->addError() if necessary
     }
 }
