@@ -72,11 +72,11 @@
                     </li>
                 <{/if}>
 
-                <{if $tagbar|default:false}>
+                <{if !empty($tagbar)}>
                     <li><{include file="db:tag_bar.tpl"}></li>
                 <{/if}>
 
-                <{if $xoops_isadmin}>
+                <{if isset($xoops_isadmin)}>
                     <li><{$video.adminvideo}></li>
                 <{/if}>
             </ul>
@@ -85,7 +85,7 @@
             <{if $video.othervideox > 0}>
                 <h3 class=".xoops-default-title"><{$other_videos}></h3>
                 <ul class="list-unstyled xoopstube-list">
-                    <{foreach item=video_user from=$video_uid}>
+                    <{foreach item=video_user from=$video_uid|default:null}>
                         <li><i class="glyphicon glyphicon-film"></i>
                             <a href="<{$xoops_url}>/modules/<{$video.module_dir}>/singlevideo.php?cid=<{$video_user.cid}>&amp;lid=<{$video_user.lid}>"
                                title="<{$video_user.title}>"><{$video_user.title}></a>
@@ -108,12 +108,14 @@
 
 <{$commentsnav}> <{$lang_notice}>
 
-<{if $comment_mode == "flat"}>
-    <{include file="db:system_comments_flat.tpl"}>
-<{elseif $comment_mode == "thread"}>
-    <{include file="db:system_comments_thread.tpl"}>
-<{elseif $comment_mode == "nest"}>
-    <{include file="db:system_comments_nest.tpl"}>
+<{if isset($comment_mode)}>
+    <{if $comment_mode == "flat"}>
+        <{include file="db:system_comments_flat.tpl"}>
+    <{elseif $comment_mode == "thread"}>
+        <{include file="db:system_comments_thread.tpl"}>
+    <{elseif $comment_mode == "nest"}>
+        <{include file="db:system_comments_nest.tpl"}>
+    <{/if}>
 <{/if}>
 
 <{include file="db:system_notification_select.tpl"}>

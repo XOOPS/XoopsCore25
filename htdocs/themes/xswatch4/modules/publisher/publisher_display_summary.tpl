@@ -6,7 +6,7 @@
 <{if $indexpage || $category.subcats || ($category && $display_category_summary)}>
 
     <!-- let's begin the display of the other display type -->
-    <{if $collapsable_heading == 1}>
+    <{if isset($collapsable_heading) && $collapsable_heading == 1}>
         <div class="publisher_collaps_title">
             <a href='javascript:' onclick="toggle('toptable'); toggleIcon('toptableicon')"><img id='toptableicon' src='<{$publisher_url}>/assets/images/links/close12.gif'
                                                                                                 alt=''></a>&nbsp;<{$lang_category_summary}>
@@ -18,14 +18,14 @@
 
     <{include file='db:publisher_categories_table.tpl'}>
 
-    <{if $collapsable_heading == 1}>
+    <{if isset($collapsable_heading) && $collapsable_heading == 1}>
         </div>
     <{/if}>
     <br>
     <!-- End of if !$category || $category.subcats || ($category && $display_category_summary) //-->
 <{/if}>
-<{if $items}>
-    <{if $collapsable_heading == 1}>
+<{if isset($items)}>
+    <{if isset($collapsable_heading) && $collapsable_heading == 1}>
         <div class="publisher_collaps_title">
             <a href='javascript:' onclick="toggle('bottomtable'); toggleIcon('bottomtableicon')">
                 <img id='bottomtableicon' src='<{$publisher_url}>/assets/images/links/close12.gif' alt=''>
@@ -40,14 +40,14 @@
     <table border="0" width="90%" cellspacing="1" cellpadding="3" align="center" class="outer">
         <tr>
             <td align="left" class="itemHead" width='60%'><strong><{$smarty.const._CO_PUBLISHER_TITLE}></strong></td>
-            <{if $display_date_col == 1}>
+            <{if isset($display_date_col) && $display_date_col == 1}>
                 <td align="center" class="itemHead" width="30%"><strong><{$smarty.const._MD_PUBLISHER_DATESUB}></strong></td>
-            <{/if}> <{if $display_hits_col == 1}>
+            <{/if}> <{if isset($display_hits_col) && $display_hits_col == 1}>
                 <td align="center" class="itemHead" width="10%"><strong><{$smarty.const._MD_PUBLISHER_HITS}></strong></td>
             <{/if}>
         </tr>
         <!-- Start item loop -->
-        <{foreach item=item from=$items}>
+        <{foreach item=item from=$items|default:null}>
             <tr>
                 <td class="even" align="left">
                     <strong><{$item.titlelink}></strong>
@@ -56,12 +56,12 @@
                         <em><{$item.subtitle}></em>
                     <{/if}>
                 </td>
-                <{if $display_date_col == 1}>
+                <{if isset($display_date_col) && $display_date_col == 1}>
                     <td class="odd" align="left">
                         <div align="center"><{$item.datesub}></div>
                     </td>
                 <{/if}>
-                <{if $display_hits_col == 1}>
+                <{if isset($display_hits_col) && $display_hits_col == 1}>
                     <td class="odd" align="left">
                         <div align="center"><{$item.counter}></div>
                     </td>
@@ -73,7 +73,7 @@
     <div class="generic-pagination col text-right mt-2">
         <{$navbar|replace:'form':'div'|replace:'id="xo-pagenav"':''|replace:' //':'/'}>
     </div>
-    <{if $collapsable_heading == 1}>
+    <{if isset($collapsable_heading) && $collapsable_heading == 1}>
         </div>
     <{/if}>
 <{/if}><!-- end of if $items -->

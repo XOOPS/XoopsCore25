@@ -113,14 +113,14 @@ if ($_SERVER['REQUEST_METHOD'] !== 'POST' || !$xoopsSecurity->checkReferer(XOOPS
  * Requires XoopsLogger, XOOPS_DB_PROXY;
  */
 include_once $xoops->path('class/database/databasefactory.php');
-/* @var XoopsMySQLDatabase $xoopsDB */
+/** @var XoopsMySQLDatabase $xoopsDB */
 $xoopsDB = XoopsDatabaseFactory::getDatabaseConnection();
 
 /**
  * Get xoops configs
  * Requires functions and database loaded
  */
-/* @var XoopsConfigHandler $config_handler */
+/** @var XoopsConfigHandler $config_handler */
 $config_handler = xoops_getHandler('config');
 $xoopsConfig    = $config_handler->getConfigsByCat(XOOPS_CONF);
 
@@ -161,7 +161,7 @@ if (!ini_get('date.timezone')) {
 $xoops->gzipCompression();
 
 /**
- * Start of Error Reportings.
+ * Start of Error Reporting.
  */
 if ($xoopsConfig['debug_mode'] == 1 || $xoopsConfig['debug_mode'] == 2) {
     xoops_loadLanguage('logger');
@@ -191,9 +191,9 @@ xoops_loadLanguage('pagetype');
  */
 $xoopsUser        = '';
 $xoopsUserIsAdmin = false;
-/* @var XoopsMemberHandler $member_handler */
+/** @var XoopsMemberHandler $member_handler */
 $member_handler   = xoops_getHandler('member');
-/* @var \XoopsSessionHandler $sess_handler */
+/** @var \XoopsSessionHandler $sess_handler */
 $sess_handler     = xoops_getHandler('session');
 if ($xoopsConfig['use_ssl'] && isset($_POST[$xoopsConfig['sslpost_name']]) && $_POST[$xoopsConfig['sslpost_name']] != '') {
     session_id($_POST[$xoopsConfig['sslpost_name']]);
@@ -262,8 +262,15 @@ if (!empty($_SESSION['xoopsUserId'])) {
         if (((int)$xoopsUser->getVar('last_login') + 60 * 5) < time()) {
             $sql = 'UPDATE ' . $xoopsDB->prefix('users') . " SET last_login = '" . time()
                    . "' WHERE uid = " . $_SESSION['xoopsUserId'];
-            @$xoopsDB->queryF($sql);
+            try {
+                $xoopsDB->queryF($sql);
+            } catch (Exception $e) {
+                throw new \RuntimeException(
+                    \sprintf(_DB_QUERY_ERROR, $sql) . $db->error(), E_USER_ERROR
+                );
+            }
         }
+
         //$sess_handler->update_cookie();
         if (isset($_SESSION['xoopsUserGroups'])) {
             $xoopsUser->setGroups($_SESSION['xoopsUserGroups']);
@@ -337,7 +344,7 @@ if ($xoopsConfig['closesite'] == 1) {
  */
 if (file_exists('./xoops_version.php')) {
     $url_arr        = explode('/', strstr($_SERVER['PHP_SELF'], '/modules/'));
-    /* @var XoopsModuleHandler $module_handler */
+    /** @var XoopsModuleHandler $module_handler */
     $module_handler = xoops_getHandler('module');
     $xoopsModule    = $module_handler->getByDirname($url_arr[2]);
     unset($url_arr);
@@ -348,7 +355,7 @@ if (file_exists('./xoops_version.php')) {
         include_once $xoops->path('footer.php');
         exit();
     }
-    /* @var XoopsGroupPermHandler $moduleperm_handler */
+    /** @var XoopsGroupPermHandler $moduleperm_handler */
     $moduleperm_handler = xoops_getHandler('groupperm');
     if ($xoopsUser) {
         if (!$moduleperm_handler->checkRight('module_read', $xoopsModule->getVar('mid'), $xoopsUser->getGroups())) {

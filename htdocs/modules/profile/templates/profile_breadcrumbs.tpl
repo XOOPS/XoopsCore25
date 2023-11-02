@@ -1,7 +1,7 @@
 <div class="breadcrumbs">
-    <{foreach item=itm from=$xoBreadcrumbs name=bcloop}>
+    <{foreach item=itm from=$xoBreadcrumbs|default:null name=bcloop}>
         <span class="item">
-        <{if $itm.link|default:false}>
+        <{if !empty($itm.link)}>
             <a href="<{$itm.link}>" title="<{$itm.title}>"><{$itm.title}></a>
         <{else}>
             <{$itm.title}>

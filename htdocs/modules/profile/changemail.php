@@ -18,7 +18,7 @@
 
 $xoopsOption['pagetype'] = 'user';
 include __DIR__ . '/header.php';
-/* @var XoopsConfigHandler $config_handler */
+/** @var XoopsConfigHandler $config_handler */
 $config_handler             = xoops_getHandler('config');
 $GLOBALS['xoopsConfigUser'] = $config_handler->getConfigsByCat(XOOPS_CONF_USER);
 
@@ -38,9 +38,9 @@ if (!isset($_POST['submit']) || !isset($_POST['passwd'])) {
     $form->addElement(new XoopsFormButton('', 'submit', _SUBMIT, 'submit'));
     $form->assign($GLOBALS['xoopsTpl']);
 } else {
-    $myts   = MyTextSanitizer::getInstance();
-    $pass   = @$myts->stripSlashesGPC(trim($_POST['passwd']));
-    $email  = @$myts->stripSlashesGPC(trim($_POST['newmail']));
+    $myts   = \MyTextSanitizer::getInstance();
+    $pass   = isset($_POST['passwd']) ? $myts->stripSlashesGPC(trim($_POST['passwd'])) : '';
+    $email  = isset($_POST['newmail']) ? $myts->stripSlashesGPC(trim($_POST['newmail'])) : '';
     $errors = array();
     if (!password_verify($oldpass, $GLOBALS['xoopsUser']->getVar('pass', 'n'))) {
         $errors[] = _PROFILE_MA_WRONGPASSWORD;
@@ -54,7 +54,7 @@ if (!isset($_POST['submit']) || !isset($_POST['passwd'])) {
     } else {
         //update password
         $GLOBALS['xoopsUser']->setVar('email', trim($_POST['newmail']));
-        /* @var XoopsMemberHandler $member_handler */
+        /** @var XoopsMemberHandler $member_handler */
         $member_handler = xoops_getHandler('member');
         if ($member_handler->insertUser($GLOBALS['xoopsUser'])) {
             $msg = _PROFILE_MA_EMAILCHANGED;

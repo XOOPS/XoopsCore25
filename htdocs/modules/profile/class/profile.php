@@ -25,6 +25,9 @@
  */
 class ProfileProfile extends XoopsObject
 {
+    public $profile_id;
+    public $handler;
+
     /**
      * @param $fields
      */
@@ -40,7 +43,7 @@ class ProfileProfile extends XoopsObject
      */
     public function init($fields)
     {
-        if (is_array($fields) && count($fields) > 0) {
+        if (!empty($fields) && \is_array($fields)) {
             foreach (array_keys($fields) as $key) {
                 $this->initVar($key, $fields[$key]->getVar('field_valuetype'), $fields[$key]->getVar('field_default', 'n'), $fields[$key]->getVar('field_required'), $fields[$key]->getVar('field_maxlength'));
             }
@@ -322,14 +325,15 @@ class ProfileProfileHandler extends XoopsPersistableObjectHandler
 
         $sql_users = $sql_select . $sql_from . $sql_clause . $sql_order;
         $result    = $this->db->query($sql_users, $limit, $start);
-
-        if (!$result) {
+        if (!$this->db->isResultSet($result)) {
             return array(array(), array(), 0);
         }
+
         $user_handler = xoops_getHandler('user');
         $uservars     = $this->getUserVars();
         $users        = array();
         $profiles     = array();
+        /** @var array $myrow */
         while (false !== ($myrow = $this->db->fetchArray($result))) {
             $profile = $this->create(false);
             $user    = $user_handler->create(false);
@@ -349,6 +353,11 @@ class ProfileProfileHandler extends XoopsPersistableObjectHandler
         if ((!empty($limit) && $count >= $limit) || !empty($start)) {
             $sql_count = 'SELECT COUNT(*)' . $sql_from . $sql_clause;
             $result    = $this->db->query($sql_count);
+            if (!$this->db->isResultSet($result)) {
+                throw new \RuntimeException(
+                    \sprintf(_DB_QUERY_ERROR, $sql_count) . $this->db->error(), E_USER_ERROR
+                );
+            }
             list($count) = $this->db->fetchRow($result);
         }
 

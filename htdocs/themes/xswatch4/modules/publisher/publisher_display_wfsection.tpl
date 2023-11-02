@@ -15,8 +15,8 @@
     <span class="fa fa-newspaper-o"></span>&nbsp;<{$lang_items_title}>
 </h4>
 <div class="publisher_items_list_">
-    <{if $items}>
-    <{foreach item=item from=$items}>
+    <{if isset($items)}>
+    <{foreach item=item from=$items|default:null}>
         <div class="article_wf">
             <div class="article_wf_title">
                 <h3><{$item.titlelink}></h3>

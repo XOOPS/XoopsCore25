@@ -10,7 +10,7 @@
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  *
  * @copyright       (c) 2000-2016 XOOPS Project (www.xoops.org)
- * @license             GNU GPL 2 or later (https://www.gnu.org/licenses/gpl-2.0.html)
+ * @license             GNU GPL 2.0 or later (https://www.gnu.org/licenses/gpl-2.0.html)
  * @package             protector
  * @since               2.4.0
  * @author              trabis <lusopoemas@gmail.com>
@@ -22,7 +22,7 @@
  * Protector core preloads
  *
  * @copyright       (c) 2000-2016 XOOPS Project (www.xoops.org)
- * @license             GNU GPL 2 or later (https://www.gnu.org/licenses/gpl-2.0.html)
+ * @license             GNU GPL 2.0 or later (https://www.gnu.org/licenses/gpl-2.0.html)
  * @author              trabis <lusopoemas@gmail.com>
  */
 class ProtectorCorePreload extends XoopsPreloadItem

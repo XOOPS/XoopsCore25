@@ -10,14 +10,14 @@
  */
 
 /**
- * @copyright    XOOPS Project http://xoops.org/
- * @license      GNU GPL 2 or later (https://www.gnu.org/licenses/gpl-2.0.html)
+ * @copyright    XOOPS Project https://xoops.org/
+ * @license      GNU GPL 2.0 or later (https://www.gnu.org/licenses/gpl-2.0.html)
  * @package
  * @since
  * @author       XOOPS Development Team, Raul Recio (AKA UNFOR)
  */
 
-include_once 'admin_header.php';
+include_once __DIR__ . '/admin_header.php';
 xoops_cp_header();
 
 $indexAdmin = new ModuleAdmin();
@@ -25,6 +25,6 @@ $indexAdmin = new ModuleAdmin();
 echo $indexAdmin->addNavigation(basename(__FILE__));
 echo $indexAdmin->renderIndex();
 
-include 'admin_footer.php';
+include __DIR__ . '/admin_footer.php';
 //xoops_cp_footer();
 

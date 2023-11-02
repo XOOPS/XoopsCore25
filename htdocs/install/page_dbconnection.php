@@ -15,7 +15,7 @@
  * If you did not receive this file, get it at https://www.gnu.org/licenses/gpl-2.0.html
  *
  * @copyright    (c) 2000-2016 XOOPS Project (www.xoops.org)
- * @license          GNU GPL 2 or later (https://www.gnu.org/licenses/gpl-2.0.html)
+ * @license          GNU GPL 2.0 or later (https://www.gnu.org/licenses/gpl-2.0.html)
  * @package          installer
  * @since            2.3.0
  * @author           Haruki Setoyama  <haruki@planewave.org>
@@ -25,7 +25,7 @@
  * @author           DuGris (aka L. JEN) <dugris@frxoops.org>
  **/
 
-require_once './include/common.inc.php';
+require_once __DIR__ . '/include/common.inc.php';
 defined('XOOPS_INSTALL') || die('XOOPS Installation wizard die');
 
 $pageHasForm = true;
@@ -38,7 +38,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     foreach ($params as $name) {
         $vars[$name] = $_POST[$name];
     }
-    $vars['DB_PCONNECT'] = @$_POST['DB_PCONNECT'] ? 1 : 0;
+    $vars['DB_PCONNECT'] = isset($_POST['DB_PCONNECT']) ? 1 : 0;
 }
 
 $error = '';
@@ -67,7 +67,7 @@ if (@empty($vars['DB_HOST'])) {
 ob_start();
 ?>
 <?php if (!empty($error)) {
-    echo '<div class="alert alert-danger"><span class="fa fa-ban text-danger"></span> ' . htmlspecialchars($error) . "</div>\n";
+    echo '<div class="alert alert-danger"><span class="fa fa-ban text-danger"></span> ' . htmlspecialchars($error, ENT_QUOTES) . "</div>\n";
 } ?>
     <div class="panel panel-info">
     <div class="panel-heading"><?php echo LEGEND_CONNECTION; ?></div>
@@ -90,4 +90,4 @@ ob_start();
 <?php
 $content = ob_get_contents();
 ob_end_clean();
-include './include/install_tpl.php';
+include __DIR__ . '/include/install_tpl.php';

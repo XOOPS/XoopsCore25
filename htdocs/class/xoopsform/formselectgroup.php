@@ -36,13 +36,13 @@ class XoopsFormSelectGroup extends XoopsFormSelect
      * @param string $name
      * @param bool   $include_anon Include group "anonymous"?
      * @param mixed  $value        Pre-selected value (or array of them).
-     * @param int    $size         Number or rows. "1" makes a drop-down-list.
+     * @param int    $size         Number of rows. "1" makes a drop-down-list.
      * @param bool   $multiple     Allow multiple selections?
      */
     public function __construct($caption, $name, $include_anon = false, $value = null, $size = 1, $multiple = false)
     {
         parent::__construct($caption, $name, $value, $size, $multiple);
-        /* @var XoopsMemberHandler $member_handler */
+        /** @var XoopsMemberHandler $member_handler */
         $member_handler = xoops_getHandler('member');
         if (!$include_anon) {
             $this->addOptionArray($member_handler->getGroupList(new Criteria('groupid', XOOPS_GROUP_ANONYMOUS, '!=')));

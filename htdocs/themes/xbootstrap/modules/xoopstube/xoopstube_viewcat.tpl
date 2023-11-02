@@ -1,5 +1,5 @@
 <div class="xoopstube">
-    <{if $catarray.imageheader != ""}>
+    <{if !empty($catarray.imageheader)}>
         <div class="xoopstube-header text-center">
             <{$catarray.imageheader}>
         </div>
@@ -14,9 +14,9 @@
 
     <{$category_path}>
 
-    <{if $subcategories|default:''}>
+    <{if !empty($subcategories)}>
         <{$smarty.const._MD_XOOPSTUBE_SUBCATLISTING}>
-        <{foreach item=subcat from=$subcategories}>
+        <{foreach item=subcat from=$subcategories|default:null}>
             <a href="viewcat.php?cid=<{$subcat.id}>" title="<{$subcat.alttext}>"><img src="<{$subcat.image}>" alt="<{$subcat.alttext}>"></a>
             <a href="viewcat.php?cid=<{$subcat.id}>"><{$subcat.title}></a>
             (<{$subcat.totalvideos}>)
@@ -28,7 +28,7 @@
 
 
     <div class="order-by">
-        <{if $show_videos == true}>
+        <{if isset($show_videos) && $show_videos == true}>
             <h3 class="xoops-default-title"><{$smarty.const._MD_XOOPSTUBE_SORTBY}></h3>
             <div class="row">
                 <div class="col-sm-3 col-md-3">
@@ -77,7 +77,7 @@
         <{/if}>
     </div><!-- .order-by -->
 
-    <{if $page_nav == true}>
+    <{if isset($page_nav) && $page_nav == true}>
         <{$pagenav}>
     <{/if}>
 
@@ -85,11 +85,11 @@
         <{include file="db:xoopstube_videoload.tpl" video=$video[i]}>
     <{/section}>
 
-    <{if $page_nav == true}>
+    <{if isset($page_nav) && $page_nav == true}>
         <{$pagenav}>
     <{/if}>
 
-    <{if $moderate|default:false == true}>
+    <{if isset($moderate) ? $moderate!= true : true}>
         <{$smarty.const._MD_XOOPSTUBE_MODERATOR_OPTIONS}>
 
         <{section name=a loop=$mod_arr}>

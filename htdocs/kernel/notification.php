@@ -33,6 +33,15 @@ include_once $GLOBALS['xoops']->path('include/notification_functions.php');
  */
 class XoopsNotification extends XoopsObject
 {
+    //PHP 8.2 Dynamic properties deprecated
+    public $not_id;
+    public $not_modid;
+    public $not_category;
+    public $not_itemid;
+    public $not_event;
+    public $not_uid;
+    public $not_mode;
+
     /**
      * Constructor
      **/
@@ -148,12 +157,13 @@ class XoopsNotification extends XoopsObject
     public function notifyUser($template_dir, $template, $subject, $tags)
     {
         // Check the user's notification preference.
-        /* @var XoopsMemberHandler $member_handler */
+        /** @var XoopsMemberHandler $member_handler */
         $member_handler = xoops_getHandler('member');
         $user           = $member_handler->getUser($this->getVar('not_uid'));
-        if (!is_object($user)) {
+        if (!is_object($user) || !$user->isActive()) {
             return true;
         }
+
         $method = $user->getVar('notify_method');
 
         $xoopsMailer = xoops_getMailer();
@@ -161,7 +171,7 @@ class XoopsNotification extends XoopsObject
         switch ($method) {
             case XOOPS_NOTIFICATION_METHOD_PM:
                 $xoopsMailer->usePM();
-                /* @var XoopsConfigHandler $config_handler */
+                /** @var XoopsConfigHandler $config_handler */
                 $config_handler    = xoops_getHandler('config');
                 $xoopsMailerConfig = $config_handler->getConfigsByCat(XOOPS_CONF_MAILER);
                 $xoopsMailer->setFromUser($member_handler->getUser($xoopsMailerConfig['fromuid']));
@@ -247,7 +257,7 @@ class XoopsNotificationHandler extends XoopsObjectHandler
      *
      * @param int $id ID
      *
-     * @return XoopsNotification {@link XoopsNotification}, FALSE on fail
+     * @return XoopsNotification|false {@link XoopsNotification}, false on fail
      **/
     public function get($id)
     {
@@ -255,7 +265,8 @@ class XoopsNotificationHandler extends XoopsObjectHandler
         $id           = (int)$id;
         if ($id > 0) {
             $sql = 'SELECT * FROM ' . $this->db->prefix('xoopsnotifications') . ' WHERE not_id=' . $id;
-            if (!$result = $this->db->query($sql)) {
+            $result = $this->db->query($sql);
+            if (!$this->db->isResultSet($result)) {
                 return $notification;
             }
             $numrows = $this->db->getRowsNum($result);
@@ -342,7 +353,7 @@ class XoopsNotificationHandler extends XoopsObjectHandler
         $ret   = array();
         $limit = $start = 0;
         $sql   = 'SELECT * FROM ' . $this->db->prefix('xoopsnotifications');
-        if (isset($criteria) && is_subclass_of($criteria, 'CriteriaElement')) {
+        if (isset($criteria) && \method_exists($criteria, 'renderWhere')) {
             $sql .= ' ' . $criteria->renderWhere();
             $sort = ($criteria->getSort() != '') ? $criteria->getSort() : 'not_id';
             $sql .= ' ORDER BY ' . $sort . ' ' . $criteria->getOrder();
@@ -350,9 +361,10 @@ class XoopsNotificationHandler extends XoopsObjectHandler
             $start = $criteria->getStart();
         }
         $result = $this->db->query($sql, $limit, $start);
-        if (!$result) {
+        if (!$this->db->isResultSet($result)) {
             return $ret;
         }
+        /** @var array $myrow */
         while (false !== ($myrow = $this->db->fetchArray($result))) {
             $notification = new XoopsNotification();
             $notification->assignVars($myrow);
@@ -378,15 +390,16 @@ class XoopsNotificationHandler extends XoopsObjectHandler
     public function getCount(CriteriaElement $criteria = null)
     {
         $sql = 'SELECT COUNT(*) FROM ' . $this->db->prefix('xoopsnotifications');
-        if (isset($criteria) && is_subclass_of($criteria, 'CriteriaElement')) {
+        if (isset($criteria) && \method_exists($criteria, 'renderWhere')) {
             $sql .= ' ' . $criteria->renderWhere();
         }
-        if (!$result = $this->db->query($sql)) {
+        $result = $this->db->query($sql);
+        if (!$this->db->isResultSet($result)) {
             return 0;
         }
         list($count) = $this->db->fetchRow($result);
 
-        return $count;
+        return (int)$count;
     }
 
     /**
@@ -399,7 +412,7 @@ class XoopsNotificationHandler extends XoopsObjectHandler
     public function deleteAll(CriteriaElement $criteria = null)
     {
         $sql = 'DELETE FROM ' . $this->db->prefix('xoopsnotifications');
-        if (isset($criteria) && is_subclass_of($criteria, 'CriteriaElement')) {
+        if (isset($criteria) && \method_exists($criteria, 'renderWhere')) {
             $sql .= ' ' . $criteria->renderWhere();
         }
         if (!$result = $this->db->query($sql)) {
@@ -504,7 +517,7 @@ class XoopsNotificationHandler extends XoopsObjectHandler
             $events = array($events);
         }
         foreach ($events as $event) {
-            /* @var  XoopsNotification $notification */
+            /** @var  XoopsNotification $notification */
             if ($notification = $this->getNotification($module_id, $category, $item_id, $event, $user_id)) {
                 if ($notification->getVar('not_mode') != $mode) {
                     $this->updateByField($notification, 'not_mode', $mode);
@@ -520,7 +533,7 @@ class XoopsNotificationHandler extends XoopsObjectHandler
                 $this->insert($notification);
             }
         }
-        return null;
+        return true;
     }
 
     // TODO: this will be to provide a list of everything a particular
@@ -603,7 +616,7 @@ class XoopsNotificationHandler extends XoopsObjectHandler
      * @param int    $item_id      ID of the item
      * @param array  $events       trigger events
      * @param array  $extra_tags   array of substitutions for template to be
-     *                              merged with the one from function..
+     *                              merged with the one from function.
      * @param array  $user_list    only notify the selected users
      * @param int    $module_id    ID of the module
      * @param int    $omit_user_id ID of the user to omit from notifications. (default to current user).  set to 0 for all users to receive notification.
@@ -644,13 +657,13 @@ class XoopsNotificationHandler extends XoopsObjectHandler
             $module    = $xoopsModule;
             $module_id = !empty($xoopsModule) ? $xoopsModule->getVar('mid') : 0;
         } else {
-            /* @var XoopsModuleHandler $module_handler */
+            /** @var XoopsModuleHandler $module_handler */
             $module_handler = xoops_getHandler('module');
             $module         = $module_handler->get($module_id);
         }
 
         // Check if event is enabled
-        /* @var XoopsConfigHandler $config_handler */
+        /** @var XoopsConfigHandler $config_handler */
         $config_handler = xoops_getHandler('config');
         $mod_config     = $config_handler->getConfigsByCat(0, $module->getVar('mid'));
         if (empty($mod_config['notification_enabled'])) {
@@ -734,16 +747,30 @@ class XoopsNotificationHandler extends XoopsObjectHandler
         $template     = $event_info['mail_template'] . '.tpl';
         $subject      = $event_info['mail_subject'];
 
+        $merged_tags = array();
+
+        // First loop: Merge tags only, don't notify
         foreach ($notifications as $notification) {
             if (empty($omit_user_id) || $notification->getVar('not_uid') != $omit_user_id) {
                 // user-specific tags
-                //$tags['X_UNSUBSCRIBE_URL'] = 'TODO';
-                // TODO: don't show unsubscribe link if it is 'one-time' ??
+                $tags = array();
                 $tags['X_UNSUBSCRIBE_URL'] = XOOPS_URL . '/notifications.php';
-                $tags                      = array_merge($tags, $extra_tags);
-                $notification->notifyUser($template_dir, $template, $subject, $tags);
+
+                // Check if the $tags array is not empty
+                if (!empty($tags)) {
+                    // Merge tags into the merged_tags array
+                    $merged_tags = array_merge($merged_tags, $tags);
+                }
             }
         }
+
+        // Second loop: Notify users with the merged tags
+        foreach ($notifications as $notification) {
+            if (empty($omit_user_id) || $notification->getVar('not_uid') != $omit_user_id) {
+                $notification->notifyUser($template_dir, $template, $subject, $merged_tags);
+            }
+        }
+
         return null;
     }
 

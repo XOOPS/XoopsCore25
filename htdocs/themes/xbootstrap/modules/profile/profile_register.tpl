@@ -3,7 +3,7 @@
 <{if $steps|@count > 1 AND $current_step >= 0}>
     <div class='register-steps'>
         <span class='caption'><{$lang_register_steps}></span>
-        <{foreach item=step from=$steps key=stepno name=steploop}>
+        <{foreach item=step from=$steps|default:null key=stepno name=steploop}>
             <{if $stepno == $current_step}>
                 <span class='item current'><{$step.step_name}></span>
             <{else}>
@@ -16,27 +16,27 @@
     </div>
 <{/if}>
 
-<{if $stop}>
+<{if isset($stop)}>
 	<div class="alert alert-danger" role="alert">
 		<{$stop}>
     </div>
 <{/if}>
 
-<{if $confirm}>
-    <{foreach item=msg from=$confirm}>
+<{if isset($confirm)}>
+    <{foreach item=msg from=$confirm|default:null}>
         <div class="alert alert-info" role="alert">
 			<{$msg}>
 		</div>
     <{/foreach}>
 <{/if}>
 
-<{if $regform}>
+<{if isset($regform)}>
     <h3><{$regform.title}></h3>
     <{include file="db:profile_form.tpl" xoForm=$regform}>
 <{elseif $finish}>
     <h1><{$finish}></h1>
-    <{if $finish_message}><p><{$finish_message}></p><{/if}>
-    <{if $finish_login}>
+    <{if isset($finish_message)}><p><{$finish_message}></p><{/if}>
+    <{if isset($finish_login)}>
     <form id='register_login' name='register_login' action='user.php' method='post'>
     <input type='submit' value="<{$finish_login}>">
     <input type='hidden' name="op" id="op" value="login">

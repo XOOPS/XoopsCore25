@@ -1,9 +1,9 @@
 <div class="news-home">
-    <{if $topic_rssfeed_link != ""}>
+    <{if !empty($topic_rssfeed_link)}>
         <{$topic_rssfeed_link}>
     <{/if}>
 
-    <{if $displaynav == true}>
+    <{if isset($displaynav) && $displaynav == true}>
         <div class="text-center">
             <form name="form1" action="<{$xoops_url}>/modules/news/index.php" method="get">
                 <{$topic_select}> <select name="storynum"><{$storynum_options}></select> <input type="submit" value="<{$lang_go}>">
@@ -11,15 +11,15 @@
         </div>
     <{/if}>
 
-    <{if $topic_description != ""}>
+    <{if !empty($topic_description)}>
         <{$topic_description}>
     <{/if}>
 
     <div id="xoopsgrid" class="row">
         <{section name=i loop=$columns}>
-            <{foreach item=story from=$columns[i]}>
+            <{foreach item=story from=$columns[i]|default:null}>
                 <div class="col-xs-12 col-md-6 home-news-loop">
-                    <{if $story.picture != ""}>
+                    <{if !empty($story.picture)}>
                         <div class="home-thumbnails">
                             <img src="<{$story.picture}>" alt="<{$story.pictureinfo}>" class="img-responsive">
                         </div>
@@ -40,7 +40,7 @@
     </div>
 
     <div class="text-center generic-pagination">
-        <{$pagenav}>
+        <{$pagenav|default:''}>
     </div>
 
 </div>

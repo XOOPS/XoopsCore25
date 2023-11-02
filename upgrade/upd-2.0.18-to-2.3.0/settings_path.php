@@ -16,7 +16,7 @@
  * If you did not receive this file, get it at https://www.gnu.org/licenses/gpl-2.0.html
  *
  * @copyright    (c) 2000-2016 XOOPS Project (www.xoops.org)
- * @license          GNU GPL 2 or later (https://www.gnu.org/licenses/gpl-2.0.html)
+ * @license          GNU GPL 2.0 or later (https://www.gnu.org/licenses/gpl-2.0.html)
  * @package          upgrader
  * @since            2.3.0
  * @author           Skalpa Keo <skalpa@xoops.org>
@@ -35,7 +35,7 @@ if (!defined('XOOPS_ROOT_PATH')) {
  */
 function genPathCheckHtml($path, $valid)
 {
-    $myts = MyTextSanitizer::getInstance();
+    $myts = \MyTextSanitizer::getInstance();
     if ($valid) {
         switch ($path) {
             case 'lib':
@@ -67,7 +67,7 @@ if ($res = $ctrl->execute()) {
     return $res;
 }
 
-$myts = MyTextSanitizer::getInstance();
+$myts = \MyTextSanitizer::getInstance();
 
 ?>
 

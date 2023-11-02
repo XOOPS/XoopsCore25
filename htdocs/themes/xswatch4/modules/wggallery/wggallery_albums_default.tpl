@@ -1,10 +1,10 @@
 <{include file='db:wggallery_header.tpl'}>
-<{if $albums_list}>
+<{if isset($albums_list)}>
 	<div class='col-sm-12 col-sm-8'>
 	<div class='panel panel-<{$panel_type}>'>
 		<div class='panel-heading'><{$smarty.const._CO_WGGALLERY_ALBUMS_TITLE}></div>
 		<div class='panel-body'>
-			<{foreach item=album from=$albums_list}>
+			<{foreach item=album from=$albums_list|default:null}>
 				<div class='row wgg-album-list'>
 					<div class='col-sm-4'>
 						<img id='album_<{$album.id}>' class='img-fluid wgg-album-img' src='<{$album.image}>?<{$force}>' alt='<{$smarty.const._CO_WGGALLERY_ALBUM_IMAGE}> <{$album.name}>'>
@@ -28,15 +28,15 @@
 					</div>
 					<div class='col-sm-12 center'>
 						<{if $album.nb_images}>
-							<{if $gallery}>
-								<a class='btn btn-secondary wgg-btn' href='<{$wggallery_url}>/gallery.php?op=show&amp;alb_id=<{$album.id}>&amp;alb_pid=<{$album.pid}><{if $subm_id}>&amp;subm_id=<{$subm_id}><{/if}>' title='<{$smarty.const._CO_WGGALLERY_IMAGES_ALBUMSHOW}>' target='<{$gallery_target}>' >
+							<{if isset($gallery)}>
+								<a class='btn btn-secondary wgg-btn' href='<{$wggallery_url}>/gallery.php?op=show&amp;alb_id=<{$album.id}>&amp;alb_pid=<{$album.pid}><{if isset($subm_id)}>&amp;subm_id=<{$subm_id}><{/if}>' title='<{$smarty.const._CO_WGGALLERY_IMAGES_ALBUMSHOW}>' target='<{$gallery_target}>' >
 									<span class="wgg-btn-icon"><img class='' src='<{$wggallery_icon_url_16}>show.png' alt='<{$smarty.const._CO_WGGALLERY_IMAGES_ALBUMSHOW}>'></span>
-									<{if $displayButtonText}><{$smarty.const._CO_WGGALLERY_IMAGES_ALBUMSHOW}><{/if}>
+									<{if isset($displayButtonText)}><{$smarty.const._CO_WGGALLERY_IMAGES_ALBUMSHOW}><{/if}>
 								</a>
 							<{/if}>
-							<a class='btn btn-secondary wgg-btn' href='<{$wggallery_url}>/images.php?op=list&amp;ref=albums&amp;alb_id=<{$album.id}>&amp;alb_pid=<{$album.pid}><{if $subm_id}>&amp;subm_id=<{$subm_id}><{/if}>' title='<{$smarty.const._CO_WGGALLERY_IMAGES_INDEX}>'>
+							<a class='btn btn-secondary wgg-btn' href='<{$wggallery_url}>/images.php?op=list&amp;ref=albums&amp;alb_id=<{$album.id}>&amp;alb_pid=<{$album.pid}><{if isset($subm_id)}>&amp;subm_id=<{$subm_id}><{/if}>' title='<{$smarty.const._CO_WGGALLERY_IMAGES_INDEX}>'>
 								<img class='wgg-btn-icon' src='<{$wggallery_icon_url_16}>photos.png' alt='<{$smarty.const._CO_WGGALLERY_IMAGES_INDEX}>' title='<{$smarty.const._CO_WGGALLERY_IMAGES_INDEX}>'>
-								<{if $displayButtonText}><{$smarty.const._CO_WGGALLERY_IMAGES_INDEX}><{/if}>
+								<{if isset($displayButtonText)}><{$smarty.const._CO_WGGALLERY_IMAGES_INDEX}><{/if}>
 							</a>
 						<{else}>
 							<a class='disabled btn btn-secondary wgg-btn'><img class='wgg-btn-icon' src='<{$wggallery_icon_url_16}>photos.png' alt='<{$smarty.const._CO_WGGALLERY_IMAGES_INDEX}>' title='<{$smarty.const._CO_WGGALLERY_IMAGES_INDEX}>'><{$smarty.const._CO_WGGALLERY_ALBUM_NO_IMAGES}></a>
@@ -44,27 +44,27 @@
 						<{if $album.edit}>
                             <{if $album.nb_images}>
                                 <a class='btn btn-secondary wgg-btn' href='images.php?op=manage&amp;ref=albums&amp;alb_id=<{$album.id}>&amp;alb_pid=<{$album.pid}>' title='<{$smarty.const._CO_WGGALLERY_IMAGE_MANAGE}>'>
-                                    <img class='wgg-btn-icon' src='<{$wggallery_icon_url_16}>images.png' alt='<{$smarty.const._CO_WGGALLERY_IMAGE_MANAGE}>'><{if $displayButtonText}><{$smarty.const._CO_WGGALLERY_IMAGE_MANAGE}><{/if}></a>
+                                    <img class='wgg-btn-icon' src='<{$wggallery_icon_url_16}>images.png' alt='<{$smarty.const._CO_WGGALLERY_IMAGE_MANAGE}>'><{if isset($displayButtonText)}><{$smarty.const._CO_WGGALLERY_IMAGE_MANAGE}><{/if}></a>
                             <{/if}>
 							<{if 0 == $album.iscoll}>
 								<a class='btn btn-secondary wgg-btn' href='upload.php?op=list&amp;alb_id=<{$album.id}>&amp;alb_pid=<{$album.pid}>' title='<{$smarty.const._CO_WGGALLERY_IMAGES_UPLOAD}>'>
-									<img class='wgg-btn-icon' src='<{$wggallery_icon_url_16}>upload.png' alt='<{$smarty.const._CO_WGGALLERY_IMAGES_UPLOAD}>'><{if $displayButtonText}><{$smarty.const._CO_WGGALLERY_IMAGES_UPLOAD}><{/if}></a>
+									<img class='wgg-btn-icon' src='<{$wggallery_icon_url_16}>upload.png' alt='<{$smarty.const._CO_WGGALLERY_IMAGES_UPLOAD}>'><{if isset($displayButtonText)}><{$smarty.const._CO_WGGALLERY_IMAGES_UPLOAD}><{/if}></a>
                             <{/if}>
 							<a class='btn btn-secondary wgg-btn' href='albums.php?op=edit&amp;alb_id=<{$album.id}>&amp;alb_pid=<{$album.pid}>' title='<{$smarty.const._CO_WGGALLERY_ALBUM_EDIT}>'>
-                                <img class='wgg-btn-icon' src='<{$wggallery_icon_url_16}>edit.png' alt='<{$smarty.const._CO_WGGALLERY_ALBUM_EDIT}>'><{if $displayButtonText}><{$smarty.const._CO_WGGALLERY_ALBUM_EDIT}><{/if}></a>
+                                <img class='wgg-btn-icon' src='<{$wggallery_icon_url_16}>edit.png' alt='<{$smarty.const._CO_WGGALLERY_ALBUM_EDIT}>'><{if isset($displayButtonText)}><{$smarty.const._CO_WGGALLERY_ALBUM_EDIT}><{/if}></a>
                             <a class='btn btn-secondary wgg-btn' href='album_images.php?op=imghandler&amp;alb_id=<{$album.id}>&amp;alb_pid=<{$album.pid}>' title='<{$smarty.const._CO_WGGALLERY_ALBUM_IH_IMAGE_EDIT}>'>
-                                <img class='wgg-btn-icon' src='<{$wggallery_icon_url_16}>album_images.png' alt='<{$smarty.const._CO_WGGALLERY_ALBUM_IH_IMAGE_EDIT}>'><{if $displayButtonText}><{$smarty.const._CO_WGGALLERY_ALBUM_IH_IMAGE_EDIT}><{/if}></a>
+                                <img class='wgg-btn-icon' src='<{$wggallery_icon_url_16}>album_images.png' alt='<{$smarty.const._CO_WGGALLERY_ALBUM_IH_IMAGE_EDIT}>'><{if isset($displayButtonText)}><{$smarty.const._CO_WGGALLERY_ALBUM_IH_IMAGE_EDIT}><{/if}></a>
                             <a class='btn btn-secondary wgg-btn' href='albums.php?op=delete&amp;alb_id=<{$album.id}>&amp;alb_pid=<{$album.pid}>' title='<{$smarty.const._DELETE}>'>
-                                <img class='wgg-btn-icon' src='<{$wggallery_icon_url_16}>delete.png' alt='<{$smarty.const._DELETE}>'><{if $displayButtonText}><{$smarty.const._DELETE}><{/if}></a>
+                                <img class='wgg-btn-icon' src='<{$wggallery_icon_url_16}>delete.png' alt='<{$smarty.const._DELETE}>'><{if isset($displayButtonText)}><{$smarty.const._DELETE}><{/if}></a>
                         <{/if}>
                         <{if 0 == $album.iscoll && $album.download}>
                             <a class='btn btn-secondary wgg-btn' href='<{$wggallery_url}>/download.php?op=album&amp;alb_id=<{$album.id}>' title='<{$smarty.const._CO_WGGALLERY_DOWNLOAD_ALB}>'>
-                                <img class='wgg-btn-icon' src='<{$wggallery_icon_url_16}>download.png' alt='<{$smarty.const._CO_WGGALLERY_DOWNLOAD_ALB}>'><{if $displayButtonText}><{$smarty.const._CO_WGGALLERY_DOWNLOAD_ALB}><{/if}></a>
+                                <img class='wgg-btn-icon' src='<{$wggallery_icon_url_16}>download.png' alt='<{$smarty.const._CO_WGGALLERY_DOWNLOAD_ALB}>'><{if isset($displayButtonText)}><{$smarty.const._CO_WGGALLERY_DOWNLOAD_ALB}><{/if}></a>
                         <{/if}>
 
 						<{if $album.nb_subalbums}>
-							<a class='btn btn-secondary wgg-btn' href='albums.php?op=list&amp;alb_pid=<{$album.id}><{if $subm_id}>&amp;subm_id=<{$subm_id}><{/if}>' title='<{$smarty.const._CO_WGGALLERY_COLL_ALBUMS}>'>
-								<img class='wgg-btn-icon' src='<{$wggallery_icon_url_16}>index.png' alt='<{$smarty.const._CO_WGGALLERY_COLL_ALBUMS}>'><{if $displayButtonText}><{$smarty.const._CO_WGGALLERY_COLL_ALBUMS}><{/if}></a>
+							<a class='btn btn-secondary wgg-btn' href='albums.php?op=list&amp;alb_pid=<{$album.id}><{if isset($subm_id)}>&amp;subm_id=<{$subm_id}><{/if}>' title='<{$smarty.const._CO_WGGALLERY_COLL_ALBUMS}>'>
+								<img class='wgg-btn-icon' src='<{$wggallery_icon_url_16}>index.png' alt='<{$smarty.const._CO_WGGALLERY_COLL_ALBUMS}>'><{if isset($displayButtonText)}><{$smarty.const._CO_WGGALLERY_COLL_ALBUMS}><{/if}></a>
 						<{/if}>
 					</div>
 				</div>
@@ -72,7 +72,7 @@
 		</div>
 	</div>
 	<div class='clear'>&nbsp;</div>
-	<{if $pagenav}>
+	<{if isset($pagenav)}>
 		<div class="col">
 		<div class="generic-pagination xo-pagenav pull-right"><{$pagenav|replace:'form':'div'|replace:'id="xo-pagenav"':''|replace:' //':'/'}></div>
 		</div>
@@ -89,10 +89,10 @@
 				</ol>
 				<p class='center'>
 					<a class='btn btn-secondary wgg-btn' href='albums.php' title='<{$smarty.const._CO_WGGALLERY_UPDATE}>'>
-						<img class='wgg-btn-icon' src='<{$wggallery_icon_url_16}>reset.png' alt='<{$smarty.const._CO_WGGALLERY_UPDATE}>'><{if $displayButtonText}><{$smarty.const._CO_WGGALLERY_UPDATE}><{/if}></a>
-					<{if $global_submit}>
+						<img class='wgg-btn-icon' src='<{$wggallery_icon_url_16}>reset.png' alt='<{$smarty.const._CO_WGGALLERY_UPDATE}>'><{if isset($displayButtonText)}><{$smarty.const._CO_WGGALLERY_UPDATE}><{/if}></a>
+					<{if isset($global_submit)}>
 						<a class='btn btn-secondary wgg-btn' href='albums.php?op=new&alb_pid=<{$albpid}>' title='<{$smarty.const._CO_WGGALLERY_ALBUM_ADD}>'>
-							<img class='wgg-btn-icon' src='<{$wggallery_icon_url_16}>add.png' alt='<{$smarty.const._CO_WGGALLERY_ALBUM_ADD}>'><{if $displayButtonText}><{$smarty.const._CO_WGGALLERY_ALBUM_ADD}><{/if}></a>
+							<img class='wgg-btn-icon' src='<{$wggallery_icon_url_16}>add.png' alt='<{$smarty.const._CO_WGGALLERY_ALBUM_ADD}>'><{if isset($displayButtonText)}><{$smarty.const._CO_WGGALLERY_ALBUM_ADD}><{/if}></a>
 					<{/if}>
 				</p>
 			</div>
@@ -101,7 +101,7 @@
 <{/if}>
 
 
-<{if $form}>
+<{if isset($form)}>
 	<{$form}>
 
 	<!-- Modal -->
@@ -116,7 +116,7 @@
                     <h4 class="modal-title" id="myModalLabel"><{$smarty.const._CO_WGGALLERY_IMAGES_TITLE}></h4>
                 </div>
                 <div class="modal-body">
-                    <{foreach item=image from=$images}>
+                    <{foreach item=image from=$images|default:null}>
                         <{if $image.alb_name}><h4 class="modal-title"><{$image.alb_name}></h4><{/if}>
                         <input class="img <{if $image.selected}>wgg-modal-selected<{/if}>" type="image" src="<{$image.medium}>" alt="<{$image.title}>"
                                style="padding:3px;max-height:150px;max-width:200px" value="<{$image.name}>">
@@ -145,18 +145,18 @@
     </script>
 
 <{/if}>
-<{if $error}>
+<{if isset($error)}>
 	<div class='errorMsg'><strong><{$error}></strong></div>
 <{/if}>
 <div class='clear'>&nbsp;</div>
 <div class='center'>
-	<{if $global_submit}>
+	<{if isset($global_submit)}>
 		<a class='btn btn-secondary wgg-btn' href='albums.php?op=new' title='<{$smarty.const._CO_WGGALLERY_ALBUM_ADD}>'>
-			<img class='wgg-btn-icon' src='<{$wggallery_icon_url_16}>add.png' alt='<{$smarty.const._CO_WGGALLERY_ALBUM_ADD}>'><{if $displayButtonText}><{$smarty.const._CO_WGGALLERY_ALBUM_ADD}><{/if}></a>
+			<img class='wgg-btn-icon' src='<{$wggallery_icon_url_16}>add.png' alt='<{$smarty.const._CO_WGGALLERY_ALBUM_ADD}>'><{if isset($displayButtonText)}><{$smarty.const._CO_WGGALLERY_ALBUM_ADD}><{/if}></a>
 	<{/if}>
-	<{if $goback}>
+	<{if isset($goback)}>
 	<a class='btn btn-secondary wgg-btn' href='albums.php?op=list' title='<{$smarty.const._CO_WGGALLERY_BACK}>'>
-		<img class='wgg-btn-icon' src='<{$wggallery_icon_url_16}>back.png' alt='<{$smarty.const._CO_WGGALLERY_BACK}>'><{if $displayButtonText}><{$smarty.const._CO_WGGALLERY_BACK}><{/if}></a>
+		<img class='wgg-btn-icon' src='<{$wggallery_icon_url_16}>back.png' alt='<{$smarty.const._CO_WGGALLERY_BACK}>'><{if isset($displayButtonText)}><{$smarty.const._CO_WGGALLERY_BACK}><{/if}></a>
 	<{/if}>
 </div>
 

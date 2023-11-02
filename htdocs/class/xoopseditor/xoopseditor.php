@@ -45,7 +45,7 @@ class XoopsEditor extends XoopsFormTextArea
                 }
                 ++$i;
             }
-            $configs = (isset($args[$i]) && is_array($args[$i])) ? array_merge($configs, $args[$i]) : $configs;
+            $configs = (isset($args[$i]) && \is_array($args[$i])) ? array_merge($configs, $args[$i]) : $configs;
         } else {
             $configs = $args[0];
         }
@@ -158,7 +158,7 @@ class XoopsEditorHandler
         */
         if (!isset($this->root_path)) {
             $this->root_path = XOOPS_ROOT_PATH . '/class/xoopseditor';
-            $GLOBALS['xoopsLogger']->addDeprecated(__CLASS__ . '::' . __FUNCTION__ . '() should not be called statically.');
+            $GLOBALS['xoopsLogger']->addDeprecated(__METHOD__ . '() should not be called statically.');
         }
 
         xoops_load('XoopsCache');
@@ -210,7 +210,7 @@ class XoopsEditorHandler
      */
     public function render($editor)
     {
-        trigger_error(__CLASS__ . '::' . __FUNCTION__ . '() deprecated', E_USER_WARNING);
+        $GLOBALS['xoopsLogger']->addDeprecated(__METHOD__ . ' is deprecated');
 
         return $editor->render();
     }

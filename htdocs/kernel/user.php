@@ -18,6 +18,8 @@
 
 defined('XOOPS_ROOT_PATH') || exit('Restricted access');
 
+require_once XOOPS_ROOT_PATH . '/include/notification_constants.php';
+
 /**
  * Class for users
  * @author              Kazumi Ono <onokazu@xoops.org>
@@ -47,6 +49,40 @@ class XoopsUser extends XoopsObject
      * @access private
      */
     public $_isOnline;
+
+    //PHP 8.2 Dynamic properties deprecated
+    public $uid;
+    public $name;
+    public $uname;
+    public $email;
+    public $url;
+    public $user_avatar;
+    public $user_regdate;
+    public $user_icq;
+    public $user_from;
+    public $user_sig;
+    public $user_viewemail;
+    public $actkey;
+    public $user_aim;
+    public $user_yim;
+    public $user_msnm;
+    public $pass;
+    public $posts;
+    public $attachsig;
+    public $rank;
+    public $level;
+    public $theme;
+    public $timezone_offset;
+    public $last_login;
+    public $umode;
+    public $uorder;
+    // RMV-NOTIFY
+    public $notify_method;
+    public $notify_mode;
+    public $user_occ;
+    public $bio;
+    public $user_intrest;
+    public $user_mailok;
 
     /**
      * constructor
@@ -80,8 +116,8 @@ class XoopsUser extends XoopsObject
         $this->initVar('umode', XOBJ_DTYPE_OTHER, null, false);
         $this->initVar('uorder', XOBJ_DTYPE_INT, 1, false);
         // RMV-NOTIFY
-        $this->initVar('notify_method', XOBJ_DTYPE_OTHER, 1, false);
-        $this->initVar('notify_mode', XOBJ_DTYPE_OTHER, 0, false);
+        $this->initVar('notify_method', XOBJ_DTYPE_OTHER, XOOPS_NOTIFICATION_METHOD_PM, false);
+        $this->initVar('notify_mode', XOBJ_DTYPE_OTHER, XOOPS_NOTIFICATION_MODE_SENDALWAYS, false);
         $this->initVar('user_occ', XOBJ_DTYPE_TXTBOX, null, false, 100);
         $this->initVar('bio', XOBJ_DTYPE_TXTAREA, null, false, null);
         $this->initVar('user_intrest', XOBJ_DTYPE_TXTBOX, null, false, 150);
@@ -91,7 +127,7 @@ class XoopsUser extends XoopsObject
             if (is_array($id)) {
                 $this->assignVars($id);
             } else {
-                /* @var XoopsMemberHandler $member_handler */
+                /** @var XoopsMemberHandler $member_handler */
                 $member_handler = xoops_getHandler('member');
                 $user           = $member_handler->getUser($id);
                 foreach ($user->vars as $k => $v) {
@@ -116,30 +152,30 @@ class XoopsUser extends XoopsObject
      * Updated by Catzwolf 11 Jan 2004
      * find the username for a given ID
      *
-     * @param  int $userid  ID of the user to find
-     * @param  int $usereal switch for usename or realname
+     * @param  int  $userid  ID of the user to find
+     * @param  int  $usereal switch for usename or realname
+     * @param  bool $linked add a link
      * @return string name of the user. name for 'anonymous' if not found.
      */
-    public static function getUnameFromId($userid, $usereal = 0)
+    public static function getUnameFromId($userid, $usereal = 0, $linked = false)
     {
         $userid  = (int)$userid;
         $usereal = (int)$usereal;
         if ($userid > 0) {
-            /* @var XoopsMemberHandler $member_handler */
+            /** @var XoopsMemberHandler $member_handler */
             $member_handler = xoops_getHandler('member');
             $user           = $member_handler->getUser($userid);
             if (is_object($user)) {
-                $ts = MyTextSanitizer::getInstance();
-                if ($usereal) {
-                    $name = $user->getVar('name');
-                    if ($name != '') {
-                        return $ts->htmlSpecialChars($name);
-                    } else {
-                        return $ts->htmlSpecialChars($user->getVar('uname'));
-                    }
+                $myts = \MyTextSanitizer::getInstance();
+                if ($usereal && $user->getVar('name')) {
+                    $username = $myts->htmlSpecialChars($user->getVar('name'));
                 } else {
-                    return $ts->htmlSpecialChars($user->getVar('uname'));
+                    $username = $myts->htmlSpecialChars($user->getVar('uname'));
                 }
+                if (!empty($linked)) {
+                    $username = '<a href="' . XOOPS_URL . '/userinfo.php?uid=' . $userid . '" title="' . $username . '">' . $username . '</a>';
+                }
+				return $username;
             }
         }
 
@@ -153,7 +189,7 @@ class XoopsUser extends XoopsObject
      */
     public function incrementPost()
     {
-        /* @var XoopsMemberHandler $member_handler */
+        /** @var XoopsMemberHandler $member_handler */
         $member_handler = xoops_getHandler('member');
 
         return $member_handler->updateUserByField($this, 'posts', $this->getVar('posts') + 1);
@@ -179,7 +215,7 @@ class XoopsUser extends XoopsObject
     public function &getGroups()
     {
         if (empty($this->_groups)) {
-            /* @var XoopsMemberHandler $member_handler */
+            /** @var XoopsMemberHandler $member_handler */
             $member_handler = xoops_getHandler('member');
             $this->_groups  = $member_handler->getGroupsByUser($this->getVar('uid'));
         }
@@ -217,7 +253,7 @@ class XoopsUser extends XoopsObject
         } elseif ((int)$module_id < 1) {
             $module_id = 0;
         }
-        /* @var XoopsGroupPermHandler $moduleperm_handler */
+        /** @var XoopsGroupPermHandler $moduleperm_handler */
         $moduleperm_handler = xoops_getHandler('groupperm');
 
         return $moduleperm_handler->checkRight('module_admin', $module_id, $this->getGroups());
@@ -252,7 +288,7 @@ class XoopsUser extends XoopsObject
     public function isOnline()
     {
         if (!isset($this->_isOnline)) {
-            /* @var XoopsOnlineHandler $onlinehandler */
+            /** @var XoopsOnlineHandler $onlinehandler */
             $onlinehandler   = xoops_getHandler('online');
             $this->_isOnline = ($onlinehandler->getCount(new Criteria('online_uid', $this->getVar('uid'))) > 0);// ? true : false;
         }
@@ -558,7 +594,7 @@ class XoopsUser extends XoopsObject
      */
     public function getProfile()
     {
-        trigger_error(__CLASS__ . '::' . __FUNCTION__ . ' is deprecated', E_USER_WARNING);
+        $GLOBALS['xoopsLogger']->addDeprecated(__METHOD__ . ' is deprecated');
 
         return false;
     }
@@ -611,9 +647,9 @@ class XoopsUserHandler extends XoopsPersistableObjectHandler
      * @param bool $md5
      * @return bool|object
      */
-    public function &loginUser($uname, $pwd, $md5 = false)
+    public function loginUser($uname, $pwd, $md5 = false)
     {
-        trigger_error(__CLASS__ . '::' . __FUNCTION__ . ' is deprecated', E_USER_WARNING);
+        $GLOBALS['xoopsLogger']->addDeprecated(__METHOD__ . ' is deprecated');
 
         return false;
     }
@@ -627,7 +663,7 @@ class XoopsUserHandler extends XoopsPersistableObjectHandler
      */
     public function updateUserByField($fieldName, $fieldValue, $uid)
     {
-        trigger_error(__CLASS__ . '::' . __FUNCTION__ . ' is deprecated', E_USER_WARNING);
+        $GLOBALS['xoopsLogger']->addDeprecated(__METHOD__ . ' is deprecated');
 
         return false;
     }

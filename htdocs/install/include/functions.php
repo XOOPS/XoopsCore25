@@ -4,7 +4,7 @@
  * If you did not receive this file, get it at https://www.gnu.org/licenses/gpl-2.0.html
  *
  * @copyright    (c) 2000-2021 XOOPS Project (www.xoops.org)
- * @license          GNU GPL 2 or later (https://www.gnu.org/licenses/gpl-2.0.html)
+ * @license          GNU GPL 2.0 or later (https://www.gnu.org/licenses/gpl-2.0.html)
  * @package          installer
  * @since            2.3.0
  * @author           Haruki Setoyama  <haruki@planewave.org>
@@ -18,10 +18,10 @@
 
 /**
  * call htmlspecialchars with standard arguments
- * @param $value string
+ * @param string $value
  * @return string
  */
-function installerHtmlSpecialChars($value)
+function installerHtmlSpecialChars($value = '')
 {
     return htmlspecialchars($value, ENT_QUOTES, _INSTALL_CHARSET, true);
 }
@@ -37,7 +37,7 @@ function install_acceptUser($hash = '')
         return false;
     }
     $uname = $claims->uname;
-    /* @var XoopsMemberHandler $memberHandler */
+    /** @var XoopsMemberHandler $memberHandler */
     $memberHandler = xoops_getHandler('member');
     $users = $memberHandler->getUsers(new Criteria('uname', $uname));
     $user = array_pop($users);
@@ -69,9 +69,9 @@ function install_finalize($installer_modified)
 }
 
 /**
- * @param        $name
- * @param        $value
- * @param        $label
+ * @param string $name
+ * @param string $value
+ * @param string $label
  * @param string $help
  */
 function xoFormField($name, $value, $label, $help = '')

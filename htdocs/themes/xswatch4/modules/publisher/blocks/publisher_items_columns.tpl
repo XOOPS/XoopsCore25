@@ -2,7 +2,7 @@
     <div style="width:100%;">
         <{section name=i loop=$block.columns}>
             <div style="width: <{$block.columnwidth}>%;" class="publisher-left">
-                <{foreach item=item from=$block.columns[i]}>
+                <{foreach item=item from=$block.columns[i]|default:null}>
                     <div class="publisher-box">
                         <div class="publisher-section publisher-clearfix">
                             <a href="<{$item.categoryurl}>" title="<{$item.item_cat_description}>"><span><{$item.item_cat_name}></span></a>
@@ -13,17 +13,17 @@
                             </h4>
 
                             <p>
-                                <{if $item.item_image != ''}>
+                                <{if !empty($item.item_image)}>
                                     <img src="<{$item.item_image}>" alt="<{$item.item_cleantitle}>" align="left" width="120">
                                 <{/if}>
                                 <{$item.item_summary}>
                             </p>
                         </div>
 
-                        <{if $item.subitem|default:false}>
+                        <{if !empty($item.subitem)}>
                             <strong class="publisher-more"><{$smarty.const._MB_PUBLISHER_MORE}></strong>
                             <ul class="publisher-links">
-                                <{foreach item=subitem from=$item.subitem}>
+                                <{foreach item=subitem from=$item.subitem|default:null}>
                                     <li>
                                         <a title="<{$subitem.title}>" href="<{$subitem.itemurl}>"> <{$subitem.title}></a>
                                     </li>
@@ -41,7 +41,7 @@
     <div style="width:100%;">
     <{section name=i loop=$block.columns}>
         <div style="width: <{$block.columnwidth}>%;" class="publisher-left">
-            <{foreach item=item from=$block.columns[i]}>
+            <{foreach item=item from=$block.columns[i]|default:null}>
                 <div class="publisher-box">
 
                     <h3 class="publisher-title">
@@ -51,7 +51,7 @@
                     <div style="float:right; width:60%;">
 
                         <div class="publisher-content clearfix">
-                            <{if $item.item_image != ''}>
+                            <{if !empty($item.item_image)}>
                                 <img src="<{$item.item_image}>" alt="<{$item.item_cleantitle}>" align="right" width="100">
                             <{/if}>
                             <p><{$item.item_summary}></p>
@@ -69,7 +69,7 @@
                             <strong class="publisher-more"><{$smarty.const._MB_PUBLISHER_MORE}></strong>
                             <br>
                             <ul class="publisher-links">
-                                <{foreach item=subitem from=$item.subitem}>
+                                <{foreach item=subitem from=$item.subitem|default:null}>
                                     <li>
                                         <a title="<{$subitem.summary}>" href="<{$subitem.itemurl}>"> <{$subitem.title}></a>
                                     </li>

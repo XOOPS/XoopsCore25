@@ -8,7 +8,7 @@
     </tr>
     </thead>
     <tbody>
-    <{foreach item=item from=$block.items}>
+    <{foreach item=item from=$block.items|default:null}>
         <tr>
             <td><{$item.itemlink}></td>
             <td align="left"><{$item.categorylink}></td>
@@ -20,7 +20,7 @@
 
 </table>
 
-<{if $publisher_url|default:'' != ''}>
+<{if !empty($publisher_url)}>
     <div style="text-align:right; padding: 5px;">
         <a class="btn btn-primary btn-xs" href="<{$publisher_url}>"><{$block.lang_visitItem}></a>
     </div>

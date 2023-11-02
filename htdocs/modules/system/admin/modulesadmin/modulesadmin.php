@@ -10,8 +10,8 @@
  */
 
 /**
- * @copyright    XOOPS Project http://xoops.org/
- * @license      GNU GPL 2 or later (https://www.gnu.org/licenses/gpl-2.0.html)
+ * @copyright    XOOPS Project https://xoops.org/
+ * @license      GNU GPL 2.0 or later (https://www.gnu.org/licenses/gpl-2.0.html)
  * @package
  * @since
  * @author       XOOPS Development Team, Kazumi Ono (AKA onokazu)
@@ -68,7 +68,7 @@ function xoops_module_install($dirname)
         'banner',
         'bannerclient',
         'bannerfinish');
-    /* @var XoopsModuleHandler $module_handler */
+    /** @var XoopsModuleHandler $module_handler */
     $module_handler = xoops_getHandler('module');
     if ($module_handler->getCount(new Criteria('dirname', $dirname)) == 0) {
         $module = $module_handler->create();
@@ -86,7 +86,7 @@ function xoops_module_install($dirname)
         }
         $msgs[] = '<strong>' . _VERSION . ':</strong> ' . $module->getInfo('version');
         if ($module->getInfo('author') !== false && trim($module->getInfo('author')) != '') {
-            $msgs[] = '<strong>' . _AUTHOR . ':</strong> ' . htmlspecialchars(trim($module->getInfo('author')));
+            $msgs[] = '<strong>' . _AUTHOR . ':</strong> ' . htmlspecialchars(trim($module->getInfo('author')), ENT_QUOTES);
         }
         $msgs[] = '</div><div class="logger">';
         // Load module specific install script if any
@@ -95,7 +95,7 @@ function xoops_module_install($dirname)
             include_once XOOPS_ROOT_PATH . '/modules/' . $dirname . '/' . trim($install_script);
         }
         $func = "xoops_module_pre_install_{$dirname}";
-        // If pre install function is defined, execute
+        // If pre-install function is defined, execute
         if (function_exists($func)) {
             $result = $func($module);
             if (!$result) {
@@ -387,7 +387,7 @@ function xoops_module_install($dirname)
 
                 if ($configs !== false) {
                     $msgs[]         = _AM_SYSTEM_MODULES_MODULE_DATA_ADD;
-                    /* @var XoopsConfigHandler $config_handler */
+                    /** @var XoopsConfigHandler $config_handler */
                     $config_handler = xoops_getHandler('config');
                     $order          = 0;
                     foreach ($configs as $config) {
@@ -402,7 +402,7 @@ function xoops_module_install($dirname)
                         $confobj->setConfValueForInput($config['default'], true);
                         $confobj->setVar('conf_order', $order);
                         $confop_msgs = '';
-                        if (isset($config['options']) && is_array($config['options'])) {
+                        if (isset($config['options']) && \is_array($config['options'])) {
                             foreach ($config['options'] as $key => $value) {
                                 $confop = $config_handler->createConfigOption();
                                 $confop->setVar('confop_name', $key, true);
@@ -430,11 +430,11 @@ function xoops_module_install($dirname)
             // retrieve all block ids for this module
             $blocks        = XoopsBlock::getByModule($newmid, false);
             $msgs[]        = _AM_SYSTEM_MODULES_GROUP_SETTINGS_ADD;
-            /* @var  XoopsGroupPermHandler $gperm_handler */
+            /** @var  XoopsGroupPermHandler $gperm_handler */
             $gperm_handler = xoops_getHandler('groupperm');
             foreach ($groups as $mygroup) {
                 if ($gperm_handler->checkRight('module_admin', 0, $mygroup)) {
-                    /* @var XoopsGroupPerm $mperm */
+                    /** @var XoopsGroupPerm $mperm */
                     $mperm = $gperm_handler->create();
                     $mperm->setVar('gperm_groupid', $mygroup);
                     $mperm->setVar('gperm_itemid', $newmid);
@@ -459,7 +459,7 @@ function xoops_module_install($dirname)
                 }
                 unset($mperm);
                 foreach ($blocks as $blc) {
-                    /* @var XoopsGroupPerm $bperm */
+                    /** @var XoopsGroupPerm $bperm */
                     $bperm = $gperm_handler->create();
                     $bperm->setVar('gperm_groupid', $mygroup);
                     $bperm->setVar('gperm_itemid', $blc);
@@ -609,7 +609,7 @@ function xoops_module_uninstall($dirname)
         'bannerclient',
         'bannerfinish');
     $db             = XoopsDatabaseFactory::getDatabaseConnection();
-    /* @var XoopsModuleHandler $module_handler */
+    /** @var XoopsModuleHandler $module_handler */
     $module_handler = xoops_getHandler('module');
     $module         = $module_handler->getByDirname($dirname);
     include_once XOOPS_ROOT_PATH . '/class/template.php';
@@ -627,7 +627,7 @@ function xoops_module_uninstall($dirname)
         }
         $msgs[] = '<strong>' . _VERSION . ':</strong> ' . $module->getInfo('version');
         if ($module->getInfo('author') !== false && trim($module->getInfo('author')) != '') {
-            $msgs[] = '<strong>' . _AUTHOR . ':</strong> ' . htmlspecialchars(trim($module->getInfo('author')));
+            $msgs[] = '<strong>' . _AUTHOR . ':</strong> ' . htmlspecialchars(trim($module->getInfo('author')), ENT_QUOTES);
         }
         $msgs[] = '</div><div class="logger">';
         // Load module specific install script if any
@@ -701,7 +701,7 @@ function xoops_module_uninstall($dirname)
 
             // delete tables used by this module
             $modtables = $module->getInfo('tables');
-            if ($modtables !== false && is_array($modtables)) {
+            if ($modtables !== false && \is_array($modtables)) {
                 $msgs[] = _AM_SYSTEM_MODULES_DELETE_MOD_TABLES;
                 foreach ($modtables as $table) {
                     // prevent deletion of reserved core tables!
@@ -750,7 +750,7 @@ function xoops_module_uninstall($dirname)
 
             // delete module config options if any
             if ($module->getVar('hasconfig') != 0 || $module->getVar('hascomments') != 0) {
-                /* @var XoopsConfigHandler $config_handler */
+                /** @var XoopsConfigHandler $config_handler */
                 $config_handler = xoops_getHandler('config');
                 $configs        = $config_handler->getConfigs(new Criteria('conf_modid', $module->getVar('mid')));
                 $confcount      = count($configs);
@@ -795,16 +795,16 @@ function xoops_module_update($dirname)
     $dirname = trim($dirname);
     $xoopsDB =& $GLOBALS['xoopsDB'];
 
-    $myts = MyTextSanitizer::getInstance();
+    $myts = \MyTextSanitizer::getInstance();
 
     $dirname        = $myts->htmlSpecialChars(trim($dirname));
-    /* @var XoopsModuleHandler $module_handler */
+    /** @var XoopsModuleHandler $module_handler */
     $module_handler = xoops_getHandler('module');
     $module         = $module_handler->getByDirname($dirname);
     // Save current version for use in the update function
     $prev_version = $module->getVar('version');
     $clearTpl     = new XoopsTpl();
-    $clearTpl->clearCache($dirname);
+    $clearTpl->xoopsClearCache($dirname);
 
     // we don't want to change the module name set by admin
     $temp_name = $module->getVar('name');
@@ -859,7 +859,7 @@ function xoops_module_update($dirname)
             }
         }
         $msgs[]          = _AM_SYSTEM_MODULES_MODULE_DATA_UPDATE;
-        /* @var XoopsTplfileHandler $tplfile_handler */
+        /** @var XoopsTplfileHandler $tplfile_handler */
         $tplfile_handler = xoops_getHandler('tplfile');
         // irmtfan bug fix: remove codes for delete templates
         /*
@@ -956,6 +956,11 @@ function xoops_module_update($dirname)
                     }
                     $sql     = 'SELECT bid, name FROM ' . $xoopsDB->prefix('newblocks') . ' WHERE mid=' . $module->getVar('mid') . ' AND func_num=' . $i . " AND show_func='" . addslashes($block['show_func']) . "' AND func_file='" . addslashes($block['file']) . "'";
                     $fresult = $xoopsDB->query($sql);
+                    if (!$xoopsDB->isResultSet($fresult)) {
+                        throw new \RuntimeException(
+                            \sprintf(_DB_QUERY_ERROR, $sql) . $xoopsDB->error(), E_USER_ERROR
+                        );
+                    }
                     $fcount  = 0;
                     while (false !== ($fblock = $xoopsDB->fetchArray($fresult))) {
                         ++$fcount;
@@ -981,7 +986,7 @@ function xoops_module_update($dirname)
                                 $tplfile_new->setVar('tpl_desc', $block['description'], true);
                                 $tplfile_new->setVar('tpl_lastmodified', time());
                                 $tplfile_new->setVar('tpl_lastimported', 0);
-                                $tplfile_new->setVar('tpl_file', $block['template'], true); // irmtfan bug fix:  block template file will not updated after update the module
+                                $tplfile_new->setVar('tpl_file', $block['template'], true); // irmtfan bug fix:  block template file will not be updated after update the module
                                 if (!$tplfile_handler->insert($tplfile_new)) {
                                     $msgs[] = '&nbsp;&nbsp;<span style="color:#ff0000;">' . sprintf(_AM_SYSTEM_MODULES_TEMPLATE_UPDATE_ERROR, '<strong>' . $block['template'] . '</strong>') . '</span>';
                                 } else {
@@ -1062,7 +1067,7 @@ function xoops_module_update($dirname)
                 }
             }
             $block_arr = XoopsBlock::getByModule($module->getVar('mid'));
-            /* @var XoopsBlock $block */
+            /** @var XoopsBlock $block */
             foreach ($block_arr as $block) {
                 if (!in_array($block->getVar('show_func'), $showfuncs) || !in_array($block->getVar('func_file'), $funcfiles)) {
                     $sql = sprintf('DELETE FROM %s WHERE bid = %u', $xoopsDB->prefix('newblocks'), $block->getVar('bid'));
@@ -1100,7 +1105,7 @@ function xoops_module_update($dirname)
         //        $xoopsTpl->setCompileId();
 
         // first delete all config entries
-        /* @var XoopsConfigHandler $config_handler */
+        /** @var XoopsConfigHandler $config_handler */
         $config_handler = xoops_getHandler('config');
         $configs        = $config_handler->getConfigs(new Criteria('conf_modid', $module->getVar('mid')));
         $confcount      = count($configs);
@@ -1223,7 +1228,7 @@ function xoops_module_update($dirname)
 
         if ($configs !== false) {
             $msgs[]         = 'Adding module config data...';
-            /* @var XoopsConfigHandler $config_handler */
+            /** @var XoopsConfigHandler $config_handler */
             $config_handler = xoops_getHandler('config');
             $order          = 0;
             foreach ($configs as $config) {
@@ -1250,7 +1255,7 @@ function xoops_module_update($dirname)
                     }
                     $confobj->setVar('conf_order', $order);
                     $confop_msgs = '';
-                    if (isset($config['options']) && is_array($config['options'])) {
+                    if (isset($config['options']) && \is_array($config['options'])) {
                         foreach ($config['options'] as $key => $value) {
                             $confop = $config_handler->createConfigOption();
                             $confop->setVar('confop_name', $key, true);
@@ -1414,7 +1419,7 @@ function xoops_module_change($mid, $name)
     $module_handler = xoops_getHandler('module');
     $module         = $module_handler->get($mid);
     $module->setVar('name', $name);
-    $myts = MyTextSanitizer::getInstance();
+    $myts = \MyTextSanitizer::getInstance();
     if (!$module_handler->insert($module)) {
         $ret = '<p>' . sprintf(_AM_SYSTEM_MODULES_FAILORDER, '<strong>' . $myts->stripSlashesGPC($name) . '</strong>') . '&nbsp;' . _AM_SYSTEM_MODULES_ERRORSC . '<br>';
         $ret .= $module->getHtmlErrors() . '</p>';
@@ -1445,7 +1450,7 @@ function xoops_module_log_header($module, $title)
     }
     $msgs[] = '<strong>' . _VERSION . ':</strong> ' . $module->getInfo('version');
     if ($module->getInfo('author') !== false && trim($module->getInfo('author')) != '') {
-        $msgs[] = '<strong>' . _AUTHOR . ':</strong> ' . htmlspecialchars(trim($module->getInfo('author')));
+        $msgs[] = '<strong>' . _AUTHOR . ':</strong> ' . htmlspecialchars(trim($module->getInfo('author')), ENT_QUOTES);
     }
     $msgs[] = '</div>';
 

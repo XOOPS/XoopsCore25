@@ -10,8 +10,8 @@
  */
 
 /**
- * @copyright    XOOPS Project http://xoops.org/
- * @license      GNU GPL 2 or later (https://www.gnu.org/licenses/gpl-2.0.html)
+ * @copyright    XOOPS Project https://xoops.org/
+ * @license      GNU GPL 2.0 or later (https://www.gnu.org/licenses/gpl-2.0.html)
  * @package
  * @since
  * @author       XOOPS Development Team, Kazumi Ono (AKA onokazu)
@@ -81,7 +81,7 @@ class MetaWeblogApi extends XoopsXmlRpcApi
                         unset($value);
                     }
                     $newparams[3]['xoops_text'] = $this->params[3]['description'];
-                    if (isset($this->params[3]['categories']) && is_array($this->params[3]['categories'])) {
+                    if (isset($this->params[3]['categories']) && \is_array($this->params[3]['categories'])) {
                         foreach ($this->params[3]['categories'] as $k => $v) {
                             $newparams[3]['categories'][$k] = $v;
                         }
@@ -134,7 +134,7 @@ class MetaWeblogApi extends XoopsXmlRpcApi
                         $newparams[3][$key] =& $value;
                         unset($value);
                     }
-                    if (isset($this->params[3]['categories']) && is_array($this->params[3]['categories'])) {
+                    if (isset($this->params[3]['categories']) && \is_array($this->params[3]['categories'])) {
                         foreach ($this->params[3]['categories'] as $k => $v) {
                             $newparams[3]['categories'][$k] = $v;
                         }

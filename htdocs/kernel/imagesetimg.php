@@ -26,6 +26,12 @@ defined('XOOPS_ROOT_PATH') || exit('Restricted access');
  */
 class XoopsImagesetimg extends XoopsObject
 {
+    //PHP 8.2 Dynamic properties deprecated
+    public $imgsetimg_id;
+    public $imgsetimg_file;
+    public $imgsetimg_body;
+    public $imgsetimg_imgset;
+
     /**
      * Constructor
      */
@@ -121,7 +127,7 @@ class XoopsImagesetimgHandler extends XoopsObjectHandler
      * @param int $id ID
      *
      * @internal param bool $getbinary
-     * @return XoopsImageSetImg {@link XoopsImageSetImg}, FALSE on fail
+     * @return XoopsImageSetImg|false {@link XoopsImageSetImg}, false on fail
      */
     public function get($id)
     {
@@ -129,7 +135,8 @@ class XoopsImagesetimgHandler extends XoopsObjectHandler
         $id        = (int)$id;
         if ($id > 0) {
             $sql = 'SELECT * FROM ' . $this->db->prefix('imgsetimg') . ' WHERE imgsetimg_id=' . $id;
-            if (!$result = $this->db->query($sql)) {
+            $result = $this->db->query($sql);
+            if (!$this->db->isResultSet($result)) {
                 return $imgsetimg;
             }
             $numrows = $this->db->getRowsNum($result);
@@ -217,16 +224,18 @@ class XoopsImagesetimgHandler extends XoopsObjectHandler
         $ret   = array();
         $limit = $start = 0;
         $sql   = 'SELECT DISTINCT i.* FROM ' . $this->db->prefix('imgsetimg') . ' i LEFT JOIN ' . $this->db->prefix('imgset_tplset_link') . ' l ON l.imgset_id=i.imgsetimg_imgset LEFT JOIN ' . $this->db->prefix('imgset') . ' s ON s.imgset_id=l.imgset_id';
-        if (isset($criteria) && is_subclass_of($criteria, 'CriteriaElement')) {
+        if (isset($criteria) && \method_exists($criteria, 'renderWhere')) {
             $sql .= ' ' . $criteria->renderWhere();
             $sql .= ' ORDER BY imgsetimg_id ' . $criteria->getOrder();
             $limit = $criteria->getLimit();
             $start = $criteria->getStart();
         }
         $result = $this->db->query($sql, $limit, $start);
-        if (!$result) {
+        if (!$this->db->isResultSet($result)) {
             return $ret;
         }
+
+        /** @var array $myrow */
         while (false !== ($myrow = $this->db->fetchArray($result))) {
             $imgsetimg = new XoopsImagesetimg();
             $imgsetimg->assignVars($myrow);
@@ -250,15 +259,16 @@ class XoopsImagesetimgHandler extends XoopsObjectHandler
     public function getCount(CriteriaElement $criteria = null)
     {
         $sql = 'SELECT COUNT(i.imgsetimg_id) FROM ' . $this->db->prefix('imgsetimg') . ' i LEFT JOIN ' . $this->db->prefix('imgset_tplset_link') . ' l ON l.imgset_id=i.imgsetimg_imgset';
-        if (isset($criteria) && is_subclass_of($criteria, 'CriteriaElement')) {
+        if (isset($criteria) && \method_exists($criteria, 'renderWhere')) {
             $sql .= ' ' . $criteria->renderWhere() . ' GROUP BY i.imgsetimg_id';
         }
-        if (!$result = $this->db->query($sql)) {
+        $result = $this->db->query($sql);
+        if (!$this->db->isResultSet($result)) {
             return 0;
         }
         list($count) = $this->db->fetchRow($result);
 
-        return $count;
+        return (int)$count;
     }
 
     /**

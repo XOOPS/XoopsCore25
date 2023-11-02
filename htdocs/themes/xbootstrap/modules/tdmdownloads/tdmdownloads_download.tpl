@@ -1,6 +1,6 @@
 <div class="col-sm-4 col-md-4 tdm-minibox">
-    <{if $show_screenshot == true}>
-        <{if $down.logourl != ''}>
+    <{if isset($show_screenshot) && $show_screenshot == true}>
+        <{if !empty($down.logourl)}>
             <div class="tdm-download-logo">
                 <img src="<{$down.logourl}>" alt="<{$down.title}>">
             </div>
@@ -37,7 +37,7 @@
         <{$smarty.const._MD_TDMDOWNLOADS_MOREDETAILS}>
     </a>
 
-    <{if $down.perm_download != ""}>
+    <{if !empty($down.perm_download)}>
         <a title="<{$smarty.const._MD_TDMDOWNLOADS_INDEX_DLNOW}>" href="visit.php?cid=<{$down.cid}>&amp;lid=<{$down.id}>"
            class="btn btn-success btn-xs tdm-download-btn col-md-2 pull-right">
             <span class="glyphicon glyphicon-cloud-download"></span>

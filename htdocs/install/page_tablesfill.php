@@ -15,7 +15,7 @@
  * If you did not receive this file, get it at https://www.gnu.org/licenses/gpl-2.0.html
  *
  * @copyright    (c) 2000-2016 XOOPS Project (www.xoops.org)
- * @license          GNU GPL 2 or later (https://www.gnu.org/licenses/gpl-2.0.html)
+ * @license          GNU GPL 2.0 or later (https://www.gnu.org/licenses/gpl-2.0.html)
  * @package          installer
  * @since            2.3.0
  * @author           Haruki Setoyama  <haruki@planewave.org>
@@ -25,7 +25,7 @@
  * @author           DuGris (aka L. JEN) <dugris@frxoops.org>
  */
 
-require_once './include/common.inc.php';
+require_once __DIR__ . '/include/common.inc.php';
 defined('XOOPS_INSTALL') || die('XOOPS Installation wizard die');
 
 $pageHasForm = false;
@@ -33,28 +33,46 @@ $pageHasHelp = false;
 
 $vars =& $_SESSION['settings'];
 
-include_once '../mainfile.php';
-include_once './class/dbmanager.php';
+require_once __DIR__ . '/../mainfile.php';
+require_once __DIR__ . '/class/dbmanager.php';
+if (!defined('_XOOPS_FATAL_MESSAGE')) {
+    include_once (XOOPS_ROOT_PATH . '/include/defines.php');
+}
+if (!defined('_DB_QUERY_ERROR')) {
+    if (file_exists(XOOPS_ROOT_PATH . "/language/{$wizard->language}/global.php")) {
+        include_once (XOOPS_ROOT_PATH . "/language/{$wizard->language}/global.php");
+    } else {
+        include_once (XOOPS_ROOT_PATH . '/language/english/global.php');
+    }
+}
 $dbm = new Db_manager();
 
 if (!$dbm->isConnectable()) {
     $wizard->redirectToPage('dbsettings');
     exit();
 }
-$res = $dbm->query('SELECT COUNT(*) FROM ' . $dbm->db->prefix('users'));
-if (!$res) {
+
+$sql = 'SELECT COUNT(*) FROM ' . $dbm->db->prefix('users');
+$result = $dbm->query($sql);
+if (!$dbm->db->isResultSet($result)) {
+        throw new \RuntimeException(
+        \sprintf(_DB_QUERY_ERROR, $sql) . $dbm->db->error(), E_USER_ERROR
+    );
+}
+
+if (!$result) {
     $wizard->redirectToPage('dbsettings');
     exit();
 }
 
-list($count) = $dbm->db->fetchRow($res);
+list($count) = $dbm->db->fetchRow($result);
 $process = ($count == 0);
 $update  = false;
 
 extract($_SESSION['siteconfig'], EXTR_SKIP);
 
-include_once './include/makedata.php';
-//$cm = 'dummy';
+require_once __DIR__ . '/include/makedata.php';
+
 $wizard->loadLangFile('install2');
 
 $licenseFile = XOOPS_VAR_PATH . '/data/license.php';
@@ -94,4 +112,4 @@ if (!empty($_SESSION['settings']['authorized']) && !empty($adminname) && !empty(
     xoops_setcookie('xo_install_user', $token, 0, null, null, null, true);
 }
 
-include './include/install_tpl.php';
+include __DIR__ . '/include/install_tpl.php';

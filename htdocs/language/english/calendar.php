@@ -3,7 +3,7 @@
 // _LANGCODE: en
 // _CHARSET : UTF-8
 // Translator: XOOPS Translation Team
-// more examples: http://php.net/manual/en/function.date.php
+// more examples: https://php.net/manual/en/function.date.php
 //
 // Revision by TXMod Xoops - Added shot text: 30/06/2012
 //

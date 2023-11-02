@@ -15,8 +15,10 @@
  * @since               2.0.0
  * @author              Kazumi Ono (AKA onokazu) http://www.myweb.ne.jp/, http://jp.xoops.org/
  */
-/* @var XoopsUser $xoopsUser */
-/* @var XoopsConfigItem $xoopsConfig */
+/** @var XoopsUser $xoopsUser */
+/** @var XoopsConfigItem $xoopsConfig */
+
+use Xmf\Request;
 
 if (!defined('XOOPS_ROOT_PATH') || !is_object($xoopsModule)) {
     die('Restricted access');
@@ -29,7 +31,7 @@ if (XOOPS_COMMENT_APPROVENONE != $xoopsModuleConfig['com_rule']) {
     xoops_load('XoopsFormLoader');
 
     include_once $GLOBALS['xoops']->path('modules/system/constants.php');
-    /* @var  XoopsGroupPermHandler $gperm_handler */
+    /** @var  XoopsGroupPermHandler $gperm_handler */
     $gperm_handler = xoops_getHandler('groupperm');
     $groups        = $xoopsUser ? $xoopsUser->getGroups() : XOOPS_GROUP_ANONYMOUS;
     $xoopsTpl->assign('xoops_iscommentadmin', $gperm_handler->checkRight('system_admin', XOOPS_SYSTEM_COMMENT, $groups));
@@ -37,9 +39,11 @@ if (XOOPS_COMMENT_APPROVENONE != $xoopsModuleConfig['com_rule']) {
     xoops_loadLanguage('comment');
 
     $comment_config = $xoopsModule->getInfo('comments');
-    $com_itemid     = (trim($comment_config['itemName']) != '' && isset($_GET[$comment_config['itemName']])) ? (int)$_GET[$comment_config['itemName']] : 0;
+    $com_itemid = (trim($comment_config['itemName']) != '') ? Request::getInt($comment_config['itemName'], 0, 'GET') : 0;
+
     if ($com_itemid > 0) {
-        $com_mode = isset($_GET['com_mode']) ? htmlspecialchars(trim($_GET['com_mode']), ENT_QUOTES) : '';
+        $com_mode = htmlspecialchars(Request::getString('com_mode', '', 'GET'), ENT_QUOTES);
+
         if ($com_mode == '') {
             if (is_object($xoopsUser)) {
                 $com_mode = $xoopsUser->getVar('umode');
@@ -54,7 +58,7 @@ if (XOOPS_COMMENT_APPROVENONE != $xoopsModuleConfig['com_rule']) {
                 $com_order = $xoopsConfig['com_order'];
             }
         } else {
-            $com_order = (int)$_GET['com_order'];
+            $com_order = Request::getInt('com_order', 0, 'GET');
         }
         if ($com_order != XOOPS_COMMENT_OLD1ST) {
             $xoopsTpl->assign(array(
@@ -73,9 +77,9 @@ if (XOOPS_COMMENT_APPROVENONE != $xoopsModuleConfig['com_rule']) {
             $admin_view = true;
         }
 
-        $com_id          = isset($_GET['com_id']) ? (int)$_GET['com_id'] : 0;
-        $com_rootid      = isset($_GET['com_rootid']) ? (int)$_GET['com_rootid'] : 0;
-        /* @var  XoopsCommentHandler $comment_handler */
+        $com_id          = Request::getInt('com_id', 0, 'GET');
+        $com_rootid      = Request::getInt('com_rootid', 0, 'GET');
+        /** @var  XoopsCommentHandler $comment_handler */
         $comment_handler = xoops_getHandler('comment');
         if ($com_mode === 'flat') {
             $comments = $comment_handler->getByItemId($xoopsModule->getVar('mid'), $com_itemid, $com_dborder);
@@ -86,16 +90,16 @@ if (XOOPS_COMMENT_APPROVENONE != $xoopsModuleConfig['com_rule']) {
         } elseif ($com_mode === 'thread') {
             // RMV-FIX... added extraParam stuff here
             $comment_url = $comment_config['pageName'] . '?';
-            if (isset($comment_config['extraParams']) && is_array($comment_config['extraParams'])) {
+            if (isset($comment_config['extraParams']) && \is_array($comment_config['extraParams'])) {
                 $extra_params = '';
                 foreach ($comment_config['extraParams'] as $extra_param) {
                     // This page is included in the module hosting page -- param could be from anywhere
                     if (isset(${$extra_param})) {
                         $extra_params .= $extra_param . '=' . ${$extra_param} . '&amp;';
                     } elseif (isset($_POST[$extra_param])) {
-                        $extra_params .= $extra_param . '=' . $_POST[$extra_param] . '&amp;';
+                        $extra_params .= $extra_param . '=' . Request::getString($extra_param, '', 'POST') . '&amp;';
                     } elseif (isset($_GET[$extra_param])) {
-                        $extra_params .= $extra_param . '=' . $_GET[$extra_param] . '&amp;';
+                        $extra_params .= $extra_param . '=' . Request::getString($extra_param, '', 'GET') . '&amp;';
                     } else {
                         $extra_params .= $extra_param . '=&amp;';
                     }
@@ -177,16 +181,16 @@ if (XOOPS_COMMENT_APPROVENONE != $xoopsModuleConfig['com_rule']) {
         $commentBarHidden .= '<input type="hidden" name="' . $comment_config['itemName']
             . '" value="' . $com_itemid . '" />';
         $link_extra = '';
-        if (isset($comment_config['extraParams']) && is_array($comment_config['extraParams'])) {
+        if (isset($comment_config['extraParams']) && \is_array($comment_config['extraParams'])) {
             foreach ($comment_config['extraParams'] as $extra_param) {
                 if (isset(${$extra_param})) {
                     $link_extra .= '&amp;' . $extra_param . '=' . ${$extra_param};
                     $hidden_value    = htmlspecialchars(${$extra_param}, ENT_QUOTES);
                     $extra_param_val = ${$extra_param};
                 } elseif (isset($_POST[$extra_param])) {
-                    $extra_param_val = $_POST[$extra_param];
+                    $extra_param_val = Request::getString($extra_param, '', 'POST');
                 } elseif (isset($_GET[$extra_param])) {
-                    $extra_param_val = $_GET[$extra_param];
+                    $extra_param_val = Request::getString($extra_param, '', 'GET');
                 }
                 if (isset($extra_param_val)) {
                     $link_extra .= '&amp;' . $extra_param . '=' . $extra_param_val;
@@ -211,7 +215,7 @@ if (XOOPS_COMMENT_APPROVENONE != $xoopsModuleConfig['com_rule']) {
                 include_once $GLOBALS['xoops']->path('modules/' . $xoopsModule->getVar('dirname') . '/comment_fast.php');
             }
             if (isset($com_replytitle)) {
-                $myts      = MyTextSanitizer::getInstance();
+                $myts      = \MyTextSanitizer::getInstance();
                 $com_title = $myts->htmlSpecialChars($com_replytitle);
                 if (!preg_match('/^' . _RE . '/i', $com_title)) {
                     $com_title = _RE . ' ' . xoops_substr($com_title, 0, 56);
@@ -264,15 +268,15 @@ if (XOOPS_COMMENT_APPROVENONE != $xoopsModuleConfig['com_rule']) {
             // add module specific extra params
             if ('system' !== $xoopsModule->getVar('dirname')) {
                 $comment_config = $xoopsModule->getInfo('comments');
-                if (isset($comment_config['extraParams']) && is_array($comment_config['extraParams'])) {
-                    $myts = MyTextSanitizer::getInstance();
+                if (isset($comment_config['extraParams']) && \is_array($comment_config['extraParams'])) {
+                    $myts = \MyTextSanitizer::getInstance();
                     foreach ($comment_config['extraParams'] as $extra_param) {
                         // This routine is included from forms accessed via both GET and POST
                         $hidden_value = '';
                         if (isset($_POST[$extra_param])) {
-                            $hidden_value = $myts->stripSlashesGPC($_POST[$extra_param]);
+                            $hidden_value = $myts->stripSlashesGPC(Request::getString($extra_param, '', 'POST'));
                         } elseif (isset($_GET[$extra_param])) {
-                            $hidden_value = $myts->stripSlashesGPC($_GET[$extra_param]);
+                            $hidden_value = $myts->stripSlashesGPC(Request::getString($extra_param, '', 'GET'));
                         }
                         $cform->addElement(new XoopsFormHidden($extra_param, $hidden_value));
                     }
@@ -286,7 +290,7 @@ if (XOOPS_COMMENT_APPROVENONE != $xoopsModuleConfig['com_rule']) {
         } else {
             $xoopsTpl->assign('commentform', '');
         }
-        // End add by voltan
+        // End added by voltan
 
         $xoopsTpl->assign(array(
                               'commentsnav'        => $navbar,

@@ -22,9 +22,9 @@
         }
         //-->
     </script>
-    <link rel="stylesheet" type="text/css" media="screen" href="<{xoAppUrl xoops.css}>">
-    <link rel="stylesheet" type="text/css" media="screen" href="<{xoAppUrl modules/system/css/imagemanager.css}>">
-    <link rel="stylesheet" type="text/css" media="screen" href="<{xoAppUrl media/font-awesome/css/font-awesome.min.css}>">
+    <link rel="stylesheet" type="text/css" media="screen" href="<{xoAppUrl 'xoops.css'}>">
+    <link rel="stylesheet" type="text/css" media="screen" href="<{xoAppUrl 'modules/system/css/imagemanager.css'}>">
+    <link rel="stylesheet" type="text/css" media="screen" href="<{xoAppUrl 'media/font-awesome/css/font-awesome.min.css'}>">
 
     <{php}>
         $language = $GLOBALS['xoopsConfig']['language'];
@@ -48,7 +48,7 @@
                 <input type="submit" value="<{$lang_go}>"/>
             </td>
 
-            <{if $show_cat > 0}>
+            <{if isset($show_cat) && $show_cat > 0}>
                 <td id="addimage" class="txtright"><a href="<{$xoops_url}>/imagemanager.php?target=<{$target}>&op=upload&imgcat_id=<{$show_cat}>"
                                                       title="<{$lang_addimage}>"><{$lang_addimage}></a></td>
             <{/if}>
@@ -57,7 +57,7 @@
     </table>
 </form>
 <div id="pagenav"><{$pagenav|default:''}></div>
-<{if $image_total|default:0 > 0}>
+<{if isset($image_total) && $image_total > 0}>
     <table cellspacing="0" id="imagemain">
         <tr>
             <th><{$lang_imagename}></th>

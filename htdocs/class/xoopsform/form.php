@@ -99,7 +99,7 @@ class XoopsForm
     public $_required = array();
 
     /**
-     * additional serialised object checksum (ERM Analysis - Requirement)
+     * additional serialized object checksum (ERM Analysis - Requirement)
      * @deprecated
      * @access private
      */
@@ -126,7 +126,7 @@ class XoopsForm
         $this->_action  = $action;
         $this->_method  = $method;
         $this->_summary = $summary;
-        if ($addtoken != false) {
+        if (false != $addtoken) {
             $this->addElement(new XoopsFormHiddenToken());
         }
     }
@@ -137,73 +137,65 @@ class XoopsForm
     public function XoopsForm()
     {
         $trace = debug_backtrace(DEBUG_BACKTRACE_IGNORE_ARGS, 1);
-        trigger_error("Should call parent::__construct in {$trace[0]['file']} line {$trace[0]['line']},");
+        trigger_error("Should call parent::__construct in {$trace[0]['file']} line {$trace[0]['line']},", E_USER_DEPRECATED);
         self::__construct();
     }
     /**
      * *#@+
-     * retrieves object serialisation/identification id (sha1 used)
+     * retrieves object serialization/identification id (sha1 used)
      *
-     * each object has serialisation<br>
+     * each object has serialization<br>
      * - legal requirement of enterprise relational management (ERM)
      *
      * @deprecated
      * @access public
-     * @param         $object
-     * @param  string $hashinfo
-     * @return string
+     * @param mixed  $object   The object or value to serialize
+     * @param string $hashinfo Hashing algorithm to use (default 'sha1')
+     * @return string         The serialization ID
      */
     public function getObjectID($object, $hashinfo = 'sha1')
     {
+        // Initialize $var
+        $var = array(
+            'name' => '',
+            'value' => '',
+            'func' => ''
+        );
+
+        // Check if $object is an object; if not, use $this
         if (!is_object($object)) {
             $object = $this;
         }
 
-        switch ($hashinfo) {
-            case 'md5':
+        // Switch hash method based on $hashinfo
+        $hashMethod = ('md5' === $hashinfo) ? 'md5' : 'sha1';
 
-                @$var['name'] = md5(get_class($object));
+        // Hash the class name
+        $var['name'] = $hashMethod(get_class($object));
 
-                foreach (get_object_vars($object) as $key => $value) {
-                    if ($key !== '_objid') {
-                        @$var['value'] = $this->getArrayID($value, $key, $var['value'], $hashinfo);
-                    }
-                }
-
-                foreach (get_class_methods($object) as $key => $value) {
-                    @$var['func'] = $this->getArrayID($value, $key, $var['func'], $hashinfo);
-                }
-
-                @$this->_objid = md5($var['name'] . ':' . $var['func'] . ':' . $var['value']);
-
-                return $this->_objid;
-                break;
-
-            default:
-
-                @$var['name'] = sha1(get_class($object));
-
-                foreach (get_object_vars($object) as $key => $value) {
-                    if ($key !== '_objid') {
-                        @$var['value'] = $this->getArrayID($value, $key, $var['value'], $hashinfo);
-                    }
-                }
-
-                foreach (get_class_methods($object) as $key => $value) {
-                    @$var['func'] = $this->getArrayID($value, $key, $var['func'], $hashinfo);
-                }
-
-                @$this->_objid = sha1($var['name'] . ':' . $var['func'] . ':' . $var['value']);
-
-                return $this->_objid;
-
+        // Hash the object variables
+        foreach (get_object_vars($object) as $key => $value) {
+            if ($key !== '_objid') {
+                $var['value'] = $this->getArrayID($value, $key, $var['value'], $hashinfo);
+            }
         }
+
+        // Hash the class methods
+        foreach (get_class_methods($object) as $key => $value) {
+            $var['func'] = $this->getArrayID($value, $key, $var['func'], $hashinfo);
+        }
+
+        // Generate the final hash
+        $this->_objid = $hashMethod(implode(':', $var));
+
+        return $this->_objid;
     }
 
+
     /**
-     * @param        $value
-     * @param        $key
-     * @param        $ret
+     * @param mixed  $value
+     * @param mixed  $key
+     * @param string $ret
      * @param string $hashinfo
      *
      * @return string
@@ -212,27 +204,31 @@ class XoopsForm
     {
         switch ($hashinfo) {
             case 'md5':
+                if (!isset($ret)) {
+                    $ret = '';
+                }
                 if (is_array($value)) {
                     foreach ($value as $keyb => $valueb) {
-                        @$ret = md5($ret . ':' . $this->getArrayID($valueb, $keyb, $ret, $hashinfo));
+                        $ret = md5($ret . ':' . $this->getArrayID($valueb, $keyb, $ret, $hashinfo));
                     }
                 } else {
-                    @$ret = md5($ret . ':' . $key . ':' . $value);
+                    $ret = md5($ret . ':' . $key . ':' . $value);
                 }
 
                 return $ret;
-                break;
             default:
+                if (!isset($ret)) {
+                    $ret = '';
+                }
                 if (is_array($value)) {
                     foreach ($value as $keyb => $valueb) {
-                        @$ret = sha1($ret . ':' . $this->getArrayID($valueb, $keyb, $ret, $hashinfo));
+                        $ret = sha1($ret . ':' . $this->getArrayID($valueb, $keyb, $ret, $hashinfo));
                     }
                 } else {
-                    @$ret = sha1($ret . ':' . $key . ':' . $value);
+                    $ret = sha1($ret . ':' . $key . ':' . $value);
                 }
 
                 return $ret;
-                break;
         }
     }
 
@@ -412,7 +408,7 @@ class XoopsForm
      */
     public function setElementValues($values)
     {
-        if (is_array($values) && !empty($values)) {
+        if (!empty($values) && \is_array($values)) {
             // will not use getElementByName() for performance..
             $elements = &$this->getElements(true);
             $count    = count($elements);

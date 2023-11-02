@@ -10,8 +10,8 @@
  */
 
 /**
- * @copyright    XOOPS Project http://xoops.org/
- * @license      GNU GPL 2 or later (https://www.gnu.org/licenses/gpl-2.0.html)
+ * @copyright    XOOPS Project https://xoops.org/
+ * @license      GNU GPL 2.0 or later (https://www.gnu.org/licenses/gpl-2.0.html)
  * @package
  * @since
  * @author       XOOPS Development Team, Kazumi Ono (AKA onokazu)
@@ -25,7 +25,7 @@ include_once $GLOBALS['xoops']->path('class/xoopsformloader.php');
 function b_system_online_show()
 {
     global $xoopsUser, $xoopsModule;
-    /* @var XoopsOnlineHandler $online_handler */
+    /** @var XoopsOnlineHandler $online_handler */
     $online_handler = xoops_getHandler('online');
     // set gc probabillity to 10% for now..
     if (mt_rand(1, 100) < 11) {
@@ -117,7 +117,7 @@ function b_system_main_show()
     $criteria->add(new Criteria('isactive', 1));
     $criteria->add(new Criteria('weight', 0, '>'));
     $modules            = $module_handler->getObjects($criteria, true);
-    /* @var XoopsGroupPermHandler $moduleperm_handler */
+    /** @var XoopsGroupPermHandler $moduleperm_handler */
     $moduleperm_handler = xoops_getHandler('groupperm');
     $groups             = is_object($xoopsUser) ? $xoopsUser->getGroups() : XOOPS_GROUP_ANONYMOUS;
     $read_allowed       = $moduleperm_handler->getItemIds('module_read', $groups);
@@ -202,14 +202,15 @@ function b_system_waiting_show()
 {
     global $xoopsUser;
     $xoopsDB        = XoopsDatabaseFactory::getDatabaseConnection();
-    /* @var XoopsModuleHandler $module_handler */
+    /** @var XoopsModuleHandler $module_handler */
     $module_handler = xoops_getHandler('module');
     $block          = array();
 
     // waiting content for news
     if (xoops_isActiveModule('news') && $module_handler->getCount(new Criteria('dirname', 'news'))) {
-        $result = $xoopsDB->query('SELECT COUNT(*) FROM ' . $xoopsDB->prefix('stories') . ' WHERE published=0');
-        if ($result) {
+        $sql    = 'SELECT COUNT(*) FROM ' . $xoopsDB->prefix('stories') . ' WHERE published=0';
+        $result = $xoopsDB->query($sql);
+        if ($xoopsDB->isResultSet($result)) {
             $block['modules'][0]['adminlink'] = XOOPS_URL . '/modules/news/admin/index.php?op=newarticle';
             list($block['modules'][0]['pendingnum']) = $xoopsDB->fetchRow($result);
             $block['modules'][0]['lang_linkname'] = _MB_SYSTEM_SUBMS;
@@ -218,20 +219,25 @@ function b_system_waiting_show()
 
     // waiting content for mylinks
     if (xoops_isActiveModule('mylinks') && $module_handler->getCount(new Criteria('dirname', 'mylinks'))) {
-        $result = $xoopsDB->query('SELECT COUNT(*) FROM ' . $xoopsDB->prefix('mylinks_links') . ' WHERE status=0');
-        if ($result) {
+        $sql = 'SELECT COUNT(*) FROM ' . $xoopsDB->prefix('mylinks_links') . ' WHERE status=0';
+        $result = $xoopsDB->query($sql);
+        if ($xoopsDB->isResultSet($result)) {
             $block['modules'][1]['adminlink'] = XOOPS_URL . '/modules/mylinks/admin/index.php?op=listNewLinks';
             list($block['modules'][1]['pendingnum']) = $xoopsDB->fetchRow($result);
             $block['modules'][1]['lang_linkname'] = _MB_SYSTEM_WLNKS;
         }
-        $result = $xoopsDB->query('SELECT COUNT(*) FROM ' . $xoopsDB->prefix('mylinks_broken'));
-        if ($result) {
+
+        $sql = 'SELECT COUNT(*) FROM ' . $xoopsDB->prefix('mylinks_broken');
+        $result = $xoopsDB->query($sql);
+        if ($xoopsDB->isResultSet($result)) {
             $block['modules'][2]['adminlink'] = XOOPS_URL . '/modules/mylinks/admin/index.php?op=listBrokenLinks';
             list($block['modules'][2]['pendingnum']) = $xoopsDB->fetchRow($result);
             $block['modules'][2]['lang_linkname'] = _MB_SYSTEM_BLNK;
         }
-        $result = $xoopsDB->query('SELECT COUNT(*) FROM ' . $xoopsDB->prefix('mylinks_mod'));
-        if ($result) {
+
+        $sql = 'SELECT COUNT(*) FROM ' . $xoopsDB->prefix('mylinks_mod');
+        $result = $xoopsDB->query($sql);
+        if ($xoopsDB->isResultSet($result)) {
             $block['modules'][3]['adminlink'] = XOOPS_URL . '/modules/mylinks/admin/index.php?op=listModReq';
             list($block['modules'][3]['pendingnum']) = $xoopsDB->fetchRow($result);
             $block['modules'][3]['lang_linkname'] = _MB_SYSTEM_MLNKS;
@@ -240,20 +246,25 @@ function b_system_waiting_show()
 
     // waiting content for mydownloads
     if (xoops_isActiveModule('mydownloads') && $module_handler->getCount(new Criteria('dirname', 'mydownloads'))) {
-        $result = $xoopsDB->query('SELECT COUNT(*) FROM ' . $xoopsDB->prefix('mydownloads_downloads') . ' WHERE status=0');
-        if ($result) {
+        $sql = 'SELECT COUNT(*) FROM ' . $xoopsDB->prefix('mydownloads_downloads') . ' WHERE status=0';
+        $result = $xoopsDB->query($sql);
+        if ($xoopsDB->isResultSet($result)) {
             $block['modules'][4]['adminlink'] = XOOPS_URL . '/modules/mydownloads/admin/index.php?op=listNewDownloads';
             list($block['modules'][4]['pendingnum']) = $xoopsDB->fetchRow($result);
             $block['modules'][4]['lang_linkname'] = _MB_SYSTEM_WDLS;
         }
-        $result = $xoopsDB->query('SELECT COUNT(*) FROM ' . $xoopsDB->prefix('mydownloads_broken') . '');
-        if ($result) {
+
+        $sql = 'SELECT COUNT(*) FROM ' . $xoopsDB->prefix('mydownloads_broken') . '';
+        $result = $xoopsDB->query($sql);
+        if ($xoopsDB->isResultSet($result)) {
             $block['modules'][5]['adminlink'] = XOOPS_URL . '/modules/mydownloads/admin/index.php?op=listBrokenDownloads';
             list($block['modules'][5]['pendingnum']) = $xoopsDB->fetchRow($result);
             $block['modules'][5]['lang_linkname'] = _MB_SYSTEM_BFLS;
         }
-        $result = $xoopsDB->query('SELECT COUNT(*) FROM ' . $xoopsDB->prefix('mydownloads_mod') . '');
-        if ($result) {
+
+        $sql = 'SELECT COUNT(*) FROM ' . $xoopsDB->prefix('mydownloads_mod') . '';
+        $result = $xoopsDB->query($sql);
+        if ($xoopsDB->isResultSet($result)) {
             $block['modules'][6]['adminlink'] = XOOPS_URL . '/modules/mydownloads/admin/index.php?op=listModReq';
             list($block['modules'][6]['pendingnum']) = $xoopsDB->fetchRow($result);
             $block['modules'][6]['lang_linkname'] = _MB_SYSTEM_MFLS;
@@ -261,8 +272,9 @@ function b_system_waiting_show()
     }
 
     // waiting content for xoops comments
-    $result = $xoopsDB->query('SELECT COUNT(*) FROM ' . $xoopsDB->prefix('xoopscomments') . ' WHERE com_status=1');
-    if ($result) {
+    $sql = 'SELECT COUNT(*) FROM ' . $xoopsDB->prefix('xoopscomments') . ' WHERE com_status=1';
+    $result = $xoopsDB->query($sql);
+    if ($xoopsDB->isResultSet($result)) {
         $block['modules'][7]['adminlink'] = XOOPS_URL . '/modules/system/admin.php?module=0&amp;status=1&fct=comments';
         list($block['modules'][7]['pendingnum']) = $xoopsDB->fetchRow($result);
         $block['modules'][7]['lang_linkname'] = _MB_SYSTEM_COMPEND;
@@ -270,8 +282,9 @@ function b_system_waiting_show()
 
     // waiting content for TDMDownloads
     if (xoops_isActiveModule('TDMdownloads') && $module_handler->getCount(new Criteria('dirname', 'TDMDownloads'))) {
-        $result = $xoopsDB->query('SELECT COUNT(*) FROM ' . $xoopsDB->prefix('tdmdownloads_downloads') . ' WHERE status=0');
-        if ($result) {
+        $sql = 'SELECT COUNT(*) FROM ' . $xoopsDB->prefix('tdmdownloads_downloads') . ' WHERE status=0';
+        $result = $xoopsDB->query($sql);
+        if ($xoopsDB->isResultSet($result)) {
             $block['modules'][8]['adminlink'] = XOOPS_URL . '/modules/TDMDownloads/admin/downloads.php?op=list&statut_display=0';
             list($block['modules'][8]['pendingnum']) = $xoopsDB->fetchRow($result);
             $block['modules'][8]['lang_linkname'] = _MB_SYSTEM_TDMDOWNLOADS;
@@ -280,8 +293,9 @@ function b_system_waiting_show()
 
     // waiting content for extgallery
     if (xoops_isActiveModule('extgallery') && $module_handler->getCount(new Criteria('dirname', 'extgallery'))) {
-        $result = $xoopsDB->query('SELECT COUNT(*) FROM ' . $xoopsDB->prefix('extgallery_publicphoto') . ' WHERE photo_approved=0');
-        if ($result) {
+        $sql = 'SELECT COUNT(*) FROM ' . $xoopsDB->prefix('extgallery_publicphoto') . ' WHERE photo_approved=0';
+        $result = $xoopsDB->query($sql);
+        if ($xoopsDB->isResultSet($result)) {
             $block['modules'][9]['adminlink'] = XOOPS_URL . '/modules/extgallery/admin/photo.php#pending-photo';
             list($block['modules'][9]['pendingnum']) = $xoopsDB->fetchRow($result);
             $block['modules'][9]['lang_linkname'] = _MB_SYSTEM_EXTGALLERY;
@@ -290,8 +304,9 @@ function b_system_waiting_show()
 
     // waiting content for smartsection
     if (xoops_isActiveModule('smartsection') && $module_handler->getCount(new Criteria('dirname', 'smartsection'))) {
-        $result = $xoopsDB->query('SELECT COUNT(*) FROM ' . $xoopsDB->prefix('smartsection_items') . ' WHERE status=1');
-        if ($result) {
+        $sql = 'SELECT COUNT(*) FROM ' . $xoopsDB->prefix('smartsection_items') . ' WHERE status=1';
+        $result = $xoopsDB->query($sql);
+        if ($xoopsDB->isResultSet($result)) {
             $block['modules'][10]['adminlink'] = XOOPS_URL . '/modules/smartsection/admin/item.php';
             list($block['modules'][10]['pendingnum']) = $xoopsDB->fetchRow($result);
             $block['modules'][10]['lang_linkname'] = _MB_SYSTEM_SMARTSECTION;
@@ -310,12 +325,13 @@ function b_system_info_show($options)
 {
     global $xoopsConfig, $xoopsUser;
     $xoopsDB = XoopsDatabaseFactory::getDatabaseConnection();
-    $myts    = MyTextSanitizer::getInstance();
+    $myts    = \MyTextSanitizer::getInstance();
     $block   = array();
     if (!empty($options[3])) {
         $block['showgroups'] = true;
-        $result              = $xoopsDB->query('SELECT u.uid, u.uname, u.email, u.user_viewemail, u.user_avatar, g.name AS groupname FROM ' . $xoopsDB->prefix('groups_users_link') . ' l LEFT JOIN ' . $xoopsDB->prefix('users') . ' u ON l.uid=u.uid LEFT JOIN ' . $xoopsDB->prefix('groups') . " g ON l.groupid=g.groupid WHERE g.group_type='Admin' ORDER BY l.groupid, u.uid");
-        if ($xoopsDB->getRowsNum($result) > 0) {
+        $sql = 'SELECT u.uid, u.uname, u.email, u.user_viewemail, u.user_avatar, g.name AS groupname FROM ' . $xoopsDB->prefix('groups_users_link') . ' l LEFT JOIN ' . $xoopsDB->prefix('users') . ' u ON l.uid=u.uid LEFT JOIN ' . $xoopsDB->prefix('groups') . " g ON l.groupid=g.groupid WHERE g.group_type='Admin' ORDER BY l.groupid, u.uid";
+        $result = $xoopsDB->query($sql);
+        if ($xoopsDB->isResultSet($result) && $xoopsDB->getRowsNum($result) > 0) {
             $prev_caption = '';
             $i            = 0;
             while (false !== ($userinfo = $xoopsDB->fetchArray($result))) {
@@ -369,7 +385,7 @@ function b_system_newmembers_show($options)
     $criteria->setOrder('DESC');
     $criteria->setSort('user_regdate');
     $criteria->setLimit($limit);
-    /* @var XoopsMemberHandler $member_handler */
+    /** @var XoopsMemberHandler $member_handler */
     $member_handler = xoops_getHandler('member');
     $newmembers     = $member_handler->getUsers($criteria);
     $count          = count($newmembers);
@@ -405,7 +421,7 @@ function b_system_topposters_show($options)
     $criteria->setOrder('DESC');
     $criteria->setSort('posts');
     $criteria->setLimit($limit);
-    /* @var XoopsMemberHandler $member_handler */
+    /** @var XoopsMemberHandler $member_handler */
     $member_handler = xoops_getHandler('member');
     $topposters     = $member_handler->getUsers($criteria);
     $count          = count($topposters);
@@ -457,9 +473,9 @@ function b_system_comments_show($options)
     // Check modules permissions
 
     $comments       = $comment_handler->getObjects($criteria, true);
-    /* @var XoopsMemberHandler $member_handler */
+    /** @var XoopsMemberHandler $member_handler */
     $member_handler = xoops_getHandler('member');
-    /* @var XoopsModuleHandler $module_handler */
+    /** @var XoopsModuleHandler $module_handler */
     $module_handler = xoops_getHandler('module');
     $modules        = $module_handler->getObjects(new Criteria('hascomments', 1), true);
     $comment_config = array();
@@ -470,7 +486,7 @@ function b_system_comments_show($options)
             $comment_config[$mid] = $modules[$mid]->getInfo('comments');
         }
         $com['id']    = $i;
-        $com['title'] = '<a href="' . XOOPS_URL . '/modules/' . $modules[$mid]->getVar('dirname') . '/' . $comment_config[$mid]['pageName'] . '?' . $comment_config[$mid]['itemName'] . '=' . $comments[$i]->getVar('com_itemid') . '&amp;com_id=' . $i . '&amp;com_rootid=' . $comments[$i]->getVar('com_rootid') . '&amp;' . htmlspecialchars($comments[$i]->getVar('com_exparams')) . '#comment' . $i . '">' . $comments[$i]->getVar('com_title') . '</a>';
+        $com['title'] = '<a href="' . XOOPS_URL . '/modules/' . $modules[$mid]->getVar('dirname') . '/' . $comment_config[$mid]['pageName'] . '?' . $comment_config[$mid]['itemName'] . '=' . $comments[$i]->getVar('com_itemid') . '&amp;com_id=' . $i . '&amp;com_rootid=' . $comments[$i]->getVar('com_rootid') . '&amp;' . htmlspecialchars($comments[$i]->getVar('com_exparams'), ENT_QUOTES) . '#comment' . $i . '">' . $comments[$i]->getVar('com_title') . '</a>';
         $com['icon']  = htmlspecialchars($comments[$i]->getVar('com_icon'), ENT_QUOTES);
         $com['icon']  = ($com['icon'] != '') ? $com['icon'] : 'icon1.gif';
         $com['time']  = formatTimestamp($comments[$i]->getVar('com_created'), 'm');
@@ -505,7 +521,7 @@ function b_system_notification_show()
         return false; // do not display block
     }
     $notification_handler = xoops_getHandler('notification');
-    // Now build the a nested associative array of info to pass
+    // Now build the nested associative array of info to pass
     // to the block template.
     $block      = array();
     $categories =& notificationSubscribableCategoryInfo();

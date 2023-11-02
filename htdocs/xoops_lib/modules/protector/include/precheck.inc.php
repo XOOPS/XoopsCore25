@@ -14,7 +14,9 @@ define('PROTECTOR_VERSION', (float) file_get_contents(__DIR__ . '/version.txt'))
 // set $_SERVER['REQUEST_URI'] for IIS
 if (empty($_SERVER['REQUEST_URI'])) {         // Not defined by IIS
     // Under some configs, IIS makes SCRIPT_NAME point to php.exe :-(
-    if (!($_SERVER['REQUEST_URI'] = @$_SERVER['PHP_SELF'])) {
+    if (!empty($_SERVER['PHP_SELF'])) {
+        $_SERVER['REQUEST_URI'] = $_SERVER['PHP_SELF'];
+    } else {
         $_SERVER['REQUEST_URI'] = $_SERVER['SCRIPT_NAME'];
     }
     if (isset($_SERVER['QUERY_STRING'])) {

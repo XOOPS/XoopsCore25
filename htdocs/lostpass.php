@@ -15,6 +15,8 @@
  * @since               2.0.0
  */
 
+use Xmf\Request;
+
 include __DIR__ . '/mainfile.php';
 
 $xoopsPreload = XoopsPreload::getInstance();
@@ -22,15 +24,15 @@ $xoopsPreload->triggerEvent('core.lostpass.start');
 
 xoops_loadLanguage('user');
 
-$email = isset($_GET['email']) ? trim($_GET['email']) : '';
-$email = isset($_POST['email']) ? trim($_POST['email']) : $email;
+$email = Request::getEmail('email', '', 'GET');
+$email = Request::getEmail('email', $email, 'POST');
 
 if ($email == '') {
     redirect_header('user.php', 2, _US_SORRYNOTFOUND);
 }
 
-$myts           = MyTextSanitizer::getInstance();
-/* @var XoopsMemberHandler $member_handler */
+$myts           = \MyTextSanitizer::getInstance();
+/** @var XoopsMemberHandler $member_handler */
 $member_handler = xoops_getHandler('member');
 $getuser        = $member_handler->getUsers(new Criteria('email', $myts->addSlashes($email)));
 
@@ -38,7 +40,7 @@ if (empty($getuser)) {
     $msg = _US_SORRYNOTFOUND;
     redirect_header('user.php', 2, $msg);
 } else {
-    $code   = isset($_GET['code']) ? trim($_GET['code']) : '';
+    $code   = Request::getString('code', '', 'GET');
     $areyou = substr(md5($getuser[0]->getVar('pass')), 0, 5);
     if ($code != '' && $areyou == $code) {
         $newpass     = xoops_makepass();

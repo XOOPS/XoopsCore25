@@ -28,7 +28,7 @@
  * Certain ranges are common to all languages, whitespace, punctuations, currency symbols, emoji, etc.
  * These are automatically excluded from the analysis.
  *
- * If site requirements are for multiple languages concurrently, a $customRange can be set to to include
+ * If site requirements are for multiple languages concurrently, a $customRange can be set to include
  * the requirements of both languages.
  *
  * Ranges are in regular expression format as used in preg_replace()
@@ -39,9 +39,9 @@
  * @category  Protector\Filter
  * @package   Protector
  * @author    Richard Griffith <richard@geekwright.com>
- * @copyright 2016 XOOPS Project (http://xoops.org)
- * @license   GNU GPL 2 or later (https://www.gnu.org/licenses/gpl-2.0.html)
- * @link      http://xoops.org
+ * @copyright 2016 XOOPS Project (https://xoops.org)
+ * @license   GNU GPL 2.0 or later (https://www.gnu.org/licenses/gpl-2.0.html)
+ * @link      https://xoops.org
  */
 class Protector_postcommon_post_language_match extends ProtectorFilterAbstract
 {
@@ -62,7 +62,7 @@ class Protector_postcommon_post_language_match extends ProtectorFilterAbstract
     protected $skipThese = array('edituser.php', 'register.php', 'search.php', 'user.php', 'lostpass.php');
 
     // map regex compatible unicode script range to a XOOPS language name
-    // http://php.net/manual/en/regexp.reference.unicode.php
+    // https://php.net/manual/en/regexp.reference.unicode.php
     // http://www.regular-expressions.info/unicode.html
     // http://www.localizingjapan.com/blog/2012/01/20/regular-expressions-for-japanese-text/
     protected $scriptCodes = array(
@@ -120,7 +120,7 @@ class Protector_postcommon_post_language_match extends ProtectorFilterAbstract
      */
     public function execute()
     {
-        /* @var XoopsUser $xoopsUser */
+        /** @var XoopsUser $xoopsUser */
         global $xoopsUser;
 
         if (!function_exists('mb_strlen')) {

@@ -44,12 +44,12 @@ class XoopsModelStats extends XoopsModelAbstract
             }
         }
         $sql = "SELECT {$field} COUNT(*) FROM `{$this->handler->table}`";
-        if (isset($criteria) && is_subclass_of($criteria, 'CriteriaElement')) {
+        if (isset($criteria) && \method_exists($criteria, 'renderWhere')) {
             $sql .= ' ' . $criteria->renderWhere();
             $sql .= $criteria->getGroupby();
         }
         $result = $this->handler->db->query($sql);
-        if (!$result) {
+        if (!$this->handler->db->isResultSet($result)) {
             return 0;
         }
         if ($groupby == false) {
@@ -79,7 +79,7 @@ class XoopsModelStats extends XoopsModelAbstract
         $limit       = null;
         $start       = null;
         $groupby_key = $this->handler->keyName;
-        if (isset($criteria) && is_subclass_of($criteria, 'CriteriaElement')) {
+        if (isset($criteria) && \method_exists($criteria, 'renderWhere')) {
             $sql_where = $criteria->renderWhere();
             $limit     = $criteria->getLimit();
             $start     = $criteria->getStart();
@@ -88,7 +88,8 @@ class XoopsModelStats extends XoopsModelAbstract
             }
         }
         $sql = "SELECT {$groupby_key}, COUNT(*) AS count" . " FROM `{$this->handler->table}`" . " {$sql_where}" . " GROUP BY {$groupby_key}";
-        if (!$result = $this->handler->db->query($sql, $limit, $start)) {
+        $result = $this->handler->db->query($sql, $limit, $start);
+        if (!$this->handler->db->isResultSet($result)) {
             return $ret;
         }
         while (false !== (list($id, $count) = $this->handler->db->fetchRow($result))) {

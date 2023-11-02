@@ -2,7 +2,7 @@
     <form name="notification_select" action="<{$xoops_notification.target_page}>" method="post">
         <h4 class="txtcenter"><{$lang_activenotifications}></h4>
         <input type="hidden" name="not_redirect" value="<{$xoops_notification.redirect_script}>"/>
-        <input type="hidden" name="XOOPS_TOKEN_REQUEST" value="<{php}>echo $GLOBALS['xoopsSecurity']->createToken();<{/php}>"/>
+        <{securityToken}>
         <table class="outer">
             <tr>
                 <th colspan="3"><{$lang_notificationoptions}></th>
@@ -13,8 +13,8 @@
                                         value="<{$lang_checkall}>"/></td>
                 <td class="head"><{$lang_events}></td>
             </tr>
-            <{foreach name=outer item=category from=$xoops_notification.categories}>
-                <{foreach name=inner item=event from=$category.events}>
+            <{foreach item=category from=$xoops_notification.categories|default:null name=outer}>
+                <{foreach item=event from=$category.events|default:null name=inner}>
                     <tr>
                         <{if $smarty.foreach.inner.first}>
                             <td class="even" rowspan="<{$smarty.foreach.inner.total}>"><{$category.title}></td>

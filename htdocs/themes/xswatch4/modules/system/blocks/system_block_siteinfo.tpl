@@ -1,14 +1,19 @@
-<table style="background-color: inherit;">
-
-    <{if $block.showgroups == true}>
+<{if $block.showgroups == true}>
+	<table style="background-color: inherit;">
 
         <!-- start group loop -->
-        <{foreach item=group from=$block.groups}>
-            <tr>
-                <th colspan="2"><{$group.name|default:''}></th>
-            </tr>
+        <{foreach item=group from=$block.groups|default:null}>
+
+			<{if !empty($group.name)}>
+				<thead> 
+					<tr>
+						<th colspan="2"><{$group.name}></th>
+					</tr>
+				</thead> 
+            <{/if}>
+
             <!-- start group member loop -->
-            <{foreach item=user from=$group.users}>
+            <{foreach item=user from=$group.users|default:null}>
                 <tr>
                     <td class="even txtcenter alignmiddle">
                         <img style="width:48px;" src="<{$user.avatar}>" alt="<{$user.name}>"/><br>
@@ -25,9 +30,9 @@
 
         <{/foreach}>
         <!-- end group loop -->
-    <{/if}>
-</table>
 
+	</table>
+<{/if}>
 <br>
 
 <div>

@@ -19,7 +19,7 @@
 </div>
 
 <div class="tag-item-list" style="padding-top: 10px;">
-    <{foreach item=article from=$tag_articles}>
+    <{foreach item=article from=$tag_articles|default:null}>
         <div class="tag-item-title" style="padding-top: 10px;">
             <a href="<{$xoops_url}>/modules/<{$article.dirname}>/" title="<{$article.module}>"><{$article.module}></a>:
             <a href="<{$xoops_url}>/modules/<{$article.dirname}>/<{$article.link}>"
@@ -37,10 +37,10 @@
     <{/foreach}>
 </div>
 
-<{if $tag_addon}>
+<{if isset($tag_addon)}>
     <div class="tag-item-meta" style="padding-top: 10px;">
         <{$tag_addon.title}>:
-        <{foreach item=addon from=$tag_addon.addons}> <{$addon}><{/foreach}>
+        <{foreach item=addon from=$tag_addon.addons|default:null}> <{$addon}><{/foreach}>
     </div>
 <{/if}>
 

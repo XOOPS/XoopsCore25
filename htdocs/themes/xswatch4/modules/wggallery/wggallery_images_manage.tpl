@@ -1,6 +1,6 @@
 <{include file='db:wggallery_header.tpl'}>
 
-<{if $form}>
+<{if isset($form)}>
 	<{$form}>
 <{else}>
     <div class='card panel-<{$panel_type}>'>
@@ -9,9 +9,9 @@
                 <p><{$smarty.const._CO_WGGALLERY_IMAGE_MANAGE_DESC}></p>
             </div>
             <div class='card-body'>
-                <{if $images}>
+                <{if isset($images)}>
                     <ol class="sortable ui-sortable mjs-nestedSortable-branch mjs-nestedSortable-expanded">
-                        <{foreach item=image from=$images}>
+                        <{foreach item=image from=$images|default:null}>
                             <li style="display: list-item;" class="mjs-nestedSortable-branch mjs-nestedSortable-collapsed mjs-nestedSortable-leaf" id="menuItem_<{$image.id}>">
                                 <div class="menuDiv ui-sortable-handle">
                                     <div class='col-xs-1 wgg-img-sort'><img id='image_<{$image.id}>' src='<{$wggallery_icon_url_16}>drag.png' alt='drag&drop'></div>
@@ -44,19 +44,19 @@
                 <{/if}>
                 <div class='clear'>&nbsp;</div>
                 <div class='wgg-goback'>
-                    <a class='btn btn-secondary wgg-btn' href='<{if $ref}><{$ref}><{else}>images<{/if}>.php?op=<{if $redir_op}><{$redir_op}><{else}>list<{/if}>&amp;alb_id=<{$alb_id}>&amp;alb_pid=<{$alb_pid}>' title='<{$smarty.const._CO_WGGALLERY_BACK}>'>
-                        <img class='wgg-btn-icon' src='<{$wggallery_icon_url_16}>back.png' alt='<{$smarty.const._CO_WGGALLERY_BACK}>'><{if $displayButtonText}><{$smarty.const._CO_WGGALLERY_BACK}><{/if}></a>
+                    <a class='btn btn-secondary wgg-btn' href='<{if isset($ref)}><{$ref}><{else}>images<{/if}>.php?op=<{if isset($redir_op)}><{$redir_op}><{else}>list<{/if}>&amp;alb_id=<{$alb_id}>&amp;alb_pid=<{$alb_pid}>' title='<{$smarty.const._CO_WGGALLERY_BACK}>'>
+                        <img class='wgg-btn-icon' src='<{$wggallery_icon_url_16}>back.png' alt='<{$smarty.const._CO_WGGALLERY_BACK}>'><{if isset($displayButtonText)}><{$smarty.const._CO_WGGALLERY_BACK}><{/if}></a>
                  </div>
             </div>
             <div class='clear'>&nbsp;</div>
-            <{if $pagenav}>
+            <{if isset($pagenav)}>
             <div class='xo-pagenav floatright'><{$pagenav}></div>
             <div class='clear spacer'></div>
             <{/if}>
     </div>
 <{/if}>
 
-<{if $error}>
+<{if isset($error)}>
 	<div class='errorMsg'><strong><{$error}></strong></div>
 <{/if}>
 

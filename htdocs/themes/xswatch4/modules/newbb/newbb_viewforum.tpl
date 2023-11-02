@@ -7,8 +7,8 @@
         <li class="breadcrumb-item"><a href="<{$xoops_url}>/modules/<{$xoops_dirname}>/index.php?cat=<{$category.id}>"><{$category.title}></a></li>
 
     <!-- If is subforum-->
-    <{if $parentforum}>
-        <{foreach item=forum from=$parentforum}>
+    <{if isset($parentforum)}>
+        <{foreach item=forum from=$parentforum|default:null}>
              <li class="breadcrumb-item"><a href="<{$xoops_url}>/modules/<{$xoops_dirname}>/viewforum.php?forum=<{$forum.forum_id}>"><{$forum.forum_name}></a></li>
         <{/foreach}>
     <{/if}>
@@ -17,19 +17,21 @@
     </ol>
     <div>
         <div class="col-xs-12">
-        <{if $viewer_level gt 1}>
+        <{if isset($viewer_level) && $viewer_level > 1}>
             <a href="<{$xoops_url}>/modules/<{$xoops_dirname}>/newtopic.php?forum=<{$forum_id}>" title="<{$smarty.const.THEME_FORUM_NEWTOPIC}>" class="btn btn-success"><{$smarty.const.THEME_FORUM_NEWTOPIC}></a>
         <{else}>
-            <{if $xoops_isuser}>
+            <{if isset($xoops_isuser)}>
                 <a href="<{$xoops_url}>/modules/<{$xoops_dirname}>/newtopic.php?forum=<{$forum_id}>" title="<{$smarty.const.THEME_FORUM_NEWTOPIC}>" class="btn btn-success"><{$smarty.const.THEME_FORUM_NEWTOPIC}></a>
             <{else}>
                 <a href="<{$xoops_url}>/user.php" title="<{$smarty.const.THEME_FORUM_REGISTER}>" class="btn btn-success"><{$smarty.const.THEME_FORUM_REGISTER}></a>
             <{/if}>
         <{/if}>
 
-        <{if $forum_topictype}><{$forum_topictype}><{/if}>
+        <{if isset($forum_topictype)}>
+            <{$forum_topictype}>
+        <{/if}>
 
-        <{if $forum_topicstatus}>
+        <{if isset($forum_topicstatus)}>
             <span class="btn btn-info"><{$forum_topicstatus}></span>
         <{else}>
             <a href="<{$xoops_url}>/modules/<{$xoops_dirname}>/viewforum.php?forum=<{$forum_id}>&amp;status=digest" title="<{$smarty.const._MD_NEWBB_DIGEST}>" class="btn btn-info">
@@ -41,7 +43,7 @@
             <span class="fa fa-search"></span>
         </a>
 
-        <{if $subforum}>
+        <{if isset($subforum)}>
             <{include file="db:newbb_viewforum_subforum.tpl"}>
         <{/if}>
         </div>
@@ -72,12 +74,12 @@
     <div class="col-sm-12">
         <div class="row">
             <div class="col-md-8 col-xs-12">
-                <{if $mode gt 1}>
+                <{if isset($mode) && $mode > 1}>
                     <form class="form-inline" name="form_topics_admin" action="<{$xoops_url}>/modules/<{$xoops_dirname}>/action.topic.php" method="POST" onsubmit="if(window.document.form_topics_admin.op.value &lt; 1){return false;}">
                 <{/if}>
 
-                <{if $viewer_level gt 1}>
-                <{if $mode gt 1}>
+                <{if isset($viewer_level) && $viewer_level > 1}>
+                <{if isset($mode) && $mode > 1}>
                         <div class="form-row align-items-center">
                             <div class="col-auto">
                                 <div class="form-check mb-2">
@@ -90,10 +92,10 @@
                             <div class="col-auto">
                                 <select name="op" class="custom-select mb-2">                        <option value="0"><{$smarty.const._SELECT}></option>
                                     <option value="delete"><{$smarty.const._DELETE}></option>
-                                    <{if $status eq "pending"}>
+                                     <{if isset($status) && $status == "pending"}>
                                     <option value="approve"><{$smarty.const._MD_NEWBB_APPROVE}></option>
                                     <option value="move"><{$smarty.const._MD_NEWBB_MOVE}></option>
-                                    <{elseif $status eq "deleted"}>
+                                    <{elseif isset($status) && $status == "deleted"}>
                                     <option value="restore"><{$smarty.const._MD_NEWBB_RESTORE}></option>
                                     <{else}>
                                     <option value="move"><{$smarty.const._MD_NEWBB_MOVE}></option>
@@ -139,18 +141,18 @@
     </div>
     <table class="table table-hover">
         <tbody>
-        <{foreach item=topic from=$topics}>
+        <{foreach item=topic from=$topics|default:null}>
             <tr>
-                <{if $mode gt 1}>
+                <{if isset($mode) && $mode > 1}>
                 <td><input type="checkbox" name="topic_id[]" id="topic_id[<{$topic.topic_id}>]" value="<{$topic.topic_id}>"></td>
                 <{/if}>
                 <td class="d-none d-sm-table-cell"><{$topic.topic_folder}></td>
-                <td><a class="<{if $topic.topic_read eq 1 }>read-topic<{else}>new-topic<{/if}>" href="<{$xoops_url}>/modules/<{$xoops_dirname}>/<{$topic.topic_link}>" title="<{$topic.topic_excerpt}>"><{$topic.topic_title}></a></td>
+                <td><a class="<{if isset($topic.topic_read) && $topic.topic_read == 1 }>read-topic<{else}>new-topic<{/if}>" href="<{$xoops_url}>/modules/<{$xoops_dirname}>/<{$topic.topic_link}>" title="<{$topic.topic_excerpt}>"><{$topic.topic_title}></a></td>
                 <td class="d-none d-sm-table-cell"><span class="fa fa-user"></span> <{$topic.topic_poster}></td>
                 <td><{$topic.topic_time}></td>
                 <td class="d-none d-sm-table-cell"><{$topic.topic_replies}></td>
                 <td class="d-none d-sm-table-cell"><{$topic.topic_views}></td>
-                <{if $rating_enable}>
+                <{if isset($rating_enable)}>
                 <td class="d-none d-sm-table-cell"><{$topic.rating_img}></td>
                 <{/if}>
                 <{assign var='golast' value=`$smarty.const._MD_NEWBB_GOTOLASTPOST`}>
@@ -161,7 +163,7 @@
         </tbody>
         <thead>
         <tr>
-        <{if $mode gt 1}>
+        <{if isset($mode) && $mode > 1}>
             <th> </th>
         <{/if}>
         <th class="d-none d-sm-table-cell"> </th>
@@ -170,7 +172,7 @@
         <th scope="col"><a href="<{$h_publish_link}>" title="<{$smarty.const._MD_NEWBB_TOPICTIME}>"><{$smarty.const._MD_NEWBB_TOPICTIME}> <span class="fa fa-sort" aria-hidden="true"></span></a></th>
         <th class="d-none d-sm-table-cell" scope="col"><a href="<{$h_reply_link}>" title="<{$smarty.const._MD_NEWBB_REPLIES}>"><{$smarty.const._MD_NEWBB_REPLIES}> <span class="fa fa-sort" aria-hidden="true"></span></a></th>
         <th class="d-none d-sm-table-cell" scope="col"><a href="<{$h_views_link}>" title="<{$smarty.const._MD_NEWBB_VIEWS}>"><{$smarty.const._MD_NEWBB_VIEWS}> <span class="fa fa-sort" aria-hidden="true"></span></a></th>
-        <{if $rating_enable}>
+        <{if isset($rating_enable)}>
             <th class="d-none d-sm-table-cell" scope="col"><a href="<{$h_rating_link}>" title="<{$smarty.const._MD_NEWBB_RATINGS}>"><{$smarty.const._MD_NEWBB_RATINGS}> <span class="fa fa-sort" aria-hidden="true"></span></a></th>
         <{/if}>
         <th scope="col"><a href="<{$h_date_link}>" title="<{$smarty.const._MD_NEWBB_LASTPOSTTIME}>"><{$smarty.const._MD_NEWBB_LASTPOSTTIME}> <span class="fa fa-sort" aria-hidden="true"></span></a></th>
@@ -180,7 +182,7 @@
     <{if empty($topics)}>
     <div class="alert alert-warning" role="alert"><{$smarty.const._MD_NEWBB_NOTOPIC}></div>
     <{/if}>
-    <{if $mode gt 1}>
+    <{if isset($mode) && $mode > 1}>
         </form>
     <{/if}>
 
@@ -212,7 +214,7 @@
 
 <div class="row collapse" id="forum-info">
     <div class="col-sm-6 col-md-6">
-        <{foreach item=perm from=$permission_table}>
+        <{foreach item=perm from=$permission_table|default:null}>
             <{$perm}>
         <{/foreach}>
     </div>
@@ -229,12 +231,12 @@
     </div>
 </div>
 
-<{if $online}>
+<{if !empty($online)}>
     <{include file="db:newbb_online.tpl"}>
 <{/if}>
 
-<a title="NewBB" href="https://xoops.org" class="btn btn-xs btn-success">NewBB Version  <{$version/100}></a>
-<{if $rss_button}>
+<a title="NewBB" href="https://xoops.org" class="btn btn-xs btn-success">NewBB Version  <{$version}></a>
+<{if isset($rss_button)}>
     <a href="<{$xoops_url}>/modules/<{$xoops_dirname}>/rss.php?f=<{$forum_id}>" target="_blank" title="RSS FEED">
         <{$rss_button}>
     </a>

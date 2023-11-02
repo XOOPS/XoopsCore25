@@ -1,21 +1,20 @@
 <h4><{$smarty.const._PM_PRIVATEMESSAGE}></h4>
-<{if $op}>
-
-	<{if $msg|default:false}>
+<{if isset($op)}>
+	<{if isset($msg)}>
 		<div class="alert alert-success alert-dismissable">
 			<button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
 			<strong><{$msg}></strong>
 		</div>
 	<{/if}>
 
-	<{if $errormsg|default:false}>
+	<{if isset($errormsg)}>
 		<div class="alert alert-danger alert-dismissable">
 			<button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
 			<strong><{$errormsg}></strong>
 		</div>
 	<{/if}>
 
-	<{if $pagenav|default:false}>
+	<{if isset($pagenav)}>
 	<div class="generic-pagination col text-right mb-2">
 		<{$pagenav|replace:'form':'div'|replace:'id="xo-pagenav"':''}>
 	</div>
@@ -50,7 +49,7 @@
 					<tr class="table-secondary">
 						<th class="text-center"><input name='allbox' id='allbox' onclick='xoopsCheckAll("<{$pmform.name}>", "allbox");' type='checkbox' value='Check All' title="<{$smarty.const.THEME_SELECT_ALL}>"/></th>
 						<th class="text-center d-none d-sm-table-cell"><span class="fa fa-envelope text-primary"></span> <span class="fa fa-envelope-open text-secondary"></span></th>
-						<{if $op == "out"}>
+						<{if isset($op) && $op == "out"}>
 							<th class="text-center"><{$smarty.const._PM_TO}></th>
 						<{else}>
 							<th class="text-center"><{$smarty.const._PM_FROM}></th>
@@ -61,7 +60,7 @@
 					</tr>
 					<!-- Table - End Head -->
 
-					<{if $total_messages == 0}>
+					<{if isset($total_messages) && $total_messages == 0}>
 						<tr>
 							<td class='even text-center bg-secondary' colspan='6'><{$smarty.const._PM_YOUDONTHAVE}></td>
 						</tr>
@@ -73,9 +72,7 @@
 								<input type='checkbox' id='msg_id_<{$message.msg_id}>' name='msg_id[]' value='<{$message.msg_id}>' />
 							</td>
 							<td class='d-table-cell d-sm-none aligntop text-center'>
-								<input type='checkbox' id='msg_id_<{$message.msg_id}>' name='msg_id[]' value='<{$message.msg_id}>' />
-								<br />
-								<{if $message.read_msg == 1}>
+								<{if isset($message.read_msg) && $message.read_msg == 1}>
 									<span class="fa fa-envelope-open fa-2x text-secondary"></span>
 								<{else}>
 									<span class="fa fa-envelope fa-2x text-primary"></span>
@@ -83,7 +80,7 @@
 							</td>
 
 							<td class="text-center d-none d-sm-table-cell">
-								<{if $message.read_msg == 1}>
+								<{if isset($message.read_msg) && $message.read_msg == 1}>
 									<span class="fa fa-envelope-open fa-2x text-secondary"></span>
 								<{else}>
 									<span class="fa fa-envelope fa-2x text-primary"></span>
@@ -91,11 +88,11 @@
 							</td>
 
 							<td class='text-center'>
-								<{if $message.postername != ""}>
+								<{if isset($message.postername) && $message.postername!= ""}>
 									<{assign var="tempPosteruid" value=$message.posteruid}>
 									<{xoUserInfo uid=$message.posteruid}>
 									<a href='<{$xoops_url}>/userinfo.php?uid=<{$message.posteruid}>' alt="<{$message.postername}>" title='<{$message.postername}>'>
-										<{if $userInfo.user_avatar != "blank.gif"}>
+										<{if isset($userInfo.user_avatar) && $userInfo.user_avatar != "blank.gif"}>
 											<img src="<{$xoops_url}>/uploads/<{$userInfo.user_avatar}>" alt="<{$message.postername}>" class="img-rounded img-thumbnail" width="128">
 										<{else}>
 											<img src="<{$xoops_imageurl}>images/no-avatar.png" alt="<{$message.postername}>"  class="img-rounded img-thumbnail" width="128">
@@ -109,7 +106,7 @@
 							</td>
 
 							<td class='d-none d-sm-table-cell'>
-								<{if $message.msg_image|default:false}>
+								<{if isset($message.msg_image)}>
 									<img src='<{$xoops_url}>/images/subject/<{$message.msg_image}>' alt='' />
 								<{/if}>
 								<a href='readpmsg.php?msg_id=<{$message.msg_id}>&amp;start=<{$message.msg_no}>&amp;total_messages=<{$total_messages}>&amp;op=<{$op}>' title=''>
@@ -117,7 +114,7 @@
 								</a>
 							</td>
 							<td class='d-table-cell d-sm-none'>
-								<{if $message.msg_image|default:false}>
+								<{if isset($message.msg_image)}>
 									<img src='<{$xoops_url}>/images/subject/<{$message.msg_image}>' alt='' />
 								<{/if}>
 								<a href='readpmsg.php?msg_id=<{$message.msg_id}>&amp;start=<{$message.msg_no}>&amp;total_messages=<{$total_messages}>&amp;op=<{$op}>' title=''>
@@ -136,20 +133,20 @@
 			</div>
 		</div>
 		<hr />
-		<{if $display|default:false}>
+		<{if isset($display)}>
 			<{$pmform.elements.move_messages.body|replace:'formButton':'btn btn-success'|replace:'" >':'" ><span class="fa fa-sign-in fa-2x"></span><br />'}>
 			<{$pmform.elements.delete_messages.body|replace:'formButton':'btn btn-secondary'|replace:'" >':'" ><span class="fa fa-times fa-2x"></span><br />'}>
 			<{$pmform.elements.empty_messages.body|replace:'formButton':'btn btn-secondary'|replace:'" >':'" ><span class="fa fa-trash fa-2x"></span><br />'}>
 		<{/if}>
-		<{foreach item=element from=$pmform.elements}>
-			<{if $element.hidden == 1}>
+		<{foreach item=element from=$pmform.elements|default:null}>
+			<{if isset($element.hidden) && $element.hidden == 1}>
 				<{$element.body}>
 			<{/if}>
 		<{/foreach}>
 		</div>
 	</form>
 
-	<{if $pagenav|default:false}>
+	<{if isset($pagenav)}>
 	<div class="generic-pagination col text-right mt-2">
 		<{$pagenav|replace:'form':'div'|replace:'id="xo-pagenav"':''}>
 	</div>

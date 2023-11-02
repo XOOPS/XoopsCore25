@@ -56,9 +56,9 @@ if (!is_object($GLOBALS['xoopsUser'])) {
 }
 xoops_header();
 
-$myts = MyTextSanitizer::getInstance();
+$myts = \MyTextSanitizer::getInstance();
 if ($op === 'submit') {
-    /* @var XoopsMemberHandler $member_handler */
+    /** @var XoopsMemberHandler $member_handler */
     $member_handler = xoops_getHandler('member');
     $count          = $member_handler->getUserCount(new Criteria('uid', XoopsRequest::getInt('to_userid', 0, 'POST')));
     if ($count != 1) {

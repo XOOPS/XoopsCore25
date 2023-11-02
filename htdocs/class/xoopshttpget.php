@@ -16,7 +16,7 @@
  * @package   Xoops
  * @author    Richard Griffith <richard@geekwright.com>
  * @copyright 2020 XOOPS Project (https://xoops.org)
- * @license   GNU GPL 2 or later (https://www.gnu.org/licenses/gpl-2.0.html)
+ * @license   GNU GPL 2.0 or later (https://www.gnu.org/licenses/gpl-2.0.html)
  */
 class XoopsHttpGet
 {
@@ -29,7 +29,7 @@ class XoopsHttpGet
      *
      * @param string $url the url to process
      *
-     * @throws \RuntimeException if neither curl extension or stream wrappers (allow_url_fopen) is available
+     * @throws \RuntimeException if neither curl extension nor stream wrappers (allow_url_fopen) is available
      */
     public function __construct($url)
     {

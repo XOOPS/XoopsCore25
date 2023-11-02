@@ -13,7 +13,7 @@
  * Xoops Cpanel oxygen menu
  *
  * @copyright   (c) 2000-2016 XOOPS Project (www.xoops.org)
- * @license     GNU GPL 2 or later (https://www.gnu.org/licenses/gpl-2.0.html)
+ * @license     GNU GPL 2.0 or later (https://www.gnu.org/licenses/gpl-2.0.html)
  * @package     system
  * @usbpackage  GUI
  * @since       2.4
@@ -27,7 +27,7 @@
 $groups = $GLOBALS['xoopsUser']->getGroups();
 $all_ok = false;
 if (!in_array(XOOPS_GROUP_ADMIN, $groups)) {
-    /* @var XoopsGroupPermHandler $sysperm_handler */
+    /** @var XoopsGroupPermHandler $sysperm_handler */
     $sysperm_handler = xoops_getHandler('groupperm');
     $ok_syscats      = $sysperm_handler->getItemIds('system_admin', $groups);
 } else {

@@ -16,7 +16,7 @@
  * If you did not receive this file, get it at https://www.gnu.org/licenses/gpl-2.0.html
  *
  * @copyright    (c) 2000-2016 XOOPS Project (www.xoops.org)
- * @license          GNU GPL 2 or later (https://www.gnu.org/licenses/gpl-2.0.html)
+ * @license          GNU GPL 2.0 or later (https://www.gnu.org/licenses/gpl-2.0.html)
  * @package          upgrader
  * @since            2.3.0
  * @author           Taiwen Jiang <phppp@users.sourceforge.net>
@@ -120,7 +120,7 @@ class XoopsUpgrade
             $sql .= " WHERE {$condition}";
         }
         $result = $db->query($sql);
-        if ($result) {
+        if ($db->isResultSet($result)) {
             $row = $db->fetchRow($result);
             if ($row) {
                 return $row[0];

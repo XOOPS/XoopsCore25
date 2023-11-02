@@ -26,6 +26,18 @@
 
 class SystemBanner extends XoopsObject
 {
+    //PHP 8.2 Dynamic properties deprecated
+    public $bid;
+    public $cid;
+    public $imptotal;
+    public $impmade;
+    public $clicks;
+    public $imageurl;
+    public $clickurl;
+    public $date;
+    public $htmlbanner;
+    public $htmlcode;
+
     /**
      *
      */
@@ -62,7 +74,7 @@ class SystemBanner extends XoopsObject
         xoops_load('XoopsFormLoader');
 
         $form = new XoopsThemeForm($title, 'form', $action, 'post', true);
-        /* @var  SystemBannerclientHandler $banner_client_Handler */
+        /** @var  SystemBannerclientHandler $banner_client_Handler */
         $banner_client_Handler = xoops_getModuleHandler('bannerclient', 'system');
         $client_select         = new XoopsFormSelect(_AM_SYSTEM_BANNERS_CLINAMET, 'cid', $this->getVar('cid'));
         $client_select->addOptionArray($banner_client_Handler->getList());

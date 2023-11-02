@@ -30,6 +30,7 @@ xoops_load('XoopsEditor');
  */
 class FormDhtmlTextArea extends XoopsEditor
 {
+    public $renderer;
     /**
      * Hidden text
      *
@@ -37,6 +38,7 @@ class FormDhtmlTextArea extends XoopsEditor
      * @access private
      */
     public $_hiddenText = 'xoopsHiddenText';
+    public $renderer;
 
     /**
      * FormDhtmlTextArea::__construct()

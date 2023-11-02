@@ -5,8 +5,8 @@
  * @license         http://www.fsf.org/copyleft/gpl.html GNU public license 3.0
  * @package         themes
  * @since           2.5.x
- * @author          Xoops Design Theme <http://www.xoops.org/>
- * @maintained      Xoops Design Theme <http://www.xoops.org/>
+ * @author          Xoops Design Theme <https://xoops.org/>
+ * @maintained      Xoops Design Theme <https://xoops.org/>
  *
 */ /*======= forms ========*/
 input,button,select {
@@ -19,8 +19,6 @@ fieldset {
     border: 1px solid #333;
     color: #000;
     background-color: #f0f0f0;
-    -moz-border-radius: 6px;
-    -webkit-border-radius: 6px;
     border-radius: 6px;
 }
 
@@ -63,11 +61,8 @@ input[type=submit],input[type=reset],input[type=button],.xo-formbuttons,.formBut
     font-weight: bold;
     border: 1px solid #ccc;
     border-radius: 5px;
-    -moz-border-radius: 5px;
-    -webkit-border-radius: 5px;
-    box-shadow: 0 20px 10px -10px rgba(255, 255, 255, 0.3) inset;
-    -moz-box-shadow: 0 20px 10px -10px rgba(255, 255, 255, 0.3) inset;
-    -webkit-box-shadow: 0 20px 10px -10px rgba(255, 255, 255, 0.3) inset;
+    -webkit-box-shadow: 0 20px 10px -10px rgba(255, 255, 255, .3) inset;
+            box-shadow: 0 20px 10px -10px rgba(255, 255, 255, .3) inset;
     cursor: pointer;
 }
 
@@ -87,8 +82,6 @@ input[type=text],input[type=password],input[type=checkbox],input[type=file],text
     padding: 2px 2px 2px .2em;
     color: inherit;
     border: #ccc solid 1px;
-    -moz-border-radius: 5px;
-    -webkit-border-radius: 5px;
     border-radius: 5px;
 
 }
@@ -111,8 +104,6 @@ input[type=text]:focus,input[type=password]:focus,input[type=file]:focus,input[t
     color: #333;
     border: #139EE8 solid 1px;
     outline: 1px solid #139EE8;
-    -moz-outline-radius: 5px;
-    -webkit-outline-radius: 5px;
     border-outline: 5px;
 }
 

@@ -47,7 +47,8 @@ class XoopsBlockInstance
      */
     public function __call($name, $args)
     {
-        trigger_error("Class '" . __CLASS__ . "' is deprecated" . (empty($name) ? '' : " thus the method '{$name}' is not executed") . '!', E_USER_WARNING);
+        $GLOBALS['xoopsLogger']->addDeprecated("Class '" . __CLASS__ . "' is deprecated" . (empty($name) ? '' : " thus the method '{$name}' is not executed") . '!');
+
 
         return null;
     }
@@ -61,9 +62,9 @@ class XoopsBlockInstance
      */
     public function __set($name, $args)
     {
-        trigger_error("Class '" . __CLASS__ . "' is deprecated" . (empty($name) ? '' : " thus the variable '{$name}' is not set") . '!', E_USER_WARNING);
+        $GLOBALS['xoopsLogger']->addDeprecated("Class '" . __CLASS__ . "' is deprecated" . (empty($name) ? '' : " thus the variable '{$name}' is not set") . '!');
 
-        return false;
+        return null;
     }
 
     /**
@@ -74,7 +75,7 @@ class XoopsBlockInstance
      */
     public function __get($name)
     {
-        trigger_error("Class '" . __CLASS__ . "' is deprecated" . (empty($name) ? '' : " thus the variable '{$name}' is not vailable") . '!', E_USER_WARNING);
+        $GLOBALS['xoopsLogger']->addDeprecated("Class '" . __CLASS__ . "' is deprecated" . (empty($name) ? '' : " thus the variable '{$name}' is not vailable") . '!');
 
         return null;
     }
@@ -110,7 +111,7 @@ class XoopsBlockInstanceHandler
      */
     public function __call($name, $args)
     {
-        trigger_error("Class '" . __CLASS__ . "' is deprecated" . (empty($name) ? '' : " thus the method '{$name}' is not executed") . '!', E_USER_WARNING);
+        $GLOBALS['xoopsLogger']->addDeprecated("Class '" . __CLASS__ . "' is deprecated" . (empty($name) ? '' : " thus the method '{$name}' is not executed") . '!');
 
         return null;
     }
@@ -124,9 +125,9 @@ class XoopsBlockInstanceHandler
      */
     public function __set($name, $args)
     {
-        trigger_error("Class '" . __CLASS__ . "' is deprecated" . (empty($name) ? '' : " thus the variable '{$name}' is not set") . '!', E_USER_WARNING);
+        $GLOBALS['xoopsLogger']->addDeprecated("Class '" . __CLASS__ . "' is deprecated" . (empty($name) ? '' : " thus the variable '{$name}' is not set") . '!');
 
-        return false;
+        return null;
     }
 
     /**
@@ -137,7 +138,7 @@ class XoopsBlockInstanceHandler
      */
     public function __get($name)
     {
-        trigger_error("Class '" . __CLASS__ . "' is deprecated" . (empty($name) ? '' : " thus the variable '{$name}' is not available") . '!', E_USER_WARNING);
+        $GLOBALS['xoopsLogger']->addDeprecated("Class '" . __CLASS__ . "' is deprecated" . (empty($name) ? '' : " thus the variable '{$name}' is not available") . '!');
 
         return null;
     }

@@ -10,8 +10,8 @@
  */
 
 /**
- * @copyright    XOOPS Project http://xoops.org/
- * @license      GNU GPL 2 or later (https://www.gnu.org/licenses/gpl-2.0.html)
+ * @copyright    XOOPS Project https://xoops.org/
+ * @license      GNU GPL 2.0 or later (https://www.gnu.org/licenses/gpl-2.0.html)
  * @package
  * @since
  * @author       XOOPS Development Team, Kazumi Ono (AKA onokazu)
@@ -39,7 +39,7 @@ $upload_size = 500000;
 // Get Action type
 $op = Request::getString('op', 'list');
 // Get userrank handler
-/* @var SystemUserrankHandler $userrank_Handler */
+/** @var SystemUserrankHandler $userrank_Handler */
 $userrank_Handler = xoops_getModuleHandler('userrank', 'system');
 
 switch ($op) {
@@ -83,7 +83,7 @@ switch ($op) {
                 $userrank['rank_special'] = $userrank_arr[$i]->getVar('rank_special');
                 $rank_img                 = $userrank_arr[$i]->getVar('rank_image') ?: 'blank.gif';
                 $userrank['rank_image']   = '<img src="' . XOOPS_UPLOAD_URL . '/' . $rank_img . '" alt="" />';
-                $xoopsTpl->append_by_ref('userrank', $userrank);
+                $xoopsTpl->appendByRef('userrank', $userrank);
                 unset($userrank);
             }
         }

@@ -26,6 +26,17 @@ defined('XOOPS_ROOT_PATH') || exit('Restricted access');
  */
 class XoopsImage extends XoopsObject
 {
+    //PHP 8.2 Dynamic properties deprecated
+    public $image_id;
+    public $image_nam;
+    public $image_nicename;
+    public $image_mimetype;
+    public $image_created;
+    public $image_display;
+    public $image_weight;
+    public $image_body;
+    public $imgcat_id;
+
     /**
      * Constructor
      **/
@@ -178,7 +189,7 @@ class XoopsImageHandler extends XoopsObjectHandler
      *
      * @param  int     $id ID
      * @param  boolean $getbinary
-     * @return XoopsImage {@link XoopsImage}, FALSE on fail
+     * @return XoopsImage|false {@link XoopsImage}, false on fail
      **/
     public function get($id, $getbinary = true)
     {
@@ -186,7 +197,8 @@ class XoopsImageHandler extends XoopsObjectHandler
         $id    = (int)$id;
         if ($id > 0) {
             $sql = 'SELECT i.*, b.image_body FROM ' . $this->db->prefix('image') . ' i LEFT JOIN ' . $this->db->prefix('imagebody') . ' b ON b.image_id=i.image_id WHERE i.image_id=' . $id;
-            if (!$result = $this->db->query($sql)) {
+            $result = $this->db->query($sql);
+            if (!$this->db->isResultSet($result)) {
                 return $image;
             }
             $numrows = $this->db->getRowsNum($result);
@@ -301,7 +313,7 @@ class XoopsImageHandler extends XoopsObjectHandler
         } else {
             $sql = 'SELECT * FROM ' . $this->db->prefix('image');
         }
-        if (isset($criteria) && is_subclass_of($criteria, 'CriteriaElement')) {
+        if (isset($criteria) && \method_exists($criteria, 'renderWhere')) {
             $sql .= ' ' . $criteria->renderWhere();
             $sort = $criteria->getSort() == '' ? 'image_weight' : $criteria->getSort();
             $sql .= ' ORDER BY ' . $sort . ' ' . $criteria->getOrder();
@@ -309,9 +321,10 @@ class XoopsImageHandler extends XoopsObjectHandler
             $start = $criteria->getStart();
         }
         $result = $this->db->query($sql, $limit, $start);
-        if (!$result) {
+        if (!$this->db->isResultSet($result)) {
             return $ret;
         }
+        /** @var array $myrow */
         while (false !== ($myrow = $this->db->fetchArray($result))) {
             $image = new XoopsImage();
             $image->assignVars($myrow);
@@ -335,15 +348,16 @@ class XoopsImageHandler extends XoopsObjectHandler
     public function getCount(CriteriaElement $criteria = null)
     {
         $sql = 'SELECT COUNT(*) FROM ' . $this->db->prefix('image');
-        if (isset($criteria) && is_subclass_of($criteria, 'CriteriaElement')) {
+        if (isset($criteria) && \method_exists($criteria, 'renderWhere')) {
             $sql .= ' ' . $criteria->renderWhere();
         }
-        if (!$result = $this->db->query($sql)) {
+        $result = $this->db->query($sql);
+        if (!$this->db->isResultSet($result)) {
             return 0;
         }
         list($count) = $this->db->fetchRow($result);
 
-        return $count;
+        return (int)$count;
     }
 
     /**

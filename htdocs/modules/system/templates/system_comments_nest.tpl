@@ -8,7 +8,7 @@
         <{include file="db:system_comment.tpl" comment=$comments[i]}>
     </table>
     <!-- start comment replies -->
-    <{foreach item=reply from=$comments[i].replies}>
+    <{foreach item=reply from=$comments[i].replies|default:null}>
         <br>
         <table class="bnone collapse">
             <tr>
@@ -27,5 +27,5 @@
     <{/foreach}>
     <!-- end comment tree -->
 <{/section}>
-<{if $commentform}>
+<{if isset($commentform)}>
     <div class="commentform"><{$commentform}></div><{/if}>

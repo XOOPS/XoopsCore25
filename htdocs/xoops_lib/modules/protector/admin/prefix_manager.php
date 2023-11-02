@@ -1,6 +1,6 @@
 <?php
-include '../../../include/cp_header.php';
-include 'admin_header.php';
+include XOOPS_ROOT_PATH . '/include/cp_header.php';
+include __DIR__ . '/admin_header.php';
 require_once dirname(__DIR__) . '/class/gtickets.php';
 $db = XoopsDatabaseFactory::getDatabaseConnection();
 
@@ -18,7 +18,13 @@ if (!empty($_POST['copy']) && !empty($_POST['old_prefix'])) {
     $new_prefix = empty($_POST['new_prefix']) ? 'x' . substr(md5(time()), -5) : $_POST['new_prefix'];
     $old_prefix = $_POST['old_prefix'];
 
-    $srs = $db->queryF('SHOW TABLE STATUS FROM `' . XOOPS_DB_NAME . '`');
+    $sql = 'SHOW TABLE STATUS FROM `' . XOOPS_DB_NAME . '`';
+    $srs = $db->queryF($sql);
+    if (!$db->isResultSet($srs)) {
+        throw new \RuntimeException(
+            \sprintf(_DB_QUERY_ERROR, $sql) . $db->error(), E_USER_ERROR
+        );
+    }
 
     if (!$db->getRowsNum($srs)) {
         die('You are not allowed to copy tables');
@@ -34,7 +40,14 @@ if (!empty($_POST['copy']) && !empty($_POST['old_prefix'])) {
 
         $new_table = $new_prefix . substr($old_table, strlen($old_prefix));
 
-        $crs = $db->queryF('SHOW CREATE TABLE ' . $old_table);
+        $sql = 'SHOW CREATE TABLE ' . $old_table;
+        $crs = $db->queryF($sql);
+        if (!$db->isResultSet($crs)) {
+            throw new \RuntimeException(
+                \sprintf(_DB_QUERY_ERROR, $sql) . $db->error(), E_USER_ERROR
+            );
+        }
+
         if (!$db->getRowsNum($crs)) {
             echo "error: SHOW CREATE TABLE ($old_table)<br>\n";
             continue;
@@ -74,7 +87,13 @@ if (!empty($_POST['copy']) && !empty($_POST['old_prefix'])) {
     $prefix = $_POST['prefix'];
 
     // get table list
-    $srs = $db->queryF('SHOW TABLE STATUS FROM `' . XOOPS_DB_NAME . '`');
+    $sql = 'SHOW TABLE STATUS FROM `' . XOOPS_DB_NAME . '`';
+    $srs = $db->queryF($sql);
+    if (!$db->isResultSet($srs)) {
+        throw new \RuntimeException(
+            \sprintf(_DB_QUERY_ERROR, $sql) . $db->error(), E_USER_ERROR
+        );
+    }
     if (!$db->getRowsNum($srs)) {
         die('You are not allowed to delete tables');
     }
@@ -87,12 +106,25 @@ if (!empty($_POST['copy']) && !empty($_POST['old_prefix'])) {
         if (substr($table, 0, strlen($prefix) + 1) !== $prefix . '_') {
             continue;
         }
-        $drawCreate = $db->queryF("SHOW CREATE TABLE `$table`");
+        $sql = "SHOW CREATE TABLE `$table`";
+        $drawCreate = $db->queryF($sql);
+        if (!$db->isResultSet($drawCreate)) {
+            throw new \RuntimeException(
+                \sprintf(_DB_QUERY_ERROR, $sql) . $db->error(), E_USER_ERROR
+            );
+        }
+
         $create = $db->fetchRow($drawCreate);
         $db->freeRecordSet($drawCreate);
 
         $exportString .= "\nDROP TABLE IF EXISTS `$table`;\n{$create[1]};\n\n";
-        $result      = $db->query("SELECT * FROM `$table`");
+        $sql      = "SELECT * FROM `$table`";
+        $result = $db->query($sql);
+        if (!$db->isResultSet($result)) {
+            throw new \RuntimeException(
+                \sprintf(_DB_QUERY_ERROR, $sql) . $db->error(), E_USER_ERROR
+            );
+        }
         $fieldCount  = $db->getFieldsNum($result);
 
         $insertValues = '';
@@ -149,7 +181,9 @@ if (!empty($_POST['copy']) && !empty($_POST['old_prefix'])) {
         }
 
         $exportString .= $insertValues;
-        $db->freeRecordSet($result);
+        if ($this->db->isResultSet($result)) {
+            $db->freeRecordSet($result);
+        }
     }
 
     header('Content-Type: Application/octet-stream');
@@ -184,7 +218,13 @@ if (!empty($_POST['copy']) && !empty($_POST['old_prefix'])) {
     }
 
     // get table list
-    $srs = $db->queryF('SHOW TABLE STATUS FROM `' . XOOPS_DB_NAME . '`');
+    $sql = 'SHOW TABLE STATUS FROM `' . XOOPS_DB_NAME . '`';
+    $srs = $db->queryF($sql);
+    if (!$db->isResultSet($srs)) {
+        throw new \RuntimeException(
+            \sprintf(_DB_QUERY_ERROR, $sql) . $db->error(), E_USER_ERROR
+        );
+    }
     if (!$db->getRowsNum($srs)) {
         die('You are not allowed to delete tables');
     }
@@ -208,7 +248,13 @@ xoops_cp_header();
 include __DIR__ . '/mymenu.php';
 
 // query
-$srs = $db->queryF('SHOW TABLE STATUS FROM `' . XOOPS_DB_NAME . '`');
+$sql = 'SHOW TABLE STATUS FROM `' . XOOPS_DB_NAME . '`';
+$srs = $db->queryF($sql);
+if (!$db->isResultSet($srs)) {
+    throw new \RuntimeException(
+        \sprintf(_DB_QUERY_ERROR, $sql) . $db->error(), E_USER_ERROR
+    );
+}
 if (!$db->getRowsNum($srs)) {
     die('You are not allowed to copy tables');
     xoops_cp_footer();

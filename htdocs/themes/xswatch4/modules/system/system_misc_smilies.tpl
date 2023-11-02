@@ -1,5 +1,5 @@
 <{* smilies selector popup *}>
-<{if $closeHead|default:true}>
+<{if isset($closeHead) ? $closeHead : true}>
 <{$headContents|default:''}>
 <script>window.resizeTo(400, 580)</script>
 </head>
@@ -8,7 +8,7 @@
 
 <h4 class="text-center"><{$lang_smiles}></h4>
 
-<{if $closeButton|default:true}>
+<{if isset($closeButton) ? $closeButton : true}>
     <div class="text-center m-3"><input class="btn btn-primary btn-block" value="<{$lang_close}>" type="button" onclick="window.close();" /></div>
 <{/if}>
 
@@ -21,7 +21,7 @@
         </tr>
     </thead>
     <tbody>
-        <{foreach item=smile from=$smilies}>
+        <{foreach item=smile from=$smilies|default:null}>
             <tr>
                 <td class="text-center"><{$smile.code}></td>
                 <td class="text-center"><{$smile.emotion}></td>
@@ -35,6 +35,6 @@
 
 <p class="text-center mx-2"><{$lang_clicksmile}></p>
 
-<{if $closeButton|default:true}>
+<{if isset($closeButton) ? $closeButton : true}>
     <div class="text-center m-3"><input class="btn btn-primary btn-block" value="<{$lang_close}>" type="button" onclick="window.close();" /></div>
 <{/if}>

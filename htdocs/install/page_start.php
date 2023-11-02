@@ -15,7 +15,7 @@
  * If you did not receive this file, get it at https://www.gnu.org/licenses/gpl-2.0.html
  *
  * @copyright    (c) 2000-2016 XOOPS Project (www.xoops.org)
- * @license          GNU GPL 2 or later (https://www.gnu.org/licenses/gpl-2.0.html)
+ * @license          GNU GPL 2.0 or later (https://www.gnu.org/licenses/gpl-2.0.html)
  * @package          installer
  * @since            2.3.0
  * @author           Haruki Setoyama  <haruki@planewave.org>
@@ -25,13 +25,13 @@
  * @author           DuGris (aka L. JEN) <dugris@frxoops.org>
  **/
 
-require_once './include/common.inc.php';
+require_once __DIR__ . '/include/common.inc.php';
 defined('XOOPS_INSTALL') || die('XOOPS Installation wizard die');
 
 $pageHasForm = false;
 
 $content = '';
-include "./language/{$wizard->language}/welcome.php";
+include __DIR__ . "/language/{$wizard->language}/welcome.php";
 
 $writable = '<div class="alert alert-warning"><ul style="list-style: none;">';
 foreach ($wizard->configs['writable'] as $key => $value) {
@@ -62,4 +62,4 @@ $writable_trust .= '</ul></div>';
 
 $content = sprintf($content, $writable, $xoops_trust, $writable_trust);
 
-include './include/install_tpl.php';
+include __DIR__ . '/include/install_tpl.php';

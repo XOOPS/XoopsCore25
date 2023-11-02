@@ -1,5 +1,5 @@
 <{* online details popup *}>
-<{if $closeHead|default:true}>
+<{if isset($closeHead) ? $closeHead : true}>
     <{$headContents|default:''}>
     <script>window.resizeTo(260, 560)</script>
     </head>
@@ -8,11 +8,11 @@
 
 <h4 class="text-center"><{$lang_whoisonline}></h4>
 
-<{if $closeButton|default:true}>
+<{if isset($closeButton) ? $closeButton : true}>
     <div class="text-center m-3"><input class="btn btn-primary btn-block" value="<{$lang_close}>" type="button" onclick="window.close();" /></div>
 <{/if}>
 
-<{foreach item=online from=$onlineUserInfo}>
+<{foreach item=online from=$onlineUserInfo|default:null}>
     <div class="row justify-content-center align-items-center <{cycle values='alert-primary,alert-secondary'}>">
         <div class="col-12 col-sm-3 text-center mt-2">
             <{if $online.uid == 0}>
@@ -33,7 +33,7 @@
             <{if $online.module_name <> "" }>
                 <h5 class="text-center text-sm-left font-weight-bold"><{$online.module_name}></h5>
             <{/if}>
-            <{if $isadmin|default:false}>
+            <{if !empty($isadmin)}>
                 <div class="ml-5 ml-sm-0">
                     <span class="fa fa-map-marker fa-fw "></span> <{$online.ip}>
                     <br>
@@ -44,6 +44,6 @@
     </div>
 <{/foreach}>
 
-<{if $closeButton|default:true}>
+<{if isset($closeButton) ? $closeButton : true}>
     <div class="text-center m-3"><input class="btn btn-primary btn-block" value="<{$lang_close}>" type="button" onclick="window.close();" /></div>
 <{/if}>

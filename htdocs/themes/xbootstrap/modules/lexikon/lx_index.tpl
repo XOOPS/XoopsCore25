@@ -4,11 +4,11 @@
   <li><{$lang_modulename}></li>
 </ol>
 
-<{if $empty|default:0 == 1}>
+<{if isset($empty) && $empty == 1}>
     <div class="alert alert-warning" role="alert"><{$smarty.const._MD_LEXIKON_STILLNOTHINGHERE}></div>
 <{/if}>
 
-<{if $teaser == true}>
+<{if isset($teaser) && $teaser == true}>
 <div class="row" >
   <div class="col-md-12">
     <div class="panel panel-default">
@@ -30,7 +30,7 @@
     <div class="col-md-6">
       <h3 style="padding-bottom: 10px;"><{$smarty.const._MD_LEXIKON_WEHAVE}></h3>
       <{$smarty.const._MD_LEXIKON_DEFS}><{$publishedwords}><br>
-      <{if $multicats == 1}><{$smarty.const._MD_LEXIKON_CATS}><{$totalcats}><br><{/if}>
+      <{if isset($multicats) && $multicats == 1}><{$smarty.const._MD_LEXIKON_CATS}><{$totalcats}><br><{/if}>
       <div style="padding-top: 10px">
         <input class="btn btn-success btn-sm" type="button" value="<{$smarty.const._MD_LEXIKON_SUBMITENTRY}>" onclick="location.href = 'submit.php'"/>
         <input class="btn btn-info btn-sm" type="button" value="<{$smarty.const._MD_LEXIKON_REQUESTDEF}>" onclick="location.href = 'request.php' "/>
@@ -47,7 +47,7 @@
 
     <ul class="pagination pagination-sm">
       <li><a href="<{$xoops_url}>/modules/<{$lang_moduledirname}>/letter.php" title="[ <{$publishedwords}> ]"><{$smarty.const._MD_LEXIKON_ALL}></a></li>
-      <{foreach item=letterlinks from=$alpha.initial}>
+      <{foreach item=letterlinks from=$alpha.initial|default:null}>
           <{if $letterlinks.total > 0}>
             <li><a href="<{$xoops_url}>/modules/<{$lang_moduledirname}>/letter.php?init=<{$letterlinks.id}>" title="[ <{$letterlinks.total}> ]" >
               <{$letterlinks.linktext}>
@@ -57,7 +57,7 @@
           <{/if}>
       <{/foreach}>
 
-      <{if $totalother > 0}>
+      <{if isset($totalother) && $totalother > 0}>
         <li><a href="<{$xoops_url}>/modules/<{$lang_moduledirname}>/letter.php?init=<{$smarty.const._MD_LEXIKON_OTHER}>" title="[ <{$totalother}> ]">
           <{$smarty.const._MD_LEXIKON_OTHER}>
         </a></li>
@@ -72,8 +72,8 @@
 
 <{* Category block *}>
 <!-- $layout 0 and 1 are the same. if you want to change first change CONFIG_CATEGORY_LAYOUT_PLAIN in inlcude/common.inc.php -->
-<{if $layout == '0'}> 
-    <{if $multicats == 1 && count($block0.categories) gt 0 }>
+<{if isset($layout) && $layout == '0'}>
+    <{if $multicats == 1 && count($block0.categories) > 0 }>
         <div class="row" style="margin-bottom: 20px">
             <div class="col-md-12">
                 <h3> <{$smarty.const._MD_LEXIKON_BROWSECAT}> </h3>
@@ -89,7 +89,7 @@
                       [<{$publishedwords}>]
                    </td>
                    <!-- Start category loop -->
-                   <{foreach item=catlinks from=$block0.categories}>
+                   <{foreach item=catlinks from=$block0.categories|default:null}>
                    <td>
                     <{if $catlinks.image != "" && $show_screenshot == true}>
                         <a href="<{$xoops_url}>/modules/<{$lang_moduledirname}>/category.php?categoryID=<{$catlinks.id}>" target="_parent">
@@ -120,7 +120,7 @@
         </table>
     <{/if}>
 <{else}>
-    <{if $multicats == 1}>
+    <{if isset($multicats) && $multicats == 1}>
       <div class="row" style="margin-bottom: 20px">
             <div class="col-md-12">
                 <h3> <{$smarty.const._MD_LEXIKON_BROWSECAT}> </h3>
@@ -130,7 +130,7 @@
           <tbody>
               <tr>
                    <!-- Start category loop -->
-                   <{foreach item=catlinks from=$block0.categories}>
+                   <{foreach item=catlinks from=$block0.categories|default:null}>
                    <td>
                     <{if $catlinks.image != "" && $show_screenshot == true}>
                         <a href="<{$xoops_url}>/modules/<{$lang_moduledirname}>/category.php?categoryID=<{$catlinks.id}>" target="_parent">
@@ -176,9 +176,8 @@
         <ul>
             <{foreach item=newentries from=$block.newstuff|default:null}>
                 <li>
-                    <a href="<{$xoops_url}>/modules/<{$lang_moduledirname}>/entry.php?entryID=<{$newentries.id}>"><{$newentries.linktext}></a> <{if $showdate == 1}>
-                        <span
-                                style="font-size: xx-small; color: #456;">[<{$newentries.date}>]</span><{/if}>
+                    <a href="<{$xoops_url}>/modules/<{$lang_moduledirname}>/entry.php?entryID=<{$newentries.id}>"><{$newentries.linktext}></a> <{if isset($showdate) && $showdate == 1}>
+                        <span style="font-size: xx-small; color: #456;">[<{$newentries.date}>]</span><{/if}>
                 </li>
             <{/foreach}>
         </ul>
@@ -189,7 +188,7 @@
         <ul>
             <{foreach item=popentries from=$block2.popstuff|default:null}>
                 <li>
-                    <a href="<{$xoops_url}>/modules/<{$lang_moduledirname}>/entry.php?entryID=<{$popentries.id}>"><{$popentries.linktext}></a> <{if $showcount == 1}>
+                    <a href="<{$xoops_url}>/modules/<{$lang_moduledirname}>/entry.php?entryID=<{$popentries.id}>"><{$popentries.linktext}></a> <{if isset($showcount) && $showcount == 1}>
                         <span
                                 style="font-size: xx-small; color: #456;">[<{$popentries.counter}>
                         ]</span><{/if}></li>
@@ -199,8 +198,8 @@
 
     <div class="col-md-4 col-sm-12">
         <h3><{$smarty.const._MD_LEXIKON_RANDOMTERM}></h3>
-        <{if $multicats == 1}>
-            <{if $empty|default:0 != 1}>
+        <{if isset($multicats) && $multicats == 1}>
+            <{if isset($empty) && $empty == 1}>
                 <div class="catname"><a
                             href="<{$xoops_url}>/modules/<{$lang_moduledirname}>/category.php?categoryID=<{$random.categoryID}>"><{$random.categoryname}></a>
                 </div>
@@ -219,14 +218,14 @@
 <hr>
 
 
-<{if $userisadmin == 1}>
+<{if isset($userisadmin) && $userisadmin == 1}>
    <div class="row" style="margin-bottom: 20px">
     <div class="col-md-12">
         <h3><{$smarty.const._MD_LEXIKON_SUBANDREQ}></h3>
 
         <dl class="dl-horizontal">
             <dt><{$smarty.const._MD_LEXIKON_SUB}></dt>
-            <{if $wehavesubs == '0'}><dd><{$smarty.const._MD_LEXIKON_NOSUB}></dd><{/if}>
+            <{if isset($wehavesubs) && $wehavesubs == '0'}><dd><{$smarty.const._MD_LEXIKON_NOSUB}></dd><{/if}>
             <dd>
             <{foreach item=subentries from=$blockS.substuff|default:null}>
                 <a href="<{$xoops_url}>/modules/<{$lang_moduledirname}>/admin/entry.php?op=mod&entryID=<{$subentries.id}>"><{$subentries.linktext}></a>
@@ -237,7 +236,7 @@
 
        <dl class="dl-horizontal">
             <dt><{$smarty.const._MD_LEXIKON_REQ}></dt>
-            <{if $wehavereqs == '0'}><dd><{$smarty.const._MD_LEXIKON_NOREQ}></dd><{/if}>
+            <{if isset($wehavereqs) && $wehavereqs == '0'}><dd><{$smarty.const._MD_LEXIKON_NOREQ}></dd><{/if}>
             <dd>
             <{foreach item=reqentries from=$blockR.reqstuff|default:null}>
                 <a href="<{$xoops_url}>/modules/<{$lang_moduledirname}>/admin/entry.php?op=mod&entryID=<{$reqentries.id}>"><{$reqentries.linktext}></a>
@@ -255,7 +254,7 @@
     </div>
     <dl class="dl-horizontal">
         <dt><{$smarty.const._MD_LEXIKON_REQ}></dt>
-            <{if $wehavereqs == '0'}>
+            <{if isset($wehavereqs) && $wehavereqs == '0'}>
                 <dd><{$smarty.const._MD_LEXIKON_NOREQ}></dd>
             <{else}>
             <dd>
@@ -269,7 +268,7 @@
     </dl>
 <{/if}>
 
-<{if $syndication == true}>
+<{if isset($syndication) && $syndication == true}>
     <div align="center" class="clearer" style="padding: 4px;"><br><br>
         <a href="rss.php" title="recent glossary definitions">
             <img src="assets/images/rss.gif" ALT="RSS" border="0"/>

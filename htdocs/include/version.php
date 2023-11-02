@@ -9,7 +9,7 @@
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  *
- * @copyright       (c) 2000-2020 XOOPS Project (https://xoops.org)
+ * @copyright       (c) 2000-2023 XOOPS Project (https://xoops.org)
  * @license             GNU GPL 2 (https://www.gnu.org/licenses/gpl-2.0.html)
  * @package             kernel
  */
@@ -29,4 +29,4 @@ defined('XOOPS_ROOT_PATH') || exit('Restricted access');
 /**
  *  Define XOOPS version
  */
-define('XOOPS_VERSION', 'XOOPS 2.5.11-Beta2');
+define('XOOPS_VERSION', 'XOOPS 2.5.11-RC3');

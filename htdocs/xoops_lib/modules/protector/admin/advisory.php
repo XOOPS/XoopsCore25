@@ -1,6 +1,6 @@
 <?php
-include '../../../include/cp_header.php';
-include 'admin_header.php';
+include XOOPS_ROOT_PATH . '/include/cp_header.php';
+include __DIR__ . '/admin_header.php';
 $db = XoopsDatabaseFactory::getDatabaseConnection();
 
 // beggining of Output
@@ -23,7 +23,7 @@ $relative_path = str_repeat('../', count($root_paths) - $i) . implode('/', array
 
 // the path of XOOPS_TRUST_PATH accessible check
 echo "<dl><dt>'XOOPS_TRUST_PATH' : ";
-echo "<img src='" . XOOPS_URL . '/' . htmlspecialchars($relative_path) . "/modules/protector/public_check.png' width='40' height='20' alt='' style='border:1px solid black;' /><br><a href='" . XOOPS_URL . '/' . htmlspecialchars($relative_path) . "/modules/protector/public_check.php'>" . _AM_ADV_TRUSTPATHPUBLICLINK . "</a></dt>\n";
+echo "<img src='" . XOOPS_URL . '/' . htmlspecialchars($relative_path, ENT_QUOTES) . "/modules/protector/public_check.png' width='40' height='20' alt='' style='border:1px solid black;' /><br><a href='" . XOOPS_URL . '/' . htmlspecialchars($relative_path, ENT_QUOTES) . "/modules/protector/public_check.php'>" . _AM_ADV_TRUSTPATHPUBLICLINK . "</a></dt>\n";
 echo '<dd>' . _AM_ADV_TRUSTPATHPUBLIC . '</b><br><br></dd></dl>';
 
 // register_globals
@@ -54,7 +54,7 @@ echo "</b><br><br></dl>\n";
 
 // register_long_arrays -- enabling deprecated feature opens potential attack surface
 // This option was removed in PHP 5.4, and is no longer supported in XOOPS.
-// Any code still using the the long arrays ($HTTP_GET_VARS, $HTTP_POST_VARS, $HTTP_COOKIE_VARS)
+// Any code still using the long arrays ($HTTP_GET_VARS, $HTTP_POST_VARS, $HTTP_COOKIE_VARS)
 // should be considered "suspect."
 if (version_compare(PHP_VERSION, '5.4.0', '<')) {
     echo "<dl><dt>'register_long_arrays' : ";

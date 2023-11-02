@@ -3,7 +3,7 @@
  * Installer main english strings declaration file
  *
  * @copyright    (c) 2000-2016 XOOPS Project (www.xoops.org)
- * @license          GNU GPL 2 or later (https://www.gnu.org/licenses/gpl-2.0.html)
+ * @license          GNU GPL 2.0 or later (https://www.gnu.org/licenses/gpl-2.0.html)
  * @package          installer
  * @since            2.3.0
  * @author           Haruki Setoyama  <haruki@planewave.org>
@@ -17,8 +17,8 @@
 // Translator: XOOPS Translation Team
 define('SHOW_HIDE_HELP', 'Show/hide help text');
 // License
-define('LICENSE_NOT_WRITEABLE', 'License file "%s" is NOT writable!');
-define('LICENSE_IS_WRITEABLE', '%s License is writable.');
+//define('LICENSE_NOT_WRITEABLE', 'License file "%s" is NOT writable!');
+//define('LICENSE_IS_WRITEABLE', '%s License is writable.');
 // Configuration check page
 define('SERVER_API', 'Server API');
 define('PHP_EXTENSION', '%s extension');

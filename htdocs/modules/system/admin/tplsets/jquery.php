@@ -1,6 +1,7 @@
 <?php
 
 use Xmf\Assert;
+use Xmf\Request;
 
 /**
  * Template Manager
@@ -13,14 +14,14 @@ use Xmf\Assert;
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  *
- * @copyright       (c) 2000-2016 XOOPS Project (www.xoops.org)
+ * @copyright       (c) 2000-2022 XOOPS Project (www.xoops.org)
  * @license             GNU GPL 2 (https://www.gnu.org/licenses/gpl-2.0.html)
  * @author              Maxime Cointin (AKA Kraven30)
  * @package             system
  */
-/* @var XoopsUser $xoopsUser */
-/* @var XoopsModule $xoopsModule */
-/* @var XoopsConfigItem $xoopsConfig */
+/** @var XoopsUser $xoopsUser */
+/** @var XoopsModule $xoopsModule */
+/** @var XoopsConfigItem $xoopsConfig */
 
 include dirname(dirname(__DIR__)) . '/header.php';
 
@@ -47,21 +48,35 @@ $op = XoopsRequest::getCmd('op', 'default');
 switch ($op) {
     // Display tree folder
     case 'tpls_display_folder':
-        $_REQUEST['dir'] = urldecode($_REQUEST['dir']);
-        $root            = XOOPS_THEME_PATH;
-        if (file_exists($root . $_REQUEST['dir'])) {
-            $files = scandir($root . $_REQUEST['dir']);
+        $root = XOOPS_THEME_PATH;
+        $cleanDir = urldecode(Request::getString('dir', ''));
+        $requestDir = $root . $cleanDir;
+        //
+        $path_file = realpath($requestDir);
+        $check_path = realpath($root);
+        try {
+            Assert::true(is_dir($check_path), _AM_SYSTEM_TEMPLATES_ERROR);
+            Assert::true(is_dir($path_file), _AM_SYSTEM_TEMPLATES_ERROR);
+            Assert::startsWith($path_file, $check_path, _AM_SYSTEM_TEMPLATES_ERROR);
+        } catch (\InvalidArgumentException $e) {
+            // handle the exception
+            redirect_header(XOOPS_URL . '/modules/system/admin.php?fct=tplsets', 2, $e->getMessage());
+            exit;
+        }
+        //
+        if (file_exists($requestDir)) {
+            $files = scandir($requestDir);
             natcasesort($files);
             if (count($files) > 2) { /* The 2 accounts for . and .. */
                 echo "<ul class=\"jqueryFileTree\" style=\"display: none;\">";
                 // All dirs
                 foreach ($files as $file) {
-                    if (file_exists($root . $_REQUEST['dir'] . $file) && $file !== '.' && $file !== '..' && is_dir($root . $_REQUEST['dir'] . $file)) {
+                    if (file_exists($requestDir . $file) && $file !== '.' && $file !== '..' && is_dir($requestDir . $file)) {
                         //retirer .svn
                         $file_no_valid = array('.svn', 'icons', 'img', 'images', 'language');
 
                         if (!in_array($file, $file_no_valid)) {
-                            echo "<li class=\"directory collapsed\"><a href=\"#\" rel=\"" . htmlentities($_REQUEST['dir'] . $file) . "/\">" . htmlentities($file) . '</a></li>';
+                            echo "<li class=\"directory collapsed\"><a href=\"#\" rel=\"" . htmlentities($_REQUEST['dir'] . $file, ENT_QUOTES) . "/\">" . htmlentities($file, ENT_QUOTES) . '</a></li>';
                         }
                     }
                 }
@@ -74,7 +89,7 @@ switch ($op) {
                         $extension_verif = strrchr($file, '.');
 
                         if (in_array($extension_verif, $extensions)) {
-                            echo "<li class=\"file ext_$ext\"><a href=\"#\" onclick=\"tpls_edit_file('" . htmlentities($_REQUEST['dir'] . $file) . "', '" . htmlentities($_REQUEST['dir']) . "', '" . htmlentities($file) . "', '" . $ext . "');\" rel=\"tpls_edit_file('" . htmlentities($_REQUEST['dir'] . $file) . "', '" . htmlentities($_REQUEST['dir']) . "', '" . htmlentities($file) . "', '" . $ext . "');\">" . htmlentities($file) . '</a></li>';
+                            echo "<li class=\"file ext_$ext\"><a href=\"#\" onclick=\"tpls_edit_file('" . htmlentities($_REQUEST['dir'] . $file, ENT_QUOTES) . "', '" . htmlentities($_REQUEST['dir'], ENT_QUOTES) . "', '" . htmlentities($file, ENT_QUOTES) . "', '" . $ext . "');\" rel=\"tpls_edit_file('" . htmlentities($_REQUEST['dir'] . $file, ENT_QUOTES) . "', '" . htmlentities($_REQUEST['dir'], ENT_QUOTES) . "', '" . htmlentities($file, ENT_QUOTES) . "', '" . $ext . "');\">" . htmlentities($file, ENT_QUOTES) . '</a></li>';
                         } else {
                             //echo "<li class=\"file ext_$ext\">" . htmlentities($file) . "</li>";
                         }
@@ -92,7 +107,7 @@ switch ($op) {
         $check_path = realpath(XOOPS_ROOT_PATH.'/themes');
         try {
             Assert::startsWith($path_file, $check_path, _AM_SYSTEM_TEMPLATES_ERROR);
-        } catch(\InvalidArgumentException $e) {
+        } catch (\InvalidArgumentException $e) {
             // handle the exception
             redirect_header(XOOPS_URL . '/modules/system/admin.php?fct=tplsets', 2, $e->getMessage());
             exit;
@@ -170,5 +185,4 @@ switch ($op) {
         }
         xoops_error(_AM_SYSTEM_TEMPLATES_RESTORE_NOTOK);
         break;
-
 }

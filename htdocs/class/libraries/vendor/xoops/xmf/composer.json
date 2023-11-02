@@ -13,7 +13,7 @@
       "kint-php/kint": "^3.3",
       "symfony/yaml": "^2.8",
       "paragonie/random_compat": "^2",
-      "firebase/php-jwt": "^5.0",
+      "firebase/php-jwt": "6.0.0",
       "webmozart/assert": "1.9.1"
     },
     "require-dev": {

@@ -432,10 +432,8 @@ class XoopsFormElement
             switch ($this->getFormType()) {
                 case 'checkbox':
                     return NWLINE . "if (!myform.{$eltname}.checked) { window.alert(\"{$eltmsg}\"); myform.{$eltname}.focus(); return false; }\n";
-                    break;
                 default:
                     return NWLINE . "if (myform.{$eltname}.value == \"\") { window.alert(\"{$eltmsg}\"); myform.{$eltname}.focus(); return false; }\n";
-                    break;
             } // switch
         }
 

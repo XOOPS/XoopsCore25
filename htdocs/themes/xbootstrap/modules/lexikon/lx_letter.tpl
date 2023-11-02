@@ -14,7 +14,7 @@
 
     <ul class="pagination pagination-sm">
       <li><a href="<{$xoops_url}>/modules/<{$lang_moduledirname}>/letter.php" title="[ <{$publishedwords}> ]"><{$smarty.const._MD_LEXIKON_ALL}></a></li>
-      <{foreach item=letterlinks from=$alpha.initial}>
+      <{foreach item=letterlinks from=$alpha.initial|default:null}>
           <{if $letterlinks.total > 0}>
             <li><a href="<{$xoops_url}>/modules/<{$lang_moduledirname}>/letter.php?init=<{$letterlinks.id}>" title="[ <{$letterlinks.total}> ]" >
               <{$letterlinks.linktext}>
@@ -24,7 +24,7 @@
           <{/if}>
       <{/foreach}>
 
-      <{if $totalother > 0}>
+      <{if isset($totalother) && $totalother > 0}>
         <li><a href="<{$xoops_url}>/modules/<{$lang_moduledirname}>/letter.php?init=<{$smarty.const._MD_LEXIKON_OTHER}>" title="[ <{$totalother}> ]">
           <{$smarty.const._MD_LEXIKON_OTHER}>
         </a></li>
@@ -40,14 +40,14 @@
 <div class="row" style="margin-bottom: 20px">
   <div class="col-md-12">
 
-    <{if $pagetype == '0'}>
+    <{if isset($pagetype) && $pagetype == '0'}>
        <h2 style="text-align: center"><{$smarty.const._MD_LEXIKON_ALL}></h2>
         <div class="letters"><{$smarty.const._MD_LEXIKON_WEHAVE}> <{$totalentries}> <{$smarty.const._MD_LEXIKON_INALLGLOSSARIES}></div>
         <br>
-        <{foreach item=eachentry from=$entriesarray.single}>
+        <{foreach item=eachentry from=$entriesarray.single|default:null}>
             <h4 class="term" style="clear:both;">
                 <a href="<{$xoops_url}>/modules/<{$eachentry.dir}>/entry.php?entryID=<{$eachentry.id}>"><{$eachentry.term}></a> 
-                <{if $multicats == 1}>
+                <{if isset($multicats) && $multicats == 1}>
                 <a style="color: #456;" href="<{$xoops_url}>/modules/<{$eachentry.dir}>/category.php?categoryID=<{$eachentry.catid}>">
                     [<{$eachentry.catname}>]
                 </a>
@@ -67,10 +67,10 @@
         <h2 style="text-align: center"><{$firstletter}></h2>
         <div class="letters"><{$smarty.const._MD_LEXIKON_WEHAVE}> <{$totalentries}> <{$smarty.const._MD_LEXIKON_BEGINWITHLETTER}></div>
         <br>
-        <{foreach item=eachentry from=$entriesarray2.single}>
+        <{foreach item=eachentry from=$entriesarray2.single|default:null}>
             <h4 class="term" style="clear:both;">
                 <a href="<{$xoops_url}>/modules/<{$eachentry.dir}>/entry.php?entryID=<{$eachentry.id}>"><{$eachentry.term}></a> 
-                <{if $multicats == 1}>
+                <{if isset($multicats) && $multicats == 1}>
                 <a style="color: #456;" href="<{$xoops_url}>/modules/<{$eachentry.dir}>/category.php?categoryID=<{$eachentry.catid}>">
                     [<{$eachentry.catname}>]</A><{/if}>
              <{$eachentry.microlinks}>

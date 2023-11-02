@@ -10,7 +10,7 @@
  */
 
 /**
- * @copyright      {@link http://xoops.org/ XOOPS Project}
+ * @copyright      {@link https://xoops.org/ XOOPS Project}
  * @license        {@link https://www.gnu.org/licenses/gpl-2.0.html GNU GPL 2 or later}
  * @package
  * @since
@@ -30,11 +30,11 @@ if (!xoops_getModuleOption('active_banners', 'system')) {
 // Parameters
 $nb_aff = xoops_getModuleOption('banners_pager', 'system');
 // Classes
-/* @var  SystemBannerHandler $banner_Handler */
+/** @var  SystemBannerHandler $banner_Handler */
 $banner_Handler        = xoops_getModuleHandler('banner', 'system');
-/* @var  SystemBannerfinishHandler $banner_finish_Handler */
+/** @var  SystemBannerfinishHandler $banner_finish_Handler */
 $banner_finish_Handler = xoops_getModuleHandler('bannerfinish', 'system');
-/* @var  SystemBannerclientHandler $banner_client_Handler */
+/** @var  SystemBannerclientHandler $banner_client_Handler */
 $banner_client_Handler = xoops_getModuleHandler('bannerclient', 'system');
 // Get Action type
 $op = Request::getString('op', 'default');
@@ -59,7 +59,7 @@ switch ($op) {
             redirect_header('admin.php?fct=banners', 3, implode(',', $GLOBALS['xoopsSecurity']->getErrors()));
         }
 		$bid = Request::getInt('bid', 0);
-        /* @var  SystemBanner $obj */
+        /** @var  SystemBanner $obj */
     if ($bid > 0) {
             $obj = $banner_Handler->get($bid);
         } else {
@@ -89,9 +89,9 @@ switch ($op) {
 
 		$bid = Request::getInt('bid', 0);
         if ($bid > 0) {
-            /* @var  SystemBanner $obj */
+            /** @var  SystemBanner $obj */
             $obj  = $banner_Handler->get($bid);
-            /* @var  XoopsThemeForm $form */
+            /** @var  XoopsThemeForm $form */
             $form = $obj->getForm();
             $form->display();
         } else {
@@ -161,7 +161,7 @@ switch ($op) {
             redirect_header('admin.php?fct=banners', 3, implode(',', $GLOBALS['xoopsSecurity']->getErrors()));
         }
 		$cid = Request::getInt('cid', 0);
-        /* @var  SystemBanner $obj */
+        /** @var  SystemBanner $obj */
         if ($cid > 0) {
             $obj = $banner_client_Handler->get($cid);
         } else {
@@ -179,7 +179,7 @@ switch ($op) {
         }
 
         xoops_error($obj->getHtmlErrors());
-        /* @var  XoopsThemeForm $form */
+        /** @var  XoopsThemeForm $form */
         $form = $obj->getForm(false);
         $form->display();
         break;
@@ -192,7 +192,7 @@ switch ($op) {
 
 		$cid = Request::getInt('cid', 0);
         if ($cid > 0) {
-            /* @var  SystemBanner $obj */
+            /** @var  SystemBanner $obj */
             $obj  = $banner_client_Handler->get($cid);
             $form = $obj->getForm();
             $xoopsTpl->assign('form', $form->render());
@@ -238,7 +238,7 @@ switch ($op) {
         $xoBreadCrumb->addHelp(system_adminVersion('banners', 'help') . '#new_banner');
         $xoBreadCrumb->addTips(_AM_SYSTEM_BANNERS_NAV_TIPS);
         $xoBreadCrumb->render();
-        /* @var  SystemBanner $obj */
+        /** @var  SystemBanner $obj */
         $obj  = $banner_Handler->create();
         $form = $obj->getForm();
         $xoopsTpl->assign('form', $form->render());
@@ -249,7 +249,7 @@ switch ($op) {
         $xoBreadCrumb->addHelp(system_adminVersion('banners', 'help') . '#new_client');
         $xoBreadCrumb->addTips(_AM_SYSTEM_BANNERS_NAV_TIPS);
         $xoBreadCrumb->render();
-        /* @var  SystemBanner $obj */
+        /** @var  SystemBanner $obj */
         $obj  = $banner_client_Handler->create();
         $form = $obj->getForm();
         $xoopsTpl->assign('form', $form->render());
@@ -332,8 +332,8 @@ switch ($op) {
                 $banner['name']        = $name;
                 $banner['edit_delete'] = '<img class="cursorpointer" onclick="display_dialog(' . $bid . ', true, false, \'slide\', \'slide\', 200, 520);" src="images/icons/view.png" alt="' . _AM_SYSTEM_BANNERS_VIEW . '" title="' . _AM_SYSTEM_BANNERS_VIEW . '" /><a href="admin.php?fct=banners&amp;op=banner_edit&amp;bid=' . $bid . '"><img src="./images/icons/edit.png" border="0" alt="' . _AM_SYSTEM_BANNERS_EDIT . '" title="' . _AM_SYSTEM_BANNERS_EDIT . '"></a><a href="admin.php?fct=banners&amp;op=banner_delete&amp;bid=' . $bid . '"><img src="./images/icons/delete.png" border="0" alt="' . _AM_SYSTEM_BANNERS_DELETE . '" title="' . _AM_SYSTEM_BANNERS_DELETE . '"></a>';
 
-                $xoopsTpl->append_by_ref('banner', $banner);
-                $xoopsTpl->append_by_ref('popup_banner', $banner);
+                $xoopsTpl->appendByRef('banner', $banner);
+                $xoopsTpl->appendByRef('popup_banner', $banner);
                 unset($banner);
             }
         }
@@ -376,7 +376,7 @@ switch ($op) {
                 $banner_finish['name']        = $name_client->getVar('name');
                 $banner_finish['edit_delete'] = '<img class="cursorpointer" onclick="display_dialog(' . $bid . '000, true, true, \'slide\', \'slide\', 200, 520);" src="images/icons/view.png" alt="' . _AM_SYSTEM_BANNERS_VIEW . '" title="' . _AM_SYSTEM_BANNERS_VIEW . '" /><a href="admin.php?fct=banners&amp;op=banner_finish_delete&amp;bid=' . $bid . '"><img src="./images/icons/delete.png" border="0" alt="' . _AM_SYSTEM_BANNERS_DELETE . '" title="' . _AM_SYSTEM_BANNERS_DELETE . '"></a>';
 
-                $xoopsTpl->append_by_ref('banner_finish', $banner_finish);
+                $xoopsTpl->appendByRef('banner_finish', $banner_finish);
                 unset($banner_finish);
             }
         }
@@ -411,7 +411,7 @@ switch ($op) {
                 $banner_client['email']         = $banner_client_arr[$i]->getVar('email');
                 $banner_client['edit_delete']   = '<a href="admin.php?fct=banners&amp;op=banner_client_edit&amp;cid=' . $cid . '"><img src="./images/icons/edit.png" border="0" alt="' . _AM_SYSTEM_BANNERS_EDIT . '" title="' . _AM_SYSTEM_BANNERS_EDIT . '"></a><a href="admin.php?fct=banners&amp;op=banner_client_delete&amp;cid=' . $cid . '"><img src="./images/icons/delete.png" border="0" alt="' . _AM_SYSTEM_BANNERS_DELETE . '" title="' . _AM_SYSTEM_BANNERS_DELETE . '"></a>';
 
-                $xoopsTpl->append_by_ref('banner_client', $banner_client);
+                $xoopsTpl->appendByRef('banner_client', $banner_client);
                 unset($banner_client);
             }
         }

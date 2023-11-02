@@ -5,7 +5,7 @@
     </ul>
 </div>
 
-<{if $error_message}>
+<{if !empty($error_message)}>
     <div class="errorMsg"><{$error_message}></div>
     <div class="clear"></div>
     <br>
@@ -16,9 +16,9 @@
     <table class="table table-hover">
     <thead>
     <tr>
-    <{foreach item=colHead from=$columnHeaders}>
+    <{foreach item=colHead from=$columnHeaders|default:null}>
         <th>
-            <{if $colHead.url}>
+            <{if !empty($colHead.url)}>
             <a href="<{$colHead.url}>" title="<{$colHead.title}>"><{$colHead.header}> <span class="fa fa-sort" aria-hidden="true"></span></a>
             <{else}>
             <{$colHead.header}>
@@ -28,7 +28,7 @@
     </tr>
     </thead>
     <tbody>
-    <{foreach item=row from=$columnRows}>
+    <{foreach item=row from=$columnRows|default:null}>
         <tr>
             <td><{$row.uid}></td>
             <td><{$row.start}></td>

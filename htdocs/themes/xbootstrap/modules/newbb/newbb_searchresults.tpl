@@ -1,6 +1,6 @@
 <div class="alert alert-success"> <{$search_info}> </div>
 <br>
-<{if $results}>
+<{if isset($results)}>
     <table class="table" border="0" cellpadding="0" cellspacing="0" align="center" width="95%">
         <thead>
         <tr class="head" align="center">
@@ -35,7 +35,7 @@
         <{/section}>
         <!-- end search results -->
 
-        <{if $search_next|default:'' or $search_prev|default:''}>
+        <{if !empty($search_next) || !empty($search_prev)}>
         <tr>
             <!-- irmtfan hardcode removed align="left" -->
             <td colspan="2" class="align_left"><{$search_prev|default:''}> </td>
@@ -45,7 +45,7 @@
         </tbody>
     </table>
     <br>
-<{elseif $lang_nomatch}>
+<{elseif !empty($lang_nomatch)}>
     <div class="resultMsg"> <{$lang_nomatch}> </div>
     <br>
 <{/if}>

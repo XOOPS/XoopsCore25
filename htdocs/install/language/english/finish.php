@@ -15,7 +15,7 @@ with <em>modules</em> as well as customizing the look of your XOOPS with <em>the
 ";
 
 $content .= "<h3>Security configuration</h3>
-<p>The installer will try to configure your site for security considerations. Please double check to make sure:
+<p>The installer will try to configure your site for security considerations. Please double-check to make sure:
 <div class='confirmMsg'>
 The <em>mainfile.php</em> is readonly.<br>
 Remove the folder <em>{$installer_modified}</em> (or <em>install</em> if it was not renamed automatically by the installer)  from your server.

@@ -41,6 +41,22 @@ class XoopsComments extends XoopsObject
      * @var \XoopsMySQLDatabase
      */
     public $db;
+    //PHP 8.2 Dynamic properties deprecated
+    public $comment_id;
+    public $item_id;
+    public $order;
+    public $mode;
+    public $subject;
+    public $comment;
+    public $ip;
+    public $pid;
+    public $date;
+    public $nohtml;
+    public $nosmiley;
+    public $noxcode;
+    public $user_id;
+    public $icon;
+    public $prefix;
 
     /**
      * @param      $ctable
@@ -84,7 +100,14 @@ class XoopsComments extends XoopsObject
     {
         $id  = (int)$id;
         $sql = 'SELECT * FROM ' . $this->ctable . ' WHERE comment_id=' . $id;
-        $arr = $this->db->fetchArray($this->db->query($sql));
+        $result = $this->db->query($sql);
+        if (!$this->db->isResultSet($result)) {
+            throw new \RuntimeException(
+                \sprintf(_DB_QUERY_ERROR, $sql) . $this->db->error(), E_USER_ERROR
+            );
+        }
+
+        $arr = $this->db->fetchArray($result);
         $this->assignVars($arr);
     }
 
@@ -191,7 +214,7 @@ class XoopsComments extends XoopsObject
     {
         $ret         = array();
         $where_query = '';
-        if (is_array($criteria) && count($criteria) > 0) {
+        if (!empty($criteria) && \is_array($criteria)) {
             $where_query = ' WHERE';
             foreach ($criteria as $c) {
                 $where_query .= " $c AND";
@@ -201,12 +224,24 @@ class XoopsComments extends XoopsObject
         if (!$asobject) {
             $sql    = 'SELECT comment_id FROM ' . $this->ctable . "$where_query ORDER BY $orderby";
             $result = $this->db->query($sql, $limit, $start);
+            if (!$this->db->isResultSet($result)) {
+                throw new \RuntimeException(
+                    \sprintf(_DB_QUERY_ERROR, $sql) . $this->db->error(), E_USER_ERROR
+                );
+            }
+            /** @var array $myrow */
             while (false !== ($myrow = $this->db->fetchArray($result))) {
                 $ret[] = $myrow['comment_id'];
             }
         } else {
             $sql    = 'SELECT * FROM ' . $this->ctable . '' . $where_query . " ORDER BY $orderby";
             $result = $this->db->query($sql, $limit, $start);
+            if (!$this->db->isResultSet($result)) {
+                throw new \RuntimeException(
+                    \sprintf(_DB_QUERY_ERROR, $sql) . $this->db->error(), E_USER_ERROR
+                );
+            }
+            /** @var array $myrow */
             while (false !== ($myrow = $this->db->fetchArray($result))) {
                 $ret[] = new XoopsComments($this->ctable, $myrow);
             }

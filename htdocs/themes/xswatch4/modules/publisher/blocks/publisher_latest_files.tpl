@@ -1,5 +1,5 @@
 <ul class="list-group">
-    <{foreach item=file from=$block.files}>
+    <{foreach item=file from=$block.files|default:null}>
         <li class="list-group-item">
             <{$file.link}>
             <span style="padding-left: 16px;">

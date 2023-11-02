@@ -23,11 +23,11 @@ $xoopsOption['pagetype'] = 'admin';
 include_once dirname(__DIR__) . '/mainfile.php';
 include_once $GLOBALS['xoops']->path('include/cp_functions.php');
 
-/* @var XoopsGroupPermHandler $moduleperm_handler */
+/** @var XoopsGroupPermHandler $moduleperm_handler */
 $moduleperm_handler = xoops_getHandler('groupperm');
 if ($xoopsUser) {
     $url_arr        = explode('/', strstr($_SERVER['REQUEST_URI'], '/modules/'));
-    /* @var XoopsModuleHandler $module_handler */
+    /** @var XoopsModuleHandler $module_handler */
     $module_handler = xoops_getHandler('module');
     $xoopsModule    = $module_handler->getByDirname($url_arr[2]);
     unset($url_arr);
@@ -40,7 +40,7 @@ if ($xoopsUser) {
 
 // set config values for this module
 if ($xoopsModule->getVar('hasconfig') == 1 || $xoopsModule->getVar('hascomments') == 1) {
-    /* @var XoopsConfigHandler $config_handler */
+    /** @var XoopsConfigHandler $config_handler */
     $config_handler    = xoops_getHandler('config');
     $xoopsModuleConfig = $config_handler->getConfigsByCat(0, $xoopsModule->getVar('mid'));
 }
@@ -51,6 +51,6 @@ if (file_exists($file = $GLOBALS['xoops']->path('modules/' . $xoopsModule->getVa
 } elseif (file_exists($file = $GLOBALS['xoops']->path('modules/' . $xoopsModule->getVar('dirname') . '/language/english/admin.php'))) {
     include_once $file;
 }
-// I will disable this because module developer should nod be forced to have a admin.php
+// I will disable this because module developer should not be forced to have an admin.php
 // xoops_loadLanguage('admin', $xoopsModule->getVar('dirname'));
 

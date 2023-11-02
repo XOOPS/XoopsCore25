@@ -1,5 +1,5 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="<{$xoops_langcode}>" lang="<{$xoops_langcode}>">
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "https://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="https://www.w3.org/1999/xhtml" xml:lang="<{$xoops_langcode}>" lang="<{$xoops_langcode}>">
 <head>
     <!-- Assign Theme name -->
     <{assign var=theme_name value=$xoTheme->folderName}>
@@ -7,7 +7,7 @@
     <!-- Title and meta -->
     <meta http-equiv="content-language" content="<{$xoops_langcode}>"/>
     <meta http-equiv="content-type" content="text/html; charset=<{$xoops_charset}>"/>
-    <title><{if $xoops_pagetitle !=''}><{$xoops_pagetitle}> - <{/if}><{$xoops_sitename}></title>
+    <title><{if !empty($xoops_pagetitle)}><{$xoops_pagetitle}> - <{/if}><{$xoops_sitename}></title>
     <meta name="robots" content="<{$xoops_meta_robots}>"/>
     <meta name="keywords" content="<{$xoops_meta_keywords}>"/>
     <meta name="description" content="<{$xoops_meta_description}>"/>
@@ -17,17 +17,17 @@
     <meta name="generator" content="XOOPS"/>
 
     <!-- Rss -->
-    <link rel="alternate" type="application/rss+xml" title="" href="<{xoAppUrl backend.php}>"/>
+    <link rel="alternate" type="application/rss+xml" title="" href="<{xoAppUrl 'backend.php'}>"/>
 
     <!-- Favicon -->
-    <link rel="shortcut icon" type="image/ico" href="<{xoImgUrl icons/favicon.ico}>"/>
-    <link rel="icon" type="image/png" href="<{xoImgUrl icons/favicon.png}>"/>
+    <link rel="shortcut icon" type="image/ico" href="<{xoImgUrl 'icons/favicon.ico'}>"/>
+    <link rel="icon" type="image/png" href="<{xoImgUrl 'icons/favicon.png'}>"/>
 
     <!-- Sheet Css -->
-    <link rel="stylesheet" type="text/css" media="all" title="Style sheet" href="<{xoAppUrl xoops.css}>"/>
-    <link rel="stylesheet" type="text/css" media="all" title="Style sheet" href="<{xoImgUrl style.css}>"/>
-    <!--[if lte IE 8]>
-    <link rel="stylesheet" href="<{xoImgUrl styleIE8.css}>" type="text/css"/>
+    <link rel="stylesheet" type="text/css" media="all" title="Style sheet" href="<{xoAppUrl 'xoops.css'}>"/>
+    <link rel="stylesheet" type="text/css" media="all" title="Style sheet" href="<{xoImgUrl 'style.css'}>"/>
+    <!--[if <= IE 8]>
+    <link rel="stylesheet" href="<{xoImgUrl 'styleIE8.css'}>" type="text/css"/>
     <![endif]-->
 
     <!-- customized header contents -->
@@ -38,7 +38,7 @@
 <!-- Start Header -->
 <table cellspacing="0">
     <tr id="header">
-        <td id="headerlogo"><a href="<{xoAppUrl /}>" title="<{$xoops_sitename}>"><img src="<{xoImgUrl xoops-logo.png}>"
+        <td id="headerlogo"><a href="<{xoAppUrl '/'}>" title="<{$xoops_sitename}>"><img src="<{xoImgUrl 'xoops-logo.png'}>"
                                                                                       alt="<{$xoops_sitename}>"/></a></td>
         <td id="headerbanner"><{$xoops_banner}></td>
     </tr>
@@ -51,9 +51,9 @@
 <table cellspacing="0">
     <tr>
         <!-- Start left blocks loop -->
-        <{if $xoops_showlblock}>
+        <{if isset($xoops_showlblock)}>
         <td id="leftcolumn">
-            <{foreach item=block from=$xoBlocks.canvas_left}>
+            <{foreach item=block from=$xoBlocks.canvas_left|default:null}>
             <{include file="$theme_name/theme_blockleft.tpl"}>
             <{/foreach}>
         </td>
@@ -62,12 +62,12 @@
 
         <td id="centercolumn">
             <!-- Display center blocks if any -->
-            <{if $xoBlocks.page_topleft or $xoBlocks.page_topcenter or $xoBlocks.page_topright}>
+            <{if $xoBlocks.page_topleft || $xoBlocks.page_topcenter || $xoBlocks.page_topright}>
             <table cellspacing="0">
                 <tr>
                     <td id="centerCcolumn" colspan="2">
                         <!-- Start center-center blocks loop -->
-                        <{foreach item=block from=$xoBlocks.page_topcenter}>
+                        <{foreach item=block from=$xoBlocks.page_topcenter|default:null}>
                         <{include file="$theme_name/theme_blockcenter_c.tpl"}>
                         <{/foreach}>
                         <!-- End center-center blocks loop -->
@@ -76,14 +76,14 @@
                 <tr>
                     <td id="centerLcolumn">
                         <!-- Start center-left blocks loop -->
-                        <{foreach item=block from=$xoBlocks.page_topleft}>
+                        <{foreach item=block from=$xoBlocks.page_topleft|default:null}>
                         <{include file="$theme_name/theme_blockcenter_l.tpl"}>
                         <{/foreach}>
                         <!-- End center-left blocks loop -->
                     </td>
                     <td id="centerRcolumn">
                         <!-- Start center-right blocks loop -->
-                        <{foreach item=block from=$xoBlocks.page_topright}>
+                        <{foreach item=block from=$xoBlocks.page_topright|default:null}>
                         <{include file="$theme_name/theme_blockcenter_r.tpl"}>
                         <{/foreach}>
                         <!-- End center-right blocks loop -->
@@ -105,7 +105,7 @@
                 <{if $xoBlocks.page_bottomcenter}>
                 <tr>
                     <td id="bottomCcolumn" colspan="2">
-                        <{foreach from=$xoBlocks.page_bottomcenter item=block}>
+                        <{foreach item=block from=$xoBlocks.page_bottomcenter|default:null}>
                         <{include file="$theme_name/theme_blockcenter_c.tpl"}>
                         <{/foreach}>
                     </td>
@@ -115,13 +115,13 @@
                 <{if $xoBlocks.page_bottomleft or $xoBlocks.page_bottomright}>
                 <tr>
                     <td id="bottomLcolumn">
-                        <{foreach from=$xoBlocks.page_bottomleft item=block}>
+                        <{foreach item=block from=$xoBlocks.page_bottomleft|default:null}>
                         <{include file="$theme_name/theme_blockcenter_l.tpl"}>
                         <{/foreach}>
                     </td>
 
                     <td id="bottomRcolumn">
-                        <{foreach from=$xoBlocks.page_bottomright item=block}>
+                        <{foreach item=block from=$xoBlocks.page_bottomright|default:null}>
                         <{include file="$theme_name/theme_blockcenter_r.tpl"}>
                         <{/foreach}>
                     </td>
@@ -133,9 +133,9 @@
         </td>
 
         <!-- Start right blocks loop -->
-        <{if $xoops_showrblock}>
+        <{if isset($xoops_showrblock)}>
         <td id="rightcolumn">
-            <{foreach item=block from=$xoBlocks.canvas_right}>
+            <{foreach item=block from=$xoBlocks.canvas_right|default:null}>
             <{include file="$theme_name/theme_blockright.tpl"}>
             <{/foreach}>
         </td>
@@ -150,7 +150,7 @@
             <tr>
                 <{if $xoBlocks.footer_left}>
                 <td id="footerLeft">
-                    <{foreach from=$xoBlocks.footer_left item=block}>
+                    <{foreach item=block from=$xoBlocks.footer_left|default:null}>
                     <{include file="$theme_name/theme_blockfooter_l.tpl"}>
                     <{/foreach}>
                 </td>
@@ -159,7 +159,7 @@
 
                 <{if $xoBlocks.footer_center}>
                 <td id="footerCenter">
-                    <{foreach from=$xoBlocks.footer_center item=block}>
+                    <{foreach item=block from=$xoBlocks.footer_center|default:null}>
                     <{include file="$theme_name/theme_blockfooter_c.tpl"}>
                     <{/foreach}>
                 </td>
@@ -167,7 +167,7 @@
 
                 <{if $xoBlocks.footer_right}>
                 <td id="footerRight">
-                    <{foreach from=$xoBlocks.footer_right item=block}>
+                    <{foreach item=block from=$xoBlocks.footer_right|default:null}>
                     <{include file="$theme_name/theme_blockfooter_r.tpl"}>
                     <{/foreach}>
                 </td>

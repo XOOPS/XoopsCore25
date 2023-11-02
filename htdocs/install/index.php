@@ -15,7 +15,7 @@
  * If you did not receive this file, get it at https://www.gnu.org/licenses/gpl-2.0.html
  *
  * @copyright    (c) 2000-2016 XOOPS Project (www.xoops.org)
- * @license          GNU GPL 2 or later (https://www.gnu.org/licenses/gpl-2.0.html)
+ * @license          GNU GPL 2.0 or later (https://www.gnu.org/licenses/gpl-2.0.html)
  * @package          installer
  * @since            2.3.0
  * @author           Haruki Setoyama  <haruki@planewave.org>
@@ -26,5 +26,5 @@
  * @author           DuGris (aka L. JEN) <dugris@frxoops.org>
  **/
 
-require_once 'page_langselect.php';
+require_once __DIR__ . '/page_langselect.php';
 exit();

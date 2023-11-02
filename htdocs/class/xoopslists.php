@@ -258,7 +258,7 @@ if (!defined('XOOPS_LISTS_INCLUDED')) {
             $dirlist = XoopsLists::getDirListAsArray(XOOPS_ROOT_PATH . '/images/avatar/');
             if (count($dirlist) > 0) {
                 foreach ($dirlist as $dir) {
-                    $avatars[$dir] = &XoopsLists::getImgListAsArray(XOOPS_ROOT_PATH . '/images/avatar/' . $dir . '/', $dir . '/');
+                    $avatars[$dir] = XoopsLists::getImgListAsArray(XOOPS_ROOT_PATH . '/images/avatar/' . $dir . '/', $dir . '/');
                 }
             } else {
                 return false;
@@ -648,10 +648,15 @@ if (!defined('XOOPS_LISTS_INCLUDED')) {
         {
             /** @var \XoopsMySQLDatabase $db */
             $db     = XoopsDatabaseFactory::getDatabaseConnection();
-            $myts   = MyTextSanitizer::getInstance();
+            $myts   = \MyTextSanitizer::getInstance();
             $sql    = sprintf('SELECT rank_id, rank_title FROM ' . $db->prefix('ranks') . ' WHERE rank_special = %u', 1);
             $ret    = array();
             $result = $db->query($sql);
+            if (!$db->isResultSet($result)) {
+                throw new \RuntimeException(
+                    \sprintf(_DB_QUERY_ERROR, $sql) . $db->error(), E_USER_ERROR
+                );
+            }
             while (false !== ($myrow = $db->fetchArray($result))) {
                 $ret[$myrow['rank_id']] = $myts->htmlSpecialChars($myrow['rank_title']);
             }

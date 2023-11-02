@@ -21,16 +21,16 @@
     <{$requestform.javascript}>
     <h3><{$requestform.title}></h3>
     <form id="sub-lex" name="<{$requestform.name}>" action="<{$requestform.action}>" method="<{$requestform.method}>" <{$requestform.extra}>>
-      <{foreach item=element from=$requestform.elements}>
-        <{if $element.hidden|default:false  != true}>
-        <div class="form-group">
-          <label><{$element.caption|default:''}></label>
-          <{$element.body}>
-        </div>
-        <{else}>
-          <{$element.body}>
-        <{/if}>
-      <{/foreach}>
+        <{foreach item=element from=$requestform.elements|default:null}>
+            <{if isset($element.hidden) ? $element.hidden!= true : true}>
+                <div class="form-group">
+                    <label><{$element.caption|default:''}></label>
+                    <{$element.body}>
+                </div>
+            <{else}>
+                <{$element.body}>
+            <{/if}>
+        <{/foreach}>
 
 
     </form>

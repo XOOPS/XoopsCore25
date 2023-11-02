@@ -1,4 +1,4 @@
-<{if $block.category && $block.category.image_path|default:'' != ''}>
+<{if !empty($block.category) &&  !empty($block.category.image_path)}>
     <div align="center">
         <a href="<{$block.category.categoryurl}>" title="<{$block.category.name}>">
             <img src="<{$block.category.image_path}>" width="185" height="80" alt="<{$block.category.name}>">
@@ -7,14 +7,14 @@
 <{/if}>
 
 
-<{if $block.display_type=='block'}>
-    <{foreach item=item from=$block.items}>
+<{if isset($block.display_type) && $block.display_type=='block'}>
+    <{foreach item=item from=$block.items|default:null}>
         <{include file="db:publisher_singleitem_block.tpl" item=$item}>
     <{/foreach}>
 
 <{else}>
-    <{foreach item=item from=$block.items name=spotlight}>
-        <{if $item.summary != ''}>
+    <{foreach item=item from=$block.items|default:null name=spotlight}>
+        <{if !empty($item.summary)}>
             <div class="spot_publisher_items_list">
                 <div class="article_wf_title">
                     <h3><{$item.titlelink}></h3>
@@ -31,7 +31,7 @@
                         <span class="glyphicon glyphicon-comment"></span>&nbsp;<{$item.comments}>
                     </span>
                 </div>
-                <{if $item.image_path|default:''}>
+                <{if !empty($item.image_path)}>
                     <div class="spot_article_wf_img">
                         <img src="<{$item.image_path}>" alt="<{$item.title}>">
                     </div>
@@ -40,7 +40,7 @@
                     <{$item.summary}>
                 </div>
 
-                <{if $block.truncate}>
+                <{if !empty($block.truncate)}>
                     <div class="pull-right" style="margin-top: 15px;">
                         <a href="<{$item.itemurl}>" class="btn btn-primary btn-xs">
                             <{$block.lang_readmore}>

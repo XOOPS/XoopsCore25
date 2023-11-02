@@ -48,12 +48,20 @@ class xos_kernel_Xoops2
      */
     public function path($url, $virtual = false)
     {
-        // removed , $error_type = E_USER_WARNING
         $path = '';
-        @list($root, $path) = explode('/', $url, 2);
+        $parts = explode('/', $url, 2);
+
+        if (count($parts) < 2) {
+            $root = 'www'; // Default root
+            $path = $url;  // Entire URL is treated as the path
+        } else {
+            list($root, $path) = $parts;
+        }
+
         if (!isset($this->paths[$root])) {
             list($root, $path) = array('www', $url);
         }
+
         if (!$virtual) { // Returns a physical path
             $path = $this->paths[$root][0] . '/' . $path;
             $path = str_replace('/', DS, $path);
@@ -65,7 +73,7 @@ class xos_kernel_Xoops2
     }
 
     /**
-     * Convert a XOOPS path to an URL
+     * Convert a XOOPS path to a URL
      * @param $url
      * @return mixed|string
      */
@@ -75,7 +83,7 @@ class xos_kernel_Xoops2
     }
 
     /**
-     * Build an URL with the specified request params
+     * Build a URL with the specified request params
      * @param         $url
      * @param  array  $params
      * @return string
@@ -93,7 +101,7 @@ class xos_kernel_Xoops2
         }
         if (!empty($params)) {
             foreach ($params as $k => $v) {
-                $params[$k] = $k . '=' . rawurlencode($v);
+                $params[$k] = $k . '=' . rawurlencode((string)$v);
             }
             $url .= '?' . implode('&', $params);
         }
@@ -128,7 +136,7 @@ class xos_kernel_Xoops2
     public function gzipCompression()
     {
         /**
-         * Disable gzip compression if PHP is run under CLI mode and needs refactored to work correctly
+         * Disable gzip compression if PHP is run under CLI mode and needs to be refactored to work correctly
          */
         if (empty($_SERVER['SERVER_NAME']) || substr(PHP_SAPI, 0, 3) === 'cli') {
             xoops_setConfigOption('gzip_compression', 0);
@@ -163,9 +171,10 @@ class xos_kernel_Xoops2
          */
         if (empty($_SERVER['REQUEST_URI'])) { // Not defined by IIS
             // Under some configs, IIS makes SCRIPT_NAME point to php.exe :-(
-            if (!($_SERVER['REQUEST_URI'] = @$_SERVER['PHP_SELF'])) {
+            if (!(isset($_SERVER['PHP_SELF']) && ($_SERVER['REQUEST_URI'] = $_SERVER['PHP_SELF']))) {
                 $_SERVER['REQUEST_URI'] = $_SERVER['SCRIPT_NAME'];
             }
+
             if (isset($_SERVER['QUERY_STRING'])) {
                 $_SERVER['REQUEST_URI'] .= '?' . $_SERVER['QUERY_STRING'];
             }

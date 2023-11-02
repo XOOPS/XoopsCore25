@@ -49,16 +49,16 @@ class SystemBlock extends XoopsBlock
             $op = 'save';
         } else {
             // Search modules
-            /* @var  SystemBlockLinkModuleHandler $blocklinkmodule_handler */
+            /** @var  SystemBlockLinkModuleHandler $blocklinkmodule_handler */
             $blocklinkmodule_handler = xoops_getModuleHandler('blocklinkmodule');
             $criteria                = new CriteriaCompo(new Criteria('block_id', $this->getVar('bid')));
             $blocklinkmodule         = $blocklinkmodule_handler->getObjects($criteria);
             foreach ($blocklinkmodule as $link) {
-                /* @var  SystemBlockLinkModule $link */
+                /** @var  SystemBlockLinkModule $link */
                 $modules[] = $link->getVar('module_id');
             }
             // Search perms
-            /* @var XoopsGroupPermHandler $groupperm_handler */
+            /** @var XoopsGroupPermHandler $groupperm_handler */
             $groupperm_handler = xoops_getHandler('groupperm');
             $groups            = $groupperm_handler->getGroupIds('block_read', $this->getVar('bid'));
             switch ($mode) {
@@ -103,7 +103,7 @@ class SystemBlock extends XoopsBlock
         $form->addElement(new XoopsFormRadioYN(_AM_SYSTEM_BLOCKS_VISIBLE, 'visible', $this->getVar('visible')));
         // Visible In
         $mod_select     = new XoopsFormSelect(_AM_SYSTEM_BLOCKS_VISIBLEIN, 'modules', $modules, 5, true);
-        /* @var XoopsModuleHandler $module_handler */
+        /** @var XoopsModuleHandler $module_handler */
         $module_handler = xoops_getHandler('module');
         $criteria       = new CriteriaCompo(new Criteria('hasmain', 1));
         $criteria->add(new Criteria('isactive', 1));
@@ -269,12 +269,12 @@ class SystemBlock extends XoopsBlock
 
                     return str_replace('{X_SITEURL}', XOOPS_URL . '/', $content);
                 } elseif ($c_type === 'S') {
-                    $myts    = MyTextSanitizer::getInstance();
+                    $myts    = \MyTextSanitizer::getInstance();
                     $content = str_replace('{X_SITEURL}', XOOPS_URL . '/', $this->getVar('content', 'n'));
 
                     return $myts->displayTarea($content, 1, 1);
                 } else {
-                    $myts    = MyTextSanitizer::getInstance();
+                    $myts    = \MyTextSanitizer::getInstance();
                     $content = str_replace('{X_SITEURL}', XOOPS_URL . '/', $this->getVar('content', 'n'));
 
                     return $myts->displayTarea($content, 1, 0);
@@ -339,17 +339,18 @@ class SystemBlockHandler extends XoopsPersistableObjectHandler
         $ret   = array();
         $limit = $start = 0;
         $sql   = 'SELECT DISTINCT(b.bid), b.* FROM ' . $this->db->prefix('newblocks') . ' b LEFT JOIN ' . $this->db->prefix('block_module_link') . ' l ON b.bid=l.block_id';
-        if (isset($criteria) && is_subclass_of($criteria, 'CriteriaElement')) {
+        if (isset($criteria) && \method_exists($criteria, 'renderWhere')) {
             $sql .= ' ' . $criteria->renderWhere();
             $limit = $criteria->getLimit();
             $start = $criteria->getStart();
         }
         $result = $this->db->query($sql, $limit, $start);
-        if (!$result) {
+        if (!$this->db->isResultSet($result)) {
             return $ret;
         }
 
         if ($as_object) {
+            /** @var array $myrow */
             while (false !== ($myrow = $this->db->fetchArray($result))) {
                 $object = $this->create(false);
                 $object->assignVars($myrow);
@@ -362,6 +363,7 @@ class SystemBlockHandler extends XoopsPersistableObjectHandler
             }
         } else {
             $object = $this->create(false);
+            /** @var array $myrow */
             while (false !== ($myrow = $this->db->fetchArray($result))) {
                 $object->assignVars($myrow);
                 if ($id_as_key) {
@@ -397,7 +399,7 @@ class SystemBlockHandler extends XoopsPersistableObjectHandler
      */
     public function getAllBlocksByGroup($groupid, $asobject = true, $side = null, $visible = null, $orderby = 'b.weight,b.bid', $isactive = 1)
     {
-        /* @var XoopsMySQLDatabase $db */
+        /** @var XoopsMySQLDatabase $db */
         $db  = XoopsDatabaseFactory::getDatabaseConnection();
         $ret = array();
         $sql = 'SELECT b.* ';
@@ -436,6 +438,11 @@ class SystemBlockHandler extends XoopsPersistableObjectHandler
         }
         $sql .= " ORDER BY $orderby";
         $result = $db->query($sql);
+        if (!$db->isResultSet($result)) {
+            throw new \RuntimeException(
+                \sprintf(_DB_QUERY_ERROR, $sql) . $db->error(), E_USER_ERROR
+            );
+        }
         $added  = array();
         while (false !== ($myrow = $db->fetchArray($result))) {
             if (!in_array($myrow['bid'], $added)) {
@@ -467,8 +474,14 @@ class SystemBlockHandler extends XoopsPersistableObjectHandler
                     $sql .= ' AND gperm_groupid=' . (int)$groupid;
                 }
             }
-            $result   = $this->db->query($sql);
+            $result = $this->db->query($sql);
+            if (!$this->db->isResultSet($result)) {
+                throw new \RuntimeException(
+                    \sprintf(_DB_QUERY_ERROR, $sql) . $this->db->error(), E_USER_ERROR
+                );
+            }
             $blockids = array();
+            /** @var array $myrow */
             while (false !== ($myrow = $this->db->fetchArray($result))) {
                 $blockids[] = $myrow['gperm_itemid'];
             }
@@ -506,7 +519,12 @@ class SystemBlockHandler extends XoopsPersistableObjectHandler
                     $sql .= ' AND gperm_groupid=' . (int)$groupid;
                 }
             }
-            $result   = $db->query($sql);
+            $result = $db->query($sql);
+            if (!$db->isResultSet($result)) {
+                throw new \RuntimeException(
+                    \sprintf(_DB_QUERY_ERROR, $sql) . $db->error(), E_USER_ERROR
+                );
+            }
             $blockids = array();
             while (false !== ($myrow = $db->fetchArray($result))) {
                 $blockids[] = $myrow['gperm_itemid'];
@@ -539,6 +557,11 @@ class SystemBlockHandler extends XoopsPersistableObjectHandler
         }
         $sql .= ' ORDER BY ' . $orderby;
         $result = $db->query($sql);
+        if (!$db->isResultSet($result)) {
+            throw new \RuntimeException(
+                \sprintf(_DB_QUERY_ERROR, $sql) . $db->error(), E_USER_ERROR
+            );
+        }
         while (false !== ($myrow = $db->fetchArray($result))) {
             $block              = new XoopsBlock($myrow);
             $ret[$myrow['bid']] =& $block;
@@ -563,18 +586,22 @@ class SystemBlockHandler extends XoopsPersistableObjectHandler
         $ret  = array();
         $bids = array();
         $sql  = 'SELECT DISTINCT(bid) from ' . $db->prefix('newblocks');
-        if ($result = $db->query($sql)) {
+        $result = $db->query($sql);
+        if ($db->isResultSet($result)) {
             while (false !== ($myrow = $db->fetchArray($result))) {
                 $bids[] = $myrow['bid'];
             }
         }
+
         $sql     = 'SELECT DISTINCT(p.gperm_itemid) from ' . $db->prefix('group_permission') . ' p, ' . $db->prefix('groups') . " g WHERE g.groupid=p.gperm_groupid AND p.gperm_name='block_read'";
         $grouped = array();
-        if ($result = $db->query($sql)) {
+        $result = $db->query($sql);
+        if ($db->isResultSet($result)) {
             while (false !== ($myrow = $db->fetchArray($result))) {
                 $grouped[] = $myrow['gperm_itemid'];
             }
         }
+
         $non_grouped = array_diff($bids, $grouped);
         if (!empty($non_grouped)) {
             $sql = 'SELECT b.* FROM ' . $db->prefix('newblocks') . ' b, ' . $db->prefix('block_module_link') . ' m WHERE m.block_id=b.bid';
@@ -599,6 +626,11 @@ class SystemBlockHandler extends XoopsPersistableObjectHandler
             $sql .= ' AND b.bid IN (' . implode(',', $non_grouped) . ')';
             $sql .= ' ORDER BY ' . $orderby;
             $result = $db->query($sql);
+            if (!$db->isResultSet($result)) {
+                throw new \RuntimeException(
+                    \sprintf(_DB_QUERY_ERROR, $sql) . $db->error(), E_USER_ERROR
+                );
+            }
             while (false !== ($myrow = $db->fetchArray($result))) {
                 $block              = new XoopsBlock($myrow);
                 $ret[$myrow['bid']] =& $block;
@@ -625,7 +657,7 @@ class SystemBlockHandler extends XoopsPersistableObjectHandler
             // invalid query
             return 0;
         }
-        /* @var XoopsMySQLDatabase $db */
+        /** @var XoopsMySQLDatabase $db */
         $db = XoopsDatabaseFactory::getDatabaseConnection();
         if (isset($showFunc)) {
             // showFunc is set for more strict comparison
@@ -633,11 +665,15 @@ class SystemBlockHandler extends XoopsPersistableObjectHandler
         } else {
             $sql = sprintf('SELECT COUNT(*) FROM %s WHERE mid = %d AND func_num = %d', $db->prefix('newblocks'), $moduleId, $funcNum);
         }
-        if (!$result = $db->query($sql)) {
+        $result = $db->query($sql);
+        if (!$db->isResultSet($result)) {
+            // throw new \RuntimeException(
+            //       \sprintf(_DB_QUERY_ERROR, $sql) . $db->error(), E_USER_ERROR
+            // );
             return 0;
         }
         list($count) = $db->fetchRow($result);
 
-        return $count;
+        return (int)$count;
     }
 }

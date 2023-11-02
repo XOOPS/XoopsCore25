@@ -29,9 +29,9 @@ if ($uname == '' || $pass == '') {
     redirect_header(XOOPS_URL . '/user.php', 1, _US_INCORRECTLOGIN);
 }
 
-/* @var XoopsMemberHandler $member_handler */
+/** @var XoopsMemberHandler $member_handler */
 $member_handler = xoops_getHandler('member');
-$myts           = MyTextSanitizer::getInstance();
+$myts           = \MyTextSanitizer::getInstance();
 
 include_once $GLOBALS['xoops']->path('class/auth/authfactory.php');
 
@@ -104,7 +104,7 @@ if (false !== $user) {
         } else {
             $url .= $_SERVER['HTTP_HOST'];
         }
-        if (@$parsed['path']) {
+        if (isset($parsed['path']) && $parsed['path']) {
             if (strncmp($parsed['path'], $xoops_redirect, strlen($parsed['path']))) {
                 $url .= $parsed['path'];
             }

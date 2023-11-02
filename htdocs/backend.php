@@ -26,7 +26,7 @@ include_once $GLOBALS['xoops']->path('class/template.php');
 $tpl                 = new XoopsTpl();
 $tpl->caching        = 2;
 $tpl->cache_lifetime = 3600;
-if (!$tpl->is_cached('db:system_rss.tpl')) {
+if (!$tpl->isCached('db:system_rss.tpl')) {
     xoops_load('XoopsLocal');
     $tpl->assign('channel_title', XoopsLocal::convert_encoding(htmlspecialchars($xoopsConfig['sitename'], ENT_QUOTES)));
     $tpl->assign('channel_link', XOOPS_URL . '/');
@@ -55,7 +55,7 @@ if (!$tpl->is_cached('db:system_rss.tpl')) {
         include $fileinc;
         $sarray = NewsStory::getAllPublished(10, 0, true);
     }
-    if (!empty($sarray) && is_array($sarray)) {
+    if (!empty($sarray) && \is_array($sarray)) {
         foreach ($sarray as $story) {
             $tpl->append('items', array(
                 'title'       => XoopsLocal::convert_encoding(htmlspecialchars($story->title(), ENT_QUOTES)),

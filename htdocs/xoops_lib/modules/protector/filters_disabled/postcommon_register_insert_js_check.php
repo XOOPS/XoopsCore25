@@ -61,6 +61,12 @@ class Protector_postcommon_register_insert_js_check extends ProtectorFilterAbstr
             $as_md5shuffle[] = array('key' => $key, 'val' => $val);
         }
         shuffle($as_md5shuffle);
+        
+//TODO in PHP 7.2+ change the above to:
+//        $seed = random_bytes(64);
+//        mt_srand($seed);
+//        shuffle($as_md5shuffle);
+
         $js_in_validate_function = "antispam_md5s=new Array(32);\n";
         foreach ($as_md5shuffle as $item) {
             $key = $item['key'];
@@ -85,7 +91,7 @@ class Protector_postcommon_register_insert_js_check extends ProtectorFilterAbstr
      */
     public function checkValidate()
     {
-        $user_md5 = trim(@$_POST['antispam_md5']);
+        $user_md5 = isset($_POST['antispam_md5']) ? trim($_POST['antispam_md5']) : '';
 
         // 2-3 hour margin
         if ($user_md5 != $this->getMd5() && $user_md5 != $this->getMd5(time() - 3600) && $user_md5 != $this->getMd5(time() - 7200)) {

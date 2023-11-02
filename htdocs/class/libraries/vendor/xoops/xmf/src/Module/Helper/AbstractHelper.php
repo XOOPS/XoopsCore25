@@ -20,7 +20,7 @@ namespace Xmf\Module\Helper;
  * @author    trabis <lusopoemas@gmail.com>
  * @author    Richard Griffith <richard@geekwright.com>
  * @copyright 2016-2018 XOOPS Project (https://xoops.org)
- * @license   GNU GPL 2 or later (http://www.gnu.org/licenses/gpl-2.0.html)
+ * @license   GNU GPL 2.0 or later (https://www.gnu.org/licenses/gpl-2.0.html)
  * @link      https://xoops.org
  */
 abstract class AbstractHelper
@@ -67,7 +67,7 @@ abstract class AbstractHelper
             if (isset($xoops)) {
                 $moduleHandler = $xoops->getHandlerModule();
             } else {
-                /* @var \XoopsModuleHandler $moduleHandler */
+                /** @var \XoopsModuleHandler $moduleHandler */
                 $moduleHandler = xoops_getHandler('module');
             }
             $this->module = $moduleHandler->getByDirname($dirname);

@@ -27,18 +27,18 @@
 class MyTextSanitizerExtension
 {
     public $instance;
-    public $ts;
+    public $myts;
     public $config;
     public $image_path;
 
     /**
      * Constructor
      *
-     * @param MyTextSanitizer $ts
+     * @param MyTextSanitizer $myts
      */
-    public function __construct(MyTextSanitizer $ts)
+    public function __construct(MyTextSanitizer $myts)
     {
-        $this->ts         = $ts;
+        $this->myts         = $myts;
         $this->image_path = XOOPS_URL . '/images/form';
     }
 
@@ -50,10 +50,10 @@ class MyTextSanitizerExtension
      */
     public static function loadConfig($path = null)
     {
-        $ts   = MyTextSanitizer::getInstance();
+        $myts   = \MyTextSanitizer::getInstance();
         $extensionName = (null === $path) ? '' : basename($path);
-        $pathDist = $ts->path_basic;
-        $pathConfig = $ts->path_config;
+        $pathDist = $myts->path_basic;
+        $pathConfig = $myts->path_config;
 
         if ('' !== $extensionName) {
             $configFileName = $pathConfig . '/config.' . $extensionName . '.php';
@@ -103,7 +103,7 @@ class MyTextSanitizerExtension
      */
     public function encode($textarea_id)
     {
-        return array();
+        return array(array(), array());
     }
 
     /**
@@ -152,11 +152,8 @@ class MyTextSanitizer
     public $text         = '';
     public $patterns     = array();
     public $replacements = array();
-
-    //mb------------------------------
     public $callbackPatterns = array();
     public $callbacks        = array();
-    //mb------------------------------
 
     public $path_basic;
     public $path_config;
@@ -218,7 +215,7 @@ class MyTextSanitizer
     {
         if (is_array($config_custom)) {
             foreach ($config_custom as $key => $val) {
-                if (isset($config_default[$key]) && is_array($config_default[$key])) {
+                if (isset($config_default[$key]) && \is_array($config_default[$key])) {
                     $config_default[$key] = $this->mergeConfig($config_default[$key], $config_custom[$key]);
                 } else {
                     $config_default[$key] = $val;
@@ -254,10 +251,12 @@ class MyTextSanitizer
     public function getSmileys($isAll = true)
     {
         if (count($this->smileys) == 0) {
-            /* @var XoopsMySQLDatabase $xoopsDB */
+            /** @var XoopsMySQLDatabase $xoopsDB */
             $xoopsDB = XoopsDatabaseFactory::getDatabaseConnection();
-            if ($getsmiles = $xoopsDB->query('SELECT * FROM ' . $xoopsDB->prefix('smiles'))) {
-                while (false !== ($smiles = $xoopsDB->fetchArray($getsmiles))) {
+            $sql     = 'SELECT * FROM ' . $xoopsDB->prefix('smiles');
+            $result  = $xoopsDB->query($sql);
+            if ($xoopsDB->isResultSet($result)) {
+                while (false !== ($smiles = $xoopsDB->fetchArray($result))) {
                     $this->smileys[] = $smiles;
                 }
             }
@@ -287,7 +286,7 @@ class MyTextSanitizer
     {
         $smileys = $this->getSmileys();
         foreach ($smileys as $smile) {
-            $message = str_replace($smile['code'], '<img class="imgsmile" src="' . XOOPS_UPLOAD_URL . '/' . htmlspecialchars($smile['smile_url']) . '" alt="" />', $message);
+            $message = str_replace($smile['code'], '<img class="imgsmile" src="' . XOOPS_UPLOAD_URL . '/' . htmlspecialchars($smile['smile_url'], ENT_QUOTES) . '" alt="" />', $message);
         }
 
         return $message;
@@ -317,12 +316,15 @@ class MyTextSanitizer
     {
         $pattern = "/(^|[^]_a-z0-9-=\"'\/:\.])([-_a-z0-9\'+*$^&%=~!?{}]++(?:\.[-_a-z0-9\'+*$^&%=~!?{}]+)*+)@((?:(?![-.])[-a-z0-9.]+(?<![-.])\.[a-z]{2,6}|\d{1,3}(?:\.\d{1,3}){3})(?::\d++)?)/i";
         $text = preg_replace_callback($pattern, 'self::makeClickableCallbackEmailAddress', $text);
+        //TODO after moving to PHP 7+ as minimum version, let's convert it to this
+//        $text = preg_replace_callback($pattern, self::class . '::makeClickableCallbackEmailAddress', $text);
 
-        $pattern = "%(https?://)([-A-Z0-9./_*?&:;=#\[\]\%@]+)%i";
+
+        $pattern = "/(?:\s+|^)(https?:\/\/)([-A-Z0-9.\_*?&:;=#\/\[\]\%@]+)/i";
         $replacement = '<a href="$1$2" target="_blank" rel="external noopener nofollow">$1$2</a>';
         $text = preg_replace($pattern, $replacement, $text);
 
-        $pattern = "%(s?ftp://)([-A-Z0-9./_*?&:;=#\[\]\%@]+)%i";
+        $pattern = "%(?:\s+|^)(s?ftp://)([-A-Z0-9./_*?&:;=#\[\]\%@]+)%i";
         $replacement = '<a href="$1$2" target="_blank" rel="external">$1$2</a>';
         $text = preg_replace($pattern, $replacement, $text);
 
@@ -337,7 +339,7 @@ class MyTextSanitizer
      */
     public function truncate($text)
     {
-        $instance = MyTextSanitizer::getInstance();
+        $instance = \MyTextSanitizer::getInstance();
         if (empty($text) || empty($instance->config['truncate_length']) || strlen($text) < $instance->config['truncate_length']) {
             return $text;
         }
@@ -352,7 +354,7 @@ class MyTextSanitizer
      *
      * @param  string   $text
      * @param  bool|int $allowimage Allow images in the text?
-     *                              On FALSE, uses links to images.
+     *                              On FALSE, uses links to the images.
      * @return string
      */
     public function &xoopsCodeDecode(&$text, $allowimage = 1)
@@ -367,9 +369,9 @@ class MyTextSanitizer
         $replacements[] = '<a href="\\2" rel="external" title="">\\3</a>';
         $patterns[]     = "/\[url=(['\"]?)([^'\"<>]*)\\1](.*)\[\/url\]/sU";
         $replacements[] = '<a href="http://\\2" rel="noopener external" title="">\\3</a>';
-        $patterns[]     = "/\[color=(['\"]?)([a-zA-Z0-9]*)\\1](.*)\[\/color\]/sU";
-        $replacements[] = '<span style="color: #\\2;">\\3</span>';
-        $patterns[]     = "/\[size=(['\"]?)([a-z0-9-]*)\\1](.*)\[\/size\]/sU";
+        $patterns[]     = "/\[color=(['\"]?)([a-zA-Z0-9#]*)\\1](.*)\[\/color\]/sU";
+        $replacements[] = '<span style="color: \\2;">\\3</span>';
+        $patterns[]     = "/\[size=(['\"]?)([a-zA-Z0-9.#]*)\\1](.*)\[\/size\]/sU";
         $replacements[] = '<span style="font-size: \\2;">\\3</span>';
         $patterns[]     = "/\[font=(['\"]?)([^;<>\*\(\)\"']*)\\1](.*)\[\/font\]/sU";
         $replacements[] = '<span style="font-family: \\2;">\\3</span>';
@@ -598,7 +600,6 @@ class MyTextSanitizer
      *
      * @param  string $text
      * @return string
-     * @deprecated
      */
     public function &censorString(&$text)
     {
@@ -768,7 +769,7 @@ class MyTextSanitizer
      */
     public function codeSanitizer($str, $image = 1)
     {
-        $GLOBALS['xoopsLogger']->addDeprecated(__CLASS__ . '::' . __FUNCTION__ . ' is deprecated');
+        $GLOBALS['xoopsLogger']->addDeprecated(__METHOD__ . ' is deprecated');
         $str = $this->htmlSpecialChars(str_replace('\"', '"', base64_decode($str)));
         $str =& $this->xoopsCodeDecode($str, $image);
 
@@ -787,7 +788,7 @@ class MyTextSanitizer
      */
     public function sanitizeForDisplay($text, $allowhtml = 0, $smiley = 1, $bbcode = 1)
     {
-        $GLOBALS['xoopsLogger']->addDeprecated(__CLASS__ . '::' . __FUNCTION__ . ' is deprecated');
+        $GLOBALS['xoopsLogger']->addDeprecated(__METHOD__ . ' is deprecated');
         if ($allowhtml == 0) {
             $text = $this->htmlSpecialChars($text);
         } else {
@@ -819,7 +820,7 @@ class MyTextSanitizer
      */
     public function sanitizeForPreview($text, $allowhtml = 0, $smiley = 1, $bbcode = 1)
     {
-        $GLOBALS['xoopsLogger']->addDeprecated(__CLASS__ . '::' . __FUNCTION__ . ' is deprecated');
+        $GLOBALS['xoopsLogger']->addDeprecated(__METHOD__ . ' is deprecated');
         $text = $this->oopsStripSlashesGPC($text);
         if ($allowhtml == 0) {
             $text = $this->htmlSpecialChars($text);
@@ -849,7 +850,7 @@ class MyTextSanitizer
      */
     public function makeTboxData4Save($text)
     {
-        $GLOBALS['xoopsLogger']->addDeprecated(__CLASS__ . '::' . __FUNCTION__ . ' is deprecated');
+        $GLOBALS['xoopsLogger']->addDeprecated(__METHOD__ . ' is deprecated');
 
         // $text = $this->undoHtmlSpecialChars($text);
         return $this->addSlashes($text);
@@ -865,7 +866,7 @@ class MyTextSanitizer
      */
     public function makeTboxData4Show($text, $smiley = 0)
     {
-        $GLOBALS['xoopsLogger']->addDeprecated(__CLASS__ . '::' . __FUNCTION__ . ' is deprecated');
+        $GLOBALS['xoopsLogger']->addDeprecated(__METHOD__ . ' is deprecated');
         $text = $this->htmlSpecialChars($text);
 
         return $text;
@@ -880,7 +881,7 @@ class MyTextSanitizer
      */
     public function makeTboxData4Edit($text)
     {
-        $GLOBALS['xoopsLogger']->addDeprecated(__CLASS__ . '::' . __FUNCTION__ . ' is deprecated');
+        $GLOBALS['xoopsLogger']->addDeprecated(__METHOD__ . ' is deprecated');
 
         return $this->htmlSpecialChars($text);
     }
@@ -895,7 +896,7 @@ class MyTextSanitizer
      */
     public function makeTboxData4Preview($text, $smiley = 0)
     {
-        $GLOBALS['xoopsLogger']->addDeprecated(__CLASS__ . '::' . __FUNCTION__ . ' is deprecated');
+        $GLOBALS['xoopsLogger']->addDeprecated(__METHOD__ . ' is deprecated');
         $text = $this->stripSlashesGPC($text);
         $text = $this->htmlSpecialChars($text);
 
@@ -911,7 +912,7 @@ class MyTextSanitizer
      */
     public function makeTboxData4PreviewInForm($text)
     {
-        $GLOBALS['xoopsLogger']->addDeprecated(__CLASS__ . '::' . __FUNCTION__ . ' is deprecated');
+        $GLOBALS['xoopsLogger']->addDeprecated(__METHOD__ . ' is deprecated');
         $text = $this->stripSlashesGPC($text);
 
         return $this->htmlSpecialChars($text);
@@ -926,7 +927,7 @@ class MyTextSanitizer
      */
     public function makeTareaData4Save($text)
     {
-        $GLOBALS['xoopsLogger']->addDeprecated(__CLASS__ . '::' . __FUNCTION__ . ' is deprecated');
+        $GLOBALS['xoopsLogger']->addDeprecated(__METHOD__ . ' is deprecated');
 
         return $this->addSlashes($text);
     }
@@ -943,7 +944,7 @@ class MyTextSanitizer
      */
     public function &makeTareaData4Show(&$text, $html = 1, $smiley = 1, $xcode = 1)
     {
-        $GLOBALS['xoopsLogger']->addDeprecated(__CLASS__ . '::' . __FUNCTION__ . ' is deprecated');
+        $GLOBALS['xoopsLogger']->addDeprecated(__METHOD__ . ' is deprecated');
         $text =& $this->displayTarea($text, $html, $smiley, $xcode);
 
         return $text;
@@ -958,7 +959,7 @@ class MyTextSanitizer
      */
     public function makeTareaData4Edit($text)
     {
-        $GLOBALS['xoopsLogger']->addDeprecated(__CLASS__ . '::' . __FUNCTION__ . ' is deprecated');
+        $GLOBALS['xoopsLogger']->addDeprecated(__METHOD__ . ' is deprecated');
 
         return $this->htmlSpecialChars($text);
     }
@@ -975,7 +976,7 @@ class MyTextSanitizer
      */
     public function &makeTareaData4Preview(&$text, $html = 1, $smiley = 1, $xcode = 1)
     {
-        $GLOBALS['xoopsLogger']->addDeprecated(__CLASS__ . '::' . __FUNCTION__ . ' is deprecated');
+        $GLOBALS['xoopsLogger']->addDeprecated(__METHOD__ . ' is deprecated');
         $text =& $this->previewTarea($text, $html, $smiley, $xcode);
 
         return $text;
@@ -990,7 +991,7 @@ class MyTextSanitizer
      */
     public function makeTareaData4PreviewInForm($text)
     {
-        $GLOBALS['xoopsLogger']->addDeprecated(__CLASS__ . '::' . __FUNCTION__ . ' is deprecated');
+        $GLOBALS['xoopsLogger']->addDeprecated(__METHOD__ . ' is deprecated');
         // if magic_quotes_gpc is on, do stipslashes
         $text = $this->stripSlashesGPC($text);
 
@@ -1006,7 +1007,7 @@ class MyTextSanitizer
      */
     public function makeTareaData4InsideQuotes($text)
     {
-        $GLOBALS['xoopsLogger']->addDeprecated(__CLASS__ . '::' . __FUNCTION__ . ' is deprecated');
+        $GLOBALS['xoopsLogger']->addDeprecated(__METHOD__ . ' is deprecated');
 
         return $this->htmlSpecialChars($text);
     }
@@ -1020,7 +1021,7 @@ class MyTextSanitizer
      */
     public function oopsStripSlashesGPC($text)
     {
-        $GLOBALS['xoopsLogger']->addDeprecated(__CLASS__ . '::' . __FUNCTION__ . ' is deprecated');
+        $GLOBALS['xoopsLogger']->addDeprecated(__METHOD__ . ' is deprecated');
 
         return $this->stripSlashesGPC($text);
     }
@@ -1034,7 +1035,7 @@ class MyTextSanitizer
      */
     public function oopsStripSlashesRT($text)
     {
-        $GLOBALS['xoopsLogger']->addDeprecated(__CLASS__ . '::' . __FUNCTION__ . ' is deprecated');
+        $GLOBALS['xoopsLogger']->addDeprecated(__METHOD__ . ' is deprecated');
         if (get_magic_quotes_runtime()) {
             $text = stripslashes($text);
         }
@@ -1051,7 +1052,7 @@ class MyTextSanitizer
      */
     public function oopsAddSlashes($text)
     {
-        $GLOBALS['xoopsLogger']->addDeprecated(__CLASS__ . '::' . __FUNCTION__ . ' is deprecated');
+        $GLOBALS['xoopsLogger']->addDeprecated(__METHOD__ . ' is deprecated');
 
         return $this->addSlashes($text);
     }
@@ -1065,7 +1066,7 @@ class MyTextSanitizer
      */
     public function oopsHtmlSpecialChars($text)
     {
-        $GLOBALS['xoopsLogger']->addDeprecated(__CLASS__ . '::' . __FUNCTION__ . ' is deprecated');
+        $GLOBALS['xoopsLogger']->addDeprecated(__METHOD__ . ' is deprecated');
 
         return $this->htmlSpecialChars($text);
     }
@@ -1079,7 +1080,7 @@ class MyTextSanitizer
      */
     public function oopsNl2Br($text)
     {
-        $GLOBALS['xoopsLogger']->addDeprecated(__CLASS__ . '::' . __FUNCTION__ . ' is deprecated');
+        $GLOBALS['xoopsLogger']->addDeprecated(__METHOD__ . ' is deprecated');
 
         return $this->nl2Br($text);
     }

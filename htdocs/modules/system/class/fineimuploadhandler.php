@@ -50,13 +50,13 @@ class SystemFineImUploadHandler extends SystemFineUploadHandler
 
     protected function storeUploadedFile($target, $mimeType, $uuid)
     {
-        /* @var XoopsImagecategoryHandler */
+        /** @var XoopsImagecategoryHandler */
         $imgcatHandler = xoops_getHandler('imagecategory');
         $imgcat = $imgcatHandler->get($this->claims->cat);
 
         $pathParts = pathinfo($this->getName());
 
-        $imageName = uniqid('img') . '.' . strtolower($pathParts['extension']);
+        $imageName = uniqid('img', true) . '.' . strtolower($pathParts['extension']);
         $imageNicename = str_replace(array('_','-'), ' ', $pathParts['filename']);
         $imagePath = XOOPS_ROOT_PATH . '/uploads/images/' . $imageName;
 
@@ -69,7 +69,7 @@ class SystemFineImUploadHandler extends SystemFineUploadHandler
             }
         }
 
-        /* @var XoopsImageHandler $imageHandler */
+        /** @var XoopsImageHandler $imageHandler */
         $imageHandler = xoops_getHandler('image');
         $image = $imageHandler->create();
 

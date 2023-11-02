@@ -40,7 +40,7 @@ class Upgrade_259 extends XoopsUpgrade
      */
     private function getColumnLength($table, $column)
     {
-        /* @var XoopsMySQLDatabase $db */
+        /** @var XoopsMySQLDatabase $db */
         $db = XoopsDatabaseFactory::getDatabaseConnection();
 
         $dbname = constant('XOOPS_DB_NAME');
@@ -56,7 +56,7 @@ class Upgrade_259 extends XoopsUpgrade
 
         /** @var mysqli_result $result */
         $result = $db->query($sql);
-        if ($result) {
+        if ($db->isResultSet($result)) {
             $row = $db->fetchRow($result);
             if ($row) {
                 $columnLength = $row[0];

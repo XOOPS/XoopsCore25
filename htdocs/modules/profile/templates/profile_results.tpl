@@ -1,15 +1,15 @@
 <{include file="db:profile_breadcrumbs.tpl"}>
 <div>( <{$total_users}> )</div>
-<{if $users}>
+<{if !empty($users)}>
     <table>
         <tr>
-            <{foreach item=caption from=$captions}>
+            <{foreach item=caption from=$captions|default:null}>
                 <th><{$caption}></th>
             <{/foreach}>
         </tr>
-        <{foreach item=user from=$users}>
+        <{foreach item=user from=$users|default:null}>
             <tr class="<{cycle values='odd, even'}>">
-                <{foreach item=fieldvalue from=$user.output}>
+                <{foreach item=fieldvalue from=$user.output|default:null}>
                     <td><{$fieldvalue}></td>
                 <{/foreach}>
             </tr>

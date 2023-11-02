@@ -27,7 +27,7 @@
 <br><br>
 <div class="clearer">
     <DIV style="text-align: left; font-size: small;">
-        <{if $nothing==false}>
+        <{if isset($nothing) && $nothing == false}>
             <img src='<{$xoops_url}>/modules/<{$lang_moduledirname}>/assets/images/square-green.gif' align='absmiddle'/>
             <{$submitted}>
             <br>
@@ -48,8 +48,8 @@
             <td><{$smarty.const._MD_LEXIKON_TERMS}></td>
             <td><{$smarty.const._MD_LEXIKON_HITS}></td>
         </tr>
-        <{if $nothing==false}>
-            <{foreach item=d from=$entries}>
+        <{if isset($nothing) && $nothing == false}>
+            <{foreach item=d from=$entries|default:null}>
                 <tr class="<{cycle values="even,odd"}>">
                     <td align="center" style="font-size:11px;"><{$d.date}></td>
                     <td align="left"><a href="entry.php?entryID=<{$d.id}>"><{$d.name}></a></td>
@@ -58,12 +58,12 @@
             <{/foreach}>
         <{/if}>
     </table>
-    <{if $navi==true}>
+    <{if isset($navi) && $navi == true}>
     <div style="text-align: right; font-size: small;">
         <{$authortermsarr.navbar}>
     </div>
 </div><{/if}>
 
 <div style="text-align: center; font-size: small;">
-    <{if $nothing==true}><{$nothing}><{/if}>
+    <{if isset($nothing) && $nothing == true}><{$nothing}><{/if}>
 </div>

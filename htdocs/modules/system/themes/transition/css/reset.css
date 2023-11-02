@@ -5,12 +5,12 @@
  * @license         http://www.fsf.org/copyleft/gpl.html GNU public license 3.0
  * @package         themes
  * @since           2.5.x
- * @author          Xoops Design Theme <http://www.xoops.org/>
- * @maintained      Xoops Design Theme <http://www.xoops.org/>
+ * @author          Xoops Design Theme <https://xoops.org/>
+ * @maintained      Xoops Design Theme <https://xoops.org/>
  *
 */
 
-* { box-sizing: border-box; margin: 0; padding: 0; border: 0; outline: none; text-decoration: none; font-family: sans-serif; font-size: 1em; font-weight: normal; font-style: normal; resize:none; }
+* { -webkit-box-sizing: border-box; box-sizing: border-box; margin: 0; padding: 0; border: 0; outline: none; text-decoration: none; font-family: sans-serif; font-size: 1em; font-weight: normal; font-style: normal; resize:none; }
 
 html, body, div, span, applet, object, iframe, h1, h2, h3, h4, h5, h6, p, blockquote, pre,
 a, abbr, acronym, address, big, cite, code, del, dfn, em, font, img, ins, kbd, q, s, samp,

@@ -1,5 +1,5 @@
 <{include file="db:system_header.tpl"}>
-<{if $modifs_mods}>
+<{if isset($modifs_mods)}>
     <form action="admin.php" method="post">
         <table class="outer" cellspacing="1">
             <thead>
@@ -10,7 +10,7 @@
             </tr>
             </thead>
             <tbody>
-            <{foreach item=row from=$modifs_mods}>
+            <{foreach item=row from=$modifs_mods|default:null}>
                 <tr class="txtcenter <{cycle values='odd, even'}>">
                     <td>
                         <{$row.oldname}>
@@ -62,9 +62,9 @@
     </form>
 <{else}>
     <div id="xo-module-log">
-        <{if $result}>
+        <{if isset($result)}>
             <div class="logger">
-                <{foreach item=row from=$result}>
+                <{foreach item=row from=$result|default:null}>
                     <div class="spacer"><{$row}></div>
                 <{/foreach}>
             </div>

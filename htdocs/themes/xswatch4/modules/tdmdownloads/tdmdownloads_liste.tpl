@@ -15,8 +15,8 @@
             <th scope="col"><{$smarty.const._MD_TDMDOWNLOADS_SEARCH_TITLE}></th>
             <th scope="col" class="d-none d-lg-table-cell"> </th>
             <th scope="col"><{$smarty.const._MD_TDMDOWNLOADS_SEARCH_CATEGORIES}></th>
-            <{foreach item=field from=$field}>
-                <th scope="col" class="d-none d-lg-table-cell"><{$field}></th>
+            <{foreach item=fielditem from=$field|default:null}>
+                <th scope="col" class="d-none d-lg-table-cell"><{$fielditem}></th>
             <{/foreach}>
             <th scope="col" class="d-none d-sm-table-cell"><{$smarty.const._MD_TDMDOWNLOADS_SEARCH_DATE}></th>
             <th scope="col" class="d-none d-md-table-cell"><{$smarty.const._MD_TDMDOWNLOADS_SEARCH_NOTE}></th>
@@ -25,7 +25,7 @@
         </tr>
         </thead>
         <tbody>
-        <{foreach item=download from=$search_list}>
+        <{foreach item=download from=$search_list|default:null}>
             <tr>
                 <td>
                     <a href="<{$xoops_url}>/modules/tdmdownloads/singlefile.php?cid=<{$download.cid}>&amp;lid=<{$download.lid}>" title="<{$download.title}>"><{$download.title}></a>
@@ -36,7 +36,7 @@
                 <td>
                     <a href="<{$xoops_url}>/modules/tdmdownloads/viewcat.php?cid=<{$download.cid}>" target="_blank" title="<{$download.cat}>"><{$download.cat}></a>
                 </td>
-                <{foreach item=fielddata from=$download.fielddata}>
+                <{foreach item=fielddata from=$download.fielddata|default:null}>
                     <td class="d-none d-lg-table-cell"><{$fielddata}></td>
                 <{/foreach}>
                 <td class="d-none d-sm-table-cell"><{$download.date}></td>
@@ -49,7 +49,7 @@
                     <a href="<{$xoops_url}>/modules/tdmdownloads/singlefile.php?cid=<{$download.cid}>&amp;lid=<{$download.lid}>" title="<{$download.title}>">
                         <img src="<{$pathModIcon16}>/view_mini.png" alt="<{$smarty.const._PREVIEW}><{$download.title}>" title="<{$smarty.const._PREVIEW}>">
                     </a>
-                    <{if $perm_submit}>
+                    <{if isset($perm_submit)}>
                         <a href="<{$xoops_url}>/modules/tdmdownloads/modfile.php?lid=<{$download.lid}>" title="<{$download.title}>">
                             <img src="<{$pathModIcon16}>/edit.png" alt="<{$smarty.const._EDIT}><{$download.title}>" title="<{$smarty.const._EDIT}>">
                         </a>
@@ -60,7 +60,7 @@
         </tbody>
     </table>
 
-    <{if $pagenav != ''}>
+    <{if !empty($pagenav)}>
     <div class="generic-pagination col text-right mt-2">
         <{$pagenav|replace:'form':'div'|replace:'id="xo-pagenav"':''}>
     </div>

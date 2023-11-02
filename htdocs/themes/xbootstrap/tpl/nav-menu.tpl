@@ -1,6 +1,6 @@
 <{* enable adhesive menus by setting value to 'yes', disable using 'no' *}>
 <{assign var='stickyHeader' value='yes'}>
-<{if $stickyHeader === 'yes'}><header class="adhesiveHeader"><{/if}>
+<{if isset($stickyHeader) && $stickyHeader === 'yes'}><header class="adhesiveHeader"><{/if}>
 <div class="navbar-wrapper">
     <div class="navbar navbar-inverse navbar-static-top global-nav">
         <div class="container">
@@ -38,8 +38,8 @@
                     <li><a href="<{$xoops_url}>/modules/newbb"><{$smarty.const.THEME_MODULE3}></a></li>
                     <li><a href="<{$xoops_url}>/modules/contact"><{$smarty.const.THEME_MODULE4}></a></li>
                 </ul>
-                <{if $xoops_search|default:false}>
-                <form class="navbar-form navbar-right" role="search" action="<{xoAppUrl search.php}>" method="get">
+                <{if !empty($xoops_search)}>
+                <form class="navbar-form navbar-right" role="search" action="<{xoAppUrl 'search.php'}>" method="get">
                     <div class="form-group">
                         <input type="text" name="query" class="form-control" placeholder="<{$smarty.const.THEME_SEARCH_TEXT}>">
                         <input type="hidden" name="action" value="results">
@@ -51,4 +51,4 @@
         </div>
     </div>
 </div><!-- .navbar-wrapper -->
-<{if $stickyHeader === 'yes'}></header><{/if}>
+<{if isset($stickyHeader) && $stickyHeader === 'yes'}></header><{/if}>

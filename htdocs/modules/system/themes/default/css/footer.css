@@ -5,16 +5,16 @@
  * @license         http://www.fsf.org/copyleft/gpl.html GNU public license 3.0
  * @package         themes
  * @since           2.5.x
- * @author          Xoops Design Theme <http://www.xoops.org/>
- * @maintained      Xoops Design Theme <http://www.xoops.org/>
+ * @author          Xoops Design Theme <https://xoops.org/>
+ * @maintained      Xoops Design Theme <https://xoops.org/>
  *
 */
 
 #xo-footer {
     padding: 10px;
     background-color: #333;
-    background: -moz-linear-gradient(center bottom, rgb(79,74,74) 0%, rgb(51,51,51) 100%);
-    background: -webkit-gradient(linear, left bottom, left top, color-stop(0, rgb(79,74,74)), color-stop(1, rgb(51,51,51)));
+    background: -webkit-gradient(linear, left bottom, left top, from(rgb(79, 74, 74)), to(rgb(51, 51, 51)));
+    background: linear-gradient(to top, rgb(79,74,74) 0%, rgb(51,51,51) 100%);
         border-top: 2px solid #afafaf;
     text-align: center;
     font-size: 10px;

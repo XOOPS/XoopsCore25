@@ -11,7 +11,7 @@
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  *
- * @copyright       The XOOPS Project (http://xoops.org)
+ * @copyright       The XOOPS Project (https://xoops.org)
  * @license         GNU GPL 2 (https://www.gnu.org/licenses/gpl-2.0.html)
  * @package         kernel
  * @subpackage      form
@@ -38,7 +38,7 @@ class XoopsFormSelectUser extends XoopsFormElementTray
      *                                 For an item with massive members, such as "Registered Users", "$value"
      *                                 should be used to store selected temporary users only instead of all
      *                                 members of that item
-     * @param int    $size             Number or rows. "1" makes a drop-down-list.
+     * @param int    $size             Number of rows. "1" makes a drop-down-list.
      * @param bool   $multiple         Allow multiple selections?
      */
     public function __construct($caption, $name, $includeAnonymous = false, $value = null, $size = 1, $multiple = false)
@@ -71,7 +71,7 @@ class XoopsFormSelectUser extends XoopsFormElementTray
         if ($includeAnonymous) {
             $select_element->addOption(0, $GLOBALS['xoopsConfig']['anonymous']);
         }
-        /* @var XoopsMemberHandler $member_handler */
+        /** @var XoopsMemberHandler $member_handler */
         $member_handler = xoops_getHandler('member');
         $value          = is_array($value) ? $value : (empty($value) ? array() : array($value));
         $selectedUsers = array();

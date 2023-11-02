@@ -5,8 +5,8 @@
  * @license         http://www.fsf.org/copyleft/gpl.html GNU public license 3.0
  * @package         themes
  * @since           2.5.x
- * @author          Xoops Design Theme <http://www.xoops.org/>
- * @maintained      Xoops Design Theme <http://www.xoops.org/>
+ * @author          Xoops Design Theme <https://xoops.org/>
+ * @maintained      Xoops Design Theme <https://xoops.org/>
  *
 */
 
@@ -36,12 +36,9 @@
     margin: 3px;
     color: #666666;
     border: 1px solid #f9f9f9;
-    -moz-border-radius: 9px;
-    -webkit-border-radius: 9px;
     border-radius: 9px;
-    box-shadow: 0 20px 10px -10px rgba(255, 255, 255, 0.3) inset;
-    -moz-box-shadow: 0 20px 10px -10px rgba(255, 255, 255, 0.3) inset;
-    -webkit-box-shadow: 0 20px 10px -10px rgba(255, 255, 255, 0.3) inset;
+    -webkit-box-shadow: 0 20px 10px -10px rgba(255, 255, 255, .3) inset;
+            box-shadow: 0 20px 10px -10px rgba(255, 255, 255, .3) inset;
 }
 
 #xo-module-icons a {
@@ -56,12 +53,9 @@
     margin: 3px;
     color: #666666;
     border: 1px solid #f9f9f9;
-    -moz-border-radius: 6px;
-    -webkit-border-radius: 6px;
     border-radius: 6px;
-    box-shadow: 0 20px 10px -10px rgba(255, 255, 255, 0.3) inset;
-    -moz-box-shadow: 0 20px 10px -10px rgba(255, 255, 255, 0.3) inset;
-    -webkit-box-shadow: 0 20px 10px -10px rgba(255, 255, 255, 0.3) inset;
+    -webkit-box-shadow: 0 20px 10px -10px rgba(255, 255, 255, .3) inset;
+            box-shadow: 0 20px 10px -10px rgba(255, 255, 255, .3) inset;
 }
 
 #xo-icon a:hover,#xo-module-icons a:hover {
@@ -71,12 +65,9 @@
     border-bottom-color: #ccc;
     background: #f9f9f9;
     filter: alpha(opacity =                                   80);
-    -moz-opacity: 0.8;
-    -webkit-opacity: 0.8;
     opacity: 0.8;
-    box-shadow: 0 20px 10px -10px rgba(255, 255, 255, 0.3) inset;
-    -moz-box-shadow: 0 20px 10px -10px rgba(255, 255, 255, 0.3) inset;
-    -webkit-box-shadow: 0 20px 10px -10px rgba(255, 255, 255, 0.3) inset;
+    -webkit-box-shadow: 0 20px 10px -10px rgba(255, 255, 255, .3) inset;
+            box-shadow: 0 20px 10px -10px rgba(255, 255, 255, .3) inset;
 }
 
 #xo-icon img{

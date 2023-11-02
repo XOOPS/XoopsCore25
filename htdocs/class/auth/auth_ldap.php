@@ -9,7 +9,7 @@
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  *
- * @copyright           The XOOPS Project (http://xoops.org)
+ * @copyright           The XOOPS Project (https://xoops.org)
  * @license             GNU GPL 2 (https://www.gnu.org/licenses/gpl-2.0.html)
  * @package             kernel
  * @subpackage          auth
@@ -133,7 +133,7 @@ class XoopsAuthLdap extends XoopsAuth
          */
         "\xc2\x99" => "\xe2\x84\xa2",
         /**
-         * TRADE MARK SIGN
+         * TRADEMARK SIGN
          */
         "\xc2\x9a" => "\xc5\xa1",
         /**
@@ -178,7 +178,7 @@ class XoopsAuthLdap extends XoopsAuth
     {
         $this->_dao = $dao;
         // The config handler object allows us to look at the configuration options that are stored in the database
-        /* @var XoopsConfigHandler $config_handler */
+        /** @var XoopsConfigHandler $config_handler */
         $config_handler = xoops_getHandler('config');
         $config         = $config_handler->getConfigsByCat(XOOPS_CONF_AUTH);
         $confcount      = count($config);
@@ -196,7 +196,7 @@ class XoopsAuthLdap extends XoopsAuth
      */
     public function cp1252_to_utf8($str)
     {
-        return strtr(utf8_encode($str), $this->cp1252_map);
+        return strtr(xoops_utf8_encode($str), $this->cp1252_map);
     }
 
     /**

@@ -27,6 +27,16 @@ defined('XOOPS_ROOT_PATH') || exit('Restricted access');
  **/
 class XoopsPrivmessage extends XoopsObject
 {
+    //PHP 8.2 Dynamic properties deprecated
+    public $msg_id;
+    public $msg_image;
+    public $subject;
+    public $from_userid;
+    public $to_userid;
+    public $msg_time;
+    public $msg_text;
+    public $read_msg;
+
     /**
      * constructor
      **/
@@ -168,7 +178,7 @@ class XoopsPrivmessageHandler extends XoopsObjectHandler
     /**
      * Load a {@link XoopsPrivmessage} object
      * @param  int $id ID of the message
-     * @return XoopsPrivmessage
+     * @return XoopsPrivmessage|false
      **/
     public function get($id)
     {
@@ -176,7 +186,8 @@ class XoopsPrivmessageHandler extends XoopsObjectHandler
         $id = (int)$id;
         if ($id > 0) {
             $sql = 'SELECT * FROM ' . $this->db->prefix('priv_msgs') . ' WHERE msg_id=' . $id;
-            if (!$result = $this->db->query($sql)) {
+            $result = $this->db->query($sql);
+            if (!$this->db->isResultSet($result)) {
                 return $pm;
             }
             $numrows = $this->db->getRowsNum($result);
@@ -262,7 +273,7 @@ class XoopsPrivmessageHandler extends XoopsObjectHandler
         $ret   = array();
         $limit = $start = 0;
         $sql   = 'SELECT * FROM ' . $this->db->prefix('priv_msgs');
-        if (isset($criteria) && is_subclass_of($criteria, 'CriteriaElement')) {
+        if (isset($criteria) && \method_exists($criteria, 'renderWhere')) {
             $sql .= ' ' . $criteria->renderWhere();
             $sort = !in_array($criteria->getSort(), array(
                 'msg_id',
@@ -273,9 +284,10 @@ class XoopsPrivmessageHandler extends XoopsObjectHandler
             $start = $criteria->getStart();
         }
         $result = $this->db->query($sql, $limit, $start);
-        if (!$result) {
+        if (!$this->db->isResultSet($result)) {
             return $ret;
         }
+        /** @var array $myrow */
         while (false !== ($myrow = $this->db->fetchArray($result))) {
             $pm = new XoopsPrivmessage();
             $pm->assignVars($myrow);
@@ -298,15 +310,16 @@ class XoopsPrivmessageHandler extends XoopsObjectHandler
     public function getCount(CriteriaElement $criteria = null)
     {
         $sql = 'SELECT COUNT(*) FROM ' . $this->db->prefix('priv_msgs');
-        if (isset($criteria) && is_subclass_of($criteria, 'CriteriaElement')) {
+        if (isset($criteria) && \method_exists($criteria, 'renderWhere')) {
             $sql .= ' ' . $criteria->renderWhere();
         }
-        if (!$result = $this->db->query($sql)) {
+        $result = $this->db->query($sql);
+        if (!$this->db->isResultSet($result)) {
             return 0;
         }
         list($count) = $this->db->fetchRow($result);
 
-        return $count;
+        return (int)$count;
     }
 
     /**

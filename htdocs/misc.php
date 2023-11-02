@@ -26,7 +26,7 @@ $action = Request::getCmd('action', '');
 $type = Request::getCmd('type', '');
 
 if ($action !== 'showpopups') {
-    header("HTTP/1.0 404 Not Found");
+    header('HTTP/1.0 404 Not Found');
     exit();
 }
     xoops_header(false);
@@ -55,7 +55,7 @@ EOSMJS;
                 $variables['lang_clicksmile'] = _MSC_CLICKASMILIE;
                 $variables['lang_close'] = _CLOSE;
                 $variables['upload_url'] = XOOPS_UPLOAD_URL .'/';
-                $myts = MyTextSanitizer::getInstance();
+                $myts = \MyTextSanitizer::getInstance();
                 if ($smiles = $myts->getSmileys(false)) {
                     $variables['smilies'] = $smiles;
                 } else {
@@ -66,7 +66,7 @@ EOSMJS;
             }
             break;
         case 'avatars':
-            /* @var  XoopsAvatarHandler $avatarHandler */
+            /** @var  XoopsAvatarHandler $avatarHandler */
             $avatarHandler = xoops_getHandler('avatar');
             $avatarsList = $avatarHandler->getList('S', true);
 
@@ -218,11 +218,11 @@ EOAVJS;
             $start = Request::getInt('start', 0);
             $limit = 20; // how many to make available per page
 
-            /* @var XoopsModuleHandler $module_handler */
+            /** @var XoopsModuleHandler $module_handler */
             $module_handler = xoops_getHandler('module');
             $modules = $module_handler->getObjects(new Criteria('isactive', 1), true);
 
-            /* @var XoopsOnlineHandler $onlineHandler */
+            /** @var XoopsOnlineHandler $onlineHandler */
             $onlineHandler = xoops_getHandler('online');
             $onlineTotal = $onlineHandler->getCount();
             $criteria = new CriteriaCompo();

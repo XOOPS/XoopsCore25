@@ -3,8 +3,8 @@
 <div class="txtcenter"><a href="banners.php?op=logout" title="<{$smarty.const._BANNERS_LOGOUT}>"><{$smarty.const._BANNERS_LOGOUT}></a></div>
 <div class="txtcenter"><a href="banners.php?op=list" title="<{$smarty.const._BANNERS_BACK}>"><{$smarty.const._BANNERS_BACK}></a></div>
 <div><{$banneractive}></div><br>
-<{if $count}>
-    <{foreach item=banner from=$banners}>
+<{if isset($count)}>
+    <{foreach item=banner from=$banners|default:null}>
         <form action="banners.php" method="post">
             <table cellspacing="1" class="outer width100">
                 <th colspan="2"><{$smarty.const._BANNERS_ID}> <{$banner.bid}></th>

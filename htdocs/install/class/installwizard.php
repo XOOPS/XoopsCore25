@@ -14,7 +14,7 @@
  * If you did not receive this file, get it at https://www.gnu.org/licenses/gpl-2.0.html
  *
  * @copyright    (c) 2000-2016 XOOPS Project (www.xoops.org)
- * @license          GNU GPL 2 or later (https://www.gnu.org/licenses/gpl-2.0.html)
+ * @license          GNU GPL 2.0 or later (https://www.gnu.org/licenses/gpl-2.0.html)
  * @package          installer
  * @since            2.3.0
  * @author           Haruki Setoyama  <haruki@planewave.org>
@@ -30,6 +30,7 @@ class XoopsInstallWizard
     public $currentPage = 'langselect';
     public $pageIndex   = 0;
     public $configs     = array();
+    public $form;
 
     /**
      * @return bool
@@ -43,11 +44,11 @@ class XoopsInstallWizard
         // Load the main language file
         $this->initLanguage(!empty($_COOKIE['xo_install_lang']) ? $_COOKIE['xo_install_lang'] : 'english');
         // Setup pages
-        include_once './include/page.php';
+        include_once __DIR__ . '/../include/page.php';
         $this->pages = $pages;
 
         // Load default configs
-        include_once './include/config.php';
+        include_once __DIR__ . '/../include/config.php';
         $this->configs = $configs;
         /*
         // Database type
@@ -141,10 +142,10 @@ class XoopsInstallWizard
      */
     public function loadLangFile($file)
     {
-        if (file_exists("./language/{$this->language}/{$file}.php")) {
-            include_once "./language/{$this->language}/{$file}.php";
+        if (file_exists(__DIR__ . "/../language/{$this->language}/{$file}.php")) {
+            include_once __DIR__ . "/../language/{$this->language}/{$file}.php";
         } else {
-            include_once "./language/english/$file.php";
+            include_once __DIR__ . "/../language/english/$file.php";
         }
     }
 
@@ -191,7 +192,7 @@ class XoopsInstallWizard
      */
     public function baseLocation()
     {
-        $proto = (@$_SERVER['HTTPS'] === 'on') ? 'https' : 'http';
+        $proto = ((isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on')) ? 'https' : 'http';
         $host  = $_SERVER['HTTP_HOST'];
         $base  = substr($_SERVER['PHP_SELF'], 0, strrpos($_SERVER['PHP_SELF'], '/'));
 

@@ -17,13 +17,13 @@
  * point, and no further installer action is expected.
  *
  * @copyright   (c) 2000-2016 XOOPS Project (www.xoops.org)
- * @license         GNU GPL 2 or later (https://www.gnu.org/licenses/gpl-2.0.html)
+ * @license         GNU GPL 2.0 or later (https://www.gnu.org/licenses/gpl-2.0.html)
  * @package         installer
  * @since           2.5.7
  * @author          Richard Griffith <richard@geekwright.com>
  */
 
-require_once './include/common.inc.php';
+require_once __DIR__ . '/include/common.inc.php';
 defined('XOOPS_INSTALL') || die('XOOPS Installation wizard die');
 
 $install_rename_suffix = $_POST['instsuffix'];

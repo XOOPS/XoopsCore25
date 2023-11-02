@@ -15,7 +15,7 @@
  * @since               2.3.0
  * @author              Taiwen Jiang <phppp@users.sourceforge.net>
  */
-/* @var  XoopsUser $xoopsUser */
+/** @var  XoopsUser $xoopsUser */
 
 use Xmf\Request;
 
@@ -24,13 +24,14 @@ include_once dirname(__DIR__) . '/mainfile.php';
 xoops_header(false);
 
 $denied = true;
-if (Request::hasVar('token')) {
+if (Request::hasVar('token') && is_object($xoopsUser)) {
     if ($GLOBALS['xoopsSecurity']->validateToken(Request::getString('token'), false)) {
         $denied = false;
     }
 } elseif (is_object($xoopsUser) && $xoopsUser->isAdmin()) {
     $denied = false;
 }
+
 if ($denied) {
     xoops_error(_NOPERM);
     exit();
@@ -50,6 +51,14 @@ xoops_loadLanguage('findusers');
  */
 class XoopsRank extends XoopsObject
 {
+    //PHP 8.2 Dynamic properties deprecated
+    public $rank_id;
+    public $rank_title;
+    public $rank_min;
+    public $rank_max;
+    public $rank_special;
+    public $rank_image;
+    
     /**
      * Construct
      *
@@ -108,11 +117,13 @@ class XoopsRankHandler extends XoopsObjectHandler
     {
         $object = $this->create(false);
         $sql    = 'SELECT * FROM ' . $this->db->prefix('ranks') . ' WHERE rank_id = ' . $this->db->quoteString($id);
-        if (!$result = $this->db->query($sql)) {
+        $result = $this->db->query($sql);
+        if (!$this->db->isResultSet($result)) {
             $ret = null;
 
             return $ret;
         }
+
         while (false !== ($row = $this->db->fetchArray($result))) {
             $object->assignVars($row);
         }
@@ -136,7 +147,7 @@ class XoopsRankHandler extends XoopsObjectHandler
         }
 
         $sql = 'SELECT rank_id, rank_title FROM ' . $this->db->prefix('ranks');
-        if (isset($criteria) && is_subclass_of($criteria, 'CriteriaElement')) {
+        if (isset($criteria) && \method_exists($criteria, 'renderWhere')) {
             $sql .= ' ' . $criteria->renderWhere();
             if ($criteria->getSort() != '') {
                 $sql .= ' ORDER BY ' . $criteria->getSort() . ' ' . $criteria->getOrder();
@@ -145,10 +156,11 @@ class XoopsRankHandler extends XoopsObjectHandler
             $start = $criteria->getStart();
         }
         $result = $this->db->query($sql, $limit, $start);
-        if (!$result) {
+        if (!$this->db->isResultSet($result)) {
             return $ret;
         }
-        $myts = MyTextSanitizer::getInstance();
+        $myts = \MyTextSanitizer::getInstance();
+        /** @var array $myrow */
         while (false !== ($myrow = $this->db->fetchArray($result))) {
             $ret[$myrow['rank_id']] = $myts->htmlSpecialChars($myrow['rank_title']);
         }
@@ -241,9 +253,14 @@ class XoUserHandler extends XoopsObjectHandler
             }
         }
         $result = $this->db->query($sql);
+        if (!$this->db->isResultSet($result)) {
+            throw new \RuntimeException(
+                \sprintf(_DB_QUERY_ERROR, $sql) . $this->db->error(), E_USER_ERROR
+            );
+        }
         list($count) = $this->db->fetchRow($result);
 
-        return $count;
+        return (int)$count;
     }
 
     /**
@@ -282,7 +299,13 @@ class XoUserHandler extends XoopsObjectHandler
             $sql .= ' ORDER BY u.uid ASC';
         }
         $result = $this->db->query($sql, $limit, $start);
+        if (!$this->db->isResultSet($result)) {
+            throw new \RuntimeException(
+                \sprintf(_DB_QUERY_ERROR, $sql) . $this->db->error(), E_USER_ERROR
+            );
+        }
         $ret    = array();
+        /** @var array $myrow */
         while (false !== ($myrow = $this->db->fetchArray($result))) {
             $object = $this->create(false);
             $object->assignVars($myrow);
@@ -363,7 +386,7 @@ if (!Request::hasVar('user_submit', 'POST')) {
             'both' => _MA_USER_BOTH
         ));
 
-        $level_radio = new XoopsFormRadio(_MA_USER_LEVEL, 'level', @$_POST['level']);
+        $level_radio = new XoopsFormRadio(_MA_USER_LEVEL, 'level', Request::getString('level', '', 'POST'));
         $levels      = array(
             0 => _ALL,
             1 => _MA_USER_LEVEL_ACTIVE,
@@ -372,7 +395,7 @@ if (!Request::hasVar('user_submit', 'POST')) {
         );
         $level_radio->addOptionArray($levels);
 
-        /* @var XoopsMemberHandler $member_handler */
+        /** @var XoopsMemberHandler $member_handler */
         $member_handler = xoops_getHandler('member');
         $groups         = $member_handler->getGroupList();
         $groups[0]      = _ALL;
@@ -405,14 +428,14 @@ if (!Request::hasVar('user_submit', 'POST')) {
         }
     }
 
-    $sort_select = new XoopsFormSelect(_MA_USER_SORT, 'user_sort', @$_POST['user_sort']);
+    $sort_select = new XoopsFormSelect(_MA_USER_SORT, 'user_sort', Request::getString('user_sort', '', 'POST'));
     $sort_select->addOptionArray(array(
         'uname' => _MA_USER_UNAME,
         'last_login' => _MA_USER_LASTLOGIN,
         'user_regdate' => _MA_USER_REGDATE,
         'posts' => _MA_USER_POSTS
     ));
-    $order_select = new XoopsFormSelect(_MA_USER_ORDER, 'user_order', @$_POST['user_order']);
+    $order_select = new XoopsFormSelect(_MA_USER_ORDER, 'user_order', Request::getString('user_order', '', 'POST'));
     $order_select->addOptionArray(array(
         'ASC' => _MA_USER_ASC,
         'DESC' => _MA_USER_DESC
@@ -443,7 +466,7 @@ if (!Request::hasVar('user_submit', 'POST')) {
     echo '(' . sprintf(_MA_USER_ACTUS, "<span style='color:#ff0000;'>$acttotal</span>") . ' ' . sprintf(_MA_USER_INACTUS, "<span style='color:#ff0000;'>$inacttotal</span>") . ')';
     $form->display();
 } else {
-    $myts  = MyTextSanitizer::getInstance();
+    $myts  = \MyTextSanitizer::getInstance();
     $limit = Request::getInt('limit', 50, 'POST');
     $start = Request::getInt('start', 0, 'POST');
     if (Request::hasVar('query', 'POST')) {
@@ -543,7 +566,7 @@ if (!Request::hasVar('user_submit', 'POST')) {
             }
         }
     }
-    $total     = $user_handler->getCount($criteria, @$_POST['groups']);
+    $total     = $user_handler->getCount($criteria, Request::getArray('groups', [], 'POST'));
     $validsort = array(
         'uname',
         'email',

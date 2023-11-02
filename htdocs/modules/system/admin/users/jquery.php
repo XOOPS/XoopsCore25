@@ -15,8 +15,8 @@
  * @author              Maxime Cointin (AKA Kraven30)
  * @package             system
  */
-/* @var XoopsUser $xoopsUser */
-/* @var XoopsModule $xoopsModule */
+/** @var XoopsUser $xoopsUser */
+/** @var XoopsModule $xoopsModule */
 use Xmf\Request;
 
 require dirname(dirname(dirname(dirname(__DIR__)))) . '/mainfile.php';
@@ -28,11 +28,7 @@ if (!is_object($xoopsUser) || !is_object($xoopsModule) || !$xoopsUser->isAdmin($
     exit(_NOPERM);
 }
 
-if (isset($_REQUEST['op'])) {
-    $op = $_REQUEST['op'];
-} else {
-    @$op = 'default';
-}
+$op = Request::getCmd('op', 'default', 'REQUEST');
 
 switch ($op) {
 
@@ -68,7 +64,8 @@ switch ($op) {
                 $criteria->add($table['criteria']);
             }
             $sql = 'SELECT COUNT(*) AS total FROM ' . $xoopsDB->prefix($table['table_name']) . ' ' . $criteria->renderWhere();
-            if ($result = $xoopsDB->query($sql)) {
+            $result = $xoopsDB->query($sql);
+            if ($xoopsDB->isResultSet($result)) {
                 if ($row = $xoopsDB->fetchArray($result)) {
                     $total_posts += $row['total'];
                 }

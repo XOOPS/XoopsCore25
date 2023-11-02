@@ -13,7 +13,7 @@
  *  TinyMCE adapter for XOOPS
  *
  * @copyright       (c) 2000-2016 XOOPS Project (www.xoops.org)
- * @license             GNU GPL 2 or later (https://www.gnu.org/licenses/gpl-2.0.html)
+ * @license             GNU GPL 2.0 or later (https://www.gnu.org/licenses/gpl-2.0.html)
  * @package             class
  * @subpackage          editor
  * @since               2.3.0
@@ -26,6 +26,7 @@ class TinyMCE
     public        $rootpath;
     public        $config                = array();
     public        $setting               = array();
+    public        $xoopsPlugins          = array();
     public static $LastOfElementsTinymce = '';
     public static $ListOfElementsTinymce = array();
 
@@ -78,9 +79,12 @@ class TinyMCE
         $configured = array();
 
         // Load default settings
-        if (!($this->setting = @include($GLOBALS['xoops']->path('var/configs/tinymce.php')))) {
+        if (file_exists($GLOBALS['xoops']->path('var/configs/tinymce.php')) && is_readable($GLOBALS['xoops']->path('var/configs/tinymce.php'))) {
+            $this->setting = include($GLOBALS['xoops']->path('var/configs/tinymce.php'));
+        } else {
             $this->setting = include __DIR__ . '/settings.php';
         }
+
 
         // get editor language (from ...)
         if (isset($this->config['language']) && is_readable(XOOPS_ROOT_PATH . $this->rootpath . '/langs/' . $this->config['language'] . '.js')) {

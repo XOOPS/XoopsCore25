@@ -1,20 +1,20 @@
 <br>
 <div class="head">
     <form id="<{$addform.name}>" method="<{$addform.method}>" action="<{$addform.action}>">
-        <{foreach item=element from=$addform.elements}>
+        <{foreach item=element from=$addform.elements|default:null}>
             <{$element.caption}> <{$element.body}>
         <{/foreach}>
     </form>
 </div>
 
 <table>
-    <{foreach item=field from=$fields key=field_id}>
+    <{foreach item=field from=$fields|default:null key=field_id}>
         <tr class="<{cycle values='odd,even'}>">
             <td class="width20"><{$field}></td>
             <td>
                 <{if isset($visibilities.$field_id)}>
                     <ul>
-                        <{foreach item=visibility from=$visibilities.$field_id}>
+                        <{foreach item=visibility from=$visibilities.$field_id|default:null}>
                             <{assign var=user_gid value=$visibility.user_group}>
                             <{assign var=profile_gid value=$visibility.profile_group}>
                             <li>

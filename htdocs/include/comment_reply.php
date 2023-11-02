@@ -15,10 +15,12 @@
  * @since               2.0.0
  * @author              Kazumi Ono (AKA onokazu) http://www.myweb.ne.jp/, http://jp.xoops.org/
  */
-/* @var XoopsUser $xoopsUser */
-/* @var XoopsModule $xoopsModule */
-/* @var XoopsConfigItem $xoopsConfig */
+/** @var XoopsUser $xoopsUser */
+/** @var XoopsModule $xoopsModule */
+/** @var XoopsConfigItem $xoopsConfig */
 
+
+use Xmf\Request;
 
 defined('XOOPS_ROOT_PATH') || exit('Restricted access');
 
@@ -29,8 +31,10 @@ if (('system' !== $xoopsModule->getVar('dirname') && XOOPS_COMMENT_APPROVENONE =
 }
 
 xoops_loadLanguage('comment');
-$com_id   = isset($_GET['com_id']) ? (int)$_GET['com_id'] : 0;
-$com_mode = isset($_GET['com_mode']) ? htmlspecialchars(trim($_GET['com_mode']), ENT_QUOTES) : '';
+$com_id   = Request::getInt('com_id', 0, 'GET');
+$com_mode = htmlspecialchars(Request::getString('com_mode', '', 'GET'), ENT_QUOTES);
+
+
 if ($com_mode == '') {
     if (is_object($xoopsUser)) {
         $com_mode = $xoopsUser->getVar('umode');
@@ -45,7 +49,7 @@ if (!isset($_GET['com_order'])) {
         $com_order = $xoopsConfig['com_order'];
     }
 } else {
-    $com_order = (int)$_GET['com_order'];
+    $com_order =  Request::getInt('com_order', 0, 'GET');
 }
 $comment_handler = xoops_getHandler('comment');
 $comment         = $comment_handler->get($com_id);
@@ -74,11 +78,11 @@ $doimage    = 1;
 $com_icon   = '';
 $com_rootid = $comment->getVar('com_rootid');
 $com_itemid = $comment->getVar('com_itemid');
-// Start Add by voltan
+// Start added by voltan
 $com_user  = '';
 $com_email = '';
 $com_url   = '';
-// End Add by voltan
+// End added by voltan
 
 include_once $GLOBALS['xoops']->path('header.php');
 echo '<table cellpadding="4" cellspacing="1" width="98%" class="outer">

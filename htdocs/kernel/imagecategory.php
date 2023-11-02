@@ -33,6 +33,16 @@ defined('XOOPS_ROOT_PATH') || exit('Restricted access');
 class XoopsImagecategory extends XoopsObject
 {
     public $_imageCount;
+    //PHP 8.2 Dynamic properties deprecated
+    public $imgcat_id;
+    public $imgcat_name;
+    public $imgcat_display;
+    public $imgcat_weight;
+    public $imgcat_maxsize;
+    public $imgcat_maxwidth;
+    public $imgcat_maxheight;
+    public $imgcat_type;
+    public $imgcat_storetype;
 
     /**
      * Constructor
@@ -204,7 +214,7 @@ class XoopsImagecategoryHandler extends XoopsObjectHandler
      * @param int $id ID
      *
      * @internal param bool $getbinary
-     * @return XoopsImageCategory {@link XoopsImageCategory}, FALSE on fail
+     * @return XoopsImageCategory|false {@link XoopsImageCategory}, false on fail
      */
     public function get($id)
     {
@@ -212,7 +222,8 @@ class XoopsImagecategoryHandler extends XoopsObjectHandler
         $imgcat = false;
         if ($id > 0) {
             $sql = 'SELECT * FROM ' . $this->db->prefix('imagecategory') . ' WHERE imgcat_id=' . $id;
-            if (!$result = $this->db->query($sql)) {
+            $result = $this->db->query($sql);
+            if (!$this->db->isResultSet($result)) {
                 return $imgcat;
             }
             $numrows = $this->db->getRowsNum($result);
@@ -307,9 +318,10 @@ class XoopsImagecategoryHandler extends XoopsObjectHandler
         }
         $sql .= ' ORDER BY imgcat_weight, imgcat_id ASC';
         $result = $this->db->query($sql, $limit, $start);
-        if (!$result) {
+        if (!$this->db->isResultSet($result)) {
             return $ret;
         }
+        /** @var array $myrow */
         while (false !== ($myrow = $this->db->fetchArray($result))) {
             $imgcat = new XoopsImagecategory();
             $imgcat->assignVars($myrow);
@@ -337,12 +349,13 @@ class XoopsImagecategoryHandler extends XoopsObjectHandler
             $where = $criteria->render();
             $sql .= ($where != '') ? ' AND ' . $where : '';
         }
-        if (!$result = $this->db->query($sql)) {
+        $result = $this->db->query($sql);
+        if (!$this->db->isResultSet($result)) {
             return 0;
         }
         list($count) = $this->db->fetchRow($result);
 
-        return $count;
+        return (int)$count;
     }
 
     /**
@@ -359,7 +372,7 @@ class XoopsImagecategoryHandler extends XoopsObjectHandler
     public function getList($groups = array(), $perm = 'imgcat_read', $display = null, $storetype = null)
     {
         $criteria = new CriteriaCompo();
-        if (is_array($groups) && !empty($groups)) {
+        if (!empty($groups) && \is_array($groups)) {
             $criteriaTray = new CriteriaCompo();
             foreach ($groups as $gid) {
                 $criteriaTray->add(new Criteria('gperm_groupid', $gid), 'OR');

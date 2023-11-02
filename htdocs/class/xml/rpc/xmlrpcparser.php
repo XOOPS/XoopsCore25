@@ -10,8 +10,8 @@
  */
 
 /**
- * @copyright    XOOPS Project http://xoops.org/
- * @license      GNU GPL 2 or later (https://www.gnu.org/licenses/gpl-2.0.html)
+ * @copyright    XOOPS Project https://xoops.org/
+ * @license      GNU GPL 2.0 or later (https://www.gnu.org/licenses/gpl-2.0.html)
  * @package
  * @since
  * @author       XOOPS Development Team, Kazumi Ono (AKA onokazu)
@@ -26,7 +26,7 @@ require_once XOOPS_ROOT_PATH . '/class/xml/xmltaghandler.php';
  *
  * This class offers methods to parse RSS Files
  *
- * @link          http://www.xoops.org/ Latest release of this class
+ * @link          https://xoops.org/ Latest release of this class
  * @package       class
  * @copyright (c) 2000-2016 XOOPS Project (www.xoops.org)
  * @author        Kazumi Ono <onokazu@xoops.org>

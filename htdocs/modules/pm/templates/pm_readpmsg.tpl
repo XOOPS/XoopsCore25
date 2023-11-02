@@ -1,29 +1,29 @@
 <div>
     <h4><{$smarty.const._PM_PRIVATEMESSAGE}></h4>
 </div><br>
-<{if $op=='out'}>
-    <a href='viewpmsg.php?op=out' title='<{$smarty.const._PM_OUTBOX}>'><{$smarty.const._PM_OUTBOX}></a>
-    &nbsp;
-<{elseif $op == "save"}>
-    <a href='viewpmsg.php?op=save' title='<{$smarty.const._PM_SAVEBOX}>'><{$smarty.const._PM_SAVEBOX}></a>
-    &nbsp;
+<{if isset($op)}>
+    <{if $op=='out'}>
+        <a href='viewpmsg.php?op=out' title='<{$smarty.const._PM_OUTBOX}>'><{$smarty.const._PM_OUTBOX}></a>
+        &nbsp;
+    <{elseif $op == "save"}>
+        <a href='viewpmsg.php?op=save' title='<{$smarty.const._PM_SAVEBOX}>'><{$smarty.const._PM_SAVEBOX}></a>
+    <{/if}>   &nbsp;
 <{else}>
-    <a href='viewpmsg.php?op=in' title='<{$smarty.const._PM_INBOX}>'><{$smarty.const._PM_INBOX}></a>
-    &nbsp;
+    <a href='viewpmsg.php?op=in' title='<{$smarty.const._PM_INBOX}>'><{$smarty.const._PM_INBOX}></a>    &nbsp;
 <{/if}>
 
-<{if $message|default:false}>
+<{if !empty($message)}>
     <span class='bold'>&raquo;</span>
     &nbsp;<{$message.subject}>
     <br>
     <form name="<{$pmform.name}>" id="<{$pmform.name}>" action="<{$pmform.action}>" method="<{$pmform.method}>" <{$pmform.extra}> >
         <table cellpadding='4' cellspacing='1' class='outer bnone width100'>
             <tr>
-                <th colspan='2'><{if $op=='out'}><{$smarty.const._PM_TO}><{else}><{$smarty.const._PM_FROM}><{/if}></th>
+                <th colspan='2'><{if isset($op) && $op == 'out'}><{$smarty.const._PM_TO}><{else}><{$smarty.const._PM_FROM}><{/if}></th>
             </tr>
             <tr class='even'>
                 <td class='aligntop'>
-                    <{if ( $poster != false ) }>
+                    <{if isset($poster) && $poster != false}>
                         <a href='<{$xoops_url}>/userinfo.php?uid=<{$poster->getVar("uid")}>'><{$poster->getVar("uname")}></a>
                         <br>
                         <{if ( $poster->getVar("user_avatar") != "" ) }>
@@ -45,7 +45,7 @@
                     <{/if}>
                 </td>
                 <td>
-                    <{if $message.msg_image != ""}>
+                    <{if !empty($message.msg_image)}>
                         <img src='<{$xoops_url}>/images/subject/<{$message.msg_image}>' alt=''/>
                     <{/if}>
                     <{$smarty.const._PM_SENTC}><{$message.msg_time}><br>
@@ -58,7 +58,7 @@
             </tr>
             <tr class='foot'>
                 <td class='width20 txtleft' colspan='2'>
-                    <{foreach item=element from=$pmform.elements}>
+                    <{foreach item=element from=$pmform.elements|default:null}>
                         <{$element.body}>
                     <{/foreach}>
                 </td>

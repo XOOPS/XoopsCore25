@@ -135,7 +135,7 @@ class XoopsTplsetHandler extends XoopsObjectHandler
      *
      * @see XoopsTplset
      * @param  int $id tplset_id of the tplsets to retrieve
-     * @return object XoopsTplset reference to the tplsets
+     * @return object|false XoopsTplset reference to the tplsets
      **/
     public function get($id)
     {
@@ -143,7 +143,8 @@ class XoopsTplsetHandler extends XoopsObjectHandler
         $id     = (int)$id;
         if ($id > 0) {
             $sql = 'SELECT * FROM ' . $this->db->prefix('tplset') . ' WHERE tplset_id=' . $id;
-            if (!$result = $this->db->query($sql)) {
+            $result = $this->db->query($sql);
+            if (!$this->db->isResultSet($result)) {
                 return $tplset;
             }
             $numrows = $this->db->getRowsNum($result);
@@ -164,7 +165,7 @@ class XoopsTplsetHandler extends XoopsObjectHandler
      * @param $tplset_name
      *
      * @internal param int $id tplset_id of the block to retrieve
-     * @return object XoopsTplset reference to the tplsets
+     * @return object|false XoopsTplset reference to the tplsets
      */
     public function getByName($tplset_name)
     {
@@ -172,7 +173,8 @@ class XoopsTplsetHandler extends XoopsObjectHandler
         $tplset_name = trim($tplset_name);
         if ($tplset_name != '') {
             $sql = 'SELECT * FROM ' . $this->db->prefix('tplset') . ' WHERE tplset_name=' . $this->db->quoteString($tplset_name);
-            if (!$result = $this->db->query($sql)) {
+            $result = $this->db->query($sql);
+            if (!$this->db->isResultSet($result)) {
                 return $tplset;
             }
             $numrows = $this->db->getRowsNum($result);
@@ -259,15 +261,16 @@ class XoopsTplsetHandler extends XoopsObjectHandler
         $ret   = array();
         $limit = $start = 0;
         $sql   = 'SELECT * FROM ' . $this->db->prefix('tplset');
-        if (isset($criteria) && is_subclass_of($criteria, 'CriteriaElement')) {
+        if (isset($criteria) && \method_exists($criteria, 'renderWhere')) {
             $sql .= ' ' . $criteria->renderWhere() . ' ORDER BY tplset_id';
             $limit = $criteria->getLimit();
             $start = $criteria->getStart();
         }
         $result = $this->db->query($sql, $limit, $start);
-        if (!$result) {
+        if (!$this->db->isResultSet($result)) {
             return $ret;
         }
+        /** @var array $myrow */
         while (false !== ($myrow = $this->db->fetchArray($result))) {
             $tplset = new XoopsTplset();
             $tplset->assignVars($myrow);
@@ -291,15 +294,16 @@ class XoopsTplsetHandler extends XoopsObjectHandler
     public function getCount(CriteriaElement $criteria = null)
     {
         $sql = 'SELECT COUNT(*) FROM ' . $this->db->prefix('tplset');
-        if (isset($criteria) && is_subclass_of($criteria, 'CriteriaElement')) {
+        if (isset($criteria) && \method_exists($criteria, 'renderWhere')) {
             $sql .= ' ' . $criteria->renderWhere();
         }
-        if (!$result = $this->db->query($sql)) {
+        $result = $this->db->query($sql);
+        if (!$this->db->isResultSet($result)) {
             return 0;
         }
         list($count) = $this->db->fetchRow($result);
 
-        return $count;
+        return (int)$count;
     }
 
     /**

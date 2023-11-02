@@ -16,6 +16,9 @@
  * @since               2.0.0
  * @author              Kazumi Ono (AKA onokazu) http://www.myweb.ne.jp/, http://jp.xoops.org/
  */
+
+use Xmf\Request;
+
 defined('XOOPS_ROOT_PATH') || exit('Restricted access');
 
 // RMV-NOTIFY
@@ -38,11 +41,11 @@ function notificationEnabled($style, $module_id = null)
         if (!isset($module_id)) {
             return false;
         }
-        /* @var XoopsModuleHandler $module_handler */
+        /** @var XoopsModuleHandler $module_handler */
         $module_handler = xoops_getHandler('module');
         $module         = $module_handler->get($module_id);
         if (!empty($module) && $module->getVar('hasnotification') == 1) {
-            /* @var XoopsConfigHandler $config_handler */
+            /** @var XoopsConfigHandler $config_handler */
             $config_handler = xoops_getHandler('config');
             $config         = $config_handler->getConfigsByCat(0, $module_id);
             $status         = $config['notification_enabled'];
@@ -76,7 +79,7 @@ function &notificationCategoryInfo($category_name = '', $module_id = null)
         $module_id = !empty($xoopsModule) ? $xoopsModule->getVar('mid') : 0;
         $module    =& $xoopsModule;
     } else {
-        /* @var XoopsModuleHandler $module_handler */
+        /** @var XoopsModuleHandler $module_handler */
         $module_handler = xoops_getHandler('module');
         $module         = $module_handler->get($module_id);
     }
@@ -147,12 +150,12 @@ function &notificationEvents($category_name, $enabled_only, $module_id = null)
         $module_id = !empty($xoopsModule) ? $xoopsModule->getVar('mid') : 0;
         $module    =& $xoopsModule;
     } else {
-        /* @var XoopsModuleHandler $module_handler */
+        /** @var XoopsModuleHandler $module_handler */
         $module_handler = xoops_getHandler('module');
         $module         = $module_handler->get($module_id);
     }
     $not_config     = $module->getInfo('notification');
-    /* @var XoopsConfigHandler $config_handler */
+    /** @var XoopsConfigHandler $config_handler */
     $config_handler = xoops_getHandler('config');
     $mod_config     = $config_handler->getConfigsByCat(0, $module_id);
 
@@ -294,7 +297,7 @@ function &notificationEvents($category_name, $enabled_only, $module_id = null)
  **/
 function notificationEventEnabled(&$category, &$event, &$module)
 {
-    /* @var XoopsConfigHandler $config_handler */
+    /** @var XoopsConfigHandler $config_handler */
     $config_handler = xoops_getHandler('config');
     $mod_config     = $config_handler->getConfigsByCat(0, $module->getVar('mid'));
 
@@ -365,7 +368,7 @@ function &notificationSubscribableCategoryInfo($module_id = null)
         if (!in_array($script_name, $subscribe_from)) {
             continue;
         }
-        // If 'item_name' is missing, automatic match.  Otherwise
+        // If 'item_name' is missing, automatic match.  Otherwise,
         // check if that argument exists...
         if (empty($category['item_name'])) {
             $category['item_name'] = '';
@@ -373,7 +376,7 @@ function &notificationSubscribableCategoryInfo($module_id = null)
             $sub_categories[]      = $category;
         } else {
             $item_name = $category['item_name'];
-            $id        = ($item_name != '' && isset($_GET[$item_name])) ? (int)$_GET[$item_name] : 0;
+            $id        = ($item_name != '' && isset($_GET[$item_name])) ? Request::getInt($item_name, 0, 'GET'): 0;
             if ($id > 0) {
                 $category['item_id'] = $id;
                 $sub_categories[]    = $category;

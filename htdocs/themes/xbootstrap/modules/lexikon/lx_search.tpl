@@ -22,7 +22,7 @@
     <h3><{$smarty.const._MD_LEXIKON_WEHAVE}></h3>
 
     <{$smarty.const._MD_LEXIKON_DEFS}><{$publishedwords}><br>
-    <{if $multicats == 1}><{$smarty.const._MD_LEXIKON_CATS}><{$totalcats}><br/><{/if}>
+    <{if isset($multicats) && $multicats == 1}><{$smarty.const._MD_LEXIKON_CATS}><{$totalcats}><br/><{/if}>
     <br/>
     <input class="btn btn-success btn-sm" type="button" value="<{$smarty.const._MD_LEXIKON_SUBMITENTRY}>" onclick="location.href = 'submit.php'"/>
     <input class="btn btn-info btn-sm" type="button" value="<{$smarty.const._MD_LEXIKON_REQUESTDEF}>" onclick="location.href = 'request.php'"/>
@@ -36,12 +36,12 @@
 
 <div class="row">
   <div class="col-md-12">
-    <{foreach item=eachresult from=$resultset.match}>
+    <{foreach item=eachresult from=$resultset.match|default:null}>
         <h4><img src="<{$xoops_url}>/modules/<{$eachresult.dir}>/assets/images/lx.png"/>&nbsp;
-          <a href="<{$xoops_url}>/modules/<{$eachresult.dir}>/entry.php?entryID=<{$eachresult.id}><{if $highlight == 1}><{$eachresult.keywords}><{/if}>">
+          <a href="<{$xoops_url}>/modules/<{$eachresult.dir}>/entry.php?entryID=<{$eachresult.id}><{if isset($highlight) && $highlight == 1}><{$eachresult.keywords}><{/if}>">
             <{$eachresult.term}>
           </a>
-          <{if $multicats == 1}>
+          <{if isset($multicats) && $multicats == 1}>
             <a href="<{$xoops_url}>/modules/<{$eachresult.dir}>/category.php?categoryID=<{$eachresult.categoryID}>">
                 [<{$eachresult.catname}>]
             </a>

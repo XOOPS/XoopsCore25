@@ -15,6 +15,8 @@
  * @since               2.0.0
  */
 
+use Xmf\Request;
+
 $xoopsOption['pagetype'] = 'notification';
 include __DIR__ . '/mainfile.php';
 
@@ -26,9 +28,9 @@ $uid = $xoopsUser->getVar('uid');
 
 $op = 'list';
 if (isset($_POST['op'])) {
-    $op = trim($_POST['op']);
+    $op = Request::getString('op', '', 'POST');
 } elseif (isset($_GET['op'])) {
-    $op = trim($_GET['op']);
+    $op = Request::getString('op', '', 'GET');
 }
 if (isset($_POST['delete'])) {
     $op = 'delete';
@@ -56,12 +58,12 @@ switch ($op) {
         // Get an array of all notifications for the selected user
         $criteria = new Criteria('not_uid', $uid);
         $criteria->setSort('not_modid,not_category,not_itemid');
-        /* @var  XoopsNotificationHandler $notification_handler */
+        /** @var  XoopsNotificationHandler $notification_handler */
         $notification_handler = xoops_getHandler('notification');
         $notifications        = $notification_handler->getObjects($criteria);
 
         // Generate the info for the template
-        /* @var XoopsModuleHandler $module_handler */
+        /** @var XoopsModuleHandler $module_handler */
         $module_handler = xoops_getHandler('module');
         include_once $GLOBALS['xoops']->path('include/notification_functions.php');
         $modules       = array();
@@ -74,6 +76,7 @@ switch ($op) {
                 $prev_modid      = $modid;
                 $prev_category   = -1;
                 $prev_item       = -1;
+                /** @var \XoopsModule $module */
                 $module          = $module_handler->get($modid);
                 $modules[$modid] = array(
                     'id'         => $modid,

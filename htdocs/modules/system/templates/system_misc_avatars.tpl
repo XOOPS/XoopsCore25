@@ -1,5 +1,5 @@
 <{* avatar selector popup *}>
-<{if $closeHead|default:true}>
+<{if isset($closeHead) ? $closeHead : true}>
 <{$headContents|default:''}>
 <script>window.resizeTo(600, 400)</script>
 </head>
@@ -11,7 +11,7 @@
     <{counter name=loopid start=0 print=false}>
     <{assign var=tdcnt value=1}>
     <tr>
-    <{foreach from=$avatars key=file item=name}>
+    <{foreach item=name from=$avatars|default:null key=file }>
         <td align="center" valign="center">
             <img src="<{$upload_url}><{$file}>" alt="<{$name}>" title="<{$name}>" /><br>
             <{$name}><br>
@@ -26,7 +26,7 @@
     <{/foreach}>
     </tr>
 </table>
-<{if $closeButton|default:true}>
+<{if isset($closeButton) ? $closeButton : true}>
     <div style="text-align:center;"><input class="formButton" value="<{$lang_close}>" type="button" onclick="window.close();" /></div>
 <{/if}>
 

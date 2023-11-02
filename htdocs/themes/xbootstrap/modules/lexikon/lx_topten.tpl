@@ -13,10 +13,10 @@
 <br><br>
 
 <!-- Start ranking loop -->
-<{foreach item=ranking from=$rankings}>
+<{foreach item=ranking from=$rankings|default:null}>
     <table>
         <tr>
-            <th class="head" colspan="6"><{if $multicats == 1}><{$lang_category}>: <{/if}><a style='color:#FFFFFF;'
+            <th class="head" colspan="6"><{if isset($multicats) && $multicats == 1}><{$lang_category}>: <{/if}><a style='color:#FFFFFF;'
                                                                                              href='<{$xoops_url}>/modules/<{$lang_moduledirname}>/category.php?categoryID=<{$ranking.cid}>'><{$ranking.title}></a>
                 (<{$lang_sortby}>)
             </th>
@@ -31,7 +31,7 @@
             <{*<td class="head" width='8%' align='right'><{$lang_def}></td>*}>
         </tr>
         <!-- Start links loop -->
-        <{foreach item=terms from=$ranking.terms}>
+        <{foreach item=terms from=$ranking.terms|default:null}>
             <{*<tr class="<{cycle values="even,odd"}>">*}>
             <tr>
                 <td class="even"><{$terms.rank}></td>

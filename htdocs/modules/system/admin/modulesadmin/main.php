@@ -10,8 +10,8 @@
  */
 
 /**
- * @copyright    XOOPS Project http://xoops.org/
- * @license      GNU GPL 2 or later (https://www.gnu.org/licenses/gpl-2.0.html)
+ * @copyright    XOOPS Project https://xoops.org/
+ * @license      GNU GPL 2.0 or later (https://www.gnu.org/licenses/gpl-2.0.html)
  * @package
  * @since
  * @author       XOOPS Development Team, Kazumi Ono (AKA onokazu)
@@ -41,7 +41,7 @@ if (in_array($op, array('confirm', 'submit', 'install_ok', 'update_ok', 'uninsta
         $op = 'list';
     }
 }
-$myts = MyTextSanitizer::getInstance();
+$myts = \MyTextSanitizer::getInstance();
 
 switch ($op) {
     case 'list':
@@ -63,7 +63,7 @@ switch ($op) {
         $xoBreadCrumb->addTips(_AM_SYSTEM_MODULES_TIPS);
         $xoBreadCrumb->render();
         // Get Module Handler
-        /* @var XoopsModuleHandler $module_handler */
+        /** @var XoopsModuleHandler $module_handler */
         $module_handler = xoops_getHandler('module');
         $criteria       = new CriteriaCompo();
         $criteria->setSort('weight');
@@ -75,7 +75,7 @@ switch ($op) {
         $install_mods   = array();
 		$module = Request::getArray('module', array());
         foreach ($installed_mods as $module) {
-            /* @var XoopsModule $module */
+            /** @var XoopsModule $module */
             $listed_mods[$i]                  = $module->toArray();
             $listed_mods[$i]['name']          = htmlspecialchars($module->getVar('name'), ENT_QUOTES);
             $listed_mods[$i]['image']         = $module->getInfo('image');
@@ -142,12 +142,12 @@ switch ($op) {
         $xoBreadCrumb->addTips(_AM_SYSTEM_MODULES_TIPS);
         $xoBreadCrumb->render();
         // Get Module Handler
-        /* @var XoopsModuleHandler $module_handler */
+        /** @var XoopsModuleHandler $module_handler */
         $module_handler = xoops_getHandler('module');
         // Get all installed modules
         $installed_mods = $module_handler->getObjects();
         foreach ($installed_mods as $module) {
-            /* @var XoopsModule $module */
+            /** @var XoopsModule $module */
             $install_mods[] = $module->getInfo('dirname');
         }
         // Get module to install
@@ -184,7 +184,7 @@ switch ($op) {
 
     case 'order':
         // Get Module Handler
-        /* @var XoopsModuleHandler $module_handler */
+        /** @var XoopsModuleHandler $module_handler */
         $module_handler = xoops_getHandler('module');
         if (isset($_POST['mod'])) {
             $i = 1;
@@ -249,11 +249,11 @@ switch ($op) {
 
     case 'display':
         // Get module handler
-        /* @var XoopsModuleHandler $module_handler */
+        /** @var XoopsModuleHandler $module_handler */
         $module_handler = xoops_getHandler('module');
         $module_id      = Request::getInt('mid', 0);
         if ($module_id > 0) {
-            /* @var XoopsModule $module */
+            /** @var XoopsModule $module */
             $module = $module_handler->get($module_id);
             $old    = $module->getVar('isactive');
             // Set value
@@ -338,7 +338,7 @@ switch ($op) {
 		$module = Request::getString('module', '');
         $module = $myts->htmlSpecialChars($module);
         // Get module handler
-        /* @var XoopsModuleHandler $module_handler */
+        /** @var XoopsModuleHandler $module_handler */
         $module_handler = xoops_getHandler('module');
         $mod            = $module_handler->create();
         $mod->loadInfoAsVar($module);
@@ -397,7 +397,7 @@ switch ($op) {
 		$module = Request::getString('module', '');
         $module = $myts->htmlSpecialChars($module);
         // Get module handler
-        /* @var XoopsModuleHandler $module_handler */
+        /** @var XoopsModuleHandler $module_handler */
         $module_handler = xoops_getHandler('module');
         $mod            = $module_handler->getByDirname($module);
         // Construct message
@@ -456,7 +456,7 @@ switch ($op) {
 		$module = Request::getString('module', '');
         $module = $myts->htmlSpecialChars($module);
         // Get module handler
-        /* @var XoopsModuleHandler $module_handler */
+        /** @var XoopsModuleHandler $module_handler */
         $module_handler = xoops_getHandler('module');
         $mod            = $module_handler->getByDirname($module);
         // Construct message

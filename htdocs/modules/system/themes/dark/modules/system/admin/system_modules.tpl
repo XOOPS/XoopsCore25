@@ -1,19 +1,19 @@
 <{include file="db:system_header.tpl"}>
-<{if $install_mods|default:false}>
+<{if !empty($install_mods)}>
     <script type="text/javascript">
-        IMG_ON = '<{xoAdminIcons success.png}>';
-        IMG_OFF = '<{xoAdminIcons cancel.png}>';
+        IMG_ON = "<{xoAdminIcons 'success.png'}>";
+        IMG_OFF = "<{xoAdminIcons 'cancel.png'}>";
     </script>
     <div class="floatleft">
-        <img class="module-size cursorpointer tooltip" onclick="system_moduleLargeView();" src="<{xoAdminIcons view_large.png}>"
+        <img class="module-size cursorpointer tooltip" onclick="system_moduleLargeView();" src="<{xoAdminIcons 'view_large.png'}>"
              alt="<{$smarty.const._AM_SYSTEM_MODULES_VIEWLARGE}>" title="<{$smarty.const._AM_SYSTEM_MODULES_VIEWLARGE}>"/>
-        <img class="module-size cursorpointer tooltip" onclick="system_moduleListView();" src="<{xoAdminIcons view_small.png}>"
+        <img class="module-size cursorpointer tooltip" onclick="system_moduleListView();" src="<{xoAdminIcons 'view_small.png'}>"
              alt="<{$smarty.const._AM_SYSTEM_MODULES_VIEWLINE}>" title="<{$smarty.const._AM_SYSTEM_MODULES_VIEWLINE}>"/>
     </div>
     <div class="floatright">
         <div class="xo-buttons">
             <a class="ui-corner-all tooltip" href="admin.php?fct=modulesadmin&amp;op=installlist" title="<{$smarty.const._AM_SYSTEM_MODULES_TOINSTALL}>">
-                <img src="<{xoAdminIcons install.png}>" alt="<{$smarty.const._AM_SYSTEM_MODULES_TOINSTALL}>"/>
+                <img src="<{xoAdminIcons 'install.png'}>" alt="<{$smarty.const._AM_SYSTEM_MODULES_TOINSTALL}>"/>
                 <{$smarty.const._AM_SYSTEM_MODULES_TOINSTALL}>&nbsp;<span class="red">(<{$toinstall_nb}>)</span></a>
         </div>
     </div>
@@ -31,7 +31,7 @@
             </tr>
             </thead>
             <tbody>
-            <{foreach item=row from=$install_mods}>
+            <{foreach item=row from=$install_mods|default:null}>
                 <{if $row.dirname == 'system'}>
                     <tr class="txtcenter foot">
                         <td>
@@ -40,7 +40,7 @@
 
                             <div class="spacer xo-modsimages">
                                 <a class="tooltip" href="<{$xoops_url}>/modules/<{$row.dirname}>/<{$row.adminindex}>" title="<{$row.name}>">
-                                    <img class="xo-mods hide" src="<{xoAdminIcons applications.png}>" alt="<{$row.name}>" title="<{$row.name}>"/></a>
+                                    <img class="xo-mods hide" src="<{xoAdminIcons 'applications.png'}>" alt="<{$row.name}>" title="<{$row.name}>"/></a>
                                 <input type="text" name="newname[<{$row.mid}>]" value="<{$row.name}>" maxlength="150" size="20"/>
                                 <input type="hidden" name="oldname[<{$row.mid}>]" value="<{$row.name}>"/>
                             </div>
@@ -60,13 +60,13 @@
                                 <a class="tooltip" href="<{$xoops_url}>/modules/system/admin.php?fct=modulesadmin&amp;op=update&amp;module=<{$row.dirname}>"
                                    title="<{$smarty.const._AM_SYSTEM_MODULES_UPDATE}>">
                                     <{if $row.warning_update == 1}>
-                                        <img src="<{xoAdminIcons messagebox_warning.png}>" alt="<{$smarty.const._AM_SYSTEM_MODULES_UPDATE}>"/></a>
+                                        <img src="<{xoAdminIcons 'messagebox_warning.png'}>" alt="<{$smarty.const._AM_SYSTEM_MODULES_UPDATE}>"/></a>
                                     <{else}>
-                                        <img src="<{xoAdminIcons reload.png}>" alt="<{$smarty.const._AM_SYSTEM_MODULES_UPDATE}>"/></a>
+                                        <img src="<{xoAdminIcons 'reload.png'}>" alt="<{$smarty.const._AM_SYSTEM_MODULES_UPDATE}>"/></a>
                                     <{/if}>
                             <{/if}>
                             <img class="cursorpointer tooltip" onclick="display_dialog(<{$row.mid}>, true, true, 'slide', 'slide', 240, 450);"
-                                 src="<{xoAdminIcons info.png}>" alt="<{$smarty.const._INFO}>" title="<{$smarty.const._INFO}>"/>
+                                 src="<{xoAdminIcons 'info.png'}>" alt="<{$smarty.const._INFO}>" title="<{$smarty.const._INFO}>"/>
                             <input type="hidden" name="module[]" value="<{$row.mid}>"/>
                         </td>
                     </tr>
@@ -77,11 +77,11 @@
             </tr>
             </tbody>
             <tbody class="xo-module">
-            <{foreach item=row from=$install_mods}>
+            <{foreach item=row from=$install_mods|default:null}>
                 <{if $row.dirname != 'system' && $row.hasmain}>
                     <tr id="mod_<{$row.mid}>" class="<{if $row.dirname == 'system'}>xo-system <{/if}>txtcenter <{cycle values='odd, even'}>">
                         <td>
-                            <{if $row.hasadmin == 1 && $row.isactive == 1}>
+                             <{if (isset($row.hasadmin) && $row.hasadmin  == 1) && (isset($row.isactive) && $row.isactive == 1)}>
                                 <a class="xo-logonormal tooltip" href="<{$xoops_url}>/modules/<{$row.dirname}>/<{$row.adminindex}>" title="<{$row.name}>">
                                     <img src="<{$xoops_url}>/modules/<{$row.dirname}>/<{$row.image}>" alt="<{$row.name}>"/></a>
                             <{else}>
@@ -89,11 +89,11 @@
                                      title="<{$row.name}>"/>
                             <{/if}>
                             <div class="spacer xo-modsimages">
-                                <{if $row.hasadmin == 1 && $row.isactive == 1}>
+                                <{if (isset($row.hasadmin) && $row.hasadmin  == 1) && (isset($row.isactive) && $row.isactive == 1)}>
                                     <a class="tooltip" href="<{$xoops_url}>/modules/<{$row.dirname}>/<{$row.adminindex}>" title="<{$row.name}>">
-                                        <img class="xo-mods hide" src="<{xoAdminIcons applications.png}>" alt="<{$row.name}>" title="<{$row.name}>"/></a>
+                                        <img class="xo-mods hide" src="<{xoAdminIcons 'applications.png'}>" alt="<{$row.name}>" title="<{$row.name}>"/></a>
                                 <{else}>
-                                    <img class="xo-mods hide tooltip" src="<{xoAdminIcons applications.png}>" alt="<{$row.name}>" title="<{$row.name}>"/>
+                                    <img class="xo-mods hide tooltip" src="<{xoAdminIcons 'applications.png'}>" alt="<{$row.name}>" title="<{$row.name}>"/>
                                 <{/if}>
                                 <input type="text" name="newname[<{$row.mid}>]" value="<{$row.name}>" maxlength="150" size="20"/>
                                 <input type="hidden" name="oldname[<{$row.mid}>]" value="<{$row.name}>"/>
@@ -115,7 +115,7 @@
                             <img id="loading_active<{$row.mid}>" src="images/spinner.gif" style="display:none;" alt="<{$smarty.const._AM_SYSTEM_LOADING}>"/>
                             <img class="cursorpointer tooltip" id="active<{$row.mid}>"
                                  onclick="system_setStatus( { fct: 'modulesadmin', op: 'display', mid: <{$row.mid}> }, 'active<{$row.mid}>', 'admin.php' )"
-                                 src="<{if $row.isactive}><{xoAdminIcons success.png}><{else}><{xoAdminIcons cancel.png}><{/if}>"
+                                 src="<{if $row.isactive}><{xoAdminIcons 'success.png'}><{else}><{xoAdminIcons 'cancel.png'}><{/if}>"
                                  alt="<{if $row.isactive}><{$smarty.const._AM_SYSTEM_MODULES_DEACTIVATE}><{else}><{$smarty.const._AM_SYSTEM_MODULES_ACTIVATE}><{/if}>"
                                  title="<{if $row.isactive}><{$smarty.const._AM_SYSTEM_MODULES_DEACTIVATE}><{else}><{$smarty.const._AM_SYSTEM_MODULES_ACTIVATE}><{/if}>"/>
                         </td>
@@ -124,7 +124,7 @@
                                  alt="<{$smarty.const._AM_SYSTEM_LOADING}>"/>
                             <img class="cursorpointer tooltip" id="menu<{$row.mid}>"
                                  onclick="system_setStatus( { fct: 'modulesadmin', op: 'display_in_menu', mid: <{$row.mid}> }, 'menu<{$row.mid}>', 'admin.php' )"
-                                 src="<{if $row.weight != 0}><{xoAdminIcons success.png}><{else}><{xoAdminIcons cancel.png}><{/if}>"
+                                 src="<{if $row.weight != 0}><{xoAdminIcons 'success.png'}><{else}><{xoAdminIcons 'cancel.png'}><{/if}>"
                                  alt="<{if $row.weight != 0}><{$smarty.const._AM_SYSTEM_MODULES_HIDE}><{else}><{$smarty.const._AM_SYSTEM_MODULES_SHOW}><{/if}>"
                                  title="<{if $row.weight != 0}><{$smarty.const._AM_SYSTEM_MODULES_HIDE}><{else}><{$smarty.const._AM_SYSTEM_MODULES_SHOW}><{/if}>"/>
                         </td>
@@ -133,16 +133,16 @@
                                 <a class="tooltip" href="<{$xoops_url}>/modules/system/admin.php?fct=modulesadmin&amp;op=update&amp;module=<{$row.dirname}>"
                                    title="<{$smarty.const._AM_SYSTEM_MODULES_UPDATE}>">
                                     <{if $row.warning_update == 1}>
-                                        <img src="<{xoAdminIcons messagebox_warning.png}>" alt="<{$smarty.const._AM_SYSTEM_MODULES_UPDATE}>"/></a>
+                                        <img src="<{xoAdminIcons 'messagebox_warning.png'}>" alt="<{$smarty.const._AM_SYSTEM_MODULES_UPDATE}>"/></a>
                                     <{else}>
-                                        <img src="<{xoAdminIcons reload.png}>" alt="<{$smarty.const._AM_SYSTEM_MODULES_UPDATE}>"/></a>
+                                        <img src="<{xoAdminIcons 'reload.png'}>" alt="<{$smarty.const._AM_SYSTEM_MODULES_UPDATE}>"/></a>
                                     <{/if}>
                             <{/if}>
                             <a class="tooltip" href="<{$xoops_url}>/modules/system/admin.php?fct=modulesadmin&amp;op=uninstall&amp;module=<{$row.dirname}>"
                                title="<{$smarty.const._AM_SYSTEM_MODULES_UNINSTALL}>">
-                                <img src="<{xoAdminIcons uninstall.png}>" alt="<{$smarty.const._AM_SYSTEM_MODULES_UNINSTALL}>"/></a>
+                                <img src="<{xoAdminIcons 'uninstall.png'}>" alt="<{$smarty.const._AM_SYSTEM_MODULES_UNINSTALL}>"/></a>
                             <img class="cursorpointer tooltip" onclick="display_dialog(<{$row.mid}>, true, true, 'slide', 'slide', 240, 450);"
-                                 src="<{xoAdminIcons info.png}>" alt="<{$smarty.const._INFO}>" title="<{$smarty.const._INFO}>"/>
+                                 src="<{xoAdminIcons 'info.png'}>" alt="<{$smarty.const._INFO}>" title="<{$smarty.const._INFO}>"/>
                             <input type="hidden" name="module[]" value="<{$row.mid}>"/>
                         </td>
                     </tr>
@@ -153,7 +153,7 @@
             <tr class="head">
                 <td colspan="6"></td>
             </tr>
-            <{foreach item=row from=$install_mods}>
+            <{foreach item=row from=$install_mods|default:null}>
                 <{if $row.dirname != 'system' && !$row.hasmain}>
                     <tr class="txtcenter foot">
                         <td>
@@ -162,7 +162,7 @@
 
                             <div class="spacer xo-modsimages">
                                 <a class="tooltip" href="<{$xoops_url}>/modules/<{$row.dirname}>/<{$row.adminindex}>" title="<{$row.name}>">
-                                    <img class="xo-mods hide" src="<{xoAdminIcons applications.png}>" alt="<{$row.name}>" title="<{$row.name}>"/></a>
+                                    <img class="xo-mods hide" src="<{xoAdminIcons 'applications.png'}>" alt="<{$row.name}>" title="<{$row.name}>"/></a>
                                 <input type="text" name="newname[<{$row.mid}>]" value="<{$row.name}>" maxlength="150" size="20"/>
                                 <input type="hidden" name="oldname[<{$row.mid}>]" value="<{$row.name}>"/>
                             </div>
@@ -183,7 +183,7 @@
                                                        title="<{$smarty.const._AM_SYSTEM_LOADING}>" alt="<{$smarty.const._AM_SYSTEM_LOADING}>"/><img
                                     class="cursorpointer tooltip" id="mid<{$row.mid}>"
                                     onclick="system_setStatus( { fct: 'modulesadmin', op: 'display', mid: <{$row.mid}> }, 'mid<{$row.mid}>', 'admin.php' )"
-                                    src="<{if $row.isactive}><{xoAdminIcons success.png}><{else}><{xoAdminIcons cancel.png}><{/if}>"
+                                    src="<{if $row.isactive}><{xoAdminIcons 'success.png'}><{else}><{xoAdminIcons 'cancel.png'}><{/if}>"
                                     alt="<{if $row.isactive}><{$smarty.const._AM_SYSTEM_MODULES_DEACTIVATE}><{else}><{$smarty.const._AM_SYSTEM_MODULES_ACTIVATE}><{/if}>"
                                     title="<{if $row.isactive}><{$smarty.const._AM_SYSTEM_MODULES_DEACTIVATE}><{else}><{$smarty.const._AM_SYSTEM_MODULES_ACTIVATE}><{/if}>"/>
                         </td>
@@ -192,13 +192,13 @@
                             <{if $row.isactive == 1}>
                                 <a class="tooltip" href="<{$xoops_url}>/modules/system/admin.php?fct=modulesadmin&amp;op=update&amp;module=<{$row.dirname}>"
                                    title="<{$smarty.const._AM_SYSTEM_MODULES_UPDATE}>">
-                                    <img src="<{xoAdminIcons reload.png}>" alt="<{$smarty.const._AM_SYSTEM_MODULES_UPDATE}>"/></a>
+                                    <img src="<{xoAdminIcons 'reload.png'}>" alt="<{$smarty.const._AM_SYSTEM_MODULES_UPDATE}>"/></a>
                             <{/if}>
                             <a class="tooltip" href="<{$xoops_url}>/modules/system/admin.php?fct=modulesadmin&amp;op=uninstall&amp;module=<{$row.dirname}>"
                                title="<{$smarty.const._AM_SYSTEM_MODULES_UNINSTALL}>">
-                                <img src="<{xoAdminIcons uninstall.png}>" alt="<{$smarty.const._AM_SYSTEM_MODULES_UNINSTALL}>"/></a>
+                                <img src="<{xoAdminIcons 'uninstall.png'}>" alt="<{$smarty.const._AM_SYSTEM_MODULES_UNINSTALL}>"/></a>
                             <img class="cursorpointer tooltip" onclick="display_dialog(<{$row.mid}>, true, true, 'slide', 'slide', 240, 450);"
-                                 src="<{xoAdminIcons info.png}>" alt="<{$smarty.const._INFO}>" title="<{$smarty.const._INFO}>"/>
+                                 src="<{xoAdminIcons 'info.png'}>" alt="<{$smarty.const._INFO}>" title="<{$smarty.const._INFO}>"/>
                             <input type="hidden" name="module[]" value="<{$row.mid}>"/>
                         </td>
                     </tr>
@@ -215,15 +215,15 @@
             </tr>
             </tfoot>
         </table>
-        <{php}>echo $GLOBALS['xoopsSecurity']->getTokenHTML();<{/php}>
+        <{securityToken}>
     </form>
 <{/if}>
 
-<{if $toinstall_mods|default:false}>
+<{if !empty($toinstall_mods)}>
     <div class="floatleft">
-        <img class="module-size cursorpointer tooltip" onclick="system_moduleLargeView();" src="<{xoAdminIcons view_large.png}>"
+        <img class="module-size cursorpointer tooltip" onclick="system_moduleLargeView();" src="<{xoAdminIcons 'view_large.png'}>"
              alt="<{$smarty.const._AM_SYSTEM_MODULES_VIEWLARGE}>" title="<{$smarty.const._AM_SYSTEM_MODULES_VIEWLARGE}>"/>
-        <img class="module-size cursorpointer tooltip" onclick="system_moduleListView();" src="<{xoAdminIcons view_small.png}>"
+        <img class="module-size cursorpointer tooltip" onclick="system_moduleListView();" src="<{xoAdminIcons 'view_small.png'}>"
              alt="<{$smarty.const._AM_SYSTEM_MODULES_VIEWLINE}>" title="<{$smarty.const._AM_SYSTEM_MODULES_VIEWLINE}>"/>
     </div>
     <div class="clear spacer"></div>
@@ -236,17 +236,17 @@
         </tr>
         </thead>
         <tbody>
-        <{foreach item=row from=$toinstall_mods}>
+        <{foreach item=row from=$toinstall_mods|default:null}>
             <tr class="txtcenter <{cycle values='odd, even'}>">
                 <td>
                     <img class="xo-logonormal" src="<{$xoops_url}>/modules/<{$row.dirname}>/<{$row.image}>" alt="<{$row.name}>" title="<{$row.name}>"/>
 
                     <div class="spacer xo-modsimages">
-                        <{if $row.hasadmin|default:0 == 1 && $row.isactive|default:0 == 1}>
+                        <{if (isset($row.hasadmin) && $row.hasadmin  == 1) && (isset($row.isactive) && $row.isactive == 1)}>
                             <a class="tooltip" href="<{$xoops_url}>/modules/<{$row.dirname}>/<{$row.adminindex}>" title="<{$row.name}>">
-                                <img class="xo-mods hide" src="<{xoAdminIcons applications.png}>" alt="<{$row.name}>" title="<{$row.name}>"/></a>
+                                <img class="xo-mods hide" src="<{xoAdminIcons 'applications.png'}>" alt="<{$row.name}>" title="<{$row.name}>"/></a>
                         <{else}>
-                            <img class="xo-mods hide tooltip" src="<{xoAdminIcons applications.png}>" alt="<{$row.name}>" title="<{$row.name}>"/>
+                            <img class="xo-mods hide tooltip" src="<{xoAdminIcons 'applications.png'}>" alt="<{$row.name}>" title="<{$row.name}>"/>
                         <{/if}>
                         <span class="spacer bold"><{$row.name}></span>
                     </div>
@@ -255,9 +255,9 @@
                 <td class="xo-modsimages">
                     <a class="tooltip" href="<{$xoops_url}>/modules/system/admin.php?fct=modulesadmin&amp;op=install&amp;module=<{$row.dirname}>"
                        title="<{$smarty.const._AM_SYSTEM_MODULES_INSTALL}>">
-                        <img src="<{xoAdminIcons install.png}>" alt="<{$smarty.const._AM_SYSTEM_MODULES_INSTALL}>"/></a>
+                        <img src="<{xoAdminIcons 'install.png'}>" alt="<{$smarty.const._AM_SYSTEM_MODULES_INSTALL}>"/></a>
                     <img class="cursorpointer tooltip" onclick="display_dialog(<{$row.mid}>, true, true, 'slide', 'slide', 240, 450);"
-                         src="<{xoAdminIcons info.png}>" alt="<{$smarty.const._INFO}>" title="<{$smarty.const._INFO}>"/>
+                         src="<{xoAdminIcons 'info.png'}>" alt="<{$smarty.const._INFO}>" title="<{$smarty.const._INFO}>"/>
                 </td>
             </tr>
         <{/foreach}>
@@ -265,7 +265,7 @@
     </table>
 <{/if}>
 <!--Pop-pup-->
-<{foreach item=row from=$mods_popup}>
+<{foreach item=row from=$mods_popup|default:null}>
     <div id="dialog<{$row.mid}>" title="<{$row.name}>" style='display:none;'>
         <table>
             <tr>

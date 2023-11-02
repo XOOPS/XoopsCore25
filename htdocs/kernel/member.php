@@ -17,8 +17,8 @@
  */
 defined('XOOPS_ROOT_PATH') || exit('Restricted access');
 
-require_once $GLOBALS['xoops']->path('kernel/user.php');
-require_once $GLOBALS['xoops']->path('kernel/group.php');
+require_once __DIR__ . '/user.php';
+require_once __DIR__ . '/group.php';
 
 /**
  * XOOPS member handler class.
@@ -92,7 +92,7 @@ class XoopsMemberHandler
      * retrieve a group
      *
      * @param  int $id ID for the group
-     * @return XoopsGroup XoopsGroup reference to the group
+     * @return XoopsGroup|false XoopsGroup reference to the group
      */
     public function getGroup($id)
     {
@@ -385,7 +385,7 @@ class XoopsMemberHandler
 
         /** @var mysqli_result $result */
         $result = $db->query($sql);
-        if ($result) {
+        if ($db->isResultSet($result)) {
             $row = $db->fetchRow($result);
             if ($row) {
                 $columnLength = $row[0];
@@ -503,9 +503,11 @@ class XoopsMemberHandler
             $sql .= $sql_criteria;
         }
 
-        if (!$result = $this->userHandler->db->query($sql, $limit, $start)) {
+        $result = $this->userHandler->db->query($sql, $limit, $start);
+        if (!$this->userHandler->db->isResultSet($result)) {
             return $ret;
         }
+        /** @var array $myrow */
         while (false !== ($myrow = $this->userHandler->db->fetchArray($result))) {
             if ($asobject) {
                 $user = new XoopsUser();
@@ -551,12 +553,12 @@ class XoopsMemberHandler
         if ($sql_criteria) {
             $sql .= ' AND ' . $sql_criteria;
         }
-
-        if (!$result = $this->userHandler->db->query($sql)) {
+        $result = $this->userHandler->db->query($sql);
+        if (!$this->userHandler->db->isResultSet($result)) {
             return $ret;
         }
         list($ret) = $this->userHandler->db->fetchRow($result);
 
-        return $ret;
+        return (int)$ret;
     }
 }

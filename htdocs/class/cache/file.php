@@ -24,7 +24,7 @@ defined('XOOPS_ROOT_PATH') || exit('Restricted access');
  *
  * PHP versions 4 and 5
  *
- * CakePHP(tm) :  Rapid Development Framework <http://www.cakephp.org/>
+ * CakePHP(tm) :  Rapid Development Framework <https://www.cakephp.org/>
  * Copyright 2005-2008, Cake Software Foundation, Inc.
  *                                       1785 E. Sahara Avenue, Suite 490-204
  *                                       Las Vegas, Nevada 89104
@@ -34,13 +34,13 @@ defined('XOOPS_ROOT_PATH') || exit('Restricted access');
  *
  * @filesource
  * @copyright  Copyright 2005-2008, Cake Software Foundation, Inc.
- * @link       http://www.cakefoundation.org/projects/info/cakephp CakePHP(tm) Project
+ * @link       https://www.cakefoundation.org/projects/info/cakephp CakePHP(tm) Project
  * @package    cake
  * @subpackage cake.cake.libs.cache
  * @since      CakePHP(tm) v 1.2.0.4933
  * @modifiedby $LastChangedBy$
  * @lastmodified $Date$
- * @license    http://www.opensource.org/licenses/mit-license.php The MIT License
+ * @license    https://www.opensource.org/licenses/mit-license.php The MIT License
  */
 
 /**
@@ -212,7 +212,7 @@ class XoopsCacheFile extends XoopsCacheEngine
             $data = stripslashes($data);
             // $data = preg_replace('!s:(\d+):"(.*?)";!se', "'s:'.strlen('$2').':\"$2\";'", $data);
             $data = preg_replace_callback('!s:(\d+):"(.*?)";!s', function ($m) { return 's:' . strlen($m[2]) . ':"' . $m[2] . '";'; }, $data);
-            $data = unserialize($data);
+            $data = unserialize($data, array('allowed_classes' => false));
             if (is_array($data)) {
                 XoopsLoad::load('XoopsUtility');
                 $data = XoopsUtility::recursive('stripslashes', $data);

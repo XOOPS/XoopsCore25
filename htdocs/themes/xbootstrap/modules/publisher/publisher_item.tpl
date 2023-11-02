@@ -43,24 +43,24 @@
                 </span>
         </h2>
 
-        <{if $show_subtitle && $item.subtitle}>
+        <{if !empty($show_subtitle) && !empty($item.subtitle)}>
             <h5><{$item.subtitle}></h5>
         <{/if}>
     </header>
-    <{if $item.image_path || $item.images}>
+    <{if !empty($item.image_path) || !empty($item.images)}>
         <figure>
-            <{if $item.images}>
+            <{if !empty($item.images)}>
                 <div id="articleslider" class="owl-carousel owl-theme" style="margin-bottom:10px;">
                     <div class="item">
                         <img class="img-responsive" src="<{$item.image_path}>"/>
                     </div>
-                    <{foreach item=image from=$item.images}>
+                    <{foreach item=image from=$item.images|default:null}>
                         <div class="item">
                             <img class="img-responsive" src="<{$image.path}>" alt="<{$image.name}>"/>
                         </div>
                     <{/foreach}>
                 </div>
-            <{elseif $item.image_path}>
+            <{elseif !empty($item.image_path)}>
                 <img style="margin-bottom:15px;" class="img-responsive" src="<{$item.image_path}>" alt="<{$item.image_name}>"/>
             <{/if}>
         </figure>
@@ -72,7 +72,7 @@
     </div>
 
 </div>
-<{if $pagenav}>
+<{if !empty($pagenav)}>
     <div class="pub_pagenav text-right">
         <{$pagenav}>
     </div>
@@ -80,17 +80,17 @@
 <div class="clearfix"></div>
 <div class="pub_article_extras">
 
-    <{if $rating_enabled|default:false}>
+    <{if !empty($rating_enabled)}>
         <div class="pull-left">
             <small><{$item.ratingbar}></small>
         </div>
     <{/if}>
     <div class="pull-right text-right">
 
-        <{if $display_print_link|default:0 !=0}>
+        <{if !empty($display_print_link)}>
             <{$item.printlink}>
         <{/if}>
-        <{if $display_pdf_button|default:0 !=0}>
+        <{if !empty($display_pdf_button)}>
             <{$item.pdfbutton}>
         <{/if}>
 
@@ -100,7 +100,7 @@
     <div class="clearfix"></div>
 </div>
 
-<{if $itemfooter}>
+<{if !empty($itemfooter)}>
     <div class="panel-footer">
         <small><{$itemfooter}></small>
     </div>
@@ -118,10 +118,10 @@
         </tr>
         </thead>
         <tbody>
-        <{foreach item=file from=$item.files}>
+        <{foreach item=file from=$item.files|default:null}>
             <tr>
                 <td>
-                    <{if $file.mod}>
+                    <{if !empty($file.mod)}>
                         <a href="<{$publisher_url}>/file.php?op=mod&fileid=<{$file.fileid}>">
                             <img src="<{$publisher_url}>/assets/images/links/edit.gif" title="<{$smarty.const._CO_PUBLISHER_EDITFILE}>"
                                  alt="<{$smarty.const._CO_PUBLISHER_EDITFILE}>"/></a>
@@ -148,7 +148,7 @@
 <!-- End Attached Files -->
 
 <!-- Items by same Author -->
-<{if $perm_author_items && $item.uid != 0}>
+<{if !empty($perm_author_items) && isset($item.uid) && $item.uid != 0}>
     <div class="pub_article_extras">
         <div class="btn btn-primary btn-lg btn-block">
             <a href="<{$publisher_url}>/author_items.php?uid=<{$item.uid}>">
@@ -160,9 +160,9 @@
 <!-- END Items by same Author -->
 
 <!-- Other articles in the category -->
-<{if $other_items == "previous_next"}>
-    <{if $previous_item_link|default:'' || $next_item_link|default:''}>
-        <{if $previous_item_link|default:''}>
+<{if isset($other_items) && $other_items == "previous_next"}>
+    <{if !empty($previous_item_link) || !empty($next_item_link)}>
+        <{if !empty($previous_item_link)}>
             <div class="pull-left">
                 <a href="<{$previous_item_url}>">
                     <img style="vertical-align: middle;" src="<{$publisher_images_url}>/links/previous.gif" title="<{$smarty.const._MD_PUBLISHER_PREVIOUS_ITEM}>"
@@ -171,7 +171,7 @@
                 <{$previous_item_link|default:''}>
             </div>
         <{/if}>
-        <{if $next_item_link|default:''}>
+        <{if !empty($next_item_link)}>
             <div class="text-right">
                 <{$next_item_link}>
                 <a href="<{$next_item_url}>">
@@ -186,23 +186,23 @@
         <thead>
         <tr>
             <th><{$smarty.const._MD_PUBLISHER_OTHER_ITEMS}></th>
-            <{if $display_date_col == 1}>
+            <{if isset($display_date_col) && $display_date_col == 1}>
                 <th style="text-align: center;"><{$smarty.const._MD_PUBLISHER_DATESUB}></th>
             <{/if}>
-            <{if $display_hits_col == 1}>
+            <{if isset($display_hits_col) && $display_hits_col == 1}>
                 <th style="text-align: center;"><{$smarty.const._MD_PUBLISHER_HITS}></th>
             <{/if}>
         </tr>
         </thead>
         <tbody>
         <!-- Start item loop -->
-        <{foreach item=item from=$items}>
+        <{foreach item=item from=$items|default:null}>
             <tr>
                 <td class="even" align="left"><{$item.titlelink}></td>
-                <{if $display_date_col == 1}>
+                <{if isset($display_date_col) && $display_date_col == 1}>
                     <td style="text-align: center;"><{$item.datesub}></td>
                 <{/if}>
-                <{if $display_hits_col == 1}>
+                <{if isset($display_hits_col) && $display_hits_col == 1}>
                     <td style="text-align: center;"><{$item.counter}></td>
                 <{/if}>
             </tr>
@@ -213,7 +213,7 @@
 <{/if}>
 <!-- END Other articles in the category -->
 
-<{if $tagbar|default:false}>
+<{if !empty($tagbar)}>
     <p><{include file="db:tag_bar.tpl"}></p>
 <{/if}>
 

@@ -15,7 +15,7 @@
  * If you did not receive this file, get it at https://www.gnu.org/licenses/gpl-2.0.html
  *
  * @copyright    (c) 2000-2016 XOOPS Project (www.xoops.org)
- * @license          GNU GPL 2 or later (https://www.gnu.org/licenses/gpl-2.0.html)
+ * @license          GNU GPL 2.0 or later (https://www.gnu.org/licenses/gpl-2.0.html)
  * @package          installer
  * @since            2.3.0
  * @author           Haruki Setoyama  <haruki@planewave.org>
@@ -25,11 +25,12 @@
  * @author           DuGris (aka L. JEN) <dugris@frxoops.org>
  **/
 
-require_once './include/common.inc.php';
+require_once __DIR__ . '/include/common.inc.php';
 defined('XOOPS_INSTALL') || die('XOOPS Installation wizard die');
 
 $pageHasForm = true;
 $pageHasHelp = false;
+$isadmin     = false;
 
 $vars =& $_SESSION['siteconfig'];
 
@@ -67,7 +68,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         return 302;
     }
 } else {
-    include_once './class/dbmanager.php';
+    require_once __DIR__ . '/class/dbmanager.php';
     $dbm = new Db_manager();
 
     if (!$dbm->isConnectable()) {
@@ -75,8 +76,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         exit();
     }
 
-    $res = $dbm->query('SELECT COUNT(*) FROM ' . $dbm->db->prefix('users'));
-    list($isadmin) = $dbm->db->fetchRow($res);
+    $sql = 'SELECT COUNT(*) FROM ' . $dbm->db->prefix('users');
+    $result = $dbm->db->query($sql);
+    if ($dbm->db->isResultSet($result)) {
+        list($isadmin) = $dbm->db->fetchRow($result);
+    }
 }
 
 ob_start();
@@ -103,14 +107,15 @@ if ($isadmin) {
 
         <?php
         echo '<div class="row"><div class="col-md-9">';
-        echo xoFormField('adminname', $vars['adminname'], ADMIN_LOGIN_LABEL);
+        xoFormField('adminname', isset($vars['adminname']) ? $vars['adminname'] : '', ADMIN_LOGIN_LABEL);
+
         if (isset($error['name'])) {
             foreach ($error['name'] as $errmsg) {
                 echo '<div class="alert alert-danger"><span class="fa fa-ban text-danger"></span> ' . $errmsg . '</div>';
             }
         }
 
-        echo xoFormField('adminmail', $vars['adminmail'], ADMIN_EMAIL_LABEL);
+        xoFormField('adminmail', isset($vars['adminmail']) ? $vars['adminmail'] : '', ADMIN_EMAIL_LABEL);
         if (isset($error['email'])) {
             foreach ($error['email'] as $errmsg) {
                 echo '<div class="alert alert-danger"><span class="fa fa-ban text-danger"></span> ' . $errmsg . '</div>';
@@ -160,4 +165,4 @@ if ($isadmin) {
 $content = ob_get_contents();
 ob_end_clean();
 $error = !empty($error);
-include './include/install_tpl.php';
+include __DIR__ . '/include/install_tpl.php';

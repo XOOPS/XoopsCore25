@@ -17,17 +17,19 @@
  * @author              Taiwen Jiang <phppp@users.sourceforge.net>
  */
 
+use Xmf\Request;
+
 $xoopsOption['pagetype'] = 'user';
 include __DIR__ . '/header.php';
 
 include $GLOBALS['xoops']->path('header.php');
 if (!empty($_GET['id']) && !empty($_GET['actkey'])) {
-    $id     = (int)$_GET['id'];
-    $actkey = trim($_GET['actkey']);
+    $id     = Request::getInt('id', 0, 'GET');
+    $actkey = Request::getString('actkey', '', 'GET');
     if (empty($id)) {
         redirect_header(XOOPS_URL, 1, '');
     }
-    /* @var XoopsMemberHandler $member_handler */
+    /** @var XoopsMemberHandler $member_handler */
     $member_handler = xoops_getHandler('member');
     $thisuser       = $member_handler->getUser($id);
     if (!is_object($thisuser)) {
@@ -42,11 +44,11 @@ if (!empty($_GET['id']) && !empty($_GET['actkey'])) {
             if (false !== $member_handler->activateUser($thisuser)) {
                 $xoopsPreload = XoopsPreload::getInstance();
                 $xoopsPreload->triggerEvent('core.behavior.user.activate', $thisuser);
-                /* @var XoopsConfigHandler $config_handler */
+                /** @var XoopsConfigHandler $config_handler */
                 $config_handler             = xoops_getHandler('config');
                 $GLOBALS['xoopsConfigUser'] = $config_handler->getConfigsByCat(XOOPS_CONF_USER);
                 if ($GLOBALS['xoopsConfigUser']['activation_type'] == 2) {
-                    $myts        = MyTextSanitizer::getInstance();
+                    $myts        = \MyTextSanitizer::getInstance();
                     $xoopsMailer = xoops_getMailer();
                     $xoopsMailer->useMail();
                     $xoopsMailer->setTemplate('activated.tpl');
@@ -74,8 +76,8 @@ if (!empty($_GET['id']) && !empty($_GET['actkey'])) {
     }
     // Not implemented yet: re-send activiation code
 } elseif (!empty($_REQUEST['email']) && $xoopsConfigUser['activation_type'] != 0) {
-    $myts           = MyTextSanitizer::getInstance();
-    /* @var XoopsMemberHandler $member_handler */
+    $myts           = \MyTextSanitizer::getInstance();
+    /** @var XoopsMemberHandler $member_handler */
     $member_handler = xoops_getHandler('member');
     $getuser        = $member_handler->getUsers(new Criteria('email', $myts->addSlashes(trim($_REQUEST['email']))));
     if (count($getuser) == 0) {

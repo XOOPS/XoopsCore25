@@ -15,7 +15,7 @@
  * @package   XoopsFormRendererLegacy
  * @author    Richard Griffith <richard@geekwright.com>
  * @copyright 2017-2021 XOOPS Project (https://xoops.org)
- * @license   GNU GPL 2 or later (https://www.gnu.org/licenses/gpl-2.0.html)
+ * @license   GNU GPL 2.0 or later (https://www.gnu.org/licenses/gpl-2.0.html)
  */
 class XoopsFormRendererLegacy implements XoopsFormRendererInterface
 {
@@ -162,7 +162,8 @@ class XoopsFormRendererLegacy implements XoopsFormRendererInterface
         // fonts
         $ret .= $this->renderFormDhtmlTATypography($element);
         // length checker
-        $ret .= "<button type='button' class='btn btn-default' onclick=\"XoopsCheckLength('" . $element->getName() . "', '" . @$element->configs['maxlength'] . "', '" . _XOOPS_FORM_ALT_LENGTH . "', '" . _XOOPS_FORM_ALT_LENGTH_MAX . "');\" title='" . _XOOPS_FORM_ALT_CHECKLENGTH . "'><span class='fa fa-check-square-o' aria-hidden='true'></span></button>&nbsp;";
+        $maxlength = isset($element->configs['maxlength']) ? $element->configs['maxlength'] : 0;
+        $ret .= "<button type='button' class='btn btn-default' onclick=\"XoopsCheckLength('" . $element->getName() . "', '" . $maxlength . "', '" . _XOOPS_FORM_ALT_LENGTH . "', '" . _XOOPS_FORM_ALT_LENGTH_MAX . "');\" title='" . _XOOPS_FORM_ALT_CHECKLENGTH . "'><span class='fa fa-check-square-o' aria-hidden='true'></span></button>&nbsp;";
         $ret .= "<br>\n";
         // the textarea box
         $ret .= "<textarea id='" . $element->getName() . "' name='" . $element->getName() . "' title='" . $element->getTitle() . "' onselect=\"xoopsSavePosition('" . $element->getName() . "');\" onclick=\"xoopsSavePosition('" . $element->getName() . "');\" onkeyup=\"xoopsSavePosition('" . $element->getName() . "');\" cols='" . $element->getCols() . "' rows='" . $element->getRows() . "'" . $element->getExtra() . '>' . $element->getValue() . "</textarea><br>\n";
@@ -215,7 +216,7 @@ EOJS;
         $code .= "<button type='button' class='btn btn-default' onclick='openWithSelfMain(\"" . XOOPS_URL . "/imagemanager.php?target={$textarea_id}\",\"imgmanager\",400,430);' onmouseover='style.cursor=\"hand\"' title='" . _XOOPS_FORM_ALT_IMAGE . "'><span class='fa fa-file-image-o' aria-hidden='true'></span><span style='font-size:75%;'> Manager</span></button>";
         $code .= "<button type='button' class='btn btn-default' onclick='openWithSelfMain(\"" . XOOPS_URL . "/misc.php?action=showpopups&amp;type=smilies&amp;target={$textarea_id}\",\"smilies\",300,475);' onmouseover='style.cursor=\"hand\"' title='" . _XOOPS_FORM_ALT_SMILEY . "'><span class='fa fa-fw fa-smile-o' aria-hidden='true'></span></button>";
 
-        $myts        = MyTextSanitizer::getInstance();
+        $myts        = \MyTextSanitizer::getInstance();
 
         $extensions = array_filter($myts->config['extensions']);
         foreach (array_keys($extensions) as $key) {

@@ -11,7 +11,7 @@
 
 /**
  * @copyright       (c) 2000-2016 XOOPS Project (www.xoops.org)
- * @license             GNU GPL 2 or later (https://www.gnu.org/licenses/gpl-2.0.html)
+ * @license             GNU GPL 2.0 or later (https://www.gnu.org/licenses/gpl-2.0.html)
  * @author              Gregory Mage (AKA Mage)
  * @package             system
  */
@@ -26,6 +26,14 @@
  */
 class SystemBannerFinish extends XoopsObject
 {
+    //PHP 8.2 Dynamic properties deprecated
+    public $bid;
+    public $cid;
+    public $impressions;
+    public $clicks;
+    public $datestart;
+    public $dateend;
+    
     /**
      *
      */

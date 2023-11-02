@@ -27,6 +27,33 @@ defined('XOOPS_ROOT_PATH') || exit('Restricted access');
  */
 class XoopsComment extends XoopsObject
 {
+    //PHP 8.2 Dynamic properties deprecated
+    public $com_id;
+    public $com_pid;
+    public $com_modid;
+    public $com_icon;
+    public $com_title;
+    public $com_text;
+    public $com_created;
+    public $com_modified;
+    public $com_uid;
+    // Start Add by voltan
+    public $com_user;
+    public $com_email;
+    public $com_url;
+    // End Add by voltan
+    public $com_ip;
+    public $com_sig;
+    public $com_itemid;
+    public $com_rootid;
+    public $com_status;
+    public $com_exparams;
+    public $dohtml;
+    public $dosmiley;
+    public $doxcode;
+    public $doimage;
+    public $dobr;
+
     /**
      * Constructor
      **/
@@ -42,11 +69,11 @@ class XoopsComment extends XoopsObject
         $this->initVar('com_created', XOBJ_DTYPE_INT, 0, false);
         $this->initVar('com_modified', XOBJ_DTYPE_INT, 0, false);
         $this->initVar('com_uid', XOBJ_DTYPE_INT, 0, true);
-        // Start Add by voltan
+        // Start added by voltan
         $this->initVar('com_user', XOBJ_DTYPE_TXTBOX, null, false, 60);
         $this->initVar('com_email', XOBJ_DTYPE_TXTBOX, null, false, 60);
         $this->initVar('com_url', XOBJ_DTYPE_TXTBOX, null, false, 60);
-        // End Add by voltan
+        // End added by voltan
         $this->initVar('com_ip', XOBJ_DTYPE_OTHER, null, false);
         $this->initVar('com_sig', XOBJ_DTYPE_INT, 0, false);
         $this->initVar('com_itemid', XOBJ_DTYPE_INT, 0, false);
@@ -160,7 +187,7 @@ class XoopsComment extends XoopsObject
         return $this->getVar('com_uid', $format);
     }
 
-    // Start Add by voltan
+    // Start added by voltan
     /**
      * Returns Class Base Variable com_user
      * @param string $format
@@ -190,7 +217,7 @@ class XoopsComment extends XoopsObject
     {
         return $this->getVar('com_url', $format);
     }
-    // End Add by voltan
+    // End added by voltan
 
     /**
      * Returns Class Base Variable com_ip
@@ -352,7 +379,7 @@ class XoopsCommentHandler extends XoopsObjectHandler
      *
      * @param int $id ID
      *
-     * @return XoopsComment {@link XoopsComment}, FALSE on fail
+     * @return XoopsComment|false {@link XoopsComment}, false on fail
      **/
     public function get($id)
     {
@@ -360,7 +387,8 @@ class XoopsCommentHandler extends XoopsObjectHandler
         $id      = (int)$id;
         if ($id > 0) {
             $sql = 'SELECT * FROM ' . $this->db->prefix('xoopscomments') . ' WHERE com_id=' . $id;
-            if (!$result = $this->db->query($sql)) {
+            $result = $this->db->query($sql);
+            if (!$this->db->isResultSet($result)) {
                 return $comment;
             }
             $numrows = $this->db->getRowsNum($result);
@@ -448,7 +476,7 @@ class XoopsCommentHandler extends XoopsObjectHandler
         $ret   = array();
         $limit = $start = 0;
         $sql   = 'SELECT * FROM ' . $this->db->prefix('xoopscomments');
-        if (isset($criteria) && is_subclass_of($criteria, 'CriteriaElement')) {
+        if (isset($criteria) && \method_exists($criteria, 'renderWhere')) {
             $sql .= ' ' . $criteria->renderWhere();
             $sort = ($criteria->getSort() != '') ? $criteria->getSort() : 'com_id';
             $sql .= ' ORDER BY ' . $sort . ' ' . $criteria->getOrder();
@@ -456,9 +484,10 @@ class XoopsCommentHandler extends XoopsObjectHandler
             $start = $criteria->getStart();
         }
         $result = $this->db->query($sql, $limit, $start);
-        if (!$result) {
+        if (!$this->db->isResultSet($result)) {
             return $ret;
         }
+        /** @var array $myrow */
         while (false !== ($myrow = $this->db->fetchArray($result))) {
             $comment = new XoopsComment();
             $comment->assignVars($myrow);
@@ -483,15 +512,16 @@ class XoopsCommentHandler extends XoopsObjectHandler
     public function getCount(CriteriaElement $criteria = null)
     {
         $sql = 'SELECT COUNT(*) FROM ' . $this->db->prefix('xoopscomments');
-        if (isset($criteria) && is_subclass_of($criteria, 'CriteriaElement')) {
+        if (isset($criteria) && \method_exists($criteria, 'renderWhere')) {
             $sql .= ' ' . $criteria->renderWhere();
         }
-        if (!$result = $this->db->query($sql)) {
+        $result = $this->db->query($sql);
+        if (!$this->db->isResultSet($result)) {
             return 0;
         }
         list($count) = $this->db->fetchRow($result);
 
-        return $count;
+        return (int)$count;
     }
 
     /**
@@ -504,7 +534,7 @@ class XoopsCommentHandler extends XoopsObjectHandler
     public function deleteAll(CriteriaElement $criteria = null)
     {
         $sql = 'DELETE FROM ' . $this->db->prefix('xoopscomments');
-        if (isset($criteria) && is_subclass_of($criteria, 'CriteriaElement')) {
+        if (isset($criteria) && \method_exists($criteria, 'renderWhere')) {
             $sql .= ' ' . $criteria->renderWhere();
         }
         if (!$result = $this->db->query($sql)) {

@@ -1,20 +1,20 @@
 <{include file="db:profile_breadcrumbs.tpl"}>
 
-<{if $old_avatar|default:false}>
+<{if !empty($old_avatar)}>
     <div class="pad10 center">
         <h4 class="bold red"><{$smarty.const._US_OLDDELETED}></h4>
         <img src="<{$old_avatar}>" alt="" />
     </div>
 <{/if}>
 
-<{if $uploadavatar|default:false}>
+<{if !empty($uploadavatar)}>
 <{$uploadavatar.javascript}>
 <legend class="bold"><{$uploadavatar.title}></legend>
 <form name="<{$uploadavatar.name}>" action="<{$uploadavatar.action}>" method="<{$uploadavatar.method}>" <{$uploadavatar.extra}>>
 	<div class="form-group row">
 		<!-- start of form elements loop -->
-		<{foreach item=element from=$uploadavatar.elements}>
-			<{if !$element.hidden|default:false}>
+		<{foreach item=element from=$uploadavatar.elements|default:null}>
+			<{if empty($element.hidden)}>
 				<label class="col-2 col-form-label">
 					<span class='caption-text'><{$element.caption|default:''}></span>
 				</label>
@@ -24,7 +24,7 @@
 		    <{else}>
 			<{$element.body}>
 			<{/if}>
-			<{if $element.description|default:'' != ''}>
+			<{if !empty($element.description)}>
 				<small id="passwordHelpBlock" class="form-text text-muted">
 					<{$element.description}>
 				</small>
@@ -42,7 +42,7 @@
 <form name="<{$chooseavatar.name}>" action="<{$chooseavatar.action}>" method="<{$chooseavatar.method}>" <{$chooseavatar.extra}>>
 	<div class="form-group">
 		<!-- start of form elements loop -->
-		<{foreach item=element from=$chooseavatar.elements}>
+		<{foreach item=element from=$chooseavatar.elements|default:null}>
 			<{if !$element.hidden}>
 				<label class="col-sm-2 col-form-label">
 					<span class='caption-text'><{$element.caption|default:''}></span>
@@ -53,7 +53,7 @@
 			<{else}>
 			<{$element.body}>
 			<{/if}>
-			<{if $element.description|default:'' != ''}>
+			<{if !empty($element.description)}>
 				<small id="passwordHelpBlock" class="form-text text-muted">
 					<{$element.description}>
 				</small>

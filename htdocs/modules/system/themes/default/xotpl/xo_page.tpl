@@ -1,13 +1,13 @@
 <div id="xo-body-contain">
     <div id="xo-body">
-        <{if $xoops_contents}>
+        <{if !empty($xoops_contents)}>
             <div id="xo-content">
                 <{*Display Admin menu*}>
-                <{if $xo_system_menu|default:false}><{$xo_system_menu}><{/if}>
+                <{if !empty($xo_system_menu)}><{$xo_system_menu}><{/if}>
                 <{$xoops_contents}>
             </div>
         <{/if}>
-        <{if $modules|default:false}>
+        <{if !empty($modules)}>
             <div>
                 <div id="xo-index">
                     <div id="xo-body-icons" class="xo-index-option"><{include file="$theme_tpl/xo_icons.tpl"}></div>

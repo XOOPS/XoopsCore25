@@ -14,8 +14,16 @@ class ProtectorFilterAbstract
     public function __construct()
     {
         $this->protector = Protector::getInstance();
-        $lang            = empty($GLOBALS['xoopsConfig']['language']) ? @$this->protector->_conf['default_lang'] : $GLOBALS['xoopsConfig']['language'];
-        @include_once dirname(__DIR__) . '/language/' . $lang . '/main.php';
+        $lang            = empty($GLOBALS['xoopsConfig']['language']) ? (isset($this->protector->_conf['default_lang']) ? $this->protector->_conf['default_lang'] : '') : $GLOBALS['xoopsConfig']['language'];
+        $file_to_include = dirname(__DIR__) . '/language/' . $lang . '/main.php';
+
+        if (file_exists($file_to_include)) {
+            include_once $file_to_include;
+        } else {
+            trigger_error('File Path Error: ' . $file_to_include . ' does not exist.');
+            throw new \RuntimeException('File Path Error: ' . $file_to_include . ' does not exist.');
+        }
+
         if (!defined('_MD_PROTECTOR_YOUAREBADIP')) {
             include_once dirname(__DIR__) . '/language/english/main.php';
         }
@@ -74,7 +82,7 @@ class ProtectorFilterHandler
 
     // return: false : execute default action
     /**
-     * @param $type
+     * @param string $type
      *
      * @return int|mixed
      */

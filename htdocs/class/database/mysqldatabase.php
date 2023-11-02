@@ -136,9 +136,9 @@ abstract class XoopsMySQLDatabase extends XoopsDatabase
     }
 
     /**
-     * XoopsMySQLiDatabase::fetchObjected()
+     * XoopsMySQLDatabase::fetchObject()
      *
-     * @param mixed $result
+     * @param mysqli_result $result
      * @return stdClass|false false on end of data
      */
     public function fetchObject($result)
@@ -166,7 +166,7 @@ abstract class XoopsMySQLDatabase extends XoopsDatabase
      */
     public function getRowsNum($result)
     {
-        return @mysqli_num_rows($result);
+        return (int)@mysqli_num_rows($result);
     }
 
     /**
@@ -176,7 +176,7 @@ abstract class XoopsMySQLDatabase extends XoopsDatabase
      */
     public function getAffectedRows()
     {
-        return mysqli_affected_rows($this->conn);
+        return (int)mysqli_affected_rows($this->conn);
     }
 
     /**

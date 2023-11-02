@@ -1,5 +1,5 @@
 <div class="txtcenter">
-    <form style="margin-top: 0;" action="<{xoAppUrl user.php}>" method="post">
+    <form style="margin-top: 0;" action="<{xoAppUrl 'user.php'}>" method="post">
         <{$block.lang_username}><br>
         <input type="text" name="uname" size="12" value="<{$block.unamevalue}>" maxlength="25"/><br>
         <{$block.lang_password}><br>
@@ -16,7 +16,7 @@
         <{$block.sslloginlink|default:''}>
     </form>
     <br>
-    <a href="<{xoAppUrl user.php#lost}>" title="<{$block.lang_lostpass}>"><{$block.lang_lostpass}></a>
+    <a href="<{xoAppUrl 'user.php#lost'}>" title="<{$block.lang_lostpass}>"><{$block.lang_lostpass}></a>
     <br><br>
-    <a href="<{xoAppUrl register.php}>" title="<{$block.lang_registernow}>"><{$block.lang_registernow}></a>
+    <a href="<{xoAppUrl 'register.php'}>" title="<{$block.lang_registernow}>"><{$block.lang_registernow}></a>
 </div>

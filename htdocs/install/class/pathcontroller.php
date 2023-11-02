@@ -5,7 +5,7 @@
  * If you did not receive this file, get it at https://www.gnu.org/licenses/gpl-2.0.html
  *
  * @copyright    (c) 2000-2016 XOOPS Project (www.xoops.org)
- * @license          GNU GPL 2 or later (https://www.gnu.org/licenses/gpl-2.0.html)
+ * @license          GNU GPL 2.0 or later (https://www.gnu.org/licenses/gpl-2.0.html)
  * @package          installer
  * @since            2.3.0
  * @author           Haruki Setoyama  <haruki@planewave.org>
@@ -16,20 +16,29 @@
  **/
 class PathStuffController
 {
+    /**
+     * @var array
+     */
     public $xoopsPath = array(
         'root' => '',
+        'data' => '',
         'lib'  => '',
-        'data' => '');
-
+    );
+    /**
+     * @var array
+     */
     public $xoopsPathDefault = array(
+        'data' => 'xoops_data',
         'lib'  => 'xoops_lib',
-        'data' => 'xoops_data');
-
+    );
+    /**
+     * @var array
+     */
     public $dataPath = array(
         'caches'    => array(
-            'xoops_cache',
             'smarty_cache',
             'smarty_compile',
+            'xoops_cache',
         ),
         'configs'   => array(
             'captcha',
@@ -38,25 +47,35 @@ class PathStuffController
         'data'      => null,
         'protector' => null,
     );
-
+    /**
+     * @var array
+     */
     public $path_lookup = array(
         'root' => 'ROOT_PATH',
         'data' => 'VAR_PATH',
-        'lib'  => 'PATH');
-
+        'lib'  => 'PATH',
+    );
     public $xoopsUrl = '';
     public $xoopsCookieDomain = '';
-
+    /**
+     * @var array
+     */
     public $validPath = array(
         'root' => 0,
         'data' => 0,
-        'lib'  => 0);
-
+        'lib'  => 0,
+    );
+    /**
+     * @var bool
+     */
     public $validUrl = false;
-
+    /**
+     * @var array
+     */
     public $permErrors = array(
         'root' => null,
-        'data' => null);
+        'data' => null,
+    );
 
     /**
      * @param $xoopsPathDefault
@@ -72,7 +91,7 @@ class PathStuffController
                 $this->xoopsPath[$req] = $_SESSION['settings'][$sess];
             }
         } else {
-            $path = str_replace("\\", '/', realpath('../'));
+            $path = str_replace("\\", '/', realpath(dirname(dirname(__DIR__)) . '/'));
             if (substr($path, -1) === '/') {
                 $path = substr($path, 0, -1);
             }
@@ -256,11 +275,16 @@ class PathStuffController
     public function checkPermissions($path)
     {
         $paths  = array(
-            'root' => array('mainfile.php', 'uploads', /*'templates_c', 'cache'*/),
-            'data' => $this->dataPath);
+            'root' => array(
+                'mainfile.php',
+                'uploads',
+            ),
+            'data' => $this->dataPath,
+        );
         $errors = array(
             'root' => null,
-            'data' => null);
+            'data' => null,
+        );
 
         if (!isset($this->xoopsPath[$path])) {
             return false;
@@ -288,7 +312,7 @@ class PathStuffController
     public function makeWritable($path, $create = true)
     {
         $mode = intval('0777', 8);
-        if (!file_exists($path)) {
+        if (!is_dir($path)) {
             if (!$create) {
                 return false;
             } else {

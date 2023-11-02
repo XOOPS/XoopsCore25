@@ -16,11 +16,14 @@
  * If you did not receive this file, get it at https://www.gnu.org/licenses/gpl-2.0.html
  *
  * @copyright       (c) 2000-2016 XOOPS Project (www.xoops.org)
- * @license             GNU GPL 2 or later (https://www.gnu.org/licenses/gpl-2.0.html)
+ * @license             GNU GPL 2.0 or later (https://www.gnu.org/licenses/gpl-2.0.html)
  * @package             core
  * @since               2.0.0
  * @author              Kazumi Ono <webmaster@myweb.ne.jp>
  */
+
+use Xmf\Request;
+
 include __DIR__ . '/mainfile.php';
 $xoopsPreload = XoopsPreload::getInstance();
 $xoopsPreload->triggerEvent('core.userinfo.start');
@@ -29,19 +32,19 @@ xoops_loadLanguage('user');
 include_once $GLOBALS['xoops']->path('class/module.textsanitizer.php');
 include_once $GLOBALS['xoops']->path('modules/system/constants.php');
 
-$uid = (int)$_GET['uid'];
+$uid = Request::getInt('uid', 0, 'GET');
 if ($uid <= 0) {
     redirect_header('index.php', 3, _US_SELECTNG);
 }
 
-/* @var  XoopsGroupPermHandler $gperm_handler */
+/** @var  XoopsGroupPermHandler $gperm_handler */
 $gperm_handler = xoops_getHandler('groupperm');
 $groups        = is_object($xoopsUser) ? $xoopsUser->getGroups() : XOOPS_GROUP_ANONYMOUS;
 
 $isAdmin = $gperm_handler->checkRight('system_admin', XOOPS_SYSTEM_USER, $groups);
 if (is_object($xoopsUser)) {
     if ($uid == $xoopsUser->getVar('uid')) {
-        /* @var XoopsConfigHandler $config_handler */
+        /** @var XoopsConfigHandler $config_handler */
         $config_handler               = xoops_getHandler('config');
         $xoopsConfigUser              = $config_handler->getConfigsByCat(XOOPS_CONF_USER);
         $GLOBALS['xoopsOption']['template_main'] = 'system_userinfo.tpl';
@@ -59,7 +62,7 @@ if (is_object($xoopsUser)) {
         }
         $thisUser =& $xoopsUser;
     } else {
-        /* @var XoopsMemberHandler $member_handler */
+        /** @var XoopsMemberHandler $member_handler */
         $member_handler = xoops_getHandler('member');
         $thisUser       = $member_handler->getUser($uid);
         if (!is_object($thisUser) || !$thisUser->isActive()) {
@@ -70,7 +73,7 @@ if (is_object($xoopsUser)) {
         $xoopsTpl->assign('user_ownpage', false);
     }
 } else {
-    /* @var XoopsMemberHandler $member_handler */
+    /** @var XoopsMemberHandler $member_handler */
     $member_handler = xoops_getHandler('member');
     $thisUser       = $member_handler->getUser($uid);
     if (!is_object($thisUser) || !$thisUser->isActive()) {
@@ -80,7 +83,7 @@ if (is_object($xoopsUser)) {
     include $GLOBALS['xoops']->path('header.php');
     $xoopsTpl->assign('user_ownpage', false);
 }
-$myts = MyTextSanitizer::getInstance();
+$myts = \MyTextSanitizer::getInstance();
 if (is_object($xoopsUser) && $isAdmin) {
     $xoopsTpl->assign('lang_editprofile', _US_EDITPROFILE);
     $xoopsTpl->assign('lang_deleteaccount', _US_DELACCOUNT);
@@ -163,13 +166,14 @@ $date = $thisUser->getVar('last_login');
 if (!empty($date)) {
     $xoopsTpl->assign('user_lastlogin', formatTimestamp($date, 'm'));
 }
-/* @var XoopsModuleHandler $module_handler */
+/** @var XoopsModuleHandler $module_handler */
 $module_handler = xoops_getHandler('module');
 $criteria       = new CriteriaCompo(new Criteria('hassearch', 1));
 $criteria->add(new Criteria('isactive', 1));
 $mids = array_keys($module_handler->getList($criteria));
 foreach ($mids as $mid) {
     if ($gperm_handler->checkRight('module_read', $mid, $groups)) {
+        /** @var XoopsModule $module */
         $module  = $module_handler->get($mid);
         $results = $module->search('', '', 5, 0, $thisUser->getVar('uid'));
         if ($results) {

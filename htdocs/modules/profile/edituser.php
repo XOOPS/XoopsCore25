@@ -26,9 +26,9 @@ if (!is_object($GLOBALS['xoopsUser'])) {
     redirect_header(XOOPS_URL, 3, _US_NOEDITRIGHT);
 }
 
-$myts                       = MyTextSanitizer::getInstance();
+$myts                       = \MyTextSanitizer::getInstance();
 $op                         = isset($_REQUEST['op']) ? $_REQUEST['op'] : 'editprofile';
-/* @var XoopsConfigHandler $config_handler */
+/** @var XoopsConfigHandler $config_handler */
 $config_handler             = xoops_getHandler('config');
 $GLOBALS['xoopsConfigUser'] = $config_handler->getConfigsByCat(XOOPS_CONF_USER);
 
@@ -56,7 +56,7 @@ if ($op === 'save') {
         // Get fields
         $fields = $profile_handler->loadFields();
         // Get ids of fields that can be edited
-        /* @var  XoopsGroupPermHandler $gperm_handler */
+        /** @var  XoopsGroupPermHandler $gperm_handler */
         $gperm_handler   = xoops_getHandler('groupperm');
         $editable_fields = $gperm_handler->getItemIds('profile_edit', $GLOBALS['xoopsUser']->getGroups(), $GLOBALS['xoopsModule']->getVar('mid'));
 
@@ -149,7 +149,7 @@ if ($op === 'avatarupload') {
     }
     $xoops_upload_file = array();
     $uid               = 0;
-    if (!empty($_POST['xoops_upload_file']) && is_array($_POST['xoops_upload_file'])) {
+    if (!empty($_POST['xoops_upload_file']) && \is_array($_POST['xoops_upload_file'])) {
         $xoops_upload_file = $_POST['xoops_upload_file'];
     }
     if (!empty($_POST['uid'])) {
@@ -169,7 +169,7 @@ if ($op === 'avatarupload') {
         if ($uploader->fetchMedia($_POST['xoops_upload_file'][0])) {
             $uploader->setPrefix('cavt');
             if ($uploader->upload()) {
-                /* @var XoopsAvatarHandler $avt_handler */
+                /** @var XoopsAvatarHandler $avt_handler */
                 $avt_handler = xoops_getHandler('avatar');
                 $avatar      = $avt_handler->create();
                 $avatar->setVar('avatar_file', 'avatars/' . $uploader->getSavedFileName());
@@ -230,7 +230,7 @@ if ($op === 'avatarchoose') {
     if (0 === strpos($user_avatarpath, realpath(XOOPS_UPLOAD_PATH)) && is_file($user_avatarpath)) {
         $oldavatar = $GLOBALS['xoopsUser']->getVar('user_avatar');
         $GLOBALS['xoopsUser']->setVar('user_avatar', $user_avatar);
-        /* @var XoopsMemberHandler $member_handler */
+        /** @var XoopsMemberHandler $member_handler */
         $member_handler = xoops_getHandler('member');
         if (!$member_handler->insertUser($GLOBALS['xoopsUser'])) {
             include $GLOBALS['xoops']->path('header.php');

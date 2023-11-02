@@ -31,7 +31,7 @@ class XoopsModule extends XoopsObject
     public $modinfo;
     /**
      *
-     * @var string
+     * @var array
      */
     public $adminmenu;
     /**
@@ -39,6 +39,22 @@ class XoopsModule extends XoopsObject
      * @var array
      */
     public $_msg;
+
+    //PHP 8.2 Dynamic properties deprecated
+    public $mid;
+    public $name;
+    public $version;
+    public $last_update;
+    public $weight;
+    public $isactive;
+    public $dirname;
+    public $hasmain;
+    public $hasadmin;
+    public $hassearch;
+    public $hasconfig;
+    public $hascomments;
+    // RMV-NOTIFY
+    public $hasnotification;
 
     /**
      * Constructor
@@ -80,7 +96,7 @@ class XoopsModule extends XoopsObject
         $hasmain     = (isset($this->modinfo['hasMain']) && $this->modinfo['hasMain'] == 1) ? 1 : 0;
         $hasadmin    = (isset($this->modinfo['hasAdmin']) && $this->modinfo['hasAdmin'] == 1) ? 1 : 0;
         $hassearch   = (isset($this->modinfo['hasSearch']) && $this->modinfo['hasSearch'] == 1) ? 1 : 0;
-        $hasconfig   = ((isset($this->modinfo['config']) && is_array($this->modinfo['config'])) || !empty($this->modinfo['hasComments'])) ? 1 : 0;
+        $hasconfig   = ((isset($this->modinfo['config']) && \is_array($this->modinfo['config'])) || !empty($this->modinfo['hasComments'])) ? 1 : 0;
         $hascomments = (isset($this->modinfo['hasComments']) && $this->modinfo['hasComments'] == 1) ? 1 : 0;
         // RMV-NOTIFY
         $hasnotification = (isset($this->modinfo['hasNotification']) && $this->modinfo['hasNotification'] == 1) ? 1 : 0;
@@ -156,9 +172,9 @@ class XoopsModule extends XoopsObject
 
         return $this->modinfo;
     }
-	
+
 	/**
-     * Get statut
+     * Get status
      *
      * @return string
      */
@@ -166,7 +182,7 @@ class XoopsModule extends XoopsObject
     {
 		return substr(strrchr($this->getVar('version'), '-'), 1);
     }
-	
+
 	/**
      * Compares two "XOOPS-standardized" version number strings.
      *
@@ -212,7 +228,7 @@ class XoopsModule extends XoopsObject
     public function subLink()
     {
         $ret = array();
-        if ($this->getInfo('sub') && is_array($this->getInfo('sub'))) {
+        if ($this->getInfo('sub') && \is_array($this->getInfo('sub'))) {
             foreach ($this->getInfo('sub') as $submenu) {
                 $ret[] = array(
                     'name' => $submenu['name'],
@@ -238,7 +254,7 @@ class XoopsModule extends XoopsObject
     /**
      * Get the admin menu for the module
      *
-     * @return string
+     * @return array
      */
     public function &getAdminMenu()
     {
@@ -467,7 +483,7 @@ class XoopsModule extends XoopsObject
      */
     public static function getByDirname($dirname)
     {
-        /* @var XoopsModuleHandler $modhandler */
+        /** @var XoopsModuleHandler $modhandler */
         $modhandler = xoops_getHandler('module');
         $inst       = $modhandler->getByDirname($dirname);
 
@@ -481,7 +497,7 @@ class XoopsModule extends XoopsObject
      */
     public function checkAccess()
     {
-        trigger_error(__CLASS__ . '::' . __FUNCTION__ . ' is deprecated', E_USER_WARNING);
+        $GLOBALS['xoopsLogger']->addDeprecated(__METHOD__ . ' is deprecated');
 
         return false;
     }
@@ -493,7 +509,7 @@ class XoopsModule extends XoopsObject
      */
     public function loadLanguage($type = 'main')
     {
-        trigger_error(__CLASS__ . '::' . __FUNCTION__ . ' is deprecated', E_USER_WARNING);
+        $GLOBALS['xoopsLogger']->addDeprecated(__METHOD__ . ' is deprecated');
 
         return false;
     }
@@ -503,7 +519,7 @@ class XoopsModule extends XoopsObject
      */
     public function loadErrorMessages()
     {
-        trigger_error(__CLASS__ . '::' . __FUNCTION__ . ' is deprecated', E_USER_WARNING);
+        $GLOBALS['xoopsLogger']->addDeprecated(__METHOD__ . ' is deprecated');
 
         return false;
     }
@@ -513,7 +529,7 @@ class XoopsModule extends XoopsObject
      */
     public function getCurrentPage()
     {
-        trigger_error(__CLASS__ . '::' . __FUNCTION__ . ' is deprecated', E_USER_WARNING);
+        $GLOBALS['xoopsLogger']->addDeprecated(__METHOD__ . ' is deprecated');
 
         return false;
     }
@@ -526,7 +542,7 @@ class XoopsModule extends XoopsObject
      */
     public function install($admingroups = array(), $accessgroups = array())
     {
-        trigger_error(__CLASS__ . '::' . __FUNCTION__ . ' is deprecated', E_USER_WARNING);
+        $GLOBALS['xoopsLogger']->addDeprecated(__METHOD__ . ' is deprecated');
 
         return false;
     }
@@ -536,7 +552,7 @@ class XoopsModule extends XoopsObject
      */
     public function update()
     {
-        trigger_error(__CLASS__ . '::' . __FUNCTION__ . ' is deprecated', E_USER_WARNING);
+        $GLOBALS['xoopsLogger']->addDeprecated(__METHOD__ . ' is deprecated');
 
         return false;
     }
@@ -546,7 +562,7 @@ class XoopsModule extends XoopsObject
      */
     public function insert()
     {
-        trigger_error(__CLASS__ . '::' . __FUNCTION__ . ' is deprecated', E_USER_WARNING);
+        $GLOBALS['xoopsLogger']->addDeprecated(__METHOD__ . ' is deprecated');
 
         return false;
     }
@@ -556,7 +572,7 @@ class XoopsModule extends XoopsObject
      */
     public function executeSQL()
     {
-        trigger_error(__CLASS__ . '::' . __FUNCTION__ . ' is deprecated', E_USER_WARNING);
+        $GLOBALS['xoopsLogger']->addDeprecated(__METHOD__ . ' is deprecated');
 
         return false;
     }
@@ -566,7 +582,7 @@ class XoopsModule extends XoopsObject
      */
     public function insertTemplates()
     {
-        trigger_error(__CLASS__ . '::' . __FUNCTION__ . ' is deprecated', E_USER_WARNING);
+        $GLOBALS['xoopsLogger']->addDeprecated(__METHOD__ . ' is deprecated');
 
         return false;
     }
@@ -579,7 +595,7 @@ class XoopsModule extends XoopsObject
      */
     public function gettemplate($template, $block = false)
     {
-        trigger_error(__CLASS__ . '::' . __FUNCTION__ . ' is deprecated', E_USER_WARNING);
+        $GLOBALS['xoopsLogger']->addDeprecated(__METHOD__ . ' is deprecated');
 
         return false;
     }
@@ -589,7 +605,7 @@ class XoopsModule extends XoopsObject
      */
     public function insertBlocks()
     {
-        trigger_error(__CLASS__ . '::' . __FUNCTION__ . ' is deprecated', E_USER_WARNING);
+        $GLOBALS['xoopsLogger']->addDeprecated(__METHOD__ . ' is deprecated');
 
         return false;
     }
@@ -599,7 +615,7 @@ class XoopsModule extends XoopsObject
      */
     public function insertConfigCategories()
     {
-        trigger_error(__CLASS__ . '::' . __FUNCTION__ . ' is deprecated', E_USER_WARNING);
+        $GLOBALS['xoopsLogger']->addDeprecated(__METHOD__ . ' is deprecated');
 
         return false;
     }
@@ -609,7 +625,7 @@ class XoopsModule extends XoopsObject
      */
     public function insertConfig()
     {
-        trigger_error(__CLASS__ . '::' . __FUNCTION__ . ' is deprecated', E_USER_WARNING);
+        $GLOBALS['xoopsLogger']->addDeprecated(__METHOD__ . ' is deprecated');
 
         return false;
     }
@@ -619,7 +635,7 @@ class XoopsModule extends XoopsObject
      */
     public function insertProfileFields()
     {
-        trigger_error(__CLASS__ . '::' . __FUNCTION__ . ' is deprecated', E_USER_WARNING);
+        $GLOBALS['xoopsLogger']->addDeprecated(__METHOD__ . ' is deprecated');
 
         return false;
     }
@@ -632,7 +648,7 @@ class XoopsModule extends XoopsObject
      */
     public function executeScript($type, $state = 2)
     {
-        trigger_error(__CLASS__ . '::' . __FUNCTION__ . ' is deprecated', E_USER_WARNING);
+        $GLOBALS['xoopsLogger']->addDeprecated(__METHOD__ . ' is deprecated');
 
         return false;
     }
@@ -645,7 +661,7 @@ class XoopsModule extends XoopsObject
      */
     public function insertGroupPermissions($groups, $type)
     {
-        trigger_error(__CLASS__ . '::' . __FUNCTION__ . ' is deprecated', E_USER_WARNING);
+        $GLOBALS['xoopsLogger']->addDeprecated(__METHOD__ . ' is deprecated');
 
         return false;
     }
@@ -702,7 +718,7 @@ class XoopsModuleHandler extends XoopsObjectHandler
      * Load a module from the database
      *
      * @param  int $id ID of the module
-     * @return object FALSE on fail
+     * @return XoopsObject|false false on fail
      */
     public function get($id)
     {
@@ -715,7 +731,8 @@ class XoopsModuleHandler extends XoopsObjectHandler
                 return $_cachedModule_mid[$id];
             } else {
                 $sql = 'SELECT * FROM ' . $this->db->prefix('modules') . ' WHERE mid = ' . $id;
-                if (!$result = $this->db->query($sql)) {
+                $result = $this->db->query($sql);
+                if (!$this->db->isResultSet($result)) {
                     return $module;
                 }
                 $numrows = $this->db->getRowsNum($result);
@@ -754,7 +771,8 @@ class XoopsModuleHandler extends XoopsObjectHandler
         } else {
             $module = false;
             $sql    = 'SELECT * FROM ' . $this->db->prefix('modules') . " WHERE dirname = '" . trim($dirname) . "'";
-            if (!$result = $this->db->query($sql)) {
+            $result = $this->db->query($sql);
+            if (!$this->db->isResultSet($result)) {
                 return $module;
             }
             $numrows = $this->db->getRowsNum($result);
@@ -840,8 +858,10 @@ class XoopsModuleHandler extends XoopsObjectHandler
         $this->db->query($sql);
 
         $sql = sprintf('SELECT block_id FROM %s WHERE module_id = %u', $this->db->prefix('block_module_link'), $module->getVar('mid'));
-        if ($result = $this->db->query($sql)) {
+        $result = $this->db->query($sql);
+        if ($this->db->isResultSet($result)) {
             $block_id_arr = array();
+            /** @var array $myrow */
             while (false !== ($myrow = $this->db->fetchArray($result))) {
                 $block_id_arr[] = $myrow['block_id'];
             }
@@ -850,13 +870,14 @@ class XoopsModuleHandler extends XoopsObjectHandler
         if (isset($block_id_arr)) {
             foreach ($block_id_arr as $i) {
                 $sql = sprintf('SELECT block_id FROM %s WHERE module_id != %u AND block_id = %u', $this->db->prefix('block_module_link'), $module->getVar('mid'), $i);
-                if ($result2 = $this->db->query($sql)) {
+                $result2 = $this->db->query($sql);
+                if ($this->db->isResultSet($result2)) {
                     if (0 < $this->db->getRowsNum($result2)) {
                         // this block has other entries, so delete the entry for this module
                         $sql = sprintf('DELETE FROM %s WHERE (module_id = %u) AND (block_id = %u)', $this->db->prefix('block_module_link'), $module->getVar('mid'), $i);
                         $this->db->query($sql);
                     } else {
-                        // this block doesnt have other entries, so disable the block and let it show on top page only. otherwise, this block will not display anymore on block admin page!
+                        // this block doesn't have other entries, so disable the block and let it show on top page only. otherwise, this block will not display anymore on block admin page!
                         $sql = sprintf('UPDATE %s SET visible = 0 WHERE bid = %u', $this->db->prefix('newblocks'), $i);
                         $this->db->query($sql);
                         $sql = sprintf('UPDATE %s SET module_id = -1 WHERE module_id = %u', $this->db->prefix('block_module_link'), $module->getVar('mid'));
@@ -866,11 +887,14 @@ class XoopsModuleHandler extends XoopsObjectHandler
             }
         }
 
-        if (!empty($this->_cachedModule_dirname[$module->getVar('dirname')])) {
-            unset($this->_cachedModule_dirname[$module->getVar('dirname')]);
+        $dirname = (string) $module->getVar('dirname');
+        $mid = (int) $module->getVar('mid');
+
+        if (!empty($this->_cachedModule_dirname[$dirname])) {
+            unset($this->_cachedModule_dirname[$dirname]);
         }
-        if (!empty($this->_cachedModule_mid[$module->getVar('mid')])) {
-            unset($this->_cachedModule_mid[$module->getVar('mid')]);
+        if (!empty($this->_cachedModule_mid[$mid])) {
+            unset($this->_cachedModule_mid[$mid]);
         }
 
         return true;
@@ -888,16 +912,17 @@ class XoopsModuleHandler extends XoopsObjectHandler
         $ret   = array();
         $limit = $start = 0;
         $sql   = 'SELECT * FROM ' . $this->db->prefix('modules');
-        if (isset($criteria) && is_subclass_of($criteria, 'CriteriaElement')) {
+        if (isset($criteria) && \method_exists($criteria, 'renderWhere')) {
             $sql .= ' ' . $criteria->renderWhere();
             $sql .= ' ORDER BY weight ' . $criteria->getOrder() . ', mid ASC';
             $limit = $criteria->getLimit();
             $start = $criteria->getStart();
         }
         $result = $this->db->query($sql, $limit, $start);
-        if (!$result) {
+        if (!$this->db->isResultSet($result)) {
             return $ret;
         }
+        /** @var array $myrow */
         while (false !== ($myrow = $this->db->fetchArray($result))) {
             $module = new XoopsModule();
             $module->assignVars($myrow);
@@ -921,15 +946,16 @@ class XoopsModuleHandler extends XoopsObjectHandler
     public function getCount(CriteriaElement $criteria = null)
     {
         $sql = 'SELECT COUNT(*) FROM ' . $this->db->prefix('modules');
-        if (isset($criteria) && is_subclass_of($criteria, 'CriteriaElement')) {
+        if (isset($criteria) && \method_exists($criteria, 'renderWhere')) {
             $sql .= ' ' . $criteria->renderWhere();
         }
-        if (!$result = $this->db->query($sql)) {
+        $result = $this->db->query($sql);
+        if (!$this->db->isResultSet($result)) {
             return 0;
         }
         list($count) = $this->db->fetchRow($result);
 
-        return $count;
+        return (int)$count;
     }
 
     /**

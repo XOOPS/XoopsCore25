@@ -313,7 +313,7 @@ class HTMLPurifier_Strategy_MakeWellFormed extends HTMLPurifier_Strategy
 
                     if ($autoclose) {
                         // check if this autoclose is doomed to fail
-                        // (this rechecks $parent, which his harmless)
+                        // (this rechecks $parent, which is harmless)
                         $autoclose_ok = isset($global_parent_allowed_elements[$token->name]);
                         if (!$autoclose_ok) {
                             foreach ($this->stack as $ancestor) {

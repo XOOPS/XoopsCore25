@@ -44,13 +44,18 @@ $sql .= 'UNION ALL ';
 $sql .= sprintf($queryFormat, 'day', 24*60*60);
 $sql .= 'UNION ALL ';
 $sql .= sprintf($queryFormat, 'hour', 60*60);
+$result = $xoopsDB->query($sql);
+if (!$xoopsDB->isResultSet($result)) {
+    throw new \RuntimeException(
+        \sprintf(_DB_QUERY_ERROR, $sql) . $xoopsDB->error(), E_USER_ERROR
+    );
+}
 
 $rawStats = array();
 $rawStats['']['month'] = 0;
 $rawStats['']['week'] = 0;
 $rawStats['']['day'] = 0;
 $rawStats['']['hour'] = 0;
-$result = $xoopsDB->query($sql);
 while (false !== ($row = $xoopsDB->fetchArray($result))) {
     $rawStats[$row['type']][$row['age']] = $row['count'];
 }

@@ -29,14 +29,14 @@
     <{/if}>
 
     <td class="odd">
-        <div class="comTitle"><{$comment.image}><{$comment.title}></div>
+        <div class="comTitle"><{$comment.image|default:''}><{$comment.title}></div>
         <div class="comText"><{$comment.text}></div>
     </td>
 </tr>
 <tr>
     <td class="even"></td>
 
-    <{if $xoops_iscommentadmin == true}>
+    <{if isset($xoops_iscommentadmin) && $xoops_iscommentadmin == true}>
         <td class="even txtright">
             <button type="button" class="btn btn-default" onclick="window.location.href = '<{$editcomment_link}>&amp;com_id=<{$comment.id}>'" title="<{$lang_edit}>"><span class="fa fa-pencil-square-o fa-fw"></span></button>
             <button type="button" class="btn btn-default" onclick="window.location.href = '<{$deletecomment_link}>&amp;com_id=<{$comment.id}>'" title="<{$lang_delete}>"><span class="fa fa-remove fa-fw"></span></button>

@@ -1,6 +1,6 @@
 <{if !$xoops_page|strstr:'viewpmsg' && !$xoops_page|strstr:'readpmsg'}>
     <{xoInboxCount assign='newPms'}>
-    <{if $newPms>0}>
+    <{if isset($newPms) && $newPms > 0}>
     <{* Turn off hide with data-autohide="false" *}>
     <{* Adjust millisecond time to hide in data-delay *}>
     <div data-autohide="true" data-delay="4000" role="alert" aria-live="assertive" aria-atomic="true" class="toast" style="position: absolute; top: 0; left: 0;" >

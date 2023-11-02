@@ -14,7 +14,7 @@ use Xmf\Jwt\TokenReader;
  *
  * Follow these steps to get up and running with Fine Uploader in a PHP environment:
  *
- * 1. Setup your client-side code, as documented on http://docs.fineuploader.com.
+ * 1. Set up your client-side code, as documented on http://docs.fineuploader.com.
  *
  * 2. Copy this file and handler.php to your server.
  *
@@ -108,7 +108,7 @@ if (false === strpos($handler, '\\')) {
     XoopsLoad::load($handler, $moddir);
     $className = $moddir . $handler;
 }
-/* @var SystemFineUploadHandler $uploader */
+/** @var SystemFineUploadHandler $uploader */
 $uploader = new $className($claims);
 
 $method = get_request_method();

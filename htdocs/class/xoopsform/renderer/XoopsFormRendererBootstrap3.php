@@ -15,7 +15,7 @@
  * @package   XoopsFormRendererBootstrap3
  * @author    Richard Griffith <richard@geekwright.com>
  * @copyright 2017-2021 XOOPS Project (https://xoops.org)
- * @license   GNU GPL 2 or later (https://www.gnu.org/licenses/gpl-2.0.html)
+ * @license   GNU GPL 2.0 or later (https://www.gnu.org/licenses/gpl-2.0.html)
  */
 class XoopsFormRendererBootstrap3 implements XoopsFormRendererInterface
 {
@@ -293,7 +293,7 @@ EOJS;
         $code .= "<button type='button' class='btn btn-default btn-sm' onclick='openWithSelfMain(\"" . XOOPS_URL . "/imagemanager.php?target={$textarea_id}\",\"imgmanager\",400,430);' onmouseover='style.cursor=\"hand\"' title='" . _XOOPS_FORM_ALT_IMAGE . "'><span class='fa fa-file-image-o' aria-hidden='true'></span><small> Manager</small></button>";
         $code .= "<button type='button' class='btn btn-default btn-sm' onclick='openWithSelfMain(\"" . XOOPS_URL . "/misc.php?action=showpopups&amp;type=smilies&amp;target={$textarea_id}\",\"smilies\",300,475);' onmouseover='style.cursor=\"hand\"' title='" . _XOOPS_FORM_ALT_SMILEY . "'><span class='fa fa-fw fa-smile-o' aria-hidden='true'></span></button>";
 
-        $myts = MyTextSanitizer::getInstance();
+        $myts = \MyTextSanitizer::getInstance();
 
         $extensions = array_filter($myts->config['extensions']);
         foreach (array_keys($extensions) as $key) {
@@ -407,11 +407,13 @@ EOJS;
 
         $fontStr .= "&nbsp;{$styleStr}&nbsp;{$alignStr}&nbsp;\n";
 
+        $maxlength = isset($element->configs['maxlength']) ? $element->configs['maxlength'] : 0;
         $fontStr .= "<button type='button' class='btn btn-default btn-sm' onclick=\"XoopsCheckLength('"
-            . $element->getName() . "', '" . @$element->configs['maxlength'] . "', '"
-            . _XOOPS_FORM_ALT_LENGTH . "', '" . _XOOPS_FORM_ALT_LENGTH_MAX . "');\" title='"
-            . _XOOPS_FORM_ALT_CHECKLENGTH . "'><span class='fa fa-check-square-o' aria-hidden='true'></span></button>";
+                    . $element->getName() . "', '" . $maxlength . "', '"
+                    . _XOOPS_FORM_ALT_LENGTH . "', '" . _XOOPS_FORM_ALT_LENGTH_MAX . "');\" title='"
+                    . _XOOPS_FORM_ALT_CHECKLENGTH . "'><span class='fa fa-check-square-o' aria-hidden='true'></span></button>";
         $fontStr .= "</div></div>";
+
 
         return $fontStr;
     }

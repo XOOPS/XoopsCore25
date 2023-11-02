@@ -27,7 +27,7 @@ $op = isset($_REQUEST['op']) ? $_REQUEST['op'] : 'list';
 if ($op === 'editordelete') {
     $op = isset($_REQUEST['delete']) ? 'delete' : 'edit';
 }
-/* @var XoopsMemberHandler $handler */
+/** @var XoopsMemberHandler $handler */
 $handler = xoops_getHandler('member');
 
 switch ($op) {
@@ -73,13 +73,13 @@ switch ($op) {
         }
 
         // Dynamic fields
-        /* @var  ProfileProfileHandler $profile_handler */
+        /** @var  ProfileProfileHandler $profile_handler */
         $profile_handler = xoops_getModuleHandler('profile');
         // Get fields
         $fields     = $profile_handler->loadFields();
         $userfields = $profile_handler->getUserVars();
         // Get ids of fields that can be edited
-        /* @var  XoopsGroupPermHandler $gperm_handler */
+        /** @var  XoopsGroupPermHandler $gperm_handler */
         $gperm_handler   = xoops_getHandler('groupperm');
         $editable_fields = $gperm_handler->getItemIds('profile_edit', $GLOBALS['xoopsUser']->getGroups(), $GLOBALS['xoopsModule']->getVar('mid'));
 
@@ -110,7 +110,7 @@ switch ($op) {
             $user->setVar('level', 1);
             $user->setVar('user_avatar', 'avatars/blank.gif');
         }
-        $myts = MyTextSanitizer::getInstance();
+        $myts = \MyTextSanitizer::getInstance();
         $user->setVar('uname', $_POST['uname']);
         $user->setVar('email', trim($_POST['email']));
         if (isset($_POST['level']) && $user->getVar('level') != (int)$_POST['level']) {
@@ -119,7 +119,7 @@ switch ($op) {
         $password = $vpass = null;
         if (!empty($_POST['password'])) {
             $password = $myts->stripSlashesGPC(trim($_POST['password']));
-            $vpass    = @$myts->stripSlashesGPC(trim($_POST['vpass']));
+            $vpass = isset($_POST['vpass']) ? $myts->stripSlashesGPC(trim($_POST['vpass'])) : '';
             $user->setVar('pass', password_hash($password, PASSWORD_DEFAULT));
         } elseif ($user->isNew()) {
             $password = $vpass = '';

@@ -23,7 +23,7 @@ defined('XOOPS_ROOT_PATH') || exit('Restricted access');
  *
  * PHP versions 4 and 5
  *
- * CakePHP(tm) :  Rapid Development Framework <http://www.cakephp.org/>
+ * CakePHP(tm) :  Rapid Development Framework <https://www.cakephp.org/>
  * Copyright 2005-2008, Cake Software Foundation, Inc.
  *                                     1785 E. Sahara Avenue, Suite 490-204
  *                                     Las Vegas, Nevada 89104
@@ -33,13 +33,13 @@ defined('XOOPS_ROOT_PATH') || exit('Restricted access');
  *
  * @filesource
  * @copyright  Copyright 2005-2008, Cake Software Foundation, Inc.
- * @link       http://www.cakefoundation.org/projects/info/cakephp CakePHP(tm) Project
+ * @link       https://www.cakefoundation.org/projects/info/cakephp CakePHP(tm) Project
  * @package    cake
  * @subpackage cake.cake.libs
  * @since      CakePHP(tm) v 0.2.9
  * @modifiedby $LastChangedBy: beckmi $
  * @lastmodified $Date: 2015-06-06 17:59:41 -0400 (Sat, 06 Jun 2015) $
- * @license    http://www.opensource.org/licenses/mit-license.php The MIT License
+ * @license    https://www.opensource.org/licenses/mit-license.php The MIT License
  */
 
 /**
@@ -255,7 +255,7 @@ class XoopsFileHandler
      * Write given data to this File.
      *
      * @param  string      $data  Data to write to this File.
-     * @param  string      $mode  Mode of writing. {@link http://php.net/fwrite See fwrite()}.
+     * @param  string      $mode  Mode of writing. {@link https://php.net/fwrite See fwrite()}.
      * @param  bool|string $force force the file to open
      * @return boolean     Success
      * @access public
@@ -403,7 +403,7 @@ class XoopsFileHandler
      * Get md5 Checksum of file with previous check of Filesize
      *
      * @param  mixed $maxsize in MB or true to force
-     * @return string|false md5 Checksum {@link http://php.net/md5_file See md5_file()}
+     * @return string|false md5 Checksum {@link https://php.net/md5_file See md5_file()}
      * @access public
      */
     public function md5($maxsize = 5)

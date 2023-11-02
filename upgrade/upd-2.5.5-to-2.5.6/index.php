@@ -7,7 +7,7 @@
  * If you did not receive this file, get it at https://www.gnu.org/licenses/gpl-2.0.html
  *
  * @copyright    (c) 2000-2016 XOOPS Project (www.xoops.org)
- * @license          GNU GPL 2 or later (https://www.gnu.org/licenses/gpl-2.0.html)
+ * @license          GNU GPL 2.0 or later (https://www.gnu.org/licenses/gpl-2.0.html)
  * @package          upgrader
  * @since            2.5.6
  * @author           XOOPS Team
@@ -29,7 +29,13 @@ class Upgrade_256 extends XoopsUpgrade
      */
     public function check_com_user()
     {
-        $result = $GLOBALS['xoopsDB']->queryF('SHOW COLUMNS FROM ' . $GLOBALS['xoopsDB']->prefix('xoopscomments') . " LIKE 'com_user'");
+        $sql = 'SHOW COLUMNS FROM ' . $GLOBALS['xoopsDB']->prefix('xoopscomments') . " LIKE 'com_user'";
+        $result = $GLOBALS['xoopsDB']->queryF($sql);
+        if (!$GLOBALS['xoopsDB']->isResultSet($result)) {
+            throw new \RuntimeException(
+                \sprintf(_DB_QUERY_ERROR, $sql) . $GLOBALS['xoopsDB']->error(), E_USER_ERROR
+            );
+        }
 
         return ($GLOBALS['xoopsDB']->getRowsNum($result) > 0);
 
@@ -41,7 +47,13 @@ class Upgrade_256 extends XoopsUpgrade
      */
     public function check_com_email()
     {
-        $result = $GLOBALS['xoopsDB']->queryF('SHOW COLUMNS FROM ' . $GLOBALS['xoopsDB']->prefix('xoopscomments') . " LIKE 'com_email'");
+        $sql = 'SHOW COLUMNS FROM ' . $GLOBALS['xoopsDB']->prefix('xoopscomments') . " LIKE 'com_email'";
+        $result = $GLOBALS['xoopsDB']->queryF($sql);
+        if (!$GLOBALS['xoopsDB']->isResultSet($result)) {
+            throw new \RuntimeException(
+                \sprintf(_DB_QUERY_ERROR, $sql) . $GLOBALS['xoopsDB']->error(), E_USER_ERROR
+            );
+        }
 
         return ($GLOBALS['xoopsDB']->getRowsNum($result) > 0);
 
@@ -53,7 +65,13 @@ class Upgrade_256 extends XoopsUpgrade
      */
     public function check_com_url()
     {
-        $result = $GLOBALS['xoopsDB']->queryF('SHOW COLUMNS FROM ' . $GLOBALS['xoopsDB']->prefix('xoopscomments') . " LIKE 'com_url'");
+        $sql = 'SHOW COLUMNS FROM ' . $GLOBALS['xoopsDB']->prefix('xoopscomments') . " LIKE 'com_url'";
+        $result = $GLOBALS['xoopsDB']->queryF($sql);
+        if (!$GLOBALS['xoopsDB']->isResultSet($result)) {
+            throw new \RuntimeException(
+                \sprintf(_DB_QUERY_ERROR, $sql) . $GLOBALS['xoopsDB']->error(), E_USER_ERROR
+            );
+        }
 
         return ($GLOBALS['xoopsDB']->getRowsNum($result) > 0);
 

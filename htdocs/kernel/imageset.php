@@ -31,6 +31,11 @@ defined('XOOPS_ROOT_PATH') || exit('Restricted access');
  */
 class XoopsImageSet extends XoopsObject
 {
+    //PHP 8.2 Dynamic properties deprecated
+    public $imgset_id;
+    public $imgset_name;
+    public $imgset_refid;
+
     /**
      * XoopsImageSet constructor.
      */
@@ -115,7 +120,7 @@ class XoopsImageSetHandler extends XoopsObjectHandler
      * @param int $id ID
      *
      * @internal param bool $getbinary
-     * @return XoopsImageSet {@link XoopsImageSet}, FALSE on fail
+     * @return XoopsImageSet|false {@link XoopsImageSet}, false on fail
      */
     public function get($id)
     {
@@ -123,7 +128,8 @@ class XoopsImageSetHandler extends XoopsObjectHandler
         $imgset = false;
         if ($id > 0) {
             $sql = 'SELECT * FROM ' . $this->db->prefix('imgset') . ' WHERE imgset_id=' . $id;
-            if (!$result = $this->db->query($sql)) {
+            $result = $this->db->query($sql);
+            if (!$this->db->isResultSet($result)) {
                 return $imgset;
             }
             $numrows = $this->db->getRowsNum($result);
@@ -212,15 +218,16 @@ class XoopsImageSetHandler extends XoopsObjectHandler
         $ret   = array();
         $limit = $start = 0;
         $sql   = 'SELECT DISTINCT i.* FROM ' . $this->db->prefix('imgset') . ' i LEFT JOIN ' . $this->db->prefix('imgset_tplset_link') . ' l ON l.imgset_id=i.imgset_id';
-        if (isset($criteria) && is_subclass_of($criteria, 'CriteriaElement')) {
+        if (isset($criteria) && \method_exists($criteria, 'renderWhere')) {
             $sql .= ' ' . $criteria->renderWhere();
             $limit = $criteria->getLimit();
             $start = $criteria->getStart();
         }
         $result = $this->db->query($sql, $limit, $start);
-        if (!$result) {
+        if (!$this->db->isResultSet($result)) {
             return $ret;
         }
+        /** @var array $myrow */
         while (false !== ($myrow = $this->db->fetchArray($result))) {
             $imgset = new XoopsImageSet();
             $imgset->assignVars($myrow);
@@ -240,7 +247,7 @@ class XoopsImageSetHandler extends XoopsObjectHandler
      *
      * @param  int    $imgset_id
      * @param  string $tplset_name
-     * @return array
+     * @return array|bool
      */
     public function linkThemeset($imgset_id, $tplset_name)
     {
@@ -266,7 +273,7 @@ class XoopsImageSetHandler extends XoopsObjectHandler
      *
      * @param  int    $imgset_id
      * @param  string $tplset_name
-     * @return array
+     * @return array|bool
      */
     public function unlinkThemeset($imgset_id, $tplset_name)
     {

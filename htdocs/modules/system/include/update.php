@@ -10,8 +10,8 @@
  */
 
 /**
- * @copyright    XOOPS Project http://xoops.org/
- * @license      GNU GPL 2 or later (https://www.gnu.org/licenses/gpl-2.0.html)
+ * @copyright    XOOPS Project https://xoops.org/
+ * @license      GNU GPL 2.0 or later (https://www.gnu.org/licenses/gpl-2.0.html)
  * @package
  * @since
  * @author       XOOPS Development Team, Kazumi Ono (AKA onokazu)
@@ -50,7 +50,13 @@ function xoops_module_update_system(XoopsModule $module, $prev_version = null)
 function update_system_v211($module)
 {
     global $xoopsDB;
-    $result = $xoopsDB->query('SELECT t1.tpl_id FROM ' . $xoopsDB->prefix('tplfile') . ' t1, ' . $xoopsDB->prefix('tplfile') . ' t2 WHERE t1.tpl_refid = t2.tpl_refid AND t1.tpl_module = t2.tpl_module AND t1.tpl_tplset=t2.tpl_tplset AND t1.tpl_file = t2.tpl_file AND t1.tpl_type = t2.tpl_type AND t1.tpl_id > t2.tpl_id');
+    $sql = 'SELECT t1.tpl_id FROM ' . $xoopsDB->prefix('tplfile') . ' t1, ' . $xoopsDB->prefix('tplfile') . ' t2 WHERE t1.tpl_refid = t2.tpl_refid AND t1.tpl_module = t2.tpl_module AND t1.tpl_tplset=t2.tpl_tplset AND t1.tpl_file = t2.tpl_file AND t1.tpl_type = t2.tpl_type AND t1.tpl_id > t2.tpl_id';
+    $result = $xoopsDB->query($sql);
+    if (!$xoopsDB->isResultSet($result)) {
+        throw new \RuntimeException(
+            \sprintf(_DB_QUERY_ERROR, $sql) . $xoopsDB->error(), E_USER_ERROR
+        );
+}
     $tplids = array();
     while (false !== (list($tplid) = $xoopsDB->fetchRow($result))) {
         $tplids[] = $tplid;
@@ -67,7 +73,7 @@ function update_system_v211($module)
     }
     $sql = 'SHOW INDEX FROM ' . $xoopsDB->prefix('tplfile') . " WHERE KEY_NAME = 'tpl_refid_module_set_file_type'";
     if (!$result = $xoopsDB->queryF($sql)) {
-        xoops_error($this->db->error() . '<br>' . $sql);
+        xoops_error($xoopsDB->error() . '<br>' . $sql);
 
         return false;
     }

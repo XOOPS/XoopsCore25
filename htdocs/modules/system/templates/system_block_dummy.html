@@ -1,1 +1,1 @@
-<{$block.content}>
+<{$block.content|default:''}>

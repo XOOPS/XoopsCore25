@@ -45,7 +45,7 @@ class SystemAvatar extends XoopsAvatar
             $blank_img = str_replace('avatars/', '', $this->getVar('avatar_file', 'e'));
         }
         // Get User Config
-        /* @var XoopsConfigHandler $config_handler */
+        /** @var XoopsConfigHandler $config_handler */
         $config_handler  = xoops_getHandler('config');
         $xoopsConfigUser = $config_handler->getConfigsByCat(XOOPS_CONF_USER);
         // New and edit form
@@ -131,7 +131,7 @@ class SystemAvatarHandler extends XoopsAvatarHandler
      * Egt Object
      *
      * @param  int $id
-     * @return object
+     * @return object|false
      */
     public function get($id)
     {
@@ -139,7 +139,8 @@ class SystemAvatarHandler extends XoopsAvatarHandler
         $id     = (int)$id;
         if ($id > 0) {
             $sql = 'SELECT * FROM ' . $this->db->prefix('avatar') . ' WHERE avatar_id=' . $id;
-            if (!$result = $this->db->query($sql)) {
+            $result = $this->db->query($sql);
+            if (!$this->db->isResultSet($result)) {
                 return false;
             }
             $numrows = $this->db->getRowsNum($result);

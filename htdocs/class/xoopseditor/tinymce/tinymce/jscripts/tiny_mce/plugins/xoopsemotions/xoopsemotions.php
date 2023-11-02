@@ -3,7 +3,7 @@
  *  Xoopsemotions plugin for tinymce
  *
  * @copyright       (c) 2000-2016 XOOPS Project (www.xoops.org)
- * @license             GNU GPL 2 or later (https://www.gnu.org/licenses/gpl-2.0.html)
+ * @license             GNU GPL 2.0 or later (https://www.gnu.org/licenses/gpl-2.0.html)
  * @package             class / xoopseditor
  * @subpackage          tinymce / xoops plugins
  * @since               2.3.0
@@ -11,6 +11,8 @@
  * @author              luciorota <lucio.rota@gmail.com>
  * @author              Laurent JEN <dugris@frxoops.org>
  */
+
+use Xmf\Request;
 
 // load mainfile.php - start
 $current_path = __DIR__;
@@ -39,14 +41,10 @@ $groups        = is_object($GLOBALS['xoopsUser']) ? $GLOBALS['xoopsUser']->getGr
 $gperm_handler = xoops_getHandler('groupperm');
 $admin         = $gperm_handler->checkRight('system_admin', XOOPS_SYSTEM_SMILE, $groups);
 
-$op = '';
-if (!empty($_GET['op'])) {
-    $op = trim($_GET['op']);
-} elseif (!empty($_POST['op'])) {
-    $op = trim($_POST['op']);
-}
+$op = Request::getString('op', '', 'POST');
+$op = Request::getString('op', $op, 'GET');
 
-$myts = MyTextSanitizer::getInstance();
+$myts = \MyTextSanitizer::getInstance();
 
 if ($admin && $op === 'SmilesAdd') {
     if (!$GLOBALS['xoopsSecurity']->check()) {
@@ -89,14 +87,14 @@ if ($admin && $op === 'SmilesAdd') {
 }
 
 $time = time();
-if (!isset($_SESSION['XoopsEmotions']) && @$_SESSION['XoopsEmotions_expire'] < $time) {
+if (!isset($_SESSION['XoopsEmotions']) && (isset($_SESSION['XoopsEmotions_expire']) && $_SESSION['XoopsEmotions_expire'] < $time)) {
     $_SESSION['XoopsEmotions']        = $myts->getSmileys();
     $_SESSION['XoopsEmotions_expire'] = $time + 300;
 }
 
 //xoops_header(false);
-echo '<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">';
-echo '<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="' . _LANGCODE . '" lang="' . _LANGCODE . '">';
+echo '<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "https://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">';
+echo '<html xmlns="https://www.w3.org/1999/xhtml" xml:lang="' . _LANGCODE . '" lang="' . _LANGCODE . '">';
 echo '<head>';
 echo '<meta http-equiv="content-type" content="text/html; charset=' . _CHARSET . '" />';
 echo '<meta http-equiv="content-language" content="' . _LANGCODE . '" />';

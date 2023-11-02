@@ -44,7 +44,7 @@ define('_PROFILE_AM_PROF_EDITABLE', 'Field editable from profile');
 define('_PROFILE_AM_PROF_REGISTER', 'Show in registration form');
 define('_PROFILE_AM_PROF_SEARCH', 'Searchable by these groups');
 define('_PROFILE_AM_PROF_ACCESS', 'Profile accessible by these groups');
-define('_PROFILE_AM_PROF_ACCESS_DESC', '<ul>' . "<li>Admin groups: If a user belongs to admin groups, the current user has access if and only if one of the current user's groups is allowed to access admin group; else</li>" . "<li>Non basic groups: If a user belongs to one or more non basic groups (NOT admin, user, anonymous), the current user has access if and only if one of the current user's groups is allowed to allowed to any of the non basic groups; else</li>" . '<li>User group: If a user belongs to User group only, the current user has access if and only if one of his groups is allowed to access User group</li>' . '</ul>');
+define('_PROFILE_AM_PROF_ACCESS_DESC', '<ul>' . "<li>Admin groups: If a user belongs to admin groups, the current user has access if and only if one of the current user's groups is allowed to access admin group; else</li>" . "<li>Non basic groups: If a user belongs to one or more non-basic groups (NOT admin, user, anonymous), the current user has access if and only if one of the current user's groups is allowed to access any of the non basic groups; else</li>" . '<li>User group: If a user belongs to User group only, the current user has access if and only if one of their groups is allowed to access User group</li>' . '</ul>');
 define('_PROFILE_AM_FIELDVISIBLE', 'The field ');
 define('_PROFILE_AM_FIELDVISIBLEFOR', ' is visible for ');
 define('_PROFILE_AM_FIELDVISIBLEON', ' viewing a profile of ');

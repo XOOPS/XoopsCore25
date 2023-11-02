@@ -10,11 +10,11 @@
         <{if $online.num_user}>
             <br>
             <{$online.num_user}> <{$smarty.const._MD_NEWBB_REGISTERED_USERS}>
-            <{foreach item=user from=$online.users}>
+            <{foreach item=user from=$online.users|default:null}>
             <a href="<{$user.link}>">
-                <{if $user.level eq 2}>
+                <{if isset($user.level) && $user.level == 2}>
                     <span class="online_admin"><{$user.uname}></span>
-                <{elseif $user.level eq 1}>
+                <{elseif isset($user.level) && $user.level == 1}>
                     <span class="online_moderator"><{$user.uname}></span>
                 <{else}>
                     <{$user.uname}>

@@ -53,7 +53,7 @@ if (!$allowed) {
                           'xoops_requesturi'  => htmlspecialchars($_SERVER['REQUEST_URI'], ENT_QUOTES),
                           'xoops_sitename'    => htmlspecialchars($xoopsConfig['sitename'], ENT_QUOTES),
                           'xoops_slogan'      => htmlspecialchars($xoopsConfig['slogan'], ENT_QUOTES),
-                          'xoops_dirname'     => @$xoopsModule ? $xoopsModule->getVar('dirname') : 'system',
+                          'xoops_dirname'     => !empty($xoopsModule) ? $xoopsModule->getVar('dirname') : 'system',
                           'xoops_banner'      => $xoopsConfig['banners'] ? xoops_getbanner() : '&nbsp;',
                           'xoops_pagetitle'   => isset($xoopsModule) && is_object($xoopsModule) ? $xoopsModule->getVar('name') : htmlspecialchars($xoopsConfig['slogan'], ENT_QUOTES),
                           'lang_login'        => _LOGIN,
@@ -65,7 +65,7 @@ if (!$allowed) {
         unset($_SESSION['redirect_message']);
     }
 
-    /* @var XoopsConfigHandler $config_handler */
+    /** @var XoopsConfigHandler $config_handler */
     $config_handler = xoops_getHandler('config');
     $criteria       = new CriteriaCompo(new Criteria('conf_modid', 0));
     $criteria->add(new Criteria('conf_catid', XOOPS_CONF_METAFOOTER));
@@ -89,9 +89,9 @@ if (!$allowed) {
     $xoopsTpl->debugging_ctrl = 'none';
     $xoopsTpl->caching        = 0;
     // handle error and transition to tpl naming convention
-    if ($xoopsTpl->template_exists('db:system_siteclosed.tpl')) {
+    if ($xoopsTpl->templateExists('db:system_siteclosed.tpl')) {
         $xoopsTpl->display('db:system_siteclosed.tpl');
-    } elseif ($xoopsTpl->template_exists('db:system_siteclosed.html')) {
+    } elseif ($xoopsTpl->templateExists('db:system_siteclosed.html')) {
         $xoopsTpl->display('db:system_siteclosed.html');
     } else {
         echo $xoopsConfig['closesite_text'];

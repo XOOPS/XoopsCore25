@@ -1,6 +1,9 @@
 <?php
+
+use Xmf\Request;
+
 //require_once XOOPS_ROOT_PATH.'/include/cp_header.php' ;
-include_once 'admin_header.php'; //mb problem: it shows always the same "Center" tab
+include_once __DIR__ . '/admin_header.php'; //mb problem: it shows always the same "Center" tab
 xoops_cp_header();
 include __DIR__ . '/mymenu.php';
 require_once XOOPS_ROOT_PATH . '/class/pagenav.php';
@@ -11,12 +14,12 @@ if (isset($_GET['num'])) {
     $_SERVER['REQUEST_URI'] = 'admin/center.php?page=center';
 }
 
-$myts = MyTextSanitizer::getInstance();
+$myts = \MyTextSanitizer::getInstance();
 $db   = XoopsDatabaseFactory::getDatabaseConnection();
 
 // GET vars
-$pos = empty($_GET['pos']) ? 0 : (int)$_GET['pos'];
-$num = empty($_GET['num']) ? 20 : (int)$_GET['num'];
+$pos = Request::getInt('pos', 0, 'GET');
+$num = Request::getInt('num', 20, 'GET');
 
 // Table Name
 $log_table = $db->prefix($mydirname . '_log');
@@ -68,7 +71,7 @@ if (!empty($_POST['action'])) {
         $redirect_msg = $error_msg ? : _AM_MSG_IPFILESUPDATED;
         redirect_header('center.php?page=center', 2, $redirect_msg);
         exit;
-    } elseif ($_POST['action'] === 'delete' && isset($_POST['ids']) && is_array($_POST['ids'])) {
+    } elseif ($_POST['action'] === 'delete' && isset($_POST['ids']) && \is_array($_POST['ids'])) {
         // remove selected records
         foreach ($_POST['ids'] as $lid) {
             $lid = (int)$lid;
@@ -76,16 +79,22 @@ if (!empty($_POST['action'])) {
         }
         redirect_header('center.php?page=center', 2, _AM_MSG_REMOVED);
         exit;
-    } elseif ($_POST['action'] === 'banbyip' && isset($_POST['ids']) && is_array($_POST['ids'])) {
+    } elseif ($_POST['action'] === 'banbyip' && isset($_POST['ids']) && \is_array($_POST['ids'])) {
         // remove selected records
         foreach ($_POST['ids'] as $lid) {
             $lid = (int)$lid;
-            $result = $db->query("SELECT `ip` FROM $log_table WHERE lid='$lid'");
-            if (false !== $result) {
+            $sql = "SELECT `ip` FROM $log_table WHERE lid='$lid'";
+            $result = $db->query($sql);
+
+            if (!$db->isResultSet($result)) {
                 list($ip) = $db->fetchRow($result);
                 $protector->register_bad_ips(0, $ip);
             }
-            $db->freeRecordSet($result);
+
+            if ($db->isResultSet($result)) {
+                $db->freeRecordSet($result);
+            }
+
         }
         redirect_header('center.php?page=center', 2, _AM_MSG_BANNEDIP);
         exit;
@@ -96,7 +105,13 @@ if (!empty($_POST['action'])) {
         exit;
     } elseif ($_POST['action'] === 'compactlog') {
         // compactize records (removing duplicated records (ip,type)
-        $result = $db->query("SELECT `lid`,`ip`,`type` FROM $log_table ORDER BY lid DESC");
+        $sql = "SELECT `lid`,`ip`,`type` FROM $log_table ORDER BY lid DESC";
+        $result = $db->query($sql);
+        if (!$db->isResultSet($result)) {
+            throw new \RuntimeException(
+                \sprintf(_DB_QUERY_ERROR, $sql) . $db->error(), E_USER_ERROR
+            );
+        }
         $buf    = array();
         $ids    = array();
         while (false !== (list($lid, $ip, $type) = $db->fetchRow($result))) {
@@ -117,9 +132,22 @@ if (!empty($_POST['action'])) {
 //
 
 // query for listing
-$rs = $db->query("SELECT count(lid) FROM $log_table");
-list($numrows) = $db->fetchRow($rs);
-$prs = $db->query("SELECT l.lid, l.uid, l.ip, l.agent, l.type, l.description, UNIX_TIMESTAMP(l.timestamp), u.uname FROM $log_table l LEFT JOIN " . $db->prefix('users') . " u ON l.uid=u.uid ORDER BY timestamp DESC LIMIT $pos,$num");
+$sql = "SELECT count(lid) FROM $log_table";
+$result = $db->query($sql);
+if (!$db->isResultSet($result)) {
+    throw new \RuntimeException(
+        \sprintf(_DB_QUERY_ERROR, $sql) . $db->error(), E_USER_ERROR
+    );
+}
+list($numrows) = $db->fetchRow($result);
+
+$sql = "SELECT l.lid, l.uid, l.ip, l.agent, l.type, l.description, UNIX_TIMESTAMP(l.timestamp), u.uname FROM $log_table l LEFT JOIN " . $db->prefix('users') . " u ON l.uid=u.uid ORDER BY timestamp DESC LIMIT $pos,$num";
+$result = $db->query($sql);
+if (!$db->isResultSet($result)) {
+    throw new \RuntimeException(
+        \sprintf(_DB_QUERY_ERROR, $sql) . $db->error(), E_USER_ERROR
+    );
+}
 
 // Page Navigation
 $nav      = new XoopsPageNav($numrows, $num, $pos, 'pos', "page=center&num=$num");
@@ -175,7 +203,7 @@ echo "
     <td class='even'>
       <textarea name='bad_ips' id='bad_ips' style='width:360px;height:60px;' spellcheck='false'>$bad_ips4disp</textarea>
       <br>
-      " . htmlspecialchars($protector->get_filepath4badips()) . "
+      " . htmlspecialchars($protector->get_filepath4badips(), ENT_QUOTES) . "
     </td>
   </tr>
   <tr valign='top' align='left'>
@@ -185,7 +213,7 @@ echo "
     <td class='even'>
       <textarea name='group1_ips' id='group1_ips' style='width:360px;height:60px;' spellcheck='false'>$group1_ips4disp</textarea>
       <br>
-      " . htmlspecialchars($protector->get_filepath4group1ips()) . "
+      " . htmlspecialchars($protector->get_filepath4group1ips(), ENT_QUOTES) . "
     </td>
   </tr>
   <tr valign='top' align='left'>
@@ -231,7 +259,7 @@ echo "
 
 // body of log listing
 $oddeven = 'odd';
-while (false !== (list($lid, $uid, $ip, $agent, $type, $description, $timestamp, $uname) = $db->fetchRow($prs))) {
+while (false !== (list($lid, $uid, $ip, $agent, $type, $description, $timestamp, $uname) = $db->fetchRow($result))) {
     $oddeven = ($oddeven === 'odd' ? 'even' : 'odd');
     $style = '';
 

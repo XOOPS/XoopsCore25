@@ -3,7 +3,7 @@
     <form name="<{$contactform.name}>" action="<{$contactform.action}>" method="<{$contactform.method}>"
             <{$contactform.extra}>>
         <h4><{$contactform.title}></h4>
-        <{foreach item=element from=$contactform.elements}>
+        <{foreach item=element from=$contactform.elements|default:null}>
             <{if $element.hidden != true}>
                 <{$element.caption}>
                 <{$element.body}>

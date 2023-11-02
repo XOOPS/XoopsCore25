@@ -7,7 +7,7 @@
 
 <ul class="list-group">
     <!-- start question loop -->
-    <{foreach item=question from=$questions}>
+    <{foreach item=question from=$questions|default:null}>
         <li class="list-group-item"><a href="#q<{$question.id}>"><span class="glyphicon glyphicon-hand-right"></span>&nbsp;&nbsp;<{$question.title}></a>
         </li>
     <{/foreach}>
@@ -16,7 +16,7 @@
 
 
 <!-- start question and answer loop -->
-<{foreach item=question from=$questions}>
+<{foreach item=question from=$questions|default:null}>
     <div class="panel panel-default">
         <div class="panel-heading"><a id="q<{$question.id}>" name="q<{$question.id}>"></a><span class="label label-danger"><{$question.title}></span>
         </div>
@@ -39,12 +39,14 @@
 
 <div style="margin:3px; padding: 3px;">
     <!-- start comments loop -->
-    <{if $comment_mode == "flat"}>
-        <{include file="db:system_comments_flat.tpl"}>
-    <{elseif $comment_mode == "thread"}>
-        <{include file="db:system_comments_thread.tpl"}>
-    <{elseif $comment_mode == "nest"}>
-        <{include file="db:system_comments_nest.tpl"}>
+    <{if isset($comment_mode)}>
+        <{if $comment_mode == "flat"}>
+            <{include file="db:system_comments_flat.tpl"}>
+        <{elseif $comment_mode == "thread"}>
+            <{include file="db:system_comments_thread.tpl"}>
+        <{elseif $comment_mode == "nest"}>
+            <{include file="db:system_comments_nest.tpl"}>
+        <{/if}>
     <{/if}>
     <!-- end comments loop -->
 </div>

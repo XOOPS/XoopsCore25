@@ -10,8 +10,8 @@
  */
 
 /**
- * @copyright    XOOPS Project http://xoops.org/
- * @license      GNU GPL 2 or later (https://www.gnu.org/licenses/gpl-2.0.html)
+ * @copyright    XOOPS Project https://xoops.org/
+ * @license      GNU GPL 2.0 or later (https://www.gnu.org/licenses/gpl-2.0.html)
  * @package
  * @since
  * @author       XOOPS Development Team, Kazumi Ono (AKA onokazu)
@@ -75,7 +75,7 @@ class XoopsXmlRpcApi
         if (isset($this->user)) {
             return true;
         }
-        /* @var XoopsMemberHandler $member_handler */
+        /** @var XoopsMemberHandler $member_handler */
         $member_handler = xoops_getHandler('member');
         $this->user     = $member_handler->loginUser(addslashes($username), addslashes($password));
         if (!is_object($this->user)) {
@@ -83,7 +83,7 @@ class XoopsXmlRpcApi
 
             return false;
         }
-        /* @var  XoopsGroupPermHandler $moduleperm_handler */
+        /** @var  XoopsGroupPermHandler $moduleperm_handler */
         $moduleperm_handler = xoops_getHandler('groupperm');
         if (!$moduleperm_handler->checkRight('module_read', $this->module->getVar('mid'), $this->user->getGroups())) {
             unset($this->user);

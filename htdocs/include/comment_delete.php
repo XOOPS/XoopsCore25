@@ -61,7 +61,7 @@ if ('system' === $xoopsModule->getVar('dirname')) {
     $com_modid             = $xoopsModule->getVar('mid');
     $redirect_page         = $comment_config['pageName'] . '?';
     $comment_confirm_extra = array();
-    if (isset($comment_config['extraParams']) && is_array($comment_config['extraParams'])) {
+    if (isset($comment_config['extraParams']) && \is_array($comment_config['extraParams'])) {
         foreach ($comment_config['extraParams'] as $extra_param) {
             if (isset(${$extra_param})) {
                 $redirect_page .= $extra_param . '=' . ${$extra_param} . '&amp;';
@@ -81,14 +81,14 @@ if ('system' === $xoopsModule->getVar('dirname')) {
     $redirect_page .= $comment_config['itemName'];
     $moddir = $xoopsModule->getVar('dirname');
 }
-/* @var  XoopsUser $xoopsUser */
+/** @var  XoopsUser $xoopsUser */
 $accesserror = false;
 if (!is_object($xoopsUser)) {
     $accesserror = true;
 } else {
     if (!$xoopsUser->isAdmin($com_modid)) {
         include_once $GLOBALS['xoops']->path('modules/system/constants.php');
-        /* @var  XoopsGroupPermHandler $sysperm_handler */
+        /** @var  XoopsGroupPermHandler $sysperm_handler */
         $sysperm_handler = xoops_getHandler('groupperm');
         if (!$sysperm_handler->checkRight('system_admin', XOOPS_SYSTEM_COMMENT, $xoopsUser->getGroups())) {
             $accesserror = true;
@@ -109,7 +109,7 @@ if (false !== $accesserror) {
 xoops_loadLanguage('comment');
 switch ($op) {
     case 'delete_one':
-        /* @var  XoopsCommentHandler $comment_handler */
+        /** @var  XoopsCommentHandler $comment_handler */
         $comment_handler = xoops_getHandler('comment');
         $comment         = $comment_handler->get($com_id);
         if (!$comment_handler->delete($comment)) {
@@ -145,9 +145,9 @@ switch ($op) {
             }
         }
 
-        // update user posts if its not an anonymous post
+        // update user posts if it's not an anonymous post
         if ($comment->getVar('com_uid') != 0) {
-            /* @var XoopsMemberHandler $member_handler */
+            /** @var XoopsMemberHandler $member_handler */
             $member_handler = xoops_getHandler('member');
             $com_poster     = $member_handler->getUser($comment->getVar('com_uid'));
             if (is_object($com_poster)) {
@@ -156,10 +156,10 @@ switch ($op) {
         }
 
         // get all comments posted later within the same thread
-        $thread_comments =& $comment_handler->getThread($comment->getVar('com_rootid'), $com_id);
+        $thread_comments = $comment_handler->getThread($comment->getVar('com_rootid'), $com_id);
         include_once $GLOBALS['xoops']->path('class/tree.php');
         $xot            = new XoopsObjectTree($thread_comments, 'com_id', 'com_pid', 'com_rootid');
-        $child_comments =& $xot->getFirstChild($com_id);
+        $child_comments = $xot->getFirstChild($com_id);
         // now set new parent ID for direct child comments
         $new_pid = $comment->getVar('com_pid');
         $errs    = array();
@@ -173,7 +173,7 @@ switch ($op) {
                     $errs[] = 'Could not change comment parent ID from <strong>' . $com_id . '</strong> to <strong>' . $new_pid . '</strong>. (ID: ' . $new_rootid . ')';
                 } else {
                     // need to change root id for all its child comments as well
-                    $c_child_comments = &$xot->getAllChild($new_rootid);
+                    $c_child_comments = $xot->getAllChild($new_rootid);
                     $cc_count         = count($c_child_comments);
                     foreach (array_keys($c_child_comments) as $j) {
                         $c_child_comments[$j]->setVar('com_rootid', $new_rootid);
@@ -198,23 +198,23 @@ switch ($op) {
         break;
 
     case 'delete_all':
-        /* @var  XoopsCommentHandler $comment_handler */
+        /** @var  XoopsCommentHandler $comment_handler */
         $comment_handler = xoops_getHandler('comment');
         $comment         = $comment_handler->get($com_id);
         $com_rootid      = $comment->getVar('com_rootid');
 
         // get all comments posted later within the same thread
-        $thread_comments =& $comment_handler->getThread($com_rootid, $com_id);
+        $thread_comments = $comment_handler->getThread($com_rootid, $com_id);
 
         // construct a comment tree
         include_once $GLOBALS['xoops']->path('class/tree.php');
         $xot            = new XoopsObjectTree($thread_comments, 'com_id', 'com_pid', 'com_rootid');
-        $child_comments =& $xot->getAllChild($com_id);
+        $child_comments = $xot->getAllChild($com_id);
         // add itself here
         $child_comments[$com_id] = &$comment;
         $msgs                    = array();
         $deleted_num             = array();
-        /* @var XoopsMemberHandler $member_handler */
+        /** @var XoopsMemberHandler $member_handler */
         $member_handler          = xoops_getHandler('member');
         foreach (array_keys($child_comments) as $i) {
             if (!$comment_handler->delete($child_comments[$i])) {
@@ -222,7 +222,7 @@ switch ($op) {
             } else {
                 $msgs[] = _CM_COMDELETED . ' (ID: ' . $child_comments[$i]->getVar('com_id') . ')';
                 // store poster ID and deleted post number into array for later use
-                $poster_id = $child_comments[$i]->getVar('com_uid');
+                $poster_id = (int)$child_comments[$i]->getVar('com_uid');
                 if ($poster_id > 0) {
                     $deleted_num[$poster_id] = !isset($deleted_num[$poster_id]) ? 1 : ($deleted_num[$poster_id] + 1);
                 }
@@ -277,7 +277,7 @@ switch ($op) {
             'op'        => array(
                 _CM_DELETEONE => 'delete_one',
                 _CM_DELETEALL => 'delete_all'));
-        if (!empty($comment_confirm_extra) && is_array($comment_confirm_extra)) {
+        if (!empty($comment_confirm_extra) && \is_array($comment_confirm_extra)) {
             $comment_confirm += $comment_confirm_extra;
         }
         xoops_confirm($comment_confirm, 'comment_delete.php', _CM_DELETESELECT);

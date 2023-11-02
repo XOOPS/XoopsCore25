@@ -3,7 +3,7 @@
         <ol class="breadcrumb">
             <li class="breadcrumb-item"><a href="<{$xoops_url}>/modules/obituaries/index.php">Obituaries</a></li>
             <li class="breadcrumb-item active" aria-current="page"><{$obituaries_user.obituaries_lastname}>, <{$obituaries_user.obituaries_firstname}></li>
-            <{if $xoops_isadmin}>
+            <{if isset($xoops_isadmin)}>
             <a title="<{$smarty.const._EDIT}>" class="ml-2" href="<{$xoops_url}>/modules/obituaries/admin/main.php?op=edit&id=<{$obituaries_user.obituaries_id}>"><span class="fa fa-edit"></span></a>
             <{/if}>
         </ol>
@@ -30,17 +30,17 @@
         <div class="mt-2 alert alert-success"><b><{$smarty.const._AM_OBITUARIES_DESCRIPTION}></b> :</div>
         <div class="mb-3 ml-2"><{$obituaries_user.obituaries_description}></div>
 
-        <{if $obituaries_user.obituaries_survivors != ""}>
+        <{if !empty($obituaries_user.obituaries_survivors)}>
         <div class="alert alert-info"><b><{$smarty.const._AM_OBITUARIES_SURVIVORS}></b> :</div>
         <div class="mb-3 ml-2"><{$obituaries_user.obituaries_survivors}></div>
         <{/if}>
 
-        <{if $obituaries_user.obituaries_service != ""}>
+        <{if !empty($obituaries_user.obituaries_service)}>
         <div class="alert alert-warning"><b><{$smarty.const._AM_OBITUARIES_SERVICE}></b> :</div>
         <div class="mb-3 ml-2"><{$obituaries_user.obituaries_service}></div>
         <{/if}>
 
-        <{if $obituaries_user.obituaries_memorial != ""}>
+        <{if !empty($obituaries_user.obituaries_memorial)}>
             <div class="alert alert-danger"><b><{$smarty.const._AM_OBITUARIES_MEMORIAL}></b> :</div>
             <div class="mb-3 ml-2"><{$obituaries_user.obituaries_memorial}></div>
         <{/if}>
@@ -66,18 +66,14 @@
 
 <div style="margin:3px; padding: 3px;">
 
-    <{if $comment_mode == "flat"}>
-
-        <{include file="db:system_comments_flat.tpl"}>
-
-    <{elseif $comment_mode == "thread"}>
-
-        <{include file="db:system_comments_thread.tpl"}>
-
-    <{elseif $comment_mode == "nest"}>
-
-        <{include file="db:system_comments_nest.tpl"}>
-
+    <{if isset($comment_mode)}>
+        <{if $comment_mode == "flat"}>
+            <{include file="db:system_comments_flat.tpl"}>
+        <{elseif $comment_mode == "thread"}>
+            <{include file="db:system_comments_thread.tpl"}>
+        <{elseif $comment_mode == "nest"}>
+            <{include file="db:system_comments_nest.tpl"}>
+        <{/if}>
     <{/if}>
 
 </div>

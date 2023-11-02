@@ -18,7 +18,7 @@
  */
 
 include __DIR__ . '/header.php';
-$myts = MyTextSanitizer::getInstance();
+$myts = \MyTextSanitizer::getInstance();
 
 $limit_default    = 20;
 $op               = isset($_REQUEST['op']) ? $_REQUEST['op'] : 'search';
@@ -47,7 +47,7 @@ switch ($op) {
         // Get fields
         $fields = $profile_handler->loadFields();
         // Get ids of fields that can be searched
-        /* @var  XoopsGroupPermHandler $gperm_handler */
+        /** @var  XoopsGroupPermHandler $gperm_handler */
         $gperm_handler     = xoops_getHandler('groupperm');
         $searchable_fields = $gperm_handler->getItemIds('profile_search', $groups, $GLOBALS['xoopsModule']->getVar('mid'));
 
@@ -150,7 +150,7 @@ switch ($op) {
         $GLOBALS['xoopsTpl']->assign('page_title', _PROFILE_MA_SEARCH);
 
         //added count user
-        /* @var XoopsMemberHandler $member_handler */
+        /** @var XoopsMemberHandler $member_handler */
         $member_handler = xoops_getHandler('member');
         $acttotal       = $member_handler->getUserCount(new Criteria('level', 0, '>'));
         $total          = sprintf(_PROFILE_MA_ACTUS, "<span style='color:#ff0000;'>{$acttotal}</span>");
@@ -165,14 +165,14 @@ switch ($op) {
             'link'  => XOOPS_URL . '/modules/' . $GLOBALS['xoopsModule']->getVar('dirname', 'n') . '/search.php',
             'title' => _SEARCH);
         $xoBreadcrumbs[] = array('title' => _PROFILE_MA_RESULTS);
-        /* @var XoopsMemberHandler $member_handler */
+        /** @var XoopsMemberHandler $member_handler */
         $member_handler = xoops_getHandler('member');
         // Dynamic fields
         $profile_handler = xoops_getModuleHandler('profile');
         // Get fields
         $fields = $profile_handler->loadFields();
         // Get ids of fields that can be searched
-        /* @var  XoopsGroupPermHandler $gperm_handler */
+        /** @var  XoopsGroupPermHandler $gperm_handler */
         $gperm_handler     = xoops_getHandler('groupperm');
         $searchable_fields = $gperm_handler->getItemIds('profile_search', $groups, $GLOBALS['xoopsModule']->getVar('mid'));
         $searchvars        = array();
@@ -427,7 +427,7 @@ switch ($op) {
             $search_url[] = 'order=' . $order;
             //TODO remove it for final release
             //            $search_url[] = "sortby=" . htmlspecialchars($_REQUEST['sortby']);
-            $search_url[] = 'sortby=' . htmlspecialchars($sortby); // change by zyspec
+            $search_url[] = 'sortby=' . htmlspecialchars($sortby, ENT_QUOTES); // change by zyspec
             $search_url[] = 'limit=' . $limit;
             if (isset($search_url)) {
                 $args = implode('&amp;', $search_url);

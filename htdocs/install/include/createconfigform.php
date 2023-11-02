@@ -4,7 +4,7 @@
  * If you did not receive this file, get it at https://www.gnu.org/licenses/gpl-2.0.html
  *
  * @copyright    (c) 2000-2021 XOOPS Project (www.xoops.org)
- * @license          GNU GPL 2 or later (https://www.gnu.org/licenses/gpl-2.0.html)
+ * @license          GNU GPL 2.0 or later (https://www.gnu.org/licenses/gpl-2.0.html)
  * @package          installer
  * @since            2.3.0
  * @author           Haruki Setoyama  <haruki@planewave.org>
@@ -41,7 +41,7 @@ function createConfigform($config)
     xoops_load('XoopsFormRendererBootstrap3');
     XoopsFormRenderer::getInstance()->set(new XoopsFormRendererBootstrap3());
 
-    /* @var XoopsConfigHandler $config_handler */
+    /** @var XoopsConfigHandler $config_handler */
     $config_handler         = xoops_getHandler('config');
     $GLOBALS['xoopsConfig'] = $xoopsConfig = $config_handler->getConfigsByCat(XOOPS_CONF);
 
@@ -60,7 +60,7 @@ function createConfigform($config)
         switch ($config[$i]->getVar('conf_formtype')) {
             case 'textarea':
                 if ($config[$i]->getVar('conf_valuetype') === 'array') {
-                    // this is exceptional.. only when value type is arrayneed a smarter way for this
+                    // this is exceptional. Only when value type is array, we need a smarter way for this
                     $ele = ($config[$i]->getVar('conf_value') != '') ? new XoopsFormTextArea($title, $config[$i]->getVar('conf_name'), installerHtmlSpecialChars(implode('|', $config[$i]->getConfValueForOutput())), 5, 50) : new XoopsFormTextArea($title, $config[$i]->getVar('conf_name'), '', 5, 50);
                 } else {
                     $ele = new XoopsFormTextArea($title, $config[$i]->getVar('conf_name'), installerHtmlSpecialChars($config[$i]->getConfValueForOutput()), 5, 100);
@@ -128,7 +128,7 @@ function createConfigform($config)
 
             case 'startpage':
                 $ele            = new XoopsFormSelect($title, $config[$i]->getVar('conf_name'), $config[$i]->getConfValueForOutput());
-                /* @var XoopsModuleHandler $module_handler */
+                /** @var XoopsModuleHandler $module_handler */
                 $module_handler = xoops_getHandler('module');
                 $criteria       = new CriteriaCompo(new Criteria('hasmain', 1));
                 $criteria->add(new Criteria('isactive', 1));
@@ -155,7 +155,7 @@ function createConfigform($config)
                 break;
 
             case 'module_cache':
-                /* @var XoopsModuleHandler $module_handler */
+                /** @var XoopsModuleHandler $module_handler */
                 $module_handler = xoops_getHandler('module');
                 $modules        = $module_handler->getObjects(new Criteria('hasmain', 1), true);
                 $currrent_val   = $config[$i]->getConfValueForOutput();
@@ -275,7 +275,7 @@ function createThemeform($config)
         }
         if (file_exists(XOOPS_ROOT_PATH . "/themes/$theme/theme.ini")) {
             $theme_ini = parse_ini_file(XOOPS_ROOT_PATH . "/themes/$theme/theme.ini");
-            if ($theme_ini['screenshot'] == '') {
+            if (isset($theme_ini['screenshot']) && $theme_ini['screenshot'] == '') {
                 $theme_ini['screenshot'] = 'screenshot.png';
                 $theme_ini['thumbnail']  = 'thumbnail.png';
             }
@@ -283,9 +283,9 @@ function createThemeform($config)
         if (!empty($theme_ini['Description'])) {
             $label_content .= '<div class="alert alert-info" role="alert">' . $theme_ini['Description'] . '</div>';
         }
-        if ($theme_ini['screenshot'] !== '' && file_exists(XOOPS_ROOT_PATH . '/themes/' . $theme . '/' . $theme_ini['screenshot'])) {
+        if (isset($theme_ini['screenshot']) && $theme_ini['screenshot'] !== '' && file_exists(XOOPS_ROOT_PATH . '/themes/' . $theme . '/' . $theme_ini['screenshot'])) {
             $label_content .= '<img class="img-responsive" src="' . XOOPS_URL . '/themes/' . $theme . '/' . $theme_ini['screenshot'] . '" alt="Screenshot" />';
-        } elseif ($theme_ini['thumbnail'] !== '' && file_exists(XOOPS_ROOT_PATH . '/themes/' . $theme .'/' . $theme_ini['thumbnail'])) {
+        } elseif (isset($theme_ini['thumbnail']) && $theme_ini['thumbnail'] !== '' && file_exists(XOOPS_ROOT_PATH . '/themes/' . $theme .'/' . $theme_ini['thumbnail'])) {
             $label_content .= '<img class="img-responsive" src="' . XOOPS_URL . '/themes/' . $theme . '/' . $theme_ini['thumbnail'] . '" alt="$theme" />';
         } else {
             $label_content .= THEME_NO_SCREENSHOT;

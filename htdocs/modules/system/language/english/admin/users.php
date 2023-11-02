@@ -1,7 +1,7 @@
 <?php
 /**
  * @copyright       (c) 2000-2016 XOOPS Project (www.xoops.org)
- * @license         GNU GPL 2 or later (https://www.gnu.org/licenses/gpl-2.0.html)
+ * @license         GNU GPL 2.0 or later (https://www.gnu.org/licenses/gpl-2.0.html)
  * _LANGCODE    en
  * _CHARSET     UTF-8
  */
@@ -93,9 +93,6 @@ define('_AM_SYSTEM_USERS_YMCACF', 'You must complete all required fields');
 define('_AM_SYSTEM_USERS_CNRNU', 'Could not register new user.');
 define('_AM_SYSTEM_USERS_EDEUSER', 'Edit/Delete Users');
 define('_AM_SYSTEM_USERS_NICKNAME', 'User Name');
-define('_AM_SYSTEM_USERS_MODIFYUSER', 'Modify User');
-define('_AM_SYSTEM_USERS_DELUSER', 'Delete User');
-define('_AM_SYSTEM_USERS_GO', 'Go!');
 define('_AM_SYSTEM_USERS_ADDUSER', 'Add User');
 define('_AM_SYSTEM_USERS_OPTION', 'Option');
 define('_AM_SYSTEM_USERS_THEME', 'Theme');

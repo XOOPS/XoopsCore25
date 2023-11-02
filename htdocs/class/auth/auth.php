@@ -31,6 +31,7 @@ class XoopsAuth
 {
     public $_dao;
     public $_errors;
+    public $auth_method;
 
     /**
      * Authentication Service constructor
@@ -43,7 +44,7 @@ class XoopsAuth
 
     /**
      * @param  string $uname
-     * @abstract need to be write in the derived class
+     * @abstract need to be written in the derived class
      */
     public function authenticate($uname)
     {

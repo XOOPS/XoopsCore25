@@ -141,7 +141,7 @@ if (!class_exists('XoopsGTicket')) {
             $referer = empty($_SERVER['HTTP_REFERER']) ? '' : $_SERVER['REQUEST_URI'];
 
             // area as module's dirname
-            if (!$area && is_object(@$xoopsModule)) {
+            if (!$area && isset($xoopsModule) && is_object($xoopsModule)) {
                 $area = $xoopsModule->getVar('dirname');
             }
 
@@ -171,13 +171,22 @@ if (!class_exists('XoopsGTicket')) {
             $this->_errors = array();
 
             // CHECK: stubs are not stored in session
-            if (!is_array(@$_SESSION['XOOPS_G_STUBS'])) {
+            if (!isset($_SESSION['XOOPS_G_STUBS']) || !is_array($_SESSION['XOOPS_G_STUBS'])) {
                 $this->_errors[]           = $this->messages['err_nostubs'];
                 $_SESSION['XOOPS_G_STUBS'] = array();
             }
 
             // get key&val of the ticket from a user's query
-            $ticket = $post ? @$_POST['XOOPS_G_TICKET'] : @$_GET['XOOPS_G_TICKET'];
+            $ticket = '';
+            if ($post) {
+                if (isset($_POST['XOOPS_G_TICKET'])) {
+                    $ticket = $_POST['XOOPS_G_TICKET'];
+                }
+            } else {
+                if (isset($_GET['XOOPS_G_TICKET'])) {
+                    $ticket = $_GET['XOOPS_G_TICKET'];
+                }
+            }
 
             // CHECK: no tickets found
             if (empty($ticket)) {
@@ -215,17 +224,19 @@ if (!class_exists('XoopsGTicket')) {
 
                 // set area if necessary
                 // area as module's dirname
-                if (!$area && is_object(@$xoopsModule)) {
+                if (!$area && isset($xoopsModule) && is_object($xoopsModule)) {
                     $area = $xoopsModule->getVar('dirname');
                 }
 
                 // check area or referer
-                if (@$found_stub['area'] == $area) {
+                if (isset($found_stub['area']) && $found_stub['area'] == $area) {
                     $area_check = true;
                 }
-                if (!empty($found_stub['referer']) && false !== strpos(@$_SERVER['HTTP_REFERER'], $found_stub['referer'])) {
+
+                if (!empty($found_stub['referer']) && isset($_SERVER['HTTP_REFERER']) && false !== strpos($_SERVER['HTTP_REFERER'], $found_stub['referer'])) {
                     $referer_check = true;
                 }
+
 
                 if (empty($area_check) && empty($referer_check)) { // loose
                     $this->_errors[] = $this->messages['err_areaorref'];
@@ -270,7 +281,8 @@ if (!class_exists('XoopsGTicket')) {
             }
 
             $table = '<table>';
-            $form  = '<form action="?' . htmlspecialchars(@$_SERVER['QUERY_STRING'], ENT_QUOTES) . '" method="post" >';
+            $form = '<form action="?' . htmlspecialchars(isset($_SERVER['QUERY_STRING']) ? $_SERVER['QUERY_STRING'] : '', ENT_QUOTES) . '" method="post">';
+
             foreach ($_POST as $key => $val) {
                 if ($key === 'XOOPS_G_TICKET') {
                     continue;
@@ -374,8 +386,8 @@ if (!class_exists('XoopsGTicket')) {
          */
         public function errorHandler4FindOutput($errNo, $errStr, $errFile, $errLine)
         {
-            if (preg_match('?' . preg_quote(XOOPS_ROOT_PATH) . '([^:]+)\:(\d+)?', $errStr, $regs)) {
-                echo 'Irregular output! check the file ' . htmlspecialchars($regs[1]) . ' line ' . htmlspecialchars($regs[2]);
+            if (preg_match('#' . preg_quote(XOOPS_ROOT_PATH, '#') . '([^:]+)\:(\d+)?#', $errStr, $regs)) {
+                echo 'Irregular output! check the file ' . htmlspecialchars($regs[1], ENT_QUOTES) . ' line ' . htmlspecialchars($regs[2], ENT_QUOTES);
             } else {
                 echo 'Irregular output! check language files etc.';
             }

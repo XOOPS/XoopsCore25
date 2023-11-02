@@ -26,7 +26,7 @@ echo $indexAdmin->addNavigation(basename(__FILE__));
 echo $indexAdmin->renderButton('right', '');
 
 $op = isset($_REQUEST['op']) ? $_REQUEST['op'] : (isset($_REQUEST['id']) ? 'edit' : 'list');
-/* @var XoopsModuleHandler $profilefield_handler */
+/** @var XoopsModuleHandler $profilefield_handler */
 $profilefield_handler = xoops_getModuleHandler('field');
 
 switch ($op) {
@@ -34,11 +34,11 @@ switch ($op) {
     case 'list':
         $fields = $profilefield_handler->getObjects(null, true, false);
 
-    /* @var XoopsModuleHandler $module_handler */
+    /** @var XoopsModuleHandler $module_handler */
         $module_handler = xoops_getHandler('module');
         $modules        = $module_handler->getObjects(null, true);
 
-    /* @var XoopsModuleHandler $cat_handler */
+    /** @var XoopsModuleHandler $cat_handler */
         $cat_handler = xoops_getModuleHandler('category');
         $criteria    = new CriteriaCompo();
         $criteria->setSort('cat_weight');
@@ -148,7 +148,7 @@ switch ($op) {
             if (count($ids) > 0) {
                 $errors = array();
                 //if there are changed fields, fetch the fieldcategory objects
-                /* @var XoopsModuleHandler $field_handler */
+                /** @var XoopsModuleHandler $field_handler */
                 $field_handler = xoops_getModuleHandler('field');
                 $fields        = $field_handler->getObjects(new Criteria('field_id', '(' . implode(',', $ids) . ')', 'IN'), true);
                 foreach ($ids as $i) {
@@ -196,7 +196,7 @@ switch ($op) {
             }
             $options = $obj->getVar('field_options');
 
-            if (isset($_REQUEST['removeOptions']) && is_array($_REQUEST['removeOptions'])) {
+            if (isset($_REQUEST['removeOptions']) && \is_array($_REQUEST['removeOptions'])) {
                 foreach ($_REQUEST['removeOptions'] as $index) {
                     unset($options[$index]);
                 }
@@ -241,7 +241,7 @@ switch ($op) {
             $obj->setVar('step_id', $_REQUEST['step_id']);
         }
         if ($profilefield_handler->insert($obj)) {
-            /* @var XoopsGroupPermHandler $groupperm_handler */
+            /** @var XoopsGroupPermHandler $groupperm_handler */
             $groupperm_handler = xoops_getHandler('groupperm');
 
             $perm_arr = array();
@@ -260,7 +260,7 @@ switch ($op) {
                     $criteria = new CriteriaCompo(new Criteria('gperm_name', $perm));
                     $criteria->add(new Criteria('gperm_itemid', (int)$obj->getVar('field_id')));
                     $criteria->add(new Criteria('gperm_modid', (int)$GLOBALS['xoopsModule']->getVar('mid')));
-                    if (isset($_REQUEST[$perm]) && is_array($_REQUEST[$perm])) {
+                    if (isset($_REQUEST[$perm]) && \is_array($_REQUEST[$perm])) {
                         $perms = $groupperm_handler->getObjects($criteria);
                         if (count($perms) > 0) {
                             foreach (array_keys($perms) as $i) {

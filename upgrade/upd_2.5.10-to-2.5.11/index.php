@@ -11,6 +11,7 @@ use Xmf\Database\Tables;
  * @since            2.5.11
  * @author           XOOPS Team
  */
+
 class Upgrade_2511 extends XoopsUpgrade
 {
     /**
@@ -586,7 +587,7 @@ class Upgrade_2511 extends XoopsUpgrade
         return $i;
     }
 
-	 /**
+    /**
      * Determine if columns are declared smallint, and if
      * so, queue ddl to alter to varchar.
      *
@@ -827,6 +828,80 @@ class Upgrade_2511 extends XoopsUpgrade
 
         return $returnResult;
     }
+
+    /**
+     * @return bool
+     */
+    public function apply_templatesadmin()
+    {
+        include XOOPS_ROOT_PATH . '/modules/system/xoops_version.php';
+        $dbm  = new Db_manager();
+        $time = time();
+        foreach ($modversion['templates'] as $tplfile) {
+            // Admin templates
+            if (isset($tplfile['type']) && $tplfile['type'] === 'admin' && $fp = fopen('../modules/system/templates/admin/' . $tplfile['file'], 'r')) {
+                $newtplid  = $dbm->insert('tplfile', " VALUES (0, 1, 'system', 'default', '" . addslashes($tplfile['file']) . "', '" . addslashes($tplfile['description']) . "', " . $time . ', ' . $time . ", 'admin')");
+                $tplsource = fread($fp, filesize('../modules/system/templates/admin/' . $tplfile['file']));
+                fclose($fp);
+                $dbm->insert('tplsource', ' (tpl_id, tpl_source) VALUES (' . $newtplid . ", '" . addslashes($tplsource) . "')");
+            }
+        }
+
+        return true;
+    }
+
+    //modules/system/themes/legacy/legacy.php
+    /**
+     * Do we need to delete obsolete Smarty files?
+     *
+     * @return bool
+     */
+    public function check_zapsmarty()
+    {
+        return !file_exists('../class/smarty/smarty.class.php');
+    }
+
+    /**
+     * Delete obsolete Smarty files
+     *
+     * @return bool
+     */
+    public function apply_zapsmarty()
+    {
+        // Define the base directory
+        $baseDir = '../class/smarty/';
+
+        // List of sub-folders and files to delete
+        $itemsToDelete = array(
+            'configs',
+            'internals',
+            'xoops_plugins',
+            'Config_File.class.php',
+            'debug.tpl',
+            'Smarty.class.php',
+            'Smarty_Compiler.class.php'
+        );
+
+        // Loop through each item and delete it
+        foreach ($itemsToDelete as $item) {
+            $path = $baseDir . $item;
+
+            // Check if it's a directory or a file
+            if (is_dir($path)) {
+                // Delete directory and its contents
+                array_map('unlink', glob("$path/*.*"));
+                rmdir($path);
+            } elseif (is_file($path)) {
+                // Delete file
+                if (is_writable($path)) {
+                    unlink($path);
+                }
+            }
+        }
+
+        return true;
+    }
+
 
 }
 

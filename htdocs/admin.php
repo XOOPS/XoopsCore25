@@ -35,17 +35,20 @@ xoops_cp_header();
  // Define Stylesheet
 $xoTheme->addStylesheet(XOOPS_URL . '/modules/system/css/admin.css');
 if (!isset($xoopsConfig['admin_warnings_enable']) || $xoopsConfig['admin_warnings_enable']) {
-    // recommend lowest security supported version at time of XOOPS release
-    // see: http://php.net/supported-versions.php
+    // recommend the lowest security supported version at time of XOOPS release
+    // see: https://php.net/supported-versions.php
     $minRecommendedPHP = '7.3.0';
     if (version_compare(PHP_VERSION, $minRecommendedPHP) < 0) {
         xoops_error(sprintf(_AD_WARNING_OLD_PHP, $minRecommendedPHP));
         echo '<br>';
     }
 
-    if (is_dir(XOOPS_ROOT_PATH . '/install/')) {
-        xoops_error(sprintf(_AD_WARNINGINSTALL, XOOPS_ROOT_PATH . '/install/'));
+	$installDirs = glob(XOOPS_ROOT_PATH . '/install*', GLOB_ONLYDIR);
+    if (!empty($installDirs)) {
+        foreach ($installDirs as $installDir) {
+            xoops_error(sprintf(_AD_WARNINGINSTALL, $installDir));
         echo '<br>';
+    }
     }
 
     if (is_writable(XOOPS_ROOT_PATH . '/mainfile.php')) {
@@ -86,7 +89,7 @@ if (!empty($_GET['xoopsorgnews']) && !function_exists('xml_parser_create')) {
 
 if (!empty($_GET['xoopsorgnews'])) {
     // Multiple feeds
-    $myts     = MyTextSanitizer::getInstance();
+    $myts     = \MyTextSanitizer::getInstance();
     $rssurl   = array();
     $rssurl[] = 'https://xoops.org/modules/publisher/backend.php';
     if ($URLs = include $GLOBALS['xoops']->path('language/' . xoops_getConfigOption('language') . '/backend.php')) {
@@ -132,16 +135,16 @@ if (!empty($_GET['xoopsorgnews'])) {
     if ($items != '') {
         $ret = '<table id="xoopsorgnews" class="outer width100">';
         foreach (array_keys($items) as $i) {
-            $ret .= '<tr class="head"><td><a href="' . htmlspecialchars(trim($items[$i]['link'])) . '" rel="external">';
-            $ret .= htmlspecialchars($items[$i]['title']) . '</a> (' . htmlspecialchars($items[$i]['pubdate']) . ')</td></tr>';
+            $ret .= '<tr class="head"><td><a href="' . htmlspecialchars(trim($items[$i]['link']), ENT_QUOTES) . '" rel="external">';
+            $ret .= htmlspecialchars($items[$i]['title'], ENT_QUOTES) . '</a> (' . htmlspecialchars($items[$i]['pubdate'], ENT_QUOTES) . ')</td></tr>';
             if ($items[$i]['description'] != '') {
                 $ret .= '<tr><td class="odd">' . $items[$i]['description'];
                 if (!empty($items[$i]['guid'])) {
-                    $ret .= '&nbsp;&nbsp;<a href="' . htmlspecialchars($items[$i]['guid']) . '" rel="external" title="">' . _MORE . '</a>';
+                    $ret .= '&nbsp;&nbsp;<a href="' . htmlspecialchars($items[$i]['guid'], ENT_QUOTES) . '" rel="external" title="">' . _MORE . '</a>';
                 }
                 $ret .= '</td></tr>';
             } elseif ($items[$i]['guid'] != '') {
-                $ret .= '<tr><td class="even aligntop"></td><td colspan="2" class="odd"><a href="' . htmlspecialchars($items[$i]['guid']) . '" rel="external">' . _MORE . '</a></td></tr>';
+                $ret .= '<tr><td class="even aligntop"></td><td colspan="2" class="odd"><a href="' . htmlspecialchars($items[$i]['guid'], ENT_QUOTES) . '" rel="external">' . _MORE . '</a></td></tr>';
             }
         }
         $ret .= '</table>';

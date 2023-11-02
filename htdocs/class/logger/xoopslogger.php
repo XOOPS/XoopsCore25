@@ -111,6 +111,7 @@ class XoopsLogger
      */
     public function microtime()
     {
+        /** @var array $now */
         $now = explode(' ', microtime());
 
         return (float)$now[0] + (float)$now[1];
@@ -185,9 +186,9 @@ class XoopsLogger
     /**
      * Log messages for deprecated functions
      *
-     * @deprecated
+     * this was deprecated, but is still in broad use?
      *
-     * @param int $msg text message for the entry
+     * @param string $msg text message for the entry
      *
      */
     public function addDeprecated($msg)
@@ -213,24 +214,27 @@ class XoopsLogger
      * @param string  $errstr
      * @param string  $errfile
      * @param string  $errline
+     * @param array|null $trace
      */
-    public function handleError($errno, $errstr, $errfile, $errline)
+    public function handleError($errno, $errstr, $errfile, $errline,$trace=null)
     {
         if ($this->activated && ($errno & error_reporting())) {
             // NOTE: we only store relative pathnames
             $this->errors[] = compact('errno', 'errstr', 'errfile', 'errline');
         }
         if ($errno == E_USER_ERROR) {
-            $trace = true;
+            $includeTrace = true;
             if (substr($errstr, 0, '8') === 'notrace:') {
-                $trace  = false;
+                $includeTrace  = false;
                 $errstr = substr($errstr, 8);
             }
             echo sprintf(_XOOPS_FATAL_MESSAGE, $errstr);
-            if ($trace && function_exists('debug_backtrace')) {
+            if ($includeTrace) {
                 echo "<div style='color:#f0f0f0;background-color:#f0f0f0;'>" . _XOOPS_FATAL_BACKTRACE . ':<br>';
-                $trace = debug_backtrace();
-                array_shift($trace);
+                if ($trace === null && function_exists('debug_backtrace')) {
+                    $trace = \debug_backtrace();
+                    array_shift($trace);  // Remove the first element, which is this function itself
+                }
                 foreach ($trace as $step) {
                     if (isset($step['file'])) {
                         echo $this->sanitizePath($step['file']);
@@ -253,8 +257,8 @@ class XoopsLogger
     public function handleException($e)
     {
         if ($this->isThrowable($e)) {
-            $msg = get_class($e) . ': ' . $e->getMessage();
-            $this->handleError(E_USER_ERROR, $msg, $e->getFile(), $e->getLine());
+            $msg = get_class($e) . ': ' . $this->sanitizePath($this->sanitizeDbMessage($e->getMessage()));
+            $this->handleError(E_USER_ERROR, $msg, $e->getFile(), $e->getLine(), $e->getTrace());
         }
     }
 
@@ -284,6 +288,23 @@ class XoopsLogger
         $path = str_replace(array('\\', XOOPS_ROOT_PATH, str_replace('\\', '/', realpath(XOOPS_ROOT_PATH))), array('/', '', ''), $path);
 
         return $path;
+    }
+
+    /**
+     * sanitizeDbMessage
+     * @access protected
+     *
+     * @param string $message
+     *
+     * @return string
+     */
+    protected function sanitizeDbMessage($message)
+    {
+        // XOOPS_DB_PREFIX  XOOPS_DB_NAME
+        $message = str_replace(XOOPS_DB_PREFIX.'_', '', $message);
+        $message = str_replace(XOOPS_DB_NAME.'.', '', $message);
+
+        return $message;
     }
 
     /**
@@ -357,12 +378,12 @@ class XoopsLogger
      * @param  string  $errStr
      * @param  string  $errFile
      * @param  string  $errLine
-     * @param  integer $errNo
+     * @param  int $errNo
      * @return void
      */
     public function triggerError($errkey = 0, $errStr = '', $errFile = '', $errLine = '', $errNo = 0)
     {
-        $GLOBALS['xoopsLogger']->addDeprecated('\'$xoopsLogger->triggerError();\' is deprecated since XOOPS 2.5.4');
+        $GLOBALS['xoopsLogger']->addDeprecated(__METHOD__ . '  is deprecated since XOOPS 2.5.4');
 
         if (!empty($errStr)) {
             $errStr = sprintf($errStr, $errkey);
@@ -378,7 +399,7 @@ class XoopsLogger
      */
     public function dumpAll()
     {
-        $GLOBALS['xoopsLogger']->addDeprecated('\'$xoopsLogger->dumpAll();\' is deprecated since XOOPS 2.5.4, please use \'$xoopsLogger->dump(\'\');\' instead.');
+        $GLOBALS['xoopsLogger']->addDeprecated(__METHOD__ . '  is deprecated since XOOPS 2.5.4, please use \'$xoopsLogger->dump(\'\');\' instead.');
 
         return $this->dump('');
     }
@@ -390,7 +411,7 @@ class XoopsLogger
      */
     public function dumpBlocks()
     {
-        $GLOBALS['xoopsLogger']->addDeprecated('\'$xoopsLogger->dumpBlocks();\' is deprecated since XOOPS 2.5.4, please use \'$xoopsLogger->dump(\'blocks\');\' instead.');
+        $GLOBALS['xoopsLogger']->addDeprecated(__METHOD__ . '  is deprecated since XOOPS 2.5.4, please use \'$xoopsLogger->dump(\'blocks\');\' instead.');
 
         return $this->dump('blocks');
     }
@@ -402,7 +423,7 @@ class XoopsLogger
      */
     public function dumpExtra()
     {
-        $GLOBALS['xoopsLogger']->addDeprecated('\'$xoopsLogger->dumpExtra();\' is deprecated since XOOPS 2.5.4, please use \'$xoopsLogger->dump(\'extra\');\' instead.');
+        $GLOBALS['xoopsLogger']->addDeprecated(__METHOD__ . '  is deprecated since XOOPS 2.5.4, please use \'$xoopsLogger->dump(\'extra\');\' instead.');
 
         return $this->dump('extra');
     }
@@ -414,7 +435,7 @@ class XoopsLogger
      */
     public function dumpQueries()
     {
-        $GLOBALS['xoopsLogger']->addDeprecated('\'$xoopsLogger->dumpQueries();\' is deprecated since XOOPS 2.5.4, please use \'$xoopsLogger->dump(\'queries\');\' instead.');
+        $GLOBALS['xoopsLogger']->addDeprecated(__METHOD__ . '  is deprecated since XOOPS 2.5.4, please use \'$xoopsLogger->dump(\'queries\');\' instead.');
 
         return $this->dump('queries');
     }
@@ -429,7 +450,7 @@ class XoopsLogger
  * NB: You're not supposed to call this function directly, if you don't understand why, then
  * you'd better spend some time reading your PHP manual before you hurt somebody
  *
- * @internal : Using a function and not calling the handler method directly because of old PHP versions
+ * @internal Using a function and not calling the handler method directly because of old PHP versions
  * set_error_handler() have problems with the array( obj,methodname ) syntax
  * @param       $errNo
  * @param       $errStr

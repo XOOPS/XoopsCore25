@@ -91,11 +91,11 @@
     <div class="pane">
         <table>
             <tr>
-                <td><a rel="external" href="http://xoops.org"><{$smarty.const._OXYGEN_XOOPSPROJECT}></a></td>
+                <td><a rel="external" href="https://xoops.org"><{$smarty.const._OXYGEN_XOOPSPROJECT}></a></td>
                 <td><a rel="external" href="https://github.com/XOOPS/XoopsCore25/releases"><{$smarty.const._OXYGEN_XOOPSCORE}></a></td>
             </tr>
             <tr>
-                <td><a rel="external" href="http://www.xoops.org/modules/xoopspartners"><{$smarty.const._OXYGEN_LOCALSUPPORT}></a></td>
+                <td><a rel="external" href="https://xoops.org/modules/xoopspartners"><{$smarty.const._OXYGEN_LOCALSUPPORT}></a></td>
                 <td><a rel="external" href="https://github.com/XOOPS/XoopsCore25"><{$smarty.const._OXYGEN_CODESVN}></a></td>
             </tr>
             <tr>

@@ -1,12 +1,12 @@
 <ol class="breadcrumb">
     <li class="breadcrumb-item"><a href="<{$xoops_url}>/modules/<{$xoops_dirname}>/index.php"><{$smarty.const._MD_NEWBB_FORUMHOME}></a></li>
-    <{if $parent_forum|default:false}>
+    <{if !empty($parent_forum)}>
         <li class="breadcrumb-item"><a href="<{$xoops_url}>/modules/<{$xoops_dirname}>/viewforum.php?forum=<{$parent_forum}>"><{$parent_name}></a></li>
         <li class="breadcrumb-item"><a href="<{$xoops_url}>/modules/<{$xoops_dirname}>/viewforum.php?forum=<{$forum_id}>"><{$forum_name}></a></li>
-    <{elseif $forum_name|default:false}>
+    <{elseif !empty($forum_name)}>
         <li class="breadcrumb-item"><a href="<{$xoops_url}>/modules/<{$xoops_dirname}>/viewforum.php?forum=<{$forum_id}>"><{$forum_name}></a></li>
     <{/if}>
-    <{if $current}>
+    <{if isset($current)}>
         <li class="breadcrumb-item active"><{$current.title}></li>
     <{/if}>
 </ol>
@@ -15,22 +15,22 @@
         <h3><a href="<{$xoops_url}>/modules/<{$xoops_dirname}>/index.php"><{$forum_index_title}></a></h3>
     </div>
     <div class="col-md-6 col-xs-12 pull-right">
-        <{if $mode gt 1}>
+        <{if isset($mode) && $mode > 1}>
         <form name="form_topics_admin" action="<{$xoops_url}>/modules/<{$xoops_dirname}>/action.topic.php" method="POST" onsubmit="if(window.document.form_topics_admin.op.value &lt; 1){return false;}">
         <{/if}>
-        <{if $viewer_level gt 1}>
+        <{if isset($viewer_level) && $viewer_level > 1}>
             <!-- irmtfan hardcode removed style="padding: 5px;float: right; text-align:right;" -->
             <div class="pagenav" id="admin">
-                <{if $mode gt 1}>
+                <{if isset($mode) && $mode > 1}>
                     <{$smarty.const._ALL}>:
                     <input type="checkbox" name="topic_check1" id="topic_check1" value="1" onclick="xoopsCheckAll('form_topics_admin', 'topic_check1');">
                     <select class="form-control" name="op">
                         <option value="0"><{$smarty.const._SELECT}></option>
                         <option value="delete"><{$smarty.const._DELETE}></option>
-                        <{if $status eq "pending"}>
+                        <{if isset($status) && $status == "pending"}>
                             <option value="approve"><{$smarty.const._MD_NEWBB_APPROVE}></option>
                             <option value="move"><{$smarty.const._MD_NEWBB_MOVE}></option>
-                        <{elseif $status eq "deleted"}>
+                        <{elseif isset($status) && $status  == "deleted"}>
                             <option value="restore"><{$smarty.const._MD_NEWBB_RESTORE}></option>
                         <{else}>
                             <option value="move"><{$smarty.const._MD_NEWBB_MOVE}></option>
@@ -41,7 +41,7 @@
                     |
                     <a href="<{$xoops_url}>/modules/<{$xoops_dirname}>/list.topic.php" target="_self"
                        title="<{$smarty.const._MD_NEWBB_TYPE_VIEW}>"><{$smarty.const._MD_NEWBB_TYPE_VIEW}></a>
-                    <!-- irmtfan remove < { elseif $mode eq 1} > to show all admin links in admin mode in the initial page loading -->
+                    <!-- irmtfan remove < { elseif $mode == 1} > to show all admin links in admin mode in the initial page loading -->
                 <{else}>
                     <a href="<{$xoops_url}>/modules/<{$xoops_dirname}>/list.topic.php?status=active#admin" target="_self"
                        title="<{$smarty.const._MD_NEWBB_TYPE_ADMIN}>"><{$smarty.const._MD_NEWBB_TYPE_ADMIN}></a>
@@ -68,7 +68,7 @@
 
         <div>
             <div>
-                <{if $menumode eq 0}>
+                <{if isset($menumode) && $menumode == 0}>
                     <select class="form-control menu" name="topicoption" id="topicoption" onchange="if(this.options[this.selectedIndex].value.length >0 )    { window.document.location=this.options[this.selectedIndex].value;}">
                         <option value=""><{$smarty.const._MD_NEWBB_TOPICOPTION}></option>
                         <option value="<{$post_link}>"><{$smarty.const._MD_NEWBB_VIEW}>
@@ -77,15 +77,15 @@
                             &nbsp;<{$smarty.const._MD_NEWBB_NEWPOSTS}></option>
                         <!-- irmtfan add a separator -->
                         <option value="">--------</option>
-                        <{foreach item=filter from=$filters}>
+                        <{foreach item=filter from=$filters|default:null}>
                             <option value="<{$filter.link}>"><{$filter.title}></option>
                         <{/foreach}>
                         <option value="">--------</option>
-                        <{foreach item=filter from=$types|default:false}>
+                        <{foreach item=filter from=$types|default:null}>
                             <option value="<{$filter.link}>"><{$filter.title}></option>
                         <{/foreach}>
                     </select>
-                <{elseif $menumode eq 1}>
+                <{elseif isset($menumode) && $menumode == 1}>
                     <div id="topicoption" class="menu">
                         <table>
                             <tr>
@@ -110,7 +110,7 @@
                     <script type="text/javascript">document.getElementById("topicoption").onmouseout = closeMenu;</script>
                     <div class="menubar"><a href="" onclick="openMenu(event, 'topicoption');return false;"><{$smarty.const._MD_NEWBB_TOPICOPTION|escape:'quotes'}></a>
                     </div>
-                <{elseif $menumode eq 2}>
+                <{elseif isset($menumode) && $menumode == 2}>
                     <div class="menu">
                         <ul>
                             <li>
@@ -153,7 +153,7 @@
         <div class="clear"></div>
         <br>
         <br>
-    <{if $mode gt 1}>
+    <{if isset($mode) && $mode > 1}>
     </form>
     <{/if}>
 
@@ -164,7 +164,7 @@
     <thead>
     <tr class="head" class="align_left">
         <th width="5%" colspan="2">
-            <{if $mode gt 1}>
+         <{if isset($mode) && $mode > 1}>
                 <{$smarty.const._ALL}>:
                 <input type="checkbox" name="topic_check" id="topic_check" value="1" onclick="xoopsCheckAll('form_topics_admin', 'topic_check');">
             <{else}>
@@ -181,11 +181,11 @@
     </thead>
     <tbody>
     <!-- start forum topic -->
-    <{foreach name=loop item=topic from=$topics}>
+    <{foreach item=topic from=$topics|default:null name=loop}>
     <tr class="<{cycle values="even,odd"}>">
         <!-- irmtfan add topic-read/topic-new smarty variable  -->
-        <td width="4%" align="center" class="<{if $topic.topic_read eq 1 }>topic-read<{else}>topic-new<{/if}>">
-        <{if $mode gt 1}>
+        <td width="4%" align="center" class="<{if $topic.topic_read == 1 }>topic-read<{else}>topic-new<{/if}>">
+        <{if isset($mode) && $mode > 1}>
             <input type="checkbox" name="topic_id[]" id="topic_id[<{$topic.topic_id}>]" value="<{$topic.topic_id}>">
         <{else}>
         <!-- irmtfan add lock -->
@@ -196,7 +196,7 @@
         <td width="4%" align="center"><{$topic.topic_icon}><{$topic.sticky}><br><{$topic.digest}><{$topic.poll}></td>
         <!-- irmtfan remove topic_link hardcode and add topic_excerpt -->
         <td>&nbsp;<a href="<{$xoops_url}>/modules/<{$xoops_dirname}>/<{$topic.topic_link}>" title="<{$topic.topic_excerpt}>">
-            <{$topic.topic_title}></a><{$topic.attachment}> <{$topic.topic_page_jump}>
+            <{$topic.topic_title}></a><{$topic.attachment|default:''}> <{$topic.topic_page_jump}>
             <!-- irmtfan add topic publish time and rating -->
             <br>
             <span><{$headers.publish.title}>: <{$topic.topic_time}></span>
@@ -227,7 +227,7 @@
                     <li><{$selection.order|replace:'<select name':'<select class="form-control" name'}></li>
                     <li><{$selection.since}></li>
                 </ul>
-                <{foreach item=hidval key=hidvar from=$selection.vars}>
+                <{foreach item=hidval from=$selection.vars|default:null key=hidvar }>
                     <{if $hidval && $hidvar neq "sort" && $hidvar neq "order" && $hidvar neq "since"}>
                         <!-- irmtfan correct name="$hidvar" -->
                         <input type="hidden" name="<{$hidvar}>" value="<{$hidval}>">
@@ -243,7 +243,7 @@
 </table>
 <!-- end forum main table -->
 
-<{if $pagenav}>
+<{if isset($pagenav)}>
     <!-- irmtfan hardcode removed style="padding: 5px;float: right; text-align:right;" -->
     <div class="generic-pagination col text-right"><{$pagenav|replace:'form':'div'|replace:'id="xo-pagenav"':''|replace:' //':'/'}>
         <!-- irmtfan to solve nested forms and id="xo-pagenav" issue --></div>
@@ -264,7 +264,7 @@
     <div class="icon_right">
         <form action="<{$xoops_url}>/modules/<{$xoops_dirname}>/search.php" method="get">
             <input name="term" id="term" type="text" size="15">
-            <{foreach item=hidval key=hidvar from=$search}>
+            <{foreach item=hidval from=$search|default:null key=hidvar }>
                 <{if $hidval }>
                     <!-- irmtfan correct name="$hidvar" -->
                     <input type="hidden" name="<{$hidvar}>" value="<{$hidval}>">
@@ -282,6 +282,6 @@
 <div class="clear"></div>
 <br>
 
-<{if $online}><{include file="db:newbb_online.tpl"}><{/if}>
+<{if !empty($online)}><{include file="db:newbb_online.tpl"}><{/if}>
 <{include file='db:system_notification_select.tpl'}>
 <!-- end module contents -->

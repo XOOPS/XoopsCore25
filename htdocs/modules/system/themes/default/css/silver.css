@@ -5,8 +5,8 @@
  * @license         http://www.fsf.org/copyleft/gpl.html GNU public license 3.0
  * @package         themes
  * @since           2.5.x
- * @author          Xoops Design Theme <http://www.xoops.org/>
- * @maintained      Xoops Design Theme <http://www.xoops.org/>
+ * @author          Xoops Design Theme <https://xoops.org/>
+ * @maintained      Xoops Design Theme <https://xoops.org/>
  *
 */
 body {
@@ -80,8 +80,6 @@ body {
     background: #e7e7e7;
     border-top: 1px solid #FFFFFF;
     border-bottom: 1px solid #CCCCCC;
-    background: -moz-linear-gradient(center bottom, rgb(321,321,321) 0%, rgb(191,191,191) 100%);
-    background: -webkit-gradient(linear, left bottom, left top, color-stop(0, rgb(321,321,321)), color-stop(1, rgb(191,191,191)));
 }
 
 #xo-nav-options a {
@@ -100,8 +98,8 @@ body {
 #xo-footer {
     background-color: #CFCFCF;
     color: #666666;
-    background: -moz-linear-gradient(center bottom, rgb(191,191,191) 0%, rgb(207,207,207) 100%);
-    background: -webkit-gradient(linear, left bottom, left top, color-stop(0, rgb(191,191,191)), color-stop(1, rgb(207,207,207)));
+    background: -webkit-gradient(linear, left top, left bottom, from(rgb(191, 191, 191)), to(rgb(207, 207, 207)));
+    background: linear-gradient(rgb(191, 191, 191), rgb(207, 207, 207) 1);
 }
 
 #xo-footer a {

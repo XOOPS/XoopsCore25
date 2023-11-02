@@ -13,23 +13,23 @@
 			</tr>
 			</thead>
 			<tbody>
-			<{foreach item=module from=$modules}>
+			<{foreach item=module from=$modules|default:null}>
 				<tr class="table-warning">
 					<th class="head"><input name="del_mod[<{$module.id}>]" id="del_mod[]"
 											onclick="xoopsCheckGroup('notificationlist', 'del_mod[<{$module.id}>]', 'del_not[<{$module.id}>][]');"
 											type="checkbox" value="<{$module.id}>"/></th>
 					<th class="head" colspan="4"><{$lang_module}>: <{$module.name}></th>
 				</tr>
-				<{foreach item=category from=$module.categories}>
-				<{foreach item=item from=$category.items}>
-				<{foreach item=notification from=$item.notifications}>
+				<{foreach item=category from=$module.categories|default:null}>
+				<{foreach item=item from=$category.items|default:null}>
+				<{foreach item=notification from=$item.notifications|default:null}>
 				<tr>
 					<td><input type="checkbox" name="del_not[<{$module.id}>][]" id="del_not[<{$module.id}>]" value="<{$notification.id}>"/>
 					</td>
 					<td><{$notification.event_title}></td>
 					<td><{$notification.category_title}></td>
 					<td class="d-none d-sm-table-cell"><{if $item.id != 0}><{$item.id}><{/if}></td>
-					<td><{if $item.id != 0}><{if $item.url != ''}><a href="<{$item.url}>" title="<{$item.name}>"><{/if}><{$item.name}><{if
+					<td><{if $item.id != 0}><{if !empty($item.url)}><a href="<{$item.url}>" title="<{$item.name}>"><{/if}><{$item.name}><{if
 						$item.url != ''}></a><{/if}><{/if}>
 					</td>
 				</tr>

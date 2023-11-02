@@ -27,28 +27,28 @@
     </tr-->
             <tr class="odd" align="center">
                 <td>#</td>
-                <{if $authorlistext}>
+                <{if isset($authorlistext)}>
                     <td><{$smarty.const._MD_LEXIKON_MAIL}></td>
                 <{/if}>
                 <td><{$smarty.const._MD_LEXIKON_AUTHOR}></td>
                 <td><{$smarty.const._MD_LEXIKON_TOTAL}></td>
-                <{if $authorlistext}>
+                <{if isset($authorlistext)}>
                     <td><{$smarty.const._MD_LEXIKON_PM}></td>
                     <td><{$smarty.const._MD_LEXIKON_LOCATION}></td>
                     <td><{$smarty.const._MD_LEXIKON_WWW}></td>
                 <{/if}>
             </tr>
-            <{foreach item=author from=$authors}>
+            <{foreach item=author from=$authors|default:null}>
                 <tr class="<{cycle values="even,odd"}>">
                     <td align="center"><{$author.id}></td>
-                    <{if $authorlistext}>
+                    <{if isset($authorlistext)}>
                         <td align="center"><{$author.email}></td>
                     <{/if}>
                     <td align="center" style="font-size:12px;"><a
                                 href="<{$xoops_url}>/modules/<{$lang_moduledirname}>/profile.php?uid=<{$author.uid}>"><{$author.name}></a>
                     </td>
                     <td align="center"><{$author.total}></td>
-                    <{if $authorlistext}>
+                    <{if isset($authorlistext)}>
                         <td align="center"><{$author.pm}></td>
                         <td align="center"><{$author.location}></td>
                         <td align="center"><{$author.url}></td>

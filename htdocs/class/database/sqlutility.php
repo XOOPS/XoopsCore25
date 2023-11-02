@@ -34,7 +34,7 @@ class SqlUtility
      *
      * Last revision: September 23, 2001 - gandon
      *
-     * @param  array  $ret the splitted sql commands
+     * @param  array  $ret the split sql commands
      * @param  string $sql the sql commands
      * @return boolean always true
      * @access   public

@@ -34,7 +34,7 @@ defined('XOOPS_ROOT_PATH') || exit('Restricted access');
  *
  * PHP versions 4 and 5
  *
- * CakePHP(tm) :  Rapid Development Framework <http://www.cakephp.org/>
+ * CakePHP(tm) :  Rapid Development Framework <https://www.cakephp.org/>
  * Copyright 2005-2008, Cake Software Foundation, Inc.
  *                                     1785 E. Sahara Avenue, Suite 490-204
  *                                     Las Vegas, Nevada 89104
@@ -44,11 +44,11 @@ defined('XOOPS_ROOT_PATH') || exit('Restricted access');
  *
  * @filesource
  * @copyright  Copyright 2005-2008, Cake Software Foundation, Inc.
- * @link       http://www.cakefoundation.org/projects/info/cakephp CakePHP(tm) Project
+ * @link       https://www.cakefoundation.org/projects/info/cakephp CakePHP(tm) Project
  * @package    cake
  * @subpackage cake.cake.libs.cache
  * @since      CakePHP(tm) v 1.2.0.4933
- * @license    http://www.opensource.org/licenses/mit-license.php The MIT License
+ * @license    https://www.opensource.org/licenses/mit-license.php The MIT License
  */
 
 /**
@@ -197,6 +197,11 @@ class XoopsCacheModel extends XoopsCacheEngine
  */
 class XoopsCacheModelObject extends XoopsObject
 {
+    //PHP 8.2 Dynamic properties deprecated
+    public $key;
+    public $data;
+    public $expires;
+
     /**
      * Constructor
      */

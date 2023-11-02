@@ -1,16 +1,16 @@
 <div id="xo_globalnav">
     <!-- start menu -->
     <ul class="menu" id="menu">
-        <{foreach item=item from=$navitems}>
+        <{foreach item=item from=$navitems|default:null}>
             <li>
                 <a href="<{$item.link}>" class="menulink"><{$item.text}></a>
                 <ul>
-                    <{foreach item=sub from=$item.menu}>
+                    <{foreach item=sub from=$item.menu|default:null}>
                         <li>
-                            <{if $sub.options|default:0 != 0}>
+                            <{if isset($sub.options) && $sub.options != 0}>
                                 <a class="sub" href="<{$sub.link}>" title="<{$sub.title|strip_tags:false}>"><{$sub.title}></a>
                                 <ul>
-                                    <{foreach item=option from=$sub.options}>
+                                    <{foreach item=option from=$sub.options|default:null}>
                                         <li><a href="<{$sub.url}><{$option.link}>"><{$option.title}></a></li>
                                     <{/foreach}>
                                 </ul>

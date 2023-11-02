@@ -11,7 +11,7 @@
         <div class="row">
 
             <div class="newbb-header-icons hidden-xs">
-                <{if $viewer_level gt 1}>
+                <{if isset($viewer_level) && $viewer_level > 1}>
                     <div class="col-md-6 mb10">
                         <strong><{$smarty.const._MD_NEWBB_TOPIC}>:</strong>
                         <a href="<{$xoops_url}>/modules/<{$xoops_dirname}>/list.topic.php?status=active#admin" title="<{$smarty.const._MD_NEWBB_TYPE_ADMIN}>" class="btn btn-xs btn-primary">
@@ -19,18 +19,18 @@
                         </a>
 
                         <a href="<{$xoops_url}>/modules/<{$xoops_dirname}>/list.topic.php?status=pending#admin" title="<{$smarty.const._MD_NEWBB_TYPE_PENDING}>" class="btn btn-xs btn-primary">
-                            <{if $wait_new_topic|default:''}><span class="badge"><{$wait_new_topic}></span><{/if}> <{$smarty.const._MD_NEWBB_TYPE_PENDING}>
+                            <{if !empty($wait_new_topic)}><span class="badge"><{$wait_new_topic}></span><{/if}> <{$smarty.const._MD_NEWBB_TYPE_PENDING}>
                         </a>
 
                         <a href="<{$xoops_url}>/modules/<{$xoops_dirname}>/list.topic.php?status=deleted#admin" title="<{$smarty.const._MD_NEWBB_TYPE_DELETED}>" class="btn btn-xs btn-danger">
-                            <{if $delete_topic}><span class="badge"><{$delete_topic}></span><{/if}> <{$smarty.const._MD_NEWBB_TYPE_DELETED}>
+                            <{if isset($delete_topic)}><span class="badge"><{$delete_topic}></span><{/if}> <{$smarty.const._MD_NEWBB_TYPE_DELETED}>
                         </a>
                     </div>
                 <{/if}>
 
-                <div class="<{if $viewer_level gt 1}>col-md-6<{else}>col-md-12<{/if}> text-right"><{include file="db:newbb_index_menu.tpl"}></div>
+                <div class="<{if isset($viewer_level) && $viewer_level > 1}>col-md-6<{else}>col-md-12<{/if}> text-right"><{include file="db:newbb_index_menu.tpl"}></div>
 
-                <{if $viewer_level gt 1}>
+                <{if isset($viewer_level) && $viewer_level > 1}>
                     <div class="col-md-12">
                         <strong><{$smarty.const._MD_NEWBB_POST2}>:</strong>
                         <a href="<{$xoops_url}>/modules/<{$xoops_dirname}>/viewpost.php?status=active#admin" title="<{$smarty.const._MD_NEWBB_TYPE_ADMIN}>" class="btn btn-xs btn-primary">
@@ -38,14 +38,14 @@
                         </a>
 
                         <a href="<{$xoops_url}>/modules/<{$xoops_dirname}>/viewpost.php?status=pending#admin" title="<{$smarty.const._MD_NEWBB_TYPE_PENDING}>" class="btn btn-xs btn-primary">
-                            <{if $wait_new_post|default:''}>(<span style="color:#ff0000;"><{$wait_new_post}></span>)<{/if}> <{$smarty.const._MD_NEWBB_TYPE_PENDING}>
+                            <{if !empty($wait_new_post)}>(<span style="color:#ff0000;"><{$wait_new_post}></span>)<{/if}> <{$smarty.const._MD_NEWBB_TYPE_PENDING}>
                         </a>
 
                         <a href="<{$xoops_url}>/modules/<{$xoops_dirname}>/viewpost.php?status=deleted#admin" title="<{$smarty.const._MD_NEWBB_TYPE_DELETED}>" class="btn btn-xs btn-primary">
-                            <{if $delete_post}>(<span style="color:#ff0000;"><{$delete_post}></span>)<{/if}> <{$smarty.const._MD_NEWBB_TYPE_DELETED}>
+                            <{if isset($delete_post)}>(<span style="color:#ff0000;"><{$delete_post}></span>)<{/if}> <{$smarty.const._MD_NEWBB_TYPE_DELETED}>
                         </a>
 
-                        <{if $report_post}>
+                        <{if isset($report_post)}>
                             <a href="<{$xoops_url}>/modules/<{$xoops_dirname}>/admin/admin_report.php" title="<{$report_post}>" class="btn btn-xs btn-primary">
                                 <{$report_post}>
                             </a>
@@ -67,7 +67,7 @@
     </div>
 
         <div class="panel-group newbb-category-list" id="accordion">
-            <{foreach item=category from=$categories}><!-- Forum categories -->
+            <{foreach item=category from=$categories|default:null}><!-- Forum categories -->
             <div class="panel panel-default mb10">
                 <div class="panel-heading">
                     <h4 class="panel-title newbb-forum-title">
@@ -123,11 +123,11 @@
                     <{/if}>
                 </div><!-- .panel-heading -->
 
-                <div id="<{$category.cat_element_id}>" class="panel-collapse collapse <{if $subforum_display == 'expand'}>in<{/if}>">
+                <div id="<{$category.cat_element_id}>" class="panel-collapse collapse <{if isset($subforum_display) && $subforum_display == 'expand'}>in<{/if}>">
                     <div class="panel-body">
                         <{if $category.forums}>
                             <div class="row hidden-xs">
-                                <{if $subforum_display == "expand"}>
+                                <{if isset($subforum_display) && $subforum_display == "expand"}>
                                     <div class="col-sm-6 col-md-6"><strong><{$smarty.const._MD_NEWBB_FORUM}></strong></div>
                                 <{else}>
                                     <div class="col-sm-6 col-md-6"><strong><{$smarty.const._MD_NEWBB_FORUM}></strong></div>
@@ -137,15 +137,15 @@
                                 <div class="col-sm-4 col-md-4"><strong><{$smarty.const._MD_NEWBB_LASTPOST}></strong></div>
                             </div>
                         <{/if}>
-                        <{foreach item=forum from=$category.forums}>
+                        <{foreach item=forum from=$category.forums|default:null}>
                         <div class="row newbb-list-foruns mb10">
                             <div class="col-sm-6 col-md-6">
-                                <{if $forum.subforum|default:false}>
-                                    <div class="<{if $forum.forum_read|default:0  eq 1 }>forum-read<{else}>forum-new2<{/if}> pull-left">
+                                <{if !empty($forum.subforum)}>
+                                    <div class="<{if isset($forum.forum_read) && $forum.forum_read == 1 }>forum-read<{else}>forum-new2<{/if}> pull-left">
                                         <{$forum.forum_folder|default:'' }>
                                     </div>
                                 <{else}>
-                                    <div class="<{if $forum.forum_read|default:0  eq 1 }>forum-read<{else}>forum-new2<{/if}> pull-left">
+                                    <div class="<{if isset($forum.forum_read) && $forum.forum_read == 1}>forum-read<{else}>forum-new2<{/if}> pull-left">
                                         <{$forum.forum_folder|default:'' }>
                                     </div>
                                 <{/if}>
@@ -154,14 +154,14 @@
                                     <{$forum.forum_name}>
                                 </a>
 
-                                <{if $rss_enable}>
+                                <{if isset($rss_enable)}>
                                     <a href="<{$xoops_url}>/modules/<{$xoops_dirname}>/rss.php?f=<{$forum.forum_id}>" target="_blank" title="RSS feed"
                                        class="pull-right btn btn-xs btn-warning">
                                         RSS
                                     </a>
                                 <{/if}>
                                 <!-- Forum description -->
-                                <{if $forum.forum_desc != ""}>
+                                <{if isset($forum.forum_desc)}>
                                     <button class="btn btn-primary btn-xs pull-right" data-toggle="modal" data-target="#forumDesc-<{$forum.forum_id}>"><span
                                                 class="glyphicon glyphicon-info-sign"></span></button>
                                     <div class="modal fade" id="forumDesc-<{$forum.forum_id}>" tabindex="-1" role="dialog" aria-labelledby="ForumDescription"
@@ -195,7 +195,7 @@
                             </div>
 
                             <div class="col-sm-1 col-md-1 text-center hidden-xs">
-                                <{if $stats[$forum.forum_id].topic.day|default:''}>
+                                <{if !empty($stats[$forum.forum_id].topic.day)}>
                                     <strong><{$stats[$forum.forum_id].topic.day}></strong>
                                     /
                                 <{/if}>
@@ -203,7 +203,7 @@
                             </div>
 
                             <div class="col-sm-1 col-md-1 text-center hidden-xs">
-                                <{if $stats[$forum.forum_id].post.day|default:''}>
+                                <{if !empty($stats[$forum.forum_id].post.day)}>
                                     <strong><{$stats[$forum.forum_id].post.day}></strong>
                                     /
                                 <{/if}>
@@ -211,7 +211,7 @@
                             </div>
 
                             <div class="col-sm-4 col-md-4 hidden-xs">
-                                <{if $forum.forum_lastpost_subject|default:''}>
+                                <{if !empty($forum.forum_lastpost_subject)}>
                                     <{$forum.forum_lastpost_time}> <{$smarty.const._MD_NEWBB_BY}> <{$forum.forum_lastpost_user}>
                                     <a href="<{$xoops_url}>/modules/<{$xoops_dirname}>/viewtopic.php?post_id=<{$forum.forum_lastpost_id}>">
                                         <{$forum.forum_lastpost_subject}>
@@ -221,9 +221,9 @@
                                     <{$smarty.const._MD_NEWBB_NOTOPIC}>
                                 <{/if}>
 
-                                <{if $forum.subforum|default:false}>
+                                <{if !empty($forum.subforum)}>
                                     <{$smarty.const._MD_NEWBB_SUBFORUMS}><{$img_subforum}>
-                                    <{foreach item=subforum from=$forum.subforum|default:false}>
+                                    <{foreach item=subforum from=$forum.subforum|default:null}>
                                     [
                                     <a href="<{$xoops_url}>/modules/<{$xoops_dirname}>/viewforum.php?forum=<{$subforum.forum_id}>"><{$subforum.forum_name}></a>
                                     ]
@@ -264,7 +264,7 @@
             </div>
         </div>
 
-        <{if $currenttime}>
+        <{if isset($currenttime)}>
             <div class="row">
                 <div class="col-lg-12"><h3 class="nompl"><{$online.statistik}> <{$smarty.const._MD_NEWBB_STATS}></h3></div>
                 <div class="col-sm-6 col-md-6">
@@ -274,17 +274,17 @@
 
                         <li><{$smarty.const._MD_NEWBB_TOTALTOPICSC}>
                             <a href="<{$xoops_url}>/modules/<{$xoops_dirname}>/list.topic.php" title="<{$smarty.const._MD_NEWBB_ALL}>">
-                                <{$stats[0].topic.total}>
+                                <{$stats[0].topic.total|default:''}>
                             </a></li>
 
                         <li><{$smarty.const._MD_NEWBB_TOTALPOSTSC}>
                             <a href="<{$xoops_url}>/modules/<{$xoops_dirname}>/viewpost.php" title="<{$smarty.const._MD_NEWBB_ALLPOSTS}>">
-                                <{$stats[0].post.total}>
+                                <{$stats[0].post.total|default:''}>
                             </a></li>
-                        <{if $stats[0].digest.total}>
+                        <{if isset($stats[0].digest.total)}>
                             <li><{$smarty.const._MD_NEWBB_TOTALDIGESTSC}>
                                 <a href="<{$xoops_url}>/modules/<{$xoops_dirname}>/list.topic.php?status=digest" title="<{$smarty.const._MD_NEWBB_TOTALDIGESTSC}>">
-                                    <{$stats[0].digest.total}>
+                                    <{$stats[0].digest.total|default:''}>
                                 </a></li>
                         <{/if}>
 
@@ -297,7 +297,7 @@
 
                 <div class="col-sm-6 col-md-6">
                     <ul class="list-unstyled lw30">
-                        <{if $userstats}>
+                        <{if isset($userstats)}>
                             <li><{*$userstats.lastvisit*}>
                                 <{$userstats.lastpost}>
                             </li>
@@ -306,7 +306,7 @@
                         <li><{$smarty.const._MD_NEWBB_TODAYTOPICSC}> <{$stats[0].topic.day|default:0}></li>
                         <li><{$smarty.const._MD_NEWBB_TODAYPOSTSC}> <{$stats[0].post.day|default:0}></li>
 
-                        <{if $userstats}>
+                        <{if isset($userstats)}>
                             <li><{$userstats.topics}> | <{$userstats.posts}></li>
                             <{if $userstats.digests}>
                                 <li><{$userstats.digests}></li>
@@ -318,12 +318,12 @@
             </div>
         <{/if}>
 
-        <{if $online}>
+        <{if isset($online)}>
             <{include file="db:newbb_online.tpl"}>
         <{/if}>
 
-        <a title="NewBB" href="https://xoops.org" class="btn btn-xs btn-success">NewBB Version <{$version/100}></a>
-        <{if $rss_button}>
+        <a title="NewBB" href="https://xoops.org" class="btn btn-xs btn-success">NewBB Version <{$version}></a>
+        <{if isset($rss_button)}>
             <div class="text-right">
                 <a href="<{$xoops_url}>/modules/<{$xoops_dirname}>/rss.php?c=<{$viewcat}>" target="_blank" title="RSS FEED">
                     <{$rss_button}>

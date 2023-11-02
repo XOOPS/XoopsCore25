@@ -25,6 +25,24 @@
  */
 class ProfileField extends XoopsObject
 {
+    public $field_id;
+    public $cat_id;
+    public $field_type;
+    public $field_valuetype;
+    public $field_name;
+    public $field_title;
+    public $field_description;
+    public $field_required; //0 = no, 1 = yes
+    public $field_maxlength;
+    public $field_weight;
+    public $field_default;
+    public $field_notnull;
+    public $field_edit;
+    public $field_show;
+    public $field_config;
+    public $field_options;
+    public $step_id;
+
     /**
      *
      */
@@ -58,7 +76,7 @@ class ProfileField extends XoopsObject
      */
     public function setVar($key, $value, $not_gpc = false)
     {
-        if ($key === 'field_options' && is_array($value)) {
+        if ($key === 'field_options' && \is_array($value)) {
             foreach (array_keys($value) as $idx) {
                 $value[$idx] = base64_encode($value[$idx]);
             }
@@ -150,7 +168,7 @@ class ProfileField extends XoopsObject
                 break;
 
             case 'radio':
-                $element = new XoopsFormRadio($caption, $name, $value);
+                $element = new XoopsFormRadio($caption, $name, (string)$value);
                 $element->addOptionArray($options);
                 break;
 
@@ -248,7 +266,7 @@ class ProfileField extends XoopsObject
                 $value = is_array($value) ? $value[0] : $value;
                 $options = $this->getVar('field_options');
                 if (isset($options[$value])) {
-                    $value = htmlspecialchars(defined($options[$value]) ? constant($options[$value]) : $options[$value]);
+                    $value = htmlspecialchars(defined($options[$value]) ? constant($options[$value]) : $options[$value], ENT_QUOTES);
                 } else {
                     $value = '';
                 }
@@ -263,7 +281,7 @@ class ProfileField extends XoopsObject
                 if (count($options) > 0) {
                     foreach (array_keys($options) as $key) {
                         if (in_array($key, $value)) {
-                            $ret[$key] = htmlspecialchars(defined($options[$key]) ? constant($options[$key]) : $options[$key]);
+                            $ret[$key] = htmlspecialchars(defined($options[$key]) ? constant($options[$key]) : $options[$key], ENT_QUOTES);
                         }
                     }
                 }
@@ -272,7 +290,7 @@ class ProfileField extends XoopsObject
                 break;
 
             case 'group':
-                /* @var XoopsMemberHandler $member_handler */
+                /** @var XoopsMemberHandler $member_handler */
                 $member_handler = xoops_getHandler('member');
                 $options        = $member_handler->getGroupList();
                 $ret            = isset($options[$value]) ? $options[$value] : '';
@@ -281,13 +299,13 @@ class ProfileField extends XoopsObject
                 break;
 
             case 'group_multi':
-                /* @var XoopsMemberHandler $member_handler */
+                /** @var XoopsMemberHandler $member_handler */
                 $member_handler = xoops_getHandler('member');
                 $options        = $member_handler->getGroupList();
                 $ret            = array();
                 foreach (array_keys($options) as $key) {
                     if (in_array($key, $value)) {
-                        $ret[$key] = htmlspecialchars($options[$key]);
+                        $ret[$key] = htmlspecialchars($options[$key], ENT_QUOTES);
                     }
                 }
 
@@ -398,7 +416,7 @@ class ProfileField extends XoopsObject
      */
     public function getUserVars()
     {
-        /* @var ProfileProfileHandler $profile_handler */
+        /** @var ProfileProfileHandler $profile_handler */
         $profile_handler = xoops_getModuleHandler('profile', 'profile');
 
         return $profile_handler->getUserVars();
@@ -411,6 +429,8 @@ class ProfileField extends XoopsObject
  */
 class ProfileFieldHandler extends XoopsPersistableObjectHandler
 {
+    public $table_link;
+
     /**
      * @param null|XoopsDatabase $db
      */
@@ -456,7 +476,7 @@ class ProfileFieldHandler extends XoopsPersistableObjectHandler
         if (!($obj instanceof $this->className)) {
             return false;
         }
-         /* @var ProfileProfileHandler $profile_handler */
+         /** @var ProfileProfileHandler $profile_handler */
         $profile_handler = xoops_getModuleHandler('profile', 'profile');
         $obj->setVar('field_name', str_replace(' ', '_', $obj->getVar('field_name')));
         $obj->cleanVars();
@@ -598,7 +618,7 @@ class ProfileFieldHandler extends XoopsPersistableObjectHandler
         if (!($obj instanceof $this->className)) {
             return false;
         }
-         /* @var ProfileProfileHandler $profile_handler */
+         /** @var ProfileProfileHandler $profile_handler */
         $profile_handler = xoops_getModuleHandler('profile', 'profile');
         // remove column from table
         $sql = 'ALTER TABLE ' . $profile_handler->table . ' DROP `' . $obj->getVar('field_name', 'n') . '`';
@@ -609,12 +629,12 @@ class ProfileFieldHandler extends XoopsPersistableObjectHandler
             }
 
             if ($obj->getVar('field_show') || $obj->getVar('field_edit')) {
-                /* @var XoopsModuleHandler $module_handler */
+                /** @var XoopsModuleHandler $module_handler */
                 $module_handler = xoops_getHandler('module');
                 $profile_module = $module_handler->getByDirname('profile');
                 if (is_object($profile_module)) {
                     // Remove group permissions
-                    /* @var XoopsGroupPermHandler $groupperm_handler */
+                    /** @var XoopsGroupPermHandler $groupperm_handler */
                     $groupperm_handler = xoops_getHandler('groupperm');
                     $criteria          = new CriteriaCompo(new Criteria('gperm_modid', $profile_module->getVar('mid')));
                     $criteria->add(new Criteria('gperm_itemid', $obj->getVar('field_id')));

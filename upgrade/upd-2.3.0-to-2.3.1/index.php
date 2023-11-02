@@ -16,7 +16,7 @@
  * If you did not receive this file, get it at https://www.gnu.org/licenses/gpl-2.0.html
  *
  * @copyright    (c) 2000-2016 XOOPS Project (www.xoops.org)
- * @license          GNU GPL 2 or later (https://www.gnu.org/licenses/gpl-2.0.html)
+ * @license          GNU GPL 2.0 or later (https://www.gnu.org/licenses/gpl-2.0.html)
  * @package          upgrader
  * @since            2.3.0
  * @author           Taiwen Jiang <phppp@users.sourceforge.net>
@@ -55,7 +55,8 @@ class Upgrade_231 extends XoopsUpgrade
             'bio' => 'users');
         foreach ($fields as $field => $table) {
             $sql = 'SHOW COLUMNS FROM `' . $GLOBALS['xoopsDB']->prefix($table) . "` LIKE '{$field}'";
-            if (!$result = $GLOBALS['xoopsDB']->queryF($sql)) {
+            $result = $GLOBALS['xoopsDB']->queryF($sql);
+            if (!$GLOBALS['xoopsDB']->isResultSet($result)) {
                 return false;
             }
             while (false !== ($row = $GLOBALS['xoopsDB']->fetchArray($result))) {

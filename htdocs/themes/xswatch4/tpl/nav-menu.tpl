@@ -17,12 +17,12 @@
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" id="xswatch-account-menu"><{$smarty.const.THEME_ACCOUNT}> <span class="caret"></span></a>
                         <div class="dropdown-menu" aria-labelledby="xswatch-account-menu">
-                            <{if $xoops_isuser|default:false}>
+                            <{if !empty($xoops_isuser)}>
                             <a class="dropdown-item" href="<{$xoops_url}>/user.php"><{$smarty.const.THEME_ACCOUNT_EDIT}></a>
                             <a class="dropdown-item" href="<{$xoops_url}>/viewpmsg.php"><{$smarty.const.THEME_ACCOUNT_MESSAGES}> <span class="badge badge-primary badge-pill"><{xoInboxCount}></span></a>
                             <a class="dropdown-item" href="<{$xoops_url}>/notifications.php"><{$smarty.const.THEME_ACCOUNT_NOTIFICATIONS}></a>
                             <a class="dropdown-item" href="<{$xoops_url}>/user.php?op=logout"><{$smarty.const.THEME_ACCOUNT_LOGOUT}></a>
-                            <{if $xoops_isadmin|default:false}>
+                            <{if !empty($xoops_isadmin)}>
                             <a class="dropdown-item" href="javascript:xswatchToolbarToggle();"><{$smarty.const.THEME_ACCOUNT_TOOLBAR}> <span id="xswatch-toolbar-ind"></span></a>
                             <{/if}>
                             <{else}>
@@ -57,10 +57,10 @@
                     </li>
                     <!-- end custom menus -->
                 </ul>
-                <{if $xoops_search|default:false}>
+                <{if !empty($xoops_search)}>
                 <ul class="navbar-nav ml-auto">
                 <li class="nav-item">
-                    <form class="form-inline my-2 my-lg-0" role="search" action="<{xoAppUrl search.php}>" method="get">
+                    <form class="form-inline my-2 my-lg-0" role="search" action="<{xoAppUrl 'search.php'}>" method="get">
 						<div class="input-group mb-3">
 							<input class="form-control" type="text" name="query" placeholder="<{$smarty.const.THEME_SEARCH_TEXT}>">
 							<div class="input-group-append">

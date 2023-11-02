@@ -1,6 +1,6 @@
 <{include file="db:system_header.tpl"}>
 
-<{if $users_display|default:false == true}>
+<{if isset($users_display) && $users_display == true}>
     <!--Display form sort-->
     <div class="xo-headercontent">
         <div class="floatleft"><{$form_sort}></div>
@@ -8,11 +8,11 @@
             <div class="xo-buttons">
                 <a class="ui-corner-all tooltip" href="admin.php?fct=users&amp;op=users_synchronize&amp;status=2"
                    title="<{$smarty.const._AM_SYSTEM_USERS_SYNCHRONIZE}>">
-                    <img src="<{xoAdminIcons reload.png}>" alt="<{$smarty.const._AM_SYSTEM_USERS_SYNCHRONIZE}>"/>
+                    <img src="<{xoAdminIcons 'reload.png'}>" alt="<{$smarty.const._AM_SYSTEM_USERS_SYNCHRONIZE}>"/>
                     <{$smarty.const._AM_SYSTEM_USERS_SYNCHRONIZE}>
                 </a>
                 <a class="ui-corner-all tooltip" href="admin.php?fct=users&amp;op=users_add" title="<{$smarty.const._AM_SYSTEM_USERS_ADDUSER}>">
-                    <img src="<{xoAdminIcons user_add.png}>" alt="<{$smarty.const._AM_SYSTEM_USERS_ADDUSER}>"/>
+                    <img src="<{xoAdminIcons 'user_add.png'}>" alt="<{$smarty.const._AM_SYSTEM_USERS_ADDUSER}>"/>
                     <{$smarty.const._AM_SYSTEM_USERS_ADDUSER}>
                 </a>
             </div>
@@ -35,51 +35,51 @@
         </tr>
         </thead>
         <!--Display data-->
-        <{if $users_count == true}>
-            <form name='memberslist' id='memberslist' action='<{xoAppUrl modules/system/admin.php?fct=users}>' method='POST'>
+        <{if isset($users_count) && $users_count == true}>
+            <form name='memberslist' id='memberslist' action='<{xoAppUrl "modules/system/admin.php?fct=users"}>' method='POST'>
                 <tbody>
-                <{foreach item=users from=$users}>
+                <{foreach item=user from=$users|default:null}>
                     <tr class="<{cycle values='even,odd'}> alignmiddle">
-                        <td class="txtcenter"><{if $users.checkbox_user}><input type='checkbox' name='memberslist_id[]' id='memberslist_id[]'
-                                                                                value='<{$users.uid}>'/><{/if}>
+                        <td class="txtcenter"><{if $user.checkbox_user}><input type='checkbox' name='memberslist_id[]' id='memberslist_id[]'
+                                                                                value='<{$user.uid}>'/><{/if}>
                         </td>
-                        <td class="txtcenter"><img class="xo-imgmini" src="<{$users.group}>" alt=""/></td>
-                        <td class="txtcenter"><a title="<{$users.uname}>" href="<{$xoops_url}>/userinfo.php?uid=<{$users.uid}>"><{$users.uname}></a></td>
-                        <td class="txtcenter"><{$users.name}></td>
-                        <td class="txtcenter"><{$users.email}></td>
-                        <td class="txtcenter"><{$users.reg_date}></td>
-                        <td class="txtcenter"><{$users.last_login}></td>
+                        <td class="txtcenter"><img class="xo-imgmini" src="<{$user.group}>" alt=""/></td>
+                        <td class="txtcenter"><a title="<{$user.uname}>" href="<{$xoops_url}>/userinfo.php?uid=<{$user.uid}>"><{$user.uname}></a></td>
+                        <td class="txtcenter"><{$user.name}></td>
+                        <td class="txtcenter"><{$user.email}></td>
+                        <td class="txtcenter"><{$user.reg_date}></td>
+                        <td class="txtcenter"><{$user.last_login}></td>
                         <td class="txtcenter">
-                            <div id="display_post_<{$users.uid}>"><{$users.posts}></div>
-                            <div id='loading_<{$users.uid}>' class="txtcenter" style="display:none;"><img src="./images/mimetypes/spinner.gif" title="Loading"
+                            <div id="display_post_<{$user.uid}>"><{$user.posts}></div>
+                            <div id='loading_<{$user.uid}>' class="txtcenter" style="display:none;"><img src="./images/mimetypes/spinner.gif" title="Loading"
                                                                                                           alt="Loading" width="12px"/></div>
                         </td>
                         <td class="xo-actions txtcenter">
-                            <{if $users.user_level > 0}>
-                                <img class="tooltip" onclick="display_post('<{$users.uid}>');" src="<{xoAdminIcons reload.png}>"
+                            <{if $user.user_level > 0}>
+                                <img class="tooltip" onclick="display_post('<{$user.uid}>');" src="<{xoAdminIcons 'reload.png'}>"
                                      alt="<{$smarty.const._AM_SYSTEM_USERS_SYNCHRONIZE}>" title="<{$smarty.const._AM_SYSTEM_USERS_SYNCHRONIZE}>"/>
-                                <img class="tooltip" onclick="display_dialog('<{$users.uid}>', true, true, 'slide', 'slide', 300, 400);"
-                                     src="<{xoAdminIcons display.png}>" alt="<{$smarty.const._AM_SYSTEM_USERS_VIEW}>"
+                                <img class="tooltip" onclick="display_dialog('<{$user.uid}>', true, true, 'slide', 'slide', 300, 400);"
+                                     src="<{xoAdminIcons 'display.png'}>" alt="<{$smarty.const._AM_SYSTEM_USERS_VIEW}>"
                                      title="<{$smarty.const._AM_SYSTEM_USERS_VIEW}>"/>
-                                <a class="tooltip" href="admin.php?fct=users&amp;op=users_edit&amp;uid=<{$users.uid}>"
+                                <a class="tooltip" href="admin.php?fct=users&amp;op=users_edit&amp;uid=<{$user.uid}>"
                                    title="<{$smarty.const._AM_SYSTEM_USERS_EDIT}>">
-                                    <img src="<{xoAdminIcons edit.png}>" alt="<{$smarty.const._AM_SYSTEM_USERS_EDIT}>"/></a>
-                                <a class="tooltip" href="admin.php?fct=users&amp;op=users_delete&amp;uid=<{$users.uid}>"
+                                    <img src="<{xoAdminIcons 'edit.png'}>" alt="<{$smarty.const._AM_SYSTEM_USERS_EDIT}>"/></a>
+                                <a class="tooltip" href="admin.php?fct=users&amp;op=users_delete&amp;uid=<{$user.uid}>"
                                    title="<{$smarty.const._AM_SYSTEM_USERS_DEL}>">
-                                    <img src="<{xoAdminIcons delete.png}>" alt="<{$smarty.const._AM_SYSTEM_USERS_DEL}>"/></a>
+                                    <img src="<{xoAdminIcons 'delete.png'}>" alt="<{$smarty.const._AM_SYSTEM_USERS_DEL}>"/></a>
                             <{else}>
-                                <a class="tooltip" href="admin.php?fct=users&amp;op=users_active&amp;uid=<{$users.uid}>"
+                                <a class="tooltip" href="admin.php?fct=users&amp;op=users_active&amp;uid=<{$user.uid}>"
                                    title="<{$smarty.const._AM_SYSTEM_USERS_ACTIVE}>">
-                                    <img src="<{xoAdminIcons xoops/active_user.png}>" alt="<{$smarty.const._AM_SYSTEM_USERS_ACTIVE}>"/></a>
-                                <img class="tooltip" onclick="display_dialog('<{$users.uid}>', true, true, 'slide', 'slide', 300, 400);"
-                                     src="<{xoAdminIcons display.png}>" alt="<{$smarty.const._AM_SYSTEM_USERS_VIEW}>"
+                                    <img src="<{xoAdminIcons 'xoops/active_user.png'}>" alt="<{$smarty.const._AM_SYSTEM_USERS_ACTIVE}>"/></a>
+                                <img class="tooltip" onclick="display_dialog('<{$user.uid}>', true, true, 'slide', 'slide', 300, 400);"
+                                     src="<{xoAdminIcons 'display.png'}>" alt="<{$smarty.const._AM_SYSTEM_USERS_VIEW}>"
                                      title="<{$smarty.const._AM_SYSTEM_USERS_VIEW}>"/>
-                                <a class="tooltip" href="admin.php?fct=users&amp;op=users_edit&amp;uid=<{$users.uid}>"
+                                <a class="tooltip" href="admin.php?fct=users&amp;op=users_edit&amp;uid=<{$user.uid}>"
                                    title="<{$smarty.const._AM_SYSTEM_USERS_EDIT}>">
-                                    <img src="<{xoAdminIcons edit.png}>" alt="<{$smarty.const._AM_SYSTEM_USERS_EDIT}>"/></a>
-                                <a class="tooltip" href="admin.php?fct=users&amp;op=users_delete&amp;uid=<{$users.uid}>"
+                                    <img src="<{xoAdminIcons 'edit.png'}>" alt="<{$smarty.const._AM_SYSTEM_USERS_EDIT}>"/></a>
+                                <a class="tooltip" href="admin.php?fct=users&amp;op=users_delete&amp;uid=<{$user.uid}>"
                                    title="<{$smarty.const._AM_SYSTEM_USERS_DEL}>">
-                                    <img src="<{xoAdminIcons delete.png}>" alt="<{$smarty.const._AM_SYSTEM_USERS_DEL}>"/></a>
+                                    <img src="<{xoAdminIcons 'delete.png'}>" alt="<{$smarty.const._AM_SYSTEM_USERS_DEL}>"/></a>
                             <{/if}>
                         </td>
                     </tr>
@@ -107,15 +107,15 @@
             </form>
         <{/if}>
         <!--No found-->
-        <{if $users_no_found|default:false == true}>
+        <{if isset($users_no_found) && $users_no_found == true}>
             <tr class="<{cycle values='even,odd'}> alignmiddle">
                 <td colspan='8' class="txtcenter"><{$smarty.const._AM_SYSTEM_USERS_NO_FOUND}></td>
             </tr>
         <{/if}>
     </table>
     <!--Pop-pup-->
-    <{if $users_count|default:false == true}>
-        <{foreach item=users from=$users_popup}>
+    <{if isset($users_count) && $users_count == true}>
+        <{foreach item=users from=$users_popup|default:null}>
             <div id="dialog<{$users.uid}>" title="<{$users.uname}>" style='display:none;'>
                 <table>
                     <tr>
@@ -123,22 +123,22 @@
                             <img src="<{$users.user_avatar}>" alt="<{$users.uname}>" title="<{$users.uname}>"/>
                         </td>
                         <td class="txtcenter">
-                            <a href='mailto:<{$users.email}>'><img src="<{xoAdminIcons mail_send.png}>" alt="" title=<{$smarty.const._AM_SYSTEM_USERS_EMAIL}>
+                            <a href='mailto:<{$users.email}>'><img src="<{xoAdminIcons 'mail_send.png'}>" alt="" title=<{$smarty.const._AM_SYSTEM_USERS_EMAIL}>
                                 /></a>
                             <a href='javascript:openWithSelfMain("<{$xoops_url}>/pmlite.php?send2=1&amp;to_userid=<{$users.uid}>","pmlite",565,500);'><img
-                                        src="<{xoAdminIcons pm.png}>" alt="" title="<{$smarty.const._AM_SYSTEM_USERS_PM}>"></a>
-                            <a href='<{$users.url}>' rel='external'><img src="<{xoAdminIcons url.png}>" alt="" title="<{$smarty.const._AM_SYSTEM_USERS_URL}>"></a>
+                                        src="<{xoAdminIcons 'pm.png'}>" alt="" title="<{$smarty.const._AM_SYSTEM_USERS_PM}>"></a>
+                            <{if !empty($users.url)}><a href='<{$users.url}>' rel='external'><img src="<{xoAdminIcons 'url.png'}>" alt="" title="<{$smarty.const._AM_SYSTEM_USERS_URL}>"></a><{/if}>
                         </td>
                     </tr>
                     <tr>
                         <td colspan="2">
                             <ul style="border: 1px solid #666; padding: 8px;">
-                                <{if $users.user_name|default:false}>
+                                <{if !empty($users.user_name)}>
                                     <li><span class="bold"><{$smarty.const._AM_SYSTEM_USERS_NAME}></span>&nbsp;:&nbsp;<{$users.name}></li>
                                 <{/if}>
                                 <li><span class="bold"><{$smarty.const._AM_SYSTEM_USERS_UNAME}></span>&nbsp;:&nbsp;<{$users.uname}></li>
                                 <li><span class="bold"><{$smarty.const._AM_SYSTEM_USERS_EMAIL}></span>&nbsp;:&nbsp;<{$users.email}></li>
-                                <{if $users.user_url|default:false}>
+                                <{if !empty($users.user_url)}>
                                     <li><span class="bold"><{$smarty.const._AM_SYSTEM_USERS_URL}></span>&nbsp;:&nbsp;<{$users.url}></li>
                                 <{/if}>
                                 <{if $users.user_icq}>
@@ -165,6 +165,6 @@
 <{/if}>
 <br>
 <!-- Display Avatar form (add,edit) -->
-<{if $form|default:false}>
+<{if !empty($form)}>
     <div class="spacer"><{$form}></div>
 <{/if}>

@@ -5,8 +5,8 @@
  * @license         http://www.fsf.org/copyleft/gpl.html GNU public license 3.0
  * @package         themes
  * @since           2.5.x
- * @author          Xoops Design Theme <http://www.xoops.org/>
- * @maintained      Xoops Design Theme <http://www.xoops.org/>
+ * @author          Xoops Design Theme <https://xoops.org/>
+ * @maintained      Xoops Design Theme <https://xoops.org/>
  *
 */
 h1,h2,h3,h4,h5,h6 {
@@ -159,8 +159,6 @@ code,pre {
     border: 2px solid #FBC2C4;
     padding: 8px;
     font-weight: bold;
-    -moz-border-radius: 4px;
-    -webkit-border-radius: 4px;
     border-radius: 4px;
     line-height: 140%;
 }
@@ -176,8 +174,6 @@ code,pre {
     margin: 80px auto;
     padding: 8px;
     padding-top: 30px !important;
-    -moz-border-radius: 6px;
-    -webkit-border-radius: 6px;
     border-radius: 6px;
     line-height: 190%;
 }
@@ -221,8 +217,6 @@ th {
 .outer {
     width: 99%;
     border: 2px solid #ccc;
-    -moz-border-radius: 3px;
-    -webkit-border-radius: 3px;
     border-radius: 3px;
     margin: 5px;
 }

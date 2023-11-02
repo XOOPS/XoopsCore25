@@ -6,8 +6,8 @@
         <a href="<{$xoops_url}>/modules/<{$xoops_dirname}>/index.php"><{$smarty.const._MD_NEWBB_FORUMINDEX}></a>
         <span class="delimiter">&raquo;</span>
         <a href="<{$xoops_url}>/modules/<{$xoops_dirname}>/index.php?cat=<{$category.id}>"><{$category.title}></a>
-        <{if $parentforum}>
-            <{foreach item=forum from=$parentforum}>
+        <{if isset($parentforum)}>
+            <{foreach item=forum from=$parentforum|default:null}>
             <span class="delimiter">&raquo;</span>
             &nbsp;
             <a href="<{$xoops_url}>/modules/<{$xoops_dirname}>/viewforum.php?forum=<{$forum.forum_id}>"><{$forum.forum_name}></a>
@@ -22,19 +22,19 @@
 <div class="clear"></div>
 <br>
 
-<{if $disclaimer|default:''}>
+<{if !empty($disclaimer)}>
     <div class="confirmMsg"><{$disclaimer}></div>
     <div class="clear"></div>
     <br>
 <{/if}>
 
-<{if $error_message|default:''}>
+<{if !empty($error_message)}>
     <div class="errorMsg"><{$error_message}></div>
     <div class="clear"></div>
     <br>
 <{/if}>
 
-<{if $post_preview|default:''}>
+<{if !empty($post_preview)}>
     <table width='100%' class='outer' cellspacing='1'>
         <tr valign="top">
             <td class="head"><{$post_preview.subject}></td>
@@ -52,14 +52,14 @@
 <form name="<{$form_post.name}>" id="<{$form_post.name}>" action="<{$form_post.action}>"
       method="<{$form_post.method}>" <{$form_post.extra}> >
     <table width='100%' class='outer' cellspacing='1'>
-        <{foreach item=element from=$form_post.elements}>
-        <{if $element.hidden|default:false != true}>
+        <{foreach item=element from=$form_post.elements|default:null}>
+        <{if isset($element.hidden) ? $element.hidden!= true : true}>
             <tr valign="top">
                 <td class="head">
-                    <div class="xoops-form-element-caption<{if $element.required|default:''}>-required<{/if}>"><span
+                    <div class="xoops-form-element-caption<{if !empty($element.required)}>-required<{/if}>"><span
                                 class="caption-text"><{$element.caption|default:''}></span><span class="caption-marker">*</span>
                     </div>
-                    <{if $element.description|default:'' != ''}>
+                    <{if !empty($element.description)}>
                         <div class="xoops-form-element-help"><{$element.description}></div>
                     <{/if}>
                 </td>
@@ -68,7 +68,7 @@
         <{/if}>
         <{/foreach}>
     </table>
-    <{foreach item=element from=$form_post.elements}>
+    <{foreach item=element from=$form_post.elements|default:null}>
     <{if $element.hidden|default:false == true}>
         <{$element.body}>
     <{/if}>
@@ -78,9 +78,9 @@
 <div class="clear"></div>
 <br>
 
-<{if $posts_context|default:''}>
+<{if !empty($posts_context)}>
     <table width='100%' class='outer' cellspacing='1'>
-        <{foreach item=post from=$posts_context}>
+        <{foreach item=post from=$posts_context|default:null}>
         <tr valign="top">
             <td class="head"><{$post.subject}></td>
         </tr>
@@ -92,3 +92,5 @@
         <{/foreach}>
     </table>
 <{/if}>
+
+

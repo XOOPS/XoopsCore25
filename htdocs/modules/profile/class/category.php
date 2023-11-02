@@ -25,6 +25,11 @@
  */
 class ProfileCategory extends XoopsObject
 {
+    public $cat_id;
+    public $cat_title;
+    public $cat_description;
+    public $cat_weight;
+
     /**
      *
      */

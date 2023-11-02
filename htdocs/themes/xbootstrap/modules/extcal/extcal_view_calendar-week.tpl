@@ -8,7 +8,7 @@
 <div class="extcalform mb10 text-center">
     <form action="<{$navigSelectBox.action}>" method="<{$navigSelectBox.method}>">
         <ul class="list-inline">
-            <{foreach item=element from=$navigSelectBox.elements}>
+            <{foreach item=element from=$navigSelectBox.elements|default:null}>
             <li><{$element.body}></li>
             <{/foreach}>
         </ul>
@@ -30,18 +30,18 @@
                     &gt;&gt;</a></td>
         </tr>
         <tr style="text-align:center;" class="head">
-            <{foreach item=weekdayName from=$weekdayNames}>
+            <{foreach item=weekdayName from=$weekdayNames|default:null}>
                 <td><{$weekdayName}></td>
             <{/foreach}>
         </tr>
         <tr>
-            <{foreach item=day from=$week}>
+            <{foreach item=day from=$week|default:null}>
                 <td class="<{if $day.isEmpty}>even<{else}>odd<{/if}>"
                     style="width:14%; height:80px; vertical-align:top;<{if $day.isSelected}> background-color:#B6CDE4;<{/if}>">
                     <{if $day.isEmpty}>&nbsp;<{else}><a
                     href="<{$xoops_url}>/modules/extcal/view_day.php?year=<{$day.year}>&amp;month=<{$day.month}>&amp;day=<{$day.dayNumber}>"><{$day.dayNumber}></a><{/if}><br/>
-                    <{foreach item=event from=$day.events}>
-                        <{if $event}>
+                    <{foreach item=event from=$day.events|default:null}>
+                        <{if isset($event)}>
                             <div style="font-size:0.8em; margin-top:5px;"><img
                                         src="assets/images/icons/event-<{$event.status}>.gif"/> <a
                                         href="<{$xoops_url}>/modules/extcal/event.php?event=<{$event.event_id}>"
@@ -58,9 +58,9 @@
         </tr>
         <tr>
             <th colspan="7">
-                <{foreach item=cat from=$cats}>
+                <{foreach item=cat from=$cats|default:null}>
                     <div style="float:left; margin-left:5px;">
-                        <div style="float:left; background-color:#<{$cat.cat_color}>; border:1px solid white; margin-right:5px;">
+                        <div style="float:left; background-color:#<{$cat.cat_color|default:''}>; border:1px solid white; margin-right:5px;">
                             &nbsp;
                         </div>
                         <{$cat.cat_name}>
@@ -72,6 +72,6 @@
 </div>
 
 <div style="text-align:right;"><a
-            href="<{$xoops_url}>/modules/extcal/rss.php?cat=<{$selectedCat}>"><img
+            href="<{$xoops_url}>/modules/extcal/rss.php?cat=<{$selectedCat|default:''}>"><img
                 src="assets/images/icons/rss.gif" alt="RSS Feed"/></a></div>
 <{include file='db:system_notification_select.tpl'}>

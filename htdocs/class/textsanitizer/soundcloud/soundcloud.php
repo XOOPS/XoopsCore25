@@ -12,7 +12,7 @@ class MytsSoundcloud extends MyTextSanitizerExtension
      */
     public function encode($textarea_id)
     {
-        $config = parent::loadConfig(__DIR__);
+//        $config = parent::loadConfig(__DIR__);
 
         $code = "<button type='button' class='btn btn-default btn-sm' onclick='xoopsCodeSoundCloud(\"{$textarea_id}\",\""
             . htmlspecialchars(_XOOPS_FORM_ENTER_SOUNDCLOUD_URL, ENT_QUOTES)
@@ -40,12 +40,12 @@ EOH;
     }
 
     /**
-     * @param $ts
+     * @param MyTextSanitizer $myts
      */
-    public function load($ts)
+    public function load(MyTextSanitizer $myts)
     {
-        $ts->callbackPatterns[] = "/\[soundcloud\](http[s]?:\/\/[^\"'<>]*)(.*)\[\/soundcloud\]/sU";
-        $ts->callbacks[]        = __CLASS__ . '::myCallback';
+        $myts->callbackPatterns[] = "/\[soundcloud\](http[s]?:\/\/[^\"'<>]*)(.*)\[\/soundcloud\]/sU";
+        $myts->callbacks[]        = __CLASS__ . '::myCallback';
     }
 
     /**
@@ -63,7 +63,7 @@ EOH;
             return '';
         }
 
-        $code = '<object height="81" width="100%"><param name="movie" ' . 'value="http://player.soundcloud.com/player.swf?url=' . $url . '&amp;g=bb">' . '</param><param name="allowscriptaccess" value="always"></param>' . '<embed allowscriptaccess="always" height="81" ' . 'src="http://player.soundcloud.com/player.swf?url=' . $url . '&amp;g=bb" type="application/x-shockwave-flash" width="100%"></embed></object>' . '<a href="' . $url . '">' . $url . '</a>';
+        $code = '<object height="81" width="100%"><param name="movie" ' . 'value="https://player.soundcloud.com/player.swf?url=' . $url . '&amp;g=bb">' . '</param><param name="allowscriptaccess" value="always"></param>' . '<embed allowscriptaccess="always" height="81" ' . 'src="https://player.soundcloud.com/player.swf?url=' . $url . '&amp;g=bb" type="application/x-shockwave-flash" width="100%"></embed></object>' . '<a href="' . $url . '">' . $url . '</a>';
 
         return $code;
     }

@@ -10,14 +10,14 @@
  */
 
 /**
- * @copyright    XOOPS Project http://xoops.org/
- * @license      GNU GPL 2 or later (https://www.gnu.org/licenses/gpl-2.0.html)
+ * @copyright    XOOPS Project https://xoops.org/
+ * @license      GNU GPL 2.0 or later (https://www.gnu.org/licenses/gpl-2.0.html)
  * @package
  * @since
  * @author       XOOPS Development Team, Kazumi Ono (AKA onokazu)
  */
-/* @var XoopsUser $xoopsUser */
-/* @var XoopsModule $xoopsModule */
+/** @var XoopsUser $xoopsUser */
+/** @var XoopsModule $xoopsModule */
 
 use Xmf\Request;
 
@@ -37,7 +37,7 @@ $op = Request::getString('op', 'list');
 $image_id = Request::getInt('image_id', 0);
 $imgcat_id = Request::getInt('imgcat_id', 0);
 
-/* @var  XoopsGroupPermHandler $gperm_handler */
+/** @var  XoopsGroupPermHandler $gperm_handler */
 $gperm_handler = xoops_getHandler('groupperm');
 $groups        = is_object($xoopsUser) ? $xoopsUser->getGroups() : XOOPS_GROUP_ANONYMOUS;
 
@@ -90,7 +90,7 @@ switch ($op) {
         $imagecategorys = $imgcat_handler->getObjects();
 
         $catcount      = count($imagecategorys);
-        /* @var  XoopsImageHandler $image_handler */
+        /** @var  XoopsImageHandler $image_handler */
         $image_handler = xoops_getHandler('image');
 
         foreach (array_keys($imagecategorys) as $i) {
@@ -111,7 +111,7 @@ switch ($op) {
                 $cat_images['type']      = $imagecategorys[$i]->getVar('imgcat_type');
                 $cat_images['store']     = $imagecategorys[$i]->getVar('imgcat_storetype');
 
-                $xoopsTpl->append_by_ref('cat_img', $cat_images);
+                $xoopsTpl->appendByRef('cat_img', $cat_images);
                 unset($cat_images);
             }
         }
@@ -214,7 +214,7 @@ switch ($op) {
         $criteria->setSort('image_weight ASC, image_id');
         $criteria->setOrder('DESC');
         $imgcount = $image_handler->getCount($criteria);
-        $start    = isset($_GET['start']) ? (int)$_GET['start'] : 0;
+        $start    = Request::getInt('start', 0, 'GET');
         $criteria->setStart($start);
         $criteria->setLimit(xoops_getModuleOption('images_pager', 'system'));
         $images = $image_handler->getObjects($criteria, true, false);
@@ -500,7 +500,7 @@ switch ($op) {
             exit();
         }
         $newid                     = $imagecategory->getVar('imgcat_id');
-        /* @var  XoopsGroupPermHandler $imagecategoryperm_handler */
+        /** @var  XoopsGroupPermHandler $imagecategoryperm_handler */
         $imagecategoryperm_handler = xoops_getHandler('groupperm');
         if (!isset($readgroup)) {
             $readgroup = array();
@@ -671,7 +671,7 @@ switch ($op) {
             xoops_cp_footer();
             exit();
         }
-        /* @var  XoopsImageHandler $image_handler */
+        /** @var  XoopsImageHandler $image_handler */
         $image_handler = xoops_getHandler('image');
         $images        = $image_handler->getObjects(new Criteria('imgcat_id', $imgcat_id), true, false);
         $errors        = array();

@@ -1,5 +1,5 @@
 <div class="xoops-comment-body">
-    <{if ($comments|default:false) }>
+    <{if !empty($comments) }>
     <{section name=i loop=$comments}>
     <div class="row">
         <div class="col-xs-2 col-md-2"><strong><{$lang_poster}></strong></div>
@@ -7,11 +7,11 @@
     </div>
     <{include file="db:system_comment.tpl" comment=$comments[i]}>
     <!-- start comment replies -->
-    <{foreach item=reply from=$comments[i].replies}>
+    <{foreach item=reply from=$comments[i].replies|default:null}>
     <{assign var="indent" value="`$reply.prefix/25`"}>
     <{assign var="fullcolwidth" value="12"}>
 
-    <{if $indent>3}>
+    <{if isset($indent) && $indent > 3}>
     <{assign var="indent" value="3"}>
     <{/if}>
     <{assign var="replyspace" value="`$fullcolwidth-$indent`"}>
@@ -24,7 +24,7 @@
     <{/foreach}>
     <{/section}>
     <{/if}>
-    <{if $commentform}>
+    <{if isset($commentform)}>
     <div class="aligncenter">
         <button class="btn-comment btn btn-primary btn-md" data-toggle="modal" data-target="#comments-form">
             <span class="glyphicon glyphicon-comment"></span> Add Comment

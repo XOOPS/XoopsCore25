@@ -1,7 +1,7 @@
 <{if isset($obituaries_user)}>
     <ol class="breadcrumb">
         <li><a href="index.php"><{$breadcrumb}></a></li>
-        <{if $xoops_isadmin}>
+        <{if isset($xoops_isadmin)}>
             <li>[ <a href="<{$xoops_url}>/modules/obituaries/admin/main.php?op=edit&id=<{$obituaries_user.obituaries_id}>"><{$smarty.const._EDIT}></a> ]</li>
         <{/if}>
     </ol>
@@ -62,7 +62,7 @@
         <div class="alert alert-warning"><b><{$smarty.const._AM_OBITUARIES_SERVICE}></b> :</div>
         <div class="well well-lg"><{$obituaries_user.obituaries_service}></div>
 
-        <{if $obituaries_user.obituaries_memorial != ""}>
+        <{if !empty($obituaries_user.obituaries_memorial)}>
             <div class="alert alert-danger"><b><{$smarty.const._AM_OBITUARIES_MEMORIAL}></b> :</div>
             <div class="well well-lg"><{$obituaries_user.obituaries_memorial}></div>
         <{/if}>
@@ -88,18 +88,14 @@
 
 <div style="margin:3px; padding: 3px;">
 
-    <{if $comment_mode == "flat"}>
-
-        <{include file="db:system_comments_flat.tpl"}>
-
-    <{elseif $comment_mode == "thread"}>
-
-        <{include file="db:system_comments_thread.tpl"}>
-
-    <{elseif $comment_mode == "nest"}>
-
-        <{include file="db:system_comments_nest.tpl"}>
-
+    <{if isset($comment_mode)}>
+        <{if $comment_mode == "flat"}>
+            <{include file="db:system_comments_flat.tpl"}>
+        <{elseif $comment_mode == "thread"}>
+            <{include file="db:system_comments_thread.tpl"}>
+        <{elseif $comment_mode == "nest"}>
+            <{include file="db:system_comments_nest.tpl"}>
+        <{/if}>
     <{/if}>
 
 </div>

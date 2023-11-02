@@ -22,32 +22,40 @@ if (!function_exists('protector_onupdate_base')) {
      */
     function protector_onupdate_base($module, $mydirname)
     {
-        // transations on module update
+        // translations on module update
 
         global $msgs; // TODO :-D
 
-        // for Cube 2.1
-        if (defined('XOOPS_CUBE_LEGACY')) {
-            $root =& XCube_Root::getSingleton();
-            $root->mDelegateManager->add('Legacy.Admin.Event.ModuleUpdate.' . ucfirst($mydirname) . '.Success', 'protector_message_append_onupdate');
+        if (!is_array($msgs)) {
             $msgs = array();
-        } else {
-            if (!is_array($msgs)) {
-                $msgs = array();
-            }
         }
 
+        /** @var XoopsMySQLDatabase $db */
         $db  = XoopsDatabaseFactory::getDatabaseConnection();
         $mid = $module->getVar('mid');
 
         // TABLES (write here ALTER TABLE etc. if necessary)
 
         // configs (Though I know it is not a recommended way...)
-        $check_sql = 'SHOW COLUMNS FROM ' . $db->prefix('config') . " LIKE 'conf_title'";
-        if (($result = $db->query($check_sql)) && ($myrow = $db->fetchArray($result)) && @$myrow['Type'] === 'varchar(30)') {
-            $db->queryF('ALTER TABLE ' . $db->prefix('config') . " MODIFY `conf_title` varchar(255) NOT NULL default '', MODIFY `conf_desc` varchar(255) NOT NULL default ''");
+        $sql = 'SHOW COLUMNS FROM ' . $db->prefix('config') . " LIKE 'conf_title'";
+        $result = $db->query($sql);
+        if ($result !== false && $db->isResultSet($result)) {
+            if ($result instanceof mysqli_result && ($myrow = $db->fetchArray($result)) && isset($myrow['Type']) && $myrow['Type'] === 'varchar(30)') {
+                $db->queryF('ALTER TABLE ' . $db->prefix('config') . " MODIFY `conf_title` varchar(255) NOT NULL default '', MODIFY `conf_desc` varchar(255) NOT NULL default ''");
+            }
         }
-        list(, $create_string) = $db->fetchRow($db->query('SHOW CREATE TABLE ' . $db->prefix('config')));
+
+        $sql = 'SHOW CREATE TABLE ' . $db->prefix('config');
+        $result = $db->query($sql);
+        if (false === $result || !($result instanceof mysqli_result) || !$db->isResultSet($result)) {
+            throw new \RuntimeException(
+                \sprintf(_DB_QUERY_ERROR, $sql) . $db->error(), E_USER_ERROR
+            );
+        } else {
+            list(, $create_string) = $db->fetchRow($result);
+        }
+
+
         foreach (explode('KEY', $create_string) as $line) {
             if (preg_match('/(\`conf\_title_\d+\`) \(\`conf\_title\`\)/', $line, $regs)) {
                 $db->query('ALTER TABLE ' . $db->prefix('config') . ' DROP KEY ' . $regs[1]);
@@ -56,12 +64,24 @@ if (!function_exists('protector_onupdate_base')) {
         $db->query('ALTER TABLE ' . $db->prefix('config') . ' ADD KEY `conf_title` (`conf_title`)');
 
         // 2.x -> 3.0
-        list(, $create_string) = $db->fetchRow($db->query('SHOW CREATE TABLE ' . $db->prefix($mydirname . '_log')));
+        $sql = 'SHOW CREATE TABLE ' . $db->prefix($mydirname . '_log');
+        $result = $db->query($sql);
+
+        if (false === $result || !($result instanceof mysqli_result) || !$db->isResultSet($result)) {
+            throw new \RuntimeException(
+                \sprintf(_DB_QUERY_ERROR, $sql) . $db->error(), E_USER_ERROR
+            );
+        } else {
+            list(, $create_string) = $db->fetchRow($result);
+        }
+
+
         if (preg_match('/timestamp\(/i', $create_string)) {
             $db->query('ALTER TABLE ' . $db->prefix($mydirname . '_log') . ' MODIFY `timestamp` DATETIME');
         }
 
         // TEMPLATES (all templates have been already removed by modulesadmin)
+        /** @var XoopsTplfileHandler $tplfile_handler */
         $tplfile_handler = xoops_getHandler('tplfile');
         $tpl_path        = __DIR__ . '/templates';
         if ($handler = @opendir($tpl_path . '/')) {
@@ -83,17 +103,17 @@ if (!function_exists('protector_onupdate_base')) {
                     $tplfile->setVar('tpl_lastimported', 0);
                     $tplfile->setVar('tpl_type', 'module');
                     if (!$tplfile_handler->insert($tplfile)) {
-                        $msgs[] = '<span style="color:#ff0000;">ERROR: Could not insert template <b>' . htmlspecialchars($mydirname . '_' . $file) . '</b> to the database.</span>';
+                        $msgs[] = '<span style="color:#ff0000;">ERROR: Could not insert template <b>' . htmlspecialchars($mydirname . '_' . $file, ENT_QUOTES) . '</b> to the database.</span>';
                     } else {
                         $tplid  = $tplfile->getVar('tpl_id');
-                        $msgs[] = 'Template <b>' . htmlspecialchars($mydirname . '_' . $file) . '</b> added to the database. (ID: <b>' . $tplid . '</b>)';
+                        $msgs[] = 'Template <b>' . htmlspecialchars($mydirname . '_' . $file, ENT_QUOTES) . '</b> added to the database. (ID: <b>' . $tplid . '</b>)';
                         // generate compiled file
                         include_once XOOPS_ROOT_PATH . '/class/xoopsblock.php';
                         include_once XOOPS_ROOT_PATH . '/class/template.php';
-                        if (!xoops_template_touch($tplid)) {
-                            $msgs[] = '<span style="color:#ff0000;">ERROR: Failed compiling template <b>' . htmlspecialchars($mydirname . '_' . $file) . '</b>.</span>';
+                        if (!xoops_template_touch((string)$tplid)) {
+                            $msgs[] = '<span style="color:#ff0000;">ERROR: Failed compiling template <b>' . htmlspecialchars($mydirname . '_' . $file, ENT_QUOTES) . '</b>.</span>';
                         } else {
-                            $msgs[] = 'Template <b>' . htmlspecialchars($mydirname . '_' . $file) . '</b> compiled.</span>';
+                            $msgs[] = 'Template <b>' . htmlspecialchars($mydirname . '_' . $file, ENT_QUOTES) . '</b> compiled.</span>';
                         }
                     }
                 }
@@ -113,7 +133,7 @@ if (!function_exists('protector_onupdate_base')) {
      */
     function protector_message_append_onupdate(&$module_obj, &$log)
     {
-        if (is_array(@$GLOBALS['msgs'])) {
+        if (isset($GLOBALS['msgs']) && is_array($GLOBALS['msgs'])) {
             foreach ($GLOBALS['msgs'] as $message) {
                 $log->add(strip_tags($message));
             }

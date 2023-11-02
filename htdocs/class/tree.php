@@ -214,7 +214,8 @@ class XoopsObjectTree
         $extra = ''
     ) {
         $trace = debug_backtrace(DEBUG_BACKTRACE_IGNORE_ARGS, 1);
-        trigger_error("makeSelBox() is deprecated since 2.5.9, please use makeSelectElement(), accessed from {$trace[0]['file']} line {$trace[0]['line']},");
+        $GLOBALS['xoopsLogger']->addDeprecated(__METHOD__ . " is deprecated since 2.5.9, please use makeSelectElement(), called from {$trace[0]['file']} line {$trace[0]['line']}");
+
         $ret = '<select name="' . $name . '" id="' . $name . '" ' . $extra . '>';
         if (false !== (bool)$addEmptyOption) {
             $ret .= '<option value="0"></option>';
@@ -296,7 +297,7 @@ class XoopsObjectTree
      * when code was modernized. This will keep them running for now.
      *
      * @param string $name unknown variable name requested
-     *                      currently only '_tree' is supported
+     *                      currently, only '_tree' is supported
      *
      * @return mixed value
      */
@@ -304,13 +305,12 @@ class XoopsObjectTree
     {
         $trace = debug_backtrace(DEBUG_BACKTRACE_IGNORE_ARGS, 1);
         if ($name === '_tree') {
-            trigger_error("XoopsObjectTree::\$_tree is deprecated, accessed from {$trace[0]['file']} line {$trace[0]['line']},");
+            $GLOBALS['xoopsLogger']->addDeprecated("XoopsObjectTree::\$_tree is deprecated, accessed from {$trace[0]['file']} line {$trace[0]['line']}");
             return $this->tree;
         }
-        trigger_error(
-            'Undefined property: XoopsObjectTree::$' . $name .
-            " in {$trace[0]['file']} line {$trace[0]['line']}, ",
-            E_USER_NOTICE);
+        $message = 'Undefined property: XoopsObjectTree::$' . $name . " in {$trace[0]['file']} line {$trace[0]['line']}";
+        $GLOBALS['xoopsLogger']->addExtra(get_called_class(), $message);
+
         return null;
     }
 }

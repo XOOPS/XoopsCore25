@@ -5,8 +5,8 @@
  * @license         http://www.fsf.org/copyleft/gpl.html GNU public license 3.0
  * @package         themes
  * @since           2.5.x
- * @author          Xoops Design Theme <http://www.xoops.org/>
- * @maintained      Xoops Design Theme <http://www.xoops.org/>
+ * @author          Xoops Design Theme <https://xoops.org/>
+ * @maintained      Xoops Design Theme <https://xoops.org/>
  *
 */
 #xo-pagenav {
@@ -24,11 +24,8 @@
     font-weight: bold;
     border: 1px solid #ccc;
     border-radius: 5px;
-    -moz-border-radius: 5px;
-    -webkit-border-radius: 5px;
-    box-shadow: 0 20px 10px -10px rgba(255, 255, 255, 0.3) inset;
-    -moz-box-shadow : 0 20px 10px -10px rgba( 255, 255, 255, 0.3) inset;
-    -webkit-box-shadow : 0 20px 10px -10px rgba( 255, 255, 255, 0.3) inset;
+    -webkit-box-shadow: 0 20px 10px -10px rgba(255, 255, 255, .3) inset;
+            box-shadow: 0 20px 10px -10px rgba(255, 255, 255, .3) inset;
     cursor: pointer;
 }
 
@@ -48,11 +45,8 @@
     font-weight: bold;
     border: 1px solid #ccc;
     border-radius: 5px;
-    -moz-border-radius: 5px;
-    -webkit-border-radius: 5px;
-    box-shadow: 0 20px 10px -10px rgba(255, 255, 255, 0.3) inset;
-    -moz-box-shadow : 0 20px 10px -10px rgba( 255, 255, 255, 0.3) inset;
-    -webkit-box-shadow : 0 20px 10px -10px rgba( 255, 255, 255, 0.3) inset;
+    -webkit-box-shadow: 0 20px 10px -10px rgba(255, 255, 255, .3) inset;
+            box-shadow: 0 20px 10px -10px rgba(255, 255, 255, .3) inset;
     cursor: pointer;
 }
 

@@ -137,9 +137,9 @@ class XoopsGroupPermForm extends XoopsForm
             $this->_itemTree[$item_id]['allchild'] = array();
             $this->_loadAllChildItemIds($item_id, $this->_itemTree[$item_id]['allchild']);
         }
-        /* @var  XoopsGroupPermHandler $gperm_handler */
+        /** @var  XoopsGroupPermHandler $gperm_handler */
         $gperm_handler  = xoops_getHandler('groupperm');
-        /* @var XoopsMemberHandler $member_handler */
+        /** @var XoopsMemberHandler $member_handler */
         $member_handler = xoops_getHandler('member');
         $glist          = $member_handler->getGroupList();
         foreach (array_keys($glist) as $i) {
@@ -323,7 +323,7 @@ class XoopsGroupFormCheckBox extends XoopsFormElement
         if (in_array($option['id'], $this->_value)) {
             $tree .= ' checked';
         }
-        $tree .= ' />' . $option['name'] . "<input type=\"hidden\" name=\"" . $ele_name . '[parents][' . $option['id'] . "]\" value=\"" . implode(':', $parentIds) . "\" /><input type=\"hidden\" name=\"" . $ele_name . '[itemname][' . $option['id'] . "]\" value=\"" . htmlspecialchars($option['name']) . "\" /><br>\n";
+        $tree .= ' />' . $option['name'] . "<input type=\"hidden\" name=\"" . $ele_name . '[parents][' . $option['id'] . "]\" value=\"" . implode(':', $parentIds) . "\" /><input type=\"hidden\" name=\"" . $ele_name . '[itemname][' . $option['id'] . "]\" value=\"" . htmlspecialchars($option['name'], ENT_QUOTES) . "\" /><br>\n";
         if (isset($option['children'])) {
             foreach ($option['children'] as $child) {
                 $parentIds[] = $option['id'];

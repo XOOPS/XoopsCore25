@@ -5,8 +5,8 @@
  * @license         http://www.fsf.org/copyleft/gpl.html GNU public license 3.0
  * @package         themes
  * @since           2.5.x
- * @author          Xoops Design Theme <http://www.xoops.org/>
- * @maintained      Xoops Design Theme <http://www.xoops.org/>
+ * @author          Xoops Design Theme <https://xoops.org/>
+ * @maintained      Xoops Design Theme <https://xoops.org/>
  *
 */
 .tabs {
@@ -43,14 +43,9 @@
     border: 1px solid #ddd;
     border-bottom-width: 0;
     border-top-left-radius:    5px;
-    -moz-border-radius-topleft: 5px;
-    -webkit-border-top-left-radius: 5px;
     border-top-right-radius: 5px;
-    -moz-border-radius-topright: 5px;
-    -webkit-border-top-right-radius: 5px;
-    box-shadow: 0 20px 10px -10px rgba(255, 255, 255, 0.3) inset;
-    -moz-box-shadow: 0 20px 10px -10px rgba(255, 255, 255, 0.3) inset;
-    -webkit-box-shadow: 0 20px 10px -10px rgba(255, 255, 255, 0.3) inset;
+    -webkit-box-shadow: 0 20px 10px -10px rgba(255, 255, 255, .3) inset;
+            box-shadow: 0 20px 10px -10px rgba(255, 255, 255, .3) inset;
 }
 
 
@@ -82,8 +77,6 @@
     padding: 5px;
     margin: 5px 0 5px 0;
     background-color: #f4f4f4 !important;
-    -moz-border-radius: 6px;
-    -webkit-border-radius: 6px;
     border-radius: 6px;
 }
 
@@ -102,12 +95,9 @@
     margin-bottom: 3px;
     text-align: justify;
     border: 1px solid #f9f9f9;
-    -moz-border-radius: 9px;
-    -webkit-border-radius: 9px;
     border-radius: 9px;
-    box-shadow: 0 20px 10px -10px rgba(255, 255, 255, 0.3) inset;
-    -moz-box-shadow: 0 20px 10px -10px rgba(255, 255, 255, 0.3) inset;
-    -webkit-box-shadow: 0 20px 10px -10px rgba(255, 255, 255, 0.3) inset;
+    -webkit-box-shadow: 0 20px 10px -10px rgba(255, 255, 255, .3) inset;
+            box-shadow: 0 20px 10px -10px rgba(255, 255, 255, .3) inset;
 }
 
 .help a {

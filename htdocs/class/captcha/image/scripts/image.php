@@ -86,7 +86,7 @@ class XoopsCaptchaImageHandler
     }
 
     /**
-     * @return string|void
+     * @return string|bool
      */
     public function createImage()
     {
@@ -112,7 +112,6 @@ class XoopsCaptchaImageHandler
      */
     public function getList($name, $extension = '')
     {
-        $items = array();
         xoops_load('XoopsCache');
         if ($items = XoopsCache::read("captcha_captcha_{$name}")) {
             return $items;
@@ -121,6 +120,7 @@ class XoopsCaptchaImageHandler
         require_once XOOPS_ROOT_PATH . '/class/xoopslists.php';
         $file_path = XOOPS_ROOT_PATH . "/class/captcha/image/{$name}";
         $files     = XoopsLists::getFileListAsArray($file_path);
+        $items = array();
         foreach ($files as $item) {
             if (empty($extension) || preg_match("/(\.{$extension})$/i", $item)) {
                 $items[] = $item;
@@ -147,9 +147,9 @@ class XoopsCaptchaImageHandler
         $this->loadFont();
         $this->setImageSize();
 
-        $this->oImage = imagecreatetruecolor($this->width, $this->height);
+        $this->oImage = imagecreatetruecolor((int)$this->width, (int)$this->height);
         $background   = imagecolorallocate($this->oImage, 255, 255, 255);
-        imagefilledrectangle($this->oImage, 0, 0, $this->width, $this->height, $background);
+        imagefilledrectangle($this->oImage, 0, 0, (int)$this->width, (int)$this->height, $background);
 
         switch ($this->config['background_type']) {
             default:
@@ -185,8 +185,17 @@ class XoopsCaptchaImageHandler
         $this->drawCode();
 
         header('Content-type: image/jpeg');
-        imagejpeg($this->oImage);
-        imagedestroy($this->oImage);
+        if (!imagejpeg($this->oImage)) {
+            // Log or handle the error as you see fit
+            return false;
+        }
+
+        if (!imagedestroy($this->oImage)) {
+            // Log or handle the error as you see fit
+            return false;
+        }
+
+        return true;
     }
 
     public function loadFont()
@@ -244,18 +253,20 @@ class XoopsCaptchaImageHandler
     {
         if ($RandImage = $this->loadBackground()) {
             $ImageType = @getimagesize($RandImage);
-            switch (@$ImageType[2]) {
-                case 1:
-                    $BackgroundImage = imagecreatefromgif($RandImage);
-                    break;
+            if (isset($ImageType[2])) {
+                switch ($ImageType[2]) {
+                    case 1:
+                        $BackgroundImage = imagecreatefromgif($RandImage);
+                        break;
 
-                case 2:
-                    $BackgroundImage = imagecreatefromjpeg($RandImage);
-                    break;
+                    case 2:
+                        $BackgroundImage = imagecreatefromjpeg($RandImage);
+                        break;
 
-                case 3:
-                    $BackgroundImage = imagecreatefrompng($RandImage);
-                    break;
+                    case 3:
+                        $BackgroundImage = imagecreatefrompng($RandImage);
+                        break;
+                }
             }
         }
         if (!empty($BackgroundImage)) {
@@ -291,7 +302,7 @@ class XoopsCaptchaImageHandler
             $posX = ($this->spacing / 2) + ($i * $this->spacing);
             $posY = 2 + ($this->height / 2) + ($CharHeight / 4);
 
-            imagefttext($this->oImage, $FontSize, $Angle, $posX, $posY, $text_color, $this->font, $this->code[$i], array());
+            imagefttext($this->oImage, $FontSize, $Angle, (int)$posX, (int)$posY, $text_color, $this->font, $this->code[$i], array());
         }
     }
 
@@ -345,12 +356,12 @@ class XoopsCaptchaImageHandler
     {
         for ($i = 0; $i <= $this->height;) {
             $randomcolor = imagecolorallocate($this->oImage, mt_rand(190, 255), mt_rand(190, 255), mt_rand(190, 255));
-            imageline($this->oImage, 0, $i, $this->width, $i, $randomcolor);
+            imageline($this->oImage, 0, (int)$i, (int)$this->width, (int)$i, (int)$randomcolor);
             $i += 2.5;
         }
         for ($i = 0; $i <= $this->width;) {
             $randomcolor = imagecolorallocate($this->oImage, mt_rand(190, 255), mt_rand(190, 255), mt_rand(190, 255));
-            imageline($this->oImage, $i, 0, $i, $this->height, $randomcolor);
+            imageline($this->oImage, (int)$i, 0, (int)$i, (int)$this->height, (int)$randomcolor);
             $i += 2.5;
         }
     }

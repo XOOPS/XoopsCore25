@@ -15,7 +15,7 @@ use Xmf\Language;
 
 /**
  * GenericHelper implements a Xoops 2.6 Xoops\Module\Helper\HelperAbstract.
- * We use it pre 2.6 systems so we can encapsulate many of the changes
+ * We use it pre 2.6 systems, so we can encapsulate many of the changes
  * needed to make modules more compatible with 2.6 in these methods.
  * The most common deprecated warnings can be avoided by using module
  * helper methods.
@@ -24,7 +24,7 @@ use Xmf\Language;
  * @package   Xmf
  * @author    trabis <lusopoemas@gmail.com>
  * @author    Richard Griffith <richard@geekwright.com>
- * @copyright 2016-2018 XOOPS Project (https://xoops.org)
+ * @copyright 2016-2023 XOOPS Project (https://xoops.org)
  * @license   GNU GPL 2 or later (http://www.gnu.org/licenses/gpl-2.0.html)
  * @link      https://xoops.org
  */
@@ -141,7 +141,7 @@ abstract class GenericHelper extends AbstractHelper
         ) {
             $this->module = $xoopsModule;
         } else {
-            /* @var \XoopsModuleHandler $module_handler */
+            /** @var \XoopsModuleHandler $module_handler */
             $module_handler = xoops_getHandler('module');
             $this->module = $module_handler->getByDirname($this->dirname);
         }
@@ -163,7 +163,7 @@ abstract class GenericHelper extends AbstractHelper
             global $xoopsModuleConfig;
             $this->configs = $xoopsModuleConfig;
         } else {
-            /* @var \XoopsConfigHandler $config_handler */
+            /** @var \XoopsConfigHandler $config_handler */
             $config_handler = xoops_getHandler('config');
             $this->configs = $config_handler->getConfigsByCat(0, $this->getModule()->getVar('mid'));
         }

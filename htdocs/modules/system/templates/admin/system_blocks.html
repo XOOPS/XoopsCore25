@@ -1,14 +1,14 @@
 <!-- Breadcrumb Header -->
 <{include file="db:system_header.tpl"}>
 <script type="text/javascript">
-    IMG_ON = '<{xoAdminIcons success.png}>';
-    IMG_OFF = '<{xoAdminIcons cancel.png}>';
+    IMG_ON = "<{xoAdminIcons 'success.png'}>";
+    IMG_OFF = "<{xoAdminIcons 'cancel.png'}>";
 </script>
-<{if $filterform|default:false}>
+<{if !empty($filterform)}>
     <div class="floatright">
         <div class="xo-buttons">
             <button id="xo-add-btn" class="ui-corner-all" onclick="self.location.href='admin.php?fct=blocksadmin&amp;op=add';">
-                <img src="<{xoAdminIcons add.png}>" alt="<{$smarty.const._AM_SYSTEM_BLOCKS_ADD}>"/>
+                <img src="<{xoAdminIcons 'add.png'}>" alt="<{$smarty.const._AM_SYSTEM_BLOCKS_ADD}>"/>
                 <{$smarty.const._AM_SYSTEM_BLOCKS_ADD}>
             </button>
         </div>
@@ -21,7 +21,7 @@
                     <form name="<{$filterform.name}>" id="<{$filterform.name}>" action="<{$filterform.action}>" method="<{$filterform.method}>"
                             <{$filterform.extra}> >
                         <div class="xo-blocksfilter">
-                            <{foreach item=element from=$filterform.elements}>
+                            <{foreach item=element from=$filterform.elements|default:null}>
                                 <{if $element.hidden != true}>
                                     <div class="xo-caption"><{$element.caption}></div>
                                     <div class="xo-element"><{$element.body}></div>
@@ -101,8 +101,8 @@
         </table>
     </div>
 <{/if}>
-<div id="xo-block-add" <{if $filterform|default:false}>class="hide"<{/if}>>
-    <{if !$filterform|default:false}><br><{/if}>
+<div id="xo-block-add" <{if !empty($filterform)}>class="hide"<{/if}>>
+    <{if empty($filterform)}><br><{/if}>
     <{$blockform}>
 </div>
 <!-- Preview block -->

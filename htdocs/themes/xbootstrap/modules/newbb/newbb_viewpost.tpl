@@ -4,7 +4,7 @@
         <!-- irmtfan hardcode removed align="left" -->
         <hr class="align_left" width="50%" size="1">
         <a href="<{$xoops_url}>/modules/<{$xoops_dirname}>/index.php"><{$smarty.const._MD_NEWBB_FORUMHOME}></a>
-        <{if $parent_forum}>
+        <{if isset($parent_forum)}>
             <span class="delimiter">&raquo;</span>
             <a href="<{$xoops_url}>/modules/<{$xoops_dirname}>/viewforum.php?forum=<{$parent_forum}>"><{$parent_name}></a>
             <span class="delimiter">&raquo;</span>
@@ -18,9 +18,9 @@
     </div>
 </div>
 <div class="clear"></div>
-<{if $viewer_level gt 1}>
+<{if isset($viewer_level) && $viewer_level > 1}>
     <div class="right" id="admin">
-        <{if $mode gt 1}>
+        <{if isset($mode) && $mode > 1}>
         <!-- irmtfan mistype forum_posts_admin => form_posts_admin  -->
         <form name="form_posts_admin" action="action.post.php" method="POST" onsubmit="if(window.document.form_posts_admin.op.value &lt; 1){return false;}">
             <{$smarty.const._ALL}>:
@@ -28,9 +28,9 @@
             <select name="op">
                 <option value="0"><{$smarty.const._SELECT}></option>
                 <option value="delete"><{$smarty.const._DELETE}></option>
-                <{if $status eq "pending"}>
+                <{if isset($status) &&  $status == "pending"}>
                     <option value="approve"><{$smarty.const._MD_NEWBB_APPROVE}></option>
-                <{elseif $status eq "deleted"}>
+                <{elseif isset($status) &&  $status == "deleted"}>
                     <option value="restore"><{$smarty.const._MD_NEWBB_RESTORE}></option>
                 <{/if}>
             </select>
@@ -83,7 +83,7 @@
                 onchange="if(this.options[this.selectedIndex].value.length >0 )    { window.document.location=this.options[this.selectedIndex].value;}"
         >
             <option value=""><{$smarty.const._MD_NEWBB_VIEWMODE}></option>
-            <{foreach item=act from=$viewmode_options}>
+            <{foreach item=act from=$viewmode_options|default:null}>
             <option value="<{$act.link}>"><{$act.title}></option>
             <{/foreach}>
         </select>
@@ -98,12 +98,12 @@
 <br>
 <br>
 
-<{foreach item=post from=$posts}>
+<{foreach item=post from=$posts|default:null}>
 <{include file="db:newbb_thread.tpl" topic_post=$post}>
 <!-- irmtfan hardcode removed style="padding: 5px;float: right; text-align:right;" -->
 <div class="pagenav">
     <a href="<{$xoops_url}>/modules/<{$xoops_dirname}>/viewtopic.php?topic_id=<{$post.topic_id}>"><strong><{$smarty.const._MD_NEWBB_VIEWTOPIC}></strong></a>
-    <{if !$forum_name }>
+    <{if !isset($forum_name) }>
         |
         <a href="<{$xoops_url}>/modules/<{$xoops_dirname}>/viewforum.php?forum=<{$post.forum_id}>"><strong><{$smarty.const._MD_NEWBB_VIEWFORUM}></strong></a>
     <{/if}>
@@ -113,7 +113,7 @@
 <br>
 <{/foreach}>
 
-<{if $mode gt 1}>
+<{if isset($mode) && $mode > 1}>
     </form>
 <{/if}>
 
@@ -153,7 +153,7 @@
 </div>
 <div class="clear"></div>
 <br>
-<{if $online}>
+<{if isset($online)}>
     <br>
     <{include file="db:newbb_online.tpl"}>
 <{/if}>

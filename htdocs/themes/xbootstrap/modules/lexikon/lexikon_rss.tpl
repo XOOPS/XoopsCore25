@@ -11,7 +11,7 @@
         <managingEditor><{$channel_editor}></managingEditor>
         <webMaster><{$channel_webmaster}></webMaster>
         <language><{$channel_language}></language>
-        <{if $image_url != ""}>
+        <{if !empty($image_url)}>
             <image>
                 <title><{$channel_title}></title>
                 <url><{$image_url}></url>
@@ -20,7 +20,7 @@
                 <height><{$image_height}></height>
             </image>
         <{/if}>
-        <{foreach item=item from=$items}>
+        <{foreach item=item from=$items|default:null}>
             <item>
                 <title><{$item.title}></title>
                 <link><{$item.link}></link>

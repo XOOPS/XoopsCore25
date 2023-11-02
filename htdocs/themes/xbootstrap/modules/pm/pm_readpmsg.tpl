@@ -1,15 +1,17 @@
 <h4><{$smarty.const._PM_PRIVATEMESSAGE}></h4>
 <div class="message-current-tab">
-    <{if $op=='out'}>
-        <div class="alert alert-success alert-dismissable">
-            <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
-            <strong><a href="viewpmsg.php?op=out" title="<{$smarty.const._PM_OUTBOX}>"><{$smarty.const._PM_OUTBOX}></a></strong>
-        </div>
-    <{elseif $op == "save"}>
-        <div class="alert alert-success alert-dismissable">
-            <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
-            <strong><a href="viewpmsg.php?op=save" title="<{$smarty.const._PM_SAVEBOX}>"><{$smarty.const._PM_SAVEBOX}></a></strong>
-        </div>
+    <{if isset($op)}>
+        <{if $op=='out'}>
+            <div class="alert alert-success alert-dismissable">
+                <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                <strong><a href="viewpmsg.php?op=out" title="<{$smarty.const._PM_OUTBOX}>"><{$smarty.const._PM_OUTBOX}></a></strong>
+            </div>
+        <{elseif $op == "save"}>
+            <div class="alert alert-success alert-dismissable">
+                <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                <strong><a href="viewpmsg.php?op=save" title="<{$smarty.const._PM_SAVEBOX}>"><{$smarty.const._PM_SAVEBOX}></a></strong>
+            </div>
+        <{/if}>
     <{else}>
         <div class="alert alert-success alert-dismissable">
             <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
@@ -18,7 +20,7 @@
     <{/if}>
 </div>
 
-<{if $message}>
+<{if isset($message)}>
 <blockquote>
     <p><{$message.subject}></p>
 </blockquote>
@@ -27,8 +29,8 @@
     <form name="<{$pmform.name}>" id="<{$pmform.name}>" action="<{$pmform.action}>" method="<{$pmform.method}>"
             <{$pmform.extra}>>
         <div class="col-xs-4 col-md-4 sender-info">
-            <{if $op=='out'}><strong><{$smarty.const._PM_TO}>: </strong><{else}><strong><{$smarty.const._PM_FROM}>: </strong><{/if}>
-            <{if ( $poster != false ) }>
+            <{if isset($op) && $op == 'out'}><strong><{$smarty.const._PM_TO}>: </strong><{else}><strong><{$smarty.const._PM_FROM}>: </strong><{/if}>
+            <{if isset($poster) && $poster != false}>
                 <a href="<{$xoops_url}>/userinfo.php?uid=<{$poster->getVar('uid')}>"><{$poster->getVar('uname')}></a>
                 <{if ( $poster->getVar("user_avatar") != "")}>
                     <img src="<{$xoops_url}>/uploads/<{$poster->getVar('user_avatar')}>" alt="<{$poster->getVar('uname')}>"
@@ -56,7 +58,7 @@
             <div class="col-xs-4 col-md-4">
             </div>
             <div class="col-xs-8 col-md-8">
-                <{foreach item=element from=$pmform.elements}>
+                <{foreach item=element from=$pmform.elements|default:null}>
                 <{$element.body}>
                 <{/foreach}>
                 <br>

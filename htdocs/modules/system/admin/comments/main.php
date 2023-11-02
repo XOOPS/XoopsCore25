@@ -10,8 +10,8 @@
  */
 
 /**
- * @copyright    XOOPS Project http://xoops.org/
- * @license      GNU GPL 2 or later (https://www.gnu.org/licenses/gpl-2.0.html)
+ * @copyright    XOOPS Project https://xoops.org/
+ * @license      GNU GPL 2.0 or later (https://www.gnu.org/licenses/gpl-2.0.html)
  * @package
  * @since
  * @author       XOOPS Development Team, Kazumi Ono (AKA onokazu)
@@ -64,7 +64,7 @@ $module          = !isset($_REQUEST['module']) ? 0 : (int)$_REQUEST['module'];
 $modules_Handler = xoops_getHandler('module');
 $module_array    = $modules_Handler->getList(new Criteria('hascomments', 1));
 $module_array[0] = _AM_SYSTEM_COMMENTS_FORM_ALL_MODS;
-/* @var  XoopsCommentHandler $comment_handler */
+/** @var  XoopsCommentHandler $comment_handler */
 $comment_handler = xoops_getHandler('comment');
 
 switch ($op) {
@@ -74,8 +74,9 @@ switch ($op) {
         if ($com_id > 0) {
             $comment = $comment_handler->get($com_id);
             if (is_object($comment)) {
-                /* @var XoopsModuleHandler $module_handler */
+                /** @var XoopsModuleHandler $module_handler */
                 $module_handler = xoops_getHandler('module');
+                /** @var \XoopsModule $module */
                 $module         = $module_handler->get($comment->getVar('com_modid'));
                 $comment_config = $module->getInfo('comments');
                 header('Location: ' . XOOPS_URL . '/modules/' . $module->getVar('dirname') . '/' . $comment_config['pageName'] . '?' . $comment_config['itemName'] . '=' . $comment->getVar('com_itemid') . '&com_id=' . $comment->getVar('com_id') . '&com_rootid=' . $comment->getVar('com_rootid') . '&com_mode=thread&' . str_replace('&amp;', '&', $comment->getVar('com_exparams')) . '#comment' . $comment->getVar('com_id'));
@@ -99,7 +100,7 @@ switch ($op) {
         $form_purge->addElement(new XoopsFormTextDateSelect(_AM_SYSTEM_COMMENTS_FORM_PURGE_DATE_BEFORE, 'comments_before', '15'));
 
         //user
-        $form_purge->addElement(new XoopsFormSelectUser(_AM_SYSTEM_COMMENTS_FORM_PURGE_USER, 'comments_userid', false, @$_REQUEST['comments_userid'], 5, true));
+        $form_purge->addElement(new XoopsFormSelectUser(_AM_SYSTEM_COMMENTS_FORM_PURGE_USER, 'comments_userid', false, (isset($_REQUEST['comments_userid']) ? $_REQUEST['comments_userid'] : ''), 5, true));
 
         //groups
         $groupe_select = new XoopsFormSelectGroup(_AM_SYSTEM_COMMENTS_FORM_PURGE_GROUPS, 'comments_groupe', false, '', 5, true);
@@ -158,7 +159,7 @@ switch ($op) {
         $comments_groupe = Request::getString('comments_groupe', '');
         if ($comments_groupe != '') {
             foreach ($_POST['comments_groupe'] as $del => $u_name) {
-                /* @var XoopsMemberHandler $member_handler */
+                /** @var XoopsMemberHandler $member_handler */
                 $member_handler = xoops_getHandler('member');
                 $members        = $member_handler->getUsersByGroup($u_name, true);
                 $mcount         = count($members);
@@ -172,7 +173,7 @@ switch ($op) {
             $verif = true;
         }
         if (isset($_POST['commentslist_id'])) {
-            $commentslist_count = (!empty($_POST['commentslist_id']) && is_array($_POST['commentslist_id'])) ? count($_POST['commentslist_id']) : 0;
+            $commentslist_count = (!empty($_POST['commentslist_id']) && \is_array($_POST['commentslist_id'])) ? count($_POST['commentslist_id']) : 0;
             if ($commentslist_count > 0) {
                 for ($i = 0; $i < $commentslist_count; ++$i) {
                     $criteria->add(new Criteria('com_id', $_REQUEST['commentslist_id'][$i]), 'OR');
@@ -196,8 +197,8 @@ switch ($op) {
         $xoBreadCrumb->addTips(_AM_SYSTEM_COMMENTS_NAV_TIPS);
         $xoBreadCrumb->render();
 
-        $myts             = MyTextSanitizer::getInstance();
-        /* @var  XoopsCommentHandler $comments_Handler */
+        $myts             = \MyTextSanitizer::getInstance();
+        /** @var  XoopsCommentHandler $comments_Handler */
         $comments_Handler = xoops_getHandler('comment');
         $comments_module  = '';
         $comments_status  = '';
@@ -294,13 +295,13 @@ switch ($op) {
                 $comments['comments_ip']           = $comments_arr[$i]->getVar('com_ip');
                 $comments['comments_date']         = formatTimestamp($comments_arr[$i]->getVar('com_created'));
                 $comments['comments_text'] = $myts->htmlSpecialChars($comments_arr[$i]->getVar('com_text'));
-                $comments['comments_status']       = @$status_array2[$comments_arr[$i]->getVar('com_status')];
+                $comments['comments_status']       = isset($status_array2[$comments_arr[$i]->getVar('com_status')]) ? $status_array2[$comments_arr[$i]->getVar('com_status')] : 0;
                 $comments['comments_date_created'] = formatTimestamp($comments_arr[$i]->getVar('com_created'), 'm');
-                $comments['comments_modid']        = @$module_array[$comments_arr[$i]->getVar('com_modid')];
+                $comments['comments_modid']        = isset($module_array[$comments_arr[$i]->getVar('com_modid')]) ? $module_array[$comments_arr[$i]->getVar('com_modid')] : 0;
                 //$comments['comments_view_edit_delete'] = '<img class="cursorpointer" onclick="display_dialog('.$com_id.', true, true, \'slide\', \'slide\', 300, 500);" src="images/icons/view.png" alt="'._AM_SYSTEM_COMMENTS_VIEW.'" title="'._AM_SYSTEM_COMMENTS_VIEW.'" /><a href="admin/comments/comment_edit.php?com_id='.$com_id.'"><img src="./images/icons/edit.png" border="0" alt="'._EDIT.'" title="'._EDIT.'"></a><a href="admin/comments/comment_delete.php?com_id='.$com_id.'"><img src="./images/icons/delete.png" border="0" alt="'._DELETE.'" title="'._DELETE.'"></a>';
 
-                $xoopsTpl->append_by_ref('comments', $comments);
-                $xoopsTpl->append_by_ref('comments_popup', $comments);
+                $xoopsTpl->appendByRef('comments', $comments);
+                $xoopsTpl->appendByRef('comments_popup', $comments);
                 unset($comments);
             }
 

@@ -5,8 +5,8 @@
  * @license         http://www.fsf.org/copyleft/gpl.html GNU public license 3.0
  * @package         themes
  * @since           2.5.x
- * @author          Xoops Design Theme <http://www.xoops.org/>
- * @maintained      Xoops Design Theme <http://www.xoops.org/>
+ * @author          Xoops Design Theme <https://xoops.org/>
+ * @maintained      Xoops Design Theme <https://xoops.org/>
  *
 */
     /* ==================== Import other stylesheets ==================== */
@@ -34,13 +34,14 @@ html {
 
 body {
     background-color: #EBE9E1;
-    background: -moz-linear-gradient(center bottom, rgb(235,233,225) 0%, rgb(223,220,209) 100%);
-    background: -webkit-gradient(linear, left bottom, left top, color-stop(0, rgb(235,233,225)), color-stop(1, rgb(223,220,209)));
+    background: -webkit-gradient(linear, left top, left bottom, color-stop(rgb(235, 233, 225)), color-stop(1, rgb(223, 220, 209)));
+    background: linear-gradient(0, rgb(235, 233, 225), rgb(223, 220, 209) 1);
     font-size: 11px;
     font-family: Verdana, tahoma, Helvetica, sans-serif;
     margin: 0;
     padding: 0;
 }
+
 
 hr {
     height: 0;

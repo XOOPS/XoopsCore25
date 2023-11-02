@@ -1,14 +1,14 @@
 <div class="xoops-comment-body">
-    <{if ($comments|default:false) }>
+    <{if !empty($comments) }>
     <div class="row">
         <div class="col-2 col-md-2"><strong><{$lang_poster}></strong></div>
         <div class="col-10 col-md-10"><strong><{$lang_thread}></strong></div>
     </div>
-    <{foreach item=comment from=$comments}>
+    <{foreach item=comment from=$comments|default:null}>
         <{include file="db:system_comment.tpl" comment=$comment}>
     <{/foreach}>
     <{/if}>
-    <{if $commentform}>
+    <{if isset($commentform)}>
         <div class="aligncenter">
             <button class="btn-comment btn btn-primary btn-md" data-toggle="modal" data-target="#comments-form">
                 <span class="fa fa-comment"></span> <{$smarty.const.THEME_COMMENT_ADD}>

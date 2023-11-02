@@ -1,3 +1,3 @@
-<{if $xoops_contents}>
+<{if isset($xoops_contents)}>
     <{$xoops_contents}>
 <{/if}>

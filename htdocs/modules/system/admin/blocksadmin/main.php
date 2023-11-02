@@ -11,8 +11,8 @@
 use Xmf\Request;
 
 /**
- * @copyright    XOOPS Project http://xoops.org/
- * @license      GNU GPL 2 or later (https://www.gnu.org/licenses/gpl-2.0.html)
+ * @copyright    XOOPS Project https://xoops.org/
+ * @license      GNU GPL 2.0 or later (https://www.gnu.org/licenses/gpl-2.0.html)
  * @package
  * @since
  * @author       XOOPS Development Team, Kazumi Ono (AKA onokazu)
@@ -67,7 +67,7 @@ switch ($op) {
         $xoBreadCrumb->render();
 
         // Initialize module handler
-        /* @var XoopsModuleHandler $module_handler */
+        /** @var XoopsModuleHandler $module_handler */
         $module_handler = xoops_getHandler('module');
         $modules        = $module_handler->getObjects(null, true);
         $criteria       = new CriteriaCompo(new Criteria('hasmain', 1));
@@ -77,10 +77,10 @@ switch ($op) {
         $display_list = $module_handler->getList($criteria);
         unset($criteria);
         // Initialize blocks handler
-        /* @var SystemBlockHandler $block_handler */
+        /** @var SystemBlockHandler $block_handler */
         $block_handler = xoops_getModuleHandler('block');
         // Initialize module handler
-        /* @var XoopsModuleHandler $module_handler */
+        /** @var XoopsModuleHandler $module_handler */
         $module_handler = xoops_getHandler('module');
         $modules        = $module_handler->getObjects(null, true);
 
@@ -112,7 +112,7 @@ switch ($op) {
         // For selection of group access
         $sel_grp = new XoopsFormSelect(_AM_SYSTEM_BLOCKS_GROUP, 'selgrp', $selgrp);
         $sel_grp->setExtra("onchange='submit()'");
-        /* @var XoopsMemberHandler $member_handler */
+        /** @var XoopsMemberHandler $member_handler */
         $member_handler = xoops_getHandler('member');
         $group_list     = $member_handler->getGroupList();
         $sel_grp->addOption(-1, _AM_SYSTEM_BLOCKS_TYPES);
@@ -156,7 +156,7 @@ switch ($op) {
 		if (!empty($blocks_arr)){
 			foreach (array_keys($blocks_arr) as $i) {
 				$arr[$i] = $blocks_arr[$i]->toArray();
-				$xoopsTpl->append_by_ref('blocks', $arr[$i]);
+				$xoopsTpl->appendByRef('blocks', $arr[$i]);
 			}
 		} else {
 			$xoopsTpl->assign('blocks', array());
@@ -188,7 +188,7 @@ switch ($op) {
         $xoBreadCrumb->render();
         // Initialize blocks handler
         $block_handler = xoops_getModuleHandler('block');
-        /* @var  SystemBlock $block */
+        /** @var  SystemBlock $block */
         $block         = $block_handler->create();
         $blockform     = $block->getForm();
         $xoopsTpl->assign('blockform', $blockform->render());
@@ -198,7 +198,7 @@ switch ($op) {
 
     case 'display':
         // Initialize blocks handler
-        /* @var SystemBlockHandler $block_handler */
+        /** @var SystemBlockHandler $block_handler */
         $block_handler = xoops_getModuleHandler('block');
         // Get variable
         $block_id = Request::getInt('bid', 0);
@@ -251,13 +251,13 @@ switch ($op) {
             redirect_header('admin.php?fct=blocksadmin', 3, implode('<br>', $GLOBALS['xoopsSecurity']->getErrors()));
         }
         // Initialize blocks handler
-        /* @var XoopsBlockHandler $block_handler */
+        /** @var XoopsBlockHandler $block_handler */
         $block_handler = xoops_getModuleHandler('block');
         $block         = $block_handler->create();
         $block->setVars($_POST);
         $content = isset($_POST['content_block']) ? $_POST['content_block'] : '';
         $block->setVar('content', $content);
-        $myts = MyTextSanitizer::getInstance();
+        $myts = \MyTextSanitizer::getInstance();
         echo '<div id="xo-preview-dialog" title="' . $block->getVar('title', 's') . '">' . $block->getContent('s', $block->getVar('c_type')) . '</div>';
         break;
 
@@ -283,7 +283,7 @@ switch ($op) {
             $name = $block->getVar('name');
             // Save block options
             $options = Xmf\Request::getArray('options', array(), 'POST');
-            if (is_array($options) && !empty($options)) {
+            if (!empty($options) && \is_array($options)) {
                 $options_count = count($options);
                 if ($options_count > 0) {
                     //Convert array values to comma-separated
@@ -344,7 +344,7 @@ switch ($op) {
                 }
             }
         }
-        /* @var XoopsGroupPermHandler $groupperm_handler */
+        /** @var XoopsGroupPermHandler $groupperm_handler */
         $groupperm_handler  = xoops_getHandler('groupperm');
         $groups             = $_POST['groups'];
         $groups_with_access = $groupperm_handler->getGroupIds('block_read', $newid);
@@ -405,7 +405,7 @@ switch ($op) {
 
     case 'delete':
         // Initialize blocks handler
-        /* @var SystemBlockHandler $block_handler */
+        /** @var SystemBlockHandler $block_handler */
         $block_handler = xoops_getModuleHandler('block');
         // Get block id
         $block_id = Request::getInt('bid', 0);
@@ -454,7 +454,7 @@ switch ($op) {
                     $blocklinkmodule_handler->delete($link, true);
                 }
                 // Delete Group permission
-                /* @var  XoopsGroupPermHandler $groupperm_handler */
+                /** @var  XoopsGroupPermHandler $groupperm_handler */
                 $groupperm_handler = xoops_getHandler('groupperm');
                 $criteria          = new CriteriaCompo(new Criteria('gperm_name', 'block_read'));
                 $criteria->add(new Criteria('gperm_itemid', $block_id));
@@ -493,7 +493,7 @@ switch ($op) {
             $xoBreadCrumb->addLink(_AM_SYSTEM_BLOCKS_ADMIN, system_adminVersion('blocksadmin', 'adminpath'));
             $xoBreadCrumb->addLink(_AM_SYSTEM_BLOCKS_CLONEBLOCK);
             $xoBreadCrumb->render();
-            /* @var XoopsBlock $block */
+            /** @var XoopsBlock $block */
             $block     = $block_handler->get($block_id);
             $blockform = $block->getForm('clone');
             $xoopsTpl->assign('blockform', $blockform->render());

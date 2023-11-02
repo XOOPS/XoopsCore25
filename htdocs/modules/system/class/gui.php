@@ -62,7 +62,7 @@ class XoopsSystemGui
         require_once XOOPS_ROOT_PATH . '/class/template.php';
         require_once XOOPS_ROOT_PATH . '/class/theme.php';
 
-        if (@$GLOBALS['xoopsOption']['template_main']) {
+        if (isset($GLOBALS['xoopsOption']['template_main'])) {
             if (false === strpos($GLOBALS['xoopsOption']['template_main'], ':')) {
                 $GLOBALS['xoopsOption']['template_main'] = 'db:' . $GLOBALS['xoopsOption']['template_main'];
             }
@@ -72,8 +72,7 @@ class XoopsSystemGui
         $this->xoTheme     =& $adminThemeFactory->createInstance(array(
                                                                      'folderName'      => $this->foldername,
                                                                      'themesPath'      => 'modules/system/themes',
-                                                                     'contentTemplate' => @$GLOBALS['xoopsOption']['template_main']));
-
+                                                                     'contentTemplate' => isset($GLOBALS['xoopsOption']['template_main'])? $GLOBALS['xoopsOption']['template_main'] :''));
         $this->xoTheme->loadLocalization('admin');
         $this->template =& $this->xoTheme->template;
 
@@ -91,7 +90,7 @@ class XoopsSystemGui
 
             foreach (array_keys($xoopsModule->adminmenu) as $item) {
                 $sys_menu[$item]['link'] = XOOPS_URL . '/modules/' . $xoopsModule->getVar('dirname') . '/' . $xoopsModule->adminmenu[$item]['link'];
-                $GLOBALS['xoopsTpl']->append_by_ref('sys_menu', $sys_menu);
+                $GLOBALS['xoopsTpl']->appendByRef('sys_menu', $sys_menu);
                 unset($sys_menu);
             }
         }
@@ -102,7 +101,7 @@ class XoopsSystemGui
 
                 $xoopsModule->loadAdminMenu();
                 // Get menu tab handler
-                /* @var SystemMenuHandler $menu_handler */
+                /** @var SystemMenuHandler $menu_handler */
                 $menu_handler = xoops_getModuleHandler('menu', 'system');
                 // Define top navigation
                 $menu_handler->addMenuTop(XOOPS_URL . '/modules/system/admin.php?fct=preferences&amp;op=showmod&amp;mod=' . $xoopsModule->getVar('mid', 'e'), _AM_SYSTEM_PREF);

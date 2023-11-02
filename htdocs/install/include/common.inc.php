@@ -15,7 +15,7 @@
  * If you did not receive this file, get it at https://www.gnu.org/licenses/gpl-2.0.html
  *
  * @copyright    (c) 2000-2021 XOOPS Project (www.xoops.org)
- * @license          GNU GPL 2 or later (https://www.gnu.org/licenses/gpl-2.0.html)
+ * @license          GNU GPL 2.0 or later (https://www.gnu.org/licenses/gpl-2.0.html)
  * @package          installer
  * @since            2.3.0
  * @author           Haruki Setoyama  <haruki@planewave.org>
@@ -69,24 +69,24 @@ if (empty($xoopsOption['hascommon'])) {
     session_start();
 
     if (PHP_VERSION_ID < 70300) {
-        require_once '../include/xoopssetcookie.php';
+        require_once __DIR__ . '/../../include/xoopssetcookie.php';
         xoops_setcookie(session_name(), session_id(), $options);
     }
 
 }
 
-@include '../mainfile.php';
+@include __DIR__ . '/../../mainfile.php';
 if (!defined('XOOPS_ROOT_PATH')) {
     define('XOOPS_ROOT_PATH', str_replace("\\", '/', realpath('../')));
 }
 
 date_default_timezone_set(@date_default_timezone_get());
-include './class/installwizard.php';
-include_once '../include/version.php';
-require_once '../include/xoopssetcookie.php';
-include_once './include/functions.php';
-include_once '../class/module.textsanitizer.php';
-include_once '../class/libraries/vendor/autoload.php';
+include __DIR__ . '/../class/installwizard.php';
+include_once __DIR__ . '/../../include/version.php';
+require_once __DIR__ . '/../../include/xoopssetcookie.php';
+include_once __DIR__ . '/../include/functions.php';
+include_once __DIR__ . '/../../class/module.textsanitizer.php';
+include_once __DIR__ . '/../../class/libraries/vendor/autoload.php';
 
 $pageHasHelp = false;
 $pageHasForm = false;
@@ -96,6 +96,6 @@ if (!$wizard->xoInit()) {
     exit();
 }
 
-if (!@is_array($_SESSION['settings'])) {
+if (!isset($_SESSION['settings']) || !is_array($_SESSION['settings'])) {
     $_SESSION['settings'] = array();
 }

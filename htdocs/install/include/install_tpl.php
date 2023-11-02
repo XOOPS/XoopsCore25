@@ -16,7 +16,7 @@
  * See: https://github.com/BlackrockDigital/startbootstrap-sb-admin
  *
  * @copyright    (c) 2000-2016 XOOPS Project (www.xoops.org)
- * @license          GNU GPL 2 or later (https://www.gnu.org/licenses/gpl-2.0.html)
+ * @license          GNU GPL 2.0 or later (https://www.gnu.org/licenses/gpl-2.0.html)
  * @package          installer
  * @since            2.3.0
  * @author           Haruki Setoyama  <haruki@planewave.org>
@@ -28,7 +28,7 @@
  **/
 
 defined('XOOPS_INSTALL') || die('XOOPS Installation wizard die');
-include_once '../language/' . $wizard->language . '/global.php';
+include_once __DIR__ . '/../../language/' . $wizard->language . '/global.php';
 ?><!doctype html>
 <html lang="<?php echo _LANGCODE; ?>">
 
@@ -94,7 +94,7 @@ include_once '../language/' . $wizard->language . '/global.php';
                 <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-book"></i> <?php echo SUPPORT; ?> <b class="caret"></b></a>
                 <ul class="dropdown-menu">
                     <?php
-                    @include_once './language/' . $wizard->language . '/support.php';
+                    @include_once __DIR__ . '/../language/' . $wizard->language . '/support.php';
                     foreach ($supports as $lang => $support) {
                         echo '<li><a href="' . $support['url'] . '" target="_blank">' . $support['title'] . '</a></li>';
                     }
@@ -214,7 +214,7 @@ include_once '../language/' . $wizard->language . '/global.php';
                         </div>
 
                         <div id="buttons">
-                            <?php if (@$pageHasForm) { ?>
+                            <?php if (!empty($pageHasForm)) { ?>
                             <button class="btn btn-lg btn-success" type="submit">
                             <?php } else { ?>
                             <button class="btn btn-lg btn-success" type="button" accesskey="n" onclick="location.href='<?php echo $wizard->pageURI('+1'); ?>'">

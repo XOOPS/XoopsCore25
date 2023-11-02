@@ -3,7 +3,7 @@
   <li><a href="<{$xoops_url}>"><{$smarty.const._MD_LEXIKON_HOME}></a></li>
   <li><a href="<{$xoops_url}>/modules/<{$lang_moduledirname}>/index.php"><{$lang_modulename}></a></li>
   <li>
-      <{if $pagetype == '0'}>
+      <{if isset($pagetype) && $pagetype == '0'}>
         <{$smarty.const._MD_LEXIKON_ALLCATS}>
       <{elseif $pagetype == '1'}>
         <{$singlecat.name}>
@@ -18,7 +18,7 @@
 
     <ul class="pagination pagination-sm">
       <li><a href="<{$xoops_url}>/modules/<{$lang_moduledirname}>/letter.php" title="[ <{$publishedwords}> ]"><{$smarty.const._MD_LEXIKON_ALL}></a></li>
-      <{foreach item=letterlinks from=$alpha.initial}>
+      <{foreach item=letterlinks from=$alpha.initial|default:null}>
           <{if $letterlinks.total > 0}>
             <li><a href="<{$xoops_url}>/modules/<{$lang_moduledirname}>/letter.php?init=<{$letterlinks.id}>" title="[ <{$letterlinks.total}> ]" >
               <{$letterlinks.linktext}>
@@ -28,7 +28,7 @@
           <{/if}>
       <{/foreach}>
 
-      <{if $totalother > 0}>
+      <{if isset($totalother) && $totalother > 0}>
         <li><a href="<{$xoops_url}>/modules/<{$lang_moduledirname}>/letter.php?init=<{$smarty.const._MD_LEXIKON_OTHER}>" title="[ <{$totalother}> ]">
           <{$smarty.const._MD_LEXIKON_OTHER}>
         </a></li>
@@ -42,13 +42,13 @@
 <hr>
 
 
-<{if $pagetype == '0'}>
+<{if isset($pagetype) && $pagetype == '0'}>
 <div class="row" style="margin-bottom: 20px">
 <div class="col-md-12">
 <{* Category block *}>
 <!-- $layout 0 and 1 are the same. if you want to change first change CONFIG_CATEGORY_LAYOUT_PLAIN in inlcude/common.inc.php -->
-<{if $layout == '0'}> 
-    <{if $multicats == 1 && count($block0.categories) gt 0 }>
+<{if isset($layout) && $layout == '0'}>
+    <{if $multicats == 1 && count($block0.categories) > 0 }>
         <div class="row" style="margin-bottom: 20px">
             <div class="col-md-12">
                 <h3> <{$smarty.const._MD_LEXIKON_BROWSECAT}> </h3>
@@ -64,7 +64,7 @@
                       [<{$publishedwords}>]
                    </td>
                    <!-- Start category loop -->
-                   <{foreach item=catlinks from=$block0.categories}>
+                   <{foreach item=catlinks from=$block0.categories|default:null}>
                    <td>
                     <{if $catlinks.image != "" && $show_screenshot == true}>
                         <a href="<{$xoops_url}>/modules/<{$lang_moduledirname}>/category.php?categoryID=<{$catlinks.id}>" target="_parent">
@@ -95,7 +95,7 @@
         </table>
     <{/if}>
 <{else}>
-    <{if $multicats == 1}>
+    <{if isset($multicats) && $multicats == 1}>
       <div class="row" style="margin-bottom: 20px">
             <div class="col-md-12">
                 <h3> <{$smarty.const._MD_LEXIKON_BROWSECAT}> </h3>
@@ -105,7 +105,7 @@
           <tbody>
               <tr>
                    <!-- Start category loop -->
-                   <{foreach item=catlinks from=$block0.categories}>
+                   <{foreach item=catlinks from=$block0.categories|default:null}>
                    <td>
                     <{if $catlinks.image != "" && $show_screenshot == true}>
                         <a href="<{$xoops_url}>/modules/<{$lang_moduledirname}>/category.php?categoryID=<{$catlinks.id}>" target="_parent">
@@ -150,9 +150,9 @@
 <!-- Category -->
 <div class="row" style="margin-bottom: 20px">
 <div class="col-md-12">
-<{if $pagetype == '0'}>
+<{if isset($pagetype) && $pagetype == '0'}>
     <h3><{$smarty.const._MD_LEXIKON_ALLCATS}></h3>
-    <{foreach item=eachcat from=$catsarray.single}>
+    <{foreach item=eachcat from=$catsarray.single|default:null}>
         <table class="table table-responsive">
             <thead>
                 <tr><th><a href="<{$xoops_url}>/modules/<{$eachcat.dir}>/category.php?categoryID=<{$eachcat.id}>"><{$eachcat.name}></a></th></tr>
@@ -181,7 +181,7 @@
     </div>
 
     <{* syndication *}>
-    <{if $syndication == true}>
+    <{if isset($syndication) && $syndication == true}>
         <div align="center" style="padding: 4px;"><br><br>
             <a href="rss.php" title="recent entries"><img src="assets/images/rss.gif" border="0"/></a>
         </div>
@@ -203,7 +203,7 @@
 <hr>
 
 
-    <{foreach item=eachentry from=$entriesarray.single}>
+    <{foreach item=eachentry from=$entriesarray.single|default:null}>
     <span style="display:block; margin-bottom: 15px;">
             <h4>
                 <a href="<{$xoops_url}>/modules/<{$eachentry.dir}>/entry.php?entryID=<{$eachentry.id}>"><{$eachentry.term}></a>
@@ -224,7 +224,7 @@
 </div>
 
         <{* syndication *}>
-        <{if $syndication == true}>
+        <{if isset($syndication) && $syndication == true}>
             <div align="center" style="padding: 4px;"><br><br>
                 <a href="rss.php?categoryID=<{$singlecat.id}>" title="Recent terms in this category"><img
                             src="assets/images/rss.gif" border="0"/></a>

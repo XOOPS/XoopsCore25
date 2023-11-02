@@ -23,7 +23,7 @@ use Xmf\Module\Helper\GenericHelper;
  * @package   Xmf
  * @author    trabis <lusopoemas@gmail.com>
  * @author    Richard Griffith <richard@geekwright.com>
- * @copyright 2011-2018 XOOPS Project (https://xoops.org)
+ * @copyright 2011-2023 XOOPS Project (https://xoops.org)
  * @license   GNU GPL 2 or later (http://www.gnu.org/licenses/gpl-2.0.html)
  * @link      https://xoops.org
  */
@@ -47,7 +47,7 @@ class Helper extends GenericHelper
             if (class_exists('Xoops', false)) {
                 $instance[$dirname] = \Xoops\Module\Helper::getHelper($dirname);
             } else {
-                // otherwise get a GenericHelper instance for dirname
+                // otherwise, get a GenericHelper instance for dirname
                 if (xoops_isActiveModule($dirname)) {
                     $instance[$dirname] = new static($dirname);
                 }

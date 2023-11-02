@@ -3,7 +3,7 @@
  *  Xoopsemotions plugin for tinymce
  *
  * @copyright       (c) 2000-2016 XOOPS Project (www.xoops.org)
- * @license             GNU GPL 2 or later (https://www.gnu.org/licenses/gpl-2.0.html)
+ * @license             GNU GPL 2.0 or later (https://www.gnu.org/licenses/gpl-2.0.html)
  * @package             class / xoopseditor
  * @subpackage          tinymce / xoops plugins
  * @since               2.3.0
@@ -11,6 +11,8 @@
  * @author              luciorota <lucio.rota@gmail.com>
  * @author              Laurent JEN <dugris@frxoops.org>
  */
+
+use Xmf\Request;
 
 // load mainfile.php
 $current_path = __DIR__;
@@ -54,7 +56,7 @@ $gperm_handler = xoops_getHandler('groupperm');
 $groups        = is_object($GLOBALS['xoopsUser']) ? $GLOBALS['xoopsUser']->getGroups() : array(XOOPS_GROUP_ANONYMOUS);
 $isadmin       = $gperm_handler->checkRight('system_admin', XOOPS_SYSTEM_IMAGE, $groups);
 
-// check categories readability/writability
+// check category readability/writability
 /** @var \XoopsImagecategoryHandler $imgcat_handler */
 $imgcat_handler = xoops_getHandler('imagecategory');
 $catreadlist    = $imgcat_handler->getList($groups, 'imgcat_read', 1);    // get readable categories
@@ -71,25 +73,25 @@ if (!isset($_REQUEST['target'])) {
 }
 
 if (isset($_GET['op'])) {
-    $op = trim($_GET['op']);
+    $op = Request::getString('op', '', 'GET');
 }
 
 if (isset($_GET['target'])) {
-    $target = trim($_GET['target']);
+    $target = Request::getString('target', '', 'GET');
 }
 
 if (isset($_GET['image_id'])) {
-    $image_id = (int)$_GET['image_id'];
+    $image_id = Request::getInt('image_id', 0, 'GET');
 }
 
 if (isset($_GET['imgcat_id'])) {
-    $imgcat_id = (int)$_GET['imgcat_id'];
+    $imgcat_id = Request::getInt('imgcat_id', 0, 'GET');
 }
 
 if (isset($imgcat_id)) {
     $imgcat_id = (int)$imgcat_id;
 }
-$target = htmlspecialchars($target);
+$target = htmlspecialchars($target, ENT_QUOTES);
 
 if ($isadmin || ($catreadcount > 0) || ($catwritecount > 0)) {
 
@@ -329,6 +331,7 @@ if ($isadmin || ($catreadcount > 0) || ($catwritecount > 0)) {
         if ($imagecategory->getVar('imgcat_type') !== 'C') {
             redirect_header($current_file . '?target=' . $target, 3, _AM_SYSTEM_IMAGES_SCATDELNG);
         }
+        /** @var \XoopsImageHandler $image_handler */
         $image_handler = xoops_getHandler('image');
         $images        = $image_handler->getObjects(new Criteria('imgcat_id', $imgcat_id), true, false);
         $errors        = array();
@@ -386,8 +389,8 @@ if ($isadmin || ($catreadcount > 0) || ($catwritecount > 0)) {
     // ************************* NOT USED ************************************
 }
 
-echo '<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">';
-echo '<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="' . _LANGCODE . '" lang="' . _LANGCODE . '">';
+echo '<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "https://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">';
+echo '<html xmlns="https://www.w3.org/1999/xhtml" xml:lang="' . _LANGCODE . '" lang="' . _LANGCODE . '">';
 echo '<head>';
 echo '<meta http-equiv="content-type" content="text/html; charset=' . _CHARSET . '" />';
 echo '<meta http-equiv="content-language" content="' . _LANGCODE . '" />';
@@ -471,7 +474,7 @@ if ($op === 'listimg') {
 
     $criteria = new Criteria('imgcat_id', $imgcat_id);
     $imgcount = $image_handler->getCount($criteria);
-    $start    = isset($_GET['start']) ? (int)$_GET['start'] : 0;
+    $start    = Request::getInt('start', 0, 'GET');
     $criteria->setStart($start);
     $criteria->setSort('image_id');
     $criteria->setOrder('DESC');

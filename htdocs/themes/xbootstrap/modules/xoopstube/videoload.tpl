@@ -1,4 +1,4 @@
-<{if $show_categort_title == true}>
+<{if isset($show_categort_title) && $show_categort_title == true}>
 <{$smarty.const._MD_XOOPSTUBE_CATEGORYC}> <{$video.category}>
 <{/if}>
 
@@ -7,7 +7,7 @@
 </a>
 <{$video.icons}>
 
-<{if $xoops_isadmin}>
+<{if isset($xoops_isadmin)}>
 <{$video.adminvideo}>
 <{/if}>
 

@@ -42,7 +42,7 @@ class XoopsModelWrite extends XoopsModelAbstract
      */
     public function cleanVars(&$object)
     {
-        $ts     = MyTextSanitizer::getInstance();
+        $myts     = \MyTextSanitizer::getInstance();
         $errors = array();
 
         $vars              = $object->getVars();
@@ -76,9 +76,9 @@ class XoopsModelWrite extends XoopsModelAbstract
                         continue 2;
                     }
                     if (!$v['not_gpc']) {
-                        $cleanv = $ts->stripSlashesGPC($ts->censorString($cleanv));
+                        $cleanv = $myts->stripSlashesGPC($myts->censorString($cleanv));
                     } else {
-                        $cleanv = $ts->censorString($cleanv);
+                        $cleanv = $myts->censorString($cleanv);
                     }
                     $cleanv = str_replace('\\"', '"', $this->handler->db->quote($cleanv));
                     break;
@@ -91,11 +91,11 @@ class XoopsModelWrite extends XoopsModelAbstract
                     $cleanv = xoops_convert_encode($cleanv);
                     if (!$v['not_gpc']) {
                         if (!empty($vars['dohtml']['value'])) {
-                            $cleanv = $ts->textFilter($cleanv);
+                            $cleanv = $myts->textFilter($cleanv);
                         }
-                        $cleanv = $ts->stripSlashesGPC($ts->censorString($cleanv));
+                        $cleanv = $myts->stripSlashesGPC($myts->censorString($cleanv));
                     } else {
-                        $cleanv = $ts->censorString($cleanv);
+                        $cleanv = $myts->censorString($cleanv);
                     }
                     $cleanv = str_replace('\\"', '"', $this->handler->db->quote($cleanv));
                     break;
@@ -110,9 +110,9 @@ class XoopsModelWrite extends XoopsModelAbstract
                         continue 2;
                     }
                     if (!$v['not_gpc']) {
-                        $cleanv = $ts->stripSlashesGPC($ts->censorString($cleanv));
+                        $cleanv = $myts->stripSlashesGPC($myts->censorString($cleanv));
                     } else {
-                        $cleanv = $ts->censorString($cleanv);
+                        $cleanv = $myts->censorString($cleanv);
                     }
                     $cleanv = str_replace('\\"', '"', $this->handler->db->quote($cleanv));
                     break;
@@ -124,11 +124,11 @@ class XoopsModelWrite extends XoopsModelAbstract
                     }
                     if (!$v['not_gpc']) {
                         if (!empty($vars['dohtml']['value'])) {
-                            $cleanv = $ts->textFilter($cleanv);
+                            $cleanv = $myts->textFilter($cleanv);
                         }
-                        $cleanv = $ts->stripSlashesGPC($ts->censorString($cleanv));
+                        $cleanv = $myts->stripSlashesGPC($myts->censorString($cleanv));
                     } else {
-                        $cleanv = $ts->censorString($cleanv);
+                        $cleanv = $myts->censorString($cleanv);
                     }
                     $cleanv = str_replace('\\"', '"', $this->handler->db->quote($cleanv));
                     break;
@@ -136,7 +136,7 @@ class XoopsModelWrite extends XoopsModelAbstract
                 case XOBJ_DTYPE_SOURCE:
                     $cleanv = trim($cleanv);
                     if (!$v['not_gpc']) {
-                        $cleanv = $ts->stripSlashesGPC($cleanv);
+                        $cleanv = $myts->stripSlashesGPC($cleanv);
                     } else {
                         $cleanv = $cleanv;
                     }
@@ -150,7 +150,7 @@ class XoopsModelWrite extends XoopsModelAbstract
                         continue 2;
                     }
                     if (!$v['not_gpc']) {
-                        $cleanv = $ts->stripSlashesGPC($cleanv);
+                        $cleanv = $myts->stripSlashesGPC($cleanv);
                     }
                     $cleanv = str_replace('\\"', '"', $this->handler->db->quote(xoops_convert_encode($cleanv)));
                     break;
@@ -166,7 +166,7 @@ class XoopsModelWrite extends XoopsModelAbstract
                         continue 2;
                     }
                     if (!$v['not_gpc']) {
-                        $cleanv = $ts->stripSlashesGPC($cleanv);
+                        $cleanv = $myts->stripSlashesGPC($cleanv);
                     }
                     $cleanv = str_replace('\\"', '"', $this->handler->db->quote($cleanv));
                     break;
@@ -182,7 +182,7 @@ class XoopsModelWrite extends XoopsModelAbstract
                         $cleanv = XOOPS_PROT . $cleanv;
                     }
                     if (!$v['not_gpc']) {
-                        $cleanv = $ts->stripSlashesGPC($cleanv);
+                        $cleanv = $myts->stripSlashesGPC($cleanv);
                     }
                     $cleanv = str_replace('\\"', '"', $this->handler->db->quote(xoops_convert_encode($cleanv)));
                     break;
@@ -196,7 +196,7 @@ class XoopsModelWrite extends XoopsModelAbstract
                         $cleanv = XOOPS_PROT . $cleanv;
                     }
                     if (!$v['not_gpc']) {
-                        $cleanv = $ts->stripSlashesGPC($cleanv);
+                        $cleanv = $myts->stripSlashesGPC($cleanv);
                     }
                     $cleanv = str_replace('\\"', '"', $this->handler->db->quote($cleanv));
                     break;
@@ -225,7 +225,7 @@ class XoopsModelWrite extends XoopsModelAbstract
                 // Should not be used!
                 case XOBJ_DTYPE_UNICODE_ARRAY:
                     if (!$v['not_gpc']) {
-                        $cleanv = array_map(array(&$ts, 'stripSlashesGPC'), $cleanv);
+                        $cleanv = array_map(array(&$myts, 'stripSlashesGPC'), $cleanv);
                     }
                     foreach (array_keys($cleanv) as $key) {
                         $cleanv[$key] = str_replace('\\"', '"', addslashes($cleanv[$key]));
@@ -237,7 +237,7 @@ class XoopsModelWrite extends XoopsModelAbstract
                 case XOBJ_DTYPE_ARRAY:
                     $cleanv = (array)$cleanv;
                     if (!$v['not_gpc']) {
-                        $cleanv = array_map(array(&$ts, 'stripSlashesGPC'), $cleanv);
+                        $cleanv = array_map(array(&$myts, 'stripSlashesGPC'), $cleanv);
                     }
                     // TODO: Not encoding safe, should try base64_encode -- phppp
                     $cleanv = $this->handler->db->quote(serialize($cleanv));
@@ -397,7 +397,7 @@ class XoopsModelWrite extends XoopsModelAbstract
             $set_clause .= $this->handler->db->quote($fieldvalue);
         }
         $sql = 'UPDATE `' . $this->handler->table . '` SET ' . $set_clause;
-        if (isset($criteria) && is_subclass_of($criteria, 'CriteriaElement')) {
+        if (isset($criteria) && \method_exists($criteria, 'renderWhere')) {
             $sql .= ' ' . $criteria->renderWhere();
         }
         $queryFunc = empty($force) ? 'query' : 'queryF';

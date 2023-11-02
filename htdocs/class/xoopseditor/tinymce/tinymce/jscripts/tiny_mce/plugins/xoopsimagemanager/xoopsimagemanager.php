@@ -3,7 +3,7 @@
  *  Xoopsemotions plugin for tinymce
  *
  * @copyright       (c) 2000-2016 XOOPS Project (www.xoops.org)
- * @license             GNU GPL 2 or later (https://www.gnu.org/licenses/gpl-2.0.html)
+ * @license             GNU GPL 2.0 or later (https://www.gnu.org/licenses/gpl-2.0.html)
  * @package             class / xoopseditor
  * @subpackage          tinymce / xoops plugins
  * @since               2.3.0
@@ -32,7 +32,7 @@ $gperm_handler = xoops_getHandler('groupperm');
 $groups        = is_object($GLOBALS['xoopsUser']) ? $GLOBALS['xoopsUser']->getGroups() : array(XOOPS_GROUP_ANONYMOUS);
 $admin         = $gperm_handler->checkRight('system_admin', XOOPS_SYSTEM_IMAGE, $groups);
 
-// check categories readability/writability by group
+// check category readability/writability by group
 /** @var \XoopsImagecategoryHandler $imgcat_handler */
 $imgcat_handler = xoops_getHandler('imagecategory');
 $catreadlist    = $imgcat_handler->getList($groups, 'imgcat_read', 1);    // get readable categories
@@ -40,8 +40,8 @@ $catwritelist   = $imgcat_handler->getList($groups, 'imgcat_write', 1);  // get 
 
 $canbrowse = ($admin || !empty($catreadlist) || !empty($catwritelist)) ? true : false;
 
-echo '<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">';
-echo '<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="' . _LANGCODE . '" lang="' . _LANGCODE . '">';
+echo '<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "https://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">';
+echo '<html xmlns="https://www.w3.org/1999/xhtml" xml:lang="' . _LANGCODE . '" lang="' . _LANGCODE . '">';
 ?>
 <head>
     <title>{#xoopsimagemanager_dlg.dialog_title}</title>

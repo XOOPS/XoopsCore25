@@ -193,7 +193,7 @@ $GLOBALS['xoopsTpl']->assign('op', $op);
 
 if ($total_messages > $GLOBALS['xoopsModuleConfig']['perpage']) {
     include_once $GLOBALS['xoops']->path('class/pagenav.php');
-    $nav = new XoopsPageNav($total_messages, $GLOBALS['xoopsModuleConfig']['perpage'], $start, 'start', 'op=' . htmlspecialchars($op));
+    $nav = new XoopsPageNav($total_messages, $GLOBALS['xoopsModuleConfig']['perpage'], $start, 'start', 'op=' . htmlspecialchars($op, ENT_QUOTES));
     $GLOBALS['xoopsTpl']->assign('pagenav', $nav->renderNav(4));
 }
 
@@ -207,7 +207,7 @@ if (count($pm_arr) > 0) {
             $uids[] = $pm_arr[$i]['from_userid'];
         }
     }
-    /* @var XoopsMemberHandler $member_handler */
+    /** @var XoopsMemberHandler $member_handler */
     $member_handler = xoops_getHandler('member');
     $senders        = $member_handler->getUserList(new Criteria('uid', '(' . implode(', ', array_unique($uids)) . ')', 'IN'));
     foreach (array_keys($pm_arr) as $i) {

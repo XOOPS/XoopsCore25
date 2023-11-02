@@ -1,8 +1,8 @@
 <table cellspacing="1" class="outer">
-    <{foreach item=user from=$block.users}>
+    <{foreach item=user from=$block.users|default:null}>
         <tr class="<{cycle values='even,odd'}> alignmiddle">
             <td class="txtcenter">
-                <{if $user.avatar != ""}>
+                <{if !empty($user.avatar)}>
                     <img style="width:32px;" src="<{$user.avatar}>" alt="<{$user.name}>"/>
                     <br>
                 <{/if}>

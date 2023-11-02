@@ -20,7 +20,7 @@
     </p>
     <br>
     <ul class="heyula">
-        <{foreach item=obituaries_user from=$obituaries_users}>
+        <{foreach item=obituaries_user from=$obituaries_users|default:null}>
             <div class="col-sm-6 col-md-4">
                 <div class="thumbnail">
 

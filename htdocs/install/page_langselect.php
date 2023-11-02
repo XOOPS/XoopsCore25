@@ -15,7 +15,7 @@
  * If you did not receive this file, get it at https://www.gnu.org/licenses/gpl-2.0.html
  *
  * @copyright    (c) 2000-2016 XOOPS Project (www.xoops.org)
- * @license          GNU GPL 2 or later (https://www.gnu.org/licenses/gpl-2.0.html)
+ * @license          GNU GPL 2.0 or later (https://www.gnu.org/licenses/gpl-2.0.html)
  * @package          installer
  * @since            2.3.0
  * @author           Haruki Setoyama  <haruki@planewave.org>
@@ -26,7 +26,7 @@
  * @author           DuGris (aka L. JEN) <dugris@frxoops.org>
  **/
 
-require_once './include/common.inc.php';
+require_once __DIR__ . '/include/common.inc.php';
 defined('XOOPS_INSTALL') || die('XOOPS Installation wizard die');
 
 xoops_setcookie('xo_install_lang', 'english', null, null, null);
@@ -50,7 +50,7 @@ $content =<<<EOT
     <select name="lang" id="lang" class="form-control">
 EOT;
 
-$languages = getDirList('./language/');
+$languages = getDirList(__DIR__ . '/../language/');
 foreach ($languages as $lang) {
     $sel = ($lang == $wizard->language) ? ' selected' : '';
     $content .= "<option value=\"{$lang}\"{$sel}>{$lang}</option>\n";
@@ -61,4 +61,4 @@ $content .=<<<EOB
 EOB;
 
 
-include './include/install_tpl.php';
+include __DIR__ . '/include/install_tpl.php';

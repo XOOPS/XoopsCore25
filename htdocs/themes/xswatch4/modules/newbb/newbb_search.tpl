@@ -2,7 +2,7 @@
     <li class="breadcrumb-item"><a href="<{$xoops_url}>/modules/<{$xoops_dirname}>/index.php"><{$forumindex}></a></li>
     <li class="breadcrumb-item active"><a href="<{$xoops_url}>/modules/<{$xoops_dirname}>/search.php"><{$smarty.const._SR_SEARCH}></a></li>
 </ol>
-<{if $search_info}>
+<{if isset($search_info)}>
     <{include file="db:newbb_searchresults.tpl" results=$results}>
 <{/if}>
 
@@ -64,7 +64,7 @@
                 <strong><{$smarty.const._MD_NEWBB_SELECT_STARTLAG}></strong>&nbsp;
             </td>
             <td class="even" title="<{$smarty.const._MD_NEWBB_SELECT_STARTLAG_DESC}>">
-                <input class="form-control" type="text" name="selectstartlag" value="<{$selectstartlag_select}>">
+                <input class="form-control" type="text" name="selectstartlag" value="<{$selectstartlag_select|default:''}>">
             </td>
         </tr>
         <tr>
@@ -89,7 +89,7 @@
             </td>
         </tr>
         <!-- START irmtfan add show search -->
-        <{if $search_rule}>
+        <{if isset($search_rule)}>
         <tr>
             <!-- irmtfan hardcode removed align="right" -->
             <td class="head" id="align_right"><strong><{$smarty.const._SR_SEARCHRULE}></strong>&nbsp;</td>

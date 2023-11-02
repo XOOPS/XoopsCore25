@@ -16,6 +16,8 @@
  * @author              Kazumi Ono (AKA onokazu) http://www.myweb.ne.jp/, http://jp.xoops.org/
  */
 
+use Xmf\Request;
+
 defined('XOOPS_ROOT_PATH') || exit('Restricted access');
 
 include_once $GLOBALS['xoops']->path('include/comment_constants.php');
@@ -26,7 +28,7 @@ if (('system' !== $xoopsModule->getVar('dirname') && XOOPS_COMMENT_APPROVENONE =
 
 xoops_loadLanguage('comment');
 
-$com_itemid = isset($_GET['com_itemid']) ? (int)$_GET['com_itemid'] : 0;
+$com_itemid = Request::getInt('com_itemid', 0, 'GET');
 if ($com_itemid > 0) {
     include_once $GLOBALS['xoops']->path('header.php');
     if (isset($com_replytitle)) {
@@ -36,7 +38,7 @@ if ($com_itemid > 0) {
                   <tr><td><br>' . $com_replytext . '<br></td></tr>
                   </table>';
         }
-        $myts      = MyTextSanitizer::getInstance();
+        $myts      = \MyTextSanitizer::getInstance();
         $com_title = $myts->htmlSpecialChars($com_replytitle);
         if (!preg_match('/^' . _RE . '/i', $com_title)) {
             $com_title = _RE . ' ' . xoops_substr($com_title, 0, 56);
@@ -44,8 +46,9 @@ if ($com_itemid > 0) {
     } else {
         $com_title = '';
     }
-    $com_mode = isset($_GET['com_mode']) ? htmlspecialchars(trim($_GET['com_mode']), ENT_QUOTES) : '';
-    /* @var  XoopsUser $xoopsUser */
+    $com_mode = htmlspecialchars(Request::getString('com_mode', '', 'GET'), ENT_QUOTES);
+
+    /** @var  XoopsUser $xoopsUser */
     if ($com_mode == '') {
         if (is_object($xoopsUser)) {
             $com_mode = $xoopsUser->getVar('umode');
@@ -60,7 +63,7 @@ if ($com_itemid > 0) {
             $com_order = $xoopsConfig['com_order'];
         }
     } else {
-        $com_order = (int)$_GET['com_order'];
+        $com_order = Request::getInt('com_order', 0, 'GET');
     }
     $com_id     = 0;
     $noname     = 0;
@@ -72,11 +75,11 @@ if ($com_itemid > 0) {
     $com_pid    = 0;
     $com_rootid = 0;
     $com_text   = '';
-    // Start Add by voltan
+    // Start added by voltan
     $com_user  = '';
     $com_email = '';
     $com_url   = '';
-    // End Add by voltan
+    // End added by voltan
     include_once $GLOBALS['xoops']->path('include/comment_form.php');
     include_once $GLOBALS['xoops']->path('footer.php');
 }

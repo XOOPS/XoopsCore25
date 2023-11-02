@@ -7,8 +7,8 @@
         <li><a href="<{$xoops_url}>/modules/<{$xoops_dirname}>/index.php?cat=<{$category.id}>"><{$category.title}></a></li>
 
     <!-- If is subforum-->
-    <{if $parentforum}>
-        <{foreach item=forum from=$parentforum}>
+    <{if isset($parentforum)}>
+        <{foreach item=forum from=$parentforum|default:null}>
              <li><a href="<{$xoops_url}>/modules/<{$xoops_dirname}>/viewforum.php?forum=<{$forum.forum_id}>"><{$forum.forum_name}></a></li>
         <{/foreach}>
     <{/if}>
@@ -17,19 +17,19 @@
     </ol>
     <div class="row">
         <div class="col-xs-12">
-        <{if $viewer_level gt 1}>
+        <{if isset($viewer_level) && $viewer_level > 1}>
             <a href="<{$xoops_url}>/modules/<{$xoops_dirname}>/newtopic.php?forum=<{$forum_id}>" title="<{$smarty.const.THEME_FORUM_NEWTOPIC}>" class="btn btn-success"><{$smarty.const.THEME_FORUM_NEWTOPIC}></a>
         <{else}>
-            <{if $xoops_isuser}>
+            <{if isset($xoops_isuser)}>
                 <a href="<{$xoops_url}>/modules/<{$xoops_dirname}>/newtopic.php?forum=<{$forum_id}>" title="<{$smarty.const.THEME_FORUM_NEWTOPIC}>" class="btn btn-success"><{$smarty.const.THEME_FORUM_NEWTOPIC}></a>
             <{else}>
                 <a href="<{$xoops_url}>/user.php" title="<{$smarty.const.THEME_FORUM_REGISTER}>" class="btn btn-success"><{$smarty.const.THEME_FORUM_REGISTER}></a>
             <{/if}>
         <{/if}>
 
-        <{if $forum_topictype|default:''}><{$forum_topictype}><{/if}>
+        <{if !empty($forum_topictype)}><{$forum_topictype}><{/if}>
 
-        <{if $forum_topicstatus}>
+        <{if isset($forum_topicstatus)}>
             <span class="btn btn-info"><{$forum_topicstatus}></span>
         <{else}>
             <a href="<{$xoops_url}>/modules/<{$xoops_dirname}>/viewforum.php?forum=<{$forum_id}>&amp;status=digest" title="<{$smarty.const._MD_NEWBB_DIGEST}>" class="btn btn-info">
@@ -41,7 +41,7 @@
             <span class="glyphicon glyphicon-search"></span>
         </a>
 
-        <{if $subforum|default:''}>
+        <{if !empty($subforum)}>
             <{include file="db:newbb_viewforum_subforum.tpl"}>
         <{/if}>
         </div>
@@ -72,22 +72,22 @@
     <div class="col-sm-12">
         <div class="row">
             <div class="col-md-8 col-xs-12">
-                <{if $mode gt 1}>
+                <{if isset($mode) && $mode > 1}>
                     <form name="form_topics_admin" action="<{$xoops_url}>/modules/<{$xoops_dirname}>/action.topic.php" method="POST" onsubmit="if(window.document.form_topics_admin.op.value &lt; 1){return false;}">
                 <{/if}>
 
-                <{if $viewer_level gt 1}>
+                <{if isset($viewer_level) && $viewer_level > 1}>
                     <a class="btn btn-xs btn-info" href="<{$xoops_url}>/modules/<{$xoops_dirname}>/newtopic.php?op=add&forum=<{$forum_id}>" title="<{$smarty.const.THEME_ADD_POLL}>"><{$smarty.const.THEME_ADD_POLL}></a>
-                <{if $mode gt 1}>
+                <{if isset($mode) && $mode > 1}>
                     <{$smarty.const._ALL}>:
                     <input type="checkbox" name="topic_check1" id="topic_check1" value="1" onclick="xoopsCheckAll('form_topics_admin', 'topic_check1');">
                     <select name="op">
                         <option value="0"><{$smarty.const._SELECT}></option>
                         <option value="delete"><{$smarty.const._DELETE}></option>
-                        <{if $status eq "pending"}>
+                        <{if isset($status) &&  $status == "pending"}>
                         <option value="approve"><{$smarty.const._MD_NEWBB_APPROVE}></option>
                         <option value="move"><{$smarty.const._MD_NEWBB_MOVE}></option>
-                        <{elseif $status eq "deleted"}>
+                        <{elseif isset($status) &&  $status == "deleted"}>
                         <option value="restore"><{$smarty.const._MD_NEWBB_RESTORE}></option>
                         <{else}>
                         <option value="move"><{$smarty.const._MD_NEWBB_MOVE}></option>
@@ -112,7 +112,7 @@
                 <{include file="db:newbb_viewforum_menu.tpl"}>
             </div>
         </div>
-        <{if $mode gt 1}>
+        <{if isset($mode) && $mode > 1}>
             <{$smarty.const._ALL}>:
             <input type="checkbox" name="topic_check" id="topic_check" value="1" onclick="xoopsCheckAll('form_topics_admin', 'topic_check');">
         <{else}>
@@ -133,26 +133,26 @@
         <div class="col-md-1 visible-lg visible-md"><a href="<{$h_reply_link}>" title="<{$smarty.const._MD_NEWBB_REPLIES}>"><{$smarty.const._MD_NEWBB_REPLIES}></a></div>
         <div class="col-md-1 visible-lg visible-md"><a href="<{$h_views_link}>" title="<{$smarty.const._MD_NEWBB_VIEWS}>"><{$smarty.const._MD_NEWBB_VIEWS}></a></div>
 
-        <{if $rating_enable}>
+        <{if isset($rating_enable)}>
             <div class="col-md-1 visible-lg"><a href="<{$h_rating_link}>" title="<{$smarty.const._MD_NEWBB_RATINGS}>"><{$smarty.const._MD_NEWBB_RATINGS}></a></div>
         <{/if}>
 
-        <div class="<{if $rating_enable}>col-xs-6 col-sm-6 col-md-2<{else}>col-xs-6 col-sm-6 col-md-3<{/if}>"><a href="<{$h_date_link}>" title="<{$smarty.const._MD_NEWBB_LASTPOSTTIME}>"><{$smarty.const._MD_NEWBB_LASTPOSTTIME}></a></div>
+        <div class="<{if isset($rating_enable)}>col-xs-6 col-sm-6 col-md-2<{else}>col-xs-6 col-sm-6 col-md-3<{/if}>"><a href="<{$h_date_link}>" title="<{$smarty.const._MD_NEWBB_LASTPOSTTIME}>"><{$smarty.const._MD_NEWBB_LASTPOSTTIME}></a></div>
         </div><!-- .newbb-topiclist-header -->
 
-        <{if $sticky > 0}>
-            <{if $rating_enable}>
+        <{if isset($sticky) && $sticky > 0}>
+            <{if isset($rating_enable)}>
                 <{$smarty.const._MD_NEWBB_IMTOPICS}>
             <{else}>
                 <{$smarty.const._MD_NEWBB_IMTOPICS}>
             <{/if}>
         <{/if}>
 
-    <{foreach name=loop item=topic from=$topics}>
+    <{foreach item=topic from=$topics|default:null name=loop}>
     <div class="clearfix newbb-topiclist-itens <{cycle values="even,odd"}>">
 <!--
         <{if $topic.stick AND $smarty.foreach.loop.iteration == $sticky+1}>
-            <{if $rating_enable}>
+            <{if isset($rating_enable)}>
                 <{$smarty.const._MD_NEWBB_NOTIMTOPICS}>
             <{else}>
                 <{$smarty.const._MD_NEWBB_NOTIMTOPICS}>
@@ -161,7 +161,7 @@
 -->
         <div class="col-xs-6 col-sm-6 col-md-3">
         <span>
-            <{if $mode gt 1}>
+            <{if isset($mode) && $mode > 1}>
                 <input type="checkbox" name="topic_id[]" id="topic_id[<{$topic.topic_id}>]" value="<{$topic.topic_id}>">
             <{else}>
                 <{$topic.topic_folder}>
@@ -169,32 +169,32 @@
             <{$topic.topic_icon}>
         </span>
 
-        <a class="<{if $topic.topic_read eq 1 }>read-topic<{else}>new-topic<{/if}>" href="<{$xoops_url}>/modules/<{$xoops_dirname}>/<{$topic.topic_link}>" title="<{$topic.topic_excerpt}>">
+        <a class="<{if $topic.topic_read == 1 }>read-topic<{else}>new-topic<{/if}>" href="<{$xoops_url}>/modules/<{$xoops_dirname}>/<{$topic.topic_link}>" title="<{$topic.topic_excerpt}>">
             <{$topic.topic_title}>
         </a></div>
 
-<{*         <{$topic.attachment}> <{$topic.topic_page_jump}> *}>
+<{*         <{$topic.attachment|default:''}> <{$topic.topic_page_jump}> *}>
 
         <div class="col-md-2 visible-lg visible-md"><label class="label label-info"><span class="glyphicon glyphicon-user"></span> <{$topic.topic_poster}></label></div>
         <div class="col-md-2 visible-lg visible-md"><{$topic.topic_time}></div>
         <div class="col-md-1 visible-lg visible-md text-center"><{$topic.topic_replies}></div>
         <div class="col-md-1 visible-lg visible-md text-center"><{$topic.topic_views}></div>
-        <{if $rating_enable}><div class="col-md-1 visible-lg"><{$topic.rating_img}></div><{/if}>
-        <div class="<{if $rating_enable}>col-xs-6 col-sm-6 col-md-2<{else}>col-xs-6 col-sm-6 col-md-3<{/if}>"><{$topic.topic_last_posttime}> <{$smarty.const._MD_NEWBB_BY}> <{$topic.topic_last_poster}> <{$topic.topic_page_jump_icon}></div>
+        <{if isset($rating_enable)}><div class="col-md-1 visible-lg"><{$topic.rating_img}></div><{/if}>
+        <div class="<{if isset($rating_enable)}>col-xs-6 col-sm-6 col-md-2<{else}>col-xs-6 col-sm-6 col-md-3<{/if}>"><{$topic.topic_last_posttime}> <{$smarty.const._MD_NEWBB_BY}> <{$topic.topic_last_poster}> <{$topic.topic_page_jump_icon}></div>
 
     </div><!-- .newbb-topiclist-itens -->
     <{/foreach}>
 
     </div><!-- .newbb-topiclist-loop -->
 
-    <{if $mode gt 1}>
+    <{if isset($mode) && $mode > 1}>
         </form>
     <{/if}>
 
-    <{if $rating_enable}>
-        <!-- do do something -->
+    <{if isset($rating_enable)}>
+        <!-- do something -->
     <{else}>
-        <!-- do do something -->
+        <!-- do something -->
     <{/if}>
 </div><!-- .newbb-topicslist -->
 
@@ -224,7 +224,7 @@
 
 <div class="row collapse" id="forum-info">
     <div class="col-sm-6 col-md-6">
-        <{foreach item=perm from=$permission_table}>
+        <{foreach item=perm from=$permission_table|default:null}>
             <{$perm}>
         <{/foreach}>
     </div>
@@ -241,12 +241,12 @@
     </div>
 </div>
 
-<{if $online}>
+<{if isset($online)}>
     <{include file="db:newbb_online.tpl"}>
 <{/if}>
 
-<a title="NewBB" href="https://xoops.org" class="btn btn-xs btn-success">NewBB Version  <{$version/100}></a>
-<{if $rss_button}>
+<a title="NewBB" href="https://xoops.org" class="btn btn-xs btn-success">NewBB Version  <{$version}></a>
+<{if isset($rss_button)}>
     <a href="<{$xoops_url}>/modules/<{$xoops_dirname}>/rss.php?f=<{$forum_id}>" target="_blank" title="RSS FEED">
         <{$rss_button}>
     </a>

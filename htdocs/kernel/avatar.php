@@ -29,6 +29,16 @@ class XoopsAvatar extends XoopsObject
 {
     public $_userCount;
 
+    //PHP 8.2 Dynamic properties deprecated
+    public $avatar_id;
+    public $avatar_file;
+    public $avatar_name;
+    public $avatar_mimetype;
+    public $avatar_created;
+    public $avatar_display;
+    public $avatar_weight;
+    public $avatar_type;
+
     /**
      * Constructor
      */
@@ -189,7 +199,7 @@ class XoopsAvatarHandler extends XoopsObjectHandler
      * Egt Object
      *
      * @param  int $id
-     * @return XoopsAvatar
+     * @return XoopsAvatar|false
      */
     public function get($id)
     {
@@ -197,7 +207,8 @@ class XoopsAvatarHandler extends XoopsObjectHandler
         $id     = (int)$id;
         if ($id > 0) {
             $sql = 'SELECT * FROM ' . $this->db->prefix('avatar') . ' WHERE avatar_id=' . $id;
-            if (!$result = $this->db->query($sql)) {
+            $result = $this->db->query($sql);
+            if (!$this->db->isResultSet($result)) {
                 return false;
             }
             $numrows = $this->db->getRowsNum($result);
@@ -288,16 +299,19 @@ class XoopsAvatarHandler extends XoopsObjectHandler
         $ret   = array();
         $limit = $start = 0;
         $sql   = 'SELECT a.*, COUNT(u.user_id) AS count FROM ' . $this->db->prefix('avatar') . ' a LEFT JOIN ' . $this->db->prefix('avatar_user_link') . ' u ON u.avatar_id=a.avatar_id';
-        if (isset($criteria) && is_subclass_of($criteria, 'CriteriaElement')) {
+        if (isset($criteria) && \method_exists($criteria, 'renderWhere')) {
             $sql .= ' ' . $criteria->renderWhere();
             $sql .= ' GROUP BY a.avatar_id ORDER BY avatar_weight, avatar_id';
             $limit = $criteria->getLimit();
             $start = $criteria->getStart();
         }
         $result = $this->db->query($sql, $limit, $start);
-        if (!$result) {
-            return $ret;
+        if (!$this->db->isResultSet($result)) {
+            throw new \RuntimeException(
+                \sprintf(_DB_QUERY_ERROR, $sql) . $this->db->error(), E_USER_ERROR
+            );
         }
+        /** @var array $myrow */
         while (false !== ($myrow = $this->db->fetchArray($result))) {
             $avatar = new XoopsAvatar();
             $avatar->assignVars($myrow);
@@ -324,15 +338,17 @@ class XoopsAvatarHandler extends XoopsObjectHandler
 
 
         $sql = 'SELECT COUNT(*) FROM ' . $this->db->prefix('avatar');
-        if (isset($criteria) && is_subclass_of($criteria, 'CriteriaElement')) {
+        if (isset($criteria) && \method_exists($criteria, 'renderWhere')) {
             $sql .= ' ' . $criteria->renderWhere();
         }
-        if (!$result = $this->db->query($sql)) {
+        $result = $this->db->query($sql);
+        if (!$this->db->isResultSet($result)) {
             return 0;
         }
+
         list($count) = $this->db->fetchRow($result);
 
-        return $count;
+        return (int)$count;
     }
 
     /**
@@ -375,9 +391,11 @@ class XoopsAvatarHandler extends XoopsObjectHandler
             return false;
         }
         $sql = 'SELECT user_id FROM ' . $this->db->prefix('avatar_user_link') . ' WHERE avatar_id=' . $avatar->getVar('avatar_id');
-        if (!$result = $this->db->query($sql)) {
+        $result = $this->db->query($sql);
+        if (!$this->db->isResultSet($result)) {
             return $ret;
         }
+        /** @var array $myrow */
         while (false !== ($myrow = $this->db->fetchArray($result))) {
             $ret[] = &$myrow['user_id'];
         }
