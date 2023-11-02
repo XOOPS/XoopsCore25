@@ -197,7 +197,7 @@ class XoopsXmlRpcApi
      *
      * @return $this|XoopsApi
      */
-    public function &_getXoopsApi(&$params)
+    public function _getXoopsApi(&$params)
     {
         if (strtolower(get_class($this)) !== 'xoopsapi') {
             require_once(XOOPS_ROOT_PATH . '/class/xml/rpc/xoopsapi.php');
