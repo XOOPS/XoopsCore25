@@ -119,10 +119,6 @@ if (!function_exists('protector_oninstall_base')) {
                 $ret[] = '<span style="color:#ff0000;">ERROR: Could not open the directory:  <b>' . htmlspecialchars($tpl_path) . '</b>.</span><br>';
             }
             closedir($handler);
-            } else {
-                // Handle the error condition when opendir fails
-                $ret[] = '<span style="color:#ff0000;">ERROR: Could not open the directory:  <b>' . htmlspecialchars($tpl_path) . '</b>.</span><br>';
-            }
         } else {
             // Directory does not exist; handle this condition
             $ret[] = '<span style="color:#ff0000;">ERROR: Directory does not exist: <b>' . htmlspecialchars($tpl_path) . '</b>.</span><br>';
