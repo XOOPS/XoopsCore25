@@ -335,6 +335,9 @@ if (!empty($imageId)) {
         case 'image/jpeg':
             $sourceImage = imagecreatefromjpeg($imagePath);
             break;
+        case 'image/webp':
+            $sourceImage = imagecreatefromwebp($imagePath);
+            break;
         default:
             exit404BadReq();
             break;
@@ -482,6 +485,10 @@ switch ($imageMimetype) {
         $output_function = 'imagejpeg';
         $do_sharpen = true;
         break;
+    case 'image/webp':
+        $output_function = 'imagewebp';
+        $do_sharpen = false;
+        break;
     default:
         exit404BadReq();
         break;
@@ -491,7 +498,7 @@ switch ($imageMimetype) {
 imagecopyresampled($destination_image, $sourceImage, 0, 0, $offset_x, $offset_y, $tn_width, $tn_height, $imageWidth, $imageHeight);
 
 // Set background color
-if (in_array($imageMimetype, array('image/gif', 'image/png'))) {
+if (in_array($imageMimetype, ['image/gif', 'image/png', 'image/webp'])) {
     if (!$color) {
         // If this is a GIF or a PNG, we need to set up transparency
         imagealphablending($destination_image, false);
@@ -559,7 +566,7 @@ if (ENABLE_IMAGEFILTER && !empty($filter)) {
         $rawFilterArgs = explode(',', $currentFilter);
         $filterConst = constant(array_shift($rawFilterArgs));
         if (null !== $filterConst) { // skip if unknown constant
-            $filterArgs = array();
+            $filterArgs = [];
             $filterArgs[] = $destination_image;
             $filterArgs[] = $filterConst;
             foreach ($rawFilterArgs as $tempValue) {
@@ -609,10 +616,11 @@ if ($do_sharpen) {
     // (1) the difference between the original size and the final size
     // (2) the final size
     $sharpness = findSharp($imageWidth, $tn_width);
-    $sharpen_matrix = array(
-        array(-1, -2, -1),
-        array(-2, $sharpness + 12, -2),
-        array(-1, -2, -1));
+    $sharpen_matrix = [
+        [-1, -2, -1],
+        [-2, $sharpness + 12, -2],
+        [-1, -2, -1]
+    ];
     $divisor = $sharpness;
     $offset = 0;
     imageconvolution($destination_image, $sharpen_matrix, $divisor, $offset);
