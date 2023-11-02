@@ -102,6 +102,7 @@ return array(
     'ppm'   => 'image/x-portable-pixmap',
     'xbm'   => 'image/x-xbitmap',
     'xpm'   => 'image/x-xpixmap',
+    'webp'  => 'image/webp',
     'ics'   => 'text/calendar',
     'ifb'   => 'text/calendar',
     'csv'   => 'text/csv',
