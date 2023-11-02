@@ -10,8 +10,8 @@
  */
 
 /**
- * @copyright    XOOPS Project http://xoops.org/
- * @license      GNU GPL 2 or later (https://www.gnu.org/licenses/gpl-2.0.html)
+ * @copyright    XOOPS Project https://xoops.org/
+ * @license      GNU GPL 2.0 or later (https://www.gnu.org/licenses/gpl-2.0.html)
  * @package
  * @since
  * @author       XOOPS Development Team, Kazumi Ono (AKA onokazu)
@@ -52,7 +52,6 @@ function form_user($add_or_edit, $user = '')
         /** @var XoopsConfigHandler $config_handler */
         $config_handler  = xoops_getHandler('config');
         $xoopsConfigUser = $config_handler->getConfigsByCat(XOOPS_CONF_USER);
-
         //Add user
         $uid_value        = '';
         $uname_value      = '';
@@ -73,7 +72,7 @@ function form_user($add_or_edit, $user = '')
         $umode_value      = $xoopsConfig['com_mode'];
         $uorder_value     = $xoopsConfig['com_order'];
         // RMV-NOTIFY
-        $notify_method_value = (isset($xoopsConfigUser['defaultnotificationmethod']) ? $xoopsConfigUser['defaultnotificationmethod'] : XOOPS_NOTIFICATION_METHOD_PM);
+        $notify_method_value = (isset($xoopsConfigUser['default_notification']) ? $xoopsConfigUser['default_notification'] : XOOPS_NOTIFICATION_METHOD_PM);
         $notify_mode_value   = XOOPS_NOTIFICATION_MODE_SENDALWAYS;
         $bio_value           = '';
         $rank_value          = 0;
@@ -83,7 +82,7 @@ function form_user($add_or_edit, $user = '')
         $groups              = array(XOOPS_GROUP_USERS);
     } else {
         //Edit user
-        /* @var XoopsMemberHandler $member_handler */
+        /** @var XoopsMemberHandler $member_handler */
         $member_handler = xoops_getHandler('member');
         $user           = $member_handler->getUser($uid);
         if (is_object($user)) {
@@ -186,7 +185,7 @@ function form_user($add_or_edit, $user = '')
     $form->addElement(new XoopsFormRadioYN(_AM_SYSTEM_USERS_ACCEPT_EMAIL, 'user_mailok', $mailok_value));
 
     //Groups administration addition XOOPS 2.0.9: Mith
-    /* @var  XoopsGroupPermHandler $gperm_handler */
+    /** @var  XoopsGroupPermHandler $gperm_handler */
     $gperm_handler = xoops_getHandler('groupperm');
     //If user has admin rights on groups
     if ($gperm_handler->checkRight('system_admin', XOOPS_SYSTEM_GROUP, $xoopsUser->getGroups(), 1)) {
@@ -252,21 +251,24 @@ function synchronize($uid, $type)
                     $criteria->add($table['criteria']);
                 }
                 $sql = 'SELECT COUNT(*) AS total FROM ' . $xoopsDB->prefix($table['table_name']) . ' ' . $criteria->renderWhere();
-                if ($result = $xoopsDB->query($sql)) {
+                $result = $xoopsDB->query($sql);
+                if ($xoopsDB->isResultSet($result)) {
                     if ($row = $xoopsDB->fetchArray($result)) {
                         $total_posts += $row['total'];
                     }
                 }
             }
             $sql = 'UPDATE ' . $xoopsDB->prefix('users') . " SET posts = '" . $total_posts . "' WHERE uid = '" . $uid . "'";
-            if (!$result = $xoopsDB->queryF($sql)) {
+            $result = $xoopsDB->queryF($sql);
+            if (!$xoopsDB->isResultSet($result)) {
                 redirect_header('admin.php?fct=users', 1, _AM_SYSTEM_USERS_CNUUSER);
             }
             break;
 
         case 'all users':
             $sql = 'SELECT uid FROM ' . $xoopsDB->prefix('users') . '';
-            if (!$result = $xoopsDB->query($sql)) {
+            $result = $xoopsDB->query($sql);
+            if (!$xoopsDB->isResultSet($result)) {
                 redirect_header('admin.php?fct=users', 1, sprintf(_AM_SYSTEM_USERS_CNGUSERID, $uid));
             }
 

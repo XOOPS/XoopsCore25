@@ -10,8 +10,8 @@
  */
 
 /**
- * @copyright    XOOPS Project http://xoops.org/
- * @license      GNU GPL 2 or later (https://www.gnu.org/licenses/gpl-2.0.html)
+ * @copyright    XOOPS Project https://xoops.org/
+ * @license      GNU GPL 2.0 or later (https://www.gnu.org/licenses/gpl-2.0.html)
  * @package
  * @since
  * @author       XOOPS Development Team, Kazumi Ono (AKA onokazu)
@@ -474,3 +474,12 @@ $modversion['config'][$i]['description'] = '';
 $modversion['config'][$i]['formtype']    = 'hidden';
 $modversion['config'][$i]['valuetype']   = 'int';
 $modversion['config'][$i]['default']     = 0;
+//2.5.11
+++$i;
+$modversion['config'][$i]['name']        = 'default_notification';
+$modversion['config'][$i]['title']       = '_MD_AM_DEFAULT_NOTIFICATION_METHOD';
+$modversion['config'][$i]['description'] = '_MD_AM_DEFAULT_NOTIFICATION_METHOD_DESC';
+$modversion['config'][$i]['formtype']    = 'select';
+$modversion['config'][$i]['valuetype']   = 'int';
+$modversion['config'][$i]['default']     = 3;
+$modversion['config'][$i]['options']     = [_MI_DEFAULT_NOTIFICATION_METHOD_DISABLE => 0, _MI_DEFAULT_NOTIFICATION_METHOD_PM => 1, _MI_DEFAULT_NOTIFICATION_METHOD_EMAIL => 2];

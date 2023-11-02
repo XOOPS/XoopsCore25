@@ -5,7 +5,7 @@ use Xmf\Database\Tables;
 /**
  * Upgrade from 2.5.10 to 2.5.11
  *
- * @copyright    (c) 2000-2021 XOOPS Project (https://xoops.org)
+ * @copyright    (c) 2000-2023 XOOPS Project (https://xoops.org)
  * @license          GNU GPL 2 (https://www.gnu.org/licenses/gpl-2.0.html)
  * @package          Upgrade
  * @since            2.5.11
@@ -20,13 +20,19 @@ class Upgrade_2511 extends XoopsUpgrade
     {
         parent::__construct(basename(__DIR__));
         $this->tasks = array(
+            'cleancache',
             'bannerintsize',
             'captchadata',
+            'configkey',
+            'modulesvarchar',
             'qmail',
             'rmindexhtml',
             'textsanitizer',
             'xoopsconfig',
-			'modulesvarchar',
+            'templates',
+            'templatesadmin',
+            'zapsmarty',
+            'notificationmethod',  
         );
         $this->usedFiles = array();
         $this->pathsToCheck = array(
@@ -53,14 +59,45 @@ class Upgrade_2511 extends XoopsUpgrade
         );
     }
 
+    protected $cleanCacheKey = 'cache-cleaned';
+
+    /**
+     * We must remove stale template caches and compiles
+     *
+     * @return bool true if patch IS applied, false if NOT applied
+     */
+    public function check_cleancache()
+    {
+        if (!array_key_exists($this->cleanCacheKey, $_SESSION)
+            || $_SESSION[$this->cleanCacheKey]===false) {
+            return false;
+        }
+        return true;
+    }
+
+    /**
+     * Remove  all caches and compiles
+     *
+     * @return bool true if applied, false if failed
+     */
+    public function apply_cleancache()
+    {
+        require_once XOOPS_ROOT_PATH . '/modules/system/class/maintenance.php';
+        $maintenance = new SystemMaintenance();
+        $result  = $maintenance->CleanCache(array(1,2,3));
+        if ($result===true) {
+            $_SESSION[$this->cleanCacheKey] = true;
+        }
+        return $result;
+    }
 
     /**
      * Determine if columns are declared mediumint, and if
      * so, queue ddl to alter to int.
      *
-     * @param $migrate           \Xmf\Database\Tables
-     * @param $bannerTableName   string
-     * @param $bannerColumnNames string[] array of columns to check
+     * @param Tables   $migrate
+     * @param string   $bannerTableName
+     * @param string[] $bannerColumnNames array of columns to check
      *
      * @return integer count of queue items added
      */
@@ -101,13 +138,14 @@ class Upgrade_2511 extends XoopsUpgrade
      */
     public function apply_bannerintsize()
     {
-        $migrate = new \Xmf\Database\Tables();
+        $migrate = new Tables();
 
         $count = $this->fromMediumToInt($migrate, $this->bannerTableName, $this->bannerColumnNames);
 
         $result = $migrate->executeQueue(true);
         if (false === $result) {
-            $this->logs[] = sprintf('Migration of %s table failed. Error: %s - %s' .
+            $this->logs[] = sprintf(
+                'Migration of %s table failed. Error: %s - %s' .
                 $this->bannerTableName,
                 $migrate->getLastErrNo(),
                 $migrate->getLastError()
@@ -125,7 +163,7 @@ class Upgrade_2511 extends XoopsUpgrade
      */
     public function check_qmail()
     {
-        /* @var XoopsMySQLDatabase $db */
+        /** @var XoopsMySQLDatabase $db */
         $db = XoopsDatabaseFactory::getDatabaseConnection();
 
         $table = $db->prefix('configoption');
@@ -138,7 +176,7 @@ class Upgrade_2511 extends XoopsUpgrade
 
         /** @var mysqli_result $result */
         $result = $db->query($sql);
-        if ($result) {
+        if ($db->isResultSet($result)) {
             $row = $db->fetchRow($result);
             if ($row) {
                 $count = $row[0];
@@ -170,17 +208,22 @@ class Upgrade_2511 extends XoopsUpgrade
     /**
      * Do we need to move captcha writable data?
      *
-     * @return bool
+     * @return bool true if patch IS applied, false if NOT applied
      */
     public function check_captchadata()
     {
         $captchaConfigFile = XOOPS_VAR_PATH . '/configs/captcha/config.php';
+        $oldCaptchaConfigFile = XOOPS_ROOT_PATH . '/class/captcha/config.php';
+        if (!file_exists($oldCaptchaConfigFile)) { // nothing to copy
+            return true;
+        }
         return file_exists($captchaConfigFile);
     }
 
     /**
      * Attempt to make the supplied path
-     * @param $newPath string
+     *
+     * @param string $newPath
      *
      * @return bool
      */
@@ -196,8 +239,8 @@ class Upgrade_2511 extends XoopsUpgrade
     /**
      * Copy file $source to $destination
      *
-     * @param $source      string
-     * @param $destination string
+     * @param string $source
+     * @param string $destination
      *
      * @return bool true if successful, false on error
      */
@@ -247,6 +290,63 @@ class Upgrade_2511 extends XoopsUpgrade
 
         return $returnResult;
     }
+
+    //config
+    /**
+     * Increase primary key columns from smallint to int
+     *
+     * @return bool true if patch IS applied, false if NOT applied
+     */
+    public function check_configkey()
+    {
+        $tableName = 'config';
+        $columnName = 'conf_id';
+
+        $migrate = new Tables();
+        $migrate->useTable($tableName);
+        $count = 0;
+        $attributes = $migrate->getColumnAttributes($tableName, $columnName);
+        if (0 === strpos(trim($attributes), 'smallint')) {
+            $count++;
+            $migrate->alterColumn($tableName, $columnName, 'int(10) UNSIGNED NOT NULL');
+        }
+
+        return $count==0;
+    }
+
+    /**
+     * Increase primary key columns from smallint to int
+     *
+     * @return bool true if applied, false if failed
+     */
+    public function apply_configkey()
+    {
+        $tableName = 'config';
+        $columnName = 'conf_id';
+
+        $migrate = new Tables();
+        $migrate->useTable($tableName);
+        $count = 0;
+        $attributes = $migrate->getColumnAttributes($tableName, $columnName);
+        if (0 === strpos(trim($attributes), 'smallint')) {
+            $count++;
+            $migrate->alterColumn($tableName, $columnName, 'int(10) UNSIGNED NOT NULL AUTO_INCREMENT');
+        }
+
+        $result = $migrate->executeQueue(true);
+        if (false === $result) {
+            $this->logs[] = sprintf(
+                'Migration of %s table failed. Error: %s - %s' .
+                $tableName,
+                $migrate->getLastErrNo(),
+                $migrate->getLastError()
+            );
+            return false;
+        }
+
+        return $count!==0;
+    }
+    //configend
 
     /**
      * Do we need to create a xoops_data/configs/xoopsconfig.php?
@@ -301,10 +401,11 @@ class Upgrade_2511 extends XoopsUpgrade
 
     /**
      * Build a list of config files using the existing textsanitizer/config.php
+     * each as source name => destination name in $this->textsanitizerConfigFiles
+     *
      * This should prevent some issues with customized systems.
      *
-     * @return string[] array of existing ts and extension config files
-     *                  each as source name => destination name
+     * @return void
      */
     protected function buildListTSConfigs()
     {
@@ -489,9 +590,9 @@ class Upgrade_2511 extends XoopsUpgrade
      * Determine if columns are declared smallint, and if
      * so, queue ddl to alter to varchar.
      *
-     * @param $migrate           \Xmf\Database\Tables
-     * @param $modulesTableName   string
-     * @param $modulesColumnNames string[] array of columns to check
+     * @param Tables   $migrate
+     * @param string   $modulesTableName
+     * @param string[] $modulesColumnNames  array of columns to check
      *
      * @return integer count of queue items added
      */
@@ -513,7 +614,7 @@ class Upgrade_2511 extends XoopsUpgrade
     private $modulesColumnNames = array('version');
 
     /**
-     * Increase count columns from smallint to varchar
+     * Increase version columns from smallint to varchar
      *
      * @return bool true if patch IS applied, false if NOT applied
      */
@@ -521,24 +622,24 @@ class Upgrade_2511 extends XoopsUpgrade
     {
         $migrate = new Tables();
         $count = $this->fromSmallintToVarchar($migrate, $this->modulesTableName, $this->modulesColumnNames);
-		echo 'count: ' .$count;
         return $count==0;
     }
 
     /**
-     * Increase count columns from smallint to varchar
+     * Increase version columns from smallint to varchar
      *
      * @return bool true if applied, false if failed
      */
     public function apply_modulesvarchar()
     {
-        $migrate = new \Xmf\Database\Tables();
+        $migrate = new Tables();
 
         $count = $this->fromSmallintToVarchar($migrate, $this->modulesTableName, $this->modulesColumnNames);
 
         $result = $migrate->executeQueue(true);
         if (false === $result) {
-            $this->logs[] = sprintf('Migration of %s table failed. Error: %s - %s' .
+            $this->logs[] = sprintf(
+                'Migration of %s table failed. Error: %s - %s' .
                 $this->modulesTableName,
                 $migrate->getLastErrNo(),
                 $migrate->getLastError()
@@ -546,7 +647,185 @@ class Upgrade_2511 extends XoopsUpgrade
             return false;
         }
 
-        return $count!==0;
+        return true;
+    }
+
+    /**
+     * @return bool
+     */
+    public function check_templates()
+    {
+        $sql = 'SELECT COUNT(*) FROM `' . $GLOBALS['xoopsDB']->prefix('tplfile') . "` WHERE `tpl_file` IN ('system_confirm.tpl') AND `tpl_type` = 'module'";
+        $result = $GLOBALS['xoopsDB']->queryF($sql);
+        if (!$GLOBALS['xoopsDB']->isResultSet($result)) {
+            return false;
+        }
+        list($count) = $GLOBALS['xoopsDB']->fetchRow($result);
+
+        return ($count != 0);
+    }
+
+
+    /**
+     * @return bool
+     */
+    public function apply_templates()
+    {
+        $modversion = array();
+        include_once XOOPS_ROOT_PATH . '/modules/system/xoops_version.php';
+
+        $dbm = new Db_manager();
+        $time = time();
+        foreach ($modversion['templates'] as $tplfile) {
+            if ((isset($tplfile['type']) && $tplfile['type'] === 'module') || !isset($tplfile['type'])) {
+
+                $filePath = XOOPS_ROOT_PATH . '/modules/system/templates/' . $tplfile['file'];
+                if ($fp = fopen($filePath, 'r')) {
+                    $newtplid = $dbm->insert('tplfile', " VALUES (0, 1, 'system', 'default', '" . addslashes($tplfile['file']) . "', '" . addslashes($tplfile['description']) . "', " . $time . ', ' . $time . ", 'module')");
+                    $tplsource = fread($fp, filesize($filePath));
+                    fclose($fp);
+                    $dbm->insert('tplsource', ' (tpl_id, tpl_source) VALUES (' . $newtplid . ", '" . addslashes($tplsource) . "')");
+                }
+            }
+        }
+
+        return true;
+    }
+
+    /**
+     * @return bool
+     */
+    public function check_templatesadmin()
+    {
+        $sql = 'SELECT COUNT(*) FROM `' . $GLOBALS['xoopsDB']->prefix('tplfile') . "` WHERE `tpl_file` IN ('system_modules.tpl') AND `tpl_type` = 'admin'";
+        $result = $GLOBALS['xoopsDB']->queryF($sql);
+        if (!$GLOBALS['xoopsDB']->isResultSet($result)) {
+            return false;
+        }
+        list($count) = $GLOBALS['xoopsDB']->fetchRow($result);
+
+        return ($count != 0);
+    }
+
+    /**
+     * @return bool
+     */
+    public function apply_templatesadmin()
+    {
+        include XOOPS_ROOT_PATH . '/modules/system/xoops_version.php';
+        $dbm  = new Db_manager();
+        $time = time();
+        foreach ($modversion['templates'] as $tplfile) {
+            // Admin templates
+            if (isset($tplfile['type']) && $tplfile['type'] === 'admin' && $fp = fopen('../modules/system/templates/admin/' . $tplfile['file'], 'r')) {
+                $newtplid  = $dbm->insert('tplfile', " VALUES (0, 1, 'system', 'default', '" . addslashes($tplfile['file']) . "', '" . addslashes($tplfile['description']) . "', " . $time . ', ' . $time . ", 'admin')");
+                $tplsource = fread($fp, filesize('../modules/system/templates/admin/' . $tplfile['file']));
+                fclose($fp);
+                $dbm->insert('tplsource', ' (tpl_id, tpl_source) VALUES (' . $newtplid . ", '" . addslashes($tplsource) . "')");
+            }
+        }
+
+        return true;
+    }
+
+    //modules/system/themes/legacy/legacy.php
+    /**
+     * Do we need to delete obsolete Smarty files?
+     *
+     * @return bool
+     */
+    public function check_zapsmarty()
+    {
+        return !file_exists('../class/smarty/smarty.class.php');
+    }
+
+    /**
+     * Delete obsolete Smarty files
+     *
+     * @return bool
+     */
+    public function apply_zapsmarty()
+    {
+        // Define the base directory
+        $baseDir = '../class/smarty/';
+
+        // List of sub-folders and files to delete
+        $itemsToDelete = array(
+            'configs',
+            'internals',
+            'xoops_plugins',
+            'Config_File.class.php',
+            'debug.tpl',
+            'Smarty.class.php',
+            'Smarty_Compiler.class.php'
+        );
+
+        // Loop through each item and delete it
+        foreach ($itemsToDelete as $item) {
+            $path = $baseDir . $item;
+
+            // Check if it's a directory or a file
+            if (is_dir($path)) {
+                // Delete directory and its contents
+                array_map('unlink', glob("$path/*.*"));
+                rmdir($path);
+            } elseif (is_file($path)) {
+                // Delete file
+                if (is_writable($path)) {
+                    unlink($path);
+                }
+            }
+        }
+
+        return true;
+    }
+
+    /**
+     * Check if default notification method already exists
+     *
+     */
+    public function check_notificationmethod()
+    {
+        $sql = 'SELECT COUNT(*) FROM `' . $GLOBALS['xoopsDB']->prefix('config') . "` WHERE `conf_name` IN ('default_notification')";
+        if (!$result = $GLOBALS['xoopsDB']->queryF($sql)) {
+            return false;
+        }
+        return true;
+    }
+
+    /**
+     * @return bool
+     */
+    public function apply_notificationmethod()
+    {
+        $returnResult = true;
+        $notification_method = false;
+        $sql                   = 'SELECT COUNT(*) FROM `' . $GLOBALS['xoopsDB']->prefix('config') . "` WHERE `conf_name` = 'default_notification'";
+        if ($result = $GLOBALS['xoopsDB']->queryF($sql)) {
+            list($count) = $GLOBALS['xoopsDB']->fetchRow($result);
+            if ($count == 1) {
+                $notification_method = true;
+            }
+        }
+
+        if (!$notification_method) {
+            $sql = 'INSERT INTO ' . $GLOBALS['xoopsDB']->prefix('config') . ' (conf_id, conf_modid, conf_catid, conf_name, conf_title, conf_value, conf_desc, conf_formtype, conf_valuetype, conf_order) ' . ' VALUES ' . " (NULL, 0, 2, 'default_notification', '_MD_AM_DEFAULT_NOTIFICATION_METHOD', '1', '_MD_AM_DEFAULT_NOTIFICATION_METHOD_DESC', 'select', 'int', 3)";
+
+            if (!$GLOBALS['xoopsDB']->queryF($sql)) {
+                return false;
+            }
+            $config_id = $GLOBALS['xoopsDB']->getInsertId();
+
+            $sql = 'INSERT INTO ' . $GLOBALS['xoopsDB']->prefix('configoption') . ' (confop_id, confop_name, confop_value, conf_id)'. ' VALUES'
+                . " (NULL, '_MI_DEFAULT_NOTIFICATION_METHOD_DISABLE', '0', {$config_id}),"
+                . " (NULL, '_MI_DEFAULT_NOTIFICATION_METHOD_PM', '1', {$config_id}),"
+                . " (NULL, '_MI_DEFAULT_NOTIFICATION_METHOD_EMAIL', '2', {$config_id})";
+            if (!$result = $GLOBALS['xoopsDB']->queryF($sql)) {
+                return false;
+            }
+        }
+
+        return $returnResult;
     }
 
 }

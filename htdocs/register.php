@@ -16,7 +16,7 @@
  * If you did not receive this file, get it at https://www.gnu.org/licenses/gpl-2.0.html
  *
  * @copyright       (c) 2000-2016 XOOPS Project (www.xoops.org)
- * @license             GNU GPL 2 or later (https://www.gnu.org/licenses/gpl-2.0.html)
+ * @license             GNU GPL 2.0 or later (https://www.gnu.org/licenses/gpl-2.0.html)
  * @package             core
  * @since               2.0.0
  * @author              Kazumi Ono <webmaster@myweb.ne.jp>
@@ -31,7 +31,7 @@ $xoopsPreload->triggerEvent('core.register.start');
 xoops_loadLanguage('user');
 xoops_load('XoopsUserUtility');
 
-$myts = MyTextSanitizer::getInstance();
+$myts = \MyTextSanitizer::getInstance();
 /** @var XoopsConfigHandler $config_handler */
 $config_handler  = xoops_getHandler('config');
 $xoopsConfigUser = $config_handler->getConfigsByCat(XOOPS_CONF_USER);
@@ -76,7 +76,7 @@ $clean_actkey = '';
 if (!isset($_POST['op']) && isset($_GET['op'])) {
     $op = Request::getCmd('op', 'register', 'GET');
     if (isset($_GET['id'])) {
-        $clean_id =  Request::getInt('id', '', 'POST');
+        $clean_id =  Request::getInt('id', '', 'GET');
     }
     if (isset($_GET['actkey'])) {
         $clean_actkey =  Request::getCmd('actkey', '', 'GET');
@@ -163,7 +163,7 @@ switch ($op) {
             $newuser->setVar('umode', $GLOBALS['xoopsConfig']['com_mode'], true);
             $newuser->setVar('theme', $GLOBALS['xoopsConfig']['theme_set'], true);
             $newuser->setVar('user_mailok', $user_mailok, true);
-            $newuser->setVar('notify_method', (isset($xoopsConfigUser['defaultnotificationmethod']) ? $xoopsConfigUser['defaultnotificationmethod'] : XOOPS_NOTIFICATION_METHOD_PM));
+            $newuser->setVar('notify_method', (isset($xoopsConfigUser['default_notification']) ? $xoopsConfigUser['default_notification'] : XOOPS_NOTIFICATION_METHOD_PM));
             if ($xoopsConfigUser['activation_type'] == 1) {
                 $newuser->setVar('level', 1, true);
             } else {
@@ -270,7 +270,7 @@ switch ($op) {
                     $config_handler  = xoops_getHandler('config');
                     $xoopsConfigUser = $config_handler->getConfigsByCat(XOOPS_CONF_USER);
                     if ($xoopsConfigUser['activation_type'] == 2) {
-                        $myts        = MyTextSanitizer::getInstance();
+                        $myts        = \MyTextSanitizer::getInstance();
                         $xoopsMailer = xoops_getMailer();
                         $xoopsMailer->useMail();
                         $xoopsMailer->setTemplate('activated.tpl');
