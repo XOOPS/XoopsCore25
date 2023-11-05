@@ -69,7 +69,7 @@ switch ($op) {
     case 'users_delete':
         $xoBreadCrumb->render();
         $user = $member_handler->getUser($uid);
-        if (Request::getInt('ok', 0) === 1) {
+        if ((int)Request::getInt('ok', 0) === 1) {
             if (!$GLOBALS['xoopsSecurity']->check()) {
                 redirect_header('admin.php?fct=users', 3, implode('<br>', $GLOBALS['xoopsSecurity']->getErrors()));
             }
