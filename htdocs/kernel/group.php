@@ -486,7 +486,7 @@ class XoopsMembershipHandler extends XoopsObjectHandler
             $sql .= ' ' . $criteria->renderWhere();
         }
         $result = $this->db->query($sql);
-        if (!$this->db->isResultSet($result)) {
+        if (!$result) {
             return false;
         }
 
