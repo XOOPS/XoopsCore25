@@ -755,7 +755,7 @@ EOJS;
             if (($caption = $element->getCaption()) != '') {
                 $ret .= '<label for="' . $element->getName() . '" class="col-xs-12 col-sm-2 col-form-label text-sm-right">'
                     . $element->getCaption()
-                    . ($element->isRequired() ? '<span class="caption-required">*</span>' : '')
+                    . ($element->isRequired() ? '<span class="xo-caption-required">*</span>' : '')
                     . '</label>';
             } else {
                 $ret .= '<div class="col-xs-12 col-sm-2"> </div>';
@@ -767,6 +767,10 @@ EOJS;
             }
             $ret .= '</div>';
             $ret .= '</div>';
+        }
+        if (count($form->getRequired()) > 0) {
+            //  Add caption marker constructed using renderer's formatting
+            $ret .= NWLINE . '<div class="col-12 mb-2"> <span class="xo-caption-required">*</span> = ' . _REQUIRED . '</div>' . NWLINE;
         }
         $ret .= $hidden;
         $ret .= '</form></div>';
