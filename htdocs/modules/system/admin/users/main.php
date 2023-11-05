@@ -362,7 +362,7 @@ switch ($op) {
                 }
             }
 
-            $uname_text  = new XoopsFormText('', 'user_uname', 30, 60);
+            $uname_text  = new XoopsFormText('', 'username', 30, 60);
             $uname_match = new XoopsFormSelectMatchOption('', 'user_uname_match');
             $uname_tray  = new XoopsFormElementTray(_AM_SYSTEM_USERS_UNAME, '&nbsp;');
             $uname_tray->addElement($uname_match);
