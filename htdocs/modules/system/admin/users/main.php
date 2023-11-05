@@ -151,9 +151,9 @@ switch ($op) {
             }
 
             $edituser = $member_handler->getUser($uid);
-            if ($edituser->getVar('uname', 'n') != Request::getString('username') && $member_handler->getUserCount(new Criteria('uname', $myts->addSlashes(Request::getString('user_uname')))) > 0) {
+            if ($edituser->getVar('uname', 'n') != Request::getString('username') && $member_handler->getUserCount(new Criteria('uname', $myts->addSlashes(Request::getString('username')))) > 0) {
                 xoops_cp_header();
-                xoops_error(sprintf(_AM_SYSTEM_USERS_PSEUDO_ERROR, htmlspecialchars(Request::getString('user_uname'), ENT_QUOTES)));
+                xoops_error(sprintf(_AM_SYSTEM_USERS_PSEUDO_ERROR, htmlspecialchars(Request::getString('username'), ENT_QUOTES)));
                 xoops_cp_footer();
             } elseif ($edituser->getVar('email', 'n') != Request::getEmail('email') && $member_handler->getUserCount(new Criteria('email', $myts->addSlashes(Request::getEmail('email')))) > 0) {
                 xoops_cp_header();
@@ -161,7 +161,7 @@ switch ($op) {
                 xoops_cp_footer();
             } else {
                 $edituser->setVar('name', Request::getString('name'));
-                $edituser->setVar('uname', Request::getString('user_uname'));
+                $edituser->setVar('uname', Request::getString('username'));
                 $edituser->setVar('email', Request::getEmail('email'));
                 $url = formatURL(Request::getUrl('url'));
                 $edituser->setVar('url', $url);
@@ -246,7 +246,7 @@ switch ($op) {
                         $newuser->setVar('attachsig', Request::getString('attachsig'));
                     }
                     $newuser->setVar('name', Request::getString('name'));
-                    $newuser->setVar('uname', Request::getString('user_uname'));
+                    $newuser->setVar('uname', Request::getString('username'));
                     $newuser->setVar('email', Request::getEmail('email'));
                     $newuser->setVar('url', formatURL(Request::getUrl('url')));
                     $newuser->setVar('user_avatar', 'avatars/blank.gif');
@@ -474,7 +474,7 @@ switch ($op) {
             $requete_search  = '<br><br><strong>See search request: </strong><br><br>';
             $requete_pagenav = '';
 
-            $user_uname = Request::getString('user_uname');
+            $user_uname = Request::getString('username');
             $user_uname_match = Request::getInt('user_uname_match', 0);
 
                        $criteria = new CriteriaCompo();
@@ -497,7 +497,7 @@ switch ($op) {
                 $requete_pagenav .= '&amp;user_uname=' . htmlspecialchars($user_uname, ENT_QUOTES) . '&amp;user_uname_match=' . htmlspecialchars($user_uname_match, ENT_QUOTES);
                 $requete_search .= 'uname : ' . $user_uname . ' et user_uname_match=' . $user_uname_match . '<br>';
             }
-            $user_name = Request::getString('user_name');
+            $user_name = Request::getString('username');
             $user_name_match = Request::getInt('user_name_match', 0);
             if (!empty($user_name)) {
                 $match = Request::getString('user_name_match', XOOPS_MATCH_START);
@@ -809,14 +809,14 @@ switch ($op) {
             $user_type = Request::getString('user_type');
             //selgroups
             $selgroups = Request::getString('selgroups'); //TODO should it be an array?
-            $user_uname = Request::getString('user_uname');
+            $user_uname = Request::getString('username');
 
             //Form tris
             $form          = '<form action="admin.php?fct=users" method="post">
                     ' . _AM_SYSTEM_USERS_SEARCH_USER . '<input type="text" name="user_uname" value="' . $myts->htmlSpecialChars($user_uname) . '" size="15">
                     <select name="selgroups">
                         <option value="" selected>' . _AM_SYSTEM_USERS_ALLGROUP . '</option>';
-            /* @var XoopsGroupHandler $group_handler */
+            /** @var XoopsGroupHandler $group_handler */
             $group_handler = xoops_getHandler('group');
             $group_arr     = $group_handler->getObjects();
             foreach (array_keys($group_arr) as $i) {
