@@ -1,5 +1,4 @@
 <?php
-
 // start hack by Trabis
 if (!class_exists('ProtectorRegistry')) {
     exit('Registry not found');
@@ -14,6 +13,7 @@ $language  = $registry->getEntry('language');
 eval(' function xoops_module_install_' . $mydirname . '( $module ) { return protector_oninstall_base( $module , "' . $mydirname . '" ) ; } ');
 
 if (!function_exists('protector_oninstall_base')) {
+
     /**
      * @param $module
      * @param $mydirname
@@ -31,26 +31,24 @@ if (!function_exists('protector_oninstall_base')) {
             $ret = array();
         }
 
+        /** @var XoopsMySQLDatabase $db */
         $db  = XoopsDatabaseFactory::getDatabaseConnection();
         $mid = $module->getVar('mid');
-        if (!is_array($ret)) {
-            $ret = array();
-        }
 
         // TABLES (loading mysql.sql)
         $sql_file_path = __DIR__ . '/sql/mysql.sql';
         $prefix_mod    = $db->prefix() . '_' . $mydirname;
         if (file_exists($sql_file_path)) {
-            $ret[] = 'SQL file found at <b>' . htmlspecialchars($sql_file_path, ENT_QUOTES) . '</b>.<br> Creating tables...';
+            $ret[] = 'SQL file found at <b>' . htmlspecialchars($sql_file_path, ENT_QUOTES) . '</b>.<br> Creating tables...<br>';
 
             include_once XOOPS_ROOT_PATH . '/class/database/sqlutility.php';
             $sqlutil = new SqlUtility; //old code is -> $sqlutil =& new SqlUtility ; //hack by Trabis
 
             $sql_query = trim(file_get_contents($sql_file_path));
-            $sqlutil->splitMySqlFile($pieces, $sql_query);
-            $created_tables = array();
+            $sqlutil::splitMySqlFile($pieces, $sql_query);
+            $created_tables = [];
             foreach ($pieces as $piece) {
-                $prefixed_query = $sqlutil->prefixQuery($piece, $prefix_mod);
+                $prefixed_query = $sqlutil::prefixQuery($piece, $prefix_mod);
                 if (!$prefixed_query) {
                     $ret[] = 'Invalid SQL <b>' . htmlspecialchars($piece, ENT_QUOTES) . '</b><br>';
 
@@ -73,20 +71,20 @@ if (!function_exists('protector_oninstall_base')) {
         }
 
         // TEMPLATES
+        /** @var XoopsTplfileHandler $tplfile_handler */
         $tplfile_handler = xoops_getHandler('tplfile');
         $tpl_path        = __DIR__ . '/templates';
         // Check if the directory exists
-        if (is_dir($tpl_path)) {
+        if (is_dir($tpl_path) && is_readable($tpl_path)) {
             // Try to open the directory
-            $handler = opendir($tpl_path . '/');
-            if (false !== $handler) {
+             if ($handler = opendir($tpl_path . '/')) {
                 while (($file = readdir($handler)) !== false) {
                     if (substr($file, 0, 1) === '.') {
                         continue;
                     }
                     $file_path = $tpl_path . '/' . $file;
-                    if (is_file($file_path) && in_array(strrchr($file, '.'), array('.html', '.css', '.js'))) {
-                        $mtime   = (int)(filemtime($file_path));
+                    if (is_file($file_path) && in_array(strrchr($file, '.'),  array('.html', '.css', '.js'))) {
+                        $mtime   = (int)(@filemtime($file_path));
                         $tplfile = $tplfile_handler->create();
                         $tplfile->setVar('tpl_source', file_get_contents($file_path), true);
                         $tplfile->setVar('tpl_refid', $mid);
@@ -105,7 +103,7 @@ if (!function_exists('protector_oninstall_base')) {
                             // generate compiled file
                             include_once XOOPS_ROOT_PATH . '/class/xoopsblock.php';
                             include_once XOOPS_ROOT_PATH . '/class/template.php';
-                            if (!xoops_template_touch($tplid)) {
+                            if (!xoops_template_touch((string)$tplid)) {
                                 $ret[] = '<span style="color:#ff0000;">ERROR: Failed compiling template <b>' . htmlspecialchars($mydirname . '_' . $file, ENT_QUOTES) . '</b>.</span><br>';
                             } else {
                                 $ret[] = 'Template <b>' . htmlspecialchars($mydirname . '_' . $file, ENT_QUOTES) . '</b> compiled.</span><br>';
@@ -113,14 +111,14 @@ if (!function_exists('protector_oninstall_base')) {
                         }
                     }
                 }
+                closedir($handler);
             } else {
                 // Handle the error condition when opendir fails
-                $ret[] = '<span style="color:#ff0000;">ERROR: Could not open the directory:  <b>' . htmlspecialchars($tpl_path) . '</b>.</span><br>';
+                $ret[] = '<span style="color:#ff0000;">ERROR: Could not open the template directory:  <b>' . htmlspecialchars($tpl_path, ENT_QUOTES) . '</b>.</span><br>';
             }
-            closedir($handler);
         } else {
             // Directory does not exist; handle this condition
-            $ret[] = '<span style="color:#ff0000;">ERROR: Directory does not exist: <b>' . htmlspecialchars($tpl_path) . '</b>.</span><br>';
+            $ret[] = '<span style="color:#ff0000;">ERROR: The template directory does not exist or is not readable: <b>' . htmlspecialchars($tpl_path, ENT_QUOTES) . '</b>.</span><br>';
         }
         include_once XOOPS_ROOT_PATH . '/class/xoopsblock.php';
         include_once XOOPS_ROOT_PATH . '/class/template.php';
@@ -140,6 +138,7 @@ if (!function_exists('protector_oninstall_base')) {
                 $log->add(strip_tags($message));
             }
         }
+
         // use mLog->addWarning() or mLog->addError() if necessary
     }
 }
