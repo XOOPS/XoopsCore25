@@ -22,6 +22,7 @@ if (!function_exists('protector_onuninstall_base')) {
      */
     function protector_onuninstall_base($module, $mydirname)
     {
+        /** @var XoopsModule $module */
         // translations on module uninstall
 
         global $ret; // TODO :-D
@@ -30,6 +31,7 @@ if (!function_exists('protector_onuninstall_base')) {
             $ret = array();
         }
 
+        /** @var XoopsMySQLDatabase $db */
         $db  = XoopsDatabaseFactory::getDatabaseConnection();
         $mid = $module->getVar('mid');
         if (!is_array($ret)) {
@@ -55,6 +57,7 @@ if (!function_exists('protector_onuninstall_base')) {
         }
 
         // TEMPLATES (Not necessary because modulesadmin removes all templates)
+        /** @var XoopsTplfileHandler $tplfile_handler */
         /* $tplfile_handler = xoops_getHandler( 'tplfile' ) ;
         $templates =& $tplfile_handler->find( null , 'module' , $mid ) ;
         $tcount = count( $templates ) ;
