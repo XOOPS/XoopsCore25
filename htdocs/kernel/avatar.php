@@ -292,7 +292,7 @@ class XoopsAvatarHandler extends XoopsObjectHandler
      *
      * @param  CriteriaElement|CriteriaCompo $criteria
      * @param  bool  $id_as_key
-     * @return object
+     * @return array
      */
     public function &getObjects(CriteriaElement $criteria = null, $id_as_key = false)
     {
@@ -379,7 +379,7 @@ class XoopsAvatarHandler extends XoopsObjectHandler
      * Get User
      *
      * @param  XoopsAvatar $avatar
-     * @return array
+     * @return array|false
      */
     public function getUser(XoopsAvatar $avatar)
     {
@@ -406,7 +406,7 @@ class XoopsAvatarHandler extends XoopsObjectHandler
     /**
      * Get a list of Avatars
      *
-     * @param  string    $avatar_type 'S' for system, 'C' for custom
+     * @param string|null $avatar_type  'S' for system, 'C' for custom
      * @param  bool|null $avatar_display null lists all, bool respects avatar_display
      * @return array
      */
@@ -421,8 +421,7 @@ class XoopsAvatarHandler extends XoopsObjectHandler
             $criteria->add(new Criteria('avatar_display', (int)$avatar_display));
         }
         $avatars = &$this->getObjects($criteria, true);
-        $ret     = array(
-            'blank.gif' => _NONE);
+        $ret     = array('blank.gif' => _NONE);
         foreach (array_keys($avatars) as $i) {
             $ret[$avatars[$i]->getVar('avatar_file')] = $avatars[$i]->getVar('avatar_name');
         }
