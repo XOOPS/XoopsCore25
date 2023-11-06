@@ -232,7 +232,7 @@ switch ($op) {
             if (!Request::getString('username') || !Request::getString('email') || !Request::getString('password')) {
                 $adduser_errormsg = _AM_SYSTEM_USERS_YMCACF;
             } else {
-                /* @var XoopsMemberHandler $member_handler */
+                /** @var XoopsMemberHandler $member_handler */
                 $member_handler = xoops_getHandler('member');
                 // make sure the username doesnt exist yet
                 if ($member_handler->getUserCount(new Criteria('uname', $myts->addSlashes(Request::getString('username')))) > 0) {

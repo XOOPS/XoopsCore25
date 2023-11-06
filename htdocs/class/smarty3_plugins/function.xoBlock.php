@@ -43,7 +43,7 @@ function smarty_function_xoBlock($params, $smarty)
 
     static $block_objs;
     if (!isset($block_objs[$block_id])) {
-        /* @var XoopsBlockHandler $blkhandler */
+        /** @var XoopsBlockHandler $blkhandler */
         $blkhandler = xoops_getHandler('block');
         $blockObj   = $blkhandler->get($block_id);
 

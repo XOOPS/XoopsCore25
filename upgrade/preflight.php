@@ -16,7 +16,8 @@
  * @author              Skalpa Keo <skalpa@xoops.org>
  * @author              Taiwen Jiang <phppp@users.sourceforge.net>
  */
-/* @var  XoopsUser $xoopsUser */
+
+/** @var XoopsUser $xoopsUser */
 
 use Xoops\Upgrade\ScannerOutput;
 use Xoops\Upgrade\ScannerProcess;
