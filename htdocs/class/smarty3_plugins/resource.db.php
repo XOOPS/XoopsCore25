@@ -33,7 +33,7 @@ class Smarty_Resource_Db extends Smarty_Resource_Custom
     {
         $tpl = $this->dbTplInfo($name);
         if (is_object($tpl)) {
-            /* @var $tpl XoopsTplFile */
+            /** @var XoopsTplFile $tpl */
             $source = $tpl->getVar('tpl_source', 'n');
             $mtime = $tpl->getVar('tpl_lastmodified', 'n');
         } else {
@@ -85,7 +85,7 @@ class Smarty_Resource_Db extends Smarty_Resource_Custom
         if (!count($tplobj)) {
             return $cache[$tpl_name] = $tpl_name;
         }
-        /* @var $tplobj XoopsTplFile */
+        /** @var XoopsTplFile $tplobj */
         $tplobj = $tplobj[0];
         $module = $tplobj->getVar('tpl_module', 'n');
         $type = $tplobj->getVar('tpl_type', 'n');

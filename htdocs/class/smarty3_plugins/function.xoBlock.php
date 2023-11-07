@@ -43,7 +43,7 @@ function smarty_function_xoBlock($params, $smarty)
 
     static $block_objs;
     if (!isset($block_objs[$block_id])) {
-        /* @var XoopsBlockHandler $blkhandler */
+        /** @var XoopsBlockHandler $blkhandler */
         $blkhandler = xoops_getHandler('block');
         $blockObj   = $blkhandler->get($block_id);
 
@@ -100,7 +100,7 @@ function smarty_function_xoBlock($params, $smarty)
     $tplName = ($tplName = $blockObj->getVar('template')) ? "db:{$tplName}" : 'db:system_block_dummy.tpl';
     $cacheid = 'blk_' . $block_id;
 
-    if (!$bcachetime || !$template->is_cached($tplName, $cacheid)) {
+    if (!$bcachetime || !$template->isCached($tplName, $cacheid)) {
         $xoopsLogger->addBlock($blockObj->getVar('name'));
         if (!($bresult = $blockObj->buildBlock())) {
             return null;
