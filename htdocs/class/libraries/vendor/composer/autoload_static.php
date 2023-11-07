@@ -457,6 +457,7 @@ class ComposerStaticInit6352cb8ef79af2c7649e83bf921c4678
         'Xmf\\Random' => __DIR__ . '/..' . '/xoops/xmf/src/Random.php',
         'Xmf\\Request' => __DIR__ . '/..' . '/xoops/xmf/src/Request.php',
         'Xmf\\StopWords' => __DIR__ . '/..' . '/xoops/xmf/src/StopWords.php',
+        'Xmf\\Ulid' => __DIR__ . '/..' . '/xoops/xmf/src/Ulid.php',
         'Xmf\\Uuid' => __DIR__ . '/..' . '/xoops/xmf/src/Uuid.php',
         'Xmf\\Yaml' => __DIR__ . '/..' . '/xoops/xmf/src/Yaml.php',
     );

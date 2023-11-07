@@ -22,7 +22,7 @@ use Xmf\Key\KeyAbstract;
  * @package   Xmf
  * @author    Richard Griffith <richard@geekwright.com>
  * @copyright 2018-2023 XOOPS Project (https://xoops.org)
- * @license   GNU GPL 2 or later (http://www.gnu.org/licenses/gpl-2.0.html)
+ * @license   GNU GPL 2.0 or later (https://www.gnu.org/licenses/gpl-2.0.html)
  * @link      https://xoops.org
  */
 class JsonWebToken
@@ -90,7 +90,9 @@ class JsonWebToken
         foreach ($assertClaims as $claim => $assert) {
             if (!property_exists($values, $claim)) {
                 return false;
-            } elseif ($values->$claim != $assert) {
+            }
+
+            if ($values->$claim != $assert) {
                 return false;
             }
         }
