@@ -123,18 +123,17 @@ if ($op === 'editprofile') {
     $form->addElement($uname_label);
     $name_text = new XoopsFormText(_US_REALNAME, 'name', 30, 60, $xoopsUser->getVar('name', 'E'));
     $form->addElement($name_text);
-    $email_tray = new XoopsFormElementTray(_US_EMAIL, '<br>');
     if ($xoopsConfigUser['allow_chgmail'] == 1) {
-        $email_text = new XoopsFormText('', 'email', 30, 60, $xoopsUser->getVar('email'));
+        $email_text = new XoopsFormText(_US_EMAIL, 'email', 30, 60, $xoopsUser->getVar('email'));
+        $form->addElement($email_text, true);
     } else {
-        $email_text = new XoopsFormLabel('', $xoopsUser->getVar('email'));
+        $email_text = new XoopsFormLabel(_US_EMAIL, $xoopsUser->getVar('email'));
+        $form->addElement($email_text);
     }
-    $email_tray->addElement($email_text);
     $email_cbox_value = $xoopsUser->user_viewemail() ? 1 : 0;
     $email_cbox       = new XoopsFormCheckBox('', 'user_viewemail', $email_cbox_value);
     $email_cbox->addOption(1, _US_ALLOWVIEWEMAIL);
-    $email_tray->addElement($email_cbox);
-    $form->addElement($email_tray);
+    $form->addElement($email_cbox);
     $url_text = new XoopsFormText(_US_WEBSITE, 'url', 30, 100, $xoopsUser->getVar('url', 'E'));
     $form->addElement($url_text);
 
@@ -208,9 +207,6 @@ if ($op === 'editprofile') {
     $form->addElement($op_hidden);
     //$form->addElement($token_hidden);
     $form->addElement($submit_button);
-    if ($xoopsConfigUser['allow_chgmail'] == 1) {
-        $form->setRequired($email_text);
-    }
     $form->display();
     include $GLOBALS['xoops']->path('footer.php');
 }

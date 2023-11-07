@@ -663,6 +663,9 @@ EOJS;
                 $hidden .= $ele->render();
             }
         }
+        if (count($form->getRequired()) > 0) {
+            $ret .= "<tr class='foot'><td colspan='2'>* = " . _REQUIRED . '</td></tr>';
+        }
         $ret .= '</table>' . NWLINE . ' ' . $hidden . '</form>' . NWLINE;
         $ret .= $form->renderValidationJS(true);
 
