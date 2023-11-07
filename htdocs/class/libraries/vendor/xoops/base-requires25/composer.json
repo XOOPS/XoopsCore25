@@ -4,8 +4,8 @@
     "type": "project",
     "description": "Primary dependencies for XOOPS/XoopsCore25",
     "require": {
-        "php": ">=5.3.9",
-        "xoops/xmf": "^1.2.26",
+        "php": ">=5.6.0",
+        "xoops/xmf": "^1.2.28",
         "ircmaxell/password-compat": "^1.0.4",
         "geekwright/regdom": "^1.0.0",
         "symfony/polyfill-iconv": "^1.10.0",
