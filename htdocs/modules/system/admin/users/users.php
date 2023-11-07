@@ -49,6 +49,9 @@ function form_user($add_or_edit, $user = '')
     include_once XOOPS_ROOT_PATH . '/include/notification_constants.php';
 
     if ($add_or_edit === true) {
+        /** @var XoopsConfigHandler $config_handler */
+        $config_handler  = xoops_getHandler('config');
+        $xoopsConfigUser = $config_handler->getConfigsByCat(XOOPS_CONF_USER);
         //Add user
         $uid_value        = '';
         $uname_value      = '';
@@ -69,7 +72,7 @@ function form_user($add_or_edit, $user = '')
         $umode_value      = $xoopsConfig['com_mode'];
         $uorder_value     = $xoopsConfig['com_order'];
         // RMV-NOTIFY
-        $notify_method_value = XOOPS_NOTIFICATION_METHOD_PM;
+        $notify_method_value = (isset($xoopsConfigUser['default_notification']) ? $xoopsConfigUser['default_notification'] : XOOPS_NOTIFICATION_METHOD_PM);
         $notify_mode_value   = XOOPS_NOTIFICATION_MODE_SENDALWAYS;
         $bio_value           = '';
         $rank_value          = 0;

@@ -310,6 +310,8 @@ function make_data($dbm, $adminname, $hashedAdminPass, $adminmail, $language, $g
     $dbm->insert('config', " VALUES (133, 1, 0, 'jquery_theme', '_MI_SYSTEM_PREFERENCE_JQUERY_THEME', 'base', '', 'select', 'text', 35)");
 
     $dbm->insert('config', " VALUES (134, 0, 1, 'redirect_message_ajax', '_MD_AM_CUSTOM_REDIRECT', '1', '_MD_AM_CUSTOM_REDIRECT_DESC', 'yesno', 'int', 12)");
+    //notification method
+    $dbm->insert('config', " VALUES (135, 0, 2, 'default_notification', '_MD_AM_DEFAULT_NOTIFICATION_METHOD', '1', '_MD_AM_DEFAULT_NOTIFICATION_METHOD_DESC', 'select', 'int', 3)");
 
     require_once XOOPS_ROOT_PATH . '/class/xoopslists.php';
     $editors = XoopsLists::getDirListAsArray(XOOPS_ROOT_PATH . '/class/xoopseditor');
@@ -341,6 +343,13 @@ function make_data($dbm, $adminname, $hashedAdminPass, $adminmail, $language, $g
         $dbm->insert('configoption', ' VALUES (' . $conf . ", '" . $dir . "', '" . $dir . "', 133)");
         ++$conf;
     }
+    //notification method
+    $dbm->insert('configoption', " VALUES ($conf, '_MI_DEFAULT_NOTIFICATION_METHOD_DISABLE', '0', 135)");
+    ++$conf;
+    $dbm->insert('configoption', " VALUES ($conf, '_MI_DEFAULT_NOTIFICATION_METHOD_PM', '1', 135)");
+    ++$conf;
+    $dbm->insert('configoption', " VALUES ($conf, '_MI_DEFAULT_NOTIFICATION_METHOD_EMAIL', '2', 135)");
+    ++$conf;
 
     return $groups;
 }

@@ -33,6 +33,7 @@ class Upgrade_2511 extends XoopsUpgrade
             'templates',
             'templatesadmin',
             'zapsmarty',
+            'notificationmethod',  
         );
         $this->usedFiles = array();
         $this->pathsToCheck = array(
@@ -622,7 +623,7 @@ class Upgrade_2511 extends XoopsUpgrade
     {
         $migrate = new Tables();
         $count = $this->fromSmallintToVarchar($migrate, $this->modulesTableName, $this->modulesColumnNames);
-        return $count == 0;
+        return $count==0;
     }
 
     /**
@@ -705,6 +706,127 @@ class Upgrade_2511 extends XoopsUpgrade
         list($count) = $GLOBALS['xoopsDB']->fetchRow($result);
 
         return ($count != 0);
+    }
+
+    /**
+     * @return bool
+     */
+    public function apply_templatesadmin()
+    {
+        include XOOPS_ROOT_PATH . '/modules/system/xoops_version.php';
+        $dbm  = new Db_manager();
+        $time = time();
+        foreach ($modversion['templates'] as $tplfile) {
+            // Admin templates
+            if (isset($tplfile['type']) && $tplfile['type'] === 'admin' && $fp = fopen('../modules/system/templates/admin/' . $tplfile['file'], 'r')) {
+                $newtplid  = $dbm->insert('tplfile', " VALUES (0, 1, 'system', 'default', '" . addslashes($tplfile['file']) . "', '" . addslashes($tplfile['description']) . "', " . $time . ', ' . $time . ", 'admin')");
+                $tplsource = fread($fp, filesize('../modules/system/templates/admin/' . $tplfile['file']));
+                fclose($fp);
+                $dbm->insert('tplsource', ' (tpl_id, tpl_source) VALUES (' . $newtplid . ", '" . addslashes($tplsource) . "')");
+            }
+        }
+
+        return true;
+    }
+
+    //modules/system/themes/legacy/legacy.php
+    /**
+     * Do we need to delete obsolete Smarty files?
+     *
+     * @return bool
+     */
+    public function check_zapsmarty()
+    {
+        return !file_exists('../class/smarty/smarty.class.php');
+    }
+
+    /**
+     * Delete obsolete Smarty files
+     *
+     * @return bool
+     */
+    public function apply_zapsmarty()
+    {
+        // Define the base directory
+        $baseDir = '../class/smarty/';
+
+        // List of sub-folders and files to delete
+        $itemsToDelete = array(
+            'configs',
+            'internals',
+            'xoops_plugins',
+            'Config_File.class.php',
+            'debug.tpl',
+            'Smarty.class.php',
+            'Smarty_Compiler.class.php'
+        );
+
+        // Loop through each item and delete it
+        foreach ($itemsToDelete as $item) {
+            $path = $baseDir . $item;
+
+            // Check if it's a directory or a file
+            if (is_dir($path)) {
+                // Delete directory and its contents
+                array_map('unlink', glob("$path/*.*"));
+                rmdir($path);
+            } elseif (is_file($path)) {
+                // Delete file
+                if (is_writable($path)) {
+                    unlink($path);
+                }
+            }
+        }
+
+        return true;
+    }
+
+    /**
+     * Check if default notification method already exists
+     *
+     */
+    public function check_notificationmethod()
+    {
+        $sql = 'SELECT COUNT(*) FROM `' . $GLOBALS['xoopsDB']->prefix('config') . "` WHERE `conf_name` IN ('default_notification')";
+        if (!$result = $GLOBALS['xoopsDB']->queryF($sql)) {
+            return false;
+        }
+        return true;
+    }
+
+    /**
+     * @return bool
+     */
+    public function apply_notificationmethod()
+    {
+        $returnResult = true;
+        $notification_method = false;
+        $sql                   = 'SELECT COUNT(*) FROM `' . $GLOBALS['xoopsDB']->prefix('config') . "` WHERE `conf_name` = 'default_notification'";
+        if ($result = $GLOBALS['xoopsDB']->queryF($sql)) {
+            list($count) = $GLOBALS['xoopsDB']->fetchRow($result);
+            if ($count == 1) {
+                $notification_method = true;
+            }
+        }
+
+        if (!$notification_method) {
+            $sql = 'INSERT INTO ' . $GLOBALS['xoopsDB']->prefix('config') . ' (conf_id, conf_modid, conf_catid, conf_name, conf_title, conf_value, conf_desc, conf_formtype, conf_valuetype, conf_order) ' . ' VALUES ' . " (NULL, 0, 2, 'default_notification', '_MD_AM_DEFAULT_NOTIFICATION_METHOD', '1', '_MD_AM_DEFAULT_NOTIFICATION_METHOD_DESC', 'select', 'int', 3)";
+
+            if (!$GLOBALS['xoopsDB']->queryF($sql)) {
+                return false;
+            }
+            $config_id = $GLOBALS['xoopsDB']->getInsertId();
+
+            $sql = 'INSERT INTO ' . $GLOBALS['xoopsDB']->prefix('configoption') . ' (confop_id, confop_name, confop_value, conf_id)'. ' VALUES'
+                . " (NULL, '_MI_DEFAULT_NOTIFICATION_METHOD_DISABLE', '0', {$config_id}),"
+                . " (NULL, '_MI_DEFAULT_NOTIFICATION_METHOD_PM', '1', {$config_id}),"
+                . " (NULL, '_MI_DEFAULT_NOTIFICATION_METHOD_EMAIL', '2', {$config_id})";
+            if (!$result = $GLOBALS['xoopsDB']->queryF($sql)) {
+                return false;
+            }
+        }
+
+        return $returnResult;
     }
 
     /**
