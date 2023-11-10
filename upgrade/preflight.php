@@ -170,7 +170,7 @@ if (!$xoopsUser || !$xoopsUser->isAdmin()) {
     $template_dir = Xmf\Request::getString('template_dir', '');
     $template_ext = Xmf\Request::getString('template_ext', '');
     $runfix = Xmf\Request::getString('runfix', 'off');
-    Xmf\Debug::dump($_POST, $runfix, $template_dir, $template_ext);
+    // Xmf\Debug::dump($_POST, $runfix, $template_dir, $template_ext);
     if (empty($op)) {
         $upgradeControl->loadLanguage('welcome');
         echo _XOOPS_SMARTY3_SCANNER_OFFER;
