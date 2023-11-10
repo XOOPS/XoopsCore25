@@ -17,7 +17,7 @@ define('_XOOPS_SMARTY3_SCANNER_NOT_WRITABLE', 'Not Writeable');
 
 define('_XOOPS_SMARTY3_RESCAN_OPTIONS', 'Rescan Options');
 
-define('_XOOPS_SMARTY3_FIX_BUTTON', 'Run fixes?');
+define('_XOOPS_SMARTY3_FIX_BUTTON', 'Click the "Yes" checkbox below and then click the Run Scan button to try to automatically fix any issues found.');
 define('_XOOPS_SMARTY3_SCANNER_MARK_COMPLETE', 'Mark Complete');
 
 define('_XOOPS_SMARTY3_TEMPLATE_DIR', 'Template Directory (optional)');
