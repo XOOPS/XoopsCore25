@@ -9,6 +9,8 @@
  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
 */
 
+use Xmf\Database\Tables;
+
 /**
  * Upgrader from 2.0.18 to 2.3.0
  *
@@ -67,7 +69,8 @@ class Upgrade_230 extends XoopsUpgrade
             return false;
         }
 
-        return $GLOBALS['xoopsDB']->getRowsNum($result) > 0;
+        $temp = $GLOBALS['xoopsDB']->getRowsNum($result) > 0;
+        return $temp;
 
         /*
         $sql = "SELECT COUNT(*) FROM `" . $GLOBALS['xoopsDB']->prefix('cache_model') . "`";
@@ -106,29 +109,38 @@ class Upgrade_230 extends XoopsUpgrade
      */
     public function apply_bmlink()
     {
-        $sql = 'SHOW KEYS FROM `' . $GLOBALS['xoopsDB']->prefix('block_module_link') . '`';
-        $result = $GLOBALS['xoopsDB']->queryF($sql);
-        if (!$GLOBALS['xoopsDB']->isResultSet($result)) {
-            return false;
-        }
-        $keys_drop   = array();
-        $primary_add = true;
-        while (false !== ($row = $GLOBALS['xoopsDB']->fetchArray($result))) {
-            if ($row['Key_name'] === 'PRIMARY') {
-                $primary_add = false;
-            }
-            if (in_array($row['Key_name'], array('block_id', 'module_id'))) {
-                $keys_drop[] = $row['Key_name'];
-            }
-        }
-        foreach ($keys_drop as $drop) {
-            $sql = 'ALTER TABLE `' . $GLOBALS['xoopsDB']->prefix('block_module_link') . "` DROP KEY `{$drop}`";
-            $GLOBALS['xoopsDB']->queryF($sql);
-        }
-        if ($primary_add) {
-            $sql = 'ALTER IGNORE TABLE `' . $GLOBALS['xoopsDB']->prefix('block_module_link') . '` ADD PRIMARY KEY (`block_id`, `module_id`)';
+        $tableName = 'block_module_link';
+        $tableNameOld = $tableName . '_old';
 
-            return $GLOBALS['xoopsDB']->queryF($sql);
+        $tables = new Tables();
+
+        $tables->useTable($tableName);
+        $tables->renameTable($tableName, $tableNameOld);
+        $result = $tables->executeQueue(true);
+        if (true!==$result) {
+            throw new \RuntimeException(
+                __METHOD__ . ' failed.', E_USER_ERROR
+            );
+        }
+        $tables->resetQueue();
+        $tables->addTable($tableName);
+        $tables->addColumn($tableName, 'block_id', 'int');
+        $tables->addColumn($tableName, 'module_id', 'int');
+        $tables->addPrimaryKey($tableName, 'block_id, module_id');
+        $result = $tables->executeQueue(true);
+        if (true!==$result) {
+            throw new \RuntimeException(
+                __METHOD__ . ' failed.', E_USER_ERROR
+            );
+        }
+        $prefixedName = $GLOBALS['xoopsDB']->prefix('block_module_link');
+        $sql = 'INSERT INTO `' . $prefixedName . '` (`block_id`, `module_id`) ' .
+            'SELECT DISTINCT `block_id`, `module_id` FROM `' . $prefixedName . '_old`';
+        $result = $GLOBALS['xoopsDB']->queryF($sql);
+        if (true!==$result) {
+            throw new \RuntimeException(
+                __METHOD__ . ' failed.', E_USER_ERROR
+            );
         }
 
         return true;
