@@ -83,6 +83,10 @@ class Smarty3TemplateRepair extends ScannerProcess
         if (false===$fileInfo->isWritable()) {
             return;
         }
+
+        /** get and sanitize $filename used for error messages */
+        $filename = str_replace(XOOPS_ROOT_PATH, '', $fileInfo->getPathname());
+
         $length = $fileInfo->getSize();
         $file = $fileInfo->openFile('r+');
         $lines = $file->fread($length);
@@ -96,7 +100,7 @@ class Smarty3TemplateRepair extends ScannerProcess
             $count
         );
         if ($updatedLines===null) {
-            error;
+            trigger_error(sprintf('NULL return processing: %s', $filename), E_WARNING);
         }
 
         /* rewrite if changes were made */
@@ -104,10 +108,9 @@ class Smarty3TemplateRepair extends ScannerProcess
             $file->fseek(0);
             $file->ftruncate(0);
             $result = $file->fwrite($updatedLines);
-            if ($result===false) {
-                error;
+            if ($result==false) {
+                trigger_error(sprintf('Error writing file: %s', $filename), E_WARNING);
             }
-            $filename = str_replace(XOOPS_ROOT_PATH, '', $fileInfo->getPathname());
             $output->outputIssue($output->makeOutputIssue($filename, $count));
         }
     }
