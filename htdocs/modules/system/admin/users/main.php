@@ -186,7 +186,7 @@ switch ($op) {
                 $edituser->setVar('user_occ', Request::getString('user_occ'));
                 $edituser->setVar('user_intrest', Request::getString('user_intrest'));
                 $edituser->setVar('user_mailok', Request::getString('user_mailok'));
-                if ('' !== Request::getString('pass2d')) {
+                if ('' !== Request::getString('pass2')) {
                     if (Request::getString('password') != Request::getString('pass2')) {
                         xoops_cp_header();
                         echo '
@@ -257,7 +257,7 @@ switch ($op) {
                     $newuser->setVar('user_aim', Request::getString('user_aim'));
                     $newuser->setVar('user_yim', Request::getString('user_yim'));
                     $newuser->setVar('user_msnm', Request::getString('user_msnm'));
-                    if ('' !== Request::getString('pass2d')) {
+                    if ('' !== Request::getString('pass2')) {
                         if (Request::getString('password') != Request::getString('pass2')) {
                             xoops_cp_header();
                             echo '<strong>' . _AM_SYSTEM_USERS_STNPDNM . '</strong>';
