@@ -53,7 +53,7 @@
       method="<{$form_post.method}>" <{$form_post.extra}> >
     <table width='100%' class='outer' cellspacing='1'>
         <{foreach item=element from=$form_post.elements|default:null}>
-        <{if isset($element.hidden) ? $element.hidden!= true : true}>
+        <{if isset($element.hidden) && $element.hidden == true}>
             <tr valign="top">
                 <td class="head">
                     <div class="xoops-form-element-caption<{if !empty($element.required)}>-required<{/if}>"><span

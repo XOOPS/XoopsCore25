@@ -1,5 +1,5 @@
 <{* tell a friend, recommend us popup *}>
-<{if isset($closeHead) ? $closeHead : true}>
+<{if isset($closeHead) && $closeHead == true}>
 <{$headContents|default:''}>
 <script>window.resizeTo(360, 560)</script>
 </head>
@@ -11,6 +11,6 @@
 
 <{$recommendus.rendered|default:''}>
 <{/if}>
-<{if isset($closeButton) ? $closeButton : true}>
+<{if isset($closeButton) && $closeButton == true}>
     <div style="text-align:center;"><input class="btn btn-secondary btn-default formButton" value="<{$lang_close}>" type="button" onclick="window.close();" /></div>
 <{/if}>
