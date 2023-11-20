@@ -1,5 +1,7 @@
 <?php
 
+use Xmf\Request;
+
 /**
  * Base SystemFineUploadHandler class to work with ajaxfineupload.php endpoint
  *
@@ -65,13 +67,13 @@ abstract class SystemFineUploadHandler
      */
     public function getName()
     {
-        if (isset($_REQUEST['qqfilename'])) {
-            return $_REQUEST['qqfilename'];
+        $qqfilename = Request::getString('qqfilename', null, 'REQUEST');
+        if (null !== $qqfilename) {
+            return $qqfilename;
         }
 
-        if (isset($_FILES[$this->inputName])) {
-            return $_FILES[$this->inputName]['name'];
-        }
+        $file = Request::getArray($this->inputName, null, 'FILES');
+        return null !== $file ? $file['name'] : null;
     }
 
     /**
@@ -92,23 +94,25 @@ abstract class SystemFineUploadHandler
      */
     public function combineChunks($uploadDirectory, $name = null)
     {
-        $uuid = $_POST['qquuid'];
-        if ($name === null) {
+        $uuid = Request::getString('qquuid', '', 'POST');
+        if (null === $name) {
             $name = $this->getName();
         }
-        $targetFolder = $this->chunksFolder.DIRECTORY_SEPARATOR.$uuid;
-        $totalParts = isset($_REQUEST['qqtotalparts']) ? (int)$_REQUEST['qqtotalparts'] : 1;
+        $targetFolder = $this->chunksFolder . DIRECTORY_SEPARATOR . $uuid;
+        $totalParts = Request::getInt('qqtotalparts', 1, 'REQUEST');
 
-        $targetPath = join(DIRECTORY_SEPARATOR, array($uploadDirectory, $uuid, $name));
+        $targetPath = implode(DIRECTORY_SEPARATOR, array($uploadDirectory, $uuid, $name));
         $this->uploadName = $name;
 
         if (!file_exists($targetPath)) {
-            mkdir(dirname($targetPath), 0777, true);
+            if (!mkdir($concurrentDirectory = dirname($targetPath), 0777, true) && !is_dir($concurrentDirectory)) {
+                throw new \RuntimeException(sprintf('Directory "%s" was not created', $concurrentDirectory));
+            }
         }
         $target = fopen($targetPath, 'wb');
 
-        for ($i=0; $i<$totalParts; $i++) {
-            $chunk = fopen($targetFolder.DIRECTORY_SEPARATOR.$i, "rb");
+        for ($i = 0; $i < $totalParts; $i++) {
+            $chunk = fopen($targetFolder . DIRECTORY_SEPARATOR . $i, 'rb');
             stream_copy_to_stream($chunk, $target);
             fclose($chunk);
         }
@@ -116,20 +120,20 @@ abstract class SystemFineUploadHandler
         // Success
         fclose($target);
 
-        for ($i=0; $i<$totalParts; $i++) {
-            unlink($targetFolder.DIRECTORY_SEPARATOR.$i);
+        for ($i = 0; $i < $totalParts; $i++) {
+            unlink($targetFolder . DIRECTORY_SEPARATOR . $i);
         }
 
         rmdir($targetFolder);
 
-        if (!is_null($this->sizeLimit) && filesize($targetPath) > $this->sizeLimit) {
+        if (null !== $this->sizeLimit && filesize($targetPath) > $this->sizeLimit) {
             unlink($targetPath);
             //http_response_code(413);
-            header("HTTP/1.0 413 Request Entity Too Large");
-            return array("success" => false, "uuid" => $uuid, "preventRetry" => true);
+            header('HTTP/1.0 413 Request Entity Too Large');
+            return array('success' => false, 'uuid' => $uuid, 'preventRetry' => true);
         }
 
-        return array("success" => true, "uuid" => $uuid);
+        return array('success' => true, 'uuid' => $uuid);
     }
 
     /**
@@ -152,7 +156,7 @@ abstract class SystemFineUploadHandler
             $this->toBytes(ini_get('upload_max_filesize')) < $this->sizeLimit) {
             $neededRequestSize = max(1, $this->sizeLimit / 1024 / 1024) . 'M';
             return array(
-                'error'=>"Server error. Increase post_max_size and upload_max_filesize to ".$neededRequestSize
+                'error'=> 'Server error. Increase post_max_size and upload_max_filesize to ' . $neededRequestSize
             );
         }
 
@@ -167,7 +171,9 @@ abstract class SystemFineUploadHandler
 
         if (!isset($type)) {
             return array('error' => "No files were uploaded.");
-        } elseif (strpos(strtolower($type), 'multipart/') !== 0) {
+        }
+
+        if (strpos(strtolower($type), 'multipart/') !== 0) {
             return array(
                 'error' => "Server error. Not a multipart request. Please set forceMultipart to default value (true)."
             );
@@ -180,7 +186,7 @@ abstract class SystemFineUploadHandler
             $size = $_REQUEST['qqtotalfilesize'];
         }
 
-        if ($name === null) {
+        if (null === $name) {
             $name = $this->getName();
         }
 
@@ -190,16 +196,16 @@ abstract class SystemFineUploadHandler
         }
 
         // Validate name
-        if ($name === null || $name === '') {
+        if (null === $name || '' === $name) {
             return array('error' => 'File name empty.');
         }
 
         // Validate file size
-        if ($size == 0) {
+        if (0 == $size) {
             return array('error' => 'File is empty.');
         }
 
-        if (!is_null($this->sizeLimit) && $size > $this->sizeLimit) {
+        if ($this->sizeLimit !== null && $size > $this->sizeLimit) {
             return array('error' => 'File is too large.', 'preventRetry' => true);
         }
 
@@ -208,7 +214,7 @@ abstract class SystemFineUploadHandler
         $ext = isset($pathinfo['extension']) ? strtolower($pathinfo['extension']) : '';
 
         if ($this->allowedExtensions
-            && !in_array(strtolower($ext), array_map("strtolower", $this->allowedExtensions))) {
+            && !in_array(strtolower($ext), array_map('strtolower', $this->allowedExtensions))) {
             $these = implode(', ', $this->allowedExtensions);
             return array(
                 'error' => 'File has an invalid extension, it should be one of '. $these . '.',
@@ -241,7 +247,9 @@ abstract class SystemFineUploadHandler
             $targetFolder = $this->chunksFolder.DIRECTORY_SEPARATOR.$uuid;
 
             if (!file_exists($targetFolder)) {
-                mkdir($targetFolder, 0775, true);
+                if (!mkdir($targetFolder, 0775, true) && !is_dir($targetFolder)) {
+                    throw new \RuntimeException(sprintf('Directory "%s" was not created', $targetFolder));
+                }
             }
 
             $target = $targetFolder.'/'.$partIndex;
@@ -253,7 +261,7 @@ abstract class SystemFineUploadHandler
         } else {
             # non-chunked upload
 
-            $target = join(DIRECTORY_SEPARATOR, array($uploadDirectory, $uuid, $name));
+            $target = implode(DIRECTORY_SEPARATOR, array($uploadDirectory, $uuid, $name));
 
             if ($target) {
                 $this->uploadName = basename($target);
@@ -272,10 +280,13 @@ abstract class SystemFineUploadHandler
     protected function storeUploadedFile($target, $mimeType, $uuid)
     {
         if (!is_dir(dirname($target))) {
-            mkdir(dirname($target), 0775, true);
+            if (!mkdir($concurrentDirectory = dirname($target), 0775, true) && !is_dir($concurrentDirectory)) {
+                throw new \RuntimeException(sprintf('Directory "%s" was not created', $concurrentDirectory));
+            }
         }
-        if (move_uploaded_file($_FILES[$this->inputName]['tmp_name'], $target)) {
-            return array('success'=> true, "uuid" => $uuid);
+        $file = Request::getArray($this->inputName, null, 'FILES');
+        if (null !== $file && move_uploaded_file($file['tmp_name'], $target)) {
+            return array('success' => true, 'uuid' => $uuid);
         }
         return false;
     }
@@ -291,34 +302,33 @@ abstract class SystemFineUploadHandler
         if ($this->isInaccessible($uploadDirectory)) {
             return array(
                 'error' => "Server error. Uploads directory isn't writable"
-                            . ((!$this->isWindows()) ? " or executable." : ".")
+                           . ((!$this->isWindows()) ? ' or executable.' : '.')
             );
         }
 
-        $targetFolder = $uploadDirectory;
+        $method = Request::getString('REQUEST_METHOD', 'GET', 'SERVER');
         $uuid = false;
-        $method = $_SERVER["REQUEST_METHOD"];
-        if ($method == "DELETE") {
-            $url = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
+
+        if ('DELETE' === $method) {
+            $url = parse_url(Request::getString('REQUEST_URI', '', 'SERVER'), PHP_URL_PATH);
             $tokens = explode('/', $url);
-            $uuid = $tokens[sizeof($tokens)-1];
-        } elseif ($method == "POST") {
-            $uuid = $_REQUEST['qquuid'];
+            $uuid = $tokens[count($tokens) - 1];
+        } elseif ('POST' === $method) {
+            $uuid = Request::getString('qquuid', '', 'REQUEST');
         } else {
-            return array("success" => false,
-                "error" => "Invalid request method! ".$method
-            );
+            return array('success' => false, 'error' => 'Invalid request method! ' . $method);
         }
 
-        $target = join(DIRECTORY_SEPARATOR, array($targetFolder, $uuid));
+        $target = implode(DIRECTORY_SEPARATOR, array($uploadDirectory, $uuid));
 
         if (is_dir($target)) {
             $this->removeDir($target);
-            return array("success" => true, "uuid" => $uuid);
+            return array('success' => true, 'uuid' => $uuid);
         } else {
-            return array("success" => false,
-                "error" => "File not found! Unable to delete.".$url,
-                "path" => $uuid
+            return array(
+                'success' => false,
+                'error'   => 'File not found! Unable to delete.' . $url,
+                'path'    => $uuid
             );
         }
     }
@@ -345,7 +355,7 @@ abstract class SystemFineUploadHandler
         $pathinfo = pathinfo($filename);
         $base = $pathinfo['filename'];
         $ext = isset($pathinfo['extension']) ? $pathinfo['extension'] : '';
-        $ext = $ext == '' ? $ext : '.' . $ext;
+        $ext = '' == $ext ? $ext : '.' . $ext;
 
         $unique = $base;
         $suffix = 0;
@@ -381,7 +391,7 @@ abstract class SystemFineUploadHandler
     protected function cleanupChunks()
     {
         foreach (scandir($this->chunksFolder) as $item) {
-            if ($item == "." || $item == "..") {
+            if ('.' == $item || '..' == $item) {
                 continue;
             }
 
@@ -405,14 +415,14 @@ abstract class SystemFineUploadHandler
     protected function removeDir($dir)
     {
         foreach (scandir($dir) as $item) {
-            if ($item == "." || $item == "..") {
+            if ('.' == $item || '..' == $item) {
                 continue;
             }
 
             if (is_dir($item)) {
                 $this->removeDir($item);
             } else {
-                unlink(join(DIRECTORY_SEPARATOR, array($dir, $item)));
+                unlink(implode(DIRECTORY_SEPARATOR, array($dir, $item)));
             }
         }
         rmdir($dir);
@@ -466,12 +476,12 @@ abstract class SystemFineUploadHandler
     /**
      * Determines is the OS is Windows or not
      *
-     * @return boolean
+     * @return bool
      */
 
     protected function isWindows()
     {
-        $isWin = (strtoupper(substr(PHP_OS, 0, 3)) === 'WIN');
+        $isWin = (stripos(PHP_OS, 'WIN') === 0);
         return $isWin;
     }
 }

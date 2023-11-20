@@ -1,5 +1,7 @@
 <?php
 
+use Xmf\Request;
+
 /*
  You may not change or alter any portion of this comment or credits
  of supporting developers from this source code or any supporting source code
@@ -29,12 +31,24 @@ defined('XOOPS_ROOT_PATH') || exit('XOOPS root path not defined');
 /**
  * This code was moved to the top to avoid overriding variables that do not come from post
  */
-$op = 'list'; // default
+$op = Request::getString('op', 'list', 'GET'); // Default operation from GET
+
 if (isset($_POST)) {
     foreach ($_POST as $k => $v) {
         ${$k} = $v;
     }
 }
+
+$target = Request::getString('target', '', 'REQUEST');
+//$target = htmlspecialchars($target, ENT_QUOTES);
+
+if (empty($target)) {
+    exit();
+}
+
+$image_id = Request::getInt('image_id', 0, 'GET');
+$imgcat_id = Request::getInt('imgcat_id', 0, 'GET');
+$start = Request::getInt('start', 0, 'GET');
 
 // get current filename
 $current_file = basename(__FILE__);
@@ -48,6 +62,9 @@ xoops_load('xoopsformloader');
 //xoops_load("xoopsmodule");
 include_once XOOPS_ROOT_PATH . '/include/cp_functions.php';
 include_once XOOPS_ROOT_PATH . '/modules/system/constants.php';
+include_once __DIR__ . '/XoopsFormRendererBootstrap4.php';
+XoopsFormRenderer::getInstance()->set(new XoopsFormRendererBootstrap4());
+
 
 global $xoopsConfig;
 
@@ -66,47 +83,20 @@ $catwritelist   = $imgcat_handler->getList($groups, 'imgcat_write', 1);  // get 
 $catreadcount  = count($catreadlist);        // count readable categories
 $catwritecount = count($catwritelist);      // count writable categories
 
-include_once __DIR__ . '/XoopsFormRendererBootstrap4.php';
-XoopsFormRenderer::getInstance()->set(new XoopsFormRendererBootstrap4());
 
-// check/set parameters - start
-if (!isset($_REQUEST['target'])) {
-    exit();
-} else {
-    $target = $_REQUEST['target'];
-}
 
-if (isset($_GET['op'])) {
-    $op = trim($_GET['op']);
-}
-
-if (isset($_GET['target'])) {
-    $target = trim($_GET['target']);
-}
-
-if (isset($_GET['image_id'])) {
-    $image_id = (int)$_GET['image_id'];
-}
-
-if (isset($_GET['imgcat_id'])) {
-    $imgcat_id = (int)$_GET['imgcat_id'];
-}
-
-if (isset($imgcat_id)) {
-    $imgcat_id = (int)$imgcat_id;
-}
-$target = htmlspecialchars($target, ENT_QUOTES);
 
 if ($isadmin || ($catreadcount > 0) || ($catwritecount > 0)) {
     // Add new image - start
-    if (!empty($_POST['op']) && $op === 'addfile') {
+    if ('addfile' === Request::getString('op', '', 'POST')) {
         if (!$GLOBALS['xoopsSecurity']->check()) {
             redirect_header($current_file . '?target=' . $target, 3, implode('<br>', $GLOBALS['xoopsSecurity']->getErrors()));
         }
-        $imgcat = $imgcat_handler->get((int)$imgcat_id);
+        $imgcat = $imgcat_handler->get($imgcat_id);
         if (!is_object($imgcat)) {
             redirect_header($current_file . '?target=' . $target, 3);
         }
+
         include_once XOOPS_ROOT_PATH . '/class/uploader.php';
 
         $uploader = new XoopsMediaUploader(XOOPS_UPLOAD_PATH, array(
@@ -373,11 +363,11 @@ echo '<div class="container-fluid pt-1">';
 echo '<ul class="nav nav-tabs" id="imgTabs" role="tablist">';
 echo '<li class="nav-item"><a class="nav-link active" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home"
 aria-selected="true">';
-if ($op === 'listimg') { 
-    echo _AM_SYSTEM_IMAGES_IMGLIST; 
-} else { 
-    echo _AM_SYSTEM_IMAGES_CATLIST; 
-} 
+if ($op === 'listimg') {
+    echo _AM_SYSTEM_IMAGES_IMGLIST;
+} else {
+    echo _AM_SYSTEM_IMAGES_CATLIST;
+}
 echo '</a></li>';
 if (!empty($catwritelist)) {
     echo '<li class="nav-item"><a class="nav-link" id="addimg-tab" data-toggle="tab" href="#addimg" role="tab" aria-controls="img" aria-selected="true">';
@@ -514,7 +504,7 @@ if ($op === 'editcat') {
     $form->addElement(new XoopsFormHidden('imgcat_id', $imgcat_id));
     $form->addElement(new XoopsFormHidden('op', 'updatecat'));
     $form->addElement(new XoopsFormButton('', 'imgcat_button', _SUBMIT, 'submit'));
-    
+
     echo '<nav aria-label="breadcrumb">';
     echo '<ol class="breadcrumb">';
     echo '<li class="breadcrumb-item"><a href="' . $current_file . '?target=' . $target . '">' . _MD_IMGMAIN . '</a></li>';
