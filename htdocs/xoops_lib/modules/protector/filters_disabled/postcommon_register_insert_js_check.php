@@ -1,5 +1,7 @@
 <?php
 
+use Xmf\Random;
+
 /**
  * Class protector_postcommon_register_insert_js_check
  */
@@ -54,37 +56,22 @@ class Protector_postcommon_register_insert_js_check extends ProtectorFilterAbstr
      */
     public function getHtml4Assign()
     {
-        $as_md5        = $this->getMd5();
-        $as_md5array   = preg_split('//', $as_md5, -1, PREG_SPLIT_NO_EMPTY);
-        $as_md5shuffle = array();
-        foreach ($as_md5array as $key => $val) {
-            $as_md5shuffle[] = array('key' => $key, 'val' => $val);
-        }
-        shuffle($as_md5shuffle);
-        
-//TODO in PHP 7.2+ change the above to:
-//        $seed = random_bytes(64);
-//        mt_srand($seed);
-//        shuffle($as_md5shuffle);
+        // Generate a secure token using the generateKey function
+        $secureToken = Random::generateKey('sha512', 128);
 
-        $js_in_validate_function = "antispam_md5s=new Array(32);\n";
-        foreach ($as_md5shuffle as $item) {
-            $key = $item['key'];
-            $val = $item['val'];
-            $js_in_validate_function .= "antispam_md5s[$key]='$val';\n";
-        }
-        $js_in_validate_function .= "
-            antispam_md5 = '' ;
-            for (i = 0 ; i < 32 ; i ++) {
-                antispam_md5 += antispam_md5s[i] ;
-            }
-            xoopsGetElementById('antispam_md5').value = antispam_md5 ;
-        ";
+        // JavaScript to assign the generated token to a hidden input field
+        $js_in_validate_function = "
+        xoopsGetElementById('antispam_md5').value = '$secureToken';
+    ";
 
+        // Return the HTML for the form and the JavaScript
         return array(
             'html_in_form' => '<input type="hidden" name="antispam_md5" id="antispam_md5" value="" />',
             'js_global'    => '<script type="text/javascript"><!--//' . "\n" . $js_in_validate_function . "\n" . '//--></script><noscript><div class="errorMsg">' . _MD_PROTECTOR_TURNJAVASCRIPTON . '</div></noscript>');
     }
+
+
+
 
     /**
      * @return bool
