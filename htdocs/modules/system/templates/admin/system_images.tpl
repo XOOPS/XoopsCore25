@@ -153,7 +153,9 @@
                     <tr>
                         <td class="odd aligntop">
                             <div class="spacer bold"><{$element.caption|default:''}><{if !empty($element.required)}><span class="red">&nbsp;*</span><{/if}></div>
-                            <div class="spacer"><{$element.description|default:''}></div>
+                            <{if !empty($element.description)}>
+                                <div class="spacer"><{$element.description|default:''}></div>
+                            <{/if}>
                         </td>
                         <td class="even"><{$element.body}></td>
                     </tr>
@@ -181,7 +183,9 @@
                     <tr>
                         <td class="odd aligntop">
                             <div class="spacer bold"><{$element.caption|default:''}><{if !empty($element.required)}><span class="red">&nbsp;*</span><{/if}></div>
-                            <div class="spacer"><{$element.description|default:''}></div>
+                            <{if !empty($element.description)}>
+                                <div class="spacer"><{$element.description|default:''}></div>
+                            <{/if}>
                         </td>
                         <td class="even"><{$element.body}></td>
                     </tr>
@@ -279,7 +283,9 @@
                         <tr>
                             <td class="odd aligntop">
                                 <div class="spacer bold"><{$element.caption|default:''}><{if !empty($element.required)}><span class="red">&nbsp;*</span><{/if}></div>
-                                <div class="spacer"><{$element.description|default:''}></div>
+                                <{if !empty($element.description)}>
+                                    <div class="spacer"><{$element.description|default:''}></div>
+                                <{/if}>
                             </td>
                             <td class="even"><{$element.body}></td>
                         </tr>
