@@ -67,8 +67,8 @@ abstract class SystemFineUploadHandler
      */
     public function getName()
     {
-        $qqfilename = Request::getString('qqfilename', null, 'REQUEST');
-        if (null !== $qqfilename) {
+        $qqfilename = Request::getString('qqfilename', '', 'REQUEST');
+        if ('' !== $qqfilename) {
             return $qqfilename;
         }
 
@@ -95,7 +95,7 @@ abstract class SystemFineUploadHandler
     public function combineChunks($uploadDirectory, $name = null)
     {
         $uuid = Request::getString('qquuid', '', 'POST');
-        if (null === $name) {
+        if ('' === $name) {
             $name = $this->getName();
         }
         $targetFolder = $this->chunksFolder . DIRECTORY_SEPARATOR . $uuid;
