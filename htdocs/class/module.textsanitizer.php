@@ -478,8 +478,10 @@ class MyTextSanitizer
      */
     public function addSlashes($text)
     {
-        if (!@get_magic_quotes_gpc()) {
-            $text = addslashes($text);
+        if (PHP_VERSION_ID < 50400) {
+            if (!get_magic_quotes_gpc()) {
+                $text = addslashes($text);
+            }
         }
 
         return $text;
@@ -752,8 +754,10 @@ class MyTextSanitizer
      */
     public function stripSlashesGPC($text)
     {
-        if (@get_magic_quotes_gpc()) {
-            $text = stripslashes($text);
+        if (PHP_VERSION_ID < 50400) {
+            if (get_magic_quotes_gpc()) {
+                $text = stripslashes($text);
+            }
         }
 
         return $text;
@@ -1036,8 +1040,10 @@ class MyTextSanitizer
     public function oopsStripSlashesRT($text)
     {
         $GLOBALS['xoopsLogger']->addDeprecated(__METHOD__ . ' is deprecated');
-        if (get_magic_quotes_runtime()) {
-            $text = stripslashes($text);
+        if (PHP_VERSION_ID < 50400) {
+            if (get_magic_quotes_runtime()) {
+                $text = stripslashes($text);
+            }
         }
 
         return $text;
