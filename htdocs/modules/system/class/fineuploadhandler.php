@@ -67,13 +67,15 @@ abstract class SystemFineUploadHandler
      */
     public function getName()
     {
-        $qqfilename = Request::getString('qqfilename', '', 'REQUEST');
-        if ('' !== $qqfilename) {
+        if (Request::hasVar('qqfilename', 'REQUEST')) {
+            $qqfilename = Request::getString('qqfilename', '', 'REQUEST');
             return $qqfilename;
         }
 
-        $file = Request::getArray($this->inputName, null, 'FILES');
-        return null !== $file ? $file['name'] : null;
+        if (Request::hasVar($this->inputName, 'FILES')) {
+            $file = Request::getArray($this->inputName, null, 'FILES');
+            return $file ;
+        }
     }
 
     /**
@@ -180,10 +182,10 @@ abstract class SystemFineUploadHandler
         }
 
         // Get size and name
-        $file = $_FILES[$this->inputName];
+        $file = Request::getArray($this->inputName, [], 'FILES');
         $size = $file['size'];
-        if (isset($_REQUEST['qqtotalfilesize'])) {
-            $size = $_REQUEST['qqtotalfilesize'];
+        if (Request::hasVar('qqtotalfilesize')) {
+            $size = Request::getInt('qqtotalfilesize');
         }
 
         if (null === $name) {
@@ -205,7 +207,7 @@ abstract class SystemFineUploadHandler
             return array('error' => 'File is empty.');
         }
 
-        if ($this->sizeLimit !== null && $size > $this->sizeLimit) {
+        if (null !== $this->sizeLimit && $size > $this->sizeLimit) {
             return array('error' => 'File is too large.', 'preventRetry' => true);
         }
 
@@ -224,21 +226,24 @@ abstract class SystemFineUploadHandler
 
         $mimeType = '';
         if (!empty($this->allowedMimeTypes)) {
-            $mimeType = mime_content_type($_FILES[$this->inputName]['tmp_name']);
+            $mimeType = mime_content_type(Request::getString($this->inputName['tmp_name'], '', 'FILES'));
             if (!in_array($mimeType, $this->allowedMimeTypes)) {
                 return array('error' => 'File is of an invalid type.', 'preventRetry' => true);
             }
         }
 
         // Save a chunk
-        $totalParts = isset($_REQUEST['qqtotalparts']) ? (int)$_REQUEST['qqtotalparts'] : 1;
+        $totalParts = 1;
+        if (Request::hasVar('qqtotalparts')) {
+            $totalParts = (int)Request::getString('qqtotalparts');
+        }
 
-        $uuid = $_REQUEST['qquuid'];
+        $uuid = Request::getString('qquuid');
         if ($totalParts > 1) {
             # chunked upload
 
             $chunksFolder = $this->chunksFolder;
-            $partIndex = (int)$_REQUEST['qqpartindex'];
+            $partIndex = (int)Request::getString('qqpartindex');
 
             if (!is_writable($chunksFolder) && !is_executable($uploadDirectory)) {
                 return array('error' => "Server error. Chunks directory isn't writable or executable.");
@@ -306,17 +311,22 @@ abstract class SystemFineUploadHandler
             );
         }
 
-        $method = Request::getString('REQUEST_METHOD', 'GET', 'SERVER');
         $uuid = false;
+        $method = Request::getString('REQUEST_METHOD', 'GET', 'SERVER');
 
         if ('DELETE' === $method) {
-            $url = parse_url(Request::getString('REQUEST_URI', '', 'SERVER'), PHP_URL_PATH);
-            $tokens = explode('/', $url);
-            $uuid = $tokens[count($tokens) - 1];
+            $url = Request::getString('REQUEST_URI', '', 'SERVER');
+            if ('' !== $url) {
+                $url    = parse_url($url, PHP_URL_PATH);
+                $tokens = explode('/', $url);
+                $uuid = $tokens[count($tokens) - 1];
+            }
         } elseif ('POST' === $method) {
             $uuid = Request::getString('qquuid', '', 'REQUEST');
         } else {
-            return array('success' => false, 'error' => 'Invalid request method! ' . $method);
+            return array('success' => false,
+                'error' => 'Invalid request method! ' . $method
+             );
         }
 
         $target = implode(DIRECTORY_SEPARATOR, array($uploadDirectory, $uuid));

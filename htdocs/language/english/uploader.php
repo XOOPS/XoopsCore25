@@ -1,5 +1,5 @@
 <?php
-// 
+//
 // _LANGCODE: en
 // _CHARSET : UTF-8
 // Translator: XOOPS Translation Team
@@ -33,3 +33,5 @@ define('_ER_UP_CANTWRITE', 'Failed to write file to disk');
 define('_ER_UP_EXTENSION', 'File upload stopped by extension. View phpinfo()');
 define('_ER_UP_UNKNOWN', 'Unknown upload error');
 define('_ER_UP_INDEXNOTSET', 'Attempt to fetch multiple file, index must be set.');
+// 2.5.11
+define('_ER_UP_MODE_NOT_CHANGED', 'File uploaded, but could not change the mode');

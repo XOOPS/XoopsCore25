@@ -239,7 +239,11 @@ class XoopsMediaUploader
 
         if (is_array($files['name']) && isset($index)) {
             $index = (int)$index;
-            $this->mediaName = $files['name'][$index];
+            if (version_compare(PHP_VERSION, '5.4', '<') && get_magic_quotes_gpc()) {
+                $this->mediaName = stripslashes($files['name'][$index]);
+            } else {
+                $this->mediaName = $files['name'][$index];
+            }
             if ($this->randomFilename) {
                 $unique = uniqid();
                 $this->targetFileName = $unique . '--' . $this->mediaName;
@@ -457,7 +461,7 @@ class XoopsMediaUploader
     /**
      * Copy the file to its destination
      *
-     * @param $chmod
+     * @param int $chmod
      * @return bool
      */
     public function _copyFile($chmod)
@@ -499,8 +503,7 @@ class XoopsMediaUploader
         }
 
         if (false === chmod($this->savedDestination, $chmod)) {
-            // Handle the error
-            // return false; 
+            $this->setErrors(_ER_UP_MODE_NOT_CHANGED);
         }
 
         return true;
