@@ -396,6 +396,7 @@ switch ($op) {
     case 'uninstall':
 		$module = Request::getString('module', '');
         $module = $myts->htmlSpecialChars($module);
+        $msgs = '';
         // Get module handler
         /** @var XoopsModuleHandler $module_handler */
         $module_handler = xoops_getHandler('module');
