@@ -42,8 +42,8 @@ class SystemBlock extends XoopsBlock
     {
         if ($this->isNew()) {
             $title   = _AM_SYSTEM_BLOCKS_ADDBLOCK;
-            $modules = array(-1);
-            $groups  = array(XOOPS_GROUP_USERS, XOOPS_GROUP_ANONYMOUS, XOOPS_GROUP_ADMIN);
+            $modules = [-1];
+            $groups  = [XOOPS_GROUP_USERS, XOOPS_GROUP_ANONYMOUS, XOOPS_GROUP_ADMIN];
             $this->setVar('block_type', 'C');
             $this->setVar('visible', 1);
             $op = 'save';
@@ -79,11 +79,11 @@ class SystemBlock extends XoopsBlock
         }
         $form = new XoopsThemeForm($title, 'blockform', 'admin.php', 'post', true);
         if (!$this->isNew()) {
-			$form->addElement(new XoopsFormLabel(_AM_SYSTEM_BLOCKS_NAME, $this->getVar('name') . ' [' . $this->getVar('dirname') . ']'));
+            $form->addElement(new XoopsFormLabel(_AM_SYSTEM_BLOCKS_NAME, $this->getVar('name') . ' [' . $this->getVar('dirname') . ']'));
         }
         // Side position
         $side_select = new XoopsFormSelect(_AM_SYSTEM_BLOCKS_TYPE, 'side', $this->getVar('side'));
-        $side_select->addOptionArray(array(
+        $side_select->addOptionArray([
                                          0  => _AM_SYSTEM_BLOCKS_SBLEFT,
                                          1  => _AM_SYSTEM_BLOCKS_SBRIGHT,
                                          3  => _AM_SYSTEM_BLOCKS_CBLEFT,
@@ -94,7 +94,7 @@ class SystemBlock extends XoopsBlock
                                          9  => _AM_SYSTEM_BLOCKS_CBBOTTOM,
                                          10 => _AM_SYSTEM_BLOCKS_CBFOOTERLEFT,
                                          11 => _AM_SYSTEM_BLOCKS_CBFOOTERRIGHT,
-                                         12 => _AM_SYSTEM_BLOCKS_CBFOOTERCENTER));
+                                         12 => _AM_SYSTEM_BLOCKS_CBFOOTERCENTER]);
 
         $form->addElement($side_select);
         // Order
@@ -116,7 +116,7 @@ class SystemBlock extends XoopsBlock
         // Title
         $form->addElement(new XoopsFormText(_AM_SYSTEM_BLOCKS_TITLE, 'title', 50, 255, $this->getVar('title')), false);
         if ($this->isNew() || $this->isCustom()) {
-            $editor_configs           = array();
+            $editor_configs           = [];
             $editor_configs['name']   = 'content_block';
             $editor_configs['value']  = $this->getVar('content', 'e');
             $editor_configs['rows']   = 20;
@@ -125,13 +125,13 @@ class SystemBlock extends XoopsBlock
             $editor_configs['height'] = '400px';
             $editor_configs['editor'] = xoops_getModuleOption('blocks_editor', 'system');
             $form->addElement(new XoopsFormEditor(_AM_SYSTEM_BLOCKS_CONTENT, 'content_block', $editor_configs), true);
-            if (in_array($editor_configs['editor'], array('dhtmltextarea', 'textarea'))) {
+            if (in_array($editor_configs['editor'], ['dhtmltextarea', 'textarea'])) {
                 $ctype_select = new XoopsFormSelect(_AM_SYSTEM_BLOCKS_CTYPE, 'c_type', $this->getVar('c_type'));
-                $ctype_select->addOptionArray(array(
+                $ctype_select->addOptionArray([
                                                   'H' => _AM_SYSTEM_BLOCKS_HTML,
                                                   'P' => _AM_SYSTEM_BLOCKS_PHP,
                                                   'S' => _AM_SYSTEM_BLOCKS_AFWSMILE,
-                                                  'T' => _AM_SYSTEM_BLOCKS_AFNOSMILE));
+                                                  'T' => _AM_SYSTEM_BLOCKS_AFNOSMILE]);
                 $form->addElement($ctype_select);
             } else {
                 $form->addElement(new XoopsFormHidden('c_type', 'H'));
@@ -157,7 +157,7 @@ class SystemBlock extends XoopsBlock
             $form->addElement(new XoopsFormHidden('c_type', 'H'));
         }
         $cache_select = new XoopsFormSelect(_AM_SYSTEM_BLOCKS_BCACHETIME, 'bcachetime', $this->getVar('bcachetime'));
-        $cache_select->addOptionArray(array(
+        $cache_select->addOptionArray([
                                           '0'       => _NOCACHE,
                                           '30'      => sprintf(_SECONDS, 30),
                                           '60'      => _MINUTE,
@@ -168,7 +168,7 @@ class SystemBlock extends XoopsBlock
                                           '86400'   => _DAY,
                                           '259200'  => sprintf(_DAYS, 3),
                                           '604800'  => _WEEK,
-                                          '2592000' => _MONTH));
+                                          '2592000' => _MONTH]);
         $form->addElement($cache_select);
         // Groups
         $form->addElement(new XoopsFormSelectGroup(_AM_SYSTEM_BLOCKS_GROUP, 'groups', true, $groups, 5, true));
@@ -336,7 +336,7 @@ class SystemBlockHandler extends XoopsPersistableObjectHandler
      **/
     public function &getObjects(CriteriaElement $criteria = null, $id_as_key = false, $as_object = true)
     {
-        $ret   = array();
+        $ret   = [];
         $limit = $start = 0;
         $sql   = 'SELECT DISTINCT(b.bid), b.* FROM ' . $this->db->prefix('newblocks') . ' b LEFT JOIN ' . $this->db->prefix('block_module_link') . ' l ON b.bid=l.block_id';
         if (isset($criteria) && \method_exists($criteria, 'renderWhere')) {
@@ -401,7 +401,7 @@ class SystemBlockHandler extends XoopsPersistableObjectHandler
     {
         /** @var XoopsMySQLDatabase $db */
         $db  = XoopsDatabaseFactory::getDatabaseConnection();
-        $ret = array();
+        $ret = [];
         $sql = 'SELECT b.* ';
         if (!$asobject) {
             $sql = 'SELECT b.bid ';
@@ -440,10 +440,11 @@ class SystemBlockHandler extends XoopsPersistableObjectHandler
         $result = $db->query($sql);
         if (!$db->isResultSet($result)) {
             throw new \RuntimeException(
-                \sprintf(_DB_QUERY_ERROR, $sql) . $db->error(), E_USER_ERROR
+                \sprintf(_DB_QUERY_ERROR, $sql) . $db->error(),
+                E_USER_ERROR
             );
         }
-        $added  = array();
+        $added  = [];
         while (false !== ($myrow = $db->fetchArray($result))) {
             if (!in_array($myrow['bid'], $added)) {
                 if (!$asobject) {
@@ -477,10 +478,11 @@ class SystemBlockHandler extends XoopsPersistableObjectHandler
             $result = $this->db->query($sql);
             if (!$this->db->isResultSet($result)) {
                 throw new \RuntimeException(
-                    \sprintf(_DB_QUERY_ERROR, $sql) . $this->db->error(), E_USER_ERROR
+                    \sprintf(_DB_QUERY_ERROR, $sql) . $this->db->error(),
+                    E_USER_ERROR
                 );
             }
-            $blockids = array();
+            $blockids = [];
             /** @var array $myrow */
             while (false !== ($myrow = $this->db->fetchArray($result))) {
                 $blockids[] = $myrow['gperm_itemid'];
@@ -509,7 +511,7 @@ class SystemBlockHandler extends XoopsPersistableObjectHandler
     {
         $isactive = (int)$isactive;
         $db       = $GLOBALS['xoopsDB'];
-        $ret      = array();
+        $ret      = [];
         if (isset($groupid)) {
             $sql = 'SELECT DISTINCT gperm_itemid FROM ' . $db->prefix('group_permission') . " WHERE gperm_name = 'block_read' AND gperm_modid = 1";
             if (is_array($groupid)) {
@@ -522,10 +524,11 @@ class SystemBlockHandler extends XoopsPersistableObjectHandler
             $result = $db->query($sql);
             if (!$db->isResultSet($result)) {
                 throw new \RuntimeException(
-                    \sprintf(_DB_QUERY_ERROR, $sql) . $db->error(), E_USER_ERROR
+                    \sprintf(_DB_QUERY_ERROR, $sql) . $db->error(),
+                    E_USER_ERROR
                 );
             }
-            $blockids = array();
+            $blockids = [];
             while (false !== ($myrow = $db->fetchArray($result))) {
                 $blockids[] = $myrow['gperm_itemid'];
             }
@@ -559,12 +562,13 @@ class SystemBlockHandler extends XoopsPersistableObjectHandler
         $result = $db->query($sql);
         if (!$db->isResultSet($result)) {
             throw new \RuntimeException(
-                \sprintf(_DB_QUERY_ERROR, $sql) . $db->error(), E_USER_ERROR
+                \sprintf(_DB_QUERY_ERROR, $sql) . $db->error(),
+                E_USER_ERROR
             );
         }
         while (false !== ($myrow = $db->fetchArray($result))) {
             $block              = new XoopsBlock($myrow);
-            $ret[$myrow['bid']] =& $block;
+            $ret[$myrow['bid']] = &$block;
             unset($block);
         }
 
@@ -583,8 +587,8 @@ class SystemBlockHandler extends XoopsPersistableObjectHandler
     public function getNonGroupedBlocks($module_id = 0, $toponlyblock = false, $visible = null, $orderby = 'b.weight, m.block_id', $isactive = 1)
     {
         $db   = $GLOBALS['xoopsDB'];
-        $ret  = array();
-        $bids = array();
+        $ret  = [];
+        $bids = [];
         $sql  = 'SELECT DISTINCT(bid) from ' . $db->prefix('newblocks');
         $result = $db->query($sql);
         if ($db->isResultSet($result)) {
@@ -594,7 +598,7 @@ class SystemBlockHandler extends XoopsPersistableObjectHandler
         }
 
         $sql     = 'SELECT DISTINCT(p.gperm_itemid) from ' . $db->prefix('group_permission') . ' p, ' . $db->prefix('groups') . " g WHERE g.groupid=p.gperm_groupid AND p.gperm_name='block_read'";
-        $grouped = array();
+        $grouped = [];
         $result = $db->query($sql);
         if ($db->isResultSet($result)) {
             while (false !== ($myrow = $db->fetchArray($result))) {
@@ -628,12 +632,13 @@ class SystemBlockHandler extends XoopsPersistableObjectHandler
             $result = $db->query($sql);
             if (!$db->isResultSet($result)) {
                 throw new \RuntimeException(
-                    \sprintf(_DB_QUERY_ERROR, $sql) . $db->error(), E_USER_ERROR
+                    \sprintf(_DB_QUERY_ERROR, $sql) . $db->error(),
+                    E_USER_ERROR
                 );
             }
             while (false !== ($myrow = $db->fetchArray($result))) {
                 $block              = new XoopsBlock($myrow);
-                $ret[$myrow['bid']] =& $block;
+                $ret[$myrow['bid']] = &$block;
                 unset($block);
             }
         }

@@ -1,4 +1,5 @@
 <?php
+
 // start hack by Trabis
 if (!class_exists('ProtectorRegistry')) {
     exit('Registry not found');
@@ -28,14 +29,14 @@ if (!function_exists('protector_onuninstall_base')) {
         global $ret; // TODO :-D
 
         if (!is_array($ret)) {
-            $ret = array();
+            $ret = [];
         }
 
         /** @var XoopsMySQLDatabase $db */
         $db  = XoopsDatabaseFactory::getDatabaseConnection();
         $mid = $module->getVar('mid');
         if (!is_array($ret)) {
-            $ret = array();
+            $ret = [];
         }
 
         // TABLES (loading mysql.sql)

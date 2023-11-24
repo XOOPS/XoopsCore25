@@ -69,15 +69,15 @@ class XoopsSystemGui
         }
 
         $adminThemeFactory = new xos_opal_AdminThemeFactory();
-        $this->xoTheme     =& $adminThemeFactory->createInstance(array(
+        $this->xoTheme     = &$adminThemeFactory->createInstance([
                                                                      'folderName'      => $this->foldername,
                                                                      'themesPath'      => 'modules/system/themes',
-                                                                     'contentTemplate' => isset($GLOBALS['xoopsOption']['template_main'])? $GLOBALS['xoopsOption']['template_main'] :''));
+                                                                     'contentTemplate' => isset($GLOBALS['xoopsOption']['template_main']) ? $GLOBALS['xoopsOption']['template_main'] : '']);
         $this->xoTheme->loadLocalization('admin');
-        $this->template =& $this->xoTheme->template;
+        $this->template = &$this->xoTheme->template;
 
-        $GLOBALS['xoTheme']  =& $this->xoTheme;
-        $GLOBALS['adminTpl'] =& $this->xoTheme->template;
+        $GLOBALS['xoTheme']  = &$this->xoTheme;
+        $GLOBALS['adminTpl'] = &$this->xoTheme->template;
 
         $xoopsLogger->stopTime('XOOPS output init');
         $xoopsLogger->startTime('Module display');
@@ -111,11 +111,11 @@ class XoopsSystemGui
                     $menu_handler->addMenuTop(XOOPS_URL . '/modules/system/admin.php?fct=blocksadmin&amp;op=list&amp;filter=1&amp;selgen=' . $xoopsModule->getVar('mid', 'e') . '&amp;selmod=-2&amp;selgrp=-1&amp;selvis=-1', _AM_SYSTEM_BLOCKS);
                 }
                 $menu_handler->addMenuTop(XOOPS_URL . '/modules/system/admin.php?fct=tplsets&amp;op=listtpl&amp;tplset=default&amp;moddir=' . $xoopsModule->getVar('dirname', 'e'), _AM_SYSTEM_TPLSETS);
-                if ($xoopsModule->getInfo('hasComments') == 1){
+                if ($xoopsModule->getInfo('hasComments') == 1) {
                     $menu_handler->addMenuTop(XOOPS_URL . '/modules/system/admin.php?module=' . $xoopsModule->getVar('mid', 'e') . '&amp;status=0&amp;limit=10&amp;fct=comments', _AM_SYSTEM_COMMENTS);
                 }
                 $menu_handler->addMenuTop(XOOPS_URL . '/modules/system/admin.php?fct=modulesadmin&amp;op=uninstall&amp;module=' . $xoopsModule->getVar('dirname', 'e'), _AM_SYSTEM_UNINSTALL);
-                if ($xoopsModule->getInfo('hasMain') == 1){
+                if ($xoopsModule->getInfo('hasMain') == 1) {
                     $menu_handler->addMenuTop(XOOPS_URL . '/modules/' . $xoopsModule->getVar('dirname', 'e') . '/', _AM_SYSTEM_GOTOMODULE);
                 }
                 // Define main tab navigation

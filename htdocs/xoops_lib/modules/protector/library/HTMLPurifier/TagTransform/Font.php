@@ -25,7 +25,7 @@ class HTMLPurifier_TagTransform_Font extends HTMLPurifier_TagTransform
     /**
      * @type array
      */
-    protected $_size_lookup = array(
+    protected $_size_lookup = [
         '0' => 'xx-small',
         '1' => 'xx-small',
         '2' => 'small',
@@ -40,7 +40,7 @@ class HTMLPurifier_TagTransform_Font extends HTMLPurifier_TagTransform
         '+2' => '150%',
         '+3' => '200%',
         '+4' => '300%'
-    );
+    ];
 
     /**
      * @param HTMLPurifier_Token_Tag $tag

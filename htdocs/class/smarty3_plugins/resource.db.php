@@ -19,7 +19,6 @@
  */
 class Smarty_Resource_Db extends Smarty_Resource_Custom
 {
-
     /**
      * Fetch a template and its modification time from database
      *
@@ -62,7 +61,7 @@ class Smarty_Resource_Db extends Smarty_Resource_Custom
      */
     private function dbTplInfo($tpl_name)
     {
-        static $cache = array();
+        static $cache = [];
         global $xoopsConfig;
         // $xoops = Xoops::getInstance();
 

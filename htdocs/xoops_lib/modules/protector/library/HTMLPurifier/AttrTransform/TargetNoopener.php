@@ -22,7 +22,7 @@ class HTMLPurifier_AttrTransform_TargetNoopener extends HTMLPurifier_AttrTransfo
         if (isset($attr['rel'])) {
             $rels = explode(' ', $attr['rel']);
         } else {
-            $rels = array();
+            $rels = [];
         }
         if (isset($attr['target']) && !in_array('noopener', $rels)) {
             $rels[] = 'noopener';
@@ -34,4 +34,3 @@ class HTMLPurifier_AttrTransform_TargetNoopener extends HTMLPurifier_AttrTransfo
         return $attr;
     }
 }
-

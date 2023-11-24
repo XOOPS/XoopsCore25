@@ -22,9 +22,9 @@ class HTMLPurifier_HTMLModule_Text extends HTMLPurifier_HTMLModule
     /**
      * @type array
      */
-    public $content_sets = array(
+    public $content_sets = [
         'Flow' => 'Heading | Block | Inline'
-    );
+    ];
 
     /**
      * @param HTMLPurifier_Config $config
@@ -37,7 +37,7 @@ class HTMLPurifier_HTMLModule_Text extends HTMLPurifier_HTMLModule
         $this->addElement('cite', 'Inline', 'Inline', 'Common');
         $this->addElement('dfn', 'Inline', 'Inline', 'Common');
         $this->addElement('kbd', 'Inline', 'Inline', 'Common');
-        $this->addElement('q', 'Inline', 'Inline', 'Common', array('cite' => 'URI'));
+        $this->addElement('q', 'Inline', 'Inline', 'Common', ['cite' => 'URI']);
         $this->addElement('samp', 'Inline', 'Inline', 'Common');
         $this->addElement('var', 'Inline', 'Inline', 'Common');
 
@@ -56,7 +56,7 @@ class HTMLPurifier_HTMLModule_Text extends HTMLPurifier_HTMLModule
 
         // Block Phrasal --------------------------------------------------
         $this->addElement('address', 'Block', 'Inline', 'Common');
-        $this->addElement('blockquote', 'Block', 'Optional: Heading | Block | List', 'Common', array('cite' => 'URI'));
+        $this->addElement('blockquote', 'Block', 'Optional: Heading | Block | List', 'Common', ['cite' => 'URI']);
         $pre = $this->addElement('pre', 'Block', 'Inline', 'Common');
         $pre->excludes = $this->makeLookup(
             'img',
@@ -77,7 +77,7 @@ class HTMLPurifier_HTMLModule_Text extends HTMLPurifier_HTMLModule
         // Block Structural -----------------------------------------------
         $p = $this->addElement('p', 'Block', 'Inline', 'Common');
         $p->autoclose = array_flip(
-            array("address", "blockquote", "center", "dir", "div", "dl", "fieldset", "ol", "p", "ul")
+            ["address", "blockquote", "center", "dir", "div", "dl", "fieldset", "ol", "p", "ul"]
         );
 
         $this->addElement('div', 'Block', 'Flow', 'Common');

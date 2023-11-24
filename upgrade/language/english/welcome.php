@@ -1,9 +1,12 @@
 <?php
+
 // _LANGCODE: en
 // _CHARSET : UTF-8
 // Translator: XOOPS Translation Team
 
-define('_XOOPS_UPGRADE_WELCOME', <<<'EOT'
+define(
+    '_XOOPS_UPGRADE_WELCOME',
+    <<<'EOT'
 <h2>XOOPS Upgrader</h2>
 
 <p>

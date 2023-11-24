@@ -33,7 +33,7 @@ defined('XOOPS_INSTALL') || die('XOOPS Installation wizard die');
 $pageHasForm = true;
 $pageHasHelp = true;
 
-$vars =& $_SESSION['settings'];
+$vars = &$_SESSION['settings'];
 
 $hostConnectPrefix = empty($vars['DB_PCONNECT']) ? '' : 'p:';
 mysqli_report(MYSQLI_REPORT_OFF);
@@ -50,7 +50,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET' && isset($_GET['charset']) && Request::
 }
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $params = array('DB_NAME', 'DB_CHARSET', 'DB_COLLATION', 'DB_PREFIX');
+    $params = ['DB_NAME', 'DB_CHARSET', 'DB_COLLATION', 'DB_PREFIX'];
     foreach ($params as $name) {
         $vars[$name] =  Request::getString($name, '', 'POST') ;
     }
@@ -87,11 +87,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && !empty($vars['DB_NAME'])) {
 
 if (@empty($vars['DB_NAME'])) {
     // Fill with default values
-    $vars = array_merge($vars, array(
+    $vars = array_merge($vars, [
                                  'DB_NAME'      => '',
                                  'DB_CHARSET'   => 'utf8mb4',
                                  'DB_COLLATION' => '',
-                                 'DB_PREFIX'    => 'x' . substr(md5(time()), 0, 3)));
+                                 'DB_PREFIX'    => 'x' . substr(md5(time()), 0, 3)]);
 }
 
 ob_start();

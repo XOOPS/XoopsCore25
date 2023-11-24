@@ -73,7 +73,7 @@ switch ($op) {
                 foreach ($files as $file) {
                     if (file_exists($requestDir . $file) && $file !== '.' && $file !== '..' && is_dir($requestDir . $file)) {
                         //retirer .svn
-                        $file_no_valid = array('.svn', 'icons', 'img', 'images', 'language');
+                        $file_no_valid = ['.svn', 'icons', 'img', 'images', 'language'];
 
                         if (!in_array($file, $file_no_valid)) {
                             echo "<li class=\"directory collapsed\"><a href=\"#\" rel=\"" . htmlentities($_REQUEST['dir'] . $file, ENT_QUOTES) . "/\">" . htmlentities($file, ENT_QUOTES) . '</a></li>';
@@ -85,7 +85,7 @@ switch ($op) {
                     if (file_exists($root . $_REQUEST['dir'] . $file) && $file !== '.' && $file !== '..' && !is_dir($root . $_REQUEST['dir'] . $file) && $file !== 'index.html') {
                         $ext = preg_replace('/^.*\./', '', $file);
 
-                        $extensions      = array('.html', '.htm', '.css', '.tpl');
+                        $extensions      = ['.html', '.htm', '.css', '.tpl'];
                         $extension_verif = strrchr($file, '.');
 
                         if (in_array($extension_verif, $extensions)) {
@@ -99,7 +99,7 @@ switch ($op) {
             }
         }
         break;
-    // Edit File
+        // Edit File
     case 'tpls_edit_file':
         $clean_file = XoopsRequest::getString('file', '');
         $clean_path_file = XoopsRequest::getString('path_file', '');
@@ -164,9 +164,9 @@ switch ($op) {
             .'"><input type="hidden" name="ext" value="' . htmlentities($ext, ENT_QUOTES) . '"></form>';
         break;
 
-    // Restore backup file
+        // Restore backup file
     case 'tpls_restore':
-        $extensions = array('.html', '.htm', '.css', '.tpl');
+        $extensions = ['.html', '.htm', '.css', '.tpl'];
 
         //check if the file is inside themes directory
         $valid_dir = stristr(realpath($_REQUEST['path_file']), realpath(XOOPS_ROOT_PATH . '/themes'));

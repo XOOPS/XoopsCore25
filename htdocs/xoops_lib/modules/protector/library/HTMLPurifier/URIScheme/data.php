@@ -13,13 +13,13 @@ class HTMLPurifier_URIScheme_data extends HTMLPurifier_URIScheme
     /**
      * @type array
      */
-    public $allowed_types = array(
+    public $allowed_types = [
         // you better write validation code for other types if you
         // decide to allow them
         'image/jpeg' => true,
         'image/gif' => true,
         'image/png' => true,
-    );
+    ];
     // this is actually irrelevant since we only write out the path
     // component
     /**
@@ -79,7 +79,7 @@ class HTMLPurifier_URIScheme_data extends HTMLPurifier_URIScheme
         } else {
             $raw_data = $data;
         }
-        if ( strlen($raw_data) < 12 ) {
+        if (strlen($raw_data) < 12) {
             // error; exif_imagetype throws exception with small files,
             // and this likely indicates a corrupt URI/failed parse anyway
             return false;
@@ -96,7 +96,7 @@ class HTMLPurifier_URIScheme_data extends HTMLPurifier_URIScheme
             $image_code = exif_imagetype($file);
             unlink($file);
         } elseif (function_exists('getimagesize')) {
-            set_error_handler(array($this, 'muteErrorHandler'));
+            set_error_handler([$this, 'muteErrorHandler']);
             $info = getimagesize($file);
             restore_error_handler();
             unlink($file);

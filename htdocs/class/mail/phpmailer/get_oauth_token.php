@@ -36,7 +36,7 @@ class Google extends AbstractProvider
 {
     use BearerAuthorizationTrait;
 
-    const ACCESS_TOKEN_RESOURCE_OWNER_ID = 'id';
+    public const ACCESS_TOKEN_RESOURCE_OWNER_ID = 'id';
 
     /**
      * @var string If set, this will be sent to google as the "access_type" parameter.
@@ -68,12 +68,12 @@ class Google extends AbstractProvider
 
     public function getResourceOwnerDetailsUrl(AccessToken $token)
     {
-	return ' ';
+        return ' ';
     }
 
     protected function getAuthorizationParameters(array $options)
     {
-	if (is_array($this->scope)) {
+        if (is_array($this->scope)) {
             $separator = $this->getScopeSeparator();
             $this->scope = implode($separator, $this->scope);
         }
@@ -83,7 +83,7 @@ class Google extends AbstractProvider
             array_filter([
                 'hd'          => $this->hostedDomain,
                 'access_type' => $this->accessType,
-		'scope'       => $this->scope,
+        'scope'       => $this->scope,
                 // if the user is logged in with more than one account ask which one to use for the login!
                 'authuser'    => '-1'
             ])
@@ -129,13 +129,13 @@ class Google extends AbstractProvider
 
 //Set Redirect URI in Developer Console as [https/http]://<yourdomain>/<folder>/get_oauth_token.php
 $provider = new Google(
-    array(
+    [
         'clientId' => $clientId,
         'clientSecret' => $clientSecret,
         'redirectUri' => $redirectUri,
-        'scope' => array('https://mail.google.com/'),
-	'accessType' => 'offline'
-    )
+        'scope' => ['https://mail.google.com/'],
+    'accessType' => 'offline'
+    ]
 );
 
 if (!isset($_GET['code'])) {
@@ -152,9 +152,9 @@ if (!isset($_GET['code'])) {
     // Try to get an access token (using the authorization code grant)
     $token = $provider->getAccessToken(
         'authorization_code',
-        array(
+        [
             'code' => $_GET['code']
-        )
+        ]
     );
 
     // Use this to get a new access token if the old one expires

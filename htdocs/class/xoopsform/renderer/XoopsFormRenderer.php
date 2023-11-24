@@ -20,7 +20,7 @@
  */
 final class XoopsFormRenderer
 {
-    const NOT_PERMITTED = 'Not supported for Singleton';
+    public const NOT_PERMITTED = 'Not supported for Singleton';
 
     /**
      * @var XoopsFormRenderer The reference to *Singleton* instance of this class

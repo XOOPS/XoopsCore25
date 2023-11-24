@@ -65,7 +65,7 @@ class MyTextSanitizerExtension
         if (!file_exists($configFileName)) {
             if (false === copy($distFileName, $configFileName)) {
                 trigger_error('Could not create textsanitizer config file ' . basename($configFileName));
-                return $a = array();
+                return $a = [];
             }
         }
         $configs = include $configFileName;
@@ -103,7 +103,7 @@ class MyTextSanitizerExtension
      */
     public function encode($textarea_id)
     {
-        return array(array(), array());
+        return [[], []];
     }
 
     /**
@@ -139,7 +139,7 @@ class MyTextSanitizer
      *
      * @var array
      */
-    public $smileys = array();
+    public $smileys = [];
 
     /**
      */
@@ -150,10 +150,10 @@ class MyTextSanitizer
      * @var string holding reference to text
      */
     public $text         = '';
-    public $patterns     = array();
-    public $replacements = array();
-    public $callbackPatterns = array();
-    public $callbacks        = array();
+    public $patterns     = [];
+    public $replacements = [];
+    public $callbackPatterns = [];
+    public $callbacks        = [];
 
     public $path_basic;
     public $path_config;
@@ -196,9 +196,9 @@ class MyTextSanitizer
         $distFileName = $this->path_basic . '/config.dist.php';
 
         if (!file_exists($configFileName)) {
-            if (false===copy($distFileName, $configFileName)) {
+            if (false === copy($distFileName, $configFileName)) {
                 trigger_error('Could not create textsanitizer config file ' . basename($configFileName));
-                return array();
+                return [];
             }
         }
         return include $configFileName;
@@ -265,7 +265,7 @@ class MyTextSanitizer
             return $this->smileys;
         }
 
-        $smileys = array();
+        $smileys = [];
         foreach ($this->smileys as $smile) {
             if (empty($smile['display'])) {
                 continue;
@@ -317,7 +317,7 @@ class MyTextSanitizer
         $pattern = "/(^|[^]_a-z0-9-=\"'\/:\.])([-_a-z0-9\'+*$^&%=~!?{}]++(?:\.[-_a-z0-9\'+*$^&%=~!?{}]+)*+)@((?:(?![-.])[-a-z0-9.]+(?<![-.])\.[a-z]{2,6}|\d{1,3}(?:\.\d{1,3}){3})(?::\d++)?)/i";
         $text = preg_replace_callback($pattern, 'self::makeClickableCallbackEmailAddress', $text);
         //TODO after moving to PHP 7+ as minimum version, let's convert it to this
-//        $text = preg_replace_callback($pattern, self::class . '::makeClickableCallbackEmailAddress', $text);
+        //        $text = preg_replace_callback($pattern, self::class . '::makeClickableCallbackEmailAddress', $text);
 
 
         $pattern = "/(?:\s+|^)(https?:\/\/)([-A-Z0-9.\_*?&:;=#\/\[\]\%@]+)/i";
@@ -359,8 +359,8 @@ class MyTextSanitizer
      */
     public function &xoopsCodeDecode(&$text, $allowimage = 1)
     {
-        $patterns       = array();
-        $replacements   = array();
+        $patterns       = [];
+        $replacements   = [];
         $patterns[]     = "/\[siteurl=(['\"]?)([^\"'<>]*)\\1](.*)\[\/siteurl\]/sU";
         $replacements[] = '<a href="' . XOOPS_URL . '/\\2" title="">\\3</a>';
         $patterns[]     = "/\[url=(['\"]?)(http[s]?:\/\/[^\"'<>]*)\\1](.*)\[\/url\]/sU";
@@ -444,8 +444,8 @@ class MyTextSanitizer
      */
     public function filterXss($text)
     {
-        $patterns       = array();
-        $replacements   = array();
+        $patterns       = [];
+        $replacements   = [];
         $text           = str_replace("\x00", '', $text);
         $c              = "[\x01-\x1f]*";
         $patterns[]     = "/\bj{$c}a{$c}v{$c}a{$c}s{$c}c{$c}r{$c}i{$c}p{$c}t{$c}[\s]*:/si";
@@ -494,9 +494,9 @@ class MyTextSanitizer
      * @param  bool   $double_encode
      * @return string
      */
-    public function htmlSpecialChars($text, $quote_style = NULL, $charset = null, $double_encode = true)
+    public function htmlSpecialChars($text, $quote_style = null, $charset = null, $double_encode = true)
     {
-        if ($quote_style === NULL) {
+        if ($quote_style === null) {
             $quote_style = ENT_QUOTES;
         }
         $text = (string) $text;
@@ -506,7 +506,7 @@ class MyTextSanitizer
             $text = htmlspecialchars($text, $quote_style);
         }
 
-        return preg_replace(array('/&amp;/i', '/&nbsp;/i'), array('&', '&amp;nbsp;'), $text);
+        return preg_replace(['/&amp;/i', '/&nbsp;/i'], ['&', '&amp;nbsp;'], $text);
     }
 
     /**
@@ -517,7 +517,7 @@ class MyTextSanitizer
      */
     public function undoHtmlSpecialChars($text)
     {
-        return preg_replace(array('/&gt;/i', '/&lt;/i', '/&quot;/i', '/&#039;/i', '/&amp;nbsp;/i'), array('>', '<', '"', '\'', '&nbsp;'), $text);
+        return preg_replace(['/&gt;/i', '/&lt;/i', '/&quot;/i', '/&#039;/i', '/&amp;nbsp;/i'], ['>', '<', '"', '\'', '&nbsp;'], $text);
     }
 
     /**
@@ -558,10 +558,10 @@ class MyTextSanitizer
             // decode xcode
             if ($image != 0) {
                 // image allowed
-                $text =& $this->xoopsCodeDecode($text);
+                $text = &$this->xoopsCodeDecode($text);
             } else {
                 // image not allowed
-                $text =& $this->xoopsCodeDecode($text, 0);
+                $text = &$this->xoopsCodeDecode($text, 0);
             }
         }
         if ($br != 0) {
@@ -590,7 +590,7 @@ class MyTextSanitizer
     public function &previewTarea($text, $html = 0, $smiley = 1, $xcode = 1, $image = 1, $br = 1)
     {
         $text = $this->stripSlashesGPC($text);
-        $text =& $this->displayTarea($text, $html, $smiley, $xcode, $image, $br);
+        $text = &$this->displayTarea($text, $html, $smiley, $xcode, $image, $br);
 
         return $text;
     }
@@ -660,7 +660,7 @@ class MyTextSanitizer
             return $text;
         }
         $patterns = "/\[code([^\]]*?)\](.*)\[\/code\]/sU";
-        $text1    = preg_replace_callback($patterns, array($this, 'codeConvCallback'), $text);
+        $text1    = preg_replace_callback($patterns, [$this, 'codeConvCallback'], $text);
 
         return $text1;
     }
@@ -718,7 +718,7 @@ class MyTextSanitizer
         $args      = array_slice(func_get_args(), 1);
         array_unshift($args, $this);
 
-        return call_user_func_array(array($extension, 'load'), $args);
+        return call_user_func_array([$extension, 'load'], $args);
     }
 
     /**
@@ -771,7 +771,7 @@ class MyTextSanitizer
     {
         $GLOBALS['xoopsLogger']->addDeprecated(__METHOD__ . ' is deprecated');
         $str = $this->htmlSpecialChars(str_replace('\"', '"', base64_decode($str)));
-        $str =& $this->xoopsCodeDecode($str, $image);
+        $str = &$this->xoopsCodeDecode($str, $image);
 
         return $str;
     }
@@ -801,7 +801,7 @@ class MyTextSanitizer
             $text = $this->smiley($text);
         }
         if ($bbcode == 1) {
-            $text =& $this->xoopsCodeDecode($text);
+            $text = &$this->xoopsCodeDecode($text);
         }
         $text = $this->nl2Br($text);
 
@@ -834,7 +834,7 @@ class MyTextSanitizer
             $text = $this->smiley($text);
         }
         if ($bbcode == 1) {
-            $text =& $this->xoopsCodeDecode($text);
+            $text = &$this->xoopsCodeDecode($text);
         }
         $text = $this->nl2Br($text);
 
@@ -945,7 +945,7 @@ class MyTextSanitizer
     public function &makeTareaData4Show(&$text, $html = 1, $smiley = 1, $xcode = 1)
     {
         $GLOBALS['xoopsLogger']->addDeprecated(__METHOD__ . ' is deprecated');
-        $text =& $this->displayTarea($text, $html, $smiley, $xcode);
+        $text = &$this->displayTarea($text, $html, $smiley, $xcode);
 
         return $text;
     }
@@ -977,7 +977,7 @@ class MyTextSanitizer
     public function &makeTareaData4Preview(&$text, $html = 1, $smiley = 1, $xcode = 1)
     {
         $GLOBALS['xoopsLogger']->addDeprecated(__METHOD__ . ' is deprecated');
-        $text =& $this->previewTarea($text, $html, $smiley, $xcode);
+        $text = &$this->previewTarea($text, $html, $smiley, $xcode);
 
         return $text;
     }

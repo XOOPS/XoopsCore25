@@ -1,5 +1,6 @@
 <?php
-// 
+
+//
 /**
  * package::i.tools
  *
@@ -35,14 +36,14 @@ class Zipfile
      *
      * @var array $datasec
      */
-    public $datasec = array();
+    public $datasec = [];
 
     /**
      * Central directory
      *
      * @var array $ctrl_dir
      */
-    public $ctrl_dir = array();
+    public $ctrl_dir = [];
 
     /**
      * End of central directory record
@@ -167,4 +168,3 @@ class Zipfile
                "\x00\x00"; // .zip file comment length
     } // end of the 'file()' method
 } // end of the 'zipfile' class
-

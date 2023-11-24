@@ -2,7 +2,6 @@
 
 class HTMLPurifier_HTMLModule_Tidy_Proprietary extends HTMLPurifier_HTMLModule_Tidy
 {
-
     /**
      * @type string
      */
@@ -18,7 +17,7 @@ class HTMLPurifier_HTMLModule_Tidy_Proprietary extends HTMLPurifier_HTMLModule_T
      */
     public function makeFixes()
     {
-        $r = array();
+        $r = [];
         $r['table@background'] = new HTMLPurifier_AttrTransform_Background();
         $r['td@background']    = new HTMLPurifier_AttrTransform_Background();
         $r['th@background']    = new HTMLPurifier_AttrTransform_Background();

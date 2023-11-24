@@ -35,7 +35,7 @@ class HTMLPurifier_ChildDef_Optional extends HTMLPurifier_ChildDef_Required
             } elseif ($this->whitespace) {
                 return $children;
             } else {
-                return array();
+                return [];
             }
         }
         return $result;

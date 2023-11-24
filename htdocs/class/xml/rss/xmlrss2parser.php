@@ -26,10 +26,10 @@ require_once(XOOPS_ROOT_PATH . '/class/xml/xmltaghandler.php');
  */
 class XoopsXmlRss2Parser extends SaxParser
 {
-    public $_tempArr     = array();
-    public $_channelData = array();
-    public $_imageData   = array();
-    public $_items       = array();
+    public $_tempArr     = [];
+    public $_channelData = [];
+    public $_imageData   = [];
+    public $_items       = [];
 
     /**
      * @param $input
@@ -70,7 +70,7 @@ class XoopsXmlRss2Parser extends SaxParser
     public function setChannelData($name, &$value)
     {
         if (!isset($this->_channelData[$name])) {
-            $this->_channelData[$name] =& $value;
+            $this->_channelData[$name] = &$value;
         } else {
             $this->_channelData[$name] .= $value;
         }
@@ -100,7 +100,7 @@ class XoopsXmlRss2Parser extends SaxParser
      */
     public function setImageData($name, &$value)
     {
-        $this->_imageData[$name] =& $value;
+        $this->_imageData[$name] = &$value;
     }
 
     /**
@@ -127,7 +127,7 @@ class XoopsXmlRss2Parser extends SaxParser
      */
     public function setItems(&$itemarr)
     {
-        $this->_items[] =& $itemarr;
+        $this->_items[] = &$itemarr;
     }
 
     /**
@@ -146,7 +146,7 @@ class XoopsXmlRss2Parser extends SaxParser
     public function setTempArr($name, &$value, $delim = '')
     {
         if (!isset($this->_tempArr[$name])) {
-            $this->_tempArr[$name] =& $value;
+            $this->_tempArr[$name] = &$value;
         } else {
             $this->_tempArr[$name] .= $delim . $value;
         }
@@ -163,7 +163,7 @@ class XoopsXmlRss2Parser extends SaxParser
     public function resetTempArr()
     {
         unset($this->_tempArr);
-        $this->_tempArr = array();
+        $this->_tempArr = [];
     }
 }
 

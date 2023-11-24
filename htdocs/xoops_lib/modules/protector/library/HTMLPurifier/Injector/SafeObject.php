@@ -14,38 +14,38 @@ class HTMLPurifier_Injector_SafeObject extends HTMLPurifier_Injector
     /**
      * @type array
      */
-    public $needed = array('object', 'param');
+    public $needed = ['object', 'param'];
 
     /**
      * @type array
      */
-    protected $objectStack = array();
+    protected $objectStack = [];
 
     /**
      * @type array
      */
-    protected $paramStack = array();
+    protected $paramStack = [];
 
     /**
      * Keep this synchronized with AttrTransform/SafeParam.php.
      * @type array
      */
-    protected $addParam = array(
+    protected $addParam = [
         'allowScriptAccess' => 'never',
         'allowNetworking' => 'internal',
-    );
+    ];
 
     /**
      * These are all lower-case keys.
      * @type array
      */
-    protected $allowedParam = array(
+    protected $allowedParam = [
         'wmode' => true,
         'movie' => true,
         'flashvars' => true,
         'src' => true,
         'allowfullscreen' => true, // if omitted, assume to be 'false'
-    );
+    ];
 
     /**
      * @param HTMLPurifier_Config $config
@@ -64,10 +64,10 @@ class HTMLPurifier_Injector_SafeObject extends HTMLPurifier_Injector
     {
         if ($token->name == 'object') {
             $this->objectStack[] = $token;
-            $this->paramStack[] = array();
-            $new = array($token);
+            $this->paramStack[] = [];
+            $new = [$token];
             foreach ($this->addParam as $name => $value) {
-                $new[] = new HTMLPurifier_Token_Empty('param', array('name' => $name, 'value' => $value));
+                $new[] = new HTMLPurifier_Token_Empty('param', ['name' => $name, 'value' => $value]);
             }
             $token = $new;
         } elseif ($token->name == 'param') {

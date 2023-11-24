@@ -27,7 +27,6 @@
  */
 class HTMLPurifier_StringHashParser
 {
-
     /**
      * @type string
      */
@@ -62,7 +61,7 @@ class HTMLPurifier_StringHashParser
         if (!file_exists($file)) {
             return false;
         }
-        $ret = array();
+        $ret = [];
         $fh = fopen($file, 'r');
         if (!$fh) {
             return false;
@@ -87,7 +86,7 @@ class HTMLPurifier_StringHashParser
     {
         $state   = false;
         $single  = false;
-        $ret     = array();
+        $ret     = [];
         do {
             $line = fgets($fh);
             if ($line === false) {

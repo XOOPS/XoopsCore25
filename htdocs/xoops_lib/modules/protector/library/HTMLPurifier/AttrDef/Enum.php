@@ -9,13 +9,12 @@
  */
 class HTMLPurifier_AttrDef_Enum extends HTMLPurifier_AttrDef
 {
-
     /**
      * Lookup table of valid values.
      * @type array
      * @todo Make protected
      */
-    public $valid_values = array();
+    public $valid_values = [];
 
     /**
      * Bool indicating whether or not enumeration is case sensitive.
@@ -27,7 +26,7 @@ class HTMLPurifier_AttrDef_Enum extends HTMLPurifier_AttrDef
      * @param array $valid_values List of valid values
      * @param bool $case_sensitive Whether or not case sensitive
      */
-    public function __construct($valid_values = array(), $case_sensitive = false)
+    public function __construct($valid_values = [], $case_sensitive = false)
     {
         $this->valid_values = array_flip($valid_values);
         $this->case_sensitive = $case_sensitive;

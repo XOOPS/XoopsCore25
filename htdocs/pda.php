@@ -29,9 +29,10 @@ $result = $xoopsDB->query($sql, 10, 0);
 //TODO Remove this hardcoded string
 if (!$xoopsDB->isResultSet($result)) {
     //    echo 'An error occured';
-       throw new \RuntimeException(
-       \sprintf(_DB_QUERY_ERROR, $sql) . $xoopsDB->error(), E_USER_ERROR
-   );
+    throw new \RuntimeException(
+        \sprintf(_DB_QUERY_ERROR, $sql) . $xoopsDB->error(),
+        E_USER_ERROR
+    );
 } else {
     echo "<img src='images/logo.gif' alt='" . htmlspecialchars($xoopsConfig['sitename'], ENT_QUOTES) . "' border='0' /><br>";
     echo '<h2>' . htmlspecialchars($xoopsConfig['slogan'], ENT_QUOTES) . '</h2>';

@@ -63,7 +63,7 @@ class ProfileField extends XoopsObject
         $this->initVar('field_edit', XOBJ_DTYPE_INT, 0);
         $this->initVar('field_show', XOBJ_DTYPE_INT, 0);
         $this->initVar('field_config', XOBJ_DTYPE_INT, 0);
-        $this->initVar('field_options', XOBJ_DTYPE_ARRAY, array());
+        $this->initVar('field_options', XOBJ_DTYPE_ARRAY, []);
         $this->initVar('step_id', XOBJ_DTYPE_INT, 0);
     }
 
@@ -151,7 +151,7 @@ class ProfileField extends XoopsObject
             case 'select':
                 $element = new XoopsFormSelect($caption, $name, $value);
                 // If options do not include an empty element, then add a blank option to prevent any default selection
-//                if (!in_array('', array_keys($options))) {
+                //                if (!in_array('', array_keys($options))) {
                 if (!array_key_exists('', $options)) {
                     $element->addOption('', _NONE);
 
@@ -277,7 +277,7 @@ class ProfileField extends XoopsObject
             case 'select_multi':
             case 'checkbox':
                 $options = $this->getVar('field_options');
-                $ret     = array();
+                $ret     = [];
                 if (count($options) > 0) {
                     foreach (array_keys($options) as $key) {
                         if (in_array($key, $value)) {
@@ -302,7 +302,7 @@ class ProfileField extends XoopsObject
                 /** @var XoopsMemberHandler $member_handler */
                 $member_handler = xoops_getHandler('member');
                 $options        = $member_handler->getGroupList();
-                $ret            = array();
+                $ret            = [];
                 foreach (array_keys($options) as $key) {
                     if (in_array($key, $value)) {
                         $ret[$key] = htmlspecialchars($options[$key], ENT_QUOTES);
@@ -448,12 +448,12 @@ class ProfileFieldHandler extends XoopsPersistableObjectHandler
      */
     public function loadFields($force_update = false)
     {
-        static $fields = array();
+        static $fields = [];
         if (!empty($force_update) || count($fields) == 0) {
             $this->table_link = $this->db->prefix('profile_category');
             $criteria         = new Criteria('o.field_id', 0, '!=');
             $criteria->setSort('l.cat_weight ASC, o.field_weight');
-            $field_objs =& $this->getByLink($criteria, array('o.*'), true, 'cat_id', 'cat_id');
+            $field_objs = &$this->getByLink($criteria, ['o.*'], true, 'cat_id', 'cat_id');
             foreach (array_keys($field_objs) as $i) {
                 $fields[$field_objs[$i]->getVar('field_name')] = $field_objs[$i];
             }
@@ -476,7 +476,7 @@ class ProfileFieldHandler extends XoopsPersistableObjectHandler
         if (!($obj instanceof $this->className)) {
             return false;
         }
-         /** @var ProfileProfileHandler $profile_handler */
+        /** @var ProfileProfileHandler $profile_handler */
         $profile_handler = xoops_getModuleHandler('profile', 'profile');
         $obj->setVar('field_name', str_replace(' ', '_', $obj->getVar('field_name')));
         $obj->cleanVars();
@@ -618,7 +618,7 @@ class ProfileFieldHandler extends XoopsPersistableObjectHandler
         if (!($obj instanceof $this->className)) {
             return false;
         }
-         /** @var ProfileProfileHandler $profile_handler */
+        /** @var ProfileProfileHandler $profile_handler */
         $profile_handler = xoops_getModuleHandler('profile', 'profile');
         // remove column from table
         $sql = 'ALTER TABLE ' . $profile_handler->table . ' DROP `' . $obj->getVar('field_name', 'n') . '`';
@@ -654,7 +654,7 @@ class ProfileFieldHandler extends XoopsPersistableObjectHandler
      */
     public function getUserVars()
     {
-        return array(
+        return [
             'uid',
             'uname',
             'name',
@@ -685,6 +685,6 @@ class ProfileFieldHandler extends XoopsPersistableObjectHandler
             'user_occ',
             'bio',
             'user_intrest',
-            'user_mailok');
+            'user_mailok'];
     }
 }

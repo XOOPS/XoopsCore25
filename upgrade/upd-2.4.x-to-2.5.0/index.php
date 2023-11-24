@@ -175,10 +175,10 @@ class Upgrade_250 extends XoopsUpgrade
      */
     private function strayblockCriteria()
     {
-        $criteria = new CriteriaCompo(new Criteria('mid','1', '='));
-        $criteria->add(new Criteria('block_type','S', '='));
-        $criteria->add(new Criteria('func_num','1', '='));
-        $criteria->add(new Criteria('template','system_block_user.html', '='));
+        $criteria = new CriteriaCompo(new Criteria('mid', '1', '='));
+        $criteria->add(new Criteria('block_type', 'S', '='));
+        $criteria->add(new Criteria('func_num', '1', '='));
+        $criteria->add(new Criteria('template', 'system_block_user.html', '='));
         return $criteria;
     }
 
@@ -201,7 +201,7 @@ class Upgrade_250 extends XoopsUpgrade
         $criteria = $this->strayblockCriteria();
         $tables = new Xmf\Database\Tables();
         $tables->useTable('newblocks');
-        $tables->update('newblocks', array('func_num' => '0'), $criteria);
+        $tables->update('newblocks', ['func_num' => '0'], $criteria);
 
         return $tables->executeQueue(true);
     }
@@ -209,7 +209,7 @@ class Upgrade_250 extends XoopsUpgrade
     public function __construct()
     {
         parent::__construct(basename(__DIR__));
-        $this->tasks = array('config', 'templates', 'strayblock');
+        $this->tasks = ['config', 'templates', 'strayblock'];
     }
 }
 

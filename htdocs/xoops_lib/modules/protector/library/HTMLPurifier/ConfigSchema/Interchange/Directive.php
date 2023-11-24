@@ -5,7 +5,6 @@
  */
 class HTMLPurifier_ConfigSchema_Interchange_Directive
 {
-
     /**
      * ID of directive.
      * @type HTMLPurifier_ConfigSchema_Interchange_Id
@@ -49,7 +48,7 @@ class HTMLPurifier_ConfigSchema_Interchange_Directive
      * e.g. array(new HTMLPurifier_ConfigSchema_Interchange_Id('Ns', 'Dir'))).
      * @type HTMLPurifier_ConfigSchema_Interchange_Id[]
      */
-    public $aliases = array();
+    public $aliases = [];
 
     /**
      * Hash of value aliases, e.g. array('alt' => 'real'). Null if value
@@ -83,7 +82,7 @@ class HTMLPurifier_ConfigSchema_Interchange_Directive
      * List of external projects this directive depends on, e.g. array('CSSTidy').
      * @type array
      */
-    public $external = array();
+    public $external = [];
 }
 
 // vim: et sw=4 sts=4

@@ -23,12 +23,12 @@
  */
 class TinyMCE
 {
-    public        $rootpath;
-    public        $config                = array();
-    public        $setting               = array();
-    public        $xoopsPlugins          = array();
+    public $rootpath;
+    public $config                = [];
+    public $setting               = [];
+    public $xoopsPlugins          = [];
     public static $LastOfElementsTinymce = '';
-    public static $ListOfElementsTinymce = array();
+    public static $ListOfElementsTinymce = [];
 
     // PHP 5 Constructor
     /**
@@ -76,7 +76,7 @@ class TinyMCE
     public function init()
     {
         // list of configured options
-        $configured = array();
+        $configured = [];
 
         // Load default settings
         if (file_exists($GLOBALS['xoops']->path('var/configs/tinymce.php')) && is_readable($GLOBALS['xoops']->path('var/configs/tinymce.php'))) {
@@ -111,15 +111,15 @@ class TinyMCE
 
         if ($this->setting['theme'] !== 'simple') {
             if (empty($this->config['buttons'])) {
-                $this->config['buttons'][] = array(
+                $this->config['buttons'][] = [
                     'before' => '',
-                    'add' => '');
-                $this->config['buttons'][] = array(
+                    'add' => ''];
+                $this->config['buttons'][] = [
                     'before' => '',
-                    'add' => '');
-                $this->config['buttons'][] = array(
+                    'add' => ''];
+                $this->config['buttons'][] = [
                     'before' => '',
-                    'add' => '');
+                    'add' => ''];
             }
             $i = 0;
             foreach ($this->config['buttons'] as $button) {
@@ -176,7 +176,7 @@ class TinyMCE
             }
 
             for ($i = 1; $i <= 4; ++$i) {
-                $buttons = array();
+                $buttons = [];
                 if (isset($this->setting['theme_' . $this->setting['theme'] . "_buttons{$i}"])) {
                     $checklist = explode(',', $this->setting['theme_' . $this->setting['theme'] . "_buttons{$i}"]);
                     foreach ($checklist as $plugin) {
@@ -216,7 +216,7 @@ class TinyMCE
      */
     public function loadPlugins()
     {
-        $plugins      = array();
+        $plugins      = [];
         $plugins_list = XoopsLists::getDirListAsArray(XOOPS_ROOT_PATH . $this->rootpath . '/plugins');
         if (empty($this->setting['plugins'])) {
             $plugins = $plugins_list;
@@ -239,7 +239,7 @@ class TinyMCE
      */
     public function get_xoopsPlugins()
     {
-        $xoopsPlugins = array();
+        $xoopsPlugins = [];
         $allplugins   = XoopsLists::getDirListAsArray(XOOPS_ROOT_PATH . $this->rootpath . '/plugins');
         foreach ($allplugins as $plugin) {
             if (strpos(strtolower($plugin), 'xoops') != false && file_exists(XOOPS_ROOT_PATH . $this->config['rootpath'] . "/include/$plugin.php")) {
@@ -266,7 +266,7 @@ class TinyMCE
             $css_path = str_replace(XOOPS_THEME_URL, XOOPS_THEME_PATH, $css_url);
         }
 
-        $css         = array();
+        $css         = [];
         $css[]       = $css_url . '/' . $css_file;
         $css_content = file_get_contents($css_path . '/' . $css_file);
 
@@ -307,7 +307,7 @@ class TinyMCE
             $file_browser_callback = "MyXoopsUrl ='" . XOOPS_URL . "';\n";
             $file_browser_callback .= file_get_contents($fbc_name);
             $file_browser_callback .= "\n//suis passé la " . $fbc_name;
-            //unset($this->setting["file_browser_callback"]);
+        //unset($this->setting["file_browser_callback"]);
         } else {
             $file_browser_callback = '//suis absent';
         }

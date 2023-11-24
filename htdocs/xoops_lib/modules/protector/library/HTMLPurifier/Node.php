@@ -27,7 +27,7 @@ abstract class HTMLPurifier_Node
      * Currently, valid values are "ValidateAttributes".
      * @type array
      */
-    public $armor = array();
+    public $armor = [];
 
     /**
      * When true, this node should be ignored as non-existent.

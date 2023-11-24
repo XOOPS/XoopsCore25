@@ -27,12 +27,12 @@ use SplFileInfo;
  */
 class Smarty3TemplateChecks extends ScannerProcess
 {
-    protected $patterns = array(
+    protected $patterns = [
         'varname' => '/<{foreach[[:space:]]+item=([a-zA-Z0-9\-_.]+)[[:space:]]from=\$([a-zA-Z0-9\-_.]+) *}>/',
-        'noquotes' =>'/(<{xo[a-zA-Z\d]*\b[^}>]*?)\s*([^\'"}]+)(}>)/',
+        'noquotes' => '/(<{xo[a-zA-Z\d]*\b[^}>]*?)\s*([^\'"}]+)(}>)/',
         'includeq' => '/(<{includeq[[:space:]]+[ -=\.\/_\'\"\$a-zA-Z0-9]+}>)/',
         'foreachq' => '/(<{foreachq[[:space:]]+[ -=\.\/_\'\"\$a-zA-Z0-9]+}>)/',
-    );
+    ];
 
     /**
      * @var ScannerOutput

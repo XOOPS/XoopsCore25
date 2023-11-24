@@ -43,7 +43,7 @@ class Smarty3ScannerOutput extends ScannerOutput
     public function __construct()
     {
         $this->content = '';
-        $this->counts = new ArrayObject(array());
+        $this->counts = new ArrayObject([]);
     }
 
     /**
@@ -186,12 +186,12 @@ class Smarty3ScannerOutput extends ScannerOutput
     public function makeOutputIssue($rule, $file, $match, $writable)
     {
         return new ArrayObject(
-            array(
+            [
                 'rule' => $rule,
                 'file' => $file,
-                'match'=> $match,
+                'match' => $match,
                 'writable' => $writable
-            )
+            ]
         );
     }
 }

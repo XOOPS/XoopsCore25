@@ -31,7 +31,7 @@ class XoopsModelFactory
     /**
      * static private
      */
-    public $handlers = array();
+    public $handlers = [];
 
     /**
      * XoopsModelFactory::__construct()
@@ -136,7 +136,7 @@ class XoopsModelAbstract
     public function setHandler($handler)
     {
         if (is_object($handler) && is_a($handler, 'XoopsPersistableObjectHandler')) {
-            $this->handler =& $handler;
+            $this->handler = &$handler;
 
             return true;
         }

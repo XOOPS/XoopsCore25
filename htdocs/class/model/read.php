@@ -63,10 +63,11 @@ class XoopsModelRead extends XoopsModelAbstract
         $result = $this->handler->db->query($sql, $limit, $start);
         if (!$this->handler->db->isResultSet($result)) {
             throw new \RuntimeException(
-                \sprintf(_DB_QUERY_ERROR, $sql) . $this->handler->db->error(), E_USER_ERROR
+                \sprintf(_DB_QUERY_ERROR, $sql) . $this->handler->db->error(),
+                E_USER_ERROR
             );
         }
-        $ret    = array();
+        $ret    = [];
         if (false !== $result) {
             if ($asObject) {
                 while (false !== ($myrow = $this->handler->db->fetchArray($result))) {
@@ -107,7 +108,7 @@ class XoopsModelRead extends XoopsModelAbstract
      */
     public function &getObjects(CriteriaElement $criteria = null, $id_as_key = false, $as_object = true)
     {
-        $objects =& $this->getAll($criteria, null, $as_object, $id_as_key);
+        $objects = &$this->getAll($criteria, null, $as_object, $id_as_key);
 
         return $objects;
     }
@@ -122,7 +123,7 @@ class XoopsModelRead extends XoopsModelAbstract
      */
     public function getList(CriteriaElement $criteria = null, $limit = 0, $start = 0)
     {
-        $ret = array();
+        $ret = [];
         if ($criteria == null) {
             $criteria = new CriteriaCompo();
             $criteria->setLimit($limit);
@@ -147,7 +148,7 @@ class XoopsModelRead extends XoopsModelAbstract
         $result = $this->handler->db->query($sql, $limit, $start);
         if (!$this->handler->db->isResultSet($result)) {
             return $ret;
-            }
+        }
 
         $myts = \MyTextSanitizer::getInstance();
         while (false !== ($myrow = $this->handler->db->fetchArray($result))) {
@@ -166,7 +167,7 @@ class XoopsModelRead extends XoopsModelAbstract
      */
     public function &getIds(CriteriaElement $criteria = null)
     {
-        $ret   = array();
+        $ret   = [];
         $sql   = "SELECT `{$this->handler->keyName}` FROM `{$this->handler->table}`";
         $limit = $start = null;
         if (isset($criteria) && \method_exists($criteria, 'renderWhere')) {
@@ -177,7 +178,7 @@ class XoopsModelRead extends XoopsModelAbstract
         $result = $this->handler->db->query($sql, $limit, $start);
         if (!$this->handler->db->isResultSet($result)) {
             return $ret;
-         }
+        }
 
         while (false !== ($myrow = $this->handler->db->fetchArray($result))) {
             $ret[] = $myrow[$this->handler->keyName];
@@ -225,7 +226,7 @@ class XoopsModelRead extends XoopsModelAbstract
     public function convertResultSet($result, $id_as_key = false, $as_object = true)
     {
         $GLOBALS['xoopsLogger']->addDeprecated(__METHOD__ . '() is deprecated.');
-        $ret = array();
+        $ret = [];
         while (false !== ($myrow = $this->handler->db->fetchArray($result))) {
             $obj = $this->handler->create(false);
             $obj->assignVars($myrow);
@@ -233,7 +234,7 @@ class XoopsModelRead extends XoopsModelAbstract
                 if ($as_object) {
                     $ret[] = $obj;
                 } else {
-                    $row  = array();
+                    $row  = [];
                     $vars = $obj->getVars();
                     foreach (array_keys($vars) as $i) {
                         $row[$i] = $obj->getVar($i);
@@ -242,9 +243,9 @@ class XoopsModelRead extends XoopsModelAbstract
                 }
             } else {
                 if ($as_object) {
-                    $ret[$myrow[$this->handler->keyName]] =& $obj;
+                    $ret[$myrow[$this->handler->keyName]] = &$obj;
                 } else {
-                    $row  = array();
+                    $row  = [];
                     $vars = $obj->getVars();
                     foreach (array_keys($vars) as $i) {
                         $row[$i] = $obj->getVar($i);

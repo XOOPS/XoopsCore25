@@ -5,7 +5,6 @@
  */
 class HTMLPurifier_AttrDef_CSS_Color extends HTMLPurifier_AttrDef
 {
-
     /**
      * @type HTMLPurifier_AttrDef_CSS_AlphaValue
      */
@@ -59,19 +58,19 @@ class HTMLPurifier_AttrDef_CSS_Color extends HTMLPurifier_AttrDef
              * Allowed types for values :
              * parameter_position => [type => max_value]
              */
-            $allowed_types = array(
-                1 => array('percentage' => 100, 'integer' => 255),
-                2 => array('percentage' => 100, 'integer' => 255),
-                3 => array('percentage' => 100, 'integer' => 255),
-            );
+            $allowed_types = [
+                1 => ['percentage' => 100, 'integer' => 255],
+                2 => ['percentage' => 100, 'integer' => 255],
+                3 => ['percentage' => 100, 'integer' => 255],
+            ];
             $allow_different_types = false;
 
             if (strpos($function, 'hsl') !== false) {
-                $allowed_types = array(
-                    1 => array('integer' => 360),
-                    2 => array('percentage' => 100),
-                    3 => array('percentage' => 100),
-                );
+                $allowed_types = [
+                    1 => ['integer' => 360],
+                    2 => ['percentage' => 100],
+                    3 => ['percentage' => 100],
+                ];
                 $allow_different_types = true;
             }
 
@@ -83,7 +82,7 @@ class HTMLPurifier_AttrDef_CSS_Color extends HTMLPurifier_AttrDef
             }
 
             $type = false;
-            $new_parts = array();
+            $new_parts = [];
             $i = 0;
 
             foreach ($parts as $part) {

@@ -41,7 +41,7 @@ include_once __DIR__ . '/../../language/' . $wizard->language . '/global.php';
     <meta name="author" content="">
 
     <title><?php echo XOOPS_VERSION . ' : ' . XOOPS_INSTALL_WIZARD; ?>
-        (<?php echo ($wizard->pageIndex + 1) . '/' . count($wizard->pages); ?>)</title>
+        (<?php echo($wizard->pageIndex + 1) . '/' . count($wizard->pages); ?>)</title>
 
     <!-- Bootstrap Core CSS -->
     <link href="assets/css/bootstrap.min.css" rel="stylesheet">
@@ -62,12 +62,12 @@ include_once __DIR__ . '/../../language/' . $wizard->language . '/global.php';
     if (!empty($extraSources)) {
         echo $extraSources;
     }
-    ?>
+?>
     <?php
-    if (file_exists('language/' . $wizard->language . '/style.css')) {
-        echo '<link rel="stylesheet" type="text/css" media="all" href="language/' . $wizard->language . '/style.css" />';
-    }
-    ?>
+if (file_exists('language/' . $wizard->language . '/style.css')) {
+    echo '<link rel="stylesheet" type="text/css" media="all" href="language/' . $wizard->language . '/style.css" />';
+}
+?>
     <script type="text/javascript" src="./assets/js/xo-installer.js"></script>
 
 </head>
@@ -94,11 +94,11 @@ include_once __DIR__ . '/../../language/' . $wizard->language . '/global.php';
                 <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-book"></i> <?php echo SUPPORT; ?> <b class="caret"></b></a>
                 <ul class="dropdown-menu">
                     <?php
-                    @include_once __DIR__ . '/../language/' . $wizard->language . '/support.php';
-                    foreach ($supports as $lang => $support) {
-                        echo '<li><a href="' . $support['url'] . '" target="_blank">' . $support['title'] . '</a></li>';
-                    }
-                    ?>
+                @include_once __DIR__ . '/../language/' . $wizard->language . '/support.php';
+foreach ($supports as $lang => $support) {
+    echo '<li><a href="' . $support['url'] . '" target="_blank">' . $support['title'] . '</a></li>';
+}
+?>
                 </ul>
             </li>
             <li>
@@ -127,7 +127,7 @@ include_once __DIR__ . '/../../language/' . $wizard->language . '/global.php';
                             . '</a></li>';
                     }
                 }
-                ?>
+?>
             </ul>
         </div>
         <!-- /.navbar-collapse -->
@@ -167,7 +167,7 @@ include_once __DIR__ . '/../../language/' . $wizard->language . '/global.php';
                                     <span class="<?php echo $wizard->pages[$wizard->currentPage]['icon']; ?> fa-5x"></span>
                                 </div>
                                 <div class="col-xs-9 text-right">
-                                    <div class="huge"><?php echo ($wizard->pageIndex + 1) . '/' . count($wizard->pages); ?></div>
+                                    <div class="huge"><?php echo($wizard->pageIndex + 1) . '/' . count($wizard->pages); ?></div>
                                     <div><?php echo XOOPS_INSTALLING; ?></div>
                                 </div>
                             </div>
@@ -179,9 +179,9 @@ include_once __DIR__ . '/../../language/' . $wizard->language . '/global.php';
                     </div>
                 </div>
                 <?php
-                $versionParts=array();
-                $versionResult = preg_match ('/(^[a-z\s]*)([0-9\.]*)/i', XOOPS_VERSION, $versionParts);
-                ?>
+$versionParts = [];
+$versionResult = preg_match('/(^[a-z\s]*)([0-9\.]*)/i', XOOPS_VERSION, $versionParts);
+?>
 
                 <div class="col-lg-3 col-md-6">
                     <div class="panel panel-green">

@@ -73,8 +73,8 @@ class XoopsFormSelectUser extends XoopsFormElementTray
         }
         /** @var XoopsMemberHandler $member_handler */
         $member_handler = xoops_getHandler('member');
-        $value          = is_array($value) ? $value : (empty($value) ? array() : array($value));
-        $selectedUsers = array();
+        $value          = is_array($value) ? $value : (empty($value) ? [] : [$value]);
+        $selectedUsers = [];
         if (count($value) > 0) {
             // fetch the set of uids in $value
             $criteria = new Criteria('uid', '(' . implode(',', $value) . ')', 'IN');
@@ -157,11 +157,11 @@ class XoopsFormSelectUser extends XoopsFormElementTray
         $searchUsers->setExtra(' onclick="openWithSelfMain(\'' . XOOPS_URL . '/include/findusers.php?target=' . $name . '&amp;multiple=' . $multiple . '&amp;token=' . $token . '\', \'userselect\', 800, 600, null); return false;" ');
         $action_tray->addElement($searchUsers);
 
-         if (isset($GLOBALS['xoTheme']) && is_object($GLOBALS['xoTheme'])) {
-             $GLOBALS['xoTheme']->addScript('', array(), $js_addusers);
-         } else {
-             echo '<script>' . $js_addusers . '</script>';
-         }
+        if (isset($GLOBALS['xoTheme']) && is_object($GLOBALS['xoTheme'])) {
+            $GLOBALS['xoTheme']->addScript('', [], $js_addusers);
+        } else {
+            echo '<script>' . $js_addusers . '</script>';
+        }
         parent::__construct($caption, '', $name);
         $this->addElement($select_element);
         $this->addElement($action_tray);

@@ -208,10 +208,10 @@ if (!class_exists('\BaseStringHelper', false)) {
             $config = \HTMLPurifier_Config::create(null);
             $lexer = \HTMLPurifier_Lexer::create($config);
             $tokens = $lexer->tokenizeHTML($string, $config, new \HTMLPurifier_Context());
-            $openTokens = array();
+            $openTokens = [];
             $totalCount = 0;
             $depth = 0;
-            $truncated = array();
+            $truncated = [];
             foreach ($tokens as $token) {
                 if ($token instanceof \HTMLPurifier_Token_Start) { //Tag begins
                     $openTokens[$depth] = $token->name;
@@ -219,7 +219,7 @@ if (!class_exists('\BaseStringHelper', false)) {
                     ++$depth;
                 } elseif ($token instanceof \HTMLPurifier_Token_Text && $totalCount <= $count) { //Text
                     if (false === $encoding) {
-                        preg_match('/^(\s*)/um', $token->data, $prefixSpace) ?: $prefixSpace = array('', '');
+                        preg_match('/^(\s*)/um', $token->data, $prefixSpace) ?: $prefixSpace = ['', ''];
                         $token->data = $prefixSpace[1] . self::truncateWords(ltrim($token->data), $count - $totalCount, '');
                         $currentCount = self::countWords($token->data);
                     } else {
@@ -441,13 +441,13 @@ if (!class_exists('\BaseStringHelper', false)) {
          * @return bool whether the string matches pattern or not.
          * @since 2.0.14
          */
-        public static function matchWildcard($pattern, $string, $options = array())
+        public static function matchWildcard($pattern, $string, $options = [])
         {
             if ($pattern === '*' && empty($options['filePath'])) {
                 return true;
             }
 
-            $replacements = array(
+            $replacements = [
                 '\\\\\\\\' => '\\\\',
                 '\\\\\\*' => '[*]',
                 '\\\\\\?' => '[?]',
@@ -457,7 +457,7 @@ if (!class_exists('\BaseStringHelper', false)) {
                 '\[' => '[',
                 '\]' => ']',
                 '\-' => '-',
-            );
+            ];
 
             if (isset($options['escape']) && !$options['escape']) {
                 unset($replacements['\\\\\\\\']);

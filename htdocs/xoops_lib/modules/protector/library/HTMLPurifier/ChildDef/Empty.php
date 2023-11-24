@@ -31,7 +31,7 @@ class HTMLPurifier_ChildDef_Empty extends HTMLPurifier_ChildDef
      */
     public function validateChildren($children, $config, $context)
     {
-        return array();
+        return [];
     }
 }
 

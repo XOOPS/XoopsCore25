@@ -48,7 +48,7 @@ if (empty($_GET['refresh']) && $op !== 'submit') {
 xoops_header();
 
 $method      = XoopsRequest::getMethod();
-$safeMethods = array('GET', 'HEAD');
+$safeMethods = ['GET', 'HEAD'];
 if (!in_array($method, $safeMethods)) {
     if (!$GLOBALS['xoopsSecurity']->check()) {
         echo '<br><br><div><h4>' . _ERRORS . '</h4><br>';
@@ -65,7 +65,8 @@ if (is_object($xoopsUser)) {
         $result = $xoopsDB->query($sql);
         if (!$xoopsDB->isResultSet($result)) {
             throw new \RuntimeException(
-                \sprintf(_DB_QUERY_ERROR, $sql) . $xoopsDB->error(), E_USER_ERROR
+                \sprintf(_DB_QUERY_ERROR, $sql) . $xoopsDB->error(),
+                E_USER_ERROR
             );
         }
         list($count) = $xoopsDB->fetchRow($result);
@@ -133,7 +134,7 @@ if (is_object($xoopsUser)) {
 
         $msg_image   = '';
         $icons_radio = new XoopsFormRadio(_MESSAGEICON, 'msg_image', $msg_image);
-        $subjectImages = array();
+        $subjectImages = [];
         foreach ($subject_icons as $name => $value) {
             $subjectImages[$name] = '<img src="' . XOOPS_URL . '/images/subject/' . $value .'">';
         }

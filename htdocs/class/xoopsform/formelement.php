@@ -33,7 +33,7 @@ class XoopsFormElement
      *
      * @var array ()
      */
-    public $customValidationCode = array();
+    public $customValidationCode = [];
 
     /**
      * *#@+
@@ -66,7 +66,7 @@ class XoopsFormElement
      *
      * @var array
      */
-    public $_class = array();
+    public $_class = [];
 
     /**
      * hidden?
@@ -80,7 +80,7 @@ class XoopsFormElement
      *
      * @var array
      */
-    public $_extra = array();
+    public $_extra = [];
 
     /**
      * required field?
@@ -222,7 +222,7 @@ class XoopsFormElement
         if (empty($this->_class)) {
             return false;
         }
-        $classes = array();
+        $classes = [];
         foreach ($this->_class as $class) {
             $classes[] = htmlspecialchars($class, ENT_QUOTES);
         }
@@ -259,7 +259,7 @@ class XoopsFormElement
      */
     public function getTitle($encode = true)
     {
-        if(!isset($this->_caption)) { 
+        if(!isset($this->_caption)) {
             $this->_caption = '';
         }
         if (strlen($this->_description) > 0) {
@@ -331,7 +331,7 @@ class XoopsFormElement
     public function setExtra($extra, $replace = false)
     {
         if ($replace) {
-            $this->_extra = array(trim($extra));
+            $this->_extra = [trim($extra)];
         } else {
             $this->_extra[] = trim($extra);
         }
@@ -350,7 +350,7 @@ class XoopsFormElement
         if (!$encode) {
             return ' ' . implode(' ', $this->_extra);
         }
-        $value = array();
+        $value = [];
         foreach ($this->_extra as $val) {
             $value[] = str_replace('>', '&gt;', str_replace('<', '&lt;', $val));
         }
@@ -420,12 +420,12 @@ class XoopsFormElement
         // render custom validation code if any
         if (!empty($this->customValidationCode)) {
             return implode(NWLINE, $this->customValidationCode);
-            // generate validation code if required
+        // generate validation code if required
         } elseif ($this->isRequired() && $eltname = $this->getName()) {
             // $eltname    = $this->getName();
             $eltcaption = $this->getCaption();
             $eltmsg     = empty($eltcaption) ? sprintf(_FORM_ENTER, $eltname) : sprintf(_FORM_ENTER, $eltcaption);
-            $eltmsg     = str_replace(array(':', '?', '%'), '', $eltmsg);
+            $eltmsg     = str_replace([':', '?', '%'], '', $eltmsg);
             $eltmsg     = str_replace('"', '\"', stripslashes($eltmsg));
             $eltmsg     = strip_tags($eltmsg);
             echo $this->getFormType();

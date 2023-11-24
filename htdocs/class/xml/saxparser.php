@@ -1,4 +1,5 @@
 <?php
+
 //
 /*******************************************************************************
  * Location: <strong>xml/SaxParser.class</strong><br>
@@ -21,15 +22,15 @@ class SaxParser
     public $targetEncoding;
 
     /* Custom Handler Variables */
-    public $tagHandlers = array();
+    public $tagHandlers = [];
 
     /* Tag stack */
-    public $tags = array();
+    public $tags = [];
 
     /* Xml Source Input */
     public $xmlInput;
 
-    public $errors = array();
+    public $errors = [];
 
     /****************************************************************************
      * Creates a SaxParser object using a FileInput to represent the stream
@@ -142,10 +143,10 @@ class SaxParser
 
                 return false;
             }
-            //if (!$fp = fopen($this->input, 'r')) {
-            //    $this->setErrors('Could not open file: '.$this->input);
-            //    return false;
-            //}
+        //if (!$fp = fopen($this->input, 'r')) {
+        //    $this->setErrors('Could not open file: '.$this->input);
+        //    return false;
+        //}
         } else {
             while ($data = fread($this->input, 4096)) {
                 if (!xml_parse($this->parser, str_replace("'", '&apos;', $data), feof($this->input))) {
@@ -260,7 +261,7 @@ class SaxParser
      */
     public function handleCharacterData($parser, $data)
     {
-        $tagHandler =& $this->tagHandlers[$this->getCurrentTag()];
+        $tagHandler = &$this->tagHandlers[$this->getCurrentTag()];
         if (isset($tagHandler) && is_subclass_of($tagHandler, 'XmlTagHandler')) {
             $tagHandler->handleCharacterData($this, $data);
         } else {

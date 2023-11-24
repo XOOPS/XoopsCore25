@@ -33,7 +33,7 @@ class XoopsUser extends XoopsObject
      * @var array
      * @access private
      */
-    public $_groups = array();
+    public $_groups = [];
     /**
      * @var bool is the user admin?
      * @access private
@@ -175,7 +175,7 @@ class XoopsUser extends XoopsObject
                 if (!empty($linked)) {
                     $username = '<a href="' . XOOPS_URL . '/userinfo.php?uid=' . $userid . '" title="' . $username . '">' . $username . '</a>';
                 }
-				return $username;
+                return $username;
             }
         }
 
@@ -203,7 +203,7 @@ class XoopsUser extends XoopsObject
     public function setGroups($groupsArr)
     {
         if (is_array($groupsArr)) {
-            $this->_groups =& $groupsArr;
+            $this->_groups = &$groupsArr;
         }
     }
 
@@ -231,7 +231,7 @@ class XoopsUser extends XoopsObject
      */
     public function &groups()
     {
-        $groups =& $this->getGroups();
+        $groups = &$this->getGroups();
 
         return $groups;
     }

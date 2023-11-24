@@ -9,7 +9,6 @@
  */
 class HTMLPurifier_LanguageFactory
 {
-
     /**
      * Cache of language code information used to load HTMLPurifier_Language objects.
      * Structure is: $factory->cache[$language_code][$key] = $value
@@ -22,7 +21,7 @@ class HTMLPurifier_LanguageFactory
      * variables to slurp out of a message file.
      * @type array
      */
-    public $keys = array('fallback', 'messages', 'errorNames');
+    public $keys = ['fallback', 'messages', 'errorNames'];
 
     /**
      * Instance to validate language codes.
@@ -42,13 +41,13 @@ class HTMLPurifier_LanguageFactory
      * Keys whose contents are a hash map and can be merged.
      * @type array
      */
-    protected $mergeable_keys_map = array('messages' => true, 'errorNames' => true);
+    protected $mergeable_keys_map = ['messages' => true, 'errorNames' => true];
 
     /**
      * Keys whose contents are a list and can be merged.
      * @value array lookup
      */
-    protected $mergeable_keys_list = array();
+    protected $mergeable_keys_list = [];
 
     /**
      * Retrieve sole instance of the factory.
@@ -145,7 +144,7 @@ class HTMLPurifier_LanguageFactory
      */
     public function loadLanguage($code)
     {
-        static $languages_seen = array(); // recursion guard
+        static $languages_seen = []; // recursion guard
 
         // abort if we've already loaded it
         if (isset($this->cache[$code])) {
@@ -162,7 +161,7 @@ class HTMLPurifier_LanguageFactory
         if (!file_exists($filename)) {
             // skip the include: will rely solely on fallback
             $filename = $this->dir . '/Language/messages/en.php';
-            $cache = array();
+            $cache = [];
         } else {
             include $filename;
             $cache = compact($this->keys);

@@ -26,8 +26,8 @@ class SystemMenuHandler
      *
      * @var string
      */
-    public $_menutop  = array();
-    public $_menutabs = array();
+    public $_menutop  = [];
+    public $_menutabs = [];
     public $_obj;
     public $_header;
     public $_subheader;
@@ -46,7 +46,7 @@ class SystemMenuHandler
      */
     public function getAddon($addon)
     {
-        $this->_obj =& $addon;
+        $this->_obj = &$addon;
     }
 
     /**
@@ -172,7 +172,7 @@ class SystemMenuHandler
         /**
          * Select current menu tab, sets id names for menu tabs
          */
-        $j=0;
+        $j = 0;
         foreach ($this->_menutabs as $k => $menus) {
             if ($j == $currentoption) {
                 $breadcrumb = $menus;

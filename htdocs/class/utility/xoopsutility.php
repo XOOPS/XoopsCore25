@@ -46,9 +46,9 @@ class XoopsUtility
     public static function recursive($handler, $data)
     {
         if (is_array($data)) {
-            $return = array_map(array(
+            $return = array_map([
                                     'XoopsUtility',
-                                    'recursive'), $handler, $data);
+                                    'recursive'], $handler, $data);
 
             return $return;
         }
@@ -58,9 +58,9 @@ class XoopsUtility
         }
         // Method of a class
         if (is_array($handler)) {
-            return call_user_func(array(
+            return call_user_func([
                                       $handler[0],
-                                      $handler[1]), $data);
+                                      $handler[1]], $data);
         }
 
         return $data;

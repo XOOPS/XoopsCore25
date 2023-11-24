@@ -21,7 +21,7 @@ class SystemBreadcrumb
 {
     /* Variables */
     public $_directory;
-    public $_bread = array();
+    public $_bread = [];
     public $_help;
     public $_tips;
 
@@ -41,10 +41,10 @@ class SystemBreadcrumb
      */
     public function addLink($title = '', $link = '', $home = false)
     {
-        $this->_bread[] = array(
+        $this->_bread[] = [
             'link'  => $link,
             'title' => $title,
-            'home'  => $home);
+            'home'  => $home];
     }
 
     /**

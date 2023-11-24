@@ -22,7 +22,7 @@ $loadCommon = !isset($xoopsOption['nocommon']);
 $xoopsOption['nocommon'] = true;
 include_once __DIR__ . '/../mainfile.php';
 
-$mainfileKeys = array(
+$mainfileKeys = [
     // in mainfile.php
     'XOOPS_ROOT_PATH'       => null,
     'XOOPS_PATH'            => null,
@@ -43,7 +43,7 @@ $mainfileKeys = array(
     'XOOPS_DB_PASS'         => null,
     'XOOPS_DB_NAME'         => null,
     'XOOPS_DB_PCONNECT'     => null,
-);
+];
 
 $needMainfileRewrite = false;
 foreach ($mainfileKeys as $key => $unused) {
@@ -55,7 +55,7 @@ foreach ($mainfileKeys as $key => $unused) {
 }
 
 // this is a generated define in a current mainfile, so just define it if it doesn't exist
-unset ($mainfileKeys['XOOPS_PROT']);
+unset($mainfileKeys['XOOPS_PROT']);
 if (!defined('XOOPS_PROT')) {
     $parts = parse_url(XOOPS_URL);
     $http = (empty($parts['scheme']) ? 'http' : $parts['scheme']) . '://';

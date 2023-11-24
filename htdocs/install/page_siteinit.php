@@ -32,16 +32,16 @@ $pageHasForm = true;
 $pageHasHelp = false;
 $isadmin     = false;
 
-$vars =& $_SESSION['siteconfig'];
+$vars = &$_SESSION['siteconfig'];
 
-$error =& $_SESSION['error'];
+$error = &$_SESSION['error'];
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $vars['adminname']  = trim($_POST['adminname']);
     $vars['adminmail']  = trim($_POST['adminmail']);
     $vars['adminpass']  = trim($_POST['adminpass']);
     $vars['adminpass2'] = trim($_POST['adminpass2']);
-    $error              = array();
+    $error              = [];
 
     if (empty($vars['adminname'])) {
         $error['name'][] = ERR_REQUIRED;
@@ -91,7 +91,7 @@ if ($isadmin) {
     $pageHasHelp = false;
     echo "<div class='alert alert-warning'>" . ADMIN_EXIST . "</div>\n";
 } else {
-        echo '<script type="text/javascript">
+    echo '<script type="text/javascript">
                 var desc = new Array();
                 desc[0] = "' . PASSWORD_VERY_WEAK . '";
                 desc[1] = "' . PASSWORD_WEAK . '";
@@ -107,33 +107,33 @@ if ($isadmin) {
 
         <?php
         echo '<div class="row"><div class="col-md-9">';
-        xoFormField('adminname', isset($vars['adminname']) ? $vars['adminname'] : '', ADMIN_LOGIN_LABEL);
+    xoFormField('adminname', isset($vars['adminname']) ? $vars['adminname'] : '', ADMIN_LOGIN_LABEL);
 
-        if (isset($error['name'])) {
-            foreach ($error['name'] as $errmsg) {
-                echo '<div class="alert alert-danger"><span class="fa fa-ban text-danger"></span> ' . $errmsg . '</div>';
-            }
+    if (isset($error['name'])) {
+        foreach ($error['name'] as $errmsg) {
+            echo '<div class="alert alert-danger"><span class="fa fa-ban text-danger"></span> ' . $errmsg . '</div>';
         }
+    }
 
-        xoFormField('adminmail', isset($vars['adminmail']) ? $vars['adminmail'] : '', ADMIN_EMAIL_LABEL);
-        if (isset($error['email'])) {
-            foreach ($error['email'] as $errmsg) {
-                echo '<div class="alert alert-danger"><span class="fa fa-ban text-danger"></span> ' . $errmsg . '</div>';
-            }
+    xoFormField('adminmail', isset($vars['adminmail']) ? $vars['adminmail'] : '', ADMIN_EMAIL_LABEL);
+    if (isset($error['email'])) {
+        foreach ($error['email'] as $errmsg) {
+            echo '<div class="alert alert-danger"><span class="fa fa-ban text-danger"></span> ' . $errmsg . '</div>';
         }
-        ?>
+    }
+    ?>
 
         <div id="password">
             <div id="passwordinput">
                 <?php
-                echo xoPassField('adminpass', '', ADMIN_PASS_LABEL);
-                echo xoPassField('adminpass2', '', ADMIN_CONFIRMPASS_LABEL);
-                if (isset($error['pass'])) {
-                    foreach ($error['pass'] as $errmsg) {
-                        echo '<div class="alert alert-danger"><span class="fa fa-ban text-danger"></span> ' . $errmsg . '</div>';
-                    }
-                }
-                ?>
+            echo xoPassField('adminpass', '', ADMIN_PASS_LABEL);
+    echo xoPassField('adminpass2', '', ADMIN_CONFIRMPASS_LABEL);
+    if (isset($error['pass'])) {
+        foreach ($error['pass'] as $errmsg) {
+            echo '<div class="alert alert-danger"><span class="fa fa-ban text-danger"></span> ' . $errmsg . '</div>';
+        }
+    }
+    ?>
             </div>
         </div>
     </div>

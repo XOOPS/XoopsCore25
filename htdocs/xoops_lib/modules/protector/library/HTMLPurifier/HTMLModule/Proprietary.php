@@ -21,7 +21,7 @@ class HTMLPurifier_HTMLModule_Proprietary extends HTMLPurifier_HTMLModule
             'Inline',
             'Flow',
             'Common',
-            array(
+            [
                 'direction' => 'Enum#left,right,up,down',
                 'behavior' => 'Enum#alternate',
                 'width' => 'Length',
@@ -32,7 +32,7 @@ class HTMLPurifier_HTMLModule_Proprietary extends HTMLPurifier_HTMLModule
                 'bgcolor' => 'Color',
                 'hspace' => 'Pixels',
                 'vspace' => 'Pixels',
-            )
+            ]
         );
     }
 }

@@ -144,7 +144,7 @@ function xoops_loadLanguage($name, $domain = '', $language = null)
     if (empty($name)) {
         return false;
     }
-//    $language = empty($language) ? $GLOBALS['xoopsConfig']['language'] : $language;
+    //    $language = empty($language) ? $GLOBALS['xoopsConfig']['language'] : $language;
     global $xoopsConfig;
     $language = empty($language) ? $xoopsConfig['language'] : $language;
     $path     = ((empty($domain) || 'global' === $domain) ? '' : "modules/{$domain}/") . 'language';
@@ -198,7 +198,7 @@ function xoops_setActiveModules()
     /** @var XoopsModuleHandler $module_handler */
     $module_handler = xoops_getHandler('module');
     $modules_obj    = $module_handler->getObjects(new Criteria('isactive', 1));
-    $modules_active = array();
+    $modules_active = [];
     foreach (array_keys($modules_obj) as $key) {
         $modules_active[] = $modules_obj[$key]->getVar('dirname');
     }
@@ -240,7 +240,7 @@ function xoops_header($closehead = true)
     include_once XOOPS_ROOT_PATH . '/class/template.php';
     $headTpl = new \XoopsTpl();
     $GLOBALS['xoopsHeadTpl'] = $headTpl;  // expose template for use by caller
-    $headTpl->assign(array(
+    $headTpl->assign([
         'closeHead'      => (bool) $closehead,
         'themeUrl'       => $themeUrl,
         'themePath'      => $themePath,
@@ -248,13 +248,13 @@ function xoops_header($closehead = true)
         'xoops_charset'  => _CHARSET,
         'xoops_sitename' => $xoopsConfig['sitename'],
         'xoops_url'      => XOOPS_URL,
-    ));
+    ]);
 
     if (file_exists($themePath . 'theme_autorun.php')) {
         include_once($themePath . 'theme_autorun.php');
     }
 
-    $headItems = array();
+    $headItems = [];
     $headItems[] = '<script type="text/javascript" src="' . XOOPS_URL . '/include/xoops.js"></script>';
     $headItems[] = '<link rel="stylesheet" type="text/css" media="all" href="' . XOOPS_URL . '/xoops.css">';
     $headItems[] = '<link rel="stylesheet" type="text/css" media="all" href="' . XOOPS_URL . '/media/font-awesome/css/font-awesome.min.css">';
@@ -263,7 +263,7 @@ function xoops_header($closehead = true)
         $headItems[] = '<link rel="stylesheet" type="text/css" media="all" href="' . $GLOBALS['xoops']->url($languageFile) . '">';
     }
     $themecss = xoops_getcss($xoopsConfig['theme_set']);
-    if ($themecss!=='') {
+    if ($themecss !== '') {
         $headItems[] = '<link rel="stylesheet" type="text/css" media="all" href="' . $themecss . '">';
     }
     $headTpl->assign('headItems', $headItems);
@@ -293,13 +293,13 @@ function xoops_footer()
     $themePath = XOOPS_THEME_URL . '/' . $themeSet . '/';
     include_once XOOPS_ROOT_PATH . '/class/template.php';
     $footTpl = new \XoopsTpl();
-    $footTpl->assign(array(
+    $footTpl->assign([
         'themePath'      => $themePath,
         'xoops_langcode' => _LANGCODE,
         'xoops_charset'  => _CHARSET,
         'xoops_sitename' => $xoopsConfig['sitename'],
         'xoops_url'      => XOOPS_URL,
-    ));
+    ]);
     $output = $footTpl->fetch('db:system_popup_footer.tpl');
     echo $output;
     ob_end_flush();
@@ -429,33 +429,33 @@ function xoops_confirm($hiddens, $action, $msg, $submit = '', $addtoken = true)
         $confirmTpl->assign('token', $GLOBALS['xoopsSecurity']->getTokenHTML());
     }
     $submit = ($submit != '') ? trim($submit) : _SUBMIT;
-	$confirmTpl->assign('submit', $submit);
-	$html = $confirmTpl->fetch("db:system_confirm.tpl");
-	if (!empty($html)) {
-		echo $html;
-	} else {
-		$submit = ($submit != '') ? trim($submit) : _SUBMIT;
-		echo '<div class="confirmMsg">' . $msg . '<br>
+    $confirmTpl->assign('submit', $submit);
+    $html = $confirmTpl->fetch("db:system_confirm.tpl");
+    if (!empty($html)) {
+        echo $html;
+    } else {
+        $submit = ($submit != '') ? trim($submit) : _SUBMIT;
+        echo '<div class="confirmMsg">' . $msg . '<br>
 			  <form method="post" action="' . $action . '">';
-		foreach ($hiddens as $name => $value) {
-			if (is_array($value)) {
-				foreach ($value as $caption => $newvalue) {
-					echo '<input type="radio" name="' . $name . '" value="' . htmlspecialchars($newvalue, ENT_QUOTES) . '" /> ' . $caption;
-				}
-				echo '<br>';
-			} else {
-				echo '<input type="hidden" name="' . $name . '" value="' . htmlspecialchars($value, ENT_QUOTES) . '" />';
-			}
-		}
-		if ($addtoken != false) {
-			echo $GLOBALS['xoopsSecurity']->getTokenHTML();
-		}
-		// TODO - these buttons should go through formRenderer
-		echo '<input type="submit" class="btn btn-default btn-secondary" name="confirm_submit" value="' . $submit . '" title="' . $submit . '"/>
+        foreach ($hiddens as $name => $value) {
+            if (is_array($value)) {
+                foreach ($value as $caption => $newvalue) {
+                    echo '<input type="radio" name="' . $name . '" value="' . htmlspecialchars($newvalue, ENT_QUOTES) . '" /> ' . $caption;
+                }
+                echo '<br>';
+            } else {
+                echo '<input type="hidden" name="' . $name . '" value="' . htmlspecialchars($value, ENT_QUOTES) . '" />';
+            }
+        }
+        if ($addtoken != false) {
+            echo $GLOBALS['xoopsSecurity']->getTokenHTML();
+        }
+        // TODO - these buttons should go through formRenderer
+        echo '<input type="submit" class="btn btn-default btn-secondary" name="confirm_submit" value="' . $submit . '" title="' . $submit . '"/>
 			  <input type="button" class="btn btn-default btn-secondary" name="confirm_back" value="' . _CANCEL . '" onclick="history.go(-1);" title="' . _CANCEL . '" />
 			  </form>
 			  </div>';
-	}
+    }
 }
 
 /**
@@ -519,7 +519,7 @@ function userTimeToServerTime($timestamp, $userTZ = null)
 function xoops_makepass()
 {
     $makepass  = '';
-    $syllables = array(
+    $syllables = [
         'er',
         'in',
         'tia',
@@ -603,7 +603,7 @@ function xoops_makepass()
         'kay',
         'en',
         'be',
-        'se');
+        'se'];
     for ($count = 1; $count <= 4; ++$count) {
         if (mt_rand() % 10 == 1) {
             $makepass .= sprintf('%0.0f', (mt_rand() % 50) + 1);
@@ -684,7 +684,8 @@ function xoops_getbanner()
     $result = $db->query($sql);
     if (!$db->isResultSet($result)) {
         throw new \RuntimeException(
-            \sprintf(_DB_QUERY_ERROR, $sql) . $db->error(), E_USER_ERROR
+            \sprintf(_DB_QUERY_ERROR, $sql) . $db->error(),
+            E_USER_ERROR
         );
     }
     list($numrows) = $db->fetchRow($result);
@@ -699,7 +700,8 @@ function xoops_getbanner()
         $result = $db->query($sql, 1, $bannum);
         if (!$db->isResultSet($result)) {
             throw new \RuntimeException(
-                \sprintf(_DB_QUERY_ERROR, $sql) . $db->error(), E_USER_ERROR
+                \sprintf(_DB_QUERY_ERROR, $sql) . $db->error(),
+                E_USER_ERROR
             );
         }
         list($bid, $cid, $imptotal, $impmade, $clicks, $imageurl, $clickurl, $date, $htmlbanner, $htmlcode) = $db->fetchRow($result);
@@ -762,9 +764,9 @@ function redirect_header($url, $time = 3, $message = '', $addredirect = true, $a
     global $xoopsConfig, $xoopsLogger, $xoopsUserIsAdmin;
 
     $xoopsPreload = XoopsPreload::getInstance();
-    $xoopsPreload->triggerEvent('core.include.functions.redirectheader.start', array($url, $time, $message, $addredirect, $allowExternalLink));
+    $xoopsPreload->triggerEvent('core.include.functions.redirectheader.start', [$url, $time, $message, $addredirect, $allowExternalLink]);
     // under normal circumstance this event will exit, so listen for the .start above
-    $xoopsPreload->triggerEvent('core.include.functions.redirectheader', array($url, $time, $message, $addredirect, $allowExternalLink));
+    $xoopsPreload->triggerEvent('core.include.functions.redirectheader', [$url, $time, $message, $addredirect, $allowExternalLink]);
 
     if (preg_match("/[\\0-\\31]|about:|script:/i", $url)) {
         if (!preg_match('/^\b(java)?script:([\s]*)history\.go\(-\d*\)([\s]*[;]*[\s]*)$/si', $url)) {
@@ -789,11 +791,11 @@ function redirect_header($url, $time = 3, $message = '', $addredirect = true, $a
     $xoopsThemeFactory                = new xos_opal_ThemeFactory();
     $xoopsThemeFactory->allowedThemes = $xoopsConfig['theme_set_allowed'];
     $xoopsThemeFactory->defaultTheme  = $theme;
-    $xoTheme                          = $xoopsThemeFactory->createInstance(array(
-                                                                                'plugins'      => array(),
-                                                                                'renderBanner' => false));
+    $xoTheme                          = $xoopsThemeFactory->createInstance([
+                                                                                'plugins'      => [],
+                                                                                'renderBanner' => false]);
     $xoopsTpl                         = $xoTheme->template;
-    $xoopsTpl->assign(array(
+    $xoopsTpl->assign([
                           'xoops_theme'      => $theme,
                           'xoops_imageurl'   => XOOPS_THEME_URL . '/' . $theme . '/',
                           'xoops_themecss'   => xoops_getcss($theme),
@@ -801,7 +803,7 @@ function redirect_header($url, $time = 3, $message = '', $addredirect = true, $a
                           'xoops_sitename'   => htmlspecialchars($xoopsConfig['sitename'], ENT_QUOTES),
                           'xoops_slogan'     => htmlspecialchars($xoopsConfig['slogan'], ENT_QUOTES),
                           'xoops_dirname'    => isset($xoopsModule) && is_object($xoopsModule) ? $xoopsModule->getVar('dirname') : 'system',
-                          'xoops_pagetitle'  => isset($xoopsModule) && is_object($xoopsModule) ? $xoopsModule->getVar('name') : htmlspecialchars($xoopsConfig['slogan'], ENT_QUOTES)));
+                          'xoops_pagetitle'  => isset($xoopsModule) && is_object($xoopsModule) ? $xoopsModule->getVar('name') : htmlspecialchars($xoopsConfig['slogan'], ENT_QUOTES)]);
     if ($xoopsConfig['debug_mode'] == 2 && $xoopsUserIsAdmin) {
         $xoopsTpl->assign('time', 300);
         $xoopsTpl->assign('xoops_logdump', $xoopsLogger->dump());
@@ -938,9 +940,10 @@ function xoops_getrank($rank_id = 0, $posts = 0)
     }
     $result = $db->query($sql);
     if (!$db->isResultSet($result)) {
-            throw new \RuntimeException(
-          \sprintf(_DB_QUERY_ERROR, $sql) . $db->error(), E_USER_ERROR
-    );
+        throw new \RuntimeException(
+            \sprintf(_DB_QUERY_ERROR, $sql) . $db->error(),
+            E_USER_ERROR
+        );
     }
     $rank          = $db->fetchArray($result);
     $rank['title'] = $myts->htmlSpecialChars($rank['title']);
@@ -1043,7 +1046,7 @@ function xoops_comment_delete($module_id, $item_id)
         $comments        = $comment_handler->getByItemId($module_id, $item_id);
         if (is_array($comments)) {
             $count       = count($comments);
-            $deleted_num = array();
+            $deleted_num = [];
             for ($i = 0; $i < $count; ++$i) {
                 if (false !== $comment_handler->delete($comments[$i])) {
                     // store poster ID and deleted post number into array for later use
@@ -1177,7 +1180,7 @@ function xoops_getOption($option)
  */
 function xoops_getConfigOption($option, $type = 'XOOPS_CONF')
 {
-    static $coreOptions = array();
+    static $coreOptions = [];
 
     if (is_array($coreOptions) && array_key_exists($option, $coreOptions)) {
         return $coreOptions[$option];
@@ -1229,7 +1232,7 @@ function xoops_setConfigOption($option, $new = null)
  */
 function xoops_getModuleOption($option, $dirname = '')
 {
-    static $modOptions = array();
+    static $modOptions = [];
     if (is_array($modOptions) && isset($modOptions[$dirname][$option])) {
         return $modOptions[$dirname][$option];
     }

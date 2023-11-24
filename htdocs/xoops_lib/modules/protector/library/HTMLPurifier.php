@@ -53,7 +53,6 @@
  */
 class HTMLPurifier
 {
-
     /**
      * Version of HTML Purifier.
      * @type string
@@ -63,7 +62,7 @@ class HTMLPurifier
     /**
      * Constant with version of HTML Purifier.
      */
-    const VERSION = '4.15.0';
+    public const VERSION = '4.15.0';
 
     /**
      * Global configuration object.
@@ -76,7 +75,7 @@ class HTMLPurifier
      * for backwards compatibility.
      * @type HTMLPurifier_Filter[]
      */
-    private $filters = array();
+    private $filters = [];
 
     /**
      * Single instance of HTML Purifier.
@@ -180,7 +179,7 @@ class HTMLPurifier
         $filter_flags = $config->getBatch('Filter');
         $custom_filters = $filter_flags['Custom'];
         unset($filter_flags['Custom']);
-        $filters = array();
+        $filters = [];
         foreach ($filter_flags as $filter => $flag) {
             if (!$flag) {
                 continue;
@@ -189,7 +188,7 @@ class HTMLPurifier
                 continue;
             }
             $class = "HTMLPurifier_Filter_$filter";
-            $filters[] = new $class;
+            $filters[] = new $class();
         }
         foreach ($custom_filters as $filter) {
             // maybe "HTMLPurifier_Filter_$filter", but be consistent with AutoFormat
@@ -224,7 +223,7 @@ class HTMLPurifier
         }
 
         $html = HTMLPurifier_Encoder::convertFromUTF8($html, $config, $context);
-        $this->context =& $context;
+        $this->context = &$context;
         return $html;
     }
 
@@ -239,9 +238,9 @@ class HTMLPurifier
      */
     public function purifyArray($array_of_html, $config = null)
     {
-        $context_array = array();
-        $array = array();
-        foreach($array_of_html as $key=>$value){
+        $context_array = [];
+        $array = [];
+        foreach($array_of_html as $key => $value) {
             if (is_array($value)) {
                 $array[$key] = $this->purifyArray($value, $config);
             } else {

@@ -22,7 +22,7 @@ class HTMLPurifier_HTMLModule_Tables extends HTMLPurifier_HTMLModule
             'Block',
             new HTMLPurifier_ChildDef_Table(),
             'Common',
-            array(
+            [
                 'border' => 'Pixels',
                 'cellpadding' => 'Length',
                 'cellspacing' => 'Length',
@@ -30,25 +30,25 @@ class HTMLPurifier_HTMLModule_Tables extends HTMLPurifier_HTMLModule
                 'rules' => 'Enum#none,groups,rows,cols,all',
                 'summary' => 'Text',
                 'width' => 'Length'
-            )
+            ]
         );
 
         // common attributes
-        $cell_align = array(
+        $cell_align = [
             'align' => 'Enum#left,center,right,justify,char',
             'charoff' => 'Length',
             'valign' => 'Enum#top,middle,bottom,baseline',
-        );
+        ];
 
         $cell_t = array_merge(
-            array(
+            [
                 'abbr' => 'Text',
                 'colspan' => 'Number',
                 'rowspan' => 'Number',
                 // Apparently, as of HTML5 this attribute only applies
                 // to 'th' elements.
                 'scope' => 'Enum#row,col,rowgroup,colgroup',
-            ),
+            ],
             $cell_align
         );
         $this->addElement('td', false, 'Flow', 'Common', $cell_t);
@@ -57,10 +57,10 @@ class HTMLPurifier_HTMLModule_Tables extends HTMLPurifier_HTMLModule
         $this->addElement('tr', false, 'Required: td | th', 'Common', $cell_align);
 
         $cell_col = array_merge(
-            array(
+            [
                 'span' => 'Number',
                 'width' => 'MultiLength',
-            ),
+            ],
             $cell_align
         );
         $this->addElement('col', false, 'Empty', 'Common', $cell_col);

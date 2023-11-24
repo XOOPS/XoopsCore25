@@ -57,10 +57,10 @@ switch ($op) {
         $cache->setDescription(XOOPS_VAR_PATH . '/caches/smarty_cache/<br>'
             . XOOPS_VAR_PATH . '/caches/smarty_compile/<br>'
             . XOOPS_VAR_PATH . '/caches/xoops_cache/');
-        $cache_arr = array(
+        $cache_arr = [
             1 => 'smarty_cache',
             2 => 'smarty_compile',
-            3 => 'xoops_cache');
+            3 => 'xoops_cache'];
         $cache->addOptionArray($cache_arr);
         $form_maintenance->addElement($cache);
 
@@ -73,11 +73,11 @@ switch ($op) {
         $tables_tray->addElement($select_tables, false);
         $tables_tray->addElement(new xoopsFormLabel('&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;' . _AM_SYSTEM_MAINTENANCE_DUMP_AND . '&nbsp;'));
         $choice  = new XoopsFormSelect('&nbsp;&nbsp;', 'maintenance', '', 4, true);
-        $options = array(
+        $options = [
             '1' => _AM_SYSTEM_MAINTENANCE_CHOICE1,
             '2' => _AM_SYSTEM_MAINTENANCE_CHOICE2,
             '3' => _AM_SYSTEM_MAINTENANCE_CHOICE3,
-            '4' => _AM_SYSTEM_MAINTENANCE_CHOICE4);
+            '4' => _AM_SYSTEM_MAINTENANCE_CHOICE4];
         $choice->addOptionArray($options);
         $tables_tray->addElement($choice, false);
         $form_maintenance->addElement($tables_tray);
@@ -97,7 +97,7 @@ switch ($op) {
 
         $dump_tray->addElement(new xoopsFormLabel('&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;' . _AM_SYSTEM_MAINTENANCE_DUMP_OR . '&nbsp;'));
         $ele            = new XoopsFormSelect('&nbsp;&nbsp;', 'dump_modules', '', 7, true);
-    /** @var XoopsModuleHandler $module_handler */
+        /** @var XoopsModuleHandler $module_handler */
         $module_handler = xoops_getHandler('module');
         $criteria       = new CriteriaCompo(new Criteria('hasmain', 1));
         $criteria->add(new Criteria('isactive', 1));
@@ -127,10 +127,10 @@ switch ($op) {
         $xoBreadCrumb->render();
 
         $session            = Request::getInt('session', 1);
-        $cache              = Request::getArray('cache', array());
-        $tables             = Request::getArray('tables', array());
+        $cache              = Request::getArray('cache', []);
+        $tables             = Request::getArray('tables', []);
         $avatar             = Request::getInt('avatar', 1);
-        $tables_op          = Request::getArray('maintenance', array());
+        $tables_op          = Request::getArray('maintenance', []);
         $verif_cache        = false;
         $verif_session      = false;
         $verif_avatar       = false;

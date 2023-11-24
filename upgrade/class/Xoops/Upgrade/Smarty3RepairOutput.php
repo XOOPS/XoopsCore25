@@ -117,10 +117,10 @@ class Smarty3RepairOutput extends ScannerOutput
     public function makeOutputIssue($filename, $count)
     {
         return new ArrayObject(
-            array(
+            [
                 'filename' => $filename,
                 'count' => $count
-            )
+            ]
         );
     }
 }

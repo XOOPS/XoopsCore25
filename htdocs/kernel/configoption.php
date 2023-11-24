@@ -32,7 +32,7 @@ class XoopsConfigOption extends XoopsObject
     public $confop_name;
     public $confop_value;
     public $conf_id;
-    
+
     /**
      * Constructor
      */
@@ -239,7 +239,7 @@ class XoopsConfigOptionHandler extends XoopsObjectHandler
      */
     public function getObjects(CriteriaElement $criteria = null, $id_as_key = false)
     {
-        $ret   = array();
+        $ret   = [];
         $limit = $start = 0;
         $sql   = 'SELECT * FROM ' . $this->db->prefix('configoption');
         if (isset($criteria) && \method_exists($criteria, 'renderWhere')) {
@@ -256,7 +256,7 @@ class XoopsConfigOptionHandler extends XoopsObjectHandler
             $confoption = new XoopsConfigOption();
             $confoption->assignVars($myrow);
             if (!$id_as_key) {
-                $ret[] =& $confoption;
+                $ret[] = &$confoption;
             } else {
                 $ret[$myrow['confop_id']] = &$confoption;
             }
@@ -282,7 +282,8 @@ class XoopsConfigOptionHandler extends XoopsObjectHandler
         $result = $this->db->query($sql);
         if (!$this->db->isResultSet($result)) {
             throw new \RuntimeException(
-                \sprintf(_DB_QUERY_ERROR, $sql) . $this->db->error(), E_USER_ERROR
+                \sprintf(_DB_QUERY_ERROR, $sql) . $this->db->error(),
+                E_USER_ERROR
             );
         }
         $row = $this->db->fetchArray($result);

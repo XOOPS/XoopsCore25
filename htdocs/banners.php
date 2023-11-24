@@ -106,7 +106,8 @@ function bannerstats()
     $result = $xoopsDB->query($sql);
     if (!$xoopsDB->isResultSet($result)) {
         throw new \RuntimeException(
-            \sprintf(_DB_QUERY_ERROR, $sql) . $xoopsDB->error(), E_USER_ERROR
+            \sprintf(_DB_QUERY_ERROR, $sql) . $xoopsDB->error(),
+            E_USER_ERROR
         );
     }
     list($cid, $name, $passwd) = $xoopsDB->fetchRow($result);
@@ -137,7 +138,8 @@ function bannerstats()
         $result = $xoopsDB->query($sql);
         if (!$xoopsDB->isResultSet($result)) {
             throw new \RuntimeException(
-                \sprintf(_DB_QUERY_ERROR, $sql) . $xoopsDB->error(), E_USER_ERROR
+                \sprintf(_DB_QUERY_ERROR, $sql) . $xoopsDB->error(),
+                E_USER_ERROR
             );
         }
         $i      = 0;
@@ -171,7 +173,8 @@ function bannerstats()
         $result = $xoopsDB->query($sql);
         if (!$xoopsDB->isResultSet($result)) {
             throw new \RuntimeException(
-                \sprintf(_DB_QUERY_ERROR, $sql) . $xoopsDB->error(), E_USER_ERROR
+                \sprintf(_DB_QUERY_ERROR, $sql) . $xoopsDB->error(),
+                E_USER_ERROR
             );
         }
         while (false !== (list($bid, $imageurl, $clickurl, $htmlbanner, $htmlcode) = $xoopsDB->fetchRow($result))) {
@@ -340,7 +343,8 @@ function clickbanner($bid)
         $result = $xoopsDB->query($sql);
         if (!$xoopsDB->isResultSet($result)) {
             throw new \RuntimeException(
-                \sprintf(_DB_QUERY_ERROR, $sql) . $xoopsDB->error(), E_USER_ERROR
+                \sprintf(_DB_QUERY_ERROR, $sql) . $xoopsDB->error(),
+                E_USER_ERROR
             );
         }
         list($clickurl) = $xoopsDB->fetchRow($result);

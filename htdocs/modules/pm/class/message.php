@@ -153,7 +153,7 @@ class PmMessageHandler extends XoopsPersistableObjectHandler
     public function getSavecount(XoopsUser $user = null)
     {
         if (!is_object($user)) {
-            $user =& $GLOBALS['xoopsUser'];
+            $user = &$GLOBALS['xoopsUser'];
         }
         $crit_to = new CriteriaCompo(new Criteria('to_delete', 0));
         $crit_to->add(new Criteria('to_save', 1));
@@ -178,7 +178,7 @@ class PmMessageHandler extends XoopsPersistableObjectHandler
         global $xoopsConfig;
 
         if (!is_object($user)) {
-            $user =& $GLOBALS['xoopsUser'];
+            $user = &$GLOBALS['xoopsUser'];
         }
         $msg = sprintf(_PM_EMAIL_DESC, $user->getVar('uname'));
         $msg .= "\n\n";
@@ -192,7 +192,7 @@ class PmMessageHandler extends XoopsPersistableObjectHandler
         $msg .= "\n";
         $msg .= _PM_EMAIL_MESSAGE . ":\n";
         $msg .= "\n" . $pm->getVar('subject') . "\n";
-        $msg .= "\n" . strip_tags(str_replace(array('<p>', '</p>', '<br>', '<br>'), "\n", $pm->getVar('msg_text'))) . "\n\n";
+        $msg .= "\n" . strip_tags(str_replace(['<p>', '</p>', '<br>', '<br>'], "\n", $pm->getVar('msg_text'))) . "\n\n";
         $msg .= "--------------\n";
         $msg .= $xoopsConfig['sitename'] . ': ' . XOOPS_URL . "\n";
 

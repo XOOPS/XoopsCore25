@@ -20,7 +20,7 @@ class HTMLPurifier_ChildDef_List extends HTMLPurifier_ChildDef
      */
     // lying a little bit, so that we can handle ul and ol ourselves
     // XXX: This whole business with 'wrap' is all a bit unsatisfactory
-    public $elements = array('li' => true, 'ul' => true, 'ol' => true);
+    public $elements = ['li' => true, 'ul' => true, 'ol' => true];
 
     public $whitespace;
 
@@ -47,7 +47,7 @@ class HTMLPurifier_ChildDef_List extends HTMLPurifier_ChildDef
         }
 
         // the new set of children
-        $result = array();
+        $result = [];
 
         // a little sanity check to make sure it's not ALL whitespace
         $all_whitespace = true;

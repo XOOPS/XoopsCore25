@@ -44,11 +44,11 @@ class MetaWeblogApi extends XoopsXmlRpcApi
         if (!$this->_checkUser($this->params[1], $this->params[2])) {
             $this->response->add(new XoopsXmlRpcFault(104));
         } else {
-            if (!$fields =& $this->_getPostFields(null, $this->params[0])) {
+            if (!$fields = &$this->_getPostFields(null, $this->params[0])) {
                 $this->response->add(new XoopsXmlRpcFault(106));
             } else {
-                $missing = array();
-                $post    = array();
+                $missing = [];
+                $post    = [];
                 foreach ($fields as $tag => $detail) {
                     $maptag = $this->_getXoopsTagMap($tag);
                     if (!isset($this->params[3][$maptag])) {
@@ -72,12 +72,12 @@ class MetaWeblogApi extends XoopsXmlRpcApi
                     }
                     $this->response->add(new XoopsXmlRpcFault(109, $msg));
                 } else {
-                    $newparams    = array();
+                    $newparams    = [];
                     $newparams[0] = $this->params[0];
                     $newparams[1] = $this->params[1];
                     $newparams[2] = $this->params[2];
                     foreach ($post as $key => $value) {
-                        $newparams[3][$key] =& $value;
+                        $newparams[3][$key] = &$value;
                         unset($value);
                     }
                     $newparams[3]['xoops_text'] = $this->params[3]['description'];
@@ -87,7 +87,7 @@ class MetaWeblogApi extends XoopsXmlRpcApi
                         }
                     }
                     $newparams[4] = $this->params[4];
-                    $xoopsapi     =& $this->_getXoopsApi($newparams);
+                    $xoopsapi     = &$this->_getXoopsApi($newparams);
                     $xoopsapi->_setUser($this->user, $this->isadmin);
                     $xoopsapi->newPost();
                 }
@@ -100,10 +100,10 @@ class MetaWeblogApi extends XoopsXmlRpcApi
         if (!$this->_checkUser($this->params[1], $this->params[2])) {
             $this->response->add(new XoopsXmlRpcFault(104));
         } else {
-            if (!$fields =& $this->_getPostFields($this->params[0])) {
+            if (!$fields = &$this->_getPostFields($this->params[0])) {
             } else {
-                $missing = array();
-                $post    = array();
+                $missing = [];
+                $post    = [];
                 foreach ($fields as $tag => $detail) {
                     $maptag = $this->_getXoopsTagMap($tag);
                     if (!isset($this->params[3][$maptag])) {
@@ -126,12 +126,12 @@ class MetaWeblogApi extends XoopsXmlRpcApi
                     }
                     $this->response->add(new XoopsXmlRpcFault(109, $msg));
                 } else {
-                    $newparams    = array();
+                    $newparams    = [];
                     $newparams[0] = $this->params[0];
                     $newparams[1] = $this->params[1];
                     $newparams[2] = $this->params[2];
                     foreach ($post as $key => $value) {
-                        $newparams[3][$key] =& $value;
+                        $newparams[3][$key] = &$value;
                         unset($value);
                     }
                     if (isset($this->params[3]['categories']) && \is_array($this->params[3]['categories'])) {
@@ -141,7 +141,7 @@ class MetaWeblogApi extends XoopsXmlRpcApi
                     }
                     $newparams[3]['xoops_text'] = $this->params[3]['description'];
                     $newparams[4]               = $this->params[4];
-                    $xoopsapi                   =& $this->_getXoopsApi($newparams);
+                    $xoopsapi                   = &$this->_getXoopsApi($newparams);
                     $xoopsapi->_setUser($this->user, $this->isadmin);
                     $xoopsapi->editPost();
                 }
@@ -154,9 +154,9 @@ class MetaWeblogApi extends XoopsXmlRpcApi
         if (!$this->_checkUser($this->params[1], $this->params[2])) {
             $this->response->add(new XoopsXmlRpcFault(104));
         } else {
-            $xoopsapi =& $this->_getXoopsApi($this->params);
+            $xoopsapi = &$this->_getXoopsApi($this->params);
             $xoopsapi->_setUser($this->user, $this->isadmin);
-            $ret =& $xoopsapi->getPost(false);
+            $ret = &$xoopsapi->getPost(false);
             if (is_array($ret)) {
                 $struct  = new XoopsXmlRpcStruct();
                 $content = '';
@@ -177,7 +177,7 @@ class MetaWeblogApi extends XoopsXmlRpcApi
                         case 'title':
                             $struct->add('title', new XoopsXmlRpcString($value));
                             break;
-                        default :
+                        default:
                             $content .= '<' . $key . '>' . trim($value) . '</' . $key . '>';
                             break;
                     }
@@ -195,9 +195,9 @@ class MetaWeblogApi extends XoopsXmlRpcApi
         if (!$this->_checkUser($this->params[1], $this->params[2])) {
             $this->response->add(new XoopsXmlRpcFault(104));
         } else {
-            $xoopsapi =& $this->_getXoopsApi($this->params);
+            $xoopsapi = &$this->_getXoopsApi($this->params);
             $xoopsapi->_setUser($this->user, $this->isadmin);
-            $ret =& $xoopsapi->getRecentPosts(false);
+            $ret = &$xoopsapi->getRecentPosts(false);
             if (is_array($ret)) {
                 $arr   = new XoopsXmlRpcArray();
                 $count = count($ret);
@@ -224,7 +224,7 @@ class MetaWeblogApi extends XoopsXmlRpcApi
                                 case 'title':
                                     $struct->add('title', new XoopsXmlRpcString($value));
                                     break;
-                                default :
+                                default:
                                     $content .= '<' . $key . '>' . trim($value) . '</' . $key . '>';
                                     break;
                             }
@@ -246,9 +246,9 @@ class MetaWeblogApi extends XoopsXmlRpcApi
         if (!$this->_checkUser($this->params[1], $this->params[2])) {
             $this->response->add(new XoopsXmlRpcFault(104));
         } else {
-            $xoopsapi =& $this->_getXoopsApi($this->params);
+            $xoopsapi = &$this->_getXoopsApi($this->params);
             $xoopsapi->_setUser($this->user, $this->isadmin);
-            $ret =& $xoopsapi->getCategories(false);
+            $ret = &$xoopsapi->getCategories(false);
             if (is_array($ret)) {
                 $arr = new XoopsXmlRpcArray();
                 foreach ($ret as $id => $detail) {

@@ -84,7 +84,7 @@ switch ($op) {
         $xoopsTpl->assign('form', $form->render());
         break;
 
-    //generate surcharge
+        //generate surcharge
     case 'tpls_generate_surcharge':
         if (!$GLOBALS['xoopsSecurity']->check()) {
             redirect_header('admin.php?fct=tplsets', 3, implode('<br>', $GLOBALS['xoopsSecurity']->getErrors()));
@@ -352,7 +352,7 @@ switch ($op) {
         }
         break;
 
-    // save
+        // save
     case 'tpls_save':
         if (!$GLOBALS['xoopsSecurity']->check()) {
             redirect_header('admin.php?fct=tplsets', 2, implode('<br>', $GLOBALS['xoopsSecurity']->getErrors()));
@@ -361,9 +361,9 @@ switch ($op) {
         $clean_path_file = XoopsRequest::getString('path_file', '');
         if (!empty($clean_path_file)) {
             $path_file = realpath(XOOPS_ROOT_PATH.'/themes'.trim($clean_path_file));
-            $path_file = str_replace('\\','/',$path_file);
+            $path_file = str_replace('\\', '/', $path_file);
             $pathInfo = pathinfo($path_file);
-            if (!in_array($pathInfo['extension'], array('css', 'html', 'tpl'))) {
+            if (!in_array($pathInfo['extension'], ['css', 'html', 'tpl'])) {
                 redirect_header('admin.php?fct=tplsets', 2, _AM_SYSTEM_TEMPLATES_ERROR);
                 exit;
             }

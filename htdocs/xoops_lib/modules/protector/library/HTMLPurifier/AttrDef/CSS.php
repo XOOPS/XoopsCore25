@@ -13,7 +13,6 @@
  */
 class HTMLPurifier_AttrDef_CSS extends HTMLPurifier_AttrDef
 {
-
     /**
      * @param string $css
      * @param HTMLPurifier_Config $config
@@ -34,13 +33,15 @@ class HTMLPurifier_AttrDef_CSS extends HTMLPurifier_AttrDef
         // handle quotes.
         $len = strlen($css);
         $accum = "";
-        $declarations = array();
+        $declarations = [];
         $quoted = false;
         for ($i = 0; $i < $len; $i++) {
             $c = strcspn($css, ";'\"", $i);
             $accum .= substr($css, $i, $c);
             $i += $c;
-            if ($i == $len) break;
+            if ($i == $len) {
+                break;
+            }
             $d = $css[$i];
             if ($quoted) {
                 $accum .= $d;
@@ -57,9 +58,11 @@ class HTMLPurifier_AttrDef_CSS extends HTMLPurifier_AttrDef
                 }
             }
         }
-        if ($accum != "") $declarations[] = $accum;
+        if ($accum != "") {
+            $declarations[] = $accum;
+        }
 
-        $propvalues = array();
+        $propvalues = [];
         $new_declarations = '';
 
         /**

@@ -2,11 +2,10 @@
 
 class HTMLPurifier_URIDefinition extends HTMLPurifier_Definition
 {
-
     public $type = 'URI';
-    protected $filters = array();
-    protected $postFilters = array();
-    protected $registeredFilters = array();
+    protected $filters = [];
+    protected $postFilters = [];
+    protected $registeredFilters = [];
 
     /**
      * HTMLPurifier_URI object of the base specified at %URI.Base
@@ -42,7 +41,9 @@ class HTMLPurifier_URIDefinition extends HTMLPurifier_Definition
     public function addFilter($filter, $config)
     {
         $r = $filter->prepare($config);
-        if ($r === false) return; // null is ok, for backwards compat
+        if ($r === false) {
+            return;
+        } // null is ok, for backwards compat
         if ($filter->post) {
             $this->postFilters[$filter->name] = $filter;
         } else {
@@ -79,9 +80,13 @@ class HTMLPurifier_URIDefinition extends HTMLPurifier_Definition
             $parser = new HTMLPurifier_URIParser();
             $this->base = $parser->parse($base_uri);
             $this->defaultScheme = $this->base->scheme;
-            if (is_null($this->host)) $this->host = $this->base->host;
+            if (is_null($this->host)) {
+                $this->host = $this->base->host;
+            }
         }
-        if (is_null($this->defaultScheme)) $this->defaultScheme = $config->get('URI.DefaultScheme');
+        if (is_null($this->defaultScheme)) {
+            $this->defaultScheme = $config->get('URI.DefaultScheme');
+        }
     }
 
     public function getDefaultScheme($config, $context)
@@ -93,7 +98,9 @@ class HTMLPurifier_URIDefinition extends HTMLPurifier_Definition
     {
         foreach ($this->filters as $name => $f) {
             $result = $f->filter($uri, $config, $context);
-            if (!$result) return false;
+            if (!$result) {
+                return false;
+            }
         }
         return true;
     }
@@ -102,7 +109,9 @@ class HTMLPurifier_URIDefinition extends HTMLPurifier_Definition
     {
         foreach ($this->postFilters as $name => $f) {
             $result = $f->filter($uri, $config, $context);
-            if (!$result) return false;
+            if (!$result) {
+                return false;
+            }
         }
         return true;
     }

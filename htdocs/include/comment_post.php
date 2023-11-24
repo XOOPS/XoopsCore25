@@ -16,7 +16,7 @@
  * @author              Kazumi Ono (AKA onokazu) http://www.myweb.ne.jp/, http://jp.xoops.org/
  */
 
-use \Xmf\Request;
+use Xmf\Request;
 
 defined('XOOPS_ROOT_PATH') || exit('Restricted access');
 
@@ -97,7 +97,7 @@ if (!empty($_POST)) {
         $myts = \MyTextSanitizer::getInstance();
 
         // Check user name
-        $search_arr  = array(
+        $search_arr  = [
             '&nbsp;',
             "\t",
             "\r\n",
@@ -132,7 +132,7 @@ if (!empty($_POST)) {
             '%',
             '^',
             '&'
-        );
+        ];
         $com_user = Request::getString('com_user', 'POST', '');
         $com_user = str_replace($search_arr, '', $com_user);
         //$com_user = strtolower($com_user);
@@ -146,7 +146,7 @@ if (!empty($_POST)) {
                 $com_url = false;
             }
             if (false === $com_url) {
-                $com_url='';
+                $com_url = '';
             }
         }
 
@@ -271,8 +271,8 @@ switch ($op) {
                             }
                         } elseif (XOOPS_COMMENT_HIDDEN == $old_com_status && XOOPS_COMMENT_ACTIVE == $com_status) {
                             $call_updatefunc = true;
-                            // Comments can not be directly posted hidden,
-                            // no need to send notification here
+                        // Comments can not be directly posted hidden,
+                        // no need to send notification here
                         } elseif (XOOPS_COMMENT_ACTIVE == $old_com_status && XOOPS_COMMENT_HIDDEN == $com_status) {
                             $call_updatefunc = true;
                         }
@@ -433,10 +433,10 @@ switch ($op) {
                     $criteria->add(new Criteria('com_status', XOOPS_COMMENT_ACTIVE));
                     $comment_count = $comment_handler->getCount($criteria);
                     $func          = $comment_config['callback']['update'];
-                    call_user_func_array($func, array(
+                    call_user_func_array($func, [
                         $com_itemid,
                         $comment_count,
-                        $comment->getVar('com_id')));
+                        $comment->getVar('com_id')]);
                 }
             }
 
@@ -456,23 +456,23 @@ switch ($op) {
             if ($notify_event) {
                 $not_modid = $com_modid;
                 include_once $GLOBALS['xoops']->path('include/notification_functions.php');
-                $not_catinfo  =& notificationCommentCategoryInfo($not_modid);
+                $not_catinfo  = &notificationCommentCategoryInfo($not_modid);
                 $not_category = $not_catinfo['name'];
                 $not_itemid   = $com_itemid;
                 $not_event    = $notify_event;
                 // Build an ABSOLUTE URL to view the comment.  Make sure we
                 // point to a viewable page (i.e. not the system administration
                 // module).
-                $comment_tags = array();
+                $comment_tags = [];
                 if ('system' === $xoopsModule->getVar('dirname')) {
                     /** @var XoopsModuleHandler $module_handler */
                     $module_handler = xoops_getHandler('module');
                     $not_module     = $module_handler->get($not_modid);
                 } else {
-                    $not_module =& $xoopsModule;
+                    $not_module = &$xoopsModule;
                 }
                 if (!isset($comment_url)) {
-                    $com_config  =& $not_module->getInfo('comments');
+                    $com_config  = &$not_module->getInfo('comments');
                     $comment_url = $com_config['pageName'] . '?';
                     if (isset($com_config['extraParams']) && \is_array($com_config['extraParams'])) {
                         $extra_params = '';

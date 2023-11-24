@@ -17,10 +17,10 @@
  */
 class ModuleAdmin
 {
-    private $_itemButton        = array();
-    private $_itemInfoBox       = array();
-    private $_itemInfoBoxLine   = array();
-    private $_itemConfigBoxLine = array();
+    private $_itemButton        = [];
+    private $_itemInfoBox       = [];
+    private $_itemInfoBoxLine   = [];
+    private $_itemConfigBoxLine = [];
 
     /**
      * @var XoopsModule
@@ -33,7 +33,7 @@ class ModuleAdmin
     public function __construct()
     {
         global $xoopsModule;
-        $this->_obj =& $xoopsModule;
+        $this->_obj = &$xoopsModule;
         $this->loadLanguage();
     }
 
@@ -57,9 +57,9 @@ class ModuleAdmin
      */
     public function getInfo()
     {
-        $infoArray = array();
+        $infoArray = [];
         if (!isset($infoArray) || empty($infoArray)) {
-            $infoArray                = array();
+            $infoArray                = [];
             $infoArray['version']     = $this->getVersion();
             $infoArray['releasedate'] = $this->getReleaseDate();
             $infoArray['methods']     = $this->getClassMethods();
@@ -222,7 +222,7 @@ class ModuleAdmin
      */
     public function addItemButton($title, $link, $icon = 'add', $extra = '')
     {
-        $ret = array();
+        $ret = [];
         $ret['title']        = $title;
         $ret['link']         = $link;
         $ret['icon']         = $icon . '.png';
@@ -331,7 +331,7 @@ class ModuleAdmin
             // Database version
             $path    = XOOPS_URL . '/Frameworks/moduleclasses/icons/16/';
             $dbarray = $this->_obj->getInfo('min_db');
-            if ($dbarray!=false) {
+            if ($dbarray != false) {
                 // changes from redheadedrod to use connector specific version info
                 switch (XOOPS_DB_TYPE) {
                     // server should be the same in both cases
@@ -340,10 +340,10 @@ class ModuleAdmin
                         global $xoopsDB;
                         $dbCurrentVersion = $xoopsDB->getServerVersion();
                         break;
-                    //case "pdo":
-                    //    global $xoopsDB;
-                    //    $dbCurrentVersion = $xoopsDB->getAttribute(PDO::ATTR_SERVER_VERSION);
-                    //    break;
+                        //case "pdo":
+                        //    global $xoopsDB;
+                        //    $dbCurrentVersion = $xoopsDB->getAttribute(PDO::ATTR_SERVER_VERSION);
+                        //    break;
                     default: // don't really support anything other than mysql
                         $dbCurrentVersion = '0';
                         break;
@@ -417,7 +417,7 @@ class ModuleAdmin
      */
     public function addInfoBox($title)
     {
-        $ret = array();
+        $ret = [];
         $ret['title']         = $title;
         $this->_itemInfoBox[] = $ret;
 
@@ -444,7 +444,7 @@ class ModuleAdmin
      */
     public function addInfoBoxLine($label, $text, $value = '', $color = 'inherit', $type = 'default')
     {
-        $ret = array();
+        $ret = [];
         $ret['label'] = $label;
         $line         = '';
         switch ($type) {
@@ -516,9 +516,9 @@ class ModuleAdmin
                       . $this->_obj->getInfo('module_website_name') . " - " . $this->_obj->getInfo('module_website_url') . "\">"
                       . $this->_obj->getInfo('module_website_name') . "</a></text>\n"
                       . "</div>\n";
-        $authorArray  = array();
-        foreach ( $author as $k => $aName ) {
-            $authorArray[$k] = ( isset( $nickname[$k] ) && ( '' != $nickname[$k] ) ) ? "{$aName} ({$nickname[$k]})" : "{$aName}";
+        $authorArray  = [];
+        foreach ($author as $k => $aName) {
+            $authorArray[$k] = (isset($nickname[$k]) && ('' != $nickname[$k])) ? "{$aName} ({$nickname[$k]})" : "{$aName}";
         }
         $license_url = $this->_obj->getInfo('license_url');
         $license_url = preg_match('%^(https?:)?//%', $license_url) ? $license_url : 'http://' . $license_url;
@@ -563,24 +563,24 @@ class ModuleAdmin
                   . "</td>\n</tr>\n";
         }
         $ret .= "</table>\n";
-        $this->addInfoBox( _AM_MODULEADMIN_ABOUT_MODULEINFO );
-        $this->addInfoBoxLine( _AM_MODULEADMIN_ABOUT_MODULEINFO, $module_info, '', '', 'information' );
+        $this->addInfoBox(_AM_MODULEADMIN_ABOUT_MODULEINFO);
+        $this->addInfoBoxLine(_AM_MODULEADMIN_ABOUT_MODULEINFO, $module_info, '', '', 'information');
         $ret .= $this->renderInfoBox()
               . "</td>\n"
               . "<td width=\"50%\">\n"
               . "<fieldset><legend class=\"label\">" . _AM_MODULEADMIN_ABOUT_CHANGELOG . "</legend><br>\n"
               . "<div class=\"txtchangelog\">\n";
-        $language = empty( $GLOBALS['xoopsConfig']['language'] ) ? 'english' : $GLOBALS['xoopsConfig']['language'];
+        $language = empty($GLOBALS['xoopsConfig']['language']) ? 'english' : $GLOBALS['xoopsConfig']['language'];
         $file     = XOOPS_ROOT_PATH . "/modules/{$module_dir}/language/{$language}/changelog.txt";
-        if ( !is_file( $file ) && ( 'english' !== $language ) ) {
+        if (!is_file($file) && ('english' !== $language)) {
             $file = XOOPS_ROOT_PATH . "/modules/{$module_dir}/language/english/changelog.txt";
         }
-        if ( is_readable( $file ) ) {
-            $ret .= ( implode( '<br>', file( $file ) ) ) . "\n";
+        if (is_readable($file)) {
+            $ret .= (implode('<br>', file($file))) . "\n";
         } else {
             $file = XOOPS_ROOT_PATH . "/modules/{$module_dir}/docs/changelog.txt";
-            if ( is_readable( $file ) ) {
-                $ret .= implode( '<br>', file( $file ) ) . "\n";
+            if (is_readable($file)) {
+                $ret .= implode('<br>', file($file)) . "\n";
             }
         }
         $ret .= "</div>\n"
@@ -588,7 +588,7 @@ class ModuleAdmin
               . "</td>\n"
               . "</tr>\n"
               . "</table>\n";
-        if ( true === $logo_xoops ) {
+        if (true === $logo_xoops) {
             $ret .= "<div class=\"center\">"
                   . "<a href=\"https://xoops.org\" target=\"_blank\"><img src=\"{$path}xoopsmicrobutton.gif\" alt=\"XOOPS\" title=\"XOOPS\"></a>"
                   . "</div>";

@@ -1,4 +1,5 @@
 <?php
+
 // start hack by Trabis
 if (!class_exists('ProtectorRegistry')) {
     exit('Registry not found');
@@ -28,7 +29,7 @@ if (!function_exists('protector_onupdate_base')) {
         global $msgs; // TODO :-D
 
         if (!is_array($msgs)) {
-            $msgs = array();
+            $msgs = [];
         }
 
         /** @var XoopsMySQLDatabase $db */
@@ -50,7 +51,8 @@ if (!function_exists('protector_onupdate_base')) {
         $result = $db->query($sql);
         if (false === $result || !($result instanceof mysqli_result) || !$db->isResultSet($result)) {
             throw new \RuntimeException(
-                \sprintf(_DB_QUERY_ERROR, $sql) . $db->error(), E_USER_ERROR
+                \sprintf(_DB_QUERY_ERROR, $sql) . $db->error(),
+                E_USER_ERROR
             );
         } else {
             list(, $create_string) = $db->fetchRow($result);
@@ -70,7 +72,8 @@ if (!function_exists('protector_onupdate_base')) {
 
         if (false === $result || !($result instanceof mysqli_result) || !$db->isResultSet($result)) {
             throw new \RuntimeException(
-                \sprintf(_DB_QUERY_ERROR, $sql) . $db->error(), E_USER_ERROR
+                \sprintf(_DB_QUERY_ERROR, $sql) . $db->error(),
+                E_USER_ERROR
             );
         } else {
             list(, $create_string) = $db->fetchRow($result);
@@ -94,7 +97,7 @@ if (!function_exists('protector_onupdate_base')) {
                         continue;
                     }
                     $file_path = $tpl_path . '/' . $file;
-                if (is_file($file_path) && in_array(strrchr($file, '.'), array('.html', '.css', '.js'))) {
+                    if (is_file($file_path) && in_array(strrchr($file, '.'), ['.html', '.css', '.js'])) {
                         $mtime   = (int)(@filemtime($file_path));
                         $tplfile = $tplfile_handler->create();
                         $tplfile->setVar('tpl_source', file_get_contents($file_path), true);
@@ -107,7 +110,7 @@ if (!function_exists('protector_onupdate_base')) {
                         $tplfile->setVar('tpl_lastimported', 0);
                         $tplfile->setVar('tpl_type', 'module');
                         if (!$tplfile_handler->insert($tplfile)) {
-                        $ret[] = '<span style="color:#ff0000;">ERROR: Could not insert template <b>' . htmlspecialchars($mydirname . '_' . $file, ENT_QUOTES) . '</b> to the database.</span><br>';
+                            $ret[] = '<span style="color:#ff0000;">ERROR: Could not insert template <b>' . htmlspecialchars($mydirname . '_' . $file, ENT_QUOTES) . '</b> to the database.</span><br>';
                         } else {
                             $tplid  = $tplfile->getVar('tpl_id');
                             $msgs[] = 'Template <b>' . htmlspecialchars($mydirname . '_' . $file, ENT_QUOTES) . '</b> added to the database. (ID: <b>' . $tplid . '</b>)<br>';

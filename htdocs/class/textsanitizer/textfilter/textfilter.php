@@ -51,9 +51,9 @@ class MytsTextfilter extends MyTextSanitizerExtension
             return $text;
         }
 
-        $tags    = array();
-        $search  = array();
-        $replace = array();
+        $tags    = [];
+        $search  = [];
+        $replace = [];
         $config  = parent::loadConfig(__DIR__);
         if (!empty($config['patterns'])) {
             foreach ($config['patterns'] as $pattern) {

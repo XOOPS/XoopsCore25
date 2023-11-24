@@ -41,12 +41,12 @@ if (!$allowed) {
     $xoopsThemeFactory                = new xos_opal_ThemeFactory();
     $xoopsThemeFactory->allowedThemes = $xoopsConfig['theme_set_allowed'];
     $xoopsThemeFactory->defaultTheme  = $xoopsConfig['theme_set'];
-    $xoTheme                          = $xoopsThemeFactory->createInstance(array(
-                                                                                'plugins' => array()));
-    $xoTheme->addScript('/include/xoops.js', array(
-        'type' => 'text/javascript'));
+    $xoTheme                          = $xoopsThemeFactory->createInstance([
+                                                                                'plugins' => []]);
+    $xoTheme->addScript('/include/xoops.js', [
+        'type' => 'text/javascript']);
     $xoopsTpl = $xoTheme->template;
-    $xoopsTpl->assign(array(
+    $xoopsTpl->assign([
                           'xoops_theme'       => $xoopsConfig['theme_set'],
                           'xoops_imageurl'    => XOOPS_THEME_URL . '/' . $xoopsConfig['theme_set'] . '/',
                           'xoops_themecss'    => xoops_getcss($xoopsConfig['theme_set']),
@@ -59,7 +59,7 @@ if (!$allowed) {
                           'lang_login'        => _LOGIN,
                           'lang_username'     => _USERNAME,
                           'lang_password'     => _PASSWORD,
-                          'lang_siteclosemsg' => $xoopsConfig['closesite_text']));
+                          'lang_siteclosemsg' => $xoopsConfig['closesite_text']]);
     if (isset($_SESSION['redirect_message'])) {
         $xoopsTpl->assign('redirect_message', $_SESSION['redirect_message']);
         unset($_SESSION['redirect_message']);

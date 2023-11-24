@@ -44,16 +44,16 @@ function protector_prepare()
 
     // reliable ips
     if (isset($conf['reliable_ips'])) {
-        $reliable_ips = unserialize($conf['reliable_ips'], array('allowed_classes' => false));
+        $reliable_ips = unserialize($conf['reliable_ips'], ['allowed_classes' => false]);
     } else {
-        $reliable_ips = array();
+        $reliable_ips = [];
     }
 
-        // for the environment of (buggy core version && magic_quotes_gpc)
+    // for the environment of (buggy core version && magic_quotes_gpc)
     if (!is_array($reliable_ips) && isset($conf['reliable_ips'])) {
-        $reliable_ips = unserialize(stripslashes($conf['reliable_ips']), array('allowed_classes' => false));
+        $reliable_ips = unserialize(stripslashes($conf['reliable_ips']), ['allowed_classes' => false]);
         if (!is_array($reliable_ips)) {
-            $reliable_ips = array();
+            $reliable_ips = [];
         }
     }
     $is_reliable = false;
@@ -102,7 +102,7 @@ function protector_prepare()
             } else {
                 $protector->_should_be_banned_time0 = true;
             }
-            $_GET = $_POST = array();
+            $_GET = $_POST = [];
         }
 
         $protector->output_log($protector->last_error_type);
@@ -133,7 +133,7 @@ function protector_prepare()
 function protector_phar_check($item, $key)
 {
     $check = preg_match('#^\s*phar://#', $item);
-    if(1===$check) {
+    if(1 === $check) {
         $protector = Protector::getInstance();
         $protector->message = 'Protector detects attacking actions';
         $protector->output_log('PHAR');

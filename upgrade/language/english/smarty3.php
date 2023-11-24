@@ -1,4 +1,5 @@
 <?php
+
 // _LANGCODE: en
 // _CHARSET : UTF-8
 // Translator: XOOPS Translation Team
@@ -24,7 +25,9 @@ define('_XOOPS_SMARTY3_TEMPLATE_DIR', 'Template Directory (optional)');
 define('_XOOPS_SMARTY3_TEMPLATE_EXT', 'Template Extension (optional)');
 
 
-define('_XOOPS_SMARTY3_SCANNER_OFFER', <<<'EOT'
+define(
+    '_XOOPS_SMARTY3_SCANNER_OFFER',
+    <<<'EOT'
 <h3>XOOPS 2.5.11 introduces a significant change: Smarty 3</h3>
 
 <p>Unfortunately, this change may potentially disrupt some older themes. Therefore, before proceeding with the upgrade, please ensure that you follow these steps:

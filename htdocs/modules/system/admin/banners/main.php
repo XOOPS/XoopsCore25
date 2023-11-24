@@ -58,20 +58,20 @@ switch ($op) {
         if (!$GLOBALS['xoopsSecurity']->check()) {
             redirect_header('admin.php?fct=banners', 3, implode(',', $GLOBALS['xoopsSecurity']->getErrors()));
         }
-		$bid = Request::getInt('bid', 0);
+        $bid = Request::getInt('bid', 0);
         /** @var  SystemBanner $obj */
-    if ($bid > 0) {
+        if ($bid > 0) {
             $obj = $banner_Handler->get($bid);
         } else {
             $obj = $banner_Handler->create();
             $obj->setVar('date', time());
         }
-		$obj->setVar('cid', Request::getInt('cid', 0));
-		$obj->setVar('imptotal', Request::getInt('imptotal', 0));
-		$obj->setVar('imageurl', Request::getUrl('imageurl', ''));
-		$obj->setVar('clickurl', Request::getUrl('clickurl', ''));
-		$obj->setVar('htmlbanner', Request::getInt('htmlbanner', 0));
-		$obj->setVar('htmlcode', Request::getText('htmlcode', ''));
+        $obj->setVar('cid', Request::getInt('cid', 0));
+        $obj->setVar('imptotal', Request::getInt('imptotal', 0));
+        $obj->setVar('imageurl', Request::getUrl('imageurl', ''));
+        $obj->setVar('clickurl', Request::getUrl('clickurl', ''));
+        $obj->setVar('htmlbanner', Request::getInt('htmlbanner', 0));
+        $obj->setVar('htmlcode', Request::getText('htmlcode', ''));
 
         if ($banner_Handler->insert($obj)) {
             redirect_header('admin.php?fct=banners', 2, _AM_SYSTEM_BANNERS_DBUPDATED);
@@ -87,7 +87,7 @@ switch ($op) {
         $xoBreadCrumb->addTips(_AM_SYSTEM_BANNERS_NAV_TIPS);
         $xoBreadCrumb->render();
 
-		$bid = Request::getInt('bid', 0);
+        $bid = Request::getInt('bid', 0);
         if ($bid > 0) {
             /** @var  SystemBanner $obj */
             $obj  = $banner_Handler->get($bid);
@@ -104,7 +104,7 @@ switch ($op) {
         $xoBreadCrumb->addHelp(system_adminVersion('banners', 'help') . '#banner_delete');
         $xoBreadCrumb->render();
 
-		$bid = Request::getInt('bid', 0);
+        $bid = Request::getInt('bid', 0);
         if ($bid > 0) {
             $obj = $banner_Handler->get($bid);
             if (isset($_POST['ok']) && $_POST['ok'] == 1) {
@@ -117,10 +117,10 @@ switch ($op) {
                     xoops_error($obj->getHtmlErrors());
                 }
             } else {
-                xoops_confirm(array(
+                xoops_confirm([
                                   'ok' => 1,
                                   'bid' => $bid,
-                                  'op' => 'banner_delete'), 'admin.php?fct=banners', sprintf(_AM_SYSTEM_BANNERS_SUREDELE));
+                                  'op' => 'banner_delete'], 'admin.php?fct=banners', sprintf(_AM_SYSTEM_BANNERS_SUREDELE));
             }
         } else {
             redirect_header('admin.php?fct=banners', 1, _AM_SYSTEM_DBERROR);
@@ -132,7 +132,7 @@ switch ($op) {
         $xoBreadCrumb->addHelp(system_adminVersion('banners', 'help') . '#banner_finish_delete');
         $xoBreadCrumb->render();
 
-		$bid = Request::getInt('bid', 0);
+        $bid = Request::getInt('bid', 0);
         if ($bid > 0) {
             $obj = $banner_finish_Handler->get($bid);
             if (isset($_POST['ok']) && $_POST['ok'] == 1) {
@@ -145,34 +145,34 @@ switch ($op) {
                     xoops_error($obj->getHtmlErrors());
                 }
             } else {
-                xoops_confirm(array(
+                xoops_confirm([
                                   'ok' => 1,
                                   'bid' => $bid,
-                                  'op' => 'banner_finish_delete'), 'admin.php?fct=banners', sprintf(_AM_SYSTEM_BANNERS_SUREDELE));
+                                  'op' => 'banner_finish_delete'], 'admin.php?fct=banners', sprintf(_AM_SYSTEM_BANNERS_SUREDELE));
             }
         } else {
             redirect_header('admin.php?fct=banners', 1, _AM_SYSTEM_DBERROR);
         }
         break;
 
-    // Clients
+        // Clients
     case 'banner_client_save': // Save client
         if (!$GLOBALS['xoopsSecurity']->check()) {
             redirect_header('admin.php?fct=banners', 3, implode(',', $GLOBALS['xoopsSecurity']->getErrors()));
         }
-		$cid = Request::getInt('cid', 0);
+        $cid = Request::getInt('cid', 0);
         /** @var  SystemBanner $obj */
         if ($cid > 0) {
             $obj = $banner_client_Handler->get($cid);
         } else {
             $obj = $banner_client_Handler->create();
         }
-		$obj->setVar('name', Request::getString('name', ''));
-		$obj->setVar('contact', Request::getString('contact', ''));
-		$obj->setVar('email', Request::getEmail('email', ''));
-		$obj->setVar('login', Request::getString('login', ''));
-		$obj->setVar('passwd ', Request::getString('passwd ', ''));
-		$obj->setVar('extrainfo', Request::getText('extrainfo', ''));
+        $obj->setVar('name', Request::getString('name', ''));
+        $obj->setVar('contact', Request::getString('contact', ''));
+        $obj->setVar('email', Request::getEmail('email', ''));
+        $obj->setVar('login', Request::getString('login', ''));
+        $obj->setVar('passwd ', Request::getString('passwd ', ''));
+        $obj->setVar('extrainfo', Request::getText('extrainfo', ''));
 
         if ($banner_client_Handler->insert($obj)) {
             redirect_header('admin.php?fct=banners', 2, _AM_SYSTEM_BANNERS_DBUPDATED);
@@ -190,7 +190,7 @@ switch ($op) {
         $xoBreadCrumb->addTips(_AM_SYSTEM_BANNERS_NAV_TIPS);
         $xoBreadCrumb->render();
 
-		$cid = Request::getInt('cid', 0);
+        $cid = Request::getInt('cid', 0);
         if ($cid > 0) {
             /** @var  SystemBanner $obj */
             $obj  = $banner_client_Handler->get($cid);
@@ -206,7 +206,7 @@ switch ($op) {
         $xoBreadCrumb->addHelp(system_adminVersion('banners', 'help') . '#banner_client_delete');
         $xoBreadCrumb->render();
 
-		$cid = Request::getInt('cid', 0);
+        $cid = Request::getInt('cid', 0);
         if ($cid > 0) {
             $obj = $banner_client_Handler->get($cid);
             if (isset($_POST['ok']) && $_POST['ok'] == 1) {
@@ -223,10 +223,10 @@ switch ($op) {
                     xoops_error($obj->getHtmlErrors());
                 }
             } else {
-                xoops_confirm(array(
+                xoops_confirm([
                                   'ok' => 1,
                                   'cid' => $cid,
-                                  'op' => 'banner_client_delete'), 'admin.php?fct=banners', _AM_SYSTEM_BANNERS_SUREDELBNR);
+                                  'op' => 'banner_client_delete'], 'admin.php?fct=banners', _AM_SYSTEM_BANNERS_SUREDELBNR);
             }
         } else {
             redirect_header('admin.php?fct=banners', 1, _AM_SYSTEM_DBERROR);
@@ -261,9 +261,9 @@ switch ($op) {
         $xoBreadCrumb->render();
 
         // Get start pager
-		$start = Request::getInt('start', 0);
-		$startF = Request::getInt('startF', 0);
-		$startC = Request::getInt('startC', 0);
+        $start = Request::getInt('start', 0);
+        $startF = Request::getInt('startF', 0);
+        $startC = Request::getInt('startC', 0);
         // Display Banners
         // Criteria
         $criteria = new CriteriaCompo();
@@ -305,7 +305,7 @@ switch ($op) {
                 //Img
                 $img = '';
                 if ($htmlbanner) {
-                    if ($htmlcode){
+                    if ($htmlcode) {
                         $img .= html_entity_decode($htmlcode);
                     } else {
                         $img .= ' <iframe src=' . $imageurl . ' border="0" scrolling="no" allowtransparency="true" width="480px" height="60px" style="border:0" alt=""> </iframe>';

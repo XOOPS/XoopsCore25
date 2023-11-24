@@ -10,7 +10,7 @@ class HTMLPurifier_ConfigSchema
      * @type array
      * @note This shares the exact same structure as HTMLPurifier_Config::$conf
      */
-    public $defaults = array();
+    public $defaults = [];
 
     /**
      * The default property list. Do not edit this property list.
@@ -49,7 +49,7 @@ class HTMLPurifier_ConfigSchema
      * which uses more memory but has much richer information.
      * @type array
      */
-    public $info = array();
+    public $info = [];
 
     /**
      * Application-wide singleton
@@ -126,7 +126,7 @@ class HTMLPurifier_ConfigSchema
     public function addValueAliases($key, $aliases)
     {
         if (!isset($this->info[$key]->aliases)) {
-            $this->info[$key]->aliases = array();
+            $this->info[$key]->aliases = [];
         }
         foreach ($aliases as $alias => $real) {
             $this->info[$key]->aliases[$alias] = $real;
@@ -152,7 +152,7 @@ class HTMLPurifier_ConfigSchema
      */
     public function addAlias($key, $new_key)
     {
-        $obj = new stdClass;
+        $obj = new stdClass();
         $obj->key = $new_key;
         $obj->isAlias = true;
         $this->info[$key] = $obj;

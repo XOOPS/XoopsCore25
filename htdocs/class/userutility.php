@@ -186,7 +186,8 @@ class XoopsUserUtility
         $result = $xoopsDB->query($sql);
         if (!$xoopsDB->isResultSet($result)) {
             throw new \RuntimeException(
-                \sprintf(_DB_QUERY_ERROR, $sql) . $xoopsDB->error(), E_USER_ERROR
+                \sprintf(_DB_QUERY_ERROR, $sql) . $xoopsDB->error(),
+                E_USER_ERROR
             );
         }
         list($count) = $xoopsDB->fetchRow($result);
@@ -197,7 +198,8 @@ class XoopsUserUtility
         $result = $xoopsDB->query($sql);
         if (!$xoopsDB->isResultSet($result)) {
             throw new \RuntimeException(
-                \sprintf(_DB_QUERY_ERROR, $sql) . $xoopsDB->error(), E_USER_ERROR
+                \sprintf(_DB_QUERY_ERROR, $sql) . $xoopsDB->error(),
+                E_USER_ERROR
             );
         }
         list($count) = $xoopsDB->fetchRow($result);
@@ -275,12 +277,12 @@ class XoopsUserUtility
     public static function getUnameFromIds($uid, $usereal = false, $linked = false)
     {
         if (!is_array($uid)) {
-            $uid = array($uid);
+            $uid = [$uid];
         }
         $userid = array_map('intval', array_filter($uid));
 
         $myts  = \MyTextSanitizer::getInstance();
-        $users = array();
+        $users = [];
         if (count($userid) > 0) {
             /** @var XoopsMySQLDatabase $xoopsDB */
             $xoopsDB = XoopsDatabaseFactory::getDatabaseConnection();

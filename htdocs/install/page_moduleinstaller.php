@@ -46,7 +46,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $config_handler = xoops_getHandler('config');
     $xoopsConfig    = $config_handler->getConfigsByCat(XOOPS_CONF);
 
-    $msgs = array();
+    $msgs = [];
     if (isset($_REQUEST['modules']) && \is_array($_REQUEST['modules'])) {
         foreach ($_REQUEST['modules'] as $dirname => $installmod) {
             if ($installmod) {
@@ -61,7 +61,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $content = '<div class="alert alert-success"><span class="fa fa-check text-success"></span> '
             . INSTALLED_MODULES . '</div><div class="well"><ul class="list-unstyled">';
         foreach ($msgs as $msg) {
-            $noAnchors = preg_replace(array('"<a (.*?)>"', '"</a>"'), array('',''), $msg);
+            $noAnchors = preg_replace(['"<a (.*?)>"', '"</a>"'], ['',''], $msg);
             $content .= "<li>{$noAnchors}</li>";
         }
         $content .= '</ul></div>';
@@ -84,7 +84,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     /** @var XoopsModuleHandler $module_handler */
     $module_handler = xoops_getHandler('module');
     $installed_mods = $module_handler->getObjects();
-    $listed_mods    = array();
+    $listed_mods    = [];
     foreach ($installed_mods as $module) {
         $listed_mods[] = $module->getVar('dirname');
     }
@@ -120,17 +120,17 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $moduleYN->addOption(1, sprintf(INSTALL_THIS_MODULE, $module->getInfo('name')));
             $moduleYN->setExtra("onclick='selectModule(\"" . $file . "\", this)'");
             $form->addElement($moduleYN);
-/*
-            $content .= "<tr id='" . $file . "'" . $style . ">\n";
-            $content .= "    <td class='img' ><img src='" . XOOPS_URL . '/modules/' . $module->getInfo('dirname') . '/' . $module->getInfo('image') . "' alt='" . $module->getInfo('name') . "'/></td>\n";
-            $content .= '    <td>';
-            $content .= '        ' . $module->getInfo('name') . '&nbsp;' . number_format(round($module->getInfo('version'), 2), 2) . '&nbsp;(' . $module->getInfo('dirname') . ')';
-            $content .= '        <br>' . $module->getInfo('description');
-            $content .= "    </td>\n";
-            $content .= "    <td class='yesno'>";
-            $content .= $moduleYN->render();
-            $content .= "    </td></tr>\n";
-*/
+            /*
+                        $content .= "<tr id='" . $file . "'" . $style . ">\n";
+                        $content .= "    <td class='img' ><img src='" . XOOPS_URL . '/modules/' . $module->getInfo('dirname') . '/' . $module->getInfo('image') . "' alt='" . $module->getInfo('name') . "'/></td>\n";
+                        $content .= '    <td>';
+                        $content .= '        ' . $module->getInfo('name') . '&nbsp;' . number_format(round($module->getInfo('version'), 2), 2) . '&nbsp;(' . $module->getInfo('dirname') . ')';
+                        $content .= '        <br>' . $module->getInfo('description');
+                        $content .= "    </td>\n";
+                        $content .= "    <td class='yesno'>";
+                        $content .= $moduleYN->render();
+                        $content .= "    </td></tr>\n";
+            */
             $content .= '<div class="row module-row" id="' . $file . '">';
             $content .= '<div class="col-md-2">';
             $content .= '<br><img src="' . XOOPS_URL . '/modules/' . $module->getInfo('dirname')

@@ -33,7 +33,7 @@ class XoopsHandlerRegistry
      * @var array
      * @access    private
      */
-    public $_handlers = array();
+    public $_handlers = [];
 
     /**
      * get a reference to the only instance of this class
@@ -63,7 +63,7 @@ class XoopsHandlerRegistry
      */
     public function setHandler($name, XoopsObjectHandler $handler)
     {
-        $this->_handlers['kernel'][$name] =& $handler;
+        $this->_handlers['kernel'][$name] = &$handler;
     }
 
     /**
@@ -101,7 +101,7 @@ class XoopsHandlerRegistry
      */
     public function setModuleHandler($module, $name, XoopsObjectHandler $handler)
     {
-        $this->_handlers['module'][$module][$name] =& $handler;
+        $this->_handlers['module'][$module][$name] = &$handler;
     }
 
     /**

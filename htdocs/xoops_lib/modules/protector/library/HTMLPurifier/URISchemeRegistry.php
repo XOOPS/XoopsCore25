@@ -5,7 +5,6 @@
  */
 class HTMLPurifier_URISchemeRegistry
 {
-
     /**
      * Retrieve sole instance of the registry.
      * @param HTMLPurifier_URISchemeRegistry $prototype Optional prototype to overload sole instance with,
@@ -29,7 +28,7 @@ class HTMLPurifier_URISchemeRegistry
      * Cache of retrieved schemes.
      * @type HTMLPurifier_URIScheme[]
      */
-    protected $schemes = array();
+    protected $schemes = [];
 
     /**
      * Retrieves a scheme validator object

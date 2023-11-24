@@ -35,7 +35,7 @@ class HTMLPurifier_URIFilter_Munge extends HTMLPurifier_URIFilter
     /**
      * @type array
      */
-    protected $replace = array();
+    protected $replace = [];
 
     /**
      * @param HTMLPurifier_Config $config

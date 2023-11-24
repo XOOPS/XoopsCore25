@@ -27,7 +27,7 @@ include_once XOOPS_ROOT_PATH . '/include/cp_functions.php';
 
 if (file_exists($GLOBALS['xoops']->path('/Frameworks/moduleclasses/moduleadmin/moduleadmin.php'))) {
     include_once $GLOBALS['xoops']->path('/Frameworks/moduleclasses/moduleadmin/moduleadmin.php');
-    //return true;
+//return true;
 } else {
     redirect_header(XOOPS_ROOT_PATH . '/admin.php', 5, _AM_MODULEADMIN_MISSING, false);
     //return false;

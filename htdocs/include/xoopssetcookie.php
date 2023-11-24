@@ -28,21 +28,21 @@ function xoops_setcookie()
     if (headers_sent()) {
         return false;
     }
-    $argNames    = array('name', 'value', 'expires', 'path', 'domain', 'secure', 'httponly');
+    $argNames    = ['name', 'value', 'expires', 'path', 'domain', 'secure', 'httponly'];
     //$argDefaults = array(null,   '',       0,        '',     '',        false,    false);
     //$optionsKeys = array('expires', 'path', 'domain', 'secure', 'httponly', 'samesite');
     $rawArgs = func_get_args();
-    $args = array();
+    $args = [];
     foreach ($rawArgs as $key => $value) {
         if (2 === $key && \is_array($value)) {
             // modern call
-            $args['options'] = array();
+            $args['options'] = [];
             foreach ($value as $optionKey => $optionValue) {
                 $args['options'][strtolower($optionKey)] = $optionValue;
             }
             break;
         }
-        if ($key>1) {
+        if ($key > 1) {
             if (null !== $value) {
                 $args['options'][$argNames[$key]] = $value;
             }
@@ -53,7 +53,7 @@ function xoops_setcookie()
 
     // make samesite=strict the default
     $args['options']['samesite'] = isset($args['options']['samesite']) ? $args['options']['samesite'] : 'strict';
-    if (!isset($args['value'])){
+    if (!isset($args['value'])) {
         $args['value'] = '';
     }
     // after php 7.3 we just let php do it

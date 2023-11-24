@@ -27,11 +27,11 @@ $op = Request::getString('op', 'list');
 
 $filter = Request::getInt('filter', 0);
 
-$sel = array(
+$sel = [
     'selmod' => -2,
     'selgen' => -1,
     'selgrp' => -1,
-    'selvis' => -1);
+    'selvis' => -1];
 
 foreach ($sel as $key => $value) {
     $temp = isset($_SESSION[$key]) ? (int)$_SESSION[$key] : $value;
@@ -152,15 +152,15 @@ switch ($op) {
             }
         }
 
-        $arr = array();
-		if (!empty($blocks_arr)){
-			foreach (array_keys($blocks_arr) as $i) {
-				$arr[$i] = $blocks_arr[$i]->toArray();
-				$xoopsTpl->appendByRef('blocks', $arr[$i]);
-			}
-		} else {
-			$xoopsTpl->assign('blocks', array());
-		}
+        $arr = [];
+        if (!empty($blocks_arr)) {
+            foreach (array_keys($blocks_arr) as $i) {
+                $arr[$i] = $blocks_arr[$i]->toArray();
+                $xoopsTpl->appendByRef('blocks', $arr[$i]);
+            }
+        } else {
+            $xoopsTpl->assign('blocks', []);
+        }
         $block     = $block_handler->create();
         $blockform = $block->getForm();
         $xoopsTpl->assign('blockform', $blockform->render());
@@ -282,7 +282,7 @@ switch ($op) {
             $type = $block->getVar('block_type');
             $name = $block->getVar('name');
             // Save block options
-            $options = Xmf\Request::getArray('options', array(), 'POST');
+            $options = Xmf\Request::getArray('options', [], 'POST');
             if (!empty($options) && \is_array($options)) {
                 $options_count = count($options);
                 if ($options_count > 0) {
@@ -427,10 +427,10 @@ switch ($op) {
             // Call Header
             xoops_cp_header();
             // Display Question
-            xoops_confirm(array(
+            xoops_confirm([
                               'op'  => 'delete_ok',
                               'fct' => 'blocksadmin',
-                              'bid' => $block->getVar('bid')), 'admin.php', sprintf(_AM_SYSTEM_BLOCKS_RUSUREDEL, $block->getVar('title')));
+                              'bid' => $block->getVar('bid')], 'admin.php', sprintf(_AM_SYSTEM_BLOCKS_RUSUREDEL, $block->getVar('title')));
             // Call Footer
             xoops_cp_footer();
         }

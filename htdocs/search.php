@@ -72,7 +72,7 @@ if (!empty($_GET['start'])) {
     $start = Request::getInt('start', 0, 'POST');
 }
 
-$queries = array();
+$queries = [];
 
 if ($action === 'results') {
     if ($query == '') {
@@ -95,7 +95,7 @@ $available_modules = $gperm_handler->getItemIds('module_read', $groups);
 if ($action === 'search') {
     include $GLOBALS['xoops']->path('header.php');
     include $GLOBALS['xoops']->path('include/searchform.php');
-	$xoopsTpl->assign('form', $search_form->render());
+    $xoopsTpl->assign('form', $search_form->render());
     include $GLOBALS['xoops']->path('footer.php');
     exit();
 }
@@ -106,7 +106,7 @@ if ($andor !== 'OR' && $andor !== 'exact' && $andor !== 'AND') {
 $myts = \MyTextSanitizer::getInstance();
 if ($action !== 'showallbyuser') {
     if ($andor !== 'exact') {
-        $ignored_queries = array(); // holds kewords that are shorter than allowed minmum length
+        $ignored_queries = []; // holds kewords that are shorter than allowed minmum length
         $temp_queries    = preg_split('/[\s,]+/', $query);
         foreach ($temp_queries as $q) {
             $q = trim($q);
@@ -124,7 +124,7 @@ if ($action !== 'showallbyuser') {
         if (strlen($query) < $xoopsConfigSearch['keyword_min']) {
             redirect_header('search.php', 2, sprintf(_SR_KEYTOOSHORT, $xoopsConfigSearch['keyword_min']));
         }
-        $queries = array($myts->addSlashes($query));
+        $queries = [$myts->addSlashes($query)];
     }
 }
 switch ($action) {
@@ -135,102 +135,102 @@ switch ($action) {
         $criteria->add(new Criteria('isactive', 1));
         $criteria->add(new Criteria('mid', '(' . implode(',', $available_modules) . ')', 'IN'));
         $modules = $module_handler->getObjects($criteria, true);
-        $mids    = isset($_REQUEST['mids']) ? $_REQUEST['mids'] : array();
+        $mids    = isset($_REQUEST['mids']) ? $_REQUEST['mids'] : [];
         if (empty($mids) || !is_array($mids)) {
             unset($mids);
             $mids = array_keys($modules);
         }
         $xoopsOption['xoops_pagetitle'] = _SR_SEARCHRESULTS . ': ' . implode(' ', $queries);
         include $GLOBALS['xoops']->path('header.php');
-		$xoopsTpl->assign('results', true);
+        $xoopsTpl->assign('results', true);
         $nomatch = true;
-		$keywords = '';
-		$error_length = '';
-		$error_keywords = '';
+        $keywords = '';
+        $error_length = '';
+        $error_keywords = '';
         if ($andor !== 'exact') {
             foreach ($queries as $q) {
-				$keywords .= htmlspecialchars(stripslashes($q), ENT_QUOTES) . ' ';
+                $keywords .= htmlspecialchars(stripslashes($q), ENT_QUOTES) . ' ';
             }
             if (!empty($ignored_queries)) {
-				$error_length = sprintf(_SR_IGNOREDWORDS, $xoopsConfigSearch['keyword_min']);
+                $error_length = sprintf(_SR_IGNOREDWORDS, $xoopsConfigSearch['keyword_min']);
                 foreach ($ignored_queries as $q) {
-					$error_keywords .= htmlspecialchars(stripslashes($q), ENT_QUOTES) . ' ';
+                    $error_keywords .= htmlspecialchars(stripslashes($q), ENT_QUOTES) . ' ';
                 }
             }
         } else {
-			$keywords .= '"' . htmlspecialchars(stripslashes($queries[0]), ENT_QUOTES) . '"';
+            $keywords .= '"' . htmlspecialchars(stripslashes($queries[0]), ENT_QUOTES) . '"';
         }
-		$xoopsTpl->assign('keywords', $keywords);
-		$xoopsTpl->assign('error_length', $error_length);
-		$xoopsTpl->assign('error_keywords', $error_keywords);
-		$results_arr = array();
+        $xoopsTpl->assign('keywords', $keywords);
+        $xoopsTpl->assign('error_length', $error_length);
+        $xoopsTpl->assign('error_keywords', $error_keywords);
+        $results_arr = [];
         foreach ($mids as $mid) {
             $mid = (int)$mid;
             if (in_array($mid, $available_modules)) {
                 $module  = $modules[$mid];
                 $results = $module->search($queries, $andor, 5, 0);
-				if (empty($results)){
-					$count = 0;
+                if (empty($results)) {
+                    $count = 0;
                 } else {
-					$count = count($results);
-				}
+                    $count = count($results);
+                }
                 if (is_array($results) && $count > 0) {
                     $nomatch = false;
-					$module_name = $module->getVar('name');
+                    $module_name = $module->getVar('name');
                     for ($i = 0; $i < $count; ++$i) {
                         if (isset($results[$i]['image']) && $results[$i]['image'] != '') {
-							$results_arr[$i]['image_link'] = 'modules/' . $module->getVar('dirname') . '/' . $results[$i]['image'];
+                            $results_arr[$i]['image_link'] = 'modules/' . $module->getVar('dirname') . '/' . $results[$i]['image'];
                         } else {
-							$results_arr[$i]['image_link'] = 'images/icons/posticon2.gif';
+                            $results_arr[$i]['image_link'] = 'images/icons/posticon2.gif';
                         }
-						$results_arr[$i]['image_title'] = $module->getVar('name');
+                        $results_arr[$i]['image_title'] = $module->getVar('name');
                         if (!preg_match("/^http[s]*:\/\//i", $results[$i]['link'])) {
                             $results[$i]['link'] = 'modules/' . $module->getVar('dirname') . '/' . $results[$i]['link'];
                         }
-						$results_arr[$i]['link'] = $results[$i]['link'];
-						$results_arr[$i]['link_title'] = $myts->htmlSpecialChars($results[$i]['title']);
+                        $results_arr[$i]['link'] = $results[$i]['link'];
+                        $results_arr[$i]['link_title'] = $myts->htmlSpecialChars($results[$i]['title']);
 
                         $results[$i]['uid'] = @(int)$results[$i]['uid'];
                         if (!empty($results[$i]['uid'])) {
                             $uname = XoopsUser::getUnameFromId($results[$i]['uid']);
-							$results_arr[$i]['uname'] = $uname;
-							$results_arr[$i]['uname_link'] = XOOPS_URL . '/userinfo.php?uid=' . $results[$i]['uid'];
+                            $results_arr[$i]['uname'] = $uname;
+                            $results_arr[$i]['uname_link'] = XOOPS_URL . '/userinfo.php?uid=' . $results[$i]['uid'];
                         }
-						if (!empty($results[$i]['time'])){
-							$results_arr[$i]['time'] = formatTimestamp((int)$results[$i]['time']);
-						}
+                        if (!empty($results[$i]['time'])) {
+                            $results_arr[$i]['time'] = formatTimestamp((int)$results[$i]['time']);
+                        }
                     }
                     if ($count >= 5) {
                         $search_url = XOOPS_URL . '/search.php?query=' . urlencode(stripslashes(implode(' ', $queries)));
                         $search_url .= "&mid={$mid}&action=showall&andor={$andor}";
-						$search_arr['module_show_all'] = htmlspecialchars($search_url, ENT_QUOTES);
+                        $search_arr['module_show_all'] = htmlspecialchars($search_url, ENT_QUOTES);
                     }
-					$search_arr['module_name'] = $module_name;
-					$search_arr['module_data'] = $results_arr;
-					$xoopsTpl->appendByRef('search', $search_arr);
-					unset($results_arr, $search_arr);
+                    $search_arr['module_name'] = $module_name;
+                    $search_arr['module_data'] = $results_arr;
+                    $xoopsTpl->appendByRef('search', $search_arr);
+                    unset($results_arr, $search_arr);
                 }
             }
             unset($results, $module, $module_name);
         }
 
         if ($nomatch) {
-			$xoopsTpl->assign('nomatch', _SR_NOMATCH);
+            $xoopsTpl->assign('nomatch', _SR_NOMATCH);
         }
         include $GLOBALS['xoops']->path('include/searchform.php');
-		$xoopsTpl->assign('form', $search_form->render());
+        $xoopsTpl->assign('form', $search_form->render());
         break;
 
     case 'showall':
     case 'showallbyuser':
         include $GLOBALS['xoops']->path('header.php');
-		$xoopsTpl->assign('showallbyuser', true);
-    /** @var XoopsModuleHandler $module_handler */
-		$module_handler = xoops_getHandler('module');
-    /** @var XoopsModule $module */
-    $module      = $module_handler->get($mid);
+        $xoopsTpl->assign('showallbyuser', true);
+        /** @var XoopsModuleHandler $module_handler */
+        $module_handler = xoops_getHandler('module');
+        /** @var XoopsModule $module */
+        $module      = $module_handler->get($mid);
         $results = $module->search($queries, $andor, 20, $start, $uid);
-		$results?$count = count($results):$count = 0;
+        $results ? $count = count($results) : $count = 0;
         if (is_array($results) && $count > 0) {
             $next_results = $module->search($queries, $andor, 1, $start + 20, $uid);
             $next_count   = count($next_results);
@@ -239,43 +239,43 @@ switch ($action) {
                 $has_next = true;
             }
             if ($action === 'showall') {
-				$xoopsTpl->assign('showall', true);
-				$keywords = '';
+                $xoopsTpl->assign('showall', true);
+                $keywords = '';
                 if ($andor !== 'exact') {
                     foreach ($queries as $q) {
-						$keywords .= htmlspecialchars(stripslashes($q), ENT_QUOTES);
+                        $keywords .= htmlspecialchars(stripslashes($q), ENT_QUOTES);
                     }
                 } else {
-					$keywords .= htmlspecialchars(stripslashes($queries[0]), ENT_QUOTES);
+                    $keywords .= htmlspecialchars(stripslashes($queries[0]), ENT_QUOTES);
                 }
-				$xoopsTpl->assign('keywords', $keywords);
+                $xoopsTpl->assign('keywords', $keywords);
             }
-			$xoopsTpl->assign('showing', sprintf(_SR_SHOWING, $start + 1, $start + $count));
-			$xoopsTpl->assign('module_name', $module->getVar('name'));
-			$results_arr = array();
+            $xoopsTpl->assign('showing', sprintf(_SR_SHOWING, $start + 1, $start + $count));
+            $xoopsTpl->assign('module_name', $module->getVar('name'));
+            $results_arr = [];
             for ($i = 0; $i < $count; ++$i) {
                 if (isset($results[$i]['image']) && $results[$i]['image'] != '') {
-					$results_arr['image_link'] = 'modules/' . $module->getVar('dirname') . '/' . $results[$i]['image'];
+                    $results_arr['image_link'] = 'modules/' . $module->getVar('dirname') . '/' . $results[$i]['image'];
                 } else {
-					$results_arr['image_link'] = 'images/icons/posticon2.gif';
+                    $results_arr['image_link'] = 'images/icons/posticon2.gif';
                 }
-				$results_arr['image_title'] = $module->getVar('name');
+                $results_arr['image_title'] = $module->getVar('name');
                 if (!preg_match("/^http[s]*:\/\//i", $results[$i]['link'])) {
                     $results[$i]['link'] = 'modules/' . $module->getVar('dirname') . '/' . $results[$i]['link'];
                 }
-				$results_arr['link'] = $results[$i]['link'];
-				$results_arr['link_title'] = $myts->htmlSpecialChars($results[$i]['title']);
+                $results_arr['link'] = $results[$i]['link'];
+                $results_arr['link_title'] = $myts->htmlSpecialChars($results[$i]['title']);
                 $results['uid'] = @(int)$results[$i]['uid'];
                 if (!empty($results[$i]['uid'])) {
                     $uname = XoopsUser::getUnameFromId($results[$i]['uid']);
-					$results_arr['uname'] = $uname;
-					$results_arr['uname_link'] = XOOPS_URL . '/userinfo.php?uid=' . $results[$i]['uid'];
+                    $results_arr['uname'] = $uname;
+                    $results_arr['uname_link'] = XOOPS_URL . '/userinfo.php?uid=' . $results[$i]['uid'];
                 }
-				if (!empty($results[$i]['time'])){
-					$results_arr['time'] = formatTimestamp((int)$results[$i]['time']);
-				}
-				$xoopsTpl->appendByRef('results_arr', $results_arr);
-				unset($results_arr);
+                if (!empty($results[$i]['time'])) {
+                    $results_arr['time'] = formatTimestamp((int)$results[$i]['time']);
+                }
+                $xoopsTpl->appendByRef('results_arr', $results_arr);
+                unset($results_arr);
             }
             $search_url = XOOPS_URL . '/search.php?query=' . urlencode(stripslashes(implode(' ', $queries)));
             $search_url .= "&mid={$mid}&action={$action}&andor={$andor}";
@@ -285,15 +285,15 @@ switch ($action) {
             if ($start > 0) {
                 $prev = $start - 20;
                 $search_url_prev = $search_url . "&start={$prev}";
-				$xoopsTpl->assign('previous', htmlspecialchars($search_url_prev, ENT_QUOTES));
+                $xoopsTpl->assign('previous', htmlspecialchars($search_url_prev, ENT_QUOTES));
             }
             if (false !== $has_next) {
                 $next            = $start + 20;
                 $search_url_next = $search_url . "&start={$next}";
-				$xoopsTpl->assign('next', htmlspecialchars($search_url_next, ENT_QUOTES));
+                $xoopsTpl->assign('next', htmlspecialchars($search_url_next, ENT_QUOTES));
             }
         } else {
-			$xoopsTpl->assign('nomatch', true);
+            $xoopsTpl->assign('nomatch', true);
         }
         include $GLOBALS['xoops']->path('include/searchform.php');
         $search_form->display();

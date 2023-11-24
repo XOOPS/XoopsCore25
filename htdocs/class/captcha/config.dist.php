@@ -23,10 +23,10 @@ defined('XOOPS_ROOT_PATH') || exit('Restricted access');
  * This keeping config in files has really got to stop. If we can't actually put these into
  * the actual XOOPS config then we should do this. (Who said this? You are right!)
  */
-return $config = array(
+return $config = [
     'disabled'    => false,  // Disable CAPTCHA
     'mode'        => 'text',  // default mode, you can choose 'text', 'image', 'recaptcha2'(requires api key)
     'name'        => 'xoopscaptcha',  // captcha name
     'skipmember'  => true,  // Skip CAPTCHA check for members
     'maxattempts' => 10,  // Maximum attempts for each session
-);
+];

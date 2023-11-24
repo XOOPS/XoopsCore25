@@ -106,10 +106,11 @@ class XoopsModelJoint extends XoopsModelAbstract
         $result = $this->handler->db->query($sql, $limit, $start);
         if (!$this->handler->db->isResultSet($result)) {
             throw new \RuntimeException(
-                \sprintf(_DB_QUERY_ERROR, $sql) . $this->handler->db->error(), E_USER_ERROR
+                \sprintf(_DB_QUERY_ERROR, $sql) . $this->handler->db->error(),
+                E_USER_ERROR
             );
         }
-        $ret    = array();
+        $ret    = [];
         if ($asObject) {
             while (false !== ($myrow = $this->handler->db->fetchArray($result))) {
                 $object = $this->handler->create(false);
@@ -174,7 +175,7 @@ class XoopsModelJoint extends XoopsModelAbstract
         if (!$this->handler->db->isResultSet($result)) {
             return false;
         }
-        $ret = array();
+        $ret = [];
         while (false !== (list($id, $count) = $this->handler->db->fetchRow($result))) {
             $ret[$id] = $count;
         }
@@ -194,7 +195,7 @@ class XoopsModelJoint extends XoopsModelAbstract
         if (!$this->validateLinks()) {
             return null;
         }
-        $set = array();
+        $set = [];
         foreach ($data as $key => $val) {
             $set[] = "o.{$key}=" . $this->handler->db->quoteString($val);
         }

@@ -25,20 +25,19 @@
  */
 class HTMLPurifier_HTMLDefinition extends HTMLPurifier_Definition
 {
-
     // FULLY-PUBLIC VARIABLES ---------------------------------------------
 
     /**
      * Associative array of element names to HTMLPurifier_ElementDef.
      * @type HTMLPurifier_ElementDef[]
      */
-    public $info = array();
+    public $info = [];
 
     /**
      * Associative array of global attribute name to attribute definition.
      * @type array
      */
-    public $info_global_attr = array();
+    public $info_global_attr = [];
 
     /**
      * String name of parent element HTML will be going into.
@@ -64,32 +63,32 @@ class HTMLPurifier_HTMLDefinition extends HTMLPurifier_Definition
      * Associative array of deprecated tag name to HTMLPurifier_TagTransform.
      * @type array
      */
-    public $info_tag_transform = array();
+    public $info_tag_transform = [];
 
     /**
      * Indexed list of HTMLPurifier_AttrTransform to be performed before validation.
      * @type HTMLPurifier_AttrTransform[]
      */
-    public $info_attr_transform_pre = array();
+    public $info_attr_transform_pre = [];
 
     /**
      * Indexed list of HTMLPurifier_AttrTransform to be performed after validation.
      * @type HTMLPurifier_AttrTransform[]
      */
-    public $info_attr_transform_post = array();
+    public $info_attr_transform_post = [];
 
     /**
      * Nested lookup array of content set name (Block, Inline) to
      * element name to whether or not it belongs in that content set.
      * @type array
      */
-    public $info_content_sets = array();
+    public $info_content_sets = [];
 
     /**
      * Indexed list of HTMLPurifier_Injector to be used.
      * @type HTMLPurifier_Injector[]
      */
-    public $info_injector = array();
+    public $info_injector = [];
 
     /**
      * Doctype object
@@ -126,7 +125,7 @@ class HTMLPurifier_HTMLDefinition extends HTMLPurifier_Definition
      * @see HTMLPurifier_HTMLModule::addElement() for detailed
      *       parameter and return value descriptions.
      */
-    public function addElement($element_name, $type, $contents, $attr_collections, $attributes = array())
+    public function addElement($element_name, $type, $contents, $attr_collections, $attributes = [])
     {
         $module = $this->getAnonymousModule();
         // assume that if the user is calling this, the element
@@ -320,7 +319,7 @@ class HTMLPurifier_HTMLDefinition extends HTMLPurifier_Definition
             // global attributes. It's possible that userland code uses
             // it, but HTMLModuleManager doesn't!
             foreach ($this->info_global_attr as $attr => $x) {
-                $keys = array($attr, "*@$attr", "*.$attr");
+                $keys = [$attr, "*@$attr", "*.$attr"];
                 $delete = true;
                 foreach ($keys as $key) {
                     if ($delete && isset($allowed_attributes[$key])) {
@@ -337,7 +336,7 @@ class HTMLPurifier_HTMLDefinition extends HTMLPurifier_Definition
 
             foreach ($this->info as $tag => $info) {
                 foreach ($info->attr as $attr => $x) {
-                    $keys = array("$tag@$attr", $attr, "*@$attr", "$tag.$attr", "*.$attr");
+                    $keys = ["$tag@$attr", $attr, "*@$attr", "$tag.$attr", "*.$attr"];
                     $delete = true;
                     foreach ($keys as $key) {
                         if ($delete && isset($allowed_attributes[$key])) {
@@ -382,6 +381,7 @@ class HTMLPurifier_HTMLDefinition extends HTMLPurifier_Definition
                             break;
                         }
                         // otherwise fall through
+                        // no break
                     case 1:
                         $attribute = htmlspecialchars($bits[0]);
                         trigger_error(
@@ -457,10 +457,10 @@ class HTMLPurifier_HTMLDefinition extends HTMLPurifier_Definition
      */
     public function parseTinyMCEAllowedList($list)
     {
-        $list = str_replace(array(' ', "\t"), '', $list);
+        $list = str_replace([' ', "\t"], '', $list);
 
-        $elements = array();
-        $attributes = array();
+        $elements = [];
+        $attributes = [];
 
         $chunks = preg_split('/(,|[\n\r]+)/', $list);
         foreach ($chunks as $chunk) {
@@ -486,7 +486,7 @@ class HTMLPurifier_HTMLDefinition extends HTMLPurifier_Definition
                 $attributes["$element.$key"] = true;
             }
         }
-        return array($elements, $attributes);
+        return [$elements, $attributes];
     }
 }
 

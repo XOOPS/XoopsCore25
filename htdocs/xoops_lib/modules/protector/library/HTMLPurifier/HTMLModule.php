@@ -17,7 +17,6 @@
 
 class HTMLPurifier_HTMLModule
 {
-
     // -- Overloadable ----------------------------------------------------
 
     /**
@@ -31,7 +30,7 @@ class HTMLPurifier_HTMLModule
      * Not used in any significant way.
      * @type array
      */
-    public $elements = array();
+    public $elements = [];
 
     /**
      * Associative array of element names to element definitions.
@@ -39,7 +38,7 @@ class HTMLPurifier_HTMLModule
      * with the full definition.
      * @type array
      */
-    public $info = array();
+    public $info = [];
 
     /**
      * Associative array of content set names to content set additions.
@@ -48,7 +47,7 @@ class HTMLPurifier_HTMLModule
      * and NOT info_content_sets member variable of HTMLDefinition.
      * @type array
      */
-    public $content_sets = array();
+    public $content_sets = [];
 
     /**
      * Associative array of attribute collection names to attribute
@@ -59,25 +58,25 @@ class HTMLPurifier_HTMLModule
      * with extra behavior associated with it.
      * @type array
      */
-    public $attr_collections = array();
+    public $attr_collections = [];
 
     /**
      * Associative array of deprecated tag name to HTMLPurifier_TagTransform.
      * @type array
      */
-    public $info_tag_transform = array();
+    public $info_tag_transform = [];
 
     /**
      * List of HTMLPurifier_AttrTransform to be performed before validation.
      * @type array
      */
-    public $info_attr_transform_pre = array();
+    public $info_attr_transform_pre = [];
 
     /**
      * List of HTMLPurifier_AttrTransform to be performed after validation.
      * @type array
      */
-    public $info_attr_transform_post = array();
+    public $info_attr_transform_post = [];
 
     /**
      * List of HTMLPurifier_Injector to be performed during well-formedness fixing.
@@ -86,7 +85,7 @@ class HTMLPurifier_HTMLModule
      * silently disabled.
      * @type array
      */
-    public $info_injector = array();
+    public $info_injector = [];
 
     /**
      * Boolean flag that indicates whether or not getChildDef is implemented.
@@ -141,7 +140,7 @@ class HTMLPurifier_HTMLModule
      * @return HTMLPurifier_ElementDef Created element definition object, so you
      *         can set advanced parameters
      */
-    public function addElement($element, $type, $contents, $attr_includes = array(), $attr = array())
+    public function addElement($element, $type, $contents, $attr_includes = [], $attr = [])
     {
         $this->elements[] = $element;
         // parse content_model
@@ -212,21 +211,21 @@ class HTMLPurifier_HTMLModule
     public function parseContents($contents)
     {
         if (!is_string($contents)) {
-            return array(null, null);
+            return [null, null];
         } // defer
         switch ($contents) {
             // check for shorthand content model forms
             case 'Empty':
-                return array('empty', '');
+                return ['empty', ''];
             case 'Inline':
-                return array('optional', 'Inline | #PCDATA');
+                return ['optional', 'Inline | #PCDATA'];
             case 'Flow':
-                return array('optional', 'Flow | #PCDATA');
+                return ['optional', 'Flow | #PCDATA'];
         }
         list($content_model_type, $content_model) = explode(':', $contents);
         $content_model_type = strtolower(trim($content_model_type));
         $content_model = trim($content_model);
-        return array($content_model_type, $content_model);
+        return [$content_model_type, $content_model];
     }
 
     /**
@@ -239,9 +238,9 @@ class HTMLPurifier_HTMLModule
     {
         if (!is_array($attr_includes)) {
             if (empty($attr_includes)) {
-                $attr_includes = array();
+                $attr_includes = [];
             } else {
-                $attr_includes = array($attr_includes);
+                $attr_includes = [$attr_includes];
             }
         }
         $attr[0] = $attr_includes;
@@ -261,7 +260,7 @@ class HTMLPurifier_HTMLModule
         if (is_string($list)) {
             $list = $args;
         }
-        $ret = array();
+        $ret = [];
         foreach ($list as $value) {
             if (is_null($value)) {
                 continue;

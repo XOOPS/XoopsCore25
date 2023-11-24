@@ -61,10 +61,11 @@ function xoops_module_update_profile(XoopsModule $module, $oldversion = null)
         $result = $GLOBALS['xoopsDB']->query($sql);
         if (!$GLOBALS['xoopsDB']->isResultSet($result)) {
             throw new \RuntimeException(
-                \sprintf(_DB_QUERY_ERROR, $sql) . $GLOBALS['xoopsDB']->error(), E_USER_ERROR
+                \sprintf(_DB_QUERY_ERROR, $sql) . $GLOBALS['xoopsDB']->error(),
+                E_USER_ERROR
             );
         }
-        $fields        = array();
+        $fields        = [];
         while (false !== ($myrow = $GLOBALS['xoopsDB']->fetchArray($result))) {
             $fields[] = $myrow['field_name'];
             $object   = $field_handler->create();
@@ -120,7 +121,7 @@ function xoops_module_update_profile(XoopsModule $module, $oldversion = null)
     if ($oldversion < '1.8.6') {
         // delete old html template files
         $templateDirectory = XOOPS_ROOT_PATH . '/modules/' . $module->getVar('dirname', 'n') . '/templates/';
-        $template_list     = array_diff(scandir($templateDirectory), array('..', '.'));
+        $template_list     = array_diff(scandir($templateDirectory), ['..', '.']);
         foreach ($template_list as $k => $v) {
             $fileinfo = new SplFileInfo($templateDirectory . $v);
             if ($fileinfo->getExtension() === 'html' && $fileinfo->getFilename() !== 'index.html') {
@@ -147,7 +148,7 @@ function xoops_module_update_profile(XoopsModule $module, $oldversion = null)
         $tables = new Xmf\Database\Tables();
         $tables->useTable('profile_field');
         $criteria = new Criteria('field_name', 'user_sig', '=');
-        $tables->update('profile_field', array('field_type' => 'dhtml'), $criteria);
+        $tables->update('profile_field', ['field_type' => 'dhtml'], $criteria);
         $tables->executeQueue(true);
     }
 

@@ -74,7 +74,7 @@ if (!empty($_GET['id']) && !empty($_GET['actkey'])) {
             }
         }
     }
-    // Not implemented yet: re-send activiation code
+// Not implemented yet: re-send activiation code
 } elseif (!empty($_REQUEST['email']) && $xoopsConfigUser['activation_type'] != 0) {
     $myts           = \MyTextSanitizer::getInstance();
     /** @var XoopsMemberHandler $member_handler */
@@ -109,5 +109,5 @@ if (!empty($_GET['id']) && !empty($_GET['actkey'])) {
     $form->display();
 }
 
-$xoBreadcrumbs[] = array('title' => _PROFILE_MA_REGISTER);
+$xoBreadcrumbs[] = ['title' => _PROFILE_MA_REGISTER];
 include __DIR__ . '/footer.php';

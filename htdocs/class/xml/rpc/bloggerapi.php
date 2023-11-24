@@ -43,11 +43,11 @@ class BloggerApi extends XoopsXmlRpcApi
         if (!$this->_checkUser($this->params[2], $this->params[3])) {
             $this->response->add(new XoopsXmlRpcFault(104));
         } else {
-            if (!$fields =& $this->_getPostFields(null, $this->params[1])) {
+            if (!$fields = &$this->_getPostFields(null, $this->params[1])) {
                 $this->response->add(new XoopsXmlRpcFault(106));
             } else {
-                $missing = array();
-                $post    = array();
+                $missing = [];
+                $post    = [];
                 foreach ($fields as $tag => $detail) {
                     $maptag = $this->_getXoopsTagMap($tag);
                     $data   = $this->_getTagCdata($this->params[4], $maptag, true);
@@ -66,18 +66,18 @@ class BloggerApi extends XoopsXmlRpcApi
                     }
                     $this->response->add(new XoopsXmlRpcFault(109, $msg));
                 } else {
-                    $newparams = array();
+                    $newparams = [];
                     // Xoops Api ignores App key
                     $newparams[0] = $this->params[1];
                     $newparams[1] = $this->params[2];
                     $newparams[2] = $this->params[3];
                     foreach ($post as $key => $value) {
-                        $newparams[3][$key] =& $value;
+                        $newparams[3][$key] = &$value;
                         unset($value);
                     }
                     $newparams[3]['xoops_text'] = $this->params[4];
                     $newparams[4]               = $this->params[5];
-                    $xoopsapi                   =& $this->_getXoopsApi($newparams);
+                    $xoopsapi                   = &$this->_getXoopsApi($newparams);
                     $xoopsapi->_setUser($this->user, $this->isadmin);
                     $xoopsapi->newPost();
                 }
@@ -90,10 +90,10 @@ class BloggerApi extends XoopsXmlRpcApi
         if (!$this->_checkUser($this->params[2], $this->params[3])) {
             $this->response->add(new XoopsXmlRpcFault(104));
         } else {
-            if (!$fields =& $this->_getPostFields($this->params[1])) {
+            if (!$fields = &$this->_getPostFields($this->params[1])) {
             } else {
-                $missing = array();
-                $post    = array();
+                $missing = [];
+                $post    = [];
                 foreach ($fields as $tag => $detail) {
                     $data = $this->_getTagCdata($this->params[4], $tag, true);
                     if (trim($data) == '') {
@@ -111,18 +111,18 @@ class BloggerApi extends XoopsXmlRpcApi
                     }
                     $this->response->add(new XoopsXmlRpcFault(109, $msg));
                 } else {
-                    $newparams = array();
+                    $newparams = [];
                     // XOOPS API ignores App key (index 0 of params)
                     $newparams[0] = $this->params[1];
                     $newparams[1] = $this->params[2];
                     $newparams[2] = $this->params[3];
                     foreach ($post as $key => $value) {
-                        $newparams[3][$key] =& $value;
+                        $newparams[3][$key] = &$value;
                         unset($value);
                     }
                     $newparams[3]['xoops_text'] = $this->params[4];
                     $newparams[4]               = $this->params[5];
-                    $xoopsapi                   =& $this->_getXoopsApi($newparams);
+                    $xoopsapi                   = &$this->_getXoopsApi($newparams);
                     $xoopsapi->_setUser($this->user, $this->isadmin);
                     $xoopsapi->editPost();
                 }
@@ -137,7 +137,7 @@ class BloggerApi extends XoopsXmlRpcApi
         } else {
             // XOOPS API ignores App key (index 0 of params)
             array_shift($this->params);
-            $xoopsapi =& $this->_getXoopsApi($this->params);
+            $xoopsapi = &$this->_getXoopsApi($this->params);
             $xoopsapi->_setUser($this->user, $this->isadmin);
             $xoopsapi->deletePost();
         }
@@ -150,9 +150,9 @@ class BloggerApi extends XoopsXmlRpcApi
         } else {
             // XOOPS API ignores App key (index 0 of params)
             array_shift($this->params);
-            $xoopsapi =& $this->_getXoopsApi($this->params);
+            $xoopsapi = &$this->_getXoopsApi($this->params);
             $xoopsapi->_setUser($this->user, $this->isadmin);
-            $ret =& $xoopsapi->getPost(false);
+            $ret = &$xoopsapi->getPost(false);
             if (is_array($ret)) {
                 $struct  = new XoopsXmlRpcStruct();
                 $content = '';
@@ -168,7 +168,7 @@ class BloggerApi extends XoopsXmlRpcApi
                         case 'postid':
                             $struct->add('postid', new XoopsXmlRpcString($value));
                             break;
-                        default :
+                        default:
                             $content .= '<' . $key . '>' . trim($value) . '</' . $key . '>';
                             break;
                     }
@@ -188,9 +188,9 @@ class BloggerApi extends XoopsXmlRpcApi
         } else {
             // XOOPS API ignores App key (index 0 of params)
             array_shift($this->params);
-            $xoopsapi =& $this->_getXoopsApi($this->params);
+            $xoopsapi = &$this->_getXoopsApi($this->params);
             $xoopsapi->_setUser($this->user, $this->isadmin);
-            $ret =& $xoopsapi->getRecentPosts(false);
+            $ret = &$xoopsapi->getRecentPosts(false);
             if (is_array($ret)) {
                 $arr   = new XoopsXmlRpcArray();
                 $count = count($ret);
@@ -212,7 +212,7 @@ class BloggerApi extends XoopsXmlRpcApi
                                 case 'postid':
                                     $struct->add('postid', new XoopsXmlRpcString($value));
                                     break;
-                                default :
+                                default:
                                     $content .= '<' . $key . '>' . trim($value) . '</' . $key . '>';
                                     break;
                             }

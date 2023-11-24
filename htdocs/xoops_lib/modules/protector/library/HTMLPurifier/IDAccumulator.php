@@ -8,12 +8,11 @@
  */
 class HTMLPurifier_IDAccumulator
 {
-
     /**
      * Lookup table of IDs we've accumulated.
      * @public
      */
-    public $ids = array();
+    public $ids = [];
 
     /**
      * Builds an IDAccumulator, also initializing the default blacklist

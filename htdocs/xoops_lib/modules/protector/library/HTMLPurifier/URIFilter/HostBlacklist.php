@@ -14,7 +14,7 @@ class HTMLPurifier_URIFilter_HostBlacklist extends HTMLPurifier_URIFilter
     /**
      * @type array
      */
-    protected $blacklist = array();
+    protected $blacklist = [];
 
     /**
      * @param HTMLPurifier_Config $config

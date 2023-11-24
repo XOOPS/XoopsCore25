@@ -20,7 +20,7 @@ class Upgrade_2511 extends XoopsUpgrade
     public function __construct()
     {
         parent::__construct(basename(__DIR__));
-        $this->tasks = array(
+        $this->tasks = [
             'cleancache',
             'bannerintsize',
             'captchadata',
@@ -33,10 +33,10 @@ class Upgrade_2511 extends XoopsUpgrade
             'templates',
             'templatesadmin',
             'zapsmarty',
-            'notificationmethod',  
-        );
-        $this->usedFiles = array();
-        $this->pathsToCheck = array(
+            'notificationmethod',
+        ];
+        $this->usedFiles = [];
+        $this->pathsToCheck = [
             XOOPS_ROOT_PATH . '/cache',
             XOOPS_ROOT_PATH . '/class',
             XOOPS_ROOT_PATH . '/Frameworks',
@@ -57,7 +57,7 @@ class Upgrade_2511 extends XoopsUpgrade
             XOOPS_ROOT_PATH . '/uploads',
             XOOPS_VAR_PATH,
             XOOPS_PATH,
-        );
+        ];
     }
 
     protected $cleanCacheKey = 'cache-cleaned';
@@ -70,7 +70,7 @@ class Upgrade_2511 extends XoopsUpgrade
     public function check_cleancache()
     {
         if (!array_key_exists($this->cleanCacheKey, $_SESSION)
-            || $_SESSION[$this->cleanCacheKey]===false) {
+            || $_SESSION[$this->cleanCacheKey] === false) {
             return false;
         }
         return true;
@@ -85,8 +85,8 @@ class Upgrade_2511 extends XoopsUpgrade
     {
         require_once XOOPS_ROOT_PATH . '/modules/system/class/maintenance.php';
         $maintenance = new SystemMaintenance();
-        $result  = $maintenance->CleanCache(array(1,2,3));
-        if ($result===true) {
+        $result  = $maintenance->CleanCache([1,2,3]);
+        if ($result === true) {
             $_SESSION[$this->cleanCacheKey] = true;
         }
         return $result;
@@ -117,7 +117,7 @@ class Upgrade_2511 extends XoopsUpgrade
     }
 
     private $bannerTableName = 'banner';
-    private $bannerColumnNames = array('impmade', 'clicks');
+    private $bannerColumnNames = ['impmade', 'clicks'];
 
     /**
      * Increase count columns from mediumint to int
@@ -129,7 +129,7 @@ class Upgrade_2511 extends XoopsUpgrade
         $migrate = new Tables();
         $count = $this->fromMediumToInt($migrate, $this->bannerTableName, $this->bannerColumnNames);
 
-        return $count==0;
+        return $count == 0;
     }
 
     /**
@@ -154,7 +154,7 @@ class Upgrade_2511 extends XoopsUpgrade
             return false;
         }
 
-        return $count!==0;
+        return $count !== 0;
     }
 
     /**
@@ -201,7 +201,7 @@ class Upgrade_2511 extends XoopsUpgrade
         $migrate->useTable('configoption');
         $migrate->insert(
             'configoption',
-            array('confop_name' => 'qmail', 'confop_value' => 'qmail', 'conf_id' => 64)
+            ['confop_name' => 'qmail', 'confop_value' => 'qmail', 'conf_id' => 64]
         );
         return $migrate->executeQueue(true);
     }
@@ -312,7 +312,7 @@ class Upgrade_2511 extends XoopsUpgrade
             $migrate->alterColumn($tableName, $columnName, 'int(10) UNSIGNED NOT NULL');
         }
 
-        return $count==0;
+        return $count == 0;
     }
 
     /**
@@ -345,7 +345,7 @@ class Upgrade_2511 extends XoopsUpgrade
             return false;
         }
 
-        return $count!==0;
+        return $count !== 0;
     }
     //configend
 
@@ -387,7 +387,7 @@ class Upgrade_2511 extends XoopsUpgrade
      *
      * @var string[]
      */
-    protected $textsanitizerConfigFiles = array(
+    protected $textsanitizerConfigFiles = [
         'config.php' => 'config.php',
         'censor/config.php' => 'config.censor.php',
         'flash/config.php' => 'config.flash.php',
@@ -398,7 +398,7 @@ class Upgrade_2511 extends XoopsUpgrade
         'textfilter/config.php' => 'config.textfilter.php',
         'wiki/config.php' => 'config.wiki.php',
         'wmp/config.php' => 'config.wmp.php',
-    );
+    ];
 
     /**
      * Build a list of config files using the existing textsanitizer/config.php
@@ -413,9 +413,9 @@ class Upgrade_2511 extends XoopsUpgrade
         if (file_exists(XOOPS_ROOT_PATH . '/class/textsanitizer/config.php')) {
             $config = include XOOPS_ROOT_PATH . '/class/textsanitizer/config.php';
             if (is_array($config) && array_key_exists('extentions', $config)) {
-                $this->textsanitizerConfigFiles = array(
+                $this->textsanitizerConfigFiles = [
                     'config.php' => 'config.php',
-                );
+                ];
                 foreach ($config['extentions'] as $module => $enabled) {
                     $source = "{$module}/config.php";
                     if (file_exists(XOOPS_ROOT_PATH . '/class/textsanitizer/' . $source)) {
@@ -612,7 +612,7 @@ class Upgrade_2511 extends XoopsUpgrade
     }
 
     private $modulesTableName = 'modules';
-    private $modulesColumnNames = array('version');
+    private $modulesColumnNames = ['version'];
 
     /**
      * Increase version columns from smallint to varchar
@@ -623,7 +623,7 @@ class Upgrade_2511 extends XoopsUpgrade
     {
         $migrate = new Tables();
         $count = $this->fromSmallintToVarchar($migrate, $this->modulesTableName, $this->modulesColumnNames);
-        return $count==0;
+        return $count == 0;
     }
 
     /**
@@ -672,7 +672,7 @@ class Upgrade_2511 extends XoopsUpgrade
      */
     public function apply_templates()
     {
-        $modversion = array();
+        $modversion = [];
         include_once XOOPS_ROOT_PATH . '/modules/system/xoops_version.php';
 
         $dbm = new Db_manager();
@@ -751,7 +751,7 @@ class Upgrade_2511 extends XoopsUpgrade
         $baseDir = '../class/smarty/';
 
         // List of sub-folders and files to delete
-        $itemsToDelete = array(
+        $itemsToDelete = [
             'configs',
             'internals',
             'xoops_plugins',
@@ -759,7 +759,7 @@ class Upgrade_2511 extends XoopsUpgrade
             'debug.tpl',
             'Smarty.class.php',
             'Smarty_Compiler.class.php'
-        );
+        ];
 
         // Loop through each item and delete it
         foreach ($itemsToDelete as $item) {

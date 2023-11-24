@@ -19,7 +19,6 @@
  */
 class XoopsFormRendererBootstrap4 implements XoopsFormRendererInterface
 {
-
     /**
      * Render support for XoopsFormButton
      *
@@ -113,7 +112,7 @@ class XoopsFormRendererBootstrap4 implements XoopsFormRendererInterface
                 . htmlspecialchars(strip_tags($name), ENT_QUOTES) . "' value='"
                 . htmlspecialchars($value, ENT_QUOTES) . "'";
 
-            if (is_array($elementValue) ? in_array($value, $elementValue): $value == $elementValue) {
+            if (is_array($elementValue) ? in_array($value, $elementValue) : $value == $elementValue) {
                 $ret .= ' checked';
             }
             $ret .= $element->getExtra() . '>';
@@ -149,7 +148,7 @@ class XoopsFormRendererBootstrap4 implements XoopsFormRendererInterface
                 . htmlspecialchars(strip_tags($name), ENT_QUOTES) . "' value='"
                 . htmlspecialchars($value, ENT_QUOTES) . "'";
 
-            if (is_array($elementValue) ? in_array($value, $elementValue): $value == $elementValue) {
+            if (is_array($elementValue) ? in_array($value, $elementValue) : $value == $elementValue) {
                 $ret .= ' checked';
             }
             $ret .= $element->getExtra() . '>' . $name . $element->getDelimeter();
@@ -185,7 +184,7 @@ class XoopsFormRendererBootstrap4 implements XoopsFormRendererInterface
                 . htmlspecialchars(strip_tags($name), ENT_QUOTES) . "' value='"
                 . htmlspecialchars($value, ENT_QUOTES) . "'";
 
-            if (is_array($elementValue) ? in_array($value, $elementValue): $value == $elementValue) {
+            if (is_array($elementValue) ? in_array($value, $elementValue) : $value == $elementValue) {
                 $ret .= ' checked';
             }
             $ret .= $element->getExtra() . '>';
@@ -250,7 +249,7 @@ class XoopsFormRendererBootstrap4 implements XoopsFormRendererInterface
             } else {
                 $GLOBALS['xoTheme']->addScript(
                     '/class/textsanitizer/image/image.js',
-                    array('type' => 'text/javascript')
+                    ['type' => 'text/javascript']
                 );
             }
             $button = "<button type='button' class='btn btn-primary' onclick=\"form_instantPreview('" . XOOPS_URL
@@ -313,7 +312,7 @@ class XoopsFormRendererBootstrap4 implements XoopsFormRendererInterface
         $code .= "</div></div>";
 
         $xoopsPreload = XoopsPreload::getInstance();
-        $xoopsPreload->triggerEvent('core.class.xoopsform.formdhtmltextarea.codeicon', array(&$code));
+        $xoopsPreload->triggerEvent('core.class.xoopsform.formdhtmltextarea.codeicon', [&$code]);
 
         return $code;
     }
@@ -330,16 +329,16 @@ class XoopsFormRendererBootstrap4 implements XoopsFormRendererInterface
         $textarea_id = $element->getName();
         $hiddentext  = $element->_hiddenText;
 
-        $fontarray = !empty($GLOBALS['formtextdhtml_fonts']) ? $GLOBALS['formtextdhtml_fonts'] : array(
+        $fontarray = !empty($GLOBALS['formtextdhtml_fonts']) ? $GLOBALS['formtextdhtml_fonts'] : [
             'Arial',
             'Courier',
             'Georgia',
             'Helvetica',
             'Impact',
             'Verdana',
-            'Haettenschweiler');
+            'Haettenschweiler'];
 
-        $colorArray = array(
+        $colorArray = [
             'Black'  => '000000',
             'Blue'   => '38AAFF',
             'Brown'  => '987857',
@@ -351,7 +350,7 @@ class XoopsFormRendererBootstrap4 implements XoopsFormRendererInterface
             'Red'    => 'FF211E',
             'White'  => 'FEFEFE',
             'Yellow' => 'FFD628',
-        );
+        ];
 
         $fontStr = '<div class="row"><div class="col-lg-12"><div class="btn-group" role="toolbar">';
         $fontStr .= '<div class="btn-group">'
@@ -359,7 +358,7 @@ class XoopsFormRendererBootstrap4 implements XoopsFormRendererInterface
             . ' data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">'
             . '<span class = "fa fa-text-height"></span><span class="caret"></span></button>'
             . '<ul class="dropdown-menu">';
-            //. _SIZE . '&nbsp;&nbsp;<span class="caret"></span></button><ul class="dropdown-menu">';
+        //. _SIZE . '&nbsp;&nbsp;<span class="caret"></span></button><ul class="dropdown-menu">';
         foreach ($GLOBALS['formtextdhtml_sizes'] as $value => $name) {
             $fontStr .= '<li class="dropdown-item"><a href="javascript:xoopsSetElementAttribute(\'size\', \'' . $value . '\', \''
                 . $textarea_id . '\', \'' . $hiddentext . '\');">' . $name . '</a></li>';
@@ -371,7 +370,7 @@ class XoopsFormRendererBootstrap4 implements XoopsFormRendererInterface
             . ' data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">'
             . '<span class = "fa fa-font"></span><span class="caret"></span></button>'
             . '<ul class="dropdown-menu">';
-            //. _FONT . '&nbsp;&nbsp;<span class="caret"></span></button><ul class="dropdown-menu">';
+        //. _FONT . '&nbsp;&nbsp;<span class="caret"></span></button><ul class="dropdown-menu">';
         foreach ($fontarray as $font) {
             $fontStr .= '<li class="dropdown-item"><a href="javascript:xoopsSetElementAttribute(\'font\', \'' . $font . '\', \''
                 . $textarea_id . '\', \'' . $hiddentext . '\');">' . $font . '</a></li>';
@@ -383,7 +382,7 @@ class XoopsFormRendererBootstrap4 implements XoopsFormRendererInterface
             . ' data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">'
             . '<span class = "fa fa-tint"></span><span class="caret"></span></button>'
             . '<ul class="dropdown-menu">';
-            //. _COLOR . '&nbsp;&nbsp;<span class="caret"></span></button><ul class="dropdown-menu">';
+        //. _COLOR . '&nbsp;&nbsp;<span class="caret"></span></button><ul class="dropdown-menu">';
         foreach ($colorArray as $color => $hex) {
             $fontStr .= '<li class="dropdown-item"><a href="javascript:xoopsSetElementAttribute(\'color\', \'' . $hex . '\', \''
                 . $textarea_id . '\', \'' . $hiddentext . '\');">'
@@ -409,7 +408,7 @@ class XoopsFormRendererBootstrap4 implements XoopsFormRendererInterface
         $fontStr .= "&nbsp;{$styleStr}&nbsp;{$alignStr}&nbsp;\n";
 
         $fontStr .= "<button type='button' class='btn btn-secondary btn-sm' onclick=\"XoopsCheckLength('"
-            . $element->getName() . "', '" . (isset($element->configs['maxlength'])?$element->configs['maxlength']:'') . "', '"
+            . $element->getName() . "', '" . (isset($element->configs['maxlength']) ? $element->configs['maxlength'] : '') . "', '"
             . _XOOPS_FORM_ALT_LENGTH . "', '" . _XOOPS_FORM_ALT_LENGTH_MAX . "');\" title='"
             . _XOOPS_FORM_ALT_CHECKLENGTH . "'><span class='fa fa-check-square-o' aria-hidden='true'></span></button>";
         $fontStr .= "</div></div>";
@@ -701,7 +700,7 @@ class XoopsFormRendererBootstrap4 implements XoopsFormRendererInterface
                 ');
             }
         }
-		return '<div class="input-group">'
+        return '<div class="input-group">'
             . '<input class="form-control" type="text" name="' . $ele_name . '" id="' . $ele_name
             . '" size="' . $element->getSize() . '" maxlength="' . $element->getMaxlength()
             . '" value="' . $display_value . '"' . $element->getExtra() . '>'

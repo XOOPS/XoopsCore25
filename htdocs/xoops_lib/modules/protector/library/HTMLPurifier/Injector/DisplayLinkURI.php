@@ -13,7 +13,7 @@ class HTMLPurifier_Injector_DisplayLinkURI extends HTMLPurifier_Injector
     /**
      * @type array
      */
-    public $needed = array('a');
+    public $needed = ['a'];
 
     /**
      * @param $token
@@ -30,7 +30,7 @@ class HTMLPurifier_Injector_DisplayLinkURI extends HTMLPurifier_Injector
         if (isset($token->start->attr['href'])) {
             $url = $token->start->attr['href'];
             unset($token->start->attr['href']);
-            $token = array($token, new HTMLPurifier_Token_Text(" ($url)"));
+            $token = [$token, new HTMLPurifier_Token_Text(" ($url)")];
         } else {
             // nothing to display
         }

@@ -16,7 +16,7 @@ class HTMLPurifier_Injector_AutoParagraph extends HTMLPurifier_Injector
     /**
      * @type array
      */
-    public $needed = array('p');
+    public $needed = ['p'];
 
     /**
      * @return HTMLPurifier_Token_Start
@@ -57,7 +57,7 @@ class HTMLPurifier_Injector_AutoParagraph extends HTMLPurifier_Injector
 
                         // State 1.4: <div>PAR1\n\nPAR2 (see State 2)
                         //                 ------------
-                        $token = array($this->_pStart());
+                        $token = [$this->_pStart()];
                         $this->_splitText($text, $token);
                     } else {
                         // State 1.5: \n<hr />
@@ -77,7 +77,7 @@ class HTMLPurifier_Injector_AutoParagraph extends HTMLPurifier_Injector
                     // previous inline element would have triggered this very
                     // same routine, and found the double newline. One possible
                     // exception would be a comment.
-                    $token = array($this->_pStart(), $token);
+                    $token = [$this->_pStart(), $token];
                 } else {
                     // State 2.2.1: <div>PAR1<div>
                     //                   ----
@@ -86,7 +86,7 @@ class HTMLPurifier_Injector_AutoParagraph extends HTMLPurifier_Injector
                     //                   ----
                 }
             }
-            // Is the current parent a <p> tag?
+        // Is the current parent a <p> tag?
         } elseif (!empty($this->currentNesting) &&
             $this->currentNesting[count($this->currentNesting) - 1]->name == 'p') {
             // State 3.1: ...<p>PAR1
@@ -94,9 +94,9 @@ class HTMLPurifier_Injector_AutoParagraph extends HTMLPurifier_Injector
 
             // State 3.2: ...<p>PAR1\n\nPAR2
             //                  ------------
-            $token = array();
+            $token = [];
             $this->_splitText($text, $token);
-            // Abort!
+        // Abort!
         } else {
             // State 4.1: ...<b>PAR1
             //                  ----
@@ -131,7 +131,7 @@ class HTMLPurifier_Injector_AutoParagraph extends HTMLPurifier_Injector
                             // State 1.1.4: <div><p>PAR1</p>\n\n<b>
                             //                                  ---
                             // Quite frankly, this should be handled by splitText
-                            $token = array($this->_pStart(), $token);
+                            $token = [$this->_pStart(), $token];
                         } else {
                             // State 1.1.1: <div><p>PAR1</p><b>
                             //                              ---
@@ -147,7 +147,7 @@ class HTMLPurifier_Injector_AutoParagraph extends HTMLPurifier_Injector
                         if ($this->_pLookAhead()) {
                             // State 1.3.1: <div><b>PAR1\n\nPAR2
                             //                   ---
-                            $token = array($this->_pStart(), $token);
+                            $token = [$this->_pStart(), $token];
                         } else {
                             // State 1.3.2: <div><b>PAR1</b></div>
                             //                   ---
@@ -166,7 +166,7 @@ class HTMLPurifier_Injector_AutoParagraph extends HTMLPurifier_Injector
                     //            ---
                     // This is where the {p} tag is inserted, not reflected in
                     // inputTokens yet, however.
-                    $token = array($this->_pStart(), $token);
+                    $token = [$this->_pStart(), $token];
                 } else {
                     // State 3.2: <div>
                     //            -----
@@ -180,7 +180,7 @@ class HTMLPurifier_Injector_AutoParagraph extends HTMLPurifier_Injector
                         // State 3.2.1: ...</p><div>
                         //                     -----
                         if (!is_array($token)) {
-                            $token = array($token);
+                            $token = [$token];
                         }
                         array_unshift($token, new HTMLPurifier_Token_Text("\n\n"));
                     } else {
@@ -212,7 +212,7 @@ class HTMLPurifier_Injector_AutoParagraph extends HTMLPurifier_Injector
     private function _splitText($data, &$result)
     {
         $raw_paragraphs = explode("\n\n", $data);
-        $paragraphs = array(); // without empty paragraphs
+        $paragraphs = []; // without empty paragraphs
         $needs_start = false;
         $needs_end = false;
 

@@ -6,7 +6,6 @@
  */
 class HTMLPurifier_ConfigSchema_Builder_Xml extends XMLWriter
 {
-
     /**
      * @type HTMLPurifier_ConfigSchema_Interchange
      */
@@ -38,7 +37,7 @@ class HTMLPurifier_ConfigSchema_Builder_Xml extends XMLWriter
      */
     protected function export($var)
     {
-        if ($var === array()) {
+        if ($var === []) {
             return 'array()';
         }
         return var_export($var, true);

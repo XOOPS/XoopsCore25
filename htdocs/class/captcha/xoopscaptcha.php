@@ -34,8 +34,8 @@ class XoopsCaptcha
     public $path_config;
     public $path_plugin;
     public $name;
-    public $config  = array();
-    public $message = array(); // Logging error messages
+    public $config  = [];
+    public $message = []; // Logging error messages
 
     /**
      * construct
@@ -75,15 +75,15 @@ class XoopsCaptcha
      */
     public function loadConfig($methodname = null)
     {
-        $basic_config  = array();
-        $plugin_config = array();
+        $basic_config  = [];
+        $plugin_config = [];
         $filename      = empty($methodname) ? 'config.php' : 'config.' . $methodname . '.php';
         $distfilename  = empty($methodname) ? 'config.dist.php' : 'config.' . $methodname . '.dist.php';
         if (file_exists($file = $this->path_config . '/' . $filename)) {
             $basic_config = include $file;
         } elseif (file_exists($distfile = $this->path_basic . '/' . $distfilename)) {
             $basic_config = include $distfile;
-            if (false===copy($distfile, $file)) {
+            if (false === copy($distfile, $file)) {
                 trigger_error('Could not create captcha config file ' . $filename);
             }
         }
@@ -216,13 +216,13 @@ class XoopsCaptcha
         // Skip CAPTCHA verification if disabled
         if (!$this->isActive()) {
             $is_valid = true;
-            // Skip CAPTCHA for member if set
+        // Skip CAPTCHA for member if set
         } elseif (!empty($skipMember) && is_object($GLOBALS['xoopsUser'])) {
             $is_valid = true;
-            // Kill too many attempts
+        // Kill too many attempts
         } elseif (!empty($maxAttempts) && $attempt > $maxAttempts) {
             $this->message[] = _CAPTCHA_TOOMANYATTEMPTS;
-            // Verify the code
+        // Verify the code
         } else {
             $is_valid = $this->handler->verify($sessionName);
             $xoopsPreload = XoopsPreload::getInstance();
@@ -306,7 +306,7 @@ class XoopsCaptcha
         // Failure on too many attempts
         if (!empty($maxAttempts) && $attempt > $maxAttempts) {
             $form = _CAPTCHA_TOOMANYATTEMPTS;
-            // Load the form element
+        // Load the form element
         } else {
             $form = $this->loadForm();
         }

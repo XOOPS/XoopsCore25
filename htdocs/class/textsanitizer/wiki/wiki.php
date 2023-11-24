@@ -60,9 +60,9 @@ class MytsWiki extends MyTextSanitizerExtension
             }
 EOH;
 
-        return array(
+        return [
             $code,
-            $javascript);
+            $javascript];
     }
 
     /**
@@ -72,7 +72,7 @@ EOH;
      */
     public static function myCallback($match)
     {
-        return self::decode($match[1],0 ,0);
+        return self::decode($match[1], 0, 0);
     }
 
     /**

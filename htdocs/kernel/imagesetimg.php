@@ -221,7 +221,7 @@ class XoopsImagesetimgHandler extends XoopsObjectHandler
      */
     public function getObjects(CriteriaElement $criteria = null, $id_as_key = false)
     {
-        $ret   = array();
+        $ret   = [];
         $limit = $start = 0;
         $sql   = 'SELECT DISTINCT i.* FROM ' . $this->db->prefix('imgsetimg') . ' i LEFT JOIN ' . $this->db->prefix('imgset_tplset_link') . ' l ON l.imgset_id=i.imgsetimg_imgset LEFT JOIN ' . $this->db->prefix('imgset') . ' s ON s.imgset_id=l.imgset_id';
         if (isset($criteria) && \method_exists($criteria, 'renderWhere')) {
@@ -240,9 +240,9 @@ class XoopsImagesetimgHandler extends XoopsObjectHandler
             $imgsetimg = new XoopsImagesetimg();
             $imgsetimg->assignVars($myrow);
             if (!$id_as_key) {
-                $ret[] =& $imgsetimg;
+                $ret[] = &$imgsetimg;
             } else {
-                $ret[$myrow['imgsetimg_id']] =& $imgsetimg;
+                $ret[$myrow['imgsetimg_id']] = &$imgsetimg;
             }
             unset($imgsetimg);
         }

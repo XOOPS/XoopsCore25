@@ -8,17 +8,17 @@ class HTMLPurifier_DefinitionCacheFactory
     /**
      * @type array
      */
-    protected $caches = array('Serializer' => array());
+    protected $caches = ['Serializer' => []];
 
     /**
      * @type array
      */
-    protected $implementations = array();
+    protected $implementations = [];
 
     /**
      * @type HTMLPurifier_DefinitionCache_Decorator[]
      */
-    protected $decorators = array();
+    protected $decorators = [];
 
     /**
      * Initialize default decorators
@@ -97,7 +97,7 @@ class HTMLPurifier_DefinitionCacheFactory
     {
         if (is_string($decorator)) {
             $class = "HTMLPurifier_DefinitionCache_Decorator_$decorator";
-            $decorator = new $class;
+            $decorator = new $class();
         }
         $this->decorators[$decorator->name] = $decorator;
     }

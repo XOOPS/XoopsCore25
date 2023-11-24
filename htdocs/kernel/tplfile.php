@@ -410,7 +410,7 @@ class XoopsTplfileHandler extends XoopsObjectHandler
      */
     public function getObjects(CriteriaElement $criteria = null, $getsource = false, $id_as_key = false)
     {
-        $ret   = array();
+        $ret   = [];
         $limit = $start = 0;
         if ($getsource) {
             $sql = 'SELECT f.*, s.tpl_source FROM ' . $this->db->prefix('tplfile') . ' f LEFT JOIN ' . $this->db->prefix('tplsource') . ' s ON s.tpl_id=f.tpl_id';
@@ -424,16 +424,16 @@ class XoopsTplfileHandler extends XoopsObjectHandler
         }
         $result = $this->db->query($sql, $limit, $start);
         if (!$this->db->isResultSet($result)) {
-             return $ret;
+            return $ret;
         }
         /** @var array $myrow */
         while (false !== ($myrow = $this->db->fetchArray($result))) {
             $tplfile = new XoopsTplfile();
             $tplfile->assignVars($myrow);
             if (!$id_as_key) {
-                $ret[] =& $tplfile;
+                $ret[] = &$tplfile;
             } else {
-                $ret[$myrow['tpl_id']] =& $tplfile;
+                $ret[$myrow['tpl_id']] = &$tplfile;
             }
             unset($tplfile);
         }
@@ -470,7 +470,7 @@ class XoopsTplfileHandler extends XoopsObjectHandler
      */
     public function getModuleTplCount($tplset)
     {
-        $ret    = array();
+        $ret    = [];
         $sql    = 'SELECT tpl_module, COUNT(tpl_id) AS count FROM ' . $this->db->prefix('tplfile') . " WHERE tpl_tplset='" . $tplset . "' GROUP BY tpl_module";
         $result = $this->db->query($sql);
         if (!$this->db->isResultSet($result)) {

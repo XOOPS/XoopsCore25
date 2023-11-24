@@ -38,7 +38,7 @@ xoops_loadLanguage('misc');
 include_once XOOPS_ROOT_PATH . '/modules/system/constants.php';
 
 // check user/group
-$groups        = is_object($GLOBALS['xoopsUser']) ? $GLOBALS['xoopsUser']->getGroups() : array(XOOPS_GROUP_ANONYMOUS);
+$groups        = is_object($GLOBALS['xoopsUser']) ? $GLOBALS['xoopsUser']->getGroups() : [XOOPS_GROUP_ANONYMOUS];
 $gperm_handler = xoops_getHandler('groupperm');
 $admin         = $gperm_handler->checkRight('system_admin', XOOPS_SYSTEM_SMILE, $groups);
 
@@ -89,7 +89,7 @@ if ($smiles = $_SESSION['XoopsEmotions']) {
     }
 } else {
     echo 'error';
-    
+
 }
 echo '</div>';
 echo '</body>';
@@ -127,5 +127,5 @@ echo '</body>';
         }, origin);*/
     //});
 </script>
-<?
+<?php
 xoops_footer();

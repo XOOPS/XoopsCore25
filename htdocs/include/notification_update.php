@@ -78,10 +78,10 @@ foreach ($update_list as $update_item) {
 // TODO: finish integration with comments... i.e. need calls to
 // notifyUsers at appropriate places... (need to figure out where
 // comment submit occurs and where comment approval occurs)...
-$redirect_args = array();
+$redirect_args = [];
 foreach ($update_list as $update_item) {
     list($category, $item_id, $event) = preg_split('/,/', $update_item['params']);
-    $category_info =& notificationCategoryInfo($category);
+    $category_info = &notificationCategoryInfo($category);
     if (!empty($category_info['item_name'])) {
         $redirect_args[$category_info['item_name']] = $item_id;
     }

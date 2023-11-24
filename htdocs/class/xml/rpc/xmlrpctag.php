@@ -22,7 +22,7 @@
  */
 class XoopsXmlRpcDocument
 {
-    public $_tags = array();
+    public $_tags = [];
 
     /**
      * XoopsXmlRpcDocument constructor.
@@ -36,7 +36,7 @@ class XoopsXmlRpcDocument
      */
     public function add(&$tagobj)
     {
-        $this->_tags[] =& $tagobj;
+        $this->_tags[] = &$tagobj;
     }
 
     public function render()
@@ -119,14 +119,14 @@ class XoopsXmlRpcTag
      */
     public function &encode(&$text)
     {
-        $text = preg_replace(array("/\&([a-z\d\#]+)\;/i", "/\&/", "/\#\|\|([a-z\d\#]+)\|\|\#/i"), array(
+        $text = preg_replace(["/\&([a-z\d\#]+)\;/i", "/\&/", "/\#\|\|([a-z\d\#]+)\|\|\#/i"], [
             "#||\\1||#",
             '&amp;',
-            "&\\1;"), str_replace(array(
+            "&\\1;"], str_replace([
                                       '<',
-                                      '>'), array(
+                                      '>'], [
                                       '&lt;',
-                                      '&gt;'), $text));
+                                      '&gt;'], $text));
 
         return $text;
     }
@@ -373,7 +373,7 @@ class XoopsXmlRpcBase64 extends XoopsXmlRpcTag
  */
 class XoopsXmlRpcArray extends XoopsXmlRpcTag
 {
-    public $_tags = array();
+    public $_tags = [];
 
     /**
      * XoopsXmlRpcArray constructor.
@@ -387,7 +387,7 @@ class XoopsXmlRpcArray extends XoopsXmlRpcTag
      */
     public function add(&$tagobj)
     {
-        $this->_tags[] =& $tagobj;
+        $this->_tags[] = &$tagobj;
     }
 
     /**
@@ -411,7 +411,7 @@ class XoopsXmlRpcArray extends XoopsXmlRpcTag
  */
 class XoopsXmlRpcStruct extends XoopsXmlRpcTag
 {
-    public $_tags = array();
+    public $_tags = [];
 
     /**
      * XoopsXmlRpcStruct constructor.
@@ -426,7 +426,7 @@ class XoopsXmlRpcStruct extends XoopsXmlRpcTag
      */
     public function add($name, &$tagobj)
     {
-        $this->_tags[] = array('name' => $name, 'value' => $tagobj);
+        $this->_tags[] = ['name' => $name, 'value' => $tagobj];
     }
 
     /**

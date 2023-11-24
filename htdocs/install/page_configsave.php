@@ -32,7 +32,7 @@ defined('XOOPS_INSTALL') || die('XOOPS Installation wizard die');
 $pageHasForm = false;
 $pageHasHelp = false;
 
-$vars =& $_SESSION['settings'];
+$vars = &$_SESSION['settings'];
 
 if (empty($vars['ROOT_PATH'])) {
     $wizard->redirectToPage('pathsettings');
@@ -42,17 +42,17 @@ if (empty($vars['ROOT_PATH'])) {
     exit();
 }
 
-$writeFiles = array(
+$writeFiles = [
     $vars['ROOT_PATH'] . '/mainfile.php',
     $vars['VAR_PATH'] . '/data/secure.php',
-);
+];
 
 $writeCheck = checkFileWriteablity($writeFiles);
 if (true === $writeCheck) {
-    $rewrite = array(
+    $rewrite = [
         'GROUP_ADMIN' => 1,
         'GROUP_USERS' => 2,
-        'GROUP_ANONYMOUS' => 3);
+        'GROUP_ANONYMOUS' => 3];
     $rewrite = array_merge($rewrite, $vars);
 
     $result = writeConfigurationFile($rewrite, $vars['VAR_PATH'] . '/data', 'secure.dist.php', 'secure.php');
@@ -84,7 +84,7 @@ if (true === $writeCheck) {
                 }
                 echo "<li><strong>XOOPS_{$k}</strong> " . IS_VALOR . " {$v}</li>";
             }
-            ?>
+        ?>
         </ul>
         </div>
         <?php
@@ -199,7 +199,7 @@ function getTmpStats()
  */
 function prepStats($stat)
 {
-    $subSet = array();
+    $subSet = [];
     $mode = $stat['mode'];
     $subSet['mode'] = $mode;
     $subSet['uid'] = $stat['uid'];
@@ -235,7 +235,7 @@ function checkFileWriteablity($files)
         return true; // tests are not applicable
     }
 
-    $message = array();
+    $message = [];
 
     foreach ($files as $file) {
         $dirName = dirname($file);
@@ -244,7 +244,8 @@ function checkFileWriteablity($files)
         if (false !== $dirStat) {
             $uid = $tmpStats['uid'];
             $gid = $tmpStats['gid'];
-            if (!(($uid === $dirStat['uid'] && $dirStat['user']['write'])
+            if (!(
+                ($uid === $dirStat['uid'] && $dirStat['user']['write'])
                 || ($gid === $dirStat['gid'] && $dirStat['group']['write'])
                 || (file_exists($file) && is_writable($file))
                 || (false !== stripos(PHP_OS, 'WIN'))
@@ -292,7 +293,7 @@ function copyConfigDistFiles($vars)
 {
     $copied = 0;
     $failed = 0;
-    $logs = array();
+    $logs = [];
 
     /* xoopsconfig.php */
     $source = $vars['VAR_PATH'] . '/configs/xoopsconfig.dist.php';
@@ -301,17 +302,17 @@ function copyConfigDistFiles($vars)
         $result = copy($source, $destination);
         $result ? ++$copied : ++$failed;
         if (false === $result) {
-            $logs[] = sprintf(ERR_COPY_CONFIG_FILE,  'configs/' . basename($destination));
+            $logs[] = sprintf(ERR_COPY_CONFIG_FILE, 'configs/' . basename($destination));
         }
     }
 
     /* captcha files */
-    $captchaConfigFiles = array(
+    $captchaConfigFiles = [
         'config.dist.php'            => 'config.php',
         'config.image.dist.php'      => 'config.image.php',
         'config.recaptcha2.dist.php' => 'config.recaptcha2.php',
         'config.text.dist.php'       => 'config.text.php',
-    );
+    ];
 
     foreach ($captchaConfigFiles as $source => $destination) {
         $src  = $vars['ROOT_PATH'] . '/class/captcha/' . $source;
@@ -321,13 +322,13 @@ function copyConfigDistFiles($vars)
             $result ? ++$copied : ++$failed;
             if (false === $result) {
                 $logs[] = sprintf('captcha config file copy to %s failed', $destination);
-                $logs[] = sprintf(ERR_COPY_CONFIG_FILE,  'captcha/' . $destination);
+                $logs[] = sprintf(ERR_COPY_CONFIG_FILE, 'captcha/' . $destination);
             }
         }
     }
 
     /* text sanitizer  files */
-    $textsanitizerConfigFiles = array(
+    $textsanitizerConfigFiles = [
         'config.dist.php'                 => 'config.php',
         'censor/config.dist.php'          => 'config.censor.php',
         'flash/config.dist.php'           => 'config.flash.php',
@@ -338,7 +339,7 @@ function copyConfigDistFiles($vars)
         'textfilter/config.dist.php'      => 'config.textfilter.php',
         'wiki/config.dist.php'            => 'config.wiki.php',
         'wmp/config.dist.php'             => 'config.wmp.php',
-    );
+    ];
     foreach ($textsanitizerConfigFiles as $source => $destination) {
         $src  = $vars['ROOT_PATH'] . '/class/textsanitizer/' . $source;
         $dest = $vars['VAR_PATH'] . '/configs/textsanitizer/' . $destination;

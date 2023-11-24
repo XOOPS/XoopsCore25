@@ -35,12 +35,12 @@ class Smarty3TemplateRepair extends ScannerProcess
     /**
      * @var array regex patterns
      */
-    protected $patterns = array();
+    protected $patterns = [];
 
     /**
      * @var array replacement patterns
      */
-    protected $replacements = array();
+    protected $replacements = [];
 
     /**
      * @var ScannerOutput
@@ -64,11 +64,11 @@ class Smarty3TemplateRepair extends ScannerProcess
         $this->patterns[] = '/(<{foreachq[[:space:]]+)/';
         $this->replacements[] = '<{foreach ';
 
-// For double quotes
+        // For double quotes
         $this->patterns[] = '/("<{xo[a-zA-Z\d]*\b[^}>]*?)\s*([^\'"}=]+(?:=[^\'"}=]*)*)\s?}>/';
         $this->replacements[] = "$1 '$2'}>";
 
-// For single quotes
+        // For single quotes
         $this->patterns[] = "/(\'<{xo[a-zA-Z\d]*\b[^}>]*?)\s*([^\'\"=]+(?:=[^\'\"=]*)*)\s?}>/";
         $this->replacements[] = '$1 "$2"}>';
     }
@@ -80,7 +80,7 @@ class Smarty3TemplateRepair extends ScannerProcess
     public function inspectFile(SplFileInfo $fileInfo)
     {
         $output = $this->output;
-        if (false===$fileInfo->isWritable()) {
+        if (false === $fileInfo->isWritable()) {
             return;
         }
 
@@ -99,7 +99,7 @@ class Smarty3TemplateRepair extends ScannerProcess
             -1,
             $count
         );
-        if ($updatedLines===null) {
+        if ($updatedLines === null) {
             trigger_error(sprintf('NULL return processing: %s', $filename), E_WARNING);
         }
 
@@ -108,7 +108,7 @@ class Smarty3TemplateRepair extends ScannerProcess
             $file->fseek(0);
             $file->ftruncate(0);
             $result = $file->fwrite($updatedLines);
-            if ($result==false) {
+            if ($result == false) {
                 trigger_error(sprintf('Error writing file: %s', $filename), E_WARNING);
             }
             $output->outputIssue($output->makeOutputIssue($filename, $count));

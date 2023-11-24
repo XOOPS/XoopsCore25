@@ -26,12 +26,12 @@ class Upgrade_258 extends XoopsUpgrade
     public function __construct()
     {
         parent::__construct(basename(__DIR__));
-        $this->tasks = array(
+        $this->tasks = [
             'users_pass',
             'com_ip',
             'sess_ip',
             'online_ip',
-        );
+        ];
     }
 
     /**

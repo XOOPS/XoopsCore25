@@ -27,16 +27,16 @@ if (!defined('XOOPS_ROOT_PATH')) {
     die('Bad installation: please add this folder to the XOOPS install you want to upgrade');
 }
 
-$vars =& $_SESSION['settings'];
+$vars = &$_SESSION['settings'];
 
 /**
  * @return array
  */
 function getDbCharsets()
 {
-    $charsets = array();
+    $charsets = [];
 
-    $charsets['utf8'] = array();
+    $charsets['utf8'] = [];
     $ut8_available    = false;
     $sql              = 'SHOW CHARSET';
     $result = $GLOBALS['xoopsDB']->queryF($sql);
@@ -61,7 +61,7 @@ function getDbCharsets()
  */
 function getDbCollations()
 {
-    $collations = array();
+    $collations = [];
     $charsets   = getDbCharsets();
 
     $sql    = 'SHOW COLLATION';
@@ -114,7 +114,7 @@ function xoFormFieldCollation($name, $value, $label, $help = '')
 }
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && @$_POST['task'] === 'db') {
-    $params = array('DB_COLLATION');
+    $params = ['DB_COLLATION'];
     foreach ($params as $name) {
         $vars[$name] = isset($_POST[$name]) ? $_POST[$name] : '';
     }

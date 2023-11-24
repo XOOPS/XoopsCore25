@@ -11,7 +11,6 @@
  */
 class HTMLPurifier_Node_Text extends HTMLPurifier_Node
 {
-
     /**
      * PCDATA tag name compatible with DTD, see
      * HTMLPurifier_ChildDef_Custom for details.
@@ -46,8 +45,9 @@ class HTMLPurifier_Node_Text extends HTMLPurifier_Node
         $this->col = $col;
     }
 
-    public function toTokenPair() {
-        return array(new HTMLPurifier_Token_Text($this->data, $this->line, $this->col), null);
+    public function toTokenPair()
+    {
+        return [new HTMLPurifier_Token_Text($this->data, $this->line, $this->col), null];
     }
 }
 

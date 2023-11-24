@@ -55,7 +55,7 @@ class XoopsConfigHandler
      * @var array
      * @access  private
      */
-    public $_cachedConfigs = array();
+    public $_cachedConfigs = [];
 
     /**
      * Constructor
@@ -110,7 +110,7 @@ class XoopsConfigHandler
         if (!$this->_cHandler->insert($config)) {
             return false;
         }
-        $options =& $config->getConfOptions();
+        $options = &$config->getConfOptions();
         $count   = count($options);
         $conf_id = $config->getVar('conf_id');
         for ($i = 0; $i < $count; ++$i) {
@@ -198,7 +198,7 @@ class XoopsConfigHandler
         if (!empty($_cachedConfigs[$module][$category])) {
             return $_cachedConfigs[$module][$category];
         } else {
-            $ret      = array();
+            $ret      = [];
             $criteria = new CriteriaCompo(new Criteria('conf_modid', (int)$module));
             if (!empty($category)) {
                 $criteria->add(new Criteria('conf_catid', (int)$category));
@@ -285,7 +285,7 @@ class XoopsConfigHandler
             }
             $configs   = $this->_cHandler->getObjects($criteria);
             $confcount = count($configs);
-            $ret       = array();
+            $ret       = [];
             for ($i = 0; $i < $confcount; ++$i) {
                 $ret[$configs[$i]->getVar('conf_name')] = $configs[$i]->getConfValueForOutput();
             }

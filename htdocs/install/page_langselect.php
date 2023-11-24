@@ -38,13 +38,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_REQUEST['lang'])) {
     exit();
 }
 
-$_SESSION['settings'] = array();
+$_SESSION['settings'] = [];
 xoops_setcookie('xo_install_user', '', null, null, null);
 
 $pageHasForm = true;
 $title = LANGUAGE_SELECTION;
 $label = 'Available Languages';
-$content =<<<EOT
+$content = <<<EOT
 <div class="form-group col-md-4">
     <label for="lang" class="control-label">{$label}</label>
     <select name="lang" id="lang" class="form-control">
@@ -55,7 +55,7 @@ foreach ($languages as $lang) {
     $sel = ($lang == $wizard->language) ? ' selected' : '';
     $content .= "<option value=\"{$lang}\"{$sel}>{$lang}</option>\n";
 }
-$content .=<<<EOB
+$content .= <<<EOB
     </select>
 </div><div class="clearfix"></div>
 EOB;

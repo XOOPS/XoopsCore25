@@ -76,14 +76,14 @@ $xoopsLogger->activated = false;
  *
  * We will assert that aud and uid agree with our expectations (for security)
  */
-$assert = array(
+$assert = [
     'aud' => basename(__FILE__),
     'uid' => $xoopsUser instanceof \XoopsUser ? $xoopsUser->id() : 0,
-);
+];
 $claims = TokenReader::fromRequest('fineuploader', 'Authorization', $assert);
 
 if ($claims === false) {
-    echo json_encode(array('error' => "Invalid request token"));
+    echo json_encode(['error' => "Invalid request token"]);
     exit;
 }
 
@@ -91,7 +91,7 @@ if ($claims === false) {
 XoopsLoad::load('fineuploadhandler', 'system');
 
 $handler = (property_exists($claims, 'handler')) ? $claims->handler : '';
-$moddir  = (property_exists($claims, 'moddir'))  ? $claims->moddir  : '';
+$moddir  = (property_exists($claims, 'moddir')) ? $claims->moddir : '';
 
 if ($handler === '' || $moddir === '') {
     header("HTTP/1.0 400 Bad Request");

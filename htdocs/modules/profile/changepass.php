@@ -35,7 +35,7 @@ if (!isset($_POST['submit'])) {
     $form->addElement(new XoopsFormButton('', 'submit', _SUBMIT, 'submit'));
     $form->assign($GLOBALS['xoopsTpl']);
 
-    $xoBreadcrumbs[] = array('title' => _PROFILE_MA_CHANGEPASSWORD);
+    $xoBreadcrumbs[] = ['title' => _PROFILE_MA_CHANGEPASSWORD];
 } else {
     /** @var XoopsConfigHandler $config_handler */
     $config_handler             = xoops_getHandler('config');
@@ -44,7 +44,7 @@ if (!isset($_POST['submit'])) {
     $oldpass                    = isset($_POST['oldpass']) ? $myts->stripSlashesGPC(trim($_POST['oldpass'])) : '';
     $password                   = isset($_POST['newpass']) ? $myts->stripSlashesGPC(trim($_POST['newpass'])) : '';
     $vpass                      = isset($_POST['vpass']) ? $myts->stripSlashesGPC(trim($_POST['vpass'])) : '';
-    $errors                     = array();
+    $errors                     = [];
     if (!password_verify($oldpass, $GLOBALS['xoopsUser']->getVar('pass', 'n'))) {
         $errors[] = _PROFILE_MA_WRONGPASSWORD;
     }

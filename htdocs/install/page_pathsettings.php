@@ -96,7 +96,7 @@ ob_start();
             } else {
                 echo '<div id="rootperms" class="x2-note" style="display: none;"></div>';
             }
-            ?>
+?>
 
             <div class="form-group">
                 <label for="data"><?php echo XOOPS_DATA_PATH_LABEL; ?></label>
@@ -105,22 +105,22 @@ ob_start();
                 <span id="datapathimg"><?php echo genPathCheckHtml('data', $ctrl->validPath['data']); ?></span>
             </div>
             <?php
-            if ($ctrl->validPath['data'] && !empty($ctrl->permErrors['data'])) {
-                echo '<div id="dataperms" class="x2-note">';
-                echo CHECKING_PERMISSIONS . '<br><p>' . ERR_NEED_WRITE_ACCESS . '</p>';
-                echo '<ul class="diags">';
-                foreach ($ctrl->permErrors['data'] as $path => $result) {
-                    if ($result) {
-                        echo '<li class="success">' . sprintf(IS_WRITABLE, $path) . '</li>';
-                    } else {
-                        echo '<li class="failure">' . sprintf(IS_NOT_WRITABLE, $path) . '</li>';
-                    }
-                }
-                echo '</ul></div>';
-            } else {
-                echo '<div id="dataperms" class="x2-note" style="display: none;"></div>';
-            }
-            ?>
+if ($ctrl->validPath['data'] && !empty($ctrl->permErrors['data'])) {
+    echo '<div id="dataperms" class="x2-note">';
+    echo CHECKING_PERMISSIONS . '<br><p>' . ERR_NEED_WRITE_ACCESS . '</p>';
+    echo '<ul class="diags">';
+    foreach ($ctrl->permErrors['data'] as $path => $result) {
+        if ($result) {
+            echo '<li class="success">' . sprintf(IS_WRITABLE, $path) . '</li>';
+        } else {
+            echo '<li class="failure">' . sprintf(IS_NOT_WRITABLE, $path) . '</li>';
+        }
+    }
+    echo '</ul></div>';
+} else {
+    echo '<div id="dataperms" class="x2-note" style="display: none;"></div>';
+}
+?>
 
             <div class="form-group">
                 <label class="xolabel" for="lib"><?php echo XOOPS_LIB_PATH_LABEL; ?></label>

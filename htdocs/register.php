@@ -59,16 +59,16 @@ function userCheck($uname, $email, $pass, $vpass)
 
 // from $_POST we use keys: op, uname, email, url, pass, vpass, timezone_offset,
 //                          user_viewemail, user_mailok, agree_disc
-    $op = Request::getCmd('op', 'register', 'POST');
-    $uname = Request::getString('uname', '', 'POST');
-    $email = Request::getEmail('email', '', 'POST');
-    $url = Request::getUrl('url', '', 'POST');
-    $pass = Request::getString('pass', '', 'POST');
-    $vpass = Request::getString('vpass', '', 'POST');
-    $timezone_offset = Request::getFloat('cid', $xoopsConfig['default_TZ'], 'POST');
-    $user_viewemail = Request::getBool('user_viewemail', false, 'POST');
-    $user_mailok = Request::getBool('user_mailok', false, 'POST');
-    $agree_disc = Request::getBool('agree_disc', false, 'POST');
+$op = Request::getCmd('op', 'register', 'POST');
+$uname = Request::getString('uname', '', 'POST');
+$email = Request::getEmail('email', '', 'POST');
+$url = Request::getUrl('url', '', 'POST');
+$pass = Request::getString('pass', '', 'POST');
+$vpass = Request::getString('vpass', '', 'POST');
+$timezone_offset = Request::getFloat('cid', $xoopsConfig['default_TZ'], 'POST');
+$user_viewemail = Request::getBool('user_viewemail', false, 'POST');
+$user_mailok = Request::getBool('user_mailok', false, 'POST');
+$agree_disc = Request::getBool('agree_disc', false, 'POST');
 
 // from $_GET we may use keys: op, id, actkey
 $clean_id     = '';
@@ -81,10 +81,10 @@ if (!isset($_POST['op']) && isset($_GET['op'])) {
     if (isset($_GET['actkey'])) {
         $clean_actkey =  Request::getCmd('actkey', '', 'GET');
     }
-    $op = in_array($op, array(
+    $op = in_array($op, [
         'actv',
         'activate',
-    ),             true) ? $op : 'register';
+    ], true) ? $op : 'register';
 }
 
 switch ($op) {
@@ -201,7 +201,7 @@ switch ($op) {
                 } else {
                     echo _US_YOURREGISTERED;
                 }
-                // Sending notification email to administrator for activation
+            // Sending notification email to administrator for activation
             } elseif ($xoopsConfigUser['activation_type'] == 2) {
                 $xoopsMailer = xoops_getMailer();
                 $xoopsMailer->useMail();
