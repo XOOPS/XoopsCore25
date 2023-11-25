@@ -42,8 +42,8 @@ $modversion['icons32']        = '../../Frameworks/moduleclasses/icons/32';
 $modversion['release_date']        = '2019/02/18';
 $modversion['module_website_url']  = 'https://xoops.org/';
 $modversion['module_website_name'] = 'XOOPS';
-$modversion['min_php']             = '5.3.9';
-$modversion['min_xoops']           = '2.5.10';
+$modversion['min_php']             = '5.6.0';
+$modversion['min_xoops']           = '2.5.11';
 $modversion['min_admin']           = '1.2';
 $modversion['min_db']              = array('mysql'  => '5.0.7');
 
