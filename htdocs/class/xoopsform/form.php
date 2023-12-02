@@ -83,7 +83,7 @@ class XoopsForm
      * @var array
      */
     public $_class = array();
-    
+
     /**
      * extra information for the <form> tag
      *
@@ -119,7 +119,7 @@ class XoopsForm
      * @param bool   $addtoken whether to add a security token to the form
      * @param string $summary
      */
-    public function __construct($title, $name, $action, $method = 'post', $addtoken = false, $summary = '')
+    public function __construct($title, $name, $action, $method = 'post', $addtoken = true, $summary = '')
     {
         $this->_title   = $title;
         $this->_name    = $name;
@@ -472,7 +472,7 @@ class XoopsForm
             $this->_class[] = $class;
         }
     }
-    
+
     /**
      * set the extra attributes for the <form> tag
      *
@@ -514,7 +514,7 @@ class XoopsForm
 
         return implode(' ', $classes);
     }
-    
+
     /**
      * get the extra attributes for the <form> tag
      *
