@@ -17,7 +17,7 @@ namespace Xmf;
  * @category  Xmf\Random
  * @package   Xmf
  * @author    Richard Griffith <richard@geekwright.com>
- * @copyright 2015-2018 XOOPS Project (https://xoops.org)
+ * @copyright 2015-2023 XOOPS Project (https://xoops.org)
  * @license   GNU GPL 2.0 or later (https://www.gnu.org/licenses/gpl-2.0.html)
  * @link      https://xoops.org
  */
@@ -37,29 +37,7 @@ class Random
      */
     public static function generateOneTimeToken($hash = 'sha512', $bytes = 64)
     {
-        if (function_exists('random_bytes')) {
-            $randomData = random_bytes($bytes);
-        } elseif (function_exists('openssl_random_pseudo_bytes')) {
-            $crypto_strong = false;
-            $randomData = openssl_random_pseudo_bytes($bytes, $crypto_strong);
-
-            if ($randomData === false) {
-                throw new Exception("Could not generate secure random bytes.");
-            }
-
-            if (!$crypto_strong) {
-                throw new Exception("Non-cryptographically strong algorithm used for random bytes.");
-            }
-        } else {
-            $randomData = md5(uniqid(mt_rand(), true));
-        }
-
-        if ($randomData === null) {
-            throw new Exception("Failed to generate random data.");
-        }
-
-        $token = hash($hash, $randomData);
-
+        $token = hash($hash, random_bytes($bytes));
         return $token;
     }
 
@@ -77,28 +55,7 @@ class Random
      */
     public static function generateKey($hash = 'sha512', $bytes = 128)
     {
-        if (function_exists('random_bytes')) {
-            $randomData = random_bytes($bytes);
-        } elseif (function_exists('openssl_random_pseudo_bytes')) {
-            $crypto_strong = false;
-            $randomData = openssl_random_pseudo_bytes($bytes, $crypto_strong);
-
-            if ($randomData === false) {
-                throw new Exception("Could not generate secure random bytes.");
-            }
-
-            if (!$crypto_strong) {
-                throw new Exception("Non-cryptographically strong algorithm used for random bytes.");
-            }
-        } else {
-            $randomData = md5(uniqid(mt_rand(), true));
-        }
-
-        if ($randomData === null) {
-            throw new Exception("Failed to generate random data.");
-        }
-
-        $token = hash($hash, $randomData);
+        $token = hash($hash, random_bytes($bytes));
         return $token;
     }
 }
