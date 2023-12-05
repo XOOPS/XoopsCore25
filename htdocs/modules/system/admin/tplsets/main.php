@@ -16,6 +16,7 @@
  * @since
  * @author       XOOPS Development Team, Kazumi Ono (AKA onokazu)
  */
+
 use Xmf\Request;
 
 // Check users rights
@@ -94,17 +95,21 @@ switch ($op) {
         $xoBreadCrumb->addLink(_AM_SYSTEM_TEMPLATES_NAV_FILE_GENERATED);
         $xoBreadCrumb->render();
 
-        if ($_REQUEST['select_modules'] == '0' || $_REQUEST['active_modules'] == '1') {
+        $selectModules = Request::getString('select_modules', '0');
+        $activeModules = Request::getString('active_modules', '0');
+        $selectTheme = Request::getString('select_theme', '');
+        $forceGenerated = Request::getInt('force_generated', 0);
+        if (  '0' === $selectModules ||  '1' === $activeModules) {
             //Generate modules
-            if (isset($_REQUEST['select_theme']) && isset($_REQUEST['force_generated'])) {
-                //on verifie si le dossier module existe
-                $theme_surcharge = XOOPS_THEME_PATH . '/' . $_REQUEST['select_theme'] . '/modules';
+            if (Request::hasVar('select_theme') && Request::hasVar('force_generated')) {
+                //we check if the module folder exists
+                $theme_surcharge = XOOPS_THEME_PATH . '/' . $selectTheme . '/modules';
                 $indexFile       = XOOPS_ROOT_PATH . '/modules/system/include/index.html';
                 $verif_write     = false;
                 $text            = '';
 
                 if (!is_dir($theme_surcharge)) {
-                    //Creation du dossier modules
+                    //Create the modules folder
 
                     if (!is_dir($theme_surcharge)) {
                         mkdir($theme_surcharge, 0777);
@@ -115,7 +120,7 @@ switch ($op) {
 
                 $tplset = Request::getString('tplset', 'default');
 
-                //on crée uniquement les templates qui n'existent pas
+                //we only create templates that do not exist
                 /** @var XoopsModuleHandler $module_handler */
                 $module_handler = xoops_getHandler('module');
                 /** @var  XoopsTplsetHandler $tplset_handler */
@@ -166,12 +171,12 @@ switch ($op) {
                                     for ($j = 0; $j < $templatesCount; ++$j) {
                                         $filename = $templates[$j]->getVar('tpl_file');
                                         if ($tplsetname == $tplset) {
-                                            $physical_file = XOOPS_THEME_PATH . '/' . $_REQUEST['select_theme'] . '/modules/' . $moddir . '/' . $filename;
+                                            $physical_file = XOOPS_THEME_PATH . '/' . $selectTheme . '/modules/' . $moddir . '/' . $filename;
 
                                             $tplfile = $tpltpl_handler->get($templates[$j]->getVar('tpl_id'), true);
 
                                             if (is_object($tplfile)) {
-                                                if (!file_exists($physical_file) || $_REQUEST['force_generated'] == 1) {
+                                                if (!file_exists($physical_file) || 1 == $forceGenerated) {
                                                     $open = fopen('' . $physical_file . '', 'w+');
                                                     if (fwrite($open, '' . $tplfile->getVar('tpl_source', 'n'))) {
                                                         $text .= '<tr class="' . $class . '"><td align="center">' . _AM_SYSTEM_TEMPLATES_TEMPLATES . '</td><td>' . $physical_file . '</td><td align="center">';
@@ -195,11 +200,11 @@ switch ($op) {
                                     for ($k = 0; $k < $btemplatesCount; ++$k) {
                                         $filename = $btemplates[$k]->getVar('tpl_file');
                                         if ($tplsetname == $tplset) {
-                                            $physical_file = XOOPS_THEME_PATH . '/' . $_REQUEST['select_theme'] . '/modules/' . $moddir . '/blocks/' . $filename;
+                                            $physical_file = XOOPS_THEME_PATH . '/' . $selectTheme . '/modules/' . $moddir . '/blocks/' . $filename;
                                             $btplfile      = $tpltpl_handler->get($btemplates[$k]->getVar('tpl_id'), true);
 
                                             if (is_object($btplfile)) {
-                                                if (!file_exists($physical_file) || $_REQUEST['force_generated'] == 1) {
+                                                if (!file_exists($physical_file) || 1 == $forceGenerated) {
                                                     $open = fopen($physical_file, 'w+');
                                                     if (fwrite($open, $btplfile->getVar('tpl_source', 'n'))) {
                                                         $text .= '<tr class="' . $class . '"><td align="center">' . _AM_SYSTEM_TEMPLATES_BLOCKS . '</td><td>' . $physical_file . '</td><td align="center">';
@@ -228,7 +233,7 @@ switch ($op) {
                         $tplstats   = $tpltpl_handler->getModuleTplCount($tplsetname);
 
                         if (count($tplstats) > 0) {
-                            $moddir = $_REQUEST['select_modules'];
+                            $moddir = $selectModules;
                             $module = $module_handler->getByDirname($moddir);
                             if (is_object($module)) {
                                 // create module folder
@@ -258,12 +263,12 @@ switch ($op) {
                                     for ($j = 0; $j < $templatesCount; ++$j) {
                                         $filename = $templates[$j]->getVar('tpl_file');
                                         if ($tplsetname == $tplset) {
-                                            $physical_file = XOOPS_THEME_PATH . '/' . $_REQUEST['select_theme'] . '/modules/' . $moddir . '/' . $filename;
+                                            $physical_file = XOOPS_THEME_PATH . '/' . $selectTheme . '/modules/' . $moddir . '/' . $filename;
 
                                             $tplfile = $tpltpl_handler->get($templates[$j]->getVar('tpl_id'), true);
 
                                             if (is_object($tplfile)) {
-                                                if (!file_exists($physical_file) || $_REQUEST['force_generated'] == 1) {
+                                                if (!file_exists($physical_file) || 1 == $forceGenerated) {
                                                     if ($select_templates_modules[$l] == $filename) {
                                                         $open = fopen('' . $physical_file . '', 'w+');
                                                         if (fwrite($open, '' . $tplfile->getVar('tpl_source', 'n'))) {
@@ -289,11 +294,11 @@ switch ($op) {
                                     for ($k = 0; $k < $btemplatesCount; ++$k) {
                                         $filename = $btemplates[$k]->getVar('tpl_file');
                                         if ($tplsetname == $tplset) {
-                                            $physical_file = XOOPS_THEME_PATH . '/' . $_REQUEST['select_theme'] . '/modules/' . $moddir . '/blocks/' . $filename;
+                                            $physical_file = XOOPS_THEME_PATH . '/' . $selectTheme . '/modules/' . $moddir . '/blocks/' . $filename;
                                             $btplfile      = $tpltpl_handler->get($btemplates[$k]->getVar('tpl_id'), true);
 
                                             if (is_object($btplfile)) {
-                                                if (!file_exists($physical_file) || $_REQUEST['force_generated'] == 1) {
+                                                if (!file_exists($physical_file) || 1 == $forceGenerated) {
                                                     if ($select_templates_modules[$l] == $filename) {
                                                         $open = fopen('' . $physical_file . '', 'w+');
                                                         if (fwrite($open, '' . $btplfile->getVar('tpl_source', 'n') . '')) {
@@ -333,7 +338,7 @@ switch ($op) {
             $form = new XoopsThemeForm(_AM_SYSTEM_TEMPLATES_SELECT_TEMPLATES, 'form', 'admin.php?fct=tplsets', 'post', true);
 
             $tpltpl_handler = xoops_getHandler('tplfile');
-            $templates_arr  = $tpltpl_handler->find($tplset, '', null, $_REQUEST['select_modules']);
+            $templates_arr  = $tpltpl_handler->find($tplset, '', null, $selectModules);
 
             $modules = new XoopsFormSelect(_AM_SYSTEM_TEMPLATES_SELECT_TEMPLATES, 'select_templates_modules', null, 10, true);
             foreach (array_keys($templates_arr) as $i) {
@@ -342,10 +347,10 @@ switch ($op) {
             $form->addElement($modules);
 
             $form->addElement(new XoopsFormHidden('active_templates', '1'));
-            $form->addElement(new XoopsFormHidden('force_generated', $_REQUEST['force_generated']));
-            $form->addElement(new XoopsFormHidden('select_modules', $_REQUEST['select_modules']));
+            $form->addElement(new XoopsFormHidden('force_generated', (string)$forceGenerated));
+            $form->addElement(new XoopsFormHidden('select_modules', $selectModules));
             $form->addElement(new XoopsFormHidden('active_modules', '1'));
-            $form->addElement(new XoopsFormHidden('select_theme', $_REQUEST['select_theme']));
+            $form->addElement(new XoopsFormHidden('select_theme', $selectTheme));
             $form->addElement(new XoopsFormHidden('op', 'tpls_generate_surcharge'));
             $form->addElement(new XoopsFormButton('', 'submit', _SUBMIT, 'submit'));
             $xoopsTpl->assign('form', $form->render());

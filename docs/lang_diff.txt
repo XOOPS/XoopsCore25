@@ -4,6 +4,12 @@ LANGUAGE DIFFERENCES
 Below are language differences from a version to next version.
 
 ================================
+2023/10/01: Version 2.5.11-Final
+================================
+/language/english/uploader.php
+-added define('_ER_UP_MODE_NOT_CHANGED', 'File uploaded, but could not change the mode');
+
+================================
 2023/10/01: Version 2.5.11-RC3
 ================================
 
@@ -22,7 +28,8 @@ htdocs/class/xoopseditor/tinymce/language/english.php
 /htdocs/modules/system/language/english/admin/preferences.php
 - added define('_MD_AM_DEFAULT_NOTIFICATION_METHOD', 'Default notification method');
 - added define('_MD_AM_DEFAULT_NOTIFICATION_METHOD_DESC', 'For new users when they subscribe to notifications from, e.g., a forum.');
-- added define('_MD_AM_MODULEPREF', 
+- added define('_MD_AM_MODULEPREF',
+
 
 ================================
 2023/03/19: Version 2.5.11-RC1

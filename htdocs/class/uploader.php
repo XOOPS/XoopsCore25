@@ -19,6 +19,8 @@
 
 defined('XOOPS_ROOT_PATH') || exit('Restricted access');
 
+use Xmf\Request;
+
 /**
  * Upload Media files
  *
@@ -205,11 +207,12 @@ class XoopsMediaUploader
      * @return int|false
      */
     public function countMedia($media_name) {
-        if (!isset($_FILES[$media_name])) {
+        if (!Request::hasVar($media_name, 'FILES')) {
             $this->setErrors(_ER_UP_FILENOTFOUND);
             return false;
         }
-        return count($_FILES[$media_name]['name']);
+        $files = Request::getArray($media_name, [], 'FILES');
+        return count($files['name']);
     }
 
     /**
@@ -226,48 +229,39 @@ class XoopsMediaUploader
 
             return false;
         }
-        if (!isset($_FILES[$media_name])) {
+
+        if (!Request::hasVar($media_name, 'FILES')) {
             $this->setErrors(_ER_UP_FILENOTFOUND);
-
             return false;
-        } elseif (is_array($_FILES[$media_name]['name']) && isset($index)) {
-            $index           = (int)$index;
-            if (PHP_VERSION_ID < 50400) {
-                if ( get_magic_quotes_gpc()) {
-                    $this->mediaName = stripslashes($_FILES[$media_name]['name'][$index]);
-                } else {
-                    $this->mediaName = $_FILES[$media_name]['name'][$index];
-                }
-            }
-            if ($this->randomFilename) {
-                $unique          = uniqid();
-                $this->targetFileName = '' . $unique . '--' . $this->mediaName;
-            }
-            $this->mediaType    = $_FILES[$media_name]['type'][$index];
-            $this->mediaSize    = $_FILES[$media_name]['size'][$index];
-            $this->mediaTmpName = $_FILES[$media_name]['tmp_name'][$index];
-            $this->mediaError   = !empty($_FILES[$media_name]['error'][$index]) ? $_FILES[$media_name]['error'][$index] : 0;
-        } elseif (is_array($_FILES[$media_name]['name']) && !isset($index)) {
-            $this->setErrors(_ER_UP_INDEXNOTSET);
+        }
 
+        $files = Request::getArray($media_name, [], 'FILES');
+
+        if (is_array($files['name']) && isset($index)) {
+            $index = (int)$index;
+            $this->mediaName = $files['name'][$index];
+            if ($this->randomFilename) {
+                $unique = uniqid();
+                $this->targetFileName = $unique . '--' . $this->mediaName;
+            }
+            $this->mediaType    = $files['type'][$index];
+            $this->mediaSize    = $files['size'][$index];
+            $this->mediaTmpName = $files['tmp_name'][$index];
+            $this->mediaError   = !empty($files['error'][$index]) ? $files['error'][$index] : 0;
+        } elseif (is_array($files['name']) && !isset($index)) {
+            $this->setErrors(_ER_UP_INDEXNOTSET);
             return false;
         } else {
-            $media_name      =& $_FILES[$media_name];
-            if (PHP_VERSION_ID < 50400) {
-                if (get_magic_quotes_gpc()) {
-                    $this->mediaName = stripslashes($media_name['name']);
-                } else {
-                    $this->mediaName = $media_name['name'];
-                }
-            }
+            $file = $files;
+            $this->mediaName = $file['name'];
             if ($this->randomFilename) {
-                $unique          = uniqid();
-                $this->targetFileName = '' . $unique . '--' . $this->mediaName;
+                $unique = uniqid();
+                $this->targetFileName = $unique . '--' . $this->mediaName;
             }
-            $this->mediaType    = $media_name['type'];
-            $this->mediaSize    = $media_name['size'];
-            $this->mediaTmpName = $media_name['tmp_name'];
-            $this->mediaError   = !empty($media_name['error']) ? $media_name['error'] : 0;
+            $this->mediaType    = $file['type'];
+            $this->mediaSize    = $file['size'];
+            $this->mediaTmpName = $file['tmp_name'];
+            $this->mediaError   = !empty($file['error']) ? $file['error'] : 0;
         }
 
         if (($ext = strrpos($this->mediaName, '.')) !== false) {
@@ -463,7 +457,7 @@ class XoopsMediaUploader
     /**
      * Copy the file to its destination
      *
-     * @param $chmod
+     * @param int $chmod
      * @return bool
      */
     public function _copyFile($chmod)
@@ -471,9 +465,9 @@ class XoopsMediaUploader
         $matched = array();
         if (!preg_match("/\.([a-zA-Z0-9]+)$/", $this->mediaName, $matched)) {
             $this->setErrors(_ER_UP_INVALIDFILENAME);
-
             return false;
         }
+
         if (isset($this->targetFileName)) {
             $this->savedFileName = $this->targetFileName;
         } elseif (isset($this->prefix)) {
@@ -487,23 +481,26 @@ class XoopsMediaUploader
         $this->savedFileName = preg_replace("/[^a-zA-Z0-9\._-]/", '', $this->savedFileName);
 
         $this->savedDestination = $this->uploadDir . '/' . $this->savedFileName;
+
         if (!move_uploaded_file($this->mediaTmpName, $this->savedDestination)) {
             $this->setErrors(sprintf(_ER_UP_FAILEDSAVEFILE, $this->savedDestination));
-
             return false;
         }
-        // Check IE XSS before returning success
+
+        // Check for IE XSS vulnerability for image files
         $ext = strtolower(substr(strrchr($this->savedDestination, '.'), 1));
         if (in_array($ext, $this->imageExtensions)) {
-            $info = @getimagesize($this->savedDestination);
-            if ($info === false || $this->imageExtensions[(int)$info[2]] != $ext) {
+            $info = getimagesize($this->savedDestination);
+            if ($info === false || $this->imageExtensions[(int) $info[2]] != $ext) {
                 $this->setErrors(_ER_UP_SUSPICIOUSREFUSED);
-                @unlink($this->savedDestination);
-
+                unlink($this->savedDestination);
                 return false;
             }
         }
-        @chmod($this->savedDestination, $chmod);
+
+        if (false === chmod($this->savedDestination, $chmod)) {
+            $this->setErrors(_ER_UP_MODE_NOT_CHANGED);
+        }
 
         return true;
     }
