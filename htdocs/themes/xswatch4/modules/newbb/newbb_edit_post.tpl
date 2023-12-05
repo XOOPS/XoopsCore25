@@ -50,11 +50,15 @@
       method="<{$form_post.method}>" <{$form_post.extra}> >
 	  <div class="form-group row">
         <{foreach item=element from=$form_post.elements|default:null}>
+        <{assign var="legend_required" value=false}>
         <{if isset($element.hidden) && $element.hidden != true}>
 			<label class="col-xs-12 col-sm-2 col-form-label text-sm-right">
 				<{$element.caption|default:''}>
-                <{if !empty($element.required)}><span class="caption-required">*</span><{/if}>
-			</label>
+                <{if !empty($element.required)}>
+                    <span class="xo-caption-required">*</span>
+                    <{assign var="legend_required" value=true}>
+                <{/if}>
+            </label>
 			<div class="col-xs-12 col-sm-10">
 				<{$element.body}>
 				<{if !empty($element.description)}>
@@ -64,6 +68,9 @@
         <{/if}>
         <{/foreach}>
 		</div>
+    <{if isset($legend_required) && $legend_required == true}>
+        <div class="col-12 mb-2"> <span class="xo-caption-required">*</span> =  <{$smarty.const._REQUIRED}></div>
+    <{/if}>
     <{foreach item=element from=$form_post.elements|default:null}>
     <{if isset($element.hidden) && $element.hidden == true}>
         <{$element.body}>

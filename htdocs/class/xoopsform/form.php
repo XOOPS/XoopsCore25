@@ -174,22 +174,22 @@ class XoopsForm
         $var['name'] = $hashMethod(get_class($object));
 
         // Hash the object variables
-        foreach (get_object_vars($object) as $key => $value) {
-            if ($key !== '_objid') {
+                foreach (get_object_vars($object) as $key => $value) {
+                    if ($key !== '_objid') {
                 $var['value'] = $this->getArrayID($value, $key, $var['value'], $hashinfo);
-            }
-        }
+                    }
+                }
 
         // Hash the class methods
-        foreach (get_class_methods($object) as $key => $value) {
+                foreach (get_class_methods($object) as $key => $value) {
             $var['func'] = $this->getArrayID($value, $key, $var['func'], $hashinfo);
-        }
+                }
 
         // Generate the final hash
         $this->_objid = $hashMethod(implode(':', $var));
 
-        return $this->_objid;
-    }
+                return $this->_objid;
+                }
 
 
     /**
@@ -634,9 +634,7 @@ class XoopsForm
     {
         $i        = -1;
         $elements = array();
-        if (count($this->getRequired()) > 0) {
-            $this->_elements[] = "<tr class='foot'><td colspan='2'>* = " . _REQUIRED . '</td></tr>';
-        }
+        //  Removed hard-coded legacy pseudo-element - XoopsFormRenderer is now responsible for the legend
         foreach ($this->getElements() as $ele) {
             ++$i;
             if (is_string($ele)) {

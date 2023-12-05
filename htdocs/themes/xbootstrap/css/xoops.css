@@ -54,6 +54,14 @@ img.right {
 }
 
 /* For required elements in XOOPS form */
+/* For Xoops 2.5.11 - Used in XoopsFormRenderer for Bootstrap and Bootstrap based theme templates */
+.xo-caption-required {
+    background-color: inherit;
+    padding-left: 2px;
+    color: #ff0000;
+}
+
+/* Used in XoopsFormRendererLegacy */
 .xoops-form-element-caption .caption-marker {
     display: none;
 }
@@ -1215,5 +1223,5 @@ div.jGrowl div.jGrowl-closer {
 	font-size: 100%;
 	color: #333;
 	border: 1px solid #333;
-	padding: 1px 5px;	
+	padding: 1px 5px;
 }

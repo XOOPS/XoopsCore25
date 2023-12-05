@@ -410,10 +410,9 @@ EOJS;
         $maxlength = isset($element->configs['maxlength']) ? $element->configs['maxlength'] : 0;
         $fontStr .= "<button type='button' class='btn btn-default btn-sm' onclick=\"XoopsCheckLength('"
                     . $element->getName() . "', '" . $maxlength . "', '"
-                    . _XOOPS_FORM_ALT_LENGTH . "', '" . _XOOPS_FORM_ALT_LENGTH_MAX . "');\" title='"
-                    . _XOOPS_FORM_ALT_CHECKLENGTH . "'><span class='fa fa-check-square-o' aria-hidden='true'></span></button>";
+            . _XOOPS_FORM_ALT_LENGTH . "', '" . _XOOPS_FORM_ALT_LENGTH_MAX . "');\" title='"
+            . _XOOPS_FORM_ALT_CHECKLENGTH . "'><span class='fa fa-check-square-o' aria-hidden='true'></span></button>";
         $fontStr .= "</div></div>";
-
 
         return $fontStr;
     }
@@ -749,7 +748,7 @@ EOJS;
             if (($caption = $element->getCaption()) != '') {
                 $ret .= '<label for="' . $element->getName() . '" class="col-md-2 control-label">'
                     . $element->getCaption()
-                    . ($element->isRequired() ? '<span class="caption-required">*</span>' : '')
+                    . ($element->isRequired() ? '<span class="xo-caption-required">*</span>' : '')
                     . '</label>';
             } else {
                 $ret .= '<div class="col-md-2"> </div>';
@@ -761,6 +760,10 @@ EOJS;
             }
             $ret .= '</div>';
             $ret .= '</div>';
+        }
+        if (count($form->getRequired()) > 0) {
+            //  Add caption marker constructed using renderer's formatting
+            $ret .= NWLINE . '<div class="col-12"> <span class="xo-caption-required">*</span> = ' . _REQUIRED . '<br></div>' . NWLINE;
         }
         $ret .= $hidden;
         $ret .= '</form></div>';
