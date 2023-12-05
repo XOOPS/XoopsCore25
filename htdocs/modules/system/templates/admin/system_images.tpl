@@ -153,7 +153,9 @@
                     <tr>
                         <td class="odd aligntop">
                             <div class="spacer bold"><{$element.caption|default:''}><{if !empty($element.required)}><span class="red">&nbsp;*</span><{/if}></div>
-                            <div class="spacer"><{$element.description|default:''}></div>
+                            <{if !empty($element.description)}>
+                                <div class="spacer"><{$element.description|default:''}></div>
+                            <{/if}>
                         </td>
                         <td class="even"><{$element.body}></td>
                     </tr>
@@ -181,7 +183,9 @@
                     <tr>
                         <td class="odd aligntop">
                             <div class="spacer bold"><{$element.caption|default:''}><{if !empty($element.required)}><span class="red">&nbsp;*</span><{/if}></div>
-                            <div class="spacer"><{$element.description|default:''}></div>
+                            <{if !empty($element.description)}>
+                                <div class="spacer"><{$element.description|default:''}></div>
+                            <{/if}>
                         </td>
                         <td class="even"><{$element.body}></td>
                     </tr>
@@ -279,7 +283,9 @@
                         <tr>
                             <td class="odd aligntop">
                                 <div class="spacer bold"><{$element.caption|default:''}><{if !empty($element.required)}><span class="red">&nbsp;*</span><{/if}></div>
-                                <div class="spacer"><{$element.description|default:''}></div>
+                                <{if !empty($element.description)}>
+                                    <div class="spacer"><{$element.description|default:''}></div>
+                                <{/if}>
                             </td>
                             <td class="even"><{$element.body}></td>
                         </tr>
@@ -296,11 +302,11 @@
     IMG_OFF = "<{xoAdminIcons 'cancel.png'}>";
 
     $('.lightbox').lightBox({
-        imageLoading: 'language/<{$xoops_language|default:english}>/images/lightbox-ico-loading.gif',
-        imageBtnClose: 'language/<{$xoops_language|default:english}>/images/lightbox-btn-close.gif',
-        imageBtnNext: 'language/<{$xoops_language|default:english}>/images/lightbox-btn-next.gif',
-        imageBtnPrev: 'language/<{$xoops_language|default:english}>/images/lightbox-btn-prev.gif',
-        imageBlank: 'language/<{$xoops_language|default:english}>/images/lightbox-blank.gif'
+        imageLoading: 'language/<{if isset($xoops_language)}><{$xoops_language}><{else}>english<{/if}>/images/lightbox-ico-loading.gif',
+        imageBtnClose: 'language/<{if isset($xoops_language)}><{$xoops_language}><{else}>english<{/if}>/images/lightbox-btn-close.gif',
+        imageBtnNext: 'language/<{if isset($xoops_language)}><{$xoops_language}><{else}>english<{/if}>/images/lightbox-btn-next.gif',
+        imageBtnPrev: 'language/<{if isset($xoops_language)}><{$xoops_language}><{else}>english<{/if}>/images/lightbox-btn-prev.gif',
+        imageBlank: 'language/<{if isset($xoops_language)}><{$xoops_language}><{else}>english<{/if}>/images/lightbox-blank.gif'
     });
 
 

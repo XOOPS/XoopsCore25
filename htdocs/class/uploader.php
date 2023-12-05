@@ -239,11 +239,7 @@ class XoopsMediaUploader
 
         if (is_array($files['name']) && isset($index)) {
             $index = (int)$index;
-            if (version_compare(PHP_VERSION, '5.4', '<') && get_magic_quotes_gpc()) {
-                $this->mediaName = stripslashes($files['name'][$index]);
-            } else {
-                $this->mediaName = $files['name'][$index];
-            }
+            $this->mediaName = $files['name'][$index];
             if ($this->randomFilename) {
                 $unique = uniqid();
                 $this->targetFileName = $unique . '--' . $this->mediaName;

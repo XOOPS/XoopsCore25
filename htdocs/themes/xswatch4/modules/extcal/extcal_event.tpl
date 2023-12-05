@@ -123,7 +123,7 @@
 </div>
 <{/if}>
 
-<{if isset($event_attachement) && $event_attachement|is_array && count($event_attachement) > 0}>
+<{if isset($event_attachement) && is_array($event_attachement) && count($event_attachement) > 0}>
 <div>
     <h5><{$smarty.const.THEME_EVENT_DOWNLOADS}></h5>
     <table class="table table-sm table-hover">

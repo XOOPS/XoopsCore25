@@ -760,6 +760,9 @@ class XoopsModuleHandler extends XoopsObjectHandler
     public function getByDirname($dirname)
     {
         $dirname = basename($dirname);
+        // Sanitize $dirname to prevent SQL injection
+        $dirname = $this->db->escape(trim($dirname));
+
         //could not we check for spaces instead??
         if (strpos(strtolower($dirname), ' union ')) {
             return false;
@@ -770,8 +773,11 @@ class XoopsModuleHandler extends XoopsObjectHandler
             return $_cachedModule_dirname[$dirname];
         } else {
             $module = false;
-            $sql    = 'SELECT * FROM ' . $this->db->prefix('modules') . " WHERE dirname = '" . trim($dirname) . "'";
-            $result = $this->db->query($sql);
+            $sql    = 'SELECT * FROM ' . $this->db->prefix('modules') . ' WHERE dirname = ?';
+            $stmt   = $this->db->conn->prepare($sql);
+            $stmt->bind_param('s',  $dirname);
+            $result = $stmt->execute();
+
             if (!$this->db->isResultSet($result)) {
                 return $module;
             }

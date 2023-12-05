@@ -30,7 +30,7 @@ class Ulid
      *
      * @return string The generated ULID.
      */
-    public static function generate(bool $upperCase = true): string
+    public static function generate($upperCase = true)
     {
         $time = self::microtimeToUlidTime(\microtime(true));
         $timeChars = self::encodeTime($time);
@@ -47,7 +47,7 @@ class Ulid
      *
      * @return string
      */
-    public static function encodeTime(int $time): string
+    public static function encodeTime($time)
     {
         $encodingCharsArray = str_split(self::ENCODING_CHARS);
         $timeChars = '';
@@ -59,7 +59,7 @@ class Ulid
         return $timeChars;
     }
 
-    public static function encodeRandomness(): string
+    public static function encodeRandomness()
     {
         $encodingCharsArray = str_split(self::ENCODING_CHARS);
         $randomBytes = \random_bytes(10); // 80 bits
@@ -86,7 +86,7 @@ class Ulid
      *
      * @return array
      */
-    public static function decode(string $ulid): array
+    public static function decode($ulid)
     {
         if (!self::isValid($ulid)) {
             throw new \InvalidArgumentException('Invalid ULID string');
@@ -106,7 +106,7 @@ class Ulid
      *
      * @return int
      */
-    public static function decodeTime(string $ulid): int
+    public static function decodeTime($ulid)
     {
 //        $encodingCharsArray = str_split(self::ENCODING_CHARS);
 
@@ -131,7 +131,7 @@ class Ulid
      *
      * @return int
      */
-    public static function decodeRandomness(string $ulid): int
+    public static function decodeRandomness($ulid)
     {
         if (26 !== strlen($ulid)) {
             throw new \InvalidArgumentException('Invalid ULID length');  // Changed line
@@ -158,7 +158,7 @@ class Ulid
      *
      * @return bool
      */
-    public static function isValid(string $ulid): bool
+    public static function isValid($ulid)
     {
         // Check the length of the ULID string before throwing an exception.
         if (26 !== strlen($ulid)) {
@@ -180,7 +180,7 @@ class Ulid
      *
      * @return int
      */
-    public static function microtimeToUlidTime(float $microtime): int
+    public static function microtimeToUlidTime($microtime)
     {
         $timestamp = $microtime * 1000000;
         $unixEpoch = 946684800000000; // Microseconds since the Unix epoch.
@@ -188,6 +188,3 @@ class Ulid
         return (int)($timestamp - $unixEpoch);
     }
 }
-
-
-

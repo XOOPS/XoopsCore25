@@ -287,16 +287,20 @@ if (!class_exists('XoopsGTicket')) {
                 if ($key === 'XOOPS_G_TICKET') {
                     continue;
                 }
-                if (@get_magic_quotes_gpc()) {
-                    $key = stripslashes($key);
+                if (PHP_VERSION_ID < 50400) {
+                    if (get_magic_quotes_gpc()) {
+                        $key = stripslashes($key);
+                    }
                 }
                 if (is_array($val)) {
                     list($tmp_table, $tmp_form) = $this->extract_post_recursive(htmlspecialchars($key, ENT_QUOTES), $val);
                     $table .= $tmp_table;
                     $form .= $tmp_form;
                 } else {
-                    if (@get_magic_quotes_gpc()) {
-                        $val = stripslashes($val);
+                    if (PHP_VERSION_ID < 50400) {
+                        if (get_magic_quotes_gpc()) {
+                            $val = stripslashes($val);
+                        }
                     }
                     $table .= '<tr><th>' . htmlspecialchars($key, ENT_QUOTES) . '</th><td>' . htmlspecialchars($val, ENT_QUOTES) . '</td></tr>' . "\n";
                     $form .= '<input type="hidden" name="' . htmlspecialchars($key, ENT_QUOTES) . '" value="' . htmlspecialchars($val, ENT_QUOTES) . '" />' . "\n";
@@ -319,16 +323,20 @@ if (!class_exists('XoopsGTicket')) {
             $table = '';
             $form  = '';
             foreach ($tmp_array as $key => $val) {
-                if (@get_magic_quotes_gpc()) {
-                    $key = stripslashes($key);
+                if (PHP_VERSION_ID < 50400) {
+                    if (get_magic_quotes_gpc()) {
+                        $key = stripslashes($key);
+                    }
                 }
                 if (is_array($val)) {
                     list($tmp_table, $tmp_form) = $this->extract_post_recursive($key_name . '[' . htmlspecialchars($key, ENT_QUOTES) . ']', $val);
                     $table .= $tmp_table;
                     $form .= $tmp_form;
                 } else {
-                    if (@get_magic_quotes_gpc()) {
-                        $val = stripslashes($val);
+                    if (PHP_VERSION_ID < 50400) {
+                        if (get_magic_quotes_gpc()) {
+                            $val = stripslashes($val);
+                        }
                     }
                     $table .= '<tr><th>' . $key_name . '[' . htmlspecialchars($key, ENT_QUOTES) . ']</th><td>' . htmlspecialchars($val, ENT_QUOTES) . '</td></tr>' . "\n";
                     $form .= '<input type="hidden" name="' . $key_name . '[' . htmlspecialchars($key, ENT_QUOTES) . ']" value="' . htmlspecialchars($val, ENT_QUOTES) . '" />' . "\n";

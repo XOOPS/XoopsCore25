@@ -16,6 +16,7 @@
  * @since
  * @author       XOOPS Development Team, Kazumi Ono (AKA onokazu)
  */
+xoops_loadLanguage('modinfo', 'system');
 
 $modversion['name']        = _MI_SYSTEM_NAME;
 $modversion['version']     = '2.1.7-Stable';
@@ -94,15 +95,12 @@ $modversion['templates'][] = array('file' => 'system_bannerdisplay.html', 'descr
 $modversion['templates'][] = array('file' => 'system_header.tpl', 'description' => '', 'type' => 'admin');
 $modversion['templates'][] = array('file' => 'system_banners.tpl', 'description' => '', 'type' => 'admin');
 $modversion['templates'][] = array('file' => 'system_modules.tpl', 'description' => '', 'type' => 'admin');
-$modversion['templates'][] = array('file' => 'system_modules_install.tpl', 'description' => '', 'type' => 'admin');
 $modversion['templates'][] = array('file' => 'system_modules_confirm.tpl', 'description' => '', 'type' => 'admin');
-$modversion['templates'][] = array('file' => 'system_modules_result.tpl', 'description' => '', 'type' => 'admin');
 $modversion['templates'][] = array('file' => 'system_avatars.tpl', 'description' => '', 'type' => 'admin');
 $modversion['templates'][] = array('file' => 'system_smilies.tpl', 'description' => '', 'type' => 'admin');
 $modversion['templates'][] = array('file' => 'system_blocks.tpl', 'description' => '', 'type' => 'admin');
 $modversion['templates'][] = array('file' => 'system_blocks_item.tpl', 'description' => '', 'type' => 'admin');
 $modversion['templates'][] = array('file' => 'system_comments.tpl', 'description' => '', 'type' => 'admin');
-$modversion['templates'][] = array('file' => 'system_comments_list.tpl', 'description' => '', 'type' => 'admin');
 $modversion['templates'][] = array('file' => 'system_userrank.tpl', 'description' => '', 'type' => 'admin');
 $modversion['templates'][] = array('file' => 'system_users.tpl', 'description' => '', 'type' => 'admin');
 $modversion['templates'][] = array('file' => 'system_preferences.tpl', 'description' => '', 'type' => 'admin');
@@ -110,7 +108,6 @@ $modversion['templates'][] = array('file' => 'system_mailusers.tpl', 'descriptio
 $modversion['templates'][] = array('file' => 'system_groups.tpl', 'description' => '', 'type' => 'admin');
 $modversion['templates'][] = array('file' => 'system_images.tpl', 'description' => '', 'type' => 'admin');
 $modversion['templates'][] = array('file' => 'system_templates.tpl', 'description' => '', 'type' => 'admin');
-$modversion['templates'][] = array('file' => 'system_filemanager.tpl', 'description' => '', 'type' => 'admin');
 $modversion['templates'][] = array('file' => 'system_index.tpl', 'description' => '', 'type' => 'admin');
 $modversion['templates'][] = array('file' => 'system_maintenance.tpl', 'description' => '', 'type' => 'admin');
 $modversion['templates'][] = array('file' => 'system_help.tpl', 'description' => '', 'type' => 'admin');

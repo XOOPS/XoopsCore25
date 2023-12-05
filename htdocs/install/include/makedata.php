@@ -106,19 +106,14 @@ function make_data($dbm, $adminname, $hashedAdminPass, $adminmail, $language, $g
     $dbm->insert('modules', " VALUES (1, '" . _MI_SYSTEM_NAME . "', '" . $modversion['version'] . "', " . $time . ", 0, 1, 'system', 0, 1, 0, 0, 0, 0)");
 
     foreach ($modversion['templates'] as $tplfile) {
-        // Main templates
-        if ($fp = fopen(XOOPS_ROOT_PATH . '/modules/system/templates/' . $tplfile['file'], 'r')) {
-            $newtplid = $dbm->insert('tplfile', " VALUES (0, 1, 'system', 'default', '" . addslashes($tplfile['file']) . "', '" . addslashes($tplfile['description']) . "', " . $time . ', ' . $time . ", 'module')");
-            // $newtplid = $xoopsDB->getInsertId();
-            $tplsource = fread($fp, filesize(XOOPS_ROOT_PATH . '/modules/system/templates/' . $tplfile['file']));
-            fclose($fp);
-            $dbm->insert('tplsource', ' (tpl_id, tpl_source) VALUES (' . $newtplid . ", '" . addslashes($tplsource) . "')");
-        }
-        // Admin templates
-        if ($fp = fopen(XOOPS_ROOT_PATH . '/modules/system/templates/admin/' . $tplfile['file'], 'r')) {
-            $newtplid = $dbm->insert('tplfile', " VALUES (0, 1, 'system', 'default', '" . addslashes($tplfile['file']) . "', '" . addslashes($tplfile['description']) . "', " . $time . ', ' . $time . ", 'admin')");
-            // $newtplid = $xoopsDB->getInsertId();
-            $tplsource = fread($fp, filesize(XOOPS_ROOT_PATH . '/modules/system/templates/admin/' . $tplfile['file']));
+        $templateType = isset($tplfile['type']) && $tplfile['type'] === 'admin' ? 'admin' : 'module';
+        $templatePath = $templateType === 'admin'
+            ? XOOPS_ROOT_PATH . '/modules/system/templates/admin/' . $tplfile['file']
+            : XOOPS_ROOT_PATH . '/modules/system/templates/' . $tplfile['file'];
+
+        if ($fp = fopen($templatePath, 'r')) {
+            $newtplid = $dbm->insert('tplfile', " VALUES (0, 1, 'system', 'default', '" . addslashes($tplfile['file']) . "', '" . addslashes($tplfile['description']) . "', " . $time . ', ' . $time . ", '$templateType')");
+            $tplsource = fread($fp, filesize($templatePath));
             fclose($fp);
             $dbm->insert('tplsource', ' (tpl_id, tpl_source) VALUES (' . $newtplid . ", '" . addslashes($tplsource) . "')");
         }

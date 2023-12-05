@@ -343,7 +343,7 @@ if ($xoopsConfig['closesite'] == 1) {
  * Load Xoops Module
  */
 if (file_exists('./xoops_version.php')) {
-    $url_arr        = explode('/', strstr($_SERVER['PHP_SELF'], '/modules/'));
+    $url_arr        = explode('/', stristr($_SERVER['PHP_SELF'], '/modules/'));
     /** @var XoopsModuleHandler $module_handler */
     $module_handler = xoops_getHandler('module');
     $xoopsModule    = $module_handler->getByDirname($url_arr[2]);
