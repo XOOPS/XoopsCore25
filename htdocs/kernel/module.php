@@ -173,35 +173,35 @@ class XoopsModule extends XoopsObject
         return $this->modinfo;
     }
 
-	/**
+    /**
      * Get status
      *
      * @return string
      */
     public function getStatus()
     {
-		return substr(strrchr($this->getVar('version'), '-'), 1);
+        return substr(strrchr($this->getVar('version'), '-'), 1);
     }
 
-	/**
+    /**
      * Compares two "XOOPS-standardized" version number strings.
      *
-	 * @param  string $version1
+     * @param  string $version1
      * @param  string $version2
      * @param  string $operator
      * @return boolean The function will return true if the relationship is the one specified by the operator, false otherwise.
      */
     public function versionCompare($version1 = '',$version2 = '', $operator = '<')
     {
-		$version1 = strtolower($version1);
-		$version2 = strtolower($version2);
-		if (false !== strpos($version2, '-stable')){
-			$version2 = substr($version2, 0, strpos($version2, '-stable'));
-		}
-		if (false !== strpos($version1, '-stable')){
-			$version1 = substr($version1, 0, strpos($version1, '-stable'));
-		}
-		return version_compare($version1, $version2, $operator);
+        $version1 = strtolower($version1);
+        $version2 = strtolower($version2);
+        if (false !== strpos($version2, '-stable')){
+            $version2 = substr($version2, 0, strpos($version2, '-stable'));
+        }
+        if (false !== strpos($version1, '-stable')){
+            $version1 = substr($version1, 0, strpos($version1, '-stable'));
+        }
+        return version_compare($version1, $version2, $operator);
     }
 
     /**
@@ -776,7 +776,11 @@ class XoopsModuleHandler extends XoopsObjectHandler
             $sql    = 'SELECT * FROM ' . $this->db->prefix('modules') . ' WHERE dirname = ?';
             $stmt   = $this->db->conn->prepare($sql);
             $stmt->bind_param('s',  $dirname);
-            $result = $stmt->execute();
+            $success = $stmt->execute();
+            if (!$success) {
+                return $module;
+            }
+            $result = $stmt->get_result();
 
             if (!$this->db->isResultSet($result)) {
                 return $module;
@@ -821,7 +825,7 @@ class XoopsModuleHandler extends XoopsObjectHandler
             $sql = sprintf('INSERT INTO %s (mid, name, version, last_update, weight, isactive, dirname, hasmain, hasadmin, hassearch, hasconfig, hascomments, hasnotification) VALUES (%u, %s, %s, %u, %u, %u, %s, %u, %u, %u, %u, %u, %u)', $this->db->prefix('modules'), $mid, $this->db->quoteString($name), $this->db->quoteString($version), time(), $weight, 1, $this->db->quoteString($dirname), $hasmain, $hasadmin, $hassearch, $hasconfig, $hascomments, $hasnotification);
         } else {
             $sql = sprintf('UPDATE %s SET name = %s, dirname = %s, version = %s, last_update = %u, weight = %u, isactive = %u, hasmain = %u, hasadmin = %u, hassearch = %u, hasconfig = %u, hascomments = %u, hasnotification = %u WHERE mid = %u', $this->db->prefix('modules'), $this->db->quoteString($name), $this->db->quoteString($dirname), $this->db->quoteString($version), time(), $weight, $isactive, $hasmain, $hasadmin, $hassearch, $hasconfig, $hascomments, $hasnotification, $mid);
-		}
+        }
         if (!$result = $this->db->query($sql)) {
             return false;
         }
