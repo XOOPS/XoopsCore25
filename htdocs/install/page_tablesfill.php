@@ -45,6 +45,13 @@ if (!defined('_DB_QUERY_ERROR')) {
         include_once (XOOPS_ROOT_PATH . '/language/english/global.php');
     }
 }
+if (!function_exists('xoops_loadLanguage')) {
+    function xoops_loadLanguage($name, $domain = '', $language = null) {
+        // This may get called even though we loaded the required language files.
+        // This function just needs to exist to keep all things happy.
+    }
+}
+
 $dbm = new Db_manager();
 
 if (!$dbm->isConnectable()) {
