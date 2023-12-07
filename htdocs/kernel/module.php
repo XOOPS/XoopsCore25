@@ -776,7 +776,11 @@ class XoopsModuleHandler extends XoopsObjectHandler
             $sql    = 'SELECT * FROM ' . $this->db->prefix('modules') . ' WHERE dirname = ?';
             $stmt   = $this->db->conn->prepare($sql);
             $stmt->bind_param('s',  $dirname);
-            $result = $stmt->execute();
+            $success = $stmt->execute();
+            if (!$success) {
+                return $module;
+            }
+            $result = $stmt->get_result();
 
             if (!$this->db->isResultSet($result)) {
                 return $module;
