@@ -148,7 +148,7 @@
             <input type="checkbox" name="post_id[]" id="post_id[<{$topic_post.post_id}>]" value="<{$topic_post.post_id}>">
     <{else}>
         <{if !empty($topic_post.thread_buttons)}>
-            <{assign var='bantext' value=`$smarty.const._MD_NEWBB_SUSPEND_MANAGEMENT`}>
+                <{assign var='bantext' value=$smarty.const._MD_NEWBB_SUSPEND_MANAGEMENT}>
                 <{assign var='banprompt' value=">$bantext<"}>
 
                 <{foreach item=btn from=$topic_post.thread_buttons|default:null}>
