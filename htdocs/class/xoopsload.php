@@ -53,7 +53,7 @@ class XoopsLoad
             if (isset($GLOBALS['xoopsLogger'])) {
                 $GLOBALS['xoopsLogger']->addDeprecated("xoops_load('{$name}') is deprecated, use xoops_load('{$deprecated[$name]}')");
             } else {
-                trigger_error("xoops_load('{$name}') is deprecated, use xoops_load('{$deprecated[$name]}')", E_USER_WARNING);
+                trigger_error("xoops_load('{$name}') is deprecated, use xoops_load('{$deprecated[$name]}')", E_USER_DEPRECATED);
             }
             $name = $deprecated[$name];
         }
