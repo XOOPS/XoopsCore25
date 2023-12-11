@@ -102,7 +102,7 @@
 
 <!-- <{$commentsnav}> -->
 
-<{$lang_notice}>
+<{$lang_notice|default:''}>
 
 <{if isset($comment_mode)}>
     <{if $comment_mode == "flat"}>

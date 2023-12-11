@@ -106,7 +106,8 @@
     </div><!-- .xoopstube-data -->
 </div><!-- .xoopstube -->
 
-<{$commentsnav}> <{$lang_notice}>
+<{$commentsnav}>
+<{$lang_notice|default:''}>
 
 <{if isset($comment_mode)}>
     <{if $comment_mode == "flat"}>

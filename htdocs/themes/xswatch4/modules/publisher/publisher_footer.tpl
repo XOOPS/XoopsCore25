@@ -1,7 +1,7 @@
 <{if isset($isAdmin) && $isAdmin == 1}>
     <div class="publisher_adminlinks"><{$publisher_adminpage}></div><{/if}>
 
-<{if (!empty($commentatarticlelevel) && !empty($item.cancomment)) || isset($com_rule) && $com_rule != 0}>
+<{if (!empty($commentatarticlelevel) && !empty($item.cancomment)) || (isset($com_rule) && $com_rule != 0)}>
     <table border="0" width="100%" cellspacing="1" cellpadding="0" align="center">
     <tr>
         <td colspan="3" align="left">

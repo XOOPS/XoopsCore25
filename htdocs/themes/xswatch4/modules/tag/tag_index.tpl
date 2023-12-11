@@ -1,4 +1,4 @@
-<!-- phppp (D.J.): http://xoopsforge.com; https://xoops.org.cn -->
+<!-- phppp (D.J.): https://xoopsforge.com; https://xoops.org.cn -->
 
 <ol class="breadcrumb">
     <li class="breadcrumb-item"><a href="<{$xoops_url}>/modules/<{$xoops_dirname}>/" title="<{$smarty.const._MD_TAG_TAGS}>"><{$smarty.const._MD_TAG_TAGS}></a></li>
