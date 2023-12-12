@@ -77,7 +77,7 @@ switch ($op) {
         foreach ($installed_mods as $module) {
             /** @var XoopsModule $module */
             $listed_mods[$i]                  = $module->toArray();
-            $listed_mods[$i]['name']          = htmlspecialchars($module->getVar('name'), ENT_QUOTES);
+            $listed_mods[$i]['name']          = htmlspecialchars($module->getVar('name'), ENT_QUOTES | ENT_HTML5);
             $listed_mods[$i]['image']         = $module->getInfo('image');
             $listed_mods[$i]['adminindex']    = $module->getInfo('adminindex');
             $listed_mods[$i]['version']       = $module->getVar('version');
@@ -161,7 +161,7 @@ switch ($op) {
                 if (!in_array($file, $install_mods)) {
                     $module = $module_handler->create();
                     $module->loadInfo($file);
-                    $toinstall_mods[$i]['name']          = htmlspecialchars($module->getInfo('name'), ENT_QUOTES);
+                    $toinstall_mods[$i]['name']          = htmlspecialchars($module->getInfo('name'), ENT_QUOTES | ENT_HTML5);
                     $toinstall_mods[$i]['dirname']       = $module->getInfo('dirname');
                     $toinstall_mods[$i]['image']         = $module->getInfo('image');
                     $toinstall_mods[$i]['version']       = $module->getInfo('version');

@@ -50,12 +50,12 @@ if (!$allowed) {
                           'xoops_theme'       => $xoopsConfig['theme_set'],
                           'xoops_imageurl'    => XOOPS_THEME_URL . '/' . $xoopsConfig['theme_set'] . '/',
                           'xoops_themecss'    => xoops_getcss($xoopsConfig['theme_set']),
-                          'xoops_requesturi'  => htmlspecialchars($_SERVER['REQUEST_URI'], ENT_QUOTES),
-                          'xoops_sitename'    => htmlspecialchars($xoopsConfig['sitename'], ENT_QUOTES),
-                          'xoops_slogan'      => htmlspecialchars($xoopsConfig['slogan'], ENT_QUOTES),
+                          'xoops_requesturi'  => htmlspecialchars($_SERVER['REQUEST_URI'], ENT_QUOTES | ENT_HTML5),
+                          'xoops_sitename'    => htmlspecialchars($xoopsConfig['sitename'], ENT_QUOTES | ENT_HTML5),
+                          'xoops_slogan'      => htmlspecialchars($xoopsConfig['slogan'], ENT_QUOTES | ENT_HTML5),
                           'xoops_dirname'     => !empty($xoopsModule) ? $xoopsModule->getVar('dirname') : 'system',
                           'xoops_banner'      => $xoopsConfig['banners'] ? xoops_getbanner() : '&nbsp;',
-                          'xoops_pagetitle'   => isset($xoopsModule) && is_object($xoopsModule) ? $xoopsModule->getVar('name') : htmlspecialchars($xoopsConfig['slogan'], ENT_QUOTES),
+                          'xoops_pagetitle'   => isset($xoopsModule) && is_object($xoopsModule) ? $xoopsModule->getVar('name') : htmlspecialchars($xoopsConfig['slogan'], ENT_QUOTES | ENT_HTML5),
                           'lang_login'        => _LOGIN,
                           'lang_username'     => _USERNAME,
                           'lang_password'     => _PASSWORD,
@@ -79,7 +79,7 @@ if (!$allowed) {
             $value = str_replace('{X_YEAR}', date('Y', time()), $value);
         }
         if (substr($name, 0, 5) === 'meta_') {
-            $xoopsTpl->assign("xoops_$name", htmlspecialchars($value, ENT_QUOTES));
+            $xoopsTpl->assign("xoops_$name", htmlspecialchars($value, ENT_QUOTES | ENT_HTML5));
         } else {
             // prefix each tag with 'xoops_'
             $xoopsTpl->assign("xoops_$name", $value);

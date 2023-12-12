@@ -31,7 +31,7 @@ class MytsMp3 extends MyTextSanitizerExtension
     public function encode($textarea_id)
     {
         $code = "<button type='button' class='btn btn-default' onclick='xoopsCodeMp3(\"{$textarea_id}\",\""
-            . htmlspecialchars(_XOOPS_FORM_ENTERMP3URL, ENT_QUOTES)
+            . htmlspecialchars(_XOOPS_FORM_ENTERMP3URL, ENT_QUOTES | ENT_HTML5)
             . "\");' onmouseover='style.cursor=\"hand\"' title='" . _XOOPS_FORM_ALTMP3
             . "'><span class='fa fa-fw fa-music' aria-hidden='true'></span></button>";
 

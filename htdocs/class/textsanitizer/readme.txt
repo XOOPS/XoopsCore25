@@ -16,7 +16,7 @@ class MytsMycode extends MyTextSanitizerExtension
         // If the extension has config data, load it
         $config = parent::loadConfig(__DIR__);
         // Make sure that the icon is available /images/form/mycode.gif
-        $code = "<img src='{$this->image_path}/mycode.gif' alt='" . _XOOPS_FORM_ALTMYCODE . "' onclick='xoopsCodeMycode(\"{$textarea_id}\",\"" . htmlspecialchars(_XOOPS_FORM_ENTERMYCODETERM, ENT_QUOTES) . "\");'  onmouseover='style.cursor=\"hand\"'/>&nbsp;";
+        $code = "<img src='{$this->image_path}/mycode.gif' alt='" . _XOOPS_FORM_ALTMYCODE . "' onclick='xoopsCodeMycode(\"{$textarea_id}\",\"" . htmlspecialchars(_XOOPS_FORM_ENTERMYCODETERM, ENT_QUOTES | ENT_HTML5) . "\");'  onmouseover='style.cursor=\"hand\"'/>&nbsp;";
         $javascript = <<<EOH
             function xoopsCodeMycode(id, enterMycodePhrase){
                 if (enterMycodePhrase == null) {

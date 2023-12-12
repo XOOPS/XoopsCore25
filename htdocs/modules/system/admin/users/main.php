@@ -153,11 +153,11 @@ switch ($op) {
             $edituser = $member_handler->getUser($uid);
             if ($edituser->getVar('uname', 'n') != Request::getString('username') && $member_handler->getUserCount(new Criteria('uname', $myts->addSlashes(Request::getString('username')))) > 0) {
                 xoops_cp_header();
-                xoops_error(sprintf(_AM_SYSTEM_USERS_PSEUDO_ERROR, htmlspecialchars(Request::getString('username'), ENT_QUOTES)));
+                xoops_error(sprintf(_AM_SYSTEM_USERS_PSEUDO_ERROR, htmlspecialchars(Request::getString('username'), ENT_QUOTES | ENT_HTML5)));
                 xoops_cp_footer();
             } elseif ($edituser->getVar('email', 'n') != Request::getEmail('email') && $member_handler->getUserCount(new Criteria('email', $myts->addSlashes(Request::getEmail('email')))) > 0) {
                 xoops_cp_header();
-                xoops_error(sprintf(_AM_SYSTEM_USERS_MAIL_ERROR, htmlspecialchars(Request::getEmail('email'), ENT_QUOTES)));
+                xoops_error(sprintf(_AM_SYSTEM_USERS_MAIL_ERROR, htmlspecialchars(Request::getEmail('email'), ENT_QUOTES | ENT_HTML5)));
                 xoops_cp_footer();
             } else {
                 $edituser->setVar('name', Request::getString('name'));
@@ -236,7 +236,7 @@ switch ($op) {
                 $member_handler = xoops_getHandler('member');
                 // make sure the username doesnt exist yet
                 if ($member_handler->getUserCount(new Criteria('uname', $myts->addSlashes(Request::getString('username')))) > 0) {
-                    $adduser_errormsg = 'User name ' . htmlspecialchars(Request::getString('username'), ENT_QUOTES) . ' already exists';
+                    $adduser_errormsg = 'User name ' . htmlspecialchars(Request::getString('username'), ENT_QUOTES | ENT_HTML5) . ' already exists';
                 } else {
                     $newuser = $member_handler->createUser();
                     if (isset($user_viewemail)) {
@@ -494,7 +494,7 @@ switch ($op) {
                         $criteria->add(new Criteria('uname', '%' . $myts->addSlashes($user_uname) . '%', 'LIKE'));
                         break;
                 }
-                $requete_pagenav .= '&amp;user_uname=' . htmlspecialchars($user_uname, ENT_QUOTES) . '&amp;user_uname_match=' . htmlspecialchars($user_uname_match, ENT_QUOTES);
+                $requete_pagenav .= '&amp;user_uname=' . htmlspecialchars($user_uname, ENT_QUOTES | ENT_HTML5) . '&amp;user_uname_match=' . htmlspecialchars($user_uname_match, ENT_QUOTES | ENT_HTML5);
                 $requete_search .= 'uname : ' . $user_uname . ' et user_uname_match=' . $user_uname_match . '<br>';
             }
             $user_name = Request::getString('username');
@@ -515,7 +515,7 @@ switch ($op) {
                         $criteria->add(new Criteria('name', '%' . $myts->addSlashes(Request::getString('user_name', '', 'POST')) . '%', 'LIKE'));
                         break;
                 }
-                $requete_pagenav .= '&amp;user_name=' . htmlspecialchars($user_name, ENT_QUOTES) . '&amp;user_name_match=' . htmlspecialchars(Request::getString('user_name_match'), ENT_QUOTES);
+                $requete_pagenav .= '&amp;user_name=' . htmlspecialchars($user_name, ENT_QUOTES | ENT_HTML5) . '&amp;user_name_match=' . htmlspecialchars(Request::getString('user_name_match'), ENT_QUOTES | ENT_HTML5);
                 $requete_search .= 'name : ' . $user_name . ' et user_name_match=' . $user_name_match . '<br>';
             }
             $user_email = Request::getString('user_email');
@@ -536,7 +536,7 @@ switch ($op) {
                         $criteria->add(new Criteria('email', '%' . $myts->addSlashes($user_email) . '%', 'LIKE'));
                         break;
                 }
-                $requete_pagenav .= '&amp;user_email=' . htmlspecialchars($user_email, ENT_QUOTES) . '&amp;user_email_match=' . htmlspecialchars($user_email_match, ENT_QUOTES);
+                $requete_pagenav .= '&amp;user_email=' . htmlspecialchars($user_email, ENT_QUOTES | ENT_HTML5) . '&amp;user_email_match=' . htmlspecialchars($user_email_match, ENT_QUOTES | ENT_HTML5);
                 $requete_search .= 'email : ' . $user_email . ' et user_email_match=' . $user_email_match . '<br>';
             }
             $user_url = Request::getString('user_url');
@@ -544,7 +544,7 @@ switch ($op) {
             if (Request::hasVar('user_url')) {
                 $url = formatURL(Request::getUrl('user_url'));
                 $criteria->add(new Criteria('url', '%' . $myts->addSlashes($url) . '%', 'LIKE'));
-                $requete_pagenav .= '&amp;user_url=' . htmlspecialchars(Request::getString('user_url'), ENT_QUOTES);
+                $requete_pagenav .= '&amp;user_url=' . htmlspecialchars(Request::getString('user_url'), ENT_QUOTES | ENT_HTML5);
                 $requete_search .= 'url : ' . Request::getString('user_url') . '<br>';
             }
             $user_icq = Request::getString('user_icq');
@@ -565,7 +565,7 @@ switch ($op) {
                         $criteria->add(new Criteria('user_icq', '%' . $myts->addSlashes($user_icq) . '%', 'LIKE'));
                         break;
                 }
-                $requete_pagenav .= '&amp;user_icq=' . htmlspecialchars($user_icq, ENT_QUOTES) . '&amp;user_icq_match=' . htmlspecialchars($user_icq_match, ENT_QUOTES);
+                $requete_pagenav .= '&amp;user_icq=' . htmlspecialchars($user_icq, ENT_QUOTES | ENT_HTML5) . '&amp;user_icq_match=' . htmlspecialchars($user_icq_match, ENT_QUOTES | ENT_HTML5);
                 $requete_search .= 'icq : ' . $user_icq . ' et user_icq_match=' . $user_icq_match . '<br>';
             }
 
@@ -587,7 +587,7 @@ switch ($op) {
                         $criteria->add(new Criteria('user_aim', '%' . $myts->addSlashes($user_aim) . '%', 'LIKE'));
                         break;
                 }
-                $requete_pagenav .= '&amp;user_aim=' . htmlspecialchars($user_aim, ENT_QUOTES) . '&amp;user_aim_match=' . htmlspecialchars($user_aim_match, ENT_QUOTES);
+                $requete_pagenav .= '&amp;user_aim=' . htmlspecialchars($user_aim, ENT_QUOTES | ENT_HTML5) . '&amp;user_aim_match=' . htmlspecialchars($user_aim_match, ENT_QUOTES | ENT_HTML5);
                 $requete_search .= 'aim : ' . $user_aim . ' et user_aim_match=' . $user_aim_match . '<br>';
             }
             $user_yim = Request::getString('user_yim');
@@ -608,7 +608,7 @@ switch ($op) {
                         $criteria->add(new Criteria('user_yim', '%' . $myts->addSlashes(Request::getString('user_yim')) . '%', 'LIKE'));
                         break;
                 }
-                $requete_pagenav .= '&amp;user_yim=' . htmlspecialchars(Request::getString('user_yim'), ENT_QUOTES) . '&amp;user_yim_match=' . htmlspecialchars(Request::getString('user_yim_match'), ENT_QUOTES);
+                $requete_pagenav .= '&amp;user_yim=' . htmlspecialchars(Request::getString('user_yim'), ENT_QUOTES | ENT_HTML5) . '&amp;user_yim_match=' . htmlspecialchars(Request::getString('user_yim_match'), ENT_QUOTES | ENT_HTML5);
                 $requete_search .= 'yim : ' . Request::getString('user_yim') . ' et user_yim_match=' . Request::getString('user_yim_match') . '<br>';
             }
 
@@ -630,25 +630,25 @@ switch ($op) {
                         $criteria->add(new Criteria('user_msnm', '%' . $myts->addSlashes($user_msnm) . '%', 'LIKE'));
                         break;
                 }
-                $requete_pagenav .= '&amp;user_msnm=' . htmlspecialchars($user_msnm . '&amp;user_msnm_match=' . htmlspecialchars($user_msnm_match, ENT_QUOTES), ENT_QUOTES);
+                $requete_pagenav .= '&amp;user_msnm=' . htmlspecialchars($user_msnm . '&amp;user_msnm_match=' . htmlspecialchars($user_msnm_match, ENT_QUOTES | ENT_HTML5), ENT_QUOTES | ENT_HTML5);
                 $requete_search .= 'msn : ' . $user_msnm . ' et user_msnm_match=' . $user_msnm_match . '<br>';
             }
 
             if (Request::hasVar('user_from')) {
                 $criteria->add(new Criteria('user_from', '%' . $myts->addSlashes(Request::getString('user_from')) . '%', 'LIKE'));
-                $requete_pagenav .= '&amp;user_from=' . htmlspecialchars(Request::getString('user_from'), ENT_QUOTES);
+                $requete_pagenav .= '&amp;user_from=' . htmlspecialchars(Request::getString('user_from'), ENT_QUOTES | ENT_HTML5);
                 $requete_search .= 'from : ' . Request::getString('user_from') . '<br>';
             }
 
             if (Request::hasVar('user_intrest')) {
                 $criteria->add(new Criteria('user_intrest', '%' . $myts->addSlashes(Request::getString('user_intrest')) . '%', 'LIKE'));
-                $requete_pagenav .= '&amp;user_intrest=' . htmlspecialchars(Request::getString('user_intrest'), ENT_QUOTES);
+                $requete_pagenav .= '&amp;user_intrest=' . htmlspecialchars(Request::getString('user_intrest'), ENT_QUOTES | ENT_HTML5);
                 $requete_search .= 'interet : ' . Request::getString('user_intrest') . '<br>';
             }
 
             if (Request::hasVar('user_occ')) {
                 $criteria->add(new Criteria('user_occ', '%' . $myts->addSlashes(Request::getString('user_occ')) . '%', 'LIKE'));
-                $requete_pagenav .= '&amp;user_occ=' . htmlspecialchars(Request::getString('user_occ'), ENT_QUOTES);
+                $requete_pagenav .= '&amp;user_occ=' . htmlspecialchars(Request::getString('user_occ'), ENT_QUOTES | ENT_HTML5);
                 $requete_search .= 'location : ' . Request::getString('user_occ') . '<br>';
             }
 
@@ -658,7 +658,7 @@ switch ($op) {
                 if ($time > 0) {
                     $criteria->add(new Criteria('last_login', $time, '<'));
                 }
-                $requete_pagenav .= '&amp;user_lastlog_more=' . htmlspecialchars(Request::getString('user_lastlog_more'), ENT_QUOTES);
+                $requete_pagenav .= '&amp;user_lastlog_more=' . htmlspecialchars(Request::getString('user_lastlog_more'), ENT_QUOTES | ENT_HTML5);
                 $requete_search .= 'derniere connexion apres : ' . Request::getString('user_lastlog_more') . '<br>';
             }
 
@@ -668,7 +668,7 @@ switch ($op) {
                 if ($time > 0) {
                     $criteria->add(new Criteria('last_login', $time, '>'));
                 }
-                $requete_pagenav .= '&amp;user_lastlog_less=' . htmlspecialchars(Request::getString('user_lastlog_less'), ENT_QUOTES);
+                $requete_pagenav .= '&amp;user_lastlog_less=' . htmlspecialchars(Request::getString('user_lastlog_less'), ENT_QUOTES | ENT_HTML5);
                 $requete_search .= 'derniere connexion avant : ' . Request::getString('user_lastlog_less') . '<br>';
             }
 
@@ -678,7 +678,7 @@ switch ($op) {
                 if ($time > 0) {
                     $criteria->add(new Criteria('user_regdate', $time, '<'));
                 }
-                $requete_pagenav .= '&amp;user_regdate=' . htmlspecialchars(Request::getString('user_regdate'), ENT_QUOTES);
+                $requete_pagenav .= '&amp;user_regdate=' . htmlspecialchars(Request::getString('user_regdate'), ENT_QUOTES | ENT_HTML5);
                 $requete_search .= 'enregistre apres : ' . Request::getString('user_reg_more') . '<br>';
             }
 
@@ -689,19 +689,19 @@ switch ($op) {
                 if ($time > 0) {
                     $criteria->add(new Criteria('user_regdate', $time, '>'));
                 }
-                $requete_pagenav .= '&amp;user_reg_less=' . htmlspecialchars(Request::getString('user_reg_less'), ENT_QUOTES);
+                $requete_pagenav .= '&amp;user_reg_less=' . htmlspecialchars(Request::getString('user_reg_less'), ENT_QUOTES | ENT_HTML5);
                 $requete_search .= 'enregistre avant : ' . Request::getString('user_reg_less') . '<br>';
             }
 
             if (Request::hasVar('user_posts_more') && is_numeric(Request::getString('user_posts_more'))) {
                 $criteria->add(new Criteria('posts', (int)Request::getString('user_posts_more'), '>'));
-                $requete_pagenav .= '&amp;user_posts_more=' . htmlspecialchars(Request::getString('user_posts_more'), ENT_QUOTES);
+                $requete_pagenav .= '&amp;user_posts_more=' . htmlspecialchars(Request::getString('user_posts_more'), ENT_QUOTES | ENT_HTML5);
                 $requete_search .= 'posts plus de : ' . Request::getString('user_posts_more') . '<br>';
             }
 
             if (Request::hasVar('user_posts_less') && is_numeric(Request::getString('user_posts_less'))) {
                 $criteria->add(new Criteria('posts', (int)Request::getString('user_posts_less'), '<'));
-                $requete_pagenav .= '&amp;user_posts_less=' . htmlspecialchars(Request::getString('user_posts_less'), ENT_QUOTES);
+                $requete_pagenav .= '&amp;user_posts_less=' . htmlspecialchars(Request::getString('user_posts_less'), ENT_QUOTES | ENT_HTML5);
                 $requete_search .= 'post moins de : ' . Request::getString('user_posts_less') . '<br>';
             }
 
@@ -713,7 +713,7 @@ switch ($op) {
                 } else {
                     $criteria->add(new Criteria('user_mailok', 0, '>='));
                 }
-                $requete_pagenav .= '&amp;user_mailok=' . htmlspecialchars(Request::getString('user_mailok'), ENT_QUOTES);
+                $requete_pagenav .= '&amp;user_mailok=' . htmlspecialchars(Request::getString('user_mailok'), ENT_QUOTES | ENT_HTML5);
                 $requete_search .= 'accept email : ' . Request::getString('user_mailok') . '<br>';
             }
 
@@ -727,7 +727,7 @@ switch ($op) {
                     $user_type = 'actv';
                     $requete_search .= 'actif ou inactif : actif<br>';
                 }
-                $requete_pagenav .= '&amp;user_type=' . htmlspecialchars(Request::getString('user_type'), ENT_QUOTES);
+                $requete_pagenav .= '&amp;user_type=' . htmlspecialchars(Request::getString('user_type'), ENT_QUOTES | ENT_HTML5);
             } else {
                 $criteria->add(new Criteria('level', 0, '>='));
                 $user_type = '';
@@ -738,7 +738,7 @@ switch ($op) {
             if (Request::hasVar('user_sort')) {
                 $userSort = Request::getString('user_sort');
                 $sort = (!in_array($userSort, $validsort)) ? 'uid' : $userSort;
-                $requete_pagenav .= '&amp;user_sort=' . htmlspecialchars($userSort, ENT_QUOTES);
+                $requete_pagenav .= '&amp;user_sort=' . htmlspecialchars($userSort, ENT_QUOTES | ENT_HTML5);
                 $requete_search .= 'order by : ' . $sort . '<br>';
             } else {
                 $sort = 'uid';
@@ -759,7 +759,7 @@ switch ($op) {
             $user_limit = (int)xoops_getModuleOption('users_pager', 'system');
             if (Request::hasVar('user_limit')) {
                 $user_limit = Request::getInt('user_limit');
-                $requete_pagenav .= '&amp;user_limit=' . htmlspecialchars(Request::getString('user_limit'), ENT_QUOTES);
+                $requete_pagenav .= '&amp;user_limit=' . htmlspecialchars(Request::getString('user_limit'), ENT_QUOTES | ENT_HTML5);
                 $requete_search .= 'limit : ' . $user_limit . '<br>';
             } else {
                 $requete_pagenav .= '&amp;user_limit=' . xoops_getModuleOption('users_pager', 'system');
@@ -779,7 +779,7 @@ switch ($op) {
             } else {
                     $groups = array_map('intval', $selgroups);
                 }
-                $requete_pagenav .= '&amp;selgroups=' . htmlspecialchars(implode(',', $selgroups), ENT_QUOTES);
+                $requete_pagenav .= '&amp;selgroups=' . htmlspecialchars(implode(',', $selgroups), ENT_QUOTES | ENT_HTML5);
             }
             //print_r($groups);
             /** @var XoopsMemberHandler $member_handler */

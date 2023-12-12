@@ -36,13 +36,13 @@ class MytsWmp extends MyTextSanitizerExtension
         }
 
         $code = "<button type='button' class='btn btn-default btn-sm' onclick='xoopsCodeWmp(\"{$textarea_id}\",\""
-            . htmlspecialchars(_XOOPS_FORM_ENTERWMPURL, ENT_QUOTES) . "\",\""
-            . htmlspecialchars(_XOOPS_FORM_ALT_ENTERHEIGHT, ENT_QUOTES) . "\",\""
-            . htmlspecialchars(_XOOPS_FORM_ALT_ENTERWIDTH, ENT_QUOTES)
+            . htmlspecialchars(_XOOPS_FORM_ENTERWMPURL, ENT_QUOTES | ENT_HTML5) . "\",\""
+            . htmlspecialchars(_XOOPS_FORM_ALT_ENTERHEIGHT, ENT_QUOTES | ENT_HTML5) . "\",\""
+            . htmlspecialchars(_XOOPS_FORM_ALT_ENTERWIDTH, ENT_QUOTES | ENT_HTML5)
             . "\");' onmouseover='style.cursor=\"hand\"' title='" . _XOOPS_FORM_ALTWMP
             . "'><span class='fa fa-fw fa-windows' aria-hidden='true'></span></button>";
 
-        //$code = "<img src='{$this->image_path}/wmp.gif' alt='" . _XOOPS_FORM_ALTWMP . "' title='" . _XOOPS_FORM_ALTWMP . "' '" . "' onclick='xoopsCodeWmp(\"{$textarea_id}\",\"" . htmlspecialchars(_XOOPS_FORM_ENTERWMPURL, ENT_QUOTES) . "\",\"" . htmlspecialchars(_XOOPS_FORM_ALT_ENTERHEIGHT, ENT_QUOTES) . "\",\"" . htmlspecialchars(_XOOPS_FORM_ALT_ENTERWIDTH, ENT_QUOTES) . "\");'  onmouseover='style.cursor=\"hand\"'/>&nbsp;";
+        //$code = "<img src='{$this->image_path}/wmp.gif' alt='" . _XOOPS_FORM_ALTWMP . "' title='" . _XOOPS_FORM_ALTWMP . "' '" . "' onclick='xoopsCodeWmp(\"{$textarea_id}\",\"" . htmlspecialchars(_XOOPS_FORM_ENTERWMPURL, ENT_QUOTES | ENT_HTML5) . "\",\"" . htmlspecialchars(_XOOPS_FORM_ALT_ENTERHEIGHT, ENT_QUOTES | ENT_HTML5) . "\",\"" . htmlspecialchars(_XOOPS_FORM_ALT_ENTERWIDTH, ENT_QUOTES | ENT_HTML5) . "\");'  onmouseover='style.cursor=\"hand\"'/>&nbsp;";
         $javascript = <<<EOH
             function xoopsCodeWmp(id, enterWmpPhrase, enterWmpHeightPhrase, enterWmpWidthPhrase)
             {

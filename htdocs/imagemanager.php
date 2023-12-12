@@ -39,8 +39,8 @@ switch ($op) {
         require_once $GLOBALS['xoops']->path('class/template.php');
         $xoopsTpl = new XoopsTpl();
         $xoopsTpl->assign('lang_imgmanager', _IMGMANAGER);
-        $xoopsTpl->assign('sitename', htmlspecialchars($xoopsConfig['sitename'], ENT_QUOTES));
-        $target = htmlspecialchars($target, ENT_QUOTES);
+        $xoopsTpl->assign('sitename', htmlspecialchars($xoopsConfig['sitename'], ENT_QUOTES | ENT_HTML5));
+        $target = htmlspecialchars($target, ENT_QUOTES | ENT_HTML5);
         $xoopsTpl->assign('target', $target);
         /** @var XoopsImageCategoryHandler $imgcat_handler */
         $imgcat_handler = xoops_getHandler('imagecategory');
@@ -172,8 +172,8 @@ switch ($op) {
         $xoopsTpl = new XoopsTpl();
         $xoopsTpl->assign('show_cat', $imgcat_id);
         $xoopsTpl->assign('lang_imgmanager', _IMGMANAGER);
-        $xoopsTpl->assign('sitename', htmlspecialchars($xoopsConfig['sitename'], ENT_QUOTES));
-        $xoopsTpl->assign('target', htmlspecialchars($target, ENT_QUOTES));
+        $xoopsTpl->assign('sitename', htmlspecialchars($xoopsConfig['sitename'], ENT_QUOTES | ENT_HTML5));
+        $xoopsTpl->assign('target', htmlspecialchars($target, ENT_QUOTES | ENT_HTML5));
         $xoopsTpl->assign('imgcat_maxsize', $imgcat->getVar('imgcat_maxsize'));
         $xoopsTpl->assign('imgcat_maxwidth', $imgcat->getVar('imgcat_maxwidth'));
         $xoopsTpl->assign('imgcat_maxheight', $imgcat->getVar('imgcat_maxheight'));

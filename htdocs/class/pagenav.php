@@ -57,7 +57,7 @@ class XoopsPageNav
         if ($extra_arg != '' && (substr($extra_arg, -5) !== '&amp;' || substr($extra_arg, -1) !== '&')) {
             $this->extra = '&amp;' . $extra_arg;
         }
-        $this->url = htmlspecialchars(Request::getString('PHP_SELF', '', 'SERVER'), ENT_QUOTES) . '?' . trim($start_name) . '=';
+        $this->url = htmlspecialchars(Request::getString('PHP_SELF', '', 'SERVER'), ENT_QUOTES | ENT_HTML5) . '?' . trim($start_name) . '=';
     }
 
     /**

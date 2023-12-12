@@ -46,7 +46,7 @@ if ($com_itemid > 0) {
     } else {
         $com_title = '';
     }
-    $com_mode = htmlspecialchars(Request::getString('com_mode', '', 'GET'), ENT_QUOTES);
+    $com_mode = htmlspecialchars(Request::getString('com_mode', '', 'GET'), ENT_QUOTES | ENT_HTML5);
 
     /** @var  XoopsUser $xoopsUser */
     if ($com_mode == '') {

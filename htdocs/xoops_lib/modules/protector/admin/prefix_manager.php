@@ -305,7 +305,7 @@ foreach ($prefixes as $prefix) {
         continue;
     }
 
-    $prefix4disp  = htmlspecialchars($prefix['name'], ENT_QUOTES);
+    $prefix4disp  = htmlspecialchars($prefix['name'], ENT_QUOTES | ENT_HTML5);
     $ticket_input = $xoopsGTicket->getTicketHtml(__LINE__, 1800, 'protector_admin');
 
     if ($prefix['name'] == XOOPS_DB_PREFIX) {

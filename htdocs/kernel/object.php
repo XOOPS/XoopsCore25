@@ -476,7 +476,7 @@ class XoopsObject
                         break 1;
                     case 'e':
                     case 'edit':
-                        return htmlspecialchars((string)$ret, ENT_QUOTES);
+                        return htmlspecialchars((string)$ret, ENT_QUOTES | ENT_HTML5);
                         break 1;
                     case 'p':
                     case 'preview':
@@ -490,7 +490,7 @@ class XoopsObject
                         break 1;
                     case 'f':
                     case 'formpreview':
-                        return htmlspecialchars($myts->stripSlashesGPC($ret), ENT_QUOTES);
+                        return htmlspecialchars($myts->stripSlashesGPC($ret), ENT_QUOTES | ENT_HTML5);
                         break 1;
                     case 'n':
                     case 'none':
@@ -542,7 +542,7 @@ class XoopsObject
                         break 1;
                     case 'e':
                     case 'edit':
-                        return htmlspecialchars($ret, ENT_QUOTES);
+                        return htmlspecialchars($ret, ENT_QUOTES | ENT_HTML5);
                         break 1;
                     case 'p':
                     case 'preview':
@@ -550,7 +550,7 @@ class XoopsObject
                         break 1;
                     case 'f':
                     case 'formpreview':
-                        return htmlspecialchars($myts->stripSlashesGPC($ret), ENT_QUOTES);
+                        return htmlspecialchars($myts->stripSlashesGPC($ret), ENT_QUOTES | ENT_HTML5);
                         break 1;
                     case 'n':
                     case 'none':
@@ -571,9 +571,9 @@ class XoopsObject
                     case 'e':
                     case 'edit':
                         if (is_string($ret) && !is_numeric($ret)) {
-                            return htmlspecialchars(date(_DBDATESTRING, strtotime($ret)), ENT_QUOTES);
+                            return htmlspecialchars(date(_DBDATESTRING, strtotime($ret)), ENT_QUOTES | ENT_HTML5);
                         } else {
-                            return htmlspecialchars(date(_DBDATESTRING, $ret), ENT_QUOTES);
+                            return htmlspecialchars(date(_DBDATESTRING, $ret), ENT_QUOTES | ENT_HTML5);
                         }
                         break 1;
                     case 'p':
@@ -587,9 +587,9 @@ class XoopsObject
                     case 'f':
                     case 'formpreview':
                         if (is_string($ret) && !is_numeric($ret)) {
-                            return htmlspecialchars($myts->stripSlashesGPC(date(_DBDATESTRING, strtotime($ret))), ENT_QUOTES);
+                            return htmlspecialchars($myts->stripSlashesGPC(date(_DBDATESTRING, strtotime($ret))), ENT_QUOTES | ENT_HTML5);
                         } else {
-                            return htmlspecialchars($myts->stripSlashesGPC(date(_DBDATESTRING, $ret)), ENT_QUOTES);
+                            return htmlspecialchars($myts->stripSlashesGPC(date(_DBDATESTRING, $ret)), ENT_QUOTES | ENT_HTML5);
                         }
                         break 1;
                     case 'n':
@@ -611,9 +611,9 @@ class XoopsObject
                     case 'e':
                     case 'edit':
                         if (is_string($ret) && !is_numeric($ret)) {
-                            return htmlspecialchars(date(_DBTIMESTRING, strtotime($ret)), ENT_QUOTES);
+                            return htmlspecialchars(date(_DBTIMESTRING, strtotime($ret)), ENT_QUOTES | ENT_HTML5);
                         } else {
-                            return htmlspecialchars(date(_DBTIMESTRING, $ret), ENT_QUOTES);
+                            return htmlspecialchars(date(_DBTIMESTRING, $ret), ENT_QUOTES | ENT_HTML5);
                         }
                         break 1;
                     case 'p':
@@ -627,9 +627,9 @@ class XoopsObject
                     case 'f':
                     case 'formpreview':
                         if (is_string($ret) && !is_numeric($ret)) {
-                            return htmlspecialchars($myts->stripSlashesGPC(date(_DBTIMESTRING, strtotime($ret))), ENT_QUOTES);
+                            return htmlspecialchars($myts->stripSlashesGPC(date(_DBTIMESTRING, strtotime($ret))), ENT_QUOTES | ENT_HTML5);
                         } else {
-                            return htmlspecialchars($myts->stripSlashesGPC(date(_DBTIMESTRING, $ret)), ENT_QUOTES);
+                            return htmlspecialchars($myts->stripSlashesGPC(date(_DBTIMESTRING, $ret)), ENT_QUOTES | ENT_HTML5);
                         }
                         break 1;
                     case 'n':
@@ -651,9 +651,9 @@ class XoopsObject
                     case 'e':
                     case 'edit':
                         if (is_string($ret) && !is_numeric($ret)) {
-                            return htmlspecialchars(date(_DBTIMESTAMPSTRING, strtotime($ret)), ENT_QUOTES);
+                            return htmlspecialchars(date(_DBTIMESTAMPSTRING, strtotime($ret)), ENT_QUOTES | ENT_HTML5);
                         } else {
-                            return htmlspecialchars(date(_DBTIMESTAMPSTRING, $ret), ENT_QUOTES);
+                            return htmlspecialchars(date(_DBTIMESTAMPSTRING, $ret), ENT_QUOTES | ENT_HTML5);
                         }
                         break 1;
                     case 'p':
@@ -667,9 +667,9 @@ class XoopsObject
                     case 'f':
                     case 'formpreview':
                         if (is_string($ret) && !is_numeric($ret)) {
-                            return htmlspecialchars($myts->stripSlashesGPC(date(_DBTIMESTAMPSTRING, strtotime($ret))), ENT_QUOTES);
+                            return htmlspecialchars($myts->stripSlashesGPC(date(_DBTIMESTAMPSTRING, strtotime($ret))), ENT_QUOTES | ENT_HTML5);
                         } else {
-                            return htmlspecialchars($myts->stripSlashesGPC(date(_DBTIMESTAMPSTRING, $ret)), ENT_QUOTES);
+                            return htmlspecialchars($myts->stripSlashesGPC(date(_DBTIMESTAMPSTRING, $ret)), ENT_QUOTES | ENT_HTML5);
                         }
                         break 1;
                     case 'n':

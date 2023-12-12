@@ -285,7 +285,7 @@ switch ($op) {
                     }
                 }
                 // End edit by voltan
-                $comments_icon = ($comments_arr[$i]->getVar('com_icon') == '') ? '/images/icons/no_posticon.gif' : '/images/subject/' . htmlspecialchars($comments_arr[$i]->getVar('com_icon'), ENT_QUOTES);
+                $comments_icon = ($comments_arr[$i]->getVar('com_icon') == '') ? '/images/icons/no_posticon.gif' : '/images/subject/' . htmlspecialchars($comments_arr[$i]->getVar('com_icon'), ENT_QUOTES | ENT_HTML5);
                 $comments_icon = '<img src="' . XOOPS_URL . $comments_icon . '" alt="" />';
 
                 $comments['comments_id']           = $com_id;

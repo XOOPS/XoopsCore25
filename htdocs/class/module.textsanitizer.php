@@ -286,7 +286,7 @@ class MyTextSanitizer
     {
         $smileys = $this->getSmileys();
         foreach ($smileys as $smile) {
-            $message = str_replace($smile['code'], '<img class="imgsmile" src="' . XOOPS_UPLOAD_URL . '/' . htmlspecialchars($smile['smile_url'], ENT_QUOTES) . '" alt="" />', $message);
+            $message = str_replace($smile['code'], '<img class="imgsmile" src="' . XOOPS_UPLOAD_URL . '/' . htmlspecialchars($smile['smile_url'], ENT_QUOTES | ENT_HTML5) . '" alt="" />', $message);
         }
 
         return $message;
