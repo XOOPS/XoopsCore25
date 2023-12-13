@@ -100,7 +100,7 @@
                         <div class="spacer bold"><{$img.image_nicename|truncate:18:'…':true}></div>
 						<img id="loading_img<{$img.image_id}>" src="./images/spinner.gif" style="display:none;" alt="<{$smarty.const._AM_SYSTEM_LOADING}>"/>
 						<img class="cursorpointer tooltip" id="img<{$img.image_id}>"
-							onclick="system_setStatus( { fct: 'images', op: 'display_img', image_id: <{$img.image_id}> }, 'img<{$img.image_id}>', 'admin.php' )"
+							onclick="system_setStatus( { fct: 'images', op: 'display_img', image_id: '<{$img.image_id}>' }, 'img<{$img.image_id}>', 'admin.php' )"
 							src="<{if $img.image_display}><{xoAdminIcons 'success.png'}><{else}><{xoAdminIcons 'cancel.png'}><{/if}>"
 							alt="<{$smarty.const._IMGDISPLAY}>" title="<{$smarty.const._IMGDISPLAY}>"/>
 						<{if empty($db_store)}>
@@ -198,7 +198,7 @@
 </div>
 <{/if}>
 <{if !empty($multiupload)}>
-    <div class="clear">&nbsp;</div>
+    <div class="clear"></div>
     <{include file="db:system_trigger_uploads.tpl"}>
     <h2><{$imgcat_name}></h2>
     <div id="fine-uploader-manual-trigger"></div>
@@ -208,6 +208,11 @@
     <!-- Your code to create an instance of Fine Uploader and bind to the DOM/template
     ====================================================================== -->
     <script>
+        var imgcat_maxheight = "<{$imgcat_maxheight}>";
+        var imgcat_maxwidth = "<{$imgcat_maxwidth}>";
+        var imgcat_maxsize = "<{$imgcat_maxsize}>";
+        var fineup_debug = "<{$fineup_debug}>";
+
         var manualUploader = new qq.FineUploader({
             element: document.getElementById('fine-uploader-manual-trigger'),
             template: 'qq-template-manual-trigger',
@@ -248,10 +253,10 @@
                 acceptFiles: ['image/jpeg', 'image/gif', 'image/png'],
                 allowedExtensions: ['jpeg', 'jpg', 'png', 'gif'],
                 image: {
-                    maxHeight: <{$imgcat_maxheight}>,
-                    maxWidth: <{$imgcat_maxwidth}>
+                    maxHeight: imgcat_maxheight,
+                    maxWidth: imgcat_maxwidth
                 },
-                sizeLimit: <{$imgcat_maxsize}>
+                sizeLimit: imgcat_maxsize
             },
             autoUpload: false,
             callbacks: {
@@ -259,7 +264,7 @@
                  console.log(qq.format("Error uploading {}.  Reason: {}", name, errorReason));
              }
          },
-        debug: <{$fineup_debug}>
+            debug: fineup_debug
         });
         qq(document.getElementById("trigger-upload")).attach("click", function() {
             manualUploader.uploadStoredFiles();
