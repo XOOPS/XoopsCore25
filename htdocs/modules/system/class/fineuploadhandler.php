@@ -226,6 +226,8 @@ abstract class SystemFineUploadHandler
 
         $mimeType = '';
         if (!empty($this->allowedMimeTypes)) {
+
+            $temp = $this->inputName;
             $mimeType = mime_content_type(Request::getArray($temp, [], 'FILES')['tmp_name']);
             if (!in_array($mimeType, $this->allowedMimeTypes)) {
                 return array('error' => 'File is of an invalid type.', 'preventRetry' => true);
