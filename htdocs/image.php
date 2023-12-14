@@ -648,6 +648,9 @@ XoopsCache::write($edited_image_filename, $cached_image);
 /*
  * Send the edited image to the browser
  */
+if (!is_array($cached_image)) {
+    $cached_image = [];
+}
 // See if the browser already has the image
 $last_modified_string = gmdate('D, d M Y H:i:s', $imageCreatedTime) . ' GMT';
 $etag = md5($imageData);
