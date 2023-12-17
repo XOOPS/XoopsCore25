@@ -743,6 +743,7 @@ class XoopsNotificationHandler extends XoopsObjectHandler
         $tags['X_MODULE_URL']      = XOOPS_URL . '/modules/' . $module->getVar('dirname') . '/';
         $tags['X_NOTIFY_CATEGORY'] = $category;
         $tags['X_NOTIFY_EVENT']    = $event;
+        $tags['X_UNSUBSCRIBE_URL'] = XOOPS_URL . '/notifications.php';
 
         $template_dir = $event_info['mail_template_dir'];
         $template     = $event_info['mail_template'] . '.tpl';
@@ -755,16 +756,13 @@ class XoopsNotificationHandler extends XoopsObjectHandler
 
         foreach ($notifications as $notification) {
             if (empty($omit_user_id) || $notification->getVar('not_uid') != $omit_user_id) {
-                // Initialize specific tags for this notification
-                $specificTags = $tags; // Copy common tags
 
                 // Add user-specific tags
                 //$tags['X_UNSUBSCRIBE_URL'] = 'TODO';
                 // TODO: don't show unsubscribe link if it is 'one-time' ??
-                $specificTags['X_UNSUBSCRIBE_URL'] = XOOPS_URL . '/notifications.php';
 
                 // Notify the user with the merged tags
-                $notification->notifyUser($template_dir, $template, $subject, $specificTags);
+                $notification->notifyUser($template_dir, $template, $subject, $tags);
             }
         }
 
