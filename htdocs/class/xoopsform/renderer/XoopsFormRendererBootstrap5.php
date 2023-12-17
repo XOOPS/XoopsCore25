@@ -543,7 +543,7 @@ EOJS;
         $ele_title   = $element->getTitle();
         $ele_value   = $element->getValue();
         $ele_options = $element->getOptions();
-        $ret = '<select class="form-control" size="'
+        $ret = '<select class="dropdown" width: "auto" size="'
             . $element->getSize() . '"' . $element->getExtra();
         if ($element->isMultiple() != false) {
             $ret .= ' name="' . $ele_name . '[]" id="' . $ele_name . '" title="' . $ele_title
