@@ -735,39 +735,38 @@ class XoopsNotificationHandler extends XoopsObjectHandler
                 }
             }
         }
-        $tags['X_ITEM_NAME']       = !empty($item_info['name']) ? $item_info['name'] : '[' . _NOT_ITEMNAMENOTAVAILABLE . ']';
-        $tags['X_ITEM_URL']        = !empty($item_info['url']) ? $item_info['url'] : '[' . _NOT_ITEMURLNOTAVAILABLE . ']';
-        $tags['X_ITEM_TYPE']       = !empty($category_info['item_name']) ? $category_info['title'] : '[' . _NOT_ITEMTYPENOTAVAILABLE . ']';
-        $tags['X_MODULE']          = $module->getVar('name');
-        $tags['X_MODULE_URL']      = XOOPS_URL . '/modules/' . $module->getVar('dirname') . '/';
-        $tags['X_NOTIFY_CATEGORY'] = $category;
-        $tags['X_NOTIFY_EVENT']    = $event;
+
+        $tags = [
+            'X_ITEM_NAME' => !empty($item_info['name']) ? $item_info['name'] : '[' . _NOT_ITEMNAMENOTAVAILABLE . ']',
+            'X_ITEM_URL' => !empty($item_info['url']) ? $item_info['url'] : '[' . _NOT_ITEMURLNOTAVAILABLE . ']',
+            'X_ITEM_TYPE' => !empty($category_info['item_name']) ? $category_info['title'] : '[' . _NOT_ITEMTYPENOTAVAILABLE . ']',
+            'X_MODULE' => $module->getVar('name'),
+            'X_MODULE_URL' => XOOPS_URL . '/modules/' . $module->getVar('dirname') . '/',
+            'X_NOTIFY_CATEGORY' => $category,
+            'X_NOTIFY_EVENT' => $event,
+        ];
 
         $template_dir = $event_info['mail_template_dir'];
         $template     = $event_info['mail_template'] . '.tpl';
         $subject      = $event_info['mail_subject'];
 
-        $merged_tags = array();
-
-        // First loop: Merge tags only, don't notify
-        foreach ($notifications as $notification) {
-            if (empty($omit_user_id) || $notification->getVar('not_uid') != $omit_user_id) {
-                // user-specific tags
-                $tags = array();
-                $tags['X_UNSUBSCRIBE_URL'] = XOOPS_URL . '/notifications.php';
-
-                // Check if the $tags array is not empty
-                if (!empty($tags)) {
-                    // Merge tags into the merged_tags array
-                    $merged_tags = array_merge($merged_tags, $tags);
-                }
-            }
+        // Pre-merge any extra tags if they are common to all notifications
+        if (!empty($extra_tags)) {
+            $tags = array_merge($tags, $extra_tags);
         }
 
-        // Second loop: Notify users with the merged tags
         foreach ($notifications as $notification) {
             if (empty($omit_user_id) || $notification->getVar('not_uid') != $omit_user_id) {
-                $notification->notifyUser($template_dir, $template, $subject, $merged_tags);
+                // Initialize specific tags for this notification
+                $specificTags = $tags; // Copy common tags
+
+                // Add user-specific tags
+                //$tags['X_UNSUBSCRIBE_URL'] = 'TODO';
+                // TODO: don't show unsubscribe link if it is 'one-time' ??
+                $specificTags['X_UNSUBSCRIBE_URL'] = XOOPS_URL . '/notifications.php';
+
+                // Notify the user with the merged tags
+                $notification->notifyUser($template_dir, $template, $subject, $specificTags);
             }
         }
 
