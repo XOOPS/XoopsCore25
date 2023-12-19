@@ -128,6 +128,10 @@ if ($method === "POST") {
         $result["uploadName"] = $uploader->getUploadName();
     }
 
+    //====================
+    $xoopsLogger->activated = false;
+    //==================
+
     echo json_encode($result);
 } elseif ($method == "DELETE") { // for delete file requests
     $result = $uploader->handleDelete("files");
