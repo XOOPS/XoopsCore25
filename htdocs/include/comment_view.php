@@ -42,7 +42,7 @@ if (XOOPS_COMMENT_APPROVENONE != $xoopsModuleConfig['com_rule']) {
     $com_itemid = (trim($comment_config['itemName']) != '') ? Request::getInt($comment_config['itemName'], 0, 'GET') : 0;
 
     if ($com_itemid > 0) {
-        $com_mode = htmlspecialchars(Request::getString('com_mode', '', 'GET'), ENT_QUOTES);
+        $com_mode = htmlspecialchars(Request::getString('com_mode', '', 'GET'), ENT_QUOTES | ENT_HTML5);
 
         if ($com_mode == '') {
             if (is_object($xoopsUser)) {
@@ -185,7 +185,7 @@ if (XOOPS_COMMENT_APPROVENONE != $xoopsModuleConfig['com_rule']) {
             foreach ($comment_config['extraParams'] as $extra_param) {
                 if (isset(${$extra_param})) {
                     $link_extra .= '&amp;' . $extra_param . '=' . ${$extra_param};
-                    $hidden_value    = htmlspecialchars(${$extra_param}, ENT_QUOTES);
+                    $hidden_value    = htmlspecialchars(${$extra_param}, ENT_QUOTES | ENT_HTML5);
                     $extra_param_val = ${$extra_param};
                 } elseif (isset($_POST[$extra_param])) {
                     $extra_param_val = Request::getString($extra_param, '', 'POST');
@@ -194,7 +194,7 @@ if (XOOPS_COMMENT_APPROVENONE != $xoopsModuleConfig['com_rule']) {
                 }
                 if (isset($extra_param_val)) {
                     $link_extra .= '&amp;' . $extra_param . '=' . $extra_param_val;
-                    $hidden_value = htmlspecialchars($extra_param_val, ENT_QUOTES);
+                    $hidden_value = htmlspecialchars($extra_param_val, ENT_QUOTES | ENT_HTML5);
                     $commentBarHidden .= '<input type="hidden" name="' . $extra_param . '" value="' . $hidden_value . '" />';
                 }
             }

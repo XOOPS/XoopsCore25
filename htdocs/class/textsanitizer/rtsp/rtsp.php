@@ -36,12 +36,12 @@ class MytsRtsp extends MyTextSanitizerExtension
             return array();
         }
         $code = "<button type='button' class='btn btn-default btn-sm' onclick='xoopsCodeRtsp(\"{$textarea_id}\",\""
-            . htmlspecialchars(_XOOPS_FORM_ENTERRTSPURL, ENT_QUOTES) . "\",\""
-            . htmlspecialchars(_XOOPS_FORM_ALT_ENTERHEIGHT, ENT_QUOTES) . "\",\""
-            . htmlspecialchars(_XOOPS_FORM_ALT_ENTERWIDTH, ENT_QUOTES)
+            . htmlspecialchars(_XOOPS_FORM_ENTERRTSPURL, ENT_QUOTES | ENT_HTML5) . "\",\""
+            . htmlspecialchars(_XOOPS_FORM_ALT_ENTERHEIGHT, ENT_QUOTES | ENT_HTML5) . "\",\""
+            . htmlspecialchars(_XOOPS_FORM_ALT_ENTERWIDTH, ENT_QUOTES | ENT_HTML5)
             . "\");' onmouseover='style.cursor=\"hand\"' title='" . _XOOPS_FORM_ALTRTSP
             . "'><span class='fa fa-fw fa-comment-o' aria-hidden='true'></span></button>";
-        // $code = "<img src='{$this->image_path}/rtspimg.gif' alt='" . _XOOPS_FORM_ALTRTSP . "' title='" . _XOOPS_FORM_ALTRTSP . "' '" . "' onclick='xoopsCodeRtsp(\"{$textarea_id}\",\"" . htmlspecialchars(_XOOPS_FORM_ENTERRTSPURL, ENT_QUOTES) . "\",\"" . htmlspecialchars(_XOOPS_FORM_ALT_ENTERHEIGHT, ENT_QUOTES) . "\",\"" . htmlspecialchars(_XOOPS_FORM_ALT_ENTERWIDTH, ENT_QUOTES) . "\");'  onmouseover='style.cursor=\"hand\"'/>&nbsp;";
+        // $code = "<img src='{$this->image_path}/rtspimg.gif' alt='" . _XOOPS_FORM_ALTRTSP . "' title='" . _XOOPS_FORM_ALTRTSP . "' '" . "' onclick='xoopsCodeRtsp(\"{$textarea_id}\",\"" . htmlspecialchars(_XOOPS_FORM_ENTERRTSPURL, ENT_QUOTES | ENT_HTML5) . "\",\"" . htmlspecialchars(_XOOPS_FORM_ALT_ENTERHEIGHT, ENT_QUOTES | ENT_HTML5) . "\",\"" . htmlspecialchars(_XOOPS_FORM_ALT_ENTERWIDTH, ENT_QUOTES | ENT_HTML5) . "\");'  onmouseover='style.cursor=\"hand\"'/>&nbsp;";
         $javascript = <<<EOH
             function xoopsCodeRtsp(id,enterRtspPhrase, enterRtspHeightPhrase, enterRtspWidthPhrase)
             {

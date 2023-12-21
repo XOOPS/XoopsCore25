@@ -36,13 +36,13 @@ class MytsMms extends MyTextSanitizerExtension
             return array();
         }
         $code = "<button type='button' class='btn btn-default btn-sm' onclick='xoopsCodeMms(\"{$textarea_id}\",\""
-            . htmlspecialchars(_XOOPS_FORM_ENTERMMSURL, ENT_QUOTES) . "\",\""
-            . htmlspecialchars(_XOOPS_FORM_ALT_ENTERHEIGHT, ENT_QUOTES) . "\",\""
-            . htmlspecialchars(_XOOPS_FORM_ALT_ENTERWIDTH, ENT_QUOTES)
+            . htmlspecialchars(_XOOPS_FORM_ENTERMMSURL, ENT_QUOTES | ENT_HTML5) . "\",\""
+            . htmlspecialchars(_XOOPS_FORM_ALT_ENTERHEIGHT, ENT_QUOTES | ENT_HTML5) . "\",\""
+            . htmlspecialchars(_XOOPS_FORM_ALT_ENTERWIDTH, ENT_QUOTES | ENT_HTML5)
             . "\");' onmouseover='style.cursor=\"hand\"' title='" . _XOOPS_FORM_ALTMMS
             . "'><span class='fa fa-fw fa-server' aria-hidden='true'></span></button>";
 
-        //$code       = "<img src='{$this->image_path}/mmssrc.gif' alt='" . _XOOPS_FORM_ALTMMS . "' title='" . _XOOPS_FORM_ALTMMS . "' '". "' onclick='xoopsCodeMms(\"{$textarea_id}\",\"" . htmlspecialchars(_XOOPS_FORM_ENTERMMSURL, ENT_QUOTES) . "\",\"" . htmlspecialchars(_XOOPS_FORM_ALT_ENTERHEIGHT, ENT_QUOTES) . "\",\"" . htmlspecialchars(_XOOPS_FORM_ALT_ENTERWIDTH, ENT_QUOTES) . "\");'  onmouseover='style.cursor=\"hand\"'/>&nbsp;";
+        //$code       = "<img src='{$this->image_path}/mmssrc.gif' alt='" . _XOOPS_FORM_ALTMMS . "' title='" . _XOOPS_FORM_ALTMMS . "' '". "' onclick='xoopsCodeMms(\"{$textarea_id}\",\"" . htmlspecialchars(_XOOPS_FORM_ENTERMMSURL, ENT_QUOTES | ENT_HTML5) . "\",\"" . htmlspecialchars(_XOOPS_FORM_ALT_ENTERHEIGHT, ENT_QUOTES | ENT_HTML5) . "\",\"" . htmlspecialchars(_XOOPS_FORM_ALT_ENTERWIDTH, ENT_QUOTES | ENT_HTML5) . "\");'  onmouseover='style.cursor=\"hand\"'/>&nbsp;";
         $javascript = <<<EOH
             function xoopsCodeMms(id,enterMmsPhrase, enterMmsHeightPhrase, enterMmsWidthPhrase)
             {

@@ -15,7 +15,7 @@ class MytsSoundcloud extends MyTextSanitizerExtension
 //        $config = parent::loadConfig(__DIR__);
 
         $code = "<button type='button' class='btn btn-default btn-sm' onclick='xoopsCodeSoundCloud(\"{$textarea_id}\",\""
-            . htmlspecialchars(_XOOPS_FORM_ENTER_SOUNDCLOUD_URL, ENT_QUOTES)
+            . htmlspecialchars(_XOOPS_FORM_ENTER_SOUNDCLOUD_URL, ENT_QUOTES | ENT_HTML5)
             . "\");' onmouseover='style.cursor=\"hand\"' title='" . _XOOPS_FORM_ALT_SOUNDCLOUD
             . "'><span class='fa fa-fw fa-soundcloud' aria-hidden='true'></span></button>";
         $javascript = <<<EOH

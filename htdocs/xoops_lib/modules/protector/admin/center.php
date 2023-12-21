@@ -182,13 +182,13 @@ $bad_ips4disp = '';
 foreach ($bad_ips as $bad_ip => $jailed_time) {
     $line = $jailed_time ? $bad_ip . '|' . $jailed_time : $bad_ip;
     $line = str_replace('|2147483647', '', $line); // remove :0x7fffffff
-    $bad_ips4disp .= htmlspecialchars($line, ENT_QUOTES) . "\n";
+    $bad_ips4disp .= htmlspecialchars($line, ENT_QUOTES | ENT_HTML5) . "\n";
 }
 
 // group1_ips
 $group1_ips = $protector->get_group1_ips();
 usort($group1_ips, 'protector_ip_cmp');
-$group1_ips4disp = htmlspecialchars(implode("\n", $group1_ips), ENT_QUOTES);
+$group1_ips4disp = htmlspecialchars(implode("\n", $group1_ips), ENT_QUOTES | ENT_HTML5);
 
 // edit configs about IP ban and IPs for group=1
 echo "
@@ -203,7 +203,7 @@ echo "
     <td class='even'>
       <textarea name='bad_ips' id='bad_ips' style='width:360px;height:60px;' spellcheck='false'>$bad_ips4disp</textarea>
       <br>
-      " . htmlspecialchars($protector->get_filepath4badips(), ENT_QUOTES) . "
+      " . htmlspecialchars($protector->get_filepath4badips(), ENT_QUOTES | ENT_HTML5) . "
     </td>
   </tr>
   <tr valign='top' align='left'>
@@ -213,7 +213,7 @@ echo "
     <td class='even'>
       <textarea name='group1_ips' id='group1_ips' style='width:360px;height:60px;' spellcheck='false'>$group1_ips4disp</textarea>
       <br>
-      " . htmlspecialchars($protector->get_filepath4group1ips(), ENT_QUOTES) . "
+      " . htmlspecialchars($protector->get_filepath4group1ips(), ENT_QUOTES | ENT_HTML5) . "
     </td>
   </tr>
   <tr valign='top' align='left'>
@@ -263,8 +263,8 @@ while (false !== (list($lid, $uid, $ip, $agent, $type, $description, $timestamp,
     $oddeven = ($oddeven === 'odd' ? 'even' : 'odd');
     $style = '';
 
-    $ip = htmlspecialchars($ip, ENT_QUOTES);
-    $type = htmlspecialchars($type, ENT_QUOTES);
+    $ip = htmlspecialchars($ip, ENT_QUOTES | ENT_HTML5);
+    $type = htmlspecialchars($type, ENT_QUOTES | ENT_HTML5);
     if ('{"' == substr($description, 0, 2) && defined('JSON_PRETTY_PRINT')) {
         $temp = json_decode($description);
         if (is_object($temp)) {
@@ -272,8 +272,8 @@ while (false !== (list($lid, $uid, $ip, $agent, $type, $description, $timestamp,
             $style = ' log_description';
         }
     }
-    $description = htmlspecialchars($description, ENT_QUOTES);
-    $uname = htmlspecialchars(($uid ? $uname : _GUESTS), ENT_QUOTES);
+    $description = htmlspecialchars($description, ENT_QUOTES | ENT_HTML5);
+    $uname = htmlspecialchars(($uid ? $uname : _GUESTS), ENT_QUOTES | ENT_HTML5);
 
     // make agents shorter
     if (preg_match('/Chrome\/([0-9.]+)/', $agent, $regs)) {
@@ -285,8 +285,8 @@ while (false !== (list($lid, $uid, $ip, $agent, $type, $description, $timestamp,
     } else {
         $agent_short = substr($agent, 0, strpos($agent, ' '));
     }
-    $agent4disp = htmlspecialchars($agent, ENT_QUOTES);
-    $agent_desc = $agent == $agent_short ? $agent4disp : htmlspecialchars($agent_short, ENT_QUOTES) . "<img src='../images/dotdotdot.gif' alt='$agent4disp' title='$agent4disp' />";
+    $agent4disp = htmlspecialchars($agent, ENT_QUOTES | ENT_HTML5);
+    $agent_desc = $agent == $agent_short ? $agent4disp : htmlspecialchars($agent_short, ENT_QUOTES | ENT_HTML5) . "<img src='../images/dotdotdot.gif' alt='$agent4disp' title='$agent4disp' />";
 
     echo "
   <tr>

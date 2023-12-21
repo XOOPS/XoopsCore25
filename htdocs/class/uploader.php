@@ -592,7 +592,7 @@ class XoopsMediaUploader
         }
 
         if ((!empty($this->allowedMimeTypes) && !in_array($this->mediaRealType, $this->allowedMimeTypes)) || (!empty($this->deniedMimeTypes) && in_array($this->mediaRealType, $this->deniedMimeTypes))) {
-            $this->setErrors(sprintf(_ER_UP_MIMETYPENOTALLOWED, htmlspecialchars($this->mediaRealType, ENT_QUOTES)));
+            $this->setErrors(sprintf(_ER_UP_MIMETYPENOTALLOWED, htmlspecialchars($this->mediaRealType, ENT_QUOTES | ENT_HTML5)));
 
             return false;
         }
@@ -663,7 +663,7 @@ class XoopsMediaUploader
         } else {
             $ret = '';
             if (count($this->errors) > 0) {
-                $ret = '<h4>' . sprintf(_ER_UP_ERRORSRETURNED, htmlspecialchars($this->mediaName, ENT_QUOTES)) . '</h4>';
+                $ret = '<h4>' . sprintf(_ER_UP_ERRORSRETURNED, htmlspecialchars($this->mediaName, ENT_QUOTES | ENT_HTML5)) . '</h4>';
                 foreach ($this->errors as $error) {
                     $ret .= $error . '<br>';
                 }

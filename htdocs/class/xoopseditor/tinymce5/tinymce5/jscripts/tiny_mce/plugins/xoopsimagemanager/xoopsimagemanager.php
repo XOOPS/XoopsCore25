@@ -40,7 +40,7 @@ if (isset($_POST)) {
 }
 
 $target = Request::getString('target', '', 'REQUEST');
-//$target = htmlspecialchars($target, ENT_QUOTES);
+//$target = htmlspecialchars($target, ENT_QUOTES | ENT_HTML5);
 
 if (empty($target)) {
     exit();

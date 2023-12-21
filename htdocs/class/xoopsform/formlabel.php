@@ -54,7 +54,7 @@ class XoopsFormLabel extends XoopsFormElement
      */
     public function getValue($encode = false)
     {
-        return $encode ? htmlspecialchars($this->_value, ENT_QUOTES) : $this->_value;
+        return $encode ? htmlspecialchars($this->_value, ENT_QUOTES | ENT_HTML5) : $this->_value;
     }
 
     /**

@@ -240,7 +240,7 @@ class XoopsForm
      */
     public function getSummary($encode = false)
     {
-        return $encode ? htmlspecialchars($this->_summary, ENT_QUOTES) : $this->_summary;
+        return $encode ? htmlspecialchars($this->_summary, ENT_QUOTES | ENT_HTML5) : $this->_summary;
     }
 
     /**
@@ -251,7 +251,7 @@ class XoopsForm
      */
     public function getTitle($encode = false)
     {
-        return $encode ? htmlspecialchars($this->_title, ENT_QUOTES) : $this->_title;
+        return $encode ? htmlspecialchars($this->_title, ENT_QUOTES | ENT_HTML5) : $this->_title;
     }
 
     /**
@@ -264,7 +264,7 @@ class XoopsForm
      */
     public function getName($encode = true)
     {
-        return $encode ? htmlspecialchars($this->_name, ENT_QUOTES) : $this->_name;
+        return $encode ? htmlspecialchars($this->_name, ENT_QUOTES | ENT_HTML5) : $this->_name;
     }
 
     /**
@@ -276,7 +276,7 @@ class XoopsForm
     public function getAction($encode = true)
     {
         // Convert &amp; to & for backward compatibility
-        return $encode ? htmlspecialchars(str_replace('&amp;', '&', $this->_action), ENT_QUOTES) : $this->_action;
+        return $encode ? htmlspecialchars(str_replace('&amp;', '&', $this->_action), ENT_QUOTES | ENT_HTML5) : $this->_action;
     }
 
     /**
@@ -509,7 +509,7 @@ class XoopsForm
         }
         $classes = array();
         foreach ($this->_class as $class) {
-            $classes[] = htmlspecialchars($class, ENT_QUOTES);
+            $classes[] = htmlspecialchars($class, ENT_QUOTES | ENT_HTML5);
         }
 
         return implode(' ', $classes);

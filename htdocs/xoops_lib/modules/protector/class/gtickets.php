@@ -281,7 +281,7 @@ if (!class_exists('XoopsGTicket')) {
             }
 
             $table = '<table>';
-            $form = '<form action="?' . htmlspecialchars(isset($_SERVER['QUERY_STRING']) ? $_SERVER['QUERY_STRING'] : '', ENT_QUOTES) . '" method="post">';
+            $form = '<form action="?' . htmlspecialchars(isset($_SERVER['QUERY_STRING']) ? $_SERVER['QUERY_STRING'] : '', ENT_QUOTES | ENT_HTML5) . '" method="post">';
 
             foreach ($_POST as $key => $val) {
                 if ($key === 'XOOPS_G_TICKET') {
@@ -293,7 +293,7 @@ if (!class_exists('XoopsGTicket')) {
                     }
                 }
                 if (is_array($val)) {
-                    list($tmp_table, $tmp_form) = $this->extract_post_recursive(htmlspecialchars($key, ENT_QUOTES), $val);
+                    list($tmp_table, $tmp_form) = $this->extract_post_recursive(htmlspecialchars($key, ENT_QUOTES | ENT_HTML5), $val);
                     $table .= $tmp_table;
                     $form .= $tmp_form;
                 } else {
@@ -302,8 +302,8 @@ if (!class_exists('XoopsGTicket')) {
                             $val = stripslashes($val);
                         }
                     }
-                    $table .= '<tr><th>' . htmlspecialchars($key, ENT_QUOTES) . '</th><td>' . htmlspecialchars($val, ENT_QUOTES) . '</td></tr>' . "\n";
-                    $form .= '<input type="hidden" name="' . htmlspecialchars($key, ENT_QUOTES) . '" value="' . htmlspecialchars($val, ENT_QUOTES) . '" />' . "\n";
+                    $table .= '<tr><th>' . htmlspecialchars($key, ENT_QUOTES | ENT_HTML5) . '</th><td>' . htmlspecialchars($val, ENT_QUOTES | ENT_HTML5) . '</td></tr>' . "\n";
+                    $form .= '<input type="hidden" name="' . htmlspecialchars($key, ENT_QUOTES | ENT_HTML5) . '" value="' . htmlspecialchars($val, ENT_QUOTES | ENT_HTML5) . '" />' . "\n";
                 }
             }
             $table .= '</table>';
@@ -329,7 +329,7 @@ if (!class_exists('XoopsGTicket')) {
                     }
                 }
                 if (is_array($val)) {
-                    list($tmp_table, $tmp_form) = $this->extract_post_recursive($key_name . '[' . htmlspecialchars($key, ENT_QUOTES) . ']', $val);
+                    list($tmp_table, $tmp_form) = $this->extract_post_recursive($key_name . '[' . htmlspecialchars($key, ENT_QUOTES | ENT_HTML5) . ']', $val);
                     $table .= $tmp_table;
                     $form .= $tmp_form;
                 } else {
@@ -338,8 +338,8 @@ if (!class_exists('XoopsGTicket')) {
                             $val = stripslashes($val);
                         }
                     }
-                    $table .= '<tr><th>' . $key_name . '[' . htmlspecialchars($key, ENT_QUOTES) . ']</th><td>' . htmlspecialchars($val, ENT_QUOTES) . '</td></tr>' . "\n";
-                    $form .= '<input type="hidden" name="' . $key_name . '[' . htmlspecialchars($key, ENT_QUOTES) . ']" value="' . htmlspecialchars($val, ENT_QUOTES) . '" />' . "\n";
+                    $table .= '<tr><th>' . $key_name . '[' . htmlspecialchars($key, ENT_QUOTES | ENT_HTML5) . ']</th><td>' . htmlspecialchars($val, ENT_QUOTES | ENT_HTML5) . '</td></tr>' . "\n";
+                    $form .= '<input type="hidden" name="' . $key_name . '[' . htmlspecialchars($key, ENT_QUOTES | ENT_HTML5) . ']" value="' . htmlspecialchars($val, ENT_QUOTES | ENT_HTML5) . '" />' . "\n";
                 }
             }
 
@@ -395,7 +395,7 @@ if (!class_exists('XoopsGTicket')) {
         public function errorHandler4FindOutput($errNo, $errStr, $errFile, $errLine)
         {
             if (preg_match('#' . preg_quote(XOOPS_ROOT_PATH, '#') . '([^:]+)\:(\d+)?#', $errStr, $regs)) {
-                echo 'Irregular output! check the file ' . htmlspecialchars($regs[1], ENT_QUOTES) . ' line ' . htmlspecialchars($regs[2], ENT_QUOTES);
+                echo 'Irregular output! check the file ' . htmlspecialchars($regs[1], ENT_QUOTES | ENT_HTML5) . ' line ' . htmlspecialchars($regs[2], ENT_QUOTES | ENT_HTML5);
             } else {
                 echo 'Irregular output! check language files etc.';
             }

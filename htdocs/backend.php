@@ -28,9 +28,9 @@ $tpl->caching        = 2;
 $tpl->cache_lifetime = 3600;
 if (!$tpl->isCached('db:system_rss.tpl')) {
     xoops_load('XoopsLocal');
-    $tpl->assign('channel_title', XoopsLocal::convert_encoding(htmlspecialchars($xoopsConfig['sitename'], ENT_QUOTES)));
+    $tpl->assign('channel_title', XoopsLocal::convert_encoding(htmlspecialchars($xoopsConfig['sitename'], ENT_QUOTES | ENT_HTML5)));
     $tpl->assign('channel_link', XOOPS_URL . '/');
-    $tpl->assign('channel_desc', XoopsLocal::convert_encoding(htmlspecialchars($xoopsConfig['slogan'], ENT_QUOTES)));
+    $tpl->assign('channel_desc', XoopsLocal::convert_encoding(htmlspecialchars($xoopsConfig['slogan'], ENT_QUOTES | ENT_HTML5)));
     $tpl->assign('channel_lastbuild', formatTimestamp(time(), 'rss'));
     $tpl->assign('channel_webmaster', checkEmail($xoopsConfig['adminmail'], true));
     $tpl->assign('channel_editor', checkEmail($xoopsConfig['adminmail'], true));
@@ -58,11 +58,11 @@ if (!$tpl->isCached('db:system_rss.tpl')) {
     if (!empty($sarray) && \is_array($sarray)) {
         foreach ($sarray as $story) {
             $tpl->append('items', array(
-                'title'       => XoopsLocal::convert_encoding(htmlspecialchars($story->title(), ENT_QUOTES)),
+                'title'       => XoopsLocal::convert_encoding(htmlspecialchars($story->title(), ENT_QUOTES | ENT_HTML5)),
                 'link'        => XOOPS_URL . '/modules/news/article.php?storyid=' . $story->storyid(),
                 'guid'        => XOOPS_URL . '/modules/news/article.php?storyid=' . $story->storyid(),
                 'pubdate'     => formatTimestamp($story->published(), 'rss'),
-                'description' => XoopsLocal::convert_encoding(htmlspecialchars($story->hometext(), ENT_QUOTES))));
+                'description' => XoopsLocal::convert_encoding(htmlspecialchars($story->hometext(), ENT_QUOTES | ENT_HTML5))));
         }
     }
 }

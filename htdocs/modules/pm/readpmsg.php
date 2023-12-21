@@ -93,7 +93,7 @@ if (is_object($pm) && !empty($_POST['action'])) {
         }
     }
     $res_message = isset($res_message) ? $res_message : ($res ? _PM_ACTION_DONE : _PM_ACTION_ERROR);
-    redirect_header('viewpmsg.php?op=' . htmlspecialchars($_REQUEST['op'], ENT_QUOTES), 2, $res_message);
+    redirect_header('viewpmsg.php?op=' . htmlspecialchars($_REQUEST['op'], ENT_QUOTES | ENT_HTML5), 2, $res_message);
 }
 $start                        = Request::getInt('start', 0, 'GET');
 $total_messages               = Request::getInt('total_messages', 0, 'GET');
@@ -162,7 +162,7 @@ if (is_object($pm) && !empty($pm)) {
 
     $message              = $pm->getValues();
     $message['msg_time']  = formatTimestamp($pm->getVar('msg_time'));
-    $message['msg_image'] = htmlspecialchars((string)$message['msg_image'], ENT_QUOTES);
+    $message['msg_image'] = htmlspecialchars((string)$message['msg_image'], ENT_QUOTES | ENT_HTML5);
 }
 $GLOBALS['xoopsTpl']->assign('message', $message);
 $GLOBALS['xoopsTpl']->assign('op', $_REQUEST['op']);

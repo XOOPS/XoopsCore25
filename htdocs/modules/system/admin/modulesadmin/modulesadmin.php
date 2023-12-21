@@ -86,7 +86,7 @@ function xoops_module_install($dirname)
         }
         $msgs[] = '<strong>' . _VERSION . ':</strong> ' . $module->getInfo('version');
         if ($module->getInfo('author') !== false && trim($module->getInfo('author')) != '') {
-            $msgs[] = '<strong>' . _AUTHOR . ':</strong> ' . htmlspecialchars(trim($module->getInfo('author')), ENT_QUOTES);
+            $msgs[] = '<strong>' . _AUTHOR . ':</strong> ' . htmlspecialchars(trim($module->getInfo('author')), ENT_QUOTES | ENT_HTML5);
         }
         $msgs[] = '</div><div class="logger">';
         // Load module specific install script if any
@@ -627,7 +627,7 @@ function xoops_module_uninstall($dirname)
         }
         $msgs[] = '<strong>' . _VERSION . ':</strong> ' . $module->getInfo('version');
         if ($module->getInfo('author') !== false && trim($module->getInfo('author')) != '') {
-            $msgs[] = '<strong>' . _AUTHOR . ':</strong> ' . htmlspecialchars(trim($module->getInfo('author')), ENT_QUOTES);
+            $msgs[] = '<strong>' . _AUTHOR . ':</strong> ' . htmlspecialchars(trim($module->getInfo('author')), ENT_QUOTES | ENT_HTML5);
         }
         $msgs[] = '</div><div class="logger">';
         // Load module specific install script if any
@@ -1450,7 +1450,7 @@ function xoops_module_log_header($module, $title)
     }
     $msgs[] = '<strong>' . _VERSION . ':</strong> ' . $module->getInfo('version');
     if ($module->getInfo('author') !== false && trim($module->getInfo('author')) != '') {
-        $msgs[] = '<strong>' . _AUTHOR . ':</strong> ' . htmlspecialchars(trim($module->getInfo('author')), ENT_QUOTES);
+        $msgs[] = '<strong>' . _AUTHOR . ':</strong> ' . htmlspecialchars(trim($module->getInfo('author')), ENT_QUOTES | ENT_HTML5);
     }
     $msgs[] = '</div>';
 

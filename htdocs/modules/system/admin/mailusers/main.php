@@ -113,7 +113,7 @@ switch ($op) {
             //$criteria_tray->addElement($regd_max);
             $form->addElement($criteria_tray);
         }
-        $fname_text      = new XoopsFormText(_AM_SYSTEM_MAILUSERS_MAILFNAME, 'mail_fromname', 30, 255, htmlspecialchars($xoopsConfig['sitename'], ENT_QUOTES));
+        $fname_text      = new XoopsFormText(_AM_SYSTEM_MAILUSERS_MAILFNAME, 'mail_fromname', 30, 255, htmlspecialchars($xoopsConfig['sitename'], ENT_QUOTES | ENT_HTML5));
         $fromemail       = !empty($xoopsConfig['adminmail']) ? $xoopsConfig['adminmail'] : $xoopsUser->getVar('email', 'E');
         $femail_text     = new XoopsFormText(_AM_SYSTEM_MAILUSERS_MAILFMAIL, 'mail_fromemail', 30, 255, $fromemail);
         $subject_caption = _AM_SYSTEM_MAILUSERS_MAILSUBJECT . "<br><br><span style='font-size:x-small;font-weight:bold;'>" . _AM_SYSTEM_MAILUSERS_MAILTAGS . "</span><br><span style='font-size:x-small;font-weight:normal;'>" . _AM_SYSTEM_MAILUSERS_MAILTAGS2 . '</span>';

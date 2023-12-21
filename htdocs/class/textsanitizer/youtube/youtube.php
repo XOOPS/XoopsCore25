@@ -28,9 +28,9 @@ class MytsYoutube extends MyTextSanitizerExtension
     {
 //        $config = parent::loadConfig(__DIR__);
         $code = "<button type='button' class='btn btn-default btn-sm' onclick='xoopsCodeYoutube(\"{$textarea_id}\",\""
-            . htmlspecialchars(_XOOPS_FORM_ENTERYOUTUBEURL, ENT_QUOTES) . "\",\""
-            . htmlspecialchars(_XOOPS_FORM_ALT_ENTERHEIGHT, ENT_QUOTES) . "\",\""
-            . htmlspecialchars(_XOOPS_FORM_ALT_ENTERWIDTH, ENT_QUOTES)
+            . htmlspecialchars(_XOOPS_FORM_ENTERYOUTUBEURL, ENT_QUOTES | ENT_HTML5) . "\",\""
+            . htmlspecialchars(_XOOPS_FORM_ALT_ENTERHEIGHT, ENT_QUOTES | ENT_HTML5) . "\",\""
+            . htmlspecialchars(_XOOPS_FORM_ALT_ENTERWIDTH, ENT_QUOTES | ENT_HTML5)
             . "\");' onmouseover='style.cursor=\"hand\"' title='" . _XOOPS_FORM_ALTYOUTUBE
             . "'><span class='fa fa-fw fa-youtube' aria-hidden='true'></span></button>";
         $javascript = <<<EOH

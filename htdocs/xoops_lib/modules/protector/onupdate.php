@@ -107,17 +107,17 @@ if (!function_exists('protector_onupdate_base')) {
                         $tplfile->setVar('tpl_lastimported', 0);
                         $tplfile->setVar('tpl_type', 'module');
                         if (!$tplfile_handler->insert($tplfile)) {
-                        $ret[] = '<span style="color:#ff0000;">ERROR: Could not insert template <b>' . htmlspecialchars($mydirname . '_' . $file, ENT_QUOTES) . '</b> to the database.</span><br>';
+                        $ret[] = '<span style="color:#ff0000;">ERROR: Could not insert template <b>' . htmlspecialchars($mydirname . '_' . $file, ENT_QUOTES | ENT_HTML5) . '</b> to the database.</span><br>';
                         } else {
                             $tplid  = $tplfile->getVar('tpl_id');
-                            $msgs[] = 'Template <b>' . htmlspecialchars($mydirname . '_' . $file, ENT_QUOTES) . '</b> added to the database. (ID: <b>' . $tplid . '</b>)<br>';
+                            $msgs[] = 'Template <b>' . htmlspecialchars($mydirname . '_' . $file, ENT_QUOTES | ENT_HTML5) . '</b> added to the database. (ID: <b>' . $tplid . '</b>)<br>';
                             // generate compiled file
                             include_once XOOPS_ROOT_PATH . '/class/xoopsblock.php';
                             include_once XOOPS_ROOT_PATH . '/class/template.php';
                             if (!xoops_template_touch((string)$tplid)) {
-                                $msgs[] = '<span style="color:#ff0000;">ERROR: Failed compiling template <b>' . htmlspecialchars($mydirname . '_' . $file, ENT_QUOTES) . '</b>.</span><br>';
+                                $msgs[] = '<span style="color:#ff0000;">ERROR: Failed compiling template <b>' . htmlspecialchars($mydirname . '_' . $file, ENT_QUOTES | ENT_HTML5) . '</b>.</span><br>';
                             } else {
-                                $msgs[] = 'Template <b>' . htmlspecialchars($mydirname . '_' . $file, ENT_QUOTES) . '</b> compiled.</span><br>';
+                                $msgs[] = 'Template <b>' . htmlspecialchars($mydirname . '_' . $file, ENT_QUOTES | ENT_HTML5) . '</b> compiled.</span><br>';
                             }
                         }
                     }

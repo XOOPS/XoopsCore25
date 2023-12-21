@@ -76,7 +76,7 @@ switch ($op) {
                         $file_no_valid = array('.svn', 'icons', 'img', 'images', 'language');
 
                         if (!in_array($file, $file_no_valid)) {
-                            echo "<li class=\"directory collapsed\"><a href=\"#\" rel=\"" . htmlentities($_REQUEST['dir'] . $file, ENT_QUOTES) . "/\">" . htmlentities($file, ENT_QUOTES) . '</a></li>';
+                            echo "<li class=\"directory collapsed\"><a href=\"#\" rel=\"" . htmlentities($_REQUEST['dir'] . $file, ENT_QUOTES | ENT_HTML5) . "/\">" . htmlentities($file, ENT_QUOTES | ENT_HTML5) . '</a></li>';
                         }
                     }
                 }
@@ -89,7 +89,7 @@ switch ($op) {
                         $extension_verif = strrchr($file, '.');
 
                         if (in_array($extension_verif, $extensions)) {
-                            echo "<li class=\"file ext_$ext\"><a href=\"#\" onclick=\"tpls_edit_file('" . htmlentities($_REQUEST['dir'] . $file, ENT_QUOTES) . "', '" . htmlentities($_REQUEST['dir'], ENT_QUOTES) . "', '" . htmlentities($file, ENT_QUOTES) . "', '" . $ext . "');\" rel=\"tpls_edit_file('" . htmlentities($_REQUEST['dir'] . $file, ENT_QUOTES) . "', '" . htmlentities($_REQUEST['dir'], ENT_QUOTES) . "', '" . htmlentities($file, ENT_QUOTES) . "', '" . $ext . "');\">" . htmlentities($file, ENT_QUOTES) . '</a></li>';
+                            echo "<li class=\"file ext_$ext\"><a href=\"#\" onclick=\"tpls_edit_file('" . htmlentities($_REQUEST['dir'] . $file, ENT_QUOTES | ENT_HTML5) . "', '" . htmlentities($_REQUEST['dir'], ENT_QUOTES | ENT_HTML5) . "', '" . htmlentities($file, ENT_QUOTES | ENT_HTML5) . "', '" . $ext . "');\" rel=\"tpls_edit_file('" . htmlentities($_REQUEST['dir'] . $file, ENT_QUOTES | ENT_HTML5) . "', '" . htmlentities($_REQUEST['dir'], ENT_QUOTES | ENT_HTML5) . "', '" . htmlentities($file, ENT_QUOTES | ENT_HTML5) . "', '" . $ext . "');\">" . htmlentities($file, ENT_QUOTES | ENT_HTML5) . '</a></li>';
                         } else {
                             //echo "<li class=\"file ext_$ext\">" . htmlentities($file) . "</li>";
                         }
@@ -152,16 +152,16 @@ switch ($op) {
                 </tr>
                 <tr>
                     <td><textarea id="code_mirror" name="templates" rows=24 cols=110>'
-                        . htmlentities($content, ENT_QUOTES)
+                        . htmlentities($content, ENT_QUOTES | ENT_HTML5)
                     . '</textarea></td>
                 </tr>
               </table>';
         XoopsLoad::load('XoopsFormHiddenToken');
         $xoopsToken = new XoopsFormHiddenToken();
         echo $xoopsToken->render();
-        echo '<input type="hidden" name="path_file" value="' . htmlentities($clean_path_file, ENT_QUOTES)
-            .'"><input type="hidden" name="file" value="' . htmlentities(trim($clean_file), ENT_QUOTES)
-            .'"><input type="hidden" name="ext" value="' . htmlentities($ext, ENT_QUOTES) . '"></form>';
+        echo '<input type="hidden" name="path_file" value="' . htmlentities($clean_path_file, ENT_QUOTES | ENT_HTML5)
+            .'"><input type="hidden" name="file" value="' . htmlentities(trim($clean_file), ENT_QUOTES | ENT_HTML5)
+            .'"><input type="hidden" name="ext" value="' . htmlentities($ext, ENT_QUOTES | ENT_HTML5) . '"></form>';
         break;
 
     // Restore backup file

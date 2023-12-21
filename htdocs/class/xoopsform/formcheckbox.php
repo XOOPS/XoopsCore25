@@ -93,7 +93,7 @@ class XoopsFormCheckBox extends XoopsFormElement
         }
         $value = array();
         foreach ($this->_value as $val) {
-            $value[] = $val ? htmlspecialchars($val, ENT_QUOTES) : $val;
+            $value[] = $val ? htmlspecialchars($val, ENT_QUOTES | ENT_HTML5) : $val;
         }
 
         return $value;
@@ -159,7 +159,7 @@ class XoopsFormCheckBox extends XoopsFormElement
         }
         $value = array();
         foreach ($this->_options as $val => $name) {
-            $value[$encode ? htmlspecialchars($val, ENT_QUOTES) : $val] = ($encode > 1) ? htmlspecialchars($name, ENT_QUOTES) : $name;
+            $value[$encode ? htmlspecialchars($val, ENT_QUOTES | ENT_HTML5) : $val] = ($encode > 1) ? htmlspecialchars($name, ENT_QUOTES | ENT_HTML5) : $name;
         }
 
         return $value;
@@ -173,7 +173,7 @@ class XoopsFormCheckBox extends XoopsFormElement
      */
     public function getDelimeter($encode = false)
     {
-        return $encode ? htmlspecialchars(str_replace('&nbsp;', ' ', $this->_delimeter), ENT_QUOTES) : $this->_delimeter;
+        return $encode ? htmlspecialchars(str_replace('&nbsp;', ' ', $this->_delimeter), ENT_QUOTES | ENT_HTML5) : $this->_delimeter;
     }
 
     /**

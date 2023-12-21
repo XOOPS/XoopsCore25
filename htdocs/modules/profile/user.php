@@ -33,7 +33,7 @@ if ($op === 'main') {
         $GLOBALS['xoopsTpl']->assign('lang_login', _LOGIN);
         $GLOBALS['xoopsTpl']->assign('lang_username', _USERNAME);
         if (Request::hasVar('xoops_redirect', 'GET')) {
-            $GLOBALS['xoopsTpl']->assign('redirect_page', htmlspecialchars(Request::getUrl('xoops_redirect', 'GET'), ENT_QUOTES));
+            $GLOBALS['xoopsTpl']->assign('redirect_page', htmlspecialchars(Request::getUrl('xoops_redirect', 'GET'), ENT_QUOTES | ENT_HTML5));
         }
         if ($GLOBALS['xoopsConfig']['usercookie']) {
             $GLOBALS['xoopsTpl']->assign('lang_rememberme', _US_REMEMBERME);

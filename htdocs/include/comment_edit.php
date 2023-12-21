@@ -31,7 +31,7 @@ if (('system' !== $xoopsModule->getVar('dirname') && XOOPS_COMMENT_APPROVENONE =
 xoops_loadLanguage('comment');
 
 $com_id   = Request::getInt('com_id', 0, 'GET');
-$com_mode = htmlspecialchars(Request::getString('com_mode', '', 'GET'), ENT_QUOTES);
+$com_mode = htmlspecialchars(Request::getString('com_mode', '', 'GET'), ENT_QUOTES | ENT_HTML5);
 
 if ($com_mode == '') {
     if (is_object($xoopsUser)) {

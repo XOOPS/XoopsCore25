@@ -83,7 +83,7 @@ class XoopsFormRadio extends XoopsFormElement
      */
     public function getValue($encode = false)
     {
-        return ($encode && $this->_value !== null) ? htmlspecialchars($this->_value, ENT_QUOTES) : $this->_value;
+        return ($encode && $this->_value !== null) ? htmlspecialchars($this->_value, ENT_QUOTES | ENT_HTML5) : $this->_value;
     }
 
     /**
@@ -139,7 +139,7 @@ class XoopsFormRadio extends XoopsFormElement
         }
         $value = array();
         foreach ($this->_options as $val => $name) {
-            $value[$encode ? htmlspecialchars($val, ENT_QUOTES) : $val] = ($encode > 1) ? htmlspecialchars($name, ENT_QUOTES) : $name;
+            $value[$encode ? htmlspecialchars($val, ENT_QUOTES | ENT_HTML5) : $val] = ($encode > 1) ? htmlspecialchars($name, ENT_QUOTES | ENT_HTML5) : $name;
         }
 
         return $value;
@@ -153,7 +153,7 @@ class XoopsFormRadio extends XoopsFormElement
      */
     public function getDelimeter($encode = false)
     {
-        return $encode ? htmlspecialchars(str_replace('&nbsp;', ' ', $this->_delimeter), ENT_QUOTES) : $this->_delimeter;
+        return $encode ? htmlspecialchars(str_replace('&nbsp;', ' ', $this->_delimeter), ENT_QUOTES | ENT_HTML5) : $this->_delimeter;
     }
 
     /**

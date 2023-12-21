@@ -35,9 +35,9 @@ class MytsFlash extends MyTextSanitizerExtension
             return array();
         }
         $code = "<button type='button' class='btn btn-default btn-sm' onclick='xoopsCodeFlash(\"{$textarea_id}\",\""
-            . htmlspecialchars(_XOOPS_FORM_ENTERFLASHURL, ENT_QUOTES) . "\",\""
-            . htmlspecialchars(_XOOPS_FORM_ALT_ENTERHEIGHT, ENT_QUOTES) . "\",\""
-            . htmlspecialchars(_XOOPS_FORM_ALT_ENTERWIDTH, ENT_QUOTES) . "\", \""
+            . htmlspecialchars(_XOOPS_FORM_ENTERFLASHURL, ENT_QUOTES | ENT_HTML5) . "\",\""
+            . htmlspecialchars(_XOOPS_FORM_ALT_ENTERHEIGHT, ENT_QUOTES | ENT_HTML5) . "\",\""
+            . htmlspecialchars(_XOOPS_FORM_ALT_ENTERWIDTH, ENT_QUOTES | ENT_HTML5) . "\", \""
             . $config['detect_dimension'] . "\");' onmouseover='style.cursor=\"hand\"' title='"
             . _XOOPS_FORM_ALTFLASH . "'><span class='fa fa-fw fa-flash' aria-hidden='true'></span></button>";
         $javascript = <<<EOF
