@@ -11,6 +11,7 @@
 <{/if}>
 <{if !empty($comment_mode)}>
 <div class="pad2 marg2">
+    <!-- start comments loop -->
     <{if isset($comment_mode)}>
         <{if $comment_mode == "flat"}>
             <{include file="db:system_comments_flat.tpl"}>
@@ -20,6 +21,7 @@
             <{include file="db:system_comments_nest.tpl"}>
         <{/if}>
     <{/if}>
+    <!-- end comments loop -->
 </div>
 <{/if}>
 <div class='clear spacer'></div>

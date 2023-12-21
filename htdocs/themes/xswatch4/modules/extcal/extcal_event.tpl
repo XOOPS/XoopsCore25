@@ -8,7 +8,7 @@
         <h6><{$event.cat.cat_name|default:''}></h6>
         <h3><{$event.event_title|default:''}></h3>
         <div class="mb-2"><{$event.formated_event_start|default:''}></div>
-        <{assign var='desctext' value=`$smarty.const._MD_EXTCAL_LOCATION_DESCRIPTION`}>
+        <{assign var='desctext' value=$smarty.const._MD_EXTCAL_LOCATION_DESCRIPTION}>
         <{assign var='desclink' value="… <a href=\"#desc\" title=\"$desctext\"><span class=\"fa fa-forward\"></span></a>"}>
         <div><{$event.event_desc|truncateHtml:60:$desclink}></div>
     </div>

@@ -1,8 +1,8 @@
-<!-- phppp (D.J.): http://xoopsforge.com; https://xoops.org.cn -->
+<!-- phppp (D.J.): https://xoopsforge.com; https://xoops.org.cn -->
 
 <ol class="breadcrumb">
     <li class="breadcrumb-item"><a href="<{$xoops_url}>/modules/tag/" title="<{$smarty.const._MD_TAG_TAGS}>"><{$smarty.const._MD_TAG_TAGS}></a></li>
-    <li class="breadcrumb-item active"><a href="<{$xoops_url}>/modules/<{$xoops_dirname}>/list.tag.php<{$smarty.const.URL_DELIMITER}><{$tag_term}>" title="<{$tag_page_title|strip_tags}>" rel="tag"><{$tag_page_title|regex_replace:'/^.+g>/U':''|replace:'</strong>':''}></a></li>
+    <li class="breadcrumb-item active"><a href="<{$xoops_url}>/modules/<{$xoops_dirname}>/list.tag.php<{$smarty.const.URL_DELIMITER}><{$tag_term|default:''}>" title="<{$tag_page_title|strip_tags}>" rel="tag"><{$tag_page_title|regex_replace:'/^.+g>/U':''|replace:'</strong>':''}></a></li>
 </ol>
 
 <div class="tag-jumpto">

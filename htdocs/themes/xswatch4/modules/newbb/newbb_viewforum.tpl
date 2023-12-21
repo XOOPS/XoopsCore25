@@ -133,7 +133,7 @@
     </div>
 
     </div><!-- .newbb-topic-options -->
-    <{* assign var='desctext' value=`$smarty.const._MD_NEWBB_FORUMDESCRIPTION` *}>
+    <{* assign var='desctext' value=$smarty.const._MD_NEWBB_FORUMDESCRIPTION *}>
     <{* $desctext|regex_replace:"/:$/":"" *}>
     <div>
         <h3><{$forum_name}></h3>
@@ -155,8 +155,8 @@
                 <{if isset($rating_enable)}>
                 <td class="d-none d-sm-table-cell"><{$topic.rating_img}></td>
                 <{/if}>
-                <{assign var='golast' value=`$smarty.const._MD_NEWBB_GOTOLASTPOST`}>
-                <{assign var='golastimg' value="<span class=\"fa fa-forward\" aria-hidden=\"true\" title=\"`$golast`\"></span>"}>
+                <{assign var='golast' value=$smarty.const._MD_NEWBB_GOTOLASTPOST}>
+                <{assign var='golastimg' value="<span class='fa fa-forward' aria-hidden='true' title='{$golast}'></span>"}>
                 <td><{$topic.topic_last_posttime}> <{$smarty.const._MD_NEWBB_BY}> <{$topic.topic_last_poster}> <{$topic.topic_page_jump_icon|regex_replace:'/<img .*>/':$golastimg}></td>
             </tr>
             <{/foreach}>
