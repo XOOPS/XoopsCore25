@@ -3,7 +3,7 @@
         'name' => 'xoopscore25/libraries',
         'pretty_version' => 'dev-master',
         'version' => 'dev-master',
-        'reference' => 'f188a21f490b1406e119f22b9c8bc420afa517be',
+        'reference' => '4f32df01454e910d32551023daa5e6e315519728',
         'type' => 'project',
         'install_path' => __DIR__ . '/../../',
         'aliases' => array(),
@@ -442,7 +442,7 @@
         'xoopscore25/libraries' => array(
             'pretty_version' => 'dev-master',
             'version' => 'dev-master',
-            'reference' => 'f188a21f490b1406e119f22b9c8bc420afa517be',
+            'reference' => '4f32df01454e910d32551023daa5e6e315519728',
             'type' => 'project',
             'install_path' => __DIR__ . '/../../',
             'aliases' => array(),
