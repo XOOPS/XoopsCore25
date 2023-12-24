@@ -1,7 +1,519 @@
 XOOPS 2.5.x Changelog (Language changes: see: /docs/lang_diff.txt)
 
 ===================================
-2.5.11-RC3               NOT RELEASED
+2.5.11 Final             2023/12/24
+===================================
+
+* Deprecate \XoopsObject::setFormVars() by @geekwright in https://github.com/XOOPS/XoopsCore25/pull/675
+* Unneeded by reference by @geekwright in https://github.com/XOOPS/XoopsCore25/pull/677
+* Implement Xmf\Request for input by @geekwright in https://github.com/XOOPS/XoopsCore25/pull/679
+* Fix install error under MySQL in ANSI mode by @geekwright in https://github.com/XOOPS/XoopsCore25/pull/681
+* Add noopener rel attribute to external links in TextSanitizer by @geekwright in https://github.com/XOOPS/XoopsCore25/pull/684
+* Fix https://github.com/XOOPS/XoopsCore25/issues/686 by @GregMage in https://github.com/XOOPS/XoopsCore25/pull/687
+* jQuery 3.4.1 by @mambax7 in https://github.com/XOOPS/XoopsCore25/pull/690
+* Create XoopsFormRendererBootstrap4.php by @tad0616 in https://github.com/XOOPS/XoopsCore25/pull/667
+* Update xoopsload.php by @tad0616 in https://github.com/XOOPS/XoopsCore25/pull/668
+* Update admin.php by @poehoes in https://github.com/XOOPS/XoopsCore25/pull/673
+* htmlpurifier-4.11.0 by @mambax7 in https://github.com/XOOPS/XoopsCore25/pull/689
+* Remove array access with curly brackets by @geekwright in https://github.com/XOOPS/XoopsCore25/pull/692
+* removed uneeded ucfirst by @luciorota in https://github.com/XOOPS/XoopsCore25/pull/694
+* templates missing apostrophes by @mambax7 in https://github.com/XOOPS/XoopsCore25/pull/693
+* 2.5.11- starting Alpha cycle by @mambax7 in https://github.com/XOOPS/XoopsCore25/pull/688
+* Fixed #695 issue with synchronize in admin->users by @fabou78 in https://github.com/XOOPS/XoopsCore25/pull/697
+* Vulnerability with image manager (admin) CVE-2019-16683 and CVE-2019-… by @GregMage in https://github.com/XOOPS/XoopsCore25/pull/698
+* Escape Tooltip Text by @geekwright in https://github.com/XOOPS/XoopsCore25/pull/699
+* Handle negative ini sizes by @geekwright in https://github.com/XOOPS/XoopsCore25/pull/703
+* Fix issue with image_display and permissions by @geekwright in https://github.com/XOOPS/XoopsCore25/pull/700
+* Remove zetadigme admin theme by @geekwright in https://github.com/XOOPS/XoopsCore25/pull/701
+* Minor tweak to Maintenance by @geekwright in https://github.com/XOOPS/XoopsCore25/pull/702
+* Fix https://github.com/XOOPS/XoopsCore25/issues/704 by @GregMage in https://github.com/XOOPS/XoopsCore25/pull/705
+* Reset Typography Controls when focus lost by @geekwright in https://github.com/XOOPS/XoopsCore25/pull/707
+* Incorrect tooltip in image manager category list by @geekwright in https://github.com/XOOPS/XoopsCore25/pull/709
+* Move xswatch templates to NewBB V5 by @geekwright in https://github.com/XOOPS/XoopsCore25/pull/711
+* Fix https://github.com/XOOPS/XoopsCore25/issues/713 by @GregMage in https://github.com/XOOPS/XoopsCore25/pull/714
+* HTML Purifier 4.12 by @mambax7 in https://github.com/XOOPS/XoopsCore25/pull/712
+* New module page by @GregMage in https://github.com/XOOPS/XoopsCore25/pull/717
+* Add smarty "xoops_modulepage" by @GregMage in https://github.com/XOOPS/XoopsCore25/pull/716
+* Fix the errors related to this modification https://github.com/XOOPS/… by @GregMage in https://github.com/XOOPS/XoopsCore25/pull/718
+* fix https://github.com/XOOPS/XoopsCore25/issues/719 by @GregMage in https://github.com/XOOPS/XoopsCore25/pull/720
+* phpmailer to 5.2.27 by @mambax7 in https://github.com/XOOPS/XoopsCore25/pull/721
+* Replace glyphicon based controls with font-awesome by @geekwright in https://github.com/XOOPS/XoopsCore25/pull/722
+* Simplify tooltips by @geekwright in https://github.com/XOOPS/XoopsCore25/pull/724
+* phpthumb patches by @geekwright in https://github.com/XOOPS/XoopsCore25/pull/725
+* Silence magic quotes by @geekwright in https://github.com/XOOPS/XoopsCore25/pull/726
+* Add docs and example of proxy_env by @geekwright in https://github.com/XOOPS/XoopsCore25/pull/727
+* Library updates by @geekwright in https://github.com/XOOPS/XoopsCore25/pull/728
+* Attempt graceful failure on missing theme by @geekwright in https://github.com/XOOPS/XoopsCore25/pull/729
+* Get 'sel' vars from GET explicitly by @geekwright in https://github.com/XOOPS/XoopsCore25/pull/733
+* Handle special case of admin themes in checks by @geekwright in https://github.com/XOOPS/XoopsCore25/pull/734
+* Remove broken caching by @geekwright in https://github.com/XOOPS/XoopsCore25/pull/736
+* Mail Tweaks by @geekwright in https://github.com/XOOPS/XoopsCore25/pull/737
+* Get description for edit by @geekwright in https://github.com/XOOPS/XoopsCore25/pull/740
+* Smooth some rough edges in Bootstrap v4 support by @geekwright in https://github.com/XOOPS/XoopsCore25/pull/743
+* Refresh inbox count cache when using pm programs by @geekwright in https://github.com/XOOPS/XoopsCore25/pull/744
+* Remove debug statement by @geekwright in https://github.com/XOOPS/XoopsCore25/pull/745
+* More Bootstrap 4 tweaks by @geekwright in https://github.com/XOOPS/XoopsCore25/pull/746
+* Skip nl2Br() if html detected in MyTextSanitizer::displayTarea() by @geekwright in https://github.com/XOOPS/XoopsCore25/pull/747
+* fix calandar by @GregMage in https://github.com/XOOPS/XoopsCore25/pull/748
+* use smarty in xoops_confirm() by @luciorota in https://github.com/XOOPS/XoopsCore25/pull/750
+* Add system_confirm.tpl to xswatch by @geekwright in https://github.com/XOOPS/XoopsCore25/pull/751
+* include global.php in template.php  by @mambax7 in https://github.com/XOOPS/XoopsCore25/pull/752
+* Type fixes in XoopsMySQLDatabase by @geekwright in https://github.com/XOOPS/XoopsCore25/pull/754
+* Remove dead list type by @geekwright in https://github.com/XOOPS/XoopsCore25/pull/756
+* Escaping issue by @geekwright in https://github.com/XOOPS/XoopsCore25/pull/757
+* Do not load jquery.js if already loaded by @geekwright in https://github.com/XOOPS/XoopsCore25/pull/759
+* Don't backtick a function call by @geekwright in https://github.com/XOOPS/XoopsCore25/pull/760
+* Allow comment instead of blank title by @geekwright in https://github.com/XOOPS/XoopsCore25/pull/762
+* Update Help page for blocks admin by @geekwright in https://github.com/XOOPS/XoopsCore25/pull/763
+* Remove locale specific date format for calendar.js by @geekwright in https://github.com/XOOPS/XoopsCore25/pull/765
+* Add xswatch4 theme by @geekwright in https://github.com/XOOPS/XoopsCore25/pull/766
+* add xmsocial rating for xmnews bt4 by @GregMage in https://github.com/XOOPS/XoopsCore25/pull/767
+* Libraries update by @geekwright in https://github.com/XOOPS/XoopsCore25/pull/768
+* Updates to bootstrap v3 based themes by @geekwright in https://github.com/XOOPS/XoopsCore25/pull/769
+* Version 2.5.11-Beta1 prep by @geekwright in https://github.com/XOOPS/XoopsCore25/pull/770
+* Update tpl xmmodules by @GregMage in https://github.com/XOOPS/XoopsCore25/pull/772
+* fix errors with xmsocial by @GregMage in https://github.com/XOOPS/XoopsCore25/pull/776
+* Fix NEWBB_NOTOPIC error by @geekwright in https://github.com/XOOPS/XoopsCore25/pull/777
+* New clean favicon.ico by @alain01 in https://github.com/XOOPS/XoopsCore25/pull/779
+* Correct issues in dhtmltextarea by @geekwright in https://github.com/XOOPS/XoopsCore25/pull/780
+* Fix:https://github.com/XOOPS/XoopsCore25/issues/783 by @GregMage in https://github.com/XOOPS/XoopsCore25/pull/784
+* Tweak feeds used in XOOPS News in admin.php by @geekwright in https://github.com/XOOPS/XoopsCore25/pull/785
+* Update tpl for bt4 and fix error author in block by @GregMage in https://github.com/XOOPS/XoopsCore25/pull/786
+* Update xm by @GregMage in https://github.com/XOOPS/XoopsCore25/pull/788
+* Add XoopsHttpGet, deprecate Snoopy by @geekwright in https://github.com/XOOPS/XoopsCore25/pull/787
+* Remove unreferenced templates by @geekwright in https://github.com/XOOPS/XoopsCore25/pull/792
+* The message as an error was annoying  :) by @mambax7 in https://github.com/XOOPS/XoopsCore25/pull/795
+* Fix docblock \XoopsNotificationHandler::triggerEvent() by @geekwright in https://github.com/XOOPS/XoopsCore25/pull/796
+* extCal updates by @mambax7 in https://github.com/XOOPS/XoopsCore25/pull/790
+* cloning of all xswatch derivatives by @alain01 in https://github.com/XOOPS/XoopsCore25/pull/798
+* Update xm by @GregMage in https://github.com/XOOPS/XoopsCore25/pull/799
+* Error when no modules installed by @geekwright in https://github.com/XOOPS/XoopsCore25/pull/800
+* js security update bootstrap 3.4.1 by @geekwright in https://github.com/XOOPS/XoopsCore25/pull/801
+* Small tweek to pm module by @geekwright in https://github.com/XOOPS/XoopsCore25/pull/802
+* Update xmmodule by @GregMage in https://github.com/XOOPS/XoopsCore25/pull/803
+* cosmetic bt4 modifications by @alain01 in https://github.com/XOOPS/XoopsCore25/pull/804
+* phpThumb 1.7.15-202002130926 by @mambax7 in https://github.com/XOOPS/XoopsCore25/pull/808
+* Convert to English by @mambax7 in https://github.com/XOOPS/XoopsCore25/pull/813
+* Fix Profile Index Template by @liomj in https://github.com/XOOPS/XoopsCore25/pull/821
+* Admin user sync by @geekwright in https://github.com/XOOPS/XoopsCore25/pull/829
+* Update to official tagged phpthumb 1.7.15 by @geekwright in https://github.com/XOOPS/XoopsCore25/pull/824
+* Update xmmodule by @GregMage in https://github.com/XOOPS/XoopsCore25/pull/834
+* Security update jquery 3.5.1 by @geekwright in https://github.com/XOOPS/XoopsCore25/pull/835
+* change of _MEDIUMDATESTRIN by @mambax7 in https://github.com/XOOPS/XoopsCore25/pull/838
+* Template patches for Newbb 5.0 Final by @geekwright in https://github.com/XOOPS/XoopsCore25/pull/839
+* Cumulative theme related updates by @geekwright in https://github.com/XOOPS/XoopsCore25/pull/842
+* Add options text editing to profile field edit by @geekwright in https://github.com/XOOPS/XoopsCore25/pull/841
+* Fix: Avertissement: count(): Parameter must be an array or an object … by @GregMage in https://github.com/XOOPS/XoopsCore25/pull/843
+* Update user.php by @luciorota in https://github.com/XOOPS/XoopsCore25/pull/845
+* Return proper null value for integer columns by @geekwright in https://github.com/XOOPS/XoopsCore25/pull/849
+* Add macro substitutions for {X_SITEURL} and {X_YEAR} by @geekwright in https://github.com/XOOPS/XoopsCore25/pull/850
+* Patch a few issues when using PHP 8 by @geekwright in https://github.com/XOOPS/XoopsCore25/pull/851
+* Upstream patch for dropdown text contrast issue by @geekwright in https://github.com/XOOPS/XoopsCore25/pull/852
+* allow StdClass to be cast to array when compiling foreach by @mambax7 in https://github.com/XOOPS/XoopsCore25/pull/853
+* latest changes from https://github.com/JamesHeinrich/phpThumb by @mambax7 in https://github.com/XOOPS/XoopsCore25/pull/854
+* HTML Purifier 4.13.0 by @mambax7 in https://github.com/XOOPS/XoopsCore25/pull/855
+* Changelog updates by @mambax7 in https://github.com/XOOPS/XoopsCore25/pull/856
+* PHPMailer 5.2.28 by @mambax7 in https://github.com/XOOPS/XoopsCore25/pull/857
+* jQuery Form 4.3 by @mambax7 in https://github.com/XOOPS/XoopsCore25/pull/858
+* Update to tablesorter-2.31.3 by @mambax7 in https://github.com/XOOPS/XoopsCore25/pull/859
+* Case mismatch by @mambax7 in https://github.com/XOOPS/XoopsCore25/pull/862
+* PHP 8 Fixes by @geekwright in https://github.com/XOOPS/XoopsCore25/pull/863
+* Add all selected users in XoopsFormSelectUser by @geekwright in https://github.com/XOOPS/XoopsCore25/pull/864
+* Library updates for XMF 1.2.20 by @geekwright in https://github.com/XOOPS/XoopsCore25/pull/870
+* Fix errors seen in PHP 8 in pm module templates by @geekwright in https://github.com/XOOPS/XoopsCore25/pull/872
+* Magic __wakeup() method must be public by @geekwright in https://github.com/XOOPS/XoopsCore25/pull/871
+* Remove debug info by @geekwright in https://github.com/XOOPS/XoopsCore25/pull/874
+* PHP 8 issues in system maintenance by @geekwright in https://github.com/XOOPS/XoopsCore25/pull/875
+* Template fixes user and profile for php8 by @geekwright in https://github.com/XOOPS/XoopsCore25/pull/877
+* Update xswatch4 to bootstrap/bootswatch 4.5.2 by @geekwright in https://github.com/XOOPS/XoopsCore25/pull/878
+* Remove debugging code by @geekwright in https://github.com/XOOPS/XoopsCore25/pull/879
+* Fix errors in user avatar templates under php 8 by @geekwright in https://github.com/XOOPS/XoopsCore25/pull/880
+* Add map file to quiet Chrome error by @geekwright in https://github.com/XOOPS/XoopsCore25/pull/881
+* Customized Smarty debug.tpl by @geekwright in https://github.com/XOOPS/XoopsCore25/pull/882
+* replacing index.html with index.php by @mambax7 in https://github.com/XOOPS/XoopsCore25/pull/884
+* short array push syntax on a string by @mambax7 in https://github.com/XOOPS/XoopsCore25/pull/885
+* Revert "replacing index.html with index.php" by @geekwright in https://github.com/XOOPS/XoopsCore25/pull/886
+* Replace index.html with index.php by @geekwright in https://github.com/XOOPS/XoopsCore25/pull/889
+* Restore missing xoops_data/caches directories by @geekwright in https://github.com/XOOPS/XoopsCore25/pull/891
+* Malformed constant __MINWIDTHIMAGEERROR by @geekwright in https://github.com/XOOPS/XoopsCore25/pull/892
+* Image manager cleanup by @geekwright in https://github.com/XOOPS/XoopsCore25/pull/893
+* Restore xoops_data/protector directory by @geekwright in https://github.com/XOOPS/XoopsCore25/pull/894
+* Fix system breadcrumbs by @geekwright in https://github.com/XOOPS/XoopsCore25/pull/895
+* Clean up image manager display by @geekwright in https://github.com/XOOPS/XoopsCore25/pull/896
+* update for using index.php by @mambax7 in https://github.com/XOOPS/XoopsCore25/pull/897
+* Class css for captcha text by @GregMage in https://github.com/XOOPS/XoopsCore25/pull/905
+* Update preferences.php by @luciorota in https://github.com/XOOPS/XoopsCore25/pull/906
+* Update xmtemplates php8 by @GregMage in https://github.com/XOOPS/XoopsCore25/pull/913
+* Countable by @mambax7 in https://github.com/XOOPS/XoopsCore25/pull/911
+* https by @mambax7 in https://github.com/XOOPS/XoopsCore25/pull/887
+* add PHP8 defaults in templates by @mambax7 in https://github.com/XOOPS/XoopsCore25/pull/909
+* Message profil by @GregMage in https://github.com/XOOPS/XoopsCore25/pull/908
+* array check by @mambax7 in https://github.com/XOOPS/XoopsCore25/pull/912
+* Bug with captcha by @GregMage in https://github.com/XOOPS/XoopsCore25/pull/916
+* Diff for 906 update by @geekwright in https://github.com/XOOPS/XoopsCore25/pull/917
+* add {X_NAME} tag for mailusers by @GregMage in https://github.com/XOOPS/XoopsCore25/pull/920
+* Disable Flash by @alain01 in https://github.com/XOOPS/XoopsCore25/pull/922
+* Responsive xswatch4 by @alain01 in https://github.com/XOOPS/XoopsCore25/pull/868
+* Fix issues in DHTMLTextArea support by @geekwright in https://github.com/XOOPS/XoopsCore25/pull/924
+* newbbPHP8_xbootstrap by @mambax7 in https://github.com/XOOPS/XoopsCore25/pull/926
+* Mark deleted PM as read by @geekwright in https://github.com/XOOPS/XoopsCore25/pull/929
+* Update system_images.tpl by @alain01 in https://github.com/XOOPS/XoopsCore25/pull/928
+* fix php8 (Warning: Undefined array key "blocks" in file /xoops_data/c… by @GregMage in https://github.com/XOOPS/XoopsCore25/pull/930
+* Require fileinfo PHP extension during install by @geekwright in https://github.com/XOOPS/XoopsCore25/pull/931
+* Add {X_SITEURL} and {X_YEAR} to site closed page by @geekwright in https://github.com/XOOPS/XoopsCore25/pull/932
+* Fix unclosed comment by @geekwright in https://github.com/XOOPS/XoopsCore25/pull/933
+* simplify load of modinfo by @mambax7 in https://github.com/XOOPS/XoopsCore25/pull/937
+* Remove phpthumb library by @geekwright in https://github.com/XOOPS/XoopsCore25/pull/939
+* fix for version number as string by @mambax7 in https://github.com/XOOPS/XoopsCore25/pull/938
+* Library refresh by @geekwright in https://github.com/XOOPS/XoopsCore25/pull/940
+* Add two new events by @geekwright in https://github.com/XOOPS/XoopsCore25/pull/941
+* Update Xmf by @geekwright in https://github.com/XOOPS/XoopsCore25/pull/942
+* Recognize error return from db->query() by @geekwright in https://github.com/XOOPS/XoopsCore25/pull/943
+* Feature/scrutinizer by @mambax7 in https://github.com/XOOPS/XoopsCore25/pull/945
+* fix for  "array to string conversion error" by @mambax7 in https://github.com/XOOPS/XoopsCore25/pull/944
+* Bad form in profile_userinfo.tpl by @geekwright in https://github.com/XOOPS/XoopsCore25/pull/946
+* Standardize user.php functions by @geekwright in https://github.com/XOOPS/XoopsCore25/pull/948
+* Protector config cache for htmlpurifier written to xoops_lib, should go to xoops_data by @geekwright in https://github.com/XOOPS/XoopsCore25/pull/949
+* Add sort on step_order, fix form by @geekwright in https://github.com/XOOPS/XoopsCore25/pull/951
+* Make $redirect_message available in system_siteclosed.tpl by @geekwright in https://github.com/XOOPS/XoopsCore25/pull/952
+* Wrong default for debugLevel configuration by @geekwright in https://github.com/XOOPS/XoopsCore25/pull/953
+* Fix failing updates to banner table by @geekwright in https://github.com/XOOPS/XoopsCore25/pull/954
+* Now the admin menu only displays useful links: by @GregMage in https://github.com/XOOPS/XoopsCore25/pull/956
+* Change a few remaining index.html to index.php by @geekwright in https://github.com/XOOPS/XoopsCore25/pull/958
+* extra XOOPS Links in Admin (Themes and Modules) by @mambax7 in https://github.com/XOOPS/XoopsCore25/pull/957
+* Don't overwrite configuration data on upgrades by @geekwright in https://github.com/XOOPS/XoopsCore25/pull/959
+* Responsive blocks by @alain01 in https://github.com/XOOPS/XoopsCore25/pull/961
+* add real name to Admin's user table view by @mambax7 in https://github.com/XOOPS/XoopsCore25/pull/962
+* missing index.php files by @mambax7 in https://github.com/XOOPS/XoopsCore25/pull/960
+* Feature/various by @mambax7 in https://github.com/XOOPS/XoopsCore25/pull/963
+* missing array in 2.5.11 upgrade by @mambax7 in https://github.com/XOOPS/XoopsCore25/pull/964
+* Unify XoopsBlock definition by @geekwright in https://github.com/XOOPS/XoopsCore25/pull/968
+* Fix composer config platform php by @geekwright in https://github.com/XOOPS/XoopsCore25/pull/970
+* jQuery 3.6.0 by @mambax7 in https://github.com/XOOPS/XoopsCore25/pull/972
+* Errors using XOOPS_VAR_PATH early in install by @geekwright in https://github.com/XOOPS/XoopsCore25/pull/973
+* Fix https://github.com/GregMage/xmnews/issues/41 by @GregMage in https://github.com/XOOPS/XoopsCore25/pull/976
+* Add default for $xoops_logdump by @geekwright in https://github.com/XOOPS/XoopsCore25/pull/978
+* Update templates for xmcontent 1.5 by @GregMage in https://github.com/XOOPS/XoopsCore25/pull/979
+* Allow for override of any template in admin themes by @geekwright in https://github.com/XOOPS/XoopsCore25/pull/982
+* fix for version number as string by @mambax7 in https://github.com/XOOPS/XoopsCore25/pull/981
+* Incorrect template specified by @geekwright in https://github.com/XOOPS/XoopsCore25/pull/985
+* Fix: https://github.com/XOOPS/XoopsCore25/issues/986 Comment text is … by @GregMage in https://github.com/XOOPS/XoopsCore25/pull/987
+* Template page nav by @GregMage in https://github.com/XOOPS/XoopsCore25/pull/980
+* Cpanel aware smarty compile id's by @geekwright in https://github.com/XOOPS/XoopsCore25/pull/991
+* Improve performance of admin users page by @geekwright in https://github.com/XOOPS/XoopsCore25/pull/990
+* Cannot use method return in write context error by @geekwright in https://github.com/XOOPS/XoopsCore25/pull/988
+* Fix pagenav in protector center by @geekwright in https://github.com/XOOPS/XoopsCore25/pull/992
+* Removing dependencies on index.html files by @geekwright in https://github.com/XOOPS/XoopsCore25/pull/993
+* Block 'Waiting Contents' is deprecated by @GregMage in https://github.com/XOOPS/XoopsCore25/pull/994
+* now the form is responsive by @GregMage in https://github.com/XOOPS/XoopsCore25/pull/995
+* Add templates to misc.php by @geekwright in https://github.com/XOOPS/XoopsCore25/pull/998
+* Test xswatch4 dark - typo error in the theme.tpl file by @alain01 in https://github.com/XOOPS/XoopsCore25/pull/1000
+* Introduce prefers-color-scheme media queries by @geekwright in https://github.com/XOOPS/XoopsCore25/pull/999
+* Fresh library build by @geekwright in https://github.com/XOOPS/XoopsCore25/pull/1001
+* Updates for xswatch4 by @geekwright in https://github.com/XOOPS/XoopsCore25/pull/1003
+* Remove FILTER_SANITIZE_MAGIC_QUOTES in system_CleanVars() by @geekwright in https://github.com/XOOPS/XoopsCore25/pull/1004
+* Fix bug with bloc on-line. by @GregMage in https://github.com/XOOPS/XoopsCore25/pull/1005
+* Show theme description in Select Theme install dialog by @geekwright in https://github.com/XOOPS/XoopsCore25/pull/1006
+* Revert "Fix bug with bloc on-line." by @geekwright in https://github.com/XOOPS/XoopsCore25/pull/1007
+* Delete phantom anonymous entry in online left when user logs in by @geekwright in https://github.com/XOOPS/XoopsCore25/pull/1008
+* Prototype admin dark mode theme by @geekwright in https://github.com/XOOPS/XoopsCore25/pull/1010
+* Add uploads/files directory to writable list by @geekwright in https://github.com/XOOPS/XoopsCore25/pull/1012
+* Respect smilies table display column by @geekwright in https://github.com/XOOPS/XoopsCore25/pull/1013
+* Darken form entry fields by @geekwright in https://github.com/XOOPS/XoopsCore25/pull/1014
+* Bootstrap 4 online templates for xswatch4 by @alain01 in https://github.com/XOOPS/XoopsCore25/pull/1015
+* default for $xoops_language by @mambax7 in https://github.com/XOOPS/XoopsCore25/pull/1016
+* $modules|default:null by @mambax7 in https://github.com/XOOPS/XoopsCore25/pull/1017
+* THEME_FORUM_REPLY by @mambax7 in https://github.com/XOOPS/XoopsCore25/pull/1018
+* check for $result by @mambax7 in https://github.com/XOOPS/XoopsCore25/pull/1020
+* Feature/class xoopsblock.php by @mambax7 in https://github.com/XOOPS/XoopsCore25/pull/1019
+* fix for function.block.php by @mambax7 in https://github.com/XOOPS/XoopsCore25/pull/1021
+* update template for xmdoc V1.2 final by @GregMage in https://github.com/XOOPS/XoopsCore25/pull/1022
+* Bootstrap4 templates from misc.php by @alain01 in https://github.com/XOOPS/XoopsCore25/pull/1023
+* Skip scan if directory is not present by @geekwright in https://github.com/XOOPS/XoopsCore25/pull/1024
+* SameSite cookie attribute by @geekwright in https://github.com/XOOPS/XoopsCore25/pull/1026
+* Supply default value for avatar template variables by @geekwright in https://github.com/XOOPS/XoopsCore25/pull/1027
+* Explicitly set default mysqli_report(MYSQLI_REPORT_OFF) by @geekwright in https://github.com/XOOPS/XoopsCore25/pull/1028
+* Cleanup a few issues noted in Profile by @geekwright in https://github.com/XOOPS/XoopsCore25/pull/1029
+* Fix php8 by @GregMage in https://github.com/XOOPS/XoopsCore25/pull/1030
+* Dark admin theme update by @geekwright in https://github.com/XOOPS/XoopsCore25/pull/1031
+* Dark admin rework by @geekwright in https://github.com/XOOPS/XoopsCore25/pull/1032
+* PHP8 newbb template update by @mambax7 in https://github.com/XOOPS/XoopsCore25/pull/1033
+* One last pass on dark admin theme by @geekwright in https://github.com/XOOPS/XoopsCore25/pull/1035
+* Libraries rebuild by @geekwright in https://github.com/XOOPS/XoopsCore25/pull/1037
+* Create XoopsFormRendererBootstrap5.php by @alain01 in https://github.com/XOOPS/XoopsCore25/pull/1038
+* Add xoopsformrendererbootstrap5 to XoopsLoad by @geekwright in https://github.com/XOOPS/XoopsCore25/pull/1039
+* new icon by @ggoffy in https://github.com/XOOPS/XoopsCore25/pull/1044
+* Fix incorrect path names by @geekwright in https://github.com/XOOPS/XoopsCore25/pull/1042
+* Some theme/themeability issues by @geekwright in https://github.com/XOOPS/XoopsCore25/pull/1043
+* adding defaults for PHP8 by @mambax7 in https://github.com/XOOPS/XoopsCore25/pull/1046
+* label content should have also id (for 'label_for') by @ggoffy in https://github.com/XOOPS/XoopsCore25/pull/1048
+* calendar div needs z-index in order to be shown on highest level by @ggoffy in https://github.com/XOOPS/XoopsCore25/pull/1049
+* additional global language variables by @mambax7 in https://github.com/XOOPS/XoopsCore25/pull/1054
+* replace includeq with include in Smarty by @mambax7 in https://github.com/XOOPS/XoopsCore25/pull/1059
+* replace foreachq with foreach in Smarty templates by @mambax7 in https://github.com/XOOPS/XoopsCore25/pull/1058
+* Bootstrap V4.5.2 to 4.6.0 for xSwatch4 by @alain01 in https://github.com/XOOPS/XoopsCore25/pull/1063
+* tablesorter widgets and blue theme by @mambax7 in https://github.com/XOOPS/XoopsCore25/pull/1062
+* missed file by @mambax7 in https://github.com/XOOPS/XoopsCore25/pull/1068
+* Ensure variable is defined by @geekwright in https://github.com/XOOPS/XoopsCore25/pull/1067
+* Fix incorrect name for XoopsConfigCategory object variable by @geekwright in https://github.com/XOOPS/XoopsCore25/pull/1069
+* Fix incorrect variable for GroupMembership object by @geekwright in https://github.com/XOOPS/XoopsCore25/pull/1070
+* Return of ints in XoopsModelStats::getCount() and getCounts() by @geekwright in https://github.com/XOOPS/XoopsCore25/pull/1071
+* Force array for groups XoopsMemberHandler::getUserCountByGroupLink() by @geekwright in https://github.com/XOOPS/XoopsCore25/pull/1072
+* Ensure variable is defined by @geekwright in https://github.com/XOOPS/XoopsCore25/pull/1073
+* Check for correct object type by @geekwright in https://github.com/XOOPS/XoopsCore25/pull/1075
+* Cosmetic changes in theme.tpl - xswatch4 theme by @alain01 in https://github.com/XOOPS/XoopsCore25/pull/1094
+* xSwatch4 options by @alain01 in https://github.com/XOOPS/XoopsCore25/pull/1100
+* Replace hardcoded english text in protector stats graph by @geekwright in https://github.com/XOOPS/XoopsCore25/pull/1097
+* add admin.css by @GregMage in https://github.com/XOOPS/XoopsCore25/pull/1104
+* Add default for xo_sys_breadcrumb by @geekwright in https://github.com/XOOPS/XoopsCore25/pull/1107
+* Display warning if xml extension not available by @geekwright in https://github.com/XOOPS/XoopsCore25/pull/1102
+* Remove Google Swiffy references by @geekwright in https://github.com/XOOPS/XoopsCore25/pull/1140
+* add dirname in block title by @GregMage in https://github.com/XOOPS/XoopsCore25/pull/1125
+* fix: https://github.com/XOOPS/XoopsCore25/issues/1144 by @GregMage in https://github.com/XOOPS/XoopsCore25/pull/1145
+* Change define in the system module by @GregMage in https://github.com/XOOPS/XoopsCore25/pull/1142
+* Add \XoopsDatabase::isResultSet() by @geekwright in https://github.com/XOOPS/XoopsCore25/pull/1141
+* add missing argument by @GregMage in https://github.com/XOOPS/XoopsCore25/pull/1149
+* Change mcrypt_create_iv() to random_bytes() by @GregMage in https://github.com/XOOPS/XoopsCore25/pull/1148
+* Updated XM module templates by @GregMage in https://github.com/XOOPS/XoopsCore25/pull/1150
+* Feature/php81 xbootstrap by @mambax7 in https://github.com/XOOPS/XoopsCore25/pull/1135
+* The index.php file is deleted and created after a cache delete operation by @GregMage in https://github.com/XOOPS/XoopsCore25/pull/1147
+* Link for 'This Module Admin' after module install by @GregMage in https://github.com/XOOPS/XoopsCore25/pull/1146
+* Bootstrap V4.6.0 to 4.6.1 for xSwatch4 by @alain01 in https://github.com/XOOPS/XoopsCore25/pull/1127
+* bt4 search for xswatch4 by @alain01 in https://github.com/XOOPS/XoopsCore25/pull/1124
+* Add version number to module name in toolbar, similar to what we have… by @mambax7 in https://github.com/XOOPS/XoopsCore25/pull/1152
+* Review filter and escape in findusers  by @geekwright in https://github.com/XOOPS/XoopsCore25/pull/1153
+* request_findusers by @mambax7 in https://github.com/XOOPS/XoopsCore25/pull/1131
+* Smarty v2.6.32 by @mambax7 in https://github.com/XOOPS/XoopsCore25/pull/1130
+* Undefined constant "next" by @mambax7 in https://github.com/XOOPS/XoopsCore25/pull/1159
+* XS4-fix-base-css by @mambax7 in https://github.com/XOOPS/XoopsCore25/pull/1160
+* xoops.css url "/image/" by @alain01 in https://github.com/XOOPS/XoopsCore25/pull/1162
+* HTML Purifier 4.14.0 by @mambax7 in https://github.com/XOOPS/XoopsCore25/pull/1164
+* Update theme.tpl - my_xoops.css and my_xoops_dark.css by @alain01 in https://github.com/XOOPS/XoopsCore25/pull/1161
+* add warning message in admin by @GregMage in https://github.com/XOOPS/XoopsCore25/pull/1123
+* add link to image of an activated module by @mambax7 in https://github.com/XOOPS/XoopsCore25/pull/1055
+* delete xcache.php by @mambax7 in https://github.com/XOOPS/XoopsCore25/pull/1170
+* Skip prettified protector log if not supported by @geekwright in https://github.com/XOOPS/XoopsCore25/pull/1169
+* Address issues with br tags in form trays by @geekwright in https://github.com/XOOPS/XoopsCore25/pull/1171
+* hack for proper displaying of form element trays in bootstrap 4 and 5 by @ggoffy in https://github.com/XOOPS/XoopsCore25/pull/1051
+* replacing includeq and foreachq by @mambax7 in https://github.com/XOOPS/XoopsCore25/pull/1168
+* A less aggressive \MyTextSanitizer::makeClickable() by @geekwright in https://github.com/XOOPS/XoopsCore25/pull/1172
+* refactor XoopsRequest to Xmf\Request by @mambax7 in https://github.com/XOOPS/XoopsCore25/pull/1174
+* Fix bug issue #1114 by @geekwright in https://github.com/XOOPS/XoopsCore25/pull/1178
+* Add trailing end of line by @geekwright in https://github.com/XOOPS/XoopsCore25/pull/1176
+* adding sorting to default theme by @mambax7 in https://github.com/XOOPS/XoopsCore25/pull/1175
+* Revert "adding sorting to default theme" by @geekwright in https://github.com/XOOPS/XoopsCore25/pull/1180
+* Fix non-conforming id elements in module menu tabs by @geekwright in https://github.com/XOOPS/XoopsCore25/pull/1179
+* Remove unused composer files from phpmailer directory by @geekwright in https://github.com/XOOPS/XoopsCore25/pull/1181
+* Correct docblock for getHandler and getModuleHandler by @geekwright in https://github.com/XOOPS/XoopsCore25/pull/1182
+* Fix return value in deprecated XoopsBlock::store() by @geekwright in https://github.com/XOOPS/XoopsCore25/pull/1183
+* Formcaptcha option2 by @GregMage in https://github.com/XOOPS/XoopsCore25/pull/1120
+* Fix issues with Bad IP list in Protector Center by @geekwright in https://github.com/XOOPS/XoopsCore25/pull/1185
+* Fix Passing null to parameter ... of type string errors by @geekwright in https://github.com/XOOPS/XoopsCore25/pull/1186
+* XoopsNotification::getByItemId() uses wrong column info by @geekwright in https://github.com/XOOPS/XoopsCore25/pull/1187
+* Add missing \XoopsConfigOptionHandler::getCount() method by @geekwright in https://github.com/XOOPS/XoopsCore25/pull/1188
+* PhpDoc change to mixed by @mambax7 in https://github.com/XOOPS/XoopsCore25/pull/1165
+* Passing null to parameter of type string by @geekwright in https://github.com/XOOPS/XoopsCore25/pull/1189
+* Cleanup in \XoopsSecurity::checkBadips() by @geekwright in https://github.com/XOOPS/XoopsCore25/pull/1190
+* Respect method arguments $start and $limit by @geekwright in https://github.com/XOOPS/XoopsCore25/pull/1191
+* Fix some frequently seen DOM issues by @geekwright in https://github.com/XOOPS/XoopsCore25/pull/1192
+* \XoopsModule::$adminmenu not always properly initialized by @geekwright in https://github.com/XOOPS/XoopsCore25/pull/1193
+* Null to string issue in xoAppUrl by @geekwright in https://github.com/XOOPS/XoopsCore25/pull/1194
+* Scrutinizer recent complaints by @mambax7 in https://github.com/XOOPS/XoopsCore25/pull/1195
+* Mini stats Smarty plugin xoStats by @geekwright in https://github.com/XOOPS/XoopsCore25/pull/1197
+* all modules are using 'id", and this is causing issues in PHP8 by @mambax7 in https://github.com/XOOPS/XoopsCore25/pull/1199
+* New version system by @GregMage in https://github.com/XOOPS/XoopsCore25/pull/1126
+* scrutinizer3  by @mambax7 in https://github.com/XOOPS/XoopsCore25/pull/1200
+* varchar(12) to varchar(32) version by @GregMage in https://github.com/XOOPS/XoopsCore25/pull/1205
+* trim() expects parameter 1 to be string, array given by @mambax7 in https://github.com/XOOPS/XoopsCore25/pull/1203
+* Add .tpl extension option for module_index help file #482 by @mambax7 in https://github.com/XOOPS/XoopsCore25/pull/1201
+* Propagate recent default admin theme changes to dark and transition by @geekwright in https://github.com/XOOPS/XoopsCore25/pull/1207
+* Clear some Smarty and other php8.1 issues by @geekwright in https://github.com/XOOPS/XoopsCore25/pull/1206
+* Some php8.1 fixes by @geekwright in https://github.com/XOOPS/XoopsCore25/pull/1210
+* Avatar display in misc.php should respect avatar_display by @geekwright in https://github.com/XOOPS/XoopsCore25/pull/1209
+* Passing null to parameter #1 ($string) of type string is deprecated by @mambax7 in https://github.com/XOOPS/XoopsCore25/pull/1211
+* Deal with each() removal by @geekwright in https://github.com/XOOPS/XoopsCore25/pull/1216
+* Convert comment posting to use Xmf\Request by @geekwright in https://github.com/XOOPS/XoopsCore25/pull/1218
+* Reviewing Protector by @geekwright in https://github.com/XOOPS/XoopsCore25/pull/1217
+* In PHP 8.1, the default error handling is set to throw an exception by @mambax7 in https://github.com/XOOPS/XoopsCore25/pull/1219
+* trim() expects a string, null given by @mambax7 in https://github.com/XOOPS/XoopsCore25/pull/1221
+* Unknown: preg_match(): Passing null to parameter #2 by @mambax7 in https://github.com/XOOPS/XoopsCore25/pull/1225
+* Implement new module version in system module install by @geekwright in https://github.com/XOOPS/XoopsCore25/pull/1222
+* Fix module admin breadcrumb by @geekwright in https://github.com/XOOPS/XoopsCore25/pull/1224
+* Smarty defaults by @mambax7 in https://github.com/XOOPS/XoopsCore25/pull/1226
+* Update to XMF 1.2.26 by @geekwright in https://github.com/XOOPS/XoopsCore25/pull/1227
+* Missing files from PR 1227 by @geekwright in https://github.com/XOOPS/XoopsCore25/pull/1228
+* changelog 2.5.11 Beta 2 by @mambax7 in https://github.com/XOOPS/XoopsCore25/pull/1246
+* update changelog.php by @mambax7 in https://github.com/XOOPS/XoopsCore25/pull/1251
+* remove /thadmin by @mambax7 in https://github.com/XOOPS/XoopsCore25/pull/1236
+* Add phar wrapper check to protector by @geekwright in https://github.com/XOOPS/XoopsCore25/pull/1250
+* jQuery_3.6.1_install by @mambax7 in https://github.com/XOOPS/XoopsCore25/pull/1254
+* jQuery UI 1.13.1 by @mambax7 in https://github.com/XOOPS/XoopsCore25/pull/1233
+* check_$_REQUEST_modules  by @mambax7 in https://github.com/XOOPS/XoopsCore25/pull/1256
+* Xoops Editor TinyMCE 5 by @ForXoops in https://github.com/XOOPS/XoopsCore25/pull/1053
+* utf8mb4 by @mambax7 in https://github.com/XOOPS/XoopsCore25/pull/1257
+* Remove xswatch theme by @geekwright in https://github.com/XOOPS/XoopsCore25/pull/1263
+* Correct \MyTextSanitizer::makeClickable() by @geekwright in https://github.com/XOOPS/XoopsCore25/pull/1265
+* Disallow classes in unserialize by @geekwright in https://github.com/XOOPS/XoopsCore25/pull/1266
+* Undefined array key 0 in file protector.php by @mambax7 in https://github.com/XOOPS/XoopsCore25/pull/1252
+* PHP 8.2: Dynamic Properties are deprecated by @mambax7 in https://github.com/XOOPS/XoopsCore25/pull/1253
+* isResultSet_1 by @mambax7 in https://github.com/XOOPS/XoopsCore25/pull/1255
+* PHP_8.2_Dynamic_Properties_are_deprecated_2 by @mambax7 in https://github.com/XOOPS/XoopsCore25/pull/1258
+* change folder sorting in Installation, Issue #1248 (alain01/mamba) by @mambax7 in https://github.com/XOOPS/XoopsCore25/pull/1262
+* HTML Purifier 4.15 by @mambax7 in https://github.com/XOOPS/XoopsCore25/pull/1267
+* mysqli_fetch_object() requires mysqli_result by @mambax7 in https://github.com/XOOPS/XoopsCore25/pull/1268
+* remove "deprecated" for censorString() by @mambax7 in https://github.com/XOOPS/XoopsCore25/pull/1281
+* Restrict paths to inside XOOPS_THEME_PATH by @geekwright in https://github.com/XOOPS/XoopsCore25/pull/1282
+* Issues 1269 by @GregMage in https://github.com/XOOPS/XoopsCore25/pull/1271
+* adding divider in newbb thread template by @mambax7 in https://github.com/XOOPS/XoopsCore25/pull/1283
+* fix for https://github.com/XOOPS/XoopsCore25/issues/1284 by @mambax7 in https://github.com/XOOPS/XoopsCore25/pull/1285
+* adding the link on the name as in (XoopsUserUtility::getUnameFromId). by @GregMage in https://github.com/XOOPS/XoopsCore25/pull/1279
+* Fix issues in moving captcha configuration files by @geekwright in https://github.com/XOOPS/XoopsCore25/pull/1277
+* wrong return by @mambax7 in https://github.com/XOOPS/XoopsCore25/pull/1276
+* $myts name consistencies, cleanup by @mambax7 in https://github.com/XOOPS/XoopsCore25/pull/1275
+* template defaults by @mambax7 in https://github.com/XOOPS/XoopsCore25/pull/1278
+* change utf8 to utf8mb4 in install by @mambax7 in https://github.com/XOOPS/XoopsCore25/pull/1272
+* PHP 8.2 Partially Supported Callables are deprecated by @mambax7 in https://github.com/XOOPS/XoopsCore25/pull/1273
+* Added security with the "install" folder. by @GregMage in https://github.com/XOOPS/XoopsCore25/pull/1297
+* cleaning up old code, this fixes the issue here: https://github.com/X… by @GregMage in https://github.com/XOOPS/XoopsCore25/pull/1290
+* Removal of templates from XM modules by @GregMage in https://github.com/XOOPS/XoopsCore25/pull/1294
+* fix install table modules (version) by @GregMage in https://github.com/XOOPS/XoopsCore25/pull/1298
+* Fix: https://github.com/XOOPS/XoopsCore25/issues/1304 by @GregMage in https://github.com/XOOPS/XoopsCore25/pull/1306
+* Used notification_constants in XoopsUser by @Andrew-Staves-Activ in https://github.com/XOOPS/XoopsCore25/pull/1240
+* Changed to use gender-neutral pronouns by @Andrew-Staves-Activ in https://github.com/XOOPS/XoopsCore25/pull/1241
+* Set to only send notifications to activated users by @Andrew-Staves-Activ in https://github.com/XOOPS/XoopsCore25/pull/1244
+* Updated user info buttons to use recognised op values by @Andrew-Staves-Activ in https://github.com/XOOPS/XoopsCore25/pull/1245
+* jQuery 3.6.3, jQuery UI 1.13.2 by @mambax7 in https://github.com/XOOPS/XoopsCore25/pull/1300
+* update siteinfo bloc and 1 question by @alain01 in https://github.com/XOOPS/XoopsCore25/pull/1302
+* fix error with preg_split() and php 8.1 by @GregMage in https://github.com/XOOPS/XoopsCore25/pull/1292
+* small adjustments to arrays in xoopscaptcha by @mambax7 in https://github.com/XOOPS/XoopsCore25/pull/1288
+* fix error by ref. by @GregMage in https://github.com/XOOPS/XoopsCore25/pull/1287
+* Typos by @mambax7 in https://github.com/XOOPS/XoopsCore25/pull/1212
+* update docs/lang_diff.txt by @GregMage in https://github.com/XOOPS/XoopsCore25/pull/1308
+* Fix: Error in help.php by @GregMage in https://github.com/XOOPS/XoopsCore25/pull/1309
+* Fix: https://github.com/XOOPS/XoopsCore25/issues/1299 by @GregMage in https://github.com/XOOPS/XoopsCore25/pull/1310
+* add missing fields in PM by @mambax7 in https://github.com/XOOPS/XoopsCore25/pull/1313
+* fix: setcookie(): Passing null to parameter #2 ($value) of type strin… by @GregMage in https://github.com/XOOPS/XoopsCore25/pull/1311
+* fix php8.2 error by @GregMage in https://github.com/XOOPS/XoopsCore25/pull/1295
+* Php8.2 dynamic_fields by @mambax7 in https://github.com/XOOPS/XoopsCore25/pull/1238
+* [] operator not supported for strings by @mambax7 in https://github.com/XOOPS/XoopsCore25/pull/1237
+* Feature/is result set 2 by @mambax7 in https://github.com/XOOPS/XoopsCore25/pull/1301
+* reverse isResultSet() changes to XMF by @mambax7 in https://github.com/XOOPS/XoopsCore25/pull/1314
+* fix: https://github.com/XOOPS/XoopsCore25/issues/1315 by @GregMage in https://github.com/XOOPS/XoopsCore25/pull/1317
+* fix for Break in Install #1318 by @mambax7 in https://github.com/XOOPS/XoopsCore25/pull/1319
+* fix for a wrong parenthesis by @mambax7 in https://github.com/XOOPS/XoopsCore25/pull/1320
+* Merge Smarty3 by @geekwright in https://github.com/XOOPS/XoopsCore25/pull/1322
+* 2.5.11 RC1 prep by @geekwright in https://github.com/XOOPS/XoopsCore25/pull/1326
+* https://github.com/XOOPS/XoopsCore25/issues/1327 by @mambax7 in https://github.com/XOOPS/XoopsCore25/pull/1328
+* missing_paypal_image_in_renderAbout by @mambax7 in https://github.com/XOOPS/XoopsCore25/pull/1332
+* System_modules.tpl wrong quotations by @mambax7 in https://github.com/XOOPS/XoopsCore25/pull/1334
+* updating lang_diff.txt by @mambax7 in https://github.com/XOOPS/XoopsCore25/pull/1337
+* Compatibility smarty 3 and4 by @GregMage in https://github.com/XOOPS/XoopsCore25/pull/1325
+* fixed smarty default errors for module extcal by @ggoffy in https://github.com/XOOPS/XoopsCore25/pull/1331
+* rawurlencode() requires string by @mambax7 in https://github.com/XOOPS/XoopsCore25/pull/1339
+* xoops_getUserTimestamp has to return integer by @mambax7 in https://github.com/XOOPS/XoopsCore25/pull/1338
+* PHP 8.2: Dynamic Properties are deprecated by @mambax7 in https://github.com/XOOPS/XoopsCore25/pull/1336
+* using empty check instead of default by @mambax7 in https://github.com/XOOPS/XoopsCore25/pull/1324
+* Untrusted files inclusion, not guaranteed to load the right file by @mambax7 in https://github.com/XOOPS/XoopsCore25/pull/1344
+* Add makeSet() by @geekwright in https://github.com/XOOPS/XoopsCore25/pull/1346
+* Fix include paths in install by @geekwright in https://github.com/XOOPS/XoopsCore25/pull/1347
+* Freshen libraries by @geekwright in https://github.com/XOOPS/XoopsCore25/pull/1348
+* Update libraries encore by @geekwright in https://github.com/XOOPS/XoopsCore25/pull/1350
+* Dir install upgrade by @geekwright in https://github.com/XOOPS/XoopsCore25/pull/1351
+* Sanitize fatal exception message by @geekwright in https://github.com/XOOPS/XoopsCore25/pull/1352
+* Release Prep by @geekwright in https://github.com/XOOPS/XoopsCore25/pull/1353
+* Incorrect language checking in install tablesfill step by @geekwright in https://github.com/XOOPS/XoopsCore25/pull/1355
+* fix smarty 3 by @GregMage in https://github.com/XOOPS/XoopsCore25/pull/1356
+* Replace class/smarty/xoops_plugins directory with smarty3_plugins by @geekwright in https://github.com/XOOPS/XoopsCore25/pull/1357
+* fix for {$wizard->language}/english/global.php" by @mambax7 in https://github.com/XOOPS/XoopsCore25/pull/1358
+* missing quotes by @mambax7 in https://github.com/XOOPS/XoopsCore25/pull/1359
+* Fix for Upgrade Issues by @geekwright in https://github.com/XOOPS/XoopsCore25/pull/1360
+* Fix 1365 and php8 by @GregMage in https://github.com/XOOPS/XoopsCore25/pull/1366
+* jQuery to 3.7.1 by @mambax7 in https://github.com/XOOPS/XoopsCore25/pull/1361
+* Smarty 3 Preflight in Upgrade by @geekwright in https://github.com/XOOPS/XoopsCore25/pull/1375
+* fix for missing system_confirm.tpl by @mambax7 in https://github.com/XOOPS/XoopsCore25/pull/1373
+* changed to RC3 by @mambax7 in https://github.com/XOOPS/XoopsCore25/pull/1376
+* XOOPS_URL was hardcoded with "http://" by @mambax7 in https://github.com/XOOPS/XoopsCore25/pull/1372
+* Some of the issues reported by Scrutinizer by @mambax7 in https://github.com/XOOPS/XoopsCore25/pull/1229
+* Feature/entropy by @mambax7 in https://github.com/XOOPS/XoopsCore25/pull/1343
+* Proper preg_quote(...) usage by @mambax7 in https://github.com/XOOPS/XoopsCore25/pull/1341
+* Feature/css fixes by @mambax7 in https://github.com/XOOPS/XoopsCore25/pull/1345
+* conversion to Xmf\Request by @mambax7 in https://github.com/XOOPS/XoopsCore25/pull/1177
+* Undefined_array_key_in_xoopskernel by @mambax7 in https://github.com/XOOPS/XoopsCore25/pull/1368
+* Fixing paths in Protector by @mambax7 in https://github.com/XOOPS/XoopsCore25/pull/1371
+* Feature/installation fixes by @mambax7 in https://github.com/XOOPS/XoopsCore25/pull/1369
+* Feature/fixes xoops website by @mambax7 in https://github.com/XOOPS/XoopsCore25/pull/1370
+* Scrutinizer check for empty array by @mambax7 in https://github.com/XOOPS/XoopsCore25/pull/1381
+* compatibility for Apache 2.2 and 2.4 by @mambax7 in https://github.com/XOOPS/XoopsCore25/pull/1380
+* Regex adjustments, PHP8 by @mambax7 in https://github.com/XOOPS/XoopsCore25/pull/1377
+* add missing  AUTO_INCREMENT by @mambax7 in https://github.com/XOOPS/XoopsCore25/pull/1378
+* Update XoopsFormRendererBootstrap5.php by @CHCCD in https://github.com/XOOPS/XoopsCore25/pull/1379
+* moving MAX_FILE_SIZE up by @mambax7 in https://github.com/XOOPS/XoopsCore25/pull/1383
+* Feature/ent quotes ent html5 by @mambax7 in https://github.com/XOOPS/XoopsCore25/pull/1342
+* cosmetics: https, single quotes, PhpDocs by @mambax7 in https://github.com/XOOPS/XoopsCore25/pull/1223
+* consistency in dealing with deprecated in PHP 8.2 utf8_encode() and utf8_decode() by @mambax7 in https://github.com/XOOPS/XoopsCore25/pull/1363
+* check for XOOPS_USE_MULTIBYTES by @mambax7 in https://github.com/XOOPS/XoopsCore25/pull/1385
+* Reverting styles.css and footer.php by @mambax7 in https://github.com/XOOPS/XoopsCore25/pull/1387
+* better check for renderWhere() by @mambax7 in https://github.com/XOOPS/XoopsCore25/pull/1384
+* Made XoopsNotificationHandler::subscribe() return true rather than null. by @Andrew-Staves-Activ in https://github.com/XOOPS/XoopsCore25/pull/1239
+* Update media.js by @CHCCD in https://github.com/XOOPS/XoopsCore25/pull/1386
+* undefined array key plus other issue by @mambax7 in https://github.com/XOOPS/XoopsCore25/pull/1274
+* 'array_merge(...)' is used in a loop and is a resources greedy construction by @mambax7 in https://github.com/XOOPS/XoopsCore25/pull/1388
+* PHP 8.0: @ Error Suppression operator does not silent fatal errors by @mambax7 in https://github.com/XOOPS/XoopsCore25/pull/1323
+* fix for <{xoUserInfo by @mambax7 in https://github.com/XOOPS/XoopsCore25/pull/1393
+* Update image.php by @luciorota in https://github.com/XOOPS/XoopsCore25/pull/1389
+* Accept token for valid users only by @mambax7 in https://github.com/XOOPS/XoopsCore25/pull/1395
+* Greedy array_merge() by @mambax7 in https://github.com/XOOPS/XoopsCore25/pull/1391
+* Various Updates by @mambax7 in https://github.com/XOOPS/XoopsCore25/pull/1390
+* checking if template variables are set by @mambax7 in https://github.com/XOOPS/XoopsCore25/pull/1394
+* handleException() adds own trace when calling handleError() by @mambax7 in https://github.com/XOOPS/XoopsCore25/pull/1374
+* Update image.php by @luciorota in https://github.com/XOOPS/XoopsCore25/pull/1398
+* Update mimetypes.inc.php by @luciorota in https://github.com/XOOPS/XoopsCore25/pull/1397
+* Update uploader.php by @luciorota in https://github.com/XOOPS/XoopsCore25/pull/1396
+* Fix protector oninstall issue by @geekwright in https://github.com/XOOPS/XoopsCore25/pull/1400
+* version update by @mambax7 in https://github.com/XOOPS/XoopsCore25/pull/1402
+* delete duplicate $renderer by @mambax7 in https://github.com/XOOPS/XoopsCore25/pull/1405
+* Update maintenance by @GregMage in https://github.com/XOOPS/XoopsCore25/pull/1404
+* fix for wrong user variable naming by @mambax7 in https://github.com/XOOPS/XoopsCore25/pull/1407
+* delete duplicate closedir($handler); by @mambax7 in https://github.com/XOOPS/XoopsCore25/pull/1401
+* update deprecated is_cached() by @mambax7 in https://github.com/XOOPS/XoopsCore25/pull/1409
+* Xmf to 1.2.28 by @geekwright in https://github.com/XOOPS/XoopsCore25/pull/1410
+* Added an option to set the default notification method for users by @Andrew-Staves-Activ in https://github.com/XOOPS/XoopsCore25/pull/1242
+* PhpDoc updates #1196 by @mambax7 in https://github.com/XOOPS/XoopsCore25/pull/1408
+* remove duplicated code by @mambax7 in https://github.com/XOOPS/XoopsCore25/pull/1412
+* Clean up upgrade/preflight.php by @geekwright in https://github.com/XOOPS/XoopsCore25/pull/1413
+* Fix issues with upd-2.0.18-to-2.3.0 step by @geekwright in https://github.com/XOOPS/XoopsCore25/pull/1414
+* reverse quotations, update version # of system module by @mambax7 in https://github.com/XOOPS/XoopsCore25/pull/1415
+* Bug Fix - incorrect lower PHP version specified by @geekwright in https://github.com/XOOPS/XoopsCore25/pull/1416
+* Correct error handling in rewriting template by @geekwright in https://github.com/XOOPS/XoopsCore25/pull/1417
+* typo in \modules\system\admin\users\main.php by @mambax7 in https://github.com/XOOPS/XoopsCore25/pull/1418
+* Reverse adding more entropy (image_name field size in DB is too small by @mambax7 in https://github.com/XOOPS/XoopsCore25/pull/1420
+* Dynamic fields are not allowed in PHP 8.2 by @mambax7 in https://github.com/XOOPS/XoopsCore25/pull/1430
+* set  variable by @mambax7 in https://github.com/XOOPS/XoopsCore25/pull/1429
+* Fixes for templates by @mambax7 in https://github.com/XOOPS/XoopsCore25/pull/1421
+* fix for installation issues by @mambax7 in https://github.com/XOOPS/XoopsCore25/pull/1428
+* load modinfo language in /system/xoops_version.php, after upgrade by @mambax7 in https://github.com/XOOPS/XoopsCore25/pull/1424
+* Updating versions, fix for versionCompare() by @mambax7 in https://github.com/XOOPS/XoopsCore25/pull/1427
+* replace |is_array modifier by @mambax7 in https://github.com/XOOPS/XoopsCore25/pull/1433
+* Eliminating "magic_quotes" error notices in PHP 7.4+ by @mambax7 in https://github.com/XOOPS/XoopsCore25/pull/1426
+* make  $addtoken = true by @mambax7 in https://github.com/XOOPS/XoopsCore25/pull/1422
+* Parameterized Query by @mambax7 in https://github.com/XOOPS/XoopsCore25/pull/1419
+* Update to xmf v1.2.29 by @geekwright in https://github.com/XOOPS/XoopsCore25/pull/1435
+* Case insensitive path check by @geekwright in https://github.com/XOOPS/XoopsCore25/pull/1434
+* Fix rendering caption required icon2 by @mambax7 in https://github.com/XOOPS/XoopsCore25/pull/1411
+* Path traversal, bugs fixes, and adding Xmf\Request() by @mambax7 in https://github.com/XOOPS/XoopsCore25/pull/1425
+* fix for prepared statement result by @mambax7 in https://github.com/XOOPS/XoopsCore25/pull/1437
+* Patch for loadLanguage issue by @geekwright in https://github.com/XOOPS/XoopsCore25/pull/1436
+* fix for email templates in Notifications by @mambax7 in https://github.com/XOOPS/XoopsCore25/pull/1443
+* fix for multi-image upload by @mambax7 in https://github.com/XOOPS/XoopsCore25/pull/1442
+* add ENT_HTML5 by @mambax7 in https://github.com/XOOPS/XoopsCore25/pull/1441
+* Feature/cosmetics template updates by @mambax7 in https://github.com/XOOPS/XoopsCore25/pull/1440
+* update regex for makeClickable($text) by @mambax7 in https://github.com/XOOPS/XoopsCore25/pull/1445
+* fix dropdown in XoopsFormRendererBootstrap5 by @mambax7 in https://github.com/XOOPS/XoopsCore25/pull/1444
+* set false to uniqid() by @mambax7 in https://github.com/XOOPS/XoopsCore25/pull/1446
+* template updates by @mambax7 in https://github.com/XOOPS/XoopsCore25/pull/1447
+
+===================================
+2.5.11-RC3               2023/11/10
 ===================================
 - Fix uncaught exception during upgrade login
 - Add core language/*/user.php for login
