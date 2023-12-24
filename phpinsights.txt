@@ -1,0 +1,46 @@
+
+Notice: Uninitialized string offset: 1 in C:\Users\mamba\AppData\Roaming\Composer\vendor\nunomaduro\phpinsights\src\Domain\Analyser.php on line 321
+
+Notice: Uninitialized string offset: 1 in C:\Users\mamba\AppData\Roaming\Composer\vendor\nunomaduro\phpinsights\src\Domain\Analyser.php on line 322
+
+Notice: Uninitialized string offset: 1 in C:\Users\mamba\AppData\Roaming\Composer\vendor\nunomaduro\phpinsights\src\Domain\Analyser.php on line 321
+
+Notice: Uninitialized string offset: 1 in C:\Users\mamba\AppData\Roaming\Composer\vendor\nunomaduro\phpinsights\src\Domain\Analyser.php on line 322
+
+Notice: Uninitialized string offset: 1 in C:\Users\mamba\AppData\Roaming\Composer\vendor\nunomaduro\phpinsights\src\Domain\Analyser.php on line 321
+
+Notice: Uninitialized string offset: 1 in C:\Users\mamba\AppData\Roaming\Composer\vendor\nunomaduro\phpinsights\src\Domain\Analyser.php on line 322
+
+
+
+[2022-02-20 22:02:29] `L:\GitHub\MAMBAX7\CORE\XoopsCore25`
+
+                                                                                                              
+                24.0%                   0.5%                    47.1%                   33.7%                 
+                                                                                                              
+                                                                                                              
+                 Code                 Complexity             Architecture               Style                 
+
+
+Score scale: ◼ 1-49 ◼ 50-79 ◼ 80-100
+
+[CODE] 24 pts within 96640 lines
+
+Comments ...................................................... 50.4 %
+Classes ....................................................... 20.4 %
+Functions ...................................................... 5.2 %
+Globally ...................................................... 24.0 %
+
+[COMPLEXITY] 0.5 pts with average of 3.99 cyclomatic complexity
+
+[ARCHITECTURE] 47.1 pts within 1570 files
+
+Classes ....................................................... 39.6 %
+Interfaces ..................................................... 0.1 %
+Globally ...................................................... 60.4 %
+Traits ......................................................... 0.0 %
+
+[MISC] 33.7 pts on coding style
+
+Press enter to see code issues...
+Terminate batch job (Y/N)? 
