@@ -3,7 +3,7 @@
 
         <{if !empty($showTransitionInfo)}>
         <div id="trans-info">
-            <{include file="$theme_tpl/info/`$xoops_language`.tpl"}>
+            <{include file="$theme_tpl/info/{$xoops_language}.tpl"}>
         </div>
         <{/if}>
 
