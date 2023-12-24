@@ -18,7 +18,7 @@
  */
 
 if (!defined('XOOPS_MAINFILE_INCLUDED')) {
-    include_once dirname(dirname(__DIR__)) . '/mainfile.php';
+    include_once dirname(__DIR__, 2) . '/mainfile.php';
 } else {
     chdir(XOOPS_ROOT_PATH . '/modules/pm/');
     xoops_loadLanguage('main', 'pm');
@@ -140,7 +140,7 @@ if ($op === 'submit') {
 
     $msg_image   = '';
     $icons_radio = new XoopsFormRadio(_MESSAGEICON, 'msg_image', $msg_image);
-    $subjectImages = array();
+    $subjectImages = [];
     foreach ($subject_icons as $name => $value) {
         $subjectImages[$name] = '<img src="' . XOOPS_URL . '/images/subject/' . $value .'">';
     }

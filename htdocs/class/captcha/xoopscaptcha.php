@@ -34,8 +34,8 @@ class XoopsCaptcha
     public $path_config;
     public $path_plugin;
     public $name;
-    public $config  = array();
-    public $message = array(); // Logging error messages
+    public $config  = [];
+    public $message = []; // Logging error messages
 
     /**
      * construct
@@ -75,8 +75,8 @@ class XoopsCaptcha
      */
     public function loadConfig($methodname = null)
     {
-        $basic_config  = array();
-        $plugin_config = array();
+        $basic_config  = [];
+        $plugin_config = [];
         $filename      = empty($methodname) ? 'config.php' : 'config.' . $methodname . '.php';
         $distfilename  = empty($methodname) ? 'config.dist.php' : 'config.' . $methodname . '.dist.php';
         if (file_exists($file = $this->path_config . '/' . $filename)) {

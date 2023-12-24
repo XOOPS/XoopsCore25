@@ -118,11 +118,11 @@ class Upgrade_241 extends XoopsUpgrade
     public function xoops_getPublicLicenceKey()
     {
         $xoops_key    = '';
-        $xoops_serdat = array();
-        $checksums    = array(1 => 'md5', 2 => 'sha1');
+        $xoops_serdat = [];
+        $checksums    = [1 => 'md5', 2 => 'sha1'];
 
         // Remember to upgrade versions string with each release there after.
-        $versions = array('XOOPS 2.4.0', 'XOOPS 2.4.1');
+        $versions = ['XOOPS 2.4.0', 'XOOPS 2.4.1'];
 
         error_reporting(E_ALL);
         foreach ($checksums as $funcid => $func) {
@@ -158,8 +158,8 @@ class Upgrade_241 extends XoopsUpgrade
      */
     public function xoops_buildLicenceKey()
     {
-        $xoops_serdat = array();
-        $checksums = array(1 => 'md5', 2 => 'sha1');
+        $xoops_serdat = [];
+        $checksums = [1 => 'md5', 2 => 'sha1'];
         $type      = mt_rand(1, 2);
         $func      = $checksums[$type];
         $xoops_key = '';
@@ -238,7 +238,7 @@ class Upgrade_241 extends XoopsUpgrade
     public function __construct()
     {
         parent::__construct(basename(__DIR__));
-        $this->tasks = array('license');
+        $this->tasks = ['license'];
     }
 }
 

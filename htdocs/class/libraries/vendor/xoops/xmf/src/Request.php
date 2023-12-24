@@ -251,7 +251,7 @@ class Request
      *
      * @return array
      */
-    public static function getArray($name, $default = array(), $hash = 'default')
+    public static function getArray($name, $default = [], $hash = 'default')
     {
         return static::getVar($name, $default, $hash, 'array');
     }
@@ -342,7 +342,7 @@ class Request
         static $headers = null;
 
         if (null === $headers) {
-            $headers = array();
+            $headers = [];
             if (function_exists('apache_request_headers')) {
                 $rawHeaders = apache_request_headers();
                 foreach ($rawHeaders as $name => $value) {
@@ -554,7 +554,7 @@ class Request
 
         // convert $var in array if $type is ARRAY
         if ('array' === strtolower((string)$type) && !is_array($var)) {
-            $var = array($var);
+            $var = [$var];
         }
 
         // If the no trim flag is not set, trim the variable
@@ -568,7 +568,7 @@ class Request
             if ($mask & static::MASK_ALLOW_HTML) {
                 // If the allow html flag is set, apply a safe html filter to the variable
                 if (null === $safeHtmlFilter) {
-                    $safeHtmlFilter = FilterInput::getInstance(array(), array(), 1, 1);
+                    $safeHtmlFilter = FilterInput::getInstance([], [], 1, 1);
                 }
                 $var = $safeHtmlFilter->cleanVar($var, $type);
             } else {
@@ -615,7 +615,7 @@ class Request
     protected static function stripSlashesRecursive($value)
     {
         $value = is_array($value)
-            ? array_map(array(get_called_class(), 'stripSlashesRecursive'), $value)
+            ? array_map([get_called_class(), 'stripSlashesRecursive'], $value)
             : stripslashes($value);
 
         return $value;

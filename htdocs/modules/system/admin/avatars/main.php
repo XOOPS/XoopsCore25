@@ -108,7 +108,7 @@ switch ($op) {
         $criteria->setLimit(xoops_getModuleOption('avatars_pager', 'system'));
         $avatars = $avt_handler->getObjects($criteria, true);
         // Construct avatars array
-        $avatar_list = array();
+        $avatar_list = [];
         $i           = 0;
         foreach (array_keys($avatars) as $i) {
             $avatar_list[$i]          = $avatars[$i]->toArray();
@@ -181,12 +181,13 @@ switch ($op) {
 
         $uploader = new XoopsMediaUploader(
             XOOPS_UPLOAD_PATH . '/avatars',
-            array(
+            [
             'image/gif',
             'image/jpeg',
             'image/pjpeg',
             'image/x-png',
-            'image/png'),
+            'image/png'
+            ],
             $xoopsConfigUser['avatar_maxsize'],
             $xoopsConfigUser['avatar_width'],
             $xoopsConfigUser['avatar_height']
@@ -200,7 +201,7 @@ switch ($op) {
         } else {
             $avatar = $avt_handler->create();
         }
-        $err = array();
+        $err = [];
         if ($_FILES['avatar_file']['error'] != UPLOAD_ERR_NO_FILE) {
             if ($uploader->fetchMedia('avatar_file')) {
                 $uploader->setPrefix('savt');
@@ -291,12 +292,12 @@ switch ($op) {
                 . '</div>' . _AM_SYSTEM_AVATAR_SUREDEL;
             // Display message
             xoops_confirm(
-                array(
+                [
                     'op' => 'delfileok',
                     'avatar_id' => $avatar_id,
                     'fct' => 'avatars',
                     'user_id' => $user_id
-                ),
+                ],
                 'admin.php',
                 $msg
             );
@@ -369,13 +370,13 @@ switch ($op) {
         $xoopsTpl->assign('imgcat_maxsize', $xoopsConfigUser['avatar_maxsize']);
         $xoopsTpl->assign('imgcat_maxwidth', $xoopsConfigUser['avatar_width']);
         $xoopsTpl->assign('imgcat_maxheight', $xoopsConfigUser['avatar_height']);
-        $payload = array(
+        $payload = [
             'aud' => 'ajaxfineupload.php',
             'cat' => '',
             'uid' => $xoopsUser instanceof \XoopsUser ? $xoopsUser->id() : 0,
             'handler' => 'fineavataruploadhandler',
             'moddir' => 'system',
-        );
+        ];
         $jwt = \Xmf\Jwt\TokenFactory::build('fineuploader', $payload, 60*30); // token good for 30 minutes
         $xoopsTpl->assign('jwt', $jwt);
         $fineup_debug = 'false';

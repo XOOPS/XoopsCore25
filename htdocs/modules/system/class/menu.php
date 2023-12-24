@@ -26,8 +26,8 @@ class SystemMenuHandler
      *
      * @var string
      */
-    public $_menutop  = array();
-    public $_menutabs = array();
+    public $_menutop  = [];
+    public $_menutabs = [];
     public $_obj;
     public $_header;
     public $_subheader;

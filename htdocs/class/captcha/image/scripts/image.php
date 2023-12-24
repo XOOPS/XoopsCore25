@@ -27,7 +27,7 @@ $xoopsLogger->activated = false;
  */
 class XoopsCaptchaImageHandler
 {
-    public $config  = array();
+    public $config  = [];
     public $code;
     public $mode    = 'gd';
     public $invalid = false;
@@ -120,7 +120,7 @@ class XoopsCaptchaImageHandler
         require_once XOOPS_ROOT_PATH . '/class/xoopslists.php';
         $file_path = XOOPS_ROOT_PATH . "/class/captcha/image/{$name}";
         $files     = XoopsLists::getFileListAsArray($file_path);
-        $items = array();
+        $items = [];
         foreach ($files as $item) {
             if (empty($extension) || preg_match("/(\.{$extension})$/i", $item)) {
                 $items[] = $item;
@@ -213,7 +213,7 @@ class XoopsCaptchaImageHandler
         $FontSize      = $this->config['fontsize_max'];
         for ($Angle = -30; $Angle <= 30; ++$Angle) {
             for ($i = 65; $i <= 90; ++$i) {
-                $CharDetails   = imageftbbox($FontSize, $Angle, $this->font, chr($i), array());
+                $CharDetails   = imageftbbox($FontSize, $Angle, $this->font, chr($i), []);
                 $_MaxCharWidth = abs($CharDetails[0] + $CharDetails[2]);
                 if ($_MaxCharWidth > $MaxCharWidth) {
                     $MaxCharWidth = $_MaxCharWidth;
@@ -295,14 +295,14 @@ class XoopsCaptchaImageHandler
             // select random font size
             $FontSize = mt_rand($this->config['fontsize_min'], $this->config['fontsize_max']);
 
-            $CharDetails = imageftbbox($FontSize, $Angle, $this->font, $this->code[$i], array());
+            $CharDetails = imageftbbox($FontSize, $Angle, $this->font, $this->code[$i], []);
             $CharHeight  = abs($CharDetails[1] + $CharDetails[5]);
 
             // calculate character starting coordinates
             $posX = ($this->spacing / 2) + ($i * $this->spacing);
             $posY = 2 + ($this->height / 2) + ($CharHeight / 4);
 
-            imagefttext($this->oImage, $FontSize, $Angle, (int)$posX, (int)$posY, $text_color, $this->font, $this->code[$i], array());
+            imagefttext($this->oImage, $FontSize, $Angle, (int)$posX, (int)$posY, $text_color, $this->font, $this->code[$i], []);
         }
     }
 
@@ -384,7 +384,7 @@ class XoopsCaptchaImageHandler
     {
         for ($i = 1; $i <= $this->config['background_num']; ++$i) {
             $randomcolor = imagecolorallocate($this->oImage, mt_rand(190, 255), mt_rand(190, 255), mt_rand(190, 255));
-            $coords      = array();
+            $coords      = [];
             for ($j = 1; $j <= $this->config['polygon_point']; ++$j) {
                 $coords[] = mt_rand(0, $this->width);
                 $coords[] = mt_rand(0, $this->height);

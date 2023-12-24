@@ -28,7 +28,7 @@ if (!function_exists('protector_oninstall_base')) {
         global $ret; // TODO :-D
 
         if (!is_array($ret)) {
-            $ret = array();
+            $ret = [];
         }
 
         /** @var XoopsMySQLDatabase $db */
@@ -83,7 +83,7 @@ if (!function_exists('protector_oninstall_base')) {
                         continue;
                     }
                     $file_path = $tpl_path . '/' . $file;
-                    if (is_file($file_path) && in_array(strrchr($file, '.'),  array('.html', '.css', '.js'))) {
+                    if (is_file($file_path) && in_array(strrchr($file, '.'), ['.html', '.css', '.js'])) {
                         $mtime   = (int)(@filemtime($file_path));
                         $tplfile = $tplfile_handler->create();
                         $tplfile->setVar('tpl_source', file_get_contents($file_path), true);

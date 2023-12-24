@@ -31,7 +31,7 @@ if (defined('XOOPS_ROOT_PATH')) {
     return true;
 }
 
-$mainfile = dirname(dirname(__DIR__)) . '/mainfile.php';
+$mainfile = dirname(__DIR__, 2) . '/mainfile.php';
 if (DIRECTORY_SEPARATOR !== '/') {
     $mainfile = str_replace(DIRECTORY_SEPARATOR, '/', $mainfile);
 }

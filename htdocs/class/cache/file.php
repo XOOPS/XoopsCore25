@@ -71,7 +71,7 @@ class XoopsCacheFile extends XoopsCacheEngine
      * @see    CacheEngine::__defaults
      * @access public
      */
-    public $settings = array();
+    public $settings = [];
 
     /**
      * Set to true if FileEngine::init(); and FileEngine::active(); do not fail.
@@ -99,16 +99,17 @@ class XoopsCacheFile extends XoopsCacheEngine
      * @return boolean True if the engine has been successfully initialized, false if not
      * @access   public
      */
-    public function init($settings = array())
+    public function init($settings = [])
     {
         parent::init($settings);
-        $defaults       = array(
+        $defaults       = [
             'path'      => XOOPS_VAR_PATH . '/caches/xoops_cache',
             'extension' => '.php',
             'prefix'    => 'xoops_',
             'lock'      => false,
             'serialize' => false,
-            'duration'  => 31556926);
+            'duration'  => 31556926
+        ];
         $this->settings = array_merge($defaults, $this->settings);
         if (!isset($this->file)) {
             XoopsLoad::load('XoopsFile');
@@ -212,7 +213,7 @@ class XoopsCacheFile extends XoopsCacheEngine
             $data = stripslashes($data);
             // $data = preg_replace('!s:(\d+):"(.*?)";!se', "'s:'.strlen('$2').':\"$2\";'", $data);
             $data = preg_replace_callback('!s:(\d+):"(.*?)";!s', function ($m) { return 's:' . strlen($m[2]) . ':"' . $m[2] . '";'; }, $data);
-            $data = unserialize($data, array('allowed_classes' => false));
+            $data = unserialize($data, ['allowed_classes' => false]);
             if (is_array($data)) {
                 XoopsLoad::load('XoopsUtility');
                 $data = XoopsUtility::recursive('stripslashes', $data);

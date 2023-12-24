@@ -48,9 +48,9 @@ class SystemGroup extends XoopsGroup
 
         if ($this->isNew()) {
             $s_cat_value   = '';
-            $a_mod_value   = array();
-            $r_mod_value   = array();
-            $r_block_value = array();
+            $a_mod_value   = [];
+            $r_mod_value   = [];
+            $r_block_value = [];
         } else {
             /** @var XoopsGroupPermHandler $sysperm_handler */
             $sysperm_handler    = xoops_getHandler('groupperm');
@@ -143,7 +143,7 @@ class SystemGroup extends XoopsGroup
         $block_handler = xoops_getHandler('block');
         $blocks_obj    = $block_handler->getObjects(new Criteria('mid', "('" . implode("', '", array_keys($module_list)) . "')", 'IN'), true);
 
-        $blocks_module = array();
+        $blocks_module = [];
         foreach (array_keys($blocks_obj) as $bid) {
             $title                                                                             = $blocks_obj[$bid]->getVar('title');
             $blocks_module[$blocks_obj[$bid]->getVar('mid')][$blocks_obj[$bid]->getVar('bid')] = empty($title) ? $blocks_obj[$bid]->getVar('name') : $title;
@@ -157,7 +157,7 @@ class SystemGroup extends XoopsGroup
         $s_checkbox_all->setClass('xo-checkall');
         $r_block_tray->addElement($s_checkbox_all);
         foreach (array_keys($blocks_module) as $mid) {
-            $new_blocks_array = array();
+            $new_blocks_array = [];
             foreach ($blocks_module[$mid] as $key => $value) {
                 $new_blocks_array[$key] = "<a href='" . XOOPS_URL . "/modules/system/admin.php?fct=blocksadmin&amp;op=edit&amp;bid={$key}' title='ID: {$key}' rel='external'>{$value}</a>";
             }

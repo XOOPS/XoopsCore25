@@ -31,7 +31,7 @@ class XoopsModelFactory
     /**
      * static private
      */
-    public $handlers = array();
+    public $handlers = [];
 
     /**
      * XoopsModelFactory::__construct()

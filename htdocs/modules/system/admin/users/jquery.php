@@ -19,7 +19,7 @@
 /** @var XoopsModule $xoopsModule */
 use Xmf\Request;
 
-require dirname(dirname(dirname(dirname(__DIR__)))) . '/mainfile.php';
+require dirname(__DIR__, 4) . '/mainfile.php';
 require XOOPS_ROOT_PATH . '/header.php';
 
 // defined('XOOPS_ROOT_PATH') || exit('XOOPS root path not defined');
@@ -42,17 +42,17 @@ switch ($op) {
         include_once XOOPS_ROOT_PATH . '/kernel/module.php';
         include_once XOOPS_ROOT_PATH . '/modules/system/include/functions.php';
 
-        $tables = array();
+        $tables = [];
         // Count comments (approved only: com_status == XOOPS_COMMENT_ACTIVE)
-        $tables[] = array('table_name' => 'xoopscomments', 'uid_column' => 'com_uid', 'criteria' => new Criteria('com_status', XOOPS_COMMENT_ACTIVE));
+        $tables[] = ['table_name' => 'xoopscomments', 'uid_column' => 'com_uid', 'criteria' => new Criteria('com_status', XOOPS_COMMENT_ACTIVE)];
         // Count forum posts
         if (XoopsModule::getByDirname('newbb')) {
             // Added support for NewBB 5.0 new table naming convention
             $tableTest = new \Xmf\Database\Tables();
             if($tableTest->useTable('newbb_posts')) {
-                $tables[] = array('table_name' => 'newbb_posts', 'uid_column' => 'uid');
+                $tables[] = ['table_name' => 'newbb_posts', 'uid_column' => 'uid'];
             } else {
-                $tables[] = array('table_name' => 'bb_posts', 'uid_column' => 'uid');
+                $tables[] = ['table_name' => 'bb_posts', 'uid_column' => 'uid'];
             }
         }
         $uid         = Request::getInt('uid', 0);

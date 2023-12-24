@@ -60,9 +60,10 @@ class MytsWiki extends MyTextSanitizerExtension
             }
 EOH;
 
-        return array(
+        return [
             $code,
-            $javascript);
+            $javascript
+        ];
     }
 
     /**

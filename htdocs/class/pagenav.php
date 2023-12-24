@@ -73,7 +73,7 @@ class XoopsPageNav
             return $ret;
         }
         if (($this->total != 0) && ($this->perpage != 0)) {
-			$navigation = array();
+			$navigation = [];
             $total_pages = ceil($this->total / $this->perpage);
             if ($total_pages > 1) {
 				$i = 0;
@@ -235,7 +235,7 @@ class XoopsPageNav
      * @param  array $navigation
      * @return string
      */
-	private function displayPageNav($type = 'nav', $navigation = array()){
+	private function displayPageNav($type = 'nav', $navigation = []){
 		if (!isset($GLOBALS['xoTheme']) || !is_object($GLOBALS['xoTheme'])) {
 			include_once $GLOBALS['xoops']->path('/class/theme.php');
 			$GLOBALS['xoTheme'] = new \xos_opal_Theme();

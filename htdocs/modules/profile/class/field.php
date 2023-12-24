@@ -63,7 +63,7 @@ class ProfileField extends XoopsObject
         $this->initVar('field_edit', XOBJ_DTYPE_INT, 0);
         $this->initVar('field_show', XOBJ_DTYPE_INT, 0);
         $this->initVar('field_config', XOBJ_DTYPE_INT, 0);
-        $this->initVar('field_options', XOBJ_DTYPE_ARRAY, array());
+        $this->initVar('field_options', XOBJ_DTYPE_ARRAY, []);
         $this->initVar('step_id', XOBJ_DTYPE_INT, 0);
     }
 
@@ -277,7 +277,7 @@ class ProfileField extends XoopsObject
             case 'select_multi':
             case 'checkbox':
                 $options = $this->getVar('field_options');
-                $ret     = array();
+                $ret     = [];
                 if (count($options) > 0) {
                     foreach (array_keys($options) as $key) {
                         if (in_array($key, $value)) {
@@ -302,7 +302,7 @@ class ProfileField extends XoopsObject
                 /** @var XoopsMemberHandler $member_handler */
                 $member_handler = xoops_getHandler('member');
                 $options        = $member_handler->getGroupList();
-                $ret            = array();
+                $ret            = [];
                 foreach (array_keys($options) as $key) {
                     if (in_array($key, $value)) {
                         $ret[$key] = htmlspecialchars($options[$key], ENT_QUOTES | ENT_HTML5);
@@ -448,12 +448,12 @@ class ProfileFieldHandler extends XoopsPersistableObjectHandler
      */
     public function loadFields($force_update = false)
     {
-        static $fields = array();
+        static $fields = [];
         if (!empty($force_update) || count($fields) == 0) {
             $this->table_link = $this->db->prefix('profile_category');
             $criteria         = new Criteria('o.field_id', 0, '!=');
             $criteria->setSort('l.cat_weight ASC, o.field_weight');
-            $field_objs =& $this->getByLink($criteria, array('o.*'), true, 'cat_id', 'cat_id');
+            $field_objs =& $this->getByLink($criteria, ['o.*'], true, 'cat_id', 'cat_id');
             foreach (array_keys($field_objs) as $i) {
                 $fields[$field_objs[$i]->getVar('field_name')] = $field_objs[$i];
             }
@@ -654,7 +654,7 @@ class ProfileFieldHandler extends XoopsPersistableObjectHandler
      */
     public function getUserVars()
     {
-        return array(
+        return [
             'uid',
             'uname',
             'name',
@@ -685,6 +685,7 @@ class ProfileFieldHandler extends XoopsPersistableObjectHandler
             'user_occ',
             'bio',
             'user_intrest',
-            'user_mailok');
+            'user_mailok'
+        ];
     }
 }

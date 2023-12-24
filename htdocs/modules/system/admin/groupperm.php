@@ -17,7 +17,7 @@
  * @author       XOOPS Development Team, Kazumi Ono (AKA onokazu)
  */
 /** @var  XoopsUser $xoopsUser */
-include_once dirname(dirname(dirname(__DIR__))) . '/include/cp_header.php';
+include_once dirname(__DIR__, 3) . '/include/cp_header.php';
 $modid = isset($_POST['modid']) ? (int)$_POST['modid'] : 0;
 
 // we don't want system module permissions to be changed here
@@ -32,7 +32,7 @@ if (!is_object($module) || !$module->getVar('isactive')) {
     redirect_header(XOOPS_URL . '/admin.php', 1, _MODULENOEXIST);
 }
 
-$msg = array();
+$msg = [];
 
 /** @var XoopsMemberHandler $member_handler */
 $member_handler = xoops_getHandler('member');

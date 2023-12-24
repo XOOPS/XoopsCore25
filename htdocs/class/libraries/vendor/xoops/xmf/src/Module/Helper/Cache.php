@@ -117,7 +117,7 @@ class Cache extends AbstractHelper
     public function cacheRead($key, $regenFunction, $ttl = null, $args = null)
     {
         if (null === $args) {
-            $varArgs = array();
+            $varArgs = [];
         } else {
             $varArgs = func_get_args();
             array_shift($varArgs); // pull off $key

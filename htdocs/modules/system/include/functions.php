@@ -87,7 +87,7 @@ function system_loadLanguage($name, $domain = '', $language = null)
  */
 function system_adminVersion($version, $value = '')
 {
-    static $tblVersion = array();
+    static $tblVersion = [];
     if (is_array($tblVersion) && array_key_exists($version . '.' . $value, $tblVersion)) {
         return $tblVersion[$version . '.' . $value];
     }

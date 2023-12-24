@@ -35,12 +35,12 @@ class Smarty3TemplateRepair extends ScannerProcess
     /**
      * @var array regex patterns
      */
-    protected $patterns = array();
+    protected $patterns = [];
 
     /**
      * @var array replacement patterns
      */
-    protected $replacements = array();
+    protected $replacements = [];
 
     /**
      * @var ScannerOutput

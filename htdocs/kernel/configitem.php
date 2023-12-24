@@ -43,7 +43,7 @@ class XoopsConfigItem extends XoopsObject
      * @var array
      * @access    private
      */
-    public $_confOptions = array();
+    public $_confOptions = [];
     //PHP 8.2 Dynamic properties deprecated
     public $conf_id;
     public $conf_modid;
@@ -197,7 +197,7 @@ class XoopsConfigItem extends XoopsObject
             case 'array':
                 $value = @unserialize($this->getVar('conf_value', 'N'));
 
-                return $value ?: array();
+                return $value ?: [];
             case 'float':
                 $value = $this->getVar('conf_value', 'N');
 
@@ -271,7 +271,7 @@ class XoopsConfigItem extends XoopsObject
      **/
     public function clearConfOptions()
     {
-        $this->_confOptions = array();
+        $this->_confOptions = [];
     }
 }
 
@@ -408,7 +408,7 @@ class XoopsConfigItemHandler extends XoopsObjectHandler
      */
     public function getObjects(CriteriaElement $criteria = null, $id_as_key = false)
     {
-        $ret   = array();
+        $ret   = [];
         $limit = $start = 0;
         $sql   = 'SELECT * FROM ' . $this->db->prefix('config');
         if (isset($criteria) && \method_exists($criteria, 'renderWhere')) {

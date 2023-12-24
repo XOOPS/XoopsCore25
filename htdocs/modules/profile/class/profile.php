@@ -66,7 +66,7 @@ class ProfileProfileHandler extends XoopsPersistableObjectHandler
      * Array of {@link XoopsProfileField} objects
      * @var array
      */
-    public $_fields = array();
+    public $_fields = [];
 
     /**
      * @param null|XoopsDatabase $db
@@ -235,7 +235,7 @@ class ProfileProfileHandler extends XoopsPersistableObjectHandler
         if (isset($vars['options'])) {
             $field->setVar('field_options', $vars['options']);
         } else {
-            $field->setVar('field_options', array());
+            $field->setVar('field_options', []);
         }
         if ($this->insertField($field)) {
             $msg = '&nbsp;&nbsp;Field <strong>' . $vars['name'] . '</strong> added to the database';
@@ -290,13 +290,13 @@ class ProfileProfileHandler extends XoopsPersistableObjectHandler
      *
      * @return array
      */
-    public function search(CriteriaElement $criteria, $searchvars = array(), $groups = null)
+    public function search(CriteriaElement $criteria, $searchvars = [], $groups = null)
     {
         $uservars = $this->getUserVars();
 
         $searchvars_user    = array_intersect($searchvars, $uservars);
         $searchvars_profile = array_diff($searchvars, $uservars);
-        $sv                 = array('u.uid, u.uname, u.email, u.user_viewemail');
+        $sv                 = ['u.uid, u.uname, u.email, u.user_viewemail'];
         if (!empty($searchvars_user)) {
             $sv[0] .= ',u.' . implode(', u.', $searchvars_user);
         }
@@ -326,13 +326,13 @@ class ProfileProfileHandler extends XoopsPersistableObjectHandler
         $sql_users = $sql_select . $sql_from . $sql_clause . $sql_order;
         $result    = $this->db->query($sql_users, $limit, $start);
         if (!$this->db->isResultSet($result)) {
-            return array(array(), array(), 0);
+            return [[], [], 0];
         }
 
         $user_handler = xoops_getHandler('user');
         $uservars     = $this->getUserVars();
-        $users        = array();
-        $profiles     = array();
+        $users        = [];
+        $profiles     = [];
         /** @var array $myrow */
         while (false !== ($myrow = $this->db->fetchArray($result))) {
             $profile = $this->create(false);
@@ -361,6 +361,6 @@ class ProfileProfileHandler extends XoopsPersistableObjectHandler
             list($count) = $this->db->fetchRow($result);
         }
 
-        return array($users, $profiles, (int)$count);
+        return [$users, $profiles, (int)$count];
     }
 }

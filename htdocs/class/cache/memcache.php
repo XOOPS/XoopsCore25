@@ -67,7 +67,7 @@ class XoopsCacheMemcache extends XoopsCacheEngine
      * @var array
      * @access public
      */
-    public $settings = array();
+    public $settings = [];
 
     /**
      * Initialize the Cache Engine
@@ -80,23 +80,25 @@ class XoopsCacheMemcache extends XoopsCacheEngine
      * @return boolean True if the engine has been successfully initialized, false if not
      * @access   public
      */
-    public function init($settings = array())
+    public function init($settings = [])
     {
         if (!class_exists('Memcache')) {
             return false;
         }
         parent::init($settings);
-        $defaults       = array(
-            'servers'  => array(
-                '127.0.0.1'),
-            'compress' => false);
+        $defaults       = [
+            'servers'  => [
+                '127.0.0.1'
+            ],
+            'compress' => false
+        ];
         $this->settings = array_merge($defaults, $this->settings);
 
         if (!$this->settings['compress']) {
             $this->settings['compress'] = MEMCACHE_COMPRESSED;
         }
         if (!is_array($this->settings['servers'])) {
-            $this->settings['servers'] = array($this->settings['servers']);
+            $this->settings['servers'] = [$this->settings['servers']];
         }
         $this->memcache = null;
         $this->memcache = new Memcache();

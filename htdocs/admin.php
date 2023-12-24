@@ -90,14 +90,14 @@ if (!empty($_GET['xoopsorgnews']) && !function_exists('xml_parser_create')) {
 if (!empty($_GET['xoopsorgnews'])) {
     // Multiple feeds
     $myts     = \MyTextSanitizer::getInstance();
-    $rssurl   = array();
+    $rssurl   = [];
     $rssurl[] = 'https://xoops.org/modules/publisher/backend.php';
     if ($URLs = include $GLOBALS['xoops']->path('language/' . xoops_getConfigOption('language') . '/backend.php')) {
         $rssurl = array_unique(array_merge($URLs, $rssurl));
     }
     $rssfile = 'adminnews-' . xoops_getConfigOption('language');
     xoops_load('XoopsCache');
-    $items = array();
+    $items = [];
     if (!$items = XoopsCache::read($rssfile)) {
         XoopsLoad::load('xoopshttpget');
         require_once $GLOBALS['xoops']->path('class/xml/rss/xmlrss2parser.php');

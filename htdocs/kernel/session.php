@@ -52,11 +52,11 @@ class XoopsSessionHandler
      */
     public $securityLevel = 3;
 
-    protected $bitMasks = array(
-        2 => array('v4' => 16, 'v6' => 64),
-        3 => array('v4' => 24, 'v6' => 56),
-        4 => array('v4' => 32, 'v6' => 128),
-    );
+    protected $bitMasks = [
+        2 => ['v4' => 16, 'v6' => 64],
+        3 => ['v4' => 24, 'v6' => 56],
+        4 => ['v4' => 32, 'v6' => 128],
+    ];
 
     /**
      * Enable regenerate_id
@@ -83,14 +83,14 @@ class XoopsSessionHandler
             : ini_get('session.cookie_lifetime');
         $secure = (XOOPS_PROT === 'https://');
         if (PHP_VERSION_ID >= 70300) {
-            $options = array(
+            $options = [
                 'lifetime' => $lifetime,
                 'path'     => '/',
                 'domain'   => XOOPS_COOKIE_DOMAIN,
                 'secure'   => $secure,
                 'httponly' => true,
                 'samesite' => 'strict',
-            );
+            ];
             session_set_cookie_params($options);
         } else {
             session_set_cookie_params($lifetime, '/', XOOPS_COOKIE_DOMAIN, $secure, true);

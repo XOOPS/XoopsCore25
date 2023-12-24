@@ -73,7 +73,7 @@ class PublicSuffixList
             return;
         }
 
-        $this->tree = array();
+        $this->tree = [];
         $list = $this->readPSL();
 
         if (false===$list) {
@@ -140,9 +140,9 @@ class PublicSuffixList
 
         if (!array_key_exists($dom, $node)) {
             if ($isNotDomain) {
-                $node[$dom] = array("!" => "");
+                $node[$dom] = ["!" => ""];
             } else {
-                $node[$dom] = array();
+                $node[$dom] = [];
             }
         }
 
@@ -229,7 +229,7 @@ class PublicSuffixList
             if((int) PHP_VERSION_ID < 70000) {
                 return unserialize($cachedTree);
             }
-            return unserialize($cachedTree, array('allowed_classes' => false));
+            return unserialize($cachedTree, ['allowed_classes' => false]);
         }
         return false;
     }

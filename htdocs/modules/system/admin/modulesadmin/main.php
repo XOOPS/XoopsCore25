@@ -36,7 +36,7 @@ if (isset($_POST)) {
 // Get Action type
 $op = Request::getString('op', 'list');
 
-if (in_array($op, array('confirm', 'submit', 'install_ok', 'update_ok', 'uninstall_ok'))) {
+if (in_array($op, ['confirm', 'submit', 'install_ok', 'update_ok', 'uninstall_ok'])) {
     if (!$GLOBALS['xoopsSecurity']->check()) {
         $op = 'list';
     }
@@ -70,10 +70,10 @@ switch ($op) {
         $criteria->setOrder('ASC');
         // Get all installed modules
         $installed_mods = $module_handler->getObjects($criteria);
-        $listed_mods    = array();
+        $listed_mods    = [];
         $i              = 0;
-        $install_mods   = array();
-		$module = Request::getArray('module', array());
+        $install_mods   = [];
+		$module = Request::getArray('module', []);
         foreach ($installed_mods as $module) {
             /** @var XoopsModule $module */
             $listed_mods[$i]                  = $module->toArray();
@@ -103,7 +103,7 @@ switch ($op) {
         }
         // Get module to install
         $dirlist        = XoopsLists::getModulesList();
-        $toinstall_mods = array();
+        $toinstall_mods = [];
         $i              = 0;
         foreach ($dirlist as $file) {
             if (file_exists(XOOPS_ROOT_PATH . '/modules/' . $file . '/xoops_version.php')) {
@@ -152,7 +152,7 @@ switch ($op) {
         }
         // Get module to install
         $dirlist        = XoopsLists::getModulesList();
-        $toinstall_mods = array();
+        $toinstall_mods = [];
         $i              = 0;
         foreach ($dirlist as $file) {
             if (file_exists(XOOPS_ROOT_PATH . '/modules/' . $file . '/xoops_version.php')) {
@@ -218,7 +218,7 @@ switch ($op) {
         $xoBreadCrumb->addHelp(system_adminVersion('modulesadmin', 'help') . '#confirm');
         $xoBreadCrumb->addTips(_AM_SYSTEM_MODULES_CONFIRM_TIPS);
         $xoBreadCrumb->render();
-        $errorMessage = array();
+        $errorMessage = [];
         if (!is_writable(XOOPS_CACHE_PATH . '/')) {
             $errorMessage[] = sprintf(_MUSTWABLE, '<strong>' . XOOPS_CACHE_PATH . '/</strong>');
         }
@@ -230,8 +230,8 @@ switch ($op) {
             exit();
         }
         $i           = 0;
-        $modifs_mods = array();
-        $module      = empty($_POST['module']) ? array() : $_POST['module'];
+        $modifs_mods = [];
+        $module      = empty($_POST['module']) ? [] : $_POST['module'];
         foreach ($module as $mid) {
             $mid                          = (int)$mid;
             $newname[$mid]                = trim(XoopsFilterInput::clean($newname[$mid], 'STRING'));
@@ -289,9 +289,9 @@ switch ($op) {
         break;
 
     case 'submit':
-        $ret    = array();
+        $ret    = [];
         $write  = false;
-        $module = empty($_POST['module']) ? array() : $_POST['module'];
+        $module = empty($_POST['module']) ? [] : $_POST['module'];
         foreach ($module as $mid) {
             if (isset($newstatus[$mid]) && $newstatus[$mid] == 1) {
                 if ($oldstatus[$mid] == 0) {
@@ -357,13 +357,13 @@ switch ($op) {
         $xoBreadCrumb->addHelp(system_adminVersion('modulesadmin', 'help') . '#install');
         $xoBreadCrumb->render();
         // Display question message
-        xoops_confirm(array('module' => $module, 'op' => 'install_ok', 'fct' => 'modulesadmin'), 'admin.php', $msgs, _AM_SYSTEM_MODULES_INSTALL);
+        xoops_confirm(['module' => $module, 'op' => 'install_ok', 'fct' => 'modulesadmin'], 'admin.php', $msgs, _AM_SYSTEM_MODULES_INSTALL);
         // Call Footer
         xoops_cp_footer();
         break;
 
     case 'install_ok':
-        $ret   = array();
+        $ret   = [];
         $ret[] = xoops_module_install($module);
         // Flush cache files for cpanel GUIs
         xoops_load('cpanel', 'system');
@@ -416,14 +416,14 @@ switch ($op) {
         $xoBreadCrumb->addHelp(system_adminVersion('modulesadmin', 'help') . '#delete');
         $xoBreadCrumb->render();
         // Display Question
-        xoops_confirm(array('module' => $module, 'op' => 'uninstall_ok', 'fct' => 'modulesadmin'), 'admin.php', $msgs, _AM_SYSTEM_MODULES_UNINSTALL);
+        xoops_confirm(['module' => $module, 'op' => 'uninstall_ok', 'fct' => 'modulesadmin'], 'admin.php', $msgs, _AM_SYSTEM_MODULES_UNINSTALL);
         // Call Footer
         xoops_cp_footer();
         break;
 
     case 'uninstall_ok':
 		$module = Request::getString('module', '');
-        $ret   = array();
+        $ret   = [];
         $ret[] = xoops_module_uninstall($module);
         // Flush cache files for cpanel GUIs
         xoops_load('cpanel', 'system');
@@ -475,14 +475,14 @@ switch ($op) {
         $xoBreadCrumb->addHelp(system_adminVersion('modulesadmin', 'help') . '#update');
         $xoBreadCrumb->render();
         // Display message
-        xoops_confirm(array('module' => $module, 'op' => 'update_ok', 'fct' => 'modulesadmin'), 'admin.php', $msgs, _AM_SYSTEM_MODULES_UPDATE);
+        xoops_confirm(['module' => $module, 'op' => 'update_ok', 'fct' => 'modulesadmin'], 'admin.php', $msgs, _AM_SYSTEM_MODULES_UPDATE);
         // Call Footer
         xoops_cp_footer();
         break;
 
     case 'update_ok':
 		$module = Request::getString('module', '');
-        $ret   = array();
+        $ret   = [];
         $ret[] = xoops_module_update($module);
         // Flush cache files for cpanel GUIs
         xoops_load('cpanel', 'system');

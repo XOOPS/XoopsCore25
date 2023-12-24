@@ -28,7 +28,7 @@ if (!function_exists('protector_onupdate_base')) {
         global $msgs; // TODO :-D
 
         if (!is_array($msgs)) {
-            $msgs = array();
+            $msgs = [];
         }
 
         /** @var XoopsMySQLDatabase $db */
@@ -94,7 +94,7 @@ if (!function_exists('protector_onupdate_base')) {
                         continue;
                     }
                     $file_path = $tpl_path . '/' . $file;
-                if (is_file($file_path) && in_array(strrchr($file, '.'), array('.html', '.css', '.js'))) {
+                if (is_file($file_path) && in_array(strrchr($file, '.'), ['.html', '.css', '.js'])) {
                         $mtime   = (int)(@filemtime($file_path));
                         $tplfile = $tplfile_handler->create();
                         $tplfile->setVar('tpl_source', file_get_contents($file_path), true);

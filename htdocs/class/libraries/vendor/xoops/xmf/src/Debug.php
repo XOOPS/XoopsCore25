@@ -36,8 +36,8 @@ class Debug extends \Kint
         if (true !== $done) {
             $done = true;
             $class = get_called_class();
-            parent::$aliases[] = array($class, 'dump');
-            parent::$aliases[] = array($class, 'backtrace');
+            parent::$aliases[] = [$class, 'dump'];
+            parent::$aliases[] = [$class, 'backtrace'];
             parent::$enabled_mode = true;
             parent::$mode_default = \Kint::MODE_RICH;
             // display output inline ::folder = false, true puts all output at bottom of window
@@ -59,7 +59,7 @@ class Debug extends \Kint
         $args = func_get_args();
 
         static::doOnce();
-        forward_static_call_array(array('parent', 'dump'), $args);
+        forward_static_call_array(['parent', 'dump'], $args);
     }
 
     /**
