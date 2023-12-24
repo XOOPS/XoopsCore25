@@ -41,7 +41,7 @@ class ErrorHandler
     {
         global $xoopsConfig;
 
-        $errmsg = array(
+        $errmsg = [
             '0001' => 'Could not connect to the forums database.',
             '0002' => 'The forum you selected does not exist. Please go back and try again.',
             '0003' => 'Incorrect Password.',
@@ -90,7 +90,8 @@ class ErrorHandler
             '1013' => 'Please enter a search query.',
             '1016' => 'Please enter value for URL.',
             '1017' => 'Please enter value for Home Page.',
-            '9999' => 'OOPS! Unknown Error');
+            '9999' => 'OOPS! Unknown Error'
+        ];
 
         $errorno = array_keys($errmsg);
         if (!in_array($e_code, $errorno)) {

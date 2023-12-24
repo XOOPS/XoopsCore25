@@ -18,7 +18,7 @@
  */
 defined('XOOPS_ROOT_PATH') || exit('Restricted access');
 
-return $config = array(
+return $config = [
     'detect_dimension' => 1,
     'enable_flash_entry' => false,  // false to disable entry button in editor, existing content will still play
-);
+];

@@ -275,12 +275,12 @@ class XoopsUserUtility
     public static function getUnameFromIds($uid, $usereal = false, $linked = false)
     {
         if (!is_array($uid)) {
-            $uid = array($uid);
+            $uid = [$uid];
         }
         $userid = array_map('intval', array_filter($uid));
 
         $myts  = \MyTextSanitizer::getInstance();
-        $users = array();
+        $users = [];
         if (count($userid) > 0) {
             /** @var XoopsMySQLDatabase $xoopsDB */
             $xoopsDB = XoopsDatabaseFactory::getDatabaseConnection();

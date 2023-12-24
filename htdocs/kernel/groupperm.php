@@ -252,7 +252,7 @@ class XoopsGroupPermHandler extends XoopsObjectHandler
      */
     public function getObjects(CriteriaElement $criteria = null, $id_as_key = false)
     {
-        $ret   = array();
+        $ret   = [];
         $limit = $start = 0;
         $sql   = 'SELECT * FROM ' . $this->db->prefix('group_permission');
         if (isset($criteria) && \method_exists($criteria, 'renderWhere')) {
@@ -433,7 +433,7 @@ class XoopsGroupPermHandler extends XoopsObjectHandler
      */
     public function getItemIds($gperm_name, $gperm_groupid, $gperm_modid = 1)
     {
-        $ret      = array();
+        $ret      = [];
         $criteria = new CriteriaCompo(new Criteria('gperm_name', $gperm_name));
         $criteria->add(new Criteria('gperm_modid', (int)$gperm_modid));
         if (is_array($gperm_groupid)) {
@@ -464,7 +464,7 @@ class XoopsGroupPermHandler extends XoopsObjectHandler
      */
     public function getGroupIds($gperm_name, $gperm_itemid, $gperm_modid = 1)
     {
-        $ret      = array();
+        $ret      = [];
         $criteria = new CriteriaCompo(new Criteria('gperm_name', $gperm_name));
         $criteria->add(new Criteria('gperm_itemid', (int)$gperm_itemid));
         $criteria->add(new Criteria('gperm_modid', (int)$gperm_modid));

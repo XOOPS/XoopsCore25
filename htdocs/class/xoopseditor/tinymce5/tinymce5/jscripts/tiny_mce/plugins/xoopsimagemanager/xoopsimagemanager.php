@@ -72,7 +72,7 @@ global $xoopsConfig;
 $isadmin = false;
 
 $gperm_handler = xoops_getHandler('groupperm');
-$groups        = is_object($GLOBALS['xoopsUser']) ? $GLOBALS['xoopsUser']->getGroups() : array(XOOPS_GROUP_ANONYMOUS);
+$groups        = is_object($GLOBALS['xoopsUser']) ? $GLOBALS['xoopsUser']->getGroups() : [XOOPS_GROUP_ANONYMOUS];
 $isadmin       = $gperm_handler->checkRight('system_admin', XOOPS_SYSTEM_IMAGE, $groups);
 
 // check categories readability/writability
@@ -99,15 +99,16 @@ if ($isadmin || ($catreadcount > 0) || ($catwritecount > 0)) {
 
         include_once XOOPS_ROOT_PATH . '/class/uploader.php';
 
-        $uploader = new XoopsMediaUploader(XOOPS_UPLOAD_PATH, array(
+        $uploader = new XoopsMediaUploader(XOOPS_UPLOAD_PATH, [
             'image/gif',
             'image/jpeg',
             'image/pjpeg',
             'image/x-png',
             'image/png',
-            'image/bmp'), $imgcat->getVar('imgcat_maxsize'), $imgcat->getVar('imgcat_maxwidth'), $imgcat->getVar('imgcat_maxheight'));
+            'image/bmp'
+        ],                                 $imgcat->getVar('imgcat_maxsize'), $imgcat->getVar('imgcat_maxwidth'), $imgcat->getVar('imgcat_maxheight'));
         $uploader->setPrefix('img');
-        $err    = array();
+        $err    = [];
         $ucount = count($_POST['xoops_upload_file']);
         for ($i = 0; $i < $ucount; ++$i) {
             if ($uploader->fetchMedia($_POST['xoops_upload_file'][$i])) {
@@ -168,7 +169,7 @@ if ($isadmin || ($catreadcount > 0) || ($catwritecount > 0)) {
         $newid                     = $imagecategory->getVar('imgcat_id');
         $imagecategoryperm_handler = xoops_getHandler('groupperm');
         if (!isset($readgroup)) {
-            $readgroup = array();
+            $readgroup = [];
         }
         if (!in_array(XOOPS_GROUP_ADMIN, $readgroup)) {
             array_push($readgroup, XOOPS_GROUP_ADMIN);
@@ -183,7 +184,7 @@ if ($isadmin || ($catreadcount > 0) || ($catwritecount > 0)) {
             unset($imagecategoryperm);
         }
         if (!isset($writegroup)) {
-            $writegroup = array();
+            $writegroup = [];
         }
         if (!in_array(XOOPS_GROUP_ADMIN, $writegroup)) {
             array_push($writegroup, XOOPS_GROUP_ADMIN);
@@ -229,7 +230,7 @@ if ($isadmin || ($catreadcount > 0) || ($catwritecount > 0)) {
         $criteria->add($criteria2);
         $imagecategoryperm_handler->deleteAll($criteria);
         if (!isset($readgroup)) {
-            $readgroup = array();
+            $readgroup = [];
         }
         if (!in_array(XOOPS_GROUP_ADMIN, $readgroup)) {
             array_push($readgroup, XOOPS_GROUP_ADMIN);
@@ -244,7 +245,7 @@ if ($isadmin || ($catreadcount > 0) || ($catwritecount > 0)) {
             unset($imagecategoryperm);
         }
         if (!isset($writegroup)) {
-            $writegroup = array();
+            $writegroup = [];
         }
         if (!in_array(XOOPS_GROUP_ADMIN, $writegroup)) {
             array_push($writegroup, XOOPS_GROUP_ADMIN);
@@ -266,7 +267,7 @@ if ($isadmin || ($catreadcount > 0) || ($catwritecount > 0)) {
     if (!empty($_GET['op']) && $op === 'delcat') {
         xoops_header();
         echo "<link href='css/xoopsimagebrowser.css' rel='stylesheet' type='text/css' />";
-        xoops_confirm(array('op' => 'delcatok', 'imgcat_id' => $imgcat_id, 'target' => $target), $current_file, _MD_RUDELIMGCAT);
+        xoops_confirm(['op' => 'delcatok', 'imgcat_id' => $imgcat_id, 'target' => $target], $current_file, _MD_RUDELIMGCAT);
         xoops_footer();
         exit();
     }
@@ -291,7 +292,7 @@ if ($isadmin || ($catreadcount > 0) || ($catwritecount > 0)) {
         }
         $image_handler = xoops_getHandler('image');
         $images        = $image_handler->getObjects(new Criteria('imgcat_id', $imgcat_id), true, false);
-        $errors        = array();
+        $errors        = [];
         foreach (array_keys($images) as $i) {
             if (!$image_handler->delete($images[$i])) {
                 $errors[] = sprintf(_MD_FAILDEL, $i);
@@ -316,7 +317,7 @@ if ($isadmin || ($catreadcount > 0) || ($catwritecount > 0)) {
     if (!empty($_GET['op']) && $op === 'delfile') {
         xoops_header();
         echo "<link href='css/xoopsimagebrowser.css' rel='stylesheet' type='text/css' />";
-        xoops_confirm(array('op' => 'delfileok', 'image_id' => $image_id, 'target' => $target), $current_file, _MD_RUDELIMG);
+        xoops_confirm(['op' => 'delfileok', 'image_id' => $image_id, 'target' => $target], $current_file, _MD_RUDELIMG);
         xoops_footer();
         exit();
     }
@@ -499,7 +500,7 @@ if ($op === 'editcat') {
     $form->addElement(new XoopsFormText(_IMGMAXHEIGHT, 'imgcat_maxheight', 3, 4, $imagecategory->getVar('imgcat_maxheight')));
     $form->addElement(new XoopsFormText(_MD_IMGCATWEIGHT, 'imgcat_weight', 3, 4, $imagecategory->getVar('imgcat_weight')));
     $form->addElement(new XoopsFormRadioYN(_MD_IMGCATDISPLAY, 'imgcat_display', $imagecategory->getVar('imgcat_display'), _YES, _NO));
-    $storetype = array('db' => _MD_INDB, 'file' => _MD_ASFILE);
+    $storetype = ['db' => _MD_INDB, 'file' => _MD_ASFILE];
     $form->addElement(new XoopsFormLabel(_MD_IMGCATSTRTYPE, $storetype[$imagecategory->getVar('imgcat_storetype')]));
     $form->addElement(new XoopsFormHidden('imgcat_id', $imgcat_id));
     $form->addElement(new XoopsFormHidden('op', 'updatecat'));
@@ -560,7 +561,7 @@ echo '<div class="col p-4">';
     $form->addElement(new XoopsFormText(_MD_IMGCATWEIGHT, 'imgcat_weight', 3, 4, 0));
     $form->addElement(new XoopsFormRadioYN(_MD_IMGCATDISPLAY, 'imgcat_display', 1, _YES, _NO));
     $storetype = new XoopsFormRadio(_MD_IMGCATSTRTYPE . '<br><span style="color:#ff0000;">' . _MD_STRTYOPENG . '</span>', 'imgcat_storetype', 'file');
-    $storetype->addOptionArray(array('file' => _MD_ASFILE, 'db' => _MD_INDB));
+    $storetype->addOptionArray(['file' => _MD_ASFILE, 'db' => _MD_INDB]);
     $form->addElement($storetype);
     $form->addElement(new XoopsFormHidden('op', 'addcat'));
     $form->addElement(new XoopsFormButton('', 'imgcat_button', _SUBMIT, 'submit'));

@@ -121,7 +121,7 @@ abstract class AbstractHelper
         if ($this->debug) {
             $message = $this->serializeForHelperLog($log);
             if (class_exists('Xoops', false)) {
-                \Xoops::getInstance()->logger()->debug($message, array('channel'=>'Extra'));
+                \Xoops::getInstance()->logger()->debug($message, ['channel' =>'Extra']);
             } elseif (is_object($GLOBALS['xoopsLogger'])) {
                 $GLOBALS['xoopsLogger']->addExtra(get_called_class(), $message);
             }

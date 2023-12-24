@@ -1,6 +1,6 @@
 <?php
 
-return array(
+return [
     /**
      * Extended HTML editor for XoopsFormDhtmlTextArea
      *
@@ -63,4 +63,4 @@ return array(
      * The default if proxy_env is not specified is no proxy ip address is considered.
      */
     //'proxy_env' => 'HTTP_FORWARDED',
-    );
+];

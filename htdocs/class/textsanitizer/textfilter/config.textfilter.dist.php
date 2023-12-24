@@ -18,9 +18,12 @@
  */
 defined('XOOPS_ROOT_PATH') || exit('Restricted access');
 
-return $config = array(
-    'tags'     => array(),  // Tags to be filtered out
-    'patterns' => array( // patterns to be used for filtering
-                         array(
+return $config = [
+    'tags'     => [],  // Tags to be filtered out
+    'patterns' => [ // patterns to be used for filtering
+                    [
                              'search'  => '',
-                             'replace' => '')));
+                             'replace' => ''
+                    ]
+    ]
+];

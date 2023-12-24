@@ -39,7 +39,7 @@ class XoopsEditor extends XoopsFormTextArea
         // For backward compatibility
         if (!is_array($args[0])) {
             $i = 0;
-            foreach (array('caption', 'name', 'value', 'rows', 'cols', 'hiddentext') as $key) {
+            foreach (['caption', 'name', 'value', 'rows', 'cols', 'hiddentext'] as $key) {
                 if (isset($args[$i])) {
                     $configs[$key] = $args[$i];
                 }
@@ -90,7 +90,7 @@ class XoopsEditorHandler
     // static $instance;
     public $root_path       = '';
     public $nohtml          = false;
-    public $allowed_editors = array();
+    public $allowed_editors = [];
 
     /**
      * Enter description here...
@@ -164,8 +164,8 @@ class XoopsEditorHandler
         xoops_load('XoopsCache');
         $list = XoopsCache::read('editorlist');
         if (empty($list)) {
-            $list  = array();
-            $order = array();
+            $list  = [];
+            $order = [];
             xoops_load('XoopsLists');
             $_list = XoopsLists::getDirListAsArray($this->root_path . '/');
             foreach ($_list as $item) {
@@ -180,7 +180,7 @@ class XoopsEditorHandler
                         continue;
                     }
                     $order[]     = $config['order'];
-                    $list[$item] = array('title' => $config['title'], 'nohtml' => $config['nohtml']);
+                    $list[$item] = ['title' => $config['title'], 'nohtml' => $config['nohtml']];
                 }
             }
             array_multisort($order, $list);
@@ -191,7 +191,7 @@ class XoopsEditorHandler
         if (!empty($this->allowed_editors)) {
             $editors = array_intersect($editors, $this->allowed_editors);
         }
-        $_list = array();
+        $_list = [];
         foreach ($editors as $name) {
             if (!empty($noHtml) && empty($list[$name]['nohtml'])) {
                 continue;

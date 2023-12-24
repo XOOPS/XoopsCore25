@@ -40,7 +40,7 @@ class JsonWebToken
     /**
      * @var array
      */
-    protected $claims = array();
+    protected $claims = [];
 
     /**
      * JsonWebToken constructor.
@@ -79,7 +79,7 @@ class JsonWebToken
      *
      * @return object|false
      */
-    public function decode($jwtString, $assertClaims = array())
+    public function decode($jwtString, $assertClaims = [])
     {
         try {
             $values = JWT::decode($jwtString, new Key($this->key->getVerifying(), $this->algorithm));

@@ -58,15 +58,16 @@ class XoopsTpl extends Smarty
             }
         }
         $this->setCompileId();
-        $this->assign(array(
+        $this->assign([
                           'xoops_url'        => XOOPS_URL,
                           'xoops_rootpath'   => XOOPS_ROOT_PATH,
                           'xoops_langcode'   => _LANGCODE,
                           'xoops_charset'    => _CHARSET,
                           'xoops_version'    => XOOPS_VERSION,
-                          'xoops_upload_url' => XOOPS_UPLOAD_URL));
+                          'xoops_upload_url' => XOOPS_UPLOAD_URL
+                      ]);
         $xoopsPreload = XoopsPreload::getInstance();
-        $xoopsPreload->triggerEvent('core.class.template.new', array($this));
+        $xoopsPreload->triggerEvent('core.class.template.new', [$this]);
     }
 
     /**
@@ -86,15 +87,17 @@ class XoopsTpl extends Smarty
         if (isset($vars)) {
             $oldVars = $this->_tpl_vars;
             $this->assign($vars);
-            $out             = smarty_function_eval(array(
-                                                        'var' => $tplSource), $this);
+            $out             = smarty_function_eval([
+                                                        'var' => $tplSource
+                                                    ], $this);
             $this->_tpl_vars = $oldVars;
 
             return $out;
         }
 
-        return smarty_function_eval(array(
-                                        'var' => $tplSource), $this);
+        return smarty_function_eval([
+                                        'var' => $tplSource
+                                    ], $this);
     }
 
     /**
@@ -350,9 +353,9 @@ class XoopsTpl extends Smarty
     public function register_object(
         $object,
         $object_impl,
-        $allowed = array(),
+        $allowed = [],
         $smarty_args = true,
-        $block_methods = array()
+        $block_methods = []
     ) {
         settype($allowed, 'array');
         settype($smarty_args, 'boolean');

@@ -55,7 +55,7 @@ class XoopsFormCaptcha extends XoopsFormElement
      * @param boolean $skipmember Skip CAPTCHA check for members deprecated
      * @param array   $configs									 deprecated
      */
-    public function __construct($caption = '', $name = 'xoopscaptcha', $skipmember = '', $configs = array())
+    public function __construct($caption = '', $name = 'xoopscaptcha', $skipmember = '', $configs = [])
     {
         xoops_load('XoopsCaptcha');
         $this->captchaHandler  = XoopsCaptcha::getInstance();

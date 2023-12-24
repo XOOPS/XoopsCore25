@@ -51,7 +51,7 @@ function xoStatsRegen()
 {
     global $xoopsUser, $xoopsModule;
 
-    $stats = array();
+    $stats = [];
 
     /** @var \XoopsMemberHandler $memberHandler */
     $memberHandler = xoops_getHandler('member');

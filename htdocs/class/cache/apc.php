@@ -63,7 +63,7 @@ class XoopsCacheApc extends XoopsCacheEngine
      * @see      CacheEngine::__defaults
      * @access   public
      */
-    public function init($settings = array())
+    public function init($settings = [])
     {
         parent::init($settings);
 

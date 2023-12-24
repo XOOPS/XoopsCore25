@@ -19,52 +19,52 @@ class PathStuffController
     /**
      * @var array
      */
-    public $xoopsPath = array(
+    public $xoopsPath = [
         'root' => '',
         'data' => '',
         'lib'  => '',
-    );
+    ];
     /**
      * @var array
      */
-    public $xoopsPathDefault = array(
+    public $xoopsPathDefault = [
         'data' => 'xoops_data',
         'lib'  => 'xoops_lib',
-    );
+    ];
     /**
      * @var array
      */
-    public $dataPath = array(
-        'caches'    => array(
+    public $dataPath = [
+        'caches'    => [
             'smarty_cache',
             'smarty_compile',
             'xoops_cache',
-        ),
-        'configs'   => array(
+        ],
+        'configs'   => [
             'captcha',
             'textsanitizer',
-        ),
+        ],
         'data'      => null,
         'protector' => null,
-    );
+    ];
     /**
      * @var array
      */
-    public $path_lookup = array(
+    public $path_lookup = [
         'root' => 'ROOT_PATH',
         'data' => 'VAR_PATH',
         'lib'  => 'PATH',
-    );
+    ];
     public $xoopsUrl = '';
     public $xoopsCookieDomain = '';
     /**
      * @var array
      */
-    public $validPath = array(
+    public $validPath = [
         'root' => 0,
         'data' => 0,
         'lib'  => 0,
-    );
+    ];
     /**
      * @var bool
      */
@@ -72,10 +72,10 @@ class PathStuffController
     /**
      * @var array
      */
-    public $permErrors = array(
+    public $permErrors = [
         'root' => null,
         'data' => null,
-    );
+    ];
 
     /**
      * @param $xoopsPathDefault
@@ -274,17 +274,17 @@ class PathStuffController
      */
     public function checkPermissions($path)
     {
-        $paths  = array(
-            'root' => array(
+        $paths  = [
+            'root' => [
                 'mainfile.php',
                 'uploads',
-            ),
+            ],
             'data' => $this->dataPath,
-        );
-        $errors = array(
+        ];
+        $errors = [
             'root' => null,
             'data' => null,
-        );
+        ];
 
         if (!isset($this->xoopsPath[$path])) {
             return false;

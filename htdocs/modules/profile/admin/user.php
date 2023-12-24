@@ -48,7 +48,7 @@ switch ($op) {
         xoops_loadLanguage('main', $GLOBALS['xoopsModule']->getVar('dirname', 'n'));
         include_once dirname(__DIR__) . '/include/forms.php';
         $obj = $handler->createUser();
-        $obj->setGroups(array(XOOPS_GROUP_USERS));
+        $obj->setGroups([XOOPS_GROUP_USERS]);
         $form = profile_getUserForm($obj);
         $form->display();
         break;
@@ -127,7 +127,7 @@ switch ($op) {
         xoops_load('xoopsuserutility');
         $stop = XoopsUserUtility::validate($user, $password, $vpass);
 
-        $errors = array();
+        $errors = [];
         if ($stop != '') {
             $errors[] = $stop;
         }
@@ -145,7 +145,7 @@ switch ($op) {
             }
         }
 
-        $new_groups = isset($_POST['groups']) ? $_POST['groups'] : array();
+        $new_groups = isset($_POST['groups']) ? $_POST['groups'] : [];
 
         if (count($errors) == 0) {
             if ($handler->insertUser($user)) {
@@ -166,7 +166,7 @@ switch ($op) {
                     }
                     if (count($removed_groups) > 0) {
                         foreach ($removed_groups as $groupid) {
-                            $handler->removeUsersFromGroup($groupid, array($user->getVar('uid')));
+                            $handler->removeUsersFromGroup($groupid, [$user->getVar('uid')]);
                         }
                     }
                 }
@@ -216,10 +216,11 @@ switch ($op) {
                 echo $profile->getHtmlErrors();
             }
         } else {
-            xoops_confirm(array(
+            xoops_confirm([
                               'ok' => 1,
                               'id' => $_REQUEST['id'],
-                              'op' => 'delete'), $_SERVER['REQUEST_URI'], sprintf(_PROFILE_AM_RUSUREDEL, $obj->getVar('uname') . ' (' . $obj->getVar('email') . ')'));
+                              'op' => 'delete'
+                          ], $_SERVER['REQUEST_URI'], sprintf(_PROFILE_AM_RUSUREDEL, $obj->getVar('uname') . ' (' . $obj->getVar('email') . ')'));
         }
         break;
 }

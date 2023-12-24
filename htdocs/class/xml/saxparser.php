@@ -21,15 +21,15 @@ class SaxParser
     public $targetEncoding;
 
     /* Custom Handler Variables */
-    public $tagHandlers = array();
+    public $tagHandlers = [];
 
     /* Tag stack */
-    public $tags = array();
+    public $tags = [];
 
     /* Xml Source Input */
     public $xmlInput;
 
-    public $errors = array();
+    public $errors = [];
 
     /****************************************************************************
      * Creates a SaxParser object using a FileInput to represent the stream

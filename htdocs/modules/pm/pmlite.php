@@ -140,7 +140,7 @@ if ($op === 'submit') {
 
     $msg_image   = '';
     $icons_radio = new XoopsFormRadio(_MESSAGEICON, 'msg_image', $msg_image);
-    $subjectImages = array();
+    $subjectImages = [];
     foreach ($subject_icons as $name => $value) {
         $subjectImages[$name] = '<img src="' . XOOPS_URL . '/images/subject/' . $value .'">';
     }

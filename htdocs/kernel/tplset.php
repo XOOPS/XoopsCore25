@@ -258,7 +258,7 @@ class XoopsTplsetHandler extends XoopsObjectHandler
      */
     public function getObjects(CriteriaElement $criteria = null, $id_as_key = false)
     {
-        $ret   = array();
+        $ret   = [];
         $limit = $start = 0;
         $sql   = 'SELECT * FROM ' . $this->db->prefix('tplset');
         if (isset($criteria) && \method_exists($criteria, 'renderWhere')) {
@@ -314,7 +314,7 @@ class XoopsTplsetHandler extends XoopsObjectHandler
      **/
     public function getList(CriteriaElement $criteria = null)
     {
-        $ret     = array();
+        $ret     = [];
         $tplsets = $this->getObjects($criteria, true);
         foreach (array_keys($tplsets) as $i) {
             $temp       = $tplsets[$i]->getVar('tplset_name');

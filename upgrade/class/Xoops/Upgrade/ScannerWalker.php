@@ -41,13 +41,13 @@ class ScannerWalker
     /**
      * @var string[] $directories
      */
-    protected $directories = array();
+    protected $directories = [];
 
     /**
      * @var string[] $directories
      */
 
-    protected $extList = array();
+    protected $extList = [];
 
     /**
      * @var ScannerProcess

@@ -9,10 +9,10 @@ class PatchStatus
     public $applied = true;
 
     /** @var string[] $tasks tasks that need to be run */
-    public $tasks = array();
+    public $tasks = [];
 
     /** @var string[] $files files that need to be writable */
-    public $files = array();
+    public $files = [];
 
     /**
      * PatchStatus constructor.
