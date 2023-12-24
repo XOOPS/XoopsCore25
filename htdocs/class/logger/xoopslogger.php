@@ -207,6 +207,22 @@ class XoopsLogger
         }
     }
 
+    public static function writeLog($errorMsg)
+    {
+        $logDir  = XOOPS_ROOT_PATH . '/log/';
+        $logFile = XOOPS_ROOT_PATH . '/log/' . 'log.txt';
+
+        // Checking whether file exists or not
+        if (!file_exists($logDir)) {
+            // Create a new file or directory
+            if (!mkdir($logDir, 0777, true) && !is_dir($logDir)) {
+                throw new \RuntimeException(sprintf('Directory "%s" was not created', $logDir));
+            }
+        }
+
+        \file_put_contents($logFile, $errorMsg, FILE_APPEND);
+    }
+
     /**
      * Error handling callback (called by the zend engine)
      *
@@ -214,10 +230,28 @@ class XoopsLogger
      * @param string  $errstr
      * @param string  $errfile
      * @param string  $errline
-     * @param array|null $trace
      */
-    public function handleError($errno, $errstr, $errfile, $errline,$trace=null)
+    public function handleError($errno, $errstr, $errfile, $errline)
     {
+        //---------------- START --------------------
+        $errorMsgDate = date('Y-m-d H-i-s') . ' ' . $errstr . "\r";
+        self::writeLog($errorMsgDate);
+
+        $errorMsg = '';
+        self::writeLog(print_r(compact('errno', 'errstr', 'errfile', 'errline'), true));
+        $trace    = \debug_backtrace();
+        array_shift($trace);
+        foreach ($trace as $step) {
+            if (isset($step['file'])) {
+                $errorMsg .= $this->sanitizePath($step['file']);
+                $errorMsg .= ' (' . $step['line'] . ")\n";
+            }
+        }
+        $errorMsg .= "\r" . ' ======================================================' . "\n";
+        self::writeLog($errorMsg);
+        //---------------- END --------------------
+
+
         if ($this->activated && ($errno & error_reporting())) {
             // NOTE: we only store relative pathnames
             $this->errors[] = compact('errno', 'errstr', 'errfile', 'errline');
