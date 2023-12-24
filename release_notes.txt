@@ -1,8 +1,18 @@
 XOOPS 2.5.11
 
-The XOOPS Development Team is pleased to announce the pending availability of XOOPS 2.5.11 final.
+The XOOPS Development Team is pleased to announce the availability of XOOPS 2.5.11 final.
 
-This version includes numerous improvements and fixes, including:
+XOOPS 2.5.11 introduces a significant change: Smarty 3
+
+Unfortunately, this change may potentially disrupt some older themes. Therefore, before proceeding with the upgrade, please ensure that you follow these steps:
+
+- copy the /upgrade/ directory to your XOOPS root directory
+- Run /upgrade/preflight.php to check for any outdated themes or module templates.
+- If any issues are identified, consult this document to understand the necessary modifications before proceeding with the upgrade.
+- After making the required changes, run preflight.php again.
+- If there are no more issues, you can begin the upgrade process.
+
+In addidion, this version includes numerous improvements and fixes, including:
 - PHP 8.0 compatibility
 - MySQL 8.0 compatibility
 - Copying in a new XOOPS release does not overwrite existing configuration files
@@ -100,4 +110,4 @@ Documentation: https://www.gitbook.com/book/xoops/xoops-documentation-process/de
 Support Forums: https://xoops.org/modules/newbb/
 
 XOOPS Development Team
-2021
+December 2023
