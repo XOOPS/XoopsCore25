@@ -301,7 +301,8 @@ class MyTextSanitizer
      */
     protected function makeClickableCallbackEmailAddress($match)
     {
-        return $match[1] . "<a href=\"mailto:$match[2]@$match[3]\" title=\"$match[2]@$match[3]\">" . $match[2] . '@' . $match[3] . '</a>';
+        $email = trim($match[0]);
+        return '<a href="mailto:' . $email . '" title="' . $email . '">' . $email . '</a>';
     }
 
     /**
@@ -314,11 +315,8 @@ class MyTextSanitizer
      */
     public function makeClickable($text)
     {
-        $pattern = "/(^|[^]_a-z0-9-=\"'\/:\.])([-_a-z0-9\'+*$^&%=~!?{}]++(?:\.[-_a-z0-9\'+*$^&%=~!?{}]+)*+)@((?:(?![-.])[-a-z0-9.]+(?<![-.])\.[a-z]{2,6}|\d{1,3}(?:\.\d{1,3}){3})(?::\d++)?)/i";
-        $text = preg_replace_callback($pattern, 'self::makeClickableCallbackEmailAddress', $text);
-        //TODO after moving to PHP 7+ as minimum version, let's convert it to this
-//        $text = preg_replace_callback($pattern, self::class . '::makeClickableCallbackEmailAddress', $text);
-
+        $pattern = "/(^|\s)([-_a-z0-9\'+*$^&%=~!?{}]+(?:\.[-_a-z0-9\'+*$^&%=~!?{}]+)*+@[-a-z0-9.]+\.[a-z]{2,6})/i";
+        $text = preg_replace_callback($pattern, function($matches) { return $matches[1] .$this->makeClickableCallbackEmailAddress(array($matches[2])); }, $text);
 
         $pattern = "/(?:\s+|^)(https?:\/\/)([-A-Z0-9.\_*?&:;=#\/\[\]\%@]+)/i";
         $replacement = '<a href="$1$2" target="_blank" rel="external noopener nofollow">$1$2</a>';
