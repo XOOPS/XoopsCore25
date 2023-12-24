@@ -1,5 +1,5 @@
 ![alt XOOPS CMS](https://xoops.org/images/logoXoops4GithubRepository.png)
-# XOOPS Core 2.5.x
+# XOOPS Core 2.7.x
 
 [![Build Status](https://img.shields.io/travis/XOOPS/XoopsCore/master.svg?style=flat)](https://travis-ci.org/XOOPS/XoopsCore25)
 [![Software License](https://img.shields.io/badge/license-GPL-brightgreen.svg?style=flat)](docs/license.txt)

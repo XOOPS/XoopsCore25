@@ -4,6 +4,13 @@ LANGUAGE DIFFERENCES
 Below are language differences from a version to next version.
 
 ================================
+2.7.0-Alpha 1           NOT YET RELEASED
+================================
+
+
+
+
+================================
 2023/10/01: Version 2.5.11-Final
 ================================
 /language/english/uploader.php

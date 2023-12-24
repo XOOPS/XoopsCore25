@@ -1,0 +1,39 @@
+parameters:
+    level: 2
+    parallel:
+        processTimeout: 500.0
+    fileExtensions:
+        - php
+        - phtml
+    ignoreErrors:
+        -
+            message: '/no value type specified in iterable type array/'
+            path: %currentWorkingDirectory%/src/*.php
+#        -
+#            message: '/Unsafe usage of new static()/'
+#            path: %currentWorkingDirectory%/src/*.php
+    excludePaths:
+        analyseAndScan:
+            - L:\GitHub\MAMBAX7\CORE\XoopsCore25\htdocs\xoops_data\caches
+        analyse:
+            - L:\GitHub\MAMBAX7\CORE\XoopsCore25\htdocs\class\auth\
+            - L:\GitHub\MAMBAX7\CORE\XoopsCore25\htdocs\xoops_lib\modules\protector\library\
+            - L:\GitHub\MAMBAX7\CORE\XoopsCore25\htdocs\class\libraries\vendor\bin\
+#            - L:\GitHub\MAMBAX7\CORE\XoopsCore25\htdocs\class\libraries\vendor\composer\
+            - L:\GitHub\MAMBAX7\CORE\XoopsCore25\htdocs\class\libraries\vendor\firebase\
+            - L:\GitHub\MAMBAX7\CORE\XoopsCore25\htdocs\class\libraries\vendor\ircmaxell\
+#            - L:\GitHub\MAMBAX7\CORE\XoopsCore25\htdocs\class\libraries\vendor\kint-php\
+            - L:\GitHub\MAMBAX7\CORE\XoopsCore25\htdocs\class\libraries\vendor\paragonie\
+            - L:\GitHub\MAMBAX7\CORE\XoopsCore25\htdocs\class\libraries\vendor\smottt\
+            - L:\GitHub\MAMBAX7\CORE\XoopsCore25\htdocs\class\libraries\vendor\symfony\
+            - L:\GitHub\MAMBAX7\CORE\XoopsCore25\htdocs\class\libraries\vendor\webmozart\
+            - L:\GitHub\MAMBAX7\CORE\XoopsCore25\htdocs\class\mail\phpmailer\
+#            - L:\GitHub\MAMBAX7\CORE\XoopsCore25\htdocs\class\smarty\
+    scanFiles:
+      - L:\GitHub\MAMBAX7\CORE\XoopsCore25\htdocs\class\libraries\vendor\kint-php\kint\src\Kint.php
+    bootstrapFiles:
+        - constants.php
+includes:
+#    - C:\wamp64\bin\php\php8.2.0\vendor\thecodingmachine\phpstan-strict-rules\phpstan.neon
+
+

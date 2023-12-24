@@ -1,9 +1,13 @@
-XOOPS 2.5.11 Final
+XOOPS 2.7.0 Alpha 1
 
-The XOOPS Development Team is pleased to announce the release of XOOPS 2.5.11 Final. This version
-includes Smarty 3, fixes and enhancements, security updates, PHP 8.0 and improved MySQL 8.0 compatibility.
+This is a start of development work on XOOPS 2.7.0
 
-Download XOOPS 2.5.11 from GitHub: https://github.com/XOOPS/XoopsCore25/releases
+Some of the minimum requirements:
+- PHP 8.1
+- MySQL 8.0
+- Smarty 4
+
+The releases will be posted on GitHub: https://github.com/XOOPS/XoopsCore25/releases
 
 For full documentation on installing or upgrading XOOPS please see:
 https://xoops.gitbook.io/xoops-install-upgrade/

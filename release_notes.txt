@@ -1,26 +1,11 @@
-XOOPS 2.5.11
+XOOPS 2.7.0 Alpha 1 NOT RELEASED
 
-The XOOPS Development Team is pleased to announce the availability of XOOPS 2.5.11 final.
+The XOOPS Development Team is pleased to announce the start of development on XOOPS 2.7.0 Alpha 1
 
-XOOPS 2.5.11 introduces a significant change: Smarty 3
-
-Unfortunately, this change may potentially disrupt some older themes. Therefore, before proceeding with the upgrade, please ensure that you follow these steps:
-
-- copy the /upgrade/ directory to your XOOPS root directory
-- Run /upgrade/preflight.php to check for any outdated themes or module templates.
-- If any issues are identified, consult this document to understand the necessary modifications before proceeding with the upgrade.
-- After making the required changes, run preflight.php again.
-- If there are no more issues, you can begin the upgrade process.
-
-In addidion, this version includes numerous improvements and fixes, including:
-- PHP 8.0 compatibility
-- MySQL 8.0 compatibility
-- Copying in a new XOOPS release does not overwrite existing configuration files
-- New Bootstrap 4.5 theme
-- Template overload capability in system admin themes
-- Security updates
-- Updated libraries
-- and many more fixes and updates
+Some of the minimum requirements:
+- PHP 8.1
+- MySQL 8.0
+- Smarty 4
 
 See the Changelog for more details.
 
@@ -31,10 +16,10 @@ System requirements
 -----------------------------------
 
 PHP:
-Any PHP version >= 5.6.0 (PHP 7.3 or higher is strongly recommended)
+Any PHP version >= 8.1.0 (PHP 8.3 or higher is strongly recommended)
 
 MySQL:
-MySQL server 5.5 (MySQL Server 5.7 or higher is strongly recommended)
+MySQL server >= 8.0 (MySQL 8.2 or higher is strongly recommended)
 
 Web server:
 Any server supporting the required PHP version (Apache or Nginx recommended)

@@ -1,19 +1,27 @@
 {
-    "name": "bordeux/wideimage",
-    "description": "An open-source PHP library for image manipulation. (With namespaces, PHP 5.3+)",
+    "name": "smottt/wideimage",
+    "description": "An open-source PHP library for image manipulation",
     "homepage": "http://wideimage.sourceforge.net",
     "type": "library",
-    "license": ["GPL-2.0","LGPL-2.1"],
-    "version": "1.1.4",
+    "license": [
+        "GPL-2.0",
+        "LGPL-2.1"
+    ],
+    "version": "2.0.0-dev",
     "autoload": {
-        "psr-0" : {
-          "WideImage" : "lib/"
+        "psr-4": {
+            "WideImage\\": "lib/"
         }
     },
     "require": {
-    	"php": ">=5.3"
+        "php": ">=5.6",
+        "ext-gd": "*"
     },
     "require-dev": {
-    	"phpunit/phpunit": "~4.8"
+        "symfony/phpunit-bridge": "^5.2",
+        "friendsofphp/php-cs-fixer": "~2.17"
+    },
+    "config": {
+        "bin-dir": "bin"
     }
 }

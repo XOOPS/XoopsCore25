@@ -46,7 +46,7 @@ class Inline
         self::$objectSupport = $objectSupport;
         self::$objectForMap = $objectForMap;
 
-        $value = trim((string)$value);
+        $value = trim($value);
 
         if ('' === $value) {
             return '';

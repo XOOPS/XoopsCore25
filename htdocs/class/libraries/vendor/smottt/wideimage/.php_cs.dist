@@ -1,0 +1,18 @@
+<?php
+
+$finder = PhpCsFixer\Finder::create()
+    ->in([
+        __DIR__ . '/demo',
+        __DIR__ . '/lib',
+        __DIR__ . '/test',
+    ])
+;
+
+$config = new PhpCsFixer\Config();
+
+return $config->setFinder($finder)
+    ->setRules([
+        '@PSR2' => true,
+        'array_syntax' => ['syntax' => 'short'],
+    ])
+;
