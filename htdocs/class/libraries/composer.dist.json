@@ -5,7 +5,7 @@
     "description": "Libraries for XOOPS 2.5.11",
     "config": {
         "platform": {
-            "php": "5.6.0"
+            "php": "8.1.0"
         }
     },
     "require": {
