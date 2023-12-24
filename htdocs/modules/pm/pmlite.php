@@ -18,7 +18,7 @@
  */
 
 if (!defined('XOOPS_MAINFILE_INCLUDED')) {
-    include_once dirname(dirname(__DIR__)) . '/mainfile.php';
+    include_once dirname(__DIR__, 2) . '/mainfile.php';
 } else {
     chdir(XOOPS_ROOT_PATH . '/modules/pm/');
     xoops_loadLanguage('main', 'pm');

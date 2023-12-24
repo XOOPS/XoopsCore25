@@ -91,7 +91,7 @@ class PathStuffController
                 $this->xoopsPath[$req] = $_SESSION['settings'][$sess];
             }
         } else {
-            $path = str_replace("\\", '/', realpath(dirname(dirname(__DIR__)) . '/'));
+            $path = str_replace("\\", '/', realpath(dirname(__DIR__, 2) . '/'));
             if (substr($path, -1) === '/') {
                 $path = substr($path, 0, -1);
             }

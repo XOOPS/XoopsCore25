@@ -17,7 +17,7 @@
  * @author         XOOPS Development Team
  */
 
-include dirname(dirname(dirname(dirname(__DIR__)))) . '/mainfile.php';
+include dirname(__DIR__, 4) . '/mainfile.php';
 include $GLOBALS['xoops']->path('/include/cp_functions.php');
 if (is_object($xoopsUser)) {
     /** @var XoopsModuleHandler $module_handler */

@@ -23,7 +23,7 @@ use Xmf\Request;
 /** @var XoopsModule $xoopsModule */
 /** @var XoopsConfigItem $xoopsConfig */
 
-include dirname(dirname(__DIR__)) . '/header.php';
+include dirname(__DIR__, 2) . '/header.php';
 
 // defined('XOOPS_ROOT_PATH') || exit('XOOPS root path not defined');
 

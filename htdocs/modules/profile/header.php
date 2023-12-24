@@ -18,7 +18,7 @@
  */
 
 $xoopsOption['pagetype'] = 'user';
-include dirname(dirname(__DIR__)) . '/mainfile.php';
+include dirname(__DIR__, 2) . '/mainfile.php';
 $xoopsOption['xoops_module_header'] = '<link rel="stylesheet" type="text/css" href="assets/css/style.css" />';
 
 $xoBreadcrumbs   = [];
