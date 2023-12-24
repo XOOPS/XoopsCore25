@@ -301,7 +301,8 @@ class MyTextSanitizer
      */
     protected function makeClickableCallbackEmailAddress($match)
     {
-        return $match[1] . "<a href=\"mailto:$match[2]@$match[3]\" title=\"$match[2]@$match[3]\">" . $match[2] . '@' . $match[3] . '</a>';
+        $email = trim($match[0]);
+        return '<a href="mailto:' . $email . '" title="' . $email . '">' . $email . '</a>';
     }
 
     /**
