@@ -48,12 +48,12 @@ class XoopsFormRendererBootstrap5 implements XoopsFormRendererInterface
     {
         $ret = '';
         if ($element->_showDelete) {
-            $ret .= '<button type="submit" class="btn btn-danger mr-1" name="delete" id="delete" onclick="this.form.elements.op.value=\'delete\'">' . _DELETE
+            $ret .= '<button type="submit" class="btn btn-danger me-1" name="delete" id="delete" onclick="this.form.elements.op.value=\'delete\'">' . _DELETE
             . '</button>';
         }
-        $ret .= '<button class="btn btn-danger mr-1" onClick="history.go(-1);return true;">'
+        $ret .= '<button class="btn btn-danger me-1" onClick="history.go(-1);return true;">'
             . _CANCEL . '</button>'
-            . '<button type="reset" class="btn btn-warning mr-1" name="reset" id="reset">' . _RESET . '</button>'
+            . '<button type="reset" class="btn btn-warning me-1" name="reset" id="reset">' . _RESET . '</button>'
             . '<button type="' . $element->getType() . '" class="btn btn-success" name="' . $element->getName()
             . '"  id="' . $element->getName() . '" ' . $element->getExtra()
             . '>' . $element->getValue() . '</button>';
@@ -363,7 +363,7 @@ EOJS;
         $fontStr = '<div class="row"><div class="col-lg-12"><div class="btn-group" role="toolbar">';
         $fontStr .= '<div class="btn-group">'
             . '<button type="button" class="btn btn-secondary btn-sm dropdown-toggle" title="'. _SIZE .'"'
-            . ' data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">'
+            . ' data-bs-toggle="dropdown" aria-expanded="false">'
             . '<span class = "fa fa-text-height"></span><span class="caret"></span></button>'
             . '<ul class="dropdown-menu">';
             //. _SIZE . '&nbsp;&nbsp;<span class="caret"></span></button><ul class="dropdown-menu">';
@@ -375,7 +375,7 @@ EOJS;
 
         $fontStr .= '<div class="btn-group">'
             . '<button type="button" class="btn btn-secondary btn-sm dropdown-toggle" title="'. _FONT .'"'
-            . ' data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">'
+            . ' data-bs-toggle="dropdown" aria-expanded="false">'
             . '<span class = "fa fa-font"></span><span class="caret"></span></button>'
             . '<ul class="dropdown-menu">';
             //. _FONT . '&nbsp;&nbsp;<span class="caret"></span></button><ul class="dropdown-menu">';
@@ -387,7 +387,7 @@ EOJS;
 
         $fontStr .= '<div class="btn-group">'
             . '<button type="button" class="btn btn-secondary btn-sm dropdown-toggle" title="'. _COLOR .'"'
-            . ' data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">'
+            . ' data-bs-toggle="dropdown" aria-expanded="false">'
             . '<span class = "fa fa-tint"></span><span class="caret"></span></button>'
             . '<ul class="dropdown-menu">';
             //. _COLOR . '&nbsp;&nbsp;<span class="caret"></span></button><ul class="dropdown-menu">';
@@ -442,10 +442,10 @@ EOJS;
                 $ret .= $element->getDelimeter();
             }
             if ($inline) {
-                $ret .= '<span class="form-inline">';
+                $ret .= '<span class="d-inline">';
             }
             if ($ele->getCaption() != '') {
-                $ret .= '<label for="' . $ele->getName() . '" class="form-label text-sm-right">'
+                $ret .= '<label for="' . $ele->getName() . '" class="form-label text-sm-end">'
                     . $ele->getCaption()
                     . ($ele->isRequired() ? '<span class="caption-required">*</span>' : '')
                     . '</label>&nbsp;';
@@ -543,7 +543,7 @@ EOJS;
         $ele_title   = $element->getTitle();
         $ele_value   = $element->getValue();
         $ele_options = $element->getOptions();
-        $ret = '<select class="form-control" size="'
+        $ret = '<select class="form-select" size="'
             . $element->getSize() . '"' . $element->getExtra();
         if ($element->isMultiple() != false) {
             $ret .= ' name="' . $ele_name . '[]" id="' . $ele_name . '" title="' . $ele_title
@@ -753,7 +753,7 @@ EOJS;
 
             $ret .= '<div class="form-group row">';
             if (($caption = $element->getCaption()) != '') {
-                $ret .= '<label for="' . $element->getName() . '" class="col-xs-12 col-sm-2 col-form-label text-sm-right">'
+                $ret .= '<label for="' . $element->getName() . '" class="col-xs-12 col-sm-2 col-form-label text-sm-end">'
                     . $element->getCaption()
                     . ($element->isRequired() ? '<span class="xo-caption-required">*</span>' : '')
                     . '</label>';
