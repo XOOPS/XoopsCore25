@@ -1,0 +1,7 @@
+XOOPS 2.7.x Changelog (Language changes: see: /docs/lang_diff.txt)
+
+===================================
+2.7.0 Alpha 1             NOT RELEASED
+===================================
+
+* add Smarty 4
