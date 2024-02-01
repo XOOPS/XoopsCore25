@@ -64,12 +64,12 @@
                 <div class="col-12 col-md-6">
                     <div class="row">
                     <{foreach item=image from=$images|default:null name=fe_image}>
-                        <{if $image.alb_name}>
+                        <{if $image.alb_name|default:''}>
                             <div class="clear"></div>
-                            <div class="selimages col-12 col-md-12"><h5 class="modal-title" style="width:100%"><{$image.alb_name}></h5></div>
+                            <div class="selimages col-12 col-md-12"><h5 class="modal-title" style="width:100%"><{$image.alb_name|default:''}></h5></div>
                         <{/if}>
                         <div class="selimages col-6 col-md-3">
-                            <input id="<{$image.id}>_image" class="imgSelect1 img-fluid wgg-album-img <{if $image.selected}>wgg-modal-selected<{/if}>" type="image" src="<{$image.thumb}>"  preview="<{$image.medium}>" alt="<{$image.title}>" style="padding:3px;" value="<{$image.name}>">
+                            <input id="<{$image.id}>_image" class="imgSelect1 img-fluid wgg-album-img <{if $image.selected|default:false}>wgg-modal-selected<{/if}>" type="image" src="<{$image.thumb}>"  preview="<{$image.medium}>" alt="<{$image.title}>" style="padding:3px;" value="<{$image.name}>">
                         </div>
                         <{if $image.counter % 3 == 0}>
                             <div class="clear"></div>
@@ -292,7 +292,7 @@
                 </div>
                 <div class="modal-body">
                     <{foreach item=image from=$images|default:null}>
-                    <{if $image.alb_name}><h4 class="modal-title"><{$image.alb_name}></h4><{/if}>
+                    <{if $image.alb_name|default:''}><h4 class="modal-title"><{$image.alb_name|default:''}></h4><{/if}>
                     <input class="imgGrid<{$m}>" type="image" src="<{$image.thumb}>" alt="<{$image.title}>"
                        style="padding:3px;max-height:150px;max-width:200px" value="<{$image.name}>" onclick="selectGridImage(this, <{$m}>)">
                     <{/foreach}>

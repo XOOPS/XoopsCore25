@@ -34,6 +34,6 @@
         </div>
 	</div>
 
-<{if $album.linebreak}>
+<{if $album.linebreak|default:false}>
 	<div class='clear'>&nbsp;</div>
 <{/if}>

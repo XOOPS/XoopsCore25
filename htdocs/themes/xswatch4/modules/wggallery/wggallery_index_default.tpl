@@ -1,7 +1,7 @@
 <{include file='db:wggallery_header.tpl'}>
 
 <{if isset($albums)}>
-	<div class='card panel-<{$panel_type}>'>
+	<div class='card panel-<{$panel_type|default:'none'}>'>
 		<div class='card-header wgg-cats-header'><{$index_alb_title}></div>
 		<div class='row card-body'>
 			<{foreach item=album from=$albums|default:null}>
@@ -9,21 +9,21 @@
                     <div class='col-12 col-md-3 wgg-album-panel'>
                         <{include file='db:wggallery_albumitem_2.tpl' album=$album}>
                     </div>
-                    <{if $album.linebreak}>
+                    <{if $album.linebreak|default:false}>
                         <div class='clear'>&nbsp;</div>
                     <{/if}>
                 <{elseif $number_cols_album == 3}>
                     <div class='col-12 col-md-4 wgg-album-panel'>
                         <{include file='db:wggallery_albumitem_2.tpl' album=$album}>
                     </div>
-                    <{if $album.linebreak}>
+                    <{if $album.linebreak|default:false}>
                         <div class='clear'>&nbsp;</div>
                     <{/if}>
                 <{elseif $number_cols_album == 2}>
                     <div class='col-12 col-md-6 wgg-album-panel'>
                         <{include file='db:wggallery_albumitem_2.tpl' album=$album}>
                     </div>
-                    <{if $album.linebreak}>
+                    <{if $album.linebreak|default:false}>
                         <div class='clear'>&nbsp;</div>
                     <{/if}>
                 <{else}>
@@ -39,7 +39,7 @@
     <{/if}>
 <{/if}>
 <{if isset($categories)}>
-	<div class='card panel-<{$panel_type}>'>
+	<div class='card panel-<{$panel_type|default:'none'}>'>
 		<div class='card-header wgg-cats-header'><{$index_cats_title}></div>
 		<div class='row card-body'>
 			<{foreach item=category from=$categories|default:null}>
