@@ -2,7 +2,7 @@
 
 <div class="container no-pad-lr">
 <{if isset($albums)}>
-	<div class='card panel-<{$panel_type}>'>
+	<div class='card panel-<{$panel_type|default:'none'}>'>
 		<div class='card-header wgg-cats-header'><{$index_alb_title}></div>
 		<div class='card-body'>
 			<{foreach item=album from=$albums|default:null name=album}>
@@ -19,7 +19,7 @@
 	<{/if}>
 <{/if}>
 <{if isset($categories)}>
-	<div class='card panel-<{$panel_type}>'>
+	<div class='card panel-<{$panel_type|default:'none'}>'>
 		<div class='card-header wgg-cats-header'><{$index_cats_title}></div>
 		<div class='card-body'>
 			<{foreach item=category from=$categories|default:null name=category}>

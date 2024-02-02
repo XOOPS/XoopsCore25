@@ -3,7 +3,7 @@
 <{if isset($form)}>
 	<{$form}>
 <{else}>
-    <div class='card panel-<{$panel_type}>'>
+    <div class='card panel-<{$panel_type|default:'none'}>'>
             <div class='card-header wgg-imgindex-header'>
                 <h3><{$smarty.const._CO_WGGALLERY_IMAGE_MANAGE}> <{$alb_name}></h3>
                 <p><{$smarty.const._CO_WGGALLERY_IMAGE_MANAGE_DESC}></p>
@@ -37,7 +37,7 @@
                             </li>
                         <{/foreach}>
                     </ol>
-                <{else if $showlist}>
+                <{elseif $showlist}>
                     <div class=''>
                         <div class='errorMsg'><strong><{$smarty.const._CO_WGGALLERY_THEREARENT_IMAGES}></strong></div>
                     </div>

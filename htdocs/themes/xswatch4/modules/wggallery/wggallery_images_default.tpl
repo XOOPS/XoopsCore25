@@ -1,6 +1,6 @@
 <{include file='db:wggallery_header.tpl'}>
 
-<div class='card panel-<{$panel_type}> mb-3'>
+<div class='card panel-<{$panel_type|default:'none'}> mb-3'>
 	<{if isset($showlist)}>
         <div class='card-header wgg-imgindex-header'><{$smarty.const._CO_WGGALLERY_IMAGES_TITLE}> <{$alb_name}></div>
         <div class='card-body'>
@@ -8,13 +8,13 @@
                 <{foreach item=image from=$images|default:null}>
                     <div id='imglist_<{$image.id}>' class='row wgg-img-panel wgg-image-list'>
                         <div class='wgg-img-panel-row col-sm-8'>
-                            <{if $image.medium}>
+                            <{if $image.medium|default:''}>
                                 <div class='center'><img id='image_<{$image.id}>' class='img-fluid wgg-img' src='<{$image.medium}>#<{$random}>' alt='<{$image.title}>'></div>
                             <{/if}>
                         </div>
                         <div class='wgg-img-panel-row col-sm-4'>
                             <p><img class='wgg-btn-icon' src='<{$wggallery_icon_url_16}>photos.png' alt='<{$smarty.const._CO_WGGALLERY_IMAGE_TITLE}>' title='<{$smarty.const._CO_WGGALLERY_IMAGE_TITLE}>'><{$image.title}>
-                            <{if $image.desc}><{$image.desc}><{/if}>
+                            <{if $image.desc|default:''}><{$image.desc}><{/if}>
                             </p>
                             <p><img class='wgg-btn-icon' src='<{$wggallery_icon_url_16}>size.png' alt='<{$smarty.const._CO_WGGALLERY_IMAGE_SIZE}>' title='<{$smarty.const._CO_WGGALLERY_IMAGE_SIZE}>'><{$image.size}> kb</p>
                             <p><img class='wgg-btn-icon' src='<{$wggallery_icon_url_16}>dimension.png' alt='<{$smarty.const._CO_WGGALLERY_IMAGE_SIZE}>' title='<{$smarty.const._CO_WGGALLERY_IMAGE_SIZE}>'><{$image.resx}>px / <{$image.resy}>px</p>
@@ -33,10 +33,10 @@
                             <{if $use_categories && $image.cats_list}>
 								<p class='wgg-cats'><img class='wgg-btn-icon' src='<{$wggallery_icon_url_16}>categories.png' alt='<{$smarty.const._CO_WGGALLERY_CATS}>' title='<{$smarty.const._CO_WGGALLERY_CATS}>'><{$image.cats_list}></p>
                             <{/if}>
-                            <{if $use_tags && $image.tags}>
+                            <{if $use_tags|default:false && $image.tags|default:false}>
 								<p class='wgg-tags'><img class='wgg-btn-icon' src='<{$wggallery_icon_url_16}>tags.png' alt='<{$smarty.const._CO_WGGALLERY_TAGS}>' title='<{$smarty.const._CO_WGGALLERY_TAGS}>'><{$image.tags}></p>
                             <{/if}>
-                            <{if $image.com_show}>
+                            <{if $image.com_show|default:false}>
 								<p class='wgg-comcount'><img class='wgg-btn-icon' src='<{$wggallery_icon_url_16}>comments.png' alt='<{$smarty.const._CO_WGGALLERY_COMMENTS}>' title='<{$smarty.const._CO_WGGALLERY_COMMENTS}>'><{$image.com_count_text}></p>
                             <{/if}>
                             <{if isset($rating) && $rating > 0}>
@@ -113,7 +113,7 @@
         <div class='wgg-img-panel-row col-12 col-sm-12 col-md-12 col-lg-12 center'><img class='img-fluid wgg-img' src='<{$file}>' alt='<{$image.title}>'></div>
         <div class='wgg-img-panel-row col-12 col-sm-6 col-md-6 col-lg6'>
             <p><img class='wgg-btn-icon' src='<{$wggallery_icon_url_16}>photos.png' alt='<{$smarty.const._CO_WGGALLERY_IMAGE_TITLE}>' title='<{$smarty.const._CO_WGGALLERY_IMAGE_TITLE}>'><{$image.title}></p>
-            <{if $image.desc}>
+            <{if $image.desc|default:''}>
                 <p class='justify'><{$image.desc}></p>
             <{/if}>
         </div>
@@ -191,8 +191,8 @@
                             <{else}>
                             <div class="col-12 col-md-12 col-lg-12">
                             <{/if}>
-                            <{if $image.alb_name}><h4 class='modal-title'><{$image.alb_name}></h4><{/if}>
-                            <img class='img-fluid wgg-img' src='<{$image.img_modal}>' alt='<{$image.title}>'>
+                            <{if $image.alb_name|default:''}><h4 class='modal-title'><{$image.alb_name}></h4><{/if}>
+                            <img class='img-fluid wgg-img' src='<{$image.img_modal|default:''}>' alt='<{$image.title}>'>
                             <{if isset($showModalInfo)}>
                              </div>
                              <div class="col-12 col-md-6 col-lg-6">

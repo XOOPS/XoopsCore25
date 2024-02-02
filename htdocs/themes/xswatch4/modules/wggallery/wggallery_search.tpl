@@ -11,7 +11,7 @@
 <{/if}>
 
 <{if isset($showlist)}>
-    <div class='panel panel-<{$panel_type}>'>
+    <div class='panel panel-<{$panel_type|default:'none'}>'>
         <div class='panel-heading wgg-imgindex-header'><h3><{$smarty.const._MA_WGGALLERY_SEARCH_RESULT}></h3></div>
         <div class=' panel-body'>
             <{if isset($pagenav)}>
@@ -26,13 +26,13 @@
                 <{foreach item=image from=$images|default:null}>
                     <div class='row wgg-img-panel wgg-image-list'>
                         <div class='wgg-img-panel-row col-sm-8'>
-                            <{if $image.medium}>
+                            <{if $image.medium|default:''}>
                                 <div class='center'><img id='image_<{$image.id}>' class='img-fluid wgg-img' src='<{$image.medium}>#<{$random}>' alt='<{$image.title}>'></div>
                             <{/if}>
                         </div>
                         <div class='wgg-img-panel-row col-sm-4'>
                             <p><img class='wgg-btn-icon' src='<{$wggallery_icon_url_16}>photos.png' alt='<{$smarty.const._CO_WGGALLERY_IMAGE_TITLE}>' title='<{$smarty.const._CO_WGGALLERY_IMAGE_TITLE}>'><{$image.title}></p>
-                            <{if $image.desc}>
+                            <{if $image.desc|default:''}>
                                 <p class='justify'><{$image.desc}></p>
                             <{/if}>
                             <p><img class='wgg-btn-icon' src='<{$wggallery_icon_url_16}>size.png' alt='<{$smarty.const._CO_WGGALLERY_IMAGE_SIZE}>' title='<{$smarty.const._CO_WGGALLERY_IMAGE_SIZE}>'><{$image.size}> kb</p>
@@ -49,7 +49,7 @@
                             <{if $use_categories && $image.cats_list}>
 								<p class='wgg-cats'><img class='wgg-btn-icon' src='<{$wggallery_icon_url_16}>categories.png' alt='<{$smarty.const._CO_WGGALLERY_CATS}>' title='<{$smarty.const._CO_WGGALLERY_CATS}>'><{$image.cats_list}></p>
                             <{/if}>
-                            <{if $use_tags && $image.tags}>
+                            <{if $use_tags|default:false && $image.tags|default:false}>
 								<p class='wgg-tags'><img class='wgg-btn-icon' src='<{$wggallery_icon_url_16}>tags.png' alt='<{$smarty.const._CO_WGGALLERY_TAGS}>' title='<{$smarty.const._CO_WGGALLERY_TAGS}>'><{$image.tags}></p>
                             <{/if}>
                             <{if isset($rating) && $rating > 0}>
@@ -69,7 +69,7 @@
                                     <{if $image.exif}><img src="<{$wggallery_icon_url_16}>on.png" alt="_YES"><{else}><img src="<{$wggallery_icon_url_16}>0.png" alt="_NO"><{/if}>
                                 </p>
                             <{/if}>
-                            <{if $image.com_show}>
+                            <{if $image.com_show|default:false}>
 								<p class='wgg-comcount'><img class='wgg-btn-icon' src='<{$wggallery_icon_url_16}>comments.png' alt='<{$smarty.const._CO_WGGALLERY_COMMENTS}>' title='<{$smarty.const._CO_WGGALLERY_COMMENTS}>'><{$image.com_count_text}></p>
                             <{/if}>
                         </div>

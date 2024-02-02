@@ -1,7 +1,7 @@
 <{include file='db:wggallery_header.tpl'}>
 <{if isset($albums_list)}>
 	<div class='col-sm-12 col-sm-8'>
-	<div class='panel panel-<{$panel_type}>'>
+	<div class='panel panel-<{$panel_type|default:'none'}>'>
 		<div class='panel-heading'><{$smarty.const._CO_WGGALLERY_ALBUMS_TITLE}></div>
 		<div class='panel-body'>
 			<{foreach item=album from=$albums_list|default:null}>
@@ -41,7 +41,7 @@
 						<{else}>
 							<a class='disabled btn btn-secondary wgg-btn'><img class='wgg-btn-icon' src='<{$wggallery_icon_url_16}>photos.png' alt='<{$smarty.const._CO_WGGALLERY_IMAGES_INDEX}>' title='<{$smarty.const._CO_WGGALLERY_IMAGES_INDEX}>'><{$smarty.const._CO_WGGALLERY_ALBUM_NO_IMAGES}></a>
 						<{/if}>
-						<{if $album.edit}>
+						<{if $album.edit|default:false}>
                             <{if $album.nb_images}>
                                 <a class='btn btn-secondary wgg-btn' href='images.php?op=manage&amp;ref=albums&amp;alb_id=<{$album.id}>&amp;alb_pid=<{$album.pid}>' title='<{$smarty.const._CO_WGGALLERY_IMAGE_MANAGE}>'>
                                     <img class='wgg-btn-icon' src='<{$wggallery_icon_url_16}>images.png' alt='<{$smarty.const._CO_WGGALLERY_IMAGE_MANAGE}>'><{if isset($displayButtonText)}><{$smarty.const._CO_WGGALLERY_IMAGE_MANAGE}><{/if}></a>
@@ -81,7 +81,7 @@
 
 
 	<div class='col-sm-12 col-sm-4'>
-		<div class='panel panel-<{$panel_type}>'>
+		<div class='panel panel-<{$panel_type|default:'none'}>'>
 			<div class='panel-heading'><{$smarty.const._CO_WGGALLERY_ALBUMS_SORT}></div>
 			<div class='panel-body'>
 				<ol class="sortable ui-sortable mjs-nestedSortable-branch mjs-nestedSortable-expanded">
@@ -91,7 +91,7 @@
 					<a class='btn btn-secondary wgg-btn' href='albums.php' title='<{$smarty.const._CO_WGGALLERY_UPDATE}>'>
 						<img class='wgg-btn-icon' src='<{$wggallery_icon_url_16}>reset.png' alt='<{$smarty.const._CO_WGGALLERY_UPDATE}>'><{if isset($displayButtonText)}><{$smarty.const._CO_WGGALLERY_UPDATE}><{/if}></a>
 					<{if isset($global_submit)}>
-						<a class='btn btn-secondary wgg-btn' href='albums.php?op=new&alb_pid=<{$albpid}>' title='<{$smarty.const._CO_WGGALLERY_ALBUM_ADD}>'>
+						<a class='btn btn-secondary wgg-btn' href='albums.php?op=new&alb_pid=<{$albPid|default:0}>' title='<{$smarty.const._CO_WGGALLERY_ALBUM_ADD}>'>
 							<img class='wgg-btn-icon' src='<{$wggallery_icon_url_16}>add.png' alt='<{$smarty.const._CO_WGGALLERY_ALBUM_ADD}>'><{if isset($displayButtonText)}><{$smarty.const._CO_WGGALLERY_ALBUM_ADD}><{/if}></a>
 					<{/if}>
 				</p>
@@ -117,8 +117,8 @@
                 </div>
                 <div class="modal-body">
                     <{foreach item=image from=$images|default:null}>
-                        <{if $image.alb_name}><h4 class="modal-title"><{$image.alb_name}></h4><{/if}>
-                        <input class="img <{if $image.selected}>wgg-modal-selected<{/if}>" type="image" src="<{$image.medium}>" alt="<{$image.title}>"
+                        <{if $image.alb_name|default:''}><h4 class="modal-title"><{$image.alb_name|default:''}></h4><{/if}>
+                        <input class="img <{if $image.selected|default:false}>wgg-modal-selected<{/if}>" type="image" src="<{$image.medium}>" alt="<{$image.title}>"
                                style="padding:3px;max-height:150px;max-width:200px" value="<{$image.name}>">
                     <{/foreach}>
                 </div>

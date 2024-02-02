@@ -170,10 +170,10 @@
                 <{/if}>
             <{/if}>
         </div>
-        <{if $album.linebreak}>
+        <{if $album.linebreak|default:false}>
             <div class='clear'>&nbsp;</div>
         <{/if}>
-        <{if $album.linebreak}></div><{/if}>
+        <{if $album.linebreak|default:false}></div><{/if}>
     <{/foreach}>
     <div class="clear"></div>
     <{if isset($show_more_albums)}>
