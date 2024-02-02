@@ -42,7 +42,7 @@ if (!isset($_POST['submit']) || !isset($_POST['passwd'])) {
     $pass   = isset($_POST['passwd']) ? $myts->stripSlashesGPC(trim($_POST['passwd'])) : '';
     $email  = isset($_POST['newmail']) ? $myts->stripSlashesGPC(trim($_POST['newmail'])) : '';
     $errors = array();
-    if (!password_verify($oldpass, $GLOBALS['xoopsUser']->getVar('pass', 'n'))) {
+    if (!password_verify($pass, $GLOBALS['xoopsUser']->getVar('pass', 'n'))) {
         $errors[] = _PROFILE_MA_WRONGPASSWORD;
     }
     if (!checkEmail($email)) {
