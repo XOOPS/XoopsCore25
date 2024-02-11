@@ -27,7 +27,7 @@ require_once __DIR__ . '/include/common.inc.php';
 defined('XOOPS_INSTALL') || die('XOOPS Installation wizard die');
 
 $install_rename_suffix = $_POST['instsuffix'];
-if (preg_match('/^[a-f0-9]{23}$/', $install_rename_suffix)) {
+if (preg_match('/^[a-f0-9]{24}\.[0-9]{8}$/', $install_rename_suffix)) {
     $installer_modified = 'install_remove_' . $install_rename_suffix;
     install_finalize($installer_modified);
     echo 'OK';
