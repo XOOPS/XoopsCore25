@@ -2,6 +2,8 @@
 // GIJOE's Ticket Class (based on Marijuana's Oreteki XOOPS)
 // nobunobu's suggestions are applied
 
+use Xmf\Random;
+
 if (!class_exists('XoopsGTicket')) {
 
     /**
@@ -119,7 +121,7 @@ if (!class_exists('XoopsGTicket')) {
             global $xoopsModule;
 
             if ('' === $salt) {
-				$salt = '$2y$07$' . str_replace('+', '.', base64_encode(random_bytes(16)));
+				$salt = '$2y$07$' . str_replace('+', '.', base64_encode(Random::generateSecureRandomBytes(16)));
             }
 
             // create a token
