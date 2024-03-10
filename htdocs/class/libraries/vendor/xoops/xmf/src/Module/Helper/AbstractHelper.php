@@ -38,7 +38,7 @@ abstract class AbstractHelper
     /**
      * @var bool true if debug is enabled
      */
-    protected $debug;
+    public $debug;
 
     /**
      * Instantiate a XoopsModule object for the helper to use.
@@ -60,7 +60,9 @@ abstract class AbstractHelper
             if (isset($xoops)) {
                 $this->module = $xoops->module;
             } else {
-                $this->module = $GLOBALS['xoopsModule'];
+//                $this->module = $GLOBALS['xoopsModule'];
+                global $xoopsModule;
+                $this->module = $xoopsModule;
             }
         } else {
             // assume dirname specified, try to get a module object

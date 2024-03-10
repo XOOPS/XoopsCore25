@@ -283,13 +283,20 @@ class XoopsModule extends XoopsObject
             return true;
         }
         global $xoopsConfig;
-        if (file_exists($file = $GLOBALS['xoops']->path('modules/' . $dirname . '/language/' . $xoopsConfig['language'] . '/modinfo.php'))) {
+//        if (file_exists($file = $GLOBALS['xoops']->path('modules/' . $dirname . '/language/' . $xoopsConfig['language'] . '/modinfo.php'))) {
+//            include_once $file;
+//        } elseif (file_exists($file = $GLOBALS['xoops']->path('modules/' . $dirname . '/language/english/modinfo.php'))) {
+//            include_once $file;
+//        }
+
+        if (file_exists($file = dirname(__DIR__) . '/modules/' . $dirname . '/language/' . $xoopsConfig['language'] . '/modinfo.php')) {
             include_once $file;
-        } elseif (file_exists($file = $GLOBALS['xoops']->path('modules/' . $dirname . '/language/english/modinfo.php'))) {
+        } elseif (file_exists($file = dirname(__DIR__) . '/modules/' . $dirname . '/language/english/modinfo.php')) {
             include_once $file;
         }
 
-        if (!file_exists($file = $GLOBALS['xoops']->path('modules/' . $dirname . '/xoops_version.php'))) {
+//        if (!file_exists($file = $GLOBALS['xoops']->path('modules/' . $dirname . '/xoops_version.php'))) {
+        if (!file_exists($file = dirname(__DIR__) . '/modules/' . $dirname . '/xoops_version.php')) {
             if (false !== (bool)$verbose) {
                 echo "Module File for $dirname Not Found!";
             }
@@ -322,7 +329,8 @@ class XoopsModule extends XoopsObject
         if ($this->getVar('hassearch') != 1 || !isset($search['file']) || !isset($search['func']) || $search['func'] == '' || $search['file'] == '') {
             return false;
         }
-        if (file_exists($file = $GLOBALS['xoops']->path('modules/' . $this->getVar('dirname') . '/' . $search['file']))) {
+//        if (file_exists($file = $GLOBALS['xoops']->path('modules/' . $this->getVar('dirname') . '/' . $search['file']))) {
+        if (file_exists($file = dirname(__DIR__) . '/modules/' . $this->getVar('dirname') . '/' . $search['file'])) {
             include_once $file;
         } else {
             return false;

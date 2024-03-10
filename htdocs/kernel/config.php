@@ -17,9 +17,8 @@
  */
 defined('XOOPS_ROOT_PATH') || exit('Restricted access');
 
-require_once $GLOBALS['xoops']->path('kernel/configoption.php');
-require_once $GLOBALS['xoops']->path('kernel/configitem.php');
-
+require_once __DIR__ . '/configoption.php';
+require_once __DIR__ . '/configitem.php';
 /**
  * XOOPS configuration handling class.
  * This class acts as an interface for handling general configurations of XOOPS
