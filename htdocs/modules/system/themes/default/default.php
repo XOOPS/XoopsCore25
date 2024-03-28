@@ -70,7 +70,7 @@ class XoopsGuiDefault extends XoopsSystemGui
         $tpl->assign('lang_cp', _CPHOME);
         //start system overview
         //$tpl->assign('lang_xoops_version', XOOPS_VERSION);
-        $tpl->assign('lang_php_vesion', PHP_VERSION);
+        $tpl->assign('lang_php_version', PHP_VERSION);
         $tpl->assign('lang_mysql_version', mysqli_get_server_info($xoopsDB->conn));
         $tpl->assign('lang_server_api', PHP_SAPI);
         $tpl->assign('lang_os_name', PHP_OS);
@@ -237,7 +237,7 @@ class XoopsGuiDefault extends XoopsSystemGui
         foreach ($mods as $mod) {
             $rtn    = array();
             $sadmin = $moduleperm_handler->checkRight('module_admin', $mod->getVar('mid'), $xoopsUser->getGroups());
-            if ($sadmin && ($mod->getVar('hasnotification') || is_array($mod->getInfo('config')) || is_array($mod->getInfo('comments')))) {
+            if ($sadmin && ($mod->getVar('hasnotification') || \is_array($mod->getInfo('config')) || \is_array($mod->getInfo('comments')))) {
                 $rtn['link']     = XOOPS_URL . '/modules/system/admin.php?fct=preferences&amp;op=showmod&amp;mod=' . $mod->getVar('mid');
                 $rtn['title']    = htmlspecialchars($mod->name(), ENT_QUOTES | ENT_HTML5);
                 $rtn['absolute'] = 1;

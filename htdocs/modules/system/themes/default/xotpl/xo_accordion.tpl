@@ -11,7 +11,7 @@
             </tr>
             <tr>
                 <td><{$smarty.const._OXYGEN_VERSION_PHP}></td>
-                <td><{$lang_php_vesion}></td>
+                <td><{$lang_php_version}></td>
             </tr>
             <tr>
                 <td><{$smarty.const._OXYGEN_VERSION_MYSQL}></td>
