@@ -14,6 +14,10 @@
                 <td><{$lang_php_version}></td>
             </tr>
             <tr>
+                <td><{$smarty.const._OXYGEN_VERSION_SMARTY}></td>
+                <td><{$lang_smarty_version}></td>
+            </tr>
+            <tr>
                 <td><{$smarty.const._OXYGEN_VERSION_MYSQL}></td>
                 <td><{$lang_mysql_version}></td>
             </tr>
