@@ -106,6 +106,7 @@ class XoopsGuiDark extends XoopsSystemGui
         //start system overview
         //$tpl->assign('lang_xoops_version', XOOPS_VERSION);
         $tpl->assign('lang_php_version', PHP_VERSION);
+        $tpl->assign('lang_smarty_version', $tpl::SMARTY_VERSION);
         $tpl->assign('lang_mysql_version', mysqli_get_server_info($xoopsDB->conn));
         $tpl->assign('lang_server_api', PHP_SAPI);
         $tpl->assign('lang_os_name', PHP_OS);
