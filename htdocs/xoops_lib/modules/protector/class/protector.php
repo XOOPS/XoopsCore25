@@ -822,7 +822,7 @@ class Protector
         }
 
         /*    foreach ($_POST as $key => $val) {
-                if( is_array( $_POST[ $key ] ) ) continue ;
+                if( \is_array( $_POST[ $key ] ) ) continue ;
                 if ( substr( trim( $val ) , 0 , 3 ) == '../' || false !== strpos( $val , '../../' ) ) {
                     $this->last_error_type = 'ParentDir' ;
                     $this->message .= "Doubtful file specification '$val' found.\n" ;
@@ -836,7 +836,7 @@ class Protector
                 }
             }
             foreach ($_COOKIE as $key => $val) {
-                if( is_array( $_COOKIE[ $key ] ) ) continue ;
+                if( \is_array( $_COOKIE[ $key ] ) ) continue ;
                 if ( substr( trim( $val ) , 0 , 3 ) == '../' || false !== strpos( $val , '../../' ) ) {
                     $this->last_error_type = 'ParentDir' ;
                     $this->message .= "Doubtful file specification '$val' found.\n" ;

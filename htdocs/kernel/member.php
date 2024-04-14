@@ -13,7 +13,7 @@
  * @license             GNU GPL 2 (https://www.gnu.org/licenses/gpl-2.0.html)
  * @package             kernel
  * @since               2.0.0
- * @author              Kazumi Ono (AKA onokazu) http://www.myweb.ne.jp/, http://jp.xoops.org/
+ * @author              Kazumi Ono (AKA onokazu) https://www.myweb.ne.jp/, https://jp.xoops.org/
  */
 defined('XOOPS_ROOT_PATH') || exit('Restricted access');
 
@@ -540,7 +540,7 @@ class XoopsMemberHandler
         $criteriaCompo = new CriteriaCompo();
         $sql = "SELECT COUNT(*) FROM " . $this->userHandler->db->prefix('users') . " u WHERE ";
         if (!empty($groups)) {
-            $group_in = is_array($groups) ? '(' . implode(', ', $groups) . ')' : (array) $groups;
+            $group_in = \is_array($groups) ? '(' . implode(', ', $groups) . ')' : (array) $groups;
             $sql .= " EXISTS (SELECT * FROM " . $this->membershipHandler->db->prefix('groups_users_link')
                 . " m " . "WHERE m.groupid IN {$group_in} and m.uid = u.uid) ";
         }

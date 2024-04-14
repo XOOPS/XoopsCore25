@@ -16,7 +16,7 @@
  * @author    Gregory Mage
  * @author    Taiwen Jiang <phppp@users.sourceforge.net>
  * @copyright 2020 XOOPS Project (http://xoops.org)
- * @license   GNU GPL 2 or later (http://www.gnu.org/licenses/gpl-2.0.html)
+ * @license   GNU GPL 2.0 or later (https://www.gnu.org/licenses/gpl-2.0.html)
  * @link      http://xoops.org
  */
 

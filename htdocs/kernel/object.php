@@ -13,7 +13,7 @@
  * @license             GNU GPL 2 (https://www.gnu.org/licenses/gpl-2.0.html)
  * @package             kernel
  * @since               2.0.0
- * @author              Kazumi Ono (AKA onokazu) http://www.myweb.ne.jp/, http://jp.xoops.org/
+ * @author              Kazumi Ono (AKA onokazu) https://www.myweb.ne.jp/, https://jp.xoops.org/
  * @author              Taiwen Jiang <phppp@users.sourceforge.net>
  */
 
@@ -508,7 +508,7 @@ class XoopsObject
                             if ($ret != '') {
                                 $ret = unserialize($ret);
                             }
-                            $ret = is_array($ret) ? $ret : array();
+                            $ret = \is_array($ret) ? $ret : array();
                             if (is_array($ret)) {
                                 $ret = array_walk($ret, 'xoops_aw_decode');
                             }
@@ -528,7 +528,7 @@ class XoopsObject
                             if ($ret != '') {
                                 $ret = unserialize($ret);
                             }
-                            $ret = is_array($ret) ? $ret : array();
+                            $ret = \is_array($ret) ? $ret : array();
                         }
 
                         return $ret;

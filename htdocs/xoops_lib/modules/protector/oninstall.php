@@ -133,7 +133,7 @@ if (!function_exists('protector_oninstall_base')) {
      */
     function protector_message_append_oninstall(&$module_obj, &$log)
     {
-        if (isset($GLOBALS['ret']) && is_array($GLOBALS['ret'])) {
+        if (isset($GLOBALS['ret']) && \is_array($GLOBALS['ret'])) {
             foreach ($GLOBALS['ret'] as $message) {
                 $log->add(strip_tags($message));
             }

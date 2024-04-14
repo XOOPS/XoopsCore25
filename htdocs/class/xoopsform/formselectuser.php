@@ -73,7 +73,7 @@ class XoopsFormSelectUser extends XoopsFormElementTray
         }
         /** @var XoopsMemberHandler $member_handler */
         $member_handler = xoops_getHandler('member');
-        $value          = is_array($value) ? $value : (empty($value) ? array() : array($value));
+        $value          = \is_array($value) ? $value : (empty($value) ? array() : array($value));
         $selectedUsers = array();
         if (count($value) > 0) {
             // fetch the set of uids in $value

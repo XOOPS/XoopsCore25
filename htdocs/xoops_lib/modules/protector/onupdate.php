@@ -145,7 +145,7 @@ if (!function_exists('protector_onupdate_base')) {
      */
     function protector_message_append_onupdate(&$module_obj, &$log)
     {
-        if (isset($GLOBALS['msgs']) && is_array($GLOBALS['msgs'])) {
+        if (isset($GLOBALS['msgs']) && \is_array($GLOBALS['msgs'])) {
             foreach ($GLOBALS['msgs'] as $message) {
                 $log->add(strip_tags($message));
             }

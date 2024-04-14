@@ -14,7 +14,7 @@
  * @package             kernel
  * @subpackage          form
  * @since               2.0.0
- * @author              Kazumi Ono (AKA onokazu) http://www.myweb.ne.jp/, http://jp.xoops.org/
+ * @author              Kazumi Ono (AKA onokazu) https://www.myweb.ne.jp/, https://jp.xoops.org/
  * @author              Taiwen Jiang <phppp@users.sourceforge.net>
  * @author              Vinod <smartvinu@gmail.com>
  */
@@ -103,7 +103,7 @@ class XoopsFormDhtmlTextArea extends XoopsFormTextArea
             $options['name']  = $this->getName();
             $options['value'] = $this->getValue();
             if (!empty($options['editor'])) {
-                $this->htmlEditor = is_array($options['editor']) ? $options['editor'] : array($options['editor']);
+                $this->htmlEditor = \is_array($options['editor']) ? $options['editor'] : array($options['editor']);
             }
 
             if (count($this->htmlEditor) == 1) {

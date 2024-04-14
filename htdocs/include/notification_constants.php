@@ -14,7 +14,7 @@
  * @package             kernel
  * @subpackage          Xoop Notifications Defines
  * @since               2.0.0
- * @author              Kazumi Ono (AKA onokazu) http://www.myweb.ne.jp/, http://jp.xoops.org/
+ * @author              Kazumi Ono (AKA onokazu) https://www.myweb.ne.jp/, https://jp.xoops.org/
  */
 defined('XOOPS_ROOT_PATH') || exit('Restricted access');
 
