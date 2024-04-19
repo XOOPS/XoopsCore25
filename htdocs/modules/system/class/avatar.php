@@ -103,7 +103,7 @@ class SystemAvatar extends XoopsAvatar
 class SystemAvatarHandler extends XoopsAvatarHandler
 {
 
-    public string $className = '';
+    public $className = '';
     /**
      * @param $db
      */
