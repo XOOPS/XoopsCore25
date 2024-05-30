@@ -30,7 +30,7 @@ xoops_loadLanguage('global');
  * @author              Kazumi Ono <onokazu@xoops.org>
  * @copyright       (c) 2000-2022 XOOPS Project (https://xoops.org)
  */
-class XoopsTpl extends SmartyBC
+class XoopsTpl extends Smarty
 {
     /** @var xos_opal_Theme */
     public $currentTheme;
