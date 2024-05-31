@@ -126,42 +126,41 @@ class XoopsGuiTransition extends XoopsSystemGui
 
         // COMPOSER PACKAGES VERSION INFO *******************
 
-        // Path to the composer.lock file
-        $composerLockPath = XOOPS_ROOT_PATH . '/class/libraries/composer.lock';
-
-        // Check if the file exists
-        if (!file_exists($composerLockPath)) {
-            die("composer.lock file not found");
-        }
-
-        // Read the composer.lock file
+        // Function to read and parse composer.lock file
+        function getComposerData(string $composerLockPath): array
+        {
         $composerLockData = file_get_contents($composerLockPath);
-
-        // Decode the JSON data
         $composerData = json_decode($composerLockData, true);
-
-        // Check if decoding was successful
-        if ($composerData === null) {
-            die("Failed to decode JSON data from composer.lock file");
+            return $composerData['packages'] ?? [];
         }
 
-        // Extract package information
-        $packages = $composerData['packages'] ?? [];
-
-        $composerPackages = [];
-
-        // Populate the $composerPackages array
-        foreach ($packages as $package) {
-            $composerPackages[] = [
+        // Function to extract package name and version (using array_map for optimization)
+        function extractPackages(array $packages): array
+        {
+            return array_map(
+                static fn($package) => [
                 'name'    => $package['name'],
-                'version' => $package['version'],
-            ];
+                    'version' => $package['version']
+                ], $packages
+            );
         }
+
+        try {
+            // Define the path to the composer.lock file
+            $composerLockPath = XOOPS_ROOT_PATH . '/class/libraries/composer.lock';
+            // Get the packages data from composer.lock file
+            $packages = getComposerData($composerLockPath);
+            // Extract package name and version
+            $composerPackages = extractPackages($packages);
         // Assign the $composerPackages array to the Smarty template
         $tpl->assign('composerPackages', $composerPackages);
+        } catch (Exception $e) {
+            // Handle any exception and log the error using XOOPS Logger
+            global $xoopsLogger;
+            $xoopsLogger->handleError(E_USER_ERROR, $e->getMessage(), __FILE__, __LINE__);
+            echo "An error occurred. Please try again later.";
+        }
 
-
-        // ADD MENU *****************************************
 
         //Add  CONTROL PANEL  Menu  items
         $menu                = array();
