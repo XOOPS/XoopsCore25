@@ -3,7 +3,8 @@ XOOPS 2.5.x Changelog (Language changes: see: /docs/lang_diff.txt)
 ===================================
 2.5.12 Beta1             2024/05/30
 ===================================
-- Update to Smarty v4.5.3
+- Update to Smarty v4.5.3 (mamba)
+- added in Admin overview of Composer packages (mamba)
 
 ===================================
 2.5.11 Final             2023/12/24

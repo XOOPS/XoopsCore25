@@ -124,6 +124,43 @@ class XoopsGuiTransition extends XoopsSystemGui
         $tpl->assign('upload_max_filesize', ini_get('upload_max_filesize'));
         $tpl->assign('xoops_sitename', $xoopsConfig['sitename']);
 
+        // COMPOSER PACKAGES VERSION INFO *******************
+
+        // Path to the composer.lock file
+        $composerLockPath = XOOPS_ROOT_PATH . '/class/libraries/composer.lock';
+
+        // Check if the file exists
+        if (!file_exists($composerLockPath)) {
+            die("composer.lock file not found");
+        }
+
+        // Read the composer.lock file
+        $composerLockData = file_get_contents($composerLockPath);
+
+        // Decode the JSON data
+        $composerData = json_decode($composerLockData, true);
+
+        // Check if decoding was successful
+        if ($composerData === null) {
+            die("Failed to decode JSON data from composer.lock file");
+        }
+
+        // Extract package information
+        $packages = $composerData['packages'] ?? [];
+
+        $composerPackages = [];
+
+        // Populate the $composerPackages array
+        foreach ($packages as $package) {
+            $composerPackages[] = [
+                'name'    => $package['name'],
+                'version' => $package['version'],
+            ];
+        }
+        // Assign the $composerPackages array to the Smarty template
+        $tpl->assign('composerPackages', $composerPackages);
+
+
         // ADD MENU *****************************************
 
         //Add  CONTROL PANEL  Menu  items
