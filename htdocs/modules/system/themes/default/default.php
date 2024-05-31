@@ -92,32 +92,13 @@ class XoopsGuiDefault extends XoopsSystemGui
 
         // COMPOSER PACKAGES VERSION INFO *******************
 
-        // Function to read and parse composer.lock file
-        function getComposerData(string $composerLockPath): array
-        {
-        $composerLockData = file_get_contents($composerLockPath);
-        $composerData = json_decode($composerLockData, true);
-            return $composerData['packages'] ?? [];
-        }
-
-        // Function to extract package name and version (using array_map for optimization)
-        function extractPackages(array $packages): array
-        {
-            return array_map(
-                static fn($package) => [
-                'name'    => $package['name'],
-                'version' => $package['version']
-                ], $packages
-            );
-        }
-
         try {
             // Define the path to the composer.lock file
             $composerLockPath = XOOPS_ROOT_PATH . '/class/libraries/composer.lock';
             // Get the packages data from composer.lock file
-            $packages = getComposerData($composerLockPath);
+            $packages = $this->getComposerData($composerLockPath);
             // Extract package name and version
-            $composerPackages = extractPackages($packages);
+            $composerPackages = $this->extractPackages($packages);
             // Assign the $composerPackages array to the Smarty template
             $tpl->assign('composerPackages', $composerPackages);
         } catch (Exception $e) {
@@ -351,5 +332,39 @@ class XoopsGuiDefault extends XoopsSystemGui
                 $tpl->append('modules', $rtn);
             }
         }
+    }
+
+    // Function to read and parse composer.lock file
+    private function getComposerData(string $composerLockPath): array
+    {
+        if (!file_exists($composerLockPath)) {
+            throw new InvalidArgumentException("File not found at: " . $composerLockPath);
+        }
+
+        $composerLockData = file_get_contents($composerLockPath);
+
+        if ($composerLockData === false) {
+            throw new RuntimeException("Failed to read the file: " . $composerLockPath);
+        }
+
+        $composerData = json_decode($composerLockData, true);
+
+        if (json_last_error() !== JSON_ERROR_NONE) {
+            throw new JsonException("Failed to decode JSON data: " . json_last_error_msg());
+        }
+
+        return $composerData['packages'] ?? [];
+    }
+
+
+    // Function to extract package name and version (using array_map for optimization)
+    private function extractPackages(array $packages): array
+    {
+        return array_map(
+            static fn($package) => [
+                'name'    => $package['name'],
+                'version' => $package['version']
+            ], $packages
+        );
     }
 }
