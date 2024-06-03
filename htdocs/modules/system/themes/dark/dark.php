@@ -354,38 +354,4 @@ class XoopsGuiDark extends XoopsSystemGui
             }
         }
     }
-
-    // Function to read and parse composer.lock file
-    private function getComposerData(string $composerLockPath): array
-    {
-        if (!file_exists($composerLockPath)) {
-            throw new InvalidArgumentException("File not found at: " . $composerLockPath);
-        }
-
-        $composerLockData = file_get_contents($composerLockPath);
-
-        if ($composerLockData === false) {
-            throw new RuntimeException("Failed to read the file: " . $composerLockPath);
-        }
-
-        $composerData = json_decode($composerLockData, true);
-
-        if (json_last_error() !== JSON_ERROR_NONE) {
-            throw new JsonException("Failed to decode JSON data: " . json_last_error_msg());
-        }
-
-        return $composerData['packages'] ?? [];
-    }
-
-
-    // Function to extract package name and version (using array_map for optimization)
-    private function extractPackages(array $packages): array
-    {
-        return array_map(
-            static fn($package) => [
-                'name'    => $package['name'],
-                'version' => $package['version']
-            ], $packages
-        );
-    }
 }
