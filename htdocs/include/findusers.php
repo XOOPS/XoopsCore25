@@ -141,7 +141,7 @@ class XoopsRankHandler extends XoopsObjectHandler
      */
     public function getList(CriteriaElement $criteria = null, $limit = 0, $start = 0)
     {
-        $ret = array();
+        $ret = [];
         if ($criteria == null) {
             $criteria = new CriteriaCompo();
         }
@@ -182,13 +182,14 @@ class XoUser extends XoopsUser
     public function __construct()
     {
         parent::__construct();
-        $unsets = array(
+        $unsets = [
             'actkey',
             'pass',
             'theme',
             'umode',
             'uorder',
-            'notify_mode');
+            'notify_mode'
+        ];
         foreach ($unsets as $var) {
             unset($this->vars[$var]);
         }
@@ -234,11 +235,12 @@ class XoUserHandler extends XoopsObjectHandler
      * @param  array           $groups
      * @return int
      */
-    public function getCount(CriteriaElement $criteria = null, $groups = array())
+    public function getCount(CriteriaElement $criteria = null, $groups = [])
     {
         if (!is_array($groups)) {
-            $groups = array(
-                $groups);
+            $groups = [
+                $groups
+            ];
         }
         $groups = array_filter($groups);
         if (empty($groups)) {
@@ -258,7 +260,7 @@ class XoUserHandler extends XoopsObjectHandler
                 \sprintf(_DB_QUERY_ERROR, $sql) . $this->db->error(), E_USER_ERROR
             );
         }
-        list($count) = $this->db->fetchRow($result);
+        [$count] = $this->db->fetchRow($result);
 
         return (int)$count;
     }
@@ -270,11 +272,12 @@ class XoUserHandler extends XoopsObjectHandler
      * @param  array           $groups
      * @return array of matching objects
      */
-    public function getAll(CriteriaElement $criteria = null, $groups = array())
+    public function getAll(CriteriaElement $criteria = null, $groups = [])
     {
         if (!is_array($groups)) {
-            $groups = array(
-                $groups);
+            $groups = [
+                $groups
+            ];
         }
         $groups = array_filter($groups);
         $limit  = null;
@@ -304,7 +307,7 @@ class XoUserHandler extends XoopsObjectHandler
                 \sprintf(_DB_QUERY_ERROR, $sql) . $this->db->error(), E_USER_ERROR
             );
         }
-        $ret    = array();
+        $ret    = [];
         /** @var array $myrow */
         while (false !== ($myrow = $this->db->fetchArray($result))) {
             $object = $this->create(false);
@@ -320,7 +323,7 @@ class XoUserHandler extends XoopsObjectHandler
 $rank_handler = new XoopsRankHandler($xoopsDB);
 $user_handler = new XoUserHandler($xoopsDB);
 
-$items_match = array(
+$items_match = [
     'uname'     => _MA_USER_UNAME,
     'name'      => _MA_USER_REALNAME,
     'email'     => _MA_USER_EMAIL,
@@ -328,20 +331,21 @@ $items_match = array(
 //  'user_aim'  => _MA_USER_AIM,
 //  'user_yim'  => _MA_USER_YIM,
 //  'user_msnm' => _MA_USER_MSNM,
-);
+];
 
-$items_range = array(
+$items_range = [
     'user_regdate' => _MA_USER_RANGE_USER_REGDATE,
     'last_login'   => _MA_USER_RANGE_LAST_LOGIN,
-    'posts'        => _MA_USER_RANGE_POSTS);
+    'posts'        => _MA_USER_RANGE_POSTS
+];
 
 define('FINDUSERS_MODE_SIMPLE', 0);
 define('FINDUSERS_MODE_ADVANCED', 1);
 
-$modes = array(
+$modes = [
     FINDUSERS_MODE_SIMPLE   => _MA_USER_MODE_SIMPLE,
     FINDUSERS_MODE_ADVANCED => _MA_USER_MODE_ADVANCED,
-);
+];
 
 if (!Request::hasVar('user_submit', 'POST')) {
     include_once $GLOBALS['xoops']->path('class/xoopsformloader.php');
@@ -374,25 +378,29 @@ if (!Request::hasVar('user_submit', 'POST')) {
         }
 
         $mailok_radio = new XoopsFormRadio(_MA_USER_SHOWMAILOK, 'user_mailok',  Request::getString('user_mailok', 'both', 'POST'));
-        $mailok_radio->addOptionArray(array(
+        $mailok_radio->addOptionArray(
+            [
             'mailok' => _MA_USER_MAILOK,
             'mailng' => _MA_USER_MAILNG,
             'both' => _MA_USER_BOTH
-        ));
+            ]
+        );
         $avatar_radio = new XoopsFormRadio(_MA_USER_HASAVATAR, 'user_avatar', Request::getString('user_avatar', 'both', 'POST'));
-        $avatar_radio->addOptionArray(array(
+        $avatar_radio->addOptionArray(
+            [
             'y' => _YES,
             'n' => _NO,
             'both' => _MA_USER_BOTH
-        ));
+            ]
+        );
 
         $level_radio = new XoopsFormRadio(_MA_USER_LEVEL, 'level', Request::getString('level', '', 'POST'));
-        $levels      = array(
+        $levels      = [
             0 => _ALL,
             1 => _MA_USER_LEVEL_ACTIVE,
             2 => _MA_USER_LEVEL_INACTIVE,
             3 => _MA_USER_LEVEL_DISABLED
-        );
+        ];
         $level_radio->addOptionArray($levels);
 
         /** @var XoopsMemberHandler $member_handler */
@@ -416,7 +424,7 @@ if (!Request::hasVar('user_submit', 'POST')) {
         $form->addElement($group_select);
         $form->addElement($rank_select);
     } else {
-        foreach (array('uname', 'email') as $var) {
+        foreach (['uname', 'email'] as $var) {
             $title      = $items_match[$var];
             $text       = new XoopsFormText('', $var, 30, 100, Request::getString($var, '', 'POST'));
             $match      = new XoopsFormSelectMatchOption('', "{$var}_match", Request::getInt("{$var}_match", 0));
@@ -429,17 +437,21 @@ if (!Request::hasVar('user_submit', 'POST')) {
     }
 
     $sort_select = new XoopsFormSelect(_MA_USER_SORT, 'user_sort', Request::getString('user_sort', '', 'POST'));
-    $sort_select->addOptionArray(array(
+    $sort_select->addOptionArray(
+        [
         'uname' => _MA_USER_UNAME,
         'last_login' => _MA_USER_LASTLOGIN,
         'user_regdate' => _MA_USER_REGDATE,
         'posts' => _MA_USER_POSTS
-    ));
+        ]
+    );
     $order_select = new XoopsFormSelect(_MA_USER_ORDER, 'user_order', Request::getString('user_order', '', 'POST'));
-    $order_select->addOptionArray(array(
+    $order_select->addOptionArray(
+        [
         'ASC' => _MA_USER_ASC,
         'DESC' => _MA_USER_DESC
-    ));
+        ]
+    );
 
     $form->addElement($sort_select);
     $form->addElement($order_select);
@@ -455,7 +467,7 @@ if (!Request::hasVar('user_submit', 'POST')) {
     $inacttotal = $user_handler->getCount(new Criteria('level', 0, '<='));
     echo '</html><body>';
     echo "<h2 style='text-align:left;'>" . _MA_USER_FINDUS . ' - ' . $modes[$mode] . '</h2>';
-    $modes_switch = array();
+    $modes_switch = [];
     foreach ($modes as $_mode => $title) {
         if ($mode == $_mode) {
             continue;
@@ -508,7 +520,7 @@ if (!Request::hasVar('user_submit', 'POST')) {
     if (Request::hasVar('user_occ', 'POST')) {
         $criteria->add(new Criteria('user_occ', '%' . $xoopsDB->escape(Request::getString('user_occ', '', 'POST')) . '%', 'LIKE'));
     }
-    foreach (array('last_login', 'user_regdate') as $var) {
+    foreach (['last_login', 'user_regdate'] as $var) {
         if (Request::hasVar("{$var}_more", 'POST') && is_numeric($_POST["{$var}_more"])) {
             $time = time() - (60 * 60 * 24 *  Request::getInt("{$var}_more", 0, 'POST'));
             if ($time > 0) {
@@ -567,13 +579,13 @@ if (!Request::hasVar('user_submit', 'POST')) {
         }
     }
     $total     = $user_handler->getCount($criteria, Request::getArray('groups', [], 'POST'));
-    $validsort = array(
+    $validsort = [
         'uname',
         'email',
         'last_login',
         'user_regdate',
         'posts'
-    );
+    ];
     $sort      = (!in_array(Request::getString('user_sort', '', 'POST'), $validsort)) ? 'uname' : Request::getString('user_sort', '', 'POST');
     $order     = 'ASC';
     if (Request::hasVar('user_order', 'POST') && Request::getString('user_order', '', 'POST')  === 'DESC') {
@@ -583,7 +595,7 @@ if (!Request::hasVar('user_submit', 'POST')) {
     $criteria->setOrder($order);
     $criteria->setLimit($limit);
     $criteria->setStart($start);
-    $foundusers = $user_handler->getAll($criteria, Request::getArray('groups', array(), 'POST'));
+    $foundusers = $user_handler->getAll($criteria, Request::getArray('groups', [], 'POST'));
 
     echo $js_adduser = '
         <script type="text/javascript">

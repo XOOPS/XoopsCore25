@@ -69,10 +69,13 @@ class XoopsSystemGui
         }
 
         $adminThemeFactory = new xos_opal_AdminThemeFactory();
-        $this->xoTheme     =& $adminThemeFactory->createInstance(array(
+        $this->xoTheme     =& $adminThemeFactory->createInstance(
+            [
                                                                      'folderName'      => $this->foldername,
                                                                      'themesPath'      => 'modules/system/themes',
-                                                                     'contentTemplate' => isset($GLOBALS['xoopsOption']['template_main'])? $GLOBALS['xoopsOption']['template_main'] :''));
+                                                                     'contentTemplate' => isset($GLOBALS['xoopsOption']['template_main'])? $GLOBALS['xoopsOption']['template_main'] :''
+            ]
+        );
         $this->xoTheme->loadLocalization('admin');
         $this->template =& $this->xoTheme->template;
 

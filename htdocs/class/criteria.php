@@ -184,14 +184,14 @@ class CriteriaCompo extends CriteriaElement
      *
      * @var array Array of {@link CriteriaElement} objects
      */
-    public $criteriaElements = array();
+    public $criteriaElements = [];
 
     /**
      * Conditions
      *
      * @var array
      */
-    public $conditions = array();
+    public $conditions = [];
 
     /**
      * Constructor
@@ -343,13 +343,13 @@ class Criteria extends CriteriaElement
         if (!empty($this->function)) {
             $clause = sprintf($this->function, $clause);
         }
-        if (in_array(strtoupper($this->operator), array('IS NULL', 'IS NOT NULL'))) {
+        if (in_array(strtoupper($this->operator), ['IS NULL', 'IS NOT NULL'])) {
             $clause .= ' ' . $this->operator;
         } else {
             if ('' === ($value = trim((string)$this->value))) {
                 return '';
             }
-            if (!in_array(strtoupper($this->operator), array('IN', 'NOT IN'))) {
+            if (!in_array(strtoupper($this->operator), ['IN', 'NOT IN'])) {
                 if ((substr($value, 0, 1) !== '`') && (substr($value, -1) !== '`')) {
                     $value = "'{$value}'";
                 } elseif (!preg_match('/^[a-zA-Z0-9_\.\-`]*$/', $value)) {
@@ -382,7 +382,7 @@ class Criteria extends CriteriaElement
             $clause   = '(!(' . $this->column . $operator . $this->value . '))';
         } else {
             if ($this->operator === 'IN') {
-                $newvalue = str_replace(array('(', ')'), '', $this->value);
+                $newvalue = str_replace(['(', ')'], '', $this->value);
                 $tab      = explode(',', $newvalue);
                 $clause = '';
                 foreach ($tab as $uid) {

@@ -215,7 +215,7 @@ class XoopsImageSetHandler extends XoopsObjectHandler
      */
     public function getObjects(CriteriaElement $criteria = null, $id_as_key = false)
     {
-        $ret   = array();
+        $ret   = [];
         $limit = $start = 0;
         $sql   = 'SELECT DISTINCT i.* FROM ' . $this->db->prefix('imgset') . ' i LEFT JOIN ' . $this->db->prefix('imgset_tplset_link') . ' l ON l.imgset_id=i.imgset_id';
         if (isset($criteria) && \method_exists($criteria, 'renderWhere')) {
@@ -310,7 +310,7 @@ class XoopsImageSetHandler extends XoopsObjectHandler
             $criteria->add(new Criteria('tplset_name', $tplset));
         }
         $imgsets = $this->getObjects($criteria, true);
-        $ret     = array();
+        $ret     = [];
         foreach (array_keys($imgsets) as $i) {
             $ret[$i] = $imgsets[$i]->getVar('imgset_name');
         }

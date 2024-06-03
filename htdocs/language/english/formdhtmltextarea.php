@@ -24,25 +24,27 @@ defined('XOOPS_ROOT_PATH') || exit('Restricted access');
 /**
  * Localized fonts
  */
-$GLOBALS['formtextdhtml_fonts'] = array(
+$GLOBALS['formtextdhtml_fonts'] = [
     'Arial',
     'Courier',
     'Georgia',
     'Helvetica',
     'Impact',
     'Verdana',
-    'Haettenschweiler');
+    'Haettenschweiler'
+];
 /**
  * Localized font sizes: 'font size value' => 'font size name'
  */
-$GLOBALS['formtextdhtml_sizes'] = array(
+$GLOBALS['formtextdhtml_sizes'] = [
     'xx-small' => 'xx-Small',
     'x-small'  => 'x-Small',
     'small'    => 'Small',
     'medium'   => 'Medium',
     'large'    => 'Large',
     'x-large'  => 'x-Large',
-    'xx-large' => 'xx-Large');
+    'xx-large' => 'xx-Large'
+];
 define('_XOOPS_FORM_ALT_URL', 'URL');
 define('_XOOPS_FORM_ALT_EMAIL', 'Email');
 define('_XOOPS_FORM_ALT_IMG', 'Images');

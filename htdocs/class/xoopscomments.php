@@ -191,7 +191,7 @@ class XoopsComments extends XoopsObject
     public function getCommentTree()
     {
         $mytree = new XoopsTree($this->ctable, 'comment_id', 'pid');
-        $ret    = array();
+        $ret    = [];
         $tarray = $mytree->getChildTreeArray($this->getVar('comment_id'), 'comment_id');
         foreach ($tarray as $ele) {
             $ret[] = new XoopsComments($this->ctable, $ele);
@@ -210,9 +210,9 @@ class XoopsComments extends XoopsObject
      * @param  int    $start
      * @return array
      */
-    public function getAllComments($criteria = array(), $asobject = true, $orderby = 'comment_id ASC', $limit = 0, $start = 0)
+    public function getAllComments($criteria = [], $asobject = true, $orderby = 'comment_id ASC', $limit = 0, $start = 0)
     {
-        $ret         = array();
+        $ret         = [];
         $where_query = '';
         if (!empty($criteria) && \is_array($criteria)) {
             $where_query = ' WHERE';

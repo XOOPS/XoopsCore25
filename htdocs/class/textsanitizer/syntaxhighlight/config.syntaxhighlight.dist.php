@@ -18,7 +18,7 @@
  */
 defined('XOOPS_ROOT_PATH') || exit('Restricted access');
 
-return $config = array(
+return $config = [
     'highlight' => 'php',  // Source code highlight: '' - disable; 'php' - php highlight;
-);
+];
 

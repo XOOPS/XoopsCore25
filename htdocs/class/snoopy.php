@@ -11,7 +11,7 @@ if (!function_exists('each')) {
         $key = key($a);
         $value = current($a);
         next($a);
-        return is_null($key) ? false : array(1 => $value, 'value' => $value, 0 => $key, 'key' => $key);
+        return is_null($key) ? false : [1 => $value, 'value' => $value, 0 => $key, 'key' => $key];
     }
 }
 
@@ -63,9 +63,9 @@ class Snoopy
 
     var $agent = "Snoopy v1.2.5"; // agent we masquerade as
     var $referer = ""; // referer info to pass
-    var $cookies = array(); // array of cookies to pass
+    var $cookies = []; // array of cookies to pass
     // $cookies["username"]="joe";
-    var $rawheaders = array(); // array of raw headers to send
+    var $rawheaders = []; // array of raw headers to send
     // $rawheaders["Content-type"]="text/html";
 
     var $maxredirs = 5; // http redirection depth maximum. 0 = disallow
@@ -89,7 +89,7 @@ class Snoopy
 
     var $error = ""; // error messages sent here
     var $response_code = ""; // response code returned from server
-    var $headers = array(); // headers returned from server sent here
+    var $headers = []; // headers returned from server sent here
     var $maxlength = 500000; // max return data length (body)
     var $read_timeout = 0; // timeout on read operations, in seconds
     // supported only since PHP 4 Beta 4
@@ -126,7 +126,7 @@ class Snoopy
     var $_mime_boundary = ""; // MIME boundary for multipart/form-data submit type
     var $_redirectaddr = false; // will be set if page fetched is a redirect
     var $_redirectdepth = 0; // increments on an http redirect
-    var $_frameurls = array(); // frame src urls
+    var $_frameurls = []; // frame src urls
     var $_framedepth = 0; // increments on frame depth
 
     var $_isproxy = false; // set if using a proxy server
@@ -187,7 +187,7 @@ class Snoopy
 
                     if ($this->_framedepth < $this->maxframes && count($this->_frameurls) > 0) {
                         $frameurls = $this->_frameurls;
-                        $this->_frameurls = array();
+                        $this->_frameurls = [];
 
                         while (list(, $frameurl) = each($frameurls)) {
                             if ($this->_framedepth < $this->maxframes) {
@@ -235,7 +235,7 @@ class Snoopy
 
                 if ($this->_framedepth < $this->maxframes && count($this->_frameurls) > 0) {
                     $frameurls = $this->_frameurls;
-                    $this->_frameurls = array();
+                    $this->_frameurls = [];
 
                     while (list(, $frameurl) = each($frameurls)) {
                         if ($this->_framedepth < $this->maxframes) {
@@ -321,7 +321,7 @@ class Snoopy
 
                     if ($this->_framedepth < $this->maxframes && count($this->_frameurls) > 0) {
                         $frameurls = $this->_frameurls;
-                        $this->_frameurls = array();
+                        $this->_frameurls = [];
 
                         while (list(, $frameurl) = each($frameurls)) {
                             if ($this->_framedepth < $this->maxframes) {
@@ -376,7 +376,7 @@ class Snoopy
 
                 if ($this->_framedepth < $this->maxframes && count($this->_frameurls) > 0) {
                     $frameurls = $this->_frameurls;
-                    $this->_frameurls = array();
+                    $this->_frameurls = [];
 
                     while (list(, $frameurl) = each($frameurls)) {
                         if ($this->_framedepth < $this->maxframes) {
@@ -618,54 +618,54 @@ class Snoopy
         // so, list your entities one by one here. I included some of the
         // more common ones.
 
-        $search = array("'<script[^>]*?>.*?</script>'si", // strip out javascript
-            "'<[\/\!]*?[^<>]*?>'si", // strip out html tags
-            "'([\r\n])[\s]+'", // strip out white space
-            "'&(quot|#34|#034|#x22);'i", // replace html entities
-            "'&(amp|#38|#038|#x26);'i", // added hexadecimal values
-            "'&(lt|#60|#060|#x3c);'i",
-            "'&(gt|#62|#062|#x3e);'i",
-            "'&(nbsp|#160|#xa0);'i",
-            "'&(iexcl|#161);'i",
-            "'&(cent|#162);'i",
-            "'&(pound|#163);'i",
-            "'&(copy|#169);'i",
-            "'&(reg|#174);'i",
-            "'&(deg|#176);'i",
-            "'&(#39|#039|#x27);'",
-            "'&(euro|#8364);'i", // europe
-            "'&a(uml|UML);'", // german
-            "'&o(uml|UML);'",
-            "'&u(uml|UML);'",
-            "'&A(uml|UML);'",
-            "'&O(uml|UML);'",
-            "'&U(uml|UML);'",
-            "'&szlig;'i",
-        );
-        $replace = array("",
-            "",
-            "\\1",
-            "\"",
-            "&",
-            "<",
-            ">",
-            " ",
-            chr(161),
-            chr(162),
-            chr(163),
-            chr(169),
-            chr(174),
-            chr(176),
-            chr(39),
-            chr(128),
-            "ä",
-            "ö",
-            "ü",
-            "Ä",
-            "Ö",
-            "Ü",
-            "ß",
-        );
+        $search = ["'<script[^>]*?>.*?</script>'si", // strip out javascript
+                   "'<[\/\!]*?[^<>]*?>'si", // strip out html tags
+                   "'([\r\n])[\s]+'", // strip out white space
+                   "'&(quot|#34|#034|#x22);'i", // replace html entities
+                   "'&(amp|#38|#038|#x26);'i", // added hexadecimal values
+                   "'&(lt|#60|#060|#x3c);'i",
+                   "'&(gt|#62|#062|#x3e);'i",
+                   "'&(nbsp|#160|#xa0);'i",
+                   "'&(iexcl|#161);'i",
+                   "'&(cent|#162);'i",
+                   "'&(pound|#163);'i",
+                   "'&(copy|#169);'i",
+                   "'&(reg|#174);'i",
+                   "'&(deg|#176);'i",
+                   "'&(#39|#039|#x27);'",
+                   "'&(euro|#8364);'i", // europe
+                   "'&a(uml|UML);'", // german
+                   "'&o(uml|UML);'",
+                   "'&u(uml|UML);'",
+                   "'&A(uml|UML);'",
+                   "'&O(uml|UML);'",
+                   "'&U(uml|UML);'",
+                   "'&szlig;'i",
+        ];
+        $replace = ["",
+                    "",
+                    "\\1",
+                    "\"",
+                    "&",
+                    "<",
+                    ">",
+                    " ",
+                    chr(161),
+                    chr(162),
+                    chr(163),
+                    chr(169),
+                    chr(174),
+                    chr(176),
+                    chr(39),
+                    chr(128),
+                    "ä",
+                    "ö",
+                    "ü",
+                    "Ä",
+                    "Ö",
+                    "Ü",
+                    "ß",
+        ];
 
         $text = preg_replace($search, $replace, $document);
 
@@ -691,19 +691,19 @@ class Snoopy
         $match_root =
             $match_part["scheme"] . "://" . $match_part["host"];
 
-        $search = array("|^http://" . preg_quote($this->host) . "|i",
-            "|^(\/)|i",
-            "|^(?!http://)(?!mailto:)|i",
-            "|/\./|",
-            "|/[^\/]+/\.\./|"
-        );
+        $search = ["|^http://" . preg_quote($this->host) . "|i",
+                   "|^(\/)|i",
+                   "|^(?!http://)(?!mailto:)|i",
+                   "|/\./|",
+                   "|/[^\/]+/\.\./|"
+        ];
 
-        $replace = array("",
+        $replace = ["",
             $match_root . "/",
             $match . "/",
-            "/",
-            "/"
-        );
+                    "/",
+                    "/"
+        ];
 
         $expandedLinks = preg_replace($search, $replace, $links);
 
@@ -900,7 +900,7 @@ class Snoopy
         if ($this->passcookies && $this->_redirectaddr)
             $this->setcookies();
 
-        $headers = array();
+        $headers = [];
 
         $URI_PARTS = parse_url($URI);
         if (empty($url))

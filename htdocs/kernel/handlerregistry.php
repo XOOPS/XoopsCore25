@@ -33,7 +33,7 @@ class XoopsHandlerRegistry
      * @var array
      * @access    private
      */
-    public $_handlers = array();
+    public $_handlers = [];
 
     /**
      * get a reference to the only instance of this class

@@ -65,7 +65,7 @@ class MyTextSanitizerExtension
         if (!file_exists($configFileName)) {
             if (false === copy($distFileName, $configFileName)) {
                 trigger_error('Could not create textsanitizer config file ' . basename($configFileName));
-                return $a = array();
+                return $a = [];
             }
         }
         $configs = include $configFileName;
@@ -103,7 +103,7 @@ class MyTextSanitizerExtension
      */
     public function encode($textarea_id)
     {
-        return array(array(), array());
+        return [[], []];
     }
 
     /**
@@ -139,7 +139,7 @@ class MyTextSanitizer
      *
      * @var array
      */
-    public $smileys = array();
+    public $smileys = [];
 
     /**
      */
@@ -150,10 +150,10 @@ class MyTextSanitizer
      * @var string holding reference to text
      */
     public $text         = '';
-    public $patterns     = array();
-    public $replacements = array();
-    public $callbackPatterns = array();
-    public $callbacks        = array();
+    public $patterns     = [];
+    public $replacements = [];
+    public $callbackPatterns = [];
+    public $callbacks        = [];
 
     public $path_basic;
     public $path_config;
@@ -198,7 +198,7 @@ class MyTextSanitizer
         if (!file_exists($configFileName)) {
             if (false===copy($distFileName, $configFileName)) {
                 trigger_error('Could not create textsanitizer config file ' . basename($configFileName));
-                return array();
+                return [];
             }
         }
         return include $configFileName;
@@ -265,7 +265,7 @@ class MyTextSanitizer
             return $this->smileys;
         }
 
-        $smileys = array();
+        $smileys = [];
         foreach ($this->smileys as $smile) {
             if (empty($smile['display'])) {
                 continue;
@@ -316,7 +316,7 @@ class MyTextSanitizer
     public function makeClickable($text)
     {
         $pattern = "/(^|\s)([-_a-z0-9\'+*$^&%=~!?{}]+(?:\.[-_a-z0-9\'+*$^&%=~!?{}]+)*+@[-a-z0-9.]+\.[a-z]{2,6})/i";
-        $text = preg_replace_callback($pattern, function($matches) { return $matches[1] .$this->makeClickableCallbackEmailAddress(array($matches[2])); }, $text);
+        $text = preg_replace_callback($pattern, function($matches) { return $matches[1] .$this->makeClickableCallbackEmailAddress([$matches[2]]); }, $text);
 
         $pattern = "/(?:\s+|^)(https?:\/\/)([-A-Z0-9.\_*?&:;=#\/\[\]\%@]+)/i";
         $replacement = '<a href="$1$2" target="_blank" rel="external noopener nofollow">$1$2</a>';
@@ -357,8 +357,8 @@ class MyTextSanitizer
      */
     public function &xoopsCodeDecode(&$text, $allowimage = 1)
     {
-        $patterns       = array();
-        $replacements   = array();
+        $patterns       = [];
+        $replacements   = [];
         $patterns[]     = "/\[siteurl=(['\"]?)([^\"'<>]*)\\1](.*)\[\/siteurl\]/sU";
         $replacements[] = '<a href="' . XOOPS_URL . '/\\2" title="">\\3</a>';
         $patterns[]     = "/\[url=(['\"]?)(http[s]?:\/\/[^\"'<>]*)\\1](.*)\[\/url\]/sU";
@@ -442,8 +442,8 @@ class MyTextSanitizer
      */
     public function filterXss($text)
     {
-        $patterns       = array();
-        $replacements   = array();
+        $patterns       = [];
+        $replacements   = [];
         $text           = str_replace("\x00", '', $text);
         $c              = "[\x01-\x1f]*";
         $patterns[]     = "/\bj{$c}a{$c}v{$c}a{$c}s{$c}c{$c}r{$c}i{$c}p{$c}t{$c}[\s]*:/si";
@@ -506,7 +506,7 @@ class MyTextSanitizer
             $text = htmlspecialchars($text, $quote_style);
         }
 
-        return preg_replace(array('/&amp;/i', '/&nbsp;/i'), array('&', '&amp;nbsp;'), $text);
+        return preg_replace(['/&amp;/i', '/&nbsp;/i'], ['&', '&amp;nbsp;'], $text);
     }
 
     /**
@@ -517,7 +517,7 @@ class MyTextSanitizer
      */
     public function undoHtmlSpecialChars($text)
     {
-        return preg_replace(array('/&gt;/i', '/&lt;/i', '/&quot;/i', '/&#039;/i', '/&amp;nbsp;/i'), array('>', '<', '"', '\'', '&nbsp;'), $text);
+        return preg_replace(['/&gt;/i', '/&lt;/i', '/&quot;/i', '/&#039;/i', '/&amp;nbsp;/i'], ['>', '<', '"', '\'', '&nbsp;'], $text);
     }
 
     /**
@@ -660,7 +660,7 @@ class MyTextSanitizer
             return $text;
         }
         $patterns = "/\[code([^\]]*?)\](.*)\[\/code\]/sU";
-        $text1    = preg_replace_callback($patterns, array($this, 'codeConvCallback'), $text);
+        $text1    = preg_replace_callback($patterns, [$this, 'codeConvCallback'], $text);
 
         return $text1;
     }
@@ -718,7 +718,7 @@ class MyTextSanitizer
         $args      = array_slice(func_get_args(), 1);
         array_unshift($args, $this);
 
-        return call_user_func_array(array($extension, 'load'), $args);
+        return call_user_func_array([$extension, 'load'], $args);
     }
 
     /**

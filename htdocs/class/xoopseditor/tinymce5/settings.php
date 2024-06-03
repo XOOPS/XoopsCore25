@@ -18,7 +18,7 @@
  * @license   GNU GPL 2 or later (http://www.gnu.org/licenses/gpl-2.0.html)
  * @link      http://xoops.org
  */
-return array(
+return [
 	'theme' => 'silver',
 	'mode' => 'exact',
 	'plugins' => 'advlist,anchor,autolink,charmap,code,hr,image,imagetools,lists,link,media,preview,searchreplace,table,xoopsemoticons,xoopscode,xoopsimagemanager',
@@ -36,4 +36,4 @@ return array(
 	'relative_urls' => false,
 	'body_class' => 'tinymce5-body',
 	'menubar' => false
-);
+];

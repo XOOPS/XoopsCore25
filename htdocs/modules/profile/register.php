@@ -27,7 +27,7 @@ if ($GLOBALS['xoopsUser']) {
     exit();
 }
 
-if (!empty($_GET['op']) && in_array($_GET['op'], array('actv', 'activate'))) {
+if (!empty($_GET['op']) && in_array($_GET['op'], ['actv', 'activate'])) {
     header('location: ./activate.php' . (empty($_SERVER['QUERY_STRING']) ? '' : '?' . $_SERVER['QUERY_STRING']));
     exit();
 }
@@ -50,10 +50,10 @@ if (isset($_SESSION[$opkey])) {
     $current_opname = $_SESSION[$opkey];
     unset($_SESSION[$opkey]);
     if (!isset($_POST[$current_opname])) {
-        $_POST = array();
+        $_POST = [];
     }
 } else {
-    $_POST          = array();
+    $_POST          = [];
     $current_opname = 'op'; // does not matter, it isn't there
 }
 
@@ -86,11 +86,12 @@ include $GLOBALS['xoops']->path('header.php');
 $GLOBALS['xoopsTpl']->assign('steps', $steps);
 $GLOBALS['xoopsTpl']->assign('lang_register_steps', _PROFILE_MA_REGISTER_STEPS);
 
-$xoBreadcrumbs[] = array(
+$xoBreadcrumbs[] = [
     'link'  => XOOPS_URL . '/modules/' . $GLOBALS['xoopsModule']->getVar('dirname', 'n') . '/register.php',
-    'title' => _PROFILE_MA_REGISTER);
+    'title' => _PROFILE_MA_REGISTER
+];
 if (isset($steps[$current_step])) {
-    $xoBreadcrumbs[] = array('title' => $steps[$current_step]['step_name']);
+    $xoBreadcrumbs[] = ['title' => $steps[$current_step]['step_name']];
 }
 
 /** @var XoopsMemberHandler $member_handler */
@@ -124,7 +125,7 @@ if ($uid == 0) {
 
 // Let's merge current $_POST  with $_SESSION['profile_post'] so we can have access to info submited in previous steps
 // Get all fields that we can expect from a $_POST inlcuding our private '_message_'
-$fieldnames = array();
+$fieldnames = [];
 foreach (array_keys($fields) as $i) {
     $fieldnames[] = $fields[$i]->getVar('field_name');
 }
@@ -132,7 +133,7 @@ $fieldnames   = array_merge($fieldnames, $userfields);
 $fieldnames[] = '_message_';
 
 // Get $_POST that matches above criteria, we do not need to store step, tokens, etc
-$postfields = array();
+$postfields = [];
 foreach ($fieldnames as $fieldname) {
     if (isset($_POST[$fieldname])) {
         $postfields[$fieldname] = Request::getString($fieldname, '', 'POST');
@@ -141,7 +142,7 @@ foreach ($fieldnames as $fieldname) {
 
 if ($current_step == 0) {
     // Reset any previous session for first step
-    $_SESSION['profile_post']         = array();
+    $_SESSION['profile_post']         = [];
     $_SESSION['profile_register_uid'] = null;
 } else {
     // Merge current $_POST  with $_SESSION['profile_post']
@@ -338,7 +339,7 @@ if (!empty($stop) || isset($steps[$current_step])) {
     }
     if (isset($_SESSION['profile_post']['_message_'])) {
         //todo, if user is activated by admin, then we should inform it along with error messages.  _US_YOURREGMAILNG is not enough
-        $messages = array(_US_YOURREGMAILNG, _US_YOURREGISTERED, _US_YOURREGMAILNG, _US_YOURREGISTERED2);
+        $messages = [_US_YOURREGMAILNG, _US_YOURREGISTERED, _US_YOURREGMAILNG, _US_YOURREGISTERED2];
         $GLOBALS['xoopsTpl']->assign('finish_message', $messages[$_SESSION['profile_post']['_message_']]);
     }
     $_SESSION['profile_post'] = null;

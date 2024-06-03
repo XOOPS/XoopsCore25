@@ -65,7 +65,7 @@ class ProfileVisibilityHandler extends XoopsPersistableObjectHandler
         $profile_groups[] = $user_groups[] = 0;
         $sql  = "SELECT field_id FROM {$this->table} WHERE profile_group IN (" . implode(',', $profile_groups) . ')';
         $sql .= ' AND user_group IN (' . implode(',', $user_groups) . ')';
-        $field_ids = array();
+        $field_ids = [];
         $result = $this->db->query($sql);
         if ($this->db->isResultSet($result)) {
             while (false !== (list($field_id) = $this->db->fetchRow($result))) {
@@ -87,9 +87,9 @@ class ProfileVisibilityHandler extends XoopsPersistableObjectHandler
     {
         $rawRows = parent::getAll($criteria, null, false, false);
 
-        usort($rawRows, array($this, 'visibilitySort'));
+        usort($rawRows, [$this, 'visibilitySort']);
 
-        $rows = array();
+        $rows = [];
         foreach ($rawRows as $rawRow) {
             $rows[$rawRow['field_id']][] = $rawRow;
         }

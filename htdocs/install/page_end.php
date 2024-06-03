@@ -31,7 +31,7 @@ include_once __DIR__ . '/../class/preload.php';
 include_once __DIR__ . '/../class/database/databasefactory.php';
 include_once __DIR__ . '/../class/logger/xoopslogger.php';
 
-$_SESSION = array();
+$_SESSION = [];
 xoops_setcookie('xo_install_user', '', null, null, null);
 $key = \Xmf\Jwt\KeyFactory::build('install');
 $key->kill();

@@ -52,7 +52,7 @@ function protector_postcommon()
 
     // phpmailer vulnerability
     // http://larholm.com/2007/06/11/phpmailer-0day-remote-execution/
-    if (in_array(substr(XOOPS_VERSION, 0, 12), array('XOOPS 2.0.16', 'XOOPS 2.0.13', 'XOOPS 2.2.4'))) {
+    if (in_array(substr(XOOPS_VERSION, 0, 12), ['XOOPS 2.0.16', 'XOOPS 2.0.13', 'XOOPS 2.2.4'])) {
         /** @var XoopsConfigHandler $config_handler */
         $config_handler    = xoops_getHandler('config');
         $xoopsMailerConfig = $config_handler->getConfigsByCat(XOOPS_CONF_MAILER);
@@ -79,7 +79,7 @@ function protector_postcommon()
 
     // reliable ips
     $remoteAddr = Request::getString('REMOTE_ADDR', '', 'SERVER');
-    $reliable_ips = isset($conf['reliable_ips']) ? unserialize($conf['reliable_ips'], array('allowed_classes' => false)) : null;
+    $reliable_ips = isset($conf['reliable_ips']) ? unserialize($conf['reliable_ips'], ['allowed_classes' => false]) : null;
 
     if (is_array($reliable_ips)) {
         foreach ($reliable_ips as $reliable_ip) {
@@ -96,7 +96,7 @@ function protector_postcommon()
     if (isset($xoopsUser) && is_object($xoopsUser)) {
         $uid     = $xoopsUser->getVar('uid');
         $userGroups = $xoopsUser->getGroups();
-        $bip_except = isset($conf['bip_except']) ? unserialize($conf['bip_except'], array('allowed_classes' => false)) : [];
+        $bip_except = isset($conf['bip_except']) ? unserialize($conf['bip_except'], ['allowed_classes' => false]) : [];
 
         $can_ban = (!empty($userGroups) && !empty($bip_except)) ? (count(array_intersect($userGroups, $bip_except)) ? false : true) : true;
     } else {
@@ -120,9 +120,9 @@ function protector_postcommon()
 
     // DOS/CRAWLER skipping based on 'dirname' or getcwd()
     $dos_skipping  = false;
-    $skip_dirnames = isset($conf['dos_skipmodules']) ? explode('|', $conf['dos_skipmodules']) : array();
+    $skip_dirnames = isset($conf['dos_skipmodules']) ? explode('|', $conf['dos_skipmodules']) : [];
     if (!is_array($skip_dirnames)) {
-        $skip_dirnames = array();
+        $skip_dirnames = [];
     }
     if (isset($xoopsModule) && is_object($xoopsModule)) {
         if (in_array($xoopsModule->getVar('dirname'), $skip_dirnames)) {
@@ -152,7 +152,7 @@ function protector_postcommon()
     if (is_string($masks)) {
         $maskArray = explode('/', $masks);
     } else {
-        $maskArray = array(); // Or some default value that makes sense for your application
+        $maskArray = []; // Or some default value that makes sense for your application
     }
     $ipv4Mask = empty($maskArray[0]) ? 24 : $maskArray[0];
     $ipv6Mask = (!isset($maskArray[1])) ? 56 : $maskArray[1];
@@ -162,7 +162,7 @@ function protector_postcommon()
         $maskCheck = $ip->sameSubnet($_SESSION['protector_last_ip'], $ipv4Mask, $ipv6Mask);
     }
     if (!$maskCheck) {
-        if (is_object($xoopsUser) && count(array_intersect($xoopsUser->getGroups(), unserialize($conf['groups_denyipmove'], array('allowed_classes' => false))))) {
+        if (is_object($xoopsUser) && count(array_intersect($xoopsUser->getGroups(), unserialize($conf['groups_denyipmove'], ['allowed_classes' => false])))) {
             $protector->purge(true);
         }
     }

@@ -81,10 +81,10 @@ if (!isset($_POST['op']) && isset($_GET['op'])) {
     if (isset($_GET['actkey'])) {
         $clean_actkey =  Request::getCmd('actkey', '', 'GET');
     }
-    $op = in_array($op, array(
+    $op = in_array($op, [
         'actv',
         'activate',
-    ),             true) ? $op : 'register';
+    ],             true) ? $op : 'register';
 }
 
 switch ($op) {
