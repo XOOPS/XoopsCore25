@@ -50,7 +50,7 @@ $xoopsThemeFactory->defaultTheme  = $xoopsConfig['theme_set'];
 /**
  * @var xos_opal_Theme
  */
-$xoTheme  = $xoopsThemeFactory->createInstance(['contentTemplate' => isset($xoopsOption['template_main'])? $xoopsOption['template_main'] : []]);
+$xoTheme  = $xoopsThemeFactory->createInstance(['contentTemplate' => $xoopsOption['template_main'] ?? []]);
 $xoopsTpl = $xoTheme->template;
 
 $xoopsPreload->triggerEvent('core.header.addmeta');
