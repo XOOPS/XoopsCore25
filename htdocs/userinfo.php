@@ -186,7 +186,7 @@ foreach ($mids as $mid) {
                         $results[$i]['image'] = 'images/icons/posticon2.gif';
                     }
     
-                    if (!preg_match("/^http[s]*:\/\//i", $results[$i]['link'])) {
+                    if (!preg_match('/^http[s]*:\/\//i', $results[$i]['link'])) {
                         $results[$i]['link'] = 'modules/' . $module->getVar('dirname') . '/' . $results[$i]['link'];
                     }
     

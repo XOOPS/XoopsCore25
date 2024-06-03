@@ -318,11 +318,11 @@ class MyTextSanitizer
         $pattern = "/(^|\s)([-_a-z0-9\'+*$^&%=~!?{}]+(?:\.[-_a-z0-9\'+*$^&%=~!?{}]+)*+@[-a-z0-9.]+\.[a-z]{2,6})/i";
         $text = preg_replace_callback($pattern, function($matches) { return $matches[1] .$this->makeClickableCallbackEmailAddress([$matches[2]]); }, $text);
 
-        $pattern = "/(?:\s+|^)(https?:\/\/)([-A-Z0-9.\_*?&:;=#\/\[\]\%@]+)/i";
+        $pattern = '/(?:\s+|^)(https?:\/\/)([-A-Z0-9.\_*?&:;=#\/\[\]\%@]+)/i';
         $replacement = '<a href="$1$2" target="_blank" rel="external noopener nofollow">$1$2</a>';
         $text = preg_replace($pattern, $replacement, $text);
 
-        $pattern = "%(?:\s+|^)(s?ftp://)([-A-Z0-9./_*?&:;=#\[\]\%@]+)%i";
+        $pattern = '%(?:\s+|^)(s?ftp://)([-A-Z0-9./_*?&:;=#\[\]\%@]+)%i';
         $replacement = '<a href="$1$2" target="_blank" rel="external">$1$2</a>';
         $text = preg_replace($pattern, $replacement, $text);
 
@@ -376,19 +376,19 @@ class MyTextSanitizer
         $patterns[]     = "/\[email]([^;<>\*\(\)\"']*)\[\/email\]/sU";
         $replacements[] = '<a href="mailto:\\1" title="">\\1</a>';
 
-        $patterns[]     = "/\[b](.*)\[\/b\]/sU";
+        $patterns[]     = '/\[b](.*)\[\/b\]/sU';
         $replacements[] = '<strong>\\1</strong>';
-        $patterns[]     = "/\[i](.*)\[\/i\]/sU";
+        $patterns[]     = '/\[i](.*)\[\/i\]/sU';
         $replacements[] = '<em>\\1</em>';
-        $patterns[]     = "/\[u](.*)\[\/u\]/sU";
+        $patterns[]     = '/\[u](.*)\[\/u\]/sU';
         $replacements[] = '<span style="text-decoration: underline;">\\1</span>';
-        $patterns[]     = "/\[d](.*)\[\/d\]/sU";
+        $patterns[]     = '/\[d](.*)\[\/d\]/sU';
         $replacements[] = '<del>\\1</del>';
-        $patterns[]     = "/\[center](.*)\[\/center\]/sU";
+        $patterns[]     = '/\[center](.*)\[\/center\]/sU';
         $replacements[] = '<div style="text-align: center;">\\1</div>';
-        $patterns[]     = "/\[left](.*)\[\/left\]/sU";
+        $patterns[]     = '/\[left](.*)\[\/left\]/sU';
         $replacements[] = '<div style="text-align: left;">\\1</div>';
-        $patterns[]     = "/\[right](.*)\[\/right\]/sU";
+        $patterns[]     = '/\[right](.*)\[\/right\]/sU';
         $replacements[] = '<div style="text-align: right;">\\1</div>';
 
         $this->text         = $text;
@@ -420,7 +420,7 @@ class MyTextSanitizer
     public function quoteConv($text)
     {
         //look for both open and closing tags in the correct order
-        $pattern     = "/\[quote](.*)\[\/quote\]/sU";
+        $pattern     = '/\[quote](.*)\[\/quote\]/sU';
         $replacement = _QUOTEC . '<div class="xoopsQuote"><blockquote>\\1</blockquote></div>';
 
         $text = preg_replace($pattern, $replacement, $text, -1, $count);
@@ -624,7 +624,7 @@ class MyTextSanitizer
             //            $patterns = "/\[code([^\]]*?)\](.*)\[\/code\]/esU";
             //            $replacements = "'[code\\1]'.base64_encode('\\2').'[/code]'";
 
-            $patterns = "/\[code([^\]]*?)\](.*)\[\/code\]/sU";
+            $patterns = '/\[code([^\]]*?)\](.*)\[\/code\]/sU';
             $text = preg_replace_callback(
                 $patterns,
                 function ($matches) {
@@ -659,7 +659,7 @@ class MyTextSanitizer
         if (empty($xcode)) {
             return $text;
         }
-        $patterns = "/\[code([^\]]*?)\](.*)\[\/code\]/sU";
+        $patterns = '/\[code([^\]]*?)\](.*)\[\/code\]/sU';
         $text1    = preg_replace_callback($patterns, [$this, 'codeConvCallback'], $text);
 
         return $text1;

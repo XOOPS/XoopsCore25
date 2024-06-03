@@ -83,7 +83,7 @@ $assert = [
 $claims = TokenReader::fromRequest('fineuploader', 'Authorization', $assert);
 
 if ($claims === false) {
-    echo json_encode(['error' => "Invalid request token"]);
+    echo json_encode(['error' => 'Invalid request token']);
     exit;
 }
 
@@ -94,7 +94,7 @@ $handler = (property_exists($claims, 'handler')) ? $claims->handler : '';
 $moddir  = (property_exists($claims, 'moddir'))  ? $claims->moddir  : '';
 
 if ($handler === '' || $moddir === '') {
-    header("HTTP/1.0 400 Bad Request");
+    header('HTTP/1.0 400 Bad Request');
     exit;
 }
 
@@ -113,19 +113,19 @@ $uploader = new $className($claims);
 
 $method = get_request_method();
 
-if ($method === "POST") {
-    header("Content-Type: text/plain");
+if ($method === 'POST') {
+    header('Content-Type: text/plain');
 
     // Assumes you have a chunking.success.endpoint set to point here with a query parameter of "done".
     // For example: /myserver/handlers/endpoint.php?done
-    if (isset($_GET["done"])) {
-        $result = $uploader->combineChunks(XOOPS_ROOT_PATH . "/uploads");
+    if (isset($_GET['done'])) {
+        $result = $uploader->combineChunks(XOOPS_ROOT_PATH . '/uploads');
     } else { // Handle upload requests
         // Call handleUpload() with the name of the folder, relative to PHP's getcwd()
-        $result = $uploader->handleUpload(XOOPS_ROOT_PATH . "/uploads");
+        $result = $uploader->handleUpload(XOOPS_ROOT_PATH . '/uploads');
 
         // To return a name used for uploaded file you can use the following line.
-        $result["uploadName"] = $uploader->getUploadName();
+        $result['uploadName'] = $uploader->getUploadName();
     }
 
     //====================
@@ -133,11 +133,11 @@ if ($method === "POST") {
     //==================
 
     echo json_encode($result);
-} elseif ($method == "DELETE") { // for delete file requests
-    $result = $uploader->handleDelete("files");
+} elseif ($method == 'DELETE') { // for delete file requests
+    $result = $uploader->handleDelete('files');
     echo json_encode($result);
 } else {
-    header("HTTP/1.0 405 Method Not Allowed");
+    header('HTTP/1.0 405 Method Not Allowed');
 }
 
 /**
@@ -151,8 +151,8 @@ if ($method === "POST") {
  */
 function get_request_method()
 {
-    if (isset($_POST["_method"]) && $_POST["_method"] != null) {
-        return $_POST["_method"];
+    if (isset($_POST['_method']) && $_POST['_method'] != null) {
+        return $_POST['_method'];
     }
-    return $_SERVER["REQUEST_METHOD"];
+    return $_SERVER['REQUEST_METHOD'];
 }
