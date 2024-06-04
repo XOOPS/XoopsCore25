@@ -138,9 +138,9 @@ function imageCreateCorners($sourceImage, $radii)
             $b = 0;
             break;
         }
-        $r = rand(0, 255);
-        $g = rand(0, 255);
-        $b = rand(0, 255);
+        $r = random_int(0, 255);
+        $g = random_int(0, 255);
+        $b = random_int(0, 255);
     } while (imagecolorexact($sourceImage, $r, $g, $b) < 0);
 
     $imageWidth = imagesx($sourceImage);
