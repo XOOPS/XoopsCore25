@@ -142,14 +142,12 @@ $var = $thisUser->getVar('user_sig', 'N');
 $xoopsTpl->assign('user_signature', $myts->displayTarea($var, 0, 1, 1));
 if ($thisUser->getVar('user_viewemail') == 1) {
     $xoopsTpl->assign('user_email', $thisUser->getVar('email', 'E'));
-} else {
-    if (is_object($xoopsUser)) {
-        // All admins will be allowed to see emails, even those that are not allowed to edit users (I think it's ok like this)
-        if ($xoopsUserIsAdmin || ($xoopsUser->getVar('uid') == $thisUser->getVar('uid'))) {
-            $xoopsTpl->assign('user_email', $thisUser->getVar('email', 'E'));
-        } else {
-            $xoopsTpl->assign('user_email', '&nbsp;');
-        }
+} elseif (is_object($xoopsUser)) {
+    // All admins will be allowed to see emails, even those that are not allowed to edit users (I think it's ok like this)
+    if ($xoopsUserIsAdmin || ($xoopsUser->getVar('uid') == $thisUser->getVar('uid'))) {
+        $xoopsTpl->assign('user_email', $thisUser->getVar('email', 'E'));
+    } else {
+        $xoopsTpl->assign('user_email', '&nbsp;');
     }
 }
 if (is_object($xoopsUser)) {

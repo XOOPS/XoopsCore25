@@ -157,11 +157,9 @@ switch ($op) {
                 if (!$imgcatperm_handler->checkRight('imgcat_write', $imgcat_id, $xoopsUser->getGroups())) {
                     $error = true;
                 }
-            } else {
-                if (!$imgcatperm_handler->checkRight('imgcat_write', $imgcat_id, XOOPS_GROUP_ANONYMOUS)) {
+            } elseif (!$imgcatperm_handler->checkRight('imgcat_write', $imgcat_id, XOOPS_GROUP_ANONYMOUS)) {
                     $error = true;
                 }
-            }
         }
         if ($error != false) {
             xoops_header(false);
