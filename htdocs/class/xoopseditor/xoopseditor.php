@@ -50,7 +50,7 @@ class XoopsEditor extends XoopsFormTextArea
             $configs = $args[0];
         }
         // TODO: switch to property_exists() as of PHP 5.1.0
-        $vars = get_class_vars(__CLASS__);
+        $vars = get_class_vars(self::class);
         foreach ($configs as $key => $val) {
             if (method_exists($this, 'set' . ucfirst($key))) {
                 $this->{'set' . ucfirst($key)}($val);
@@ -112,7 +112,7 @@ class XoopsEditorHandler
     {
         static $instance;
         if (!isset($instance)) {
-            $class    = __CLASS__;
+            $class    = self::class;
             $instance = new $class();
         }
 

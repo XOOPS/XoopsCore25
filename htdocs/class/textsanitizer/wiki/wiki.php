@@ -82,7 +82,7 @@ EOH;
     public function load(MyTextSanitizer $myts)
     {
         $myts->callbackPatterns[] = "/\[\[([^\]]*)\]\]/sU";
-        $myts->callbacks[]        = __CLASS__ . '::myCallback';
+        $myts->callbacks[]        = self::class . '::myCallback';
     }
 
     /**

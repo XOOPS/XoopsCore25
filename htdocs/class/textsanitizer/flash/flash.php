@@ -84,7 +84,7 @@ EOF;
     public function load(MyTextSanitizer $myts)
     {
         $myts->callbackPatterns[] = "/\[(swf|flash)=(['\"]?)([^\"']*),([^\"']*)\\2]([^\"]*)\[\/\\1\]/sU";
-        $myts->callbacks[]        = __CLASS__ . '::myCallback';
+        $myts->callbacks[]        = self::class . '::myCallback';
 
         return true;
     }

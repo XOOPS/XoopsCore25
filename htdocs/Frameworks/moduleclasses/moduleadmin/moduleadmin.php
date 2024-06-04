@@ -105,7 +105,7 @@ class ModuleAdmin
      */
     public function getClassMethods()
     {
-        $myMethods = get_class_methods(__CLASS__);
+        $myMethods = get_class_methods(self::class);
 
         return $myMethods;
     }

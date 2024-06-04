@@ -75,7 +75,7 @@ EOH;
     public function load(MyTextSanitizer $myts)
     {
         $myts->callbackPatterns[] = "/\[youtube=(['\"]?)([^\"']*),([^\"']*)\\1]([^\"]*)\[\/youtube\]/sU";
-        $myts->callbacks[]        = __CLASS__ . '::myCallback';
+        $myts->callbacks[]        = self::class . '::myCallback';
     }
 
     /**

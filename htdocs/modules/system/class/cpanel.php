@@ -42,7 +42,7 @@ class XoopsSystemCpanel
     {
         static $instance;
         if (!isset($instance)) {
-            $class    = __CLASS__;
+            $class    = self::class;
             $instance = new $class();
         }
 
