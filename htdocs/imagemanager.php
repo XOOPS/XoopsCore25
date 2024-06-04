@@ -137,7 +137,6 @@ switch ($op) {
         }
         $xoopsTpl->display('db:system_imagemanager.tpl');
         exit();
-        break;
 
     case 'upload':
         if (isset($_REQUEST['target'])) {
@@ -203,5 +202,4 @@ switch ($op) {
 
         $xoopsTpl->display('db:system_imagemanager2.tpl');
         exit();
-        break;
 }
