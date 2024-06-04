@@ -16,7 +16,7 @@
  * @author              Taiwen Jiang <phppp@users.sourceforge.net>
  */
 
-$path = dirname(dirname(dirname(__DIR__)));
+$path = dirname(__DIR__, 3);
 include_once $path . '/mainfile.php';
 include_once $path . '/include/cp_functions.php';
 require_once $path . '/include/cp_header.php';

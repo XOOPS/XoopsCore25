@@ -19,7 +19,7 @@
 
 use Xmf\Request;
 
-include_once dirname(dirname(__DIR__)) . '/mainfile.php';
+include_once dirname(__DIR__, 2) . '/mainfile.php';
 
 if (!is_object($GLOBALS['xoopsUser'])) {
     redirect_header(XOOPS_URL, 3, _NOPERM);
