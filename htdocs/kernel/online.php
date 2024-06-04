@@ -83,7 +83,8 @@ class XoopsOnlineHandler
         $result = $this->db->queryF($sql);
         if (!$this->db->isResultSet($result)) {
             throw new \RuntimeException(
-                \sprintf(_DB_QUERY_ERROR, $sql) . $this->db->error(), E_USER_ERROR
+                \sprintf(_DB_QUERY_ERROR, $sql) . $this->db->error(),
+                E_USER_ERROR,
             );
         }
 
@@ -109,7 +110,7 @@ class XoopsOnlineHandler
                 $uname,
                 $time,
                 $ip,
-                $module
+                $module,
             );
         }
         if (!$this->db->queryF($sql)) {
@@ -148,7 +149,7 @@ class XoopsOnlineHandler
         $sql = sprintf(
             'DELETE FROM %s WHERE online_updated < %u',
             $this->db->prefix('online'),
-            time() - (int)$expire
+            time() - (int) $expire,
         );
         $this->db->queryF($sql);
     }
@@ -200,6 +201,6 @@ class XoopsOnlineHandler
         }
         list($ret) = $this->db->fetchRow($result);
 
-        return (int)$ret;
+        return (int) $ret;
     }
 }

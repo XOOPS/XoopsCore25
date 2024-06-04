@@ -34,9 +34,7 @@ class XoopsBlockInstance
      * Constructor
      *
      */
-    public function __construct()
-    {
-    }
+    public function __construct() {}
 
     /**
      * Call Magic Function
@@ -98,9 +96,7 @@ class XoopsBlockInstanceHandler
      * Enter description here...
      *
      */
-    public function __construct()
-    {
-    }
+    public function __construct() {}
 
     /**
      * Call Magic Function

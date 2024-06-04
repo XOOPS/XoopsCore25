@@ -118,7 +118,7 @@ $modversion['blocks'][] = [
     'name'        => _MI_SYSTEM_BNAME2,
     'description' => 'Shows user block',
     'show_func'   => 'b_system_user_show',
-    'template'    => 'system_block_user.tpl'
+    'template'    => 'system_block_user.tpl',
 ];
 
 $modversion['blocks'][2]['file']        = 'system_blocks.php';

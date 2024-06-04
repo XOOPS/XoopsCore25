@@ -320,7 +320,7 @@ class RpcIntHandler extends XmlTagHandler
      */
     public function handleCharacterData($parser, &$data)
     {
-        $parser->setTempValue((int)$data);
+        $parser->setTempValue((int) $data);
     }
 }
 
@@ -343,7 +343,7 @@ class RpcDoubleHandler extends XmlTagHandler
      */
     public function handleCharacterData($parser, &$data)
     {
-        $data = (float)$data;
+        $data = (float) $data;
         $parser->setTempValue($data);
     }
 }
@@ -367,7 +367,7 @@ class RpcBooleanHandler extends XmlTagHandler
      */
     public function handleCharacterData($parser, &$data)
     {
-        $data = (boolean)$data;
+        $data = (bool) $data;
         $parser->setTempValue($data);
     }
 }
@@ -391,7 +391,7 @@ class RpcStringHandler extends XmlTagHandler
      */
     public function handleCharacterData($parser, &$data)
     {
-        $parser->setTempValue((string)$data);
+        $parser->setTempValue((string) $data);
     }
 }
 
@@ -565,7 +565,7 @@ class RpcMemberHandler extends XmlTagHandler
      */
     public function handleEndElement($parser)
     {
-        $member =& $parser->getTempMember();
+        $member = & $parser->getTempMember();
         $parser->releaseWorkingLevel();
         $parser->setTempStruct($member);
     }

@@ -245,11 +245,13 @@ class XoopsFileHandler
             $lineBreak = "\r\n";
         }
 
-        return strtr($data, [
-            "\r\n" => $lineBreak,
-            "\n"   => $lineBreak,
-            "\r"   => $lineBreak
-        ]
+        return strtr(
+            $data,
+            [
+                "\r\n" => $lineBreak,
+                "\n"   => $lineBreak,
+                "\r"   => $lineBreak,
+            ],
         );
     }
 

@@ -28,9 +28,7 @@ class XoopsDatabaseFactory
     /**
      * XoopsDatabaseFactory constructor.
      */
-    public function __construct()
-    {
-    }
+    public function __construct() {}
 
     /**
      * Get a reference to the only instance of database class and connects to DB

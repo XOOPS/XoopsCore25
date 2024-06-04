@@ -96,7 +96,7 @@ switch ($op) {
         xoops_cp_footer();
         break;
 
-    // New userrank
+        // New userrank
     case 'userrank_new':
         // Define main template
         $GLOBALS['xoopsOption']['template_main'] = 'system_userrank.tpl';
@@ -120,7 +120,7 @@ switch ($op) {
         xoops_cp_footer();
         break;
 
-    // Edit userrank
+        // Edit userrank
     case 'userrank_edit':
         // Define main template
         $GLOBALS['xoopsOption']['template_main'] = 'system_userrank.tpl';
@@ -143,7 +143,7 @@ switch ($op) {
         xoops_cp_footer();
         break;
 
-    // Save rank
+        // Save rank
     case 'userrank_save':
         if (!$GLOBALS['xoopsSecurity']->check()) {
             redirect_header('admin.php?fct=userrank', 3, implode(',', $GLOBALS['xoopsSecurity']->getErrors()));
@@ -165,15 +165,15 @@ switch ($op) {
                 $uploader_rank_img->setPrefix('rank');
                 $uploader_rank_img->fetchMedia('rank_image');
                 if (!$uploader_rank_img->upload()) {
-                    $err[] =& $uploader_rank_img->getErrors();
+                    $err[] = & $uploader_rank_img->getErrors();
                 } else {
                     $obj->setVar('rank_image', 'ranks/' . $uploader_rank_img->getSavedFileName());
                     if (!$userrank_Handler->insert($obj)) {
                         $err[] = sprintf(_FAILSAVEIMG, $obj->getVar('rank_title'));
                     }
                 }
-            }else{
-                 $err[] = $uploader_rank_img->getErrors();
+            } else {
+                $err[] = $uploader_rank_img->getErrors();
             }
         } else {
             $obj->setVar('rank_image', 'ranks/' . $_POST['rank_image']);
@@ -202,7 +202,7 @@ switch ($op) {
         redirect_header('admin.php?fct=userrank', 2, _AM_SYSTEM_USERRANK_SAVE);
         break;
 
-    // Delete userrank
+        // Delete userrank
     case 'userrank_delete':
         $rank_id = Request::getInt('rank_id', 0);
         $obj     = $userrank_Handler->get($rank_id);
@@ -235,16 +235,19 @@ switch ($op) {
             $rank_img = $obj->getVar('rank_image') ?: 'blank.gif';
             xoops_confirm(
                 [
-                              'ok' => 1,
-                              'rank_id' => $_REQUEST['rank_id'],
-                              'op' => 'userrank_delete'
-                ], $_SERVER['REQUEST_URI'], sprintf(_AM_SYSTEM_USERRANK_SUREDEL) . '<br \><img src="' . XOOPS_UPLOAD_URL . '/' . $rank_img . '" alt="" /><br \>');
+                    'ok' => 1,
+                    'rank_id' => $_REQUEST['rank_id'],
+                    'op' => 'userrank_delete',
+                ],
+                $_SERVER['REQUEST_URI'],
+                sprintf(_AM_SYSTEM_USERRANK_SUREDEL) . '<br \><img src="' . XOOPS_UPLOAD_URL . '/' . $rank_img . '" alt="" /><br \>',
+            );
             // Call Footer
             xoops_cp_footer();
         }
         break;
 
-    // Update userrank status
+        // Update userrank status
     case 'userrank_update_special':
         // Get rank id
         $rank_id = Request::getInt('rank_id', 0);

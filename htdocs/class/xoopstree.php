@@ -65,7 +65,7 @@ class XoopsTree
      */
     public function getFirstChild($sel_id, $order = '')
     {
-        $sel_id = (int)$sel_id;
+        $sel_id = (int) $sel_id;
         $arr    = [];
         $sql    = 'SELECT * FROM ' . $this->table . ' WHERE ' . $this->pid . '=' . $sel_id . '';
         if ($order != '') {
@@ -74,7 +74,8 @@ class XoopsTree
         $result = $this->db->query($sql);
         if (!$this->db->isResultSet($result)) {
             throw new \RuntimeException(
-                \sprintf(_DB_QUERY_ERROR, $sql) . $this->db->error(), E_USER_ERROR
+                \sprintf(_DB_QUERY_ERROR, $sql) . $this->db->error(),
+                E_USER_ERROR,
             );
         }
         $count  = $this->db->getRowsNum($result);
@@ -96,13 +97,14 @@ class XoopsTree
      */
     public function getFirstChildId($sel_id)
     {
-        $sel_id  = (int)$sel_id;
+        $sel_id  = (int) $sel_id;
         $idarray = [];
         $sql  = 'SELECT ' . $this->id . ' FROM ' . $this->table . ' WHERE ' . $this->pid . '=' . $sel_id . '';
         $result  = $this->db->query($sql);
         if (!$this->db->isResultSet($result)) {
             throw new \RuntimeException(
-                \sprintf(_DB_QUERY_ERROR, $sql) . $this->db->error(), E_USER_ERROR
+                \sprintf(_DB_QUERY_ERROR, $sql) . $this->db->error(),
+                E_USER_ERROR,
             );
         }
         $count   = $this->db->getRowsNum($result);
@@ -126,7 +128,7 @@ class XoopsTree
      */
     public function getAllChildId($sel_id, $order = '', $idarray = [])
     {
-        $sel_id = (int)$sel_id;
+        $sel_id = (int) $sel_id;
         $sql    = 'SELECT ' . $this->id . ' FROM ' . $this->table . ' WHERE ' . $this->pid . '=' . $sel_id . '';
         if ($order != '') {
             $sql .= " ORDER BY $order";
@@ -134,7 +136,8 @@ class XoopsTree
         $result = $this->db->query($sql);
         if (!$this->db->isResultSet($result)) {
             throw new \RuntimeException(
-                \sprintf(_DB_QUERY_ERROR, $sql) . $this->db->error(), E_USER_ERROR
+                \sprintf(_DB_QUERY_ERROR, $sql) . $this->db->error(),
+                E_USER_ERROR,
             );
         }
         $count  = $this->db->getRowsNum($result);
@@ -160,7 +163,7 @@ class XoopsTree
      */
     public function getAllParentId($sel_id, $order = '', $idarray = [])
     {
-        $sel_id = (int)$sel_id;
+        $sel_id = (int) $sel_id;
         $sql    = 'SELECT ' . $this->pid . ' FROM ' . $this->table . ' WHERE ' . $this->id . '=' . $sel_id . '';
         if ($order != '') {
             $sql .= " ORDER BY $order";
@@ -168,11 +171,12 @@ class XoopsTree
         $result = $this->db->query($sql);
         if (!$this->db->isResultSet($result)) {
             throw new \RuntimeException(
-                \sprintf(_DB_QUERY_ERROR, $sql) . $this->db->error(), E_USER_ERROR
+                \sprintf(_DB_QUERY_ERROR, $sql) . $this->db->error(),
+                E_USER_ERROR,
             );
         }
         [$r_id] = $this->db->fetchRow($result);
-        $r_id = (int)$r_id;
+        $r_id = (int) $r_id;
         if ($r_id === 0) {
             return $idarray;
         }
@@ -193,12 +197,13 @@ class XoopsTree
      */
     public function getPathFromId($sel_id, $title, $path = '')
     {
-        $sel_id = (int)$sel_id;
+        $sel_id = (int) $sel_id;
         $sql = 'SELECT ' . $this->pid . ', ' . $title . ' FROM ' . $this->table . ' WHERE ' . $this->id . "=$sel_id";
         $result = $this->db->query($sql);
         if (!$this->db->isResultSet($result)) {
             throw new \RuntimeException(
-                \sprintf(_DB_QUERY_ERROR, $sql) . $this->db->error(), E_USER_ERROR
+                \sprintf(_DB_QUERY_ERROR, $sql) . $this->db->error(),
+                E_USER_ERROR,
             );
         }
         if ($this->db->getRowsNum($result) == 0) {
@@ -206,7 +211,7 @@ class XoopsTree
         }
         list($parentid, $name) = $this->db->fetchRow($result);
         $myts = \MyTextSanitizer::getInstance();
-        $parentid = (int)$parentid;
+        $parentid = (int) $parentid;
         $name = $myts->htmlSpecialChars($name);
         $path = '/' . $name . $path . '';
         if ($parentid === 0) {
@@ -246,7 +251,8 @@ class XoopsTree
         $result = $this->db->query($sql);
         if (!$this->db->isResultSet($result)) {
             throw new \RuntimeException(
-                \sprintf(_DB_QUERY_ERROR, $sql) . $this->db->error(), E_USER_ERROR
+                \sprintf(_DB_QUERY_ERROR, $sql) . $this->db->error(),
+                E_USER_ERROR,
             );
         }
         if ($none) {
@@ -285,12 +291,13 @@ class XoopsTree
     public function getNicePathFromId($sel_id, $title, $funcURL, $path = '')
     {
         $path   = !empty($path) ? '&nbsp;:&nbsp;' . $path : $path;
-        $sel_id = (int)$sel_id;
+        $sel_id = (int) $sel_id;
         $sql    = 'SELECT ' . $this->pid . ', ' . $title . ' FROM ' . $this->table . ' WHERE ' . $this->id . "=$sel_id";
-         $result  = $this->db->query($sql);
+        $result  = $this->db->query($sql);
         if (!$this->db->isResultSet($result)) {
             throw new \RuntimeException(
-                \sprintf(_DB_QUERY_ERROR, $sql) . $this->db->error(), E_USER_ERROR
+                \sprintf(_DB_QUERY_ERROR, $sql) . $this->db->error(),
+                E_USER_ERROR,
             );
         }
         if ($this->db->getRowsNum($result) == 0) {
@@ -299,7 +306,7 @@ class XoopsTree
         list($parentid, $name) = $this->db->fetchRow($result);
         $myts = \MyTextSanitizer::getInstance();
         $name = $myts->htmlSpecialChars($name);
-        $parentid = (int)$parentid;
+        $parentid = (int) $parentid;
         $path = "<a href='" . $funcURL . '&amp;' . $this->id . '=' . $sel_id . "'>" . $name . '</a>' . $path . '';
         if ($parentid === 0) {
             return $path;
@@ -319,12 +326,13 @@ class XoopsTree
      */
     public function getIdPathFromId($sel_id, $path = '')
     {
-        $sel_id = (int)$sel_id;
+        $sel_id = (int) $sel_id;
         $sql    = 'SELECT ' . $this->pid . ' FROM ' . $this->table . ' WHERE ' . $this->id . "=$sel_id";
         $result = $this->db->query($sql);
         if (!$this->db->isResultSet($result)) {
             throw new \RuntimeException(
-                \sprintf(_DB_QUERY_ERROR, $sql) . $this->db->error(), E_USER_ERROR
+                \sprintf(_DB_QUERY_ERROR, $sql) . $this->db->error(),
+                E_USER_ERROR,
             );
         }
         if ($this->db->getRowsNum($result) == 0) {
@@ -332,7 +340,7 @@ class XoopsTree
         }
         list($parentid) = $this->db->fetchRow($result);
         $path = '/' . $sel_id . $path . '';
-        $parentid = (int)$parentid;
+        $parentid = (int) $parentid;
         if ($parentid === 0) {
             return $path;
         }
@@ -352,7 +360,7 @@ class XoopsTree
      */
     public function getAllChild($sel_id = 0, $order = '', $parray = [])
     {
-        $sel_id = (int)$sel_id;
+        $sel_id = (int) $sel_id;
         $sql    = 'SELECT * FROM ' . $this->table . ' WHERE ' . $this->pid . '=' . $sel_id . '';
         if ($order != '') {
             $sql .= " ORDER BY $order";
@@ -360,7 +368,8 @@ class XoopsTree
         $result = $this->db->query($sql);
         if (!$this->db->isResultSet($result)) {
             throw new \RuntimeException(
-                \sprintf(_DB_QUERY_ERROR, $sql) . $this->db->error(), E_USER_ERROR
+                \sprintf(_DB_QUERY_ERROR, $sql) . $this->db->error(),
+                E_USER_ERROR,
             );
         }
         $count  = $this->db->getRowsNum($result);
@@ -386,7 +395,7 @@ class XoopsTree
      */
     public function getChildTreeArray($sel_id = 0, $order = '', $parray = [], $r_prefix = '')
     {
-        $sel_id = (int)$sel_id;
+        $sel_id = (int) $sel_id;
         $sql    = 'SELECT * FROM ' . $this->table . ' WHERE ' . $this->pid . '=' . $sel_id . '';
         if ($order != '') {
             $sql .= " ORDER BY $order";
@@ -394,7 +403,8 @@ class XoopsTree
         $result = $this->db->query($sql);
         if (!$this->db->isResultSet($result)) {
             throw new \RuntimeException(
-                \sprintf(_DB_QUERY_ERROR, $sql) . $this->db->error(), E_USER_ERROR
+                \sprintf(_DB_QUERY_ERROR, $sql) . $this->db->error(),
+                E_USER_ERROR,
             );
         }
         $count  = $this->db->getRowsNum($result);

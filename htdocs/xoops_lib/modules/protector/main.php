@@ -34,7 +34,7 @@ if (file_exists("$mydirpath/language/$language/main.php")) {
 
 // fork each page
 if (Request::hasVar('page', 'GET')) {
-$page = preg_replace('/[^a-zA-Z0-9_-]/', '', Request::getString('page', '', 'GET'));
+    $page = preg_replace('/[^a-zA-Z0-9_-]/', '', Request::getString('page', '', 'GET'));
 }
 
 if (file_exists("$mytrustdirpath/main/$page.php")) {

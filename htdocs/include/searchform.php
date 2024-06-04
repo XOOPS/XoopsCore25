@@ -26,10 +26,10 @@ $search_form->addElement(new XoopsFormText(_SR_KEYWORDS, 'query', 30, 255, htmls
 $type_select = new XoopsFormSelect(_SR_TYPE, 'andor', $andor);
 $type_select->addOptionArray(
     [
-                                 'AND'   => _SR_ALL,
-                                 'OR'    => _SR_ANY,
-                                 'exact' => _SR_EXACT
-    ]
+        'AND'   => _SR_ALL,
+        'OR'    => _SR_ANY,
+        'exact' => _SR_EXACT,
+    ],
 );
 $search_form->addElement($type_select);
 if (!empty($mids)) {

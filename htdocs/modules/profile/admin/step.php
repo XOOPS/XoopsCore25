@@ -82,10 +82,13 @@ switch ($op) {
         } else {
             xoops_confirm(
                 [
-                              'ok' => 1,
-                              'id' => $_REQUEST['id'],
-                              'op' => 'delete'
-                ], $_SERVER['REQUEST_URI'], sprintf(_PROFILE_AM_RUSUREDEL, $obj->getVar('step_name')));
+                    'ok' => 1,
+                    'id' => $_REQUEST['id'],
+                    'op' => 'delete',
+                ],
+                $_SERVER['REQUEST_URI'],
+                sprintf(_PROFILE_AM_RUSUREDEL, $obj->getVar('step_name')),
+            );
         }
         break;
 

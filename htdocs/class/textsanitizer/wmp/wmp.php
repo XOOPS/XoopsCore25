@@ -65,7 +65,7 @@ EOH;
 
         return [
             $code,
-            $javascript
+            $javascript,
         ];
     }
 

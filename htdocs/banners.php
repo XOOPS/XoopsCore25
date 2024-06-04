@@ -106,13 +106,14 @@ function bannerstats()
     $result = $xoopsDB->query($sql);
     if (!$xoopsDB->isResultSet($result)) {
         throw new \RuntimeException(
-            \sprintf(_DB_QUERY_ERROR, $sql) . $xoopsDB->error(), E_USER_ERROR
+            \sprintf(_DB_QUERY_ERROR, $sql) . $xoopsDB->error(),
+            E_USER_ERROR,
         );
     }
     list($cid, $name, $passwd) = $xoopsDB->fetchRow($result);
     if ($_SESSION['banner_pass'] == $passwd) {
         include $GLOBALS['xoops']->path('header.php');
-        $cid = (int)$cid;
+        $cid = (int) $cid;
         $GLOBALS['xoTheme']->addStylesheet(null, null, '
             #bannerstats {}
             #bannerstats td {
@@ -137,7 +138,8 @@ function bannerstats()
         $result = $xoopsDB->query($sql);
         if (!$xoopsDB->isResultSet($result)) {
             throw new \RuntimeException(
-                \sprintf(_DB_QUERY_ERROR, $sql) . $xoopsDB->error(), E_USER_ERROR
+                \sprintf(_DB_QUERY_ERROR, $sql) . $xoopsDB->error(),
+                E_USER_ERROR,
             );
         }
         $i      = 0;
@@ -171,7 +173,8 @@ function bannerstats()
         $result = $xoopsDB->query($sql);
         if (!$xoopsDB->isResultSet($result)) {
             throw new \RuntimeException(
-                \sprintf(_DB_QUERY_ERROR, $sql) . $xoopsDB->error(), E_USER_ERROR
+                \sprintf(_DB_QUERY_ERROR, $sql) . $xoopsDB->error(),
+                E_USER_ERROR,
             );
         }
         while (false !== (list($bid, $imageurl, $clickurl, $htmlbanner, $htmlcode) = $xoopsDB->fetchRow($result))) {
@@ -254,8 +257,8 @@ function emailStats($cid, $bid)
 {
     global $xoopsDB, $xoopsConfig;
     if ($_SESSION['banner_login'] != '' && $_SESSION['banner_pass'] != '') {
-        $cid     = (int)$cid;
-        $bid     = (int)$bid;
+        $cid     = (int) $cid;
+        $bid     = (int) $bid;
         $sql     = sprintf('SELECT name, email, passwd FROM %s WHERE cid=%u AND login=%s', $xoopsDB->prefix('bannerclient'), $cid, $xoopsDB->quoteString($_SESSION['banner_login']));
         $result2 = $xoopsDB->query($sql);
         if ($xoopsDB->isResultSet($result2)) {
@@ -310,8 +313,8 @@ function change_banner_url_by_client($cid, $bid, $url)
 {
     global $xoopsDB;
     if ($_SESSION['banner_login'] != '' && $_SESSION['banner_pass'] != '' && $url != '') {
-        $cid    = (int)$cid;
-        $bid    = (int)$bid;
+        $cid    = (int) $cid;
+        $bid    = (int) $bid;
         $sql    = sprintf('SELECT passwd FROM %s WHERE cid=%u AND login=%s', $xoopsDB->prefix('bannerclient'), $cid, $xoopsDB->quoteString($_SESSION['banner_login']));
         $result = $xoopsDB->query($sql);
         if ($xoopsDB->isResultSet($result)) {
@@ -334,13 +337,14 @@ function change_banner_url_by_client($cid, $bid, $url)
 function clickbanner($bid)
 {
     global $xoopsDB;
-    $bid = (int)$bid;
+    $bid = (int) $bid;
     if ($bid > 0) {
         $sql = 'SELECT clickurl FROM ' . $xoopsDB->prefix('banner') . " WHERE bid={$bid}";
         $result = $xoopsDB->query($sql);
         if (!$xoopsDB->isResultSet($result)) {
             throw new \RuntimeException(
-                \sprintf(_DB_QUERY_ERROR, $sql) . $xoopsDB->error(), E_USER_ERROR
+                \sprintf(_DB_QUERY_ERROR, $sql) . $xoopsDB->error(),
+                E_USER_ERROR,
             );
         }
         list($clickurl) = $xoopsDB->fetchRow($result);

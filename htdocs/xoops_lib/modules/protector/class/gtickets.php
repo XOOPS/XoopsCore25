@@ -1,4 +1,5 @@
 <?php
+
 // GIJOE's Ticket Class (based on Marijuana's Oreteki XOOPS)
 // nobunobu's suggestions are applied
 
@@ -37,7 +38,7 @@ if (!class_exists('XoopsGTicket')) {
                     'err_timeout'       => 'Time out',
                     'err_areaorref'     => 'Invalid area or referer',
                     'fmt_prompt4repost' => 'error(s) found:<br><span style="background-color:red;font-weight:bold;color:white;">%s</span><br>Confirm it.<br>And do you want to post again?',
-                    'btn_repost'        => 'repost'
+                    'btn_repost'        => 'repost',
                 ];
             }
         }
@@ -120,7 +121,7 @@ if (!class_exists('XoopsGTicket')) {
             global $xoopsModule;
 
             if ('' === $salt) {
-				$salt = '$2y$07$' . str_replace('+', '.', base64_encode(random_bytes(16)));
+                $salt = '$2y$07$' . str_replace('+', '.', base64_encode(random_bytes(16)));
             }
 
             // create a token
@@ -151,7 +152,7 @@ if (!class_exists('XoopsGTicket')) {
                 'expire'  => time() + $timeout,
                 'referer' => $referer,
                 'area'    => $area,
-                'token'   => $token
+                'token'   => $token,
             ];
 
             // paid md5ed token as a ticket

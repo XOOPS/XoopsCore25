@@ -60,7 +60,7 @@ switch ($op) {
         $cache_arr = [
             1 => 'smarty_cache',
             2 => 'smarty_compile',
-            3 => 'xoops_cache'
+            3 => 'xoops_cache',
         ];
         $cache->addOptionArray($cache_arr);
         $form_maintenance->addElement($cache);
@@ -78,7 +78,7 @@ switch ($op) {
             '1' => _AM_SYSTEM_MAINTENANCE_CHOICE1,
             '2' => _AM_SYSTEM_MAINTENANCE_CHOICE2,
             '3' => _AM_SYSTEM_MAINTENANCE_CHOICE3,
-            '4' => _AM_SYSTEM_MAINTENANCE_CHOICE4
+            '4' => _AM_SYSTEM_MAINTENANCE_CHOICE4,
         ];
         $choice->addOptionArray($options);
         $tables_tray->addElement($choice, false);
@@ -99,7 +99,7 @@ switch ($op) {
 
         $dump_tray->addElement(new xoopsFormLabel('&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;' . _AM_SYSTEM_MAINTENANCE_DUMP_OR . '&nbsp;'));
         $ele            = new XoopsFormSelect('&nbsp;&nbsp;', 'dump_modules', '', 7, true);
-    /** @var XoopsModuleHandler $module_handler */
+        /** @var XoopsModuleHandler $module_handler */
         $module_handler = xoops_getHandler('module');
         $criteria       = new CriteriaCompo(new Criteria('hasmain', 1));
         $criteria->add(new Criteria('isactive', 1));

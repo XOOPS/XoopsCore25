@@ -18,7 +18,8 @@
  */
 /** @var  XoopsUser $xoopsUser */
 
-function fatalPhpErrorHandler($e = null) {
+function fatalPhpErrorHandler($e = null)
+{
     $messageFormat = '<br><div>Fatal %s %s file: %s : %d </div>';
     $exceptionClass = '\Exception';
     $throwableClass = '\Throwable';
@@ -53,7 +54,7 @@ if (strlen($_SERVER['REMOTE_ADDR']) > 15) {
 include_once __DIR__ . '/checkmainfile.php';
 defined('XOOPS_ROOT_PATH') or die('Bad installation: please add this folder to the XOOPS install you want to upgrade');
 
-if (!isset($_SESSION['preflight']) || (isset($_SESSION['preflight']) && $_SESSION['preflight']!=='complete')) {
+if (!isset($_SESSION['preflight']) || (isset($_SESSION['preflight']) && $_SESSION['preflight'] !== 'complete')) {
     $_SESSION['preflight'] = 'active';
     header("Location: ./preflight.php");
     exit;
@@ -132,10 +133,10 @@ if (!$xoopsUser || !$xoopsUser->isAdmin()) {
         }
     }
     if (0 === $upgradeControl->countUpgradeQueue()) {
-            echo $upgradeControl->oneButtonContinueForm(
-                XOOPS_URL . '/modules/system/admin.php?fct=modulesadmin&amp;op=update&amp;module=system',
-                []
-            );
+        echo $upgradeControl->oneButtonContinueForm(
+            XOOPS_URL . '/modules/system/admin.php?fct=modulesadmin&amp;op=update&amp;module=system',
+            [],
+        );
     } else {
         echo $upgradeControl->oneButtonContinueForm();
     }

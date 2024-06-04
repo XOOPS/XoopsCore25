@@ -1,4 +1,5 @@
 <?php
+
 // start hack by Trabis
 if (!class_exists('ProtectorRegistry')) {
     exit('Registry not found');
@@ -42,7 +43,7 @@ if (!function_exists('protector_oninstall_base')) {
             $ret[] = 'SQL file found at <b>' . htmlspecialchars($sql_file_path, ENT_QUOTES | ENT_HTML5) . '</b>.<br> Creating tables...<br>';
 
             include_once XOOPS_ROOT_PATH . '/class/database/sqlutility.php';
-            $sqlutil = new SqlUtility; //old code is -> $sqlutil =& new SqlUtility ; //hack by Trabis
+            $sqlutil = new SqlUtility(); //old code is -> $sqlutil =& new SqlUtility ; //hack by Trabis
 
             $sql_query = trim(file_get_contents($sql_file_path));
             $sqlutil::splitMySqlFile($pieces, $sql_query);
@@ -77,14 +78,14 @@ if (!function_exists('protector_oninstall_base')) {
         // Check if the directory exists
         if (is_dir($tpl_path) && is_readable($tpl_path)) {
             // Try to open the directory
-             if ($handler = opendir($tpl_path . '/')) {
+            if ($handler = opendir($tpl_path . '/')) {
                 while (($file = readdir($handler)) !== false) {
                     if (substr($file, 0, 1) === '.') {
                         continue;
                     }
                     $file_path = $tpl_path . '/' . $file;
                     if (is_file($file_path) && in_array(strrchr($file, '.'), ['.html', '.css', '.js'])) {
-                        $mtime   = (int)(@filemtime($file_path));
+                        $mtime   = (int) (@filemtime($file_path));
                         $tplfile = $tplfile_handler->create();
                         $tplfile->setVar('tpl_source', file_get_contents($file_path), true);
                         $tplfile->setVar('tpl_refid', $mid);
@@ -103,7 +104,7 @@ if (!function_exists('protector_oninstall_base')) {
                             // generate compiled file
                             include_once XOOPS_ROOT_PATH . '/class/xoopsblock.php';
                             include_once XOOPS_ROOT_PATH . '/class/template.php';
-                            if (!xoops_template_touch((string)$tplid)) {
+                            if (!xoops_template_touch((string) $tplid)) {
                                 $ret[] = '<span style="color:#ff0000;">ERROR: Failed compiling template <b>' . htmlspecialchars($mydirname . '_' . $file, ENT_QUOTES | ENT_HTML5) . '</b>.</span><br>';
                             } else {
                                 $ret[] = 'Template <b>' . htmlspecialchars($mydirname . '_' . $file, ENT_QUOTES | ENT_HTML5) . '</b> compiled.</span><br>';

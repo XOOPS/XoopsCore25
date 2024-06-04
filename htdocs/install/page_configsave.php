@@ -32,7 +32,7 @@ defined('XOOPS_INSTALL') || die('XOOPS Installation wizard die');
 $pageHasForm = false;
 $pageHasHelp = false;
 
-$vars =& $_SESSION['settings'];
+$vars = & $_SESSION['settings'];
 
 if (empty($vars['ROOT_PATH'])) {
     $wizard->redirectToPage('pathsettings');
@@ -52,7 +52,7 @@ if (true === $writeCheck) {
     $rewrite = [
         'GROUP_ADMIN' => 1,
         'GROUP_USERS' => 2,
-        'GROUP_ANONYMOUS' => 3
+        'GROUP_ANONYMOUS' => 3,
     ];
     $rewrite = array_merge($rewrite, $vars);
 
@@ -85,7 +85,7 @@ if (true === $writeCheck) {
                 }
                 echo "<li><strong>XOOPS_{$k}</strong> " . IS_VALOR . " {$v}</li>";
             }
-            ?>
+        ?>
         </ul>
         </div>
         <?php
@@ -245,7 +245,8 @@ function checkFileWriteablity($files)
         if (false !== $dirStat) {
             $uid = $tmpStats['uid'];
             $gid = $tmpStats['gid'];
-            if (!(($uid === $dirStat['uid'] && $dirStat['user']['write'])
+            if (!(
+                ($uid === $dirStat['uid'] && $dirStat['user']['write'])
                 || ($gid === $dirStat['gid'] && $dirStat['group']['write'])
                 || (file_exists($file) && is_writable($file))
                 || (false !== stripos(PHP_OS, 'WIN'))
@@ -274,7 +275,7 @@ function checkFileWriteablity($files)
                     $gidStr,
                     basename($dirName),
                     $dUidStr,
-                    $dGidStr
+                    $dGidStr,
                 );
             }
         }
@@ -302,7 +303,7 @@ function copyConfigDistFiles($vars)
         $result = copy($source, $destination);
         $result ? ++$copied : ++$failed;
         if (false === $result) {
-            $logs[] = sprintf(ERR_COPY_CONFIG_FILE,  'configs/' . basename($destination));
+            $logs[] = sprintf(ERR_COPY_CONFIG_FILE, 'configs/' . basename($destination));
         }
     }
 
@@ -322,7 +323,7 @@ function copyConfigDistFiles($vars)
             $result ? ++$copied : ++$failed;
             if (false === $result) {
                 $logs[] = sprintf('captcha config file copy to %s failed', $destination);
-                $logs[] = sprintf(ERR_COPY_CONFIG_FILE,  'captcha/' . $destination);
+                $logs[] = sprintf(ERR_COPY_CONFIG_FILE, 'captcha/' . $destination);
             }
         }
     }

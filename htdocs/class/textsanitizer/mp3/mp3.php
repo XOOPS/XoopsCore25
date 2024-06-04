@@ -55,7 +55,7 @@ EOF;
 
         return [
             $code,
-            $javascript
+            $javascript,
         ];
     }
 

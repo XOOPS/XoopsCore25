@@ -24,7 +24,7 @@ class Protector
         'information_schema',
         'select',
         "'",
-        '"'
+        '"',
     ];
 
     public $_logged = false;
@@ -106,7 +106,7 @@ class Protector
             'xoopsConfig',
             'xoopsOption',
             'xoopsModule',
-            'xoopsModuleConfig'
+            'xoopsModuleConfig',
         ];
 
         $this->_initial_recursive($_GET, 'G');
@@ -323,7 +323,7 @@ class Protector
             . mysqli_real_escape_string($this->_conn, $agent) . "',type='"
             . mysqli_real_escape_string($this->_conn, $type) . "',description='"
             . mysqli_real_escape_string($this->_conn, $this->message) . "',uid='"
-            . (int)$uid . "',timestamp=NOW()"
+            . (int) $uid . "',timestamp=NOW()",
         );
         $this->_logged = true;
 
@@ -337,7 +337,7 @@ class Protector
      */
     public function write_file_bwlimit($expire)
     {
-        $expire = min((int)$expire, time() + 300);
+        $expire = min((int) $expire, time() + 300);
 
         $fp = @fopen($this->get_filepath4bwlimit(), 'w');
         if ($fp) {
@@ -358,7 +358,7 @@ class Protector
     public function get_bwlimit()
     {
         list($expire) = @file(Protector::get_filepath4bwlimit());
-        $expire = min((int)$expire, time() + 300);
+        $expire = min((int) $expire, time() + 300);
 
         return $expire;
     }
@@ -525,37 +525,37 @@ class Protector
         foreach ($ips as $ip => $info) {
             if ($ip) {
                 switch (strtolower(substr($ip, -1))) {
-                    case '.' :
-                    case ':' :
+                    case '.':
+                    case ':':
                         // foward match
                         if (substr($requestIp, 0, strlen($ip)) == $ip) {
                             $this->ip_matched_info = $info;
                             return true;
                         }
                         break;
-                    case '0' :
-                    case '1' :
-                    case '2' :
-                    case '3' :
-                    case '4' :
-                    case '5' :
-                    case '6' :
-                    case '7' :
-                    case '8' :
-                    case '9' :
-                    case 'a' :
-                    case 'b' :
-                    case 'c' :
-                    case 'd' :
-                    case 'e' :
-                    case 'f' :
+                    case '0':
+                    case '1':
+                    case '2':
+                    case '3':
+                    case '4':
+                    case '5':
+                    case '6':
+                    case '7':
+                    case '8':
+                    case '9':
+                    case 'a':
+                    case 'b':
+                    case 'c':
+                    case 'd':
+                    case 'e':
+                    case 'f':
                         // full match
                         if ($requestIp == $ip) {
                             $this->ip_matched_info = $info;
                             return true;
                         }
                         break;
-                    default :
+                    default:
                         // perl regex
                         if (@preg_match($ip, $requestIp)) {
                             $this->ip_matched_info = $info;
@@ -863,7 +863,7 @@ class Protector
             if (!is_array($current)) {
                 return false;
             }
-            $current =& $current[$index];
+            $current = & $current[$index];
         }
 
         return $current;
@@ -882,25 +882,25 @@ class Protector
         $base_array       = array_shift($indexes);
 
         switch ($base_array) {
-            case 'G' :
-                $main_ref   =& $this->get_ref_from_base64index($_GET, $indexes);
-                $legacy_ref =& $this->get_ref_from_base64index($HTTP_GET_VARS, $indexes);
+            case 'G':
+                $main_ref   = & $this->get_ref_from_base64index($_GET, $indexes);
+                $legacy_ref = & $this->get_ref_from_base64index($HTTP_GET_VARS, $indexes);
                 break;
-            case 'P' :
-                $main_ref   =& $this->get_ref_from_base64index($_POST, $indexes);
-                $legacy_ref =& $this->get_ref_from_base64index($HTTP_POST_VARS, $indexes);
+            case 'P':
+                $main_ref   = & $this->get_ref_from_base64index($_POST, $indexes);
+                $legacy_ref = & $this->get_ref_from_base64index($HTTP_POST_VARS, $indexes);
                 break;
-            case 'C' :
-                $main_ref   =& $this->get_ref_from_base64index($_COOKIE, $indexes);
-                $legacy_ref =& $this->get_ref_from_base64index($HTTP_COOKIE_VARS, $indexes);
+            case 'C':
+                $main_ref   = & $this->get_ref_from_base64index($_COOKIE, $indexes);
+                $legacy_ref = & $this->get_ref_from_base64index($HTTP_COOKIE_VARS, $indexes);
                 break;
-            default :
+            default:
                 exit;
         }
         if (!isset($main_ref)) {
             exit;
         }
-        $request_ref =& $this->get_ref_from_base64index($_REQUEST, $indexes);
+        $request_ref = & $this->get_ref_from_base64index($_REQUEST, $indexes);
         if ($request_ref !== false && $main_ref == $request_ref) {
             $request_ref = $val;
         }
@@ -938,7 +938,7 @@ class Protector
             13 => 'swc',
             14 => 'iff',
             15 => 'wbmp',
-            16 => 'xbm'
+            16 => 'xbm',
         ];
 
         foreach ($_FILES as $_file) {
@@ -978,7 +978,7 @@ class Protector
                         @unlink($temp_file);
                     }
 
-                    if ($image_attributes === false || $image_extensions[(int)$image_attributes[2]] != $ext) {
+                    if ($image_attributes === false || $image_extensions[(int) $image_attributes[2]] != $ext) {
                         $this->message .= "Attempt to upload camouflaged image file {$_file['name']}.\n";
                         $this->_safe_badext    = false;
                         $this->last_error_type = 'UPLOAD';
@@ -1083,7 +1083,7 @@ class Protector
         $result = $this->stopForumSpamLookup(
             isset($_POST['email']) ? $_POST['email'] : null,
             $_SERVER['REMOTE_ADDR'],
-            isset($_POST['uname']) ? $_POST['uname'] : null
+            isset($_POST['uname']) ? $_POST['uname'] : null,
         );
 
         if (false === $result || isset($result['http_code'])) {
@@ -1111,19 +1111,19 @@ class Protector
         $this->last_error_type = 'SPAMMER POST';
 
         switch ($this->_conf['stopforumspam_action']) {
-            default :
-            case 'log' :
+            default:
+            case 'log':
                 break;
-            case 'san' :
+            case 'san':
                 $_POST = [];
                 $this->message .= 'POST deleted for IP:' . $_SERVER['REMOTE_ADDR'];
                 break;
-            case 'biptime0' :
+            case 'biptime0':
                 $_POST = [];
                 $this->message .= 'BAN and POST deleted for IP:' . $_SERVER['REMOTE_ADDR'];
                 $this->_should_be_banned_time0 = true;
                 break;
-            case 'bip' :
+            case 'bip':
                 $_POST = [];
                 $this->message .= 'Ban and POST deleted for IP:' . $_SERVER['REMOTE_ADDR'];
                 $this->_should_be_banned = true;
@@ -1192,7 +1192,7 @@ class Protector
         // gargage collection
         $result = $xoopsDB->queryF(
             'DELETE FROM ' . $xoopsDB->prefix($this->mydirname . '_access')
-            . ' WHERE expire < UNIX_TIMESTAMP()'
+            . ' WHERE expire < UNIX_TIMESTAMP()',
         );
 
         // for older versions before updating this module
@@ -1205,7 +1205,7 @@ class Protector
         // sql for recording access log (INSERT should be placed after SELECT)
         $sql4insertlog = 'INSERT INTO ' . $xoopsDB->prefix($this->mydirname . '_access')
                          . " SET ip={$ip4sql}, request_uri={$uri4sql},"
-                         . " expire=UNIX_TIMESTAMP()+'" . (int)$this->_conf['dos_expire'] . "'";
+                         . " expire=UNIX_TIMESTAMP()+'" . (int) $this->_conf['dos_expire'] . "'";
 
         // bandwidth limitation
         if (isset($this->_conf['bwlimit_count']) && $this->_conf['bwlimit_count'] >= 10) {
@@ -1225,7 +1225,8 @@ class Protector
         $result = $xoopsDB->query($sql);
         if (!$xoopsDB->isResultSet($result)) {
             throw new \RuntimeException(
-                \sprintf(_DB_QUERY_ERROR, $sql) . $xoopsDB->error(), E_USER_ERROR
+                \sprintf(_DB_QUERY_ERROR, $sql) . $xoopsDB->error(),
+                E_USER_ERROR,
             );
         }
         list($f5_count) = $xoopsDB->fetchRow($result);
@@ -1244,30 +1245,30 @@ class Protector
             $this->_done_dos       = true;
             $this->last_error_type = 'DoS';
             switch ($this->_conf['dos_f5action']) {
-                default :
-                case 'exit' :
+                default:
+                case 'exit':
                     $this->output_log($this->last_error_type, $uid, true, 16);
                     exit;
-                case 'none' :
+                case 'none':
                     $this->output_log($this->last_error_type, $uid, true, 16);
 
                     return true;
-                case 'biptime0' :
+                case 'biptime0':
                     if ($can_ban) {
                         $this->register_bad_ips(time() + $this->_conf['banip_time0']);
                     }
                     break;
-                case 'bip' :
+                case 'bip':
                     if ($can_ban) {
                         $this->register_bad_ips();
                     }
                     break;
-                case 'hta' :
+                case 'hta':
                     if ($can_ban) {
                         $this->deny_by_htaccess();
                     }
                     break;
-                case 'sleep' :
+                case 'sleep':
                     sleep(5);
                     break;
             }
@@ -1303,30 +1304,30 @@ class Protector
             $this->_done_dos       = true;
             $this->last_error_type = 'CRAWLER';
             switch ($this->_conf['dos_craction']) {
-                default :
-                case 'exit' :
+                default:
+                case 'exit':
                     $this->output_log($this->last_error_type, $uid, true, 16);
                     exit;
-                case 'none' :
+                case 'none':
                     $this->output_log($this->last_error_type, $uid, true, 16);
 
                     return true;
-                case 'biptime0' :
+                case 'biptime0':
                     if ($can_ban) {
                         $this->register_bad_ips(time() + $this->_conf['banip_time0']);
                     }
                     break;
-                case 'bip' :
+                case 'bip':
                     if ($can_ban) {
                         $this->register_bad_ips();
                     }
                     break;
-                case 'hta' :
+                case 'hta':
                     if ($can_ban) {
                         $this->deny_by_htaccess();
                     }
                     break;
-                case 'sleep' :
+                case 'sleep':
                     sleep(5);
                     break;
             }
@@ -1362,7 +1363,7 @@ class Protector
 
         // gargage collection
         $result = $xoopsDB->queryF(
-            'DELETE FROM ' . $xoopsDB->prefix($this->mydirname . '_access') . ' WHERE expire < UNIX_TIMESTAMP()'
+            'DELETE FROM ' . $xoopsDB->prefix($this->mydirname . '_access') . ' WHERE expire < UNIX_TIMESTAMP()',
         );
 
         // sql for recording access log (INSERT should be placed after SELECT)
@@ -1377,7 +1378,8 @@ class Protector
             list($bf_count) = $xoopsDB->fetchRow($result);
         } else {
             throw new \RuntimeException(
-                \sprintf(_DB_QUERY_ERROR, $sql) . $xoopsDB->error(), E_USER_ERROR
+                \sprintf(_DB_QUERY_ERROR, $sql) . $xoopsDB->error(),
+                E_USER_ERROR,
             );
         }
         if ($bf_count > $this->_conf['bf_count']) {

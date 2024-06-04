@@ -1,4 +1,5 @@
 <?php
+
 // start hack by Trabis
 if (!class_exists('ProtectorRegistry')) {
     exit('Registry not found');
@@ -70,7 +71,7 @@ $modversion['config'][1] = [
     'formtype'    => 'yesno',
     'valuetype'   => 'int',
     'default'     => '0',
-    'options'     => []
+    'options'     => [],
 ];
 $modversion['config'][]  = [
     'name'        => 'default_lang',
@@ -79,7 +80,7 @@ $modversion['config'][]  = [
     'formtype'    => 'text',
     'valuetype'   => 'text',
     'default'     => isset($GLOBALS['xoopsConfig']['language']) ? $GLOBALS['xoopsConfig']['language'] : 'english',
-    'options'     => []
+    'options'     => [],
 ];
 $modversion['config'][]  = [
     'name'        => 'log_level',
@@ -92,8 +93,8 @@ $modversion['config'][]  = [
         $constpref . '_LOGLEVEL0'   => 0,
         $constpref . '_LOGLEVEL15'  => 15,
         $constpref . '_LOGLEVEL63'  => 63,
-        $constpref . '_LOGLEVEL255' => 255
-    ]
+        $constpref . '_LOGLEVEL255' => 255,
+    ],
 ];
 $modversion['config'][]  = [
     'name'        => 'banip_time0',
@@ -102,7 +103,7 @@ $modversion['config'][]  = [
     'formtype'    => 'text',
     'valuetype'   => 'int',
     'default'     => 86400,
-    'options'     => []
+    'options'     => [],
 ];
 $modversion['config'][]  = [
     'name'        => 'reliable_ips',
@@ -111,7 +112,7 @@ $modversion['config'][]  = [
     'formtype'    => 'textarea',
     'valuetype'   => 'array',
     'default'     => '^192.168.|127.0.0.1',
-    'options'     => []
+    'options'     => [],
 ];
 $modversion['config'][]  = [
     'name'        => 'session_fixed_topbit',
@@ -120,7 +121,7 @@ $modversion['config'][]  = [
     'formtype'    => 'text',
     'valuetype'   => 'text',
     'default'     => '24/56',
-    'options'     => []
+    'options'     => [],
 ];
 $modversion['config'][]  = [
     'name'        => 'groups_denyipmove',
@@ -129,7 +130,7 @@ $modversion['config'][]  = [
     'formtype'    => 'group_multi',
     'valuetype'   => 'array',
     'default'     => [1],
-    'options'     => []
+    'options'     => [],
 ];
 $modversion['config'][]  = [
     'name'        => 'san_nullbyte',
@@ -138,7 +139,7 @@ $modversion['config'][]  = [
     'formtype'    => 'yesno',
     'valuetype'   => 'int',
     'default'     => '1',
-    'options'     => []
+    'options'     => [],
 ];
 /* $modversion['config'][] = array(
     'name'            => 'die_nullbyte' ,
@@ -156,7 +157,7 @@ $modversion['config'][] = [
     'formtype'    => 'yesno',
     'valuetype'   => 'int',
     'default'     => '1',
-    'options'     => []
+    'options'     => [],
 ];
 $modversion['config'][] = [
     'name'        => 'contami_action',
@@ -169,8 +170,8 @@ $modversion['config'][] = [
         $constpref . '_OPT_NONE'     => 0,
         $constpref . '_OPT_EXIT'     => 3,
         $constpref . '_OPT_BIPTIME0' => 7,
-        $constpref . '_OPT_BIP'      => 15
-    ]
+        $constpref . '_OPT_BIP'      => 15,
+    ],
 ];
 $modversion['config'][] = [
     'name'        => 'isocom_action',
@@ -184,8 +185,8 @@ $modversion['config'][] = [
         $constpref . '_OPT_SAN'      => 1,
         $constpref . '_OPT_EXIT'     => 3,
         $constpref . '_OPT_BIPTIME0' => 7,
-        $constpref . '_OPT_BIP'      => 15
-    ]
+        $constpref . '_OPT_BIP'      => 15,
+    ],
 ];
 $modversion['config'][] = [
     'name'        => 'union_action',
@@ -199,8 +200,8 @@ $modversion['config'][] = [
         $constpref . '_OPT_SAN'      => 1,
         $constpref . '_OPT_EXIT'     => 3,
         $constpref . '_OPT_BIPTIME0' => 7,
-        $constpref . '_OPT_BIP'      => 15
-    ]
+        $constpref . '_OPT_BIP'      => 15,
+    ],
 ];
 $modversion['config'][] = [
     'name'        => 'id_forceintval',
@@ -209,7 +210,7 @@ $modversion['config'][] = [
     'formtype'    => 'yesno',
     'valuetype'   => 'int',
     'default'     => '0',
-    'options'     => []
+    'options'     => [],
 ];
 $modversion['config'][] = [
     'name'        => 'file_dotdot',
@@ -218,7 +219,7 @@ $modversion['config'][] = [
     'formtype'    => 'yesno',
     'valuetype'   => 'int',
     'default'     => '1',
-    'options'     => []
+    'options'     => [],
 ];
 $modversion['config'][] = [
     'name'        => 'bf_count',
@@ -227,7 +228,7 @@ $modversion['config'][] = [
     'formtype'    => 'text',
     'valuetype'   => 'int',
     'default'     => '10',
-    'options'     => []
+    'options'     => [],
 ];
 $modversion['config'][] = [
     'name'        => 'bwlimit_count',
@@ -236,7 +237,7 @@ $modversion['config'][] = [
     'formtype'    => 'text',
     'valuetype'   => 'int',
     'default'     => 0,
-    'options'     => []
+    'options'     => [],
 ];
 $modversion['config'][] = [
     'name'        => 'dos_skipmodules',
@@ -245,7 +246,7 @@ $modversion['config'][] = [
     'formtype'    => 'text',
     'valuetype'   => 'text',
     'default'     => '',
-    'options'     => []
+    'options'     => [],
 ];
 $modversion['config'][] = [
     'name'        => 'dos_expire',
@@ -254,7 +255,7 @@ $modversion['config'][] = [
     'formtype'    => 'text',
     'valuetype'   => 'int',
     'default'     => '60',
-    'options'     => []
+    'options'     => [],
 ];
 $modversion['config'][] = [
     'name'        => 'dos_f5count',
@@ -263,7 +264,7 @@ $modversion['config'][] = [
     'formtype'    => 'text',
     'valuetype'   => 'int',
     'default'     => '20',
-    'options'     => []
+    'options'     => [],
 ];
 $modversion['config'][] = [
     'name'        => 'dos_f5action',
@@ -278,8 +279,8 @@ $modversion['config'][] = [
         $constpref . '_DOSOPT_EXIT'     => 'exit',
         $constpref . '_DOSOPT_BIPTIME0' => 'biptime0',
         $constpref . '_DOSOPT_BIP'      => 'bip',
-        $constpref . '_DOSOPT_HTA'      => 'hta'
-    ]
+        $constpref . '_DOSOPT_HTA'      => 'hta',
+    ],
 ];
 $modversion['config'][] = [
     'name'        => 'dos_crcount',
@@ -288,7 +289,7 @@ $modversion['config'][] = [
     'formtype'    => 'text',
     'valuetype'   => 'int',
     'default'     => '40',
-    'options'     => []
+    'options'     => [],
 ];
 $modversion['config'][] = [
     'name'        => 'dos_craction',
@@ -303,8 +304,8 @@ $modversion['config'][] = [
         $constpref . '_DOSOPT_EXIT'     => 'exit',
         $constpref . '_DOSOPT_BIPTIME0' => 'biptime0',
         $constpref . '_DOSOPT_BIP'      => 'bip',
-        $constpref . '_DOSOPT_HTA'      => 'hta'
-    ]
+        $constpref . '_DOSOPT_HTA'      => 'hta',
+    ],
 ];
 $modversion['config'][] = [
     'name'        => 'dos_crsafe',
@@ -313,7 +314,7 @@ $modversion['config'][] = [
     'formtype'    => 'text',
     'valuetype'   => 'text',
     'default'     => '/(bingbot|Googlebot|Yahoo! Slurp)/i',
-    'options'     => []
+    'options'     => [],
 ];
 $modversion['config'][] = [
     'name'        => 'bip_except',
@@ -322,7 +323,7 @@ $modversion['config'][] = [
     'formtype'    => 'group_multi',
     'valuetype'   => 'array',
     'default'     => [1],
-    'options'     => []
+    'options'     => [],
 ];
 $modversion['config'][] = [
     'name'        => 'disable_features',
@@ -331,7 +332,7 @@ $modversion['config'][] = [
     'formtype'    => 'select',
     'valuetype'   => 'int',
     'default'     => 1,
-    'options'     => ['xmlrpc' => 1, 'xmlrpc + 2.0.9.2 bugs' => 1025, '_NONE' => 0]
+    'options'     => ['xmlrpc' => 1, 'xmlrpc + 2.0.9.2 bugs' => 1025, '_NONE' => 0],
 ];
 $modversion['config'][] = [
     'name'        => 'enable_dblayertrap',
@@ -340,7 +341,7 @@ $modversion['config'][] = [
     'formtype'    => 'yesno',
     'valuetype'   => 'int',
     'default'     => 1,
-    'options'     => []
+    'options'     => [],
 ];
 $modversion['config'][] = [
     'name'        => 'dblayertrap_wo_server',
@@ -349,7 +350,7 @@ $modversion['config'][] = [
     'formtype'    => 'yesno',
     'valuetype'   => 'int',
     'default'     => 0,
-    'options'     => []
+    'options'     => [],
 ];
 $modversion['config'][] = [
     'name'        => 'enable_bigumbrella',
@@ -358,7 +359,7 @@ $modversion['config'][] = [
     'formtype'    => 'yesno',
     'valuetype'   => 'int',
     'default'     => 1,
-    'options'     => []
+    'options'     => [],
 ];
 $modversion['config'][] = [
     'name'        => 'spamcount_uri4user',
@@ -367,7 +368,7 @@ $modversion['config'][] = [
     'formtype'    => 'textbox',
     'valuetype'   => 'int',
     'default'     => 0,
-    'options'     => []
+    'options'     => [],
 ];
 $modversion['config'][] = [
     'name'        => 'spamcount_uri4guest',
@@ -376,7 +377,7 @@ $modversion['config'][] = [
     'formtype'    => 'textbox',
     'valuetype'   => 'int',
     'default'     => 5,
-    'options'     => []
+    'options'     => [],
 ];
 
 $modversion['config'][] = [
@@ -391,8 +392,8 @@ $modversion['config'][] = [
         $constpref . '_OPT_NONE'     => 'log',
         $constpref . '_OPT_SAN'      => 'san',
         $constpref . '_OPT_BIPTIME0' => 'biptime0',
-        $constpref . '_OPT_BIP'      => 'bip'
-    ]
+        $constpref . '_OPT_BIP'      => 'bip',
+    ],
 ];
 
 // Search

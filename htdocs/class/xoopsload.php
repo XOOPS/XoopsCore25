@@ -46,7 +46,7 @@ class XoopsLoad
                 'file'        => 'xoopsfile',
                 'model'       => 'xoopsmodelfactory',
                 'calendar'    => 'xoopscalendar',
-                'userutility' => 'xoopsuserutility'
+                'userutility' => 'xoopsuserutility',
             ];
         }
         $name = strtolower($name);
@@ -230,9 +230,9 @@ class XoopsLoad
             'xoopsformrenderer'          => XOOPS_ROOT_PATH . '/class/xoopsform/renderer/XoopsFormRenderer.php',
             'xoopsformrendererinterface' => XOOPS_ROOT_PATH . '/class/xoopsform/renderer/XoopsFormRendererInterface.php',
             'xoopsformrendererlegacy'    => XOOPS_ROOT_PATH . '/class/xoopsform/renderer/XoopsFormRendererLegacy.php',
-            'xoopsformrendererbootstrap3'=> XOOPS_ROOT_PATH . '/class/xoopsform/renderer/XoopsFormRendererBootstrap3.php',
-            'xoopsformrendererbootstrap4'=> XOOPS_ROOT_PATH . '/class/xoopsform/renderer/XoopsFormRendererBootstrap4.php',
-            'xoopsformrendererbootstrap5'=> XOOPS_ROOT_PATH . '/class/xoopsform/renderer/XoopsFormRendererBootstrap5.php',
+            'xoopsformrendererbootstrap3' => XOOPS_ROOT_PATH . '/class/xoopsform/renderer/XoopsFormRendererBootstrap3.php',
+            'xoopsformrendererbootstrap4' => XOOPS_ROOT_PATH . '/class/xoopsform/renderer/XoopsFormRendererBootstrap4.php',
+            'xoopsformrendererbootstrap5' => XOOPS_ROOT_PATH . '/class/xoopsform/renderer/XoopsFormRendererBootstrap5.php',
             'xoopsfilterinput'           => XOOPS_ROOT_PATH . '/class/xoopsfilterinput.php',
             'xoopsrequest'               => XOOPS_ROOT_PATH . '/class/xoopsrequest.php',
             'xoopshttpget'               => XOOPS_ROOT_PATH . '/class/xoopshttpget.php',

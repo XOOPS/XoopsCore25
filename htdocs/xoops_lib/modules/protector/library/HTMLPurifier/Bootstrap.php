@@ -29,7 +29,6 @@ if (!defined('PHP_EOL')) {
  */
 class HTMLPurifier_Bootstrap
 {
-
     /**
      * Autoload function for HTML Purifier
      * @param string $class Class to load
@@ -101,7 +100,7 @@ class HTMLPurifier_Bootstrap
                                 Please do not use HTMLPurifier.autoload.php (or any
                                 file that includes this file); instead, place the code:
                                 spl_autoload_register(array(\'HTMLPurifier_Bootstrap\', \'autoload\'))
-                                after your own autoloaders.'
+                                after your own autoloaders.',
                             );
                         }
                         // Suprisingly, spl_autoload_register supports the

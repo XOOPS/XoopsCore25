@@ -48,7 +48,7 @@ if (!empty($_POST['action'])) {
         $bad_ips = [];
         foreach ($lines as $line) {
             @list($bad_ip, $jailed_time) = explode('|', $line, 2);
-            $bad_ips[trim($bad_ip)] = empty($jailed_time) ? 0x7fffffff : (int)$jailed_time;
+            $bad_ips[trim($bad_ip)] = empty($jailed_time) ? 0x7fffffff : (int) $jailed_time;
         }
         if (!$protector->write_file_badips($bad_ips)) {
             $error_msg .= _AM_MSG_BADIPSCANTOPEN;
@@ -68,13 +68,13 @@ if (!empty($_POST['action'])) {
             $error_msg .= _AM_MSG_GROUP1IPSCANTOPEN;
         }
 
-        $redirect_msg = $error_msg ? : _AM_MSG_IPFILESUPDATED;
+        $redirect_msg = $error_msg ?: _AM_MSG_IPFILESUPDATED;
         redirect_header('center.php?page=center', 2, $redirect_msg);
         exit;
     } elseif ($_POST['action'] === 'delete' && isset($_POST['ids']) && \is_array($_POST['ids'])) {
         // remove selected records
         foreach ($_POST['ids'] as $lid) {
-            $lid = (int)$lid;
+            $lid = (int) $lid;
             $db->query("DELETE FROM $log_table WHERE lid='$lid'");
         }
         redirect_header('center.php?page=center', 2, _AM_MSG_REMOVED);
@@ -82,7 +82,7 @@ if (!empty($_POST['action'])) {
     } elseif ($_POST['action'] === 'banbyip' && isset($_POST['ids']) && \is_array($_POST['ids'])) {
         // remove selected records
         foreach ($_POST['ids'] as $lid) {
-            $lid = (int)$lid;
+            $lid = (int) $lid;
             $sql = "SELECT `ip` FROM $log_table WHERE lid='$lid'";
             $result = $db->query($sql);
 
@@ -109,7 +109,8 @@ if (!empty($_POST['action'])) {
         $result = $db->query($sql);
         if (!$db->isResultSet($result)) {
             throw new \RuntimeException(
-                \sprintf(_DB_QUERY_ERROR, $sql) . $db->error(), E_USER_ERROR
+                \sprintf(_DB_QUERY_ERROR, $sql) . $db->error(),
+                E_USER_ERROR,
             );
         }
         $buf    = [];
@@ -136,7 +137,8 @@ $sql = "SELECT count(lid) FROM $log_table";
 $result = $db->query($sql);
 if (!$db->isResultSet($result)) {
     throw new \RuntimeException(
-        \sprintf(_DB_QUERY_ERROR, $sql) . $db->error(), E_USER_ERROR
+        \sprintf(_DB_QUERY_ERROR, $sql) . $db->error(),
+        E_USER_ERROR,
     );
 }
 list($numrows) = $db->fetchRow($result);
@@ -145,7 +147,8 @@ $sql = "SELECT l.lid, l.uid, l.ip, l.agent, l.type, l.description, UNIX_TIMESTAM
 $result = $db->query($sql);
 if (!$db->isResultSet($result)) {
     throw new \RuntimeException(
-        \sprintf(_DB_QUERY_ERROR, $sql) . $db->error(), E_USER_ERROR
+        \sprintf(_DB_QUERY_ERROR, $sql) . $db->error(),
+        E_USER_ERROR,
     );
 }
 
@@ -268,7 +271,7 @@ while (false !== (list($lid, $uid, $ip, $agent, $type, $description, $timestamp,
     if ('{"' == substr($description, 0, 2) && defined('JSON_PRETTY_PRINT')) {
         $temp = json_decode($description);
         if (is_object($temp)) {
-            $description = json_encode($temp, JSON_PRETTY_PRINT|JSON_UNESCAPED_UNICODE);
+            $description = json_encode($temp, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE);
             $style = ' log_description';
         }
     }
@@ -358,10 +361,10 @@ function protector_normalize_ipv4($n)
 {
     $temp = explode('.', $n);
     $n = '';
-    foreach($temp as $k=>$v) {
-        $t = '00'. $v;
+    foreach($temp as $k => $v) {
+        $t = '00' . $v;
         $n .= substr($t, -3);
-        if ($k<3) {
+        if ($k < 3) {
             $n .= '.';
         }
     }

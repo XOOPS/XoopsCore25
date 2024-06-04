@@ -1,4 +1,5 @@
 <?php
+
 //  ------------------------------------------------------------------------ //
 //                XOOPS - PHP Content Management System                      //
 //          Copyright (c) 2000-2016 XOOPS Project (www.xoops.org)            //
@@ -162,13 +163,13 @@ class Db_manager
         'create' => TABLE_CREATED,
         'insert' => ROWS_INSERTED,
         'alter'  => TABLE_ALTERED,
-        'drop'   => TABLE_DROPPED
+        'drop'   => TABLE_DROPPED,
     ];
     public $failureStrings = [
         'create' => TABLE_NOT_CREATED,
         'insert' => ROWS_FAILED,
         'alter'  => TABLE_NOT_ALTERED,
-        'drop'   => TABLE_NOT_DROPPED
+        'drop'   => TABLE_NOT_DROPPED,
     ];
 
     /**

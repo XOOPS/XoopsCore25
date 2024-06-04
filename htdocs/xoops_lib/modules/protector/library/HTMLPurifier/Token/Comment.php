@@ -30,7 +30,8 @@ class HTMLPurifier_Token_Comment extends HTMLPurifier_Token
         $this->col = $col;
     }
 
-    public function toNode() {
+    public function toNode()
+    {
         return new HTMLPurifier_Node_Comment($this->data, $this->line, $this->col);
     }
 }

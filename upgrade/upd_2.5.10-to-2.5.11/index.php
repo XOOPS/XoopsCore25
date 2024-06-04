@@ -70,7 +70,7 @@ class Upgrade_2511 extends XoopsUpgrade
     public function check_cleancache()
     {
         if (!array_key_exists($this->cleanCacheKey, $_SESSION)
-            || $_SESSION[$this->cleanCacheKey]===false) {
+            || $_SESSION[$this->cleanCacheKey] === false) {
             return false;
         }
         return true;
@@ -86,7 +86,7 @@ class Upgrade_2511 extends XoopsUpgrade
         require_once XOOPS_ROOT_PATH . '/modules/system/class/maintenance.php';
         $maintenance = new SystemMaintenance();
         $result  = $maintenance->CleanCache([1, 2, 3]);
-        if ($result===true) {
+        if ($result === true) {
             $_SESSION[$this->cleanCacheKey] = true;
         }
         return $result;
@@ -129,7 +129,7 @@ class Upgrade_2511 extends XoopsUpgrade
         $migrate = new Tables();
         $count = $this->fromMediumToInt($migrate, $this->bannerTableName, $this->bannerColumnNames);
 
-        return $count==0;
+        return $count == 0;
     }
 
     /**
@@ -149,12 +149,12 @@ class Upgrade_2511 extends XoopsUpgrade
                 'Migration of %s table failed. Error: %s - %s' .
                 $this->bannerTableName,
                 $migrate->getLastErrNo(),
-                $migrate->getLastError()
+                $migrate->getLastError(),
             );
             return false;
         }
 
-        return $count!==0;
+        return $count !== 0;
     }
 
     /**
@@ -172,7 +172,7 @@ class Upgrade_2511 extends XoopsUpgrade
         $sql = sprintf(
             'SELECT count(*) FROM `%s` '
             . "WHERE `conf_id` = 64 AND `confop_name` = 'qmail'",
-            $db->escape($table)
+            $db->escape($table),
         );
 
         /** @var mysqli_result $result */
@@ -201,7 +201,7 @@ class Upgrade_2511 extends XoopsUpgrade
         $migrate->useTable('configoption');
         $migrate->insert(
             'configoption',
-            ['confop_name' => 'qmail', 'confop_value' => 'qmail', 'conf_id' => 64]
+            ['confop_name' => 'qmail', 'confop_value' => 'qmail', 'conf_id' => 64],
         );
         return $migrate->executeQueue(true);
     }
@@ -312,7 +312,7 @@ class Upgrade_2511 extends XoopsUpgrade
             $migrate->alterColumn($tableName, $columnName, 'int(10) UNSIGNED NOT NULL');
         }
 
-        return $count==0;
+        return $count == 0;
     }
 
     /**
@@ -340,12 +340,12 @@ class Upgrade_2511 extends XoopsUpgrade
                 'Migration of %s table failed. Error: %s - %s' .
                 $tableName,
                 $migrate->getLastErrNo(),
-                $migrate->getLastError()
+                $migrate->getLastError(),
             );
             return false;
         }
 
-        return $count!==0;
+        return $count !== 0;
     }
     //configend
 
@@ -623,7 +623,7 @@ class Upgrade_2511 extends XoopsUpgrade
     {
         $migrate = new Tables();
         $count = $this->fromSmallintToVarchar($migrate, $this->modulesTableName, $this->modulesColumnNames);
-        return $count==0;
+        return $count == 0;
     }
 
     /**
@@ -643,7 +643,7 @@ class Upgrade_2511 extends XoopsUpgrade
                 'Migration of %s table failed. Error: %s - %s' .
                 $this->modulesTableName,
                 $migrate->getLastErrNo(),
-                $migrate->getLastError()
+                $migrate->getLastError(),
             );
             return false;
         }
@@ -758,7 +758,7 @@ class Upgrade_2511 extends XoopsUpgrade
             'Config_File.class.php',
             'debug.tpl',
             'Smarty.class.php',
-            'Smarty_Compiler.class.php'
+            'Smarty_Compiler.class.php',
         ];
 
         // Loop through each item and delete it
@@ -817,7 +817,7 @@ class Upgrade_2511 extends XoopsUpgrade
             }
             $config_id = $GLOBALS['xoopsDB']->getInsertId();
 
-            $sql = 'INSERT INTO ' . $GLOBALS['xoopsDB']->prefix('configoption') . ' (confop_id, confop_name, confop_value, conf_id)'. ' VALUES'
+            $sql = 'INSERT INTO ' . $GLOBALS['xoopsDB']->prefix('configoption') . ' (confop_id, confop_name, confop_value, conf_id)' . ' VALUES'
                 . " (NULL, '_MI_DEFAULT_NOTIFICATION_METHOD_DISABLE', '0', {$config_id}),"
                 . " (NULL, '_MI_DEFAULT_NOTIFICATION_METHOD_PM', '1', {$config_id}),"
                 . " (NULL, '_MI_DEFAULT_NOTIFICATION_METHOD_EMAIL', '2', {$config_id})";

@@ -19,7 +19,6 @@
  */
 class XoopsFormRendererBootstrap3 implements XoopsFormRendererInterface
 {
-
     /**
      * Render support for XoopsFormButton
      *
@@ -109,7 +108,7 @@ class XoopsFormRendererBootstrap3 implements XoopsFormRendererInterface
                 . htmlspecialchars(strip_tags($name), ENT_QUOTES | ENT_HTML5) . "' value='"
                 . htmlspecialchars($value, ENT_QUOTES | ENT_HTML5) . "'";
 
-            if (is_array($elementValue) ? in_array($value, $elementValue): $value == $elementValue) {
+            if (is_array($elementValue) ? in_array($value, $elementValue) : $value == $elementValue) {
                 $ret .= ' checked';
             }
             $ret .= $element->getExtra() . ' />' . $name . $element->getDelimeter();
@@ -144,7 +143,7 @@ class XoopsFormRendererBootstrap3 implements XoopsFormRendererInterface
                 . htmlspecialchars(strip_tags($name), ENT_QUOTES | ENT_HTML5) . "' value='"
                 . htmlspecialchars($value, ENT_QUOTES | ENT_HTML5) . "'";
 
-            if (is_array($elementValue) ? in_array($value, $elementValue): $value == $elementValue) {
+            if (is_array($elementValue) ? in_array($value, $elementValue) : $value == $elementValue) {
                 $ret .= ' checked';
             }
             $ret .= $element->getExtra() . ' />' . $name . $element->getDelimeter();
@@ -180,7 +179,7 @@ class XoopsFormRendererBootstrap3 implements XoopsFormRendererInterface
                 . htmlspecialchars(strip_tags($name), ENT_QUOTES | ENT_HTML5) . "' value='"
                 . htmlspecialchars($value, ENT_QUOTES | ENT_HTML5) . "'";
 
-            if (is_array($elementValue) ? in_array($value, $elementValue): $value == $elementValue) {
+            if (is_array($elementValue) ? in_array($value, $elementValue) : $value == $elementValue) {
                 $ret .= ' checked';
             }
             $ret .= $element->getExtra() . ' />' . $name . $element->getDelimeter();
@@ -243,11 +242,11 @@ class XoopsFormRendererBootstrap3 implements XoopsFormRendererInterface
             } else {
                 $GLOBALS['xoTheme']->addScript(
                     '/class/textsanitizer/image/image.js',
-                    ['type' => 'text/javascript']
+                    ['type' => 'text/javascript'],
                 );
             }
             $button = "<button type='button' class='btn btn-primary' onclick=\"form_instantPreview('" . XOOPS_URL
-                . "', '" . $element->getName() . "','" . XOOPS_URL . "/images', " . (int)$element->doHtml . ", '"
+                . "', '" . $element->getName() . "','" . XOOPS_URL . "/images', " . (int) $element->doHtml . ", '"
                 . $GLOBALS['xoopsSecurity']->createToken() . "')\" title='" . _PREVIEW . "'>" . _PREVIEW . "</button>";
 
             $ret .= '<br>' . "<div id='" . $element->getName() . "_hidden' style='display: block;'> "
@@ -336,7 +335,7 @@ EOJS;
             'Helvetica',
             'Impact',
             'Verdana',
-            'Haettenschweiler'
+            'Haettenschweiler',
         ];
 
         $colorArray = [
@@ -355,11 +354,11 @@ EOJS;
 
         $fontStr = '<div class="row"><div class="col-md-12"><div class="btn-group" role="toolbar">';
         $fontStr .= '<div class="btn-group">'
-            . '<button type="button" class="btn btn-default btn-sm dropdown-toggle" title="'. _SIZE .'"'
+            . '<button type="button" class="btn btn-default btn-sm dropdown-toggle" title="' . _SIZE . '"'
             . ' data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">'
             . '<span class = "fa fa-text-height"></span><span class="caret"></span></button>'
             . '<ul class="dropdown-menu">';
-            //. _SIZE . '&nbsp;&nbsp;<span class="caret"></span></button><ul class="dropdown-menu">';
+        //. _SIZE . '&nbsp;&nbsp;<span class="caret"></span></button><ul class="dropdown-menu">';
         foreach ($GLOBALS['formtextdhtml_sizes'] as $value => $name) {
             $fontStr .= '<li><a href="javascript:xoopsSetElementAttribute(\'size\', \'' . $value . '\', \''
                 . $textarea_id . '\', \'' . $hiddentext . '\');">' . $name . '</a></li>';
@@ -367,11 +366,11 @@ EOJS;
         $fontStr .= '</ul></div>';
 
         $fontStr .= '<div class="btn-group">'
-            . '<button type="button" class="btn btn-default btn-sm dropdown-toggle" title="'. _FONT .'"'
+            . '<button type="button" class="btn btn-default btn-sm dropdown-toggle" title="' . _FONT . '"'
             . ' data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">'
             . '<span class = "fa fa-font"></span><span class="caret"></span></button>'
             . '<ul class="dropdown-menu">';
-            //. _FONT . '&nbsp;&nbsp;<span class="caret"></span></button><ul class="dropdown-menu">';
+        //. _FONT . '&nbsp;&nbsp;<span class="caret"></span></button><ul class="dropdown-menu">';
         foreach ($fontarray as $font) {
             $fontStr .= '<li><a href="javascript:xoopsSetElementAttribute(\'font\', \'' . $font . '\', \''
                 . $textarea_id . '\', \'' . $hiddentext . '\');">' . $font . '</a></li>';
@@ -379,15 +378,15 @@ EOJS;
         $fontStr .= '</ul></div>';
 
         $fontStr .= '<div class="btn-group">'
-            . '<button type="button" class="btn btn-default btn-sm dropdown-toggle" title="'. _COLOR .'"'
+            . '<button type="button" class="btn btn-default btn-sm dropdown-toggle" title="' . _COLOR . '"'
             . ' data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">'
             . '<span class = "fa fa-tint"></span><span class="caret"></span></button>'
             . '<ul class="dropdown-menu">';
-            //. _COLOR . '&nbsp;&nbsp;<span class="caret"></span></button><ul class="dropdown-menu">';
+        //. _COLOR . '&nbsp;&nbsp;<span class="caret"></span></button><ul class="dropdown-menu">';
         foreach ($colorArray as $color => $hex) {
             $fontStr .= '<li><a href="javascript:xoopsSetElementAttribute(\'color\', \'' . $hex . '\', \''
                 . $textarea_id . '\', \'' . $hiddentext . '\');">'
-                . '<span style="color:#' . $hex . ';">' . $color .'</span></a></li>';
+                . '<span style="color:#' . $hex . ';">' . $color . '</span></a></li>';
         }
         $fontStr .= '</ul></div>';
         $fontStr .= '</div>';
@@ -785,6 +784,6 @@ EOJS;
     public function addThemeFormBreak(XoopsThemeForm $form, $extra, $class)
     {
         $class = ($class != '') ? preg_replace('/[^A-Za-z0-9\s\s_-]/i', '', $class) : '';
-        $form->addElement('<div class="col-sm-12 ' . $class .'">'. $extra . '</div>');
+        $form->addElement('<div class="col-sm-12 ' . $class . '">' . $extra . '</div>');
     }
 }

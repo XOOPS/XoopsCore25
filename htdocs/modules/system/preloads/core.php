@@ -68,11 +68,14 @@ class SystemCorePreload extends XoopsPreloadItem
             /**
              * Don't load jquery if already done by the theme
              */
-            $GLOBALS['xoTheme']->addScript('', ['type' => 'text/javascript'], "
+            $GLOBALS['xoTheme']->addScript(
+                '',
+                ['type' => 'text/javascript'],
+                "
                 if (typeof jQuery == 'undefined') {
                     var tag = '<scr' + 'ipt type=\'text/javascript\' src=\'" . XOOPS_URL . "/browse.php?Frameworks/jquery/jquery.js\'></scr' + 'ipt>';            	    
                     document.write(tag);            	    
-	            };"
+	            };",
             );
             $GLOBALS['xoTheme']->addScript('browse.php?Frameworks/jquery/plugins/jquery.jgrowl.js');
             $GLOBALS['xoTheme']->addScript('', ['type' => 'text/javascript'], '

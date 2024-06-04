@@ -53,7 +53,6 @@
  */
 class HTMLPurifier
 {
-
     /**
      * Version of HTML Purifier.
      * @type string
@@ -63,7 +62,7 @@ class HTMLPurifier
     /**
      * Constant with version of HTML Purifier.
      */
-    const VERSION = '4.15.0';
+    public const VERSION = '4.15.0';
 
     /**
      * Global configuration object.
@@ -127,7 +126,7 @@ class HTMLPurifier
         trigger_error(
             'HTMLPurifier->addFilter() is deprecated, use configuration directives' .
             ' in the Filter namespace or Filter.Custom',
-            E_USER_WARNING
+            E_USER_WARNING,
         );
         $this->filters[] = $filter;
     }
@@ -189,7 +188,7 @@ class HTMLPurifier
                 continue;
             }
             $class = "HTMLPurifier_Filter_$filter";
-            $filters[] = new $class;
+            $filters[] = new $class();
         }
         foreach ($custom_filters as $filter) {
             // maybe "HTMLPurifier_Filter_$filter", but be consistent with AutoFormat
@@ -212,11 +211,11 @@ class HTMLPurifier
                         // un-purified HTML
                         $html,
                         $config,
-                        $context
+                        $context,
                     ),
                     $config,
-                    $context
-                )
+                    $context,
+                ),
             );
 
         for ($i = $filter_size - 1; $i >= 0; $i--) {
@@ -224,7 +223,7 @@ class HTMLPurifier
         }
 
         $html = HTMLPurifier_Encoder::convertFromUTF8($html, $config, $context);
-        $this->context =& $context;
+        $this->context = & $context;
         return $html;
     }
 
@@ -241,7 +240,7 @@ class HTMLPurifier
     {
         $context_array = array();
         $array = array();
-        foreach($array_of_html as $key=>$value){
+        foreach($array_of_html as $key => $value) {
             if (is_array($value)) {
                 $array[$key] = $this->purifyArray($value, $config);
             } else {

@@ -89,7 +89,7 @@ if (isset($_GET['imgcat_id'])) {
 }
 
 if (isset($imgcat_id)) {
-    $imgcat_id = (int)$imgcat_id;
+    $imgcat_id = (int) $imgcat_id;
 }
 $target = htmlspecialchars($target, ENT_QUOTES | ENT_HTML5);
 
@@ -132,7 +132,7 @@ if ($isadmin || ($catreadcount > 0) || ($catwritecount > 0)) {
         if (!$GLOBALS['xoopsSecurity']->check()) {
             redirect_header($current_file . '?target=' . $target, 3, implode('<br>', $GLOBALS['xoopsSecurity']->getErrors()));
         }
-        $imgcat = $imgcat_handler->get((int)$imgcat_id);
+        $imgcat = $imgcat_handler->get((int) $imgcat_id);
         if (!is_object($imgcat)) {
             redirect_header($current_file . '?target=' . $target, 3);
         }
@@ -144,8 +144,8 @@ if ($isadmin || ($catreadcount > 0) || ($catwritecount > 0)) {
             'image/pjpeg',
             'image/x-png',
             'image/png',
-            'image/bmp'
-        ],                                 $imgcat->getVar('imgcat_maxsize'), $imgcat->getVar('imgcat_maxwidth'), $imgcat->getVar('imgcat_maxheight'));
+            'image/bmp',
+        ], $imgcat->getVar('imgcat_maxsize'), $imgcat->getVar('imgcat_maxwidth'), $imgcat->getVar('imgcat_maxheight'));
         $uploader->setPrefix('img');
         $err    = [];
         $ucount = count($_POST['xoops_upload_file']);
@@ -320,7 +320,7 @@ if ($isadmin || ($catreadcount > 0) || ($catwritecount > 0)) {
         if (!$GLOBALS['xoopsSecurity']->check()) {
             redirect_header($current_file . '?target=' . $target, 3, implode('<br>', $GLOBALS['xoopsSecurity']->getErrors()));
         }
-        $imgcat_id = (int)$imgcat_id;
+        $imgcat_id = (int) $imgcat_id;
         if ($imgcat_id <= 0) {
             redirect_header($current_file . '?target=' . $target, 3);
         }
@@ -371,7 +371,7 @@ if ($isadmin || ($catreadcount > 0) || ($catwritecount > 0)) {
         if (!$GLOBALS['xoopsSecurity']->check()) {
             redirect_header($current_file . '?target=' . $target, 3, implode('<br>', $GLOBALS['xoopsSecurity']->getErrors()));
         }
-        $image_id = (int)$image_id;
+        $image_id = (int) $image_id;
         if ($image_id <= 0) {
             redirect_header($current_file . '?target=' . $target, 3);
         }
@@ -462,7 +462,7 @@ if ($op === 'list') {
 
 //list images - start
 if ($op === 'listimg') {
-    $imgcat_id = (int)$imgcat_id;
+    $imgcat_id = (int) $imgcat_id;
     if ($imgcat_id <= 0) {
         redirect_header($current_file . '?target=' . $target, 1);
     }
@@ -491,7 +491,7 @@ if ($op === 'listimg') {
         // check if image stored in db/as file - start
         if ($imagecategory->getVar('imgcat_storetype') === 'db') {
             $image_src = '' . XOOPS_URL . '/image.php?id=' . $i . '';
-            if (ini_get('allow_url_fopen') == true){
+            if (ini_get('allow_url_fopen') == true) {
                 $image_info = true;
                 $image_size = getimagesize($image_src);
             } else {
@@ -502,7 +502,7 @@ if ($op === 'listimg') {
             $image_size = getimagesize(XOOPS_ROOT_PATH . '/uploads/' . $images[$i]->getVar('image_name'));
             $image_info = true;
         }
-        
+
         // check if image stored in db/as file - end
         echo '<table width="100%" class="outer">';
         echo '<tr>';
@@ -510,7 +510,7 @@ if ($op === 'listimg') {
 
         echo '<img id="imageid' . $images[$i]->getVar('image_id') . '" src="' . $image_src . '" alt="' . $images[$i]->getVar('image_nicename', 'E') . '" title="' . $images[$i]->getVar('image_nicename', 'E') . '" onclick="XoopsimagebrowserDialog.insertAndClose(\'imageid' . $images[$i]->getVar('image_id') . '\');return false;"/>';
         echo '<br>';
-        if ($image_info == true){
+        if ($image_info == true) {
             echo '' . $image_size[0] . 'x' . $image_size[1] . '';
         }
         echo '</td>';

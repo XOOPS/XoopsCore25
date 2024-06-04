@@ -4,9 +4,7 @@
 // understand how to interpret this filter if it's a static method.
 // It's all really silly, but if we go this route it might be reasonable
 // to coalesce all of these methods into one.
-function htmlpurifier_filter_extractstyleblocks_muteerrorhandler()
-{
-}
+function htmlpurifier_filter_extractstyleblocks_muteerrorhandler() {}
 
 /**
  * This filter extracts <style> blocks from input HTML, cleans them up
@@ -67,8 +65,8 @@ class HTMLPurifier_Filter_ExtractStyleBlocks extends HTMLPurifier_Filter
                 'visited',
                 'active',
                 'hover',
-                'focus'
-            )
+                'focus',
+            ),
         );
     }
 
@@ -331,7 +329,7 @@ class HTMLPurifier_Filter_ExtractStyleBlocks extends HTMLPurifier_Filter
             $css = str_replace(
                 array('<', '>', '&'),
                 array('\3C ', '\3E ', '\26 '),
-                $css
+                $css,
             );
         }
         return $css;

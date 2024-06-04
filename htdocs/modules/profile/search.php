@@ -31,7 +31,7 @@ $searchable_types = [
     'date',
     'datetime',
     'timezone',
-    'language'
+    'language',
 ];
 
 switch ($op) {
@@ -164,7 +164,7 @@ switch ($op) {
         $GLOBALS['xoopsTpl']->assign('page_title', _PROFILE_MA_RESULTS);
         $xoBreadcrumbs[] = [
             'link'  => XOOPS_URL . '/modules/' . $GLOBALS['xoopsModule']->getVar('dirname', 'n') . '/search.php',
-            'title' => _SEARCH
+            'title' => _SEARCH,
         ];
         $xoBreadcrumbs[] = ['title' => _PROFILE_MA_RESULTS];
         /** @var XoopsMemberHandler $member_handler */
@@ -266,7 +266,7 @@ switch ($op) {
                             case 'datetime':
                                 $value = $_REQUEST[$fieldname . '_larger'];
                                 if (!($value = strtotime($_REQUEST[$fieldname . '_larger']))) {
-                                    $value = (int)$_REQUEST[$fieldname . '_larger'];
+                                    $value = (int) $_REQUEST[$fieldname . '_larger'];
                                 }
                                 if ($value > 0) {
                                     $search_url[] = $fieldname . '_larger=' . $value;
@@ -276,7 +276,7 @@ switch ($op) {
 
                                 $value = $_REQUEST[$fieldname . '_smaller'];
                                 if (!($value = strtotime($_REQUEST[$fieldname . '_smaller']))) {
-                                    $value = (int)$_REQUEST[$fieldname . '_smaller'];
+                                    $value = (int) $_REQUEST[$fieldname . '_smaller'];
                                 }
                                 if ($value > 0) {
                                     $search_url[] = $fieldname . '_smaller=' . $value;
@@ -286,15 +286,15 @@ switch ($op) {
                                 break;
 
                             default:
-                                if (isset($_REQUEST[$fieldname . '_larger']) && (int)$_REQUEST[$fieldname . '_larger'] !== 0) {
-                                    $value        = (int)$_REQUEST[$fieldname . '_larger'];
+                                if (isset($_REQUEST[$fieldname . '_larger']) && (int) $_REQUEST[$fieldname . '_larger'] !== 0) {
+                                    $value        = (int) $_REQUEST[$fieldname . '_larger'];
                                     $search_url[] = $fieldname . '_larger=' . $value;
                                     $searchvars[] = $fieldname;
                                     $criteria->add(new Criteria($fieldname, $value, '>='));
                                 }
 
-                                if (isset($_REQUEST[$fieldname . '_smaller']) && (int)$_REQUEST[$fieldname . '_smaller'] !== 0) {
-                                    $value        = (int)$_REQUEST[$fieldname . '_smaller'];
+                                if (isset($_REQUEST[$fieldname . '_smaller']) && (int) $_REQUEST[$fieldname . '_smaller'] !== 0) {
+                                    $value        = (int) $_REQUEST[$fieldname . '_smaller'];
                                     $search_url[] = $fieldname . '_smaller=' . $value;
                                     $searchvars[] = $fieldname;
                                     $criteria->add(new Criteria($fieldname, $value, '<='));
@@ -304,7 +304,7 @@ switch ($op) {
 
                         if (isset($_REQUEST[$fieldname]) && !isset($_REQUEST[$fieldname . '_smaller']) && !isset($_REQUEST[$fieldname . '_larger'])) {
                             if (!is_array($_REQUEST[$fieldname])) {
-                                $value        = (int)$_REQUEST[$fieldname];
+                                $value        = (int) $_REQUEST[$fieldname];
                                 $search_url[] = $fieldname . '=' . $value;
                                 $criteria->add(new Criteria($fieldname, $value, '='));
                             } else {
@@ -388,10 +388,10 @@ switch ($op) {
         $order = $_REQUEST['order'] == 0 ? 'ASC' : 'DESC';
         $criteria->setOrder($order);
 
-        $limit = empty($_REQUEST['limit']) ? $limit_default : (int)$_REQUEST['limit'];
+        $limit = empty($_REQUEST['limit']) ? $limit_default : (int) $_REQUEST['limit'];
         $criteria->setLimit($limit);
 
-        $start = isset($_REQUEST['start']) ? (int)$_REQUEST['start'] : 0;
+        $start = isset($_REQUEST['start']) ? (int) $_REQUEST['start'] : 0;
         $criteria->setStart($start);
 
         list($users, $profiles, $total_users) = $profile_handler->search($criteria, $searchvars, $searchgroups);

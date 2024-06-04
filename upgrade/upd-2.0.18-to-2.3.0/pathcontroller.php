@@ -25,20 +25,20 @@ class PathStuffController
 {
     public $xoopsPath   = [
         'lib'  => '',
-        'data' => ''
+        'data' => '',
     ];
     public $path_lookup = [
         'data' => 'VAR_PATH',
-        'lib'  => 'PATH'
+        'lib'  => 'PATH',
     ];
 
     public $validPath = [
         'data' => 0,
-        'lib'  => 0
+        'lib'  => 0,
     ];
 
     public $permErrors = [
-        'data' => null
+        'data' => null,
     ];
 
     public function __construct()
@@ -200,13 +200,13 @@ class PathStuffController
                 'caches' => [
                     'xoops_cache',
                     'smarty_cache',
-                    'smarty_compile'
+                    'smarty_compile',
                 ],
-                'configs'
-            ]
+                'configs',
+            ],
         ];
         $errors = [
-            'data' => null
+            'data' => null,
         ];
         if (!isset($this->xoopsPath[$path])) {
             return false;

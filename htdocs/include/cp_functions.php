@@ -152,7 +152,7 @@ function xoops_module_get_admin_menu()
             $adminmenu[] = [
                 'link'     => '".XOOPS_URL."/modules/system/admin.php?fct=preferences&amp;op=showmod&amp;mod=' . $mid,
                 'title'    => _PREFERENCES,
-                'absolute' => true
+                'absolute' => true,
             ];
         }
         if (count($adminmenu) != 0) {

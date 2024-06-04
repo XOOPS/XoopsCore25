@@ -88,9 +88,9 @@ class XoopsCacheMemcache extends XoopsCacheEngine
         parent::init($settings);
         $defaults       = [
             'servers'  => [
-                '127.0.0.1'
+                '127.0.0.1',
             ],
-            'compress' => false
+            'compress' => false,
         ];
         $this->settings = array_merge($defaults, $this->settings);
 

@@ -111,9 +111,7 @@ class XoopsObject
      *
      * @access public
      */
-    public function __construct()
-    {
-    }
+    public function __construct() {}
 
     /**
      * PHP 4 style constructor compatibility shim
@@ -202,7 +200,7 @@ class XoopsObject
             'maxlength'   => $maxlength,
             'changed'     => false,
             'options'     => $options,
-            'enumeration' => $enumerations
+            'enumeration' => $enumerations,
         ];
     }
 
@@ -255,9 +253,9 @@ class XoopsObject
                         $this->vars[$key]['value'] = date(_DBTIMESTAMPSTRING, strtotime($value));
                     }
                     break;
-                // YOU SHOULD NOT USE THE ABOVE TYPES, THEY WILL BE REMOVED
+                    // YOU SHOULD NOT USE THE ABOVE TYPES, THEY WILL BE REMOVED
                 default:
-                    $this->vars[$key]['value'] =& $value;
+                    $this->vars[$key]['value'] = & $value;
             }
         }
     }
@@ -288,7 +286,7 @@ class XoopsObject
     public function setVar($key, $value, $not_gpc = false)
     {
         if (!empty($key) && isset($value) && isset($this->vars[$key])) {
-            $this->vars[$key]['value']   =& $value;
+            $this->vars[$key]['value']   = & $value;
             $this->vars[$key]['not_gpc'] = $not_gpc;
             $this->vars[$key]['changed'] = true;
             $this->setDirty();
@@ -477,7 +475,7 @@ class XoopsObject
                         break 1;
                     case 'e':
                     case 'edit':
-                        return htmlspecialchars((string)$ret, ENT_QUOTES | ENT_HTML5);
+                        return htmlspecialchars((string) $ret, ENT_QUOTES | ENT_HTML5);
                         break 1;
                     case 'p':
                     case 'preview':
@@ -579,11 +577,11 @@ class XoopsObject
                         break 1;
                     case 'p':
                     case 'preview':
-                    if (is_string($ret) && !is_numeric($ret)) {
-                        return date(_DBDATESTRING, strtotime($ret));
-                    } else {
-                        return date(_DBDATESTRING, $ret);
-                    }
+                        if (is_string($ret) && !is_numeric($ret)) {
+                            return date(_DBDATESTRING, strtotime($ret));
+                        } else {
+                            return date(_DBDATESTRING, $ret);
+                        }
                         break 1;
                     case 'f':
                     case 'formpreview':
@@ -659,11 +657,11 @@ class XoopsObject
                         break 1;
                     case 'p':
                     case 'preview':
-                    if (is_string($ret) && !is_numeric($ret)) {
-                        return date(_DBDATESTRING, strtotime($ret));
-                    } else {
-                        return date(_DBDATESTRING, $ret);
-                    }
+                        if (is_string($ret) && !is_numeric($ret)) {
+                            return date(_DBDATESTRING, strtotime($ret));
+                        } else {
+                            return date(_DBDATESTRING, $ret);
+                        }
                         break 1;
                     case 'f':
                     case 'formpreview':
@@ -744,11 +742,11 @@ class XoopsObject
                             $this->setErrors(sprintf(_XOBJ_ERR_REQUIRED, $k));
                             continue 2;
                         }
-                        if (isset($v['maxlength']) && strlen($cleanv) > (int)$v['maxlength']) {
-                            $this->setErrors(sprintf(_XOBJ_ERR_SHORTERTHAN, $k, (int)$v['maxlength']));
+                        if (isset($v['maxlength']) && strlen($cleanv) > (int) $v['maxlength']) {
+                            $this->setErrors(sprintf(_XOBJ_ERR_SHORTERTHAN, $k, (int) $v['maxlength']));
                             continue 2;
                         }
-                            $cleanv = $myts->censorString($cleanv);
+                        $cleanv = $myts->censorString($cleanv);
                         break;
                     case XOBJ_DTYPE_TXTAREA:
                         if ($v['required'] && $cleanv != '0' && $cleanv == '') {
@@ -761,7 +759,7 @@ class XoopsObject
                         // Perform any necessary operations for XOBJ_DTYPE_SOURCE, if needed
                         break;
                     case XOBJ_DTYPE_INT:
-                        $cleanv = (int)$cleanv;
+                        $cleanv = (int) $cleanv;
                         break;
 
                     case XOBJ_DTYPE_EMAIL:
@@ -773,7 +771,7 @@ class XoopsObject
                             $this->setErrors('Invalid Email'); //_XOBJ_ERR_INVALID_EMAIL
                             continue 2;
                         }
-                         break;
+                        break;
                     case XOBJ_DTYPE_URL:
                         if ($v['required'] && $cleanv == '') {
                             $this->setErrors(sprintf(_XOBJ_ERR_REQUIRED, $k));
@@ -784,19 +782,19 @@ class XoopsObject
                         }
                         break;
                     case XOBJ_DTYPE_ARRAY:
-                        $cleanv = (array)$cleanv;
+                        $cleanv = (array) $cleanv;
                         $cleanv = serialize($cleanv);
                         break;
                     case XOBJ_DTYPE_STIME:
                     case XOBJ_DTYPE_MTIME:
                     case XOBJ_DTYPE_LTIME:
-                        $cleanv = !is_string($cleanv) ? (int)$cleanv : strtotime($cleanv);
+                        $cleanv = !is_string($cleanv) ? (int) $cleanv : strtotime($cleanv);
                         break;
                     case XOBJ_DTYPE_FLOAT:
-                        $cleanv = (float)$cleanv;
+                        $cleanv = (float) $cleanv;
                         break;
                     case XOBJ_DTYPE_DECIMAL:
-                        $cleanv = (float)$cleanv;
+                        $cleanv = (float) $cleanv;
                         break;
                     case XOBJ_DTYPE_ENUM:
                         if (!in_array($cleanv, $v['enumeration'])) {
@@ -810,8 +808,8 @@ class XoopsObject
                             continue 2;
                         }
                         $cleanv = xoops_convert_encode($cleanv);
-                        if (isset($v['maxlength']) && strlen($cleanv) > (int)$v['maxlength']) {
-                            $this->setErrors(sprintf(_XOBJ_ERR_SHORTERTHAN, $k, (int)$v['maxlength']));
+                        if (isset($v['maxlength']) && strlen($cleanv) > (int) $v['maxlength']) {
+                            $this->setErrors(sprintf(_XOBJ_ERR_SHORTERTHAN, $k, (int) $v['maxlength']));
                             continue 2;
                         }
                         $cleanv = $myts->censorString($cleanv);
@@ -1087,9 +1085,7 @@ class XoopsObjectHandler
      * @abstract
      * @return XoopsObject
      */
-    public function create()
-    {
-    }
+    public function create() {}
 
     /**
      * gets a value object
@@ -1098,9 +1094,7 @@ class XoopsObjectHandler
      * @abstract
      * @return XoopsObject
      */
-    public function get($id)
-    {
-    }
+    public function get($id) {}
 
     /**
      * insert/update object
@@ -1108,9 +1102,7 @@ class XoopsObjectHandler
      * @param XoopsObject $object
      * @abstract
      */
-    public function insert(XoopsObject $object)
-    {
-    }
+    public function insert(XoopsObject $object) {}
 
     /**
      * delete object from database
@@ -1118,9 +1110,7 @@ class XoopsObjectHandler
      * @param XoopsObject $object
      * @abstract
      */
-    public function delete(XoopsObject $object)
-    {
-    }
+    public function delete(XoopsObject $object) {}
 }
 
 /**
@@ -1133,7 +1123,6 @@ class XoopsObjectHandler
  */
 class XoopsPersistableObjectHandler extends XoopsObjectHandler
 {
-
     //PHP 8.2 Dynamic properties deprecated
     public $table_link;
 

@@ -48,7 +48,7 @@ function smarty_function_xoUserInfo($params, &$smarty)
 
     $uid = 0;
     if (!empty($params['uid'])) {
-        $uid = (int)$params['uid'];
+        $uid = (int) $params['uid'];
     } elseif (isset($xoopsUser) && is_object($xoopsUser)) {
         $uid = $xoopsUser->getVar('uid');
     }
@@ -57,7 +57,7 @@ function smarty_function_xoUserInfo($params, &$smarty)
 
     $infoFields = [
         'uname', 'name', 'email', 'user_avatar', 'url', 'posts',
-        'user_from', 'user_occ', 'user_intrest', 'bio', 'user_sig'
+        'user_from', 'user_occ', 'user_intrest', 'bio', 'user_sig',
     ];
 
     if (!isset($usersInfo[0])) {

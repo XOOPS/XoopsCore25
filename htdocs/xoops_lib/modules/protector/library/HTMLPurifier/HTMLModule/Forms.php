@@ -44,7 +44,7 @@ class HTMLPurifier_HTMLModule_Forms extends HTMLPurifier_HTMLModule
                 'method' => 'Enum#get,post',
                 // really ContentType, but these two are the only ones used today
                 'enctype' => 'Enum#application/x-www-form-urlencoded,multipart/form-data',
-            )
+            ),
         );
         $form->excludes = array('form' => true);
 
@@ -67,7 +67,7 @@ class HTMLPurifier_HTMLModule_Forms extends HTMLPurifier_HTMLModule
                 'tabindex' => 'Number',
                 'type' => 'Enum#text,password,checkbox,button,radio,submit,reset,file,hidden,image',
                 'value' => 'CDATA',
-            )
+            ),
         );
         $input->attr_transform_post[] = new HTMLPurifier_AttrTransform_Input();
 
@@ -82,7 +82,7 @@ class HTMLPurifier_HTMLModule_Forms extends HTMLPurifier_HTMLModule
                 'name' => 'CDATA',
                 'size' => 'Number',
                 'tabindex' => 'Number',
-            )
+            ),
         );
 
         $this->addElement(
@@ -95,7 +95,7 @@ class HTMLPurifier_HTMLModule_Forms extends HTMLPurifier_HTMLModule
                 'label' => 'Text',
                 'selected' => 'Bool#selected',
                 'value' => 'CDATA',
-            )
+            ),
         );
         // It's illegal for there to be more than one selected, but not
         // be multiple. Also, no selected means undefined behavior. This might
@@ -114,7 +114,7 @@ class HTMLPurifier_HTMLModule_Forms extends HTMLPurifier_HTMLModule
                 'readonly' => 'Bool#readonly',
                 'rows*' => 'Number',
                 'tabindex' => 'Number',
-            )
+            ),
         );
         $textarea->attr_transform_pre[] = new HTMLPurifier_AttrTransform_Textarea();
 
@@ -130,7 +130,7 @@ class HTMLPurifier_HTMLModule_Forms extends HTMLPurifier_HTMLModule
                 'tabindex' => 'Number',
                 'type' => 'Enum#button,submit,reset',
                 'value' => 'CDATA',
-            )
+            ),
         );
 
         // For exclusions, ideally we'd specify content sets, not literal elements
@@ -144,7 +144,7 @@ class HTMLPurifier_HTMLModule_Forms extends HTMLPurifier_HTMLModule
             'button', // Formctrl
             'a', // as per HTML 4.01 spec, this is omitted by modularization
             'isindex',
-            'iframe' // legacy items
+            'iframe', // legacy items
         );
 
         // Extra exclusion: img usemap="" is not permitted within this element.
@@ -162,7 +162,7 @@ class HTMLPurifier_HTMLModule_Forms extends HTMLPurifier_HTMLModule
             array(
                 'accesskey' => 'Character',
                 // 'for' => 'IDREF', // IDREF not implemented, cannot allow
-            )
+            ),
         );
         $label->excludes = array('label' => true);
 
@@ -173,7 +173,7 @@ class HTMLPurifier_HTMLModule_Forms extends HTMLPurifier_HTMLModule
             'Common',
             array(
                 'accesskey' => 'Character',
-            )
+            ),
         );
 
         $this->addElement(
@@ -184,7 +184,7 @@ class HTMLPurifier_HTMLModule_Forms extends HTMLPurifier_HTMLModule
             array(
                 'disabled' => 'Bool#disabled',
                 'label*' => 'Text',
-            )
+            ),
         );
         // Don't forget an injector for <isindex>. This one's a little complex
         // because it maps to multiple elements.

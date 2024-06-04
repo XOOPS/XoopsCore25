@@ -2,7 +2,6 @@
 
 class HTMLPurifier_Printer_HTMLDefinition extends HTMLPurifier_Printer
 {
-
     /**
      * @type HTMLPurifier_HTMLDefinition, for easy access
      */
@@ -15,7 +14,7 @@ class HTMLPurifier_Printer_HTMLDefinition extends HTMLPurifier_Printer
     public function render($config)
     {
         $ret = '';
-        $this->config =& $config;
+        $this->config = & $config;
 
         $this->def = $config->getHTMLDefinition();
 
@@ -207,8 +206,8 @@ class HTMLPurifier_Printer_HTMLDefinition extends HTMLPurifier_Printer
                     'thead',
                     'tfoot',
                     'tbody',
-                    'tr'
-                )
+                    'tr',
+                ),
             );
         }
         $ret .= $this->element('th', 'Allowed children', $attr);
@@ -220,7 +219,7 @@ class HTMLPurifier_Printer_HTMLDefinition extends HTMLPurifier_Printer
                 '<em>Block</em>: ' .
                 $this->escape($this->listifyTagLookup($def->block->elements)),
                 null,
-                0
+                0,
             );
             $ret .= $this->end('tr');
             $ret .= $this->start('tr');
@@ -229,7 +228,7 @@ class HTMLPurifier_Printer_HTMLDefinition extends HTMLPurifier_Printer
                 '<em>Inline</em>: ' .
                 $this->escape($this->listifyTagLookup($def->inline->elements)),
                 null,
-                0
+                0,
             );
 
         } elseif ($def->type == 'custom') {
@@ -237,7 +236,7 @@ class HTMLPurifier_Printer_HTMLDefinition extends HTMLPurifier_Printer
             $ret .= $this->element(
                 'td',
                 '<em>' . ucfirst($def->type) . '</em>: ' .
-                $def->dtd_regex
+                $def->dtd_regex,
             );
 
         } else {
@@ -246,7 +245,7 @@ class HTMLPurifier_Printer_HTMLDefinition extends HTMLPurifier_Printer
                 '<em>' . ucfirst($def->type) . '</em>: ' .
                 $this->escape($this->listifyTagLookup($elements)),
                 null,
-                0
+                0,
             );
         }
         $ret .= $this->end('tr');

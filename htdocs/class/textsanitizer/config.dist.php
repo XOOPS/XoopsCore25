@@ -32,10 +32,10 @@ return $config = [
         'rtsp' => 0,
         'soundcloud' => 0, //new in XOOPS 2.5.7
         'ul' => 1,
-        'li' => 1
+        'li' => 1,
     ],
     'truncate_length' => 60,
     // Filters XSS scripts on display of text
     // There is considerable trade-off between security and performance
-    'filterxss_on_display' => false
+    'filterxss_on_display' => false,
 ];

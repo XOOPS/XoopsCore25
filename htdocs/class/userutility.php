@@ -186,22 +186,24 @@ class XoopsUserUtility
         $result = $xoopsDB->query($sql);
         if (!$xoopsDB->isResultSet($result)) {
             throw new \RuntimeException(
-                \sprintf(_DB_QUERY_ERROR, $sql) . $xoopsDB->error(), E_USER_ERROR
+                \sprintf(_DB_QUERY_ERROR, $sql) . $xoopsDB->error(),
+                E_USER_ERROR,
             );
         }
         list($count) = $xoopsDB->fetchRow($result);
-        if ((int)$count > 0) {
+        if ((int) $count > 0) {
             $stop .= _US_NICKNAMETAKEN . '<br>';
         }
         $sql    = 'SELECT COUNT(*) FROM `' . $xoopsDB->prefix('users') . '` WHERE `email` = ' . $xoopsDB->quote(addslashes($email)) . (($uid > 0) ? " AND `uid` <> {$uid}" : '');
         $result = $xoopsDB->query($sql);
         if (!$xoopsDB->isResultSet($result)) {
             throw new \RuntimeException(
-                \sprintf(_DB_QUERY_ERROR, $sql) . $xoopsDB->error(), E_USER_ERROR
+                \sprintf(_DB_QUERY_ERROR, $sql) . $xoopsDB->error(),
+                E_USER_ERROR,
             );
         }
         list($count) = $xoopsDB->fetchRow($result);
-        if ((int)$count > 0) {
+        if ((int) $count > 0) {
             $stop .= _US_EMAILTAKEN . '<br>';
         }
         // If password is not set, skip password validation
@@ -320,7 +322,7 @@ class XoopsUserUtility
     public static function getUnameFromId($userid, $usereal = false, $linked = false)
     {
         $myts     = \MyTextSanitizer::getInstance();
-        $userid   = (int)$userid;
+        $userid   = (int) $userid;
         $username = '';
         if ($userid > 0) {
             /** @var XoopsMemberHandler $member_handler */

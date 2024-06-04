@@ -25,7 +25,7 @@ $xoops_notification         = [];
 $xoops_notification['show'] = isset($xoopsModule) && is_object($xoopsUser) && notificationEnabled('inline') ? 1 : 0;
 if ($xoops_notification['show']) {
     xoops_loadLanguage('notification');
-    $categories  =& notificationSubscribableCategoryInfo();
+    $categories  = & notificationSubscribableCategoryInfo();
     $event_count = 0;
     if (!empty($categories)) {
         /** @var  XoopsNotificationHandler $notification_handler */
@@ -50,7 +50,7 @@ if ($xoops_notification['show']) {
                     'title'       => $event['title'],
                     'caption'     => $event['caption'],
                     'description' => $event['description'],
-                    'subscribed'  => $subscribed
+                    'subscribed'  => $subscribed,
                 ];
                 ++$event_count;
             }
@@ -60,18 +60,18 @@ if ($xoops_notification['show']) {
         $xoops_notification['redirect_script'] = xoops_getenv('PHP_SELF');
         $xoopsTpl->assign(
             [
-                              'lang_activenotifications'  => _NOT_ACTIVENOTIFICATIONS,
-                              'lang_notificationoptions'  => _NOT_NOTIFICATIONOPTIONS,
-                              'lang_updateoptions'        => _NOT_UPDATEOPTIONS,
-                              'lang_updatenow'            => _NOT_UPDATENOW,
-                              'lang_category'             => _NOT_CATEGORY,
-                              'lang_event'                => _NOT_EVENT,
-                              'lang_events'               => _NOT_EVENTS,
-                              'lang_checkall'             => _NOT_CHECKALL,
-                              'lang_notificationmethodis' => _NOT_NOTIFICATIONMETHODIS,
-                              'lang_change'               => _NOT_CHANGE,
-                              'editprofile_url'           => XOOPS_URL . '/edituser.php?uid=' . $xoopsUser->getVar('uid')
-            ]
+                'lang_activenotifications'  => _NOT_ACTIVENOTIFICATIONS,
+                'lang_notificationoptions'  => _NOT_NOTIFICATIONOPTIONS,
+                'lang_updateoptions'        => _NOT_UPDATEOPTIONS,
+                'lang_updatenow'            => _NOT_UPDATENOW,
+                'lang_category'             => _NOT_CATEGORY,
+                'lang_event'                => _NOT_EVENT,
+                'lang_events'               => _NOT_EVENTS,
+                'lang_checkall'             => _NOT_CHECKALL,
+                'lang_notificationmethodis' => _NOT_NOTIFICATIONMETHODIS,
+                'lang_change'               => _NOT_CHANGE,
+                'editprofile_url'           => XOOPS_URL . '/edituser.php?uid=' . $xoopsUser->getVar('uid'),
+            ],
         );
         switch ($xoopsUser->getVar('notify_method')) {
             case XOOPS_NOTIFICATION_METHOD_DISABLE:

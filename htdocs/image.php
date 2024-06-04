@@ -149,7 +149,7 @@ function imageCreateCorners($sourceImage, $radii)
     $workingWidth = $imageWidth * $q;
     $workingHeight = $imageHeight * $q;
 
-    $workingImage= imagecreatetruecolor($workingWidth, $workingHeight);
+    $workingImage = imagecreatetruecolor($workingWidth, $workingHeight);
     $alphaColor = imagecolorallocatealpha($workingImage, $r, $g, $b, 127);
     imagealphablending($workingImage, false);
     imagesavealpha($workingImage, true);
@@ -383,7 +383,7 @@ if (!$max_width && $max_height) {
 }
 
 // color
-$color = isset($_GET['color']) ? preg_replace('/[^0-9a-fA-F]/', '', (string)$_GET['color']) : false;
+$color = isset($_GET['color']) ? preg_replace('/[^0-9a-fA-F]/', '', (string) $_GET['color']) : false;
 
 // filter, radius, angle
 $filter = Request::getArray('filter', [], 'GET'); //isset($_GET['filter']) ? $_GET['filter'] : false;
@@ -414,7 +414,7 @@ if (isset($_GET['cropratio'])) {
     $crop_ratio = explode(':', Request::getString('cropratio', '', 'GET'));
     if (count($crop_ratio) == 2) {
         $ratio_computed = $imageWidth / $imageHeight;
-        $crop_radio_computed = (float)$crop_ratio[0] / (float)$crop_ratio[1];
+        $crop_radio_computed = (float) $crop_ratio[0] / (float) $crop_ratio[1];
         if ($ratio_computed < $crop_radio_computed) {
             // Image is too tall, so we will crop the top and bottom
             $orig_height = $imageHeight;
@@ -468,7 +468,7 @@ switch ($imageMimetype) {
         $imageMimetype = 'image/png'; // We need to convert GIFs to PNGs
         $do_sharpen = false;
         $quality = round(10 - ($quality / 10)); // We are converting the GIF to a PNG and PNG needs a compression
-                                                // level of 0 (no compression) through 9 (max)
+        // level of 0 (no compression) through 9 (max)
         break;
     case 'image/png':
     case 'image/x-png':
@@ -512,14 +512,14 @@ if (in_array($imageMimetype, ['image/gif', 'image/png', 'image/webp'])) {
                 $destination_image,
                 intval($color[0] . $color[1], 16),
                 intval($color[2] . $color[3], 16),
-                intval($color[4] . $color[5], 16)
+                intval($color[4] . $color[5], 16),
             );
         } elseif (strlen($color) == 3) {
             $background = imagecolorallocate(
                 $destination_image,
                 intval($color[0] . $color[0], 16),
                 intval($color[1] . $color[1], 16),
-                intval($color[2] . $color[2], 16)
+                intval($color[2] . $color[2], 16),
             );
         }
         if ($background) {
@@ -540,14 +540,14 @@ if (in_array($imageMimetype, ['image/gif', 'image/png', 'image/webp'])) {
             $destination_image,
             intval($color[0] . $color[1], 16),
             intval($color[2] . $color[3], 16),
-            intval($color[4] . $color[5], 16)
+            intval($color[4] . $color[5], 16),
         );
     } elseif (strlen($color) == 3) {
         $background = imagecolorallocate(
             $destination_image,
             intval($color[0] . $color[0], 16),
             intval($color[1] . $color[1], 16),
-            intval($color[2] . $color[2], 16)
+            intval($color[2] . $color[2], 16),
         );
     }
     if ($background) {
@@ -615,7 +615,7 @@ if ($do_sharpen) {
     $sharpen_matrix = [
         [-1, -2, -1],
         [-2, $sharpness + 12, -2],
-        [-1, -2, -1]
+        [-1, -2, -1],
     ];
     $divisor = $sharpness;
     $offset = 0;

@@ -160,7 +160,5 @@ class XoopsPreloadItem
     /**
      * XoopsPreloadItem constructor.
      */
-    public function __construct()
-    {
-    }
+    public function __construct() {}
 }

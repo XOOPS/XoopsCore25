@@ -40,7 +40,7 @@ class XoopsApi extends XoopsXmlRpcApi
         if (!$this->_checkUser($this->params[1], $this->params[2])) {
             $this->response->add(new XoopsXmlRpcFault(104));
         } else {
-            if (!$fields =& $this->_getPostFields(null, $this->params[0])) {
+            if (!$fields = & $this->_getPostFields(null, $this->params[0])) {
                 $this->response->add(new XoopsXmlRpcFault(106));
             } else {
                 $missing = [];
@@ -52,7 +52,7 @@ class XoopsApi extends XoopsXmlRpcApi
                                 $missing[] = $tag;
                             }
                         } else {
-                            $post[$tag] =& $data;
+                            $post[$tag] = & $data;
                         }
                     } else {
                         $post[$tag] = $this->params[3][$tag];
@@ -69,7 +69,7 @@ class XoopsApi extends XoopsXmlRpcApi
                     include_once XOOPS_ROOT_PATH . '/modules/news/class/class.newsstory.php';
                     $story = new NewsStory();
                     $error = false;
-                    if ((int)$this->params[4] > 0) {
+                    if ((int) $this->params[4] > 0) {
                         if (!$this->_checkAdmin()) {
                             // non admin users cannot publish
                             $error = true;
@@ -88,7 +88,7 @@ class XoopsApi extends XoopsXmlRpcApi
                     }
                     if (!$error) {
                         if (isset($post['categories']) && !empty($post['categories'][0])) {
-                            $story->setTopicId((int)$post['categories'][0]['categoryId']);
+                            $story->setTopicId((int) $post['categories'][0]['categoryId']);
                         } else {
                             $story->setTopicId(1);
                         }
@@ -128,7 +128,7 @@ class XoopsApi extends XoopsXmlRpcApi
         if (!$this->_checkUser($this->params[1], $this->params[2])) {
             $this->response->add(new XoopsXmlRpcFault(104));
         } else {
-            if (!$fields =& $this->_getPostFields($this->params[0])) {
+            if (!$fields = & $this->_getPostFields($this->params[0])) {
             } else {
                 $missing = [];
                 foreach ($fields as $tag => $detail) {
@@ -226,7 +226,7 @@ class XoopsApi extends XoopsXmlRpcApi
                 'storyid'   => $story->storyid(),
                 'title'     => $story->title('Edit'),
                 'hometext'  => $story->hometext('Edit'),
-                'moretext'  => $story->bodytext('Edit')
+                'moretext'  => $story->bodytext('Edit'),
             ];
             if (!$respond) {
                 return $ret;
@@ -252,7 +252,7 @@ class XoopsApi extends XoopsXmlRpcApi
                             case 'title':
                                 $struct->add('title', new XoopsXmlRpcString($value));
                                 break;
-                            default :
+                            default:
                                 $content .= '<' . $key . '>' . trim($value) . '</' . $key . '>';
                                 break;
                         }
@@ -277,10 +277,10 @@ class XoopsApi extends XoopsXmlRpcApi
             $this->response->add(new XoopsXmlRpcFault(104));
         } else {
             include_once XOOPS_ROOT_PATH . '/modules/news/class/class.newsstory.php';
-            if (isset($this->params[4]) && (int)$this->params[4] > 0) {
-                $stories =& NewsStory::getAllPublished((int)$this->params[3], 0, $this->params[4]);
+            if (isset($this->params[4]) && (int) $this->params[4] > 0) {
+                $stories = & NewsStory::getAllPublished((int) $this->params[3], 0, $this->params[4]);
             } else {
-                $stories =& NewsStory::getAllPublished((int)$this->params[3]);
+                $stories = & NewsStory::getAllPublished((int) $this->params[3]);
             }
             $scount = count($stories);
             $ret    = [];
@@ -291,7 +291,7 @@ class XoopsApi extends XoopsXmlRpcApi
                     'storyid'   => $stories[$i]->storyId(),
                     'title'     => $stories[$i]->title('Edit'),
                     'hometext'  => $stories[$i]->hometext('Edit'),
-                    'moretext'  => $stories[$i]->bodytext('Edit')
+                    'moretext'  => $stories[$i]->bodytext('Edit'),
                 ];
             }
             if (!$respond) {
@@ -321,7 +321,7 @@ class XoopsApi extends XoopsXmlRpcApi
                                 case 'title':
                                     $struct->add('title', new XoopsXmlRpcString($value));
                                     break;
-                                default :
+                                default:
                                     $content .= '<' . $key . '>' . trim($value) . '</' . $key . '>';
                                     break;
                             }

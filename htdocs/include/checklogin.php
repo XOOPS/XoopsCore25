@@ -76,15 +76,16 @@ if (false !== $user) {
             $claims = [
                 'uid' => $_SESSION['xoopsUserId'],
             ];
-            $rememberTime = 60*60*24*30;
+            $rememberTime = 60 * 60 * 24 * 30;
             $token = \Xmf\Jwt\TokenFactory::build('rememberme', $claims, $rememberTime);
             xoops_setcookie(
                 $GLOBALS['xoopsConfig']['usercookie'],
                 $token,
                 time() + $rememberTime,
                 '/',
-                XOOPS_COOKIE_DOMAIN, XOOPS_PROT === 'https://',
-                true
+                XOOPS_COOKIE_DOMAIN,
+                XOOPS_PROT === 'https://',
+                true,
             );
         } else {
             xoops_setcookie($GLOBALS['xoopsConfig']['usercookie'], null, time() - 3600, '/', XOOPS_COOKIE_DOMAIN, 0, true);

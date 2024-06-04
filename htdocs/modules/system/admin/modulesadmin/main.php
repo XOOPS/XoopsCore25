@@ -73,7 +73,7 @@ switch ($op) {
         $listed_mods    = [];
         $i              = 0;
         $install_mods   = [];
-		$module = Request::getArray('module', []);
+        $module = Request::getArray('module', []);
         foreach ($installed_mods as $module) {
             /** @var XoopsModule $module */
             $listed_mods[$i]                  = $module->toArray();
@@ -86,17 +86,17 @@ switch ($op) {
             $listed_mods[$i]['credits']       = $module->getInfo('credits');
             $listed_mods[$i]['license']       = $module->getInfo('license');
             $listed_mods[$i]['description']   = $module->getInfo('description');
-			
-			if (true === $module->versionCompare($listed_mods[$i]['version'], $module->getInfo('version'))) {
+
+            if (true === $module->versionCompare($listed_mods[$i]['version'], $module->getInfo('version'))) {
                 $listed_mods[$i]['warning_update'] = true;
             } else {
                 $listed_mods[$i]['warning_update'] = false;
             }
-			// Only to request the update because since xoops 2.5.11 the version is a character string.This condition can be removed from xoops 2.5.12.
-			if (strpos($listed_mods[$i]['version'], '.') === false){
-				$listed_mods[$i]['warning_update'] = true;
-			}
-			
+            // Only to request the update because since xoops 2.5.11 the version is a character string.This condition can be removed from xoops 2.5.12.
+            if (strpos($listed_mods[$i]['version'], '.') === false) {
+                $listed_mods[$i]['warning_update'] = true;
+            }
+
             $install_mods[] = $module->getInfo('dirname');
             unset($module);
             ++$i;
@@ -233,7 +233,7 @@ switch ($op) {
         $modifs_mods = [];
         $module      = empty($_POST['module']) ? [] : $_POST['module'];
         foreach ($module as $mid) {
-            $mid                          = (int)$mid;
+            $mid                          = (int) $mid;
             $newname[$mid]                = trim(XoopsFilterInput::clean($newname[$mid], 'STRING'));
             $modifs_mods[$i]['mid']       = $mid;
             $modifs_mods[$i]['oldname']   = $myts->htmlSpecialChars($oldname[$mid]);
@@ -276,7 +276,7 @@ switch ($op) {
         // Get module handler
 
         $module_handler = xoops_getHandler('module');
-		$module_id      = Request::getInt('mid', 0);
+        $module_id      = Request::getInt('mid', 0);
         if ($module_id > 0) {
             $module = $module_handler->get($module_id);
             $old    = $module->getVar('weight');
@@ -335,7 +335,7 @@ switch ($op) {
         break;
 
     case 'install':
-		$module = Request::getString('module', '');
+        $module = Request::getString('module', '');
         $module = $myts->htmlSpecialChars($module);
         // Get module handler
         /** @var XoopsModuleHandler $module_handler */
@@ -394,7 +394,7 @@ switch ($op) {
         break;
 
     case 'uninstall':
-		$module = Request::getString('module', '');
+        $module = Request::getString('module', '');
         $module = $myts->htmlSpecialChars($module);
         $msgs = '';
         // Get module handler
@@ -422,7 +422,7 @@ switch ($op) {
         break;
 
     case 'uninstall_ok':
-		$module = Request::getString('module', '');
+        $module = Request::getString('module', '');
         $ret   = [];
         $ret[] = xoops_module_uninstall($module);
         // Flush cache files for cpanel GUIs
@@ -454,7 +454,7 @@ switch ($op) {
         break;
 
     case 'update':
-		$module = Request::getString('module', '');
+        $module = Request::getString('module', '');
         $module = $myts->htmlSpecialChars($module);
         // Get module handler
         /** @var XoopsModuleHandler $module_handler */
@@ -481,7 +481,7 @@ switch ($op) {
         break;
 
     case 'update_ok':
-		$module = Request::getString('module', '');
+        $module = Request::getString('module', '');
         $ret   = [];
         $ret[] = xoops_module_update($module);
         // Flush cache files for cpanel GUIs

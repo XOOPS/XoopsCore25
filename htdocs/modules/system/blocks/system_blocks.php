@@ -139,7 +139,7 @@ function b_system_main_show()
                 foreach ($sublinks as $sublink) {
                     $block['modules'][$i]['sublinks'][] = [
                         'name' => $sublink['name'],
-                        'url'  => XOOPS_URL . '/modules/' . $modules[$i]->getVar('dirname') . '/' . $sublink['url']
+                        'url'  => XOOPS_URL . '/modules/' . $modules[$i]->getVar('dirname') . '/' . $sublink['url'],
                     ];
                 }
             } else {
@@ -313,7 +313,7 @@ function b_system_waiting_show()
             $block['modules'][10]['lang_linkname'] = _MB_SYSTEM_SMARTSECTION;
         }
     }
-	$GLOBALS['xoopsLogger']->addDeprecated("Block 'Waiting Contents' is deprecated since XOOPS 2.5.11, please use waiting module");
+    $GLOBALS['xoopsLogger']->addDeprecated("Block 'Waiting Contents' is deprecated since XOOPS 2.5.11, please use waiting module");
     return $block;
 }
 
@@ -345,7 +345,7 @@ function b_system_info_show($options)
                         'id'      => $userinfo['uid'],
                         'name'    => $myts->htmlSpecialChars($userinfo['uname']),
                         'msglink' => "<a href=\"javascript:openWithSelfMain('" . XOOPS_URL . '/pmlite.php?send2=1&amp;to_userid=' . $userinfo['uid'] . "','pmlite',565,500);\"><img src=\"" . XOOPS_URL . "/images/icons/pm_small.gif\" border=\"0\" width=\"27\" height=\"17\" alt=\"\" /></a>",
-                        'avatar'  => XOOPS_UPLOAD_URL . '/' . $userinfo['user_avatar']
+                        'avatar'  => XOOPS_UPLOAD_URL . '/' . $userinfo['user_avatar'],
                     ];
                 } else {
                     if ($userinfo['user_viewemail']) {
@@ -353,14 +353,14 @@ function b_system_info_show($options)
                             'id'      => $userinfo['uid'],
                             'name'    => $myts->htmlSpecialChars($userinfo['uname']),
                             'msglink' => '<a href="mailto:' . $userinfo['email'] . '"><img src="' . XOOPS_URL . '/images/icons/em_small.gif" border="0" width="16" height="14" alt="" /></a>',
-                            'avatar'  => XOOPS_UPLOAD_URL . '/' . $userinfo['user_avatar']
+                            'avatar'  => XOOPS_UPLOAD_URL . '/' . $userinfo['user_avatar'],
                         ];
                     } else {
                         $block['groups'][$i]['users'][] = [
                             'id'      => $userinfo['uid'],
                             'name'    => $myts->htmlSpecialChars($userinfo['uname']),
                             'msglink' => '&nbsp;',
-                            'avatar'  => XOOPS_UPLOAD_URL . '/' . $userinfo['user_avatar']
+                            'avatar'  => XOOPS_UPLOAD_URL . '/' . $userinfo['user_avatar'],
                         ];
                     }
                 }
@@ -455,7 +455,7 @@ function b_system_comments_show($options)
     include_once XOOPS_ROOT_PATH . '/include/comment_constants.php';
     $comment_handler = xoops_getHandler('comment');
     $criteria        = new CriteriaCompo(new Criteria('com_status', XOOPS_COMMENT_ACTIVE));
-    $criteria->setLimit((int)$options[0]);
+    $criteria->setLimit((int) $options[0]);
     $criteria->setSort('com_created');
     $criteria->setOrder('DESC');
 
@@ -504,7 +504,7 @@ function b_system_comments_show($options)
         } else {
             $com['poster'] = $GLOBALS['xoopsConfig']['anonymous'];
         }
-        $block['comments'][] =& $com;
+        $block['comments'][] = & $com;
         unset($com);
     }
 
@@ -528,7 +528,7 @@ function b_system_notification_show()
     // Now build the nested associative array of info to pass
     // to the block template.
     $block      = [];
-    $categories =& notificationSubscribableCategoryInfo();
+    $categories = & notificationSubscribableCategoryInfo();
     if (empty($categories)) {
         return false;
     }
@@ -549,7 +549,7 @@ function b_system_notification_show()
                 'title'       => $event['title'],
                 'caption'     => $event['caption'],
                 'description' => $event['description'],
-                'subscribed'  => $subscribed
+                'subscribed'  => $subscribed,
             ];
         }
         $block['categories'][$category['name']] = $section;
@@ -573,7 +573,7 @@ function b_system_notification_show()
  */
 function b_system_comments_edit($options)
 {
-    $inputtag = "<input type='text' name='options[]' value='" . (int)$options[0] . "' />";
+    $inputtag = "<input type='text' name='options[]' value='" . (int) $options[0] . "' />";
     $form     = sprintf(_MB_SYSTEM_DISPLAYC, $inputtag);
 
     return $form;
@@ -587,7 +587,7 @@ function b_system_comments_edit($options)
 function b_system_topposters_edit($options)
 {
     include_once XOOPS_ROOT_PATH . '/class/xoopslists.php';
-    $inputtag = "<input type='text' name='options[]' value='" . (int)$options[0] . "' />";
+    $inputtag = "<input type='text' name='options[]' value='" . (int) $options[0] . "' />";
     $form     = sprintf(_MB_SYSTEM_DISPLAY, $inputtag);
     $form .= '<br>' . _MB_SYSTEM_DISPLAYA . "&nbsp;<input type='radio' id='options[]' name='options[]' value='1'";
     if ($options[1] == 1) {
@@ -687,10 +687,10 @@ function b_system_themes_show($options)
     if ($options[0] == 1) {
         $themeSelect = '<img vspace="2" id="xoops_theme_img" src="'
             . XOOPS_THEME_URL . '/' . $xoopsConfig['theme_set'] . '/shot.gif" '
-            . ' alt="screenshot" width="' . (int)$options[1] . '" />'
+            . ' alt="screenshot" width="' . (int) $options[1] . '" />'
             . '<br>';
         $select->setExtra(' onchange="showImgSelected(\'xoops_theme_img\', \'xoops_theme_select\', \'themes\', \'/shot.gif\', '
-            .  '\'' . XOOPS_URL . '\');" ');
+            . '\'' . XOOPS_URL . '\');" ');
         $selectTray = new XoopsFormElementTray('');
         $selectTray->addElement($select);
         $selectTray->addElement(new XoopsFormButton('', 'submit', _GO, 'submit'));

@@ -23,10 +23,10 @@
  */
 class TinyMCE
 {
-    public        $rootpath;
-    public        $config                = [];
-    public        $setting               = [];
-    public        $xoopsPlugins          = [];
+    public $rootpath;
+    public $config                = [];
+    public $setting               = [];
+    public $xoopsPlugins          = [];
     public static $LastOfElementsTinymce = '';
     public static $ListOfElementsTinymce = [];
 
@@ -113,15 +113,15 @@ class TinyMCE
             if (empty($this->config['buttons'])) {
                 $this->config['buttons'][] = [
                     'before' => '',
-                    'add' => ''
+                    'add' => '',
                 ];
                 $this->config['buttons'][] = [
                     'before' => '',
-                    'add' => ''
+                    'add' => '',
                 ];
                 $this->config['buttons'][] = [
                     'before' => '',
-                    'add' => ''
+                    'add' => '',
                 ];
             }
             $i = 0;

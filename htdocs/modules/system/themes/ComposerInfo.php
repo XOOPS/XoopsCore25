@@ -1,4 +1,5 @@
 <?php
+
 header('HTTP/1.0 404 Not Found');
 
 class ComposerInfo
@@ -53,13 +54,14 @@ class ComposerInfo
 
 
     // Function to extract package name and version (using array_map for optimization)
-    private  static function extractPackages(array $packages): array
+    private static function extractPackages(array $packages): array
     {
         return array_map(
             static fn($package) => [
                 'name'    => $package['name'],
-                'version' => $package['version']
-            ], $packages
+                'version' => $package['version'],
+            ],
+            $packages,
         );
     }
 

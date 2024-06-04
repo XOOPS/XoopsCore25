@@ -34,9 +34,12 @@ class HTMLPurifier_Node_Element extends HTMLPurifier_Node
      */
     public $empty = false;
 
-    public $endCol = null, $endLine = null, $endArmor = array();
+    public $endCol = null;
+    public $endLine = null;
+    public $endArmor = array();
 
-    public function __construct($name, $attr = array(), $line = null, $col = null, $armor = array()) {
+    public function __construct($name, $attr = array(), $line = null, $col = null, $armor = array())
+    {
         $this->name = $name;
         $this->attr = $attr;
         $this->line = $line;
@@ -44,7 +47,8 @@ class HTMLPurifier_Node_Element extends HTMLPurifier_Node
         $this->armor = $armor;
     }
 
-    public function toTokenPair() {
+    public function toTokenPair()
+    {
         // XXX inefficiency here, normalization is not necessary
         if ($this->empty) {
             return array(new HTMLPurifier_Token_Empty($this->name, $this->attr, $this->line, $this->col, $this->armor), null);
@@ -56,4 +60,3 @@ class HTMLPurifier_Node_Element extends HTMLPurifier_Node
         }
     }
 }
-

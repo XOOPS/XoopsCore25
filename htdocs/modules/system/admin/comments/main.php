@@ -15,7 +15,7 @@
  * @package
  * @since
  * @author       XOOPS Development Team, Kazumi Ono (AKA onokazu)
- */ 
+ */
 use Xmf\Request;
 
 // Check users rights
@@ -52,16 +52,16 @@ $status_array    = [XOOPS_COMMENT_PENDING => _CM_PENDING, XOOPS_COMMENT_ACTIVE =
 $status_array2   = [
     XOOPS_COMMENT_PENDING => '<span style="text-decoration: none; font-weight: bold; color: #008000;">' . _CM_PENDING . '</span>',
     XOOPS_COMMENT_ACTIVE  => '<span style="text-decoration: none; font-weight: bold; color: #ff0000;">' . _CM_ACTIVE . '</span>',
-    XOOPS_COMMENT_HIDDEN  => '<span style="text-decoration: none; font-weight: bold; color: #0000ff;">' . _CM_HIDDEN . '</span>'
+    XOOPS_COMMENT_HIDDEN  => '<span style="text-decoration: none; font-weight: bold; color: #0000ff;">' . _CM_HIDDEN . '</span>',
 ];
 $start           = 0;
 $status_array[0] = _AM_SYSTEM_COMMENTS_FORM_ALL_STATUS;
 
 $comments = [];
 //$status   = (!isset($_REQUEST['status']) || !in_array((int)($_REQUEST['status']), array_keys($status_array))) ? 0 : (int)($_REQUEST['status']);
-$status = (!isset($_REQUEST['status']) || !array_key_exists((int)$_REQUEST['status'], $status_array)) ? 0 : (int)$_REQUEST['status'];
+$status = (!isset($_REQUEST['status']) || !array_key_exists((int) $_REQUEST['status'], $status_array)) ? 0 : (int) $_REQUEST['status'];
 
-$module          = !isset($_REQUEST['module']) ? 0 : (int)$_REQUEST['module'];
+$module          = !isset($_REQUEST['module']) ? 0 : (int) $_REQUEST['module'];
 $modules_Handler = xoops_getHandler('module');
 $module_array    = $modules_Handler->getList(new Criteria('hascomments', 1));
 $module_array[0] = _AM_SYSTEM_COMMENTS_FORM_ALL_MODS;
@@ -129,7 +129,7 @@ switch ($op) {
         $verif    = false;
         if (isset($_POST['comments_after']) && isset($_POST['comments_before'])) {
             if ($_POST['comments_after'] != $_POST['comments_before']) {
-				$com_after = strtotime(Request::getString('comments_after', time()));
+                $com_after = strtotime(Request::getString('comments_after', time()));
                 $com_before = strtotime(Request::getString('comments_before', time()));
                 if ($com_after) {
                     $criteria->add(new Criteria('com_created', $com_after, '>'));

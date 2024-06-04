@@ -1,4 +1,5 @@
 <?php
+
 // start hack by Trabis
 if (!class_exists('ProtectorRegistry')) {
     exit('Registry not found');
@@ -50,7 +51,8 @@ if (!function_exists('protector_onupdate_base')) {
         $result = $db->query($sql);
         if (false === $result || !($result instanceof mysqli_result) || !$db->isResultSet($result)) {
             throw new \RuntimeException(
-                \sprintf(_DB_QUERY_ERROR, $sql) . $db->error(), E_USER_ERROR
+                \sprintf(_DB_QUERY_ERROR, $sql) . $db->error(),
+                E_USER_ERROR,
             );
         } else {
             list(, $create_string) = $db->fetchRow($result);
@@ -70,7 +72,8 @@ if (!function_exists('protector_onupdate_base')) {
 
         if (false === $result || !($result instanceof mysqli_result) || !$db->isResultSet($result)) {
             throw new \RuntimeException(
-                \sprintf(_DB_QUERY_ERROR, $sql) . $db->error(), E_USER_ERROR
+                \sprintf(_DB_QUERY_ERROR, $sql) . $db->error(),
+                E_USER_ERROR,
             );
         } else {
             list(, $create_string) = $db->fetchRow($result);
@@ -94,8 +97,8 @@ if (!function_exists('protector_onupdate_base')) {
                         continue;
                     }
                     $file_path = $tpl_path . '/' . $file;
-                if (is_file($file_path) && in_array(strrchr($file, '.'), ['.html', '.css', '.js'])) {
-                        $mtime   = (int)(@filemtime($file_path));
+                    if (is_file($file_path) && in_array(strrchr($file, '.'), ['.html', '.css', '.js'])) {
+                        $mtime   = (int) (@filemtime($file_path));
                         $tplfile = $tplfile_handler->create();
                         $tplfile->setVar('tpl_source', file_get_contents($file_path), true);
                         $tplfile->setVar('tpl_refid', $mid);
@@ -107,14 +110,14 @@ if (!function_exists('protector_onupdate_base')) {
                         $tplfile->setVar('tpl_lastimported', 0);
                         $tplfile->setVar('tpl_type', 'module');
                         if (!$tplfile_handler->insert($tplfile)) {
-                        $ret[] = '<span style="color:#ff0000;">ERROR: Could not insert template <b>' . htmlspecialchars($mydirname . '_' . $file, ENT_QUOTES | ENT_HTML5) . '</b> to the database.</span><br>';
+                            $ret[] = '<span style="color:#ff0000;">ERROR: Could not insert template <b>' . htmlspecialchars($mydirname . '_' . $file, ENT_QUOTES | ENT_HTML5) . '</b> to the database.</span><br>';
                         } else {
                             $tplid  = $tplfile->getVar('tpl_id');
                             $msgs[] = 'Template <b>' . htmlspecialchars($mydirname . '_' . $file, ENT_QUOTES | ENT_HTML5) . '</b> added to the database. (ID: <b>' . $tplid . '</b>)<br>';
                             // generate compiled file
                             include_once XOOPS_ROOT_PATH . '/class/xoopsblock.php';
                             include_once XOOPS_ROOT_PATH . '/class/template.php';
-                            if (!xoops_template_touch((string)$tplid)) {
+                            if (!xoops_template_touch((string) $tplid)) {
                                 $msgs[] = '<span style="color:#ff0000;">ERROR: Failed compiling template <b>' . htmlspecialchars($mydirname . '_' . $file, ENT_QUOTES | ENT_HTML5) . '</b>.</span><br>';
                             } else {
                                 $msgs[] = 'Template <b>' . htmlspecialchars($mydirname . '_' . $file, ENT_QUOTES | ENT_HTML5) . '</b> compiled.</span><br>';

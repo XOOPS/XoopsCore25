@@ -6,7 +6,6 @@
  */
 class HTMLPurifier_Encoder
 {
-
     /**
      * Constructor throws fatal error if you attempt to instantiate class
      */
@@ -18,9 +17,7 @@ class HTMLPurifier_Encoder
     /**
      * Error-handler that mutes errors, alternative to shut-up operator.
      */
-    public static function muteErrorHandler()
-    {
-    }
+    public static function muteErrorHandler() {}
 
     /**
      * iconv wrapper which mutes errors, but doesn't work around bugs.
@@ -138,13 +135,13 @@ class HTMLPurifier_Encoder
         // need to do PHP stuff. 99% of the time, this will be the case.
         if (preg_match(
             '/^[\x{9}\x{A}\x{D}\x{20}-\x{7E}\x{A0}-\x{D7FF}\x{E000}-\x{FFFD}\x{10000}-\x{10FFFF}]*$/Du',
-            $str
+            $str,
         )) {
             return $str;
         }
 
         $mState = 0; // cached expected number of octets after the current octet
-                     // until the beginning of the next UTF8 character sequence
+        // until the beginning of the next UTF8 character sequence
         $mUcs4  = 0; // cached Unicode character
         $mBytes = 1; // cached expected number of octets in the current sequence
 
@@ -279,7 +276,7 @@ class HTMLPurifier_Encoder
                     $mState = 0;
                     $mUcs4  = 0;
                     $mBytes = 1;
-                    $char ='';
+                    $char = '';
                 }
             }
         }
@@ -315,7 +312,7 @@ class HTMLPurifier_Encoder
     public static function unichr($code)
     {
         if ($code > 1114111 or $code < 0 or
-          ($code >= 55296 and $code <= 57343) ) {
+          ($code >= 55296 and $code <= 57343)) {
             // bits are set outside the "valid" range as defined
             // by UNICODE 4.1.0
             return '';
@@ -409,7 +406,7 @@ class HTMLPurifier_Encoder
             trigger_error(
                 'You have a buggy version of iconv, see https://bugs.php.net/bug.php?id=48147 ' .
                 'and http://sourceware.org/bugzilla/show_bug.cgi?id=13541',
-                E_USER_ERROR
+                E_USER_ERROR,
             );
         }
     }
@@ -510,15 +507,15 @@ class HTMLPurifier_Encoder
     }
 
     /** No bugs detected in iconv. */
-    const ICONV_OK = 0;
+    public const ICONV_OK = 0;
 
     /** Iconv truncates output if converting from UTF-8 to another
      *  character set with //IGNORE, and a non-encodable character is found */
-    const ICONV_TRUNCATES = 1;
+    public const ICONV_TRUNCATES = 1;
 
     /** Iconv does not support //IGNORE, making it unusable for
      *  transcoding purposes */
-    const ICONV_UNUSABLE = 2;
+    public const ICONV_UNUSABLE = 2;
 
     /**
      * glibc iconv has a known bug where it doesn't handle the magic
@@ -548,7 +545,7 @@ class HTMLPurifier_Encoder
                 trigger_error(
                     'Your copy of iconv is extremely buggy. Please notify HTML Purifier maintainers: ' .
                     'include your iconv version as per phpversion()',
-                    E_USER_ERROR
+                    E_USER_ERROR,
                 );
             } else {
                 $code = self::ICONV_OK;

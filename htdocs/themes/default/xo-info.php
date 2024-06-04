@@ -23,5 +23,5 @@
 return [
     'copyright' => '&copy; XOOPS Core Team, maintained by XOOPS Design Team',
     // Types of language constants
-    'languages' => ['main', 'admin']
+    'languages' => ['main', 'admin'],
 ];

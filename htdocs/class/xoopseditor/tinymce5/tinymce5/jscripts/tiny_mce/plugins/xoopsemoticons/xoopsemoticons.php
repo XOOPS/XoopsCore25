@@ -89,7 +89,7 @@ if ($smiles = $_SESSION['XoopsEmotions']) {
     }
 } else {
     echo 'error';
-    
+
 }
 echo '</div>';
 echo '</body>';
@@ -127,5 +127,5 @@ echo '</body>';
         }, origin);*/
     //});
 </script>
-<?
+<?php
 xoops_footer();

@@ -145,13 +145,13 @@ class Db_manager
         'create' => 'create',
         'insert' => 'insert',
         'alter'  => 'alter',
-        'drop'   => 'drop'
+        'drop'   => 'drop',
     ];
     public $failureStrings = [
         'create' => 'fail',
         'insert' => 'fail',
         'alter'  => 'error',
-        'drop'   => 'error'
+        'drop'   => 'error',
     ];
 
     /**

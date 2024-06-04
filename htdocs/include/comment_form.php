@@ -69,7 +69,7 @@ if (class_exists('XoopsFormEditor')) {
         'cols'   => 90,
         'width'  => '100%',
         'height' => '400px',
-        'editor' => $editor
+        'editor' => $editor,
     ];
     $cform->addElement(new XoopsFormEditor(_CM_MESSAGE, 'com_text', $configs, false, $onfailure = 'textarea'), true);
 } else {
@@ -95,10 +95,10 @@ if (is_object($xoopsUser)) {
             $status_select = new XoopsFormSelect(_CM_STATUS, 'com_status', $com_status);
             $status_select->addOptionArray(
                 [
-                                               XOOPS_COMMENT_PENDING => _CM_PENDING,
-                                               XOOPS_COMMENT_ACTIVE  => _CM_ACTIVE,
-                                               XOOPS_COMMENT_HIDDEN  => _CM_HIDDEN
-                ]
+                    XOOPS_COMMENT_PENDING => _CM_PENDING,
+                    XOOPS_COMMENT_ACTIVE  => _CM_ACTIVE,
+                    XOOPS_COMMENT_HIDDEN  => _CM_HIDDEN,
+                ],
             );
             $cform->addElement($status_select);
             $button_tray->addElement(new XoopsFormButton('', 'com_dodelete', _DELETE, 'submit'));
@@ -130,8 +130,8 @@ $cform->addElement($option_tray);
 if (!$xoopsUser) {
     $cform->addElement(new XoopsFormCaptcha());
 }
-$cform->addElement(new XoopsFormHidden('com_pid', (int)$com_pid));
-$cform->addElement(new XoopsFormHidden('com_rootid', (int)$com_rootid));
+$cform->addElement(new XoopsFormHidden('com_pid', (int) $com_pid));
+$cform->addElement(new XoopsFormHidden('com_rootid', (int) $com_rootid));
 $cform->addElement(new XoopsFormHidden('com_id', $com_id));
 $cform->addElement(new XoopsFormHidden('com_itemid', $com_itemid));
 $cform->addElement(new XoopsFormHidden('com_order', $com_order));

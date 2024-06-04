@@ -159,7 +159,7 @@ class XoopsForm
         $var = [
             'name' => '',
             'value' => '',
-            'func' => ''
+            'func' => '',
         ];
 
         // Check if $object is an object; if not, use $this
@@ -174,22 +174,22 @@ class XoopsForm
         $var['name'] = $hashMethod(get_class($object));
 
         // Hash the object variables
-                foreach (get_object_vars($object) as $key => $value) {
-                    if ($key !== '_objid') {
+        foreach (get_object_vars($object) as $key => $value) {
+            if ($key !== '_objid') {
                 $var['value'] = $this->getArrayID($value, $key, $var['value'], $hashinfo);
-                    }
-                }
+            }
+        }
 
         // Hash the class methods
-                foreach (get_class_methods($object) as $key => $value) {
+        foreach (get_class_methods($object) as $key => $value) {
             $var['func'] = $this->getArrayID($value, $key, $var['func'], $hashinfo);
-                }
+        }
 
         // Generate the final hash
         $this->_objid = $hashMethod(implode(':', $var));
 
-                return $this->_objid;
-                }
+        return $this->_objid;
+    }
 
 
     /**
@@ -375,7 +375,7 @@ class XoopsForm
      */
     public function &getElementByName($name)
     {
-        $elements =& $this->getElements(true);
+        $elements = & $this->getElements(true);
         $count    = count($elements);
         for ($i = 0; $i < $count; ++$i) {
             if ($name == $elements[$i]->getName(false)) {
@@ -555,9 +555,7 @@ class XoopsForm
      * @param string $extra extra information for the break
      * @abstract
      */
-    public function insertBreak($extra = null)
-    {
-    }
+    public function insertBreak($extra = null) {}
 
     /**
      * returns renderered form
@@ -566,9 +564,7 @@ class XoopsForm
      *
      * @abstract
      */
-    public function render()
-    {
-    }
+    public function render() {}
 
     /**
      * displays rendered form
@@ -610,7 +606,7 @@ class XoopsForm
         }
         $formname = $this->getName();
         $js .= "function xoopsFormValidate_{$formname}() { var myform = window.document.{$formname}; ";
-        $elements =& $this->getElements(true);
+        $elements = & $this->getElements(true);
         foreach ($elements as $elt) {
             if (method_exists($elt, 'renderValidationJS')) {
                 $js .= $elt->renderValidationJS();
@@ -654,16 +650,18 @@ class XoopsForm
             }
         }
         $js = $this->renderValidationJS();
-        $tpl->assign($this->getName(), [
-            'title'      => $this->getTitle(),
-            'name'       => $this->getName(),
-            'action'     => $this->getAction(),
-            'method'     => $this->getMethod(),
-            'extra'      => 'onsubmit="return xoopsFormValidate_' . $this->getName() . '();"' . $this->getExtra(),
-            'javascript' => $js,
-            'elements'   => $elements,
-            'rendered'   => $this->render(),
-        ]
+        $tpl->assign(
+            $this->getName(),
+            [
+                'title'      => $this->getTitle(),
+                'name'       => $this->getName(),
+                'action'     => $this->getAction(),
+                'method'     => $this->getMethod(),
+                'extra'      => 'onsubmit="return xoopsFormValidate_' . $this->getName() . '();"' . $this->getExtra(),
+                'javascript' => $js,
+                'elements'   => $elements,
+                'rendered'   => $this->render(),
+            ],
         );
     }
 }

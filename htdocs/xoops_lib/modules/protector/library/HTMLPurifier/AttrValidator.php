@@ -7,7 +7,6 @@
  */
 class HTMLPurifier_AttrValidator
 {
-
     /**
      * Validates the attributes of a token, mutating it as necessary.
      * that has valid tokens
@@ -18,17 +17,17 @@ class HTMLPurifier_AttrValidator
     public function validateToken($token, $config, $context)
     {
         $definition = $config->getHTMLDefinition();
-        $e =& $context->get('ErrorCollector', true);
+        $e = & $context->get('ErrorCollector', true);
 
         // initialize IDAccumulator if necessary
-        $ok =& $context->get('IDAccumulator', true);
+        $ok = & $context->get('IDAccumulator', true);
         if (!$ok) {
             $id_accumulator = HTMLPurifier_IDAccumulator::build($config, $context);
             $context->register('IDAccumulator', $id_accumulator);
         }
 
         // initialize CurrentToken if necessary
-        $current_token =& $context->get('CurrentToken', true);
+        $current_token = & $context->get('CurrentToken', true);
         if (!$current_token) {
             $context->register('CurrentToken', $token);
         }
@@ -95,7 +94,7 @@ class HTMLPurifier_AttrValidator
                     $result = $defs[$attr_key]->validate(
                         $value,
                         $config,
-                        $context
+                        $context,
                     );
                 }
             } elseif (isset($d_defs[$attr_key])) {
@@ -104,7 +103,7 @@ class HTMLPurifier_AttrValidator
                 $result = $d_defs[$attr_key]->validate(
                     $value,
                     $config,
-                    $context
+                    $context,
                 );
             } else {
                 // system never heard of the attribute? DELETE!

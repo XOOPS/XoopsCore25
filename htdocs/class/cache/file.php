@@ -108,7 +108,7 @@ class XoopsCacheFile extends XoopsCacheEngine
             'prefix'    => 'xoops_',
             'lock'      => false,
             'serialize' => false,
-            'duration'  => 31556926
+            'duration'  => 31556926,
         ];
         $this->settings = array_merge($defaults, $this->settings);
         if (!isset($this->file)) {
@@ -201,7 +201,7 @@ class XoopsCacheFile extends XoopsCacheEngine
         }
         $cachetime = $this->file->read(11);
 
-        if ($cachetime !== false && (int)$cachetime < time()) {
+        if ($cachetime !== false && (int) $cachetime < time()) {
             $this->file->close();
             $this->file->delete();
 

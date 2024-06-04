@@ -38,7 +38,7 @@ if ($admintest != 0) {
             /** @var XoopsGroupPermHandler $sysperm_handler */
             $sysperm_handler = xoops_getHandler('groupperm');
 
-            $category = !empty($modversion['category']) ? (int)$modversion['category'] : 0;
+            $category = !empty($modversion['category']) ? (int) $modversion['category'] : 0;
             unset($modversion);
 
             if ($category > 0) {
@@ -70,7 +70,7 @@ if ($admintest != 0) {
 }
 
 if (false !== $error) {
-	$op = Request::getString('op', '');
+    $op = Request::getString('op', '');
     if ($op === 'system_activate') {
         $part           = Request::getString('type', '');
         /** @var XoopsConfigHandler $config_handler */
@@ -118,7 +118,7 @@ if (false !== $error) {
 
             if ($modversion['hasAdmin']) {
                 if (xoops_getModuleOption('active_' . $directory, 'system')) {
-                    $category = isset($modversion['category']) ? (int)$modversion['category'] : 0;
+                    $category = isset($modversion['category']) ? (int) $modversion['category'] : 0;
                     if (false !== $all_ok || in_array($modversion['category'], $ok_syscats)) {
                         $menu['file']   = $directory;
                         $menu['title']  = trim($modversion['name']);
@@ -127,7 +127,7 @@ if (false !== $error) {
                         $menu['status'] = true;
                     }
                 } else {
-                    $category = isset($modversion['category']) ? (int)$modversion['category'] : 0;
+                    $category = isset($modversion['category']) ? (int) $modversion['category'] : 0;
                     if (false !== $all_ok || in_array($modversion['category'], $ok_syscats)) {
                         $menu['file']   = $directory;
                         $menu['title']  = trim($modversion['name']);

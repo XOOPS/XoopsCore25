@@ -87,7 +87,7 @@ $modversion['config'][] = [
     'description' => '',
     'formtype'    => 'yesno',
     'valuetype'   => 'int',
-    'default'     => 1
+    'default'     => 1,
 ];
 
 $modversion['config'][] = [
@@ -96,7 +96,7 @@ $modversion['config'][] = [
     'description' => '_PROFILE_MI_PROFILE_CAPTCHA_STEP1_DESC',
     'formtype'    => 'yesno',
     'valuetype'   => 'int',
-    'default'     => 1
+    'default'     => 1,
 ];
 
 // Templates

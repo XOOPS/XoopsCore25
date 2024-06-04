@@ -224,7 +224,7 @@ class XoopsCacheModelObject extends XoopsObject
  */
 class XoopsCacheModelHandler extends XoopsPersistableObjectHandler
 {
-    const TABLE     = 'cache_model';
-    const CLASSNAME = 'XoopsCacheModelObject';
-    const KEYNAME   = 'key';
+    public const TABLE     = 'cache_model';
+    public const CLASSNAME = 'XoopsCacheModelObject';
+    public const KEYNAME   = 'key';
 }

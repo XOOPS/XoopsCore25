@@ -26,7 +26,6 @@
 
 class HTMLPurifier_Lexer_DOMLex extends HTMLPurifier_Lexer
 {
-
     /**
      * @type HTMLPurifier_TokenFactory
      */
@@ -145,9 +144,9 @@ class HTMLPurifier_Lexer_DOMLex extends HTMLPurifier_Lexer
     {
         if (isset($node->tagName)) {
             return $node->tagName;
-        } else if (isset($node->nodeName)) {
+        } elseif (isset($node->nodeName)) {
             return $node->nodeName;
-        } else if (isset($node->localName)) {
+        } elseif (isset($node->localName)) {
             return $node->localName;
         }
         return null;
@@ -162,9 +161,9 @@ class HTMLPurifier_Lexer_DOMLex extends HTMLPurifier_Lexer
     {
         if (isset($node->data)) {
             return $node->data;
-        } else if (isset($node->nodeValue)) {
+        } elseif (isset($node->nodeValue)) {
             return $node->nodeValue;
-        } else if (isset($node->textContent)) {
+        } elseif (isset($node->textContent)) {
             return $node->textContent;
         }
         return null;
@@ -188,7 +187,7 @@ class HTMLPurifier_Lexer_DOMLex extends HTMLPurifier_Lexer
         if ($node->nodeType === XML_TEXT_NODE) {
             $data = $this->getData($node); // Handle variable data property
             if ($data !== null) {
-              $tokens[] = $this->factory->createText($data);
+                $tokens[] = $this->factory->createText($data);
             }
             return false;
         } elseif ($node->nodeType === XML_CDATA_SECTION_NODE) {
@@ -274,9 +273,7 @@ class HTMLPurifier_Lexer_DOMLex extends HTMLPurifier_Lexer
      * @param int $errno
      * @param string $errstr
      */
-    public function muteErrorHandler($errno, $errstr)
-    {
-    }
+    public function muteErrorHandler($errno, $errstr) {}
 
     /**
      * Callback function for undoing escaping of stray angled brackets
@@ -327,9 +324,13 @@ class HTMLPurifier_Lexer_DOMLex extends HTMLPurifier_Lexer
         $ret .= '<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />';
         // No protection if $html contains a stray </div>!
         $ret .= '</head><body>';
-        if ($use_div) $ret .= '<div>';
+        if ($use_div) {
+            $ret .= '<div>';
+        }
         $ret .= $html;
-        if ($use_div) $ret .= '</div>';
+        if ($use_div) {
+            $ret .= '</div>';
+        }
         $ret .= '</body></html>';
         return $ret;
     }

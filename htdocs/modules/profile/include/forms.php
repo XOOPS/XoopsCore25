@@ -74,7 +74,7 @@ function profile_getFieldForm(ProfileField $field, $action = false)
             'dhtml'        => _PROFILE_AM_DHTMLTEXTAREA,
             'textbox'      => _PROFILE_AM_TEXTBOX,
             'timezone'     => _PROFILE_AM_TIMEZONE,
-            'yesno'        => _PROFILE_AM_YESNO
+            'yesno'        => _PROFILE_AM_YESNO,
         ];
 
         $element_select = new XoopsFormSelect(_PROFILE_AM_TYPE, 'field_type', $field->getVar('field_type', 'e'));
@@ -98,7 +98,7 @@ function profile_getFieldForm(ProfileField $field, $action = false)
                     XOBJ_DTYPE_UNICODE_TXTBOX  => _PROFILE_AM_UNICODE_TXTBOX,
                     XOBJ_DTYPE_UNICODE_TXTAREA => _PROFILE_AM_UNICODE_TXTAREA,
                     XOBJ_DTYPE_UNICODE_EMAIL   => _PROFILE_AM_UNICODE_EMAIL,
-                    XOBJ_DTYPE_UNICODE_URL     => _PROFILE_AM_UNICODE_URL
+                    XOBJ_DTYPE_UNICODE_URL     => _PROFILE_AM_UNICODE_URL,
                 ];
 
                 $type_select = new XoopsFormSelect(_PROFILE_AM_VALUETYPE, 'field_valuetype', $field->getVar('field_valuetype', 'e'));
@@ -122,7 +122,7 @@ function profile_getFieldForm(ProfileField $field, $action = false)
                     XOBJ_DTYPE_UNICODE_TXTBOX  => _PROFILE_AM_UNICODE_TXTBOX,
                     XOBJ_DTYPE_UNICODE_TXTAREA => _PROFILE_AM_UNICODE_TXTAREA,
                     XOBJ_DTYPE_UNICODE_EMAIL   => _PROFILE_AM_UNICODE_EMAIL,
-                    XOBJ_DTYPE_UNICODE_URL     => _PROFILE_AM_UNICODE_URL
+                    XOBJ_DTYPE_UNICODE_URL     => _PROFILE_AM_UNICODE_URL,
                 ];
 
                 $type_select = new XoopsFormSelect(_PROFILE_AM_VALUETYPE, 'field_valuetype', $field->getVar('field_valuetype', 'e'));
@@ -246,7 +246,7 @@ function profile_getFieldForm(ProfileField $field, $action = false)
         'date',
         'datetime',
         'timezone',
-        'language'
+        'language',
     ];
     if (in_array($field->getVar('field_type'), $searchable_types)) {
         $search_groups = $groupperm_handler->getGroupIds('profile_search', $field->getVar('field_id'), $GLOBALS['xoopsModule']->getVar('mid'));
@@ -272,7 +272,7 @@ function profile_getFieldForm(ProfileField $field, $action = false)
     $options = $field->getVar('field_options');
     if (count($options) > 0) {
         $linkText = defined('_PROFILE_AM_EDIT_OPTION_STRINGS') ? _PROFILE_AM_EDIT_OPTION_STRINGS : 'Edit Option Strings';
-        $editOptionsButton = new XoopsFormLabel('','<a href="'.$action.'&op=edit-option-strings"><i class="fa fa-fw fa-2x fa-language" aria-hidden="true"></i> ' . $linkText . '</a>');
+        $editOptionsButton = new XoopsFormLabel('', '<a href="' . $action . '&op=edit-option-strings"><i class="fa fa-fw fa-2x fa-language" aria-hidden="true"></i> ' . $linkText . '</a>');
         $form->addElement($editOptionsButton);
     }
 
@@ -292,7 +292,7 @@ function profile_getFieldOptionForm(ProfileField $field, $action = false)
     $form->addElement(new XoopsFormLabel(_PROFILE_AM_TITLE, $field->getVar('field_title', 'e')));
 
     $options = $field->getVar('field_options');
-    foreach($options as $name=>$value) {
+    foreach($options as $name => $value) {
         $form->addElement(new XoopsFormText($name, "field_options[$name]", 80, 255, $value));
     }
 
@@ -343,7 +343,7 @@ function profile_getRegisterForm(XoopsUser $user, $profile, $step = null)
         $elements[0][] = [
             'element'  => new XoopsFormText(_US_NICKNAME, 'uname', 35, $GLOBALS['xoopsConfigUser']['maxuname'], $user->getVar('uname', 'e')),
             'required' => true,
-			'description' => sprintf(_US_DESCRIPTIONMIN, $GLOBALS['xoopsConfigUser']['minuname']) . '<br>' . sprintf(_US_DESCRIPTIONMAX, $GLOBALS['xoopsConfigUser']['maxuname'])
+            'description' => sprintf(_US_DESCRIPTIONMIN, $GLOBALS['xoopsConfigUser']['minuname']) . '<br>' . sprintf(_US_DESCRIPTIONMAX, $GLOBALS['xoopsConfigUser']['maxuname']),
         ];
         $weights[0][]  = 0;
 
@@ -351,9 +351,9 @@ function profile_getRegisterForm(XoopsUser $user, $profile, $step = null)
         $weights[0][]  = 0;
 
         $elements[0][] = [
-			'element' => new XoopsFormPassword(_US_PASSWORD, 'pass', 35, 32, ''),
-			'required' => true,
-			'description' => sprintf(_US_DESCRIPTIONMIN, $GLOBALS['xoopsConfigUser']['minpass'])
+            'element' => new XoopsFormPassword(_US_PASSWORD, 'pass', 35, 32, ''),
+            'required' => true,
+            'description' => sprintf(_US_DESCRIPTIONMIN, $GLOBALS['xoopsConfigUser']['minpass']),
         ];
         $weights[0][]  = 0;
 
@@ -391,14 +391,14 @@ function profile_getRegisterForm(XoopsUser $user, $profile, $step = null)
         //$reg_form->insertBreak("<p>{$title}</p>{$desc}");
         //$reg_form->addElement(new XoopsFormLabel("<h2>".$title."</h2>", $desc), false);
         foreach (array_keys($elements[$k]) as $i) {
-			if (array_key_exists('description', $elements[$k][$i])){
-				$element = $elements[$k][$i]['element'];
-				$element->setDescription($elements[$k][$i]['description']);
-				$reg_form->addElement($element, $elements[$k][$i]['required']);
-				unset($element);
-			} else {
-				$reg_form->addElement($elements[$k][$i]['element'], $elements[$k][$i]['required']);
-			}
+            if (array_key_exists('description', $elements[$k][$i])) {
+                $element = $elements[$k][$i]['element'];
+                $element->setDescription($elements[$k][$i]['description']);
+                $reg_form->addElement($element, $elements[$k][$i]['required']);
+                unset($element);
+            } else {
+                $reg_form->addElement($elements[$k][$i]['element'], $elements[$k][$i]['required']);
+            }
         }
     }
     //end of Dynamic User fields
@@ -414,12 +414,12 @@ function profile_getRegisterForm(XoopsUser $user, $profile, $step = null)
     }
     global $xoopsModuleConfig;
     $useCaptchaAfterStep2 = $xoopsModuleConfig['profileCaptchaAfterStep1'];
-	
-	if ($step_no == 1) {
+
+    if ($step_no == 1) {
         $reg_form->addElement(new XoopsFormCaptcha(), true);
-    } elseif($useCaptchaAfterStep2 == 1){
-		$reg_form->addElement(new XoopsFormCaptcha(), true);
-	}
+    } elseif($useCaptchaAfterStep2 == 1) {
+        $reg_form->addElement(new XoopsFormCaptcha(), true);
+    }
 
     $reg_form->addElement(new XoopsFormHidden($next_opname, 'register'));
     $reg_form->addElement(new XoopsFormHidden('uid', $user->getVar('uid')));
@@ -472,7 +472,7 @@ function profile_getUserForm(XoopsUser $user, ProfileProfile $profile = null, $a
     if ($user->isNew() || $GLOBALS['xoopsUser']->isAdmin()) {
         $elements[0][] = [
             'element'  => new XoopsFormText(_US_NICKNAME, 'uname', 25, $GLOBALS['xoopsUser']->isAdmin() ? 60 : $GLOBALS['xoopsConfigUser']['maxuname'], $user->getVar('uname', 'e')),
-            'required' => 1
+            'required' => 1,
         ];
         $email_text    = new XoopsFormText('', 'email', 30, 60, $user->getVar('email'));
     } else {
@@ -495,7 +495,7 @@ function profile_getUserForm(XoopsUser $user, ProfileProfile $profile = null, $a
         $elements[0][] = ['element' => $pwd_tray, 'required' => 0]; //cannot set an element tray required
         $weights[0][]  = 0;
 
-        $level_radio = new XoopsFormRadio(_PROFILE_MA_USERLEVEL, 'level', (string)$user->getVar('level'));
+        $level_radio = new XoopsFormRadio(_PROFILE_MA_USERLEVEL, 'level', (string) $user->getVar('level'));
         $level_radio->addOption(1, _PROFILE_MA_ACTIVE);
         $level_radio->addOption(0, _PROFILE_MA_INACTIVE);
         //$level_radio->addOption(-1, _PROFILE_MA_DISABLED);
@@ -531,7 +531,7 @@ function profile_getUserForm(XoopsUser $user, ProfileProfile $profile = null, $a
             $fieldinfo['element']  = $fields[$i]->getEditElement($user, $profile);
             $fieldinfo['required'] = $fields[$i]->getVar('field_required');
 
-            $key              = isset($all_categories[$fields[$i]->getVar('cat_id')]['cat_weight']) ? (int)($all_categories[$fields[$i]->getVar('cat_id')]['cat_weight'] * $count_fields) + $fields[$i]->getVar('cat_id') : 0;
+            $key              = isset($all_categories[$fields[$i]->getVar('cat_id')]['cat_weight']) ? (int) ($all_categories[$fields[$i]->getVar('cat_id')]['cat_weight'] * $count_fields) + $fields[$i]->getVar('cat_id') : 0;
             $elements[$key][] = $fieldinfo;
             $weights[$key][]  = $fields[$i]->getVar('field_weight');
             $categories[$key] = isset($all_categories[$fields[$i]->getVar('cat_id')]) ? $all_categories[$fields[$i]->getVar('cat_id')] : null;

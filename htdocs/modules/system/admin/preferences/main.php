@@ -169,7 +169,7 @@ switch ($op) {
                     $ele = new XoopsFormSelectGroup($title, $config[$i]->getVar('conf_name'), true, $config[$i]->getConfValueForOutput(), 5, true);
                     break;
 
-                // RMV-NOTIFY - added 'user' and 'user_multi'
+                    // RMV-NOTIFY - added 'user' and 'user_multi'
                 case 'user':
                     $ele = new XoopsFormSelectUser($title, $config[$i]->getVar('conf_name'), false, $config[$i]->getConfValueForOutput(), 1, false);
                     break;
@@ -192,12 +192,12 @@ switch ($op) {
                         '18000'  => sprintf(_HOURS, 5),
                         '86400'  => _DAY,
                         '259200' => sprintf(_DAYS, 3),
-                        '604800' => _WEEK
+                        '604800' => _WEEK,
                     ];
                     if (count($modules) > 0) {
                         $ele = new XoopsFormElementTray($title, '<br>');
                         foreach (array_keys($modules) as $mid) {
-                            $c_val   = isset($currrent_val[$mid]) ? (int)$currrent_val[$mid] : null;
+                            $c_val   = isset($currrent_val[$mid]) ? (int) $currrent_val[$mid] : null;
                             $selform = new XoopsFormSelect($modules[$mid]->getVar('name'), $config[$i]->getVar('conf_name') . "[$mid]", $c_val);
                             $selform->addOptionArray($cache_options);
                             $ele->addElement($selform);
@@ -212,17 +212,17 @@ switch ($op) {
                     $ele = new XoopsFormSelect($title, $config[$i]->getVar('conf_name'), $config[$i]->getConfValueForOutput());
                     $ele->addOptionArray(
                         [
-                                             '0'      => _NOCACHE,
-                                             '30'     => sprintf(_SECONDS, 30),
-                                             '60'     => _MINUTE,
-                                             '300'    => sprintf(_MINUTES, 5),
-                                             '1800'   => sprintf(_MINUTES, 30),
-                                             '3600'   => _HOUR,
-                                             '18000'  => sprintf(_HOURS, 5),
-                                             '86400'  => _DAY,
-                                             '259200' => sprintf(_DAYS, 3),
-                                             '604800' => _WEEK
-                        ]
+                            '0'      => _NOCACHE,
+                            '30'     => sprintf(_SECONDS, 30),
+                            '60'     => _MINUTE,
+                            '300'    => sprintf(_MINUTES, 5),
+                            '1800'   => sprintf(_MINUTES, 30),
+                            '3600'   => _HOUR,
+                            '18000'  => sprintf(_HOURS, 5),
+                            '86400'  => _DAY,
+                            '259200' => sprintf(_DAYS, 3),
+                            '604800' => _WEEK,
+                        ],
                     );
                     break;
 
@@ -263,7 +263,7 @@ switch ($op) {
 
         /** @var XoopsConfigHandler $config_handler */
         $config_handler = xoops_getHandler('config');
-        $mod            = isset($_REQUEST['mod']) ? (int)$_REQUEST['mod'] : 0;
+        $mod            = isset($_REQUEST['mod']) ? (int) $_REQUEST['mod'] : 0;
         if ($mod <= 0) {
             header('Location: admin.php?fct=preferences');
             exit();
@@ -348,7 +348,7 @@ switch ($op) {
                     $ele = new XoopsFormSelectGroup($title, $config[$i]->getVar('conf_name'), false, $config[$i]->getConfValueForOutput(), 5, true);
                     break;
 
-                // RMV-NOTIFY: added 'user' and 'user_multi'
+                    // RMV-NOTIFY: added 'user' and 'user_multi'
                 case 'user':
                     include_once XOOPS_ROOT_PATH . '/class/xoopslists.php';
                     $ele = new XoopsFormSelectUser($title, $config[$i]->getVar('conf_name'), false, $config[$i]->getConfValueForOutput(), 1, false);
@@ -425,7 +425,7 @@ switch ($op) {
         if ($count > 0) {
             for ($i = 0; $i < $count; ++$i) {
                 $config    = $config_handler->getConfig($conf_ids[$i]);
-                $new_value =& ${$config->getVar('conf_name')};
+                $new_value = & ${$config->getVar('conf_name')};
                 if (is_array($new_value) || $new_value != $config->getVar('conf_value')) {
                     // if language has been changed
                     if (!$lang_updated && $config->getVar('conf_catid') == XOOPS_CONF && $config->getVar('conf_name') === 'language') {
@@ -509,7 +509,7 @@ switch ($op) {
         }
 
         if (!empty($use_mysession) && $xoopsConfig['use_mysession'] == 0 && $session_name != '') {
-            xoops_setcookie($session_name, session_id(), time() + (60 * (int)$session_expire), '/', XOOPS_COOKIE_DOMAIN, 0);
+            xoops_setcookie($session_name, session_id(), time() + (60 * (int) $session_expire), '/', XOOPS_COOKIE_DOMAIN, 0);
         }
 
         // Clean cached files, may take long time

@@ -43,7 +43,6 @@
  */
 class HTMLPurifier_AttrDef_CSS_BackgroundPosition extends HTMLPurifier_AttrDef
 {
-
     /**
      * @type HTMLPurifier_AttrDef_CSS_Length
      */
@@ -85,7 +84,7 @@ class HTMLPurifier_AttrDef_CSS_BackgroundPosition extends HTMLPurifier_AttrDef
             'bottom' => 'v',
             'left' => 'h',
             'right' => 'h',
-            'center' => 'c'
+            'center' => 'c',
         );
 
         foreach ($bits as $bit) {

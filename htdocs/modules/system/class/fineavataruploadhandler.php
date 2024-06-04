@@ -61,7 +61,7 @@ class SystemFineAvatarUploadHandler extends SystemFineUploadHandler
         /** @var  XoopsAvatarHandler $avt_handler */
         $avt_handler = xoops_getHandler('avatar');
         $avatar = $avt_handler->create();
-        
+
         $avatar->setVar('avatar_file', 'avatars/' . $avatarName);
         $avatar->setVar('avatar_name', $avatarNicename);
         $avatar->setVar('avatar_mimetype', $mimeType);
@@ -71,7 +71,7 @@ class SystemFineAvatarUploadHandler extends SystemFineUploadHandler
         $avatar->setVar('avatar_type', 's');
         if (!$avt_handler->insert($avatar)) {
             return [
-                'error' => sprintf(_FAILSAVEIMG, $avatar->getVar('avatar_name'))
+                'error' => sprintf(_FAILSAVEIMG, $avatar->getVar('avatar_name')),
             ];
         }
         return ['success' => true, "uuid" => $uuid];

@@ -83,7 +83,7 @@ class XoopsCaptcha
             $basic_config = include $file;
         } elseif (file_exists($distfile = $this->path_basic . '/' . $distfilename)) {
             $basic_config = include $distfile;
-            if (false===copy($distfile, $file)) {
+            if (false === copy($distfile, $file)) {
                 trigger_error('Could not create captcha config file ' . $filename);
             }
         }
@@ -413,7 +413,7 @@ class XoopsCaptchaMethod
      */
     public function getCode()
     {
-        return (string)$this->code;
+        return (string) $this->code;
     }
 
     /**
@@ -421,9 +421,7 @@ class XoopsCaptchaMethod
      *
      * @return void
      */
-    public function render()
-    {
-    }
+    public function render() {}
 
     /**
      * @return string

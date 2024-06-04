@@ -74,7 +74,7 @@ class SystemFineImUploadHandler extends SystemFineUploadHandler
         $image = $imageHandler->create();
 
         $image->setVar('image_nicename', $imageNicename);
-        $image->setVar('image_mimetype',  $mimeType);
+        $image->setVar('image_mimetype', $mimeType);
         $image->setVar('image_created', time());
         $image->setVar('image_display', 1);
         $image->setVar('image_weight', 0);
@@ -86,7 +86,7 @@ class SystemFineImUploadHandler extends SystemFineUploadHandler
         }
         if (!$imageHandler->insert($image)) {
             return [
-                'error' => sprintf(_FAILSAVEIMG, $image->getVar('image_nicename'))
+                'error' => sprintf(_FAILSAVEIMG, $image->getVar('image_nicename')),
             ];
         }
         return ['success' => true, "uuid" => $uuid];

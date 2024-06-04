@@ -1,4 +1,5 @@
 <?php
+
 // Skip for ORETEKI XOOPS
 if (defined('XOOPS_ORETEKI')) {
     return null;
@@ -50,7 +51,7 @@ if (count($config_handler->getConfigs(new Criteria('conf_modid', $xoopsModule->m
         // system->preferences
         $adminmenu[] = [
             'title' => _PREFERENCES,
-            'link'  => XOOPS_URL . '/modules/system/admin.php?fct=preferences&op=showmod&mod=' . $xoopsModule->mid()
+            'link'  => XOOPS_URL . '/modules/system/admin.php?fct=preferences&op=showmod&mod=' . $xoopsModule->mid(),
         ];
     }
 }
@@ -94,4 +95,3 @@ foreach( $adminmenu as $menuitem ) {
 echo "</div>\n<hr style='clear:left;display:block;' />\n" ;
 */
 // end hack by Mage
-

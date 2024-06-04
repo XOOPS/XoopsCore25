@@ -65,17 +65,13 @@ class CriteriaElement
     /**
      * Constructor
      */
-    public function __construct()
-    {
-    }
+    public function __construct() {}
 
     /**
      * Render the criteria element
      * @return string
      */
-    public function render()
-    {
-    }
+    public function render() {}
 
     /**
      *
@@ -121,7 +117,7 @@ class CriteriaElement
      */
     public function setLimit($limit = 0)
     {
-        $this->limit = (int)$limit;
+        $this->limit = (int) $limit;
     }
 
     /**
@@ -139,7 +135,7 @@ class CriteriaElement
      */
     public function setStart($start = 0)
     {
-        $this->start = (int)$start;
+        $this->start = (int) $start;
     }
 
     /**
@@ -216,7 +212,7 @@ class CriteriaCompo extends CriteriaElement
     public function &add(CriteriaElement $criteriaElement, $condition = 'AND')
     {
         if (is_object($criteriaElement)) {
-            $this->criteriaElements[] =& $criteriaElement;
+            $this->criteriaElements[] = & $criteriaElement;
             $this->conditions[]       = $condition;
         }
 
@@ -346,7 +342,7 @@ class Criteria extends CriteriaElement
         if (in_array(strtoupper($this->operator), ['IS NULL', 'IS NOT NULL'])) {
             $clause .= ' ' . $this->operator;
         } else {
-            if ('' === ($value = trim((string)$this->value))) {
+            if ('' === ($value = trim((string) $this->value))) {
                 return '';
             }
             if (!in_array(strtoupper($this->operator), ['IN', 'NOT IN'])) {

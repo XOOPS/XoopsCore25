@@ -105,8 +105,8 @@ if ($isadmin || ($catreadcount > 0) || ($catwritecount > 0)) {
             'image/pjpeg',
             'image/x-png',
             'image/png',
-            'image/bmp'
-        ],                                 $imgcat->getVar('imgcat_maxsize'), $imgcat->getVar('imgcat_maxwidth'), $imgcat->getVar('imgcat_maxheight'));
+            'image/bmp',
+        ], $imgcat->getVar('imgcat_maxsize'), $imgcat->getVar('imgcat_maxwidth'), $imgcat->getVar('imgcat_maxheight'));
         $uploader->setPrefix('img');
         $err    = [];
         $ucount = count($_POST['xoops_upload_file']);
@@ -278,7 +278,7 @@ if ($isadmin || ($catreadcount > 0) || ($catwritecount > 0)) {
         if (!$GLOBALS['xoopsSecurity']->check()) {
             redirect_header($current_file . '?target=' . $target, 3, implode('<br>', $GLOBALS['xoopsSecurity']->getErrors()));
         }
-        $imgcat_id = (int)$imgcat_id;
+        $imgcat_id = (int) $imgcat_id;
         if ($imgcat_id <= 0) {
             redirect_header($current_file . '?target=' . $target, 3);
         }
@@ -328,7 +328,7 @@ if ($isadmin || ($catreadcount > 0) || ($catwritecount > 0)) {
         if (!$GLOBALS['xoopsSecurity']->check()) {
             redirect_header($current_file . '?target=' . $target, 3, implode('<br>', $GLOBALS['xoopsSecurity']->getErrors()));
         }
-        $image_id = (int)$image_id;
+        $image_id = (int) $image_id;
         if ($image_id <= 0) {
             redirect_header($current_file . '?target=' . $target, 3);
         }
@@ -422,7 +422,7 @@ if ($op === 'list') {
 }
 
 if ($op === 'listimg') {
-    $imgcat_id = (int)$imgcat_id;
+    $imgcat_id = (int) $imgcat_id;
     if ($imgcat_id <= 0) {
         redirect_header($current_file . '?target=' . $target, 1);
     }
@@ -435,7 +435,7 @@ if ($op === 'listimg') {
 
     $criteria = new Criteria('imgcat_id', $imgcat_id);
     $imgcount = $image_handler->getCount($criteria);
-    $start    = isset($_GET['start']) ? (int)$_GET['start'] : 0;
+    $start    = isset($_GET['start']) ? (int) $_GET['start'] : 0;
     $criteria->setStart($start);
     $criteria->setSort('image_id');
     $criteria->setOrder('DESC');
@@ -455,7 +455,7 @@ if ($op === 'listimg') {
         // check if image stored in db/as file - start
         if ($imagecategory->getVar('imgcat_storetype') === 'db') {
             $image_src = '' . XOOPS_URL . '/image.php?id=' . $i . '';
-            if (ini_get('allow_url_fopen') == true){
+            if (ini_get('allow_url_fopen') == true) {
                 $image_info = true;
                 $image_size = getimagesize($image_src);
             } else {
@@ -551,21 +551,21 @@ echo '<div class="tab-pane fade" id="addcat" role="tabpanel" aria-labelledby="ad
 echo '<div class="row">';
 echo '<div class="col p-4">';
 
-    $form = new XoopsThemeForm('', 'imagecat_form', '' . $current_file . '?target=' . $target . '', 'post', true);
-    $form->addElement(new XoopsFormText(_MD_IMGCATNAME, 'imgcat_name', 50, 255), true);
-    $form->addElement(new XoopsFormSelectGroup(_MD_IMGCATRGRP, 'readgroup', true, XOOPS_GROUP_ADMIN, 5, true));
-    $form->addElement(new XoopsFormSelectGroup(_MD_IMGCATWGRP, 'writegroup', true, XOOPS_GROUP_ADMIN, 5, true));
-    $form->addElement(new XoopsFormText(_IMGMAXSIZE, 'imgcat_maxsize', 10, 10, 50000));
-    $form->addElement(new XoopsFormText(_IMGMAXWIDTH, 'imgcat_maxwidth', 3, 4, 120));
-    $form->addElement(new XoopsFormText(_IMGMAXHEIGHT, 'imgcat_maxheight', 3, 4, 120));
-    $form->addElement(new XoopsFormText(_MD_IMGCATWEIGHT, 'imgcat_weight', 3, 4, 0));
-    $form->addElement(new XoopsFormRadioYN(_MD_IMGCATDISPLAY, 'imgcat_display', 1, _YES, _NO));
-    $storetype = new XoopsFormRadio(_MD_IMGCATSTRTYPE . '<br><span style="color:#ff0000;">' . _MD_STRTYOPENG . '</span>', 'imgcat_storetype', 'file');
-    $storetype->addOptionArray(['file' => _MD_ASFILE, 'db' => _MD_INDB]);
-    $form->addElement($storetype);
-    $form->addElement(new XoopsFormHidden('op', 'addcat'));
-    $form->addElement(new XoopsFormButton('', 'imgcat_button', _SUBMIT, 'submit'));
-    $form->display();
+$form = new XoopsThemeForm('', 'imagecat_form', '' . $current_file . '?target=' . $target . '', 'post', true);
+$form->addElement(new XoopsFormText(_MD_IMGCATNAME, 'imgcat_name', 50, 255), true);
+$form->addElement(new XoopsFormSelectGroup(_MD_IMGCATRGRP, 'readgroup', true, XOOPS_GROUP_ADMIN, 5, true));
+$form->addElement(new XoopsFormSelectGroup(_MD_IMGCATWGRP, 'writegroup', true, XOOPS_GROUP_ADMIN, 5, true));
+$form->addElement(new XoopsFormText(_IMGMAXSIZE, 'imgcat_maxsize', 10, 10, 50000));
+$form->addElement(new XoopsFormText(_IMGMAXWIDTH, 'imgcat_maxwidth', 3, 4, 120));
+$form->addElement(new XoopsFormText(_IMGMAXHEIGHT, 'imgcat_maxheight', 3, 4, 120));
+$form->addElement(new XoopsFormText(_MD_IMGCATWEIGHT, 'imgcat_weight', 3, 4, 0));
+$form->addElement(new XoopsFormRadioYN(_MD_IMGCATDISPLAY, 'imgcat_display', 1, _YES, _NO));
+$storetype = new XoopsFormRadio(_MD_IMGCATSTRTYPE . '<br><span style="color:#ff0000;">' . _MD_STRTYOPENG . '</span>', 'imgcat_storetype', 'file');
+$storetype->addOptionArray(['file' => _MD_ASFILE, 'db' => _MD_INDB]);
+$form->addElement($storetype);
+$form->addElement(new XoopsFormHidden('op', 'addcat'));
+$form->addElement(new XoopsFormButton('', 'imgcat_button', _SUBMIT, 'submit'));
+$form->display();
 
 echo '</div>';
 echo '</div>';

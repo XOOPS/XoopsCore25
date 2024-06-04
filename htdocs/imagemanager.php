@@ -109,15 +109,17 @@ switch ($op) {
                             $rcode = '[img align=right]' . XOOPS_UPLOAD_URL . '/' . $images[$i]->getVar('image_name') . '[/img]';
                             $src   = XOOPS_UPLOAD_URL . '/' . $images[$i]->getVar('image_name');
                         }
-                        $xoopsTpl->append('images', [
-                            'id'       => $images[$i]->getVar('image_id'),
-                            'nicename' => $images[$i]->getVar('image_nicename'),
-                            'mimetype' => $images[$i]->getVar('image_mimetype'),
-                            'src'      => $src,
-                            'lxcode'   => $lcode,
-                            'xcode'    => $code,
-                            'rxcode'   => $rcode
-                        ]
+                        $xoopsTpl->append(
+                            'images',
+                            [
+                                'id'       => $images[$i]->getVar('image_id'),
+                                'nicename' => $images[$i]->getVar('image_nicename'),
+                                'mimetype' => $images[$i]->getVar('image_mimetype'),
+                                'src'      => $src,
+                                'lxcode'   => $lcode,
+                                'xcode'    => $code,
+                                'rxcode'   => $rcode,
+                            ],
                         );
                     }
                     if ($total > 10) {
@@ -158,8 +160,8 @@ switch ($op) {
                     $error = true;
                 }
             } elseif (!$imgcatperm_handler->checkRight('imgcat_write', $imgcat_id, XOOPS_GROUP_ANONYMOUS)) {
-                    $error = true;
-                }
+                $error = true;
+            }
         }
         if ($error != false) {
             xoops_header(false);
@@ -188,12 +190,11 @@ switch ($op) {
             'handler' => 'fineimuploadhandler',
             'moddir' => 'system',
         ];
-        $jwt = \Xmf\Jwt\TokenFactory::build('fineuploader', $payload, 60*30); // token good for 30 minutes
+        $jwt = \Xmf\Jwt\TokenFactory::build('fineuploader', $payload, 60 * 30); // token good for 30 minutes
         $xoopsTpl->assign('jwt', $jwt);
         $fineup_debug = 'false';
         if (($xoopsUser instanceof \XoopsUser ? $xoopsUser->isAdmin() : false)
-            && isset($_REQUEST['FINEUPLOADER_DEBUG']))
-        {
+            && isset($_REQUEST['FINEUPLOADER_DEBUG'])) {
             $fineup_debug = 'true';
         }
         $xoopsTpl->assign('fineup_debug', $fineup_debug);

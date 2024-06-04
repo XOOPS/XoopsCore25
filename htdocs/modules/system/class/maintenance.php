@@ -54,7 +54,8 @@ class SystemMaintenance
         $result = $this->db->queryF($sql);
         if (!$this->db->isResultSet($result)) {
             throw new \RuntimeException(
-                \sprintf(_DB_QUERY_ERROR, $sql) . $this->db->error(), E_USER_ERROR
+                \sprintf(_DB_QUERY_ERROR, $sql) . $this->db->error(),
+                E_USER_ERROR,
             );
         }
         while (false !== ($myrow = $this->db->fetchArray($result))) {
@@ -62,7 +63,7 @@ class SystemMaintenance
             $value          = substr($value[0], strlen(XOOPS_DB_PREFIX) + 1);
             $tables[$value] = $value;
         }
-        if (true === (bool)$array) {
+        if (true === (bool) $array) {
             return $tables;
         } else {
             return implode(',', $tables);
@@ -96,7 +97,8 @@ class SystemMaintenance
         $result = $this->db->queryF($sql);
         if (!$this->db->isResultSet($result)) {
             throw new \RuntimeException(
-                \sprintf(_DB_QUERY_ERROR, $sql) . $this->db->error(), E_USER_ERROR
+                \sprintf(_DB_QUERY_ERROR, $sql) . $this->db->error(),
+                E_USER_ERROR,
             );
         }
 
@@ -131,7 +133,7 @@ class SystemMaintenance
                 }
                 closedir($dirHandle);
             }
-            file_put_contents($dir . 'index.php', '<?php' . PHP_EOL  . "header('HTTP/1.0 404 Not Found');" . PHP_EOL);
+            file_put_contents($dir . 'index.php', '<?php' . PHP_EOL . "header('HTTP/1.0 404 Not Found');" . PHP_EOL);
         }
     }
 

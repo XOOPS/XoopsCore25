@@ -31,22 +31,23 @@ defined('XOOPS_INSTALL') || die('XOOPS Installation wizard die');
 $pageHasForm = false;
 $pageHasHelp = false;
 
-$vars =& $_SESSION['settings'];
+$vars = & $_SESSION['settings'];
 
 require_once __DIR__ . '/../mainfile.php';
 require_once __DIR__ . '/class/dbmanager.php';
 if (!defined('_XOOPS_FATAL_MESSAGE')) {
-    include_once (XOOPS_ROOT_PATH . '/include/defines.php');
+    include_once(XOOPS_ROOT_PATH . '/include/defines.php');
 }
 if (!defined('_DB_QUERY_ERROR')) {
     if (file_exists(XOOPS_ROOT_PATH . "/language/{$wizard->language}/global.php")) {
-        include_once (XOOPS_ROOT_PATH . "/language/{$wizard->language}/global.php");
+        include_once(XOOPS_ROOT_PATH . "/language/{$wizard->language}/global.php");
     } else {
-        include_once (XOOPS_ROOT_PATH . '/language/english/global.php');
+        include_once(XOOPS_ROOT_PATH . '/language/english/global.php');
     }
 }
 if (!function_exists('xoops_loadLanguage')) {
-    function xoops_loadLanguage($name, $domain = '', $language = null) {
+    function xoops_loadLanguage($name, $domain = '', $language = null)
+    {
         // This may get called even though we loaded the required language files.
         // This function just needs to exist to keep all things happy.
     }
@@ -62,8 +63,9 @@ if (!$dbm->isConnectable()) {
 $sql = 'SELECT COUNT(*) FROM ' . $dbm->db->prefix('users');
 $result = $dbm->query($sql);
 if (!$dbm->db->isResultSet($result)) {
-        throw new \RuntimeException(
-        \sprintf(_DB_QUERY_ERROR, $sql) . $dbm->db->error(), E_USER_ERROR
+    throw new \RuntimeException(
+        \sprintf(_DB_QUERY_ERROR, $sql) . $dbm->db->error(),
+        E_USER_ERROR,
     );
 }
 
@@ -108,13 +110,13 @@ if ($process) {
 }
 $content .= $licenseReport;
 
-xoops_setcookie('xo_install_user', '', time()-60*60*12);
+xoops_setcookie('xo_install_user', '', time() - 60 * 60 * 12);
 if (!empty($_SESSION['settings']['authorized']) && !empty($adminname) && !empty($adminpass)) {
     $claims = [
         'uname' => $adminname,
         'sub' => 'xoopsinstall',
     ];
-    $token = \Xmf\Jwt\TokenFactory::build('install', $claims, 60*60);
+    $token = \Xmf\Jwt\TokenFactory::build('install', $claims, 60 * 60);
 
     xoops_setcookie('xo_install_user', $token, 0, null, null, null, true);
 }

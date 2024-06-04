@@ -24,7 +24,7 @@ $xoopsOption['xoops_module_header'] = '<link rel="stylesheet" type="text/css" hr
 $xoBreadcrumbs   = [];
 $xoBreadcrumbs[] = [
     'title' => $GLOBALS['xoopsModule']->getVar('name'),
-    'link' => XOOPS_URL . '/modules/' . $GLOBALS['xoopsModule']->getVar('dirname', 'n') . '/'
+    'link' => XOOPS_URL . '/modules/' . $GLOBALS['xoopsModule']->getVar('dirname', 'n') . '/',
 ];
 
 //disable cache

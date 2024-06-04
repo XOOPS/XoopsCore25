@@ -106,7 +106,8 @@ class XoopsModelJoint extends XoopsModelAbstract
         $result = $this->handler->db->query($sql, $limit, $start);
         if (!$this->handler->db->isResultSet($result)) {
             throw new \RuntimeException(
-                \sprintf(_DB_QUERY_ERROR, $sql) . $this->handler->db->error(), E_USER_ERROR
+                \sprintf(_DB_QUERY_ERROR, $sql) . $this->handler->db->error(),
+                E_USER_ERROR,
             );
         }
         $ret    = [];
@@ -151,7 +152,7 @@ class XoopsModelJoint extends XoopsModelAbstract
         }
         $myrow = $this->handler->db->fetchArray($result);
 
-        return (int)$myrow['count'];
+        return (int) $myrow['count'];
     }
 
     /**

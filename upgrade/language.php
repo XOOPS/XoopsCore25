@@ -92,7 +92,7 @@ $available_languages = [
     'uk'    => ['uk|ukrainian', 'ukrainian'],
     'ur'    => ['ur|urdu', 'urdu'],
     'zh-tw' => ['zh[-_]tw|chinese traditional', 'tchinese'],
-    'zh-cn' => ['zh[-_]cn|chinese simplified', 'schinese']
+    'zh-cn' => ['zh[-_]cn|chinese simplified', 'schinese'],
 ];
 
 /**

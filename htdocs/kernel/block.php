@@ -355,6 +355,7 @@ class XoopsBlock extends XoopsObject
 
                     return $myts->displayTarea($content, 0, 0);
                 }
+                // no break
             case 'e':
                 return $this->getVar('content', 'e');
             default:
@@ -401,10 +402,12 @@ class XoopsBlock extends XoopsObject
      */
     public function isCustom()
     {
-        return in_array($this->getVar('block_type'), [
-            'C',
-            'E'
-        ]
+        return in_array(
+            $this->getVar('block_type'),
+            [
+                'C',
+                'E',
+            ],
         );
     }
 
@@ -431,7 +434,7 @@ class XoopsBlock extends XoopsObject
      */
     public function load($id)
     {
-        $id  = (int)$id;
+        $id  = (int) $id;
         /** @var XoopsBlockHandler $blkhandler */
         $blkhandler = xoops_getHandler('block');
         $obj        = $blkhandler->get($id);
@@ -624,7 +627,8 @@ class XoopsBlock extends XoopsObject
         $result = $db->query($sql);
         if (!$db->isResultSet($result)) {
             throw new \RuntimeException(
-                \sprintf(_DB_QUERY_ERROR, $sql) . $db->error(), E_USER_ERROR
+                \sprintf(_DB_QUERY_ERROR, $sql) . $db->error(),
+                E_USER_ERROR,
             );
         }
         $added  = [];
@@ -682,7 +686,8 @@ class XoopsBlock extends XoopsObject
                 $result = $db->query($sql);
                 if (!$db->isResultSet($result)) {
                     throw new \RuntimeException(
-                        \sprintf(_DB_QUERY_ERROR, $sql) . $db->error(), E_USER_ERROR
+                        \sprintf(_DB_QUERY_ERROR, $sql) . $db->error(),
+                        E_USER_ERROR,
                     );
                 }
                 while (false !== ($myrow = $db->fetchArray($result))) {
@@ -694,7 +699,8 @@ class XoopsBlock extends XoopsObject
                 $result = $db->query($sql);
                 if (!$db->isResultSet($result)) {
                     throw new \RuntimeException(
-                        \sprintf(_DB_QUERY_ERROR, $sql) . $db->error(), E_USER_ERROR
+                        \sprintf(_DB_QUERY_ERROR, $sql) . $db->error(),
+                        E_USER_ERROR,
                     );
                 }
                 while (false !== ($myrow = $db->fetchArray($result))) {
@@ -709,7 +715,8 @@ class XoopsBlock extends XoopsObject
                 $result = $db->query($sql);
                 if (!$db->isResultSet($result)) {
                     throw new \RuntimeException(
-                        \sprintf(_DB_QUERY_ERROR, $sql) . $db->error(), E_USER_ERROR
+                        \sprintf(_DB_QUERY_ERROR, $sql) . $db->error(),
+                        E_USER_ERROR,
                     );
                 }
                 while (false !== ($myrow = $db->fetchArray($result))) {
@@ -730,7 +737,7 @@ class XoopsBlock extends XoopsObject
      */
     public static function getByModule($moduleid, $asobject = true)
     {
-        $moduleid = (int)$moduleid;
+        $moduleid = (int) $moduleid;
         $db       = XoopsDatabaseFactory::getDatabaseConnection();
         if ($asobject == true) {
             $sql = $sql = 'SELECT * FROM ' . $db->prefix('newblocks') . ' WHERE mid=' . $moduleid;
@@ -740,7 +747,8 @@ class XoopsBlock extends XoopsObject
         $result = $db->query($sql);
         if (!$db->isResultSet($result)) {
             throw new \RuntimeException(
-                \sprintf(_DB_QUERY_ERROR, $sql) . $db->error(), E_USER_ERROR
+                \sprintf(_DB_QUERY_ERROR, $sql) . $db->error(),
+                E_USER_ERROR,
             );
         }
         $ret    = [];
@@ -770,7 +778,7 @@ class XoopsBlock extends XoopsObject
      */
     public function getAllByGroupModule($groupid, $module_id = 0, $toponlyblock = false, $visible = null, $orderby = 'b.weight, m.block_id', $isactive = 1)
     {
-        $isactive = (int)$isactive;
+        $isactive = (int) $isactive;
         $db       = XoopsDatabaseFactory::getDatabaseConnection();
         $ret      = [];
         if (isset($groupid)) {
@@ -778,14 +786,15 @@ class XoopsBlock extends XoopsObject
             if (is_array($groupid)) {
                 $sql .= ' AND gperm_groupid IN (' . implode(',', $groupid) . ')';
             } else {
-                if ((int)$groupid > 0) {
-                    $sql .= ' AND gperm_groupid=' . (int)$groupid;
+                if ((int) $groupid > 0) {
+                    $sql .= ' AND gperm_groupid=' . (int) $groupid;
                 }
             }
             $result   = $db->query($sql);
             if (!$db->isResultSet($result)) {
                 throw new \RuntimeException(
-                    \sprintf(_DB_QUERY_ERROR, $sql) . $db->error(), E_USER_ERROR
+                    \sprintf(_DB_QUERY_ERROR, $sql) . $db->error(),
+                    E_USER_ERROR,
                 );
             }
             $blockids = [];
@@ -799,11 +808,11 @@ class XoopsBlock extends XoopsObject
         $sql = 'SELECT b.* FROM ' . $db->prefix('newblocks') . ' b, ' . $db->prefix('block_module_link') . ' m WHERE m.block_id=b.bid';
         $sql .= ' AND b.isactive=' . $isactive;
         if (isset($visible)) {
-            $sql .= ' AND b.visible=' . (int)$visible;
+            $sql .= ' AND b.visible=' . (int) $visible;
         }
         if (!isset($module_id)) {
         } elseif (!empty($module_id)) {
-            $sql .= ' AND m.module_id IN (0,' . (int)$module_id;
+            $sql .= ' AND m.module_id IN (0,' . (int) $module_id;
             if ($toponlyblock) {
                 $sql .= ',-1';
             }
@@ -822,7 +831,8 @@ class XoopsBlock extends XoopsObject
         $result = $db->query($sql);
         if (!$db->isResultSet($result)) {
             throw new \RuntimeException(
-                \sprintf(_DB_QUERY_ERROR, $sql) . $db->error(), E_USER_ERROR
+                \sprintf(_DB_QUERY_ERROR, $sql) . $db->error(),
+                E_USER_ERROR,
             );
         }
         while (false !== ($myrow = $db->fetchArray($result))) {
@@ -872,13 +882,13 @@ class XoopsBlock extends XoopsObject
         $non_grouped = array_diff($bids, $grouped);
         if (!empty($non_grouped)) {
             $sql = 'SELECT b.* FROM ' . $db->prefix('newblocks') . ' b, ' . $db->prefix('block_module_link') . ' m WHERE m.block_id=b.bid';
-            $sql .= ' AND b.isactive=' . (int)$isactive;
+            $sql .= ' AND b.isactive=' . (int) $isactive;
             if (isset($visible)) {
-                $sql .= ' AND b.visible=' . (int)$visible;
+                $sql .= ' AND b.visible=' . (int) $visible;
             }
             if (!isset($module_id)) {
             } elseif (!empty($module_id)) {
-                $sql .= ' AND m.module_id IN (0,' . (int)$module_id;
+                $sql .= ' AND m.module_id IN (0,' . (int) $module_id;
                 if ($toponlyblock) {
                     $sql .= ',-1';
                 }
@@ -895,12 +905,13 @@ class XoopsBlock extends XoopsObject
             $result = $db->query($sql);
             if (!$db->isResultSet($result)) {
                 throw new \RuntimeException(
-                    \sprintf(_DB_QUERY_ERROR, $sql) . $db->error(), E_USER_ERROR
+                    \sprintf(_DB_QUERY_ERROR, $sql) . $db->error(),
+                    E_USER_ERROR,
                 );
             }
             while (false !== ($myrow = $db->fetchArray($result))) {
                 $block              = new XoopsBlock($myrow);
-                $ret[$myrow['bid']] =& $block;
+                $ret[$myrow['bid']] = & $block;
                 unset($block);
             }
         }
@@ -920,8 +931,8 @@ class XoopsBlock extends XoopsObject
      */
     public function countSimilarBlocks($moduleId, $funcNum, $showFunc = null)
     {
-        $funcNum  = (int)$funcNum;
-        $moduleId = (int)$moduleId;
+        $funcNum  = (int) $funcNum;
+        $moduleId = (int) $moduleId;
         if ($funcNum < 1 || $moduleId < 1) {
             // invalid query
             return 0;
@@ -939,7 +950,7 @@ class XoopsBlock extends XoopsObject
         }
         list($count) = $db->fetchRow($result);
 
-        return (int)$count;
+        return (int) $count;
     }
 }
 
@@ -985,7 +996,7 @@ class XoopsBlockHandler extends XoopsObjectHandler
     public function get($id)
     {
         $block = false;
-        $id    = (int)$id;
+        $id    = (int) $id;
         if ($id > 0) {
             $sql    = 'SELECT * FROM ' . $this->db->prefix('newblocks') . ' WHERE bid=' . $id;
             $result = $this->db->query($sql);
@@ -1068,7 +1079,7 @@ class XoopsBlockHandler extends XoopsObjectHandler
                 $edit_func,
                 $template,
                 $bcachetime,
-                time()
+                time(),
             );
         } else {
             $sql = sprintf(
@@ -1092,7 +1103,7 @@ class XoopsBlockHandler extends XoopsObjectHandler
                 $template,
                 $bcachetime,
                 time(),
-                $bid
+                $bid,
             );
         }
         if (!$result = $this->db->query($sql)) {
@@ -1156,7 +1167,7 @@ class XoopsBlockHandler extends XoopsObjectHandler
             $block = new XoopsBlock();
             $block->assignVars($myrow);
             if (!$id_as_key) {
-                $ret[] =& $block;
+                $ret[] = & $block;
             } else {
                 $ret[$myrow['bid']] = &$block;
             }

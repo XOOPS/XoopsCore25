@@ -24,8 +24,8 @@ class HTMLPurifier_HTMLModule_CommonAttributes extends HTMLPurifier_HTMLModule
             0 => array('Lang'), // proprietary, for xml:lang/lang
         ),
         'Common' => array(
-            0 => array('Core', 'I18N')
-        )
+            0 => array('Core', 'I18N'),
+        ),
     );
 }
 

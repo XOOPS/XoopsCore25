@@ -1,4 +1,5 @@
 <?php
+
 //
 /*******************************************************************************
  * Location: <strong>xml/SaxParser.class</strong><br>
@@ -260,7 +261,7 @@ class SaxParser
      */
     public function handleCharacterData($parser, $data)
     {
-        $tagHandler =& $this->tagHandlers[$this->getCurrentTag()];
+        $tagHandler = & $this->tagHandlers[$this->getCurrentTag()];
         if (isset($tagHandler) && is_subclass_of($tagHandler, 'XmlTagHandler')) {
             $tagHandler->handleCharacterData($this, $data);
         } else {
@@ -286,9 +287,7 @@ class SaxParser
      * @param $data
      * @returns void
      */
-    public function handleDefault($parser, $data)
-    {
-    }
+    public function handleDefault($parser, $data) {}
 
     /****************************************************************************
      * @param int $parser The handle to the parser.
@@ -300,9 +299,7 @@ class SaxParser
      * @returns void
      *
      */
-    public function handleUnparsedEntityDecl($parser, $entityName, $base, $systemId, $publicId, $notationName)
-    {
-    }
+    public function handleUnparsedEntityDecl($parser, $entityName, $base, $systemId, $publicId, $notationName) {}
 
     /****************************************************************************
      * @param int $parser The handle to the parser.
@@ -312,9 +309,7 @@ class SaxParser
      * @param     $publicId
      * @returns void
      */
-    public function handleNotationDecl($parser, $notationName, $base, $systemId, $publicId)
-    {
-    }
+    public function handleNotationDecl($parser, $notationName, $base, $systemId, $publicId) {}
 
     /****************************************************************************
      * @param int $parser The handle to the parser.
@@ -324,9 +319,7 @@ class SaxParser
      * @param     $publicId
      * @returns void
      */
-    public function handleExternalEntityRef($parser, $openEntityNames, $base, $systemId, $publicId)
-    {
-    }
+    public function handleExternalEntityRef($parser, $openEntityNames, $base, $systemId, $publicId) {}
 
     /**
      * The default tag handler method for a tag with no handler
@@ -336,9 +329,7 @@ class SaxParser
      * @param $tagName
      * @param $attributesArray
      */
-    public function handleBeginElementDefault($parser, $tagName, $attributesArray)
-    {
-    }
+    public function handleBeginElementDefault($parser, $tagName, $attributesArray) {}
 
     /**
      * The default tag handler method for a tag with no handler
@@ -347,9 +338,7 @@ class SaxParser
      * @param $parser
      * @param $tagName
      */
-    public function handleEndElementDefault($parser, $tagName)
-    {
-    }
+    public function handleEndElementDefault($parser, $tagName) {}
 
     /**
      * The default tag handler method for a tag with no handler
@@ -358,9 +347,7 @@ class SaxParser
      * @param $parser
      * @param $data
      */
-    public function handleCharacterDataDefault($parser, $data)
-    {
-    }
+    public function handleCharacterDataDefault($parser, $data) {}
 
     /**
      * Sets error messages

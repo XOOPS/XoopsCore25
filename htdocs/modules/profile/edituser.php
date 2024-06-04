@@ -39,7 +39,7 @@ if ($op === 'save') {
     }
     $uid      = $GLOBALS['xoopsUser']->getVar('uid');
     $errors   = [];
-    $edituser =& $GLOBALS['xoopsUser'];
+    $edituser = & $GLOBALS['xoopsUser'];
     if ($GLOBALS['xoopsUser']->isAdmin()) {
         $edituser->setVar('uname', trim($_POST['uname']));
         $edituser->setVar('email', trim($_POST['email']));
@@ -153,7 +153,7 @@ if ($op === 'avatarupload') {
         $xoops_upload_file = $_POST['xoops_upload_file'];
     }
     if (!empty($_POST['uid'])) {
-        $uid = (int)$_POST['uid'];
+        $uid = (int) $_POST['uid'];
     }
     if (empty($uid) || $GLOBALS['xoopsUser']->getVar('uid') != $uid) {
         redirect_header('index.php', 3, _US_NOEDITRIGHT);
@@ -165,8 +165,8 @@ if ($op === 'avatarupload') {
             'image/jpeg',
             'image/pjpeg',
             'image/x-png',
-            'image/png'
-        ],                                 $GLOBALS['xoopsConfigUser']['avatar_maxsize'], $GLOBALS['xoopsConfigUser']['avatar_width'], $GLOBALS['xoopsConfigUser']['avatar_height']);
+            'image/png',
+        ], $GLOBALS['xoopsConfigUser']['avatar_maxsize'], $GLOBALS['xoopsConfigUser']['avatar_width'], $GLOBALS['xoopsConfigUser']['avatar_height']);
         if ($uploader->fetchMedia($_POST['xoops_upload_file'][0])) {
             $uploader->setPrefix('cavt');
             if ($uploader->upload()) {
@@ -210,7 +210,7 @@ if ($op === 'avatarchoose') {
     }
     $uid = 0;
     if (!empty($_POST['uid'])) {
-        $uid = (int)$_POST['uid'];
+        $uid = (int) $_POST['uid'];
     }
     if (empty($uid) || $GLOBALS['xoopsUser']->getVar('uid') != $uid) {
         redirect_header('index.php', 3, _US_NOEDITRIGHT);

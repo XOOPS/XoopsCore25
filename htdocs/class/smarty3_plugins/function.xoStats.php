@@ -113,7 +113,8 @@ function xoStatsRegen()
     $result = $GLOBALS['xoopsDB']->query($sql);
     if (!$GLOBALS['xoopsDB']->isResultSet($result)) {
         throw new \RuntimeException(
-            \sprintf(_DB_QUERY_ERROR, $sql) . $GLOBALS['xoopsDB']->error(), E_USER_ERROR
+            \sprintf(_DB_QUERY_ERROR, $sql) . $GLOBALS['xoopsDB']->error(),
+            E_USER_ERROR,
         );
     }
     $myrow = $GLOBALS['xoopsDB']->fetchArray($result);

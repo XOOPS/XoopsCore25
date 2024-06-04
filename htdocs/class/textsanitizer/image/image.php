@@ -55,9 +55,11 @@ class MytsImage extends MyTextSanitizerExtension
             if (!empty($config['resize']) && empty($config['clickable']) && !empty($config['max_width']) && !empty($GLOBALS['xoTheme'])) {
                 if (!$jsLoaded) {
                     $jsLoaded = true;
-                    $GLOBALS['xoTheme']->addScript('/class/textsanitizer/image/image.js', [
-                        'type' => 'text/javascript'
-                    ]
+                    $GLOBALS['xoTheme']->addScript(
+                        '/class/textsanitizer/image/image.js',
+                        [
+                            'type' => 'text/javascript',
+                        ],
                     );
                 }
                 $myts->replacements[] = "<img src='\\5' class='\\2' alt='" . _MSC_RESIZED_IMAGE . "' border='0' onload=\"JavaScript:if(this.width>\\4)this.width=\\4\" />";
@@ -67,9 +69,11 @@ class MytsImage extends MyTextSanitizerExtension
             } elseif (!empty($config['clickable']) && !empty($config['max_width']) && !empty($GLOBALS['xoTheme'])) {
                 if (!$jsLoaded) {
                     $jsLoaded = true;
-                    $GLOBALS['xoTheme']->addScript('/class/textsanitizer/image/image.js', [
-                        'type' => 'text/javascript'
-                    ]
+                    $GLOBALS['xoTheme']->addScript(
+                        '/class/textsanitizer/image/image.js',
+                        [
+                            'type' => 'text/javascript',
+                        ],
                     );
                 }
                 $myts->replacements[] = "<a href='javascript:loadImage(\"\\5\");'><img src='\\5' class='\\2' alt='" . _MSC_CLICK_TO_OPEN_IMAGE . "' border='0' onload=\"if(this.width>\\4)this.width=\\4\" /></a>";

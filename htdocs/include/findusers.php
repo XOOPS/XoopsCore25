@@ -58,7 +58,7 @@ class XoopsRank extends XoopsObject
     public $rank_max;
     public $rank_special;
     public $rank_image;
-    
+
     /**
      * Construct
      *
@@ -188,7 +188,7 @@ class XoUser extends XoopsUser
             'theme',
             'umode',
             'uorder',
-            'notify_mode'
+            'notify_mode',
         ];
         foreach ($unsets as $var) {
             unset($this->vars[$var]);
@@ -239,7 +239,7 @@ class XoUserHandler extends XoopsObjectHandler
     {
         if (!is_array($groups)) {
             $groups = [
-                $groups
+                $groups,
             ];
         }
         $groups = array_filter($groups);
@@ -257,12 +257,13 @@ class XoUserHandler extends XoopsObjectHandler
         $result = $this->db->query($sql);
         if (!$this->db->isResultSet($result)) {
             throw new \RuntimeException(
-                \sprintf(_DB_QUERY_ERROR, $sql) . $this->db->error(), E_USER_ERROR
+                \sprintf(_DB_QUERY_ERROR, $sql) . $this->db->error(),
+                E_USER_ERROR,
             );
         }
         [$count] = $this->db->fetchRow($result);
 
-        return (int)$count;
+        return (int) $count;
     }
 
     /**
@@ -276,7 +277,7 @@ class XoUserHandler extends XoopsObjectHandler
     {
         if (!is_array($groups)) {
             $groups = [
-                $groups
+                $groups,
             ];
         }
         $groups = array_filter($groups);
@@ -304,7 +305,8 @@ class XoUserHandler extends XoopsObjectHandler
         $result = $this->db->query($sql, $limit, $start);
         if (!$this->db->isResultSet($result)) {
             throw new \RuntimeException(
-                \sprintf(_DB_QUERY_ERROR, $sql) . $this->db->error(), E_USER_ERROR
+                \sprintf(_DB_QUERY_ERROR, $sql) . $this->db->error(),
+                E_USER_ERROR,
             );
         }
         $ret    = [];
@@ -327,16 +329,16 @@ $items_match = [
     'uname'     => _MA_USER_UNAME,
     'name'      => _MA_USER_REALNAME,
     'email'     => _MA_USER_EMAIL,
-//  'user_icq'  => _MA_USER_ICQ,
-//  'user_aim'  => _MA_USER_AIM,
-//  'user_yim'  => _MA_USER_YIM,
-//  'user_msnm' => _MA_USER_MSNM,
+    //  'user_icq'  => _MA_USER_ICQ,
+    //  'user_aim'  => _MA_USER_AIM,
+    //  'user_yim'  => _MA_USER_YIM,
+    //  'user_msnm' => _MA_USER_MSNM,
 ];
 
 $items_range = [
     'user_regdate' => _MA_USER_RANGE_USER_REGDATE,
     'last_login'   => _MA_USER_RANGE_LAST_LOGIN,
-    'posts'        => _MA_USER_RANGE_POSTS
+    'posts'        => _MA_USER_RANGE_POSTS,
 ];
 
 define('FINDUSERS_MODE_SIMPLE', 0);
@@ -377,21 +379,21 @@ if (!Request::hasVar('user_submit', 'POST')) {
             unset($more, $less, $range_tray);
         }
 
-        $mailok_radio = new XoopsFormRadio(_MA_USER_SHOWMAILOK, 'user_mailok',  Request::getString('user_mailok', 'both', 'POST'));
+        $mailok_radio = new XoopsFormRadio(_MA_USER_SHOWMAILOK, 'user_mailok', Request::getString('user_mailok', 'both', 'POST'));
         $mailok_radio->addOptionArray(
             [
-            'mailok' => _MA_USER_MAILOK,
-            'mailng' => _MA_USER_MAILNG,
-            'both' => _MA_USER_BOTH
-            ]
+                'mailok' => _MA_USER_MAILOK,
+                'mailng' => _MA_USER_MAILNG,
+                'both' => _MA_USER_BOTH,
+            ],
         );
         $avatar_radio = new XoopsFormRadio(_MA_USER_HASAVATAR, 'user_avatar', Request::getString('user_avatar', 'both', 'POST'));
         $avatar_radio->addOptionArray(
             [
-            'y' => _YES,
-            'n' => _NO,
-            'both' => _MA_USER_BOTH
-            ]
+                'y' => _YES,
+                'n' => _NO,
+                'both' => _MA_USER_BOTH,
+            ],
         );
 
         $level_radio = new XoopsFormRadio(_MA_USER_LEVEL, 'level', Request::getString('level', '', 'POST'));
@@ -399,7 +401,7 @@ if (!Request::hasVar('user_submit', 'POST')) {
             0 => _ALL,
             1 => _MA_USER_LEVEL_ACTIVE,
             2 => _MA_USER_LEVEL_INACTIVE,
-            3 => _MA_USER_LEVEL_DISABLED
+            3 => _MA_USER_LEVEL_DISABLED,
         ];
         $level_radio->addOptionArray($levels);
 
@@ -412,7 +414,7 @@ if (!Request::hasVar('user_submit', 'POST')) {
 
         $ranks       = $rank_handler->getList();
         $ranks[0]    = _ALL;
-        $rank_select = new XoopsFormSelect(_MA_USER_RANK, 'rank', Request::getInt('rank', 0) );
+        $rank_select = new XoopsFormSelect(_MA_USER_RANK, 'rank', Request::getInt('rank', 0));
         $rank_select->addOptionArray($ranks);
         $form->addElement($url_text);
         $form->addElement($location_text);
@@ -439,18 +441,18 @@ if (!Request::hasVar('user_submit', 'POST')) {
     $sort_select = new XoopsFormSelect(_MA_USER_SORT, 'user_sort', Request::getString('user_sort', '', 'POST'));
     $sort_select->addOptionArray(
         [
-        'uname' => _MA_USER_UNAME,
-        'last_login' => _MA_USER_LASTLOGIN,
-        'user_regdate' => _MA_USER_REGDATE,
-        'posts' => _MA_USER_POSTS
-        ]
+            'uname' => _MA_USER_UNAME,
+            'last_login' => _MA_USER_LASTLOGIN,
+            'user_regdate' => _MA_USER_REGDATE,
+            'posts' => _MA_USER_POSTS,
+        ],
     );
     $order_select = new XoopsFormSelect(_MA_USER_ORDER, 'user_order', Request::getString('user_order', '', 'POST'));
     $order_select->addOptionArray(
         [
-        'ASC' => _MA_USER_ASC,
-        'DESC' => _MA_USER_DESC
-        ]
+            'ASC' => _MA_USER_ASC,
+            'DESC' => _MA_USER_DESC,
+        ],
     );
 
     $form->addElement($sort_select);
@@ -472,7 +474,7 @@ if (!Request::hasVar('user_submit', 'POST')) {
         if ($mode == $_mode) {
             continue;
         }
-        $modes_switch[] = "<a href='findusers.php?target=" . htmlspecialchars(Request::getString('target', ''), ENT_QUOTES | ENT_HTML5) . '&amp;multiple=' . (string)$multiple . '&amp;token=' . htmlspecialchars($token, ENT_QUOTES | ENT_HTML5) . "&amp;mode={$_mode}'>{$title}</a>";
+        $modes_switch[] = "<a href='findusers.php?target=" . htmlspecialchars(Request::getString('target', ''), ENT_QUOTES | ENT_HTML5) . '&amp;multiple=' . (string) $multiple . '&amp;token=' . htmlspecialchars($token, ENT_QUOTES | ENT_HTML5) . "&amp;mode={$_mode}'>{$title}</a>";
     }
     echo '<h4>' . implode(' | ', $modes_switch) . '</h4>';
     echo '(' . sprintf(_MA_USER_ACTUS, "<span style='color:#ff0000;'>$acttotal</span>") . ' ' . sprintf(_MA_USER_INACTUS, "<span style='color:#ff0000;'>$inacttotal</span>") . ')';
@@ -535,7 +537,7 @@ if (!Request::hasVar('user_submit', 'POST')) {
         }
     }
     if (Request::hasVar('posts_more', 'POST') && is_numeric($_POST['posts_more'])) {
-        $criteria->add(new Criteria('posts',  Request::getInt('posts_more', 0, 'POST'), '<='));
+        $criteria->add(new Criteria('posts', Request::getInt('posts_more', 0, 'POST'), '<='));
     }
     if (Request::hasVar('posts_less', 'POST') && is_numeric($_POST['posts_less'])) {
         $criteria->add(new Criteria('posts', Request::getInt('posts_less', 0, 'POST'), '>='));
@@ -555,11 +557,11 @@ if (!Request::hasVar('user_submit', 'POST')) {
         }
     }
     if (Request::hasVar('level', 'POST')) {
-//        $level_value = array(
-//            1 => 1,
-//            2 => 0,
-//            3 => -1
-//        );
+        //        $level_value = array(
+        //            1 => 1,
+        //            2 => 0,
+        //            3 => -1
+        //        );
         $level       = Request::getInt('level', 0, 'POST');
         if ($level > 0) {
             $criteria->add(new Criteria('level', $level));
@@ -584,7 +586,7 @@ if (!Request::hasVar('user_submit', 'POST')) {
         'email',
         'last_login',
         'user_regdate',
-        'posts'
+        'posts',
     ];
     $sort      = (!in_array(Request::getString('user_sort', '', 'POST'), $validsort)) ? 'uname' : Request::getString('user_sort', '', 'POST');
     $order     = 'ASC';
@@ -631,7 +633,7 @@ if (!Request::hasVar('user_submit', 'POST')) {
     ';
 
     echo '</html><body>';
-    echo "<a href='findusers.php?target=" . htmlspecialchars(Request::getString('target', '', 'POST'), ENT_QUOTES | ENT_HTML5) . '&amp;multiple=' . (string)$multiple . '&amp;token=' . htmlspecialchars($token, ENT_QUOTES | ENT_HTML5) . "'>" . _MA_USER_FINDUS . "</a>&nbsp;<span style='font-weight:bold;'>&raquo;</span>&nbsp;" . _MA_USER_RESULTS . '<br><br>';
+    echo "<a href='findusers.php?target=" . htmlspecialchars(Request::getString('target', '', 'POST'), ENT_QUOTES | ENT_HTML5) . '&amp;multiple=' . (string) $multiple . '&amp;token=' . htmlspecialchars($token, ENT_QUOTES | ENT_HTML5) . "'>" . _MA_USER_FINDUS . "</a>&nbsp;<span style='font-weight:bold;'>&raquo;</span>&nbsp;" . _MA_USER_RESULTS . '<br><br>';
     if (empty($start) && empty($foundusers)) {
         echo '<h4>' . _MA_USER_NOFOUND, '</h4>';
         $hiddenform = "<form name='findnext' action='findusers.php' method='post'>";
@@ -641,7 +643,7 @@ if (!Request::hasVar('user_submit', 'POST')) {
                 $hiddenform .= $GLOBALS['xoopsSecurity']->getTokenHTML() . "\n";
             } elseif (is_array($v)) {
                 foreach ($v as $temp) {
-                    $hiddenform .= "<input type='hidden' name='". htmlspecialchars($k, ENT_QUOTES | ENT_HTML5)."' value='" . htmlspecialchars($temp, ENT_QUOTES | ENT_HTML5) . "' />\n";
+                    $hiddenform .= "<input type='hidden' name='" . htmlspecialchars($k, ENT_QUOTES | ENT_HTML5) . "' value='" . htmlspecialchars($temp, ENT_QUOTES | ENT_HTML5) . "' />\n";
                 }
             } else {
                 $hiddenform .= "<input type='hidden' name='" . htmlspecialchars($k, ENT_QUOTES | ENT_HTML5) . "' value='" . htmlspecialchars($v, ENT_QUOTES | ENT_HTML5) . "' />\n";
@@ -668,7 +670,7 @@ if (!Request::hasVar('user_submit', 'POST')) {
             <table width='100%' border='0' cellspacing='1' cellpadding='4' class='outer'>
             <tr>
             <th align='center' width='5px'>";
-            if ($multiple > 0 ) {
+            if ($multiple > 0) {
                 echo "<input type='checkbox' name='memberslist_checkall' id='memberslist_checkall' onclick='xoopsCheckAll(\"{$name_form}\", \"memberslist_checkall\");' />";
             }
             echo "</th>

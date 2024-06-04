@@ -52,7 +52,7 @@ class Upgrade_231 extends XoopsUpgrade
             'tplset_credits' => 'tplset',
             'tpl_source' => 'tplsource',
             'user_sig' => 'users',
-            'bio' => 'users'
+            'bio' => 'users',
         ];
         foreach ($fields as $field => $table) {
             $sql = 'SHOW COLUMNS FROM `' . $GLOBALS['xoopsDB']->prefix($table) . "` LIKE '{$field}'";

@@ -117,9 +117,10 @@ class Upgrade_230 extends XoopsUpgrade
         $tables->useTable($tableName);
         $tables->renameTable($tableName, $tableNameOld);
         $result = $tables->executeQueue(true);
-        if (true!==$result) {
+        if (true !== $result) {
             throw new \RuntimeException(
-                __METHOD__ . ' failed.', E_USER_ERROR
+                __METHOD__ . ' failed.',
+                E_USER_ERROR,
             );
         }
         $tables->resetQueue();
@@ -128,18 +129,20 @@ class Upgrade_230 extends XoopsUpgrade
         $tables->addColumn($tableName, 'module_id', 'int');
         $tables->addPrimaryKey($tableName, 'block_id, module_id');
         $result = $tables->executeQueue(true);
-        if (true!==$result) {
+        if (true !== $result) {
             throw new \RuntimeException(
-                __METHOD__ . ' failed.', E_USER_ERROR
+                __METHOD__ . ' failed.',
+                E_USER_ERROR,
             );
         }
         $prefixedName = $GLOBALS['xoopsDB']->prefix('block_module_link');
         $sql = 'INSERT INTO `' . $prefixedName . '` (`block_id`, `module_id`) ' .
             'SELECT DISTINCT `block_id`, `module_id` FROM `' . $prefixedName . '_old`';
         $result = $GLOBALS['xoopsDB']->queryF($sql);
-        if (true!==$result) {
+        if (true !== $result) {
             throw new \RuntimeException(
-                __METHOD__ . ' failed.', E_USER_ERROR
+                __METHOD__ . ' failed.',
+                E_USER_ERROR,
             );
         }
 
@@ -319,13 +322,14 @@ class Upgrade_230 extends XoopsUpgrade
 
         // Begin Converter Core
         if (!empty($tables)) {
-            foreach ((array)$tables as $table) {
+            foreach ((array) $tables as $table) {
                 // Analyze tables for string types columns and generate his binary and string correctness sql sentences.
                 $sql = "DESCRIBE $table";
                 $result = $GLOBALS['xoopsDB']->queryF($sql);
                 if (!$GLOBALS['xoopsDB']->isResultSet($result)) {
                     throw new \RuntimeException(
-                        \sprintf(_DB_QUERY_ERROR, $sql) . $GLOBALS['xoopsDB']->error(), E_USER_ERROR
+                        \sprintf(_DB_QUERY_ERROR, $sql) . $GLOBALS['xoopsDB']->error(),
+                        E_USER_ERROR,
                     );
                 }
                 while (false !== ($myrow = $GLOBALS['xoopsDB']->fetchArray($result))) {
@@ -350,7 +354,8 @@ class Upgrade_230 extends XoopsUpgrade
                 $result = $GLOBALS['xoopsDB']->queryF($sql);
                 if (!$GLOBALS['xoopsDB']->isResultSet($result)) {
                     throw new \RuntimeException(
-                        \sprintf(_DB_QUERY_ERROR, $sql) . $GLOBALS['xoopsDB']->error(), E_USER_ERROR
+                        \sprintf(_DB_QUERY_ERROR, $sql) . $GLOBALS['xoopsDB']->error(),
+                        E_USER_ERROR,
                     );
                 }
                 while (false !== ($myrow = $GLOBALS['xoopsDB']->fetchArray($result))) {
@@ -361,7 +366,7 @@ class Upgrade_230 extends XoopsUpgrade
 
                 // Generate the SQL Sentence for drop and add every FULLTEXT index we found previously.
                 if (!empty($fulltext_indexes)) {
-                    foreach ((array)$fulltext_indexes as $key_name => $column) {
+                    foreach ((array) $fulltext_indexes as $key_name => $column) {
                         $drop_index_querys[] = "ALTER TABLE `$table` DROP INDEX `$key_name`";
                         $tmp_gen_index_query = "ALTER TABLE `$table` ADD FULLTEXT `$key_name`(";
                         $fields_names        = array_keys($column);
@@ -382,7 +387,7 @@ class Upgrade_230 extends XoopsUpgrade
         // End Converter Core
 
         // Merge all SQL Sentences that we temporary store in arrays.
-        $final_querys = array_merge((array)$drop_index_querys, (array)$binary_querys, (array)$tables_querys, (array)$string_querys, (array)$gen_index_querys, (array)$optimize_querys);
+        $final_querys = array_merge((array) $drop_index_querys, (array) $binary_querys, (array) $tables_querys, (array) $string_querys, (array) $gen_index_querys, (array) $optimize_querys);
 
         foreach ($final_querys as $sql) {
             $GLOBALS['xoopsDB']->queryF($sql);
@@ -408,10 +413,10 @@ class Upgrade_230 extends XoopsUpgrade
         $lines = file($file);
         foreach (array_keys($lines) as $ln) {
             if (preg_match("/(define\()([\"'])(XOOPS_[^\"']+)\\2,\s*([0-9]+)\s*\)/", $lines[$ln], $matches)) {
-                $val        = isset($vars[$matches[3]]) ? (string)constant($matches[3]) : (defined($matches[3]) ? (string)constant($matches[3]) : '0');
+                $val        = isset($vars[$matches[3]]) ? (string) constant($matches[3]) : (defined($matches[3]) ? (string) constant($matches[3]) : '0');
                 $lines[$ln] = preg_replace("/(define\()([\"'])(XOOPS_[^\"']+)\\2,\s*([0-9]+)\s*\)/", "define('" . $matches[3] . "', " . $val . ' )', $lines[$ln]);
             } elseif (preg_match("/(define\()([\"'])(XOOPS_[^\"']+)\\2,\s*([\"'])([^\"']*?)\\4\s*\)/", $lines[$ln], $matches)) {
-                $val        = isset($vars[$matches[3]]) ? (string)$vars[$matches[3]] : (defined($matches[3]) ? (string)constant($matches[3]) : '');
+                $val        = isset($vars[$matches[3]]) ? (string) $vars[$matches[3]] : (defined($matches[3]) ? (string) constant($matches[3]) : '');
                 $lines[$ln] = preg_replace("/(define\()([\"'])(XOOPS_[^\"']+)\\2,\s*([\"'])(.*?)\\4\s*\)/", "define('" . $matches[3] . "', '" . $val . "' )", $lines[$ln]);
             }
         }

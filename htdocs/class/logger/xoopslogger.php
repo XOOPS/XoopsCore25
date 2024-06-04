@@ -59,9 +59,7 @@ class XoopsLogger
     /**
      * XoopsLogger::__construct()
      */
-    public function __construct()
-    {
-    }
+    public function __construct() {}
 
     /**
      * Deprecated, use getInstance() instead
@@ -114,7 +112,7 @@ class XoopsLogger
         /** @var array $now */
         $now = explode(' ', microtime());
 
-        return (float)$now[0] + (float)$now[1];
+        return (float) $now[0] + (float) $now[1];
     }
 
     /**
@@ -216,7 +214,7 @@ class XoopsLogger
      * @param string  $errline
      * @param array|null $trace
      */
-    public function handleError($errno, $errstr, $errfile, $errline,$trace=null)
+    public function handleError($errno, $errstr, $errfile, $errline, $trace = null)
     {
         if ($this->activated && ($errno & error_reporting())) {
             // NOTE: we only store relative pathnames
@@ -301,8 +299,8 @@ class XoopsLogger
     protected function sanitizeDbMessage($message)
     {
         // XOOPS_DB_PREFIX  XOOPS_DB_NAME
-        $message = str_replace(XOOPS_DB_PREFIX.'_', '', $message);
-        $message = str_replace(XOOPS_DB_NAME.'.', '', $message);
+        $message = str_replace(XOOPS_DB_PREFIX . '_', '', $message);
+        $message = str_replace(XOOPS_DB_NAME . '.', '', $message);
 
         return $message;
     }

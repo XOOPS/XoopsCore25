@@ -16,7 +16,6 @@
  */
 class HTMLPurifier_Config
 {
-
     /**
      * HTML Purifier's version
      * @type string
@@ -133,7 +132,9 @@ class HTMLPurifier_Config
         }
         if (is_string($config)) {
             $ret->loadIni($config);
-        } elseif (is_array($config)) $ret->loadArray($config);
+        } elseif (is_array($config)) {
+            $ret->loadArray($config);
+        }
         return $ret;
     }
 
@@ -171,7 +172,7 @@ class HTMLPurifier_Config
         if ($a !== null) {
             $this->triggerError(
                 "Using deprecated API: use \$config->get('$key.$a') instead",
-                E_USER_WARNING
+                E_USER_WARNING,
             );
             $key = "$key.$a";
         }
@@ -182,7 +183,7 @@ class HTMLPurifier_Config
             // can't add % due to SimpleTest bug
             $this->triggerError(
                 'Cannot retrieve value of undefined directive ' . htmlspecialchars($key),
-                E_USER_WARNING
+                E_USER_WARNING,
             );
             return;
         }
@@ -190,7 +191,7 @@ class HTMLPurifier_Config
             $d = $this->def->info[$key];
             $this->triggerError(
                 'Cannot get value from aliased directive, use real name ' . $d->key,
-                E_USER_ERROR
+                E_USER_ERROR,
             );
             return;
         }
@@ -202,7 +203,7 @@ class HTMLPurifier_Config
                     $this->lock .
                     ' is active, this probably indicates a Definition setup method ' .
                     'is accessing directives that are not within its namespace',
-                    E_USER_ERROR
+                    E_USER_ERROR,
                 );
                 return;
             }
@@ -227,7 +228,7 @@ class HTMLPurifier_Config
             $this->triggerError(
                 'Cannot retrieve undefined namespace ' .
                 htmlspecialchars($namespace),
-                E_USER_WARNING
+                E_USER_WARNING,
             );
             return;
         }
@@ -310,7 +311,7 @@ class HTMLPurifier_Config
         if (!isset($this->def->info[$key])) {
             $this->triggerError(
                 'Cannot set undefined directive ' . htmlspecialchars($key) . ' to value',
-                E_USER_WARNING
+                E_USER_WARNING,
             );
             return;
         }
@@ -319,9 +320,9 @@ class HTMLPurifier_Config
         if (isset($def->isAlias)) {
             if ($this->aliasMode) {
                 $this->triggerError(
-                    'Double-aliases not allowed, please fix '.
+                    'Double-aliases not allowed, please fix ' .
                     'ConfigSchema bug with' . $key,
-                    E_USER_ERROR
+                    E_USER_ERROR,
                 );
                 return;
             }
@@ -349,7 +350,7 @@ class HTMLPurifier_Config
             $this->triggerError(
                 'Value for ' . $key . ' is of invalid type, should be ' .
                 HTMLPurifier_VarParser::getTypeName($type),
-                E_USER_WARNING
+                E_USER_WARNING,
             );
             return;
         }
@@ -363,7 +364,7 @@ class HTMLPurifier_Config
                 $this->triggerError(
                     'Value not supported, valid values are: ' .
                     $this->_listify($def->allowed),
-                    E_USER_WARNING
+                    E_USER_WARNING,
                 );
                 return;
             }
@@ -527,7 +528,7 @@ class HTMLPurifier_Config
                 if (is_null($this->get($type . '.DefinitionID'))) {
                     // fatally error out if definition ID not set
                     throw new HTMLPurifier_Exception(
-                        "Cannot retrieve raw version without specifying %$type.DefinitionID"
+                        "Cannot retrieve raw version without specifying %$type.DefinitionID",
                     );
                 }
             }
@@ -539,13 +540,13 @@ class HTMLPurifier_Config
                         "";
                     throw new HTMLPurifier_Exception(
                         "Cannot retrieve raw definition after it has already been setup" .
-                        $extra
+                        $extra,
                     );
                 }
                 if ($def->optimized === null) {
                     $extra = $this->chatty ? " (try flushing your cache)" : "";
                     throw new HTMLPurifier_Exception(
-                        "Optimization status of definition is unknown" . $extra
+                        "Optimization status of definition is unknown" . $extra,
                     );
                 }
                 if ($def->optimized !== $optimized) {
@@ -554,7 +555,7 @@ class HTMLPurifier_Config
                         " (this backtrace is for the first inconsistent call, which was for a $msg raw definition)"
                         : "";
                     throw new HTMLPurifier_Exception(
-                        "Inconsistent use of optimized and unoptimized raw definition retrievals" . $extra
+                        "Inconsistent use of optimized and unoptimized raw definition retrievals" . $extra,
                     );
                 }
             }
@@ -597,12 +598,12 @@ class HTMLPurifier_Config
                             'cached version is available, and no raw operations are necessary).  See ' .
                             '<a href="http://htmlpurifier.org/docs/enduser-customize.html#optimized">' .
                             'Customize</a> for more details',
-                            E_USER_WARNING
+                            E_USER_WARNING,
                         );
                     } else {
                         $this->triggerError(
                             "Useless DefinitionID declaration",
-                            E_USER_WARNING
+                            E_USER_WARNING,
                         );
                     }
                 }
@@ -634,7 +635,7 @@ class HTMLPurifier_Config
             $def = new HTMLPurifier_URIDefinition();
         } else {
             throw new HTMLPurifier_Exception(
-                "Definition of $type type not supported"
+                "Definition of $type type not supported",
             );
         }
         $this->definitions[$type] = $def;
@@ -653,7 +654,7 @@ class HTMLPurifier_Config
     {
         return $this->getDefinition('HTML', true, true);
     }
-    
+
     /**
      * @return HTMLPurifier_CSSDefinition|null
      */
@@ -661,7 +662,7 @@ class HTMLPurifier_Config
     {
         return $this->getDefinition('CSS', true, true);
     }
-    
+
     /**
      * @return HTMLPurifier_URIDefinition|null
      */
@@ -689,7 +690,7 @@ class HTMLPurifier_Config
                 $namespace = $key;
                 $namespace_values = $value;
                 foreach ($namespace_values as $directive => $value2) {
-                    $this->set($namespace .'.'. $directive, $value2);
+                    $this->set($namespace . '.' . $directive, $value2);
                 }
             }
         }
@@ -782,8 +783,8 @@ class HTMLPurifier_Config
      */
     public function mergeArrayFromForm($array, $index = false, $allowed = true, $mq_fix = true)
     {
-         $ret = HTMLPurifier_Config::prepareArrayFromForm($array, $index, $allowed, $mq_fix, $this->def);
-         $this->loadArray($ret);
+        $ret = HTMLPurifier_Config::prepareArrayFromForm($array, $index, $allowed, $mq_fix, $this->def);
+        $this->loadArray($ret);
     }
 
     /**

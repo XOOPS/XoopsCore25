@@ -64,7 +64,7 @@ return [
     'tcl'   => 'application/x-tcl',
     'xhtml' => 'application/xhtml+xml',
     'xht'   => 'application/xhtml+xml',
-//    'xhtml' => 'application/xml',
+    //    'xhtml' => 'application/xml',
     'ent'   => 'application/xml-external-parsed-entity',
     'dtd'   => 'application/xml-dtd',
     'mod'   => 'application/xml-dtd',
@@ -146,5 +146,5 @@ return [
     'xlsb'  => 'application/vnd.ms-excel.sheet.binary.macroEnabled.12',
     'xlsm'  => 'application/vnd.ms-excel.sheet.macroEnabled.12',
     'xlsx'  => 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
-    'xps'   => 'application/vnd.ms-xpsdocument'
+    'xps'   => 'application/vnd.ms-xpsdocument',
 ];

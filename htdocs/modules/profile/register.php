@@ -61,7 +61,7 @@ $op           = !isset($_POST[$current_opname]) ? 'register' : Request::getStrin
 $current_step = Request::getInt('step', 0, 'POST');
 
 // The newly introduced variable $_SESSION['profile_post'] is contaminated by $_POST, thus we use an old vaiable to hold uid parameter
-$uid = !empty($_SESSION['profile_register_uid']) ? (int)$_SESSION['profile_register_uid'] : 0;
+$uid = !empty($_SESSION['profile_register_uid']) ? (int) $_SESSION['profile_register_uid'] : 0;
 
 // First step is already secured by with the captcha Token so lets check the others
 if ($current_step > 0 && !$GLOBALS['xoopsSecurity']->check()) {
@@ -88,7 +88,7 @@ $GLOBALS['xoopsTpl']->assign('lang_register_steps', _PROFILE_MA_REGISTER_STEPS);
 
 $xoBreadcrumbs[] = [
     'link'  => XOOPS_URL . '/modules/' . $GLOBALS['xoopsModule']->getVar('dirname', 'n') . '/register.php',
-    'title' => _PROFILE_MA_REGISTER
+    'title' => _PROFILE_MA_REGISTER,
 ];
 if (isset($steps[$current_step])) {
     $xoBreadcrumbs[] = ['title' => $steps[$current_step]['step_name']];
@@ -182,7 +182,7 @@ if ($current_step == 1) {
     $url        = Request::getUrl('url', '', 'POST');
     $pass       = Request::getString('pass', '', 'POST');
     $vpass      = Request::getString('vpass', '', 'POST');
-    $agree_disc = (isset($_POST['agree_disc']) && (int)$_POST['agree_disc']) ? 1 : 0;
+    $agree_disc = (isset($_POST['agree_disc']) && (int) $_POST['agree_disc']) ? 1 : 0;
 
 
     if ($GLOBALS['xoopsConfigUser']['reg_dispdsclmr'] != 0 && $GLOBALS['xoopsConfigUser']['reg_disclaimer'] !== '') {

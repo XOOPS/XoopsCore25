@@ -20,5 +20,5 @@ defined('XOOPS_ROOT_PATH') || exit('Restricted access');
 
 return $config = [
     'censor_terminate' => false, //set to true if you want to trigger an error page
-    'censor_admin' => true       //set to false if you don't want to censor admin words
+    'censor_admin' => true,       //set to false if you don't want to censor admin words
 ];

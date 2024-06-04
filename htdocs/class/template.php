@@ -60,13 +60,13 @@ class XoopsTpl extends Smarty
         $this->setCompileId();
         $this->assign(
             [
-                          'xoops_url'        => XOOPS_URL,
-                          'xoops_rootpath'   => XOOPS_ROOT_PATH,
-                          'xoops_langcode'   => _LANGCODE,
-                          'xoops_charset'    => _CHARSET,
-                          'xoops_version'    => XOOPS_VERSION,
-                          'xoops_upload_url' => XOOPS_UPLOAD_URL
-            ]
+                'xoops_url'        => XOOPS_URL,
+                'xoops_rootpath'   => XOOPS_ROOT_PATH,
+                'xoops_langcode'   => _LANGCODE,
+                'xoops_charset'    => _CHARSET,
+                'xoops_version'    => XOOPS_VERSION,
+                'xoops_upload_url' => XOOPS_UPLOAD_URL,
+            ],
         );
         $xoopsPreload = XoopsPreload::getInstance();
         $xoopsPreload->triggerEvent('core.class.template.new', [$this]);
@@ -91,8 +91,10 @@ class XoopsTpl extends Smarty
             $this->assign($vars);
             $out             = smarty_function_eval(
                 [
-                                                        'var' => $tplSource
-                ], $this);
+                    'var' => $tplSource,
+                ],
+                $this,
+            );
             $this->_tpl_vars = $oldVars;
 
             return $out;
@@ -100,8 +102,10 @@ class XoopsTpl extends Smarty
 
         return smarty_function_eval(
             [
-                                        'var' => $tplSource
-            ], $this);
+                'var' => $tplSource,
+            ],
+            $this,
+        );
     }
 
     /**
@@ -151,7 +155,7 @@ class XoopsTpl extends Smarty
         $theme_set         = empty($theme_set) ? $xoopsConfig['theme_set'] : $theme_set;
         if (class_exists('XoopsSystemCpanel', false)) {
             $cPrefix = 'cp-';
-            $theme_set =  isset($xoopsConfig['cpanel']) ? $cPrefix .$xoopsConfig['cpanel'] : $cPrefix . 'default';
+            $theme_set =  isset($xoopsConfig['cpanel']) ? $cPrefix . $xoopsConfig['cpanel'] : $cPrefix . 'default';
         }
         $module_dirname    = empty($module_dirname) ? (empty($GLOBALS['xoopsModule']) ? 'system' : $GLOBALS['xoopsModule']->getVar('dirname', 'n')) : $module_dirname;
         $this->compile_id  = substr(md5(XOOPS_URL), 0, 8) . '-' . $module_dirname . '-' . $theme_set . '-' . $template_set;
@@ -215,7 +219,7 @@ class XoopsTpl extends Smarty
     {
         $GLOBALS['xoopsLogger']->addDeprecated(__METHOD__ . '($value) is deprecated since XOOPS 2.5.4, please use \'$xoopsTpl->caching=$value;\' instead.');
 
-        $this->caching = (int)$num;
+        $this->caching = (int) $num;
     }
 
     /**
@@ -272,7 +276,7 @@ class XoopsTpl extends Smarty
     {
         $GLOBALS['xoopsLogger']->addDeprecated(__METHOD__ . '($value) is deprecated since XOOPS 2.5.4, please use \'$xoopsTpl->cache_lifetime=$value;\' instead.');
 
-        if (($num = (int)$num) <= 0) {
+        if (($num = (int) $num) <= 0) {
             $this->caching = 0;
         } else {
             $this->cache_lifetime = $num;
@@ -723,7 +727,7 @@ class XoopsTpl extends Smarty
 function xoops_template_touch($tpl_id)
 {
     $tplfile_handler = xoops_getHandler('tplfile');
-    $tplfile         = $tplfile_handler->get((int)$tpl_id);
+    $tplfile         = $tplfile_handler->get((int) $tpl_id);
 
     if (is_object($tplfile)) {
         $file = $tplfile->getVar('tpl_file', 'n');

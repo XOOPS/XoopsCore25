@@ -227,7 +227,7 @@ class Upgrade_220 extends XoopsUpgrade
             'user_occ',
             'bio',
             'user_intrest',
-            'user_mailok'
+            'user_mailok',
         ];
         foreach ($profile_fields as $field) {
             $xoopsDB->queryF('UPDATE `' . $xoopsDB->prefix('users') . '` u, `' . $xoopsDB->prefix('user_profile') . "` p SET u.{$field} = p.{$field} WHERE u.uid=p.profileid");
@@ -320,7 +320,8 @@ class Upgrade_220 extends XoopsUpgrade
         $result = $xoopsDB->query($sql);
         if (!$xoopsDB->isResultSet($result)) {
             throw new \RuntimeException(
-                \sprintf(_DB_QUERY_ERROR, $sql) . $xoopsDB->error(), E_USER_ERROR
+                \sprintf(_DB_QUERY_ERROR, $sql) . $xoopsDB->error(),
+                E_USER_ERROR,
             );
         }
 
@@ -334,7 +335,8 @@ class Upgrade_220 extends XoopsUpgrade
         $result = $xoopsDB->query($sql);
         if (!$xoopsDB->isResultSet($result)) {
             throw new \RuntimeException(
-                \sprintf(_DB_QUERY_ERROR, $sql) . $xoopsDB->error(), E_USER_ERROR
+                \sprintf(_DB_QUERY_ERROR, $sql) . $xoopsDB->error(),
+                E_USER_ERROR,
             );
         }
         $dirname   = '';
@@ -373,7 +375,8 @@ class Upgrade_220 extends XoopsUpgrade
         $result = $xoopsDB->query($sql);
         if (!$xoopsDB->isResultSet($result)) {
             throw new \RuntimeException(
-                \sprintf(_DB_QUERY_ERROR, $sql) . $xoopsDB->error(), E_USER_ERROR
+                \sprintf(_DB_QUERY_ERROR, $sql) . $xoopsDB->error(),
+                E_USER_ERROR,
             );
         }
         $dirname   = '';
@@ -418,7 +421,8 @@ class Upgrade_220 extends XoopsUpgrade
         $result = $xoopsDB->query($sql);
         if (!$xoopsDB->isResultSet($result)) {
             throw new \RuntimeException(
-                \sprintf(_DB_QUERY_ERROR, $sql) . $xoopsDB->error(), E_USER_ERROR
+                \sprintf(_DB_QUERY_ERROR, $sql) . $xoopsDB->error(),
+                E_USER_ERROR,
             );
         }
         while (false !== (list($bid, $options) = $xoopsDB->fetchRow($result))) {
@@ -435,7 +439,8 @@ class Upgrade_220 extends XoopsUpgrade
         $result = $xoopsDB->query($sql);
         if (!$xoopsDB->isResultSet($result)) {
             throw new \RuntimeException(
-                \sprintf(_DB_QUERY_ERROR, $sql) . $xoopsDB->error(), E_USER_ERROR
+                \sprintf(_DB_QUERY_ERROR, $sql) . $xoopsDB->error(),
+                E_USER_ERROR,
             );
         }
         while (false !== (list($bid, $_options) = $xoopsDB->fetchRow($result))) {

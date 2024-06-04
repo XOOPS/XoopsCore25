@@ -62,16 +62,16 @@ class XoopsGuiTransition extends XoopsSystemGui
         parent::header();
 
         global $xoopsConfig, $xoopsUser, $xoopsModule, $xoTheme, $xoopsTpl, $xoopsDB;
-        $tpl =& $this->template;
+        $tpl = & $this->template;
 
         include_once dirname(__DIR__) . '/ComposerInfo.php';
 
         // Determine if information box must be shown
         $currentScript = str_replace(XOOPS_ROOT_PATH . '/', '', (string) $_SERVER['SCRIPT_FILENAME']);
 
-        if('admin.php' == $currentScript){
+        if('admin.php' == $currentScript) {
             $show = $_GET['show'] ?? '';
-            if('info' == $show){
+            if('info' == $show) {
                 $tpl->assign('showTransitionInfo', true);
             }
         }
@@ -92,12 +92,12 @@ class XoopsGuiTransition extends XoopsSystemGui
         $xoTheme->addScript(XOOPS_ADMINTHEME_URL . '/transition/js/formenu.js');
         $xoTheme->addScript(XOOPS_ADMINTHEME_URL . '/transition/js/menu.js');
         $xoTheme->addScript(XOOPS_ADMINTHEME_URL . '/transition/js/tooltip.js');
-//        $xoTheme->addScript(XOOPS_ADMINTHEME_URL . '/transition/js/tabs.jquery.tools.min.js');
+        //        $xoTheme->addScript(XOOPS_ADMINTHEME_URL . '/transition/js/tabs.jquery.tools.min.js');
         $xoTheme->addScript(XOOPS_ADMINTHEME_URL . '/transition/js/tabs.js');
         $xoTheme->addScript(XOOPS_ADMINTHEME_URL . '/transition/js/tabs.slideshow.js');
 
         $xoTheme->addStylesheet('https://fonts.googleapis.com/css?family=Roboto+Condensed:300,300i,400,400i,700,700i|Roboto:300,300i,400,400i,700,700i');
-//        $xoTheme->addStylesheet('https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css');
+        //        $xoTheme->addStylesheet('https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css');
         $xoTheme->addStylesheet(XOOPS_ADMINTHEME_URL . '/transition/css/style.css');
         $xoTheme->addStylesheet(XOOPS_ADMINTHEME_URL . '/transition/css/dark.css', ['title' => 'dark', 'media' => 'screen']);
         $xoTheme->addStylesheet(XOOPS_ADMINTHEME_URL . '/transition/css/silver.css', ['title' => 'silver', 'media' => 'screen']);
@@ -111,12 +111,12 @@ class XoopsGuiTransition extends XoopsSystemGui
         $tpl->assign('lang_mysql_version', mysqli_get_server_info($xoopsDB->conn));
         $tpl->assign('lang_server_api', PHP_SAPI);
         $tpl->assign('lang_os_name', PHP_OS);
-//        $tpl->assign('safe_mode', ini_get('safe_mode') ? 'On' : 'Off');
-//        $tpl->assign('register_globals', ini_get('register_globals') ? 'On' : 'Off');
-//        $tpl->assign('magic_quotes_gpc', ini_get('magic_quotes_gpc') ? 'On' : 'Off');
+        //        $tpl->assign('safe_mode', ini_get('safe_mode') ? 'On' : 'Off');
+        //        $tpl->assign('register_globals', ini_get('register_globals') ? 'On' : 'Off');
+        //        $tpl->assign('magic_quotes_gpc', ini_get('magic_quotes_gpc') ? 'On' : 'Off');
         $tpl->assign('allow_url_fopen', ini_get('allow_url_fopen') ? 'On' : 'Off');
         $tpl->assign('fsockopen', function_exists('fsockopen') ? 'On' : 'Off');
-//        $tpl->assign('allow_call_time_pass_reference', ini_get('allow_call_time_pass_reference') ? 'On' : 'Off');
+        //        $tpl->assign('allow_call_time_pass_reference', ini_get('allow_call_time_pass_reference') ? 'On' : 'Off');
         $tpl->assign('post_max_size', ini_get('post_max_size'));
         $tpl->assign('max_input_time', ini_get('max_input_time'));
         $tpl->assign('output_buffering', ini_get('output_buffering'));

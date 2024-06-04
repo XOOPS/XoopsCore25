@@ -26,5 +26,5 @@ return $config = [
     'file' => XOOPS_ROOT_PATH . '/class/xoopseditor/tinymce5/formtinymce5.php',
     'title' => _XOOPS_EDITOR_TINYMCE5,
     'order' => 5,
-    'nohtml' => 0
+    'nohtml' => 0,
 ];

@@ -159,8 +159,8 @@ class XoopsUser extends XoopsObject
      */
     public static function getUnameFromId($userid, $usereal = 0, $linked = false)
     {
-        $userid  = (int)$userid;
-        $usereal = (int)$usereal;
+        $userid  = (int) $userid;
+        $usereal = (int) $usereal;
         if ($userid > 0) {
             /** @var XoopsMemberHandler $member_handler */
             $member_handler = xoops_getHandler('member');
@@ -175,7 +175,7 @@ class XoopsUser extends XoopsObject
                 if (!empty($linked)) {
                     $username = '<a href="' . XOOPS_URL . '/userinfo.php?uid=' . $userid . '" title="' . $username . '">' . $username . '</a>';
                 }
-				return $username;
+                return $username;
             }
         }
 
@@ -203,7 +203,7 @@ class XoopsUser extends XoopsObject
     public function setGroups($groupsArr)
     {
         if (is_array($groupsArr)) {
-            $this->_groups =& $groupsArr;
+            $this->_groups = & $groupsArr;
         }
     }
 
@@ -231,7 +231,7 @@ class XoopsUser extends XoopsObject
      */
     public function &groups()
     {
-        $groups =& $this->getGroups();
+        $groups = & $this->getGroups();
 
         return $groups;
     }
@@ -250,7 +250,7 @@ class XoopsUser extends XoopsObject
     {
         if (null === $module_id) {
             $module_id = (isset($GLOBALS['xoopsModule']) && is_object($GLOBALS['xoopsModule'])) ? $GLOBALS['xoopsModule']->getVar('mid', 'n') : 1;
-        } elseif ((int)$module_id < 1) {
+        } elseif ((int) $module_id < 1) {
             $module_id = 0;
         }
         /** @var XoopsGroupPermHandler $moduleperm_handler */

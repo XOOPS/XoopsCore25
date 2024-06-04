@@ -87,7 +87,7 @@ $modversion['config'][] = [
     'description' => '_PM_MI_PERPAGE_DESC',
     'formtype'    => 'textbox',
     'valuetype'   => 'int',
-    'default'     => 20
+    'default'     => 20,
 ];
 
 $modversion['config'][] = [
@@ -96,7 +96,7 @@ $modversion['config'][] = [
     'description' => '_PM_MI_MAXSAVE_DESC',
     'formtype'    => 'textbox',
     'valuetype'   => 'int',
-    'default'     => 10
+    'default'     => 10,
 ];
 
 $modversion['config'][] = [
@@ -105,7 +105,7 @@ $modversion['config'][] = [
     'description' => '_PM_MI_PRUNESUBJECT_DESC',
     'formtype'    => 'textbox',
     'valuetype'   => 'text',
-    'default'     => _PM_MI_PRUNESUBJECTDEFAULT
+    'default'     => _PM_MI_PRUNESUBJECTDEFAULT,
 ];
 
 $modversion['config'][] = [
@@ -114,5 +114,5 @@ $modversion['config'][] = [
     'description' => '_PM_MI_PRUNEMESSAGE_DESC',
     'formtype'    => 'textarea',
     'valuetype'   => 'text',
-    'default'     => _PM_MI_PRUNEMESSAGEDEFAULT
+    'default'     => _PM_MI_PRUNEMESSAGEDEFAULT,
 ];

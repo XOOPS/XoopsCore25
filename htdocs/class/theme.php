@@ -75,9 +75,9 @@ class xos_opal_ThemeFactory
             $GLOBALS['xoopsConfig']['theme_set'] = $options['folderName'];
         }
         $testPath = isset($options['themesPath'])
-            ? XOOPS_ROOT_PATH  . '/' . $options['themesPath'] . '/' . $options['folderName']
+            ? XOOPS_ROOT_PATH . '/' . $options['themesPath'] . '/' . $options['folderName']
             : XOOPS_THEME_PATH . '/' . $options['folderName'];
-        if (!(file_exists($testPath  . '/theme.tpl')
+        if (!(file_exists($testPath . '/theme.tpl')
             || file_exists($testPath . '/theme.html'))
         ) {
             trigger_error('Theme not found -- ' . $options['folderName']);
@@ -133,15 +133,15 @@ class xos_opal_AdminThemeFactory extends xos_opal_ThemeFactory
         $inst->url               = XOOPS_ADMINTHEME_URL . '/' . $inst->folderName;
         $inst->template->assign(
             [
-                                    'theme_path'  => $inst->path,
-                                    'theme_tpl'   => $inst->path . '/xotpl',
-                                    'theme_url'   => $inst->url,
-                                    'theme_img'   => $inst->url . '/img',
-                                    'theme_icons' => $inst->url . '/icons',
-                                    'theme_css'   => $inst->url . '/css',
-                                    'theme_js'    => $inst->url . '/js',
-                                    'theme_lang'  => $inst->url . '/language'
-            ]
+                'theme_path'  => $inst->path,
+                'theme_tpl'   => $inst->path . '/xotpl',
+                'theme_url'   => $inst->url,
+                'theme_img'   => $inst->url . '/img',
+                'theme_icons' => $inst->url . '/icons',
+                'theme_css'   => $inst->url . '/css',
+                'theme_js'    => $inst->url . '/js',
+                'theme_lang'  => $inst->url . '/language',
+            ],
         );
 
         return $inst;
@@ -216,7 +216,7 @@ class xos_opal_Theme
      * @access public
      */
     public $plugins     = [
-        'xos_logos_PageBuilder'
+        'xos_logos_PageBuilder',
     ];
     public $renderCount = 0;
     /**
@@ -237,7 +237,7 @@ class xos_opal_Theme
         //    'Content-Style-Type' => 'text/css') ,
         'meta'   => [],
         'link'   => [],
-        'script' => []
+        'script' => [],
     ];
 
     /**
@@ -324,36 +324,36 @@ class xos_opal_Theme
         $xoops_search = (bool) (isset($searchConfig['enable_search']) && $searchConfig['enable_search'] === 1);
         $this->template->assign(
             [
-            'xoops_theme'      => $GLOBALS['xoopsConfig']['theme_set'],
-            'xoops_imageurl'   => XOOPS_THEME_URL . '/' . $GLOBALS['xoopsConfig']['theme_set'] . '/',
-            'xoops_themecss'   => xoops_getcss($GLOBALS['xoopsConfig']['theme_set']),
-            'xoops_requesturi' => htmlspecialchars($_SERVER['REQUEST_URI'], ENT_QUOTES | ENT_HTML5),
-            'xoops_sitename'   => htmlspecialchars($GLOBALS['xoopsConfig']['sitename'], ENT_QUOTES | ENT_HTML5),
-            'xoops_slogan'     => htmlspecialchars($GLOBALS['xoopsConfig']['slogan'], ENT_QUOTES | ENT_HTML5),
-            'xoops_dirname'    => isset($GLOBALS['xoopsModule']) && is_object($GLOBALS['xoopsModule'])
-                ? $GLOBALS['xoopsModule']->getVar('dirname') : 'system',
-            'xoops_page'       => $xoops_page,
-            'xoops_startpage'  => $xoops_startpage,
-            'xoops_modulepage' => $xoops_modulepage,
-            'xoops_banner'     => ($GLOBALS['xoopsConfig']['banners'] && $this->renderBanner)
-                ? xoops_getbanner() : '&nbsp;',
-            'xoops_pagetitle'  => isset($GLOBALS['xoopsModule']) && is_object($GLOBALS['xoopsModule'])
-                ? $GLOBALS['xoopsModule']->getVar('name')
-                : htmlspecialchars($GLOBALS['xoopsConfig']['slogan'], ENT_QUOTES | ENT_HTML5),
-            'xoops_search'     => $xoops_search,
-            ]
+                'xoops_theme'      => $GLOBALS['xoopsConfig']['theme_set'],
+                'xoops_imageurl'   => XOOPS_THEME_URL . '/' . $GLOBALS['xoopsConfig']['theme_set'] . '/',
+                'xoops_themecss'   => xoops_getcss($GLOBALS['xoopsConfig']['theme_set']),
+                'xoops_requesturi' => htmlspecialchars($_SERVER['REQUEST_URI'], ENT_QUOTES | ENT_HTML5),
+                'xoops_sitename'   => htmlspecialchars($GLOBALS['xoopsConfig']['sitename'], ENT_QUOTES | ENT_HTML5),
+                'xoops_slogan'     => htmlspecialchars($GLOBALS['xoopsConfig']['slogan'], ENT_QUOTES | ENT_HTML5),
+                'xoops_dirname'    => isset($GLOBALS['xoopsModule']) && is_object($GLOBALS['xoopsModule'])
+                    ? $GLOBALS['xoopsModule']->getVar('dirname') : 'system',
+                'xoops_page'       => $xoops_page,
+                'xoops_startpage'  => $xoops_startpage,
+                'xoops_modulepage' => $xoops_modulepage,
+                'xoops_banner'     => ($GLOBALS['xoopsConfig']['banners'] && $this->renderBanner)
+                    ? xoops_getbanner() : '&nbsp;',
+                'xoops_pagetitle'  => isset($GLOBALS['xoopsModule']) && is_object($GLOBALS['xoopsModule'])
+                    ? $GLOBALS['xoopsModule']->getVar('name')
+                    : htmlspecialchars($GLOBALS['xoopsConfig']['slogan'], ENT_QUOTES | ENT_HTML5),
+                'xoops_search'     => $xoops_search,
+            ],
         );
         if (isset($GLOBALS['xoopsUser']) && is_object($GLOBALS['xoopsUser'])) {
             $this->template->assign(
                 [
-                'xoops_isuser'     => true,
-                'xoops_avatar'     => XOOPS_UPLOAD_URL . '/' . $GLOBALS['xoopsUser']->getVar('user_avatar'),
-                'xoops_userid'     => $GLOBALS['xoopsUser']->getVar('uid'),
-                'xoops_uname'      => $GLOBALS['xoopsUser']->getVar('uname'),
-                'xoops_name'       => $GLOBALS['xoopsUser']->getVar('name'),
-                'xoops_isadmin'    => $GLOBALS['xoopsUserIsAdmin'],
-                'xoops_usergroups' => $GLOBALS['xoopsUser']->getGroups(),
-                ]
+                    'xoops_isuser'     => true,
+                    'xoops_avatar'     => XOOPS_UPLOAD_URL . '/' . $GLOBALS['xoopsUser']->getVar('user_avatar'),
+                    'xoops_userid'     => $GLOBALS['xoopsUser']->getVar('uid'),
+                    'xoops_uname'      => $GLOBALS['xoopsUser']->getVar('uname'),
+                    'xoops_name'       => $GLOBALS['xoopsUser']->getVar('name'),
+                    'xoops_isadmin'    => $GLOBALS['xoopsUserIsAdmin'],
+                    'xoops_usergroups' => $GLOBALS['xoopsUser']->getGroups(),
+                ],
             );
         } else {
             $this->template->assign(
@@ -361,7 +361,7 @@ class xos_opal_Theme
                     'xoops_isuser'     => false,
                     'xoops_isadmin'    => false,
                     'xoops_usergroups' => [XOOPS_GROUP_ANONYMOUS],
-                ]
+                ],
             );
         }
 
@@ -396,7 +396,7 @@ class xos_opal_Theme
             if (!is_object($bundleId)) {
                 $this->plugins[$bundleId]        = null;
                 $this->plugins[$bundleId]        = new $bundleId();
-                $this->plugins[$bundleId]->theme =& $this;
+                $this->plugins[$bundleId]->theme = & $this;
                 $this->plugins[$bundleId]->xoInit();
                 unset($this->plugins[$k]);
             }
@@ -534,7 +534,7 @@ class xos_opal_Theme
             'description',
             'rating',
             'author',
-            'copyright'
+            'copyright',
         ];
         foreach ($this->metas['meta'] as $name => $value) {
             if (in_array($name, $old)) {
@@ -825,7 +825,7 @@ class xos_opal_Theme
                 case 'stylesheet':
                     foreach ($this->metas[$type] as $attrs) {
                         if (isset($attrs['_'])) {
-                            $str .= '<style' . $this->renderAttributes($attrs) . ">\n/* <![CDATA[ */\n" . (isset($attrs['_'])?$attrs['_']:'') . "\n/* //]]> */\n</style>";
+                            $str .= '<style' . $this->renderAttributes($attrs) . ">\n/* <![CDATA[ */\n" . (isset($attrs['_']) ? $attrs['_'] : '') . "\n/* //]]> */\n</style>";
                         } else {
                             $str .= '<link rel="stylesheet"' . $this->renderAttributes($attrs) . " />\n";
                         }

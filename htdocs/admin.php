@@ -32,7 +32,7 @@ xoops_cp_header();
 /**
  * Error warning messages
  */
- // Define Stylesheet
+// Define Stylesheet
 $xoTheme->addStylesheet(XOOPS_URL . '/modules/system/css/admin.css');
 if (!isset($xoopsConfig['admin_warnings_enable']) || $xoopsConfig['admin_warnings_enable']) {
     // recommend the lowest security supported version at time of XOOPS release
@@ -43,12 +43,12 @@ if (!isset($xoopsConfig['admin_warnings_enable']) || $xoopsConfig['admin_warning
         echo '<br>';
     }
 
-	$installDirs = glob(XOOPS_ROOT_PATH . '/install*', GLOB_ONLYDIR);
+    $installDirs = glob(XOOPS_ROOT_PATH . '/install*', GLOB_ONLYDIR);
     if (!empty($installDirs)) {
         foreach ($installDirs as $installDir) {
             xoops_error(sprintf(_AD_WARNINGINSTALL, $installDir));
-        echo '<br>';
-    }
+            echo '<br>';
+        }
     }
 
     if (is_writable(XOOPS_ROOT_PATH . '/mainfile.php')) {
@@ -117,12 +117,12 @@ if (!empty($_GET['xoopsorgnews'])) {
             } else {
                 $rss2parser = new XoopsXmlRss2Parser($rssdata);
                 if (false !== $rss2parser->parse()) {
-                    $_items =& $rss2parser->getItems();
+                    $_items = & $rss2parser->getItems();
                     $count = count($_items);
                     for ($i = 0; $i < $count; ++$i) {
                         $_items[$i]['title'] = XoopsLocal::convert_encoding($_items[$i]['title'], _CHARSET, 'UTF-8');
                         $_items[$i]['description'] = XoopsLocal::convert_encoding($_items[$i]['description'], _CHARSET, 'UTF-8');
-                        $items[(string)strtotime($_items[$i]['pubdate']) . '-' . (string)($cnt++)] = $_items[$i];
+                        $items[(string) strtotime($_items[$i]['pubdate']) . '-' . (string) ($cnt++)] = $_items[$i];
                     }
                 } else {
                     echo $rss2parser->getErrors();

@@ -60,7 +60,7 @@ if (is_object($xoopsUser)) {
         } else {
             $xoopsTpl->assign('user_candelete', false);
         }
-        $thisUser =& $xoopsUser;
+        $thisUser = & $xoopsUser;
     } else {
         /** @var XoopsMemberHandler $member_handler */
         $member_handler = xoops_getHandler('member');
@@ -183,26 +183,28 @@ foreach ($mids as $mid) {
                     } else {
                         $results[$i]['image'] = 'images/icons/posticon2.gif';
                     }
-    
+
                     if (!preg_match('/^http[s]*:\/\//i', $results[$i]['link'])) {
                         $results[$i]['link'] = 'modules/' . $module->getVar('dirname') . '/' . $results[$i]['link'];
                     }
-    
+
                     $results[$i]['title'] = $myts->htmlSpecialChars($results[$i]['title']);
-    				$results[$i]['time']  = isset($results[$i]['time']) ? formatTimestamp($results[$i]['time']) : '';
+                    $results[$i]['time']  = isset($results[$i]['time']) ? formatTimestamp($results[$i]['time']) : '';
                 }
                 $showall_link = '';
                 if ($count == 5) {
                     $showall_link = '<a href="search.php?action=showallbyuser&amp;mid=' . $mid . '&amp;uid=' . $thisUser->getVar('uid') . '">' . _US_SHOWALL . '</a>';
                 }
-                $xoopsTpl->append('modules', [
-                    'name'         => $module->getVar('name'),
-                    'results'      => $results,
-                    'showall_link' => $showall_link
-                ]
+                $xoopsTpl->append(
+                    'modules',
+                    [
+                        'name'         => $module->getVar('name'),
+                        'results'      => $results,
+                        'showall_link' => $showall_link,
+                    ],
                 );
             }
-          }
+        }
         unset($module);
     }
 }

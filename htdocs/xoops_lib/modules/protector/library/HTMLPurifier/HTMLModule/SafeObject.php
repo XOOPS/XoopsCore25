@@ -36,10 +36,10 @@ class HTMLPurifier_HTMLModule_SafeObject extends HTMLPurifier_HTMLModule
                 'data' => 'URI#embedded',
                 'codebase' => new HTMLPurifier_AttrDef_Enum(
                     array(
-                        'http://download.macromedia.com/pub/shockwave/cabs/flash/swflash.cab#version=6,0,40,0'
-                    )
+                        'http://download.macromedia.com/pub/shockwave/cabs/flash/swflash.cab#version=6,0,40,0',
+                    ),
                 ),
-            )
+            ),
         );
         $object->attr_transform_post[] = new HTMLPurifier_AttrTransform_SafeObject();
 
@@ -51,8 +51,8 @@ class HTMLPurifier_HTMLModule_SafeObject extends HTMLPurifier_HTMLModule
             array(
                 'id' => 'ID',
                 'name*' => 'Text',
-                'value' => 'Text'
-            )
+                'value' => 'Text',
+            ),
         );
         $param->attr_transform_post[] = new HTMLPurifier_AttrTransform_SafeParam();
         $this->info_injector[] = 'SafeObject';

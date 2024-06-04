@@ -52,7 +52,7 @@ class XoopsTopic
         if (is_array($topicid)) {
             $this->makeTopic($topicid);
         } elseif ($topicid != 0) {
-            $this->getTopic((int)$topicid);
+            $this->getTopic((int) $topicid);
         } else {
             $this->topic_id = $topicid;
         }
@@ -87,12 +87,13 @@ class XoopsTopic
      */
     public function getTopic($topicid)
     {
-        $topicid = (int)$topicid;
+        $topicid = (int) $topicid;
         $sql     = 'SELECT * FROM ' . $this->table . ' WHERE topic_id=' . $topicid . '';
         $result = $this->db->query($sql);
         if (!$this->db->isResultSet($result)) {
             throw new \RuntimeException(
-                \sprintf(_DB_QUERY_ERROR, $sql) . $this->db->error(), E_USER_ERROR
+                \sprintf(_DB_QUERY_ERROR, $sql) . $this->db->error(),
+                E_USER_ERROR,
             );
         }
         $array   = $this->db->fetchArray($result);
@@ -390,7 +391,8 @@ class XoopsTopic
         $result = $this->db->query($sql);
         if (!$this->db->isResultSet($result)) {
             throw new \RuntimeException(
-                \sprintf(_DB_QUERY_ERROR, $sql) . $this->db->error(), E_USER_ERROR
+                \sprintf(_DB_QUERY_ERROR, $sql) . $this->db->error(),
+                E_USER_ERROR,
             );
         }
         $ret    = [];
@@ -410,12 +412,13 @@ class XoopsTopic
      */
     public function topicExists($pid, $title)
     {
-        $sql = 'SELECT COUNT(*) from ' . $this->table . ' WHERE topic_pid = ' . (int)$pid . " AND topic_title = '" . trim($title) . "'";
+        $sql = 'SELECT COUNT(*) from ' . $this->table . ' WHERE topic_pid = ' . (int) $pid . " AND topic_title = '" . trim($title) . "'";
         $result  = $this->db->query($sql);
         if (!$this->db->isResultSet($result)) {
-               throw new \RuntimeException(
-       \sprintf(_DB_QUERY_ERROR, $sql) . $this->db->error(), E_USER_ERROR
-   );
+            throw new \RuntimeException(
+                \sprintf(_DB_QUERY_ERROR, $sql) . $this->db->error(),
+                E_USER_ERROR,
+            );
         }
         list($count) = $this->db->fetchRow($result);
         if ($count > 0) {

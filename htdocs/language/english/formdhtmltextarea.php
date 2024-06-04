@@ -31,7 +31,7 @@ $GLOBALS['formtextdhtml_fonts'] = [
     'Helvetica',
     'Impact',
     'Verdana',
-    'Haettenschweiler'
+    'Haettenschweiler',
 ];
 /**
  * Localized font sizes: 'font size value' => 'font size name'
@@ -43,7 +43,7 @@ $GLOBALS['formtextdhtml_sizes'] = [
     'medium'   => 'Medium',
     'large'    => 'Large',
     'x-large'  => 'x-Large',
-    'xx-large' => 'xx-Large'
+    'xx-large' => 'xx-Large',
 ];
 define('_XOOPS_FORM_ALT_URL', 'URL');
 define('_XOOPS_FORM_ALT_EMAIL', 'Email');

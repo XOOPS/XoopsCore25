@@ -217,7 +217,7 @@ class XoopsMemberHandler
      */
     public function getUserList(CriteriaElement $criteria = null)
     {
-        $users =& $this->userHandler->getObjects($criteria, true);
+        $users = & $this->userHandler->getObjects($criteria, true);
         $ret   = [];
         foreach (array_keys($users) as $i) {
             $ret[$i] = $users[$i]->getVar('uname');
@@ -327,7 +327,7 @@ class XoopsMemberHandler
         $uname = $db->escape($uname);
         $pwd = $db->escape($pwd);
         $criteria = new Criteria('uname', $uname);
-        $user =& $this->userHandler->getObjects($criteria, false);
+        $user = & $this->userHandler->getObjects($criteria, false);
         if (!$user || count($user) != 1) {
             return false;
         }
@@ -335,14 +335,14 @@ class XoopsMemberHandler
         $hash = $user[0]->pass();
         $type = substr($user[0]->pass(), 0, 1);
         // see if we have a crypt like signature, old md5 hash is just hex digits
-        if ($type==='$') {
+        if ($type === '$') {
             if (!password_verify($pwd, $hash)) {
                 return false;
             }
             // check if hash uses the best algorithm (i.e. after a PHP upgrade)
             $rehash = password_needs_rehash($hash, PASSWORD_DEFAULT);
         } else {
-            if ($hash!=md5($pwd)) {
+            if ($hash != md5($pwd)) {
                 return false;
             }
             $rehash = true; // automatically update old style
@@ -380,7 +380,7 @@ class XoopsMemberHandler
             . "WHERE TABLE_SCHEMA = '%s'AND TABLE_NAME = '%s' AND COLUMN_NAME = '%s'",
             $db->escape($dbname),
             $db->escape($table),
-            $db->escape($column)
+            $db->escape($column),
         );
 
         /** @var mysqli_result $result */
@@ -513,9 +513,9 @@ class XoopsMemberHandler
                 $user = new XoopsUser();
                 $user->assignVars($myrow);
                 if (!$id_as_key) {
-                    $ret[] =& $user;
+                    $ret[] = & $user;
                 } else {
-                    $ret[$myrow['uid']] =& $user;
+                    $ret[$myrow['uid']] = & $user;
                 }
                 unset($user);
             } else {
@@ -559,6 +559,6 @@ class XoopsMemberHandler
         }
         list($ret) = $this->userHandler->db->fetchRow($result);
 
-        return (int)$ret;
+        return (int) $ret;
     }
 }

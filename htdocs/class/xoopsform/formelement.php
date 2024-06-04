@@ -156,8 +156,8 @@ class XoopsFormElement
      */
     public function getName($encode = true)
     {
-        if (false !== (bool)$encode) {
-            return str_replace('&amp;', '&', htmlspecialchars((string)$this->_name, ENT_QUOTES | ENT_HTML5));
+        if (false !== (bool) $encode) {
+            return str_replace('&amp;', '&', htmlspecialchars((string) $this->_name, ENT_QUOTES | ENT_HTML5));
         }
 
         return $this->_name;
@@ -259,7 +259,7 @@ class XoopsFormElement
      */
     public function getTitle($encode = true)
     {
-        if(!isset($this->_caption)) { 
+        if(!isset($this->_caption)) {
             $this->_caption = '';
         }
         if (strlen($this->_description) > 0) {
@@ -447,7 +447,5 @@ class XoopsFormElement
      *
      * @abstract
      */
-    public function render()
-    {
-    }
+    public function render() {}
 }

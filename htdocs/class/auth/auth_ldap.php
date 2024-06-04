@@ -151,7 +151,7 @@ class XoopsAuthLdap extends XoopsAuth
         /**
          * LATIN SMALL LETTER Z WITH CARON
          */
-        "\xc2\x9f" => "\xc5\xb8"
+        "\xc2\x9f" => "\xc5\xb8",
     ];
     /**
      * LATIN CAPITAL LETTER Y WITH DIAERESIS
@@ -319,4 +319,3 @@ class XoopsAuthLdap extends XoopsAuth
         return $xoopsUser;
     }
 } // end class
-

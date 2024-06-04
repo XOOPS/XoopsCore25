@@ -59,12 +59,12 @@ class XoopsFormCaptcha extends XoopsFormElement
     {
         xoops_load('XoopsCaptcha');
         $this->captchaHandler  = XoopsCaptcha::getInstance();
-		if($skipmember !== '' || !empty($configs)){
-			$GLOBALS['xoopsLogger']->addDeprecated("In the class 'XoopsFormCaptcha' The settings 'skipmember' and 'configs' are deprecated since XOOPS 2.5.11");
-		}
-		$config['name'] = $name;
-		$this->captchaHandler->setConfigs($config);
-        
+        if($skipmember !== '' || !empty($configs)) {
+            $GLOBALS['xoopsLogger']->addDeprecated("In the class 'XoopsFormCaptcha' The settings 'skipmember' and 'configs' are deprecated since XOOPS 2.5.11");
+        }
+        $config['name'] = $name;
+        $this->captchaHandler->setConfigs($config);
+
         if (!$this->captchaHandler->isActive()) {
             $this->setHidden();
         } else {

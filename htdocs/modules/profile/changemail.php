@@ -15,9 +15,9 @@
  * @since               2.3.0
  * @author              Taiwen Jiang <phppp@users.sourceforge.net>
  */
- 
- use Xmf\Request;
- 
+
+use Xmf\Request;
+
 $xoopsOption['pagetype'] = 'user';
 include __DIR__ . '/header.php';
 /** @var XoopsConfigHandler $config_handler */

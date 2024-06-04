@@ -23,10 +23,16 @@ global $xoops, $xoopsPreload, $xoopsLogger, $xoopsErrorHandler, $xoopsSecurity, 
  * Please remove these functions from your code
  */
 if (!function_exists('get_magic_quotes_gpc')) {
-    function get_magic_quotes_gpc() { return false; }
+    function get_magic_quotes_gpc()
+    {
+        return false;
+    }
 }
 if (!function_exists('get_magic_quotes_runtime')) {
-    function get_magic_quotes_runtime() { return false; }
+    function get_magic_quotes_runtime()
+    {
+        return false;
+    }
 }
 /* end BC polyfill */
 
@@ -68,7 +74,7 @@ $xoopsPreload->triggerEvent('core.include.common.start');
 XoopsLoad::load('xoopskernel');
 $xoops = new xos_kernel_Xoops2();
 $xoops->pathTranslation();
-$xoopsRequestUri =& $_SERVER['REQUEST_URI'];// Deprecated (use the corrected $_SERVER variable now)
+$xoopsRequestUri = & $_SERVER['REQUEST_URI'];// Deprecated (use the corrected $_SERVER variable now)
 
 /**
  * Create Instance of xoopsSecurity Object and check Supergolbals
@@ -129,7 +135,7 @@ $xoopsConfig    = $config_handler->getConfigsByCat(XOOPS_CONF);
  */
 if (file_exists($file = $GLOBALS['xoops']->path('var/configs/xoopsconfig.php'))) {
     $fileConfigs = include $file;
-    $xoopsConfig = array_merge($xoopsConfig, (array)$fileConfigs);
+    $xoopsConfig = array_merge($xoopsConfig, (array) $fileConfigs);
     unset($fileConfigs, $file);
 } else {
     trigger_error('File Path Error: ' . 'var/configs/xoopsconfig.php' . ' does not exist.');
@@ -208,7 +214,7 @@ session_set_save_handler(
     [$sess_handler, 'read'],
     [$sess_handler, 'write'],
     [$sess_handler, 'destroy'],
-    [$sess_handler, 'gc']
+    [$sess_handler, 'gc'],
 );
 
 if (function_exists('session_status')) {
@@ -259,14 +265,15 @@ if (!empty($_SESSION['xoopsUserId'])) {
         xoops_setcookie($GLOBALS['xoopsConfig']['usercookie'], null, time() - 3600, '/', XOOPS_COOKIE_DOMAIN, 0, true);
         xoops_setcookie($GLOBALS['xoopsConfig']['usercookie'], null, time() - 3600);
     } else {
-        if (((int)$xoopsUser->getVar('last_login') + 60 * 5) < time()) {
+        if (((int) $xoopsUser->getVar('last_login') + 60 * 5) < time()) {
             $sql = 'UPDATE ' . $xoopsDB->prefix('users') . " SET last_login = '" . time()
                    . "' WHERE uid = " . $_SESSION['xoopsUserId'];
             try {
                 $xoopsDB->queryF($sql);
             } catch (Exception $e) {
                 throw new \RuntimeException(
-                    \sprintf(_DB_QUERY_ERROR, $sql) . $db->error(), E_USER_ERROR
+                    \sprintf(_DB_QUERY_ERROR, $sql) . $db->error(),
+                    E_USER_ERROR,
                 );
             }
         }
@@ -286,7 +293,7 @@ if (!empty($_SESSION['xoopsUserId'])) {
             $claims = [
                 'uid' => $_SESSION['xoopsUserId'],
             ];
-            $rememberTime = 60*60*24*30;
+            $rememberTime = 60 * 60 * 24 * 30;
             $token = \Xmf\Jwt\TokenFactory::build('rememberme', $claims, $rememberTime);
             xoops_setcookie(
                 $GLOBALS['xoopsConfig']['usercookie'],
@@ -295,7 +302,7 @@ if (!empty($_SESSION['xoopsUserId'])) {
                 '/',
                 XOOPS_COOKIE_DOMAIN,
                 (XOOPS_PROT === 'https://'),
-                true
+                true,
             );
         }
         $xoopsUserIsAdmin = $xoopsUser->isAdmin();
@@ -314,7 +321,7 @@ $xoopsPreload->triggerEvent('core.include.common.auth.success');
  * Note: temporary solution only. Will be re-designed in XOOPS 3.0
  */
 if ($xoopsLogger->activated) {
-    $level = isset($xoopsConfig['debugLevel']) ? (int)$xoopsConfig['debugLevel'] : 2;
+    $level = isset($xoopsConfig['debugLevel']) ? (int) $xoopsConfig['debugLevel'] : 2;
     if (($level == 2 && empty($xoopsUserIsAdmin)) || ($level == 1 && !$xoopsUser)) {
         error_reporting(0);
         $xoopsLogger->activated = false;

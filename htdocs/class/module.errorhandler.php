@@ -90,7 +90,7 @@ class ErrorHandler
             '1013' => 'Please enter a search query.',
             '1016' => 'Please enter value for URL.',
             '1017' => 'Please enter value for Home Page.',
-            '9999' => 'OOPS! Unknown Error'
+            '9999' => 'OOPS! Unknown Error',
         ];
 
         $errorno = array_keys($errmsg);
@@ -109,4 +109,3 @@ class ErrorHandler
     }
 }
 // }
-

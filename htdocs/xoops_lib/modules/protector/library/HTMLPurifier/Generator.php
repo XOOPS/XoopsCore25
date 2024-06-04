@@ -9,7 +9,6 @@
  */
 class HTMLPurifier_Generator
 {
-
     /**
      * Whether or not generator should produce XML output.
      * @type bool
@@ -90,7 +89,7 @@ class HTMLPurifier_Generator
         $html = '';
         for ($i = 0, $size = count($tokens); $i < $size; $i++) {
             if ($this->_scriptFix && $tokens[$i]->name === 'script'
-                && $i + 2 < $size && $tokens[$i+2] instanceof HTMLPurifier_Token_End) {
+                && $i + 2 < $size && $tokens[$i + 2] instanceof HTMLPurifier_Token_End) {
                 // script special case
                 // the contents of the script block must be ONE token
                 // for this to work.
@@ -102,17 +101,17 @@ class HTMLPurifier_Generator
 
         // Tidy cleanup
         if (extension_loaded('tidy') && $this->config->get('Output.TidyFormat')) {
-            $tidy = new Tidy;
+            $tidy = new Tidy();
             $tidy->parseString(
                 $html,
                 array(
-                   'indent'=> true,
-                   'output-xhtml' => $this->_xhtml,
-                   'show-body-only' => true,
-                   'indent-spaces' => 2,
-                   'wrap' => 68,
+                    'indent' => true,
+                    'output-xhtml' => $this->_xhtml,
+                    'show-body-only' => true,
+                    'indent-spaces' => 2,
+                    'wrap' => 68,
                 ),
-                'utf8'
+                'utf8',
             );
             $tidy->cleanRepair();
             $html = (string) $tidy; // explicit cast necessary
@@ -165,12 +164,12 @@ class HTMLPurifier_Generator
 
         } elseif ($token instanceof HTMLPurifier_Token_Empty) {
             if ($this->_flashCompat && $token->name == "param" && !empty($this->_flashStack)) {
-                $this->_flashStack[count($this->_flashStack)-1]->param[$token->attr['name']] = $token->attr['value'];
+                $this->_flashStack[count($this->_flashStack) - 1]->param[$token->attr['name']] = $token->attr['value'];
             }
             $attr = $this->generateAttributes($token->attr, $token->name);
-             return '<' . $token->name . ($attr ? ' ' : '') . $attr .
-                ( $this->_xhtml ? ' /': '' ) // <br /> v. <br>
-                . '>';
+            return '<' . $token->name . ($attr ? ' ' : '') . $attr .
+               ($this->_xhtml ? ' /' : '') // <br /> v. <br>
+               . '>';
 
         } elseif ($token instanceof HTMLPurifier_Token_Text) {
             return $this->escape($token->data, ENT_NOQUOTES);
@@ -257,7 +256,7 @@ class HTMLPurifier_Generator
                     }
                 }
             }
-            $html .= $key.'="'.$this->escape($value).'" ';
+            $html .= $key . '="' . $this->escape($value) . '" ';
         }
         return rtrim($html);
     }

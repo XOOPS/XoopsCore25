@@ -43,7 +43,7 @@ class XoopsCaptchaImage extends XoopsCaptchaMethod
                 'imagefilledrectangle',
                 'imagejpeg',
                 'imagedestroy',
-                'imageftbbox'
+                'imageftbbox',
             ];
             foreach ($required_functions as $func) {
                 if (!function_exists($func)) {

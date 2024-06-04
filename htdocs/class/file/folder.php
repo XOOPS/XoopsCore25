@@ -203,7 +203,7 @@ class XoopsFolderHandler
 
         return [
             $dirs,
-            $files
+            $files,
         ];
     }
 
@@ -293,7 +293,7 @@ class XoopsFolderHandler
      */
     public function isWindowsPath($path)
     {
-        if (preg_match('/^[A-Z]:\\\\/i', (string)$path)) {
+        if (preg_match('/^[A-Z]:\\\\/i', (string) $path)) {
             return true;
         }
 
@@ -492,7 +492,7 @@ class XoopsFolderHandler
         $path              = rtrim($path, '/');
         $this->files       = [];
         $this->directories = [
-            $path
+            $path,
         ];
         $directories       = [];
         while (count($this->directories)) {
@@ -503,7 +503,7 @@ class XoopsFolderHandler
         if ($type === null) {
             return [
                 $directories,
-                $this->files
+                $this->files,
             ];
         }
         if ($type === 'dir') {
@@ -687,11 +687,13 @@ class XoopsFolderHandler
         }
         $options = array_merge(
             [
-                                   'to'   => $to,
-                                   'from' => $this->path,
-                                   'mode' => $this->mode,
-                                   'skip' => []
-            ], $options);
+                'to'   => $to,
+                'from' => $this->path,
+                'mode' => $this->mode,
+                'skip' => [],
+            ],
+            $options,
+        );
 
         $fromDir = $options['from'];
         $toDir   = $options['to'];
@@ -711,10 +713,12 @@ class XoopsFolderHandler
         }
         $exceptions = array_merge(
             [
-                                      '.',
-                                      '..',
-                                      '.svn'
-            ], $options['skip']);
+                '.',
+                '..',
+                '.svn',
+            ],
+            $options['skip'],
+        );
         $handle     = opendir($fromDir);
         if ($handle) {
             while (false !== ($item = readdir($handle))) {
@@ -775,15 +779,17 @@ class XoopsFolderHandler
         $to = null;
         if (is_string($options)) {
             $to      = $options;
-            $options = (array)$options;
+            $options = (array) $options;
         }
         $options = array_merge(
             [
-                                   'to'   => $to,
-                                   'from' => $this->path,
-                                   'mode' => $this->mode,
-                                   'skip' => []
-            ], $options);
+                'to'   => $to,
+                'from' => $this->path,
+                'mode' => $this->mode,
+                'skip' => [],
+            ],
+            $options,
+        );
         if ($this->copy($options)) {
             if ($this->delete($options['from'])) {
                 return $this->cd($options['to']);
@@ -868,7 +874,7 @@ class XoopsFolderHandler
      */
     public function isSlashTerm($path)
     {
-        if (preg_match('/[\/\\\]$/', (string)$path)) {
+        if (preg_match('/[\/\\\]$/', (string) $path)) {
             return true;
         }
 

@@ -9,7 +9,6 @@
  */
 class HTMLPurifier_EntityParser
 {
-
     /**
      * Reference to entity lookup table.
      * @type HTMLPurifier_EntityLookup
@@ -33,7 +32,8 @@ class HTMLPurifier_EntityParser
      */
     protected $_semiOptionalPrefixRegex;
 
-    public function __construct() {
+    public function __construct()
+    {
         // From
         // http://stackoverflow.com/questions/15532252/why-is-reg-being-rendered-as-without-the-bounding-semicolon
         $semi_optional = "quot|QUOT|lt|LT|gt|GT|amp|AMP|AElig|Aacute|Acirc|Agrave|Aring|Atilde|Auml|COPY|Ccedil|ETH|Eacute|Ecirc|Egrave|Euml|Iacute|Icirc|Igrave|Iuml|Ntilde|Oacute|Ocirc|Ograve|Oslash|Otilde|Ouml|REG|THORN|Uacute|Ucirc|Ugrave|Uuml|Yacute|aacute|acirc|acute|aelig|agrave|aring|atilde|auml|brvbar|ccedil|cedil|cent|copy|curren|deg|divide|eacute|ecirc|egrave|eth|euml|frac12|frac14|frac34|iacute|icirc|iexcl|igrave|iquest|iuml|laquo|macr|micro|middot|nbsp|not|ntilde|oacute|ocirc|ograve|ordf|ordm|oslash|otilde|ouml|para|plusmn|pound|raquo|reg|sect|shy|sup1|sup2|sup3|szlig|thorn|times|uacute|ucirc|ugrave|uml|uuml|yacute|yen|yuml";
@@ -43,31 +43,31 @@ class HTMLPurifier_EntityParser
         $this->_semiOptionalPrefixRegex = "/&()()()($semi_optional)/";
 
         $this->_textEntitiesRegex =
-            '/&(?:'.
+            '/&(?:' .
             // hex
-            '[#]x([a-fA-F0-9]+);?|'.
+            '[#]x([a-fA-F0-9]+);?|' .
             // dec
-            '[#]0*(\d+);?|'.
+            '[#]0*(\d+);?|' .
             // string (mandatory semicolon)
             // NB: order matters: match semicolon preferentially
-            '([A-Za-z_:][A-Za-z0-9.\-_:]*);|'.
+            '([A-Za-z_:][A-Za-z0-9.\-_:]*);|' .
             // string (optional semicolon)
-            "($semi_optional)".
+            "($semi_optional)" .
             ')/';
 
         $this->_attrEntitiesRegex =
-            '/&(?:'.
+            '/&(?:' .
             // hex
-            '[#]x([a-fA-F0-9]+);?|'.
+            '[#]x([a-fA-F0-9]+);?|' .
             // dec
-            '[#]0*(\d+);?|'.
+            '[#]0*(\d+);?|' .
             // string (mandatory semicolon)
             // NB: order matters: match semicolon preferentially
-            '([A-Za-z_:][A-Za-z0-9.\-_:]*);|'.
+            '([A-Za-z_:][A-Za-z0-9.\-_:]*);|' .
             // string (optional semicolon)
             // don't match if trailing is equals or alphanumeric (URL
             // like)
-            "($semi_optional)(?![=;A-Za-z0-9])".
+            "($semi_optional)(?![=;A-Za-z0-9])" .
             ')/';
 
     }
@@ -84,7 +84,7 @@ class HTMLPurifier_EntityParser
         return preg_replace_callback(
             $this->_textEntitiesRegex,
             array($this, 'entityCallback'),
-            $string
+            $string,
         );
     }
 
@@ -100,7 +100,7 @@ class HTMLPurifier_EntityParser
         return preg_replace_callback(
             $this->_attrEntitiesRegex,
             array($this, 'entityCallback'),
-            $string
+            $string,
         );
     }
 
@@ -119,9 +119,9 @@ class HTMLPurifier_EntityParser
         $hex_part = @$matches[1];
         $dec_part = @$matches[2];
         $named_part = empty($matches[3]) ? (empty($matches[4]) ? "" : $matches[4]) : $matches[3];
-        if ($hex_part !== NULL && $hex_part !== "") {
+        if ($hex_part !== null && $hex_part !== "") {
             return HTMLPurifier_Encoder::unichr(hexdec($hex_part));
-        } elseif ($dec_part !== NULL && $dec_part !== "") {
+        } elseif ($dec_part !== null && $dec_part !== "") {
             return HTMLPurifier_Encoder::unichr((int) $dec_part);
         } else {
             if (!$this->_entity_lookup) {
@@ -138,7 +138,7 @@ class HTMLPurifier_EntityParser
                     return preg_replace_callback(
                         $this->_semiOptionalPrefixRegex,
                         array($this, 'entityCallback'),
-                        $entity
+                        $entity,
                     );
                 }
                 return $entity;
@@ -154,32 +154,32 @@ class HTMLPurifier_EntityParser
      */
     protected $_substituteEntitiesRegex =
         '/&(?:[#]x([a-fA-F0-9]+)|[#]0*(\d+)|([A-Za-z_:][A-Za-z0-9.\-_:]*));?/';
-        //     1. hex             2. dec      3. string (XML style)
+    //     1. hex             2. dec      3. string (XML style)
 
     /**
      * Decimal to parsed string conversion table for special entities.
      * @type array
      */
     protected $_special_dec2str =
-            array(
-                    34 => '"',
-                    38 => '&',
-                    39 => "'",
-                    60 => '<',
-                    62 => '>'
-            );
+        array(
+            34 => '"',
+            38 => '&',
+            39 => "'",
+            60 => '<',
+            62 => '>',
+        );
 
     /**
      * Stripped entity names to decimal conversion table for special entities.
      * @type array
      */
     protected $_special_ent2dec =
-            array(
-                    'quot' => 34,
-                    'amp'  => 38,
-                    'lt'   => 60,
-                    'gt'   => 62
-            );
+        array(
+            'quot' => 34,
+            'amp'  => 38,
+            'lt'   => 60,
+            'gt'   => 62,
+        );
 
     /**
      * Substitutes non-special entities with their parsed equivalents. Since
@@ -195,7 +195,7 @@ class HTMLPurifier_EntityParser
         return preg_replace_callback(
             $this->_substituteEntitiesRegex,
             array($this, 'nonSpecialEntityCallback'),
-            $string
+            $string,
         );
     }
 
@@ -250,7 +250,7 @@ class HTMLPurifier_EntityParser
         return preg_replace_callback(
             $this->_substituteEntitiesRegex,
             array($this, 'specialEntityCallback'),
-            $string
+            $string,
         );
     }
 

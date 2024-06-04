@@ -28,7 +28,7 @@ $filters = [
     'com_mode' => FILTER_SANITIZE_FULL_SPECIAL_CHARS,
     'op' => FILTER_SANITIZE_FULL_SPECIAL_CHARS,
     'com_order' => FILTER_VALIDATE_INT,
-    'com_id' => FILTER_VALIDATE_INT
+    'com_id' => FILTER_VALIDATE_INT,
 ];
 
 if (!empty($_POST)) {
@@ -102,7 +102,7 @@ if (false !== $accesserror) {
     if ($ref != '') {
         redirect_header($ref, 2, _NOPERM);
     } else {
-        redirect_header($redirect_page . '?' . $comment_config['itemName'] . '=' . (int)$com_itemid, 2, _NOPERM);
+        redirect_header($redirect_page . '?' . $comment_config['itemName'] . '=' . (int) $com_itemid, 2, _NOPERM);
     }
     exit();
 }
@@ -223,7 +223,7 @@ switch ($op) {
             } else {
                 $msgs[] = _CM_COMDELETED . ' (ID: ' . $child_comments[$i]->getVar('com_id') . ')';
                 // store poster ID and deleted post number into array for later use
-                $poster_id = (int)$child_comments[$i]->getVar('com_uid');
+                $poster_id = (int) $child_comments[$i]->getVar('com_uid');
                 if ($poster_id > 0) {
                     $deleted_num[$poster_id] = !isset($deleted_num[$poster_id]) ? 1 : ($deleted_num[$poster_id] + 1);
                 }
@@ -277,8 +277,8 @@ switch ($op) {
             'com_order' => $com_order,
             'op'        => [
                 _CM_DELETEONE => 'delete_one',
-                _CM_DELETEALL => 'delete_all'
-            ]
+                _CM_DELETEALL => 'delete_all',
+            ],
         ];
         if (!empty($comment_confirm_extra) && \is_array($comment_confirm_extra)) {
             $comment_confirm += $comment_confirm_extra;

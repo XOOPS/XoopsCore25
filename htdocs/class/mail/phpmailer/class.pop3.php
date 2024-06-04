@@ -125,7 +125,7 @@ class POP3
     /**
      * Line break constant
      */
-    const CRLF = "\r\n";
+    public const CRLF = "\r\n";
 
     /**
      * Simple static wrapper for all-in-one POP before SMTP
@@ -145,7 +145,7 @@ class POP3
         $password = '',
         $debug_level = 0
     ) {
-        $pop = new POP3;
+        $pop = new POP3();
         return $pop->authorise($host, $port, $timeout, $username, $password, $debug_level);
     }
 
@@ -169,13 +169,13 @@ class POP3
         if (false === $port) {
             $this->port = $this->POP3_PORT;
         } else {
-            $this->port = (integer)$port;
+            $this->port = (int) $port;
         }
         // If no timeout value provided, use default
         if (false === $timeout) {
             $this->tval = $this->POP3_TIMEOUT;
         } else {
-            $this->tval = (integer)$timeout;
+            $this->tval = (int) $timeout;
         }
         $this->do_debug = $debug_level;
         $this->username = $username;
@@ -225,7 +225,7 @@ class POP3
             $port, //  Port #
             $errno, //  Error Number
             $errstr, //  Error Message
-            $tval
+            $tval,
         ); //  Timeout (seconds)
         //  Restore the error handler
         restore_error_handler();
@@ -235,10 +235,10 @@ class POP3
             //  It would appear not...
             $this->setError(
                 [
-                'error' => "Failed to connect to server $host on port $port",
-                'errno' => $errno,
-                'errstr' => $errstr
-                ]
+                    'error' => "Failed to connect to server $host on port $port",
+                    'errno' => $errno,
+                    'errstr' => $errstr,
+                ],
             );
             return false;
         }
@@ -352,10 +352,10 @@ class POP3
         if (substr($string, 0, 3) !== '+OK') {
             $this->setError(
                 [
-                'error' => "Server reported an error: $string",
-                'errno' => 0,
-                'errstr' => ''
-                ]
+                    'error' => "Server reported an error: $string",
+                    'errno' => 0,
+                    'errstr' => '',
+                ],
             );
             return false;
         } else {
@@ -402,12 +402,12 @@ class POP3
     {
         $this->setError(
             [
-            'error' => "Connecting to the POP3 server raised a PHP warning: ",
-            'errno' => $errno,
-            'errstr' => $errstr,
-            'errfile' => $errfile,
-            'errline' => $errline
-            ]
+                'error' => "Connecting to the POP3 server raised a PHP warning: ",
+                'errno' => $errno,
+                'errstr' => $errstr,
+                'errfile' => $errfile,
+                'errline' => $errline,
+            ],
         );
     }
 }

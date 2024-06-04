@@ -41,7 +41,7 @@ class Upgrade_2510 extends XoopsUpgrade
         $sql = sprintf(
             'SELECT count(*) FROM `%s` '
             . "WHERE `conf_formtype` = 'select' AND `conf_name` = 'meta_robots' AND `conf_modid` = 0",
-            $db->escape($table)
+            $db->escape($table),
         );
 
         /** @var mysqli_result $result */

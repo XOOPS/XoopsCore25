@@ -135,7 +135,7 @@ class XoopsSessionHandler
         $sql = sprintf(
             'SELECT sess_data, sess_ip FROM %s WHERE sess_id = %s',
             $this->db->prefix('session'),
-            $this->db->quoteString($sessionId)
+            $this->db->quoteString($sessionId),
         );
 
         $result = $this->db->query($sql);
@@ -145,7 +145,7 @@ class XoopsSessionHandler
                     if (false === $ip->sameSubnet(
                         $sess_ip,
                         $this->bitMasks[$this->securityLevel]['v4'],
-                        $this->bitMasks[$this->securityLevel]['v6']
+                        $this->bitMasks[$this->securityLevel]['v6'],
                     )) {
                         $sess_data = '';
                     }
@@ -176,7 +176,7 @@ class XoopsSessionHandler
             $this->db->prefix('session'),
             time(),
             $this->db->quoteString($data),
-            $sessionId
+            $sessionId,
         );
         $this->db->queryF($sql);
         if (!$this->db->getAffectedRows()) {
@@ -186,7 +186,7 @@ class XoopsSessionHandler
                 $sessionId,
                 time(),
                 $this->db->quote($remoteAddress),
-                $this->db->quote($data)
+                $this->db->quote($data),
             );
 
             $myReturn = $this->db->queryF($sql);
@@ -207,7 +207,7 @@ class XoopsSessionHandler
         $sql = sprintf(
             'DELETE FROM %s WHERE sess_id = %s',
             $this->db->prefix('session'),
-            $this->db->quoteString($sessionId)
+            $this->db->quoteString($sessionId),
         );
         if (!$result = $this->db->queryF($sql)) {
             return false;
@@ -228,7 +228,7 @@ class XoopsSessionHandler
             return true;
         }
 
-        $mintime = time() - (int)$expire;
+        $mintime = time() - (int) $expire;
         $sql     = sprintf('DELETE FROM %s WHERE sess_updated < %u', $this->db->prefix('session'), $mintime);
 
         return $this->db->queryF($sql);
@@ -286,8 +286,9 @@ class XoopsSessionHandler
             global $xoopsConfig;
             $session_name = session_name();
             $session_expire = null !== $expire
-                ? (int)$expire
-                : (($xoopsConfig['use_mysession'] && $xoopsConfig['session_name'] != '')
+                ? (int) $expire
+                : (
+                    ($xoopsConfig['use_mysession'] && $xoopsConfig['session_name'] != '')
                     ? $xoopsConfig['session_expire'] * 60
                     : ini_get('session.cookie_lifetime')
                 );
@@ -304,7 +305,7 @@ class XoopsSessionHandler
                 '/',
                 $cookieDomain,
                 (XOOPS_PROT === 'https://'),
-                true
+                true,
             );
         }
     }

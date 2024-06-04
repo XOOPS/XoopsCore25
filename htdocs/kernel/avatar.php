@@ -152,7 +152,7 @@ class XoopsAvatar extends XoopsObject
      */
     public function setUserCount($value)
     {
-        $this->_userCount = (int)$value;
+        $this->_userCount = (int) $value;
     }
 
     /**
@@ -204,7 +204,7 @@ class XoopsAvatarHandler extends XoopsObjectHandler
     public function get($id)
     {
         $avatar = false;
-        $id     = (int)$id;
+        $id     = (int) $id;
         if ($id > 0) {
             $sql = 'SELECT * FROM ' . $this->db->prefix('avatar') . ' WHERE avatar_id=' . $id;
             $result = $this->db->query($sql);
@@ -308,7 +308,8 @@ class XoopsAvatarHandler extends XoopsObjectHandler
         $result = $this->db->query($sql, $limit, $start);
         if (!$this->db->isResultSet($result)) {
             throw new \RuntimeException(
-                \sprintf(_DB_QUERY_ERROR, $sql) . $this->db->error(), E_USER_ERROR
+                \sprintf(_DB_QUERY_ERROR, $sql) . $this->db->error(),
+                E_USER_ERROR,
             );
         }
         /** @var array $myrow */
@@ -348,7 +349,7 @@ class XoopsAvatarHandler extends XoopsObjectHandler
 
         list($count) = $this->db->fetchRow($result);
 
-        return (int)$count;
+        return (int) $count;
     }
 
     /**
@@ -360,8 +361,8 @@ class XoopsAvatarHandler extends XoopsObjectHandler
      */
     public function addUser($avatar_id, $user_id)
     {
-        $avatar_id = (int)$avatar_id;
-        $user_id   = (int)$user_id;
+        $avatar_id = (int) $avatar_id;
+        $user_id   = (int) $user_id;
         if ($avatar_id < 1 || $user_id < 1) {
             return false;
         }
@@ -418,7 +419,7 @@ class XoopsAvatarHandler extends XoopsObjectHandler
             $criteria->add(new Criteria('avatar_type', $avatar_type));
         }
         if (isset($avatar_display)) {
-            $criteria->add(new Criteria('avatar_display', (int)$avatar_display));
+            $criteria->add(new Criteria('avatar_display', (int) $avatar_display));
         }
         $avatars = &$this->getObjects($criteria, true);
         $ret     = ['blank.gif' => _NONE];

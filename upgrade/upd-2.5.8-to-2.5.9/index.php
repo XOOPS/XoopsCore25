@@ -26,7 +26,7 @@ class Upgrade_259 extends XoopsUpgrade
         $this->usedFiles = [
             'mainfile.php',
             XOOPS_VAR_PATH . '/data/secure.php',
-            'modules/system/themes/legacy/legacy.php'
+            'modules/system/themes/legacy/legacy.php',
         ];
     }
 
@@ -51,7 +51,7 @@ class Upgrade_259 extends XoopsUpgrade
             . "WHERE TABLE_SCHEMA = '%s'AND TABLE_NAME = '%s' AND COLUMN_NAME = '%s'",
             $db->escape($dbname),
             $db->escape($table),
-            $db->escape($column)
+            $db->escape($column),
         );
 
         /** @var mysqli_result $result */
@@ -160,7 +160,7 @@ class Upgrade_259 extends XoopsUpgrade
             $upgradeControl->mainfileKeys,
             XOOPS_ROOT_PATH,
             'mainfile.dist.php',
-            'mainfile.php'
+            'mainfile.php',
         );
         if ($result !== true) {
             $this->logs[] = $result;
@@ -169,7 +169,7 @@ class Upgrade_259 extends XoopsUpgrade
                 $upgradeControl->mainfileKeys,
                 XOOPS_VAR_PATH . '/data',
                 'secure.dist.php',
-                'secure.php'
+                'secure.php',
             );
             if ($result !== true) {
                 $this->logs[] = $result;

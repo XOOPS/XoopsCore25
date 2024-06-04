@@ -13,7 +13,7 @@ class Upgrade_2016 extends XoopsUpgrade
         $db    = $GLOBALS['xoopsDB'];
         $value = $this->getDbValue($db, 'config', 'conf_id', "`conf_name` = 'ldap_use_TLS' AND `conf_catid` = " . XOOPS_CONF_AUTH);
 
-        return (bool)$value;
+        return (bool) $value;
     }
 
     /**
@@ -37,7 +37,7 @@ class Upgrade_2016 extends XoopsUpgrade
         // Insert config values
         $table = $db->prefix('config');
         $data  = [
-            'ldap_use_TLS' => "'_MD_AM_LDAP_USETLS', '0', '_MD_AM_LDAP_USETLS_DESC', 'yesno', 'int', 21"
+            'ldap_use_TLS' => "'_MD_AM_LDAP_USETLS', '0', '_MD_AM_LDAP_USETLS_DESC', 'yesno', 'int', 21",
         ];
         foreach ($data as $name => $values) {
             if (!$this->getDbValue($db, 'config', 'conf_id', "`conf_modid`=0 AND `conf_catid`=7 AND `conf_name`='$name'")) {

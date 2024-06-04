@@ -19,6 +19,7 @@
 /** @var XoopsUser $xoopsUser */
 /** @var XoopsModule $xoopsModule */
 use Xmf\Request;
+
 // Check users rights
 if (!is_object($xoopsUser) || !is_object($xoopsModule) || !$xoopsUser->isAdmin($xoopsModule->mid())) {
     exit(_NOPERM);
@@ -98,7 +99,7 @@ switch ($op) {
         }
         break;
 
-    //Add a group
+        //Add a group
     case 'groups_add':
         // Define Stylesheet
         $xoTheme->addStylesheet(XOOPS_URL . '/modules/system/css/admin.css');
@@ -114,7 +115,7 @@ switch ($op) {
         $xoopsTpl->assign('form', $form->render());
         break;
 
-    //Edit a group
+        //Edit a group
     case 'groups_edit':
         // Define Stylesheet
         $xoTheme->addStylesheet(XOOPS_URL . '/modules/system/css/admin.css');
@@ -135,7 +136,7 @@ switch ($op) {
         }
         break;
 
-    //Save a new group
+        //Save a new group
     case 'groups_save_add':
         if (!$GLOBALS['xoopsSecurity']->check()) {
             redirect_header('admin.php?fct=groups', 3, implode('<br>', $GLOBALS['xoopsSecurity']->getErrors()));
@@ -200,12 +201,12 @@ switch ($op) {
         }
         break;
 
-    //Save a edit group
+        //Save a edit group
     case 'groups_save_update':
         if (!$GLOBALS['xoopsSecurity']->check()) {
             redirect_header('admin.php?fct=groups', 3, implode('<br>', $GLOBALS['xoopsSecurity']->getErrors()));
         }
-		$system_catids = Request::getArray('system_catids', []);
+        $system_catids = Request::getArray('system_catids', []);
         $admin_mids    = Request::getArray('admin_mids', []);
         $read_mids     = Request::getArray('read_mids', []);
         $read_bids     = Request::getArray('read_bids', []);
@@ -283,7 +284,7 @@ switch ($op) {
         }
         break;
 
-    //Del a group
+        //Del a group
     case 'groups_delete':
         $groups_id = Request::getInt('groups_id', 0);
         if ($groups_id > 0) {
@@ -314,17 +315,20 @@ switch ($op) {
                 // Display message
                 xoops_confirm(
                     [
-                                  'ok' => 1,
-                                  'groups_id' => $_REQUEST['groups_id'],
-                                  'op' => 'groups_delete'
-                    ], 'admin.php?fct=groups', sprintf(_AM_SYSTEM_GROUPS_SUREDEL) . '<br \>' . $obj->getVar('name') . '<br \>');
+                        'ok' => 1,
+                        'groups_id' => $_REQUEST['groups_id'],
+                        'op' => 'groups_delete',
+                    ],
+                    'admin.php?fct=groups',
+                    sprintf(_AM_SYSTEM_GROUPS_SUREDEL) . '<br \>' . $obj->getVar('name') . '<br \>',
+                );
             }
         } else {
             redirect_header('admin.php?fct=groups', 1, _AM_SYSTEM_DBERROR);
         }
         break;
 
-    //Add users group
+        //Add users group
     case 'action_group':
         $error = true;
         if (isset($_REQUEST['edit_group'])) {

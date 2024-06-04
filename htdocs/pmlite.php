@@ -65,7 +65,8 @@ if (is_object($xoopsUser)) {
         $result = $xoopsDB->query($sql);
         if (!$xoopsDB->isResultSet($result)) {
             throw new \RuntimeException(
-                \sprintf(_DB_QUERY_ERROR, $sql) . $xoopsDB->error(), E_USER_ERROR
+                \sprintf(_DB_QUERY_ERROR, $sql) . $xoopsDB->error(),
+                E_USER_ERROR,
             );
         }
         list($count) = $xoopsDB->fetchRow($result);
@@ -135,7 +136,7 @@ if (is_object($xoopsUser)) {
         $icons_radio = new XoopsFormRadio(_MESSAGEICON, 'msg_image', $msg_image);
         $subjectImages = [];
         foreach ($subject_icons as $name => $value) {
-            $subjectImages[$name] = '<img src="' . XOOPS_URL . '/images/subject/' . $value .'">';
+            $subjectImages[$name] = '<img src="' . XOOPS_URL . '/images/subject/' . $value . '">';
         }
         $icons_radio->addOptionArray($subjectImages);
         $pmform->addElement($icons_radio);

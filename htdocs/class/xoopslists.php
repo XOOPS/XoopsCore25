@@ -68,7 +68,7 @@ if (!defined('XOOPS_LISTS_INCLUDED')) {
                 '9.5'  => _TZ_GMTP95,
                 '10'   => _TZ_GMTP10,
                 '11'   => _TZ_GMTP11,
-                '12'   => _TZ_GMTP12
+                '12'   => _TZ_GMTP12,
             ];
 
             return $time_zone_list;
@@ -107,7 +107,7 @@ if (!defined('XOOPS_LISTS_INCLUDED')) {
         {
             $ignored = [
                 'cvs',
-                '_darcs'
+                '_darcs',
             ];
             $list    = [];
             if (substr($dirname, -1) !== '/') {
@@ -170,7 +170,7 @@ if (!defined('XOOPS_LISTS_INCLUDED')) {
         {
             $filelist = [];
 
-            $extToLower = function($ext) {
+            $extToLower = function ($ext) {
                 return strtolower($ext);
             };
 
@@ -560,7 +560,7 @@ if (!defined('XOOPS_LISTS_INCLUDED')) {
                 'ZA' => _COUNTRY_ZA,
                 'ZM' => _COUNTRY_ZM,
                 'ZR' => _COUNTRY_ZR,    //  Not listed in ISO 3166
-                'ZW' => _COUNTRY_ZW
+                'ZW' => _COUNTRY_ZW,
             ];
             asort($country_list);
             reset($country_list);
@@ -635,7 +635,7 @@ if (!defined('XOOPS_LISTS_INCLUDED')) {
                 'tt'         => '&lt;tt&gt;',
                 'u'          => '&lt;u&gt;',
                 'ul'         => '&lt;ul&gt;',
-                'var'        => '&lt;var&gt;'
+                'var'        => '&lt;var&gt;',
             ];
             asort($html_list);
             reset($html_list);
@@ -658,7 +658,8 @@ if (!defined('XOOPS_LISTS_INCLUDED')) {
             $result = $db->query($sql);
             if (!$db->isResultSet($result)) {
                 throw new \RuntimeException(
-                    \sprintf(_DB_QUERY_ERROR, $sql) . $db->error(), E_USER_ERROR
+                    \sprintf(_DB_QUERY_ERROR, $sql) . $db->error(),
+                    E_USER_ERROR,
                 );
             }
             while (false !== ($myrow = $db->fetchArray($result))) {

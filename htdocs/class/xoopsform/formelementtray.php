@@ -24,8 +24,8 @@ defined('XOOPS_ROOT_PATH') || exit('Restricted access');
  */
 class XoopsFormElementTray extends XoopsFormElement
 {
-    const ORIENTATION_HORIZONTAL = 'horizontal';
-    const ORIENTATION_VERTICAL   = 'vertical';
+    public const ORIENTATION_HORIZONTAL = 'horizontal';
+    public const ORIENTATION_VERTICAL   = 'vertical';
 
     /**
      * array of form element objects

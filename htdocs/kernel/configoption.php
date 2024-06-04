@@ -32,7 +32,7 @@ class XoopsConfigOption extends XoopsObject
     public $confop_name;
     public $confop_value;
     public $conf_id;
-    
+
     /**
      * Constructor
      */
@@ -136,7 +136,7 @@ class XoopsConfigOptionHandler extends XoopsObjectHandler
     public function get($id)
     {
         $confoption = false;
-        $id         = (int)$id;
+        $id         = (int) $id;
         if ($id > 0) {
             $sql = 'SELECT * FROM ' . $this->db->prefix('configoption') . ' WHERE confop_id=' . $id;
             $result = $this->db->query($sql);
@@ -186,7 +186,7 @@ class XoopsConfigOptionHandler extends XoopsObjectHandler
                 $confop_id,
                 $this->db->quote($confop_name),
                 $this->db->quote($confop_value),
-                $conf_id
+                $conf_id,
             );
         } else {
             $sql = sprintf(
@@ -194,7 +194,7 @@ class XoopsConfigOptionHandler extends XoopsObjectHandler
                 $this->db->prefix('configoption'),
                 $this->db->quote($confop_name),
                 $this->db->quote($confop_value),
-                $confop_id
+                $confop_id,
             );
         }
         if (!$result = $this->db->query($sql)) {
@@ -256,7 +256,7 @@ class XoopsConfigOptionHandler extends XoopsObjectHandler
             $confoption = new XoopsConfigOption();
             $confoption->assignVars($myrow);
             if (!$id_as_key) {
-                $ret[] =& $confoption;
+                $ret[] = & $confoption;
             } else {
                 $ret[$myrow['confop_id']] = &$confoption;
             }
@@ -282,12 +282,13 @@ class XoopsConfigOptionHandler extends XoopsObjectHandler
         $result = $this->db->query($sql);
         if (!$this->db->isResultSet($result)) {
             throw new \RuntimeException(
-                \sprintf(_DB_QUERY_ERROR, $sql) . $this->db->error(), E_USER_ERROR
+                \sprintf(_DB_QUERY_ERROR, $sql) . $this->db->error(),
+                E_USER_ERROR,
             );
         }
         $row = $this->db->fetchArray($result);
         $count = $row['count'];
         $this->db->freeRecordSet($result);
-        return (int)$count;
+        return (int) $count;
     }
 }

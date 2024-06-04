@@ -34,11 +34,11 @@ switch ($op) {
     case 'list':
         $fields = $profilefield_handler->getObjects(null, true, false);
 
-    /** @var XoopsModuleHandler $module_handler */
+        /** @var XoopsModuleHandler $module_handler */
         $module_handler = xoops_getHandler('module');
         $modules        = $module_handler->getObjects(null, true);
 
-    /** @var XoopsModuleHandler $cat_handler */
+        /** @var XoopsModuleHandler $cat_handler */
         $cat_handler = xoops_getModuleHandler('category');
         $criteria    = new CriteriaCompo();
         $criteria->setSort('cat_weight');
@@ -61,7 +61,7 @@ switch ($op) {
             XOBJ_DTYPE_TXTBOX  => _PROFILE_AM_TXTBOX,
             XOBJ_DTYPE_URL     => _PROFILE_AM_URL,
             XOBJ_DTYPE_OTHER   => _PROFILE_AM_OTHER,
-            XOBJ_DTYPE_MTIME   => _PROFILE_AM_DATE
+            XOBJ_DTYPE_MTIME   => _PROFILE_AM_DATE,
         ];
 
         $fieldtypes = [
@@ -82,7 +82,7 @@ switch ($op) {
             'longdate'     => _PROFILE_AM_LONGDATE,
             'theme'        => _PROFILE_AM_THEME,
             'autotext'     => _PROFILE_AM_AUTOTEXT,
-            'rank'         => _PROFILE_AM_RANK
+            'rank'         => _PROFILE_AM_RANK,
         ];
 
         foreach (array_keys($fields) as $i) {
@@ -144,7 +144,7 @@ switch ($op) {
             foreach ($_POST['field_ids'] as $field_id) {
                 if ($oldweight[$field_id] != $weight[$field_id] || $oldcat[$field_id] != $category[$field_id]) {
                     //if field has changed
-                    $ids[] = (int)$field_id;
+                    $ids[] = (int) $field_id;
                 }
             }
             if (count($ids) > 0) {
@@ -154,8 +154,8 @@ switch ($op) {
                 $field_handler = xoops_getModuleHandler('field');
                 $fields        = $field_handler->getObjects(new Criteria('field_id', '(' . implode(',', $ids) . ')', 'IN'), true);
                 foreach ($ids as $i) {
-                    $fields[$i]->setVar('field_weight', (int)$weight[$i]);
-                    $fields[$i]->setVar('cat_id', (int)$category[$i]);
+                    $fields[$i]->setVar('field_weight', (int) $weight[$i]);
+                    $fields[$i]->setVar('cat_id', (int) $category[$i]);
                     if (!$field_handler->insert($fields[$i])) {
                         $errors = array_merge($errors, $fields[$i]->getErrors());
                     }
@@ -238,7 +238,7 @@ switch ($op) {
             $obj->setVar('cat_id', $_REQUEST['field_category']);
         }
         if (/*$obj->getVar('field_edit') && */
-        isset($_REQUEST['step_id'])
+            isset($_REQUEST['step_id'])
         ) {
             $obj->setVar('step_id', $_REQUEST['step_id']);
         }
@@ -260,23 +260,23 @@ switch ($op) {
             if (count($perm_arr) > 0) {
                 foreach ($perm_arr as $perm) {
                     $criteria = new CriteriaCompo(new Criteria('gperm_name', $perm));
-                    $criteria->add(new Criteria('gperm_itemid', (int)$obj->getVar('field_id')));
-                    $criteria->add(new Criteria('gperm_modid', (int)$GLOBALS['xoopsModule']->getVar('mid')));
+                    $criteria->add(new Criteria('gperm_itemid', (int) $obj->getVar('field_id')));
+                    $criteria->add(new Criteria('gperm_modid', (int) $GLOBALS['xoopsModule']->getVar('mid')));
                     if (isset($_REQUEST[$perm]) && \is_array($_REQUEST[$perm])) {
                         $perms = $groupperm_handler->getObjects($criteria);
                         if (count($perms) > 0) {
                             foreach (array_keys($perms) as $i) {
-                                $groups[$perms[$i]->getVar('gperm_groupid')] =& $perms[$i];
+                                $groups[$perms[$i]->getVar('gperm_groupid')] = & $perms[$i];
                             }
                         } else {
                             $groups = [];
                         }
                         foreach ($_REQUEST[$perm] as $groupid) {
-                            $groupid = (int)$groupid;
+                            $groupid = (int) $groupid;
                             if (!isset($groups[$groupid])) {
                                 $perm_obj = $groupperm_handler->create();
                                 $perm_obj->setVar('gperm_name', $perm);
-                                $perm_obj->setVar('gperm_itemid', (int)$obj->getVar('field_id'));
+                                $perm_obj->setVar('gperm_itemid', (int) $obj->getVar('field_id'));
                                 $perm_obj->setVar('gperm_modid', $GLOBALS['xoopsModule']->getVar('mid'));
                                 $perm_obj->setVar('gperm_groupid', $groupid);
                                 $groupperm_handler->insert($perm_obj);
@@ -337,18 +337,21 @@ switch ($op) {
         } else {
             xoops_confirm(
                 [
-                              'ok' => 1,
-                              'id' => $_REQUEST['id'],
-                              'op' => 'delete'
-                ], $_SERVER['REQUEST_URI'], sprintf(_PROFILE_AM_RUSUREDEL, $obj->getVar('field_title')));
+                    'ok' => 1,
+                    'id' => $_REQUEST['id'],
+                    'op' => 'delete',
+                ],
+                $_SERVER['REQUEST_URI'],
+                sprintf(_PROFILE_AM_RUSUREDEL, $obj->getVar('field_title')),
+            );
         }
         break;
 
     case 'toggle':
         if (isset($_REQUEST['field_id'])) {
-            $field_id = (int)$_REQUEST['field_id'];
+            $field_id = (int) $_REQUEST['field_id'];
             if (isset($_REQUEST['field_required'])) {
-                $field_required = (int)$_REQUEST['field_required'];
+                $field_required = (int) $_REQUEST['field_required'];
                 profile_visible_toggle($field_id, $field_required);
             }
         }

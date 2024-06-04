@@ -54,9 +54,7 @@ class XoopsCache
     /**
      * XoopsCache::__construct()
      */
-    public function __construct()
-    {
-    }
+    public function __construct() {}
 
     /**
      * Returns a singleton instance
@@ -125,7 +123,7 @@ class XoopsCache
                 $settings = $_this->configs['default'];
             } else {
                 $settings = [
-                    'engine' => 'file'
+                    'engine' => 'file',
                 ];
             }
         }
@@ -247,7 +245,7 @@ class XoopsCache
         if (!$duration) {
             $duration = $settings['duration'];
         }
-        $duration = is_numeric($duration) ? (int)$duration : strtotime($duration) - time();
+        $duration = is_numeric($duration) ? (int) $duration : strtotime($duration) - time();
 
         if ($duration < 1) {
             return false;
@@ -393,7 +391,7 @@ class XoopsCache
         if (empty($key)) {
             return false;
         }
-        $key = str_replace(['/', '.'], '_', (string)$key);
+        $key = str_replace(['/', '.'], '_', (string) $key);
 
         return $key;
     }
@@ -428,9 +426,11 @@ class XoopsCacheEngine
     {
         $this->settings = array_merge(
             [
-                                          'duration'    => 31556926,
-                                          'probability' => 100
-            ], $settings);
+                'duration'    => 31556926,
+                'probability' => 100,
+            ],
+            $settings,
+        );
 
         return true;
     }
@@ -442,9 +442,7 @@ class XoopsCacheEngine
      *
      * @access public
      */
-    public function gc()
-    {
-    }
+    public function gc() {}
 
     /**
      * Write value for a key into cache
@@ -479,9 +477,7 @@ class XoopsCacheEngine
      * @return boolean True if the value was successfully deleted, false if it didn't exist or couldn't be removed
      * @access public
      */
-    public function delete($key)
-    {
-    }
+    public function delete($key) {}
 
     /**
      * Delete all keys from the cache
@@ -490,9 +486,7 @@ class XoopsCacheEngine
      * @return boolean True if the cache was successfully cleared, false otherwise
      * @access public
      */
-    public function clear($check)
-    {
-    }
+    public function clear($check) {}
 
     /**
      * Cache Engine settings

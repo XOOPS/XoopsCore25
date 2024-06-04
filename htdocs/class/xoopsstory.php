@@ -63,7 +63,7 @@ class XoopsStory
         if (is_array($storyid)) {
             $this->makeStory($storyid);
         } elseif ($storyid != -1) {
-            $this->getStory((int)$storyid);
+            $this->getStory((int) $storyid);
         }
     }
 
@@ -72,7 +72,7 @@ class XoopsStory
      */
     public function setStoryId($value)
     {
-        $this->storyid = (int)$value;
+        $this->storyid = (int) $value;
     }
 
     /**
@@ -80,7 +80,7 @@ class XoopsStory
      */
     public function setTopicId($value)
     {
-        $this->topicid = (int)$value;
+        $this->topicid = (int) $value;
     }
 
     /**
@@ -88,7 +88,7 @@ class XoopsStory
      */
     public function setUid($value)
     {
-        $this->uid = (int)$value;
+        $this->uid = (int) $value;
     }
 
     /**
@@ -120,7 +120,7 @@ class XoopsStory
      */
     public function setPublished($value)
     {
-        $this->published = (int)$value;
+        $this->published = (int) $value;
     }
 
     /**
@@ -128,7 +128,7 @@ class XoopsStory
      */
     public function setExpired($value)
     {
-        $this->expired = (int)$value;
+        $this->expired = (int) $value;
     }
 
     /**
@@ -184,7 +184,7 @@ class XoopsStory
      */
     public function setApproved($value)
     {
-        $this->approved = (int)$value;
+        $this->approved = (int) $value;
     }
 
     /**
@@ -208,7 +208,7 @@ class XoopsStory
      */
     public function setComments($value)
     {
-        $this->comments = (int)$value;
+        $this->comments = (int) $value;
     }
 
     /**
@@ -270,12 +270,13 @@ class XoopsStory
      */
     public function getStory($storyid)
     {
-        $storyid = (int)$storyid;
+        $storyid = (int) $storyid;
         $sql     = 'SELECT * FROM ' . $this->table . ' WHERE storyid=' . $storyid . '';
         $result = $this->db->query($sql);
         if (!$this->db->isResultSet($result)) {
             throw new \RuntimeException(
-                \sprintf(_DB_QUERY_ERROR, $sql) . $this->db->error(), E_USER_ERROR
+                \sprintf(_DB_QUERY_ERROR, $sql) . $this->db->error(),
+                E_USER_ERROR,
             );
         }
         $array   = $this->db->fetchArray($result);

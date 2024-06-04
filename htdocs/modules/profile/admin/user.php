@@ -16,9 +16,9 @@
  * @author              Jan Pedersen
  * @author              Taiwen Jiang <phppp@users.sourceforge.net>
  */
- 
- use Xmf\Request;
- 
+
+use Xmf\Request;
+
 include_once __DIR__ . '/admin_header.php';
 xoops_cp_header();
 $indexAdmin = new ModuleAdmin();
@@ -86,7 +86,7 @@ switch ($op) {
         $gperm_handler   = xoops_getHandler('groupperm');
         $editable_fields = $gperm_handler->getItemIds('profile_edit', $GLOBALS['xoopsUser']->getGroups(), $GLOBALS['xoopsModule']->getVar('mid'));
 
-        $uid = empty($_POST['uid']) ? 0 : (int)$_POST['uid'];
+        $uid = empty($_POST['uid']) ? 0 : (int) $_POST['uid'];
         if (!empty($uid)) {
             $user    = $handler->getUser($uid);
             $profile = $profile_handler->get($uid);
@@ -116,8 +116,8 @@ switch ($op) {
         $myts = \MyTextSanitizer::getInstance();
         $user->setVar('uname', $_POST['uname']);
         $user->setVar('email', trim($_POST['email']));
-        if (isset($_POST['level']) && $user->getVar('level') != (int)$_POST['level']) {
-            $user->setVar('level', (int)$_POST['level']);
+        if (isset($_POST['level']) && $user->getVar('level') != (int) $_POST['level']) {
+            $user->setVar('level', (int) $_POST['level']);
         }
         $password = $vpass = null;
         if (!empty($_POST['password'])) {
@@ -221,10 +221,13 @@ switch ($op) {
         } else {
             xoops_confirm(
                 [
-                              'ok' => 1,
-                              'id' => $_REQUEST['id'],
-                              'op' => 'delete'
-                ], $_SERVER['REQUEST_URI'], sprintf(_PROFILE_AM_RUSUREDEL, $obj->getVar('uname') . ' (' . $obj->getVar('email') . ')'));
+                    'ok' => 1,
+                    'id' => $_REQUEST['id'],
+                    'op' => 'delete',
+                ],
+                $_SERVER['REQUEST_URI'],
+                sprintf(_PROFILE_AM_RUSUREDEL, $obj->getVar('uname') . ' (' . $obj->getVar('email') . ')'),
+            );
         }
         break;
 }

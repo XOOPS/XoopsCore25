@@ -58,17 +58,13 @@ class xos_logos_PageBuilder
      * Called before a specific zone is rendered
      * @param string $zone
      */
-    public function preRender($zone = '')
-    {
-    }
+    public function preRender($zone = '') {}
 
     /**
      * Called after a specific zone is rendered
      * @param string $zone
      */
-    public function postRender($zone = '')
-    {
-    }
+    public function postRender($zone = '') {}
 
     /**
      * xos_logos_PageBuilder::retrieveBlocks()
@@ -94,7 +90,7 @@ class xos_logos_PageBuilder
         }
 
         $groups = (isset($GLOBALS['xoopsUser']) && is_object($GLOBALS['xoopsUser'])) ? $GLOBALS['xoopsUser']->getGroups() : [
-            XOOPS_GROUP_ANONYMOUS
+            XOOPS_GROUP_ANONYMOUS,
         ];
 
         $oldzones = [
@@ -109,17 +105,17 @@ class xos_logos_PageBuilder
             XOOPS_FOOTERBLOCK_LEFT        => 'footer_left',
             XOOPS_FOOTERBLOCK_RIGHT       => 'footer_right',
             XOOPS_FOOTERBLOCK_CENTER      => 'footer_center',
-            XOOPS_FOOTERBLOCK_ALL         => 'footer_all'
+            XOOPS_FOOTERBLOCK_ALL         => 'footer_all',
         ];
 
         foreach ($oldzones as $zone) {
             $this->blocks[$zone] = [];
         }
         if ($this->theme) {
-            $template =& $this->theme->template;
+            $template = & $this->theme->template;
             $backup   = [
                 $template->caching,
-                $template->cache_lifetime
+                $template->cache_lifetime,
             ];
         } else {
             $template = null;
@@ -172,7 +168,7 @@ class xos_logos_PageBuilder
             'title'   => $xobject->getVar('title'),
             // 'name'        => strtolower( preg_replace( '/[^0-9a-zA-Z_]/', '', str_replace( ' ', '_', $xobject->getVar( 'name' ) ) ) ),
             'weight'  => $xobject->getVar('weight'),
-            'lastmod' => $xobject->getVar('last_modified')
+            'lastmod' => $xobject->getVar('last_modified'),
         ];
 
         // title is a comment, don't show it
@@ -180,7 +176,7 @@ class xos_logos_PageBuilder
             $block['title'] = '';
         }
 
-        $bcachetime = (int)$xobject->getVar('bcachetime');
+        $bcachetime = (int) $xobject->getVar('bcachetime');
         if (empty($bcachetime)) {
             $template->caching = 0;
         } else {

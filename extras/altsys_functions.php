@@ -29,7 +29,7 @@ function altsys_include_mymenu()
         $mydirpath . '/admin/mymenu.php',
         $mydirpath . '/mymenu.php',
         $mytrustdirpath . '/admin/mymenu.php',
-        $mytrustdirpath . '/mymenu.php'
+        $mytrustdirpath . '/mymenu.php',
     ];
 
     foreach ($mymenu_find_paths as $mymenu_find_path) {

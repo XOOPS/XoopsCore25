@@ -93,7 +93,7 @@ switch ($op) {
         }
         break;
 
-    // New smilie
+        // New smilie
     case 'new_smilie':
         // Define Stylesheet
         $xoTheme->addStylesheet(XOOPS_URL . '/modules/system/css/admin.css');
@@ -109,7 +109,7 @@ switch ($op) {
         $xoopsTpl->assign('form', $form->render());
         break;
 
-    // Edit smilie
+        // Edit smilie
     case 'edit_smilie':
         // Define Stylesheet
         $xoTheme->addStylesheet(XOOPS_URL . '/modules/system/css/admin.css');
@@ -125,7 +125,7 @@ switch ($op) {
         $xoopsTpl->assign('form', $form->render());
         break;
 
-    // Save smilie
+        // Save smilie
     case 'save_smilie':
         if (!$GLOBALS['xoopsSecurity']->check()) {
             redirect_header('admin.php?fct=smilies', 3, implode('<br>', $GLOBALS['xoopsSecurity']->getErrors()));
@@ -141,14 +141,14 @@ switch ($op) {
             $obj = $smilies_Handler->create();
         }
         // erreur
-		$err = [];
+        $err = [];
         $obj->setVar('code', Request::getString('code', ''));
 
         $obj->setVar('emotion', Request::getString('emotion', ''));
         $obj->setVar('display', Request::getInt('display', 0));
-		if (Request::getString('code', '') == '' || Request::getString('emotion', '') == ''){
-			$err[] = 'the code or description are empty';
-		}
+        if (Request::getString('code', '') == '' || Request::getString('emotion', '') == '') {
+            $err[] = 'the code or description are empty';
+        }
 
         include_once XOOPS_ROOT_PATH . '/class/uploader.php';
         $uploader_smilies_img = new XoopsMediaUploader(XOOPS_UPLOAD_PATH . '/smilies', $mimetypes, $upload_size, null, null);
@@ -157,7 +157,7 @@ switch ($op) {
                 $uploader_smilies_img->setPrefix('smil');
                 $uploader_smilies_img->fetchMedia('smile_url');
                 if (!$uploader_smilies_img->upload()) {
-                    $err[] =& $uploader_smilies_img->getErrors();
+                    $err[] = & $uploader_smilies_img->getErrors();
                 } else {
                     $obj->setVar('smile_url', 'smilies/' . $uploader_smilies_img->getSavedFileName());
                     if (!$smilies_Handler->insert($obj)) {
@@ -185,7 +185,7 @@ switch ($op) {
         redirect_header('admin.php?fct=smilies', 2, _AM_SYSTEM_SMILIES_SAVE);
         break;
 
-    //Del a smilie
+        //Del a smilie
     case 'smilies_delete':
         $smilies_id = Request::getInt('smilies_id', 0);
         $obj        = $smilies_Handler->get($smilies_id);
@@ -213,10 +213,13 @@ switch ($op) {
             $smilies_img = $obj->getVar('smile_url') ?: 'blank.gif';
             xoops_confirm(
                 [
-                              'ok' => 1,
-                              'smilies_id' => $_REQUEST['smilies_id'],
-                              'op' => 'smilies_delete'
-                ], $_SERVER['REQUEST_URI'], sprintf(_AM_SYSTEM_SMILIES_SUREDEL) . '<br \><img src="' . XOOPS_UPLOAD_URL . '/' . $smilies_img . '" alt="" /><br \>');
+                    'ok' => 1,
+                    'smilies_id' => $_REQUEST['smilies_id'],
+                    'op' => 'smilies_delete',
+                ],
+                $_SERVER['REQUEST_URI'],
+                sprintf(_AM_SYSTEM_SMILIES_SUREDEL) . '<br \><img src="' . XOOPS_UPLOAD_URL . '/' . $smilies_img . '" alt="" /><br \>',
+            );
         }
         break;
 

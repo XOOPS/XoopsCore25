@@ -15,7 +15,8 @@ class Upgrade_2018 extends XoopsUpgrade
         $result = $db->queryF($sql);
         if (!$db->isResultSet($result)) {
             throw new \RuntimeException(
-                \sprintf(_DB_QUERY_ERROR, $sql) . $db->error(), E_USER_ERROR
+                \sprintf(_DB_QUERY_ERROR, $sql) . $db->error(),
+                E_USER_ERROR,
             );
         }
         while (false !== ($row = $db->fetchArray($result))) {
@@ -48,9 +49,9 @@ class Upgrade_2018 extends XoopsUpgrade
         $this->fields = [
             'config' => [
                 'conf_title' => "varchar(255) NOT NULL default ''",
-                'conf_desc' => "varchar(255) NOT NULL default ''"
+                'conf_desc' => "varchar(255) NOT NULL default ''",
             ],
-            'configcategory' => ['confcat_name' => "varchar(255) NOT NULL default ''"]
+            'configcategory' => ['confcat_name' => "varchar(255) NOT NULL default ''"],
         ];
 
         foreach ($this->fields as $table => $data) {

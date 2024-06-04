@@ -61,11 +61,11 @@ class Protector_postcommon_register_insert_js_check extends ProtectorFilterAbstr
             $as_md5shuffle[] = ['key' => $key, 'val' => $val];
         }
         shuffle($as_md5shuffle);
-        
-//TODO in PHP 7.2+ change the above to:
-//        $seed = random_bytes(64);
-//        mt_srand($seed);
-//        shuffle($as_md5shuffle);
+
+        //TODO in PHP 7.2+ change the above to:
+        //        $seed = random_bytes(64);
+        //        mt_srand($seed);
+        //        shuffle($as_md5shuffle);
 
         $js_in_validate_function = "antispam_md5s=new Array(32);\n";
         foreach ($as_md5shuffle as $item) {
@@ -83,7 +83,7 @@ class Protector_postcommon_register_insert_js_check extends ProtectorFilterAbstr
 
         return [
             'html_in_form' => '<input type="hidden" name="antispam_md5" id="antispam_md5" value="" />',
-            'js_global'    => '<script type="text/javascript"><!--//' . "\n" . $js_in_validate_function . "\n" . '//--></script><noscript><div class="errorMsg">' . _MD_PROTECTOR_TURNJAVASCRIPTON . '</div></noscript>'
+            'js_global'    => '<script type="text/javascript"><!--//' . "\n" . $js_in_validate_function . "\n" . '//--></script><noscript><div class="errorMsg">' . _MD_PROTECTOR_TURNJAVASCRIPTON . '</div></noscript>',
         ];
     }
 

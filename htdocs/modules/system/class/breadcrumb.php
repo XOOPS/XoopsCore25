@@ -44,7 +44,7 @@ class SystemBreadcrumb
         $this->_bread[] = [
             'link'  => $link,
             'title' => $title,
-            'home'  => $home
+            'home'  => $home,
         ];
     }
 

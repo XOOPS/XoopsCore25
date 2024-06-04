@@ -19,7 +19,6 @@
  */
 class XoopsFormRendererLegacy implements XoopsFormRendererInterface
 {
-
     /**
      * Render support for XoopsFormButton
      *
@@ -96,7 +95,7 @@ class XoopsFormRendererLegacy implements XoopsFormRendererInterface
                 $ret .= '<td>';
             }
             // $name may be a link, should we use $name in the title tag?
-            $ret .= '<input type="checkbox" name="' . $ele_name . '" id="' . $ele_id .$id_ele . '" '
+            $ret .= '<input type="checkbox" name="' . $ele_name . '" id="' . $ele_id . $id_ele . '" '
                 . ' title="' . $ele_title . '" value="' . htmlspecialchars($value, ENT_QUOTES | ENT_HTML5) . '"';
 
             if (count($ele_value) > 0 && in_array($value, $ele_value)) {
@@ -174,7 +173,7 @@ class XoopsFormRendererLegacy implements XoopsFormRendererInterface
             } else {
                 $GLOBALS['xoTheme']->addScript('/class/textsanitizer/image/image.js', ['type' => 'text/javascript']);
             }
-            $button = "<button type='button' class='btn btn-primary' onclick=\"form_instantPreview('" . XOOPS_URL . "', '" . $element->getName() . "','" . XOOPS_URL . "/images', " . (int)$element->doHtml . ", '" . $GLOBALS['xoopsSecurity']->createToken() . "')\" title='" . _PREVIEW . "'>" . _PREVIEW . "</button>";
+            $button = "<button type='button' class='btn btn-primary' onclick=\"form_instantPreview('" . XOOPS_URL . "', '" . $element->getName() . "','" . XOOPS_URL . "/images', " . (int) $element->doHtml . ", '" . $GLOBALS['xoopsSecurity']->createToken() . "')\" title='" . _PREVIEW . "'>" . _PREVIEW . "</button>";
 
             $ret .= '<br>' . "<div id='" . $element->getName() . "_hidden' style='display: block;'> " . '   <fieldset>' . '       <legend>' . $button . '</legend>' . "       <div id='" . $element->getName() . "_hidden_data'>" . _XOOPS_FORM_PREVIEW_CONTENT . '</div>' . '   </fieldset>' . '</div>';
         }
@@ -264,7 +263,7 @@ EOJS;
             'Helvetica',
             'Impact',
             'Verdana',
-            'Haettenschweiler'
+            'Haettenschweiler',
         ];
         foreach ($fontarray as $font) {
             $fontStr .= " + '<option value=\'{$font}\'>{$font}</option>'";

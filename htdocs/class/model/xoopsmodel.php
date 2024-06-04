@@ -36,9 +36,7 @@ class XoopsModelFactory
     /**
      * XoopsModelFactory::__construct()
      */
-    protected function __construct()
-    {
-    }
+    protected function __construct() {}
 
     /**
      * Get singleton instance
@@ -136,7 +134,7 @@ class XoopsModelAbstract
     public function setHandler($handler)
     {
         if (is_object($handler) && is_a($handler, 'XoopsPersistableObjectHandler')) {
-            $this->handler =& $handler;
+            $this->handler = & $handler;
 
             return true;
         }

@@ -5,7 +5,6 @@
 
 class HTMLPurifier_Printer
 {
-
     /**
      * For HTML generation convenience funcs.
      * @type HTMLPurifier_Generator
@@ -21,9 +20,7 @@ class HTMLPurifier_Printer
     /**
      * Initialize $generator.
      */
-    public function __construct()
-    {
-    }
+    public function __construct() {}
 
     /**
      * Give generator necessary configuration if possible
@@ -51,7 +48,7 @@ class HTMLPurifier_Printer
     protected function start($tag, $attr = array())
     {
         return $this->generator->generateFromToken(
-            new HTMLPurifier_Token_Start($tag, $attr ? $attr : array())
+            new HTMLPurifier_Token_Start($tag, $attr ? $attr : array()),
         );
     }
 
@@ -63,7 +60,7 @@ class HTMLPurifier_Printer
     protected function end($tag)
     {
         return $this->generator->generateFromToken(
-            new HTMLPurifier_Token_End($tag)
+            new HTMLPurifier_Token_End($tag),
         );
     }
 
@@ -90,7 +87,7 @@ class HTMLPurifier_Printer
     protected function elementEmpty($tag, $attr = array())
     {
         return $this->generator->generateFromToken(
-            new HTMLPurifier_Token_Empty($tag, $attr)
+            new HTMLPurifier_Token_Empty($tag, $attr),
         );
     }
 
@@ -101,7 +98,7 @@ class HTMLPurifier_Printer
     protected function text($text)
     {
         return $this->generator->generateFromToken(
-            new HTMLPurifier_Token_Text($text)
+            new HTMLPurifier_Token_Text($text),
         );
     }
 

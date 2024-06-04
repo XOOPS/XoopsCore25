@@ -38,7 +38,7 @@ $configs['conf_names'] = [
 
 // languages config files
 $configs['language_files'] = [
-    'global'
+    'global',
 ];
 
 // extension_loaded

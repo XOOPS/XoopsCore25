@@ -58,8 +58,8 @@ if ($admin && $op === 'SmilesAdd') {
         'image/jpeg',
         'image/pjpeg',
         'image/x-png',
-        'image/png'
-    ],                                 100000, 120, 120);
+        'image/png',
+    ], 100000, 120, 120);
     $uploader->setPrefix('smil');
     if ($uploader->fetchMedia($_POST['xoops_upload_file'][0])) {
         if (!$uploader->upload()) {
@@ -68,7 +68,7 @@ if ($admin && $op === 'SmilesAdd') {
             $smile_url     = $uploader->getSavedFileName();
             $smile_code = Request::getString('smile_code', '', 'POST');
             $smile_desc = Request::getString('smile_desc', '', 'POST');
-            $smile_display = (int)$_POST['smile_display'] > 0 ? 1 : 0;
+            $smile_display = (int) $_POST['smile_display'] > 0 ? 1 : 0;
             $newid         = $db->genId($db->prefix('smilies') . '_id_seq');
             $sql           = sprintf('INSERT INTO %s (id, code, smile_url, emotion, display) VALUES (%d, %s, %s, %s, %d)', $db->prefix('smiles'), $newid, $db->quoteString($smile_code), $db->quoteString($smile_url), $db->quoteString($smile_desc), $smile_display);
             if (!$db->query($sql)) {
@@ -134,37 +134,37 @@ if (!$_SESSION['XoopsEmotions'] && !$admin) {
         if ($admin) {
             echo '<li id="tab_emotionsadmin"><span><a href="javascript:mcTabs.displayTab(\'tab_emotionsadmin\',\'emotionsadmin_panel\');" onmousedown="return false;">{#xoopsemotions_dlg.tab_emotionsadmin}</a></span></li>';
         }
-        ?>
+?>
     </ul>
 </div>
 
 <div class="panel_wrapper">
     <div id="emotionsbrowser_panel" class="panel current" style="overflow:auto;">
         <?php
-        if ($smiles = $_SESSION['XoopsEmotions']) {
-            echo '<div><strong>' . _MSC_CLICKASMILIE . '</strong></div>';
-            echo "<div class='xoopsEmotions'>";
-            $count = count($smiles);
+if ($smiles = $_SESSION['XoopsEmotions']) {
+    echo '<div><strong>' . _MSC_CLICKASMILIE . '</strong></div>';
+    echo "<div class='xoopsEmotions'>";
+    $count = count($smiles);
 
-            for ($i = 0; $i < $count; ++$i) {
-                if ($op == '') {
-                    if ($smiles[$i]['display']) {
-                        echo '<img class="xoopsEmotions" onclick="XoopsemotionsDialog.insert(this);" src="' . XOOPS_UPLOAD_URL . '/' . $smiles[$i]['smile_url'] . '" alt="' . $myts->htmlSpecialChars($smiles[$i]['emotion']) . '" title="' . $myts->htmlSpecialChars($smiles[$i]['emotion']) . '" />';
-                    }
-                } else {
-                    echo '<img class="xoopsEmotions" onclick="XoopsemotionsDialog.insert(this);" src="' . XOOPS_UPLOAD_URL . '/' . $smiles[$i]['smile_url'] . '" alt="' . $myts->htmlSpecialChars($smiles[$i]['emotion']) . '" title="' . $myts->htmlSpecialChars($smiles[$i]['emotion']) . '" />';
-                }
+    for ($i = 0; $i < $count; ++$i) {
+        if ($op == '') {
+            if ($smiles[$i]['display']) {
+                echo '<img class="xoopsEmotions" onclick="XoopsemotionsDialog.insert(this);" src="' . XOOPS_UPLOAD_URL . '/' . $smiles[$i]['smile_url'] . '" alt="' . $myts->htmlSpecialChars($smiles[$i]['emotion']) . '" title="' . $myts->htmlSpecialChars($smiles[$i]['emotion']) . '" />';
             }
-            if ($op == '') {
-                echo '<div class="xoopsEmotions">';
-                echo '<a class="xoopsEmotions" href="' . $current_file . '?op=' . _MORE . '">' . _MORE . '</a>';
-                echo '</div>';
-            }
-            echo '</div>';
         } else {
-            echo '<div>{#xoopsemotions_dlg.error_noemotions}</div>';
+            echo '<img class="xoopsEmotions" onclick="XoopsemotionsDialog.insert(this);" src="' . XOOPS_UPLOAD_URL . '/' . $smiles[$i]['smile_url'] . '" alt="' . $myts->htmlSpecialChars($smiles[$i]['emotion']) . '" title="' . $myts->htmlSpecialChars($smiles[$i]['emotion']) . '" />';
         }
-        ?>
+    }
+    if ($op == '') {
+        echo '<div class="xoopsEmotions">';
+        echo '<a class="xoopsEmotions" href="' . $current_file . '?op=' . _MORE . '">' . _MORE . '</a>';
+        echo '</div>';
+    }
+    echo '</div>';
+} else {
+    echo '<div>{#xoopsemotions_dlg.error_noemotions}</div>';
+}
+?>
         <div class="mceActionPanel floatright">
             <input type="button" id="cancel" name="cancel" value="{#cancel}" onclick="tinyMCEPopup.close();"/>
         </div>
@@ -172,28 +172,28 @@ if (!$_SESSION['XoopsEmotions'] && !$admin) {
 
     <div id="emotionsadmin_panel" class="panel" style="overflow:auto;">
         <?php
-        if ($admin) {
-            include_once XOOPS_ROOT_PATH . '/class/xoopsformloader.php';
+if ($admin) {
+    include_once XOOPS_ROOT_PATH . '/class/xoopsformloader.php';
 
-            $smile_form = new XoopsThemeForm(_AM_ADDSMILE, 'smileform', $current_file, 'post', true);
-            $smile_form->setExtra('enctype="multipart/form-data"');
-            $smile_form->addElement(new XoopsFormText(_AM_SMILECODE, 'smile_code', 26, 25, ''), true);
-            $smile_form->addElement(new XoopsFormText(_AM_SMILEEMOTION, 'smile_desc', 26, 25, ''), true);
-            $smile_select = new XoopsFormFile('', 'smile_url', 5000000);
-            $smile_label  = new XoopsFormLabel('', '<img src="' . XOOPS_UPLOAD_URL . '/blank.gif" alt="" />');
-            $smile_tray   = new XoopsFormElementTray(_IMAGEFILE . ':', '&nbsp;');
-            $smile_tray->addElement($smile_select);
-            $smile_tray->addElement($smile_label);
-            $smile_form->addElement($smile_tray);
-            $smile_form->addElement(new XoopsFormRadioYN(_AM_DISPLAYF, 'smile_display', 1));
-            $smile_form->addElement(new XoopsFormHidden('id', ''));
-            $smile_form->addElement(new XoopsFormHidden('op', 'SmilesAdd'));
-            $smile_form->addElement(new XoopsFormHidden('fct', 'smilies'));
-            $smile_form->addElement(new XoopsFormButton('', 'submit', _SUBMIT, 'submit'));
+    $smile_form = new XoopsThemeForm(_AM_ADDSMILE, 'smileform', $current_file, 'post', true);
+    $smile_form->setExtra('enctype="multipart/form-data"');
+    $smile_form->addElement(new XoopsFormText(_AM_SMILECODE, 'smile_code', 26, 25, ''), true);
+    $smile_form->addElement(new XoopsFormText(_AM_SMILEEMOTION, 'smile_desc', 26, 25, ''), true);
+    $smile_select = new XoopsFormFile('', 'smile_url', 5000000);
+    $smile_label  = new XoopsFormLabel('', '<img src="' . XOOPS_UPLOAD_URL . '/blank.gif" alt="" />');
+    $smile_tray   = new XoopsFormElementTray(_IMAGEFILE . ':', '&nbsp;');
+    $smile_tray->addElement($smile_select);
+    $smile_tray->addElement($smile_label);
+    $smile_form->addElement($smile_tray);
+    $smile_form->addElement(new XoopsFormRadioYN(_AM_DISPLAYF, 'smile_display', 1));
+    $smile_form->addElement(new XoopsFormHidden('id', ''));
+    $smile_form->addElement(new XoopsFormHidden('op', 'SmilesAdd'));
+    $smile_form->addElement(new XoopsFormHidden('fct', 'smilies'));
+    $smile_form->addElement(new XoopsFormButton('', 'submit', _SUBMIT, 'submit'));
 
-            $smile_form->display();
-        }
-        ?>
+    $smile_form->display();
+}
+?>
         <div class="mceActionPanel floatright">
             <input type="button" id="cancel" name="cancel" value="{#cancel}" onclick="tinyMCEPopup.close();"/>
         </div>

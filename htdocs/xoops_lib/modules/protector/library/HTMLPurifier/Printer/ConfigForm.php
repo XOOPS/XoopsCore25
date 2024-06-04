@@ -5,7 +5,6 @@
  */
 class HTMLPurifier_Printer_ConfigForm extends HTMLPurifier_Printer
 {
-
     /**
      * Printers for specific fields.
      * @type HTMLPurifier_Printer[]
@@ -171,7 +170,7 @@ class HTMLPurifier_Printer_ConfigForm extends HTMLPurifier_Printer
                 'label',
                 $directive_disp,
                 // component printers must create an element with this id
-                $attr
+                $attr,
             );
             if ($this->docURL) {
                 $ret .= $this->end('a');
@@ -253,7 +252,7 @@ class HTMLPurifier_Printer_ConfigForm_NullDecorator extends HTMLPurifier_Printer
             'class' => 'null-toggle',
             'name' => "$name" . "[Null_$ns.$directive]",
             'id' => "$name:Null_$ns.$directive",
-            'onclick' => "toggleWriteability('$name:$ns.$directive',checked)" // INLINE JAVASCRIPT!!!!
+            'onclick' => "toggleWriteability('$name:$ns.$directive',checked)", // INLINE JAVASCRIPT!!!!
         );
         if ($this->obj instanceof HTMLPurifier_Printer_ConfigForm_bool) {
             // modify inline javascript slightly
@@ -321,6 +320,7 @@ class HTMLPurifier_Printer_ConfigForm_default extends HTMLPurifier_Printer
                         $value[] = $val;
                     }
                     //TODO does this need a break?
+                    // no break
                 case HTMLPurifier_VarParser::ALIST:
                     $value = implode(PHP_EOL, $value);
                     break;
@@ -345,7 +345,7 @@ class HTMLPurifier_Printer_ConfigForm_default extends HTMLPurifier_Printer
         }
         $attr = array(
             'name' => "$name" . "[$ns.$directive]",
-            'id' => "$name:$ns.$directive"
+            'id' => "$name:$ns.$directive",
         );
         if ($value === null) {
             $attr['disabled'] = 'disabled';
@@ -413,7 +413,7 @@ class HTMLPurifier_Printer_ConfigForm_bool extends HTMLPurifier_Printer
             'type' => 'radio',
             'name' => "$name" . "[$ns.$directive]",
             'id' => "$name:Yes_$ns.$directive",
-            'value' => '1'
+            'value' => '1',
         );
         if ($value === true) {
             $attr['checked'] = 'checked';
@@ -432,7 +432,7 @@ class HTMLPurifier_Printer_ConfigForm_bool extends HTMLPurifier_Printer
             'type' => 'radio',
             'name' => "$name" . "[$ns.$directive]",
             'id' => "$name:No_$ns.$directive",
-            'value' => '0'
+            'value' => '0',
         );
         if ($value === false) {
             $attr['checked'] = 'checked';

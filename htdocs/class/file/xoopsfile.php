@@ -30,9 +30,7 @@ class XoopsFile
     /**
      * XoopsFile::__construct()
      */
-    public function __construct()
-    {
-    }
+    public function __construct() {}
 
     /**
      * XoopsFile::getInstance()
