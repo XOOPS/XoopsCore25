@@ -165,10 +165,7 @@ abstract class SystemFineUploadHandler
             return ['error' => "Server error. Uploads directory isn't writable"];
         }
 
-        $type = $_SERVER['CONTENT_TYPE'];
-        if (isset($_SERVER['HTTP_CONTENT_TYPE'])) {
-            $type = $_SERVER['HTTP_CONTENT_TYPE'];
-        }
+        $type = $_SERVER['HTTP_CONTENT_TYPE'] ?? $_SERVER['CONTENT_TYPE'];
 
         if (!isset($type)) {
             return ['error' => "No files were uploaded."];
@@ -366,7 +363,7 @@ abstract class SystemFineUploadHandler
 
         $pathinfo = pathinfo($filename);
         $base = $pathinfo['filename'];
-        $ext = isset($pathinfo['extension']) ? $pathinfo['extension'] : '';
+        $ext = $pathinfo['extension'] ?? '';
         $ext = '' == $ext ? $ext : '.' . $ext;
 
         $unique = $base;

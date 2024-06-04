@@ -89,7 +89,7 @@ if (!class_exists('\BaseStringHelper', false)) {
          */
         public static function byteSubstr($string, $start, $length = null)
         {
-            return mb_substr($string, $start, $length === null ? mb_strlen($string, '8bit') : $length, '8bit');
+            return mb_substr($string, $start, $length ?? mb_strlen($string, '8bit'), '8bit');
         }
 
         /**
@@ -367,7 +367,7 @@ if (!class_exists('\BaseStringHelper', false)) {
             $value = (string)$value;
 
             $localeInfo = localeconv();
-            $decimalSeparator = isset($localeInfo['decimal_point']) ? $localeInfo['decimal_point'] : null;
+            $decimalSeparator = $localeInfo['decimal_point'] ?? null;
 
             if ($decimalSeparator !== null && $decimalSeparator !== '.') {
                 $value = str_replace($decimalSeparator, '.', $value);

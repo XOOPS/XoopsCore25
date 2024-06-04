@@ -27,7 +27,7 @@ $indexAdmin->addItemButton(_ADD . ' ' . _PROFILE_AM_STEP, 'step.php?op=new', 'ad
 echo $indexAdmin->addNavigation(basename(__FILE__));
 echo $indexAdmin->renderButton('right', '');
 
-$op = isset($_REQUEST['op']) ? $_REQUEST['op'] : (isset($_REQUEST['id']) ? 'edit' : 'list');
+$op = $_REQUEST['op'] ?? (isset($_REQUEST['id']) ? 'edit' : 'list');
 
 $handler = xoops_getModuleHandler('regstep');
 switch ($op) {

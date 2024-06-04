@@ -75,11 +75,7 @@ class XoopsHandlerRegistry
      */
     public function getHandler($name)
     {
-        if (!isset($this->_handlers['kernel'][$name])) {
-            return false;
-        }
-
-        return $this->_handlers['kernel'][$name];
+        return $this->_handlers['kernel'][$name] ?? false;
     }
 
     /**
@@ -114,11 +110,7 @@ class XoopsHandlerRegistry
      */
     public function getModuleHandler($module, $name)
     {
-        if (!isset($this->_handlers['module'][$module][$name])) {
-            return false;
-        }
-
-        return $this->_handlers['module'][$module][$name];
+        return $this->_handlers['module'][$module][$name] ?? false;
     }
 
     /**

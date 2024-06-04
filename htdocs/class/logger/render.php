@@ -98,7 +98,7 @@ if (empty($mode) || $mode === 'errors') {
     $ret .= '<table id="xo-logger-errors" class="outer"><tr><th>' . _LOGGER_ERRORS . '</th></tr>';
     foreach ($this->errors as $error) {
         $ret .= "\n<tr><td class='$class'>";
-        $ret .= isset($types[$error['errno']]) ? $types[$error['errno']] : _LOGGER_UNKNOWN;
+        $ret .= $types[$error['errno']] ?? _LOGGER_UNKNOWN;
         $ret .= ': ';
         $ret .= sprintf(_LOGGER_FILELINE, $this->sanitizePath($error['errstr']), $this->sanitizePath($error['errfile']), $error['errline']);
         $ret .= "<br>\n</td></tr>";

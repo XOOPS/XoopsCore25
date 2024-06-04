@@ -160,7 +160,7 @@ class Protector_postcommon_post_language_match extends ProtectorFilterAbstract
         }
 
         $language = $GLOBALS['xoopsConfig']['language'];
-        $range = isset($this->scriptCodes[$language]) ? $this->scriptCodes[$language] : 'p\{Latin}';
+        $range = $this->scriptCodes[$language] ?? 'p\{Latin}';
         $range = !empty($this->customRange) ? $this->customRange : $range;
 
         // remove emoji from computations (a smilie cat is universal)

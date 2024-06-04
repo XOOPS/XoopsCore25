@@ -21,7 +21,7 @@ include __DIR__ . '/header.php';
 $myts = \MyTextSanitizer::getInstance();
 
 $limit_default    = 20;
-$op               = isset($_REQUEST['op']) ? $_REQUEST['op'] : 'search';
+$op               = $_REQUEST['op'] ?? 'search';
 $groups           = $GLOBALS['xoopsUser'] ? $GLOBALS['xoopsUser']->getGroups() : [XOOPS_GROUP_ANONYMOUS];
 $searchable_types = [
     'textbox',

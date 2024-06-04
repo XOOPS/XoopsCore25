@@ -122,11 +122,7 @@ class SaxParser
      */
     public function getParentTag()
     {
-        if (isset($this->tags[count($this->tags) - 2])) {
-            return $this->tags[count($this->tags) - 2];
-        }
-
-        return false;
+        return $this->tags[count($this->tags) - 2] ?? false;
     }
 
     /*---------------------------------------------------------------------------

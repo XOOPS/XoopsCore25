@@ -356,11 +356,7 @@ class XoopsFileHandler
         if ($this->info == null) {
             $this->info();
         }
-        if (isset($this->info['extension'])) {
-            return $this->info['extension'];
-        }
-
-        return false;
+        return $this->info['extension'] ?? false;
     }
 
     /**

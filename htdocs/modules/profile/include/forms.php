@@ -534,7 +534,7 @@ function profile_getUserForm(XoopsUser $user, ProfileProfile $profile = null, $a
             $key              = isset($all_categories[$fields[$i]->getVar('cat_id')]['cat_weight']) ? (int) ($all_categories[$fields[$i]->getVar('cat_id')]['cat_weight'] * $count_fields) + $fields[$i]->getVar('cat_id') : 0;
             $elements[$key][] = $fieldinfo;
             $weights[$key][]  = $fields[$i]->getVar('field_weight');
-            $categories[$key] = isset($all_categories[$fields[$i]->getVar('cat_id')]) ? $all_categories[$fields[$i]->getVar('cat_id')] : null;
+            $categories[$key] = $all_categories[$fields[$i]->getVar('cat_id')] ?? null;
         }
     }
 

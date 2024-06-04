@@ -162,11 +162,7 @@ class XoopsXmlRpcApi
      */
     public function _getXoopsTagMap($xoopstag)
     {
-        if (isset($this->xoopsTagMap[$xoopstag])) {
-            return $this->xoopsTagMap[$xoopstag];
-        }
-
-        return $xoopstag;
+        return $this->xoopsTagMap[$xoopstag] ?? $xoopstag;
     }
 
     /**

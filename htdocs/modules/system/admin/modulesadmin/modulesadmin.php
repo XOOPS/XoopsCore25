@@ -188,7 +188,7 @@ function xoops_module_install($dirname)
                     $msgs[] = _AM_SYSTEM_MODULES_TEMPLATES_ADD;
                     foreach ($templates as $tpl) {
                         $tplfile = $tplfile_handler->create();
-                        $type    = (isset($tpl['type']) ? $tpl['type'] : 'module');
+                        $type    = ($tpl['type'] ?? 'module');
                         $tpldata = &  xoops_module_gettemplate($dirname, $tpl['file'], $type);
                         $tplfile->setVar('tpl_source', $tpldata, true);
                         $tplfile->setVar('tpl_refid', $newmid);
@@ -405,7 +405,7 @@ function xoops_module_install($dirname)
                         $confobj->setVar('conf_catid', 0);
                         $confobj->setVar('conf_name', $config['name']);
                         $confobj->setVar('conf_title', $config['title'], true);
-                        $confobj->setVar('conf_desc', isset($config['description']) ? $config['description'] : '', true);
+                        $confobj->setVar('conf_desc', $config['description'] ?? '', true);
                         $confobj->setVar('conf_formtype', $config['formtype']);
                         $confobj->setVar('conf_valuetype', $config['valuetype']);
                         $confobj->setConfValueForInput($config['default'], true);
@@ -893,7 +893,7 @@ function xoops_module_update($dirname)
                 $tpl['file'] = trim($tpl['file']);
                 // START irmtfan solve templates duplicate issue
                 // if (!in_array($tpl['file'], $delng)) { // irmtfan bug fix: remove codes for delete templates
-                $type = (isset($tpl['type']) ? $tpl['type'] : 'module');
+                $type = ($tpl['type'] ?? 'module');
                 if (preg_match("/\.css$/i", $tpl['file'])) {
                     $type = 'css';
                 }
@@ -947,7 +947,7 @@ function xoops_module_update($dirname)
             $funcfiles = [];
             foreach ($blocks as $i => $block) {
                 if (isset($block['show_func']) && $block['show_func'] != '' && isset($block['file']) && $block['file'] != '') {
-                    $editfunc    = isset($block['edit_func']) ? $block['edit_func'] : '';
+                    $editfunc    = $block['edit_func'] ?? '';
                     $showfuncs[] = $block['show_func'];
                     $funcfiles[] = $block['file'];
                     $content = '';

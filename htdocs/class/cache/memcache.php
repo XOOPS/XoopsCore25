@@ -105,10 +105,7 @@ class XoopsCacheMemcache extends XoopsCacheEngine
         foreach ($this->settings['servers'] as $server) {
             $parts = explode(':', $server);
             $host  = $parts[0];
-            $port  = 11211;
-            if (isset($parts[1])) {
-                $port = $parts[1];
-            }
+            $port  = $parts[1] ?? 11211;
             if ($this->memcache->addServer($host, $port)) {
                 return true;
             }

@@ -545,7 +545,7 @@ class Tar
         $activeFile['group_id']   = $file_information['gid'];
         $activeFile['size']       = $file_information['size'];
         $activeFile['time']       = $file_information['mtime'];
-        $activeFile['checksum']   = isset($checksum) ? $checksum : '';
+        $activeFile['checksum']   = $checksum ?? '';
         $activeFile['user_name']  = '';
         $activeFile['group_name'] = '';
         $activeFile['file']       = trim($file_contents);

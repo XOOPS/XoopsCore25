@@ -282,10 +282,7 @@ class XoopsTopic
 
     public function prefix()
     {
-        if (isset($this->prefix)) {
-            return $this->prefix;
-        }
-        return null;
+        return $this->prefix ?? null;
     }
 
     /**

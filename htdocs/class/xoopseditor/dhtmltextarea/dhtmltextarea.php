@@ -48,7 +48,7 @@ class FormDhtmlTextArea extends XoopsEditor
     {
         parent::__construct($options);
         $this->rootPath = '/class/xoopseditor/' . basename(__DIR__);
-        $hiddenText     = isset($this->configs['hiddenText']) ? $this->configs['hiddenText'] : $this->_hiddenText;
+        $hiddenText     = $this->configs['hiddenText'] ?? $this->_hiddenText;
         xoops_load('XoopsFormDhtmlTextArea');
         $this->renderer = new XoopsFormDhtmlTextArea('', $this->getName(), $this->getValue(), $this->getRows(), $this->getCols(), $hiddenText, $this->configs);
     }

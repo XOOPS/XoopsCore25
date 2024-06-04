@@ -293,7 +293,7 @@ class ProfileField extends XoopsObject
                 /** @var XoopsMemberHandler $member_handler */
                 $member_handler = xoops_getHandler('member');
                 $options        = $member_handler->getGroupList();
-                $ret            = isset($options[$value]) ? $options[$value] : '';
+                $ret            = $options[$value] ?? '';
 
                 return $ret;
                 break;

@@ -358,7 +358,7 @@ class XoopsLogger
         if (!isset($this->logstart[$name])) {
             return 0;
         }
-        $stop  = isset($this->logend[$name]) ? $this->logend[$name] : $this->microtime();
+        $stop  = $this->logend[$name] ?? $this->microtime();
         $start = $this->logstart[$name];
 
         if ($unset) {

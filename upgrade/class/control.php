@@ -67,7 +67,7 @@ class UpgradeControl
     {
         $supports = null;
 
-        $language = (null === $language) ? $this->upgradeLanguage : $language;
+        $language = $language ?? $this->upgradeLanguage;
 
         if (file_exists(__DIR__ . "/../language/{$language}/{$domain}.php")) {
             include_once __DIR__ . "/../language/{$language}/{$domain}.php";
@@ -94,10 +94,7 @@ class UpgradeControl
     {
         global $xoopsConfig;
 
-        $upgrade_language = null;
-        if (isset($xoopsConfig['language'])) {
-            $upgrade_language = $xoopsConfig['language'];
-        }
+        $upgrade_language = $xoopsConfig['language'] ?? null;
         $upgrade_language = !empty($_COOKIE['xo_upgrade_lang']) ? $_COOKIE['xo_upgrade_lang'] : $upgrade_language;
         $upgrade_language = Xmf\Request::getString('lang', $upgrade_language);
         $upgrade_language = (null === $xoopsConfig['language']) ? 'english' : $upgrade_language;

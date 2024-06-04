@@ -144,7 +144,7 @@ if (file_exists($file = $GLOBALS['xoops']->path('var/configs/xoopsconfig.php')))
 /**
  * clickjack protection - Add option to HTTP header restricting using site in an iframe
  */
-$xFrameOptions = isset($xoopsConfig['xFrameOptions']) ? $xoopsConfig['xFrameOptions'] : 'sameorigin';
+$xFrameOptions = $xoopsConfig['xFrameOptions'] ?? 'sameorigin';
 if (!headers_sent() && !empty($xFrameOptions)) {
     header('X-Frame-Options: ' . $xFrameOptions);
 }

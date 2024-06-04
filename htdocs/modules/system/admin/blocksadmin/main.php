@@ -256,7 +256,7 @@ switch ($op) {
         $block_handler = xoops_getModuleHandler('block');
         $block         = $block_handler->create();
         $block->setVars($_POST);
-        $content = isset($_POST['content_block']) ? $_POST['content_block'] : '';
+        $content = $_POST['content_block'] ?? '';
         $block->setVar('content', $content);
         $myts = \MyTextSanitizer::getInstance();
         echo '<div id="xo-preview-dialog" title="' . $block->getVar('title', 's') . '">' . $block->getContent('s', $block->getVar('c_type')) . '</div>';
@@ -317,7 +317,7 @@ switch ($op) {
         $block->setVar('name', $name);
         $block->setVar('isactive', 1);
 
-        $content = isset($_POST['content_block']) ? $_POST['content_block'] : '';
+        $content = $_POST['content_block'] ?? '';
         $block->setVar('content', $content);
 
         if (!$newid = $block_handler->insert($block)) {

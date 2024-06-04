@@ -35,7 +35,7 @@ function smarty_function_xoBlock($params, $smarty)
 
     $display_title = (isset($params['display']) && $params['display'] === 'title');
     $display_none  = (isset($params['display']) && $params['display'] === 'none');
-    $options       = isset($params['options']) ? $params['options'] : false;
+    $options       = $params['options'] ?? false;
     $groups        = isset($params['groups']) ? explode('|', $params['groups']) : false;
     $cache         = isset($params['cache']) ? (int)$params['cache'] : false;
 

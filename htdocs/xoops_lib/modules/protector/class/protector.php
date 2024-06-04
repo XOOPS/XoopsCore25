@@ -303,12 +303,12 @@ class Protector
         }
 
         $ip    = \Xmf\IPAddress::fromRequest()->asReadable();
-        $agent = isset($_SERVER['HTTP_USER_AGENT']) ? $_SERVER['HTTP_USER_AGENT'] : '';
+        $agent = $_SERVER['HTTP_USER_AGENT'] ?? '';
 
 
         if ($unique_check) {
             $result = mysqli_query($this->_conn, 'SELECT ip,type FROM ' . XOOPS_DB_PREFIX . '_' . $this->mydirname . '_log ORDER BY timestamp DESC LIMIT 1');
-            list($last_ip, $last_type) = mysqli_fetch_row($result);
+            [$last_ip, $last_type] = mysqli_fetch_row($result);
             if ($last_ip == $ip && $last_type == $type) {
                 $this->_logged = true;
 
@@ -357,7 +357,7 @@ class Protector
      */
     public function get_bwlimit()
     {
-        list($expire) = @file(Protector::get_filepath4bwlimit());
+        [$expire] = @file(Protector::get_filepath4bwlimit());
         $expire = min((int) $expire, time() + 300);
 
         return $expire;
@@ -425,7 +425,7 @@ class Protector
         $filepath4badips = @file(Protector::get_filepath4badips());
 
         if (is_array($filepath4badips) && isset($filepath4badips[0])) {
-            list($bad_ips_serialized) = $filepath4badips;
+            [$bad_ips_serialized] = $filepath4badips;
         }
         $bad_ips = empty($bad_ips_serialized) ? [] : @unserialize($bad_ips_serialized, ['allowed_classes' => false]);
         if (!is_array($bad_ips) || isset($bad_ips[0])) {
@@ -475,7 +475,7 @@ class Protector
             } else {
                 // Proceed with your logic here
                 if (is_array($filepath4group1ips) && isset($filepath4group1ips[0])) {
-                    list($group1_ips_serialized) = $filepath4group1ips;
+                    [$group1_ips_serialized] = $filepath4group1ips;
                 }
 
                 $group1_ips = empty($group1_ips_serialized) ? [] : @unserialize($group1_ips_serialized, ['allowed_classes' => false]);
@@ -702,8 +702,7 @@ class Protector
     {
         $this->_bigumbrella_doubtfuls = [];
         $this->_bigumbrella_check_recursive($_GET);
-        $this->_bigumbrella_check_recursive(isset($_SERVER['PHP_SELF']) ? $_SERVER['PHP_SELF'] : '');
-
+        $this->_bigumbrella_check_recursive($_SERVER['PHP_SELF'] ?? '');
 
         if (!empty($this->_bigumbrella_doubtfuls)) {
             ob_start([$this, 'bigumbrella_outputcheck']);
@@ -1081,9 +1080,9 @@ class Protector
         }
 
         $result = $this->stopForumSpamLookup(
-            isset($_POST['email']) ? $_POST['email'] : null,
+            $_POST['email'] ?? null,
             $_SERVER['REMOTE_ADDR'],
-            isset($_POST['uname']) ? $_POST['uname'] : null,
+            $_POST['uname'] ?? null,
         );
 
         if (false === $result || isset($result['http_code'])) {
@@ -1184,9 +1183,9 @@ class Protector
         if (false === $ip->asReadable()) {
             return true;
         }
-        $uri = isset($_SERVER['REQUEST_URI']) ? $_SERVER['REQUEST_URI'] : '';
+        $uri = $_SERVER['REQUEST_URI'] ?? '';
 
-        $ip4sql  = $xoopsDB->quote($ip->asReadable());
+        $ip4sql = $xoopsDB->quote($ip->asReadable());
         $uri4sql = $xoopsDB->quote($uri);
 
         // gargage collection
@@ -1212,7 +1211,7 @@ class Protector
             $sql = 'SELECT COUNT(*) FROM ' . $xoopsDB->prefix($this->mydirname . '_access');
             $result = $xoopsDB->query($sql);
             if ($xoopsDB->isResultSet($result)) {
-                list($bw_count) = $xoopsDB->fetchRow($result);
+                [$bw_count] = $xoopsDB->fetchRow($result);
                 if ($bw_count > $this->_conf['bwlimit_count']) {
                     $this->write_file_bwlimit(time() + $this->_conf['dos_expire']);
                 }
@@ -1229,7 +1228,7 @@ class Protector
                 E_USER_ERROR,
             );
         }
-        list($f5_count) = $xoopsDB->fetchRow($result);
+        [$f5_count] = $xoopsDB->fetchRow($result);
         if ($f5_count > $this->_conf['dos_f5count']) {
 
             // delayed insert
@@ -1290,7 +1289,7 @@ class Protector
         if (!$xoopsDB->isResultSet($result)) {
             return false;
         }
-        list($crawler_count) = $xoopsDB->fetchRow($result);
+        [$crawler_count] = $xoopsDB->fetchRow($result);
 
         // delayed insert
         $xoopsDB->queryF($sql4insertlog);
@@ -1350,7 +1349,7 @@ class Protector
         if (false === $ip->asReadable()) {
             return true;
         }
-        $uri     = isset($_SERVER['REQUEST_URI']) ? $_SERVER['REQUEST_URI'] : '';
+        $uri     = $_SERVER['REQUEST_URI'] ?? '';
         $ip4sql  = $xoopsDB->quote($ip->asReadable());
         $uri4sql = $xoopsDB->quote($uri);
 
@@ -1375,7 +1374,7 @@ class Protector
         $sql = 'SELECT COUNT(*) FROM ' . $xoopsDB->prefix($this->mydirname . '_access') . " WHERE ip={$ip4sql} AND malicious_actions like 'BRUTE FORCE:%'";
         $result = $xoopsDB->query($sql);
         if ($xoopsDB->isResultSet($result)) {
-            list($bf_count) = $xoopsDB->fetchRow($result);
+            [$bf_count] = $xoopsDB->fetchRow($result);
         } else {
             throw new \RuntimeException(
                 \sprintf(_DB_QUERY_ERROR, $sql) . $xoopsDB->error(),
@@ -1437,7 +1436,7 @@ class Protector
         $this->_spam_check_point_recursive($_POST);
 
         if ($this->_spamcount_uri >= $points4deny) {
-            $this->message .= (isset($_SERVER['REQUEST_URI']) ? $_SERVER['REQUEST_URI'] : '') . " SPAM POINT: $this->_spamcount_uri\n";
+            $this->message .= ($_SERVER['REQUEST_URI'] ?? '') . " SPAM POINT: $this->_spamcount_uri\n";
             $this->output_log('URI SPAM', $uid, false, 128);
             $ret = $this->call_filter('spamcheck_overrun');
             if ($ret == false) {

@@ -116,7 +116,7 @@ function xoFormFieldCollation($name, $value, $label, $help = '')
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && @$_POST['task'] === 'db') {
     $params = ['DB_COLLATION'];
     foreach ($params as $name) {
-        $vars[$name] = isset($_POST[$name]) ? $_POST[$name] : '';
+        $vars[$name] = $_POST[$name] ?? '';
     }
 
     return $vars;

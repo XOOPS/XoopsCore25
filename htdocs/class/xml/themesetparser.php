@@ -69,11 +69,7 @@ class XoopsThemeSetParser extends SaxParser
     public function &getThemeSetData($name = null)
     {
         if (isset($name)) {
-            if (isset($this->themeSetData[$name])) {
-                return $this->themeSetData[$name];
-            }
-
-            return false;
+            return $this->themeSetData[$name] ?? false;
         }
 
         return $this->themeSetData;

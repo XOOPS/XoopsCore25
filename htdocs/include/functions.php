@@ -1169,10 +1169,7 @@ function xoops_trim($text)
  */
 function xoops_getOption($option)
 {
-    $ret = '';
-    if (isset($GLOBALS['xoopsOption'][$option])) {
-        $ret = $GLOBALS['xoopsOption'][$option];
-    }
+    $ret = $GLOBALS['xoopsOption'][$option] ?? '';
 
     return $ret;
 }
@@ -1293,7 +1290,7 @@ function xoops_getBaseDomain($url)
         $regdom = new \Geekwright\RegDom\RegisteredDomain();
         $host = $regdom->getRegisteredDomain($host);
     }
-    return (null === $host) ? '' : $host;
+    return $host ?? '';
 }
 
 /**

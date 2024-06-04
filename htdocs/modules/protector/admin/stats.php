@@ -26,7 +26,7 @@ function dumpArray($array, $wrap = null)
     foreach ($array as $value) {
         $string .= (!$firstTime) ? ', ' : '';
         $firstTime = false;
-        $wrap = ($wrap === null) ? ((is_int($value)) ? '' : '\'') : $wrap;
+        $wrap = $wrap ?? ((is_int($value)) ? '' : '\'');
         $string .= $wrap . $value . $wrap;
     }
     $string .= ']';

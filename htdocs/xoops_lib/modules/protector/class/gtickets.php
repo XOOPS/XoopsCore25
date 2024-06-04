@@ -284,7 +284,7 @@ if (!class_exists('XoopsGTicket')) {
             }
 
             $table = '<table>';
-            $form = '<form action="?' . htmlspecialchars(isset($_SERVER['QUERY_STRING']) ? $_SERVER['QUERY_STRING'] : '', ENT_QUOTES | ENT_HTML5) . '" method="post">';
+            $form = '<form action="?' . htmlspecialchars($_SERVER['QUERY_STRING'] ?? '', ENT_QUOTES | ENT_HTML5) . '" method="post">';
 
             foreach ($_POST as $key => $val) {
                 if ($key === 'XOOPS_G_TICKET') {

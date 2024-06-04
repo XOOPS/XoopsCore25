@@ -201,8 +201,8 @@ switch ($op) {
         $xoBreadCrumb->render();
 
         $dump         = new SystemMaintenance();
-        $dump_modules = isset($_REQUEST['dump_modules']) ? $_REQUEST['dump_modules'] : false;
-        $dump_tables  = isset($_REQUEST['dump_tables']) ? $_REQUEST['dump_tables'] : false;
+        $dump_modules = $_REQUEST['dump_modules'] ?? false;
+        $dump_tables  = $_REQUEST['dump_tables'] ?? false;
         $drop         = Request::getInt('drop', 1);
 
         if (($dump_tables === true && $dump_modules === true) || ($dump_tables === false && $dump_modules === false)) {

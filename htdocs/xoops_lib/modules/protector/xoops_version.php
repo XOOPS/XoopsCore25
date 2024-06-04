@@ -79,7 +79,7 @@ $modversion['config'][]  = [
     'description' => $constpref . '_DEFAULT_LANGDSC',
     'formtype'    => 'text',
     'valuetype'   => 'text',
-    'default'     => isset($GLOBALS['xoopsConfig']['language']) ? $GLOBALS['xoopsConfig']['language'] : 'english',
+    'default'     => $GLOBALS['xoopsConfig']['language'] ?? 'english',
     'options'     => [],
 ];
 $modversion['config'][]  = [

@@ -70,7 +70,7 @@ class Smarty_Resource_Db extends Smarty_Resource_Custom
             return $cache[$tpl_name];
         }
         $tplset = $xoopsConfig['template_set'];
-        $theme = isset($xoopsConfig['theme_set']) ? $xoopsConfig['theme_set'] : 'default';
+        $theme = $xoopsConfig['theme_set'] ?? 'default';
         $tplfile_handler = xoops_getHandler('tplfile'); // $xoops->getHandlerTplFile();
         // If we're not using the "default" template set, then get the templates from the DB
         if ($tplset !== "default") {
@@ -96,7 +96,7 @@ class Smarty_Resource_Db extends Smarty_Resource_Custom
                 $path = 'blocks/';
                 break;
             case 'admin':
-                $theme = isset($xoopsConfig['cpanel']) ? $xoopsConfig['cpanel'] : 'default';
+                $theme = $xoopsConfig['cpanel'] ?? 'default';
                 $directory = XOOPS_ROOT_PATH . '/modules/system/themes'; //\XoopsBaseConfig::get('adminthemes-path');
                 $path = 'admin/';
                 break;
@@ -105,7 +105,7 @@ class Smarty_Resource_Db extends Smarty_Resource_Custom
                 $path = '';
                 if (class_exists('XoopsSystemCpanel', false)) {
                     $directory = XOOPS_ADMINTHEME_PATH;
-                    $theme     = isset($xoopsConfig['cpanel']) ? $xoopsConfig['cpanel'] : 'default';
+                    $theme     = $xoopsConfig['cpanel'] ?? 'default';
                 }
                 break;
         }

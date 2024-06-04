@@ -76,7 +76,7 @@ if (@is_object($xoTheme->plugins['xos_logos_PageBuilder'])) {
 
 // Sets cache time
 if (!empty($xoopsModule)) {
-    $xoTheme->contentCacheLifetime = isset($xoopsConfig['module_cache'][$xoopsModule->getVar('mid', 'n')]) ? $xoopsConfig['module_cache'][$xoopsModule->getVar('mid', 'n')] : 0;
+    $xoTheme->contentCacheLifetime = $xoopsConfig['module_cache'][$xoopsModule->getVar('mid', 'n')] ?? 0;
     // Tricky solution for setting cache time for homepage
 } elseif (!empty($GLOBALS['xoopsOption']['template_main']) && $GLOBALS['xoopsOption']['template_main'] === 'db:system_homepage.tpl') {
     $xoTheme->contentCacheLifetime = 604800;

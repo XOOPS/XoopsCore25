@@ -161,7 +161,7 @@ class XoopsFormRendererLegacy implements XoopsFormRendererInterface
         // fonts
         $ret .= $this->renderFormDhtmlTATypography($element);
         // length checker
-        $maxlength = isset($element->configs['maxlength']) ? $element->configs['maxlength'] : 0;
+        $maxlength = $element->configs['maxlength'] ?? 0;
         $ret .= "<button type='button' class='btn btn-default' onclick=\"XoopsCheckLength('" . $element->getName() . "', '" . $maxlength . "', '" . _XOOPS_FORM_ALT_LENGTH . "', '" . _XOOPS_FORM_ALT_LENGTH_MAX . "');\" title='" . _XOOPS_FORM_ALT_CHECKLENGTH . "'><span class='fa fa-check-square-o' aria-hidden='true'></span></button>&nbsp;";
         $ret .= "<br>\n";
         // the textarea box

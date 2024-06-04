@@ -81,7 +81,7 @@ if (is_array($_POST['perms']) && !empty($_POST['perms'])) {
 
 $backlink = xoops_getenv('HTTP_REFERER');
 if ($module->getVar('hasadmin')) {
-    $adminindex = isset($_POST['redirect_url']) ? $_POST['redirect_url'] : $module->getInfo('adminindex');
+    $adminindex = $_POST['redirect_url'] ?? $module->getInfo('adminindex');
     if ($adminindex) {
         $backlink = XOOPS_URL . '/modules/' . $module->getVar('dirname') . '/' . $adminindex;
     }

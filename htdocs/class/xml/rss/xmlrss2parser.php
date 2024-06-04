@@ -84,11 +84,7 @@ class XoopsXmlRss2Parser extends SaxParser
     public function &getChannelData($name = null)
     {
         if (isset($name)) {
-            if (isset($this->_channelData[$name])) {
-                return $this->_channelData[$name];
-            }
-
-            return false;
+            return $this->_channelData[$name] ?? false;
         }
 
         return $this->_channelData;

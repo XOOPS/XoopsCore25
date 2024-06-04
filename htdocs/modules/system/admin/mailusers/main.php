@@ -204,7 +204,7 @@ switch ($op) {
             }
             if (!empty($criteria) || !empty($_POST['mail_to_group'])) {
                 $criteria_object = new CriteriaCompo();
-                $criteria_object->setStart(isset($_POST['mail_start']) ? $_POST['mail_start'] : 0);
+                $criteria_object->setStart($_POST['mail_start'] ?? 0);
                 $criteria_object->setLimit($limit);
                 foreach ($criteria as $c) {
                     list($field, $op, $value) = explode(' ', $c);

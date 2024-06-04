@@ -619,7 +619,7 @@ class xos_opal_Theme
      */
     public function addLanguage($type = 'main', $language = null)
     {
-        $language = (null === $language) ? $GLOBALS['xoopsConfig']['language'] : $language;
+        $language = $language ?? $GLOBALS['xoopsConfig']['language'];
         if (!file_exists($fileinc = $this->path . "/language/{$language}/{$type}.php")) {
             if (!file_exists($fileinc = $this->path . "/language/english/{$type}.php")) {
                 return false;
@@ -825,7 +825,7 @@ class xos_opal_Theme
                 case 'stylesheet':
                     foreach ($this->metas[$type] as $attrs) {
                         if (isset($attrs['_'])) {
-                            $str .= '<style' . $this->renderAttributes($attrs) . ">\n/* <![CDATA[ */\n" . (isset($attrs['_']) ? $attrs['_'] : '') . "\n/* //]]> */\n</style>";
+                            $str .= '<style' . $this->renderAttributes($attrs) . ">\n/* <![CDATA[ */\n" . ($attrs['_'] ?? '') . "\n/* //]]> */\n</style>";
                         } else {
                             $str .= '<link rel="stylesheet"' . $this->renderAttributes($attrs) . " />\n";
                         }

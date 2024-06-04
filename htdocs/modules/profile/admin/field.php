@@ -25,7 +25,7 @@ $indexAdmin->addItemButton(_ADD . ' ' . _PROFILE_AM_FIELD, 'field.php?op=new', '
 echo $indexAdmin->addNavigation(basename(__FILE__));
 echo $indexAdmin->renderButton('right', '');
 
-$op = isset($_REQUEST['op']) ? $_REQUEST['op'] : (isset($_REQUEST['id']) ? 'edit' : 'list');
+$op = $_REQUEST['op'] ?? (isset($_REQUEST['id']) ? 'edit' : 'list');
 /** @var XoopsModuleHandler $profilefield_handler */
 $profilefield_handler = xoops_getModuleHandler('field');
 
@@ -217,7 +217,7 @@ switch ($op) {
             $obj->setVar('field_options', $options);
         }
         if ($obj->getVar('field_edit')) {
-            $required = isset($_REQUEST['field_required']) ? $_REQUEST['field_required'] : 0;
+            $required = $_REQUEST['field_required'] ?? 0;
             $obj->setVar('field_required', $required); //0 = no, 1 = yes
             if (isset($_REQUEST['field_maxlength'])) {
                 $obj->setVar('field_maxlength', $_REQUEST['field_maxlength']);

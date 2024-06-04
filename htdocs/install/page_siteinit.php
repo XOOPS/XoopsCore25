@@ -107,7 +107,7 @@ if ($isadmin) {
 
         <?php
         echo '<div class="row"><div class="col-md-9">';
-        xoFormField('adminname', isset($vars['adminname']) ? $vars['adminname'] : '', ADMIN_LOGIN_LABEL);
+        xoFormField('adminname', $vars['adminname'] ?? '', ADMIN_LOGIN_LABEL);
 
         if (isset($error['name'])) {
             foreach ($error['name'] as $errmsg) {
@@ -115,7 +115,7 @@ if ($isadmin) {
             }
         }
 
-        xoFormField('adminmail', isset($vars['adminmail']) ? $vars['adminmail'] : '', ADMIN_EMAIL_LABEL);
+        xoFormField('adminmail', $vars['adminmail'] ?? '', ADMIN_EMAIL_LABEL);
         if (isset($error['email'])) {
             foreach ($error['email'] as $errmsg) {
                 echo '<div class="alert alert-danger"><span class="fa fa-ban text-danger"></span> ' . $errmsg . '</div>';

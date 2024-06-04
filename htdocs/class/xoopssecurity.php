@@ -85,7 +85,7 @@ class XoopsSecurity
     public function validateToken($token = false, $clearIfValid = true, $name = 'XOOPS_TOKEN')
     {
         global $xoopsLogger;
-        $token = ($token !== false) ? $token : (isset($_REQUEST[$name . '_REQUEST']) ? $_REQUEST[$name . '_REQUEST'] : '');
+        $token = ($token !== false) ? $token : ($_REQUEST[$name . '_REQUEST'] ?? '');
         if (empty($token) || empty($_SESSION[$name . '_SESSION'])) {
             $xoopsLogger->addExtra('Token Validation', 'No valid token found in request/session');
 

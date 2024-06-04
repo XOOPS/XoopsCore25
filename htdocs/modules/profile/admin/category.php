@@ -26,7 +26,7 @@ $indexAdmin->addItemButton(_ADD . ' ' . _PROFILE_AM_CATEGORY, 'category.php?op=n
 echo $indexAdmin->addNavigation(basename(__FILE__));
 echo $indexAdmin->renderButton('right', '');
 
-$op = isset($_REQUEST['op']) ? $_REQUEST['op'] : (isset($_REQUEST['id']) ? 'edit' : 'list');
+$op = $_REQUEST['op'] ?? (isset($_REQUEST['id']) ? 'edit' : 'list');
 
 /** @var ProfileCategoryHandler $handler */
 $handler = xoops_getModuleHandler('category');

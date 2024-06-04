@@ -210,8 +210,8 @@ class XoopsCaptcha
     {
         $sessionName = empty($name) ? $this->name : $name;
         $skipMember  = ($skipMember === null) && isset($_SESSION["{$sessionName}_skipmember"]) ? $_SESSION["{$sessionName}_skipmember"] : $skipMember;
-        $maxAttempts = isset($_SESSION["{$sessionName}_maxattempts"]) ? $_SESSION["{$sessionName}_maxattempts"] : $this->config['maxattempts'];
-        $attempt     = isset($_SESSION["{$sessionName}_attempt"]) ? $_SESSION["{$sessionName}_attempt"] : 0;
+        $maxAttempts = $_SESSION["{$sessionName}_maxattempts"] ?? $this->config['maxattempts'];
+        $attempt     = $_SESSION["{$sessionName}_attempt"] ?? 0;
         $is_valid    = false;
         // Skip CAPTCHA verification if disabled
         if (!$this->isActive()) {
@@ -300,7 +300,7 @@ class XoopsCaptcha
 
         $maxAttempts                            = $this->config['maxattempts'];
         $_SESSION[$this->name . '_maxattempts'] = $maxAttempts;
-        $attempt                                = isset($_SESSION[$this->name . '_attempt']) ? $_SESSION[$this->name . '_attempt'] : 0;
+        $attempt                                = $_SESSION[$this->name . '_attempt'] ?? 0;
         $_SESSION[$this->name . '_attempt']     = $attempt;
 
         // Failure on too many attempts
@@ -336,7 +336,7 @@ class XoopsCaptcha
      */
     public function setCode($code = null)
     {
-        $code = ($code === null) ? $this->handler->getCode() : $code;
+        $code = $code ?? $this->handler->getCode();
         if (!empty($code)) {
             $_SESSION[$this->name . '_code'] = $code;
 

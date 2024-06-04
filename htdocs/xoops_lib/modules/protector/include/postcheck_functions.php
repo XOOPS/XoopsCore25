@@ -148,14 +148,14 @@ function protector_postcommon()
     }
 
     // check session hi-jacking
-    $masks = isset($conf['session_fixed_topbit']) ? $conf['session_fixed_topbit'] : null;
+    $masks = $conf['session_fixed_topbit'] ?? null;
     if (is_string($masks)) {
         $maskArray = explode('/', $masks);
     } else {
         $maskArray = []; // Or some default value that makes sense for your application
     }
     $ipv4Mask = empty($maskArray[0]) ? 24 : $maskArray[0];
-    $ipv6Mask = (!isset($maskArray[1])) ? 56 : $maskArray[1];
+    $ipv6Mask = $maskArray[1] ?? 56;
     $ip = \Xmf\IPAddress::fromRequest();
     $maskCheck = true;
     if (isset($_SESSION['protector_last_ip'])) {
