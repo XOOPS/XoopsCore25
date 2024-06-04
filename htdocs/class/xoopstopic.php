@@ -250,7 +250,7 @@ class XoopsTopic
                 break;
             case 'P':
             case 'F':
-                $title = $myts->htmlSpecialChars($myts->stripSlashesGPC($this->topic_title));
+                $title = $myts->htmlSpecialChars($this->topic_title);
                 break;
         }
 
@@ -272,7 +272,7 @@ class XoopsTopic
                 break;
             case 'P':
             case 'F':
-                $imgurl = $myts->htmlSpecialChars($myts->stripSlashesGPC($this->topic_imgurl));
+                $imgurl = $myts->htmlSpecialChars($this->topic_imgurl);
                 break;
         }
 

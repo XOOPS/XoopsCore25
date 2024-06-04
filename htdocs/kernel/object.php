@@ -454,7 +454,7 @@ class XoopsObject
                     case 'preview':
                     case 'f':
                     case 'formpreview':
-                        return $myts->htmlSpecialChars($myts->stripSlashesGPC($ret));
+                        return $myts->htmlSpecialChars($ret);
                         break 1;
                     case 'n':
                     case 'none':
@@ -491,7 +491,7 @@ class XoopsObject
                         break 1;
                     case 'f':
                     case 'formpreview':
-                        return htmlspecialchars($myts->stripSlashesGPC($ret), ENT_QUOTES | ENT_HTML5);
+                        return htmlspecialchars($ret, ENT_QUOTES | ENT_HTML5);
                         break 1;
                     case 'n':
                     case 'none':
@@ -547,11 +547,11 @@ class XoopsObject
                         break 1;
                     case 'p':
                     case 'preview':
-                        return $myts->stripSlashesGPC($ret);
+                        return $ret;
                         break 1;
                     case 'f':
                     case 'formpreview':
-                        return htmlspecialchars($myts->stripSlashesGPC($ret), ENT_QUOTES | ENT_HTML5);
+                        return htmlspecialchars($ret, ENT_QUOTES | ENT_HTML5);
                         break 1;
                     case 'n':
                     case 'none':
@@ -579,18 +579,18 @@ class XoopsObject
                         break 1;
                     case 'p':
                     case 'preview':
-                        if (is_string($ret) && !is_numeric($ret)) {
-                            return $myts->stripSlashesGPC(date(_DBDATESTRING, strtotime($ret)));
-                        } else {
-                            return $myts->stripSlashesGPC(date(_DBDATESTRING, $ret));
-                        }
+                    if (is_string($ret) && !is_numeric($ret)) {
+                        return date(_DBDATESTRING, strtotime($ret));
+                    } else {
+                        return date(_DBDATESTRING, $ret);
+                    }
                         break 1;
                     case 'f':
                     case 'formpreview':
                         if (is_string($ret) && !is_numeric($ret)) {
-                            return htmlspecialchars($myts->stripSlashesGPC(date(_DBDATESTRING, strtotime($ret))), ENT_QUOTES | ENT_HTML5);
+                            return htmlspecialchars(date(_DBDATESTRING, strtotime($ret)), ENT_QUOTES | ENT_HTML5);
                         } else {
-                            return htmlspecialchars($myts->stripSlashesGPC(date(_DBDATESTRING, $ret)), ENT_QUOTES | ENT_HTML5);
+                            return htmlspecialchars(date(_DBDATESTRING, $ret), ENT_QUOTES | ENT_HTML5);
                         }
                         break 1;
                     case 'n':
@@ -620,17 +620,17 @@ class XoopsObject
                     case 'p':
                     case 'preview':
                         if (is_string($ret) && !is_numeric($ret)) {
-                            return $myts->stripSlashesGPC(date(_DBTIMESTRING, strtotime($ret)));
+                            return date(_DBTIMESTRING, strtotime($ret));
                         } else {
-                            return $myts->stripSlashesGPC(date(_DBTIMESTRING, $ret));
+                            return date(_DBTIMESTRING, $ret);
                         }
                         break 1;
                     case 'f':
                     case 'formpreview':
                         if (is_string($ret) && !is_numeric($ret)) {
-                            return htmlspecialchars($myts->stripSlashesGPC(date(_DBTIMESTRING, strtotime($ret))), ENT_QUOTES | ENT_HTML5);
+                            return htmlspecialchars(date(_DBTIMESTRING, strtotime($ret)), ENT_QUOTES | ENT_HTML5);
                         } else {
-                            return htmlspecialchars($myts->stripSlashesGPC(date(_DBTIMESTRING, $ret)), ENT_QUOTES | ENT_HTML5);
+                            return htmlspecialchars(date(_DBTIMESTRING, $ret), ENT_QUOTES | ENT_HTML5);
                         }
                         break 1;
                     case 'n':
@@ -659,18 +659,18 @@ class XoopsObject
                         break 1;
                     case 'p':
                     case 'preview':
-                        if (is_string($ret) && !is_numeric($ret)) {
-                            return $myts->stripSlashesGPC(date(_DBTIMESTAMPSTRING, strtotime($ret)));
-                        } else {
-                            return $myts->stripSlashesGPC(date(_DBTIMESTAMPSTRING, $ret));
-                        }
+                    if (is_string($ret) && !is_numeric($ret)) {
+                        return date(_DBDATESTRING, strtotime($ret));
+                    } else {
+                        return date(_DBDATESTRING, $ret);
+                    }
                         break 1;
                     case 'f':
                     case 'formpreview':
                         if (is_string($ret) && !is_numeric($ret)) {
-                            return htmlspecialchars($myts->stripSlashesGPC(date(_DBTIMESTAMPSTRING, strtotime($ret))), ENT_QUOTES | ENT_HTML5);
+                            return htmlspecialchars(date(_DBTIMESTAMPSTRING, strtotime($ret)), ENT_QUOTES | ENT_HTML5);
                         } else {
-                            return htmlspecialchars($myts->stripSlashesGPC(date(_DBTIMESTAMPSTRING, $ret)), ENT_QUOTES | ENT_HTML5);
+                            return htmlspecialchars(date(_DBTIMESTAMPSTRING, $ret), ENT_QUOTES | ENT_HTML5);
                         }
                         break 1;
                     case 'n':
@@ -748,27 +748,17 @@ class XoopsObject
                             $this->setErrors(sprintf(_XOBJ_ERR_SHORTERTHAN, $k, (int)$v['maxlength']));
                             continue 2;
                         }
-                        if (!$v['not_gpc']) {
-                            $cleanv = $myts->stripSlashesGPC($myts->censorString($cleanv));
-                        } else {
                             $cleanv = $myts->censorString($cleanv);
-                        }
                         break;
                     case XOBJ_DTYPE_TXTAREA:
                         if ($v['required'] && $cleanv != '0' && $cleanv == '') {
                             $this->setErrors(sprintf(_XOBJ_ERR_REQUIRED, $k));
                             continue 2;
                         }
-                        if (!$v['not_gpc']) {
-                            $cleanv = $myts->stripSlashesGPC($myts->censorString($cleanv));
-                        } else {
-                            $cleanv = $myts->censorString($cleanv);
-                        }
+                        $cleanv = $myts->censorString($cleanv);
                         break;
                     case XOBJ_DTYPE_SOURCE:
-                        if (!$v['not_gpc']) {
-                            $cleanv = $myts->stripSlashesGPC($cleanv);
-                        }
+                        // Perform any necessary operations for XOBJ_DTYPE_SOURCE, if needed
                         break;
                     case XOBJ_DTYPE_INT:
                         $cleanv = (int)$cleanv;
@@ -783,10 +773,7 @@ class XoopsObject
                             $this->setErrors('Invalid Email'); //_XOBJ_ERR_INVALID_EMAIL
                             continue 2;
                         }
-                        if (!$v['not_gpc']) {
-                            $cleanv = $myts->stripSlashesGPC($cleanv);
-                        }
-                        break;
+                         break;
                     case XOBJ_DTYPE_URL:
                         if ($v['required'] && $cleanv == '') {
                             $this->setErrors(sprintf(_XOBJ_ERR_REQUIRED, $k));
@@ -794,9 +781,6 @@ class XoopsObject
                         }
                         if ($cleanv != '' && !preg_match("/^http[s]*:\/\//i", $cleanv)) {
                             $cleanv = XOOPS_PROT . $cleanv;
-                        }
-                        if (!$v['not_gpc']) {
-                            $cleanv = $myts->stripSlashesGPC($cleanv);
                         }
                         break;
                     case XOBJ_DTYPE_ARRAY:
@@ -830,11 +814,7 @@ class XoopsObject
                             $this->setErrors(sprintf(_XOBJ_ERR_SHORTERTHAN, $k, (int)$v['maxlength']));
                             continue 2;
                         }
-                        if (!$v['not_gpc']) {
-                            $cleanv = $myts->stripSlashesGPC($myts->censorString($cleanv));
-                        } else {
-                            $cleanv = $myts->censorString($cleanv);
-                        }
+                        $cleanv = $myts->censorString($cleanv);
                         break;
                     case XOBJ_DTYPE_UNICODE_TXTAREA:
                         if ($v['required'] && $cleanv != '0' && $cleanv == '') {
@@ -842,11 +822,7 @@ class XoopsObject
                             continue 2;
                         }
                         $cleanv = xoops_convert_encode($cleanv);
-                        if (!$v['not_gpc']) {
-                            $cleanv = $myts->stripSlashesGPC($myts->censorString($cleanv));
-                        } else {
-                            $cleanv = $myts->censorString($cleanv);
-                        }
+                        $cleanv = $myts->censorString($cleanv);
                         break;
                     case XOBJ_DTYPE_UNICODE_EMAIL:
                         if ($v['required'] && $cleanv == '') {
@@ -858,9 +834,6 @@ class XoopsObject
                             continue 2;
                         }
                         $cleanv = xoops_convert_encode($cleanv);
-                        if (!$v['not_gpc']) {
-                            $cleanv = $myts->stripSlashesGPC($cleanv);
-                        }
                         break;
                     case XOBJ_DTYPE_UNICODE_URL:
                         if ($v['required'] && $cleanv == '') {
@@ -871,9 +844,6 @@ class XoopsObject
                             $cleanv = XOOPS_PROT . $cleanv;
                         }
                         $cleanv = xoops_convert_encode($cleanv);
-                        if (!$v['not_gpc']) {
-                            $cleanv = $myts->stripSlashesGPC($cleanv);
-                        }
                         break;
                     case XOBJ_DTYPE_UNICODE_ARRAY:
                         $cleanv = serialize(array_walk($cleanv, 'xoops_aw_encode'));

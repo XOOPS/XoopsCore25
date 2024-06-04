@@ -726,11 +726,10 @@ if (!Request::hasVar('user_submit', 'POST')) {
                 $hiddenform .= $GLOBALS['xoopsSecurity']->getTokenHTML() . "\n";
             } elseif (is_array($v)) {
                 foreach ($v as $temp) {
-                    $hiddenform .= "<input type='hidden' name='". htmlspecialchars($k, ENT_QUOTES | ENT_HTML5)."' value='" . htmlspecialchars($temp, ENT_QUOTES | ENT_HTML5) . "' />\n";
+                    $hiddenform .= "<input type='hidden' name='" . htmlspecialchars($k, ENT_QUOTES | ENT_HTML5) . "' value='" . htmlspecialchars($temp, ENT_QUOTES | ENT_HTML5) . "' />\n";
                 }
             } else {
-
-                $hiddenform .= "<input type='hidden' name='" . htmlspecialchars($k, ENT_QUOTES | ENT_HTML5) . "' value='" . htmlspecialchars($myts->stripSlashesGPC($v), ENT_QUOTES | ENT_HTML5) . "' />\n";
+                $hiddenform .= "<input type='hidden' name='" . htmlspecialchars($k, ENT_QUOTES | ENT_HTML5) . "' value='" . htmlspecialchars($v, ENT_QUOTES | ENT_HTML5) . "' />\n";
             }
         }
         if (!Request::hasVar('limit', 'POST')) {

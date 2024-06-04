@@ -1,6 +1,8 @@
 <?php
 // This script displays a login screen in a popupbox when SSL is enabled in the preferences. You should use this script only when your server supports SSL. Place this file under your SSL directory
 
+use Xmf\Request;
+
 // path to your xoops main directory
 $path = '/path/to/xoops/directory';
 
@@ -9,10 +11,10 @@ if (!defined('XOOPS_ROOT_PATH')) {
     exit();
 }
 include_once XOOPS_ROOT_PATH . '/language/' . $xoopsConfig['language'] . '/user.php';
-$op = (isset($_POST['op']) && $_POST['op'] === 'dologin') ? 'dologin' : 'login';
+$op = Request::getString('op', 'login', 'POST') === 'dologin' ? 'dologin' : 'login';
 
-$username = isset($_POST['username']) ? trim($_POST['username']) : '';
-$password = isset($_POST['userpass']) ? trim($_POST['userpass']) : '';
+$username = trim(Request::getString('username', '', 'POST'));
+$password = trim(Request::getString('userpass', '', 'POST'));
 if ($username == '' || $password == '') {
     $op = 'login';
 }
@@ -41,7 +43,7 @@ if ($op === 'dologin') {
     /** @var \XoopsMemberHandler $member_handler */
     $member_handler = xoops_getHandler('member');
     $myts           = \MyTextSanitizer::getInstance();
-    $user           = $member_handler->loginUser(addslashes($myts->stripSlashesGPC($username)), addslashes($myts->stripSlashesGPC($password)));
+    $user           = $member_handler->loginUser(addslashes($username), addslashes($password));
     if (is_object($user)) {
         if (0 == $user->getVar('level')) {
             redirect_header(XOOPS_URL . '/index.php', 5, _US_NOACTTPADM);
@@ -62,6 +64,7 @@ if ($op === 'dologin') {
         }
         $user->setVar('last_login', time());
         if (!$member_handler->insertUser($user)) {
+            // Handle error
         }
         $_SESSION                    = [];
         $_SESSION['xoopsUserId']     = $user->getVar('uid');

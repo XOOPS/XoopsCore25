@@ -476,12 +476,7 @@ class MyTextSanitizer
      */
     public function addSlashes($text)
     {
-        if (PHP_VERSION_ID < 50400) {
-            if (!get_magic_quotes_gpc()) {
-                $text = addslashes($text);
-            }
-        }
-
+        $GLOBALS['xoopsLogger']->addDeprecated(__METHOD__ . ' is deprecated');
         return $text;
     }
 
@@ -589,7 +584,6 @@ class MyTextSanitizer
      */
     public function &previewTarea($text, $html = 0, $smiley = 1, $xcode = 1, $image = 1, $br = 1)
     {
-        $text = $this->stripSlashesGPC($text);
         $text =& $this->displayTarea($text, $html, $smiley, $xcode, $image, $br);
 
         return $text;
@@ -752,11 +746,7 @@ class MyTextSanitizer
      */
     public function stripSlashesGPC($text)
     {
-        if (PHP_VERSION_ID < 50400) {
-            if (get_magic_quotes_gpc()) {
-                $text = stripslashes($text);
-            }
-        }
+        $GLOBALS['xoopsLogger']->addDeprecated(__METHOD__ . ' is deprecated');
 
         return $text;
     }
@@ -823,7 +813,6 @@ class MyTextSanitizer
     public function sanitizeForPreview($text, $allowhtml = 0, $smiley = 1, $bbcode = 1)
     {
         $GLOBALS['xoopsLogger']->addDeprecated(__METHOD__ . ' is deprecated');
-        $text = $this->oopsStripSlashesGPC($text);
         if ($allowhtml == 0) {
             $text = $this->htmlSpecialChars($text);
         } else {
@@ -899,7 +888,6 @@ class MyTextSanitizer
     public function makeTboxData4Preview($text, $smiley = 0)
     {
         $GLOBALS['xoopsLogger']->addDeprecated(__METHOD__ . ' is deprecated');
-        $text = $this->stripSlashesGPC($text);
         $text = $this->htmlSpecialChars($text);
 
         return $text;
@@ -915,7 +903,6 @@ class MyTextSanitizer
     public function makeTboxData4PreviewInForm($text)
     {
         $GLOBALS['xoopsLogger']->addDeprecated(__METHOD__ . ' is deprecated');
-        $text = $this->stripSlashesGPC($text);
 
         return $this->htmlSpecialChars($text);
     }
@@ -994,8 +981,6 @@ class MyTextSanitizer
     public function makeTareaData4PreviewInForm($text)
     {
         $GLOBALS['xoopsLogger']->addDeprecated(__METHOD__ . ' is deprecated');
-        // if magic_quotes_gpc is on, do stipslashes
-        $text = $this->stripSlashesGPC($text);
 
         return $this->htmlSpecialChars($text);
     }
@@ -1025,7 +1010,7 @@ class MyTextSanitizer
     {
         $GLOBALS['xoopsLogger']->addDeprecated(__METHOD__ . ' is deprecated');
 
-        return $this->stripSlashesGPC($text);
+        return $text;
     }
 
     /**
@@ -1038,11 +1023,6 @@ class MyTextSanitizer
     public function oopsStripSlashesRT($text)
     {
         $GLOBALS['xoopsLogger']->addDeprecated(__METHOD__ . ' is deprecated');
-        if (PHP_VERSION_ID < 50400) {
-            if (get_magic_quotes_runtime()) {
-                $text = stripslashes($text);
-            }
-        }
 
         return $text;
     }

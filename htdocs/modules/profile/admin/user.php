@@ -16,6 +16,9 @@
  * @author              Jan Pedersen
  * @author              Taiwen Jiang <phppp@users.sourceforge.net>
  */
+ 
+ use Xmf\Request;
+ 
 include_once __DIR__ . '/admin_header.php';
 xoops_cp_header();
 $indexAdmin = new ModuleAdmin();
@@ -118,8 +121,8 @@ switch ($op) {
         }
         $password = $vpass = null;
         if (!empty($_POST['password'])) {
-            $password = $myts->stripSlashesGPC(trim($_POST['password']));
-            $vpass = isset($_POST['vpass']) ? $myts->stripSlashesGPC(trim($_POST['vpass'])) : '';
+            $password = trim(Request::getString('password', '', 'POST'));
+            $vpass    = trim(Request::getString('vpass', '', 'POST'));
             $user->setVar('pass', password_hash($password, PASSWORD_DEFAULT));
         } elseif ($user->isNew()) {
             $password = $vpass = '';

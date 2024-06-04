@@ -177,11 +177,11 @@ if (isset($_POST['step']) && isset($_SESSION['profile_required'])) {
 
 // Check user data at first step
 if ($current_step == 1) {
-    $uname      = Request::getString('uname', '', 'POST'); //isset($_POST['uname']) ? $myts->stripSlashesGPC(trim($_POST['uname'])) : '';
-    $email      = Request::getEmail('email', '', 'POST'); //isset($_POST['email']) ? $myts->stripSlashesGPC(trim($_POST['email'])) : '';
-    $url        = Request::getUrl('url', '', 'POST'); //isset($_POST['url']) ? $myts->stripSlashesGPC(trim($_POST['url'])) : '';
-    $pass       = Request::getString('pass', '', 'POST'); //isset($_POST['pass']) ? $myts->stripSlashesGPC(trim($_POST['pass'])) : '';
-    $vpass      = Request::getString('vpass', '', 'POST'); //isset($_POST['vpass']) ? $myts->stripSlashesGPC(trim($_POST['vpass'])) : '';
+    $uname      = Request::getString('uname', '', 'POST');
+    $email      = Request::getEmail('email', '', 'POST');
+    $url        = Request::getUrl('url', '', 'POST');
+    $pass       = Request::getString('pass', '', 'POST');
+    $vpass      = Request::getString('vpass', '', 'POST');
     $agree_disc = (isset($_POST['agree_disc']) && (int)$_POST['agree_disc']) ? 1 : 0;
 
 
@@ -218,10 +218,10 @@ if ($current_step > 0 && empty($stop) && (!empty($steps[$current_step - 1]['step
 
         //Did you create a user already? If not, then let us set some extra info
         if ($isNew) {
-            $uname = Request::getString('uname', '', 'POST'); //isset($_POST['uname']) ? $myts->stripSlashesGPC(trim($_POST['uname'])) : '';
-            $email = Request::getEmail('email', '', 'POST'); //isset($_POST['email']) ? $myts->stripSlashesGPC(trim($_POST['email'])) : '';
-            $url   = Request::getUrl('url', '', 'POST'); //isset($_POST['url']) ? $myts->stripSlashesGPC(trim($_POST['url'])) : '';
-            $pass  = Request::getString('pass', '', 'POST'); //isset($_POST['pass']) ? $myts->stripSlashesGPC(trim($_POST['pass'])) : '';
+            $uname = Request::getString('uname', '', 'POST');
+            $email = Request::getEmail('email', '', 'POST');
+            $url   = Request::getUrl('url', '', 'POST');
+            $pass  = Request::getString('pass', '', 'POST');
             $newuser->setVar('uname', $uname);
             $newuser->setVar('email', $email);
             $newuser->setVar('pass', $pass ? password_hash($pass, PASSWORD_DEFAULT) : '');

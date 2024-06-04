@@ -69,9 +69,6 @@ define('ONLY_LOCAL_IMAGES', true);
 define('ENABLE_IMAGEFILTER', true); // Set to false to avoid excessive server load
 define('ENABLE_ROUNDCORNER', true); // Set to false to avoid excessive server load
 define('ENABLE_IMAGEROTATE', true); // Set to false to avoid excessive server load
-if (PHP_VERSION_ID < 50400) {
-    set_magic_quotes_runtime(false); // will never get called on PHP 5.4+
-}
 if (function_exists('mb_http_output')) {
     mb_http_output('pass');
 }

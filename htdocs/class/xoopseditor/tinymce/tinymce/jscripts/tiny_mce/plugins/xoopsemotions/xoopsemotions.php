@@ -66,8 +66,8 @@ if ($admin && $op === 'SmilesAdd') {
             $err = $uploader->getErrors();
         } else {
             $smile_url     = $uploader->getSavedFileName();
-            $smile_code    = $myts->stripSlashesGPC($_POST['smile_code']);
-            $smile_desc    = $myts->stripSlashesGPC($_POST['smile_desc']);
+            $smile_code = Request::getString('smile_code', '', 'POST');
+            $smile_desc = Request::getString('smile_desc', '', 'POST');
             $smile_display = (int)$_POST['smile_display'] > 0 ? 1 : 0;
             $newid         = $db->genId($db->prefix('smilies') . '_id_seq');
             $sql           = sprintf('INSERT INTO %s (id, code, smile_url, emotion, display) VALUES (%d, %s, %s, %s, %d)', $db->prefix('smiles'), $newid, $db->quoteString($smile_code), $db->quoteString($smile_url), $db->quoteString($smile_desc), $smile_display);

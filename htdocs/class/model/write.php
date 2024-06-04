@@ -75,11 +75,9 @@ class XoopsModelWrite extends XoopsModelAbstract
                         $errors[] = sprintf(_XOBJ_ERR_SHORTERTHAN, $k, (int)$v['maxlength']);
                         continue 2;
                     }
-                    if (!$v['not_gpc']) {
-                        $cleanv = $myts->stripSlashesGPC($myts->censorString($cleanv));
-                    } else {
-                        $cleanv = $myts->censorString($cleanv);
-                    }
+
+                    $cleanv = $myts->censorString($cleanv);
+
                     $cleanv = str_replace('\\"', '"', $this->handler->db->quote($cleanv));
                     break;
 
@@ -89,14 +87,8 @@ class XoopsModelWrite extends XoopsModelAbstract
                         continue 2;
                     }
                     $cleanv = xoops_convert_encode($cleanv);
-                    if (!$v['not_gpc']) {
-                        if (!empty($vars['dohtml']['value'])) {
-                            $cleanv = $myts->textFilter($cleanv);
-                        }
-                        $cleanv = $myts->stripSlashesGPC($myts->censorString($cleanv));
-                    } else {
-                        $cleanv = $myts->censorString($cleanv);
-                    }
+                    $cleanv = $myts->censorString($cleanv);
+
                     $cleanv = str_replace('\\"', '"', $this->handler->db->quote($cleanv));
                     break;
 
@@ -109,11 +101,8 @@ class XoopsModelWrite extends XoopsModelAbstract
                         $errors[] = sprintf(_XOBJ_ERR_SHORTERTHAN, $k, (int)$v['maxlength']);
                         continue 2;
                     }
-                    if (!$v['not_gpc']) {
-                        $cleanv = $myts->stripSlashesGPC($myts->censorString($cleanv));
-                    } else {
-                        $cleanv = $myts->censorString($cleanv);
-                    }
+
+                    $cleanv = $myts->censorString($cleanv);
                     $cleanv = str_replace('\\"', '"', $this->handler->db->quote($cleanv));
                     break;
 
@@ -122,24 +111,13 @@ class XoopsModelWrite extends XoopsModelAbstract
                         $errors[] = sprintf(_XOBJ_ERR_REQUIRED, $k);
                         continue 2;
                     }
-                    if (!$v['not_gpc']) {
-                        if (!empty($vars['dohtml']['value'])) {
-                            $cleanv = $myts->textFilter($cleanv);
-                        }
-                        $cleanv = $myts->stripSlashesGPC($myts->censorString($cleanv));
-                    } else {
-                        $cleanv = $myts->censorString($cleanv);
-                    }
+
+                    $cleanv = $myts->censorString($cleanv);
                     $cleanv = str_replace('\\"', '"', $this->handler->db->quote($cleanv));
                     break;
 
                 case XOBJ_DTYPE_SOURCE:
                     $cleanv = trim($cleanv);
-                    if (!$v['not_gpc']) {
-                        $cleanv = $myts->stripSlashesGPC($cleanv);
-                    } else {
-                        $cleanv = $cleanv;
-                    }
                     $cleanv = str_replace('\\"', '"', $this->handler->db->quote($cleanv));
                     break;
                 // Should not be used!
@@ -148,9 +126,6 @@ class XoopsModelWrite extends XoopsModelAbstract
                     if ($v['required'] && $cleanv == '') {
                         $errors[] = sprintf(_XOBJ_ERR_REQUIRED, $k);
                         continue 2;
-                    }
-                    if (!$v['not_gpc']) {
-                        $cleanv = $myts->stripSlashesGPC($cleanv);
                     }
                     $cleanv = str_replace('\\"', '"', $this->handler->db->quote(xoops_convert_encode($cleanv)));
                     break;
@@ -165,9 +140,6 @@ class XoopsModelWrite extends XoopsModelAbstract
                         $errors[] = 'Invalid Email';
                         continue 2;
                     }
-                    if (!$v['not_gpc']) {
-                        $cleanv = $myts->stripSlashesGPC($cleanv);
-                    }
                     $cleanv = str_replace('\\"', '"', $this->handler->db->quote($cleanv));
                     break;
 
@@ -181,9 +153,6 @@ class XoopsModelWrite extends XoopsModelAbstract
                     if ($cleanv != '' && !preg_match("/^http[s]*:\/\//i", $cleanv)) {
                         $cleanv = XOOPS_PROT . $cleanv;
                     }
-                    if (!$v['not_gpc']) {
-                        $cleanv = $myts->stripSlashesGPC($cleanv);
-                    }
                     $cleanv = str_replace('\\"', '"', $this->handler->db->quote(xoops_convert_encode($cleanv)));
                     break;
                 case XOBJ_DTYPE_URL:
@@ -194,9 +163,6 @@ class XoopsModelWrite extends XoopsModelAbstract
                     }
                     if ($cleanv != '' && !preg_match("/^http[s]*:\/\//i", $cleanv)) {
                         $cleanv = XOOPS_PROT . $cleanv;
-                    }
-                    if (!$v['not_gpc']) {
-                        $cleanv = $myts->stripSlashesGPC($cleanv);
                     }
                     $cleanv = str_replace('\\"', '"', $this->handler->db->quote($cleanv));
                     break;

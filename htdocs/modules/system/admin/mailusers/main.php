@@ -17,6 +17,7 @@
  * @author       XOOPS Development Team, Kazumi Ono (AKA onokazu)
  */
 use Xmf\Request;
+
 // Check users rights
 if (!is_object($xoopsUser) || !is_object($xoopsModule) || !$xoopsUser->isAdmin($xoopsModule->mid())) {
     exit(_NOPERM);
@@ -240,10 +241,10 @@ switch ($op) {
                 for ($i = 0; $i < $added_count; ++$i) {
                     $xoopsMailer->setToUsers($added[$i]);
                 }
-                $xoopsMailer->setFromName($myts->stripSlashesGPC($_POST['mail_fromname']));
-                $xoopsMailer->setFromEmail($myts->stripSlashesGPC($_POST['mail_fromemail']));
-                $xoopsMailer->setSubject($myts->stripSlashesGPC($_POST['mail_subject']));
-                $xoopsMailer->setBody($myts->stripSlashesGPC($_POST['mail_body']));
+                $xoopsMailer->setFromName(Request::getString('mail_fromname', '', 'POST'));
+                $xoopsMailer->setFromEmail(Request::getString('mail_fromemail', '', 'POST'));
+                $xoopsMailer->setSubject(Request::getString('mail_subject', '', 'POST'));
+                $xoopsMailer->setBody(Request::getString('mail_body', '', 'POST'));
                 if (in_array('mail', $_POST['mail_send_to'])) {
                     $xoopsMailer->useMail();
                 }
@@ -264,22 +265,24 @@ switch ($op) {
                             $form->addElement($group_hidden);
                         }
                     }
-                    $inactive_hidden    = new XoopsFormHidden('mail_inactive', isset($_POST['mail_inactive']) ? $_POST['mail_inactive'] : '');
-                    $lastlog_min_hidden = new XoopsFormHidden('mail_lastlog_min', $myts->htmlSpecialChars($myts->stripSlashesGPC($_POST['mail_lastlog_min'])));
-                    $lastlog_max_hidden = new XoopsFormHidden('mail_lastlog_max', $myts->htmlSpecialChars($myts->stripSlashesGPC($_POST['mail_lastlog_max'])));
-                    $regd_min_hidden    = new XoopsFormHidden('mail_regd_min', $myts->htmlSpecialChars($myts->stripSlashesGPC($_POST['mail_regd_min'])));
-                    $regd_max_hidden    = new XoopsFormHidden('mail_regd_max', $myts->htmlSpecialChars($myts->stripSlashesGPC($_POST['mail_regd_max'])));
-                    $idle_more_hidden   = new XoopsFormHidden('mail_idle_more', $myts->htmlSpecialChars($myts->stripSlashesGPC($_POST['mail_idle_more'])));
-                    $idle_less_hidden   = new XoopsFormHidden('mail_idle_less', $myts->htmlSpecialChars($myts->stripSlashesGPC($_POST['mail_idle_less'])));
-                    $fname_hidden       = new XoopsFormHidden('mail_fromname', $myts->htmlSpecialChars($myts->stripSlashesGPC($_POST['mail_fromname'])));
-                    $femail_hidden      = new XoopsFormHidden('mail_fromemail', $myts->htmlSpecialChars($myts->stripSlashesGPC($_POST['mail_fromemail'])));
-                    $subject_hidden     = new XoopsFormHidden('mail_subject', $myts->htmlSpecialChars($myts->stripSlashesGPC($_POST['mail_subject'])));
-                    $body_hidden        = new XoopsFormHidden('mail_body', $myts->htmlSpecialChars($myts->stripSlashesGPC($_POST['mail_body'])));
-                    $start_hidden       = new XoopsFormHidden('mail_start', $_POST['mail_start'] + $limit);
-                    $mail_mailok_hidden = new XoopsFormHidden('mail_mailok', isset($_POST['mail_mailok']) ? $myts->stripSlashesGPC(trim($_POST['mail_mailok'])) : '');
+
+                    $inactive_hidden    = new XoopsFormHidden('mail_inactive', Request::getString('mail_inactive', '', 'POST'));
+                    $lastlog_min_hidden = new XoopsFormHidden('mail_lastlog_min', htmlspecialchars(Request::getString('mail_lastlog_min', '', 'POST'), ENT_QUOTES | ENT_HTML5));
+                    $lastlog_max_hidden = new XoopsFormHidden('mail_lastlog_max', htmlspecialchars(Request::getString('mail_lastlog_max', '', 'POST'), ENT_QUOTES | ENT_HTML5));
+                    $regd_min_hidden    = new XoopsFormHidden('mail_regd_min', htmlspecialchars(Request::getString('mail_regd_min', '', 'POST'), ENT_QUOTES | ENT_HTML5));
+                    $regd_max_hidden    = new XoopsFormHidden('mail_regd_max', htmlspecialchars(Request::getString('mail_regd_max', '', 'POST'), ENT_QUOTES | ENT_HTML5));
+                    $idle_more_hidden   = new XoopsFormHidden('mail_idle_more', htmlspecialchars(Request::getString('mail_idle_more', '', 'POST'), ENT_QUOTES | ENT_HTML5));
+                    $idle_less_hidden   = new XoopsFormHidden('mail_idle_less', htmlspecialchars(Request::getString('mail_idle_less', '', 'POST'), ENT_QUOTES | ENT_HTML5));
+                    $fname_hidden       = new XoopsFormHidden('mail_fromname', htmlspecialchars(Request::getString('mail_fromname', '', 'POST'), ENT_QUOTES | ENT_HTML5));
+                    $femail_hidden      = new XoopsFormHidden('mail_fromemail', htmlspecialchars(Request::getString('mail_fromemail', '', 'POST'), ENT_QUOTES | ENT_HTML5));
+                    $subject_hidden     = new XoopsFormHidden('mail_subject', htmlspecialchars(Request::getString('mail_subject', '', 'POST'), ENT_QUOTES | ENT_HTML5));
+                    $body_hidden        = new XoopsFormHidden('mail_body', htmlspecialchars(Request::getString('mail_body', '', 'POST'), ENT_QUOTES | ENT_HTML5));
+                    $start_hidden       = new XoopsFormHidden('mail_start', Request::getInt('mail_start', 0, 'POST') + $limit);
+                    $mail_mailok_hidden = new XoopsFormHidden('mail_mailok', htmlspecialchars(Request::getString('mail_mailok', '', 'POST'), ENT_QUOTES | ENT_HTML5));
                     $op_hidden          = new XoopsFormHidden('op', 'send');
                     $submit_button      = new XoopsFormButton('', 'mail_submit', _AM_SYSTEM_MAILUSERS_SENDNEXT, 'submit');
-                    $sent_label         = new XoopsFormLabel(_AM_SYSTEM_MAILUSERS_SENT, sprintf(_AM_SYSTEM_MAILUSERS_SENTNUM, $_POST['mail_start'] + 1, $_POST['mail_start'] + $limit, $count_criteria + $added_count - $limit));
+                    $sent_label         = new XoopsFormLabel(_AM_SYSTEM_MAILUSERS_SENT, sprintf(_AM_SYSTEM_MAILUSERS_SENTNUM, Request::getInt('mail_start', 0, 'POST') + 1, Request::getInt('mail_start', 0, 'POST') + $limit, $count_criteria + $added_count - $limit));
+
                     $form->addElement($sent_label);
                     $form->addElement($inactive_hidden);
                     $form->addElement($lastlog_min_hidden);
