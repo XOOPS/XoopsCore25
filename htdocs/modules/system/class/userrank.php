@@ -76,9 +76,9 @@ class SystemUserrank extends XoopsObject
         $imgpath_img     = sprintf(_AM_SYSTEM_USERRANK_IMAGE_PATH, XOOPS_UPLOAD_PATH . '/ranks/');
         $imageselect_img = new XoopsFormSelect($imgpath_img, 'rank_image', $blank_img);
         $image_array_img = XoopsLists::getImgListAsArray(XOOPS_UPLOAD_PATH . '/ranks');
-        $imageselect_img->addOption("$blank_img", $blank_img);
+        $imageselect_img->addOption((string)$blank_img, $blank_img);
         foreach ($image_array_img as $image_img) {
-            $imageselect_img->addOption("$image_img", $image_img);
+            $imageselect_img->addOption((string)$image_img, $image_img);
         }
         $imageselect_img->setExtra("onchange='showImgSelected(\"xo-ranks-img\", \"rank_image\", \"ranks\", \"\", \"" . XOOPS_UPLOAD_URL . "\")'");
         $imgtray_img->addElement($imageselect_img, false);

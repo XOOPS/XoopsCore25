@@ -365,8 +365,8 @@ class XoopsTpl extends Smarty
         $smarty_args = true,
         $block_methods = []
     ) {
-        settype($allowed, 'array');
-        settype($smarty_args, 'boolean');
+        $allowed     = (array)$allowed;
+        $smarty_args = (bool)$smarty_args;
         $GLOBALS['xoopsLogger']->addDeprecated(__METHOD__ . " is deprecated, please use registerObject");
         $this->registerObject($object, $object_impl, $allowed, $smarty_args, $block_methods);
     }

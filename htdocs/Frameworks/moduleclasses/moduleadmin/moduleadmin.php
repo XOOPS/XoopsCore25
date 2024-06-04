@@ -518,7 +518,7 @@ class ModuleAdmin
                       . "</div>\n";
         $authorArray  = [];
         foreach ( $author as $k => $aName ) {
-            $authorArray[$k] = ( isset( $nickname[$k] ) && ( '' != $nickname[$k] ) ) ? "{$aName} ({$nickname[$k]})" : "{$aName}";
+            $authorArray[$k] = ( isset( $nickname[$k] ) && ( '' != $nickname[$k] ) ) ? "{$aName} ({$nickname[$k]})" : (string)($aName);
         }
         $license_url = $this->_obj->getInfo('license_url');
         $license_url = preg_match('%^(https?:)?//%', $license_url) ? $license_url : 'http://' . $license_url;
