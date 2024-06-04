@@ -116,7 +116,7 @@ class ProtectorMySQLDatabase extends XoopsMySQLDatabaseProxy
      */
     public function checkSql($sql)
     {
-        list($sql_wo_strings, $strings) = $this->separateStringsInSQL($sql);
+        [$sql_wo_strings, $strings] = $this->separateStringsInSQL($sql);
 
         // stage1: addslashes() processed or not
         foreach ($this->doubtful_requests as $request) {

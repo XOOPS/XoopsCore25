@@ -222,7 +222,7 @@ class XoopsFolderHandler
         if (!is_array($data)) {
             return [];
         }
-        list($dirs, $files) = $data;
+        [$dirs, $files] = $data;
         $found = [];
         foreach ($files as $file) {
             if (preg_match("/^{$regexp_pattern}$/i", $file)) {
@@ -262,7 +262,7 @@ class XoopsFolderHandler
      */
     public function _findRecursive($pattern, $sort = false)
     {
-        list($dirs, $files) = $this->read($sort);
+        [$dirs, $files] = $this->read($sort);
         $found = [];
         foreach ($files as $file) {
             if (preg_match("/^{$pattern}$/i", $file)) {

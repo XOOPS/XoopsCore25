@@ -207,7 +207,7 @@ switch ($op) {
                 $criteria_object->setStart($_POST['mail_start'] ?? 0);
                 $criteria_object->setLimit($limit);
                 foreach ($criteria as $c) {
-                    list($field, $op, $value) = explode(' ', $c);
+                    [$field, $op, $value] = explode(' ', $c);
                     $crit         = new Criteria($field, $value, $op);
                     $crit->prefix = 'u';
                     $criteria_object->add($crit, 'AND');

@@ -100,13 +100,13 @@ class XoopsUserUtility
                 $user = $args[0];
                 break;
             case 2:
-                list($uname, $email) = $args;
+                [$uname, $email] = $args;
                 break;
             case 3:
-                list($user, $pass, $vpass) = $args;
+                [$user, $pass, $vpass] = $args;
                 break;
             case 4:
-                list($uname, $email, $pass, $vpass) = $args;
+                [$uname, $email, $pass, $vpass] = $args;
                 break;
             default:
                 return false;
@@ -190,7 +190,7 @@ class XoopsUserUtility
                 E_USER_ERROR,
             );
         }
-        list($count) = $xoopsDB->fetchRow($result);
+        [$count] = $xoopsDB->fetchRow($result);
         if ((int) $count > 0) {
             $stop .= _US_NICKNAMETAKEN . '<br>';
         }
@@ -202,7 +202,7 @@ class XoopsUserUtility
                 E_USER_ERROR,
             );
         }
-        list($count) = $xoopsDB->fetchRow($result);
+        [$count] = $xoopsDB->fetchRow($result);
         if ((int) $count > 0) {
             $stop .= _US_EMAILTAKEN . '<br>';
         }

@@ -359,7 +359,7 @@ class ProfileProfileHandler extends XoopsPersistableObjectHandler
                     E_USER_ERROR,
                 );
             }
-            list($count) = $this->db->fetchRow($result);
+            [$count] = $this->db->fetchRow($result);
         }
 
         return [$users, $profiles, (int) $count];

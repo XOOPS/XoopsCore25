@@ -124,7 +124,7 @@ if (!is_object($pm)) {
     $criteria->setStart($start);
     $criteria->setSort('msg_time');
     $criteria->setOrder('DESC');
-    list($pm) = $pm_handler->getObjects($criteria);
+    [$pm] = $pm_handler->getObjects($criteria);
 }
 
 include_once $GLOBALS['xoops']->path('class/xoopsformloader.php');

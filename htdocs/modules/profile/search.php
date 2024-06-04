@@ -394,7 +394,7 @@ switch ($op) {
         $start = isset($_REQUEST['start']) ? (int) $_REQUEST['start'] : 0;
         $criteria->setStart($start);
 
-        list($users, $profiles, $total_users) = $profile_handler->search($criteria, $searchvars, $searchgroups);
+        [$users, $profiles, $total_users] = $profile_handler->search($criteria, $searchvars, $searchgroups);
 
         $total = sprintf(_PROFILE_MA_FOUNDUSER, "<span class='red'>{$total_users}</span>") . ' ';
         $GLOBALS['xoopsTpl']->assign('total_users', $total);

@@ -69,7 +69,7 @@ if (is_object($xoopsUser)) {
                 E_USER_ERROR,
             );
         }
-        list($count) = $xoopsDB->fetchRow($result);
+        [$count] = $xoopsDB->fetchRow($result);
         if ($count != 1) {
             echo '<br><br><div><h4>' . _PM_USERNOEXIST . '<br>';
             echo _PM_PLZTRYAGAIN . '</h4><br>';

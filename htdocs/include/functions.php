@@ -693,7 +693,7 @@ function xoops_getbanner()
             E_USER_ERROR,
         );
     }
-    list($numrows) = $db->fetchRow($result);
+    [$numrows] = $db->fetchRow($result);
     if ($numrows > 1) {
         --$numrows;
         $bannum = mt_rand(0, $numrows);
@@ -709,7 +709,7 @@ function xoops_getbanner()
                 E_USER_ERROR,
             );
         }
-        list($bid, $cid, $imptotal, $impmade, $clicks, $imageurl, $clickurl, $date, $htmlbanner, $htmlcode) = $db->fetchRow($result);
+        [$bid, $cid, $imptotal, $impmade, $clicks, $imageurl, $clickurl, $date, $htmlbanner, $htmlcode] = $db->fetchRow($result);
         if ($xoopsConfig['my_ip'] == xoops_getenv('REMOTE_ADDR')) {
             // EMPTY
         } else {

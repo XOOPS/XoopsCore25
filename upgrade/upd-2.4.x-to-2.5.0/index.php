@@ -34,7 +34,7 @@ class Upgrade_250 extends XoopsUpgrade
         if (!$GLOBALS['xoopsDB']->isResultSet($result)) {
             return false;
         }
-        list($count) = $GLOBALS['xoopsDB']->fetchRow($result);
+        [$count] = $GLOBALS['xoopsDB']->fetchRow($result);
 
         return ($count != 0);
     }
@@ -49,7 +49,7 @@ class Upgrade_250 extends XoopsUpgrade
         if (!$GLOBALS['xoopsDB']->isResultSet($result)) {
             return false;
         }
-        list($count) = $GLOBALS['xoopsDB']->fetchRow($result);
+        [$count] = $GLOBALS['xoopsDB']->fetchRow($result);
 
         return ($count != 0);
     }

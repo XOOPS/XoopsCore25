@@ -557,7 +557,7 @@ class XoopsMemberHandler
         if (!$this->userHandler->db->isResultSet($result)) {
             return $ret;
         }
-        list($ret) = $this->userHandler->db->fetchRow($result);
+        [$ret] = $this->userHandler->db->fetchRow($result);
 
         return (int) $ret;
     }

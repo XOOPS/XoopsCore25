@@ -125,7 +125,7 @@ if (!class_exists('XoopsGTicket')) {
             }
 
             // create a token
-            list($usec, $sec) = explode(' ', microtime());
+            [$usec, $sec] = explode(' ', microtime());
             $appendix_salt       = empty($_SERVER['PATH']) ? XOOPS_DB_NAME : $_SERVER['PATH'];
             $token               = crypt($salt . $usec . $appendix_salt . $sec, $salt);
             $this->_latest_token = $token;
@@ -292,7 +292,7 @@ if (!class_exists('XoopsGTicket')) {
                 }
 
                 if (is_array($val)) {
-                    list($tmp_table, $tmp_form) = $this->extract_post_recursive(htmlspecialchars($key, ENT_QUOTES | ENT_HTML5), $val);
+                    [$tmp_table, $tmp_form] = $this->extract_post_recursive(htmlspecialchars($key, ENT_QUOTES | ENT_HTML5), $val);
                     $table .= $tmp_table;
                     $form .= $tmp_form;
                 } else {
@@ -318,7 +318,7 @@ if (!class_exists('XoopsGTicket')) {
             $form  = '';
             foreach ($tmp_array as $key => $val) {
                 if (is_array($val)) {
-                    list($tmp_table, $tmp_form) = $this->extract_post_recursive($key_name . '[' . htmlspecialchars($key, ENT_QUOTES | ENT_HTML5) . ']', $val);
+                    [$tmp_table, $tmp_form] = $this->extract_post_recursive($key_name . '[' . htmlspecialchars($key, ENT_QUOTES | ENT_HTML5) . ']', $val);
                     $table .= $tmp_table;
                     $form .= $tmp_form;
                 } else {

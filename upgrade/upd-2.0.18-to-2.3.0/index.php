@@ -52,7 +52,7 @@ class Upgrade_230 extends XoopsUpgrade
         if (!$GLOBALS['xoopsDB']->isResultSet($result)) {
             return false;
         }
-        list($count) = $GLOBALS['xoopsDB']->fetchRow($result);
+        [$count] = $GLOBALS['xoopsDB']->fetchRow($result);
 
         return ($count == 2);
     }
@@ -165,7 +165,7 @@ class Upgrade_230 extends XoopsUpgrade
         $sql                   = 'SELECT COUNT(*) FROM `' . $GLOBALS['xoopsDB']->prefix('config') . "` WHERE `conf_name` = 'welcome_type'";
         $result = $GLOBALS['xoopsDB']->queryF($sql);
         if ($GLOBALS['xoopsDB']->isResultSet($result)) {
-            list($count) = $GLOBALS['xoopsDB']->fetchRow($result);
+            [$count] = $GLOBALS['xoopsDB']->fetchRow($result);
             if ($count == 1) {
                 $welcometype_installed = true;
             }

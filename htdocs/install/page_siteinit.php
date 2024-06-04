@@ -79,7 +79,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $sql = 'SELECT COUNT(*) FROM ' . $dbm->db->prefix('users');
     $result = $dbm->db->query($sql);
     if ($dbm->db->isResultSet($result)) {
-        list($isadmin) = $dbm->db->fetchRow($result);
+        [$isadmin] = $dbm->db->fetchRow($result);
     }
 }
 

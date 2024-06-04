@@ -132,7 +132,7 @@ class xos_logos_PageBuilder
             }
         }
         if ($this->theme) {
-            list($template->caching, $template->cache_lifetime) = $backup;
+            [$template->caching, $template->cache_lifetime] = $backup;
         }
     }
 

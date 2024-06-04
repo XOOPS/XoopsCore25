@@ -87,7 +87,7 @@ if (!empty($_POST['action'])) {
             $result = $db->query($sql);
 
             if (!$db->isResultSet($result)) {
-                list($ip) = $db->fetchRow($result);
+                [$ip] = $db->fetchRow($result);
                 $protector->register_bad_ips(0, $ip);
             }
 
@@ -141,7 +141,7 @@ if (!$db->isResultSet($result)) {
         E_USER_ERROR,
     );
 }
-list($numrows) = $db->fetchRow($result);
+[$numrows] = $db->fetchRow($result);
 
 $sql = "SELECT l.lid, l.uid, l.ip, l.agent, l.type, l.description, UNIX_TIMESTAMP(l.timestamp), u.uname FROM $log_table l LEFT JOIN " . $db->prefix('users') . " u ON l.uid=u.uid ORDER BY timestamp DESC LIMIT $pos,$num";
 $result = $db->query($sql);

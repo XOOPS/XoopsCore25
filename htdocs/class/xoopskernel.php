@@ -55,7 +55,7 @@ class xos_kernel_Xoops2
             $root = 'www'; // Default root
             $path = $url;  // Entire URL is treated as the path
         } else {
-            list($root, $path) = $parts;
+            [$root, $path] = $parts;
         }
 
         if (!isset($this->paths[$root])) {

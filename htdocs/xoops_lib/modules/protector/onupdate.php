@@ -55,7 +55,7 @@ if (!function_exists('protector_onupdate_base')) {
                 E_USER_ERROR,
             );
         } else {
-            list(, $create_string) = $db->fetchRow($result);
+            [, $create_string] = $db->fetchRow($result);
         }
 
 
@@ -76,7 +76,7 @@ if (!function_exists('protector_onupdate_base')) {
                 E_USER_ERROR,
             );
         } else {
-            list(, $create_string) = $db->fetchRow($result);
+            [, $create_string] = $db->fetchRow($result);
         }
 
 

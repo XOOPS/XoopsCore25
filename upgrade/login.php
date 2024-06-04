@@ -42,7 +42,7 @@ if (empty($_POST['uname']) || empty($_POST['pass'])) {
         try {
             $criteria = new CriteriaCompo(new Criteria('loginname', $uname));
             $criteria->add(new Criteria('pass', md5($pass)));
-            list($user) = $member_handler->getUsers($criteria);
+            [$user] = $member_handler->getUsers($criteria);
         } catch (\RuntimeException $e) {
             $user = false;
         }

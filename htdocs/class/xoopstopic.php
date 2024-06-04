@@ -417,7 +417,7 @@ class XoopsTopic
                 E_USER_ERROR,
             );
         }
-        list($count) = $this->db->fetchRow($result);
+        [$count] = $this->db->fetchRow($result);
         if ($count > 0) {
             return true;
         } else {

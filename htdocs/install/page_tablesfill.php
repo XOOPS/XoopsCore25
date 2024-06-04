@@ -74,7 +74,7 @@ if (!$result) {
     exit();
 }
 
-list($count) = $dbm->db->fetchRow($result);
+[$count] = $dbm->db->fetchRow($result);
 $process = ($count == 0);
 $update  = false;
 

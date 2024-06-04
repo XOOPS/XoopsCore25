@@ -209,7 +209,7 @@ class XoopsTree
         if ($this->db->getRowsNum($result) == 0) {
             return $path;
         }
-        list($parentid, $name) = $this->db->fetchRow($result);
+        [$parentid, $name] = $this->db->fetchRow($result);
         $myts = \MyTextSanitizer::getInstance();
         $parentid = (int) $parentid;
         $name = $myts->htmlSpecialChars($name);
@@ -303,7 +303,7 @@ class XoopsTree
         if ($this->db->getRowsNum($result) == 0) {
             return $path;
         }
-        list($parentid, $name) = $this->db->fetchRow($result);
+        [$parentid, $name] = $this->db->fetchRow($result);
         $myts = \MyTextSanitizer::getInstance();
         $name = $myts->htmlSpecialChars($name);
         $parentid = (int) $parentid;
@@ -338,7 +338,7 @@ class XoopsTree
         if ($this->db->getRowsNum($result) == 0) {
             return $path;
         }
-        list($parentid) = $this->db->fetchRow($result);
+        [$parentid] = $this->db->fetchRow($result);
         $path = '/' . $sel_id . $path . '';
         $parentid = (int) $parentid;
         if ($parentid === 0) {

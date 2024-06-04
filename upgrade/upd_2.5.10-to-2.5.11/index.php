@@ -661,7 +661,7 @@ class Upgrade_2511 extends XoopsUpgrade
         if (!$GLOBALS['xoopsDB']->isResultSet($result)) {
             return false;
         }
-        list($count) = $GLOBALS['xoopsDB']->fetchRow($result);
+        [$count] = $GLOBALS['xoopsDB']->fetchRow($result);
 
         return ($count != 0);
     }
@@ -703,7 +703,7 @@ class Upgrade_2511 extends XoopsUpgrade
         if (!$GLOBALS['xoopsDB']->isResultSet($result)) {
             return false;
         }
-        list($count) = $GLOBALS['xoopsDB']->fetchRow($result);
+        [$count] = $GLOBALS['xoopsDB']->fetchRow($result);
 
         return ($count != 0);
     }
@@ -803,7 +803,7 @@ class Upgrade_2511 extends XoopsUpgrade
         $notification_method = false;
         $sql                   = 'SELECT COUNT(*) FROM `' . $GLOBALS['xoopsDB']->prefix('config') . "` WHERE `conf_name` = 'default_notification'";
         if ($result = $GLOBALS['xoopsDB']->queryF($sql)) {
-            list($count) = $GLOBALS['xoopsDB']->fetchRow($result);
+            [$count] = $GLOBALS['xoopsDB']->fetchRow($result);
             if ($count == 1) {
                 $notification_method = true;
             }

@@ -686,7 +686,7 @@ class SystemBlockHandler extends XoopsPersistableObjectHandler
             // );
             return 0;
         }
-        list($count) = $db->fetchRow($result);
+        [$count] = $db->fetchRow($result);
 
         return (int) $count;
     }

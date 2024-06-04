@@ -110,7 +110,7 @@ function bannerstats()
             E_USER_ERROR,
         );
     }
-    list($cid, $name, $passwd) = $xoopsDB->fetchRow($result);
+    [$cid, $name, $passwd] = $xoopsDB->fetchRow($result);
     if ($_SESSION['banner_pass'] == $passwd) {
         include $GLOBALS['xoops']->path('header.php');
         $cid = (int) $cid;
@@ -262,7 +262,7 @@ function emailStats($cid, $bid)
         $sql     = sprintf('SELECT name, email, passwd FROM %s WHERE cid=%u AND login=%s', $xoopsDB->prefix('bannerclient'), $cid, $xoopsDB->quoteString($_SESSION['banner_login']));
         $result2 = $xoopsDB->query($sql);
         if ($xoopsDB->isResultSet($result2)) {
-            list($name, $email, $passwd) = $xoopsDB->fetchRow($result2);
+            [$name, $email, $passwd] = $xoopsDB->fetchRow($result2);
             if ($_SESSION['banner_pass'] == $passwd) {
                 if ($email == '') {
                     redirect_header('banners.php', 3, sprintf(_BANNERS_MAIL_ERROR, $name));
@@ -270,7 +270,7 @@ function emailStats($cid, $bid)
                     $sql    = 'SELECT bid, imptotal, impmade, clicks, imageurl, clickurl, date FROM ' . $xoopsDB->prefix('banner') . " WHERE bid={$bid} AND cid={$cid}";
                     $result = $xoopsDB->query($sql);
                     if ($xoopsDB->isResultSet($result)) {
-                        list($bid, $imptotal, $impmade, $clicks, $imageurl, $clickurl, $date) = $xoopsDB->fetchRow($result);
+                        [$bid, $imptotal, $impmade, $clicks, $imageurl, $clickurl, $date] = $xoopsDB->fetchRow($result);
                         if ($impmade == 0) {
                             $percent = 0;
                         } else {
@@ -318,7 +318,7 @@ function change_banner_url_by_client($cid, $bid, $url)
         $sql    = sprintf('SELECT passwd FROM %s WHERE cid=%u AND login=%s', $xoopsDB->prefix('bannerclient'), $cid, $xoopsDB->quoteString($_SESSION['banner_login']));
         $result = $xoopsDB->query($sql);
         if ($xoopsDB->isResultSet($result)) {
-            list($passwd) = $xoopsDB->fetchRow($result);
+            [$passwd] = $xoopsDB->fetchRow($result);
             if ($_SESSION['banner_pass'] == $passwd) {
                 $sql = sprintf('UPDATE %s SET clickurl=%s WHERE bid=%u AND cid=%u', $xoopsDB->prefix('banner'), $xoopsDB->quoteString($url), $bid, $cid);
                 if ($xoopsDB->query($sql)) {
@@ -347,7 +347,7 @@ function clickbanner($bid)
                 E_USER_ERROR,
             );
         }
-        list($clickurl) = $xoopsDB->fetchRow($result);
+        [$clickurl] = $xoopsDB->fetchRow($result);
         if ($clickurl) {
             if ($GLOBALS['xoopsSecurity']->checkReferer()) {
                 $xoopsDB->queryF('UPDATE ' . $xoopsDB->prefix('banner') . " SET clicks=clicks+1 WHERE bid=$bid");

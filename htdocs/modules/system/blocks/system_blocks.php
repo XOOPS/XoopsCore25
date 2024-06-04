@@ -213,7 +213,7 @@ function b_system_waiting_show()
         $result = $xoopsDB->query($sql);
         if ($xoopsDB->isResultSet($result)) {
             $block['modules'][0]['adminlink'] = XOOPS_URL . '/modules/news/admin/index.php?op=newarticle';
-            list($block['modules'][0]['pendingnum']) = $xoopsDB->fetchRow($result);
+            [$block['modules'][0]['pendingnum']] = $xoopsDB->fetchRow($result);
             $block['modules'][0]['lang_linkname'] = _MB_SYSTEM_SUBMS;
         }
     }
@@ -224,7 +224,7 @@ function b_system_waiting_show()
         $result = $xoopsDB->query($sql);
         if ($xoopsDB->isResultSet($result)) {
             $block['modules'][1]['adminlink'] = XOOPS_URL . '/modules/mylinks/admin/index.php?op=listNewLinks';
-            list($block['modules'][1]['pendingnum']) = $xoopsDB->fetchRow($result);
+            [$block['modules'][1]['pendingnum']] = $xoopsDB->fetchRow($result);
             $block['modules'][1]['lang_linkname'] = _MB_SYSTEM_WLNKS;
         }
 
@@ -232,7 +232,7 @@ function b_system_waiting_show()
         $result = $xoopsDB->query($sql);
         if ($xoopsDB->isResultSet($result)) {
             $block['modules'][2]['adminlink'] = XOOPS_URL . '/modules/mylinks/admin/index.php?op=listBrokenLinks';
-            list($block['modules'][2]['pendingnum']) = $xoopsDB->fetchRow($result);
+            [$block['modules'][2]['pendingnum']] = $xoopsDB->fetchRow($result);
             $block['modules'][2]['lang_linkname'] = _MB_SYSTEM_BLNK;
         }
 
@@ -240,7 +240,7 @@ function b_system_waiting_show()
         $result = $xoopsDB->query($sql);
         if ($xoopsDB->isResultSet($result)) {
             $block['modules'][3]['adminlink'] = XOOPS_URL . '/modules/mylinks/admin/index.php?op=listModReq';
-            list($block['modules'][3]['pendingnum']) = $xoopsDB->fetchRow($result);
+            [$block['modules'][3]['pendingnum']] = $xoopsDB->fetchRow($result);
             $block['modules'][3]['lang_linkname'] = _MB_SYSTEM_MLNKS;
         }
     }
@@ -251,7 +251,7 @@ function b_system_waiting_show()
         $result = $xoopsDB->query($sql);
         if ($xoopsDB->isResultSet($result)) {
             $block['modules'][4]['adminlink'] = XOOPS_URL . '/modules/mydownloads/admin/index.php?op=listNewDownloads';
-            list($block['modules'][4]['pendingnum']) = $xoopsDB->fetchRow($result);
+            [$block['modules'][4]['pendingnum']] = $xoopsDB->fetchRow($result);
             $block['modules'][4]['lang_linkname'] = _MB_SYSTEM_WDLS;
         }
 
@@ -259,7 +259,7 @@ function b_system_waiting_show()
         $result = $xoopsDB->query($sql);
         if ($xoopsDB->isResultSet($result)) {
             $block['modules'][5]['adminlink'] = XOOPS_URL . '/modules/mydownloads/admin/index.php?op=listBrokenDownloads';
-            list($block['modules'][5]['pendingnum']) = $xoopsDB->fetchRow($result);
+            [$block['modules'][5]['pendingnum']] = $xoopsDB->fetchRow($result);
             $block['modules'][5]['lang_linkname'] = _MB_SYSTEM_BFLS;
         }
 
@@ -267,7 +267,7 @@ function b_system_waiting_show()
         $result = $xoopsDB->query($sql);
         if ($xoopsDB->isResultSet($result)) {
             $block['modules'][6]['adminlink'] = XOOPS_URL . '/modules/mydownloads/admin/index.php?op=listModReq';
-            list($block['modules'][6]['pendingnum']) = $xoopsDB->fetchRow($result);
+            [$block['modules'][6]['pendingnum']] = $xoopsDB->fetchRow($result);
             $block['modules'][6]['lang_linkname'] = _MB_SYSTEM_MFLS;
         }
     }
@@ -277,7 +277,7 @@ function b_system_waiting_show()
     $result = $xoopsDB->query($sql);
     if ($xoopsDB->isResultSet($result)) {
         $block['modules'][7]['adminlink'] = XOOPS_URL . '/modules/system/admin.php?module=0&amp;status=1&fct=comments';
-        list($block['modules'][7]['pendingnum']) = $xoopsDB->fetchRow($result);
+        [$block['modules'][7]['pendingnum']] = $xoopsDB->fetchRow($result);
         $block['modules'][7]['lang_linkname'] = _MB_SYSTEM_COMPEND;
     }
 
@@ -287,7 +287,7 @@ function b_system_waiting_show()
         $result = $xoopsDB->query($sql);
         if ($xoopsDB->isResultSet($result)) {
             $block['modules'][8]['adminlink'] = XOOPS_URL . '/modules/TDMDownloads/admin/downloads.php?op=list&statut_display=0';
-            list($block['modules'][8]['pendingnum']) = $xoopsDB->fetchRow($result);
+            [$block['modules'][8]['pendingnum']] = $xoopsDB->fetchRow($result);
             $block['modules'][8]['lang_linkname'] = _MB_SYSTEM_TDMDOWNLOADS;
         }
     }
@@ -298,7 +298,7 @@ function b_system_waiting_show()
         $result = $xoopsDB->query($sql);
         if ($xoopsDB->isResultSet($result)) {
             $block['modules'][9]['adminlink'] = XOOPS_URL . '/modules/extgallery/admin/photo.php#pending-photo';
-            list($block['modules'][9]['pendingnum']) = $xoopsDB->fetchRow($result);
+            [$block['modules'][9]['pendingnum']] = $xoopsDB->fetchRow($result);
             $block['modules'][9]['lang_linkname'] = _MB_SYSTEM_EXTGALLERY;
         }
     }
@@ -309,7 +309,7 @@ function b_system_waiting_show()
         $result = $xoopsDB->query($sql);
         if ($xoopsDB->isResultSet($result)) {
             $block['modules'][10]['adminlink'] = XOOPS_URL . '/modules/smartsection/admin/item.php';
-            list($block['modules'][10]['pendingnum']) = $xoopsDB->fetchRow($result);
+            [$block['modules'][10]['pendingnum']] = $xoopsDB->fetchRow($result);
             $block['modules'][10]['lang_linkname'] = _MB_SYSTEM_SMARTSECTION;
         }
     }

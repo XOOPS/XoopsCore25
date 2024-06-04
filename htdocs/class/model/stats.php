@@ -53,7 +53,7 @@ class XoopsModelStats extends XoopsModelAbstract
             return 0;
         }
         if ($groupby == false) {
-            list($count) = $this->handler->db->fetchRow($result);
+            [$count] = $this->handler->db->fetchRow($result);
 
             return (int) $count;
         } else {
