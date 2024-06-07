@@ -339,7 +339,7 @@ class Protector
     {
         $expire = min((int) $expire, time() + 300);
 
-        $fp = @fopen($this->get_filepath4bwlimit(), 'w');
+        $fp = @fopen(static::get_filepath4bwlimit(), 'w');
         if ($fp) {
             @flock($fp, LOCK_EX);
             fwrite($fp, $expire . "\n");
@@ -380,7 +380,7 @@ class Protector
     {
         asort($bad_ips);
 
-        $fp = @fopen($this->get_filepath4badips(), 'w');
+        $fp = @fopen(static::get_filepath4badips(), 'w');
         if ($fp) {
             @flock($fp, LOCK_EX);
             fwrite($fp, serialize($bad_ips) . "\n");
