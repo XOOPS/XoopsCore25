@@ -47,7 +47,7 @@ class XoopsApi extends XoopsXmlRpcApi
                 foreach ($fields as $tag => $detail) {
                     if (!isset($this->params[3][$tag])) {
                         $data = $this->_getTagCdata($this->params[3]['xoops_text'], $tag, true);
-                        if (trim($data) == '') {
+                        if ('' == trim($data)) {
                             if ($detail['required']) {
                                 $missing[] = $tag;
                             }
@@ -134,7 +134,7 @@ class XoopsApi extends XoopsXmlRpcApi
                 foreach ($fields as $tag => $detail) {
                     if (!isset($this->params[3][$tag])) {
                         $data = $this->_getTagCdata($this->params[3]['xoops_text'], $tag, true);
-                        if (trim($data) == '') {
+                        if ('' == trim($data)) {
                             if ($detail['required']) {
                                 $missing[] = $tag;
                             }
@@ -299,7 +299,7 @@ class XoopsApi extends XoopsXmlRpcApi
             if (!$respond) {
                 return $ret;
             } else {
-                if (count($ret) == 0) {
+                if (0 == count($ret)) {
                     $this->response->add(new XoopsXmlRpcFault(106, 'Found 0 Entries'));
                 } else {
                     $arr   = new XoopsXmlRpcArray();
@@ -358,7 +358,7 @@ class XoopsApi extends XoopsXmlRpcApi
             if (!$respond) {
                 return $ret;
             } else {
-                if (count($ret) == 0) {
+                if (0 == count($ret)) {
                     $this->response->add(new XoopsXmlRpcFault(106, 'Found 0 Entries'));
                 } else {
                     $arr = new XoopsXmlRpcArray();

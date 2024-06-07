@@ -287,7 +287,7 @@ if (!class_exists('XoopsGTicket')) {
             $form = '<form action="?' . htmlspecialchars($_SERVER['QUERY_STRING'] ?? '', ENT_QUOTES | ENT_HTML5) . '" method="post">';
 
             foreach ($_POST as $key => $val) {
-                if ($key === 'XOOPS_G_TICKET') {
+                if ('XOOPS_G_TICKET' === $key) {
                     continue;
                 }
 
@@ -409,9 +409,9 @@ if (!function_exists('admin_refcheck')) {
             $ref = $_SERVER['HTTP_REFERER'];
         }
         $cr = XOOPS_URL;
-        if ($chkref != '') {
+        if ('' != $chkref) {
             $cr .= $chkref;
         }
-        return !(strpos($ref, $cr) !== 0);
+        return !(0 !== strpos($ref, $cr));
     }
 }

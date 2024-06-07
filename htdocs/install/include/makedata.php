@@ -106,8 +106,8 @@ function make_data($dbm, $adminname, $hashedAdminPass, $adminmail, $language, $g
     $dbm->insert('modules', " VALUES (1, '" . _MI_SYSTEM_NAME . "', '" . $modversion['version'] . "', " . $time . ", 0, 1, 'system', 0, 1, 0, 0, 0, 0)");
 
     foreach ($modversion['templates'] as $tplfile) {
-        $templateType = isset($tplfile['type']) && $tplfile['type'] === 'admin' ? 'admin' : 'module';
-        $templatePath = $templateType === 'admin'
+        $templateType = isset($tplfile['type']) && 'admin' === $tplfile['type'] ? 'admin' : 'module';
+        $templatePath = 'admin' === $templateType
             ? XOOPS_ROOT_PATH . '/modules/system/templates/admin/' . $tplfile['file']
             : XOOPS_ROOT_PATH . '/modules/system/templates/' . $tplfile['file'];
 
@@ -155,7 +155,7 @@ function make_data($dbm, $adminname, $hashedAdminPass, $adminmail, $language, $g
     //    );
     //    }
     while (false !== ($myrow = $dbm->fetchArray($result))) {
-        if ($myrow['side'] == 0) {
+        if (0 == $myrow['side']) {
             $dbm->insert('block_module_link', ' VALUES (' . $myrow['bid'] . ', 0)');
         } else {
             $dbm->insert('block_module_link', ' VALUES (' . $myrow['bid'] . ', -1)');

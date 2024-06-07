@@ -51,7 +51,7 @@ class BloggerApi extends XoopsXmlRpcApi
                 foreach ($fields as $tag => $detail) {
                     $maptag = $this->_getXoopsTagMap($tag);
                     $data   = $this->_getTagCdata($this->params[4], $maptag, true);
-                    if (trim($data) == '') {
+                    if ('' == trim($data)) {
                         if ($detail['required']) {
                             $missing[] = $maptag;
                         }
@@ -96,7 +96,7 @@ class BloggerApi extends XoopsXmlRpcApi
                 $post    = [];
                 foreach ($fields as $tag => $detail) {
                     $data = $this->_getTagCdata($this->params[4], $tag, true);
-                    if (trim($data) == '') {
+                    if ('' == trim($data)) {
                         if ($detail['required']) {
                             $missing[] = $tag;
                         }
@@ -194,7 +194,7 @@ class BloggerApi extends XoopsXmlRpcApi
             if (is_array($ret)) {
                 $arr   = new XoopsXmlRpcArray();
                 $count = count($ret);
-                if ($count == 0) {
+                if (0 == $count) {
                     $this->response->add(new XoopsXmlRpcFault(106, 'Found 0 Entries'));
                 } else {
                     for ($i = 0; $i < $count; ++$i) {

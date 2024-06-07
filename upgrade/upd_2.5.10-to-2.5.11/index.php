@@ -70,7 +70,7 @@ class Upgrade_2511 extends XoopsUpgrade
     public function check_cleancache()
     {
         if (!array_key_exists($this->cleanCacheKey, $_SESSION)
-            || $_SESSION[$this->cleanCacheKey] === false) {
+            || false === $_SESSION[$this->cleanCacheKey]) {
             return false;
         }
         return true;
@@ -86,7 +86,7 @@ class Upgrade_2511 extends XoopsUpgrade
         require_once XOOPS_ROOT_PATH . '/modules/system/class/maintenance.php';
         $maintenance = new SystemMaintenance();
         $result  = $maintenance->CleanCache([1, 2, 3]);
-        if ($result === true) {
+        if (true === $result) {
             $_SESSION[$this->cleanCacheKey] = true;
         }
         return $result;
@@ -129,7 +129,7 @@ class Upgrade_2511 extends XoopsUpgrade
         $migrate = new Tables();
         $count = $this->fromMediumToInt($migrate, $this->bannerTableName, $this->bannerColumnNames);
 
-        return $count == 0;
+        return 0 == $count;
     }
 
     /**
@@ -154,7 +154,7 @@ class Upgrade_2511 extends XoopsUpgrade
             return false;
         }
 
-        return $count !== 0;
+        return 0 !== $count;
     }
 
     /**
@@ -278,7 +278,8 @@ class Upgrade_2511 extends XoopsUpgrade
         }
         while (false !== ($entry = $directory->read())) {
             if (false === strpos($entry, '.dist.')
-                && strpos($entry, 'config.') === 0 && '.php' === substr($entry, -4)) {
+                && 0 === strpos($entry, 'config.')
+                && '.php' === substr($entry, -4)) {
                 $src = $sourcePath . $entry;
                 $dest = $destinationPath . $entry;
                 $status = $this->copyFile($src, $dest);
@@ -312,7 +313,7 @@ class Upgrade_2511 extends XoopsUpgrade
             $migrate->alterColumn($tableName, $columnName, 'int(10) UNSIGNED NOT NULL');
         }
 
-        return $count == 0;
+        return 0 == $count;
     }
 
     /**
@@ -345,7 +346,7 @@ class Upgrade_2511 extends XoopsUpgrade
             return false;
         }
 
-        return $count !== 0;
+        return 0 !== $count;
     }
     //configend
 
@@ -623,7 +624,7 @@ class Upgrade_2511 extends XoopsUpgrade
     {
         $migrate = new Tables();
         $count = $this->fromSmallintToVarchar($migrate, $this->modulesTableName, $this->modulesColumnNames);
-        return $count == 0;
+        return 0 == $count;
     }
 
     /**
@@ -663,7 +664,7 @@ class Upgrade_2511 extends XoopsUpgrade
         }
         [$count] = $GLOBALS['xoopsDB']->fetchRow($result);
 
-        return ($count != 0);
+        return (0 != $count);
     }
 
 
@@ -678,7 +679,7 @@ class Upgrade_2511 extends XoopsUpgrade
         $dbm = new Db_manager();
         $time = time();
         foreach ($modversion['templates'] as $tplfile) {
-            if ((isset($tplfile['type']) && $tplfile['type'] === 'module') || !isset($tplfile['type'])) {
+            if ((isset($tplfile['type']) && 'module' === $tplfile['type']) || !isset($tplfile['type'])) {
 
                 $filePath = XOOPS_ROOT_PATH . '/modules/system/templates/' . $tplfile['file'];
                 if ($fp = fopen($filePath, 'r')) {
@@ -705,7 +706,7 @@ class Upgrade_2511 extends XoopsUpgrade
         }
         [$count] = $GLOBALS['xoopsDB']->fetchRow($result);
 
-        return ($count != 0);
+        return (0 != $count);
     }
 
     /**
@@ -718,7 +719,7 @@ class Upgrade_2511 extends XoopsUpgrade
         $time = time();
         foreach ($modversion['templates'] as $tplfile) {
             // Admin templates
-            if (isset($tplfile['type']) && $tplfile['type'] === 'admin' && $fp = fopen('../modules/system/templates/admin/' . $tplfile['file'], 'r')) {
+            if (isset($tplfile['type']) && 'admin' === $tplfile['type'] && $fp = fopen('../modules/system/templates/admin/' . $tplfile['file'], 'r')) {
                 $newtplid  = $dbm->insert('tplfile', " VALUES (0, 1, 'system', 'default', '" . addslashes($tplfile['file']) . "', '" . addslashes($tplfile['description']) . "', " . $time . ', ' . $time . ", 'admin')");
                 $tplsource = fread($fp, filesize('../modules/system/templates/admin/' . $tplfile['file']));
                 fclose($fp);
@@ -804,7 +805,7 @@ class Upgrade_2511 extends XoopsUpgrade
         $sql                   = 'SELECT COUNT(*) FROM `' . $GLOBALS['xoopsDB']->prefix('config') . "` WHERE `conf_name` = 'default_notification'";
         if ($result = $GLOBALS['xoopsDB']->queryF($sql)) {
             [$count] = $GLOBALS['xoopsDB']->fetchRow($result);
-            if ($count == 1) {
+            if (1 == $count) {
                 $notification_method = true;
             }
         }

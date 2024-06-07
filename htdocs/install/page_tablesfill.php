@@ -75,7 +75,7 @@ if (!$result) {
 }
 
 [$count] = $dbm->db->fetchRow($result);
-$process = ($count == 0);
+$process = (0 == $count);
 $update  = false;
 
 extract($_SESSION['siteconfig'], EXTR_SKIP);

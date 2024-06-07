@@ -283,7 +283,7 @@ class XoopsXmlRpcBoolean extends XoopsXmlRpcTag
      */
     public function __construct($value)
     {
-        $this->_value = (!empty($value) && $value != false) ? 1 : 0;
+        $this->_value = (!empty($value) && false != $value) ? 1 : 0;
     }
 
     /**
