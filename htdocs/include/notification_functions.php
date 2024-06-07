@@ -298,7 +298,7 @@ function &notificationEvents($category_name, $enabled_only, $module_id = null)
  * @param  object $module   Module
  * @return bool
  **/
-function notificationEventEnabled(&$category, &$event, &$module)
+function notificationEventEnabled($category, $event, $module)
 {
     /** @var XoopsConfigHandler $config_handler */
     $config_handler = xoops_getHandler('config');
@@ -407,7 +407,7 @@ function &notificationSubscribableCategoryInfo($module_id = null)
  *
  * @return bool|string
  */
-function notificationGenerateConfig(&$category, &$event, $type)
+function notificationGenerateConfig($category, $event, $type)
 {
     switch ($type) {
         case 'option_value':

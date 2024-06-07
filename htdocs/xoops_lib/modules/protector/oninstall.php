@@ -132,7 +132,7 @@ if (!function_exists('protector_oninstall_base')) {
      * @param $module_obj
      * @param $log
      */
-    function protector_message_append_oninstall(&$module_obj, &$log)
+    function protector_message_append_oninstall(&$module_obj, $log)
     {
         if (isset($GLOBALS['ret']) && is_array($GLOBALS['ret'])) {
             foreach ($GLOBALS['ret'] as $message) {

@@ -37,7 +37,7 @@ use Xmf\IPAddress;
  *
  * @return void
  */
-function smarty_function_xoStats($params, &$smarty)
+function smarty_function_xoStats($params, $smarty)
 {
     $cache = new Cache('system');
     $stats = $cache->cacheRead('xostats', 'xoStatsRegen', 30);

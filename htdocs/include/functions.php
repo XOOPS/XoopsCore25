@@ -1112,7 +1112,7 @@ function xoops_groupperm_deletebymoditem($module_id, $perm_name, $item_id = null
  * @param mixed $text
  * @return string
  */
-function xoops_utf8_encode(&$text)
+function xoops_utf8_encode($text)
 {
     xoops_load('XoopsLocal');
 
@@ -1125,7 +1125,7 @@ function xoops_utf8_encode(&$text)
  * @param mixed $text
  * @return string
  */
-function xoops_utf8_decode(&$text)
+function xoops_utf8_decode($text)
 {
     xoops_load('XoopsLocal');
 
@@ -1138,7 +1138,7 @@ function xoops_utf8_decode(&$text)
  * @param mixed $text
  * @return string
  */
-function xoops_convert_encoding(&$text)
+function xoops_convert_encoding($text)
 {
     return xoops_utf8_encode($text);
 }

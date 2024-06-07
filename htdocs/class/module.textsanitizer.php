@@ -931,7 +931,7 @@ class MyTextSanitizer
      * @return mixed|string
      * @deprecated will be removed in next XOOPS version
      */
-    public function &makeTareaData4Show(&$text, $html = 1, $smiley = 1, $xcode = 1)
+    public function &makeTareaData4Show($text, $html = 1, $smiley = 1, $xcode = 1)
     {
         $GLOBALS['xoopsLogger']->addDeprecated(__METHOD__ . ' is deprecated');
         $text = & $this->displayTarea($text, $html, $smiley, $xcode);
@@ -963,7 +963,7 @@ class MyTextSanitizer
      * @return mixed|string
      * @deprecated will be removed in next XOOPS version
      */
-    public function &makeTareaData4Preview(&$text, $html = 1, $smiley = 1, $xcode = 1)
+    public function &makeTareaData4Preview($text, $html = 1, $smiley = 1, $xcode = 1)
     {
         $GLOBALS['xoopsLogger']->addDeprecated(__METHOD__ . ' is deprecated');
         $text = & $this->previewTarea($text, $html, $smiley, $xcode);

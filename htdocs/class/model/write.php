@@ -40,7 +40,7 @@ class XoopsModelWrite extends XoopsModelAbstract
      * @return bool true if successful
      * @access public
      */
-    public function cleanVars(&$object)
+    public function cleanVars($object)
     {
         $myts     = \MyTextSanitizer::getInstance();
         $errors = [];
@@ -236,7 +236,7 @@ class XoopsModelWrite extends XoopsModelAbstract
      * @param  bool   $force  flag to force the query execution despite security settings
      * @return mixed  object ID
      */
-    public function insert(&$object, $force = true)
+    public function insert($object, $force = true)
     {
         if (!$object->isDirty()) {
             trigger_error("Data entry is not inserted - the object '" . get_class($object) . "' is not dirty", E_USER_NOTICE);
@@ -288,7 +288,7 @@ class XoopsModelWrite extends XoopsModelAbstract
      * @param  bool   $force
      * @return bool   FALSE if failed.
      */
-    public function delete(&$object, $force = false)
+    public function delete($object, $force = false)
     {
         if (is_array($this->handler->keyName)) {
             $clause = [];

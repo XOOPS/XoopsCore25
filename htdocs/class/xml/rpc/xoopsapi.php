@@ -214,6 +214,7 @@ class XoopsApi extends XoopsXmlRpcApi
      */
     public function &getPost($respond = true)
     {
+        $ret = [];
         if (!$this->_checkUser($this->params[1], $this->params[2])) {
             $this->response->add(new XoopsXmlRpcFault(104));
         } else {
@@ -263,7 +264,7 @@ class XoopsApi extends XoopsXmlRpcApi
             }
         }
 
-        return null;
+        return $ret;
     }
 
     /**
@@ -273,6 +274,7 @@ class XoopsApi extends XoopsXmlRpcApi
      */
     public function &getRecentPosts($respond = true)
     {
+        $ret = [];
         if (!$this->_checkUser($this->params[1], $this->params[2])) {
             $this->response->add(new XoopsXmlRpcFault(104));
         } else {
@@ -335,7 +337,7 @@ class XoopsApi extends XoopsXmlRpcApi
             }
         }
 
-        return null;
+        return $ret;
     }
 
     /**
@@ -345,6 +347,7 @@ class XoopsApi extends XoopsXmlRpcApi
      */
     public function &getCategories($respond = true)
     {
+        $ret = [];
         if (!$this->_checkUser($this->params[1], $this->params[2])) {
             $this->response->add(new XoopsXmlRpcFault(104));
         } else {
@@ -372,6 +375,6 @@ class XoopsApi extends XoopsXmlRpcApi
             }
         }
 
-        return null;
+        return $ret;
     }
 }

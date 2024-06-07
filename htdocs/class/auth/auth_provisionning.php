@@ -166,7 +166,7 @@ class XoopsAuthProvisionning
      * @param  null $pwd
      * @return bool
      */
-    public function change(&$xoopsUser, $datas, $uname, $pwd = null)
+    public function change($xoopsUser, $datas, $uname, $pwd = null)
     {
         $ret            = false;
         /** @var XoopsMemberHandler $member_handler */

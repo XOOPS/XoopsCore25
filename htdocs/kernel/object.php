@@ -1570,12 +1570,12 @@ class XoopsPersistableObjectHandler extends XoopsObjectHandler
      *
      * @param \CriteriaElement|null $criteria     {@link CriteriaElement} to match
      * @param array|null            $fields       variables to fetch
-     * @param  bool            $asObject     flag indicating as object, otherwise as array
+     * @param bool                  $asObject     flag indicating as object, otherwise as array
      * @param string|null           $field_link   field of linked object for JOIN
      * @param string|null           $field_object field of current object for JOIN
      * @return array           of objects {@link XoopsObject}
      */
-    public function &getByLink(CriteriaElement $criteria = null, $fields = null, $asObject = true, $field_link = null, $field_object = null)
+    public function getByLink(CriteriaElement $criteria = null, $fields = null, $asObject = true, $field_link = null, $field_object = null)
     {
         $handler = $this->loadHandler('joint');
         $ret     = $handler->getByLink($criteria, $fields, $asObject, $field_link, $field_object);

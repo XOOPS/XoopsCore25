@@ -453,7 +453,7 @@ class XoopsForm
         for ($i = 0; $i < $count; ++$i) {
             $name = $elements[$i]->getName(false);
             if ($name && method_exists($elements[$i], 'getValue')) {
-                $values[$name] = &$elements[$i]->getValue($encode);
+                $values[$name] = $elements[$i]->getValue($encode);
             }
         }
 
@@ -502,7 +502,7 @@ class XoopsForm
      *
      * @return string "class" attribute value
      */
-    public function &getClass()
+    public function getClass()
     {
         if (empty($this->_class)) {
             return false;

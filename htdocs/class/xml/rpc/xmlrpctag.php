@@ -32,7 +32,7 @@ class XoopsXmlRpcDocument
     /**
      * @param $tagobj
      */
-    public function add(&$tagobj)
+    public function add($tagobj)
     {
         $this->_tags[] = & $tagobj;
     }
@@ -423,7 +423,7 @@ class XoopsXmlRpcStruct extends XoopsXmlRpcTag
      * @param $name
      * @param $tagobj
      */
-    public function add($name, &$tagobj)
+    public function add($name, $tagobj)
     {
         $this->_tags[] = ['name' => $name, 'value' => $tagobj];
     }

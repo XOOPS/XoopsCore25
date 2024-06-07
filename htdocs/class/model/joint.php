@@ -67,8 +67,9 @@ class XoopsModelJoint extends XoopsModelAbstract
      * @return array of objects <a href='psi_element://XoopsObject'>XoopsObject</a>
      * @internal param CriteriaElement $object <a href='psi_element://CriteriaElement'>CriteriaElement</a> to match to match
      */
-    public function &getByLink(CriteriaElement $criteria = null, $fields = null, $asObject = true, $field_link = null, $field_object = null)
+    public function getByLink(CriteriaElement $criteria = null, $fields = null, $asObject = true, $field_link = null, $field_object = null)
     {
+        $ret = [];
         if (!empty($field_link)) {
             $this->handler->field_link = $field_link;
         }
@@ -76,7 +77,7 @@ class XoopsModelJoint extends XoopsModelAbstract
             $this->handler->field_object = $field_object;
         }
         if (!$this->validateLinks()) {
-            return null;
+            return $ret;
         }
 
         if (!empty($fields) && \is_array($fields)) {
