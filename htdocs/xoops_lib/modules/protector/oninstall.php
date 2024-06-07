@@ -28,7 +28,7 @@ if (!function_exists('protector_oninstall_base')) {
 
         global $ret; // TODO :-D
 
-        if (!is_array($ret)) {
+        if (!isset($ret) || !is_array($ret)) {
             $ret = [];
         }
 
@@ -46,6 +46,7 @@ if (!function_exists('protector_oninstall_base')) {
             $sqlutil = new SqlUtility(); //old code is -> $sqlutil =& new SqlUtility ; //hack by Trabis
 
             $sql_query = trim(file_get_contents($sql_file_path));
+            $pieces = [];
             $sqlutil::splitMySqlFile($pieces, $sql_query);
             $created_tables = [];
             foreach ($pieces as $piece) {
