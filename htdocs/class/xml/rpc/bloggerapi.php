@@ -77,7 +77,7 @@ class BloggerApi extends XoopsXmlRpcApi
                     }
                     $newparams[3]['xoops_text'] = $this->params[4];
                     $newparams[4]               = $this->params[5];
-                    $xoopsapi                   =& $this->_getXoopsApi($newparams);
+                    $xoopsapi                   = $this->_getXoopsApi($newparams);
                     $xoopsapi->_setUser($this->user, $this->isadmin);
                     $xoopsapi->newPost();
                 }
@@ -122,7 +122,7 @@ class BloggerApi extends XoopsXmlRpcApi
                     }
                     $newparams[3]['xoops_text'] = $this->params[4];
                     $newparams[4]               = $this->params[5];
-                    $xoopsapi                   =& $this->_getXoopsApi($newparams);
+                    $xoopsapi                   = $this->_getXoopsApi($newparams);
                     $xoopsapi->_setUser($this->user, $this->isadmin);
                     $xoopsapi->editPost();
                 }
@@ -137,7 +137,7 @@ class BloggerApi extends XoopsXmlRpcApi
         } else {
             // XOOPS API ignores App key (index 0 of params)
             array_shift($this->params);
-            $xoopsapi =& $this->_getXoopsApi($this->params);
+            $xoopsapi = $this->_getXoopsApi($this->params);
             $xoopsapi->_setUser($this->user, $this->isadmin);
             $xoopsapi->deletePost();
         }
@@ -150,7 +150,7 @@ class BloggerApi extends XoopsXmlRpcApi
         } else {
             // XOOPS API ignores App key (index 0 of params)
             array_shift($this->params);
-            $xoopsapi =& $this->_getXoopsApi($this->params);
+            $xoopsapi = $this->_getXoopsApi($this->params);
             $xoopsapi->_setUser($this->user, $this->isadmin);
             $ret =& $xoopsapi->getPost(false);
             if (is_array($ret)) {
@@ -188,7 +188,7 @@ class BloggerApi extends XoopsXmlRpcApi
         } else {
             // XOOPS API ignores App key (index 0 of params)
             array_shift($this->params);
-            $xoopsapi =& $this->_getXoopsApi($this->params);
+            $xoopsapi = $this->_getXoopsApi($this->params);
             $xoopsapi->_setUser($this->user, $this->isadmin);
             $ret =& $xoopsapi->getRecentPosts(false);
             if (is_array($ret)) {
