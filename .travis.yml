@@ -1,0 +1,23 @@
+language: php
+
+php:
+- 7.4
+- 8.1
+- 8.2
+- 8.3
+
+matrix:
+  allow_failures:
+  - php: nightly
+
+install:
+- composer install
+- wget https://github.com/diff-sniffer/git/releases/download/0.3.2/git-phpcs.phar
+
+script:
+- vendor/bin/phpunit --stderr
+- php git-phpcs.phar $TRAVIS_COMMIT_RANGE
+
+after_script:
+- if [ "$TRAVIS_PHP_VERSION" != "7.4snapshot" ] && [ "$TRAVIS_PHP_VERSION" != "nightly" ]; then wget https://scrutinizer-ci.com/ocular.phar; fi
+- if [ "$TRAVIS_PHP_VERSION" != "7.4snapshot" ] && [ "$TRAVIS_PHP_VERSION" != "nightly" ]; then php ocular.phar code-coverage:upload --format=php-clover coverage.clover; fi
