@@ -295,14 +295,13 @@ class MyTextSanitizer
     /**
      * Callback to process email address match
      *
-     * @param array $match array of matched elements
+     * @param array $matches array of matched elements
      *
      * @return string
      */
-    protected function makeClickableCallbackEmailAddress($match)
+    protected function makeClickableCallbackEmailAddress($matches)
     {
-        $email = trim($match[0]);
-        return '<a href="mailto:' . $email . '" title="' . $email . '">' . $email . '</a>';
+        return $matches[1] . '<a href="mailto:' . $matches[2] . '">' . $matches[2] . '</a>';
     }
 
     /**
@@ -315,19 +314,59 @@ class MyTextSanitizer
      */
     public function makeClickable($text)
     {
-        $pattern = "/(^|\s)([-_a-z0-9\'+*$^&%=~!?{}]+(?:\.[-_a-z0-9\'+*$^&%=~!?{}]+)*+@[-a-z0-9.]+\.[a-z]{2,6})/i";
-        $text = preg_replace_callback($pattern, function ($matches) { return $matches[1] . $this->makeClickableCallbackEmailAddress([$matches[2]]); }, $text);
+        // Convert email addresses into clickable mailto links
+        $pattern = "/(^|[\s\n])([-_a-z0-9\'+*$^&%=~!?{}]+(?:\.[-_a-z0-9\'+*$^&%=~!?{}]+)*+@[-a-z0-9.]+\.[a-z]{2,6})/i";
+        $text = preg_replace_callback($pattern, [$this, 'makeClickableCallbackEmailAddress'], $text);
 
-        $pattern = '/(?:\s+|^)(https?:\/\/)([-A-Z0-9.\_*?&:;=#\/\[\]\%@]+)/i';
-        $replacement = '<a href="$1$2" target="_blank" rel="external noopener nofollow">$1$2</a>';
-        $text = preg_replace($pattern, $replacement, $text);
+        // Convert http/https URLs into clickable links
+        $pattern = "/(^|[\s\n]|[\(\[\{])((https?:\/\/[^\s<>\(\)\[\]]+[^\s<>\(\)\[\]\.,!\"'\(\)\[\]{}<>]))/i";
+        $text = preg_replace_callback(
+            $pattern,
+            function ($matches) {
+                return $matches[1] . '<a href="' . $matches[2] . '" target="_blank" rel="external noopener nofollow">' . $matches[2] . '</a>';
+            },
+            $text
+        );
 
-        $pattern = '%(?:\s+|^)(s?ftp://)([-A-Z0-9./_*?&:;=#\[\]\%@]+)%i';
-        $replacement = '<a href="$1$2" target="_blank" rel="external">$1$2</a>';
-        $text = preg_replace($pattern, $replacement, $text);
+        // Convert URLs starting with www. into clickable links
+        $pattern = "/(^|[\s\n]|[\(\[\{])((www\.[^\s<>\(\)\[\]]+[^\s<>\(\)\[\]\.,!\"'\(\)\[\]{}<>]))/i";
+        $text = preg_replace_callback(
+            $pattern,
+            function ($matches) {
+                return $matches[1] . '<a href="http://' . $matches[2] . '" target="_blank" rel="external noopener nofollow">http://' . $matches[2] . '</a>';
+            },
+            $text
+        );
+
+        // Convert ftp URLs into clickable links
+        $pattern = "/(^|[\s\n]|[\(\[\{])((s?ftp:\/\/[^\s<>\(\)\[\]]+[^\s<>\(\)\[\]\.,!\"'\(\)\[\]{}<>]))/i";
+        $text = preg_replace_callback(
+            $pattern,
+            function ($matches) {
+                return $matches[1] . '<a href="' . $matches[2] . '" target="_blank" rel="external">' . $matches[2] . '</a>';
+            },
+            $text
+        );
+
+        // Convert URLs within angular brackets into clickable links
+        $pattern = "/(<)(https?:\/\/[^\s>]+)(>)/i";
+        $text = preg_replace_callback(
+            $pattern,
+            function ($matches) {
+                return $matches[1] . '<a href="' . $matches[2] . '" target="_blank" rel="external noopener nofollow">' . $matches[2] . '</a>' . $matches[3];
+            },
+            $text
+        );
+
+        // Ensure consistent handling of newlines by converting them to <br /> tags
+        $text = nl2br($text);
+
+        // Clean up extra newlines
+        $text = preg_replace('/(<br \/>|<br>)[\n\s]*/', '$1', $text);
 
         return $text;
     }
+
 
     /**
      * MyTextSanitizer::truncate()
