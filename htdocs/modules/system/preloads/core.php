@@ -29,14 +29,14 @@ class SystemCorePreload extends XoopsPreloadItem
     {
         global $xoopsConfig;
         $url = $args[0];
-        if (preg_match("/[\\0-\\31]|about:|script:/i", $url)) {
-            if (!preg_match('/^\b(java)?script:([\s]*)history\.go\(-\d*\)([\s]*[;]*[\s]*)$/si', $url)) {
+        if (preg_match("/[\\0-\\31]|about:|script:/i", (string) $url)) {
+            if (!preg_match('/^\b(java)?script:([\s]*)history\.go\(-\d*\)([\s]*[;]*[\s]*)$/si', (string) $url)) {
                 $url = XOOPS_URL;
             }
         }
         if (!headers_sent() && isset($xoopsConfig['redirect_message_ajax']) && $xoopsConfig['redirect_message_ajax']) {
             $_SESSION['redirect_message'] = $args[2];
-            header('Location: ' . preg_replace('/[&]amp;/i', '&', $url));
+            header('Location: ' . preg_replace('/[&]amp;/i', '&', (string) $url));
             exit();
         }
     }

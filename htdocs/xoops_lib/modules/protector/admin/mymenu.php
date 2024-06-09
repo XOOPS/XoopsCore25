@@ -71,7 +71,7 @@ foreach (array_keys($adminmenu) as $i) {
 }
 if (empty($adminmenu_hilighted)) {
     foreach (array_keys($adminmenu) as $i) {
-        if (false !== stripos($mymenu_uri, $adminmenu[$i]['link'])) {
+        if (false !== stripos($mymenu_uri, (string) $adminmenu[$i]['link'])) {
             $adminmenu[$i]['color']          = '#FFCCCC';
             $GLOBALS['altsysAdminPageTitle'] = $adminmenu[$i]['title'];
             break;

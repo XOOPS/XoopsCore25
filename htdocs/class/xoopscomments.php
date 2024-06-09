@@ -123,7 +123,7 @@ class XoopsComments extends XoopsObject
             return false;
         }
         foreach ($this->cleanVars as $k => $v) {
-            $$k = $v;
+            ${$k} = $v;
         }
         $isnew = false;
         if (empty($comment_id)) {

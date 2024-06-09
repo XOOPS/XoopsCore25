@@ -176,7 +176,7 @@ class Protector
             return false;
         }
         $db_conf = [];
-        while (list($key, $val) = mysqli_fetch_row($result)) {
+        while ([$key, $val] = mysqli_fetch_row($result)) {
             $db_conf[$key] = $val;
         }
         $db_conf_serialized = serialize($db_conf);
@@ -651,7 +651,7 @@ class Protector
                 return null;
             }
             foreach ($this->_dblayertrap_doubtful_needles as $needle) {
-                if (false !== stripos($val, $needle)) {
+                if (false !== stripos($val, (string) $needle)) {
                     $this->_dblayertrap_doubtfuls[] = $val;
                 }
             }
@@ -733,7 +733,7 @@ class Protector
         }
 
         foreach ($this->_bigumbrella_doubtfuls as $doubtful) {
-            if (false !== strpos($s, $doubtful)) {
+            if (false !== strpos($s, (string) $doubtful)) {
                 return 'XSS found by Protector.';
             }
         }
@@ -746,7 +746,7 @@ class Protector
      */
     public function intval_allrequestsendid()
     {
-        global $HTTP_GET_VARS, $HTTP_POST_VARS, $HTTP_COOKIE_VARS;
+        global $_GET, $_POST, $_COOKIE;
 
         if ($this->_done_intval) {
             return true;
@@ -755,27 +755,27 @@ class Protector
         }
 
         foreach ($_GET as $key => $val) {
-            if ('id' === substr($key, -2) && !is_array($_GET[$key])) {
+            if (substr($key, -2) === 'id' && !is_array($_GET[$key])) {
                 $newval     = preg_replace('/[^0-9a-zA-Z_-]/', '', $val);
-                $_GET[$key] = $HTTP_GET_VARS[$key] = $newval;
+                $_GET[$key] = $_GET[$key] = $newval;
                 if ($_REQUEST[$key] == $_GET[$key]) {
                     $_REQUEST[$key] = $newval;
                 }
             }
         }
         foreach ($_POST as $key => $val) {
-            if ('id' === substr($key, -2) && !is_array($_POST[$key])) {
+            if (substr($key, -2) === 'id' && !is_array($_POST[$key])) {
                 $newval      = preg_replace('/[^0-9a-zA-Z_-]/', '', $val);
-                $_POST[$key] = $HTTP_POST_VARS[$key] = $newval;
+                $_POST[$key] = $_POST[$key] = $newval;
                 if ($_REQUEST[$key] == $_POST[$key]) {
                     $_REQUEST[$key] = $newval;
                 }
             }
         }
         foreach ($_COOKIE as $key => $val) {
-            if ('id' === substr($key, -2) && !is_array($_COOKIE[$key])) {
+            if (substr($key, -2) === 'id' && !is_array($_COOKIE[$key])) {
                 $newval        = preg_replace('/[^0-9a-zA-Z_-]/', '', $val);
-                $_COOKIE[$key] = $HTTP_COOKIE_VARS[$key] = $newval;
+                $_COOKIE[$key] = $_COOKIE[$key] = $newval;
                 if ($_REQUEST[$key] == $_COOKIE[$key]) {
                     $_REQUEST[$key] = $newval;
                 }
@@ -790,7 +790,7 @@ class Protector
      */
     public function eliminate_dotdot()
     {
-        global $HTTP_GET_VARS, $HTTP_POST_VARS, $HTTP_COOKIE_VARS;
+        global $_GET, $_POST, $_COOKIE;
 
         if ($this->_done_dotdot) {
             return true;
@@ -810,7 +810,7 @@ class Protector
                 if (' .' !== substr($sanitized_val, -2)) {
                     $sanitized_val .= ' .';
                 }
-                $_GET[$key] = $HTTP_GET_VARS[$key] = $sanitized_val;
+                $_GET[$key] = $sanitized_val;
                 if ($_REQUEST[$key] == $_GET[$key]) {
                     $_REQUEST[$key] = $sanitized_val;
                 }
@@ -1447,7 +1447,7 @@ class Protector
 
     public function disable_features()
     {
-        global $HTTP_POST_VARS, $HTTP_GET_VARS, $HTTP_COOKIE_VARS;
+        global $_POST, $_GET, $_COOKIE;
 
         // disable "Notice: Undefined index: ..."
         $error_reporting_level = error_reporting(0);
@@ -1508,25 +1508,29 @@ class Protector
 
             // preview CSRF zx 2004/12/14
             // news submit.php
-            if (isset($_SERVER['SCRIPT_NAME']) && 'modules/news/submit.php' === substr($_SERVER['SCRIPT_NAME'], -23) && isset($_POST['preview']) && isset($_SERVER['HTTP_REFERER']) && 0 !== strpos($_SERVER['HTTP_REFERER'], XOOPS_URL . '/modules/news/submit.php')) {
-                $HTTP_POST_VARS['nohtml'] = $_POST['nohtml'] = 1;
+            if (isset($_SERVER['SCRIPT_NAME']) && substr($_SERVER['SCRIPT_NAME'], -23) === 'modules/news/submit.php' && isset($_POST['preview']) && isset($_SERVER['HTTP_REFERER']) && strpos($_SERVER['HTTP_REFERER'], XOOPS_URL . '/modules/news/submit.php') !== 0) {
+                $_POST['nohtml'] = 1;
             }
+
             // news admin/index.php
-            if (isset($_SERVER['SCRIPT_NAME']) && 'modules/news/admin/index.php' === substr($_SERVER['SCRIPT_NAME'], -28) && ('preview' === $_POST['op'] || 'preview' === $_GET['op']) && isset($_SERVER['HTTP_REFERER']) && 0 !== strpos($_SERVER['HTTP_REFERER'], XOOPS_URL . '/modules/news/admin/index.php')) {
-                $HTTP_POST_VARS['nohtml'] = $_POST['nohtml'] = 1;
+            if (isset($_SERVER['SCRIPT_NAME']) && substr($_SERVER['SCRIPT_NAME'], -28) === 'modules/news/admin/index.php' && (isset($_POST['op']) && $_POST['op'] === 'preview' || isset($_GET['op']) && $_GET['op'] === 'preview') && isset($_SERVER['HTTP_REFERER']) && strpos($_SERVER['HTTP_REFERER'], XOOPS_URL . '/modules/news/admin/index.php') !== 0) {
+                $_POST['nohtml'] = 1;
             }
+
             // comment comment_post.php
-            if (isset($_POST['com_dopreview']) && isset($_SERVER['HTTP_REFERER']) && false === strpos(substr($_SERVER['HTTP_REFERER'], -16), 'comment_post.php')) {
-                $HTTP_POST_VARS['dohtml'] = $_POST['dohtml'] = 0;
+            if (isset($_POST['com_dopreview']) && isset($_SERVER['HTTP_REFERER']) && strpos(substr($_SERVER['HTTP_REFERER'], -16), 'comment_post.php') === false) {
+                $_POST['dohtml'] = 0;
             }
+
             // disable preview of system's blocksadmin
-            if (isset($_SERVER['SCRIPT_NAME']) && 'modules/system/admin.php' === substr($_SERVER['SCRIPT_NAME'], -24) && ('blocksadmin' === $_GET['fct'] || 'blocksadmin' === $_POST['fct']) && isset($_POST['previewblock'])) {
-                die("Danger! don't use this preview. Use 'altsys module' instead.(by Protector)");
+            if (isset($_SERVER['SCRIPT_NAME']) && substr($_SERVER['SCRIPT_NAME'], -24) === 'modules/system/admin.php' && (isset($_GET['fct']) && $_GET['fct'] === 'blocksadmin' || isset($_POST['fct']) && $_POST['fct'] === 'blocksadmin') && isset($_POST['previewblock'])) {
+                die("Danger! Don't use this preview. Use 'altsys module' instead. (by Protector)");
             }
+
             // tpl preview
-            if (isset($_SERVER['SCRIPT_NAME']) && 'modules/system/admin.php' === substr($_SERVER['SCRIPT_NAME'], -24) && ('tplsets' === $_GET['fct'] || 'tplsets' === $_POST['fct'])) {
-                if ('previewpopup' === $_POST['op'] || 'previewpopup' === $_GET['op'] || isset($_POST['previewtpl'])) {
-                    die("Danger! don't use this preview.(by Protector)");
+            if (isset($_SERVER['SCRIPT_NAME']) && substr($_SERVER['SCRIPT_NAME'], -24) === 'modules/system/admin.php' && (isset($_GET['fct']) && $_GET['fct'] === 'tplsets' || isset($_POST['fct']) && $_POST['fct'] === 'tplsets')) {
+                if (isset($_POST['op']) && $_POST['op'] === 'previewpopup' || isset($_GET['op']) && $_GET['op'] === 'previewpopup' || isset($_POST['previewtpl'])) {
+                    die("Danger! Don't use this preview. (by Protector)");
                 }
             }
         }

@@ -57,7 +57,7 @@ class SystemUserrank extends XoopsObject
         if ($this->isNew()) {
             $blank_img = 'blank.gif';
         } else {
-            $blank_img = str_replace('ranks/', '', $this->getVar('rank_image', 'e'));
+            $blank_img = str_replace('ranks/', '', (string) $this->getVar('rank_image', 'e'));
         }
         if ($action === false) {
             $action = $_SERVER['REQUEST_URI'];

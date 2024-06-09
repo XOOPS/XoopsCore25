@@ -79,7 +79,7 @@ class Protector_postcommon_post_language_match extends ProtectorFilterAbstract
         'german'       => 'A-Za-zÄäÉéÖöÜüß',
         'greek'        => '\p{Greek}',
         'hebrew'       => '\p{Hebrew}',
-        'hungarian'    => '\p{Latin}',
+        'hungarian'    => 'A-Za-zÁáÉéÍíÓóÖöŐőÚúÜüŰű',
         'italian'      => 'A-IL-VZa-il-vzÀÈÉÌÒÙàèéìòù',
         'japanese'     => '\p{Han}\p{Hiragana}\p{Katakana}',
         'korean'       => '\p{Hangul}',

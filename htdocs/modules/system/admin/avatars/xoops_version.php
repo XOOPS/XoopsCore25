@@ -26,6 +26,7 @@ $modversion['help']        = 'page=avatars';
 $modversion['license']     = 'GPL see LICENSE';
 $modversion['official']    = 1;
 $modversion['image']       = 'avatar.png';
+$modversion['icon']        = 'fa fa-user-circle';
 
 $modversion['hasAdmin']  = 1;
 $modversion['adminpath'] = 'admin.php?fct=avatars';

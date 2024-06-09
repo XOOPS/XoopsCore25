@@ -236,7 +236,7 @@ if (!class_exists('XoopsGTicket')) {
                     $area_check = true;
                 }
 
-                if (!empty($found_stub['referer']) && isset($_SERVER['HTTP_REFERER']) && false !== strpos($_SERVER['HTTP_REFERER'], $found_stub['referer'])) {
+                if (!empty($found_stub['referer']) && isset($_SERVER['HTTP_REFERER']) && false !== strpos($_SERVER['HTTP_REFERER'], (string) $found_stub['referer'])) {
                     $referer_check = true;
                 }
 

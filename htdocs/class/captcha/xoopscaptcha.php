@@ -336,7 +336,7 @@ class XoopsCaptcha
      */
     public function setCode($code = null)
     {
-        $code = $code ?? $this->handler->getCode();
+        $code ??= $this->handler->getCode();
         if (!empty($code)) {
             $_SESSION[$this->name . '_code'] = $code;
 

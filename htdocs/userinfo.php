@@ -60,7 +60,7 @@ if (is_object($xoopsUser)) {
         } else {
             $xoopsTpl->assign('user_candelete', false);
         }
-        $thisUser = & $xoopsUser;
+        $thisUser =& $xoopsUser;
     } else {
         /** @var XoopsMemberHandler $member_handler */
         $member_handler = xoops_getHandler('member');
@@ -143,13 +143,13 @@ $xoopsTpl->assign('user_signature', $myts->displayTarea($var, 0, 1, 1));
 if ($thisUser->getVar('user_viewemail') == 1) {
     $xoopsTpl->assign('user_email', $thisUser->getVar('email', 'E'));
 } elseif (is_object($xoopsUser)) {
-    // All admins will be allowed to see emails, even those that are not allowed to edit users (I think it's ok like this)
-    if ($xoopsUserIsAdmin || ($xoopsUser->getVar('uid') == $thisUser->getVar('uid'))) {
-        $xoopsTpl->assign('user_email', $thisUser->getVar('email', 'E'));
-    } else {
-        $xoopsTpl->assign('user_email', '&nbsp;');
+        // All admins will be allowed to see emails, even those that are not allowed to edit users (I think it's ok like this)
+        if ($xoopsUserIsAdmin || ($xoopsUser->getVar('uid') == $thisUser->getVar('uid'))) {
+            $xoopsTpl->assign('user_email', $thisUser->getVar('email', 'E'));
+        } else {
+            $xoopsTpl->assign('user_email', '&nbsp;');
+        }
     }
-}
 if (is_object($xoopsUser)) {
     $xoopsTpl->assign('user_pmlink', "<a href=\"javascript:openWithSelfMain('" . XOOPS_URL . '/pmlite.php?send2=1&amp;to_userid=' . $thisUser->getVar('uid') . "', 'pmlite', 565, 500);\"><img src=\"" . XOOPS_URL . "/images/icons/pm.gif\" alt=\"" . sprintf(_SENDPMTO, $thisUser->getVar('uname')) . "\" /></a>");
 } else {
@@ -183,13 +183,13 @@ foreach ($mids as $mid) {
                     } else {
                         $results[$i]['image'] = 'images/icons/posticon2.gif';
                     }
-
+    
                     if (!preg_match('/^http[s]*:\/\//i', $results[$i]['link'])) {
                         $results[$i]['link'] = 'modules/' . $module->getVar('dirname') . '/' . $results[$i]['link'];
                     }
-
+    
                     $results[$i]['title'] = $myts->htmlSpecialChars($results[$i]['title']);
-                    $results[$i]['time']  = isset($results[$i]['time']) ? formatTimestamp($results[$i]['time']) : '';
+    				$results[$i]['time']  = isset($results[$i]['time']) ? formatTimestamp($results[$i]['time']) : '';
                 }
                 $showall_link = '';
                 if ($count == 5) {
@@ -204,7 +204,7 @@ foreach ($mids as $mid) {
                     ],
                 );
             }
-        }
+          }
         unset($module);
     }
 }

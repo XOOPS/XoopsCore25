@@ -50,7 +50,7 @@ class SystemFineAvatarUploadHandler extends SystemFineUploadHandler
 
     protected function storeUploadedFile($target, $mimeType, $uuid)
     {
-        $pathParts = pathinfo($this->getName());
+        $pathParts = pathinfo((string) $this->getName());
         $avatarName = uniqid('savt', false) . '.' . strtolower($pathParts['extension']);
         $avatarNicename = str_replace(['_', '-'], ' ', $pathParts['filename']);
         $avatarPath = XOOPS_ROOT_PATH . '/uploads/avatars/' . $avatarName;

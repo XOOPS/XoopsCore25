@@ -163,7 +163,7 @@ switch ($op) {
                                     }
 
                                     $class = 'odd';
-                                    $text .= '<table cellspacing="1" class="outer"><tr><th colspan="3" align="center">' . _AM_SYSTEM_TEMPLATES_MODULES . ucfirst($module->getVar('dirname')) . '</th></tr><tr><th align="center">' . _AM_SYSTEM_TEMPLATES_TYPES . '</th><th  align="center">' . _AM_SYSTEM_TEMPLATES_FILES . '</th><th>' . _AM_SYSTEM_TEMPLATES_STATUS . '</th></tr>';
+                                    $text .= '<table cellspacing="1" class="outer"><tr><th colspan="3" align="center">' . _AM_SYSTEM_TEMPLATES_MODULES . ucfirst((string) $module->getVar('dirname')) . '</th></tr><tr><th align="center">' . _AM_SYSTEM_TEMPLATES_TYPES . '</th><th  align="center">' . _AM_SYSTEM_TEMPLATES_FILES . '</th><th>' . _AM_SYSTEM_TEMPLATES_STATUS . '</th></tr>';
 
                                     // create template
                                     $templates      = $tpltpl_handler->find($tplsetname, 'module', null, $moddir);
@@ -206,7 +206,7 @@ switch ($op) {
                                             if (is_object($btplfile)) {
                                                 if (!file_exists($physical_file) || 1 == $forceGenerated) {
                                                     $open = fopen($physical_file, 'w+');
-                                                    if (fwrite($open, $btplfile->getVar('tpl_source', 'n'))) {
+                                                    if (fwrite($open, (string) $btplfile->getVar('tpl_source', 'n'))) {
                                                         $text .= '<tr class="' . $class . '"><td align="center">' . _AM_SYSTEM_TEMPLATES_BLOCKS . '</td><td>' . $physical_file . '</td><td align="center">';
                                                         if (file_exists($physical_file)) {
                                                             $text .= '<img width="16" src="' . system_AdminIcons('success.png') . '" /></td></tr>';
@@ -253,7 +253,7 @@ switch ($op) {
                                 }
 
                                 $class = 'odd';
-                                $text .= '<table cellspacing="1" class="outer"><tr><th colspan="3" align="center">' . _AM_SYSTEM_TEMPLATES_MODULES . ucfirst($module->getVar('dirname')) . '</th></tr><tr><th align="center">' . _AM_SYSTEM_TEMPLATES_TYPES . '</th><th  align="center">' . _AM_SYSTEM_TEMPLATES_FILES . '</th><th>' . _AM_SYSTEM_TEMPLATES_STATUS . '</th></tr>';
+                                $text .= '<table cellspacing="1" class="outer"><tr><th colspan="3" align="center">' . _AM_SYSTEM_TEMPLATES_MODULES . ucfirst((string) $module->getVar('dirname')) . '</th></tr><tr><th align="center">' . _AM_SYSTEM_TEMPLATES_TYPES . '</th><th  align="center">' . _AM_SYSTEM_TEMPLATES_FILES . '</th><th>' . _AM_SYSTEM_TEMPLATES_STATUS . '</th></tr>';
                                 $select_templates_modules = $_REQUEST['select_templates_modules'];
                                 $tempCount                = count($_REQUEST['select_templates_modules']);
                                 for ($l = 0; $l < $tempCount; ++$l) {
@@ -378,7 +378,7 @@ switch ($op) {
             // Save modif
             if (isset($_REQUEST['templates'])) {
                 $open = fopen('' . $path_file . '', 'w+');
-                $temp = stripslashes($_REQUEST['templates']);
+                $temp = stripslashes((string) $_REQUEST['templates']);
                 if (!fwrite($open, xoops_utf8_encode($temp))) {
                     redirect_header('admin.php?fct=tplsets', 2, _AM_SYSTEM_TEMPLATES_ERROR);
                 }

@@ -660,9 +660,7 @@ class MyTextSanitizer
             $patterns = '/\[code([^\]]*?)\](.*)\[\/code\]/sU';
             $text = preg_replace_callback(
                 $patterns,
-                function ($matches) {
-                    return '[code' . $matches[1] . ']' . base64_encode($matches[2]) . '[/code]';
-                },
+                fn($matches) => '[code'. $matches[1] . ']' . base64_encode($matches[2]) . '[/code]',
                 $text,
             );
         }

@@ -313,7 +313,7 @@ function b_system_waiting_show()
             $block['modules'][10]['lang_linkname'] = _MB_SYSTEM_SMARTSECTION;
         }
     }
-    $GLOBALS['xoopsLogger']->addDeprecated("Block 'Waiting Contents' is deprecated since XOOPS 2.5.11, please use waiting module");
+	$GLOBALS['xoopsLogger']->addDeprecated("Block 'Waiting Contents' is deprecated since XOOPS 2.5.11, please use waiting module");
     return $block;
 }
 
@@ -455,7 +455,7 @@ function b_system_comments_show($options)
     include_once XOOPS_ROOT_PATH . '/include/comment_constants.php';
     $comment_handler = xoops_getHandler('comment');
     $criteria        = new CriteriaCompo(new Criteria('com_status', XOOPS_COMMENT_ACTIVE));
-    $criteria->setLimit((int) $options[0]);
+    $criteria->setLimit((int)$options[0]);
     $criteria->setSort('com_created');
     $criteria->setOrder('DESC');
 
@@ -490,8 +490,8 @@ function b_system_comments_show($options)
             $comment_config[$mid] = $modules[$mid]->getInfo('comments');
         }
         $com['id']    = $i;
-        $com['title'] = '<a href="' . XOOPS_URL . '/modules/' . $modules[$mid]->getVar('dirname') . '/' . $comment_config[$mid]['pageName'] . '?' . $comment_config[$mid]['itemName'] . '=' . $comments[$i]->getVar('com_itemid') . '&amp;com_id=' . $i . '&amp;com_rootid=' . $comments[$i]->getVar('com_rootid') . '&amp;' . htmlspecialchars($comments[$i]->getVar('com_exparams'), ENT_QUOTES | ENT_HTML5) . '#comment' . $i . '">' . $comments[$i]->getVar('com_title') . '</a>';
-        $com['icon']  = htmlspecialchars($comments[$i]->getVar('com_icon'), ENT_QUOTES | ENT_HTML5);
+        $com['title'] = '<a href="' . XOOPS_URL . '/modules/' . $modules[$mid]->getVar('dirname') . '/' . $comment_config[$mid]['pageName'] . '?' . $comment_config[$mid]['itemName'] . '=' . $comments[$i]->getVar('com_itemid') . '&amp;com_id=' . $i . '&amp;com_rootid=' . $comments[$i]->getVar('com_rootid') . '&amp;' . htmlspecialchars((string) $comments[$i]->getVar('com_exparams'), ENT_QUOTES | ENT_HTML5) . '#comment' . $i . '">' . $comments[$i]->getVar('com_title') . '</a>';
+        $com['icon']  = htmlspecialchars((string) $comments[$i]->getVar('com_icon'), ENT_QUOTES | ENT_HTML5);
         $com['icon']  = ($com['icon'] != '') ? $com['icon'] : 'icon1.gif';
         $com['time']  = formatTimestamp($comments[$i]->getVar('com_created'), 'm');
         if ($comments[$i]->getVar('com_uid') > 0) {
@@ -504,7 +504,7 @@ function b_system_comments_show($options)
         } else {
             $com['poster'] = $GLOBALS['xoopsConfig']['anonymous'];
         }
-        $block['comments'][] = & $com;
+        $block['comments'][] =& $com;
         unset($com);
     }
 
@@ -528,7 +528,7 @@ function b_system_notification_show()
     // Now build the nested associative array of info to pass
     // to the block template.
     $block      = [];
-    $categories = & notificationSubscribableCategoryInfo();
+    $categories =& notificationSubscribableCategoryInfo();
     if (empty($categories)) {
         return false;
     }
@@ -557,7 +557,7 @@ function b_system_notification_show()
     // Additional form data
     $block['target_page'] = 'notification_update.php';
     // FIXME: better or more standardized way to do this?
-    $script_url                  = explode('/', $_SERVER['PHP_SELF']);
+    $script_url                  = explode('/', (string) $_SERVER['PHP_SELF']);
     $script_name                 = $script_url[count($script_url) - 1];
     $block['redirect_script']    = $script_name;
     $block['submit_button']      = _NOT_UPDATENOW;
@@ -573,7 +573,7 @@ function b_system_notification_show()
  */
 function b_system_comments_edit($options)
 {
-    $inputtag = "<input type='text' name='options[]' value='" . (int) $options[0] . "' />";
+    $inputtag = "<input type='text' name='options[]' value='" . (int)$options[0] . "' />";
     $form     = sprintf(_MB_SYSTEM_DISPLAYC, $inputtag);
 
     return $form;
@@ -587,7 +587,7 @@ function b_system_comments_edit($options)
 function b_system_topposters_edit($options)
 {
     include_once XOOPS_ROOT_PATH . '/class/xoopslists.php';
-    $inputtag = "<input type='text' name='options[]' value='" . (int) $options[0] . "' />";
+    $inputtag = "<input type='text' name='options[]' value='" . (int)$options[0] . "' />";
     $form     = sprintf(_MB_SYSTEM_DISPLAY, $inputtag);
     $form .= '<br>' . _MB_SYSTEM_DISPLAYA . "&nbsp;<input type='radio' id='options[]' name='options[]' value='1'";
     if ($options[1] == 1) {
@@ -687,10 +687,10 @@ function b_system_themes_show($options)
     if ($options[0] == 1) {
         $themeSelect = '<img vspace="2" id="xoops_theme_img" src="'
             . XOOPS_THEME_URL . '/' . $xoopsConfig['theme_set'] . '/shot.gif" '
-            . ' alt="screenshot" width="' . (int) $options[1] . '" />'
+            . ' alt="screenshot" width="' . (int)$options[1] . '" />'
             . '<br>';
         $select->setExtra(' onchange="showImgSelected(\'xoops_theme_img\', \'xoops_theme_select\', \'themes\', \'/shot.gif\', '
-            . '\'' . XOOPS_URL . '\');" ');
+            .  '\'' . XOOPS_URL . '\');" ');
         $selectTray = new XoopsFormElementTray('');
         $selectTray->addElement($select);
         $selectTray->addElement(new XoopsFormButton('', 'submit', _GO, 'submit'));

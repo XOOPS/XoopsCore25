@@ -42,7 +42,7 @@ class SystemAvatar extends XoopsAvatar
         if ($this->isNew()) {
             $blank_img = 'blank.gif';
         } else {
-            $blank_img = str_replace('avatars/', '', $this->getVar('avatar_file', 'e'));
+            $blank_img = str_replace('avatars/', '', (string) $this->getVar('avatar_file', 'e'));
         }
         // Get User Config
         /** @var XoopsConfigHandler $config_handler */
@@ -103,7 +103,7 @@ class SystemAvatar extends XoopsAvatar
 class SystemAvatarHandler extends XoopsAvatarHandler
 {
 
-    public $className = '';
+    public string $className = '';
     /**
      * @param $db
      */

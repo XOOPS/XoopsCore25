@@ -321,12 +321,12 @@ switch ($op) {
                 $img = '';
                 if ($htmlbanner) {
                     if ($htmlcode) {
-                        $img .= html_entity_decode($htmlcode);
+                        $img .= html_entity_decode((string) $htmlcode);
                     } else {
                         $img .= ' <iframe src=' . $imageurl . ' border="0" scrolling="no" allowtransparency="true" width="480px" height="60px" style="border:0" alt=""> </iframe>';
                     }
                 } else {
-                    if (strtolower(substr($imageurl, strrpos($imageurl, '.'))) === '.swf') {
+                    if (strtolower(substr((string) $imageurl, strrpos((string) $imageurl, '.'))) === '.swf') {
                         $img .= "<object classid=\"clsid:D27CDB6E-AE6D-11cf-96B8-444553540000\" codebase=\"http://download.macromedia.com/pub/shockwave/cabs/flash/ swflash.cab#version=6,0,40,0\" width=\"468\" height=\"60\">";
                         $img .= "<param name=movie value=\"$imageurl\">";
                         $img .= '<param name=quality value=high>';

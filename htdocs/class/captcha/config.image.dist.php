@@ -35,11 +35,5 @@ return $config = [
     'background_num'  => 50,
     // Number of background images to generate
     'polygon_point'   => 3,
-    'skip_characters' => [
-        'o',
-        '0',
-        'i',
-        'l',
-        '1',
-    ],
+    'skip_characters' => ['o', '0', 'i', 'l', '1'],
 ]; // characters that should not be used

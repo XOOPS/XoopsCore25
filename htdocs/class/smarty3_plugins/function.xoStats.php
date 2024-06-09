@@ -1,7 +1,7 @@
 <?php
 
-use Xmf\Module\Helper\Cache;
 use Xmf\IPAddress;
+use Xmf\Module\Helper\Cache;
 
 /**
  * Smarty plugin

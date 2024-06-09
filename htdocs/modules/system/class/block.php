@@ -226,7 +226,7 @@ class SystemBlock extends XoopsBlock
                     include_once $file;
                 }
                 include_once $GLOBALS['xoops']->path('modules/' . $this->getVar('dirname') . '/blocks/' . $this->getVar('func_file'));
-                $options   = explode('|', $this->getVar('options'));
+                $options   = explode('|', (string) $this->getVar('options'));
                 $edit_form = $edit_func($options);
                 if (!$edit_form) {
                     return false;
@@ -269,7 +269,7 @@ class SystemBlock extends XoopsBlock
                 // S : use text sanitizater (smilies enabled)
                 // T : use text sanitizater (smilies disabled)
                 if ($c_type === 'H') {
-                    return str_replace('{X_SITEURL}', XOOPS_URL . '/', $this->getVar('content', 'n'));
+                    return str_replace('{X_SITEURL}', XOOPS_URL . '/', (string) $this->getVar('content', 'n'));
                 } elseif ($c_type === 'P') {
                     ob_start();
                     echo eval($this->getVar('content', 'n'));
@@ -279,12 +279,12 @@ class SystemBlock extends XoopsBlock
                     return str_replace('{X_SITEURL}', XOOPS_URL . '/', $content);
                 } elseif ($c_type === 'S') {
                     $myts    = \MyTextSanitizer::getInstance();
-                    $content = str_replace('{X_SITEURL}', XOOPS_URL . '/', $this->getVar('content', 'n'));
+                    $content = str_replace('{X_SITEURL}', XOOPS_URL . '/', (string) $this->getVar('content', 'n'));
 
                     return $myts->displayTarea($content, 1, 1);
                 } else {
                     $myts    = \MyTextSanitizer::getInstance();
-                    $content = str_replace('{X_SITEURL}', XOOPS_URL . '/', $this->getVar('content', 'n'));
+                    $content = str_replace('{X_SITEURL}', XOOPS_URL . '/', (string) $this->getVar('content', 'n'));
 
                     return $myts->displayTarea($content, 1, 0);
                 }
@@ -675,7 +675,7 @@ class SystemBlockHandler extends XoopsPersistableObjectHandler
         $db = XoopsDatabaseFactory::getDatabaseConnection();
         if (isset($showFunc)) {
             // showFunc is set for more strict comparison
-            $sql = sprintf('SELECT COUNT(*) FROM %s WHERE mid = %d AND func_num = %d AND show_func = %s', $db->prefix('newblocks'), $moduleId, $funcNum, $db->quoteString(trim($showFunc)));
+            $sql = sprintf('SELECT COUNT(*) FROM %s WHERE mid = %d AND func_num = %d AND show_func = %s', $db->prefix('newblocks'), $moduleId, $funcNum, $db->quoteString(trim((string) $showFunc)));
         } else {
             $sql = sprintf('SELECT COUNT(*) FROM %s WHERE mid = %d AND func_num = %d', $db->prefix('newblocks'), $moduleId, $funcNum);
         }

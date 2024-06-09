@@ -619,7 +619,7 @@ class xos_opal_Theme
      */
     public function addLanguage($type = 'main', $language = null)
     {
-        $language = $language ?? $GLOBALS['xoopsConfig']['language'];
+        $language ??= $GLOBALS['xoopsConfig']['language'];
         if (!file_exists($fileinc = $this->path . "/language/{$language}/{$type}.php")) {
             if (!file_exists($fileinc = $this->path . "/language/english/{$type}.php")) {
                 return false;

@@ -26,6 +26,7 @@ $modversion['help']        = 'page=images';
 $modversion['license']     = 'GPL see LICENSE';
 $modversion['official']    = 1;
 $modversion['image']       = 'images.png';
+$modversion['icon']        = 'fa fa-image';
 
 $modversion['hasAdmin']  = 1;
 $modversion['adminpath'] = 'admin.php?fct=images';

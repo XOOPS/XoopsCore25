@@ -86,7 +86,7 @@ class Snoopy
     // http accept types
     public $accept = "image/gif, image/x-xbitmap, image/jpeg, image/pjpeg, */*";
 
-    public $results = ""; // where the content is put
+    public $results = []; // where the content is put
 
     public $error = ""; // error messages sent here
     public $response_code = ""; // response code returned from server
@@ -741,19 +741,9 @@ class Snoopy
         $match_root =
             $match_part["scheme"] . "://" . $match_part["host"];
 
-        $search = ["|^http://" . preg_quote($this->host) . "|i",
-            "|^(\/)|i",
-            "|^(?!http://)(?!mailto:)|i",
-            "|/\./|",
-            "|/[^\/]+/\.\./|",
-        ];
+        $search = ["|^http://" . preg_quote($this->host) . "|i", "|^(\/)|i", "|^(?!http://)(?!mailto:)|i", "|/\./|", "|/[^\/]+/\.\./|"];
 
-        $replace = ["",
-            $match_root . "/",
-            $match . "/",
-            "/",
-            "/",
-        ];
+        $replace = ["", $match_root . "/", $match . "/", "/", "/"];
 
         $expandedLinks = preg_replace($search, $replace, $links);
 

@@ -125,14 +125,14 @@ class XoopsSystemGui
                 $i       = 0;
                 $current = $i;
                 foreach ($xoopsModule->adminmenu as $menu) {
-                    if (stripos($_SERVER['REQUEST_URI'], $menu['link']) !== false) {
+                    if (stripos((string) $_SERVER['REQUEST_URI'], (string) $menu['link']) !== false) {
                         $current = $i;
                     }
                     $menu_handler->addMenuTabs($menu['link'], $menu['title']);
                     ++$i;
                 }
                 if ($xoopsModule->getInfo('help')) {
-                    if (stripos($_SERVER['REQUEST_URI'], 'admin/' . $xoopsModule->getInfo('help')) !== false) {
+                    if (stripos((string) $_SERVER['REQUEST_URI'], 'admin/' . $xoopsModule->getInfo('help')) !== false) {
                         $current = $i;
                     }
                     $menu_handler->addMenuTabs('../system/help.php?mid=' . $xoopsModule->getVar('mid', 's') . '&amp;' . $xoopsModule->getInfo('help'), _AM_SYSTEM_HELP);

@@ -114,7 +114,7 @@ switch ($op) {
             //$criteria_tray->addElement($regd_max);
             $form->addElement($criteria_tray);
         }
-        $fname_text      = new XoopsFormText(_AM_SYSTEM_MAILUSERS_MAILFNAME, 'mail_fromname', 30, 255, htmlspecialchars($xoopsConfig['sitename'], ENT_QUOTES | ENT_HTML5));
+        $fname_text      = new XoopsFormText(_AM_SYSTEM_MAILUSERS_MAILFNAME, 'mail_fromname', 30, 255, htmlspecialchars((string) $xoopsConfig['sitename'], ENT_QUOTES | ENT_HTML5));
         $fromemail       = !empty($xoopsConfig['adminmail']) ? $xoopsConfig['adminmail'] : $xoopsUser->getVar('email', 'E');
         $femail_text     = new XoopsFormText(_AM_SYSTEM_MAILUSERS_MAILFMAIL, 'mail_fromemail', 30, 255, $fromemail);
         $subject_caption = _AM_SYSTEM_MAILUSERS_MAILSUBJECT . "<br><br><span style='font-size:x-small;font-weight:bold;'>" . _AM_SYSTEM_MAILUSERS_MAILTAGS . "</span><br><span style='font-size:x-small;font-weight:normal;'>" . _AM_SYSTEM_MAILUSERS_MAILTAGS2 . '</span>';
@@ -162,13 +162,13 @@ switch ($op) {
                     $criteria[] = 'user_mailok = 1';
                 }
                 if (!empty($_POST['mail_lastlog_min'])) {
-                    $time = strtotime(trim($_POST['mail_lastlog_min']));
+                    $time = strtotime(trim((string) $_POST['mail_lastlog_min']));
                     if ($time > 0) {
                         $criteria[] = "last_login > $time";
                     }
                 }
                 if (!empty($_POST['mail_lastlog_max'])) {
-                    $time = strtotime(trim($_POST['mail_lastlog_max']));
+                    $time = strtotime(trim((string) $_POST['mail_lastlog_max']));
                     if ($time > 0) {
                         $criteria[] = "last_login < $time";
                     }
@@ -191,13 +191,13 @@ switch ($op) {
                 }
             }
             if (!empty($_POST['mail_regd_min'])) {
-                $time = strtotime(trim($_POST['mail_regd_min']));
+                $time = strtotime(trim((string) $_POST['mail_regd_min']));
                 if ($time > 0) {
                     $criteria[] = "user_regdate > $time";
                 }
             }
             if (!empty($_POST['mail_regd_max'])) {
-                $time = strtotime(trim($_POST['mail_regd_max']));
+                $time = strtotime(trim((string) $_POST['mail_regd_max']));
                 if ($time > 0) {
                     $criteria[] = "user_regdate < $time";
                 }

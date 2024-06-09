@@ -323,17 +323,13 @@ if (!class_exists('\BaseStringHelper', false)) {
                 if ($trim === true) {
                     $trim = 'trim';
                 } elseif (!is_callable($trim)) {
-                    $trim = function ($v) use ($trim) {
-                        return trim($v, $trim);
-                    };
+                    $trim = fn($v) => trim($v, $trim);
                 }
                 $result = array_map($trim, $result);
             }
             if ($skipEmpty) {
                 // Wrapped with array_values to make array keys sequential after empty values removing
-                $result = array_values(array_filter($result, function ($value) {
-                    return $value !== '';
-                }));
+                $result = array_values(array_filter($result, fn($value) => $value !== ''));
             }
 
             return $result;

@@ -27,7 +27,7 @@ $log_table = $db->prefix($mydirname . '_log');
 // Protector object
 require_once dirname(__DIR__) . '/class/protector.php';
 $db        = XoopsDatabaseFactory::getDatabaseConnection();
-$protector = Protector::getInstance($db->conn);
+$protector = Protector::getInstance();
 $conf      = $protector->getConf();
 
 //
@@ -47,7 +47,7 @@ if (!empty($_POST['action'])) {
         $lines   = empty($_POST['bad_ips']) ? [] : explode("\n", trim($_POST['bad_ips']));
         $bad_ips = [];
         foreach ($lines as $line) {
-            @list($bad_ip, $jailed_time) = explode('|', $line, 2);
+            @[$bad_ip, $jailed_time] = explode('|', $line, 2);
             $bad_ips[trim($bad_ip)] = empty($jailed_time) ? 0x7fffffff : (int) $jailed_time;
         }
         if (!$protector->write_file_badips($bad_ips)) {
@@ -115,7 +115,7 @@ if (!empty($_POST['action'])) {
         }
         $buf    = [];
         $ids    = [];
-        while (false !== (list($lid, $ip, $type) = $db->fetchRow($result))) {
+        while (false !== ([$lid, $ip, $type] = $db->fetchRow($result))) {
             if (isset($buf[$ip . $type])) {
                 $ids[] = $lid;
             } else {
@@ -262,7 +262,7 @@ echo "
 
 // body of log listing
 $oddeven = 'odd';
-while (false !== (list($lid, $uid, $ip, $agent, $type, $description, $timestamp, $uname) = $db->fetchRow($result))) {
+while (false !== ([$lid, $uid, $ip, $agent, $type, $description, $timestamp, $uname] = $db->fetchRow($result))) {
     $oddeven = ($oddeven === 'odd' ? 'even' : 'odd');
     $style = '';
 

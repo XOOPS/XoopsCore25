@@ -56,7 +56,7 @@ class SystemSmilies extends XoopsObject
         if ($this->isNew()) {
             $blank_img = 'blank.gif';
         } else {
-            $blank_img = str_replace('smilies/', '', $this->getVar('smile_url', 'e'));
+            $blank_img = str_replace('smilies/', '', (string) $this->getVar('smile_url', 'e'));
         }
         if ($action === false) {
             $action = $_SERVER['REQUEST_URI'];

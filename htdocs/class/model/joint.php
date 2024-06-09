@@ -177,7 +177,7 @@ class XoopsModelJoint extends XoopsModelAbstract
             return false;
         }
         $ret = [];
-        while (false !== (list($id, $count) = $this->handler->db->fetchRow($result))) {
+        while (false !== ([$id, $count] = $this->handler->db->fetchRow($result))) {
             $ret[$id] = $count;
         }
 

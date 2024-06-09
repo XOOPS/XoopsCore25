@@ -143,7 +143,7 @@ function bannerstats()
             );
         }
         $i      = 0;
-        while (false !== (list($bid, $imptotal, $impmade, $clicks, $date) = $xoopsDB->fetchRow($result))) {
+        while (false !== ([$bid, $imptotal, $impmade, $clicks, $date] = $xoopsDB->fetchRow($result))) {
             if ($impmade == 0) {
                 $percent = 0;
             } else {
@@ -177,7 +177,7 @@ function bannerstats()
                 E_USER_ERROR,
             );
         }
-        while (false !== (list($bid, $imageurl, $clickurl, $htmlbanner, $htmlcode) = $xoopsDB->fetchRow($result))) {
+        while (false !== ([$bid, $imageurl, $clickurl, $htmlbanner, $htmlcode] = $xoopsDB->fetchRow($result))) {
             $numrows = $xoopsDB->getRowsNum($result);
             if ($numrows > 1) {
                 echo '<br>';
@@ -224,7 +224,7 @@ function bannerstats()
                   <tfoot><tr><td colspan='6'></td></tr></tfoot>";
 
             $i = 0;
-            while (false !== (list($bid, $impressions, $clicks, $datestart, $dateend) = $xoopsDB->fetchRow($result))) {
+            while (false !== ([$bid, $impressions, $clicks, $datestart, $dateend] = $xoopsDB->fetchRow($result))) {
                 if ($impressions == 0) {
                     $percent = 0;
                 } else {

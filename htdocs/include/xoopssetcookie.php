@@ -52,7 +52,7 @@ function xoops_setcookie()
     }
 
     // make samesite=strict the default
-    $args['options']['samesite'] = $args['options']['samesite'] ?? 'strict';
+    $args['options']['samesite'] ??= 'strict';
     if (!isset($args['value'])){
         $args['value'] = '';
     }

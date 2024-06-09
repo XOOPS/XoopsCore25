@@ -67,7 +67,7 @@ class XoopsCaptchaImageHandler
 
         if ($this->mode === 'bmp') {
             $this->config['num_chars'] = 4;
-            $this->code                = mt_rand(pow(10, $this->config['num_chars'] - 1), (int)str_pad('9', $this->config['num_chars'], '9'));
+            $this->code                = mt_rand(10 ** ($this->config['num_chars'] - 1), (int)str_pad('9', $this->config['num_chars'], '9'));
         } else {
             $raw_code = md5(uniqid(mt_rand(), true));
             if (!empty($this->config['skip_characters'])) {

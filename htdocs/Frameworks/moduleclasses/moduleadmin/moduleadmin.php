@@ -357,11 +357,11 @@ class ModuleAdmin
                 $reqVer            = $curVer = 0;
                 for ($i = 0; $i < $icount; ++$i) {
                     $j--;
-                    $reqVer += $iReqVerParts[$i] * pow(10, $j);
+                    $reqVer += $iReqVerParts[$i] * 10 ** $j;
                     if (isset($iCurrentVerParts[$i])) {
-                        $curVer += $iCurrentVerParts[$i] * pow(10, $j);
+                        $curVer += $iCurrentVerParts[$i] * 10 ** $j;
                     } else {
-                        $curVer *= pow(10, $j);
+                        $curVer *= 10 ** $j;
                     }
                 }
                 if ($reqVer > $curVer) {

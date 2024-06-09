@@ -68,7 +68,7 @@ class ProfileVisibilityHandler extends XoopsPersistableObjectHandler
         $field_ids = [];
         $result = $this->db->query($sql);
         if ($this->db->isResultSet($result)) {
-            while (false !== (list($field_id) = $this->db->fetchRow($result))) {
+            while (false !== ([$field_id] = $this->db->fetchRow($result))) {
                 $field_ids[] = $field_id;
             }
         }

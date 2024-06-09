@@ -140,7 +140,7 @@ class XoopsSessionHandler
 
         $result = $this->db->query($sql);
         if ($this->db->isResultSet($result)) {
-            if (list($sess_data, $sess_ip) = $this->db->fetchRow($result)) {
+            if ([$sess_data, $sess_ip] = $this->db->fetchRow($result)) {
                 if ($this->securityLevel > 1) {
                     if (false === $ip->sameSubnet(
                         $sess_ip,

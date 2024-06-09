@@ -54,7 +54,7 @@ class SystemFineImUploadHandler extends SystemFineUploadHandler
         $imgcatHandler = xoops_getHandler('imagecategory');
         $imgcat = $imgcatHandler->get($this->claims->cat);
 
-        $pathParts = pathinfo($this->getName());
+        $pathParts = pathinfo((string) $this->getName());
 
         $imageName = uniqid('img', false) . '.' . strtolower($pathParts['extension']);
         $imageNicename = str_replace(['_', '-'], ' ', $pathParts['filename']);

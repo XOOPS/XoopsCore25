@@ -125,7 +125,7 @@ class ProtectorMySQLDatabase extends XoopsMySQLDatabaseProxy
                     // check the request stayed inside of strings as whole
                     $ok_flag = false;
                     foreach ($strings as $string) {
-                        if (false !== strpos($string, $request)) {
+                        if (false !== strpos($string, (string) $request)) {
                             $ok_flag = true;
                             break;
                         }
@@ -171,7 +171,7 @@ class ProtectorMySQLDatabase extends XoopsMySQLDatabaseProxy
     {
         $sql4check = substr($sql, 7);
         foreach ($this->doubtful_needles as $needle) {
-            if (false !== stripos($sql4check, $needle)) {
+            if (false !== stripos($sql4check, (string) $needle)) {
                 $this->checkSql($sql);
                 break;
             }

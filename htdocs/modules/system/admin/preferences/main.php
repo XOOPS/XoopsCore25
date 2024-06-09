@@ -476,7 +476,7 @@ switch ($op) {
                             foreach (array_keys($imagefiles) as $j) {
                                 if (!$fp = fopen(XOOPS_CACHE_PATH . '/' . $newtplset . '_' . $imagefiles[$j]->getVar('imgsetimg_file'), 'wb')) {
                                 } else {
-                                    fwrite($fp, $imagefiles[$j]->getVar('imgsetimg_body'));
+                                    fwrite($fp, (string) $imagefiles[$j]->getVar('imgsetimg_body'));
                                     fclose($fp);
                                 }
                             }

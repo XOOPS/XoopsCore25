@@ -59,16 +59,16 @@ function userCheck($uname, $email, $pass, $vpass)
 
 // from $_POST we use keys: op, uname, email, url, pass, vpass, timezone_offset,
 //                          user_viewemail, user_mailok, agree_disc
-$op = Request::getCmd('op', 'register', 'POST');
-$uname = Request::getString('uname', '', 'POST');
-$email = Request::getEmail('email', '', 'POST');
-$url = Request::getUrl('url', '', 'POST');
-$pass = Request::getString('pass', '', 'POST');
-$vpass = Request::getString('vpass', '', 'POST');
-$timezone_offset = Request::getFloat('cid', $xoopsConfig['default_TZ'], 'POST');
-$user_viewemail = Request::getBool('user_viewemail', false, 'POST');
-$user_mailok = Request::getBool('user_mailok', false, 'POST');
-$agree_disc = Request::getBool('agree_disc', false, 'POST');
+    $op = Request::getCmd('op', 'register', 'POST');
+    $uname = Request::getString('uname', '', 'POST');
+    $email = Request::getEmail('email', '', 'POST');
+    $url = Request::getUrl('url', '', 'POST');
+    $pass = Request::getString('pass', '', 'POST');
+    $vpass = Request::getString('vpass', '', 'POST');
+    $timezone_offset = Request::getFloat('cid', $xoopsConfig['default_TZ'], 'POST');
+    $user_viewemail = Request::getBool('user_viewemail', false, 'POST');
+    $user_mailok = Request::getBool('user_mailok', false, 'POST');
+    $agree_disc = Request::getBool('agree_disc', false, 'POST');
 
 // from $_GET we may use keys: op, id, actkey
 $clean_id     = '';
@@ -117,7 +117,7 @@ switch ($op) {
             echo "<input type='hidden' name='uname' value='" . $myts->htmlSpecialChars($uname) . "' />
                   <input type='hidden' name='email' value='" . $myts->htmlSpecialChars($email) . "' />
                   <input type='hidden' name='user_viewemail' value='" . $user_viewemail . "' />
-                  <input type='hidden' name='timezone_offset' value='" . (float) $timezone_offset . "' />
+                  <input type='hidden' name='timezone_offset' value='" . (float)$timezone_offset . "' />
                   <input type='hidden' name='url' value='" . $myts->htmlSpecialChars($url) . "' />
                   <input type='hidden' name='pass' value='" . $myts->htmlSpecialChars($pass) . "' />
                   <input type='hidden' name='vpass' value='" . $myts->htmlSpecialChars($vpass) . "' />

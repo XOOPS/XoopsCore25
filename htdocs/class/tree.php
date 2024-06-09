@@ -309,7 +309,7 @@ class XoopsObjectTree
             return $this->tree;
         }
         $message = 'Undefined property: XoopsObjectTree::$' . $name . " in {$trace[0]['file']} line {$trace[0]['line']}";
-        $GLOBALS['xoopsLogger']->addExtra(get_called_class(), $message);
+        $GLOBALS['xoopsLogger']->addExtra(static::class, $message);
 
         return null;
     }

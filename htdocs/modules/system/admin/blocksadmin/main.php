@@ -8,6 +8,7 @@
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  */
+
 use Xmf\Request;
 
 /**
@@ -35,9 +36,9 @@ $sel = [
 ];
 
 foreach ($sel as $key => $value) {
-    $temp = isset($_SESSION[$key]) ? (int) $_SESSION[$key] : $value;
-    $$key = Request::getInt($key, $temp);
-    $_SESSION[$key] = $$key;
+    $temp = isset($_SESSION[$key]) ? (int)$_SESSION[$key] : $value;
+    ${$key} = Request::getInt($key, $temp);
+    $_SESSION[$key] = ${$key};
 }
 
 $type = Request::getString('type', '');
@@ -154,14 +155,14 @@ switch ($op) {
         }
 
         $arr = [];
-        if (!empty($blocks_arr)) {
-            foreach (array_keys($blocks_arr) as $i) {
-                $arr[$i] = $blocks_arr[$i]->toArray();
-                $xoopsTpl->appendByRef('blocks', $arr[$i]);
-            }
-        } else {
-            $xoopsTpl->assign('blocks', []);
-        }
+		if (!empty($blocks_arr)){
+			foreach (array_keys($blocks_arr) as $i) {
+				$arr[$i] = $blocks_arr[$i]->toArray();
+				$xoopsTpl->appendByRef('blocks', $arr[$i]);
+			}
+		} else {
+			$xoopsTpl->assign('blocks', []);
+		}
         $block     = $block_handler->create();
         $blockform = $block->getForm();
         $xoopsTpl->assign('blockform', $blockform->render());
@@ -430,8 +431,8 @@ switch ($op) {
             // Display Question
             xoops_confirm(
                 [
-                    'op'  => 'delete_ok',
-                    'fct' => 'blocksadmin',
+                              'op'  => 'delete_ok',
+                              'fct' => 'blocksadmin',
                     'bid' => $block->getVar('bid'),
                 ],
                 'admin.php',

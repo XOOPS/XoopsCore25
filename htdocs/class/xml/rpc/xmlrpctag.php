@@ -113,25 +113,7 @@ class XoopsXmlRpcTag
      */
     public function &encode(&$text)
     {
-        $text = preg_replace(
-            ["/\&([a-z\d\#]+)\;/i", "/\&/", "/\#\|\|([a-z\d\#]+)\|\|\#/i"],
-            [
-                "#||\\1||#",
-                '&amp;',
-                "&\\1;",
-            ],
-            str_replace(
-                [
-                    '<',
-                    '>',
-                ],
-                [
-                    '&lt;',
-                    '&gt;',
-                ],
-                $text,
-            ),
-        );
+        $text = preg_replace(["/\&([a-z\d\#]+)\;/i", "/\&/", "/\#\|\|([a-z\d\#]+)\|\|\#/i"], ["#||\\1||#", '&amp;', "&\\1;"], str_replace(['<', '>'], ['&lt;', '&gt;'], $text));
 
         return $text;
     }

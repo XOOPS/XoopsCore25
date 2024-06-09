@@ -16,6 +16,7 @@
  * @since
  * @author       XOOPS Development Team, Kazumi Ono (AKA onokazu)
  */
+
 use Xmf\Request;
 
 // Check users rights
@@ -59,9 +60,9 @@ $status_array[0] = _AM_SYSTEM_COMMENTS_FORM_ALL_STATUS;
 
 $comments = [];
 //$status   = (!isset($_REQUEST['status']) || !in_array((int)($_REQUEST['status']), array_keys($status_array))) ? 0 : (int)($_REQUEST['status']);
-$status = (!isset($_REQUEST['status']) || !array_key_exists((int) $_REQUEST['status'], $status_array)) ? 0 : (int) $_REQUEST['status'];
+$status = (!isset($_REQUEST['status']) || !array_key_exists((int)$_REQUEST['status'], $status_array)) ? 0 : (int)$_REQUEST['status'];
 
-$module          = !isset($_REQUEST['module']) ? 0 : (int) $_REQUEST['module'];
+$module          = !isset($_REQUEST['module']) ? 0 : (int)$_REQUEST['module'];
 $modules_Handler = xoops_getHandler('module');
 $module_array    = $modules_Handler->getList(new Criteria('hascomments', 1));
 $module_array[0] = _AM_SYSTEM_COMMENTS_FORM_ALL_MODS;
@@ -80,7 +81,7 @@ switch ($op) {
                 /** @var \XoopsModule $module */
                 $module         = $module_handler->get($comment->getVar('com_modid'));
                 $comment_config = $module->getInfo('comments');
-                header('Location: ' . XOOPS_URL . '/modules/' . $module->getVar('dirname') . '/' . $comment_config['pageName'] . '?' . $comment_config['itemName'] . '=' . $comment->getVar('com_itemid') . '&com_id=' . $comment->getVar('com_id') . '&com_rootid=' . $comment->getVar('com_rootid') . '&com_mode=thread&' . str_replace('&amp;', '&', $comment->getVar('com_exparams')) . '#comment' . $comment->getVar('com_id'));
+                header('Location: ' . XOOPS_URL . '/modules/' . $module->getVar('dirname') . '/' . $comment_config['pageName'] . '?' . $comment_config['itemName'] . '=' . $comment->getVar('com_itemid') . '&com_id=' . $comment->getVar('com_id') . '&com_rootid=' . $comment->getVar('com_rootid') . '&com_mode=thread&' . str_replace('&amp;', '&', (string) $comment->getVar('com_exparams')) . '#comment' . $comment->getVar('com_id'));
                 exit();
             }
         }
@@ -129,7 +130,7 @@ switch ($op) {
         $verif    = false;
         if (isset($_POST['comments_after']) && isset($_POST['comments_before'])) {
             if ($_POST['comments_after'] != $_POST['comments_before']) {
-                $com_after = strtotime(Request::getString('comments_after', time()));
+				$com_after = strtotime(Request::getString('comments_after', time()));
                 $com_before = strtotime(Request::getString('comments_before', time()));
                 if ($com_after) {
                     $criteria->add(new Criteria('com_created', $com_after, '>'));
@@ -286,7 +287,7 @@ switch ($op) {
                     }
                 }
                 // End edit by voltan
-                $comments_icon = ($comments_arr[$i]->getVar('com_icon') == '') ? '/images/icons/no_posticon.gif' : '/images/subject/' . htmlspecialchars($comments_arr[$i]->getVar('com_icon'), ENT_QUOTES | ENT_HTML5);
+                $comments_icon = ($comments_arr[$i]->getVar('com_icon') == '') ? '/images/icons/no_posticon.gif' : '/images/subject/' . htmlspecialchars((string) $comments_arr[$i]->getVar('com_icon'), ENT_QUOTES | ENT_HTML5);
                 $comments_icon = '<img src="' . XOOPS_URL . $comments_icon . '" alt="" />';
 
                 $comments['comments_id']           = $com_id;

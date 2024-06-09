@@ -111,7 +111,7 @@ class XoopsSystemCpanel
         foreach ($guis as $gui) {
             if ($file = XOOPS_ADMINTHEME_PATH . '/' . $gui . '/' . $gui . '.php') {
                 include_once $file;
-                if (class_exists($class = 'XoopsGui' . ucfirst($gui))) {
+                if (class_exists($class = 'XoopsGui' . ucfirst((string) $gui))) {
                     call_user_func([$class, 'flush']);
                 }
             }

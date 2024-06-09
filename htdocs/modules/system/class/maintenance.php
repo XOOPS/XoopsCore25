@@ -60,7 +60,7 @@ class SystemMaintenance
         }
         while (false !== ($myrow = $this->db->fetchArray($result))) {
             $value          = array_values($myrow);
-            $value          = substr($value[0], strlen(XOOPS_DB_PREFIX) + 1);
+            $value          = substr((string) $value[0], strlen(XOOPS_DB_PREFIX) + 1);
             $tables[$value] = $value;
         }
         if (true === (bool) $array) {
@@ -289,7 +289,7 @@ class SystemMaintenance
             /** @var XoopsModuleHandler $module_handler */
             $module_handler = xoops_getHandler('module');
             $module         = $module_handler->getByDirname($modules[$i]);
-            $ret[1] .= '<tr><th colspan="3" align="left">' . ucfirst($modules[$i]) . '</th></tr>';
+            $ret[1] .= '<tr><th colspan="3" align="left">' . ucfirst((string) $modules[$i]) . '</th></tr>';
             $modtables = $module->getInfo('tables');
             if ($modtables !== false && \is_array($modtables)) {
                 foreach ($modtables as $table) {

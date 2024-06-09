@@ -28,7 +28,7 @@ if (isset($fct) && $fct === 'users') {
 $error = false;
 if ($admintest != 0) {
     if (isset($fct) && $fct !== '') {
-        $fct = preg_replace("/[^a-z0-9_\-]/i", '', $fct);
+        $fct = preg_replace("/[^a-z0-9_\-]/i", '', (string) $fct);
         if (file_exists(XOOPS_ROOT_PATH . '/modules/' . $xoopsModule->getVar('dirname', 'n') . '/admin/' . $fct . '/xoops_version.php')) {
             // Load language file
             system_loadLanguage($fct, $xoopsModule->getVar('dirname', 'n'));
@@ -121,8 +121,8 @@ if (false !== $error) {
                     $category = isset($modversion['category']) ? (int) $modversion['category'] : 0;
                     if (false !== $all_ok || in_array($modversion['category'], $ok_syscats)) {
                         $menu['file']   = $directory;
-                        $menu['title']  = trim($modversion['name']);
-                        $menu['desc']   = str_replace('<br>', ' ', $modversion['description']);
+                        $menu['title']  = trim((string) $modversion['name']);
+                        $menu['desc']   = str_replace('<br>', ' ', (string) $modversion['description']);
                         $menu['icon']   = $modversion['image'];
                         $menu['status'] = true;
                     }
@@ -130,8 +130,8 @@ if (false !== $error) {
                     $category = isset($modversion['category']) ? (int) $modversion['category'] : 0;
                     if (false !== $all_ok || in_array($modversion['category'], $ok_syscats)) {
                         $menu['file']   = $directory;
-                        $menu['title']  = trim($modversion['name']);
-                        $menu['desc']   = str_replace('<br>', ' ', $modversion['description']);
+                        $menu['title']  = trim((string) $modversion['name']);
+                        $menu['desc']   = str_replace('<br>', ' ', (string) $modversion['description']);
                         $menu['icon']   = $modversion['image'];
                         $menu['status'] = false;
                     }

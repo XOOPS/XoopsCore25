@@ -170,9 +170,7 @@ if (!defined('XOOPS_LISTS_INCLUDED')) {
         {
             $filelist = [];
 
-            $extToLower = function ($ext) {
-                return strtolower($ext);
-            };
+            $extToLower = fn($ext) => strtolower($ext);
 
             $extensionList = array_map($extToLower, $extensions);
 

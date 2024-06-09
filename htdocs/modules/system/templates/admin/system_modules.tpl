@@ -32,7 +32,7 @@
             </thead>
             <tbody>
             <{foreach item=row from=$install_mods|default:null}>
-                <{if $row.dirname == 'system'}>
+                <{if isset($row.dirname) && $row.dirname == 'system'}>
                     <tr class="txtcenter foot">
                         <td>
                             <a class="xo-logonormal tooltip" href="<{$xoops_url}>/modules/<{$row.dirname}>/<{$row.adminindex}>" title="<{$row.name}>">
@@ -78,7 +78,7 @@
             </tbody>
             <tbody class="xo-module">
             <{foreach item=row from=$install_mods|default:null}>
-                <{if $row.dirname != 'system' && $row.hasmain}>
+                <{if isset($row.dirname) && $row.dirname != 'system' && $row.hasmain}>
                     <tr id="mod_<{$row.mid}>" class="<{if $row.dirname == 'system'}>xo-system <{/if}>txtcenter <{cycle values='odd, even'}>">
                         <td>
                             <{if $row.hasadmin == 1 && $row.isactive == 1}>
@@ -100,7 +100,7 @@
                             </div>
                         </td>
                         <td>
-                            <{if $row.warning_update == 1}>
+                             <{if isset($row.warning_update) && $row.warning_update == 1}>
                                 <a class="tooltip maxi" style="color:red;"
                                    href="<{$xoops_url}>/modules/system/admin.php?fct=modulesadmin&amp;op=update&amp;module=<{$row.dirname}>"
                                    title="<{$smarty.const._AM_SYSTEM_MODULES_UPDATE}>"><{$row.version}></a>
@@ -154,7 +154,7 @@
                 <td colspan="6"></td>
             </tr>
             <{foreach item=row from=$install_mods|default:null}>
-                <{if $row.dirname != 'system' && !$row.hasmain}>
+                <{if isset($row.dirname) && $row.dirname != 'system' && !$row.hasmain}>
                     <tr class="txtcenter foot">
                         <td>
                             <a class="xo-logonormal tooltip" href="<{$xoops_url}>/modules/<{$row.dirname}>/<{$row.adminindex}>" title="<{$row.name}>">
@@ -168,7 +168,7 @@
                             </div>
                         </td>
                         <td>
-                            <{if $row.warning_update == 1}>
+                            <{if isset($row.warning_update) && $row.warning_update == 1}>
                                 <a class="tooltip maxi" style="color:red;"
                                    href="<{$xoops_url}>/modules/system/admin.php?fct=modulesadmin&amp;op=update&amp;module=<{$row.dirname}>"
                                    title="<{$smarty.const._AM_SYSTEM_MODULES_UPDATE}>"><{$row.version}></a>
@@ -189,7 +189,7 @@
                         </td>
                         <td class="xo-modsimages"></td>
                         <td class="xo-modsimages">
-                            <{if $row.isactive == 1}>
+                            <{if isset($row.isactive) && $row.isactive == 1}>
                                 <a class="tooltip" href="<{$xoops_url}>/modules/system/admin.php?fct=modulesadmin&amp;op=update&amp;module=<{$row.dirname}>"
                                    title="<{$smarty.const._AM_SYSTEM_MODULES_UPDATE}>">
                                     <img src="<{xoAdminIcons 'reload.png'}>" alt="<{$smarty.const._AM_SYSTEM_MODULES_UPDATE}>"/></a>
