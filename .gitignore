@@ -4,7 +4,12 @@
 *.bak
 .idea/
 
+coverage.clover
+git-phpcs.phar
 htdocs/mainfile.php
+htdocs/class/libraries/vendor/
+htdocs/class/libraries/composer.json
+htdocs/class/libraries/composer.lock
 htdocs/xoops_data/caches/smarty_cache/*
 htdocs/xoops_data/caches/smarty_compile/*
 htdocs/xoops_data/caches/xoops_cache/*
