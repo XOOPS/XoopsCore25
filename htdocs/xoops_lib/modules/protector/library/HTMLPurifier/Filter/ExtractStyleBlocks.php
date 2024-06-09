@@ -144,6 +144,7 @@ class HTMLPurifier_Filter_ExtractStyleBlocks extends HTMLPurifier_Filter
         foreach ($this->_tidy->css as $k => $decls) {
             // $decls are all CSS declarations inside an @ selector
             $new_decls = array();
+            if (is_array($decls)) {
             foreach ($decls as $selector => $style) {
                 $selector = trim($selector);
                 if ($selector === '') {
@@ -313,6 +314,9 @@ class HTMLPurifier_Filter_ExtractStyleBlocks extends HTMLPurifier_Filter
                     }
                 }
                 $new_decls[$selector] = $style;
+                }
+            } else {
+                continue;
             }
             $new_css[$k] = $new_decls;
         }

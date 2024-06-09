@@ -219,7 +219,10 @@ class HTMLPurifier_HTMLModule_Tidy extends HTMLPurifier_HTMLModule
      * associative array of fix name to fix implementation.
      * @return array
      */
-    public function makeFixes() {}
+    public function makeFixes()
+    {
+        return array();
+    }
 }
 
 // vim: et sw=4 sts=4
