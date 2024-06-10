@@ -120,17 +120,17 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $moduleYN->addOption(1, sprintf(INSTALL_THIS_MODULE, $module->getInfo('name')));
             $moduleYN->setExtra("onclick='selectModule(\"" . $file . "\", this)'");
             $form->addElement($moduleYN);
-            /*
-                        $content .= "<tr id='" . $file . "'" . $style . ">\n";
-                        $content .= "    <td class='img' ><img src='" . XOOPS_URL . '/modules/' . $module->getInfo('dirname') . '/' . $module->getInfo('image') . "' alt='" . $module->getInfo('name') . "'/></td>\n";
-                        $content .= '    <td>';
-                        $content .= '        ' . $module->getInfo('name') . '&nbsp;' . number_format(round($module->getInfo('version'), 2), 2) . '&nbsp;(' . $module->getInfo('dirname') . ')';
-                        $content .= '        <br>' . $module->getInfo('description');
-                        $content .= "    </td>\n";
-                        $content .= "    <td class='yesno'>";
-                        $content .= $moduleYN->render();
-                        $content .= "    </td></tr>\n";
-            */
+/*
+            $content .= "<tr id='" . $file . "'" . $style . ">\n";
+            $content .= "    <td class='img' ><img src='" . XOOPS_URL . '/modules/' . $module->getInfo('dirname') . '/' . $module->getInfo('image') . "' alt='" . $module->getInfo('name') . "'/></td>\n";
+            $content .= '    <td>';
+            $content .= '        ' . $module->getInfo('name') . '&nbsp;' . number_format(round($module->getInfo('version'), 2), 2) . '&nbsp;(' . $module->getInfo('dirname') . ')';
+            $content .= '        <br>' . $module->getInfo('description');
+            $content .= "    </td>\n";
+            $content .= "    <td class='yesno'>";
+            $content .= $moduleYN->render();
+            $content .= "    </td></tr>\n";
+*/
             $content .= '<div class="row module-row" id="' . $file . '">';
             $content .= '<div class="col-md-2">';
             $content .= '<br><img src="' . XOOPS_URL . '/modules/' . $module->getInfo('dirname')

@@ -97,7 +97,7 @@ ob_start();
         foreach ($wizard->configs['extensions'] as $key => $value) {
             echo '<tr><th>' . $value[2] . '</th><td>' . $value[1] . '</td></tr>';
         }
-?>
+        ?>
 
         </tbody>
     </table>

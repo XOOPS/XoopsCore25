@@ -62,12 +62,12 @@ include_once __DIR__ . '/../../language/' . $wizard->language . '/global.php';
     if (!empty($extraSources)) {
         echo $extraSources;
     }
-?>
+    ?>
     <?php
-if (file_exists('language/' . $wizard->language . '/style.css')) {
-    echo '<link rel="stylesheet" type="text/css" media="all" href="language/' . $wizard->language . '/style.css" />';
-}
-?>
+    if (file_exists('language/' . $wizard->language . '/style.css')) {
+        echo '<link rel="stylesheet" type="text/css" media="all" href="language/' . $wizard->language . '/style.css" />';
+    }
+    ?>
     <script type="text/javascript" src="./assets/js/xo-installer.js"></script>
 
 </head>
@@ -94,11 +94,11 @@ if (file_exists('language/' . $wizard->language . '/style.css')) {
                 <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-book"></i> <?php echo SUPPORT; ?> <b class="caret"></b></a>
                 <ul class="dropdown-menu">
                     <?php
-                @include_once __DIR__ . '/../language/' . $wizard->language . '/support.php';
-foreach ($supports as $lang => $support) {
-    echo '<li><a href="' . $support['url'] . '" target="_blank">' . $support['title'] . '</a></li>';
-}
-?>
+                    @include_once __DIR__ . '/../language/' . $wizard->language . '/support.php';
+                    foreach ($supports as $lang => $support) {
+                        echo '<li><a href="' . $support['url'] . '" target="_blank">' . $support['title'] . '</a></li>';
+                    }
+                    ?>
                 </ul>
             </li>
             <li>
@@ -127,7 +127,7 @@ foreach ($supports as $lang => $support) {
                             . '</a></li>';
                     }
                 }
-?>
+                ?>
             </ul>
         </div>
         <!-- /.navbar-collapse -->
@@ -179,9 +179,9 @@ foreach ($supports as $lang => $support) {
                     </div>
                 </div>
                 <?php
-$versionParts = [];
-$versionResult = preg_match('/(^[a-z\s]*)([0-9\.]*)/i', XOOPS_VERSION, $versionParts);
-?>
+                $versionParts=[];
+                $versionResult = preg_match ('/(^[a-z\s]*)([0-9\.]*)/i', XOOPS_VERSION, $versionParts);
+                ?>
 
                 <div class="col-lg-3 col-md-6">
                     <div class="panel panel-green">
