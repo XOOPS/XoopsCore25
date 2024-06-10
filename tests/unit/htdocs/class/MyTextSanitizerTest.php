@@ -143,4 +143,17 @@ class MyTextSanitizerTest extends TestCase
         $expected = 'Visit <a href="https://www.example.com/~user" target="_blank" rel="external noopener nofollow">https://www.example.com/~user</a> for more info.';
         $this->assertEquals($expected, $this->sanitizer->makeClickable($input));
     }
+
+    public function testMakeClickableMultiLine3()
+    {
+        $text     = "No elitr elit quis nobis soluta cum sanctus fugiat dolor liber facer, sint exercitation kasd et nonumy assum commodi laboris culpa, commodo diam labore nisl illum consectetur nihil elitr invidunt non tempor. Invidunt facilisi soluta nisi te anim soluta labore, cillum elitr quis tempor congue vel liber est aliquyam cupiditat obcaecat tempor obcaecat sint no elit. Nostrud dignissim aliquid. https://www.monxoops.fr/modules/newbb/viewtopic.php?topic_id=139&post_id=1440#forumpost1440 and this email: test@example.com Vel ipsum eiusmod. Kasd accusam nisi.";
+        $expected = 'No elitr elit quis nobis soluta cum sanctus fugiat dolor liber facer, sint exercitation kasd et nonumy assum commodi laboris culpa, commodo diam labore nisl illum consectetur nihil elitr invidunt non tempor. Invidunt facilisi soluta nisi te anim soluta labore, cillum elitr quis tempor congue vel liber est aliquyam cupiditat obcaecat tempor obcaecat sint no elit. Nostrud dignissim aliquid. ' .
+                    '<a href="https://www.monxoops.fr/modules/newbb/viewtopic.php?topic_id=139&post_id=1440#forumpost1440" target="_blank" rel="external noopener nofollow">https://www.monxoops.fr/modules/newbb/viewtopic.php?topic_id=139&post_id=1440#forumpost1440</a>' .
+                    ' and this email: ' . '<a href="mailto:test@example.com">test@example.com</a> ' . 'Vel ipsum eiusmod. Kasd accusam nisi.';
+
+
+        $result = $this->sanitizer->makeClickable($text);
+
+        $this->assertEquals($expected, $result);
+    }
 }

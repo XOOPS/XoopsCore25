@@ -295,18 +295,19 @@ class MyTextSanitizer
     /**
      * Callback to process email address match
      *
-     * @param array $matches array of matched elements
+     * @param array $match array of matched elements
      *
      * @return string
      */
-    protected function makeClickableCallbackEmailAddress($matches)
+    protected function makeClickableCallbackEmailAddress($match)
     {
-        return $matches[1] . '<a href="mailto:' . $matches[2] . '">' . $matches[2] . '</a>';
+        $email = $match[2];  // Extract the email address
+        return $match[1] . '<a href="mailto:' . htmlspecialchars($email, ENT_QUOTES, 'UTF-8') . '" title="' . htmlspecialchars($email, ENT_QUOTES, 'UTF-8') . '">' . htmlspecialchars($email, ENT_QUOTES, 'UTF-8') . '</a>';
     }
 
     /**
      * Make links in the text clickable
-     * Presently handles email addresses and http, https, ftp and sftp urls
+     * Presently handles email addresses and http, https, ftp, and sftp urls
      * (Note: at this time, major browsers no longer directly handle ftp/sftp urls.)
      *
      * @param  string $text
@@ -314,46 +315,24 @@ class MyTextSanitizer
      */
     public function makeClickable($text)
     {
+        // Decode HTML entities to ensure URLs are properly formatted
+        $text = html_entity_decode($text, ENT_QUOTES, 'UTF-8');
+
         // Convert email addresses into clickable mailto links
-        $pattern = "/(^|[\s\n])([-_a-z0-9\'+*$^&%=~!?{}]+(?:\.[-_a-z0-9\'+*$^&%=~!?{}]+)*+@[-a-z0-9.]+\.[a-z]{2,6})/i";
+        $pattern = "/(^|[\s\n]|<br\/?>)([-_a-z0-9\'+*$^&%=~!?{}]+(?:\.[-_a-z0-9\'+*$^&%=~!?{}]+)*@[-a-z0-9.]+\.[a-z]{2,6})/i";
         $text = preg_replace_callback($pattern, [$this, 'makeClickableCallbackEmailAddress'], $text);
 
-        // Convert http/https URLs into clickable links
-        $pattern = "/(^|[\s\n]|[\(\[\{])((https?:\/\/[^\s<>\(\)\[\]]+[^\s<>\(\)\[\]\.,!\"'\(\)\[\]{}<>]))/i";
+        // Convert http/https/ftp URLs into clickable links
+        $pattern = "/(?:\s|^|[\(\[\{>])((https?:\/\/|s?ftp:\/\/|www\.)[^\s<>\(\)\[\]]+[^\s<>\(\)\[\]\.,!\"'\(\)\[\]{}<>])(?<![\.,!\"'\(\)\[\]{}])/";
         $text = preg_replace_callback(
             $pattern,
             function ($matches) {
-                return $matches[1] . '<a href="' . $matches[2] . '" target="_blank" rel="external noopener nofollow">' . $matches[2] . '</a>';
-            },
-            $text
-        );
-
-        // Convert URLs starting with www. into clickable links
-        $pattern = "/(^|[\s\n]|[\(\[\{])((www\.[^\s<>\(\)\[\]]+[^\s<>\(\)\[\]\.,!\"'\(\)\[\]{}<>]))/i";
-        $text = preg_replace_callback(
-            $pattern,
-            function ($matches) {
-                return $matches[1] . '<a href="http://' . $matches[2] . '" target="_blank" rel="external noopener nofollow">http://' . $matches[2] . '</a>';
-            },
-            $text
-        );
-
-        // Convert ftp URLs into clickable links
-        $pattern = "/(^|[\s\n]|[\(\[\{])((s?ftp:\/\/[^\s<>\(\)\[\]]+[^\s<>\(\)\[\]\.,!\"'\(\)\[\]{}<>]))/i";
-        $text = preg_replace_callback(
-            $pattern,
-            function ($matches) {
-                return $matches[1] . '<a href="' . $matches[2] . '" target="_blank" rel="external">' . $matches[2] . '</a>';
-            },
-            $text
-        );
-
-        // Convert URLs within angular brackets into clickable links
-        $pattern = "/(<)(https?:\/\/[^\s>]+)(>)/i";
-        $text = preg_replace_callback(
-            $pattern,
-            function ($matches) {
-                return $matches[1] . '<a href="' . $matches[2] . '" target="_blank" rel="external noopener nofollow">' . $matches[2] . '</a>' . $matches[3];
+                $url = $matches[1];
+                $prefix = $matches[0][0] ?? ''; // Get the prefix character (space, bracket, etc.)
+                if (strpos($url, 'www.') === 0) {
+                    $url = "http://" . $url;
+                }
+                return $prefix . '<a href="' . htmlspecialchars($url, ENT_QUOTES, 'UTF-8') . '" target="_blank" rel="external noopener nofollow">' . htmlspecialchars($url, ENT_QUOTES, 'UTF-8') . '</a>';
             },
             $text
         );
