@@ -26,6 +26,7 @@ $modversion['help']        = 'page=smilies';
 $modversion['license']     = 'GPL see LICENSE';
 $modversion['official']    = 1;
 $modversion['image']       = 'smilies.png';
+$modversion['icon']        = 'fa fa-smile-o';
 
 $modversion['hasAdmin']  = 1;
 $modversion['adminpath'] = 'admin.php?fct=smilies';

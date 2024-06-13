@@ -21,7 +21,7 @@ class Upgrade_220 extends XoopsUpgrade
     public function __construct()
     {
         parent::__construct(basename(__DIR__));
-        $this->tasks = array('config', 'profile', 'block'/*, 'pm', 'module'*/);
+        $this->tasks = ['config', 'profile', 'block'/*, 'pm', 'module'*/];
     }
 
     /**
@@ -121,7 +121,7 @@ class Upgrade_220 extends XoopsUpgrade
 
         //Rebuild user configuration items
         //Get values from Profile module
-        $profile_config_arr                          = array();
+        $profile_config_arr                          = [];
         $profile_config_arr['minpass']               = 5;
         $profile_config_arr['minuname']              = 3;
         $profile_config_arr['new_user_notify']       = 1;
@@ -134,8 +134,8 @@ class Upgrade_220 extends XoopsUpgrade
         $profile_config_arr['avatar_height']         = 80;
         $profile_config_arr['avatar_maxsize']        = 35000;
         $profile_config_arr['self_delete']           = 0;
-        $profile_config_arr['bad_unames']            = serialize(array('webmaster', '^xoops', '^admin'));
-        $profile_config_arr['bad_emails']            = serialize(array('xoops.org$'));
+        $profile_config_arr['bad_unames']            = serialize(['webmaster', '^xoops', '^admin']);
+        $profile_config_arr['bad_emails']            = serialize(['xoops.org$']);
         $profile_config_arr['maxuname']              = 10;
         $profile_config_arr['avatar_minposts']       = 0;
         $profile_config_arr['allow_chgmail']         = 0;
@@ -204,7 +204,7 @@ class Upgrade_220 extends XoopsUpgrade
               ");
 
         // Copy data from profile table
-        $profile_fields = array(
+        $profile_fields = [
             'url',
             'user_regdate',
             'user_icq',
@@ -227,7 +227,8 @@ class Upgrade_220 extends XoopsUpgrade
             'user_occ',
             'bio',
             'user_intrest',
-            'user_mailok');
+            'user_mailok',
+        ];
         foreach ($profile_fields as $field) {
             $xoopsDB->queryF('UPDATE `' . $xoopsDB->prefix('users') . '` u, `' . $xoopsDB->prefix('user_profile') . "` p SET u.{$field} = p.{$field} WHERE u.uid=p.profileid");
         }
@@ -319,11 +320,12 @@ class Upgrade_220 extends XoopsUpgrade
         $result = $xoopsDB->query($sql);
         if (!$xoopsDB->isResultSet($result)) {
             throw new \RuntimeException(
-                \sprintf(_DB_QUERY_ERROR, $sql) . $xoopsDB->error(), E_USER_ERROR
+                \sprintf(_DB_QUERY_ERROR, $sql) . $xoopsDB->error(),
+                E_USER_ERROR,
             );
         }
 
-        list($MaxInstanceId) = $xoopsDB->fetchRow($result);
+        [$MaxInstanceId] = $xoopsDB->fetchRow($result);
 
         // Change custom block mid from 1 to 0
         $sql    = 'UPDATE `' . $xoopsDB->prefix('newblocks_bak') . "` SET mid = 0 WHERE show_func = 'b_system_custom_show'";
@@ -333,7 +335,8 @@ class Upgrade_220 extends XoopsUpgrade
         $result = $xoopsDB->query($sql);
         if (!$xoopsDB->isResultSet($result)) {
             throw new \RuntimeException(
-                \sprintf(_DB_QUERY_ERROR, $sql) . $xoopsDB->error(), E_USER_ERROR
+                \sprintf(_DB_QUERY_ERROR, $sql) . $xoopsDB->error(),
+                E_USER_ERROR,
             );
         }
         $dirname   = '';
@@ -342,7 +345,7 @@ class Upgrade_220 extends XoopsUpgrade
         while (false !== ($row = $xoopsDB->fetchArray($result))) {
             if ($row['dirname'] != $dirname) {
                 $dirname    = $row['dirname'];
-                $modversion = array();
+                $modversion = [];
                 if (!@include XOOPS_ROOT_PATH . '/modules/' . $dirname . '/xoops_version.php') {
                     continue;
                 }
@@ -372,7 +375,8 @@ class Upgrade_220 extends XoopsUpgrade
         $result = $xoopsDB->query($sql);
         if (!$xoopsDB->isResultSet($result)) {
             throw new \RuntimeException(
-                \sprintf(_DB_QUERY_ERROR, $sql) . $xoopsDB->error(), E_USER_ERROR
+                \sprintf(_DB_QUERY_ERROR, $sql) . $xoopsDB->error(),
+                E_USER_ERROR,
             );
         }
         $dirname   = '';
@@ -381,7 +385,7 @@ class Upgrade_220 extends XoopsUpgrade
         while (false !== ($row = $xoopsDB->fetchArray($result))) {
             if ($row['dirname'] != $dirname) {
                 $dirname    = $row['dirname'];
-                $modversion = array();
+                $modversion = [];
                 if (!@include XOOPS_ROOT_PATH . '/modules/' . $dirname . '/xoops_version.php') {
                     continue;
                 }
@@ -417,7 +421,8 @@ class Upgrade_220 extends XoopsUpgrade
         $result = $xoopsDB->query($sql);
         if (!$xoopsDB->isResultSet($result)) {
             throw new \RuntimeException(
-                \sprintf(_DB_QUERY_ERROR, $sql) . $xoopsDB->error(), E_USER_ERROR
+                \sprintf(_DB_QUERY_ERROR, $sql) . $xoopsDB->error(),
+                E_USER_ERROR,
             );
         }
         while (false !== (list($bid, $options) = $xoopsDB->fetchRow($result))) {
@@ -434,13 +439,14 @@ class Upgrade_220 extends XoopsUpgrade
         $result = $xoopsDB->query($sql);
         if (!$xoopsDB->isResultSet($result)) {
             throw new \RuntimeException(
-                \sprintf(_DB_QUERY_ERROR, $sql) . $xoopsDB->error(), E_USER_ERROR
+                \sprintf(_DB_QUERY_ERROR, $sql) . $xoopsDB->error(),
+                E_USER_ERROR,
             );
         }
         while (false !== (list($bid, $_options) = $xoopsDB->fetchRow($result))) {
             $options = unserialize($_options);
             if (empty($options) || !is_array($options)) {
-                $options = array();
+                $options = [];
             }
             $count = count($options);
             //Convert array values to comma-separated

@@ -29,14 +29,15 @@ $result = $xoopsDB->query($sql, 10, 0);
 //TODO Remove this hardcoded string
 if (!$xoopsDB->isResultSet($result)) {
     //    echo 'An error occured';
-       throw new \RuntimeException(
-       \sprintf(_DB_QUERY_ERROR, $sql) . $xoopsDB->error(), E_USER_ERROR
-   );
+    throw new \RuntimeException(
+        \sprintf(_DB_QUERY_ERROR, $sql) . $xoopsDB->error(),
+        E_USER_ERROR,
+    );
 } else {
     echo "<img src='images/logo.gif' alt='" . htmlspecialchars($xoopsConfig['sitename'], ENT_QUOTES | ENT_HTML5) . "' border='0' /><br>";
     echo '<h2>' . htmlspecialchars($xoopsConfig['slogan'], ENT_QUOTES | ENT_HTML5) . '</h2>';
     echo '<div>';
-    while (false !== (list($storyid, $title) = $xoopsDB->fetchRow($result))) {
+    while (false !== ([$storyid, $title] = $xoopsDB->fetchRow($result))) {
         echo "<a href='" . XOOPS_URL . "/modules/news/print.php?storyid=$storyid'>" . htmlspecialchars($title, ENT_QUOTES | ENT_HTML5) . '</a><br>';
     }
     echo '</div>';

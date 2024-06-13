@@ -11,7 +11,6 @@
  */
 class HTMLPurifier_Token_Text extends HTMLPurifier_Token
 {
-
     /**
      * @type string
      */
@@ -45,7 +44,8 @@ class HTMLPurifier_Token_Text extends HTMLPurifier_Token
         $this->col = $col;
     }
 
-    public function toNode() {
+    public function toNode()
+    {
         return new HTMLPurifier_Node_Text($this->data, $this->is_whitespace, $this->line, $this->col);
     }
 }

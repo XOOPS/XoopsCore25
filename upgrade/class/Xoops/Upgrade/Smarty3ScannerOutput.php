@@ -43,7 +43,7 @@ class Smarty3ScannerOutput extends ScannerOutput
     public function __construct()
     {
         $this->content = '';
-        $this->counts = new ArrayObject(array());
+        $this->counts = new ArrayObject([]);
     }
 
     /**
@@ -143,8 +143,8 @@ class Smarty3ScannerOutput extends ScannerOutput
         $this->outputAppend('<tr><td>' . 'Files Checked' . '</td><td>' . (string) $this->getCount('checked') . '</td></tr>');
         $this->outputAppend('<tr class="warning"><td>' . 'Need file permission to fix' . '</td><td>' . (string) $this->getCount('notwritable') . '</td></tr>');
         $this->outputAppend('<tr class="danger"><td>' . 'Need manual review to fix' . '</td><td>' . (string) $this->getCount('varname') . '</td></tr>');
-        $this->outputAppend('<tr><td>' . 'Using includeq/foreachq'     . '</td><td>' . (string) ($this->getCount('includeq') + $this->getCount('foreachq')) . '</td></tr>');
-        $this->outputAppend('<tr><td>' . 'Missing Quotes'     . '</td><td>' . (string) ($this->getCount('noquotes')) . '</td></tr>');
+        $this->outputAppend('<tr><td>' . 'Using includeq/foreachq' . '</td><td>' . (string) ($this->getCount('includeq') + $this->getCount('foreachq')) . '</td></tr>');
+        $this->outputAppend('<tr><td>' . 'Missing Quotes' . '</td><td>' . (string) ($this->getCount('noquotes')) . '</td></tr>');
         $this->outputAppend('<tr><td></td><td></td></tr>');
         $this->outputAppend('</table>');
     }
@@ -186,12 +186,12 @@ class Smarty3ScannerOutput extends ScannerOutput
     public function makeOutputIssue($rule, $file, $match, $writable)
     {
         return new ArrayObject(
-            array(
+            [
                 'rule' => $rule,
                 'file' => $file,
-                'match'=> $match,
-                'writable' => $writable
-            )
+                'match' => $match,
+                'writable' => $writable,
+            ],
         );
     }
 }

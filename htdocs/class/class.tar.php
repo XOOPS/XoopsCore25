@@ -1,5 +1,6 @@
 <?php
-// 
+
+//
 
 /**
  * package::i.tools
@@ -117,9 +118,7 @@ class Tar
     /**
      * Class Constructor -- Does nothing...
      */
-    public function __construct()
-    {
-    }
+    public function __construct() {}
 
     /**
      * Computes the unsigned Checksum of a file's header
@@ -216,7 +215,7 @@ class Tar
                 // Increment number of files
                 $this->numFiles++;
                 // Create us a new file in our array
-                $activeFile =& $this->files[];
+                $activeFile = & $this->files[];
                 // Asign Values
                 $activeFile['name']       = $file_name;
                 $activeFile['mode']       = $file_mode;
@@ -232,7 +231,7 @@ class Tar
                 // Increment number of directories
                 $this->numDirectories++;
                 // Create a new directory in our array
-                $activeDir =& $this->directories[];
+                $activeDir = & $this->directories[];
                 // Assign values
                 $activeDir['name']       = $file_name;
                 $activeDir['mode']       = $file_mode;
@@ -499,7 +498,7 @@ class Tar
         $file_information = stat($dirname);
         // Add directory to processed data
         $this->numDirectories++;
-        $activeDir             =& $this->directories[];
+        $activeDir             = & $this->directories[];
         $activeDir['name']     = $dirname;
         $activeDir['mode']     = $file_information['mode'];
         $activeDir['time']     = $file_information['time'];
@@ -539,14 +538,14 @@ class Tar
         fclose($fp);
         // Add file to processed data
         $this->numFiles++;
-        $activeFile               =& $this->files[];
+        $activeFile               = & $this->files[];
         $activeFile['name']       = $filename;
         $activeFile['mode']       = $file_information['mode'];
         $activeFile['user_id']    = $file_information['uid'];
         $activeFile['group_id']   = $file_information['gid'];
         $activeFile['size']       = $file_information['size'];
         $activeFile['time']       = $file_information['mtime'];
-        $activeFile['checksum']   = isset($checksum) ? $checksum : '';
+        $activeFile['checksum']   = $checksum ?? '';
         $activeFile['user_name']  = '';
         $activeFile['group_name'] = '';
         $activeFile['file']       = trim($file_contents);

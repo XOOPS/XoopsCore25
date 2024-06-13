@@ -26,6 +26,7 @@ $modversion['help']        = 'page=banners';
 $modversion['license']     = 'GPL see LICENSE';
 $modversion['official']    = 1;
 $modversion['image']       = 'banners.png';
+$modversion['icon']        = 'fa fa-bandcamp';
 
 $modversion['hasAdmin']  = 1;
 $modversion['adminpath'] = 'admin.php?fct=banners';

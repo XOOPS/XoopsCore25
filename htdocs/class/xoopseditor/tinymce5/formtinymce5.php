@@ -50,8 +50,8 @@ class XoopsFormTinymce5 extends XoopsEditor
         $this->configs['elements']    = $this->getName();
         $this->configs['language']    = $this->getLanguage();
         $this->configs['rootpath']    = $this->rootPath;
-        $this->configs['area_width']  = isset($this->configs['width']) ? $this->configs['width'] : $this->width;
-        $this->configs['area_height'] = isset($this->configs['height']) ? $this->configs['height'] : $this->height;
+        $this->configs['area_width']  = $this->configs['width'] ?? $this->width;
+        $this->configs['area_height'] = $this->configs['height'] ?? $this->height;
 
         require_once __DIR__ . '/tinymce5.php';
         $this->editor = new TinyMCE($this->configs);

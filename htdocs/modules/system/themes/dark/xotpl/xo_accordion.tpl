@@ -80,6 +80,19 @@
         </table>
     </div>
 
+    <h5><{$smarty.const._OXYGEN_COMPOSER_PACKAGES}></h5>
+
+    <div class="pane">
+        <table>
+            <{foreach from=$composerPackages item=package}>
+                <tr>
+                    <td><{$package.name}></td>
+                    <td><{$package.version}></td>
+                </tr>
+            <{/foreach}>
+        </table>
+    </div>
+
     <h5><{$smarty.const._OXYGEN_XOOPS_LICENSE}></h5>
 
     <div class="pane">

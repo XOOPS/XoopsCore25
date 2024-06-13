@@ -86,8 +86,8 @@ class Upgrade_240 extends XoopsUpgrade
      */
     public function xoops_buildLicenceKey()
     {
-        $xoops_serdat = array();
-        $checksums = array(1 => 'md5', 2 => 'sha1');
+        $xoops_serdat = [];
+        $checksums = [1 => 'md5', 2 => 'sha1'];
         $type      = mt_rand(1, 2);
         $func      = $checksums[$type];
 
@@ -170,11 +170,11 @@ class Upgrade_240 extends XoopsUpgrade
      */
     public function check_keys()
     {
-        $tables['modules']       = array('isactive', 'weight', 'hascomments');
-        $tables['users']         = array('level');
-        $tables['online']        = array('online_updated', 'online_uid');
-        $tables['config']        = array('conf_order');
-        $tables['xoopscomments'] = array('com_status');
+        $tables['modules']       = ['isactive', 'weight', 'hascomments'];
+        $tables['users']         = ['level'];
+        $tables['online']        = ['online_updated', 'online_uid'];
+        $tables['config']        = ['conf_order'];
+        $tables['xoopscomments'] = ['com_status'];
 
         foreach ($tables as $table => $keys) {
             $sql = 'SHOW KEYS FROM `' . $GLOBALS['xoopsDB']->prefix($table) . '`';
@@ -182,7 +182,7 @@ class Upgrade_240 extends XoopsUpgrade
             if (!$GLOBALS['xoopsDB']->isResultSet($result)) {
                 continue;
             }
-            $existing_keys = array();
+            $existing_keys = [];
             while (false !== ($row = $GLOBALS['xoopsDB']->fetchArray($result))) {
                 $existing_keys[] = $row['Key_name'];
             }
@@ -202,11 +202,11 @@ class Upgrade_240 extends XoopsUpgrade
      */
     public function apply_keys()
     {
-        $tables['modules']       = array('isactive', 'weight', 'hascomments');
-        $tables['users']         = array('level');
-        $tables['online']        = array('online_updated', 'online_uid');
-        $tables['config']        = array('conf_order');
-        $tables['xoopscomments'] = array('com_status');
+        $tables['modules']       = ['isactive', 'weight', 'hascomments'];
+        $tables['users']         = ['level'];
+        $tables['online']        = ['online_updated', 'online_uid'];
+        $tables['config']        = ['conf_order'];
+        $tables['xoopscomments'] = ['com_status'];
 
         foreach ($tables as $table => $keys) {
             $sql = 'SHOW KEYS FROM `' . $GLOBALS['xoopsDB']->prefix($table) . '`';
@@ -214,7 +214,7 @@ class Upgrade_240 extends XoopsUpgrade
             if (!$GLOBALS['xoopsDB']->isResultSet($result)) {
                 continue;
             }
-            $existing_keys = array();
+            $existing_keys = [];
             while (false !== ($row = $GLOBALS['xoopsDB']->fetchArray($result))) {
                 $existing_keys[] = $row['Key_name'];
             }
@@ -234,7 +234,7 @@ class Upgrade_240 extends XoopsUpgrade
     public function __construct()
     {
         parent::__construct(basename(__DIR__));
-        $this->tasks = array('keys', 'version');
+        $this->tasks = ['keys', 'version'];
     }
 }
 

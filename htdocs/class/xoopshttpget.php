@@ -65,13 +65,13 @@ class XoopsHttpGet
             $this->error = 'curl_init failed';
             return false;
         }
-        $options = array(
+        $options = [
             CURLOPT_RETURNTRANSFER => 1,
             CURLOPT_HEADER         => 0,
             CURLOPT_CONNECTTIMEOUT => 10,
             CURLOPT_FOLLOWLOCATION => 1,
             CURLOPT_MAXREDIRS      => 4,
-        );
+        ];
         curl_setopt_array($curlHandle, $options);
 
         $response = curl_exec($curlHandle);

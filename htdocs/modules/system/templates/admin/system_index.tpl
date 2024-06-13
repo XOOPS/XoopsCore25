@@ -15,7 +15,7 @@
 
     <tbody>
     <{foreach item=menuitem from=$menu|default:null}>
-        <{if $menuitem.title}>
+                <{if !empty($menuitem.title)}>
             <tr class="<{cycle values='even,odd'}>">
                 <td class="bold width15">
                     <a class="tooltip" href="admin.php?fct=<{$menuitem.file}>" title="<{$smarty.const._AM_SYSTEM_GO}>: <{$menuitem.title}>">

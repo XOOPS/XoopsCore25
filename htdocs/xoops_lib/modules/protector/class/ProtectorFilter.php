@@ -14,7 +14,7 @@ class ProtectorFilterAbstract
     public function __construct()
     {
         $this->protector = Protector::getInstance();
-        $lang            = empty($GLOBALS['xoopsConfig']['language']) ? (isset($this->protector->_conf['default_lang']) ? $this->protector->_conf['default_lang'] : '') : $GLOBALS['xoopsConfig']['language'];
+        $lang            = empty($GLOBALS['xoopsConfig']['language']) ? ($this->protector->_conf['default_lang'] ?? '') : $GLOBALS['xoopsConfig']['language'];
         $file_to_include = dirname(__DIR__) . '/language/' . $lang . '/main.php';
 
         if (file_exists($file_to_include)) {

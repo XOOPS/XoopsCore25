@@ -166,7 +166,7 @@ class XoopsAuthProvisionning
      * @param  null $pwd
      * @return bool
      */
-    public function change(&$xoopsUser, $datas, $uname, $pwd = null)
+    public function change($xoopsUser, $datas, $uname, $pwd = null)
     {
         $ret            = false;
         /** @var XoopsMemberHandler $member_handler */
@@ -193,35 +193,26 @@ class XoopsAuthProvisionning
      *
      * @return bool
      */
-    public function delete()
-    {
-    }
+    public function delete() {}
 
     /**
      * Suspend a user
      *
      * @return bool
      */
-    public function suspend()
-    {
-    }
+    public function suspend() {}
 
     /**
      * Restore a user
      *
      * @return bool
      */
-    public function restore()
-    {
-    }
+    public function restore() {}
 
     /**
      * Add a new user to the system
      *
      * @return bool
      */
-    public function resetpwd()
-    {
-    }
+    public function resetpwd() {}
 } // end class
-

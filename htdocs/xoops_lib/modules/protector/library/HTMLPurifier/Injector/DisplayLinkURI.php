@@ -18,9 +18,7 @@ class HTMLPurifier_Injector_DisplayLinkURI extends HTMLPurifier_Injector
     /**
      * @param $token
      */
-    public function handleElement(&$token)
-    {
-    }
+    public function handleElement(&$token) {}
 
     /**
      * @param HTMLPurifier_Token $token

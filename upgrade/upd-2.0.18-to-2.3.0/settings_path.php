@@ -61,7 +61,7 @@ function genPathCheckHtml($path, $valid)
     }
 }
 
-$vars =& $_SESSION['settings'];
+$vars = & $_SESSION['settings'];
 $ctrl = new PathStuffController();
 if ($res = $ctrl->execute()) {
     return $res;
@@ -86,15 +86,15 @@ $myts = \MyTextSanitizer::getInstance();
             <?php echo CHECKING_PERMISSIONS . '<br><p>' . ERR_NEED_WRITE_ACCESS . '</p>'; ?>
             <ul class="diags">
                 <?php foreach ($ctrl->permErrors['data'] as $path => $result) {
-    if ($result) {
-        echo '<li class="success">' . sprintf(IS_WRITABLE, $path) . '</li>';
-    } else {
-        echo '<li class="failure">' . sprintf(IS_NOT_WRITABLE, $path) . '</li>';
-    }
-} ?>
+                    if ($result) {
+                        echo '<li class="success">' . sprintf(IS_WRITABLE, $path) . '</li>';
+                    } else {
+                        echo '<li class="failure">' . sprintf(IS_NOT_WRITABLE, $path) . '</li>';
+                    }
+                } ?>
             </ul>
             <?php
-} else { ?>
+        } else { ?>
                 <div id="dataperms" class="x2-note" style="display: none;"/>
             <?php } ?>
         </div>

@@ -18,7 +18,7 @@
 
 // defined('XOOPS_ROOT_PATH') || exit('XOOPS root path not defined');
 
-$path = dirname(dirname(dirname(__DIR__)));
+$path = dirname(__DIR__, 3);
 include_once $path . '/mainfile.php';
 
 $dirname         = basename(dirname(__DIR__));
@@ -35,7 +35,7 @@ if (!file_exists($fileinc = $pathLanguage . '/language/' . $GLOBALS['xoopsConfig
 
 include_once $fileinc;
 
-$adminmenu = array();
+$adminmenu = [];
 
 $i                      = 1;
 $adminmenu[$i]['title'] = _PM_MI_INDEX;

@@ -2,7 +2,6 @@
 
 class HTMLPurifier_ConfigSchema_InterchangeBuilder
 {
-
     /**
      * Used for processing DEFAULT, nothing else.
      * @type HTMLPurifier_VarParser
@@ -69,7 +68,7 @@ class HTMLPurifier_ConfigSchema_InterchangeBuilder
         $parser = new HTMLPurifier_StringHashParser();
         $this->build(
             $interchange,
-            new HTMLPurifier_StringHash($parser->parseFile($file))
+            new HTMLPurifier_StringHash($parser->parseFile($file)),
         );
     }
 
@@ -127,7 +126,7 @@ class HTMLPurifier_ConfigSchema_InterchangeBuilder
                 $directive->default = $this->varParser->parse(
                     $hash->offsetGet('DEFAULT'),
                     $directive->type,
-                    $directive->typeAllowsNull
+                    $directive->typeAllowsNull,
                 );
             } catch (HTMLPurifier_VarParserException $e) {
                 throw new HTMLPurifier_ConfigSchema_Exception($e->getMessage() . " in DEFAULT in directive hash '$id'");

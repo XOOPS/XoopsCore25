@@ -32,7 +32,7 @@ if ($email == '') {
 $myts           = \MyTextSanitizer::getInstance();
 /** @var XoopsMemberHandler $member_handler */
 $member_handler = xoops_getHandler('member');
-list($user) = $member_handler->getUsers(new Criteria('email', $myts->addSlashes($email)));
+[$user] = $member_handler->getUsers(new Criteria('email', $myts->addSlashes($email)));
 
 if (empty($user)) {
     $msg = _US_SORRYNOTFOUND;
@@ -63,7 +63,7 @@ if (empty($user)) {
             "UPDATE %s SET pass = '%s' WHERE uid = %u",
             $GLOBALS['xoopsDB']->prefix('users'),
             password_hash($newpass, PASSWORD_DEFAULT),
-            $user->getVar('uid')
+            $user->getVar('uid'),
         );
         if (!$GLOBALS['xoopsDB']->queryF($sql)) {
             include $GLOBALS['xoops']->path('header.php');

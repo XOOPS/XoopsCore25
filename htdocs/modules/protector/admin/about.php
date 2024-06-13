@@ -1,6 +1,6 @@
 <?php
 
-require dirname(dirname(dirname(__DIR__))) . '/mainfile.php';
+require dirname(__DIR__, 3) . '/mainfile.php';
 defined('XOOPS_TRUST_PATH') || exit('set XOOPS_TRUST_PATH in mainfile.php');
 
 $mydirname = basename( dirname(__DIR__) ) ;

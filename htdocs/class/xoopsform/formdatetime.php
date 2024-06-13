@@ -27,9 +27,9 @@ defined('XOOPS_ROOT_PATH') || exit('Restricted access');
  */
 class XoopsFormDateTime extends XoopsFormElementTray
 {
-    const SHOW_BOTH = 1;
-    const SHOW_DATE = 0;
-    const SHOW_TIME = 2;
+    public const SHOW_BOTH = 1;
+    public const SHOW_DATE = 0;
+    public const SHOW_TIME = 2;
 
     /**
      * XoopsFormDateTime::XoopsFormDateTime()
@@ -60,20 +60,20 @@ class XoopsFormDateTime extends XoopsFormElementTray
                 $displayTime = true;
                 break;
         }
-        $value    = (int)$value;
+        $value    = (int) $value;
         $value    = ($value > 0) ? $value : time();
         $datetime = getdate($value);
         if ($displayDate) {
             $this->addElement(new XoopsFormTextDateSelect('', $name . '[date]', $size, $value));
         } else {
-            $value = !is_numeric($value) ? time() : (int)$value;
+            $value = !is_numeric($value) ? time() : (int) $value;
             $value = ($value == 0) ? time() : $value;
             $displayValue = date(_SHORTDATESTRING, $value);
             $this->addElement(new XoopsFormHidden($name . '[date]', $displayValue));
         }
 
         if ($displayTime) {
-            $timearray = array();
+            $timearray = [];
             for ($i = 0; $i < 24; ++$i) {
                 for ($j = 0; $j < 60; $j += 10) {
                     $key = ($i * 3600) + ($j * 60);

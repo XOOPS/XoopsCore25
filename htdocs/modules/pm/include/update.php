@@ -16,7 +16,7 @@
  * @author              Taiwen Jiang <phppp@users.sourceforge.net>
  */
 
-$path = dirname(dirname(dirname(__DIR__)));
+$path = dirname(__DIR__, 3);
 require_once $path . '/include' . '/cp_header.php';
 
 /**
@@ -52,7 +52,7 @@ function xoops_module_update_pm(XoopsModule $module, $oldversion = null)
     if ($oldversion < '1.1.0') {
         // remove old html template files
         $templateDirectory = XOOPS_ROOT_PATH . '/modules/' . $module->getVar('dirname', 'n') . '/templates/';
-        $template_list     = array_diff(scandir($templateDirectory), array('..', '.'));
+        $template_list     = array_diff(scandir($templateDirectory), ['..', '.']);
         foreach ($template_list as $k => $v) {
             $fileinfo = new SplFileInfo($templateDirectory . $v);
             if ($fileinfo->getExtension() === 'html' && $fileinfo->getFilename() !== 'index.html') {

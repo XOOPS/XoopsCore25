@@ -87,7 +87,7 @@ class XoopsZipDownloader extends XoopsDownloader
      * @param string            $filename
      * @param int|mixed $time
      */
-    public function addFileData(&$data, $filename, $time = 0)
+    public function addFileData($data, $filename, $time = 0)
     {
         $this->archiver->addFile($data, $filename, $time);
     }
@@ -99,7 +99,7 @@ class XoopsZipDownloader extends XoopsDownloader
      * @param string     $filename
      * @param int|string $time
      */
-    public function addBinaryFileData(&$data, $filename, $time = 0)
+    public function addBinaryFileData($data, $filename, $time = 0)
     {
         $this->addFileData($data, $filename, $time);
     }

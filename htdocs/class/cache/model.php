@@ -67,7 +67,7 @@ class XoopsCacheModel extends XoopsCacheEngine
      * @var array
      * @access public
      */
-    public $settings = array();
+    public $settings = [];
 
     /**
      * Model instance.
@@ -83,7 +83,7 @@ class XoopsCacheModel extends XoopsCacheEngine
      * @var object
      * @access private
      */
-    public $fields = array();
+    public $fields = [];
 
     /**
      * Initialize the Cache Engine
@@ -95,12 +95,12 @@ class XoopsCacheModel extends XoopsCacheEngine
      * @return boolean True if the engine has been successfully initialized, false if not
      * @access   public
      */
-    public function init($settings = array())
+    public function init($settings = [])
     {
         $xoopsDB = XoopsDatabaseFactory::getDatabaseConnection();
 
         parent::init($settings);
-        $defaults       = array('fields' => array('data', 'expires'));
+        $defaults       = ['fields' => ['data', 'expires']];
         $this->settings = array_merge($defaults, $this->settings);
         $this->fields   = $this->settings['fields'];
         $this->model    = new XoopsCacheModelHandler($xoopsDB);
@@ -224,7 +224,7 @@ class XoopsCacheModelObject extends XoopsObject
  */
 class XoopsCacheModelHandler extends XoopsPersistableObjectHandler
 {
-    const TABLE     = 'cache_model';
-    const CLASSNAME = 'XoopsCacheModelObject';
-    const KEYNAME   = 'key';
+    public const TABLE     = 'cache_model';
+    public const CLASSNAME = 'XoopsCacheModelObject';
+    public const KEYNAME   = 'key';
 }

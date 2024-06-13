@@ -15,7 +15,8 @@
  * @package
  * @since
  * @author       XOOPS Development Team, Kazumi Ono (AKA onokazu)
- */ 
+ */
+
 use Xmf\Request;
 
 // Check users rights
@@ -47,16 +48,17 @@ $xoBreadCrumb->addLink(_AM_SYSTEM_COMMENTS_NAV_MANAGER, system_adminVersion('com
 include_once $GLOBALS['xoops']->path('/include/comment_constants.php');
 xoops_loadLanguage('comment');
 
-$limit_array     = array(20, 50, 100);
-$status_array    = array(XOOPS_COMMENT_PENDING => _CM_PENDING, XOOPS_COMMENT_ACTIVE => _CM_ACTIVE, XOOPS_COMMENT_HIDDEN => _CM_HIDDEN);
-$status_array2   = array(
+$limit_array     = [20, 50, 100];
+$status_array    = [XOOPS_COMMENT_PENDING => _CM_PENDING, XOOPS_COMMENT_ACTIVE => _CM_ACTIVE, XOOPS_COMMENT_HIDDEN => _CM_HIDDEN];
+$status_array2   = [
     XOOPS_COMMENT_PENDING => '<span style="text-decoration: none; font-weight: bold; color: #008000;">' . _CM_PENDING . '</span>',
     XOOPS_COMMENT_ACTIVE  => '<span style="text-decoration: none; font-weight: bold; color: #ff0000;">' . _CM_ACTIVE . '</span>',
-    XOOPS_COMMENT_HIDDEN  => '<span style="text-decoration: none; font-weight: bold; color: #0000ff;">' . _CM_HIDDEN . '</span>');
+    XOOPS_COMMENT_HIDDEN  => '<span style="text-decoration: none; font-weight: bold; color: #0000ff;">' . _CM_HIDDEN . '</span>',
+];
 $start           = 0;
 $status_array[0] = _AM_SYSTEM_COMMENTS_FORM_ALL_STATUS;
 
-$comments = array();
+$comments = [];
 //$status   = (!isset($_REQUEST['status']) || !in_array((int)($_REQUEST['status']), array_keys($status_array))) ? 0 : (int)($_REQUEST['status']);
 $status = (!isset($_REQUEST['status']) || !array_key_exists((int)$_REQUEST['status'], $status_array)) ? 0 : (int)$_REQUEST['status'];
 
@@ -79,7 +81,7 @@ switch ($op) {
                 /** @var \XoopsModule $module */
                 $module         = $module_handler->get($comment->getVar('com_modid'));
                 $comment_config = $module->getInfo('comments');
-                header('Location: ' . XOOPS_URL . '/modules/' . $module->getVar('dirname') . '/' . $comment_config['pageName'] . '?' . $comment_config['itemName'] . '=' . $comment->getVar('com_itemid') . '&com_id=' . $comment->getVar('com_id') . '&com_rootid=' . $comment->getVar('com_rootid') . '&com_mode=thread&' . str_replace('&amp;', '&', $comment->getVar('com_exparams')) . '#comment' . $comment->getVar('com_id'));
+                header('Location: ' . XOOPS_URL . '/modules/' . $module->getVar('dirname') . '/' . $comment_config['pageName'] . '?' . $comment_config['itemName'] . '=' . $comment->getVar('com_itemid') . '&com_id=' . $comment->getVar('com_id') . '&com_rootid=' . $comment->getVar('com_rootid') . '&com_mode=thread&' . str_replace('&amp;', '&', (string) $comment->getVar('com_exparams')) . '#comment' . $comment->getVar('com_id'));
                 exit();
             }
         }
@@ -100,7 +102,7 @@ switch ($op) {
         $form_purge->addElement(new XoopsFormTextDateSelect(_AM_SYSTEM_COMMENTS_FORM_PURGE_DATE_BEFORE, 'comments_before', '15'));
 
         //user
-        $form_purge->addElement(new XoopsFormSelectUser(_AM_SYSTEM_COMMENTS_FORM_PURGE_USER, 'comments_userid', false, (isset($_REQUEST['comments_userid']) ? $_REQUEST['comments_userid'] : ''), 5, true));
+        $form_purge->addElement(new XoopsFormSelectUser(_AM_SYSTEM_COMMENTS_FORM_PURGE_USER, 'comments_userid', false, ($_REQUEST['comments_userid'] ?? ''), 5, true));
 
         //groups
         $groupe_select = new XoopsFormSelectGroup(_AM_SYSTEM_COMMENTS_FORM_PURGE_GROUPS, 'comments_groupe', false, '', 5, true);
@@ -285,7 +287,7 @@ switch ($op) {
                     }
                 }
                 // End edit by voltan
-                $comments_icon = ($comments_arr[$i]->getVar('com_icon') == '') ? '/images/icons/no_posticon.gif' : '/images/subject/' . htmlspecialchars($comments_arr[$i]->getVar('com_icon'), ENT_QUOTES | ENT_HTML5);
+                $comments_icon = ($comments_arr[$i]->getVar('com_icon') == '') ? '/images/icons/no_posticon.gif' : '/images/subject/' . htmlspecialchars((string) $comments_arr[$i]->getVar('com_icon'), ENT_QUOTES | ENT_HTML5);
                 $comments_icon = '<img src="' . XOOPS_URL . $comments_icon . '" alt="" />';
 
                 $comments['comments_id']           = $com_id;
@@ -295,9 +297,9 @@ switch ($op) {
                 $comments['comments_ip']           = $comments_arr[$i]->getVar('com_ip');
                 $comments['comments_date']         = formatTimestamp($comments_arr[$i]->getVar('com_created'));
                 $comments['comments_text'] = $myts->htmlSpecialChars($comments_arr[$i]->getVar('com_text'));
-                $comments['comments_status']       = isset($status_array2[$comments_arr[$i]->getVar('com_status')]) ? $status_array2[$comments_arr[$i]->getVar('com_status')] : 0;
+                $comments['comments_status']       = $status_array2[$comments_arr[$i]->getVar('com_status')] ?? 0;
                 $comments['comments_date_created'] = formatTimestamp($comments_arr[$i]->getVar('com_created'), 'm');
-                $comments['comments_modid']        = isset($module_array[$comments_arr[$i]->getVar('com_modid')]) ? $module_array[$comments_arr[$i]->getVar('com_modid')] : 0;
+                $comments['comments_modid']        = $module_array[$comments_arr[$i]->getVar('com_modid')] ?? 0;
                 //$comments['comments_view_edit_delete'] = '<img class="cursorpointer" onclick="display_dialog('.$com_id.', true, true, \'slide\', \'slide\', 300, 500);" src="images/icons/view.png" alt="'._AM_SYSTEM_COMMENTS_VIEW.'" title="'._AM_SYSTEM_COMMENTS_VIEW.'" /><a href="admin/comments/comment_edit.php?com_id='.$com_id.'"><img src="./images/icons/edit.png" border="0" alt="'._EDIT.'" title="'._EDIT.'"></a><a href="admin/comments/comment_delete.php?com_id='.$com_id.'"><img src="./images/icons/delete.png" border="0" alt="'._DELETE.'" title="'._DELETE.'"></a>';
 
                 $xoopsTpl->appendByRef('comments', $comments);

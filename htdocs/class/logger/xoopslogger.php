@@ -37,13 +37,13 @@ class XoopsLogger
      *
      * @var array
      */
-    public $queries    = array();
-    public $blocks     = array();
-    public $extra      = array();
-    public $logstart   = array();
-    public $logend     = array();
-    public $errors     = array();
-    public $deprecated = array();
+    public $queries    = [];
+    public $blocks     = [];
+    public $extra      = [];
+    public $logstart   = [];
+    public $logend     = [];
+    public $errors     = [];
+    public $deprecated = [];
     /**
      * *#@-
      */
@@ -59,9 +59,7 @@ class XoopsLogger
     /**
      * XoopsLogger::__construct()
      */
-    public function __construct()
-    {
-    }
+    public function __construct() {}
 
     /**
      * Deprecated, use getInstance() instead
@@ -84,7 +82,7 @@ class XoopsLogger
             // Always catch errors, for security reasons
             set_error_handler('XoopsErrorHandler_HandleError');
             // grab any uncaught exception
-            set_exception_handler(array($instance, 'handleException'));
+            set_exception_handler([$instance, 'handleException']);
         }
 
         return $instance;
@@ -99,7 +97,7 @@ class XoopsLogger
     public function enableRendering()
     {
         if (!$this->renderingEnabled) {
-            ob_start(array(&$this, 'render'));
+            ob_start([&$this, 'render']);
             $this->renderingEnabled = true;
         }
     }
@@ -114,7 +112,7 @@ class XoopsLogger
         /** @var array $now */
         $now = explode(' ', microtime());
 
-        return (float)$now[0] + (float)$now[1];
+        return (float) $now[0] + (float) $now[1];
     }
 
     /**
@@ -152,7 +150,7 @@ class XoopsLogger
     public function addQuery($sql, $error = null, $errno = null, $query_time = null)
     {
         if ($this->activated) {
-            $this->queries[] = array('sql' => $sql, 'error' => $error, 'errno' => $errno, 'query_time' => $query_time);
+            $this->queries[] = ['sql' => $sql, 'error' => $error, 'errno' => $errno, 'query_time' => $query_time];
         }
     }
 
@@ -166,7 +164,7 @@ class XoopsLogger
     public function addBlock($name, $cached = false, $cachetime = 0)
     {
         if ($this->activated) {
-            $this->blocks[] = array('name' => $name, 'cached' => $cached, 'cachetime' => $cachetime);
+            $this->blocks[] = ['name' => $name, 'cached' => $cached, 'cachetime' => $cachetime];
         }
     }
 
@@ -179,7 +177,7 @@ class XoopsLogger
     public function addExtra($name, $msg)
     {
         if ($this->activated) {
-            $this->extra[] = array('name' => $name, 'msg' => $msg);
+            $this->extra[] = ['name' => $name, 'msg' => $msg];
         }
     }
 
@@ -216,7 +214,7 @@ class XoopsLogger
      * @param string  $errline
      * @param array|null $trace
      */
-    public function handleError($errno, $errstr, $errfile, $errline,$trace=null)
+    public function handleError($errno, $errstr, $errfile, $errline, $trace = null)
     {
         if ($this->activated && ($errno & error_reporting())) {
             // NOTE: we only store relative pathnames
@@ -285,7 +283,7 @@ class XoopsLogger
      */
     public function sanitizePath($path)
     {
-        $path = str_replace(array('\\', XOOPS_ROOT_PATH, str_replace('\\', '/', realpath(XOOPS_ROOT_PATH))), array('/', '', ''), $path);
+        $path = str_replace(['\\', XOOPS_ROOT_PATH, str_replace('\\', '/', realpath(XOOPS_ROOT_PATH))], ['/', '', ''], $path);
 
         return $path;
     }
@@ -301,8 +299,8 @@ class XoopsLogger
     protected function sanitizeDbMessage($message)
     {
         // XOOPS_DB_PREFIX  XOOPS_DB_NAME
-        $message = str_replace(XOOPS_DB_PREFIX.'_', '', $message);
-        $message = str_replace(XOOPS_DB_NAME.'.', '', $message);
+        $message = str_replace(XOOPS_DB_PREFIX . '_', '', $message);
+        $message = str_replace(XOOPS_DB_NAME . '.', '', $message);
 
         return $message;
     }
@@ -360,7 +358,7 @@ class XoopsLogger
         if (!isset($this->logstart[$name])) {
             return 0;
         }
-        $stop  = isset($this->logend[$name]) ? $this->logend[$name] : $this->microtime();
+        $stop  = $this->logend[$name] ?? $this->microtime();
         $start = $this->logstart[$name];
 
         if ($unset) {

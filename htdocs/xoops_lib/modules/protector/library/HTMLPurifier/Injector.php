@@ -15,7 +15,6 @@
  */
 abstract class HTMLPurifier_Injector
 {
-
     /**
      * Advisory name of injector, this is for friendly error messages.
      * @type string
@@ -104,9 +103,9 @@ abstract class HTMLPurifier_Injector
         if ($result !== false) {
             return $result;
         }
-        $this->currentNesting =& $context->get('CurrentNesting');
-        $this->currentToken   =& $context->get('CurrentToken');
-        $this->inputZipper    =& $context->get('InputZipper');
+        $this->currentNesting = & $context->get('CurrentNesting');
+        $this->currentToken   = & $context->get('CurrentToken');
+        $this->inputZipper    = & $context->get('InputZipper');
         return false;
     }
 
@@ -250,16 +249,12 @@ abstract class HTMLPurifier_Injector
     /**
      * Handler that is called when a text token is processed
      */
-    public function handleText(&$token)
-    {
-    }
+    public function handleText(&$token) {}
 
     /**
      * Handler that is called when a start or empty token is processed
      */
-    public function handleElement(&$token)
-    {
-    }
+    public function handleElement(&$token) {}
 
     /**
      * Handler that is called when an end token is processed
@@ -275,9 +270,7 @@ abstract class HTMLPurifier_Injector
      * @note This differs from handlers in that the token is read-only
      * @deprecated
      */
-    public function notifyEnd($token)
-    {
-    }
+    public function notifyEnd($token) {}
 }
 
 // vim: et sw=4 sts=4

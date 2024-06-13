@@ -152,7 +152,7 @@ class HTMLPurifier_ConfigSchema
      */
     public function addAlias($key, $new_key)
     {
-        $obj = new stdClass;
+        $obj = new stdClass();
         $obj->key = $new_key;
         $obj->isAlias = true;
         $this->info[$key] = $obj;

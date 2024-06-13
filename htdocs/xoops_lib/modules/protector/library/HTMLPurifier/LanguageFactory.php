@@ -9,7 +9,6 @@
  */
 class HTMLPurifier_LanguageFactory
 {
-
     /**
      * Cache of language code information used to load HTMLPurifier_Language objects.
      * Structure is: $factory->cache[$language_code][$key] = $value
@@ -92,7 +91,7 @@ class HTMLPurifier_LanguageFactory
             $code = $this->validator->validate(
                 $config->get('Core.Language'),
                 $config,
-                $context
+                $context,
             );
         } else {
             $code = $this->validator->validate($code, $config, $context);
@@ -109,7 +108,7 @@ class HTMLPurifier_LanguageFactory
         } else {
             $class = 'HTMLPurifier_Language_' . $pcode;
             $file  = $this->dir . '/Language/classes/' . $code . '.php';
-            if (file_exists($file) || class_exists($class, false)) {
+            if (file_exists($file) || class_exists($class)) {
                 $lang = new $class($config, $context);
             } else {
                 // Go fallback
@@ -176,7 +175,7 @@ class HTMLPurifier_LanguageFactory
                 trigger_error(
                     'Circular fallback reference in language ' .
                     $code,
-                    E_USER_ERROR
+                    E_USER_ERROR,
                 );
                 $fallback = 'en';
             }

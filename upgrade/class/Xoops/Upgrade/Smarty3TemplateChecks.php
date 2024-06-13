@@ -27,12 +27,12 @@ use SplFileInfo;
  */
 class Smarty3TemplateChecks extends ScannerProcess
 {
-    protected $patterns = array(
+    protected $patterns = [
         'varname' => '/<{foreach[[:space:]]+item=([a-zA-Z0-9\-_.]+)[[:space:]]from=\$([a-zA-Z0-9\-_.]+) *}>/',
         'noquotes' =>'/(<{xo[a-zA-Z\d]*\b[^}>]*?)\s*([^\'"}]+)(}>)/',
         'includeq' => '/(<{includeq[[:space:]]+[ -=\.\/_\'\"\$a-zA-Z0-9]+}>)/',
         'foreachq' => '/(<{foreachq[[:space:]]+[ -=\.\/_\'\"\$a-zA-Z0-9]+}>)/',
-    );
+    ];
 
     /**
      * @var ScannerOutput
@@ -80,7 +80,7 @@ class Smarty3TemplateChecks extends ScannerProcess
         $results = preg_match_all($pattern, $contents, $matches, PREG_PATTERN_ORDER, 0);
         if (0 < (int)$results) {
             for ($i = 0; $i < (int)$results; $i++) {
-                $match = isset($matches[0][$i]) ? $matches[0][$i] : null;
+                $match = $matches[0][$i] ?? null;
                 if (null !== $match && '<{if false}>' !== $match) { // oddball case
                     $file = str_replace(XOOPS_ROOT_PATH, '', $fileInfo->getPathname());
                     $output->outputIssue($output->makeOutputIssue($rule, $file, $match, $writable));
@@ -94,7 +94,7 @@ class Smarty3TemplateChecks extends ScannerProcess
         $pattern = $this->patterns[$rule];
         $results = preg_match_all($pattern, $contents, $matches, PREG_PATTERN_ORDER, 0);
         if (0 < (int)$results) {
-            $match = isset($matches[0][0]) ? $matches[0][0] : null;
+            $match = $matches[0][0] ?? null;
             if (null !== $match) {
                 $file = str_replace(XOOPS_ROOT_PATH, '', $fileInfo->getPathname());
                 $output->outputIssue($output->makeOutputIssue($rule, $file, $match, $writable));
@@ -107,7 +107,7 @@ class Smarty3TemplateChecks extends ScannerProcess
         $pattern = $this->patterns[$rule];
         $results = preg_match_all($pattern, $contents, $matches, PREG_PATTERN_ORDER, 0);
         if (0 < (int)$results) {
-            $match = isset($matches[0][0]) ? $matches[0][0] : null;
+            $match = $matches[0][0] ?? null;
             if (null !== $match) {
                 $file = str_replace(XOOPS_ROOT_PATH, '', $fileInfo->getPathname());
                 $output->outputIssue($output->makeOutputIssue($rule, $file, $match, $writable));

@@ -26,6 +26,7 @@ $modversion['help']        = 'page=modulesadmin';
 $modversion['license']     = 'GPL see LICENSE';
 $modversion['official']    = 1;
 $modversion['image']       = 'modules.png';
+$modversion['icon']        = 'fa fa-cogs';
 
 $modversion['hasAdmin']  = 1;
 $modversion['adminpath'] = 'admin.php?fct=modulesadmin';

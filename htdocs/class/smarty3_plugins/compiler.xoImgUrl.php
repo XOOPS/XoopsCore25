@@ -40,6 +40,6 @@ function smarty_compiler_xoImgUrl($params, Smarty $smarty)
     $arg = reset($params);
     $arg = trim($arg, " '\"\t\n\r\0\x0B");
     $path = (isset($xoTheme) && is_object($xoTheme)) ? $xoTheme->resourcePath($arg) : $arg;
-//$xoops->events()->triggerEvent('debug.log', $path);
+    //$xoops->events()->triggerEvent('debug.log', $path);
     return "<?php echo '" . addslashes($xoops->url($path)) . "'; ?>";
 }

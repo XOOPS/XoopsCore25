@@ -91,7 +91,7 @@ class XoopsTarDownloader extends XoopsDownloader
      * @param string  $filename Name for the file in the archive
      * @param integer $time
      */
-    public function addFileData(&$data, $filename, $time = 0)
+    public function addFileData($data, $filename, $time = 0)
     {
         $dummyfile = XOOPS_CACHE_PATH . '/dummy_' . time() . '.tpl';
         $fp        = fopen($dummyfile, 'w');
@@ -118,7 +118,7 @@ class XoopsTarDownloader extends XoopsDownloader
      * @param string  $filename Name for the file in the archive
      * @param integer $time
      */
-    public function addBinaryFileData(&$data, $filename, $time = 0)
+    public function addBinaryFileData($data, $filename, $time = 0)
     {
         $dummyfile = XOOPS_CACHE_PATH . '/dummy_' . time() . '.tpl';
         $fp        = fopen($dummyfile, 'wb');

@@ -7,7 +7,6 @@
  */
 class HTMLPurifier_HTMLModule_Image extends HTMLPurifier_HTMLModule
 {
-
     /**
      * @type string
      */
@@ -32,7 +31,7 @@ class HTMLPurifier_HTMLModule_Image extends HTMLPurifier_HTMLModule
                 'width' => 'Pixels#' . $max,
                 'longdesc' => 'URI',
                 'src*' => new HTMLPurifier_AttrDef_URI(true), // embedded
-            )
+            ),
         );
         if ($max === null || $config->get('HTML.Trusted')) {
             $img->attr['height'] =

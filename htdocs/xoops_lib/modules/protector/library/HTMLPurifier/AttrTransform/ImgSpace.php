@@ -15,7 +15,7 @@ class HTMLPurifier_AttrTransform_ImgSpace extends HTMLPurifier_AttrTransform
      */
     protected $css = array(
         'hspace' => array('left', 'right'),
-        'vspace' => array('top', 'bottom')
+        'vspace' => array('top', 'bottom'),
     );
 
     /**

@@ -39,7 +39,7 @@ class XoopsEditor extends XoopsFormTextArea
         // For backward compatibility
         if (!is_array($args[0])) {
             $i = 0;
-            foreach (array('caption', 'name', 'value', 'rows', 'cols', 'hiddentext') as $key) {
+            foreach (['caption', 'name', 'value', 'rows', 'cols', 'hiddentext'] as $key) {
                 if (isset($args[$i])) {
                     $configs[$key] = $args[$i];
                 }
@@ -50,7 +50,7 @@ class XoopsEditor extends XoopsFormTextArea
             $configs = $args[0];
         }
         // TODO: switch to property_exists() as of PHP 5.1.0
-        $vars = get_class_vars(__CLASS__);
+        $vars = get_class_vars(self::class);
         foreach ($configs as $key => $val) {
             if (method_exists($this, 'set' . ucfirst($key))) {
                 $this->{'set' . ucfirst($key)}($val);
@@ -90,7 +90,7 @@ class XoopsEditorHandler
     // static $instance;
     public $root_path       = '';
     public $nohtml          = false;
-    public $allowed_editors = array();
+    public $allowed_editors = [];
 
     /**
      * Enter description here...
@@ -112,7 +112,7 @@ class XoopsEditorHandler
     {
         static $instance;
         if (!isset($instance)) {
-            $class    = __CLASS__;
+            $class    = self::class;
             $instance = new $class();
         }
 
@@ -164,8 +164,8 @@ class XoopsEditorHandler
         xoops_load('XoopsCache');
         $list = XoopsCache::read('editorlist');
         if (empty($list)) {
-            $list  = array();
-            $order = array();
+            $list  = [];
+            $order = [];
             xoops_load('XoopsLists');
             $_list = XoopsLists::getDirListAsArray($this->root_path . '/');
             foreach ($_list as $item) {
@@ -180,7 +180,7 @@ class XoopsEditorHandler
                         continue;
                     }
                     $order[]     = $config['order'];
-                    $list[$item] = array('title' => $config['title'], 'nohtml' => $config['nohtml']);
+                    $list[$item] = ['title' => $config['title'], 'nohtml' => $config['nohtml']];
                 }
             }
             array_multisort($order, $list);
@@ -191,7 +191,7 @@ class XoopsEditorHandler
         if (!empty($this->allowed_editors)) {
             $editors = array_intersect($editors, $this->allowed_editors);
         }
-        $_list = array();
+        $_list = [];
         foreach ($editors as $name) {
             if (!empty($noHtml) && empty($list[$name]['nohtml'])) {
                 continue;

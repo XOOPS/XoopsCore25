@@ -26,7 +26,7 @@ class MytsYoutube extends MyTextSanitizerExtension
      */
     public function encode($textarea_id)
     {
-//        $config = parent::loadConfig(__DIR__);
+        //        $config = parent::loadConfig(__DIR__);
         $code = "<button type='button' class='btn btn-default btn-sm' onclick='xoopsCodeYoutube(\"{$textarea_id}\",\""
             . htmlspecialchars(_XOOPS_FORM_ENTERYOUTUBEURL, ENT_QUOTES | ENT_HTML5) . "\",\""
             . htmlspecialchars(_XOOPS_FORM_ALT_ENTERHEIGHT, ENT_QUOTES | ENT_HTML5) . "\",\""
@@ -56,7 +56,7 @@ class MytsYoutube extends MyTextSanitizerExtension
             }
 EOH;
 
-        return array($code, $javascript);
+        return [$code, $javascript];
     }
 
     /**
@@ -75,7 +75,7 @@ EOH;
     public function load(MyTextSanitizer $myts)
     {
         $myts->callbackPatterns[] = "/\[youtube=(['\"]?)([^\"']*),([^\"']*)\\1]([^\"]*)\[\/youtube\]/sU";
-        $myts->callbacks[]        = __CLASS__ . '::myCallback';
+        $myts->callbacks[]        = self::class . '::myCallback';
     }
 
     /**
@@ -93,7 +93,7 @@ EOH;
         // match known youtube urls
         // from: https://stackoverflow.com/questions/2936467/parse-youtube-video-id-using-preg-match/6382259#6382259
         $youtubeRegex = '%(?:youtube(?:-nocookie)?\.com/(?:[^/]+/.+/|(?:v|e(?:mbed)?)/|.*[?&]v=)|youtu\.be/)'
-            .'([^"&?/ ]{11})%i';
+            . '([^"&?/ ]{11})%i';
 
         if (preg_match($youtubeRegex, $url, $match)) {
             $videoId = $match[1]; // extract just the video id from a URL
@@ -117,7 +117,7 @@ EOH;
                 break;
         }
 
-        $aspectRatio = $width/$height; // 16x9 = 1.777777778, 4x3 = 1.333333333
+        $aspectRatio = $width / $height; // 16x9 = 1.777777778, 4x3 = 1.333333333
         $responsiveAspect = ($aspectRatio < 1.4) ? 'embed-responsive-4by3' : 'embed-responsive-16by9';
         if ($width < 17 && $height < 10) {
             $scale = (int) 450 / $width;

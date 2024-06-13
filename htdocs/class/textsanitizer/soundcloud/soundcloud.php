@@ -12,7 +12,7 @@ class MytsSoundcloud extends MyTextSanitizerExtension
      */
     public function encode($textarea_id)
     {
-//        $config = parent::loadConfig(__DIR__);
+        //        $config = parent::loadConfig(__DIR__);
 
         $code = "<button type='button' class='btn btn-default btn-sm' onclick='xoopsCodeSoundCloud(\"{$textarea_id}\",\""
             . htmlspecialchars(_XOOPS_FORM_ENTER_SOUNDCLOUD_URL, ENT_QUOTES | ENT_HTML5)
@@ -36,7 +36,7 @@ class MytsSoundcloud extends MyTextSanitizerExtension
             }
 EOH;
 
-        return array($code, $javascript);
+        return [$code, $javascript];
     }
 
     /**
@@ -45,7 +45,7 @@ EOH;
     public function load(MyTextSanitizer $myts)
     {
         $myts->callbackPatterns[] = "/\[soundcloud\](http[s]?:\/\/[^\"'<>]*)(.*)\[\/soundcloud\]/sU";
-        $myts->callbacks[]        = __CLASS__ . '::myCallback';
+        $myts->callbacks[]        = self::class . '::myCallback';
     }
 
     /**

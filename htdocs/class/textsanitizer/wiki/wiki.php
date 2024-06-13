@@ -60,9 +60,10 @@ class MytsWiki extends MyTextSanitizerExtension
             }
 EOH;
 
-        return array(
+        return [
             $code,
-            $javascript);
+            $javascript,
+        ];
     }
 
     /**
@@ -72,7 +73,7 @@ EOH;
      */
     public static function myCallback($match)
     {
-        return self::decode($match[1],0 ,0);
+        return self::decode($match[1], 0, 0);
     }
 
     /**
@@ -81,7 +82,7 @@ EOH;
     public function load(MyTextSanitizer $myts)
     {
         $myts->callbackPatterns[] = "/\[\[([^\]]*)\]\]/sU";
-        $myts->callbacks[]        = __CLASS__ . '::myCallback';
+        $myts->callbacks[]        = self::class . '::myCallback';
     }
 
     /**

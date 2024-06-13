@@ -106,13 +106,14 @@ function bannerstats()
     $result = $xoopsDB->query($sql);
     if (!$xoopsDB->isResultSet($result)) {
         throw new \RuntimeException(
-            \sprintf(_DB_QUERY_ERROR, $sql) . $xoopsDB->error(), E_USER_ERROR
+            \sprintf(_DB_QUERY_ERROR, $sql) . $xoopsDB->error(),
+            E_USER_ERROR,
         );
     }
-    list($cid, $name, $passwd) = $xoopsDB->fetchRow($result);
+    [$cid, $name, $passwd] = $xoopsDB->fetchRow($result);
     if ($_SESSION['banner_pass'] == $passwd) {
         include $GLOBALS['xoops']->path('header.php');
-        $cid = (int)$cid;
+        $cid = (int) $cid;
         $GLOBALS['xoTheme']->addStylesheet(null, null, '
             #bannerstats {}
             #bannerstats td {
@@ -137,11 +138,12 @@ function bannerstats()
         $result = $xoopsDB->query($sql);
         if (!$xoopsDB->isResultSet($result)) {
             throw new \RuntimeException(
-                \sprintf(_DB_QUERY_ERROR, $sql) . $xoopsDB->error(), E_USER_ERROR
+                \sprintf(_DB_QUERY_ERROR, $sql) . $xoopsDB->error(),
+                E_USER_ERROR,
             );
         }
         $i      = 0;
-        while (false !== (list($bid, $imptotal, $impmade, $clicks, $date) = $xoopsDB->fetchRow($result))) {
+        while (false !== ([$bid, $imptotal, $impmade, $clicks, $date] = $xoopsDB->fetchRow($result))) {
             if ($impmade == 0) {
                 $percent = 0;
             } else {
@@ -171,10 +173,11 @@ function bannerstats()
         $result = $xoopsDB->query($sql);
         if (!$xoopsDB->isResultSet($result)) {
             throw new \RuntimeException(
-                \sprintf(_DB_QUERY_ERROR, $sql) . $xoopsDB->error(), E_USER_ERROR
+                \sprintf(_DB_QUERY_ERROR, $sql) . $xoopsDB->error(),
+                E_USER_ERROR,
             );
         }
-        while (false !== (list($bid, $imageurl, $clickurl, $htmlbanner, $htmlcode) = $xoopsDB->fetchRow($result))) {
+        while (false !== ([$bid, $imageurl, $clickurl, $htmlbanner, $htmlcode] = $xoopsDB->fetchRow($result))) {
             $numrows = $xoopsDB->getRowsNum($result);
             if ($numrows > 1) {
                 echo '<br>';
@@ -221,7 +224,7 @@ function bannerstats()
                   <tfoot><tr><td colspan='6'></td></tr></tfoot>";
 
             $i = 0;
-            while (false !== (list($bid, $impressions, $clicks, $datestart, $dateend) = $xoopsDB->fetchRow($result))) {
+            while (false !== ([$bid, $impressions, $clicks, $datestart, $dateend] = $xoopsDB->fetchRow($result))) {
                 if ($impressions == 0) {
                     $percent = 0;
                 } else {
@@ -254,12 +257,12 @@ function emailStats($cid, $bid)
 {
     global $xoopsDB, $xoopsConfig;
     if ($_SESSION['banner_login'] != '' && $_SESSION['banner_pass'] != '') {
-        $cid     = (int)$cid;
-        $bid     = (int)$bid;
+        $cid     = (int) $cid;
+        $bid     = (int) $bid;
         $sql     = sprintf('SELECT name, email, passwd FROM %s WHERE cid=%u AND login=%s', $xoopsDB->prefix('bannerclient'), $cid, $xoopsDB->quoteString($_SESSION['banner_login']));
         $result2 = $xoopsDB->query($sql);
         if ($xoopsDB->isResultSet($result2)) {
-            list($name, $email, $passwd) = $xoopsDB->fetchRow($result2);
+            [$name, $email, $passwd] = $xoopsDB->fetchRow($result2);
             if ($_SESSION['banner_pass'] == $passwd) {
                 if ($email == '') {
                     redirect_header('banners.php', 3, sprintf(_BANNERS_MAIL_ERROR, $name));
@@ -267,7 +270,7 @@ function emailStats($cid, $bid)
                     $sql    = 'SELECT bid, imptotal, impmade, clicks, imageurl, clickurl, date FROM ' . $xoopsDB->prefix('banner') . " WHERE bid={$bid} AND cid={$cid}";
                     $result = $xoopsDB->query($sql);
                     if ($xoopsDB->isResultSet($result)) {
-                        list($bid, $imptotal, $impmade, $clicks, $imageurl, $clickurl, $date) = $xoopsDB->fetchRow($result);
+                        [$bid, $imptotal, $impmade, $clicks, $imageurl, $clickurl, $date] = $xoopsDB->fetchRow($result);
                         if ($impmade == 0) {
                             $percent = 0;
                         } else {
@@ -310,12 +313,12 @@ function change_banner_url_by_client($cid, $bid, $url)
 {
     global $xoopsDB;
     if ($_SESSION['banner_login'] != '' && $_SESSION['banner_pass'] != '' && $url != '') {
-        $cid    = (int)$cid;
-        $bid    = (int)$bid;
+        $cid    = (int) $cid;
+        $bid    = (int) $bid;
         $sql    = sprintf('SELECT passwd FROM %s WHERE cid=%u AND login=%s', $xoopsDB->prefix('bannerclient'), $cid, $xoopsDB->quoteString($_SESSION['banner_login']));
         $result = $xoopsDB->query($sql);
         if ($xoopsDB->isResultSet($result)) {
-            list($passwd) = $xoopsDB->fetchRow($result);
+            [$passwd] = $xoopsDB->fetchRow($result);
             if ($_SESSION['banner_pass'] == $passwd) {
                 $sql = sprintf('UPDATE %s SET clickurl=%s WHERE bid=%u AND cid=%u', $xoopsDB->prefix('banner'), $xoopsDB->quoteString($url), $bid, $cid);
                 if ($xoopsDB->query($sql)) {
@@ -334,16 +337,17 @@ function change_banner_url_by_client($cid, $bid, $url)
 function clickbanner($bid)
 {
     global $xoopsDB;
-    $bid = (int)$bid;
+    $bid = (int) $bid;
     if ($bid > 0) {
         $sql = 'SELECT clickurl FROM ' . $xoopsDB->prefix('banner') . " WHERE bid={$bid}";
         $result = $xoopsDB->query($sql);
         if (!$xoopsDB->isResultSet($result)) {
             throw new \RuntimeException(
-                \sprintf(_DB_QUERY_ERROR, $sql) . $xoopsDB->error(), E_USER_ERROR
+                \sprintf(_DB_QUERY_ERROR, $sql) . $xoopsDB->error(),
+                E_USER_ERROR,
             );
         }
-        list($clickurl) = $xoopsDB->fetchRow($result);
+        [$clickurl] = $xoopsDB->fetchRow($result);
         if ($clickurl) {
             if ($GLOBALS['xoopsSecurity']->checkReferer()) {
                 $xoopsDB->queryF('UPDATE ' . $xoopsDB->prefix('banner') . " SET clicks=clicks+1 WHERE bid=$bid");

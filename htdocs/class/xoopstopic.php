@@ -52,7 +52,7 @@ class XoopsTopic
         if (is_array($topicid)) {
             $this->makeTopic($topicid);
         } elseif ($topicid != 0) {
-            $this->getTopic((int)$topicid);
+            $this->getTopic((int) $topicid);
         } else {
             $this->topic_id = $topicid;
         }
@@ -87,12 +87,13 @@ class XoopsTopic
      */
     public function getTopic($topicid)
     {
-        $topicid = (int)$topicid;
+        $topicid = (int) $topicid;
         $sql     = 'SELECT * FROM ' . $this->table . ' WHERE topic_id=' . $topicid . '';
         $result = $this->db->query($sql);
         if (!$this->db->isResultSet($result)) {
             throw new \RuntimeException(
-                \sprintf(_DB_QUERY_ERROR, $sql) . $this->db->error(), E_USER_ERROR
+                \sprintf(_DB_QUERY_ERROR, $sql) . $this->db->error(),
+                E_USER_ERROR,
             );
         }
         $array   = $this->db->fetchArray($result);
@@ -250,7 +251,7 @@ class XoopsTopic
                 break;
             case 'P':
             case 'F':
-                $title = $myts->htmlSpecialChars($myts->stripSlashesGPC($this->topic_title));
+                $title = $myts->htmlSpecialChars($this->topic_title);
                 break;
         }
 
@@ -272,7 +273,7 @@ class XoopsTopic
                 break;
             case 'P':
             case 'F':
-                $imgurl = $myts->htmlSpecialChars($myts->stripSlashesGPC($this->topic_imgurl));
+                $imgurl = $myts->htmlSpecialChars($this->topic_imgurl);
                 break;
         }
 
@@ -281,10 +282,7 @@ class XoopsTopic
 
     public function prefix()
     {
-        if (isset($this->prefix)) {
-            return $this->prefix;
-        }
-        return null;
+        return $this->prefix ?? null;
     }
 
     /**
@@ -292,7 +290,7 @@ class XoopsTopic
      */
     public function getFirstChildTopics()
     {
-        $ret       = array();
+        $ret       = [];
         $xt        = new XoopsTree($this->table, 'topic_id', 'topic_pid');
         $topic_arr = $xt->getFirstChild($this->topic_id, 'topic_title');
         if (!empty($topic_arr) && \is_array($topic_arr)) {
@@ -309,7 +307,7 @@ class XoopsTopic
      */
     public function getAllChildTopics()
     {
-        $ret       = array();
+        $ret       = [];
         $xt        = new XoopsTree($this->table, 'topic_id', 'topic_pid');
         $topic_arr = $xt->getAllChild($this->topic_id, 'topic_title');
         if (!empty($topic_arr) && \is_array($topic_arr)) {
@@ -326,7 +324,7 @@ class XoopsTopic
      */
     public function getChildTopicsTreeArray()
     {
-        $ret       = array();
+        $ret       = [];
         $xt        = new XoopsTree($this->table, 'topic_id', 'topic_pid');
         $topic_arr = $xt->getChildTreeArray($this->topic_id, 'topic_title');
         if (!empty($topic_arr) && \is_array($topic_arr)) {
@@ -390,13 +388,14 @@ class XoopsTopic
         $result = $this->db->query($sql);
         if (!$this->db->isResultSet($result)) {
             throw new \RuntimeException(
-                \sprintf(_DB_QUERY_ERROR, $sql) . $this->db->error(), E_USER_ERROR
+                \sprintf(_DB_QUERY_ERROR, $sql) . $this->db->error(),
+                E_USER_ERROR,
             );
         }
-        $ret    = array();
+        $ret    = [];
         $myts   = \MyTextSanitizer::getInstance();
         while (false !== ($myrow = $this->db->fetchArray($result))) {
-            $ret[$myrow['topic_id']] = array('title' => $myts->htmlSpecialChars($myrow['topic_title']), 'pid' => $myrow['topic_pid']);
+            $ret[$myrow['topic_id']] = ['title' => $myts->htmlSpecialChars($myrow['topic_title']), 'pid' => $myrow['topic_pid']];
         }
 
         return $ret;
@@ -410,14 +409,15 @@ class XoopsTopic
      */
     public function topicExists($pid, $title)
     {
-        $sql = 'SELECT COUNT(*) from ' . $this->table . ' WHERE topic_pid = ' . (int)$pid . " AND topic_title = '" . trim($title) . "'";
+        $sql = 'SELECT COUNT(*) from ' . $this->table . ' WHERE topic_pid = ' . (int) $pid . " AND topic_title = '" . trim($title) . "'";
         $result  = $this->db->query($sql);
         if (!$this->db->isResultSet($result)) {
-               throw new \RuntimeException(
-       \sprintf(_DB_QUERY_ERROR, $sql) . $this->db->error(), E_USER_ERROR
-   );
+            throw new \RuntimeException(
+                \sprintf(_DB_QUERY_ERROR, $sql) . $this->db->error(),
+                E_USER_ERROR,
+            );
         }
-        list($count) = $this->db->fetchRow($result);
+        [$count] = $this->db->fetchRow($result);
         if ($count > 0) {
             return true;
         } else {

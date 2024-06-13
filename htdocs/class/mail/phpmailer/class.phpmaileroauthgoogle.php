@@ -53,7 +53,7 @@ class PHPMailerOAuthGoogle
     {
         return new League\OAuth2\Client\Provider\Google([
             'clientId' => $this->oauthClientId,
-            'clientSecret' => $this->oauthClientSecret
+            'clientSecret' => $this->oauthClientSecret,
         ]);
     }
 

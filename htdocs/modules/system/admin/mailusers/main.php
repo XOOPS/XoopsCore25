@@ -17,6 +17,7 @@
  * @author       XOOPS Development Team, Kazumi Ono (AKA onokazu)
  */
 use Xmf\Request;
+
 // Check users rights
 if (!is_object($xoopsUser) || !is_object($xoopsModule) || !$xoopsUser->isAdmin($xoopsModule->mid())) {
     exit(_NOPERM);
@@ -64,7 +65,7 @@ switch ($op) {
             $display_criteria = 0;
         }
         if (!empty($display_criteria)) {
-            $selected_groups = array();
+            $selected_groups = [];
             $group_select    = new XoopsFormSelectGroup('<div class="bold spacer">' . _AM_SYSTEM_MAILUSERS_GROUPIS . '<span class="bold green">*</span></div>', 'mail_to_group', false, $selected_groups, 5, true);
 
             $lastlog_min = new XoopsFormTextDateSelect(_AM_SYSTEM_MAILUSERS_LASTLOGMIN . '<span class="bold green">*</span>', 'mail_lastlog_min');
@@ -113,7 +114,7 @@ switch ($op) {
             //$criteria_tray->addElement($regd_max);
             $form->addElement($criteria_tray);
         }
-        $fname_text      = new XoopsFormText(_AM_SYSTEM_MAILUSERS_MAILFNAME, 'mail_fromname', 30, 255, htmlspecialchars($xoopsConfig['sitename'], ENT_QUOTES | ENT_HTML5));
+        $fname_text      = new XoopsFormText(_AM_SYSTEM_MAILUSERS_MAILFNAME, 'mail_fromname', 30, 255, htmlspecialchars((string) $xoopsConfig['sitename'], ENT_QUOTES | ENT_HTML5));
         $fromemail       = !empty($xoopsConfig['adminmail']) ? $xoopsConfig['adminmail'] : $xoopsUser->getVar('email', 'E');
         $femail_text     = new XoopsFormText(_AM_SYSTEM_MAILUSERS_MAILFMAIL, 'mail_fromemail', 30, 255, $fromemail);
         $subject_caption = _AM_SYSTEM_MAILUSERS_MAILSUBJECT . "<br><br><span style='font-size:x-small;font-weight:bold;'>" . _AM_SYSTEM_MAILUSERS_MAILTAGS . "</span><br><span style='font-size:x-small;font-weight:normal;'>" . _AM_SYSTEM_MAILUSERS_MAILTAGS2 . '</span>';
@@ -150,9 +151,9 @@ switch ($op) {
         $xoBreadCrumb->render();
 
         if (!empty($_POST['mail_send_to'])) {
-            $added          = array();
-            $added_id       = array();
-            $criteria       = array();
+            $added          = [];
+            $added_id       = [];
+            $criteria       = [];
             $count_criteria = 0; // user count via criteria;
             if (!empty($_POST['mail_inactive'])) {
                 $criteria[] = 'level = 0';
@@ -161,13 +162,13 @@ switch ($op) {
                     $criteria[] = 'user_mailok = 1';
                 }
                 if (!empty($_POST['mail_lastlog_min'])) {
-                    $time = strtotime(trim($_POST['mail_lastlog_min']));
+                    $time = strtotime(trim((string) $_POST['mail_lastlog_min']));
                     if ($time > 0) {
                         $criteria[] = "last_login > $time";
                     }
                 }
                 if (!empty($_POST['mail_lastlog_max'])) {
-                    $time = strtotime(trim($_POST['mail_lastlog_max']));
+                    $time = strtotime(trim((string) $_POST['mail_lastlog_max']));
                     if ($time > 0) {
                         $criteria[] = "last_login < $time";
                     }
@@ -190,30 +191,30 @@ switch ($op) {
                 }
             }
             if (!empty($_POST['mail_regd_min'])) {
-                $time = strtotime(trim($_POST['mail_regd_min']));
+                $time = strtotime(trim((string) $_POST['mail_regd_min']));
                 if ($time > 0) {
                     $criteria[] = "user_regdate > $time";
                 }
             }
             if (!empty($_POST['mail_regd_max'])) {
-                $time = strtotime(trim($_POST['mail_regd_max']));
+                $time = strtotime(trim((string) $_POST['mail_regd_max']));
                 if ($time > 0) {
                     $criteria[] = "user_regdate < $time";
                 }
             }
             if (!empty($criteria) || !empty($_POST['mail_to_group'])) {
                 $criteria_object = new CriteriaCompo();
-                $criteria_object->setStart(isset($_POST['mail_start']) ? $_POST['mail_start'] : 0);
+                $criteria_object->setStart($_POST['mail_start'] ?? 0);
                 $criteria_object->setLimit($limit);
                 foreach ($criteria as $c) {
-                    list($field, $op, $value) = explode(' ', $c);
+                    [$field, $op, $value] = explode(' ', $c);
                     $crit         = new Criteria($field, $value, $op);
                     $crit->prefix = 'u';
                     $criteria_object->add($crit, 'AND');
                 }
                 /** @var XoopsMemberHandler $member_handler */
                 $member_handler = xoops_getHandler('member');
-                $groups         = empty($_POST['mail_to_group']) ? array() : array_map('intval', $_POST['mail_to_group']);
+                $groups         = empty($_POST['mail_to_group']) ? [] : array_map('intval', $_POST['mail_to_group']);
                 $getusers       = $member_handler->getUsersByGroupLink($groups, $criteria_object, true);
                 $count_criteria = $member_handler->getUserCountByGroupLink($groups, $criteria_object);
                 foreach ($getusers as $getuser) {
@@ -240,10 +241,10 @@ switch ($op) {
                 for ($i = 0; $i < $added_count; ++$i) {
                     $xoopsMailer->setToUsers($added[$i]);
                 }
-                $xoopsMailer->setFromName($myts->stripSlashesGPC($_POST['mail_fromname']));
-                $xoopsMailer->setFromEmail($myts->stripSlashesGPC($_POST['mail_fromemail']));
-                $xoopsMailer->setSubject($myts->stripSlashesGPC($_POST['mail_subject']));
-                $xoopsMailer->setBody($myts->stripSlashesGPC($_POST['mail_body']));
+                $xoopsMailer->setFromName(Request::getString('mail_fromname', '', 'POST'));
+                $xoopsMailer->setFromEmail(Request::getString('mail_fromemail', '', 'POST'));
+                $xoopsMailer->setSubject(Request::getString('mail_subject', '', 'POST'));
+                $xoopsMailer->setBody(Request::getString('mail_body', '', 'POST'));
                 if (in_array('mail', $_POST['mail_send_to'])) {
                     $xoopsMailer->useMail();
                 }
@@ -264,22 +265,24 @@ switch ($op) {
                             $form->addElement($group_hidden);
                         }
                     }
-                    $inactive_hidden    = new XoopsFormHidden('mail_inactive', isset($_POST['mail_inactive']) ? $_POST['mail_inactive'] : '');
-                    $lastlog_min_hidden = new XoopsFormHidden('mail_lastlog_min', $myts->htmlSpecialChars($myts->stripSlashesGPC($_POST['mail_lastlog_min'])));
-                    $lastlog_max_hidden = new XoopsFormHidden('mail_lastlog_max', $myts->htmlSpecialChars($myts->stripSlashesGPC($_POST['mail_lastlog_max'])));
-                    $regd_min_hidden    = new XoopsFormHidden('mail_regd_min', $myts->htmlSpecialChars($myts->stripSlashesGPC($_POST['mail_regd_min'])));
-                    $regd_max_hidden    = new XoopsFormHidden('mail_regd_max', $myts->htmlSpecialChars($myts->stripSlashesGPC($_POST['mail_regd_max'])));
-                    $idle_more_hidden   = new XoopsFormHidden('mail_idle_more', $myts->htmlSpecialChars($myts->stripSlashesGPC($_POST['mail_idle_more'])));
-                    $idle_less_hidden   = new XoopsFormHidden('mail_idle_less', $myts->htmlSpecialChars($myts->stripSlashesGPC($_POST['mail_idle_less'])));
-                    $fname_hidden       = new XoopsFormHidden('mail_fromname', $myts->htmlSpecialChars($myts->stripSlashesGPC($_POST['mail_fromname'])));
-                    $femail_hidden      = new XoopsFormHidden('mail_fromemail', $myts->htmlSpecialChars($myts->stripSlashesGPC($_POST['mail_fromemail'])));
-                    $subject_hidden     = new XoopsFormHidden('mail_subject', $myts->htmlSpecialChars($myts->stripSlashesGPC($_POST['mail_subject'])));
-                    $body_hidden        = new XoopsFormHidden('mail_body', $myts->htmlSpecialChars($myts->stripSlashesGPC($_POST['mail_body'])));
-                    $start_hidden       = new XoopsFormHidden('mail_start', $_POST['mail_start'] + $limit);
-                    $mail_mailok_hidden = new XoopsFormHidden('mail_mailok', isset($_POST['mail_mailok']) ? $myts->stripSlashesGPC(trim($_POST['mail_mailok'])) : '');
+
+                    $inactive_hidden    = new XoopsFormHidden('mail_inactive', Request::getString('mail_inactive', '', 'POST'));
+                    $lastlog_min_hidden = new XoopsFormHidden('mail_lastlog_min', htmlspecialchars(Request::getString('mail_lastlog_min', '', 'POST'), ENT_QUOTES | ENT_HTML5));
+                    $lastlog_max_hidden = new XoopsFormHidden('mail_lastlog_max', htmlspecialchars(Request::getString('mail_lastlog_max', '', 'POST'), ENT_QUOTES | ENT_HTML5));
+                    $regd_min_hidden    = new XoopsFormHidden('mail_regd_min', htmlspecialchars(Request::getString('mail_regd_min', '', 'POST'), ENT_QUOTES | ENT_HTML5));
+                    $regd_max_hidden    = new XoopsFormHidden('mail_regd_max', htmlspecialchars(Request::getString('mail_regd_max', '', 'POST'), ENT_QUOTES | ENT_HTML5));
+                    $idle_more_hidden   = new XoopsFormHidden('mail_idle_more', htmlspecialchars(Request::getString('mail_idle_more', '', 'POST'), ENT_QUOTES | ENT_HTML5));
+                    $idle_less_hidden   = new XoopsFormHidden('mail_idle_less', htmlspecialchars(Request::getString('mail_idle_less', '', 'POST'), ENT_QUOTES | ENT_HTML5));
+                    $fname_hidden       = new XoopsFormHidden('mail_fromname', htmlspecialchars(Request::getString('mail_fromname', '', 'POST'), ENT_QUOTES | ENT_HTML5));
+                    $femail_hidden      = new XoopsFormHidden('mail_fromemail', htmlspecialchars(Request::getString('mail_fromemail', '', 'POST'), ENT_QUOTES | ENT_HTML5));
+                    $subject_hidden     = new XoopsFormHidden('mail_subject', htmlspecialchars(Request::getString('mail_subject', '', 'POST'), ENT_QUOTES | ENT_HTML5));
+                    $body_hidden        = new XoopsFormHidden('mail_body', htmlspecialchars(Request::getString('mail_body', '', 'POST'), ENT_QUOTES | ENT_HTML5));
+                    $start_hidden       = new XoopsFormHidden('mail_start', Request::getInt('mail_start', 0, 'POST') + $limit);
+                    $mail_mailok_hidden = new XoopsFormHidden('mail_mailok', htmlspecialchars(Request::getString('mail_mailok', '', 'POST'), ENT_QUOTES | ENT_HTML5));
                     $op_hidden          = new XoopsFormHidden('op', 'send');
                     $submit_button      = new XoopsFormButton('', 'mail_submit', _AM_SYSTEM_MAILUSERS_SENDNEXT, 'submit');
-                    $sent_label         = new XoopsFormLabel(_AM_SYSTEM_MAILUSERS_SENT, sprintf(_AM_SYSTEM_MAILUSERS_SENTNUM, $_POST['mail_start'] + 1, $_POST['mail_start'] + $limit, $count_criteria + $added_count - $limit));
+                    $sent_label         = new XoopsFormLabel(_AM_SYSTEM_MAILUSERS_SENT, sprintf(_AM_SYSTEM_MAILUSERS_SENTNUM, Request::getInt('mail_start', 0, 'POST') + 1, Request::getInt('mail_start', 0, 'POST') + $limit, $count_criteria + $added_count - $limit));
+
                     $form->addElement($sent_label);
                     $form->addElement($inactive_hidden);
                     $form->addElement($lastlog_min_hidden);

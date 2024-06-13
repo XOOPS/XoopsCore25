@@ -35,14 +35,14 @@ class Zipfile
      *
      * @var array $datasec
      */
-    public $datasec = array();
+    public $datasec = [];
 
     /**
      * Central directory
      *
      * @var array $ctrl_dir
      */
-    public $ctrl_dir = array();
+    public $ctrl_dir = [];
 
     /**
      * End of central directory record

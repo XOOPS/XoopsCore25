@@ -11,11 +11,11 @@
  */
 
 include __DIR__ . '/../../../mainfile.php';
-$mydirname = basename( dirname(__DIR__) ) ;
+$mydirname = basename(dirname(__DIR__)) ;
 $mydirpath = dirname(__DIR__) ;
-require $mydirpath.'/mytrustdirname.php' ; // set $mytrustdirname
+require $mydirpath . '/mytrustdirname.php' ; // set $mytrustdirname
 
-require XOOPS_TRUST_PATH.'/modules/'.$mytrustdirname.'/admin/admin_header.php';
+require XOOPS_TRUST_PATH . '/modules/' . $mytrustdirname . '/admin/admin_header.php';
 
 xoops_cp_header();
 
@@ -26,7 +26,7 @@ function dumpArray($array, $wrap = null)
     foreach ($array as $value) {
         $string .= (!$firstTime) ? ', ' : '';
         $firstTime = false;
-        $wrap = ($wrap === null) ? ((is_int($value)) ? '' : '\'') : $wrap;
+        $wrap ??= (is_int($value)) ? '' : '\'';
         $string .= $wrap . $value . $wrap;
     }
     $string .= ']';
@@ -37,21 +37,22 @@ $queryFormat = "SELECT `type`, '%s' as age, COUNT(*) as count FROM `" . $xoopsDB
     . "` WHERE `timestamp` > NOW() - INTERVAL %d SECOND GROUP BY `type`, 2 ";
 
 $sql = '';
-$sql .= sprintf($queryFormat, 'month', 30*24*60*60);
+$sql .= sprintf($queryFormat, 'month', 30 * 24 * 60 * 60);
 $sql .= 'UNION ALL ';
-$sql .= sprintf($queryFormat, 'week', 7*24*60*60);
+$sql .= sprintf($queryFormat, 'week', 7 * 24 * 60 * 60);
 $sql .= 'UNION ALL ';
-$sql .= sprintf($queryFormat, 'day', 24*60*60);
+$sql .= sprintf($queryFormat, 'day', 24 * 60 * 60);
 $sql .= 'UNION ALL ';
-$sql .= sprintf($queryFormat, 'hour', 60*60);
+$sql .= sprintf($queryFormat, 'hour', 60 * 60);
 $result = $xoopsDB->query($sql);
 if (!$xoopsDB->isResultSet($result)) {
     throw new \RuntimeException(
-        \sprintf(_DB_QUERY_ERROR, $sql) . $xoopsDB->error(), E_USER_ERROR
+        \sprintf(_DB_QUERY_ERROR, $sql) . $xoopsDB->error(),
+        E_USER_ERROR,
     );
 }
 
-$rawStats = array();
+$rawStats = [];
 $rawStats['']['month'] = 0;
 $rawStats['']['week'] = 0;
 $rawStats['']['day'] = 0;
@@ -59,17 +60,17 @@ $rawStats['']['hour'] = 0;
 while (false !== ($row = $xoopsDB->fetchArray($result))) {
     $rawStats[$row['type']][$row['age']] = $row['count'];
 }
-$ages = array('month', 'week', 'day', 'hour');
-$stats = array();
+$ages = ['month', 'week', 'day', 'hour'];
+$stats = [];
 foreach ($rawStats as $type => $hits) {
-    $stats[$type] = array();
+    $stats[$type] = [];
 }
 ksort($stats);
 $keys = array_keys($stats);
 foreach ($keys as $type) {
-    $count = array();
+    $count = [];
     foreach ($ages as $age) {
-        $count[] = isset($rawStats[$type][$age]) ? (int)$rawStats[$type][$age] : 0;
+        $count[] = isset($rawStats[$type][$age]) ? (int) $rawStats[$type][$age] : 0;
     }
     $stats[$type] = $count;
 }
@@ -81,11 +82,11 @@ $height = (count($keys) + 1) * 24;
 $script = "new Chartist.Bar('.ct-chart', {\n";
 $script .= '  labels: ' . dumpArray(array_keys($stats)) . ",\n";
 $script .= '  series: ';
-$allSets = array();
-for ($i=0; $i<4; ++$i) {
-    $newSet = array();
+$allSets = [];
+for ($i = 0; $i < 4; ++$i) {
+    $newSet = [];
     foreach ($stats as $set) {
-        $newSet[] = $set[$i] - (($i<3) ? $set[$i+1] : 0);
+        $newSet[] = $set[$i] - (($i < 3) ? $set[$i + 1] : 0);
     }
     $allSets[] = dumpArray($newSet);
 }
@@ -114,8 +115,8 @@ EOS;
 
 $GLOBALS['xoTheme']->addStylesheet('modules/protector/assets/css/chartist.min.css');
 $GLOBALS['xoTheme']->addScript('modules/protector/assets/js/chartist.min.js');
-$GLOBALS['xoTheme']->addScript('', array(), $script);
-$styles =<<<EOSS
+$GLOBALS['xoTheme']->addScript('', [], $script);
+$styles = <<<EOSS
 .ct-series-a .ct-bar { stroke: grey; }
 .ct-series-b .ct-bar { stroke: orange; }
 .ct-series-c .ct-bar { stroke: yellow; }
@@ -133,7 +134,7 @@ $styles =<<<EOSS
 .color-series-c { background: yellow; }
 .color-series-d { background: red; }
 EOSS;
-$GLOBALS['xoTheme']->addStylesheet('', array(), $styles);
+$GLOBALS['xoTheme']->addStylesheet('', [], $styles);
 
 
 $moduleAdmin = \Xmf\Module\Admin::getInstance();
@@ -142,7 +143,7 @@ $moduleAdmin->displayNavigation(basename(__FILE__));
 
 echo '<h3>' . _AM_ADMINSTATS_TITLE . '</h3>';
 echo '<div class="ct-chart xct-minor-seventh"></div>';
-echo '<script>'. $script .'</script>';
+echo '<script>' . $script . '</script>';
 
 echo '<div class="right">'
     . '<div class="colorkeys color-series-a">&nbsp;&nbsp;&nbsp;</div><span>' . _AM_ADMINSTATS_LAST_MONTH . ' </span>'

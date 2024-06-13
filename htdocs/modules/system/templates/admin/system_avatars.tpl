@@ -62,9 +62,9 @@
                     <img id="loading_avt<{$avatar.avatar_id}>" src="images/spinner.gif" style="display:none;" title="<{$smarty.const._AM_SYSTEM_LOADING}>"
                          alt="<{$smarty.const._AM_SYSTEM_LOADING}>"/><img class="tooltip" id="avt<{$avatar.avatar_id}>"
                                                                           onclick="system_setStatus( { fct: 'avatars', op: 'display', avatar_id: <{$avatar.avatar_id}> }, 'avt<{$avatar.avatar_id}>', 'admin.php' )"
-                                                                          src="<{if $avatar.avatar_display}><{xoAdminIcons 'success.png'}><{else}><{xoAdminIcons 'cancel.png'}><{/if}>"
+                                                                          src="<{if !empty($avatar.avatar_display)}><{xoAdminIcons 'success.png'}><{else}><{xoAdminIcons 'cancel.png'}><{/if}>"
                                                                           alt="<{$smarty.const._IMGDISPLAY}>" title="<{$smarty.const._IMGDISPLAY}>"/>
-                    <{if $avatar.type == 'c'}>
+                    <{if isset($avatar.type) &&  $avatar.type == 'c'}>
                         <a href="<{$xoops_url}>/modules/profile/userinfo.php?uid=<{$avatar.user}>" title="<{$smarty.const._AM_SYSTEM_AVATAR_USERS}>">
                             <img src="<{xoAdminIcons 'edit.png'}>" alt="<{$smarty.const._AM_SYSTEM_AVATAR_USERS}>"/>
                         </a>

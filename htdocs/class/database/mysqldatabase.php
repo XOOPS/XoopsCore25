@@ -105,7 +105,7 @@ abstract class XoopsMySQLDatabase extends XoopsDatabase
     public function fetchRow($result)
     {
         $row = @mysqli_fetch_row($result);
-        return (null === $row) ? false : $row;
+        return $row ?? false;
     }
 
     /**
@@ -118,7 +118,7 @@ abstract class XoopsMySQLDatabase extends XoopsDatabase
     public function fetchArray($result)
     {
         $row = @mysqli_fetch_assoc($result);
-        return (null === $row) ? false : $row;
+        return $row ?? false;
 
     }
 
@@ -132,7 +132,7 @@ abstract class XoopsMySQLDatabase extends XoopsDatabase
     public function fetchBoth($result)
     {
         $row = @mysqli_fetch_array($result, MYSQLI_BOTH);
-        return (null === $row) ? false : $row;
+        return $row ?? false;
     }
 
     /**
@@ -144,7 +144,7 @@ abstract class XoopsMySQLDatabase extends XoopsDatabase
     public function fetchObject($result)
     {
         $row = @mysqli_fetch_object($result);
-        return (null === $row) ? false : $row;
+        return $row ?? false;
     }
 
     /**

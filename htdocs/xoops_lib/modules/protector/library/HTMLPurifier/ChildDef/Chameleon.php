@@ -11,7 +11,6 @@
  */
 class HTMLPurifier_ChildDef_Chameleon extends HTMLPurifier_ChildDef
 {
-
     /**
      * Instance of the definition object to use when inline. Usually stricter.
      * @type HTMLPurifier_ChildDef_Optional
@@ -52,13 +51,13 @@ class HTMLPurifier_ChildDef_Chameleon extends HTMLPurifier_ChildDef
             return $this->block->validateChildren(
                 $children,
                 $config,
-                $context
+                $context,
             );
         } else {
             return $this->inline->validateChildren(
                 $children,
                 $config,
-                $context
+                $context,
             );
         }
     }

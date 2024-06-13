@@ -28,14 +28,14 @@ if (!function_exists('protector_onuninstall_base')) {
         global $ret; // TODO :-D
 
         if (!is_array($ret)) {
-            $ret = array();
+            $ret = [];
         }
 
         /** @var XoopsMySQLDatabase $db */
         $db  = XoopsDatabaseFactory::getDatabaseConnection();
         $mid = $module->getVar('mid');
         if (!is_array($ret)) {
-            $ret = array();
+            $ret = [];
         }
 
         // TABLES (loading mysql.sql)
@@ -80,7 +80,7 @@ if (!function_exists('protector_onuninstall_base')) {
      * @param $module_obj
      * @param $log
      */
-    function protector_message_append_onuninstall(&$module_obj, &$log)
+    function protector_message_append_onuninstall(&$module_obj, $log)
     {
         if (isset($GLOBALS['ret']) && is_array($GLOBALS['ret'])) {
             foreach ($GLOBALS['ret'] as $message) {

@@ -13,7 +13,6 @@
  */
 class HTMLPurifier_AttrDef_CSS extends HTMLPurifier_AttrDef
 {
-
     /**
      * @param string $css
      * @param HTMLPurifier_Config $config
@@ -40,7 +39,9 @@ class HTMLPurifier_AttrDef_CSS extends HTMLPurifier_AttrDef
             $c = strcspn($css, ";'\"", $i);
             $accum .= substr($css, $i, $c);
             $i += $c;
-            if ($i == $len) break;
+            if ($i == $len) {
+                break;
+            }
             $d = $css[$i];
             if ($quoted) {
                 $accum .= $d;
@@ -57,7 +58,9 @@ class HTMLPurifier_AttrDef_CSS extends HTMLPurifier_AttrDef
                 }
             }
         }
-        if ($accum != "") $declarations[] = $accum;
+        if ($accum != "") {
+            $declarations[] = $accum;
+        }
 
         $propvalues = array();
         $new_declarations = '';
@@ -102,7 +105,7 @@ class HTMLPurifier_AttrDef_CSS extends HTMLPurifier_AttrDef
                 $result = $definition->info[$property]->validate(
                     $value,
                     $config,
-                    $context
+                    $context,
                 );
             } else {
                 $result = 'inherit';

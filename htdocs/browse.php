@@ -53,7 +53,7 @@ $file = realpath($xoops->path($path));
 $dir  = realpath($xoops->paths[$path_type][0]);
 
 //We are not allowing directory travessal either
-if (false === strpos($file, $dir)) {
+if (false === strpos($file, (string) $dir)) {
     header('HTTP/1.0 404 Not Found');
     exit();
 }

@@ -72,7 +72,7 @@ class XoopsFileHandler
      * @var string
      * @access public
      */
-    public $info = array();
+    public $info = [];
 
     /**
      * Holds the file handler resource if the file is opened
@@ -245,10 +245,14 @@ class XoopsFileHandler
             $lineBreak = "\r\n";
         }
 
-        return strtr($data, array(
-            "\r\n" => $lineBreak,
-            "\n"   => $lineBreak,
-            "\r"   => $lineBreak));
+        return strtr(
+            $data,
+            [
+                "\r\n" => $lineBreak,
+                "\n"   => $lineBreak,
+                "\r"   => $lineBreak,
+            ],
+        );
     }
 
     /**
@@ -352,11 +356,7 @@ class XoopsFileHandler
         if ($this->info == null) {
             $this->info();
         }
-        if (isset($this->info['extension'])) {
-            return $this->info['extension'];
-        }
-
-        return false;
+        return $this->info['extension'] ?? false;
     }
 
     /**

@@ -26,12 +26,12 @@ class Upgrade_258 extends XoopsUpgrade
     public function __construct()
     {
         parent::__construct(basename(__DIR__));
-        $this->tasks = array(
+        $this->tasks = [
             'users_pass',
             'com_ip',
             'sess_ip',
             'online_ip',
-        );
+        ];
     }
 
     /**
@@ -55,7 +55,7 @@ class Upgrade_258 extends XoopsUpgrade
             . "WHERE TABLE_SCHEMA = '%s'AND TABLE_NAME = '%s' AND COLUMN_NAME = '%s'",
             $db->escape($dbname),
             $db->escape($table),
-            $db->escape($column)
+            $db->escape($column),
         );
 
         /** @var mysqli_result $result */

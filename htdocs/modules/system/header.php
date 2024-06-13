@@ -17,7 +17,7 @@
 use Xmf\Request;
 
 // Include XOOPS control panel header
-include_once dirname(dirname(__DIR__)) . '/include/cp_header.php';
+include_once dirname(__DIR__, 2) . '/include/cp_header.php';
 // Check user rights
 if (is_object($xoopsUser)) {
     $admintest   = 0;

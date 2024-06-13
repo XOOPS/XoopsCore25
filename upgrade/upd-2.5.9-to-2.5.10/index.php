@@ -22,8 +22,8 @@ class Upgrade_2510 extends XoopsUpgrade
     public function __construct()
     {
         parent::__construct(basename(__DIR__));
-        $this->tasks = array('metarobots', 'protectordata');
-        $this->usedFiles = array();
+        $this->tasks = ['metarobots', 'protectordata'];
+        $this->usedFiles = [];
     }
 
     /**
@@ -41,7 +41,7 @@ class Upgrade_2510 extends XoopsUpgrade
         $sql = sprintf(
             'SELECT count(*) FROM `%s` '
             . "WHERE `conf_formtype` = 'select' AND `conf_name` = 'meta_robots' AND `conf_modid` = 0",
-            $db->escape($table)
+            $db->escape($table),
         );
 
         /** @var mysqli_result $result */
@@ -70,7 +70,7 @@ class Upgrade_2510 extends XoopsUpgrade
 
         $migrate = new Tables();
         $migrate->useTable('config');
-        $migrate->update('config', array('conf_formtype' => 'textbox'), "WHERE `conf_name` = 'meta_robots' AND `conf_modid` = 0");
+        $migrate->update('config', ['conf_formtype' => 'textbox'], "WHERE `conf_name` = 'meta_robots' AND `conf_modid` = 0");
         return $migrate->executeQueue(true);
     }
 

@@ -52,11 +52,11 @@ class XoopsSessionHandler
      */
     public $securityLevel = 3;
 
-    protected $bitMasks = array(
-        2 => array('v4' => 16, 'v6' => 64),
-        3 => array('v4' => 24, 'v6' => 56),
-        4 => array('v4' => 32, 'v6' => 128),
-    );
+    protected $bitMasks = [
+        2 => ['v4' => 16, 'v6' => 64],
+        3 => ['v4' => 24, 'v6' => 56],
+        4 => ['v4' => 32, 'v6' => 128],
+    ];
 
     /**
      * Enable regenerate_id
@@ -83,14 +83,14 @@ class XoopsSessionHandler
             : ini_get('session.cookie_lifetime');
         $secure = (XOOPS_PROT === 'https://');
         if (PHP_VERSION_ID >= 70300) {
-            $options = array(
+            $options = [
                 'lifetime' => $lifetime,
                 'path'     => '/',
                 'domain'   => XOOPS_COOKIE_DOMAIN,
                 'secure'   => $secure,
                 'httponly' => true,
                 'samesite' => 'strict',
-            );
+            ];
             session_set_cookie_params($options);
         } else {
             session_set_cookie_params($lifetime, '/', XOOPS_COOKIE_DOMAIN, $secure, true);
@@ -135,17 +135,17 @@ class XoopsSessionHandler
         $sql = sprintf(
             'SELECT sess_data, sess_ip FROM %s WHERE sess_id = %s',
             $this->db->prefix('session'),
-            $this->db->quoteString($sessionId)
+            $this->db->quoteString($sessionId),
         );
 
         $result = $this->db->query($sql);
         if ($this->db->isResultSet($result)) {
-            if (list($sess_data, $sess_ip) = $this->db->fetchRow($result)) {
+            if ([$sess_data, $sess_ip] = $this->db->fetchRow($result)) {
                 if ($this->securityLevel > 1) {
                     if (false === $ip->sameSubnet(
                         $sess_ip,
                         $this->bitMasks[$this->securityLevel]['v4'],
-                        $this->bitMasks[$this->securityLevel]['v6']
+                        $this->bitMasks[$this->securityLevel]['v6'],
                     )) {
                         $sess_data = '';
                     }
@@ -176,7 +176,7 @@ class XoopsSessionHandler
             $this->db->prefix('session'),
             time(),
             $this->db->quoteString($data),
-            $sessionId
+            $sessionId,
         );
         $this->db->queryF($sql);
         if (!$this->db->getAffectedRows()) {
@@ -186,7 +186,7 @@ class XoopsSessionHandler
                 $sessionId,
                 time(),
                 $this->db->quote($remoteAddress),
-                $this->db->quote($data)
+                $this->db->quote($data),
             );
 
             $myReturn = $this->db->queryF($sql);
@@ -207,7 +207,7 @@ class XoopsSessionHandler
         $sql = sprintf(
             'DELETE FROM %s WHERE sess_id = %s',
             $this->db->prefix('session'),
-            $this->db->quoteString($sessionId)
+            $this->db->quoteString($sessionId),
         );
         if (!$result = $this->db->queryF($sql)) {
             return false;
@@ -228,7 +228,7 @@ class XoopsSessionHandler
             return true;
         }
 
-        $mintime = time() - (int)$expire;
+        $mintime = time() - (int) $expire;
         $sql     = sprintf('DELETE FROM %s WHERE sess_updated < %u', $this->db->prefix('session'), $mintime);
 
         return $this->db->queryF($sql);
@@ -286,8 +286,9 @@ class XoopsSessionHandler
             global $xoopsConfig;
             $session_name = session_name();
             $session_expire = null !== $expire
-                ? (int)$expire
-                : (($xoopsConfig['use_mysession'] && $xoopsConfig['session_name'] != '')
+                ? (int) $expire
+                : (
+                    ($xoopsConfig['use_mysession'] && $xoopsConfig['session_name'] != '')
                     ? $xoopsConfig['session_expire'] * 60
                     : ini_get('session.cookie_lifetime')
                 );
@@ -304,7 +305,7 @@ class XoopsSessionHandler
                 '/',
                 $cookieDomain,
                 (XOOPS_PROT === 'https://'),
-                true
+                true,
             );
         }
     }

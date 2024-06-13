@@ -62,7 +62,7 @@ class Smarty_Resource_Db extends Smarty_Resource_Custom
      */
     private function dbTplInfo($tpl_name)
     {
-        static $cache = array();
+        static $cache = [];
         global $xoopsConfig;
         // $xoops = Xoops::getInstance();
 
@@ -70,17 +70,17 @@ class Smarty_Resource_Db extends Smarty_Resource_Custom
             return $cache[$tpl_name];
         }
         $tplset = $xoopsConfig['template_set'];
-        $theme = isset($xoopsConfig['theme_set']) ? $xoopsConfig['theme_set'] : 'default';
+        $theme = $xoopsConfig['theme_set'] ?? 'default';
         $tplfile_handler = xoops_getHandler('tplfile'); // $xoops->getHandlerTplFile();
         // If we're not using the "default" template set, then get the templates from the DB
-        if ($tplset !== "default") {
+        if ($tplset !== 'default') {
             $tplobj = $tplfile_handler->find($tplset, null, null, null, $tpl_name, true);
             if (count($tplobj)) {
                 return $cache[$tpl_name] = $tplobj[0];
             }
         }
         // If we'using the default tplset, get the template from the filesystem
-        $tplobj = $tplfile_handler->find("default", null, null, null, $tpl_name, true);
+        $tplobj = $tplfile_handler->find('default', null, null, null, $tpl_name, true);
 
         if (!count($tplobj)) {
             return $cache[$tpl_name] = $tpl_name;
@@ -96,7 +96,7 @@ class Smarty_Resource_Db extends Smarty_Resource_Custom
                 $path = 'blocks/';
                 break;
             case 'admin':
-                $theme = isset($xoopsConfig['cpanel']) ? $xoopsConfig['cpanel'] : 'default';
+                $theme = $xoopsConfig['cpanel'] ?? 'default';
                 $directory = XOOPS_ROOT_PATH . '/modules/system/themes'; //\XoopsBaseConfig::get('adminthemes-path');
                 $path = 'admin/';
                 break;
@@ -105,7 +105,7 @@ class Smarty_Resource_Db extends Smarty_Resource_Custom
                 $path = '';
                 if (class_exists('XoopsSystemCpanel', false)) {
                     $directory = XOOPS_ADMINTHEME_PATH;
-                    $theme     = isset($xoopsConfig['cpanel']) ? $xoopsConfig['cpanel'] : 'default';
+                    $theme     = $xoopsConfig['cpanel'] ?? 'default';
                 }
                 break;
         }

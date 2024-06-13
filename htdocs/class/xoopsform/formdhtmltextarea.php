@@ -51,7 +51,7 @@ class XoopsFormDhtmlTextArea extends XoopsFormTextArea
      *                             </ul></li>
      * </ul>
      */
-    public $htmlEditor = array();
+    public $htmlEditor = [];
 
     /**
      * Hidden text
@@ -76,7 +76,7 @@ class XoopsFormDhtmlTextArea extends XoopsFormTextArea
      * @param string $hiddentext Identifier for hidden Text
      * @param array  $options    Extra options
      */
-    public function __construct($caption, $name, $value = '', $rows = 5, $cols = 50, $hiddentext = 'xoopsHiddenText', $options = array())
+    public function __construct($caption, $name, $value = '', $rows = 5, $cols = 50, $hiddentext = 'xoopsHiddenText', $options = [])
     {
         global $xoopsConfig;
         static $inLoop = 0;
@@ -103,7 +103,7 @@ class XoopsFormDhtmlTextArea extends XoopsFormTextArea
             $options['name']  = $this->getName();
             $options['value'] = $this->getValue();
             if (!empty($options['editor'])) {
-                $this->htmlEditor = is_array($options['editor']) ? $options['editor'] : array($options['editor']);
+                $this->htmlEditor = is_array($options['editor']) ? $options['editor'] : [$options['editor']];
             }
 
             if (count($this->htmlEditor) == 1) {
@@ -114,7 +114,7 @@ class XoopsFormDhtmlTextArea extends XoopsFormTextArea
                     $this->htmlEditor = null;
                 }
             } else {
-                list($class, $path) = $this->htmlEditor;
+                [$class, $path] = $this->htmlEditor;
                 include_once XOOPS_ROOT_PATH . $path;
                 if (class_exists($class)) {
                     $this->htmlEditor = new $class($options);

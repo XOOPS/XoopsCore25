@@ -53,9 +53,13 @@ function xoops_local()
     $func      = array_shift($func_args);
 
     // local method defined
-    return call_user_func_array(array(
-                                    'XoopsLocal',
-                                    $func), $func_args);
+    return call_user_func_array(
+        [
+            'XoopsLocal',
+            $func,
+        ],
+        $func_args,
+    );
 }
 
 XoopsLocalWrapper::load();

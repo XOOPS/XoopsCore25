@@ -29,14 +29,14 @@ class SystemCorePreload extends XoopsPreloadItem
     {
         global $xoopsConfig;
         $url = $args[0];
-        if (preg_match("/[\\0-\\31]|about:|script:/i", $url)) {
-            if (!preg_match('/^\b(java)?script:([\s]*)history\.go\(-\d*\)([\s]*[;]*[\s]*)$/si', $url)) {
+        if (preg_match("/[\\0-\\31]|about:|script:/i", (string) $url)) {
+            if (!preg_match('/^\b(java)?script:([\s]*)history\.go\(-\d*\)([\s]*[;]*[\s]*)$/si', (string) $url)) {
                 $url = XOOPS_URL;
             }
         }
         if (!headers_sent() && isset($xoopsConfig['redirect_message_ajax']) && $xoopsConfig['redirect_message_ajax']) {
             $_SESSION['redirect_message'] = $args[2];
-            header('Location: ' . preg_replace('/[&]amp;/i', '&', $url));
+            header('Location: ' . preg_replace('/[&]amp;/i', '&', (string) $url));
             exit();
         }
     }
@@ -68,14 +68,17 @@ class SystemCorePreload extends XoopsPreloadItem
             /**
              * Don't load jquery if already done by the theme
              */
-            $GLOBALS['xoTheme']->addScript('', array('type' => 'text/javascript'), "
+            $GLOBALS['xoTheme']->addScript(
+                '',
+                ['type' => 'text/javascript'],
+                "
                 if (typeof jQuery == 'undefined') {
                     var tag = '<scr' + 'ipt type=\'text/javascript\' src=\'" . XOOPS_URL . "/browse.php?Frameworks/jquery/jquery.js\'></scr' + 'ipt>';            	    
                     document.write(tag);            	    
-	            };"
+	            };",
             );
             $GLOBALS['xoTheme']->addScript('browse.php?Frameworks/jquery/plugins/jquery.jgrowl.js');
-            $GLOBALS['xoTheme']->addScript('', array('type' => 'text/javascript'), '
+            $GLOBALS['xoTheme']->addScript('', ['type' => 'text/javascript'], '
             (function($){
                 $(document).ready(function(){
                 $.jGrowl("' . $_SESSION['redirect_message'] . '", {  life:3000 , position: "center", speed: "slow" });
@@ -95,7 +98,7 @@ class SystemCorePreload extends XoopsPreloadItem
             //$GLOBALS['xoTheme']->addStylesheet('xoops.css');
             $GLOBALS['xoTheme']->addScript('browse.php?Frameworks/jquery/jquery.js');
             $GLOBALS['xoTheme']->addScript('browse.php?Frameworks/jquery/plugins/jquery.jgrowl.js');
-            $GLOBALS['xoTheme']->addScript('', array('type' => 'text/javascript'), '
+            $GLOBALS['xoTheme']->addScript('', ['type' => 'text/javascript'], '
             (function($){
             $(document).ready(function(){
                 $.jGrowl("' . $_SESSION['redirect_message'] . '", {  life:3000 , position: "center", speed: "slow" });

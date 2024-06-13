@@ -25,30 +25,30 @@ if (!defined('XOOPS_FOOTER_INCLUDED')) {
 
     $xoopsLogger = XoopsLogger::getInstance();
     $xoopsLogger->stopTime('Module display');
-	// RMV-NOTIFY
-	include_once $GLOBALS['xoops']->path('include/notification_select.php');
-	if (!headers_sent()) {
-		header('Content-Type:text/html; charset=' . _CHARSET);
-		header('Expires: Mon, 26 Jul 1997 05:00:00 GMT');
-		//header('Last-Modified: '.gmdate('D, d M Y H:i:s').' GMT');
-		header('Cache-Control: private, no-cache');
-		header('Pragma: no-cache');
-	}
+    // RMV-NOTIFY
+    include_once $GLOBALS['xoops']->path('include/notification_select.php');
+    if (!headers_sent()) {
+        header('Content-Type:text/html; charset=' . _CHARSET);
+        header('Expires: Mon, 26 Jul 1997 05:00:00 GMT');
+        //header('Last-Modified: '.gmdate('D, d M Y H:i:s').' GMT');
+        header('Cache-Control: private, no-cache');
+        header('Pragma: no-cache');
+    }
 
-	//@internal: using global $xoTheme dereferences the variable in old versions, this does not
-	if (!isset($xoTheme)) {
-		$xoTheme = $GLOBALS['xoTheme'];
-	}
+    //@internal: using global $xoTheme dereferences the variable in old versions, this does not
+    if (!isset($xoTheme)) {
+        $xoTheme = $GLOBALS['xoTheme'];
+    }
 
-	if (isset($GLOBALS['xoopsOption']['template_main']) && $GLOBALS['xoopsOption']['template_main'] != $xoTheme->contentTemplate) {
-		trigger_error("xoopsOption['template_main'] should be defined before including header.php", E_USER_WARNING);
-		if (false === strpos($GLOBALS['xoopsOption']['template_main'], ':')) {
-			$xoTheme->contentTemplate = 'db:' . $GLOBALS['xoopsOption']['template_main'];
-		} else {
-			$xoTheme->contentTemplate = $GLOBALS['xoopsOption']['template_main'];
-		}
-	}
-	$xoTheme->render();
+    if (isset($GLOBALS['xoopsOption']['template_main']) && $GLOBALS['xoopsOption']['template_main'] != $xoTheme->contentTemplate) {
+        trigger_error("xoopsOption['template_main'] should be defined before including header.php", E_USER_WARNING);
+        if (false === strpos($GLOBALS['xoopsOption']['template_main'], ':')) {
+            $xoTheme->contentTemplate = 'db:' . $GLOBALS['xoopsOption']['template_main'];
+        } else {
+            $xoTheme->contentTemplate = $GLOBALS['xoopsOption']['template_main'];
+        }
+    }
+    $xoTheme->render();
     $xoopsLogger->stopTime();
 }
 

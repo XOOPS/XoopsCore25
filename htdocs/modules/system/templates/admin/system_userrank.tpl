@@ -35,9 +35,9 @@
                                                       alt="<{$smarty.const._AM_SYSTEM_LOADING}>"/><img class="cursorpointer tooltip"
                                                                                                        id="sml<{$rankinfo.rank_id}>"
                                                                                                        onclick="system_setStatus( { fct: 'userrank', op: 'userrank_update_special', rank_id: <{$rankinfo.rank_id}> }, 'sml<{$rankinfo.rank_id}>', 'admin.php' )"
-                                                                                                       src="<{if $rankinfo.rank_special}><{xoAdminIcons 'success.png'}><{else}><{xoAdminIcons 'cancel.png'}><{/if}>"
-                                                                                                       alt="<{if $rankinfo.rank_special}><{$smarty.const._AM_SYSTEM_USERRANK_OFF}><{else}><{$smarty.const._AM_SYSTEM_USERRANK_ON}><{/if}>"
-                                                                                                       title="<{if $rankinfo.rank_special}><{$smarty.const._AM_SYSTEM_USERRANK_OFF}><{else}><{$smarty.const._AM_SYSTEM_USERRANK_ON}><{/if}>"/>
+                                                                                                        src="<{if !empty($rankinfo.rank_special)}><{xoAdminIcons 'success.png'}><{else}><{xoAdminIcons 'cancel.png'}><{/if}>"
+                                                                                                       alt="<{if !empty($rankinfo.rank_special)}><{$smarty.const._AM_SYSTEM_USERRANK_OFF}><{else}><{$smarty.const._AM_SYSTEM_USERRANK_ON}><{/if}>"
+                                                                                                       title="<{if !empty($rankinfo.rank_special)}><{$smarty.const._AM_SYSTEM_USERRANK_OFF}><{else}><{$smarty.const._AM_SYSTEM_USERRANK_ON}><{/if}>"/>
                 </td>
                 <td class="xo-actions txtcenter">
                     <a class="tooltip" href="admin.php?fct=userrank&amp;op=userrank_edit&amp;rank_id=<{$rankinfo.rank_id}>"

@@ -63,7 +63,7 @@ if ($mid > 0) {
 
         // Handling for all other modules.
     } else {
-        $list_help      = array();
+        $list_help      = [];
         $listed_mods[0] = $module->toArray();
         $helplist       = $module->getInfo('helpsection');
         $j              = 0;
@@ -127,11 +127,11 @@ if ($mid > 0) {
 
     // Get all installed modules
     $installed_mods = $module_handler->getObjects($criteria);
-    $listed_mods    = array();
+    $listed_mods    = [];
     $i              = 0;
     $j              = 0;
     foreach ($installed_mods as $module) {
-        $list_help                      = array();
+        $list_help                      = [];
         $listed_mods[$i]                = $module->toArray();
         $listed_mods[$i]['image']       = $module->getInfo('image');
         $listed_mods[$i]['adminindex']  = $module->getInfo('adminindex');

@@ -26,6 +26,7 @@ $modversion['help']        = 'page=comments';
 $modversion['license']     = 'GPL see LICENSE';
 $modversion['official']    = 1;
 $modversion['image']       = 'comments.png';
+$modversion['icon']        = 'fa fa-comments-o';
 
 $modversion['hasAdmin']  = 1;
 $modversion['adminpath'] = 'admin.php?fct=comments';

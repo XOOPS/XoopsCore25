@@ -16,8 +16,8 @@
  * @author              Mage, Mamba
  **/
 
-include_once dirname(dirname(dirname(__DIR__))) . '/include/cp_header.php';
-include_once dirname(dirname(dirname(__DIR__))) . '/class/xoopsformloader.php';
+include_once dirname(__DIR__, 3) . '/include/cp_header.php';
+include_once dirname(__DIR__, 3) . '/class/xoopsformloader.php';
 include_once __DIR__ . '/admin_header.php';
 xoops_cp_header();
 

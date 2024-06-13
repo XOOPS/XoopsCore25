@@ -1,3 +1,4 @@
+![alt XOOPS CMS](https://xoops.org/images/logoXoops4GithubRepository.png)
 # XOOPS Security Policy
 
 XOOPS takes the security of our software products and services seriously, which includes all source code repositories managed through our GitHub organizations. 

@@ -39,8 +39,8 @@ class HTMLPurifier_HTMLModule_Object extends HTMLPurifier_HTMLModule
                 'standby' => 'Text',
                 'tabindex' => 'Number',
                 'type' => 'ContentType',
-                'width' => 'Length'
-            )
+                'width' => 'Length',
+            ),
         );
 
         $this->addElement(
@@ -53,8 +53,8 @@ class HTMLPurifier_HTMLModule_Object extends HTMLPurifier_HTMLModule
                 'name*' => 'Text',
                 'type' => 'Text',
                 'value' => 'Text',
-                'valuetype' => 'Enum#data,ref,object'
-            )
+                'valuetype' => 'Enum#data,ref,object',
+            ),
         );
     }
 }

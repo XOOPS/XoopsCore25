@@ -51,7 +51,7 @@ function smarty_function_xoMemberInfo($params, $smarty)
 {
     global $xoopsUser, $xoopsConfig;
 
-    $member_info = array();
+    $member_info = [];
     if (!isset($xoopsUser) || !is_object($xoopsUser)) {
         $member_info['uname'] = $xoopsConfig['anonymous'];
     } else {

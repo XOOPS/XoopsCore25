@@ -18,8 +18,8 @@ class ProtectorRegistry
      */
     protected function __construct()
     {
-        $this->_entries = array();
-        $this->_locks   = array();
+        $this->_entries = [];
+        $this->_locks   = [];
     }
 
     /**
@@ -118,7 +118,7 @@ class ProtectorRegistry
 
     public function unsetAll()
     {
-        $this->_entries = array();
-        $this->_locks   = array();
+        $this->_entries = [];
+        $this->_locks   = [];
     }
 }

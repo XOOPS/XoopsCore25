@@ -32,7 +32,7 @@ class HTMLPurifier_HTMLModule_Proprietary extends HTMLPurifier_HTMLModule
                 'bgcolor' => 'Color',
                 'hspace' => 'Pixels',
                 'vspace' => 'Pixels',
-            )
+            ),
         );
     }
 }

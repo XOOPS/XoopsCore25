@@ -64,7 +64,7 @@ if (empty($getuser)) {
             "UPDATE %s SET pass = '%s' WHERE uid = %u",
             $xoopsDB->prefix('users'),
             password_hash($newpass, PASSWORD_DEFAULT),
-            $getuser[0]->getVar('uid')
+            $getuser[0]->getVar('uid'),
         );
         if (!$xoopsDB->queryF($sql)) {
             include $GLOBALS['xoops']->path('header.php');

@@ -31,7 +31,7 @@ class HTMLPurifier_URIFilter_MakeAbsolute extends HTMLPurifier_URIFilter
             trigger_error(
                 'URI.MakeAbsolute is being ignored due to lack of ' .
                 'value for URI.Base configuration',
-                E_USER_WARNING
+                E_USER_WARNING,
             );
             return false;
         }

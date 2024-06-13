@@ -84,7 +84,7 @@ if ($op === 'logout') {
     $message = '';
     // Regenerate a new session id and destroy old session
     $GLOBALS['sess_handler']->regenerate_id(true);
-    $_SESSION = array();
+    $_SESSION = [];
     xoops_setcookie($GLOBALS['xoopsConfig']['usercookie'], null, time() - 3600, '/', XOOPS_COOKIE_DOMAIN, 0);
     xoops_setcookie($GLOBALS['xoopsConfig']['usercookie'], null, time() - 3600, '/');
     // clear entry from online users table
@@ -121,7 +121,7 @@ if ($op === 'delete') {
         if ($ok != 1) {
             include $GLOBALS['xoops']->path('header.php');
             include __DIR__ . '/header.php';
-            xoops_confirm(array('op' => 'delete', 'ok' => 1), 'user.php', _US_SURETODEL . '<br>' . _US_REMOVEINFO);
+            xoops_confirm(['op' => 'delete', 'ok' => 1], 'user.php', _US_SURETODEL . '<br>' . _US_REMOVEINFO);
             include __DIR__ . '/footer.php';
         } else {
             $del_uid        = $GLOBALS['xoopsUser']->getVar('uid');

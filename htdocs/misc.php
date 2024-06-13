@@ -36,7 +36,7 @@ if ($action !== 'showpopups') {
         case 'smilies':
             $target = Request::getString('target', '');
             if ($target !== '' && preg_match('/^[0-9a-z_]*$/i', $target)) {
-                $variables = array();
+                $variables = [];
 $javaScript = <<<EOSMJS
 <script type="text/javascript">
 function doSmilie(addSmilie) {
@@ -59,7 +59,7 @@ EOSMJS;
                 if ($smiles = $myts->getSmileys(false)) {
                     $variables['smilies'] = $smiles;
                 } else {
-                    $variables['smilies'] = array();
+                    $variables['smilies'] = [];
                     trigger_error('Could not retrieve smilies from the database.', E_USER_NOTICE);
                 }
                 xoops_misc_popup_body('db:system_misc_smilies.tpl', $variables);
@@ -230,12 +230,12 @@ EOAVJS;
             $criteria->setLimit($limit);
             $onlines = $onlineHandler->getAll($criteria);
 
-            $onlineUserInfo = array();
+            $onlineUserInfo = [];
             foreach ($onlines as $online) {
-                $info = array();
+                $info = [];
                 if (0 == $online['online_uid']) {
                     $info['uid'] = $online['online_uid'];
-                    $info['uname'] = $xoopsConfig['anonymous'];;
+                $info['uname'] = $xoopsConfig['anonymous'];
                     $info['name'] = '';
                     $info['xoopsuser'] = false;
                     $info['avatar'] = 'avatars/blank.gif';
@@ -305,16 +305,18 @@ function xoops_misc_popup_body($template, $variables, $closehead = true, $closeb
     include_once XOOPS_ROOT_PATH . '/class/template.php';
     $headTpl = new \XoopsTpl();
     //$GLOBALS['xoopsHeadTpl'] = $headTpl;  // expose template for use by caller
-    $headTpl->assign(array(
-        'closeHead'      => (bool) $closehead,
-        'closeButton'    => (bool) $closebutton,
-        'themeUrl'       => $themeUrl,
-        'themePath'      => $themePath,
-        'xoops_langcode' => _LANGCODE,
-        'xoops_charset'  => _CHARSET,
-        'xoops_sitename' => $xoopsConfig['sitename'],
-        'xoops_url'      => XOOPS_URL,
-    ));
+    $headTpl->assign(
+        [
+            'closeHead'      => (bool) $closehead,
+            'closeButton'    => (bool) $closebutton,
+            'themeUrl'       => $themeUrl,
+            'themePath'      => $themePath,
+            'xoops_langcode' => _LANGCODE,
+            'xoops_charset'  => _CHARSET,
+            'xoops_sitename' => $xoopsConfig['sitename'],
+            'xoops_url'      => XOOPS_URL,
+        ],
+    );
 
     $headTpl->assign($variables);
     if ($xoopsForm instanceof XoopsForm) {

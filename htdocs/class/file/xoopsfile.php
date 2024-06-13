@@ -30,9 +30,7 @@ class XoopsFile
     /**
      * XoopsFile::__construct()
      */
-    public function __construct()
-    {
-    }
+    public function __construct() {}
 
     /**
      * XoopsFile::getInstance()
@@ -43,7 +41,7 @@ class XoopsFile
     {
         static $instance;
         if (!isset($instance)) {
-            $class    = __CLASS__;
+            $class    = self::class;
             $instance = new $class();
         }
 

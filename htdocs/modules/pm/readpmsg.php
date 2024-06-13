@@ -19,12 +19,12 @@
 
 use Xmf\Request;
 
-include_once dirname(dirname(__DIR__)) . '/mainfile.php';
+include_once dirname(__DIR__, 2) . '/mainfile.php';
 
 if (!is_object($GLOBALS['xoopsUser'])) {
     redirect_header(XOOPS_URL, 3, _NOPERM);
 }
-$valid_op_requests = array('out', 'save', 'in');
+$valid_op_requests = ['out', 'save', 'in'];
 $_REQUEST['op']    = !empty($_REQUEST['op']) && in_array($_REQUEST['op'], $valid_op_requests) ? $_REQUEST['op'] : 'in';
 $msg_id            = empty($_REQUEST['msg_id']) ? 0 : (int)$_REQUEST['msg_id'];
 $pm_handler        = xoops_getModuleHandler('message');
@@ -92,7 +92,7 @@ if (is_object($pm) && !empty($_POST['action'])) {
                 break;
         }
     }
-    $res_message = isset($res_message) ? $res_message : ($res ? _PM_ACTION_DONE : _PM_ACTION_ERROR);
+    $res_message ??= $res ? _PM_ACTION_DONE : _PM_ACTION_ERROR;
     redirect_header('viewpmsg.php?op=' . htmlspecialchars($_REQUEST['op'], ENT_QUOTES | ENT_HTML5), 2, $res_message);
 }
 $start                        = Request::getInt('start', 0, 'GET');
@@ -124,7 +124,7 @@ if (!is_object($pm)) {
     $criteria->setStart($start);
     $criteria->setSort('msg_time');
     $criteria->setOrder('DESC');
-    list($pm) = $pm_handler->getObjects($criteria);
+    [$pm] = $pm_handler->getObjects($criteria);
 }
 
 include_once $GLOBALS['xoops']->path('class/xoopsformloader.php');

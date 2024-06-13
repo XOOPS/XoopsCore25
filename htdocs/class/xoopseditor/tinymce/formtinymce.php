@@ -51,8 +51,8 @@ class XoopsFormTinymce extends XoopsEditor
         $this->configs['elements']    = $this->getName();
         $this->configs['language']    = $this->getLanguage();
         $this->configs['rootpath']    = $this->rootPath;
-        $this->configs['area_width']  = isset($this->configs['width']) ? $this->configs['width'] : $this->width;
-        $this->configs['area_height'] = isset($this->configs['height']) ? $this->configs['height'] : $this->height;
+        $this->configs['area_width']  = $this->configs['width'] ?? $this->width;
+        $this->configs['area_height'] = $this->configs['height'] ?? $this->height;
         $this->configs['fonts']       = $this->getFonts();
 
         require_once __DIR__ . '/tinymce.php';
@@ -115,7 +115,7 @@ class XoopsFormTinymce extends XoopsEditor
             $this->config['fonts'] = constant('_XOOPS_EDITOR_TINYMCE_FONTS');
         }
 
-        return isset($this->config['fonts']) ? $this->config['fonts'] : null;
+        return $this->config['fonts'] ?? null;
     }
 
     /**

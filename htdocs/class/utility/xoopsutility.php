@@ -31,9 +31,7 @@ class XoopsUtility
     /**
      * Constructor
      */
-    public function __construct()
-    {
-    }
+    public function __construct() {}
 
     /**
      * XoopsUtility::recursive()
@@ -46,9 +44,14 @@ class XoopsUtility
     public static function recursive($handler, $data)
     {
         if (is_array($data)) {
-            $return = array_map(array(
-                                    'XoopsUtility',
-                                    'recursive'), $handler, $data);
+            $return = array_map(
+                [
+                    'XoopsUtility',
+                    'recursive',
+                ],
+                $handler,
+                $data,
+            );
 
             return $return;
         }
@@ -58,9 +61,13 @@ class XoopsUtility
         }
         // Method of a class
         if (is_array($handler)) {
-            return call_user_func(array(
-                                      $handler[0],
-                                      $handler[1]), $data);
+            return call_user_func(
+                [
+                    $handler[0],
+                    $handler[1],
+                ],
+                $data,
+            );
         }
 
         return $data;

@@ -183,7 +183,7 @@ class XoopsPrivmessageHandler extends XoopsObjectHandler
     public function get($id)
     {
         $pm = false;
-        $id = (int)$id;
+        $id = (int) $id;
         if ($id > 0) {
             $sql = 'SELECT * FROM ' . $this->db->prefix('priv_msgs') . ' WHERE msg_id=' . $id;
             $result = $this->db->query($sql);
@@ -270,15 +270,19 @@ class XoopsPrivmessageHandler extends XoopsObjectHandler
      **/
     public function getObjects(CriteriaElement $criteria = null, $id_as_key = false)
     {
-        $ret   = array();
+        $ret   = [];
         $limit = $start = 0;
         $sql   = 'SELECT * FROM ' . $this->db->prefix('priv_msgs');
         if (isset($criteria) && \method_exists($criteria, 'renderWhere')) {
             $sql .= ' ' . $criteria->renderWhere();
-            $sort = !in_array($criteria->getSort(), array(
-                'msg_id',
-                'msg_time',
-                'from_userid')) ? 'msg_id' : $criteria->getSort();
+            $sort = !in_array(
+                $criteria->getSort(),
+                [
+                    'msg_id',
+                    'msg_time',
+                    'from_userid',
+                ],
+            ) ? 'msg_id' : $criteria->getSort();
             $sql .= ' ORDER BY ' . $sort . ' ' . $criteria->getOrder();
             $limit = $criteria->getLimit();
             $start = $criteria->getStart();
@@ -292,9 +296,9 @@ class XoopsPrivmessageHandler extends XoopsObjectHandler
             $pm = new XoopsPrivmessage();
             $pm->assignVars($myrow);
             if (!$id_as_key) {
-                $ret[] =& $pm;
+                $ret[] = & $pm;
             } else {
-                $ret[$myrow['msg_id']] =& $pm;
+                $ret[$myrow['msg_id']] = & $pm;
             }
             unset($pm);
         }
@@ -317,9 +321,9 @@ class XoopsPrivmessageHandler extends XoopsObjectHandler
         if (!$this->db->isResultSet($result)) {
             return 0;
         }
-        list($count) = $this->db->fetchRow($result);
+        [$count] = $this->db->fetchRow($result);
 
-        return (int)$count;
+        return (int) $count;
     }
 
     /**

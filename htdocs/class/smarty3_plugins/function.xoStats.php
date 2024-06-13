@@ -1,7 +1,7 @@
 <?php
 
-use Xmf\Module\Helper\Cache;
 use Xmf\IPAddress;
+use Xmf\Module\Helper\Cache;
 
 /**
  * Smarty plugin
@@ -37,7 +37,7 @@ use Xmf\IPAddress;
  *
  * @return void
  */
-function smarty_function_xoStats($params, &$smarty)
+function smarty_function_xoStats($params, $smarty)
 {
     $cache = new Cache('system');
     $stats = $cache->cacheRead('xostats', 'xoStatsRegen', 30);
@@ -51,7 +51,7 @@ function xoStatsRegen()
 {
     global $xoopsUser, $xoopsModule;
 
-    $stats = array();
+    $stats = [];
 
     /** @var \XoopsMemberHandler $memberHandler */
     $memberHandler = xoops_getHandler('member');
@@ -113,7 +113,8 @@ function xoStatsRegen()
     $result = $GLOBALS['xoopsDB']->query($sql);
     if (!$GLOBALS['xoopsDB']->isResultSet($result)) {
         throw new \RuntimeException(
-            \sprintf(_DB_QUERY_ERROR, $sql) . $GLOBALS['xoopsDB']->error(), E_USER_ERROR
+            \sprintf(_DB_QUERY_ERROR, $sql) . $GLOBALS['xoopsDB']->error(),
+            E_USER_ERROR,
         );
     }
     $myrow = $GLOBALS['xoopsDB']->fetchArray($result);

@@ -16,6 +16,8 @@
  * @author              Taiwen Jiang <phppp@users.sourceforge.net>
  */
 
+use Xmf\Request;
+
 $xoopsOption['pagetype'] = 'user';
 include __DIR__ . '/header.php';
 /** @var XoopsConfigHandler $config_handler */
@@ -38,10 +40,11 @@ if (!isset($_POST['submit']) || !isset($_POST['passwd'])) {
     $form->addElement(new XoopsFormButton('', 'submit', _SUBMIT, 'submit'));
     $form->assign($GLOBALS['xoopsTpl']);
 } else {
-    $myts   = \MyTextSanitizer::getInstance();
-    $pass   = isset($_POST['passwd']) ? $myts->stripSlashesGPC(trim($_POST['passwd'])) : '';
-    $email  = isset($_POST['newmail']) ? $myts->stripSlashesGPC(trim($_POST['newmail'])) : '';
-    $errors = array();
+    $myts  = \MyTextSanitizer::getInstance();
+    $pass  = trim(Request::getString('passwd', '', 'POST'));
+    $email = trim(Request::getString('newmail', '', 'POST'));
+
+    $errors = [];
     if (!password_verify($pass, $GLOBALS['xoopsUser']->getVar('pass', 'n'))) {
         $errors[] = _PROFILE_MA_WRONGPASSWORD;
     }
@@ -80,6 +83,6 @@ if (!isset($_POST['submit']) || !isset($_POST['passwd'])) {
     redirect_header(XOOPS_URL . '/modules/' . $GLOBALS['xoopsModule']->getVar('dirname', 'n') . '/userinfo.php?uid=' . $GLOBALS['xoopsUser']->getVar('uid'), 2, $msg);
 }
 
-$xoBreadcrumbs[] = array('title' => _PROFILE_MA_CHANGEMAIL);
+$xoBreadcrumbs[] = ['title' => _PROFILE_MA_CHANGEMAIL];
 
 include __DIR__ . '/footer.php';

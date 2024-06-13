@@ -36,7 +36,7 @@
  * {mailto address="me@domain.com" cc="you@domain.com,they@domain.com"}
  * {mailto address="me@domain.com" extra='class="mailto"'}
  *
- * @link    http://www.smarty.net/manual/en/language.function.mailto.php {mailto}
+ * @link    https://www.smarty.net/manual/en/language.function.mailto.php {mailto}
  *           (Smarty online manual)
  * @version 1.2
  * @author  Monte Ohrt <monte at ohrt dot com>
@@ -48,12 +48,12 @@
  */
 function smarty_function_mailto($params)
 {
-    static $_allowed_encoding = array(
+    static $_allowed_encoding = [
         'javascript' => true,
         'javascript_charcode' => true,
         'hex' => true,
         'none' => true
-    );
+    ];
 
     $extra = '';
     if (empty($params[ 'address' ])) {
@@ -67,14 +67,14 @@ function smarty_function_mailto($params)
 
     // netscape and mozilla do not decode %40 (@) in BCC field (bug?)
     // so, don't encode it.
-    $mail_parms = array();
+    $mail_parms = [];
     foreach ($params as $var => $value) {
         switch ($var) {
             case 'cc':
             case 'bcc':
             case 'followupto':
                 if (!empty($value)) {
-                    $mail_parms[] = $var . '=' . str_replace(array('%40', '%2C'), array('@', ','), rawurlencode($value));
+                    $mail_parms[] = $var . '=' . str_replace(['%40', '%2C'], ['@', ','], rawurlencode($value));
                 }
                 break;
             case 'subject':
@@ -101,13 +101,8 @@ function smarty_function_mailto($params)
         return;
     }
 
-    $flags = ENT_QUOTES;
-    if (defined('ENT_SUBSTITUTE') && defined('ENT_HTML401')) {
-        $flags |= ENT_SUBSTITUTE | ENT_HTML401;
-    }
-
-    $string = '<a href="mailto:' . htmlspecialchars($address, $flags, Smarty::$_CHARSET) .
-        '" ' . $extra . '>' . htmlspecialchars($text, $flags, Smarty::$_CHARSET) . '</a>';
+    $string = '<a href="mailto:' . htmlspecialchars($address, ENT_QUOTES | ENT_SUBSTITUTE | ENT_HTML401, Smarty::$_CHARSET) .
+        '" ' . $extra . '>' . htmlspecialchars($text, ENT_QUOTES | ENT_SUBSTITUTE | ENT_HTML401, Smarty::$_CHARSET) . '</a>';
 
     if ($encode === 'javascript') {
         $js_encode = '';

@@ -53,3 +53,6 @@ define('_OXYGEN_HELP_2', 'What is the Block?');
 define('_OXYGEN_HELP_DESC_2', 'Blocks can provide additional/specific content from the installed modules. There can be and custom blocks which can contain text, JS Code, HTML formatted text, pictures, etc. The content in these blocks may be formatted individually or can inherit formatting from the Website. (<a href="modules/system/help.php?mid=1&page=blocksadmin">more ...</a>)');
 define('_OXYGEN_HELP_3', 'How I can find more help?');
 define('_OXYGEN_HELP_DESC_3', 'If you need more help and information to using XOOPS you can use <a href="modules/system/help.php">Help pages </a> in system module or use <a href="https://xoops.org/modules/xoopspartners/" rel="external">XOOPS Local support sites </a>');
+
+//2.5.12
+define('_OXYGEN_COMPOSER_PACKAGES', 'Composer Packages');

@@ -29,8 +29,8 @@ class HTMLPurifier_HTMLModule_Tables extends HTMLPurifier_HTMLModule
                 'frame' => 'Enum#void,above,below,hsides,lhs,rhs,vsides,box,border',
                 'rules' => 'Enum#none,groups,rows,cols,all',
                 'summary' => 'Text',
-                'width' => 'Length'
-            )
+                'width' => 'Length',
+            ),
         );
 
         // common attributes
@@ -49,7 +49,7 @@ class HTMLPurifier_HTMLModule_Tables extends HTMLPurifier_HTMLModule
                 // to 'th' elements.
                 'scope' => 'Enum#row,col,rowgroup,colgroup',
             ),
-            $cell_align
+            $cell_align,
         );
         $this->addElement('td', false, 'Flow', 'Common', $cell_t);
         $this->addElement('th', false, 'Flow', 'Common', $cell_t);
@@ -61,7 +61,7 @@ class HTMLPurifier_HTMLModule_Tables extends HTMLPurifier_HTMLModule
                 'span' => 'Number',
                 'width' => 'MultiLength',
             ),
-            $cell_align
+            $cell_align,
         );
         $this->addElement('col', false, 'Empty', 'Common', $cell_col);
         $this->addElement('colgroup', false, 'Optional: col', 'Common', $cell_col);

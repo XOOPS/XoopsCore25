@@ -14,9 +14,7 @@ class xoopsart
     /**
      *
      */
-    public function __construct()
-    {
-    }
+    public function __construct() {}
 
     /**
      * Load a collective functions of Frameworks

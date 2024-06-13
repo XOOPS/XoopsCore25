@@ -26,6 +26,7 @@ $modversion['help']        = 'page=tplsets';
 $modversion['license']     = 'GPL see LICENSE';
 $modversion['official']    = 1;
 $modversion['image']       = 'tpls.png';
+$modversion['icon']        = 'fa fa-file-code-o';
 
 $modversion['hasAdmin']  = 1;
 $modversion['adminpath'] = 'admin.php?fct=tplsets';

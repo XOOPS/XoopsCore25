@@ -144,7 +144,7 @@ switch ($op) {
             $form->addElement(new XoopsFormRadioYN(_AM_SYSTEM_IMAGES_IMGCATDISPLAY, 'imgcat_display', 1, _YES, _NO));
 
             $storetype = new XoopsFormRadio(_MD_IMGCATSTRTYPE . '<br><span style="color:#ff0000;">' . _MD_STRTYOPENG . '</span>', 'imgcat_storetype', 'file');
-            $storetype->addOptionArray(array('file' => _MD_ASFILE, 'db' => _MD_INDB));
+            $storetype->addOptionArray(['file' => _MD_ASFILE, 'db' => _MD_INDB]);
             $form->addElement($storetype);
 
             //$form->addElement(new XoopsFormHidden('imgcat_storetype', 'file'));
@@ -161,7 +161,7 @@ switch ($op) {
         // Get Image Category handler
         $imgcat_handler = xoops_getHandler('imagecategory');
         // Get category id
-		$imgcat_id = Request::getInt('imgcat_id', 0);
+        $imgcat_id = Request::getInt('imgcat_id', 0);
         if ($imgcat_id > 0) {
             $imgcat = $imgcat_handler->get($imgcat_id);
             $old    = $imgcat->getVar('imgcat_display');
@@ -174,7 +174,7 @@ switch ($op) {
 
     case 'listimg':
         // Get category id
-		$imgcat_id = Request::getInt('imgcat_id', 0);
+        $imgcat_id = Request::getInt('imgcat_id', 0);
         if ($imgcat_id <= 0) {
             redirect_header('admin.php?fct=images', 1);
         }
@@ -265,7 +265,7 @@ switch ($op) {
         // Get image handler
         $image_handler = xoops_getHandler('image');
         // Get image id
-		$image_id = Request::getInt('image_id', 0);
+        $image_id = Request::getInt('image_id', 0);
         if ($image_id > 0) {
             $img = $image_handler->get($image_id);
             $old = $img->getVar('image_display');
@@ -294,7 +294,7 @@ switch ($op) {
         $image_handler  = xoops_getHandler('image');
         $imgcat_handler = xoops_getHandler('imagecategory');
         // Get image id
-		$image_id = Request::getInt('image_id', 0);
+        $image_id = Request::getInt('image_id', 0);
 
         if ($image_id > 0) {
             $image     = $image_handler->get($image_id);
@@ -346,7 +346,7 @@ switch ($op) {
         $xoTheme->addScript('browse.php?Frameworks/jquery/plugins/jquery.lightbox.js');
         $xoTheme->addScript('modules/system/js/admin.js');
         // Get image id
-		$image_id = Request::getInt('image_id', 0);
+        $image_id = Request::getInt('image_id', 0);
         if ($image_id > 0) {
             $image     = $image_handler->get($image_id);
             $image_cat = $imgcat_handler->get($image->getVar('imgcat_id'));
@@ -357,7 +357,7 @@ switch ($op) {
             }
             $msg .= '<div class="spacer">' . $image->getVar('image_nicename') . '</div>';
             $msg .= '<div class="spacer">' . _AM_SYSTEM_IMAGES_RUDELIMG . '</div>';
-            xoops_confirm(array('op' => 'delfileok', 'image_id' => $image_id, 'fct' => 'images'), 'admin.php', $msg, _DELETE);
+            xoops_confirm(['op' => 'delfileok', 'image_id' => $image_id, 'fct' => 'images'], 'admin.php', $msg, _DELETE);
         } else {
             redirect_header('admin.php?fct=images', 1, _AM_SYSTEM_DBERROR);
         }
@@ -403,12 +403,12 @@ switch ($op) {
         $image_id = Request::getInt('image_id', 0);
         if ($image_id > 0) {
             $image = $image_handler->get($image_id);
-			$image->setVar('image_nicename', Request::getString('image_nicename', ''));
-			$image->setVar('image_weight', Request::getInt('image_weight', 0));
-			$image->setVar('image_display', Request::getInt('image_display', 1));
-			$image->setVar('imgcat_id', Request::getInt('imgcat_id', 0));
+            $image->setVar('image_nicename', Request::getString('image_nicename', ''));
+            $image->setVar('image_weight', Request::getInt('image_weight', 0));
+            $image->setVar('image_display', Request::getInt('image_display', 1));
+            $image->setVar('imgcat_id', Request::getInt('imgcat_id', 0));
             if (!$image_handler->insert($image)) {
-				xoops_cp_header();
+                xoops_cp_header();
                 echo sprintf(_AM_SYSTEM_IMAGES_FAILSAVE, $image->getVar('image_nicename'));
                 xoops_cp_footer();
                 exit;
@@ -425,25 +425,26 @@ switch ($op) {
             redirect_header('admin.php?fct=images', 3, implode('<br>', $GLOBALS['xoopsSecurity']->getErrors()));
         }
         $imgcat_handler = xoops_getHandler('imagecategory');
-        $imagecategory  = $imgcat_handler->get((int)$imgcat_id);
+        $imagecategory  = $imgcat_handler->get((int) $imgcat_id);
         if (!is_object($imagecategory)) {
             redirect_header('admin.php?fct=images', 1);
         }
         xoops_load('xoopsmediauploader');
-        $uploader = new XoopsMediaUploader(XOOPS_UPLOAD_PATH . '/images', array(
+        $uploader = new XoopsMediaUploader(XOOPS_UPLOAD_PATH . '/images', [
             'image/gif',
             'image/jpeg',
             'image/pjpeg',
             'image/x-png',
             'image/png',
-            'image/bmp'), $imagecategory->getVar('imgcat_maxsize'), $imagecategory->getVar('imgcat_maxwidth'), $imagecategory->getVar('imgcat_maxheight'));
+            'image/bmp',
+        ], $imagecategory->getVar('imgcat_maxsize'), $imagecategory->getVar('imgcat_maxwidth'), $imagecategory->getVar('imgcat_maxheight'));
         $uploader->setPrefix('img');
-        $err    = array();
+        $err    = [];
         $ucount = count($_POST['xoops_upload_file']);
         for ($i = 0; $i < $ucount; ++$i) {
             if ($uploader->fetchMedia($_POST['xoops_upload_file'][$i])) {
                 if (!$uploader->upload()) {
-                    $err[] =& $uploader->getErrors();
+                    $err[] = & $uploader->getErrors();
                 } else {
                     $image_handler = xoops_getHandler('image');
                     $image         = $image_handler->create();
@@ -487,11 +488,11 @@ switch ($op) {
         $imagecategory  = $imgcat_handler->create();
         $imagecategory->setVar('imgcat_name', Request::getString('imgcat_name', ''));
         $imagecategory->setVar('imgcat_maxsize', Request::getInt('imgcat_maxsize', 1000000));
-		$imagecategory->setVar('imgcat_maxwidth', Request::getInt('imgcat_maxwidth', 800));
-		$imagecategory->setVar('imgcat_maxheight', Request::getInt('imgcat_maxheight', 600));
-		$imagecategory->setVar('imgcat_display', Request::getInt('imgcat_display', 1));
-		$imagecategory->setVar('imgcat_weight', Request::getInt('imgcat_weight', 0));
-		$imagecategory->setVar('imgcat_storetype', Request::getString('imgcat_storetype', 'file'));
+        $imagecategory->setVar('imgcat_maxwidth', Request::getInt('imgcat_maxwidth', 800));
+        $imagecategory->setVar('imgcat_maxheight', Request::getInt('imgcat_maxheight', 600));
+        $imagecategory->setVar('imgcat_display', Request::getInt('imgcat_display', 1));
+        $imagecategory->setVar('imgcat_weight', Request::getInt('imgcat_weight', 0));
+        $imagecategory->setVar('imgcat_storetype', Request::getString('imgcat_storetype', 'file'));
         $imagecategory->setVar('imgcat_type', 'C');
         if (!$imgcat_handler->insert($imagecategory)) {
             xoops_cp_header();
@@ -503,7 +504,7 @@ switch ($op) {
         /** @var  XoopsGroupPermHandler $imagecategoryperm_handler */
         $imagecategoryperm_handler = xoops_getHandler('groupperm');
         if (!isset($readgroup)) {
-            $readgroup = array();
+            $readgroup = [];
         }
         if (!in_array(XOOPS_GROUP_ADMIN, $readgroup)) {
             $readgroup[] = XOOPS_GROUP_ADMIN;
@@ -518,7 +519,7 @@ switch ($op) {
             unset($imagecategoryperm);
         }
         if (!isset($writegroup)) {
-            $writegroup = array();
+            $writegroup = [];
         }
         if (!in_array(XOOPS_GROUP_ADMIN, $writegroup)) {
             $writegroup[] = XOOPS_GROUP_ADMIN;
@@ -556,7 +557,7 @@ switch ($op) {
         $form->addElement(new XoopsFormText(_IMGMAXHEIGHT, 'imgcat_maxheight', 3, 4, $imagecategory->getVar('imgcat_maxheight')));
         $form->addElement(new XoopsFormText(_AM_SYSTEM_IMAGES_IMGCATWEIGHT, 'imgcat_weight', 3, 4, $imagecategory->getVar('imgcat_weight')));
         $form->addElement(new XoopsFormRadioYN(_AM_SYSTEM_IMAGES_IMGCATDISPLAY, 'imgcat_display', $imagecategory->getVar('imgcat_display'), _YES, _NO));
-        $storetype = array('db' => _AM_SYSTEM_IMAGES_INDB, 'file' => _AM_SYSTEM_IMAGES_ASFILE);
+        $storetype = ['db' => _AM_SYSTEM_IMAGES_INDB, 'file' => _AM_SYSTEM_IMAGES_ASFILE];
         $form->addElement(new XoopsFormLabel(_AM_SYSTEM_IMAGES_IMGCATSTRTYPE, $storetype[$imagecategory->getVar('imgcat_storetype')]));
         $form->addElement(new XoopsFormHidden('imgcat_id', $imgcat_id));
         $form->addElement(new XoopsFormHidden('op', 'updatecat'));
@@ -595,14 +596,14 @@ switch ($op) {
         if (!is_object($imagecategory)) {
             redirect_header('admin.php?fct=images', 1);
         }
-		$imagecategory->setVar('imgcat_name', Request::getString('imgcat_name', ''));
+        $imagecategory->setVar('imgcat_name', Request::getString('imgcat_name', ''));
         $imagecategory->setVar('imgcat_maxsize', Request::getInt('imgcat_maxsize', 1000000));
-		$imagecategory->setVar('imgcat_maxwidth', Request::getInt('imgcat_maxwidth', 800));
-		$imagecategory->setVar('imgcat_maxheight', Request::getInt('imgcat_maxheight', 600));
-		$imagecategory->setVar('imgcat_display', Request::getInt('imgcat_display', 1));
-		$imagecategory->setVar('imgcat_weight', Request::getInt('imgcat_weight', 0));
+        $imagecategory->setVar('imgcat_maxwidth', Request::getInt('imgcat_maxwidth', 800));
+        $imagecategory->setVar('imgcat_maxheight', Request::getInt('imgcat_maxheight', 600));
+        $imagecategory->setVar('imgcat_display', Request::getInt('imgcat_display', 1));
+        $imagecategory->setVar('imgcat_weight', Request::getInt('imgcat_weight', 0));
         if (!$imgcat_handler->insert($imagecategory)) {
-			xoops_cp_header();
+            xoops_cp_header();
             echo 'Failed save category ' . $imagecategory->getVar('imgcat_name') . ' into the database';
             xoops_cp_footer();
             exit();
@@ -614,7 +615,7 @@ switch ($op) {
         $criteria2->add(new Criteria('gperm_name', 'imgcat_read'), 'OR');
         $criteria->add($criteria2);
         $imagecategoryperm_handler->deleteAll($criteria);
-        $readgroup = Request::getArray('readgroup', array());
+        $readgroup = Request::getArray('readgroup', []);
         if (!in_array(XOOPS_GROUP_ADMIN, $readgroup)) {
             $readgroup[] = XOOPS_GROUP_ADMIN;
         }
@@ -627,7 +628,7 @@ switch ($op) {
             $imagecategoryperm_handler->insert($imagecategoryperm);
             unset($imagecategoryperm);
         }
-        $writegroup = Request::getArray('writegroup', array());
+        $writegroup = Request::getArray('writegroup', []);
         if (!in_array(XOOPS_GROUP_ADMIN, $writegroup)) {
             $writegroup[] = XOOPS_GROUP_ADMIN;
         }
@@ -647,7 +648,7 @@ switch ($op) {
         // Call Header
         xoops_cp_header();
         // Display message
-        xoops_confirm(array('op' => 'delcatok', 'imgcat_id' => $imgcat_id, 'fct' => 'images'), 'admin.php', _AM_SYSTEM_IMAGES_RUDELIMGCAT);
+        xoops_confirm(['op' => 'delcatok', 'imgcat_id' => $imgcat_id, 'fct' => 'images'], 'admin.php', _AM_SYSTEM_IMAGES_RUDELIMGCAT);
         // Call Footer
         xoops_cp_footer();
         break;
@@ -656,7 +657,7 @@ switch ($op) {
         if (!$GLOBALS['xoopsSecurity']->check()) {
             redirect_header('admin.php?fct=images', 3, implode('<br>', $GLOBALS['xoopsSecurity']->getErrors()));
         }
-        $imgcat_id = (int)$imgcat_id;
+        $imgcat_id = (int) $imgcat_id;
         if ($imgcat_id <= 0) {
             redirect_header('admin.php?fct=images', 1);
         }
@@ -674,7 +675,7 @@ switch ($op) {
         /** @var  XoopsImageHandler $image_handler */
         $image_handler = xoops_getHandler('image');
         $images        = $image_handler->getObjects(new Criteria('imgcat_id', $imgcat_id), true, false);
-        $errors        = array();
+        $errors        = [];
         foreach (array_keys($images) as $i) {
             if (!$image_handler->delete($images[$i])) {
                 $errors[] = sprintf(_AM_SYSTEM_IMAGES_FAILDEL, $i);
@@ -698,7 +699,7 @@ switch ($op) {
 
     case 'multiupload':
         // Get category id
-		$imgcat_id = Request::getInt('imgcat_id', 0);
+        $imgcat_id = Request::getInt('imgcat_id', 0);
         if ($imgcat_id <= 0) {
             redirect_header('admin.php?fct=images', 1);
         }
@@ -738,19 +739,18 @@ switch ($op) {
         $xoopsTpl->assign('imgcat_maxwidth', $imagecategory->getVar('imgcat_maxwidth'));
         $xoopsTpl->assign('imgcat_maxheight', $imagecategory->getVar('imgcat_maxheight'));
         $xoopsTpl->assign('imgcat_name', $imagecategory->getVar('imgcat_name'));
-        $payload = array(
+        $payload = [
             'aud' => 'ajaxfineupload.php',
             'cat' => $imgcat_id,
             'uid' => $xoopsUser instanceof \XoopsUser ? $xoopsUser->id() : 0,
             'handler' => 'fineimuploadhandler',
             'moddir' => 'system',
-        );
-        $jwt = \Xmf\Jwt\TokenFactory::build('fineuploader', $payload, 60*30); // token good for 30 minutes
+        ];
+        $jwt = \Xmf\Jwt\TokenFactory::build('fineuploader', $payload, 60 * 30); // token good for 30 minutes
         $xoopsTpl->assign('jwt', $jwt);
         $fineup_debug = 'false';
         if (($xoopsUser instanceof \XoopsUser ? $xoopsUser->isAdmin() : false)
-            && isset($_REQUEST['FINEUPLOADER_DEBUG']))
-        {
+            && isset($_REQUEST['FINEUPLOADER_DEBUG'])) {
             $fineup_debug = 'true';
         }
         $xoopsTpl->assign('fineup_debug', $fineup_debug);

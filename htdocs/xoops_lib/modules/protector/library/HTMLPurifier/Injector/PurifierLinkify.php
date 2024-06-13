@@ -59,7 +59,7 @@ class HTMLPurifier_Injector_PurifierLinkify extends HTMLPurifier_Injector
             } else {
                 $token[] = new HTMLPurifier_Token_Start(
                     'a',
-                    array('href' => str_replace('%s', $bits[$i], $this->docURL))
+                    array('href' => str_replace('%s', $bits[$i], $this->docURL)),
                 );
                 $token[] = new HTMLPurifier_Token_Text('%' . $bits[$i]);
                 $token[] = new HTMLPurifier_Token_End('a');

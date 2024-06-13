@@ -25,7 +25,6 @@
  */
 class HTMLPurifier_HTMLDefinition extends HTMLPurifier_Definition
 {
-
     // FULLY-PUBLIC VARIABLES ---------------------------------------------
 
     /**
@@ -266,7 +265,7 @@ class HTMLPurifier_HTMLDefinition extends HTMLPurifier_Definition
         } else {
             trigger_error(
                 'Cannot use non-block element as block wrapper',
-                E_USER_ERROR
+                E_USER_ERROR,
             );
         }
 
@@ -278,7 +277,7 @@ class HTMLPurifier_HTMLDefinition extends HTMLPurifier_Definition
         } else {
             trigger_error(
                 'Cannot use unrecognized element as parent',
-                E_USER_ERROR
+                E_USER_ERROR,
             );
             $this->info_parent_def = $this->manager->getElement($this->info_parent, true);
         }
@@ -352,7 +351,7 @@ class HTMLPurifier_HTMLDefinition extends HTMLPurifier_Definition
                             trigger_error(
                                 "Required attribute '$attr' in element '$tag' " .
                                 "was not allowed, which means '$tag' will not be allowed either",
-                                E_USER_WARNING
+                                E_USER_WARNING,
                             );
                         }
                         unset($this->info[$tag]->attr[$attr]);
@@ -371,23 +370,24 @@ class HTMLPurifier_HTMLDefinition extends HTMLPurifier_Definition
                             if (!isset($this->info[$element])) {
                                 trigger_error(
                                     "Cannot allow attribute '$attribute' if element " .
-                                    "'$element' is not allowed/supported $support"
+                                    "'$element' is not allowed/supported $support",
                                 );
                             } else {
                                 trigger_error(
                                     "Attribute '$attribute' in element '$element' not supported $support",
-                                    E_USER_WARNING
+                                    E_USER_WARNING,
                                 );
                             }
                             break;
                         }
                         // otherwise fall through
+                        // no break
                     case 1:
                         $attribute = htmlspecialchars($bits[0]);
                         trigger_error(
-                            "Global attribute '$attribute' is not ".
+                            "Global attribute '$attribute' is not " .
                             "supported in any elements $support",
-                            E_USER_WARNING
+                            E_USER_WARNING,
                         );
                         break;
                 }
@@ -416,7 +416,7 @@ class HTMLPurifier_HTMLDefinition extends HTMLPurifier_Definition
                     trigger_error(
                         "Error with $tag.$attr: tag.attr syntax not supported for " .
                         "HTML.ForbiddenAttributes; use tag@attr instead",
-                        E_USER_WARNING
+                        E_USER_WARNING,
                     );
                 }
             }
@@ -431,7 +431,7 @@ class HTMLPurifier_HTMLDefinition extends HTMLPurifier_Definition
             if ($key[1] == '.') {
                 trigger_error(
                     "Error with $key: *.attr syntax not supported for HTML.ForbiddenAttributes; use attr instead",
-                    E_USER_WARNING
+                    E_USER_WARNING,
                 );
             }
         }

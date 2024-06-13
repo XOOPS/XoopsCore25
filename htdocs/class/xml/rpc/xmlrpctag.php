@@ -22,26 +22,22 @@
  */
 class XoopsXmlRpcDocument
 {
-    public $_tags = array();
+    public $_tags = [];
 
     /**
      * XoopsXmlRpcDocument constructor.
      */
-    public function __construct()
-    {
-    }
+    public function __construct() {}
 
     /**
      * @param $tagobj
      */
-    public function add(&$tagobj)
+    public function add($tagobj)
     {
-        $this->_tags[] =& $tagobj;
+        $this->_tags[] = & $tagobj;
     }
 
-    public function render()
-    {
-    }
+    public function render() {}
 }
 
 /**
@@ -108,9 +104,7 @@ class XoopsXmlRpcTag
     /**
      * XoopsXmlRpcTag constructor.
      */
-    public function __construct()
-    {
-    }
+    public function __construct() {}
 
     /**
      * @param $text
@@ -119,14 +113,7 @@ class XoopsXmlRpcTag
      */
     public function &encode(&$text)
     {
-        $text = preg_replace(array("/\&([a-z\d\#]+)\;/i", "/\&/", "/\#\|\|([a-z\d\#]+)\|\|\#/i"), array(
-            "#||\\1||#",
-            '&amp;',
-            "&\\1;"), str_replace(array(
-                                      '<',
-                                      '>'), array(
-                                      '&lt;',
-                                      '&gt;'), $text));
+        $text = preg_replace(["/\&([a-z\d\#]+)\;/i", "/\&/", "/\#\|\|([a-z\d\#]+)\|\|\#/i"], ["#||\\1||#", '&amp;', "&\\1;"], str_replace(['<', '>'], ['&lt;', '&gt;'], $text));
 
         return $text;
     }
@@ -136,7 +123,7 @@ class XoopsXmlRpcTag
      */
     public function setFault($fault = true)
     {
-        $this->_fault = ((int)$fault > 0);// ? true : false;
+        $this->_fault = ((int) $fault > 0);// ? true : false;
     }
 
     /**
@@ -147,9 +134,7 @@ class XoopsXmlRpcTag
         return $this->_fault;
     }
 
-    public function render()
-    {
-    }
+    public function render() {}
 }
 
 /**
@@ -167,7 +152,7 @@ class XoopsXmlRpcFault extends XoopsXmlRpcTag
     public function __construct($code, $extra = null)
     {
         $this->setFault(true);
-        $this->_code  = (int)$code;
+        $this->_code  = (int) $code;
         $this->_extra = isset($extra) ? trim($extra) : '';
     }
 
@@ -232,7 +217,7 @@ class XoopsXmlRpcInt extends XoopsXmlRpcTag
      */
     public function __construct($value)
     {
-        $this->_value = (int)$value;
+        $this->_value = (int) $value;
     }
 
     /**
@@ -256,7 +241,7 @@ class XoopsXmlRpcDouble extends XoopsXmlRpcTag
      */
     public function __construct($value)
     {
-        $this->_value = (float)$value;
+        $this->_value = (float) $value;
     }
 
     /**
@@ -280,7 +265,7 @@ class XoopsXmlRpcBoolean extends XoopsXmlRpcTag
      */
     public function __construct($value)
     {
-        $this->_value = (!empty($value) && $value != false) ? 1 : 0;
+        $this->_value = (!empty($value) && false != $value) ? 1 : 0;
     }
 
     /**
@@ -304,7 +289,7 @@ class XoopsXmlRpcString extends XoopsXmlRpcTag
      */
     public function __construct($value)
     {
-        $this->_value = (string)$value;
+        $this->_value = (string) $value;
     }
 
     /**
@@ -331,7 +316,7 @@ class XoopsXmlRpcDatetime extends XoopsXmlRpcTag
         if (!is_numeric($value)) {
             $this->_value = strtotime($value);
         } else {
-            $this->_value = (int)$value;
+            $this->_value = (int) $value;
         }
     }
 
@@ -373,21 +358,19 @@ class XoopsXmlRpcBase64 extends XoopsXmlRpcTag
  */
 class XoopsXmlRpcArray extends XoopsXmlRpcTag
 {
-    public $_tags = array();
+    public $_tags = [];
 
     /**
      * XoopsXmlRpcArray constructor.
      */
-    public function __construct()
-    {
-    }
+    public function __construct() {}
 
     /**
      * @param $tagobj
      */
     public function add(&$tagobj)
     {
-        $this->_tags[] =& $tagobj;
+        $this->_tags[] = & $tagobj;
     }
 
     /**
@@ -411,22 +394,20 @@ class XoopsXmlRpcArray extends XoopsXmlRpcTag
  */
 class XoopsXmlRpcStruct extends XoopsXmlRpcTag
 {
-    public $_tags = array();
+    public $_tags = [];
 
     /**
      * XoopsXmlRpcStruct constructor.
      */
-    public function __construct()
-    {
-    }
+    public function __construct() {}
 
     /**
      * @param $name
      * @param $tagobj
      */
-    public function add($name, &$tagobj)
+    public function add($name, $tagobj)
     {
-        $this->_tags[] = array('name' => $name, 'value' => $tagobj);
+        $this->_tags[] = ['name' => $name, 'value' => $tagobj];
     }
 
     /**

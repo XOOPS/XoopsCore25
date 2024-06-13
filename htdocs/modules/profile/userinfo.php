@@ -34,7 +34,7 @@ if ($uid <= 0) {
 
 /** @var  XoopsGroupPermHandler $gperm_handler */
 $gperm_handler = xoops_getHandler('groupperm');
-$groups        = is_object($GLOBALS['xoopsUser']) ? $GLOBALS['xoopsUser']->getGroups() : array(XOOPS_GROUP_ANONYMOUS);
+$groups        = is_object($GLOBALS['xoopsUser']) ? $GLOBALS['xoopsUser']->getGroups() : [XOOPS_GROUP_ANONYMOUS];
 
 if (is_object($GLOBALS['xoopsUser']) && $uid == $GLOBALS['xoopsUser']->getVar('uid')) {
     //disable cache
@@ -59,7 +59,7 @@ if (is_object($GLOBALS['xoopsUser']) && $uid == $GLOBALS['xoopsUser']->getVar('u
         $GLOBALS['xoopsTpl']->assign('user_candelete', false);
     }
     $GLOBALS['xoopsTpl']->assign('user_changeemail', $GLOBALS['xoopsConfigUser']['allow_chgmail']);
-    $thisUser =& $GLOBALS['xoopsUser'];
+    $thisUser = & $GLOBALS['xoopsUser'];
 } else {
     /** @var XoopsMemberHandler $member_handler */
     $member_handler = xoops_getHandler('member');
@@ -84,7 +84,7 @@ if (is_object($GLOBALS['xoopsUser']) && $uid == $GLOBALS['xoopsUser']->getVar('u
      *
      */
     // Redirect if current user is not allowed to access the user's profile based on group permission
-    $groups_basic             = array(XOOPS_GROUP_ADMIN, XOOPS_GROUP_USERS, XOOPS_GROUP_ANONYMOUS);
+    $groups_basic             = [XOOPS_GROUP_ADMIN, XOOPS_GROUP_USERS, XOOPS_GROUP_ANONYMOUS];
     $groups_thisUser          = $thisUser->getGroups();
     $groups_thisUser_nonbasic = array_diff($groups_thisUser, $groups_basic);
     $groups_xoopsUser         = $groups;
@@ -170,7 +170,7 @@ foreach (array_keys($fields) as $i) {
         $value = implode('<br>', array_values($value));
     }
     if ($value) {
-        $categories[$cat_id]['fields'][] = array('title' => $fields[$i]->getVar('field_title'), 'value' => $value);
+        $categories[$cat_id]['fields'][] = ['title' => $fields[$i]->getVar('field_title'), 'value' => $value];
         $weights[$cat_id][]              = $fields[$i]->getVar('cat_id');
     }
 }
@@ -213,10 +213,14 @@ if ($GLOBALS['xoopsModuleConfig']['profile_search']) {
                     if ($count == 5) {
                         $showall_link = '<a href="' . XOOPS_URL . '/search.php?action=showallbyuser&amp;mid=' . $mid . '&amp;uid=' . $thisUser->getVar('uid') . '">' . _US_SHOWALL . '</a>';
                     }
-                    $GLOBALS['xoopsTpl']->append('modules', array(
-                        'name'         => $modules[$mid]->getVar('name'),
-                        'results'      => $results,
-                        'showall_link' => $showall_link));
+                    $GLOBALS['xoopsTpl']->append(
+                        'modules',
+                        [
+                            'name'         => $modules[$mid]->getVar('name'),
+                            'results'      => $results,
+                            'showall_link' => $showall_link,
+                        ],
+                    );
                 }
                 unset($modules[$mid]);
             }
@@ -229,5 +233,5 @@ $GLOBALS['xoopsTpl']->assign('uname', $thisUser->getVar('uname'));
 $GLOBALS['xoopsTpl']->assign('email', $email);
 $GLOBALS['xoopsTpl']->assign('avatar', $avatar);
 $GLOBALS['xoopsTpl']->assign('recent_activity', _PROFILE_MA_RECENTACTIVITY);
-$xoBreadcrumbs[] = array('title' => _PROFILE_MA_USERINFO);
+$xoBreadcrumbs[] = ['title' => _PROFILE_MA_USERINFO];
 include __DIR__ . '/footer.php';

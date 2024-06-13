@@ -41,7 +41,7 @@ class ArtObject extends XoopsObject
     public function __construct()
     {
         $trace = debug_backtrace(DEBUG_BACKTRACE_IGNORE_ARGS, 1);
-        $GLOBALS['xoopsLogger']->addDeprecated('Class ' . __CLASS__ . " is deprecated, instantiated from {$trace[0]['file']} line {$trace[0]['line']}");
+        $GLOBALS['xoopsLogger']->addDeprecated('Class ' . self::class . " is deprecated, instantiated from {$trace[0]['file']} line {$trace[0]['line']}");
 
     }
 }
@@ -72,7 +72,7 @@ class ArtObjectHandler extends XoopsPersistableObjectHandler
     public function __construct(XoopsMySQLDatabase $db, $table = '', $className = '', $keyName = '', $identifierName = '')
     {
         $trace = debug_backtrace(DEBUG_BACKTRACE_IGNORE_ARGS, 1);
-        $GLOBALS['xoopsLogger']->addDeprecated('Class ' . __CLASS__ . " is deprecated, instantiated from {$trace[0]['file']} line {$trace[0]['line']}");
+        $GLOBALS['xoopsLogger']->addDeprecated('Class ' . self::class . " is deprecated, instantiated from {$trace[0]['file']} line {$trace[0]['line']}");
         $this->db = $db;
         parent::__construct($db, $table, $className, $keyName, $identifierName);
     }

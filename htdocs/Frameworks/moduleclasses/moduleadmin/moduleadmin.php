@@ -17,10 +17,10 @@
  */
 class ModuleAdmin
 {
-    private $_itemButton        = array();
-    private $_itemInfoBox       = array();
-    private $_itemInfoBoxLine   = array();
-    private $_itemConfigBoxLine = array();
+    private $_itemButton        = [];
+    private $_itemInfoBox       = [];
+    private $_itemInfoBoxLine   = [];
+    private $_itemConfigBoxLine = [];
 
     /**
      * @var XoopsModule
@@ -57,9 +57,9 @@ class ModuleAdmin
      */
     public function getInfo()
     {
-        $infoArray = array();
+        $infoArray = [];
         if (!isset($infoArray) || empty($infoArray)) {
-            $infoArray                = array();
+            $infoArray                = [];
             $infoArray['version']     = $this->getVersion();
             $infoArray['releasedate'] = $this->getReleaseDate();
             $infoArray['methods']     = $this->getClassMethods();
@@ -105,7 +105,7 @@ class ModuleAdmin
      */
     public function getClassMethods()
     {
-        $myMethods = get_class_methods(__CLASS__);
+        $myMethods = get_class_methods(self::class);
 
         return $myMethods;
     }
@@ -147,7 +147,7 @@ class ModuleAdmin
         $ret = "<div class=\"rmmenuicon\">\n";
         foreach (array_keys($this->_obj->adminmenu) as $i) {
             if ($this->_obj->adminmenu[$i]['link'] !== 'admin/index.php') {
-                $ret .= "<a href=\"../" . $this->_obj->adminmenu[$i]['link'] . "\" title=\"" . (isset($this->_obj->adminmenu[$i]['desc']) ? $this->_obj->adminmenu[$i]['desc'] : '') . "\">";
+                $ret .= "<a href=\"../" . $this->_obj->adminmenu[$i]['link'] . "\" title=\"" . ($this->_obj->adminmenu[$i]['desc'] ?? '') . "\">";
                 //$ret .= "<img src=\"" . $path . $this->_obj->adminmenu[$i]['icon']. "\" alt=\"" . $this->_obj->adminmenu[$i]['title'] . "\" />";
                 //mb for direct URL access to icons in modules Admin
                 $ret .= "<img src=\"" . (filter_var($this->_obj->adminmenu[$i]['icon'], FILTER_VALIDATE_URL) ? $this->_obj->adminmenu[$i]['icon'] : $path . $this->_obj->adminmenu[$i]['icon']) . "\" alt=\"" . $this->_obj->adminmenu[$i]['title'] . "\" />";
@@ -222,7 +222,7 @@ class ModuleAdmin
      */
     public function addItemButton($title, $link, $icon = 'add', $extra = '')
     {
-        $ret = array();
+        $ret = [];
         $ret['title']        = $title;
         $ret['link']         = $link;
         $ret['icon']         = $icon . '.png';
@@ -357,11 +357,11 @@ class ModuleAdmin
                 $reqVer            = $curVer = 0;
                 for ($i = 0; $i < $icount; ++$i) {
                     $j--;
-                    $reqVer += $iReqVerParts[$i] * pow(10, $j);
+                    $reqVer += $iReqVerParts[$i] * 10 ** $j;
                     if (isset($iCurrentVerParts[$i])) {
-                        $curVer += $iCurrentVerParts[$i] * pow(10, $j);
+                        $curVer += $iCurrentVerParts[$i] * 10 ** $j;
                     } else {
-                        $curVer *= pow(10, $j);
+                        $curVer *= 10 ** $j;
                     }
                 }
                 if ($reqVer > $curVer) {
@@ -417,7 +417,7 @@ class ModuleAdmin
      */
     public function addInfoBox($title)
     {
-        $ret = array();
+        $ret = [];
         $ret['title']         = $title;
         $this->_itemInfoBox[] = $ret;
 
@@ -444,7 +444,7 @@ class ModuleAdmin
      */
     public function addInfoBoxLine($label, $text, $value = '', $color = 'inherit', $type = 'default')
     {
-        $ret = array();
+        $ret = [];
         $ret['label'] = $label;
         $line         = '';
         switch ($type) {
@@ -516,9 +516,9 @@ class ModuleAdmin
                       . $this->_obj->getInfo('module_website_name') . " - " . $this->_obj->getInfo('module_website_url') . "\">"
                       . $this->_obj->getInfo('module_website_name') . "</a></text>\n"
                       . "</div>\n";
-        $authorArray  = array();
+        $authorArray  = [];
         foreach ( $author as $k => $aName ) {
-            $authorArray[$k] = ( isset( $nickname[$k] ) && ( '' != $nickname[$k] ) ) ? "{$aName} ({$nickname[$k]})" : "{$aName}";
+            $authorArray[$k] = ( isset( $nickname[$k] ) && ( '' != $nickname[$k] ) ) ? "{$aName} ({$nickname[$k]})" : (string)($aName);
         }
         $license_url = $this->_obj->getInfo('license_url');
         $license_url = preg_match('%^(https?:)?//%', $license_url) ? $license_url : 'http://' . $license_url;

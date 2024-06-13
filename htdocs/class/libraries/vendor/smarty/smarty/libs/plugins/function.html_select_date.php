@@ -28,7 +28,7 @@
  *            - 2.0 complete rewrite for performance,
  *              added attributes month_names, *_id
  *
- * @link    http://www.smarty.net/manual/en/language.function.html.select.date.php {html_select_date}
+ * @link    https://www.smarty.net/manual/en/language.function.html.select.date.php {html_select_date}
  *           (Smarty online manual)
  * @version 2.0
  * @author  Andrei Zmievski
@@ -173,11 +173,11 @@ function smarty_function_html_select_date($params, Smarty_Internal_Template $tem
     if (isset($time) && is_array($time)) {
         if (isset($time[$prefix . 'Year'])) {
             // $_REQUEST[$field_array] given
-            foreach (array(
+            foreach ([
                          'Y' => 'Year',
                          'm' => 'Month',
                          'd' => 'Day'
-                     ) as $_elementKey => $_elementName) {
+                     ] as $_elementKey => $_elementName) {
                 $_variableName = '_' . strtolower($_elementName);
                 $$_variableName =
                     isset($time[$prefix . $_elementName]) ? $time[$prefix . $_elementName] :
@@ -185,18 +185,18 @@ function smarty_function_html_select_date($params, Smarty_Internal_Template $tem
             }
         } elseif (isset($time[$field_array][$prefix . 'Year'])) {
             // $_REQUEST given
-            foreach (array(
+            foreach ([
                          'Y' => 'Year',
                          'm' => 'Month',
                          'd' => 'Day'
-                     ) as $_elementKey => $_elementName) {
+                     ] as $_elementKey => $_elementName) {
                 $_variableName = '_' . strtolower($_elementName);
                 $$_variableName = isset($time[$field_array][$prefix . $_elementName]) ?
                     $time[$field_array][$prefix . $_elementName] : date($_elementKey);
             }
         } else {
             // no date found, use NOW
-            list($_year, $_month, $_day) = explode('-', date('Y-m-d'));
+            [$_year, $_month, $_day] = explode('-', date('Y-m-d'));
         }
     } elseif (isset($time) && preg_match("/(\d*)-(\d*)-(\d*)/", $time, $matches)) {
         $_year = $_month = $_day = null;
@@ -207,7 +207,7 @@ function smarty_function_html_select_date($params, Smarty_Internal_Template $tem
         if (array_key_exists('time', $params)) {
             $_year = $_month = $_day = null;
         } else {
-            list($_year, $_month, $_day) = explode('-', date('Y-m-d'));
+            [$_year, $_month, $_day] = explode('-', date('Y-m-d'));
         }
     } else {
         $template->_checkPlugins(
@@ -219,7 +219,7 @@ function smarty_function_html_select_date($params, Smarty_Internal_Template $tem
             )
         );
         $time = smarty_make_timestamp($time);
-	    list($_year, $_month, $_day) = explode('-', date('Y-m-d', $time));
+        [$_year, $_month, $_day] = explode('-', date('Y-m-d', $time));
     }
 
     // make syntax "+N" or "-N" work with $start_year and $end_year
@@ -316,8 +316,8 @@ function smarty_function_html_select_date($params, Smarty_Internal_Template $tem
         for ($i = 1; $i <= 12; $i++) {
             $_val = sprintf('%02d', $i);
             $_text = isset($month_names) ? smarty_function_escape_special_chars($month_names[ $i ]) :
-                ($month_format === '%m' ? $_val : strftime($month_format, $_month_timestamps[ $i ]));
-            $_value = $month_value_format === '%m' ? $_val : strftime($month_value_format, $_month_timestamps[ $i ]);
+                ($month_format === '%m' ? $_val : @strftime($month_format, $_month_timestamps[ $i ]));
+            $_value = $month_value_format === '%m' ? $_val : @strftime($month_value_format, $_month_timestamps[ $i ]);
             $_html_months .= '<option value="' . $_value . '"' . ($_val == $_month ? ' selected="selected"' : '') .
                              '>' . $_text . '</option>' . $option_separator;
         }

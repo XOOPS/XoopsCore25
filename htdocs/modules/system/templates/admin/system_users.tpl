@@ -40,7 +40,7 @@
                 <tbody>
                 <{foreach item=user from=$users|default:null}>
                     <tr class="<{cycle values='even,odd'}> alignmiddle">
-                        <td class="txtcenter"><{if $user.checkbox_user}><input type='checkbox' name='memberslist_id[]' id='memberslist_id[]'
+                        <td class="txtcenter"><{if !empty($user.checkbox_user)}><input type='checkbox' name='memberslist_id[]' id='memberslist_id[]'
                                                                                 value='<{$user.uid}>'/><{/if}>
                         </td>
                         <td class="txtcenter"><img class="xo-imgmini" src="<{$user.group}>" alt=""/></td>
@@ -141,16 +141,16 @@
                                 <{if !empty($users.user_url)}>
                                     <li><span class="bold"><{$smarty.const._AM_SYSTEM_USERS_URL}></span>&nbsp;:&nbsp;<{$users.url}></li>
                                 <{/if}>
-                                <{if $users.user_icq}>
+                                    <{if !empty($users.user_icq)}>
                                     <li><span class="bold"><{$smarty.const._AM_SYSTEM_USERS_ICQ}></span>&nbsp;:&nbsp;<{$users.user_icq}></li>
                                 <{/if}>
-                                <{if $users.user_aim}>
+                                    <{if !empty($users.user_aim)}>
                                     <li><span class="bold"><{$smarty.const._AM_SYSTEM_USERS_AIM}></span>&nbsp;:&nbsp;<{$users.user_aim}></li>
                                 <{/if}>
-                                <{if $users.user_yim}>
+                                    <{if !empty($users.user_yim)}>
                                     <li><span class="bold"><{$smarty.const._AM_SYSTEM_USERS_YIM}></span>&nbsp;:&nbsp;<{$users.user_yim}></li>
                                 <{/if}>
-                                <{if $users.user_msnm}>
+                                    <{if !empty($users.user_msnm)}>
                                     <li><span class="bold"><{$smarty.const._AM_SYSTEM_USERS_MSNM}></span>&nbsp;:&nbsp;<{$users.user_msnm}></li>
                                 <{/if}>
                             </ul>

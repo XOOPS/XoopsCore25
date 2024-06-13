@@ -56,7 +56,7 @@ class SystemSmilies extends XoopsObject
         if ($this->isNew()) {
             $blank_img = 'blank.gif';
         } else {
-            $blank_img = str_replace('smilies/', '', $this->getVar('smile_url', 'e'));
+            $blank_img = str_replace('smilies/', '', (string) $this->getVar('smile_url', 'e'));
         }
         if ($action === false) {
             $action = $_SERVER['REQUEST_URI'];
@@ -73,9 +73,9 @@ class SystemSmilies extends XoopsObject
         $imgpath_img     = sprintf(_AM_SYSTEM_SMILIES_IMAGE_PATH, XOOPS_UPLOAD_PATH . '/smilies/');
         $imageselect_img = new XoopsFormSelect($imgpath_img, 'smile_url', $blank_img);
         $image_array_img = XoopsLists::getImgListAsArray(XOOPS_UPLOAD_PATH . '/smilies');
-        $imageselect_img->addOption("$blank_img", $blank_img);
+        $imageselect_img->addOption((string)$blank_img, $blank_img);
         foreach ($image_array_img as $image_img) {
-            $imageselect_img->addOption("$image_img", $image_img);
+            $imageselect_img->addOption((string)$image_img, $image_img);
         }
         $imageselect_img->setExtra('onchange="showImgSelected(\'xo-smilies-img\', \'smile_url\', \'smilies\', \'\', \'' . XOOPS_UPLOAD_URL . '\' )"');
         $imgtray_img->addElement($imageselect_img, false);

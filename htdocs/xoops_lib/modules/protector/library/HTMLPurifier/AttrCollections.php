@@ -6,7 +6,6 @@
 
 class HTMLPurifier_AttrCollections
 {
-
     /**
      * Associative array of attribute collections, indexed by name.
      * @type array
@@ -38,7 +37,7 @@ class HTMLPurifier_AttrCollections
                         // merge in includes
                         $this->info[$coll_i][$attr_i] = array_merge(
                             $this->info[$coll_i][$attr_i],
-                            $attr
+                            $attr,
                         );
                         continue;
                     }
