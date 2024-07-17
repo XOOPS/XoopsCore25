@@ -299,10 +299,10 @@ class MyTextSanitizer
      *
      * @return string
      */
-    protected function makeClickableCallbackEmailAddress($match)
+    protected function makeClickableCallbackEmailAddress0($match)
     {
         $email = $match[2];  // Extract the email address
-        return $match[1] . '<a href="mailto:' . htmlspecialchars($email, ENT_QUOTES, 'UTF-8') . '" title="' . htmlspecialchars($email, ENT_QUOTES, 'UTF-8') . '">' . htmlspecialchars($email, ENT_QUOTES, 'UTF-8') . '</a>';
+        return $match[1] . '<a href="mailto:' . htmlspecialchars($email, ENT_QUOTES, 'UTF-8') . '">' . htmlspecialchars($email, ENT_QUOTES, 'UTF-8') . '</a>';
     }
 
     /**
@@ -310,10 +310,10 @@ class MyTextSanitizer
      * Presently handles email addresses and http, https, ftp, and sftp urls
      * (Note: at this time, major browsers no longer directly handle ftp/sftp urls.)
      *
-     * @param  string $text
+     * @param string $text
      * @return string
      */
-    public function makeClickable($text)
+    public function makeClickable0($text)
     {
         // Decode HTML entities to ensure URLs are properly formatted
         $text = html_entity_decode($text, ENT_QUOTES, 'UTF-8');
@@ -322,7 +322,7 @@ class MyTextSanitizer
         $pattern = "/(^|[\s\n]|<br\/?>)([-_a-z0-9\'+*$^&%=~!?{}]+(?:\.[-_a-z0-9\'+*$^&%=~!?{}]+)*@[-a-z0-9.]+\.[a-z]{2,6})/i";
         $text = preg_replace_callback($pattern, [$this, 'makeClickableCallbackEmailAddress'], $text);
 
-        // Convert http/https/ftp URLs into clickable links
+        // Convert URLs into clickable links
         $pattern = "/(?:\s|^|[\(\[\{>])((https?:\/\/|s?ftp:\/\/|www\.)[^\s<>\(\)\[\]]+[^\s<>\(\)\[\]\.,!\"'\(\)\[\]{}<>])(?<![\.,!\"'\(\)\[\]{}])/";
         $text = preg_replace_callback(
             $pattern,
@@ -332,7 +332,19 @@ class MyTextSanitizer
                 if (strpos($url, 'www.') === 0) {
                     $url = "http://" . $url;
                 }
-                return $prefix . '<a href="' . htmlspecialchars($url, ENT_QUOTES, 'UTF-8') . '" target="_blank" rel="external noopener nofollow">' . htmlspecialchars($url, ENT_QUOTES, 'UTF-8') . '</a>';
+                $relAttr = strpos($url, 'ftp://') === 0 || strpos($url, 'sftp://') === 0 ? 'external' : 'external noopener nofollow';
+                return $prefix . '<a href="' . htmlspecialchars($url, ENT_QUOTES, 'UTF-8') . '" target="_blank" rel="' . $relAttr . '">' . htmlspecialchars($url, ENT_QUOTES, 'UTF-8') . '</a>';
+            },
+            $text
+        );
+
+        // Convert URLs within angular brackets into clickable links
+        $pattern = "/(<)(https?:\/\/[^\s>]+)(>)/i";
+        $text = preg_replace_callback(
+            $pattern,
+            function ($matches) {
+                $url = htmlspecialchars($matches[2], ENT_QUOTES, 'UTF-8');
+                return $matches[1] . '<a href="' . $url . '" target="_blank" rel="external noopener nofollow">' . $url . '</a>' . $matches[3];
             },
             $text
         );
@@ -346,6 +358,346 @@ class MyTextSanitizer
         return $text;
     }
 
+
+    protected function makeClickableCallbackEmailAddress1($match)
+    {
+        $email = $match[2];  // Extract the email address
+        return $match[1] . '<a href="mailto:' . htmlspecialchars($email, ENT_QUOTES, 'UTF-8') . '">' . htmlspecialchars($email, ENT_QUOTES, 'UTF-8') . '</a>';
+    }
+
+    public function makeClickable1($text)
+    {
+        // Decode HTML entities to ensure URLs are properly formatted
+        $text = html_entity_decode($text, ENT_QUOTES, 'UTF-8');
+
+        // Convert email addresses into clickable mailto links
+        $pattern = "/(^|[\s\n]|<br\/?>)([-_a-z0-9\'+*$^&%=~!?{}]+(?:\.[-_a-z0-9\'+*$^&%=~!?{}]+)*@[-a-z0-9.]+\.[a-z]{2,6})/i";
+        $text = preg_replace_callback($pattern, [$this, 'makeClickableCallbackEmailAddress'], $text);
+
+        // Convert URLs into clickable links
+        $pattern = "/(?:\s|^|[\(\[\{>])((https?:\/\/|s?ftp:\/\/|www\.)[^\s<>\(\)\[\]]+[^\s<>\(\)\[\]\.,!\"'\(\)\[\]{}<>])(?<![\.,!\"'\(\)\[\]{}])/";
+        $text = preg_replace_callback(
+            $pattern,
+            function ($matches) {
+                $url = $matches[1];
+                $prefix = $matches[0][0] ?? ''; // Get the prefix character (space, bracket, etc.)
+                if (strpos($url, 'www.') === 0) {
+                    $url = "http://" . $url;
+                }
+                $relAttr = strpos($url, 'ftp://') === 0 || strpos($url, 'sftp://') === 0 ? 'external' : 'external noopener nofollow';
+                return $prefix . '<a href="' . htmlspecialchars($url, ENT_QUOTES, 'UTF-8') . '" target="_blank" rel="' . $relAttr . '">' . htmlspecialchars($url, ENT_QUOTES, 'UTF-8') . '</a>';
+            },
+            $text
+        );
+
+        // Convert URLs within angular brackets into clickable links
+        $pattern = "/(<)(https?:\/\/[^\s>]+)(>)/i";
+        $text = preg_replace_callback(
+            $pattern,
+            function ($matches) {
+                $url = htmlspecialchars($matches[2], ENT_QUOTES, 'UTF-8');
+                return $matches[1] . '<a href="' . $url . '" target="_blank" rel="external noopener nofollow">' . $url . '</a>' . $matches[3];
+            },
+            $text
+        );
+
+        $text = preg_replace('/[\n\s]+/', ' ', $text);
+
+        return $text;
+    }
+
+    protected function makeClickableCallbackEmailAddress2($match)
+    {
+        $email = $match[2];  // Extract the email address
+        return $match[1] . '<a href="mailto:' . htmlspecialchars($email, ENT_QUOTES, 'UTF-8') . '">' . htmlspecialchars($email, ENT_QUOTES, 'UTF-8') . '</a>';
+    }
+
+    public function makeClickable2($text)
+    {
+        // Decode HTML entities to ensure URLs are properly formatted
+        $text = html_entity_decode($text, ENT_QUOTES, 'UTF-8');
+
+        // Convert email addresses into clickable mailto links
+/*        $pattern = "/(^|[\s\n]|<br\/?>)([-_a-z0-9\'+*$^&%=~!?{}]+(?:\.[-_a-z0-9\'+*$^&%=~!?{}]+)*@[-a-z0-9.]+\.[a-z]{2,6})/i";*/
+//        $text = preg_replace_callback($pattern, [$this, 'makeClickableCallbackEmailAddress'], $text);
+
+
+        $pattern = "/(^|[\s\n]|<br\/?>)([-_a-z0-9\'+*$^&%=~!?{}]+(?:\.[-_a-z0-9\'+*$^&%=~!?{}]+)*@[-a-z0-9.]+\.[a-z]{2,6})/i";
+        $text = preg_replace_callback($pattern, [$this, 'makeClickableCallbackEmailAddress'], $text);
+
+        // Convert URLs into clickable links
+        $pattern = "/(?:\s|^|[\(\[\{>])((https?:\/\/|s?ftp:\/\/|www\.)[^\s<>\(\)\[\]]+[^\s<>\(\)\[\]\.,!\"'\(\)\[\]{}<>])(?<![\.,!\"'\(\)\[\]{}])/";
+        $text = preg_replace_callback(
+            $pattern,
+            function ($matches) {
+                $url = $matches[1];
+                $prefix = $matches[0][0] ?? ''; // Get the prefix character (space, bracket, etc.)
+                if (strpos($url, 'www.') === 0) {
+                    $url = "http://" . $url;
+                }
+                $relAttr = strpos($url, 'ftp://') === 0 || strpos($url, 'sftp://') === 0 ? 'external' : 'external noopener nofollow';
+                return $prefix . '<a href="' . htmlspecialchars($url, ENT_QUOTES, 'UTF-8') . '" target="_blank" rel="' . $relAttr . '">' . htmlspecialchars($url, ENT_QUOTES, 'UTF-8') . '</a>';
+            },
+            $text
+        );
+
+        // Convert URLs within angular brackets into clickable links
+        $pattern = "/(<)(https?:\/\/[^\s>]+)(>)/i";
+        $text = preg_replace_callback(
+            $pattern,
+            function ($matches) {
+                $url = htmlspecialchars($matches[2], ENT_QUOTES, 'UTF-8');
+                return $matches[1] . '<a href="' . $url . '" target="_blank" rel="external noopener nofollow">' . $url . '</a>' . $matches[3];
+            },
+            $text
+        );
+
+        return $text;
+    }
+
+
+    protected function makeClickableCallbackEmailAddress3($match)
+    {
+        $email = $match[2];  // Extract the email address
+        return $match[1] . '<a href="mailto:' . htmlspecialchars($email, ENT_QUOTES, 'UTF-8') . '">' . htmlspecialchars($email, ENT_QUOTES, 'UTF-8') . '</a>';
+    }
+
+    /**
+     * Make links in the text clickable
+     * Presently handles email addresses and http, https, ftp, and sftp urls
+     * (Note: at this time, major browsers no longer directly handle ftp/sftp urls.)
+     *
+     * @param string $text
+     * @return string
+     */
+    public function makeClickable3($text)
+    {
+        // Decode HTML entities to ensure URLs are properly formatted
+        $text = html_entity_decode($text, ENT_QUOTES, 'UTF-8');
+
+        // Convert email addresses into clickable mailto links
+        $pattern = "/(^|[\s\n]|<br\/?>)([-_a-z0-9\'+*$^&%=~!?{}]+(?:\.[-_a-z0-9\'+*$^&%=~!?{}]+)*@[-a-z0-9.]+\.[a-z]{2,6})/i";
+        $text = preg_replace_callback($pattern, [$this, 'makeClickableCallbackEmailAddress'], $text);
+
+        // Convert URLs into clickable links
+        $pattern = "/(?:\s|^|[\(\[\{>])((https?:\/\/|s?ftp:\/\/|www\.)[^\s<>\(\)\[\]]+[^\s<>\(\)\[\]\.,!\"'\(\)\[\]{}<>])(?<![\.,!\"'\(\)\[\]{}])/";
+        $text = preg_replace_callback(
+            $pattern,
+            function ($matches) {
+                $url = $matches[1];
+                $prefix = $matches[0][0] ?? ''; // Get the prefix character (space, bracket, etc.)
+                if (strpos($url, 'www.') === 0) {
+                    $url = "http://" . $url;
+                }
+                $relAttr = strpos($url, 'ftp://') === 0 || strpos($url, 'sftp://') === 0 ? 'external' : 'external noopener nofollow';
+                return $prefix . '<a href="' . htmlspecialchars($url, ENT_QUOTES, 'UTF-8') . '" target="_blank" rel="' . $relAttr . '">' . htmlspecialchars($url, ENT_QUOTES, 'UTF-8') . '</a>';
+            },
+            $text
+        );
+
+        // Ensure consistent handling of newlines by converting them to <br /> tags
+//        $text = nl2br($text);
+
+        $text = preg_replace('/[\n\s]+/', ' ', $text);
+
+        return $text;
+    }
+
+
+
+    protected function makeClickableCallbackEmailAddress4($match)
+    {
+        $email = $match[2];  // Extract the email address
+        return $match[1] . '<a href="mailto:' . htmlspecialchars($email, ENT_QUOTES, 'UTF-8') . '">' . htmlspecialchars($email, ENT_QUOTES, 'UTF-8') . '</a>';
+    }
+
+    /**
+     * Make links in the text clickable
+     * Presently handles email addresses and http, https, ftp, and sftp urls
+     * (Note: at this time, major browsers no longer directly handle ftp/sftp urls.)
+     *
+     * @param string $text
+     * @return string
+     */
+    public function makeClickable4($text)
+    {
+        // Decode HTML entities to ensure URLs are properly formatted
+        $text = html_entity_decode($text, ENT_QUOTES, 'UTF-8');
+
+        // Convert email addresses into clickable mailto links
+        $pattern = "/(^|[\s\n]|<br\/?>)([-_a-z0-9\'+*$^&%=~!?{}]+(?:\.[-_a-z0-9\'+*$^&%=~!?{}]+)*@[-a-z0-9.]+\.[a-z]{2,6})/i";
+        $text = preg_replace_callback($pattern, [$this, 'makeClickableCallbackEmailAddress'], $text);
+
+        // Convert URLs into clickable links
+        $pattern = "/(?:\s|^|[\(\[\{>])((https?:\/\/|s?ftp:\/\/|www\.)[^\s<>\(\)\[\]]+[^\s<>\(\)\[\]\.,!\"'\(\)\[\]{}<>])(?<![\.,!\"'\(\)\[\]{}])/";
+        $text = preg_replace_callback(
+            $pattern,
+            function ($matches) {
+                $url = $matches[1];
+                $prefix = $matches[0][0] ?? ''; // Get the prefix character (space, bracket, etc.)
+                if (strpos($url, 'www.') === 0) {
+                    $url = "http://" . $url;
+                }
+                $relAttr = strpos($url, 'ftp://') === 0 || strpos($url, 'sftp://') === 0 ? 'external' : 'external noopener nofollow';
+                return $prefix . '<a href="' . htmlspecialchars($url, ENT_QUOTES, 'UTF-8') . '" target="_blank" rel="' . $relAttr . '">' . htmlspecialchars($url, ENT_QUOTES, 'UTF-8') . '</a>';
+            },
+            $text
+        );
+
+        // Convert line breaks to <br> tags
+//        $text = str_replace("\n", "<br>", $text);
+        $text = preg_replace('/[\n\s]+/', ' ', $text);
+
+        return $text;
+    }
+
+    /**
+     * Callback to process email address match
+     *
+     * @param array $match array of matched elements
+     *
+     * @return string
+     */
+    protected function makeClickableCallbackEmailAddress($match)
+    {
+        $email = $match[2];  // Extract the email address
+        return $match[1] . '<a href="mailto:' . htmlspecialchars($email, ENT_QUOTES, 'UTF-8') . '">' . htmlspecialchars($email, ENT_QUOTES, 'UTF-8') . '</a>';
+    }
+
+    /**
+     * Make links in the text clickable
+     * Presently handles email addresses and http, https, ftp, and sftp urls
+     * (Note: at this time, major browsers no longer directly handle ftp/sftp urls.)
+     *
+     * @param string $text
+     * @return string
+     */
+    public function makeClickable6($text)
+    {
+        // Decode HTML entities to ensure URLs are properly formatted
+        $text = html_entity_decode($text, ENT_QUOTES, 'UTF-8');
+
+        // Convert line breaks and multiple spaces to a single space
+        $text = preg_replace('/[\n\s]+/', ' ', $text);
+
+        // Convert email addresses into clickable mailto links
+        $pattern = "/(^|[\s\n]|<br\s*\/?>)([-_a-z0-9\'+*$^&%=~!?{}]+(?:\.[-_a-z0-9\'+*$^&%=~!?{}]+)*@[-a-z0-9.]+\.[a-z]{2,6})/i";
+        $text = preg_replace_callback($pattern, [$this, 'makeClickableCallbackEmailAddress'], $text);
+
+        // Convert URLs into clickable links, allowing for angle brackets
+        $pattern = "/(?:\s|^|[\(\[\{>])(<)?((https?:\/\/|s?ftp:\/\/|www\.)[^\s<>\(\)\[\]]+[^\s<>\(\)\[\]\.,!\"'\(\)\[\]{}<>])(?<![\.,!\"'\(\)\[\]{}])/";
+        $text = preg_replace_callback(
+            $pattern,
+            function ($matches) {
+                $url = $matches[2];
+                $prefix = $matches[0][0] ?? ''; // Get the prefix character (space, bracket, etc.)
+                $openingBracket = $matches[1] ?? ''; // Check for the opening angle bracket
+
+                if (strpos($url, 'www.') === 0) {
+                    $url = "http://" . $url;
+                }
+                $relAttr = strpos($url, 'ftp://') === 0 || strpos($url, 'sftp://') === 0 ? 'external' : 'external noopener nofollow';
+
+                // Add the opening bracket back if it was present
+                return $prefix . $openingBracket . '<a href="' . htmlspecialchars($url, ENT_QUOTES, 'UTF-8') . '" target="_blank" rel="' . $relAttr . '">' . htmlspecialchars($url, ENT_QUOTES, 'UTF-8') . '</a>';
+            },
+            $text
+        );
+
+        return $text;
+    }
+
+    public function makeClickable7($text)
+    {
+        // Decode HTML entities to ensure URLs are properly formatted
+        $text = html_entity_decode($text, ENT_QUOTES, 'UTF-8');
+
+        // Convert line breaks and multiple spaces to a single space
+        $text = preg_replace('/[\n\s]+/', ' ', $text);
+
+        // Convert email addresses into clickable mailto links
+        $pattern = "/(^|[\s\n]|<br\s*\/?>)([-_a-z0-9\'+*$^&%=~!?{}]+(?:\.[-_a-z0-9\'+*$^&%=~!?{}]+)*@[-a-z0-9.]+\.[a-z]{2,6})/i";
+        $text = preg_replace_callback($pattern, [$this, 'makeClickableCallbackEmailAddress'], $text);
+
+        // Convert URLs into clickable links, allowing for angle brackets, file paths, and custom protocols
+        $pattern = "/(?:\s|^|[\(\[\{>])(<)?((https?:\/\/|s?ftp:\/\/|file:\/\/|custom:\/\/|www\.)[^\s<>\(\)\[\]]+[^\s<>\(\)\[\]\.,!\"'\(\)\[\]{}<>])(?<![\.,!\"'\(\)\[\]{}])/";
+        $text = preg_replace_callback(
+            $pattern,
+            function ($matches) {
+                $url = $matches[2];
+                $prefix = $matches[0][0] ?? ''; // Get the prefix character (space, bracket, etc.)
+                $openingBracket = $matches[1] ?? ''; // Check for the opening angle bracket
+
+                if (strpos($url, 'www.') === 0) {
+                    $url = "http://" . $url;
+                }
+                $relAttr = (strpos($url, 'ftp://') === 0 || strpos($url, 'sftp://') === 0 || strpos($url, 'file://') === 0 || strpos($url, 'custom://') === 0) ? 'external' : 'external noopener nofollow';
+
+                // Add the opening bracket back if it was present
+                return $prefix . $openingBracket . '<a href="' . htmlspecialchars($url, ENT_QUOTES, 'UTF-8') . '" target="_blank" rel="' . $relAttr . '">' . htmlspecialchars($url, ENT_QUOTES, 'UTF-8') . '</a>';
+            },
+            $text
+        );
+
+        return $text;
+    }
+
+    public function makeClickable($text) {
+        // Decode HTML entities
+        $text = html_entity_decode($text, ENT_QUOTES, 'UTF-8');
+
+        // Convert line breaks and multiple spaces to a single space
+        $text = preg_replace('/[\n\s]+/', ' ', $text);
+
+        // Convert email addresses into clickable mailto links
+        $pattern = "/(^|[\s\n]|<br\s*\/?>)([-_a-z0-9\'+*$^&%=~!?{}]+(?:\.[-_a-z0-9\'+*$^&%=~!?{}]+)*@[-a-z0-9.]+\.[a-z]{2,6})/i";
+        $text = preg_replace_callback($pattern, [$this, 'makeClickableCallbackEmailAddress'], $text);
+
+        // Convert URLs into clickable links, allowing for angle brackets, file paths, and custom protocols
+        $pattern = "/(?:\s|^|[\(\[\{>])(<)?((https?:\/\/|s?ftp:\/\/|file:\/\/|custom:\/\/|www\.)[^\s<>\(\)\[\]]+[^\s<>\(\)\[\]\.,!\"'\(\)\[\]{}<>])(?<![\.,!\"'\(\)\[\]{}])/";
+        $text = preg_replace_callback(
+            $pattern,
+            function ($matches) {
+                $url = $matches[2];
+                $prefix = $matches[0][0] ?? ''; // Get the prefix character (space, bracket, etc.)
+                $openingBracket = $matches[1] ?? ''; // Check for the opening angle bracket
+
+                // Ensure the URL is not a javascript: URL
+                if (stripos($url, 'javascript:') === 0) {
+                    return $matches[0];
+                }
+
+                // Add http prefix if missing
+                if (strpos($url, 'www.') === 0) {
+                    $url = "http://" . $url;
+                }
+
+                // Allow only specific protocols
+                $allowedProtocols = ['http://', 'https://', 'ftp://', 'sftp://', 'file://', 'custom://'];
+                $protocolAllowed = false;
+                foreach ($allowedProtocols as $protocol) {
+                    if (strpos($url, $protocol) === 0) {
+                        $protocolAllowed = true;
+                        break;
+                    }
+                }
+                if (!$protocolAllowed) {
+                    return $matches[0];
+                }
+
+                // Check if the URL is already inside an anchor tag, specifically looking for href attribute
+                if (!preg_match('#<a\s[^>]*href\s*=\s*(["\'])' . preg_quote($url, '/') . '\\1[^>]*>#i', $url)) { // <-- Change here!
+                    $relAttr = (strpos($url, 'ftp://') === 0 || strpos($url, 'sftp://') === 0 || strpos($url, 'file://') === 0 || strpos($url, 'custom://') === 0) ? 'external' : 'external noopener nofollow';
+                    return $prefix . $openingBracket . '<a href="' . htmlspecialchars($url, ENT_QUOTES, 'UTF-8') . '" target="_blank" rel="' . $relAttr . '">' . htmlspecialchars($url, ENT_QUOTES, 'UTF-8') . '</a>';
+                }
+
+                return $matches[0]; // Return the original match if it's already an anchor tag
+            },
+            $text
+        );
+
+        return $text;
+    }
 
     /**
      * MyTextSanitizer::truncate()
