@@ -87,7 +87,7 @@
         <{if isset($display_print_link) && $display_print_link !=0}>
             <{$item.printlink}>
         <{/if}>
-        <<{if isset($display_pdf_button) && $display_pdf_button !=0}>
+        <{if isset($display_pdf_button) && $display_pdf_button !=0}>
             <{$item.pdfbutton}>
         <{/if}>
 
