@@ -66,8 +66,16 @@ class MyTextSanitizerTest extends TestCase
 
     public function testMultiLineText()
     {
-        $text     = "Check this link:\nhttp://example.com\nand this email:\ntest@example.com";
-        $expected = 'Check this link:<br /><a href="http://example.com" target="_blank" rel="external noopener nofollow">http://example.com</a><br />and this email:<br /><a href="mailto:test@example.com">test@example.com</a>';
+        $text     = "Check this link:<br>http://example.com\nand this email:<br />test@example.com";
+        $expected = 'Check this link:<br><a href="http://example.com" target="_blank" rel="external noopener nofollow">http://example.com</a> and this email:<br /><a href="mailto:test@example.com">test@example.com</a>';
+        $result   = $this->sanitizer->makeClickable($text);
+        $this->assertEquals($expected, $result);
+    }
+
+    public function testMultiLineText2()
+    {
+        $text     = "Check this link:<br>http://example.com\nand this email:<br />test@example.com";
+        $expected = 'Check this link:<br><a href="http://example.com" target="_blank" rel="external noopener nofollow">http://example.com</a> and this email:<br /><a href="mailto:test@example.com">test@example.com</a>';
         $result   = $this->sanitizer->makeClickable($text);
         $this->assertEquals($expected, $result);
     }
@@ -86,7 +94,8 @@ class MyTextSanitizerTest extends TestCase
             "Check out www.example.org"                                                        => 'Check out <a href="http://www.example.org" target="_blank" rel="external noopener nofollow">http://www.example.org</a>',
             "Email me at test@example.net"                                                     => 'Email me at <a href="mailto:test@example.net">test@example.net</a>',
             "FTP link: ftp://ftp.example.com/files"                                            => 'FTP link: <a href="ftp://ftp.example.com/files" target="_blank" rel="external">ftp://ftp.example.com/files</a>',
-            "This is some text with a link on the next line:\nhttps://www.another-example.com" => 'This is some text with a link on the next line:<br /><a href="https://www.another-example.com" target="_blank" rel="external noopener nofollow">https://www.another-example.com</a>',
+            "This is some text with a link on the next line:<br />https://www.another-example.com" => 'This is some text with a link on the next line:<br /><a href="https://www.another-example.com" target="_blank" rel="external noopener nofollow">https://www.another-example.com</a>',
+            "This is some text with a link on the next line:<br>https://www.another-example.com" => 'This is some text with a link on the next line:<br><a href="https://www.another-example.com" target="_blank" rel="external noopener nofollow">https://www.another-example.com</a>',
         ];
 
         foreach ($testCases as $input => $expected) {
@@ -110,6 +119,21 @@ class MyTextSanitizerTest extends TestCase
     }
 
     public function testUrlsWithAngularBrackets()
+    {
+        $input    = "Visit <http://www.example.com> for more info.";
+        $expected = 'Visit <<a href="http://www.example.com" target="_blank" rel="external noopener nofollow">http://www.example.com</a>> for more info.';
+        $this->assertEquals($expected, $this->sanitizer->makeClickable($input));
+    }
+
+
+    public function testUrlsWithAngularBrackets2()
+    {
+        $input    = "Visit <http://www.example.com> for more info.";
+        $expected = 'Visit <<a href="http://www.example.com" target="_blank" rel="external noopener nofollow">http://www.example.com</a>> for more info.';
+        $this->assertEquals($expected, $this->sanitizer->makeClickable($input));
+    }
+
+    public function testUrlsWithAngularBrackets3()
     {
         $input    = "Visit <http://www.example.com> for more info.";
         $expected = 'Visit <<a href="http://www.example.com" target="_blank" rel="external noopener nofollow">http://www.example.com</a>> for more info.';
@@ -148,12 +172,78 @@ class MyTextSanitizerTest extends TestCase
     {
         $text     = "No elitr elit quis nobis soluta cum sanctus fugiat dolor liber facer, sint exercitation kasd et nonumy assum commodi laboris culpa, commodo diam labore nisl illum consectetur nihil elitr invidunt non tempor. Invidunt facilisi soluta nisi te anim soluta labore, cillum elitr quis tempor congue vel liber est aliquyam cupiditat obcaecat tempor obcaecat sint no elit. Nostrud dignissim aliquid. https://www.monxoops.fr/modules/newbb/viewtopic.php?topic_id=139&post_id=1440#forumpost1440 and this email: test@example.com Vel ipsum eiusmod. Kasd accusam nisi.";
         $expected = 'No elitr elit quis nobis soluta cum sanctus fugiat dolor liber facer, sint exercitation kasd et nonumy assum commodi laboris culpa, commodo diam labore nisl illum consectetur nihil elitr invidunt non tempor. Invidunt facilisi soluta nisi te anim soluta labore, cillum elitr quis tempor congue vel liber est aliquyam cupiditat obcaecat tempor obcaecat sint no elit. Nostrud dignissim aliquid. ' .
-                    '<a href="https://www.monxoops.fr/modules/newbb/viewtopic.php?topic_id=139&post_id=1440#forumpost1440" target="_blank" rel="external noopener nofollow">https://www.monxoops.fr/modules/newbb/viewtopic.php?topic_id=139&post_id=1440#forumpost1440</a>' .
+                    '<a href="https://www.monxoops.fr/modules/newbb/viewtopic.php?topic_id=139&amp;post_id=1440#forumpost1440" target="_blank" rel="external noopener nofollow">https://www.monxoops.fr/modules/newbb/viewtopic.php?topic_id=139&amp;post_id=1440#forumpost1440</a>' .
                     ' and this email: ' . '<a href="mailto:test@example.com">test@example.com</a> ' . 'Vel ipsum eiusmod. Kasd accusam nisi.';
-
 
         $result = $this->sanitizer->makeClickable($text);
 
         $this->assertEquals($expected, $result);
     }
+
+    public function testNewLine0()
+    {
+        $input    = '<span class="fas fa-bug mx-2 text-warning"></span> block id</button></h2>
+<div id="accordion-blockid"';
+        $expected = '<span class="fas fa-bug mx-2 text-warning"></span> block id</button></h2> <div id="accordion-blockid"';
+        $this->assertEquals($expected, $this->sanitizer->makeClickable($input));
+    }
+
+    public function testNewLine()
+    {
+        $text     = '<span class="fas fa-bug mx-2 text-warning"></span> block id</button></h2>
+<div id="accordion-blockid"';
+        $expected = '<span class="fas fa-bug mx-2 text-warning"></span> block id</button></h2> <div id="accordion-blockid"';
+        $result   = $this->sanitizer->makeClickable($text);
+        $this->assertEquals($expected, $result);
+    }
+
+    public function testFilePathsAndCustomProtocol()
+    {
+        $testCases = [
+            // Test for file paths
+            "Check this file path: file:///usr/local/bin" => 'Check this file path: <a href="file:///usr/local/bin" target="_blank" rel="external">file:///usr/local/bin</a>',
+
+            // Test for custom protocol
+            "Use the custom protocol: custom://myapp/resource" => 'Use the custom protocol: <a href="custom://myapp/resource" target="_blank" rel="external">custom://myapp/resource</a>',
+        ];
+
+        foreach ($testCases as $input => $expected) {
+            $output = $this->sanitizer->makeClickable($input);
+            $this->assertEquals($expected, $output);
+        }
+    }
+
+    public function testInvalidUrls()
+    {
+        $testCases = [
+            // Prevent javascript URLs
+            "Don't click this: javascript:alert('XSS')" => "Don't click this: javascript:alert('XSS')",
+
+            // Disallow unsupported protocols
+            "Unsupported protocol: gopher://example.com" => "Unsupported protocol: gopher://example.com",
+        ];
+
+        foreach ($testCases as $input => $expected) {
+            $output = $this->sanitizer->makeClickable($input);
+            $this->assertEquals($expected, $output);
+        }
+    }
+
+
+//    public function testNestedTagsAndIncompleteTags()
+//    {
+//        $testCases = [
+//            // Nested tags
+//            "Nested link: <a href='http://example.com'>http://example.com</a>" => "Nested link: <a href='http://example.com'>http://example.com</a>",
+//
+//            // Incomplete tags
+//            "Incomplete tag: <http://example.com" => "Incomplete tag: <a href=\"http://example.com\" target=\"_blank\" rel=\"external noopener nofollow\">http://example.com</a>",
+//        ];
+//
+//        foreach ($testCases as $input => $expected) {
+//            $output = $this->sanitizer->makeClickable($input);
+//            $this->assertEquals($expected, $output);
+//        }
+//    }
+
 }
