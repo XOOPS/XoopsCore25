@@ -343,7 +343,7 @@ class SystemBlockHandler extends XoopsPersistableObjectHandler
      *
      * @return array {@link XoopsBlock}s matching the conditions
      **/
-    public function &getObjects(CriteriaElement $criteria = null, $id_as_key = false, $as_object = true)
+    public function &getObjects(?CriteriaElement $criteria = null, $id_as_key = false, $as_object = true)
     {
         $ret   = [];
         $limit = $start = 0;

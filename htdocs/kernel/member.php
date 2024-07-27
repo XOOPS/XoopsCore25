@@ -175,7 +175,7 @@ class XoopsMemberHandler
      * @param  bool            $id_as_key use the group's ID as key for the array?
      * @return array           array of {@link XoopsGroup} objects
      */
-    public function getGroups(CriteriaElement $criteria = null, $id_as_key = false)
+    public function getGroups(?CriteriaElement $criteria = null, $id_as_key = false)
     {
         return $this->groupHandler->getObjects($criteria, $id_as_key);
     }
@@ -187,7 +187,7 @@ class XoopsMemberHandler
      * @param  bool            $id_as_key use the group's ID as key for the array?
      * @return array           array of {@link XoopsUser} objects
      */
-    public function getUsers(CriteriaElement $criteria = null, $id_as_key = false)
+    public function getUsers(?CriteriaElement $criteria = null, $id_as_key = false)
     {
         return $this->userHandler->getObjects($criteria, $id_as_key);
     }
@@ -198,7 +198,7 @@ class XoopsMemberHandler
      * @param  CriteriaElement $criteria {@link CriteriaElement} object
      * @return array           associative array of group-IDs and names
      */
-    public function getGroupList(CriteriaElement $criteria = null)
+    public function getGroupList(?CriteriaElement $criteria = null)
     {
         $groups = $this->groupHandler->getObjects($criteria, true);
         $ret    = [];
@@ -215,7 +215,7 @@ class XoopsMemberHandler
      * @param  CriteriaElement $criteria {@link CriteriaElement} object
      * @return array           associative array of user-IDs and names
      */
-    public function getUserList(CriteriaElement $criteria = null)
+    public function getUserList(?CriteriaElement $criteria = null)
     {
         $users = & $this->userHandler->getObjects($criteria, true);
         $ret   = [];
@@ -401,7 +401,7 @@ class XoopsMemberHandler
      * @param  CriteriaElement $criteria {@link CriteriaElement} object
      * @return int
      */
-    public function getUserCount(CriteriaElement $criteria = null)
+    public function getUserCount(?CriteriaElement $criteria = null)
     {
         return $this->userHandler->getCount($criteria);
     }
@@ -440,7 +440,7 @@ class XoopsMemberHandler
      * @param  CriteriaElement $criteria   {@link CriteriaElement} object
      * @return bool            TRUE if success or unchanged, FALSE on failure
      */
-    public function updateUsersByField($fieldName, $fieldValue, CriteriaElement $criteria = null)
+    public function updateUsersByField($fieldName, $fieldValue, ?CriteriaElement $criteria = null)
     {
         return $this->userHandler->updateAll($fieldName, $fieldValue, $criteria);
     }
@@ -474,7 +474,7 @@ class XoopsMemberHandler
      * @return array           Array of {@link XoopsUser} objects (if $asobject is TRUE)
      *                                    or of associative arrays matching the record structure in the database.
      */
-    public function getUsersByGroupLink($groups, CriteriaElement $criteria = null, $asobject = false, $id_as_key = false)
+    public function getUsersByGroupLink($groups, ?CriteriaElement $criteria = null, $asobject = false, $id_as_key = false)
     {
         $ret           = [];
         $criteriaCompo = new CriteriaCompo();
@@ -534,7 +534,7 @@ class XoopsMemberHandler
      * @param  CriteriaElement $criteria
      * @return int             count of users
      */
-    public function getUserCountByGroupLink(array $groups, CriteriaElement $criteria = null)
+    public function getUserCountByGroupLink(array $groups, ?CriteriaElement $criteria = null)
     {
         $ret           = 0;
         $criteriaCompo = new CriteriaCompo();

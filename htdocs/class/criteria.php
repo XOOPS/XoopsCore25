@@ -195,7 +195,7 @@ class CriteriaCompo extends CriteriaElement
      * @param CriteriaElement|null $ele
      * @param string $condition
      */
-    public function __construct(CriteriaElement $ele = null, $condition = 'AND')
+    public function __construct(?CriteriaElement $ele = null, $condition = 'AND')
     {
         if (isset($ele)) {
             $this->add($ele, $condition);

@@ -305,7 +305,7 @@ class XoopsImagecategoryHandler extends XoopsObjectHandler
      * @param  bool            $id_as_key if true, use id as array key
      * @return array of XoopsImagecategory objects
      */
-    public function getObjects(CriteriaElement $criteria = null, $id_as_key = false)
+    public function getObjects(?CriteriaElement $criteria = null, $id_as_key = false)
     {
         $ret   = [];
         $limit = $start = 0;
@@ -342,7 +342,7 @@ class XoopsImagecategoryHandler extends XoopsObjectHandler
      * @param  CriteriaElement $criteria {@link CriteriaElement}
      * @return int
      **/
-    public function getCount(CriteriaElement $criteria = null)
+    public function getCount(?CriteriaElement $criteria = null)
     {
         $sql = 'SELECT COUNT(*) FROM ' . $this->db->prefix('imagecategory') . ' i LEFT JOIN ' . $this->db->prefix('group_permission') . " l ON l.gperm_itemid=i.imgcat_id WHERE (l.gperm_name = 'imgcat_read' OR l.gperm_name = 'imgcat_write')";
         if (isset($criteria) && is_subclass_of($criteria, 'CriteriaElement')) {

@@ -918,8 +918,24 @@ class XoopsModuleHandler extends XoopsObjectHandler
      * @param  boolean         $id_as_key Use the ID as key into the array
      * @return array
      */
-    public function getObjects(CriteriaElement $criteria = null, $id_as_key = false)
+    public function getObjects(?CriteriaElement $criteria = null, $id_as_key = false)
     {
+        if (func_num_args() > 0) {
+            $criteria = func_get_arg(0);
+        }
+
+        if (version_compare(PHP_VERSION, '8.0.0', '>=')) {
+            $criteria = $criteria ?? null;
+        }
+
+        if (func_num_args() > 0) {
+            $criteria = func_get_arg(0);
+        }
+
+        if (version_compare(PHP_VERSION, '8.0.0', '>=')) {
+            $criteria = $criteria ?? null; // Explicitly set to null if not provided
+        }
+
         $ret   = [];
         $limit = $start = 0;
         $sql   = 'SELECT * FROM ' . $this->db->prefix('modules');
@@ -954,8 +970,16 @@ class XoopsModuleHandler extends XoopsObjectHandler
      * @param  CriteriaElement|CriteriaCompo $criteria {@link CriteriaElement}
      * @return int
      */
-    public function getCount(CriteriaElement $criteria = null)
+    public function getCount(?CriteriaElement $criteria = null)
     {
+        if (func_num_args() > 0) {
+            $criteria = func_get_arg(0);
+        }
+
+        if (version_compare(PHP_VERSION, '8.0.0', '>=')) {
+            $criteria = $criteria ?? null;
+        }
+
         $sql = 'SELECT COUNT(*) FROM ' . $this->db->prefix('modules');
         if (isset($criteria) && \method_exists($criteria, 'renderWhere')) {
             $sql .= ' ' . $criteria->renderWhere();
@@ -977,8 +1001,18 @@ class XoopsModuleHandler extends XoopsObjectHandler
      *                                         if false, array keys will be module id
      * @return array
      */
-    public function getList(CriteriaElement $criteria = null, $dirname_as_key = false)
+    public function getList(?CriteriaElement $criteria = null, $dirname_as_key = false)
     {
+
+        if (func_num_args() > 0) {
+            $criteria = func_get_arg(0);
+        }
+
+        if (version_compare(PHP_VERSION, '8.0.0', '>=')) {
+            $criteria = $criteria ?? null; // Explicitly set to null if not provided
+        }
+
+
         $ret     = [];
         $modules = $this->getObjects($criteria, true);
         foreach (array_keys($modules) as $i) {

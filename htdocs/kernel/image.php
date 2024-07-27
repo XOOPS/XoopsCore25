@@ -304,7 +304,7 @@ class XoopsImageHandler extends XoopsObjectHandler
      * @param  boolean         $getbinary
      * @return array           Array of {@link XoopsImage} objects
      **/
-    public function getObjects(CriteriaElement $criteria = null, $id_as_key = false, $getbinary = false)
+    public function getObjects(?CriteriaElement $criteria = null, $id_as_key = false, $getbinary = false)
     {
         $ret   = [];
         $limit = $start = 0;
@@ -345,7 +345,7 @@ class XoopsImageHandler extends XoopsObjectHandler
      * @param  CriteriaElement|CriteriaCompo $criteria {@link CriteriaElement}
      * @return int
      **/
-    public function getCount(CriteriaElement $criteria = null)
+    public function getCount(?CriteriaElement $criteria = null)
     {
         $sql = 'SELECT COUNT(*) FROM ' . $this->db->prefix('image');
         if (isset($criteria) && \method_exists($criteria, 'renderWhere')) {

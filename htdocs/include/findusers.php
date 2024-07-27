@@ -139,7 +139,7 @@ class XoopsRankHandler extends XoopsObjectHandler
      * @param  int             $start
      * @return array
      */
-    public function getList(CriteriaElement $criteria = null, $limit = 0, $start = 0)
+    public function getList(?CriteriaElement $criteria = null, $limit = 0, $start = 0)
     {
         $ret = [];
         if ($criteria == null) {
@@ -235,7 +235,7 @@ class XoUserHandler extends XoopsObjectHandler
      * @param  array           $groups
      * @return int
      */
-    public function getCount(CriteriaElement $criteria = null, $groups = [])
+    public function getCount(?CriteriaElement $criteria = null, $groups = [])
     {
         if (!is_array($groups)) {
             $groups = [
@@ -273,7 +273,7 @@ class XoUserHandler extends XoopsObjectHandler
      * @param  array           $groups
      * @return array of matching objects
      */
-    public function getAll(CriteriaElement $criteria = null, $groups = [])
+    public function getAll(?CriteriaElement $criteria = null, $groups = [])
     {
         if (!is_array($groups)) {
             $groups = [

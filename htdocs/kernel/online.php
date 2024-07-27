@@ -160,7 +160,7 @@ class XoopsOnlineHandler
      * @param  CriteriaElement|CriteriaCompo|null $criteria {@link CriteriaElement}
      * @return array|false  Array of associative arrays of online information
      */
-    public function getAll(CriteriaElement $criteria = null)
+    public function getAll(?CriteriaElement $criteria = null)
     {
         $ret   = [];
         $limit = $start = 0;
@@ -189,7 +189,7 @@ class XoopsOnlineHandler
      *
      * @return int
      */
-    public function getCount(CriteriaElement $criteria = null)
+    public function getCount(?CriteriaElement $criteria = null)
     {
         $sql = 'SELECT COUNT(*) FROM ' . $this->db->prefix('online');
         if (is_object($criteria) && is_subclass_of($criteria, 'CriteriaElement')) {

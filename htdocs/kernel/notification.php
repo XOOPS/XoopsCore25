@@ -348,7 +348,7 @@ class XoopsNotificationHandler extends XoopsObjectHandler
      *
      * @return array Array of {@link XoopsNotification} objects
      **/
-    public function getObjects(CriteriaElement $criteria = null, $id_as_key = false)
+    public function getObjects(?CriteriaElement $criteria = null, $id_as_key = false)
     {
         $ret   = [];
         $limit = $start = 0;
@@ -387,7 +387,7 @@ class XoopsNotificationHandler extends XoopsObjectHandler
      *
      * @return int Count
      **/
-    public function getCount(CriteriaElement $criteria = null)
+    public function getCount(?CriteriaElement $criteria = null)
     {
         $sql = 'SELECT COUNT(*) FROM ' . $this->db->prefix('xoopsnotifications');
         if (isset($criteria) && \method_exists($criteria, 'renderWhere')) {
@@ -409,7 +409,7 @@ class XoopsNotificationHandler extends XoopsObjectHandler
      *
      * @return bool
      **/
-    public function deleteAll(CriteriaElement $criteria = null)
+    public function deleteAll(?CriteriaElement $criteria = null)
     {
         $sql = 'DELETE FROM ' . $this->db->prefix('xoopsnotifications');
         if (isset($criteria) && \method_exists($criteria, 'renderWhere')) {

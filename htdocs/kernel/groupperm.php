@@ -250,7 +250,7 @@ class XoopsGroupPermHandler extends XoopsObjectHandler
      *
      * @return array Array of {@link XoopsGroupPerm}s
      */
-    public function getObjects(CriteriaElement $criteria = null, $id_as_key = false)
+    public function getObjects(?CriteriaElement $criteria = null, $id_as_key = false)
     {
         $ret   = [];
         $limit = $start = 0;
@@ -286,7 +286,7 @@ class XoopsGroupPermHandler extends XoopsObjectHandler
      *
      * @return int
      */
-    public function getCount(CriteriaElement $criteria = null)
+    public function getCount(?CriteriaElement $criteria = null)
     {
         $sql = 'SELECT COUNT(*) FROM ' . $this->db->prefix('group_permission');
         if (isset($criteria) && \method_exists($criteria, 'renderWhere')) {
@@ -308,7 +308,7 @@ class XoopsGroupPermHandler extends XoopsObjectHandler
      *
      * @return bool TRUE on success
      */
-    public function deleteAll(CriteriaElement $criteria = null)
+    public function deleteAll(?CriteriaElement $criteria = null)
     {
         $sql = sprintf('DELETE FROM %s', $this->db->prefix('group_permission'));
         if (isset($criteria) && \method_exists($criteria, 'renderWhere')) {

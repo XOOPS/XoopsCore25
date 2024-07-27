@@ -213,7 +213,7 @@ class XoopsImageSetHandler extends XoopsObjectHandler
      * @internal param bool $getbinary
      * @return array Array of {@link XoopsImageSet} objects
      */
-    public function getObjects(CriteriaElement $criteria = null, $id_as_key = false)
+    public function getObjects(?CriteriaElement $criteria = null, $id_as_key = false)
     {
         $ret   = [];
         $limit = $start = 0;

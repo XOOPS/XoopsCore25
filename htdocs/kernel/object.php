@@ -1195,7 +1195,7 @@ class XoopsPersistableObjectHandler extends XoopsObjectHandler
      * @param string             $identifierName Name of the property holding an identifier
      *                                            name (title, name ...), used on getList()
      */
-    public function __construct(XoopsDatabase $db = null, $table = '', $className = '', $keyName = '', $identifierName = '')
+    public function __construct(?\XoopsDatabase $db = null, $table = '', $className = '', $keyName = '', $identifierName = '')
     {
         $db    = XoopsDatabaseFactory::getDatabaseConnection();
         $table = $db->prefix($table);
@@ -1220,7 +1220,7 @@ class XoopsPersistableObjectHandler extends XoopsObjectHandler
      *
      * @deprecated all callers should be using parent::__construct()
      */
-    public function XoopsPersistableObjectHandler(XoopsDatabase $db = null, $table = '', $className = '', $keyName = '', $identifierName = '')
+    public function XoopsPersistableObjectHandler(?\XoopsDatabase $db = null, $table = '', $className = '', $keyName = '', $identifierName = '')
     {
         $trace = debug_backtrace(DEBUG_BACKTRACE_IGNORE_ARGS, 1);
         trigger_error("Should call parent::__construct in {$trace[0]['file']} line {$trace[0]['line']},", E_USER_DEPRECATED);
@@ -1412,7 +1412,7 @@ class XoopsPersistableObjectHandler extends XoopsObjectHandler
      * @param  bool            $asObject delete in object way: instantiate all objects and delete one by one
      * @return bool|int
      */
-    public function deleteAll(CriteriaElement $criteria = null, $force = true, $asObject = false)
+    public function deleteAll(?CriteriaElement $criteria = null, $force = true, $asObject = false)
     {
         $handler = $this->loadHandler('write');
 
@@ -1428,7 +1428,7 @@ class XoopsPersistableObjectHandler extends XoopsObjectHandler
      * @param  bool            $force      force to query
      * @return bool
      */
-    public function updateAll($fieldname, $fieldvalue, CriteriaElement $criteria = null, $force = false)
+    public function updateAll($fieldname, $fieldvalue, ?CriteriaElement $criteria = null, $force = false)
     {
         $handler = $this->loadHandler('write');
 
@@ -1450,7 +1450,7 @@ class XoopsPersistableObjectHandler extends XoopsObjectHandler
      * @param  bool            $as_object return an array of objects
      * @return array
      */
-    public function &getObjects(CriteriaElement $criteria = null, $id_as_key = false, $as_object = true)
+    public function &getObjects(?CriteriaElement $criteria = null, $id_as_key = false, $as_object = true)
     {
         $handler = $this->loadHandler('read');
         $ret     = $handler->getObjects($criteria, $id_as_key, $as_object);
@@ -1467,7 +1467,7 @@ class XoopsPersistableObjectHandler extends XoopsObjectHandler
      * @param  bool            $id_as_key use the ID as key for the array
      * @return array           of objects/array {@link XoopsObject}
      */
-    public function &getAll(CriteriaElement $criteria = null, $fields = null, $asObject = true, $id_as_key = true)
+    public function &getAll(?CriteriaElement $criteria = null, $fields = null, $asObject = true, $id_as_key = true)
     {
         $handler = $this->loadHandler('read');
         $ret     = $handler->getAll($criteria, $fields, $asObject, $id_as_key);
@@ -1483,7 +1483,7 @@ class XoopsPersistableObjectHandler extends XoopsObjectHandler
      * @param  int             $start    Which record to start at
      * @return array
      */
-    public function getList(CriteriaElement $criteria = null, $limit = 0, $start = 0)
+    public function getList(?CriteriaElement $criteria = null, $limit = 0, $start = 0)
     {
         $handler = $this->loadHandler('read');
         $ret     = $handler->getList($criteria, $limit, $start);
@@ -1497,7 +1497,7 @@ class XoopsPersistableObjectHandler extends XoopsObjectHandler
      * @param \CriteriaElement|null $criteria {@link CriteriaElement} to match
      * @return array           of object IDs
      */
-    public function &getIds(CriteriaElement $criteria = null)
+    public function &getIds(?CriteriaElement $criteria = null)
     {
         $handler = $this->loadHandler('read');
         $ret     = $handler->getIds($criteria);
@@ -1517,7 +1517,7 @@ class XoopsPersistableObjectHandler extends XoopsObjectHandler
      * @param  bool            $asObject flag indicating as object, otherwise as array
      * @return array           of objects     {@link XoopsObject}
      */
-    public function &getByLimit($limit = 0, $start = 0, CriteriaElement $criteria = null, $fields = null, $asObject = true)
+    public function &getByLimit($limit = 0, $start = 0, ?CriteriaElement $criteria = null, $fields = null, $asObject = true)
     {
         $handler = $this->loadHandler('read');
         $ret     = $handler->getByLimit($limit, $start, $criteria, $fields, $asObject);
@@ -1538,7 +1538,7 @@ class XoopsPersistableObjectHandler extends XoopsObjectHandler
      * @param \CriteriaElement|null $criteria {@link CriteriaElement} to match
      * @return int             count of objects
      */
-    public function getCount(CriteriaElement $criteria = null)
+    public function getCount(?CriteriaElement $criteria = null)
     {
         $handler = $this->loadHandler('stats');
 
@@ -1551,7 +1551,7 @@ class XoopsPersistableObjectHandler extends XoopsObjectHandler
      * @param \CriteriaElement|null $criteria {@link CriteriaElement} to match
      * @return array           of counts
      */
-    public function getCounts(CriteriaElement $criteria = null)
+    public function getCounts(?CriteriaElement $criteria = null)
     {
         $handler = $this->loadHandler('stats');
 
@@ -1575,7 +1575,7 @@ class XoopsPersistableObjectHandler extends XoopsObjectHandler
      * @param string|null           $field_object field of current object for JOIN
      * @return array           of objects {@link XoopsObject}
      */
-    public function getByLink(CriteriaElement $criteria = null, $fields = null, $asObject = true, $field_link = null, $field_object = null)
+    public function getByLink(?CriteriaElement $criteria = null, $fields = null, $asObject = true, $field_link = null, $field_object = null)
     {
         $handler = $this->loadHandler('joint');
         $ret     = $handler->getByLink($criteria, $fields, $asObject, $field_link, $field_object);
@@ -1589,7 +1589,7 @@ class XoopsPersistableObjectHandler extends XoopsObjectHandler
      * @param \CriteriaElement|null $criteria {@link CriteriaElement} to match
      * @return int             count of objects
      */
-    public function getCountByLink(CriteriaElement $criteria = null)
+    public function getCountByLink(?CriteriaElement $criteria = null)
     {
         $handler = $this->loadHandler('joint');
         $ret     = $handler->getCountByLink($criteria);
@@ -1603,7 +1603,7 @@ class XoopsPersistableObjectHandler extends XoopsObjectHandler
      * @param \CriteriaElement|null $criteria {@link CriteriaElement} to match
      * @return int             count of objects
      */
-    public function getCountsByLink(CriteriaElement $criteria = null)
+    public function getCountsByLink(?CriteriaElement $criteria = null)
     {
         $handler = $this->loadHandler('joint');
         $ret     = $handler->getCountsByLink($criteria);
@@ -1618,7 +1618,7 @@ class XoopsPersistableObjectHandler extends XoopsObjectHandler
      * @param \CriteriaElement|null $criteria {@link CriteriaElement} to match
      * @return int             count of objects
      */
-    public function updateByLink($data, CriteriaElement $criteria = null)
+    public function updateByLink($data, ?CriteriaElement $criteria = null)
     {
         $handler = $this->loadHandler('joint');
         $ret     = $handler->updateByLink($data, $criteria);
@@ -1632,7 +1632,7 @@ class XoopsPersistableObjectHandler extends XoopsObjectHandler
      * @param \CriteriaElement|null $criteria {@link CriteriaElement} to match
      * @return int|null             count of objects
      */
-    public function deleteByLink(CriteriaElement $criteria = null)
+    public function deleteByLink(?CriteriaElement $criteria = null)
     {
         $handler = $this->loadHandler('joint');
         $ret     = $handler->deleteByLink($criteria);

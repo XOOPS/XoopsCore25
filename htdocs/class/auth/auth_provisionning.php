@@ -38,7 +38,7 @@ class XoopsAuthProvisionning
      *
      * @return \XoopsAuthProvisionning
      */
-    public static function getInstance(XoopsAuth $auth_instance = null)
+    public static function getInstance(?XoopsAuth $auth_instance = null)
     {
         static $provis_instance;
         if (!isset($provis_instance)) {
@@ -52,7 +52,7 @@ class XoopsAuthProvisionning
      * Authentication Service constructor
      * @param XoopsAuth $auth_instance
      */
-    public function __construct(XoopsAuth $auth_instance = null)
+    public function __construct(?XoopsAuth $auth_instance = null)
     {
         $this->_auth_instance = $auth_instance;
         /** @var XoopsConfigHandler $config_handler */

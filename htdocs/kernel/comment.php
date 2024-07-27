@@ -471,7 +471,7 @@ class XoopsCommentHandler extends XoopsObjectHandler
      *
      * @return array Array of {@link XoopsComment} objects
      **/
-    public function getObjects(CriteriaElement $criteria = null, $id_as_key = false)
+    public function getObjects(?CriteriaElement $criteria = null, $id_as_key = false)
     {
         $ret   = [];
         $limit = $start = 0;
@@ -509,7 +509,7 @@ class XoopsCommentHandler extends XoopsObjectHandler
      *
      * @return int Count
      **/
-    public function getCount(CriteriaElement $criteria = null)
+    public function getCount(?CriteriaElement $criteria = null)
     {
         $sql = 'SELECT COUNT(*) FROM ' . $this->db->prefix('xoopscomments');
         if (isset($criteria) && \method_exists($criteria, 'renderWhere')) {
@@ -531,7 +531,7 @@ class XoopsCommentHandler extends XoopsObjectHandler
      *
      * @return bool
      **/
-    public function deleteAll(CriteriaElement $criteria = null)
+    public function deleteAll(?CriteriaElement $criteria = null)
     {
         $sql = 'DELETE FROM ' . $this->db->prefix('xoopscomments');
         if (isset($criteria) && \method_exists($criteria, 'renderWhere')) {
@@ -551,7 +551,7 @@ class XoopsCommentHandler extends XoopsObjectHandler
      *
      * @return array Array of raw database records
      **/
-    public function getList(CriteriaElement $criteria = null)
+    public function getList(?CriteriaElement $criteria = null)
     {
         $comments = $this->getObjects($criteria, true);
         $ret      = [];

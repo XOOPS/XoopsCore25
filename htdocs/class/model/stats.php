@@ -33,7 +33,7 @@ class XoopsModelStats extends XoopsModelAbstract
      * @param  CriteriaElement|CriteriaCompo $criteria {@link CriteriaElement} to match
      * @return int|array    count of objects
      */
-    public function getCount(CriteriaElement $criteria = null)
+    public function getCount(?CriteriaElement $criteria = null)
     {
         $field   = '';
         $groupby = false;
@@ -72,7 +72,7 @@ class XoopsModelStats extends XoopsModelAbstract
      * @param  CriteriaElement|CriteriaCompo  $criteria {@link CriteriaElement} to match
      * @return array  of counts
      */
-    public function getCounts(CriteriaElement $criteria = null)
+    public function getCounts(?CriteriaElement $criteria = null)
     {
         $ret         = [];
         $sql_where   = '';

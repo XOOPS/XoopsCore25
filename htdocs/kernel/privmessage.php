@@ -268,7 +268,7 @@ class XoopsPrivmessageHandler extends XoopsObjectHandler
      * @param  bool   $id_as_key use ID as key into the array?
      * @return array  Array of {@link XoopsPrivmessage} objects
      **/
-    public function getObjects(CriteriaElement $criteria = null, $id_as_key = false)
+    public function getObjects(?CriteriaElement $criteria = null, $id_as_key = false)
     {
         $ret   = [];
         $limit = $start = 0;
@@ -311,7 +311,7 @@ class XoopsPrivmessageHandler extends XoopsObjectHandler
      * @param  CriteriaElement|CriteriaCompo $criteria = null     {@link CriteriaElement} object
      * @return int
      **/
-    public function getCount(CriteriaElement $criteria = null)
+    public function getCount(?CriteriaElement $criteria = null)
     {
         $sql = 'SELECT COUNT(*) FROM ' . $this->db->prefix('priv_msgs');
         if (isset($criteria) && \method_exists($criteria, 'renderWhere')) {

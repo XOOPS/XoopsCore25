@@ -150,7 +150,7 @@ class PmMessageHandler extends XoopsPersistableObjectHandler
      * @param  XoopsUser $user
      * @return int
      **/
-    public function getSavecount(XoopsUser $user = null)
+    public function getSavecount(?XoopsUser $user = null)
     {
         if (!is_object($user)) {
             $user =& $GLOBALS['xoopsUser'];

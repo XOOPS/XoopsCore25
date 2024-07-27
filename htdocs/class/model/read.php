@@ -36,7 +36,7 @@ class XoopsModelRead extends XoopsModelAbstract
      * @param  bool            $id_as_key use the ID as key for the array
      * @return array           of objects/array {@link XoopsObject}
      */
-    public function &getAll(CriteriaElement $criteria = null, $fields = null, $asObject = true, $id_as_key = true)
+    public function &getAll(?CriteriaElement $criteria = null, $fields = null, $asObject = true, $id_as_key = true)
     {
         if (!empty($fields) && \is_array($fields)) {
             if (!in_array($this->handler->keyName, $fields)) {
@@ -106,7 +106,7 @@ class XoopsModelRead extends XoopsModelAbstract
      * @param  bool            $as_object return an array of objects?
      * @return array
      */
-    public function &getObjects(CriteriaElement $criteria = null, $id_as_key = false, $as_object = true)
+    public function &getObjects(?CriteriaElement $criteria = null, $id_as_key = false, $as_object = true)
     {
         $objects = & $this->getAll($criteria, null, $as_object, $id_as_key);
 
@@ -121,7 +121,7 @@ class XoopsModelRead extends XoopsModelAbstract
      * @param  int             $start    Which record to start at
      * @return array
      */
-    public function getList(CriteriaElement $criteria = null, $limit = 0, $start = 0)
+    public function getList(?CriteriaElement $criteria = null, $limit = 0, $start = 0)
     {
         $ret = [];
         if ($criteria == null) {
@@ -165,7 +165,7 @@ class XoopsModelRead extends XoopsModelAbstract
      * @param  CriteriaElement|CriteriaCompo $criteria {@link CriteriaElement} to match
      * @return array           of object IDs
      */
-    public function &getIds(CriteriaElement $criteria = null)
+    public function &getIds(?CriteriaElement $criteria = null)
     {
         $ret   = [];
         $sql   = "SELECT `{$this->handler->keyName}` FROM `{$this->handler->table}`";
@@ -199,7 +199,7 @@ class XoopsModelRead extends XoopsModelAbstract
      * @param  bool            $asObject flag indicating as object, otherwise as array
      * @return array           of objects    {@link XoopsObject}
      */
-    public function &getByLimit($limit = 0, $start = 0, CriteriaElement $criteria = null, $fields = null, $asObject = true)
+    public function &getByLimit($limit = 0, $start = 0, ?CriteriaElement $criteria = null, $fields = null, $asObject = true)
     {
         $GLOBALS['xoopsLogger']->addDeprecated(__METHOD__ . '() is deprecated, please use getAll instead.');
         if (isset($criteria) && is_subclass_of($criteria, 'CriteriaElement')) {

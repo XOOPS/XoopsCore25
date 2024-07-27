@@ -219,7 +219,7 @@ class XoopsImagesetimgHandler extends XoopsObjectHandler
      * @internal param bool $getbinary
      * @return array Array of {@link XoopsImageSetImg} objects
      */
-    public function getObjects(CriteriaElement $criteria = null, $id_as_key = false)
+    public function getObjects(?CriteriaElement $criteria = null, $id_as_key = false)
     {
         $ret   = [];
         $limit = $start = 0;
@@ -256,7 +256,7 @@ class XoopsImagesetimgHandler extends XoopsObjectHandler
      * @param  CriteriaElement|CriteriaCompo $criteria {@link CriteriaElement}
      * @return int
      **/
-    public function getCount(CriteriaElement $criteria = null)
+    public function getCount(?CriteriaElement $criteria = null)
     {
         $sql = 'SELECT COUNT(i.imgsetimg_id) FROM ' . $this->db->prefix('imgsetimg') . ' i LEFT JOIN ' . $this->db->prefix('imgset_tplset_link') . ' l ON l.imgset_id=i.imgsetimg_imgset';
         if (isset($criteria) && \method_exists($criteria, 'renderWhere')) {

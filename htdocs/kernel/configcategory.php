@@ -212,7 +212,7 @@ class XoopsConfigCategoryHandler extends XoopsObjectHandler
      *
      * @return array Array of {@link XoopsConfigCategory}s
      */
-    public function getObjects(CriteriaElement $criteria = null, $id_as_key = false)
+    public function getObjects(?CriteriaElement $criteria = null, $id_as_key = false)
     {
         $ret   = [];
         $limit = $start = 0;

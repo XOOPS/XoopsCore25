@@ -438,7 +438,7 @@ function profile_getRegisterForm(XoopsUser $user, $profile, $step = null)
  *
  * @return object
  */
-function profile_getUserForm(XoopsUser $user, ProfileProfile $profile = null, $action = false)
+function profile_getUserForm(XoopsUser $user, ?ProfileProfile $profile = null, $action = false)
 {
     if ($action === false) {
         $action = $_SERVER['REQUEST_URI'];
@@ -578,7 +578,7 @@ function profile_getUserForm(XoopsUser $user, ProfileProfile $profile = null, $a
  *
  * @return object
  */
-function profile_getStepForm(ProfileRegstep $step = null, $action = false)
+function profile_getStepForm(?ProfileRegstep $step = null, $action = false)
 {
     if ($action === false) {
         $action = $_SERVER['REQUEST_URI'];

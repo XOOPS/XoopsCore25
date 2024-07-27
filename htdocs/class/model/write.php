@@ -76,7 +76,7 @@ class XoopsModelWrite extends XoopsModelAbstract
                         continue 2;
                     }
 
-                    $cleanv = $myts->censorString($cleanv);
+                        $cleanv = $myts->censorString($cleanv);
 
                     $cleanv = str_replace('\\"', '"', $this->handler->db->quote($cleanv));
                     break;
@@ -87,7 +87,7 @@ class XoopsModelWrite extends XoopsModelAbstract
                         continue 2;
                     }
                     $cleanv = xoops_convert_encode($cleanv);
-                    $cleanv = $myts->censorString($cleanv);
+                        $cleanv = $myts->censorString($cleanv);
 
                     $cleanv = str_replace('\\"', '"', $this->handler->db->quote($cleanv));
                     break;
@@ -102,7 +102,7 @@ class XoopsModelWrite extends XoopsModelAbstract
                         continue 2;
                     }
 
-                    $cleanv = $myts->censorString($cleanv);
+                        $cleanv = $myts->censorString($cleanv);
                     $cleanv = str_replace('\\"', '"', $this->handler->db->quote($cleanv));
                     break;
 
@@ -112,7 +112,7 @@ class XoopsModelWrite extends XoopsModelAbstract
                         continue 2;
                     }
 
-                    $cleanv = $myts->censorString($cleanv);
+                        $cleanv = $myts->censorString($cleanv);
                     $cleanv = str_replace('\\"', '"', $this->handler->db->quote($cleanv));
                     break;
 
@@ -315,7 +315,7 @@ class XoopsModelWrite extends XoopsModelAbstract
      * @param  bool   $asObject delete in object way: instantiate all objects and delete one by one
      * @return bool|int
      */
-    public function deleteAll(CriteriaElement $criteria = null, $force = true, $asObject = false)
+    public function deleteAll(?CriteriaElement $criteria = null, $force = true, $asObject = false)
     {
         if ($asObject) {
             $objects = $this->handler->getAll($criteria);
@@ -352,7 +352,7 @@ class XoopsModelWrite extends XoopsModelAbstract
      * @param  bool   $force      force to query
      * @return bool
      */
-    public function updateAll($fieldname, $fieldvalue, CriteriaElement $criteria = null, $force = false)
+    public function updateAll($fieldname, $fieldvalue, ?CriteriaElement $criteria = null, $force = false)
     {
         $set_clause = "`{$fieldname}` = ";
         if (is_numeric($fieldvalue)) {

@@ -175,7 +175,7 @@ class XoopsAuthLdap extends XoopsAuth
      * Authentication Service constructor
      * @param XoopsDatabase $dao
      */
-    public function __construct(XoopsDatabase $dao = null)
+    public function __construct(?XoopsDatabase $dao = null)
     {
         $this->_dao = $dao;
         // The config handler object allows us to look at the configuration options that are stored in the database
@@ -319,3 +319,4 @@ class XoopsAuthLdap extends XoopsAuth
         return $xoopsUser;
     }
 } // end class
+

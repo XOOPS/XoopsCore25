@@ -1147,7 +1147,7 @@ class XoopsBlockHandler extends XoopsObjectHandler
      * @param  bool   $id_as_key should the blocks' bid be the key for the returned array?
      * @return array  {@link XoopsBlock}s matching the conditions
      **/
-    public function getObjects(CriteriaElement $criteria = null, $id_as_key = false)
+    public function getObjects(?CriteriaElement $criteria = null, $id_as_key = false)
     {
         $ret   = [];
         $limit = $start = 0;
@@ -1183,7 +1183,7 @@ class XoopsBlockHandler extends XoopsObjectHandler
      * @param  CriteriaElement $criteria conditions to match
      * @return array  array of blocks matching the conditions
      **/
-    public function getList(CriteriaElement $criteria = null)
+    public function getList(?CriteriaElement $criteria = null)
     {
         $blocks = $this->getObjects($criteria, true);
         $ret    = [];

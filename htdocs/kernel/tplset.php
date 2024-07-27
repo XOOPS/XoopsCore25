@@ -256,7 +256,7 @@ class XoopsTplsetHandler extends XoopsObjectHandler
      * @param  bool            $id_as_key return the tplsets id as key?
      * @return array           Array of {@link XoopsTplset} objects
      */
-    public function getObjects(CriteriaElement $criteria = null, $id_as_key = false)
+    public function getObjects(?CriteriaElement $criteria = null, $id_as_key = false)
     {
         $ret   = [];
         $limit = $start = 0;
@@ -291,7 +291,7 @@ class XoopsTplsetHandler extends XoopsObjectHandler
      * @param  CriteriaElement|CriteriaCompo $criteria {@link CriteriaElement}
      * @return int             Count of tplsets matching $criteria
      */
-    public function getCount(CriteriaElement $criteria = null)
+    public function getCount(?CriteriaElement $criteria = null)
     {
         $sql = 'SELECT COUNT(*) FROM ' . $this->db->prefix('tplset');
         if (isset($criteria) && \method_exists($criteria, 'renderWhere')) {
@@ -312,7 +312,7 @@ class XoopsTplsetHandler extends XoopsObjectHandler
      * @param  CriteriaElement $criteria conditions to match
      * @return array           array of tplsets matching the conditions
      **/
-    public function getList(CriteriaElement $criteria = null)
+    public function getList(?CriteriaElement $criteria = null)
     {
         $ret     = [];
         $tplsets = $this->getObjects($criteria, true);

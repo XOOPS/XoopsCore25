@@ -408,7 +408,7 @@ class XoopsTplfileHandler extends XoopsObjectHandler
      * @param  bool            $id_as_key should the blocks' bid be the key for the returned array?
      * @return array           {@link XoopsBlock}s matching the conditions
      */
-    public function getObjects(CriteriaElement $criteria = null, $getsource = false, $id_as_key = false)
+    public function getObjects(?CriteriaElement $criteria = null, $getsource = false, $id_as_key = false)
     {
         $ret   = [];
         $limit = $start = 0;
@@ -447,7 +447,7 @@ class XoopsTplfileHandler extends XoopsObjectHandler
      * @param  CriteriaElement|CriteriaCompo $criteria
      * @return int
      */
-    public function getCount(CriteriaElement $criteria = null)
+    public function getCount(?CriteriaElement $criteria = null)
     {
         $sql = 'SELECT COUNT(*) FROM ' . $this->db->prefix('tplfile');
         if (isset($criteria) && \method_exists($criteria, 'renderWhere')) {

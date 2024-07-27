@@ -294,7 +294,7 @@ class XoopsAvatarHandler extends XoopsObjectHandler
      * @param  bool  $id_as_key
      * @return array
      */
-    public function &getObjects(CriteriaElement $criteria = null, $id_as_key = false)
+    public function &getObjects(?CriteriaElement $criteria = null, $id_as_key = false)
     {
         $ret   = [];
         $limit = $start = 0;
@@ -334,7 +334,7 @@ class XoopsAvatarHandler extends XoopsObjectHandler
      * @param  CriteriaElement|CriteriaCompo $criteria
      * @return int
      */
-    public function getCount(CriteriaElement $criteria = null)
+    public function getCount(?CriteriaElement $criteria = null)
     {
 
 

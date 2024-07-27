@@ -406,7 +406,7 @@ class XoopsConfigItemHandler extends XoopsObjectHandler
      * @param  bool            $id_as_key return the config's id as key?
      * @return array           Array of {@link XoopsConfigItem} objects
      */
-    public function getObjects(CriteriaElement $criteria = null, $id_as_key = false)
+    public function getObjects(?CriteriaElement $criteria = null, $id_as_key = false)
     {
         $ret   = [];
         $limit = $start = 0;
@@ -442,7 +442,7 @@ class XoopsConfigItemHandler extends XoopsObjectHandler
      * @param  CriteriaElement|CriteriaCompo $criteria {@link CriteriaElement}
      * @return int             Count of configs matching $criteria
      */
-    public function getCount(CriteriaElement $criteria = null)
+    public function getCount(?CriteriaElement $criteria = null)
     {
         $sql   = 'SELECT * FROM ' . $this->db->prefix('config');
         if (isset($criteria) && \method_exists($criteria, 'renderWhere')) {

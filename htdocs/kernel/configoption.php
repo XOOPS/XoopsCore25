@@ -237,7 +237,7 @@ class XoopsConfigOptionHandler extends XoopsObjectHandler
      *
      * @return array Array of {@link XoopsConfigOption}s
      */
-    public function getObjects(CriteriaElement $criteria = null, $id_as_key = false)
+    public function getObjects(?CriteriaElement $criteria = null, $id_as_key = false)
     {
         $ret   = [];
         $limit = $start = 0;
@@ -273,7 +273,7 @@ class XoopsConfigOptionHandler extends XoopsObjectHandler
      *
      * @return int Count of matching XoopsConfigOption
      */
-    public function getCount(CriteriaElement $criteria = null)
+    public function getCount(?CriteriaElement $criteria = null)
     {
         $sql = 'SELECT COUNT(*) as `count` FROM ' . $this->db->prefix('configoption');
         if (isset($criteria) && $criteria instanceof \CriteriaElement) {
