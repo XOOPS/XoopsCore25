@@ -16,7 +16,8 @@
     <link href="<{$xoops_url}>/favicon.ico" rel="shortcut icon">
 
 	<{* Edit xswatch4.conf to pick the css directories you want for light and dark modes *}>
-    <{config_load file="xswatch4.conf"}>
+    <{config_load file="./xswatch4.conf"}>
+
     <{* if xswatchDarkCss doesn't set a dark mode theme, just use one for all *}>
     <{if #xswatchDarkCss# == ''}>
         <link rel="stylesheet" type="text/css" href="<{xoImgUrl}><{#xswatchCss#}>/xoops.css">
