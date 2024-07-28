@@ -50,6 +50,12 @@ class XoopsTpl extends Smarty
         $this->setCompileDir(XOOPS_VAR_PATH . '/caches/smarty_compile');
         $this->compile_check   = \Smarty::COMPILECHECK_ON; // ($xoopsConfig['theme_fromfile'] == 1);
         $this->addPluginsDir(XOOPS_ROOT_PATH . '/class/smarty3_plugins');
+
+        // Register the count function
+        $this->registerPlugin('modifier', 'count', 'count');
+        // Register the strstr function
+        $this->registerPlugin('modifier', 'strstr', 'strstr');
+
         if ($xoopsConfig['debug_mode']) {
             $this->debugging_ctrl = 'URL';
             // $this->debug_tpl = XOOPS_ROOT_PATH . '/class/smarty/xoops_tpl/debug.tpl';
