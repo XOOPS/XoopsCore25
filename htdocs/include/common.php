@@ -208,14 +208,8 @@ if ($xoopsConfig['use_ssl'] && isset($_POST[$xoopsConfig['sslpost_name']]) && $_
     session_cache_expire($xoopsConfig['session_expire']);
     @ini_set('session.gc_maxlifetime', $xoopsConfig['session_expire'] * 60);
 }
-session_set_save_handler(
-    [$sess_handler, 'open'],
-    [$sess_handler, 'close'],
-    [$sess_handler, 'read'],
-    [$sess_handler, 'write'],
-    [$sess_handler, 'destroy'],
-    [$sess_handler, 'gc'],
-);
+
+session_set_save_handler($sess_handler, true);
 
 if (function_exists('session_status')) {
     if (session_status() !== PHP_SESSION_ACTIVE) {
