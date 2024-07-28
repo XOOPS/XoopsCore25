@@ -27,7 +27,7 @@ defined('XOOPS_ROOT_PATH') || exit('Restricted access');
  * @author              Taiwen Jiang <phppp@users.sourceforge.net>
  * @copyright       (c) 2000-2016 XOOPS Project (www.xoops.org)
  */
-class XoopsSessionHandler
+class XoopsSessionHandler implements SessionHandlerInterface
 {
     /**
      * Database connection
@@ -105,7 +105,7 @@ class XoopsSessionHandler
      *
      * @return bool
      */
-    public function open($savePath, $sessionName)
+    public function open($savePath, $sessionName): bool
     {
         return true;
     }
@@ -115,10 +115,9 @@ class XoopsSessionHandler
      *
      * @return bool
      */
-    public function close()
+    public function close(): bool
     {
         $this->gc_force();
-
         return true;
     }
 
@@ -127,15 +126,15 @@ class XoopsSessionHandler
      *
      * @param string $sessionId ID of the session
      *
-     * @return string Session data
+     * @return string Session data (empty string if no data or failure)
      */
-    public function read($sessionId)
+    public function read($sessionId): string
     {
         $ip = \Xmf\IPAddress::fromRequest();
         $sql = sprintf(
             'SELECT sess_data, sess_ip FROM %s WHERE sess_id = %s',
             $this->db->prefix('session'),
-            $this->db->quoteString($sessionId),
+            $this->db->quoteString($sessionId)
         );
 
         $result = $this->db->query($sql);
@@ -143,18 +142,16 @@ class XoopsSessionHandler
             if ([$sess_data, $sess_ip] = $this->db->fetchRow($result)) {
                 if ($this->securityLevel > 1) {
                     if (false === $ip->sameSubnet(
-                        $sess_ip,
-                        $this->bitMasks[$this->securityLevel]['v4'],
-                        $this->bitMasks[$this->securityLevel]['v6'],
-                    )) {
+                            $sess_ip,
+                            $this->bitMasks[$this->securityLevel]['v4'],
+                            $this->bitMasks[$this->securityLevel]['v6']
+                        )) {
                         $sess_data = '';
                     }
                 }
-
                 return $sess_data;
             }
         }
-
         return '';
     }
 
@@ -165,8 +162,8 @@ class XoopsSessionHandler
      * @param string $data
      *
      * @return bool
-     **/
-    public function write($sessionId, $data)
+     */
+    public function write($sessionId, $data): bool
     {
         $myReturn = true;
         $remoteAddress = \Xmf\IPAddress::fromRequest()->asReadable();
@@ -176,7 +173,7 @@ class XoopsSessionHandler
             $this->db->prefix('session'),
             time(),
             $this->db->quoteString($data),
-            $sessionId,
+            $sessionId
         );
         $this->db->queryF($sql);
         if (!$this->db->getAffectedRows()) {
@@ -186,7 +183,7 @@ class XoopsSessionHandler
                 $sessionId,
                 time(),
                 $this->db->quote($remoteAddress),
-                $this->db->quote($data),
+                $this->db->quote($data)
             );
 
             $myReturn = $this->db->queryF($sql);
@@ -201,37 +198,40 @@ class XoopsSessionHandler
      * @param string $sessionId
      *
      * @return bool
-     **/
-    public function destroy($sessionId)
+     */
+    public function destroy($sessionId): bool
     {
         $sql = sprintf(
             'DELETE FROM %s WHERE sess_id = %s',
             $this->db->prefix('session'),
-            $this->db->quoteString($sessionId),
+            $this->db->quoteString($sessionId)
         );
         if (!$result = $this->db->queryF($sql)) {
             return false;
         }
-
         return true;
     }
 
     /**
      * Garbage Collector
      *
-     * @param  int $expire Time in seconds until a session expires
-     * @return bool
-     **/
+     * @param int $expire Time in seconds until a session expires
+     * @return int|bool The number of deleted sessions on success, or false on failure
+     */
+    #[\ReturnTypeWillChange]
     public function gc($expire)
     {
         if (empty($expire)) {
-            return true;
+            return 0;
         }
 
-        $mintime = time() - (int) $expire;
-        $sql     = sprintf('DELETE FROM %s WHERE sess_updated < %u', $this->db->prefix('session'), $mintime);
+        $mintime = time() - (int)$expire;
+        $sql = sprintf('DELETE FROM %s WHERE sess_updated < %u', $this->db->prefix('session'), $mintime);
 
-        return $this->db->queryF($sql);
+        if ($this->db->queryF($sql)) {
+            return $this->db->getAffectedRows();
+        }
+        return false;
     }
 
     /**
@@ -286,7 +286,7 @@ class XoopsSessionHandler
             global $xoopsConfig;
             $session_name = session_name();
             $session_expire = null !== $expire
-                ? (int) $expire
+                ? (int)$expire
                 : (
                     ($xoopsConfig['use_mysession'] && $xoopsConfig['session_name'] != '')
                     ? $xoopsConfig['session_expire'] * 60
