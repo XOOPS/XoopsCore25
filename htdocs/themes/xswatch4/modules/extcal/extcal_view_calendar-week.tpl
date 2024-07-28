@@ -37,7 +37,7 @@
         </tr>
         <tr>
             <{foreach item=day from=$week|default:null}>
-                <td class="<{if !empty($day.isEmpty}>even<{else}>odd<{/if}>"
+                <td class="<{if !empty($day.isEmpty)}>even<{else}>odd<{/if}>"
                     style="width:14%; height:80px; vertical-align:top;
                     <{if !empty($day.isSelected)}> background-color:#B6CDE4;<{/if}>">
                     <{if !empty($day.isEmpty)}>&nbsp;<{else}><a
