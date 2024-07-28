@@ -102,7 +102,7 @@ class Db_manager
         SqlUtility::splitMySqlFile($pieces, $sql_query);
         $this->db->connect();
         foreach ($pieces as $piece) {
-            $piece = trim($piece);
+            $piece = trim((string) $piece);
             // [0] contains the prefixed query
             // [4] contains unprefixed table name
             $prefixed_query = SqlUtility::prefixQuery($piece, $this->db->prefix());
@@ -301,7 +301,7 @@ class Db_manager
      */
     public function tableExists($table)
     {
-        $table = trim($table);
+        $table = trim((string) $table);
         $ret   = false;
         if ($table != '') {
             $this->db->connect();

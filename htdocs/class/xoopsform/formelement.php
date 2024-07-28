@@ -262,7 +262,7 @@ class XoopsFormElement
         if(!isset($this->_caption)) {
             $this->_caption = '';
         }
-        if (strlen($this->_description) > 0) {
+        if (strlen((string)$this->_description) > 0) {
             return $encode ? htmlspecialchars(strip_tags($this->_caption . ' - ' . $this->_description), ENT_QUOTES | ENT_HTML5) : strip_tags($this->_caption . ' - ' . $this->_description);
         } else {
             return $encode ? htmlspecialchars(strip_tags($this->_caption), ENT_QUOTES | ENT_HTML5) : strip_tags($this->_caption);
