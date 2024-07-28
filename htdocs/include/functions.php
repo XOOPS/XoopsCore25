@@ -1287,7 +1287,7 @@ function xoops_getBaseDomain($url)
         if (false !== filter_var($host, FILTER_VALIDATE_IP, FILTER_FLAG_IPV4)) {
             return '';
         }
-        $regdom = new \Geekwright\RegDom\RegisteredDomain();
+        $regdom = new \Xoops\RegDom\RegisteredDomain();
         $host = $regdom->getRegisteredDomain($host);
     }
     return $host ?? '';
