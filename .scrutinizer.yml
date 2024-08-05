@@ -5,6 +5,11 @@ build:
       APP_ENV: test
       # Add any other environment variables your tests might need
 
+  project_setup:
+    override: true
+    commands:
+      - echo "Skipping composer install as vendor directory is already included."
+
   nodes:
     analysis:
       environment:
@@ -12,9 +17,6 @@ build:
           version: 7.4
       project_setup:
         override: true
-      dependencies:
-        override:
-          - composer install --no-interaction --prefer-dist
       tests:
         override:
           - php-scrutinizer-run
@@ -41,9 +43,6 @@ build:
     php74:
       environment:
         php: 7.4
-      dependencies:
-        override:
-          - composer install --no-interaction --prefer-dist
       tests:
         override:
           - vendor/bin/phpunit
@@ -70,9 +69,6 @@ build:
     php80:
       environment:
         php: 8.0
-      dependencies:
-        override:
-          - composer install --no-interaction --prefer-dist
       tests:
         override:
           - vendor/bin/phpunit
@@ -99,9 +95,6 @@ build:
     php81:
       environment:
         php: 8.1
-      dependencies:
-        override:
-          - composer install --no-interaction --prefer-dist
       tests:
         override:
           - vendor/bin/phpunit
@@ -128,9 +121,6 @@ build:
     php82:
       environment:
         php: 8.2
-      dependencies:
-        override:
-          - composer install --no-interaction --prefer-dist
       tests:
         override:
           - vendor/bin/phpunit
@@ -157,9 +147,6 @@ build:
     php83:
       environment:
         php: 8.3
-      dependencies:
-        override:
-          - composer install --no-interaction --prefer-dist
       tests:
         override:
           - vendor/bin/phpunit
@@ -186,9 +173,6 @@ build:
     php84:
       environment:
         php: 8.4
-      dependencies:
-        override:
-          - composer install --no-interaction --prefer-dist
       tests:
         override:
           - vendor/bin/phpunit
@@ -215,9 +199,6 @@ build:
     coverage:
       environment:
         php: 8.2 # Use a stable PHP version for coverage
-      dependencies:
-        override:
-          - composer install --no-interaction --prefer-dist
       tests:
         override:
           - command: vendor/bin/phpunit --coverage-clover=coverage.xml
