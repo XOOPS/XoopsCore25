@@ -46,21 +46,21 @@ build:
         override:
           - command: php -v
 
-    php84:
-      environment:
-        php: 8.4
-      tests:
-        override:
-          - command: php -v
+#    php84:
+#      environment:
+#        php: 8.4
+#      tests:
+#        override:
+#          - command: php -v
 
 filter:
   excluded_paths:
     - '_archive/*'
     - 'tests/*'
     - 'docs/*'
-    - 'vendor/*'
+#    - 'vendor/*'
 
 tools:
   php_analyzer: true
-  external_code_coverage:
-    timeout: 300 # Timeout in seconds.
+#  external_code_coverage:
+#    timeout: 300 # Timeout in seconds.
