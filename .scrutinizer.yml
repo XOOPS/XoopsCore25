@@ -1,5 +1,10 @@
 # .scrutinizer.yml
 build:
+  environment:
+    variables:
+      APP_ENV: test
+      # Add any other environment variables your tests might need
+
   nodes:
     analysis:
       environment:
@@ -7,38 +12,245 @@ build:
           version: 7.4
       project_setup:
         override: true
+      dependencies:
+        override:
+          - composer install --no-interaction --prefer-dist
       tests:
         override:
           - php-scrutinizer-run
+      cache:
+        directories:
+          - vendor/
+      services:
+        mysql57:
+          image: mysql:5.7
+          environment:
+            MYSQL_ROOT_PASSWORD: root
+            MYSQL_DATABASE: test_db
+        mysql8:
+          image: mysql:8
+          environment:
+            MYSQL_ROOT_PASSWORD: root
+            MYSQL_DATABASE: test_db
+        mysql9:
+          image: mysql:latest
+          environment:
+            MYSQL_ROOT_PASSWORD: root
+            MYSQL_DATABASE: test_db
 
     php74:
       environment:
         php: 7.4
+      dependencies:
+        override:
+          - composer install --no-interaction --prefer-dist
+      tests:
+        override:
+          - vendor/bin/phpunit
+      cache:
+        directories:
+          - vendor/
+      services:
+        mysql57:
+          image: mysql:5.7
+          environment:
+            MYSQL_ROOT_PASSWORD: root
+            MYSQL_DATABASE: test_db
+        mysql8:
+          image: mysql:8
+          environment:
+            MYSQL_ROOT_PASSWORD: root
+            MYSQL_DATABASE: test_db
+        mysql9:
+          image: mysql:latest
+          environment:
+            MYSQL_ROOT_PASSWORD: root
+            MYSQL_DATABASE: test_db
 
     php80:
       environment:
         php: 8.0
+      dependencies:
+        override:
+          - composer install --no-interaction --prefer-dist
+      tests:
+        override:
+          - vendor/bin/phpunit
+      cache:
+        directories:
+          - vendor/
+      services:
+        mysql57:
+          image: mysql:5.7
+          environment:
+            MYSQL_ROOT_PASSWORD: root
+            MYSQL_DATABASE: test_db
+        mysql8:
+          image: mysql:8
+          environment:
+            MYSQL_ROOT_PASSWORD: root
+            MYSQL_DATABASE: test_db
+        mysql9:
+          image: mysql:latest
+          environment:
+            MYSQL_ROOT_PASSWORD: root
+            MYSQL_DATABASE: test_db
 
     php81:
       environment:
         php: 8.1
+      dependencies:
+        override:
+          - composer install --no-interaction --prefer-dist
+      tests:
+        override:
+          - vendor/bin/phpunit
+      cache:
+        directories:
+          - vendor/
+      services:
+        mysql57:
+          image: mysql:5.7
+          environment:
+            MYSQL_ROOT_PASSWORD: root
+            MYSQL_DATABASE: test_db
+        mysql8:
+          image: mysql:8
+          environment:
+            MYSQL_ROOT_PASSWORD: root
+            MYSQL_DATABASE: test_db
+        mysql9:
+          image: mysql:latest
+          environment:
+            MYSQL_ROOT_PASSWORD: root
+            MYSQL_DATABASE: test_db
 
     php82:
       environment:
         php: 8.2
+      dependencies:
+        override:
+          - composer install --no-interaction --prefer-dist
+      tests:
+        override:
+          - vendor/bin/phpunit
+      cache:
+        directories:
+          - vendor/
+      services:
+        mysql57:
+          image: mysql:5.7
+          environment:
+            MYSQL_ROOT_PASSWORD: root
+            MYSQL_DATABASE: test_db
+        mysql8:
+          image: mysql:8
+          environment:
+            MYSQL_ROOT_PASSWORD: root
+            MYSQL_DATABASE: test_db
+        mysql9:
+          image: mysql:latest
+          environment:
+            MYSQL_ROOT_PASSWORD: root
+            MYSQL_DATABASE: test_db
 
     php83:
       environment:
         php: 8.3
+      dependencies:
+        override:
+          - composer install --no-interaction --prefer-dist
+      tests:
+        override:
+          - vendor/bin/phpunit
+      cache:
+        directories:
+          - vendor/
+      services:
+        mysql57:
+          image: mysql:5.7
+          environment:
+            MYSQL_ROOT_PASSWORD: root
+            MYSQL_DATABASE: test_db
+        mysql8:
+          image: mysql:8
+          environment:
+            MYSQL_ROOT_PASSWORD: root
+            MYSQL_DATABASE: test_db
+        mysql9:
+          image: mysql:latest
+          environment:
+            MYSQL_ROOT_PASSWORD: root
+            MYSQL_DATABASE: test_db
 
     php84:
       environment:
         php: 8.4
+      dependencies:
+        override:
+          - composer install --no-interaction --prefer-dist
+      tests:
+        override:
+          - vendor/bin/phpunit
+      cache:
+        directories:
+          - vendor/
+      services:
+        mysql57:
+          image: mysql:5.7
+          environment:
+            MYSQL_ROOT_PASSWORD: root
+            MYSQL_DATABASE: test_db
+        mysql8:
+          image: mysql:8
+          environment:
+            MYSQL_ROOT_PASSWORD: root
+            MYSQL_DATABASE: test_db
+        mysql9:
+          image: mysql:latest
+          environment:
+            MYSQL_ROOT_PASSWORD: root
+            MYSQL_DATABASE: test_db
+
+    coverage:
+      environment:
+        php: 8.2 # Use a stable PHP version for coverage
+      dependencies:
+        override:
+          - composer install --no-interaction --prefer-dist
+      tests:
+        override:
+          - command: vendor/bin/phpunit --coverage-clover=coverage.xml
+            coverage:
+              file: coverage.xml
+              format: clover
+      cache:
+        directories:
+          - vendor/
+      services:
+        mysql57:
+          image: mysql:5.7
+          environment:
+            MYSQL_ROOT_PASSWORD: root
+            MYSQL_DATABASE: test_db
+        mysql8:
+          image: mysql:8
+          environment:
+            MYSQL_ROOT_PASSWORD: root
+            MYSQL_DATABASE: test_db
+        mysql9:
+          image: mysql:latest
+          environment:
+            MYSQL_ROOT_PASSWORD: root
+            MYSQL_DATABASE: test_db
 
 filter:
   excluded_paths:
     - '_archive/*'
     - 'tests/*'
+    - docs
+
 tools:
+  php_analyzer: true
   external_code_coverage:
     timeout: 300    # Timeout in seconds.
