@@ -89,7 +89,7 @@ abstract class HTMLPurifier_Injector
      * this allows references to important variables to be made within
      * the injector. This function also checks if the HTML environment
      * will work with the Injector (see checkNeeded()).
-     * @param HTMLPurifier_Config $config
+     * @param HTMLPurifier_Config  $config
      * @param HTMLPurifier_Context $context
      * @return bool|string Boolean false if success, string of missing needed element/attribute if failure
      */
@@ -103,9 +103,9 @@ abstract class HTMLPurifier_Injector
         if ($result !== false) {
             return $result;
         }
-        $this->currentNesting = & $context->get('CurrentNesting');
-        $this->currentToken   = & $context->get('CurrentToken');
-        $this->inputZipper    = & $context->get('InputZipper');
+        $this->currentNesting = &$context->get('CurrentNesting');
+        $this->currentToken = &$context->get('CurrentToken');
+        $this->inputZipper = &$context->get('InputZipper');
         return false;
     }
 
@@ -159,7 +159,7 @@ abstract class HTMLPurifier_Injector
         if (!empty($this->currentNesting)) {
             for ($i = count($this->currentNesting) - 2; $i >= 0; $i--) {
                 $node = $this->currentNesting[$i];
-                $def  = $this->htmlDefinition->info[$node->name];
+                $def = $this->htmlDefinition->info[$node->name];
                 if (isset($def->excludes[$name])) {
                     return false;
                 }
@@ -173,9 +173,9 @@ abstract class HTMLPurifier_Injector
      * you reach the end of the input tokens.
      * @warning Please prevent previous references from interfering with this
      *          functions by setting $i = null beforehand!
-     * @param int $i Current integer index variable for inputTokens
+     * @param int                $i       Current integer index variable for inputTokens
      * @param HTMLPurifier_Token $current Current token variable.
-     *          Do NOT use $token, as that variable is also a reference
+     *                                    Do NOT use $token, as that variable is also a reference
      * @return bool
      */
     protected function forward(&$i, &$current)
@@ -196,10 +196,10 @@ abstract class HTMLPurifier_Injector
      * Similar to _forward, but accepts a third parameter $nesting (which
      * should be initialized at 0) and stops when we hit the end tag
      * for the node $this->inputIndex starts in.
-     * @param int $i Current integer index variable for inputTokens
+     * @param int                $i       Current integer index variable for inputTokens
      * @param HTMLPurifier_Token $current Current token variable.
-     *          Do NOT use $token, as that variable is also a reference
-     * @param int $nesting
+     *                                    Do NOT use $token, as that variable is also a reference
+     * @param int                $nesting
      * @return bool
      */
     protected function forwardUntilEndToken(&$i, &$current, &$nesting)
@@ -227,9 +227,9 @@ abstract class HTMLPurifier_Injector
      * you reach the beginning of input tokens.
      * @warning Please prevent previous references from interfering with this
      *          functions by setting $i = null beforehand!
-     * @param int $i Current integer index variable for inputTokens
+     * @param int                $i       Current integer index variable for inputTokens
      * @param HTMLPurifier_Token $current Current token variable.
-     *          Do NOT use $token, as that variable is also a reference
+     *                                    Do NOT use $token, as that variable is also a reference
      * @return bool
      */
     protected function backward(&$i, &$current)
@@ -249,12 +249,16 @@ abstract class HTMLPurifier_Injector
     /**
      * Handler that is called when a text token is processed
      */
-    public function handleText(&$token) {}
+    public function handleText(&$token)
+    {
+    }
 
     /**
      * Handler that is called when a start or empty token is processed
      */
-    public function handleElement(&$token) {}
+    public function handleElement(&$token)
+    {
+    }
 
     /**
      * Handler that is called when an end token is processed
@@ -270,7 +274,9 @@ abstract class HTMLPurifier_Injector
      * @note This differs from handlers in that the token is read-only
      * @deprecated
      */
-    public function notifyEnd($token) {}
+    public function notifyEnd($token)
+    {
+    }
 }
 
 // vim: et sw=4 sts=4

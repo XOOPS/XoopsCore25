@@ -33,8 +33,8 @@ class HTMLPurifier_HTMLModule_Tidy_XHTMLAndHTML4 extends HTMLPurifier_HTMLModule
                     'left' => 'text-align:left;',
                     'right' => 'text-align:right;',
                     'top' => 'caption-side:top;',
-                    'bottom' => 'caption-side:bottom;', // not supported by IE
-                ),
+                    'bottom' => 'caption-side:bottom;' // not supported by IE
+                )
             );
 
         // @align for img -------------------------------------------------
@@ -47,7 +47,7 @@ class HTMLPurifier_HTMLModule_Tidy_XHTMLAndHTML4 extends HTMLPurifier_HTMLModule
                     'top' => 'vertical-align:top;',
                     'middle' => 'vertical-align:middle;',
                     'bottom' => 'vertical-align:baseline;',
-                ),
+                )
             );
 
         // @align for table -----------------------------------------------
@@ -57,8 +57,8 @@ class HTMLPurifier_HTMLModule_Tidy_XHTMLAndHTML4 extends HTMLPurifier_HTMLModule
                 array(
                     'left' => 'float:left;',
                     'center' => 'margin-left:auto;margin-right:auto;',
-                    'right' => 'float:right;',
-                ),
+                    'right' => 'float:right;'
+                )
             );
 
         // @align for hr -----------------------------------------------
@@ -72,8 +72,8 @@ class HTMLPurifier_HTMLModule_Tidy_XHTMLAndHTML4 extends HTMLPurifier_HTMLModule
                     // solution
                     'left' => 'margin-left:0;margin-right:auto;text-align:left;',
                     'center' => 'margin-left:auto;margin-right:auto;text-align:center;',
-                    'right' => 'margin-left:auto;margin-right:0;text-align:right;',
-                ),
+                    'right' => 'margin-left:auto;margin-right:0;text-align:right;'
+                )
             );
 
         // @align for h1, h2, h3, h4, h5, h6, p, div ----------------------
@@ -113,7 +113,7 @@ class HTMLPurifier_HTMLModule_Tidy_XHTMLAndHTML4 extends HTMLPurifier_HTMLModule
                     'right' => 'clear:right;',
                     'all' => 'clear:both;',
                     'none' => 'clear:none;',
-                ),
+                )
             );
 
         // @height for td, th ---------------------------------------------
@@ -130,7 +130,7 @@ class HTMLPurifier_HTMLModule_Tidy_XHTMLAndHTML4 extends HTMLPurifier_HTMLModule
         $r['hr@noshade'] =
             new HTMLPurifier_AttrTransform_BoolToCSS(
                 'noshade',
-                'color:#808080;background-color:#808080;border:0;',
+                'color:#808080;background-color:#808080;border:0;'
             );
 
         // @nowrap for td, th ---------------------------------------------
@@ -138,7 +138,7 @@ class HTMLPurifier_HTMLModule_Tidy_XHTMLAndHTML4 extends HTMLPurifier_HTMLModule
         $r['th@nowrap'] =
             new HTMLPurifier_AttrTransform_BoolToCSS(
                 'nowrap',
-                'white-space:nowrap;',
+                'white-space:nowrap;'
             );
 
         // @size for hr  --------------------------------------------------
@@ -149,14 +149,14 @@ class HTMLPurifier_HTMLModule_Tidy_XHTMLAndHTML4 extends HTMLPurifier_HTMLModule
         $ul_types = array(
             'disc' => 'list-style-type:disc;',
             'square' => 'list-style-type:square;',
-            'circle' => 'list-style-type:circle;',
+            'circle' => 'list-style-type:circle;'
         );
         $ol_types = array(
             '1' => 'list-style-type:decimal;',
             'i' => 'list-style-type:lower-roman;',
             'I' => 'list-style-type:upper-roman;',
             'a' => 'list-style-type:lower-alpha;',
-            'A' => 'list-style-type:upper-alpha;',
+            'A' => 'list-style-type:upper-alpha;'
         );
         $li_types = $ul_types + $ol_types;
         // }}}

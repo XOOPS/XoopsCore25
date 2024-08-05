@@ -32,8 +32,7 @@ class HTMLPurifier_EntityParser
      */
     protected $_semiOptionalPrefixRegex;
 
-    public function __construct()
-    {
+    public function __construct() {
         // From
         // http://stackoverflow.com/questions/15532252/why-is-reg-being-rendered-as-without-the-bounding-semicolon
         $semi_optional = "quot|QUOT|lt|LT|gt|GT|amp|AMP|AElig|Aacute|Acirc|Agrave|Aring|Atilde|Auml|COPY|Ccedil|ETH|Eacute|Ecirc|Egrave|Euml|Iacute|Icirc|Igrave|Iuml|Ntilde|Oacute|Ocirc|Ograve|Oslash|Otilde|Ouml|REG|THORN|Uacute|Ucirc|Ugrave|Uuml|Yacute|aacute|acirc|acute|aelig|agrave|aring|atilde|auml|brvbar|ccedil|cedil|cent|copy|curren|deg|divide|eacute|ecirc|egrave|eth|euml|frac12|frac14|frac34|iacute|icirc|iexcl|igrave|iquest|iuml|laquo|macr|micro|middot|nbsp|not|ntilde|oacute|ocirc|ograve|ordf|ordm|oslash|otilde|ouml|para|plusmn|pound|raquo|reg|sect|shy|sup1|sup2|sup3|szlig|thorn|times|uacute|ucirc|ugrave|uml|uuml|yacute|yen|yuml";
@@ -84,7 +83,7 @@ class HTMLPurifier_EntityParser
         return preg_replace_callback(
             $this->_textEntitiesRegex,
             array($this, 'entityCallback'),
-            $string,
+            $string
         );
     }
 
@@ -100,16 +99,16 @@ class HTMLPurifier_EntityParser
         return preg_replace_callback(
             $this->_attrEntitiesRegex,
             array($this, 'entityCallback'),
-            $string,
+            $string
         );
     }
 
     /**
      * Callback function for substituteNonSpecialEntities() that does the work.
      *
-     * @param array $matches  PCRE matches array, with 0 the entire match, and
-     *                  either index 1, 2 or 3 set with a hex value, dec value,
-     *                  or string (respectively).
+     * @param array $matches PCRE matches array, with 0 the entire match, and
+     *                       either index 1, 2 or 3 set with a hex value, dec value,
+     *                       or string (respectively).
      * @return string Replacement string.
      */
 
@@ -122,7 +121,7 @@ class HTMLPurifier_EntityParser
         if ($hex_part !== null && $hex_part !== "") {
             return HTMLPurifier_Encoder::unichr(hexdec($hex_part));
         } elseif ($dec_part !== null && $dec_part !== "") {
-            return HTMLPurifier_Encoder::unichr((int) $dec_part);
+            return HTMLPurifier_Encoder::unichr((int)$dec_part);
         } else {
             if (!$this->_entity_lookup) {
                 $this->_entity_lookup = HTMLPurifier_EntityLookup::instance();
@@ -138,7 +137,7 @@ class HTMLPurifier_EntityParser
                     return preg_replace_callback(
                         $this->_semiOptionalPrefixRegex,
                         array($this, 'entityCallback'),
-                        $entity,
+                        $entity
                     );
                 }
                 return $entity;
@@ -166,7 +165,7 @@ class HTMLPurifier_EntityParser
             38 => '&',
             39 => "'",
             60 => '<',
-            62 => '>',
+                    62 => '>'
         );
 
     /**
@@ -176,9 +175,9 @@ class HTMLPurifier_EntityParser
     protected $_special_ent2dec =
         array(
             'quot' => 34,
-            'amp'  => 38,
-            'lt'   => 60,
-            'gt'   => 62,
+            'amp' => 38,
+            'lt' => 60,
+                    'gt'   => 62
         );
 
     /**
@@ -195,16 +194,16 @@ class HTMLPurifier_EntityParser
         return preg_replace_callback(
             $this->_substituteEntitiesRegex,
             array($this, 'nonSpecialEntityCallback'),
-            $string,
+            $string
         );
     }
 
     /**
      * Callback function for substituteNonSpecialEntities() that does the work.
      *
-     * @param array $matches  PCRE matches array, with 0 the entire match, and
-     *                  either index 1, 2 or 3 set with a hex value, dec value,
-     *                  or string (respectively).
+     * @param array $matches PCRE matches array, with 0 the entire match, and
+     *                       either index 1, 2 or 3 set with a hex value, dec value,
+     *                       or string (respectively).
      * @return string Replacement string.
      */
 
@@ -215,7 +214,7 @@ class HTMLPurifier_EntityParser
         $is_num = (@$matches[0][1] === '#');
         if ($is_num) {
             $is_hex = (@$entity[2] === 'x');
-            $code = $is_hex ? hexdec($matches[1]) : (int) $matches[2];
+            $code = $is_hex ? hexdec($matches[1]) : (int)$matches[2];
             // abort for special characters
             if (isset($this->_special_dec2str[$code])) {
                 return $entity;
@@ -250,7 +249,7 @@ class HTMLPurifier_EntityParser
         return preg_replace_callback(
             $this->_substituteEntitiesRegex,
             array($this, 'specialEntityCallback'),
-            $string,
+            $string
         );
     }
 
@@ -259,9 +258,9 @@ class HTMLPurifier_EntityParser
      *
      * This callback has same syntax as nonSpecialEntityCallback().
      *
-     * @param array $matches  PCRE-style matches array, with 0 the entire match, and
-     *                  either index 1, 2 or 3 set with a hex value, dec value,
-     *                  or string (respectively).
+     * @param array $matches PCRE-style matches array, with 0 the entire match, and
+     *                       either index 1, 2 or 3 set with a hex value, dec value,
+     *                       or string (respectively).
      * @return string Replacement string.
      */
     protected function specialEntityCallback($matches)
@@ -270,7 +269,7 @@ class HTMLPurifier_EntityParser
         $is_num = (@$matches[0][1] === '#');
         if ($is_num) {
             $is_hex = (@$entity[2] === 'x');
-            $int = $is_hex ? hexdec($matches[1]) : (int) $matches[2];
+            $int = $is_hex ? hexdec($matches[1]) : (int)$matches[2];
             return isset($this->_special_dec2str[$int]) ?
                 $this->_special_dec2str[$int] :
                 $entity;

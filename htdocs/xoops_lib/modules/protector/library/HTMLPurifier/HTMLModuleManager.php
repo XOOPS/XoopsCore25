@@ -2,6 +2,7 @@
 
 class HTMLPurifier_HTMLModuleManager
 {
+
     /**
      * @type HTMLPurifier_DoctypeRegistry
      */
@@ -98,7 +99,7 @@ class HTMLPurifier_HTMLModuleManager
             array('Tidy_Transitional', 'Tidy_Proprietary'),
             array(),
             '-//W3C//DTD HTML 4.01 Transitional//EN',
-            'http://www.w3.org/TR/html4/loose.dtd',
+            'http://www.w3.org/TR/html4/loose.dtd'
         );
 
         $this->doctypes->register(
@@ -108,7 +109,7 @@ class HTMLPurifier_HTMLModuleManager
             array('Tidy_Strict', 'Tidy_Proprietary', 'Tidy_Name'),
             array(),
             '-//W3C//DTD HTML 4.01//EN',
-            'http://www.w3.org/TR/html4/strict.dtd',
+            'http://www.w3.org/TR/html4/strict.dtd'
         );
 
         $this->doctypes->register(
@@ -118,7 +119,7 @@ class HTMLPurifier_HTMLModuleManager
             array('Tidy_Transitional', 'Tidy_XHTML', 'Tidy_Proprietary', 'Tidy_Name'),
             array(),
             '-//W3C//DTD XHTML 1.0 Transitional//EN',
-            'http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd',
+            'http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd'
         );
 
         $this->doctypes->register(
@@ -128,7 +129,7 @@ class HTMLPurifier_HTMLModuleManager
             array('Tidy_Strict', 'Tidy_XHTML', 'Tidy_Strict', 'Tidy_Proprietary', 'Tidy_Name'),
             array(),
             '-//W3C//DTD XHTML 1.0 Strict//EN',
-            'http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd',
+            'http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd'
         );
 
         $this->doctypes->register(
@@ -140,7 +141,7 @@ class HTMLPurifier_HTMLModuleManager
             array('Tidy_Strict', 'Tidy_XHTML', 'Tidy_Proprietary', 'Tidy_Strict', 'Tidy_Name'), // Tidy_XHTML1_1
             array(),
             '-//W3C//DTD XHTML 1.1//EN',
-            'http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd',
+            'http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd'
         );
 
     }
@@ -184,7 +185,7 @@ class HTMLPurifier_HTMLModuleManager
                 if (!class_exists($module)) {
                     trigger_error(
                         $original_module . ' module does not exist',
-                        E_USER_ERROR,
+                        E_USER_ERROR
                     );
                     return;
                 }
@@ -319,14 +320,14 @@ class HTMLPurifier_HTMLModuleManager
         $this->contentSets = new HTMLPurifier_ContentSets(
             // content set assembly deals with all possible modules,
             // not just ones deemed to be "safe"
-            $this->modules,
+            $this->modules
         );
         $this->attrCollections = new HTMLPurifier_AttrCollections(
             $this->attrTypes,
             // there is no way to directly disable a global attribute,
             // but using AllowedAttributes or simply not including
             // the module in your custom doctype should be sufficient
-            $this->modules,
+            $this->modules
         );
     }
 

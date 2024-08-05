@@ -44,7 +44,7 @@ abstract class HTMLPurifier_Token_Tag extends HTMLPurifier_Token
         $this->name = ctype_lower($name) ? $name : strtolower($name);
         foreach ($attr as $key => $value) {
             // normalization only necessary when key is not lowercase
-            if (!ctype_lower($key)) {
+            if (!ctype_lower((string)$key)) {
                 $new_key = strtolower($key);
                 if (!isset($attr[$new_key])) {
                     $attr[$new_key] = $attr[$key];
@@ -60,8 +60,7 @@ abstract class HTMLPurifier_Token_Tag extends HTMLPurifier_Token
         $this->armor = $armor;
     }
 
-    public function toNode()
-    {
+    public function toNode() {
         return new HTMLPurifier_Node_Element($this->name, $this->attr, $this->line, $this->col, $this->armor);
     }
 }

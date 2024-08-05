@@ -12,7 +12,7 @@ class HTMLPurifier_Strategy_RemoveForeignElements extends HTMLPurifier_Strategy
 {
     /**
      * @param HTMLPurifier_Token[] $tokens
-     * @param HTMLPurifier_Config $config
+     * @param HTMLPurifier_Config  $config
      * @param HTMLPurifier_Context $context
      * @return array|HTMLPurifier_Token[]
      */
@@ -54,7 +54,7 @@ class HTMLPurifier_Strategy_RemoveForeignElements extends HTMLPurifier_Strategy
 
         $e = false;
         if ($config->get('Core.CollectErrors')) {
-            $e = & $context->get('ErrorCollector');
+            $e = &$context->get('ErrorCollector');
         }
 
         foreach ($tokens as $token) {
@@ -72,7 +72,7 @@ class HTMLPurifier_Strategy_RemoveForeignElements extends HTMLPurifier_Strategy
                     // there is a transformation for this tag
                     // DEFINITION CALL
                     $token = $definition->
-                        info_tag_transform[$token->name]->transform($token, $config, $context);
+                    info_tag_transform[$token->name]->transform($token, $config, $context);
                     if ($e) {
                         $e->send(E_NOTICE, 'Strategy_RemoveForeignElements: Tag transform', $original_name);
                     }
@@ -98,7 +98,7 @@ class HTMLPurifier_Strategy_RemoveForeignElements extends HTMLPurifier_Strategy
                                 $e->send(
                                     E_ERROR,
                                     'Strategy_RemoveForeignElements: Missing required attribute',
-                                    $name,
+                                    $name
                                 );
                             }
                             continue;
@@ -118,7 +118,7 @@ class HTMLPurifier_Strategy_RemoveForeignElements extends HTMLPurifier_Strategy
                         $e->send(E_WARNING, 'Strategy_RemoveForeignElements: Foreign element to text');
                     }
                     $token = new HTMLPurifier_Token_Text(
-                        $generator->generateFromToken($token),
+                        $generator->generateFromToken($token)
                     );
                 } else {
                     // check if we need to destroy all of the tag's children
@@ -168,7 +168,7 @@ class HTMLPurifier_Strategy_RemoveForeignElements extends HTMLPurifier_Strategy
                             if ($trailing_hyphen) {
                                 $e->send(
                                     E_NOTICE,
-                                    'Strategy_RemoveForeignElements: Trailing hyphen in comment removed',
+                                    'Strategy_RemoveForeignElements: Trailing hyphen in comment removed'
                                 );
                             }
                             if ($found_double_hyphen) {

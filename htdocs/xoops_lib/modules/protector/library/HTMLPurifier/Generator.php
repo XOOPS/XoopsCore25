@@ -60,7 +60,7 @@ class HTMLPurifier_Generator
     protected $config;
 
     /**
-     * @param HTMLPurifier_Config $config
+     * @param HTMLPurifier_Config  $config
      * @param HTMLPurifier_Context $context
      */
     public function __construct($config, $context)
@@ -105,16 +105,16 @@ class HTMLPurifier_Generator
             $tidy->parseString(
                 $html,
                 array(
-                    'indent' => true,
-                    'output-xhtml' => $this->_xhtml,
-                    'show-body-only' => true,
-                    'indent-spaces' => 2,
-                    'wrap' => 68,
+                'indent' => true,
+                'output-xhtml' => $this->_xhtml,
+                'show-body-only' => true,
+                'indent-spaces' => 2,
+                'wrap' => 68,
                 ),
-                'utf8',
+                'utf8'
             );
             $tidy->cleanRepair();
-            $html = (string) $tidy; // explicit cast necessary
+            $html = (string)$tidy; // explicit cast necessary
         }
 
         // Normalize newlines to system defined value
@@ -168,8 +168,8 @@ class HTMLPurifier_Generator
             }
             $attr = $this->generateAttributes($token->attr, $token->name);
             return '<' . $token->name . ($attr ? ' ' : '') . $attr .
-               ($this->_xhtml ? ' /' : '') // <br /> v. <br>
-               . '>';
+                ($this->_xhtml ? ' /' : '') // <br /> v. <br>
+                . '>';
 
         } elseif ($token instanceof HTMLPurifier_Token_Text) {
             return $this->escape($token->data, ENT_NOQUOTES);
@@ -187,7 +187,7 @@ class HTMLPurifier_Generator
      * @param HTMLPurifier_Token $token HTMLPurifier_Token object.
      * @return string
      * @warning This runs into problems if there's already a literal
-     *          --> somewhere inside the script contents.
+     *                                  --> somewhere inside the script contents.
      */
     public function generateScriptFromToken($token)
     {
@@ -202,9 +202,9 @@ class HTMLPurifier_Generator
     /**
      * Generates attribute declarations from attribute array.
      * @note This does not include the leading or trailing space.
-     * @param array $assoc_array_of_attributes Attribute array
-     * @param string $element Name of element attributes are for, used to check
-     *        attribute minimization.
+     * @param array  $assoc_array_of_attributes Attribute array
+     * @param string $element                   Name of element attributes are for, used to check
+     *                                          attribute minimization.
      * @return string Generated HTML fragment for insertion.
      */
     public function generateAttributes($assoc_array_of_attributes, $element = '')
@@ -267,8 +267,8 @@ class HTMLPurifier_Generator
      *       for properly generating HTML here w/o using tokens, it stays
      *       public.
      * @param string $string String data to escape for HTML.
-     * @param int $quote Quoting style, like htmlspecialchars. ENT_NOQUOTES is
-     *               permissible for non-attribute output.
+     * @param int    $quote  Quoting style, like htmlspecialchars. ENT_NOQUOTES is
+     *                       permissible for non-attribute output.
      * @return string escaped data.
      */
     public function escape($string, $quote = null)

@@ -8,13 +8,14 @@
  */
 class HTMLPurifier_ErrorStruct
 {
+
     /**
      * Possible values for $children first-key. Note that top-level structures
      * are automatically token-level.
      */
-    public const TOKEN     = 0;
-    public const ATTR      = 1;
-    public const CSSPROP   = 2;
+    const TOKEN     = 0;
+    const ATTR      = 1;
+    const CSSPROP   = 2;
 
     /**
      * Type of this struct.

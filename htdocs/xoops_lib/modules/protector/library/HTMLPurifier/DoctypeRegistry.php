@@ -2,6 +2,7 @@
 
 class HTMLPurifier_DoctypeRegistry
 {
+
     /**
      * Hash of doctype names to doctype objects.
      * @type array
@@ -53,7 +54,7 @@ class HTMLPurifier_DoctypeRegistry
                 $tidy_modules,
                 $aliases,
                 $dtd_public,
-                $dtd_system,
+                $dtd_system
             );
         }
         $this->doctypes[$doctype->name] = $doctype;

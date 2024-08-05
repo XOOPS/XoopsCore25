@@ -57,7 +57,7 @@ class HTMLPurifier_Strategy_MakeWellFormed extends HTMLPurifier_Strategy
 
     /**
      * @param HTMLPurifier_Token[] $tokens
-     * @param HTMLPurifier_Config $config
+     * @param HTMLPurifier_Config  $config
      * @param HTMLPurifier_Context $context
      * @return HTMLPurifier_Token[]
      * @throws HTMLPurifier_Exception
@@ -81,10 +81,10 @@ class HTMLPurifier_Strategy_MakeWellFormed extends HTMLPurifier_Strategy
         $stack = array();
 
         // member variables
-        $this->stack = & $stack;
-        $this->tokens = & $tokens;
-        $this->token = & $token;
-        $this->zipper = & $zipper;
+        $this->stack = &$stack;
+        $this->tokens = &$tokens;
+        $this->token = &$token;
+        $this->zipper = &$zipper;
         $this->config = $config;
         $this->context = $context;
 
@@ -149,7 +149,7 @@ class HTMLPurifier_Strategy_MakeWellFormed extends HTMLPurifier_Strategy
         //      punt ($reprocess = true; continue;) and it does that for us.
 
         // isset is in loop because $tokens size changes during loop exec
-        for (;;
+        for (; ;
             // only increment if we don't need to reprocess
             $reprocess ? $reprocess = false : $token = $zipper->next($token)) {
 
@@ -244,7 +244,7 @@ class HTMLPurifier_Strategy_MakeWellFormed extends HTMLPurifier_Strategy
                     $token->attr,
                     $token->line,
                     $token->col,
-                    $token->armor,
+                    $token->armor
                 );
                 $ok = true;
             } elseif ($type && $type !== 'empty' && $token instanceof HTMLPurifier_Token_Empty) {
@@ -253,7 +253,7 @@ class HTMLPurifier_Strategy_MakeWellFormed extends HTMLPurifier_Strategy
                 $old_token = $token;
                 $token = new HTMLPurifier_Token_End($token->name);
                 $token = $this->insertBefore(
-                    new HTMLPurifier_Token_Start($old_token->name, $old_token->attr, $old_token->line, $old_token->col, $old_token->armor),
+                    new HTMLPurifier_Token_Start($old_token->name, $old_token->attr, $old_token->line, $old_token->col, $old_token->armor)
                 );
                 // punt (since we had to modify the input stream in a non-trivial way)
                 $reprocess = true;
@@ -387,7 +387,7 @@ class HTMLPurifier_Strategy_MakeWellFormed extends HTMLPurifier_Strategy
                         $this->stack[] = $token;
                     } elseif ($token instanceof HTMLPurifier_Token_End) {
                         throw new HTMLPurifier_Exception(
-                            'Improper handling of end tag in start code; possible error in MakeWellFormed',
+                            'Improper handling of end tag in start code; possible error in MakeWellFormed'
                         );
                     }
                 }
@@ -531,9 +531,9 @@ class HTMLPurifier_Strategy_MakeWellFormed extends HTMLPurifier_Strategy
      * If $token is an integer, that number of tokens (with the first token
      * being the current one) will be deleted.
      *
-     * @param HTMLPurifier_Token|array|int|bool $token Token substitution value
-     * @param HTMLPurifier_Injector|int $injector Injector that performed the substitution; default is if
-     *        this is not an injector related operation.
+     * @param HTMLPurifier_Token|array|int|bool $token    Token substitution value
+     * @param HTMLPurifier_Injector|int         $injector Injector that performed the substitution; default is if
+     *                                                    this is not an injector related operation.
      * @throws HTMLPurifier_Exception
      */
     protected function processToken($token, $injector = -1)

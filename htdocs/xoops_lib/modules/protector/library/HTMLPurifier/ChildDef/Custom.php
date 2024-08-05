@@ -93,9 +93,9 @@ class HTMLPurifier_ChildDef_Custom extends HTMLPurifier_ChildDef
         $okay =
             preg_match(
                 '/^,?' . $this->_pcre_regex . '$/',
-                $list_of_children,
+                $list_of_children
             );
-        return (bool) $okay;
+        return (bool)$okay;
     }
 }
 

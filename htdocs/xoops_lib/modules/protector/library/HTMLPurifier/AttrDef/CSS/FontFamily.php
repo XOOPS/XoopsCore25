@@ -5,6 +5,7 @@
  */
 class HTMLPurifier_AttrDef_CSS_FontFamily extends HTMLPurifier_AttrDef
 {
+
     protected $mask = null;
 
     public function __construct()
@@ -56,7 +57,7 @@ class HTMLPurifier_AttrDef_CSS_FontFamily extends HTMLPurifier_AttrDef
             'sans-serif' => true,
             'monospace' => true,
             'fantasy' => true,
-            'cursive' => true,
+            'cursive' => true
         );
         $allowed_fonts = $config->get('CSS.AllowedFonts');
 

@@ -6,6 +6,7 @@
  */
 class HTMLPurifier_URIParser
 {
+
     /**
      * Instance of HTMLPurifier_PercentEncoder to do normalization with.
      */
@@ -29,20 +30,18 @@ class HTMLPurifier_URIParser
         // Regexp is as per Appendix B.
         // Note that ["<>] are an addition to the RFC's recommended
         // characters, because they represent external delimeters.
-        $r_URI = '!' .
-            '(([a-zA-Z0-9\.\+\-]+):)?' . // 2. Scheme
-            '(//([^/?#"<>]*))?' . // 4. Authority
-            '([^?#"<>]*)' .       // 5. Path
-            '(\?([^#"<>]*))?' .   // 7. Query
-            '(#([^"<>]*))?' .     // 8. Fragment
+        $r_URI = '!'.
+            '(([a-zA-Z0-9\.\+\-]+):)?'. // 2. Scheme
+            '(//([^/?#"<>]*))?'. // 4. Authority
+            '([^?#"<>]*)'.       // 5. Path
+            '(\?([^#"<>]*))?'.   // 7. Query
+            '(#([^"<>]*))?'.     // 8. Fragment
             '!';
 
         $matches = array();
         $result = preg_match($r_URI, $uri, $matches);
 
-        if (!$result) {
-            return false;
-        } // *really* invalid URI
+        if (!$result) return false; // *really* invalid URI
 
         // seperate out parts
         $scheme     = !empty($matches[1]) ? $matches[2] : null;
@@ -64,14 +63,7 @@ class HTMLPurifier_URIParser
         }
 
         return new HTMLPurifier_URI(
-            $scheme,
-            $userinfo,
-            $host,
-            $port,
-            $path,
-            $query,
-            $fragment,
-        );
+            $scheme, $userinfo, $host, $port, $path, $query, $fragment);
     }
 
 }

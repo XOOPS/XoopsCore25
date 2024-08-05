@@ -5,6 +5,7 @@
  */
 class HTMLPurifier_ContentSets
 {
+
     /**
      * List of content set strings (pipe separators) indexed by name.
      * @type array
@@ -90,7 +91,7 @@ class HTMLPurifier_ContentSets
             $def->content_model = preg_replace_callback(
                 '/\b(' . implode('|', $this->keys) . ')\b/',
                 array($this, 'generateChildDefCallback'),
-                $content_model,
+                $content_model
             );
             //$def->content_model = str_replace(
             //    $this->keys, $this->values, $content_model);
@@ -117,9 +118,9 @@ class HTMLPurifier_ContentSets
         $value = $def->content_model;
         if (is_object($value)) {
             trigger_error(
-                'Literal object child definitions should be stored in ' .
+                'Literal object child definitions should be stored in '.
                 'ElementDef->child not ElementDef->content_model',
-                E_USER_NOTICE,
+                E_USER_NOTICE
             );
             return $value;
         }
@@ -144,7 +145,7 @@ class HTMLPurifier_ContentSets
         // error-out
         trigger_error(
             'Could not determine which ChildDef class to instantiate',
-            E_USER_ERROR,
+            E_USER_ERROR
         );
         return false;
     }

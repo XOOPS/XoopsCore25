@@ -6,6 +6,7 @@
  */
 class HTMLPurifier_ConfigSchema_Builder_ConfigSchema
 {
+
     /**
      * @param HTMLPurifier_ConfigSchema_Interchange $interchange
      * @return HTMLPurifier_ConfigSchema
@@ -18,24 +19,24 @@ class HTMLPurifier_ConfigSchema_Builder_ConfigSchema
                 $d->id->key,
                 $d->default,
                 $d->type,
-                $d->typeAllowsNull,
+                $d->typeAllowsNull
             );
             if ($d->allowed !== null) {
                 $schema->addAllowedValues(
                     $d->id->key,
-                    $d->allowed,
+                    $d->allowed
                 );
             }
             foreach ($d->aliases as $alias) {
                 $schema->addAlias(
                     $alias->key,
-                    $d->id->key,
+                    $d->id->key
                 );
             }
             if ($d->valueAliases !== null) {
                 $schema->addValueAliases(
                     $d->id->key,
-                    $d->valueAliases,
+                    $d->valueAliases
                 );
             }
         }

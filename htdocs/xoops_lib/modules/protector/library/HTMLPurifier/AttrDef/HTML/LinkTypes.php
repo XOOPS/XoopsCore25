@@ -8,6 +8,7 @@
  */
 class HTMLPurifier_AttrDef_HTML_LinkTypes extends HTMLPurifier_AttrDef
 {
+
     /**
      * Name config attribute to pull.
      * @type string
@@ -21,13 +22,13 @@ class HTMLPurifier_AttrDef_HTML_LinkTypes extends HTMLPurifier_AttrDef
     {
         $configLookup = array(
             'rel' => 'AllowedRel',
-            'rev' => 'AllowedRev',
+            'rev' => 'AllowedRev'
         );
         if (!isset($configLookup[$name])) {
             trigger_error(
                 'Unrecognized attribute name for link ' .
                 'relationship.',
-                E_USER_ERROR,
+                E_USER_ERROR
             );
             return;
         }

@@ -28,8 +28,8 @@ class HTMLPurifier_URIScheme_data extends HTMLPurifier_URIScheme
     public $may_omit_host = true;
 
     /**
-     * @param HTMLPurifier_URI $uri
-     * @param HTMLPurifier_Config $config
+     * @param HTMLPurifier_URI     $uri
+     * @param HTMLPurifier_Config  $config
      * @param HTMLPurifier_Context $context
      * @return bool
      */
@@ -127,8 +127,10 @@ class HTMLPurifier_URIScheme_data extends HTMLPurifier_URIScheme
     }
 
     /**
-     * @param int $errno
+     * @param int    $errno
      * @param string $errstr
      */
-    public function muteErrorHandler($errno, $errstr) {}
+    public function muteErrorHandler($errno, $errstr)
+    {
+    }
 }

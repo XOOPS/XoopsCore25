@@ -41,6 +41,7 @@
  */
 class HTMLPurifier_Lexer
 {
+
     /**
      * Whether or not this lexer implements line-number/column-number tracking.
      * If it does, set to true.
@@ -78,7 +79,7 @@ class HTMLPurifier_Lexer
                 "Passing a prototype to
                 HTMLPurifier_Lexer::create() is deprecated, please instead
                 use %Core.LexerImpl",
-                E_USER_WARNING,
+                E_USER_WARNING
             );
         } else {
             $lexer = $config->get('Core.LexerImpl');
@@ -129,7 +130,7 @@ class HTMLPurifier_Lexer
                 default:
                     throw new HTMLPurifier_Exception(
                         "Cannot instantiate unrecognized Lexer type " .
-                        htmlspecialchars($lexer),
+                        htmlspecialchars($lexer)
                     );
             }
         }
@@ -143,7 +144,7 @@ class HTMLPurifier_Lexer
         if ($needs_tracking && !$inst->tracksLineNumbers) {
             throw new HTMLPurifier_Exception(
                 'Cannot use lexer that does not support line numbers with ' .
-                'Core.MaintainLineNumbers or Core.CollectErrors (use DirectLex instead)',
+                'Core.MaintainLineNumbers or Core.CollectErrors (use DirectLex instead)'
             );
         }
 
@@ -170,16 +171,14 @@ class HTMLPurifier_Lexer
             '&gt;' => '>',
             '&#39;' => "'",
             '&#039;' => "'",
-            '&#x27;' => "'",
+            '&#x27;' => "'"
         );
 
-    public function parseText($string, $config)
-    {
+    public function parseText($string, $config) {
         return $this->parseData($string, false, $config);
     }
 
-    public function parseAttr($string, $config)
-    {
+    public function parseAttr($string, $config) {
         return $this->parseData($string, true, $config);
     }
 
@@ -252,7 +251,7 @@ class HTMLPurifier_Lexer
         return preg_replace_callback(
             '/<!\[CDATA\[(.+?)\]\]>/s',
             array('HTMLPurifier_Lexer', 'CDATACallback'),
-            $string,
+            $string
         );
     }
 
@@ -266,21 +265,7 @@ class HTMLPurifier_Lexer
         return preg_replace_callback(
             '#<!--//--><!\[CDATA\[//><!--(.+?)//--><!\]\]>#s',
             array('HTMLPurifier_Lexer', 'CDATACallback'),
-            $string,
-        );
-    }
-
-    /**
-     * Special Internet Explorer conditional comments should be removed.
-     * @param string $string HTML string to process.
-     * @return string HTML with conditional comments removed.
-     */
-    protected static function removeIEConditional($string)
-    {
-        return preg_replace(
-            '#<!--\[if [^>]+\]>.*?<!\[endif\]-->#si', // probably should generalize for all strings
-            '',
-            $string,
+            $string
         );
     }
 
@@ -312,8 +297,8 @@ class HTMLPurifier_Lexer
     {
         // normalize newlines to \n
         if ($config->get('Core.NormalizeNewlines')) {
-            $html = str_replace("\r\n", "\n", (string) $html);
-            $html = str_replace("\r", "\n", (string) $html);
+            $html = str_replace("\r\n", "\n", (string)$html);
+            $html = str_replace("\r", "\n", (string)$html);
         }
 
         if ($config->get('HTML.Trusted')) {
@@ -324,13 +309,11 @@ class HTMLPurifier_Lexer
         // escape CDATA
         $html = $this->escapeCDATA($html);
 
-        $html = $this->removeIEConditional($html);
-
         // extract body from document if applicable
         if ($config->get('Core.ConvertDocumentToFragment')) {
             $e = false;
             if ($config->get('Core.CollectErrors')) {
-                $e = & $context->get('ErrorCollector');
+                $e =& $context->get('ErrorCollector');
             }
             $new_html = $this->extractBody($html);
             if ($e && $new_html != $html) {

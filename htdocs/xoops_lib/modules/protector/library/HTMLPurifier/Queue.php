@@ -17,13 +17,11 @@
  * behaviour caused by repeatedly shuffling data from the input stack
  * to the output stack and back.
  */
-class HTMLPurifier_Queue
-{
+class HTMLPurifier_Queue {
     private $input;
     private $output;
 
-    public function __construct($input = array())
-    {
+    public function __construct($input = array()) {
         $this->input = $input;
         $this->output = array();
     }
@@ -31,8 +29,7 @@ class HTMLPurifier_Queue
     /**
      * Shifts an element off the front of the queue.
      */
-    public function shift()
-    {
+    public function shift() {
         if (empty($this->output)) {
             $this->output = array_reverse($this->input);
             $this->input = array();
@@ -46,16 +43,14 @@ class HTMLPurifier_Queue
     /**
      * Pushes an element onto the front of the queue.
      */
-    public function push($x)
-    {
+    public function push($x) {
         array_push($this->input, $x);
     }
 
     /**
      * Checks if it's empty.
      */
-    public function isEmpty()
-    {
+    public function isEmpty() {
         return empty($this->input) && empty($this->output);
     }
 }

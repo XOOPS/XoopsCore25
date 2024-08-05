@@ -2,6 +2,7 @@
 
 class HTMLPurifier_DefinitionCache_Serializer extends HTMLPurifier_DefinitionCache
 {
+
     /**
      * @param HTMLPurifier_Definition $def
      * @param HTMLPurifier_Config $config
@@ -219,7 +220,7 @@ class HTMLPurifier_DefinitionCache_Serializer extends HTMLPurifier_DefinitionCac
             if (!@mkdir($directory) && !is_dir($directory)) {
                 trigger_error(
                     'Could not create directory ' . $directory . '',
-                    E_USER_WARNING,
+                    E_USER_WARNING
                 );
                 return false;
             }
@@ -231,7 +232,7 @@ class HTMLPurifier_DefinitionCache_Serializer extends HTMLPurifier_DefinitionCac
                 trigger_error(
                     'Base directory ' . $base . ' does not exist,
                     please create or change using %Cache.SerializerPath',
-                    E_USER_WARNING,
+                    E_USER_WARNING
                 );
                 return false;
             } elseif (!$this->_testPermissions($base, $chmod)) {
@@ -240,7 +241,7 @@ class HTMLPurifier_DefinitionCache_Serializer extends HTMLPurifier_DefinitionCac
             if (!@mkdir($directory, $chmod) && !is_dir($directory)) {
                 trigger_error(
                     'Could not create directory ' . $directory . '',
-                    E_USER_WARNING,
+                    E_USER_WARNING
                 );
                 return false;
             }
@@ -271,7 +272,7 @@ class HTMLPurifier_DefinitionCache_Serializer extends HTMLPurifier_DefinitionCac
             // so a more specific error message can be given
             trigger_error(
                 'Directory ' . $dir . ' does not exist',
-                E_USER_WARNING,
+                E_USER_WARNING
             );
             return false;
         }
@@ -294,14 +295,14 @@ class HTMLPurifier_DefinitionCache_Serializer extends HTMLPurifier_DefinitionCac
             trigger_error(
                 'Directory ' . $dir . ' not writable. ' .
                 ($chmod === null ? '' : 'Please chmod to ' . decoct($chmod)),
-                E_USER_WARNING,
+                E_USER_WARNING
             );
         } else {
             // generic error message
             trigger_error(
                 'Directory ' . $dir . ' not writable, ' .
                 'please alter file permissions',
-                E_USER_WARNING,
+                E_USER_WARNING
             );
         }
         return false;

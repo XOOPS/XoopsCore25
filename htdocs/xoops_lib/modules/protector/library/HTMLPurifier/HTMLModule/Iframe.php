@@ -9,6 +9,7 @@
  */
 class HTMLPurifier_HTMLModule_Iframe extends HTMLPurifier_HTMLModule
 {
+
     /**
      * @type string
      */
@@ -27,7 +28,7 @@ class HTMLPurifier_HTMLModule_Iframe extends HTMLPurifier_HTMLModule
         if ($config->get('HTML.SafeIframe')) {
             $this->safe = true;
         }
-        $attrs = [
+        $attrs = array(
             'src' => 'URI#embedded',
             'width' => 'Length',
             'height' => 'Length',
@@ -37,12 +38,12 @@ class HTMLPurifier_HTMLModule_Iframe extends HTMLPurifier_HTMLModule
             'longdesc' => 'URI',
             'marginheight' => 'Pixels',
             'marginwidth' => 'Pixels',
-        ];
-        
-                if ($config->get('HTML.Trusted')) {
+        );
+
+        if ($config->get('HTML.Trusted')) {
             $attrs['allowfullscreen'] = 'Bool#allowfullscreen';
         }
-    
+
         $this->addElement(
             'iframe',
             'Inline',

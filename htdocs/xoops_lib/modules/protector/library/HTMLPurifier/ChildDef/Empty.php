@@ -19,11 +19,13 @@ class HTMLPurifier_ChildDef_Empty extends HTMLPurifier_ChildDef
      */
     public $type = 'empty';
 
-    public function __construct() {}
+    public function __construct()
+    {
+    }
 
     /**
-     * @param HTMLPurifier_Node[] $children
-     * @param HTMLPurifier_Config $config
+     * @param HTMLPurifier_Node[]  $children
+     * @param HTMLPurifier_Config  $config
      * @param HTMLPurifier_Context $context
      * @return array
      */

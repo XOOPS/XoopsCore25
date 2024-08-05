@@ -15,11 +15,13 @@ class HTMLPurifier_AttrDef_HTML_FrameTarget extends HTMLPurifier_AttrDef_Enum
      */
     protected $case_sensitive = false;
 
-    public function __construct() {}
+    public function __construct()
+    {
+    }
 
     /**
-     * @param string $string
-     * @param HTMLPurifier_Config $config
+     * @param string               $string
+     * @param HTMLPurifier_Config  $config
      * @param HTMLPurifier_Context $context
      * @return bool|string
      */

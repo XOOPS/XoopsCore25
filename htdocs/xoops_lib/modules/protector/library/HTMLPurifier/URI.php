@@ -60,7 +60,7 @@ class HTMLPurifier_URI
         $this->scheme = is_null($scheme) || ctype_lower($scheme) ? $scheme : strtolower($scheme);
         $this->userinfo = $userinfo;
         $this->host = $host;
-        $this->port = is_null($port) ? $port : (int) $port;
+        $this->port = is_null($port) ? $port : (int)$port;
         $this->path = $path;
         $this->query = $query;
         $this->fragment = $fragment;
@@ -89,7 +89,7 @@ class HTMLPurifier_URI
                     // something funky happened to the default scheme object
                     trigger_error(
                         'Default scheme object "' . $def->defaultScheme . '" was not readable',
-                        E_USER_WARNING,
+                        E_USER_WARNING
                     );
                 } // suppress error if it's null
                 return false;

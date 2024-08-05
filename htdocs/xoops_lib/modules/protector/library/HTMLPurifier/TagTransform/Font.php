@@ -39,7 +39,7 @@ class HTMLPurifier_TagTransform_Font extends HTMLPurifier_TagTransform
         '+1' => 'larger',
         '+2' => '150%',
         '+3' => '200%',
-        '+4' => '300%',
+        '+4' => '300%'
     );
 
     /**
@@ -76,7 +76,7 @@ class HTMLPurifier_TagTransform_Font extends HTMLPurifier_TagTransform
             // normalize large numbers
             if ($attr['size'] !== '') {
                 if ($attr['size'][0] == '+' || $attr['size'][0] == '-') {
-                    $size = (int) $attr['size'];
+                    $size = (int)$attr['size'];
                     if ($size < -2) {
                         $attr['size'] = '-2';
                     }
@@ -84,7 +84,7 @@ class HTMLPurifier_TagTransform_Font extends HTMLPurifier_TagTransform
                         $attr['size'] = '+4';
                     }
                 } else {
-                    $size = (int) $attr['size'];
+                    $size = (int)$attr['size'];
                     if ($size > 7) {
                         $attr['size'] = '7';
                     }

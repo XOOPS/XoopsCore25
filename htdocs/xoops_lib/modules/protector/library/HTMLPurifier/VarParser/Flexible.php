@@ -31,17 +31,17 @@ class HTMLPurifier_VarParser_Flexible extends HTMLPurifier_VarParser
                 return $var;
             case self::C_INT:
                 if (is_string($var) && ctype_digit($var)) {
-                    $var = (int) $var;
+                    $var = (int)$var;
                 }
                 return $var;
             case self::C_FLOAT:
                 if ((is_string($var) && is_numeric($var)) || is_int($var)) {
-                    $var = (float) $var;
+                    $var = (float)$var;
                 }
                 return $var;
             case self::C_BOOL:
                 if (is_int($var) && ($var === 0 || $var === 1)) {
-                    $var = (bool) $var;
+                    $var = (bool)$var;
                 } elseif (is_string($var)) {
                     if ($var == 'on' || $var == 'true' || $var == '1') {
                         $var = true;
@@ -113,7 +113,7 @@ class HTMLPurifier_VarParser_Flexible extends HTMLPurifier_VarParser
                             trigger_error(
                                 "Lookup array has non-true value at key '$key'; " .
                                 "maybe your input array was not indexed numerically",
-                                E_USER_WARNING,
+                                E_USER_WARNING
                             );
                         }
                         $var[$key] = true;

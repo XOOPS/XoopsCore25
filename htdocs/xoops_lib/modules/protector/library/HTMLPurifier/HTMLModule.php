@@ -17,6 +17,7 @@
 
 class HTMLPurifier_HTMLModule
 {
+
     // -- Overloadable ----------------------------------------------------
 
     /**
@@ -155,7 +156,7 @@ class HTMLPurifier_HTMLModule
         $this->info[$element] = HTMLPurifier_ElementDef::create(
             $content_model,
             $content_model_type,
-            $attr,
+            $attr
         );
         // literal object $contents means direct child manipulation
         if (!is_string($contents)) {
@@ -276,7 +277,9 @@ class HTMLPurifier_HTMLModule
      * is available.
      * @param HTMLPurifier_Config $config
      */
-    public function setup($config) {}
+    public function setup($config)
+    {
+    }
 }
 
 // vim: et sw=4 sts=4
