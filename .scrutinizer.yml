@@ -24,17 +24,17 @@ build:
       services:
         mysql57:
           image: mysql:5.7
-          environment:
+          env:
             MYSQL_ROOT_PASSWORD: root
             MYSQL_DATABASE: test_db
         mysql8:
           image: mysql:8
-          environment:
+          env:
             MYSQL_ROOT_PASSWORD: root
             MYSQL_DATABASE: test_db
         mysql9:
           image: mysql:latest
-          environment:
+          env:
             MYSQL_ROOT_PASSWORD: root
             MYSQL_DATABASE: test_db
 
@@ -53,17 +53,17 @@ build:
       services:
         mysql57:
           image: mysql:5.7
-          environment:
+          env:
             MYSQL_ROOT_PASSWORD: root
             MYSQL_DATABASE: test_db
         mysql8:
           image: mysql:8
-          environment:
+          env:
             MYSQL_ROOT_PASSWORD: root
             MYSQL_DATABASE: test_db
         mysql9:
           image: mysql:latest
-          environment:
+          env:
             MYSQL_ROOT_PASSWORD: root
             MYSQL_DATABASE: test_db
 
@@ -82,17 +82,17 @@ build:
       services:
         mysql57:
           image: mysql:5.7
-          environment:
+          env:
             MYSQL_ROOT_PASSWORD: root
             MYSQL_DATABASE: test_db
         mysql8:
           image: mysql:8
-          environment:
+          env:
             MYSQL_ROOT_PASSWORD: root
             MYSQL_DATABASE: test_db
         mysql9:
           image: mysql:latest
-          environment:
+          env:
             MYSQL_ROOT_PASSWORD: root
             MYSQL_DATABASE: test_db
 
@@ -111,17 +111,17 @@ build:
       services:
         mysql57:
           image: mysql:5.7
-          environment:
+          env:
             MYSQL_ROOT_PASSWORD: root
             MYSQL_DATABASE: test_db
         mysql8:
           image: mysql:8
-          environment:
+          env:
             MYSQL_ROOT_PASSWORD: root
             MYSQL_DATABASE: test_db
         mysql9:
           image: mysql:latest
-          environment:
+          env:
             MYSQL_ROOT_PASSWORD: root
             MYSQL_DATABASE: test_db
 
@@ -140,17 +140,17 @@ build:
       services:
         mysql57:
           image: mysql:5.7
-          environment:
+          env:
             MYSQL_ROOT_PASSWORD: root
             MYSQL_DATABASE: test_db
         mysql8:
           image: mysql:8
-          environment:
+          env:
             MYSQL_ROOT_PASSWORD: root
             MYSQL_DATABASE: test_db
         mysql9:
           image: mysql:latest
-          environment:
+          env:
             MYSQL_ROOT_PASSWORD: root
             MYSQL_DATABASE: test_db
 
@@ -169,17 +169,17 @@ build:
       services:
         mysql57:
           image: mysql:5.7
-          environment:
+          env:
             MYSQL_ROOT_PASSWORD: root
             MYSQL_DATABASE: test_db
         mysql8:
           image: mysql:8
-          environment:
+          env:
             MYSQL_ROOT_PASSWORD: root
             MYSQL_DATABASE: test_db
         mysql9:
           image: mysql:latest
-          environment:
+          env:
             MYSQL_ROOT_PASSWORD: root
             MYSQL_DATABASE: test_db
 
@@ -198,17 +198,17 @@ build:
       services:
         mysql57:
           image: mysql:5.7
-          environment:
+          env:
             MYSQL_ROOT_PASSWORD: root
             MYSQL_DATABASE: test_db
         mysql8:
           image: mysql:8
-          environment:
+          env:
             MYSQL_ROOT_PASSWORD: root
             MYSQL_DATABASE: test_db
         mysql9:
           image: mysql:latest
-          environment:
+          env:
             MYSQL_ROOT_PASSWORD: root
             MYSQL_DATABASE: test_db
 
@@ -230,17 +230,17 @@ build:
       services:
         mysql57:
           image: mysql:5.7
-          environment:
+          env:
             MYSQL_ROOT_PASSWORD: root
             MYSQL_DATABASE: test_db
         mysql8:
           image: mysql:8
-          environment:
+          env:
             MYSQL_ROOT_PASSWORD: root
             MYSQL_DATABASE: test_db
         mysql9:
           image: mysql:latest
-          environment:
+          env:
             MYSQL_ROOT_PASSWORD: root
             MYSQL_DATABASE: test_db
 
