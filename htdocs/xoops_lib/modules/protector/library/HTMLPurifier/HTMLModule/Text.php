@@ -23,7 +23,7 @@ class HTMLPurifier_HTMLModule_Text extends HTMLPurifier_HTMLModule
      * @type array
      */
     public $content_sets = array(
-        'Flow' => 'Heading | Block | Inline',
+        'Flow' => 'Heading | Block | Inline'
     );
 
     /**
@@ -65,7 +65,7 @@ class HTMLPurifier_HTMLModule_Text extends HTMLPurifier_HTMLModule
             'object',
             'applet',
             'font',
-            'basefont',
+            'basefont'
         );
         $this->addElement('h1', 'Heading', 'Inline', 'Common');
         $this->addElement('h2', 'Heading', 'Inline', 'Common');
@@ -77,7 +77,7 @@ class HTMLPurifier_HTMLModule_Text extends HTMLPurifier_HTMLModule
         // Block Structural -----------------------------------------------
         $p = $this->addElement('p', 'Block', 'Inline', 'Common');
         $p->autoclose = array_flip(
-            array("address", "blockquote", "center", "dir", "div", "dl", "fieldset", "ol", "p", "ul"),
+            array("address", "blockquote", "center", "dir", "div", "dl", "fieldset", "ol", "p", "ul")
         );
 
         $this->addElement('div', 'Block', 'Flow', 'Common');

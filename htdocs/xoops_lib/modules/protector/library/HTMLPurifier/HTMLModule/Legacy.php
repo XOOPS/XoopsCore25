@@ -37,8 +37,8 @@ class HTMLPurifier_HTMLModule_Legacy extends HTMLPurifier_HTMLModule
                 'color' => 'Color',
                 'face' => 'Text', // extremely broad, we should
                 'size' => 'Text', // tighten it
-                'id' => 'ID',
-            ),
+                'id' => 'ID'
+            )
         );
         $this->addElement('center', 'Block', 'Flow', 'Common');
         $this->addElement(
@@ -47,8 +47,8 @@ class HTMLPurifier_HTMLModule_Legacy extends HTMLPurifier_HTMLModule
             'Required: li',
             'Common',
             array(
-                'compact' => 'Bool#compact',
-            ),
+                'compact' => 'Bool#compact'
+            )
         );
         $this->addElement(
             'font',
@@ -59,7 +59,7 @@ class HTMLPurifier_HTMLModule_Legacy extends HTMLPurifier_HTMLModule
                 'color' => 'Color',
                 'face' => 'Text', // extremely broad, we should
                 'size' => 'Text', // tighten it
-            ),
+            )
         );
         $this->addElement(
             'menu',
@@ -67,8 +67,8 @@ class HTMLPurifier_HTMLModule_Legacy extends HTMLPurifier_HTMLModule
             'Required: li',
             'Common',
             array(
-                'compact' => 'Bool#compact',
-            ),
+                'compact' => 'Bool#compact'
+            )
         );
 
         $s = $this->addElement('s', 'Inline', 'Inline', 'Common');

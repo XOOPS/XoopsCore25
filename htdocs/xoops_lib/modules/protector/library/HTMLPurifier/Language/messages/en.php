@@ -5,7 +5,7 @@ $fallback = false;
 $messages = array(
 
     'HTMLPurifier' => 'HTML Purifier',
-    // for unit testing purposes
+// for unit testing purposes
     'LanguageFactoryTest: Pizza' => 'Pizza',
     'LanguageTest: List' => '$1',
     'LanguageTest: Hash' => '$1.Keys; $1.Values',
@@ -49,7 +49,7 @@ $messages = array(
 $errorNames = array(
     E_ERROR => 'Error',
     E_WARNING => 'Warning',
-    E_NOTICE => 'Notice',
+    E_NOTICE => 'Notice'
 );
 
 // vim: et sw=4 sts=4

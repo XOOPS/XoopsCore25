@@ -30,7 +30,7 @@ class HTMLPurifier_HTMLModule_Tidy extends HTMLPurifier_HTMLModule
     public $fixesForLevel = array(
         'light' => array(),
         'medium' => array(),
-        'heavy' => array(),
+        'heavy' => array()
     );
 
     /**
@@ -87,7 +87,7 @@ class HTMLPurifier_HTMLModule_Tidy extends HTMLPurifier_HTMLModule
         if ($i == $c) {
             trigger_error(
                 'Tidy level ' . htmlspecialchars($level) . ' not recognized',
-                E_USER_WARNING,
+                E_USER_WARNING
             );
             return array();
         }
@@ -114,7 +114,7 @@ class HTMLPurifier_HTMLModule_Tidy extends HTMLPurifier_HTMLModule
         if (!isset($this->fixesForLevel[$this->defaultLevel])) {
             trigger_error(
                 'Default level ' . $this->defaultLevel . ' does not exist',
-                E_USER_ERROR,
+                E_USER_ERROR
             );
             return;
         }

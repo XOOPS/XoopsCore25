@@ -48,7 +48,7 @@ class HTMLPurifier_Lexer_DirectLex extends HTMLPurifier_Lexer
             $html = preg_replace_callback(
                 '#(<script[^>]*>)(\s*[^<].+?)(</script>)#si',
                 array($this, 'scriptCallback'),
-                $html,
+                $html
             );
         }
 
@@ -85,7 +85,7 @@ class HTMLPurifier_Lexer_DirectLex extends HTMLPurifier_Lexer
 
         $e = false;
         if ($config->get('Core.CollectErrors')) {
-            $e = & $context->get('ErrorCollector');
+            $e =& $context->get('ErrorCollector');
         }
 
         // for testing synchronization
@@ -98,7 +98,7 @@ class HTMLPurifier_Lexer_DirectLex extends HTMLPurifier_Lexer
 
             if ($maintain_line_numbers) {
                 // $rcursor, however, is always at the start of a token.
-                $rcursor = $cursor - (int) $inside_tag;
+                $rcursor = $cursor - (int)$inside_tag;
 
                 // Column number is cheap, so we calculate it every round.
                 // We're interested at the *end* of the newline string, so
@@ -133,10 +133,9 @@ class HTMLPurifier_Lexer_DirectLex extends HTMLPurifier_Lexer
                         substr(
                             $html,
                             $cursor,
-                            $position_next_lt - $cursor,
-                        ),
-                        $config,
-                    ),
+                            $position_next_lt - $cursor
+                        ), $config
+                    )
                 );
                 if ($maintain_line_numbers) {
                     $token->rawPosition($current_line, $current_col);
@@ -158,10 +157,9 @@ class HTMLPurifier_Lexer_DirectLex extends HTMLPurifier_Lexer
                     $this->parseText(
                         substr(
                             $html,
-                            $cursor,
-                        ),
-                        $config,
-                    ),
+                            $cursor
+                        ), $config
+                    )
                 );
                 if ($maintain_line_numbers) {
                     $token->rawPosition($current_line, $current_col);
@@ -211,8 +209,8 @@ class HTMLPurifier_Lexer_DirectLex extends HTMLPurifier_Lexer
                         substr(
                             $segment,
                             3,
-                            $strlen_segment - 3,
-                        ),
+                            $strlen_segment - 3
+                        )
                     );
                     if ($maintain_line_numbers) {
                         $token->rawPosition($current_line, $current_col);
@@ -292,14 +290,14 @@ class HTMLPurifier_Lexer_DirectLex extends HTMLPurifier_Lexer
                     trim(
                         substr(
                             $segment,
-                            $position_first_space,
-                        ),
+                            $position_first_space
+                        )
                     );
                 if ($attribute_string) {
                     $attr = $this->parseAttributeString(
                         $attribute_string,
                         $config,
-                        $context,
+                        $context
                     );
                 } else {
                     $attr = array();
@@ -327,9 +325,8 @@ class HTMLPurifier_Lexer_DirectLex extends HTMLPurifier_Lexer
                 HTMLPurifier_Token_Text(
                     '<' .
                     $this->parseText(
-                        substr($html, $cursor),
-                        $config,
-                    ),
+                        substr($html, $cursor), $config
+                    )
                 );
                 if ($maintain_line_numbers) {
                     $token->rawPosition($current_line, $current_col);
@@ -378,7 +375,7 @@ class HTMLPurifier_Lexer_DirectLex extends HTMLPurifier_Lexer
      */
     public function parseAttributeString($string, $config, $context)
     {
-        $string = (string) $string; // quick typecast
+        $string = (string)$string; // quick typecast
 
         if ($string == '') {
             return array();
@@ -386,7 +383,7 @@ class HTMLPurifier_Lexer_DirectLex extends HTMLPurifier_Lexer
 
         $e = false;
         if ($config->get('Core.CollectErrors')) {
-            $e = & $context->get('ErrorCollector');
+            $e =& $context->get('ErrorCollector');
         }
 
         // let's see if we can abort as quickly as possible

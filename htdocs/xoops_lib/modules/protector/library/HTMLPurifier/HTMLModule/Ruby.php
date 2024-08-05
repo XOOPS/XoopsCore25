@@ -6,6 +6,7 @@
  */
 class HTMLPurifier_HTMLModule_Ruby extends HTMLPurifier_HTMLModule
 {
+
     /**
      * @type string
      */
@@ -20,7 +21,7 @@ class HTMLPurifier_HTMLModule_Ruby extends HTMLPurifier_HTMLModule
             'ruby',
             'Inline',
             'Custom: ((rb, (rt | (rp, rt, rp))) | (rbc, rtc, rtc?))',
-            'Common',
+            'Common'
         );
         $this->addElement('rbc', false, 'Required: rb', 'Common');
         $this->addElement('rtc', false, 'Required: rt', 'Common');

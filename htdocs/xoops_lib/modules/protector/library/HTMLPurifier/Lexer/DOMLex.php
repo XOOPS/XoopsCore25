@@ -26,6 +26,7 @@
 
 class HTMLPurifier_Lexer_DOMLex extends HTMLPurifier_Lexer
 {
+
     /**
      * @type HTMLPurifier_TokenFactory
      */
@@ -70,6 +71,9 @@ class HTMLPurifier_Lexer_DOMLex extends HTMLPurifier_Lexer
         $options = 0;
         if ($config->get('Core.AllowParseManyTags') && defined('LIBXML_PARSEHUGE')) {
             $options |= LIBXML_PARSEHUGE;
+        }
+        if ($config->get('Core.RemoveBlanks') && defined('LIBXML_NOBLANKS')) {
+            $options |= LIBXML_NOBLANKS;
         }
 
         set_error_handler(array($this, 'muteErrorHandler'));
@@ -143,9 +147,9 @@ class HTMLPurifier_Lexer_DOMLex extends HTMLPurifier_Lexer
     {
         if (isset($node->tagName)) {
             return $node->tagName;
-        } elseif (isset($node->nodeName)) {
+        } else if (isset($node->nodeName)) {
             return $node->nodeName;
-        } elseif (isset($node->localName)) {
+        } else if (isset($node->localName)) {
             return $node->localName;
         }
         return null;
@@ -160,9 +164,9 @@ class HTMLPurifier_Lexer_DOMLex extends HTMLPurifier_Lexer
     {
         if (isset($node->data)) {
             return $node->data;
-        } elseif (isset($node->nodeValue)) {
+        } else if (isset($node->nodeValue)) {
             return $node->nodeValue;
-        } elseif (isset($node->textContent)) {
+        } else if (isset($node->textContent)) {
             return $node->textContent;
         }
         return null;
@@ -186,7 +190,7 @@ class HTMLPurifier_Lexer_DOMLex extends HTMLPurifier_Lexer
         if ($node->nodeType === XML_TEXT_NODE) {
             $data = $this->getData($node); // Handle variable data property
             if ($data !== null) {
-                $tokens[] = $this->factory->createText($data);
+              $tokens[] = $this->factory->createText($data);
             }
             return false;
         } elseif ($node->nodeType === XML_CDATA_SECTION_NODE) {
@@ -272,7 +276,9 @@ class HTMLPurifier_Lexer_DOMLex extends HTMLPurifier_Lexer
      * @param int $errno
      * @param string $errstr
      */
-    public function muteErrorHandler($errno, $errstr) {}
+    public function muteErrorHandler($errno, $errstr)
+    {
+    }
 
     /**
      * Callback function for undoing escaping of stray angled brackets
@@ -323,13 +329,9 @@ class HTMLPurifier_Lexer_DOMLex extends HTMLPurifier_Lexer
         $ret .= '<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />';
         // No protection if $html contains a stray </div>!
         $ret .= '</head><body>';
-        if ($use_div) {
-            $ret .= '<div>';
-        }
+        if ($use_div) $ret .= '<div>';
         $ret .= $html;
-        if ($use_div) {
-            $ret .= '</div>';
-        }
+        if ($use_div) $ret .= '</div>';
         $ret .= '</body></html>';
         return $ret;
     }
