@@ -39,12 +39,12 @@ build:
         override:
           - command: php -v
 
-    php83:
-      environment:
-        php: 8.3
-      tests:
-        override:
-          - command: php -v
+#    php83:
+#      environment:
+#        php: 8.3
+#      tests:
+#        override:
+#          - command: php -v
 
 #    php84:
 #      environment:
