@@ -7,7 +7,7 @@ build:
 
   project_setup:
     override: true
-    commands:
+    before:
       - echo "Skipping composer install as vendor directory is already included."
 
   nodes:
@@ -17,6 +17,8 @@ build:
           version: 7.4
       project_setup:
         override: true
+      before:
+        - echo "Skipping composer install as vendor directory is already included."
       tests:
         override:
           - php-scrutinizer-run
@@ -43,6 +45,8 @@ build:
     php74:
       environment:
         php: 7.4
+      before:
+        - echo "Skipping composer install as vendor directory is already included."
       tests:
         override:
           - vendor/bin/phpunit
@@ -69,6 +73,8 @@ build:
     php80:
       environment:
         php: 8.0
+      before:
+        - echo "Skipping composer install as vendor directory is already included."
       tests:
         override:
           - vendor/bin/phpunit
@@ -95,6 +101,8 @@ build:
     php81:
       environment:
         php: 8.1
+      before:
+        - echo "Skipping composer install as vendor directory is already included."
       tests:
         override:
           - vendor/bin/phpunit
@@ -121,6 +129,8 @@ build:
     php82:
       environment:
         php: 8.2
+      before:
+        - echo "Skipping composer install as vendor directory is already included."
       tests:
         override:
           - vendor/bin/phpunit
@@ -147,6 +157,8 @@ build:
     php83:
       environment:
         php: 8.3
+      before:
+        - echo "Skipping composer install as vendor directory is already included."
       tests:
         override:
           - vendor/bin/phpunit
@@ -173,6 +185,8 @@ build:
     php84:
       environment:
         php: 8.4
+      before:
+        - echo "Skipping composer install as vendor directory is already included."
       tests:
         override:
           - vendor/bin/phpunit
@@ -199,6 +213,8 @@ build:
     coverage:
       environment:
         php: 8.2 # Use a stable PHP version for coverage
+      before:
+        - echo "Skipping composer install as vendor directory is already included."
       tests:
         override:
           - command: vendor/bin/phpunit --coverage-clover=coverage.xml
