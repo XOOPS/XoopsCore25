@@ -24,8 +24,8 @@ defined('XOOPS_ROOT_PATH') || exit('Restricted access');
  */
 class XoopsFormElementTray extends XoopsFormElement
 {
-    const ORIENTATION_HORIZONTAL = 'horizontal';
-    const ORIENTATION_VERTICAL   = 'vertical';
+    public const ORIENTATION_HORIZONTAL = 'horizontal';
+    public const ORIENTATION_VERTICAL   = 'vertical';
 
     /**
      * array of form element objects
@@ -33,14 +33,14 @@ class XoopsFormElementTray extends XoopsFormElement
      * @var array
      * @access private
      */
-    private $_elements = array();
+    private $_elements = [];
 
     /**
      * required elements
      *
      * @var array
      */
-    public $_required = array();
+    public $_required = [];
 
     protected $orientation;
 
@@ -132,7 +132,7 @@ class XoopsFormElementTray extends XoopsFormElement
         if (!$recurse) {
             return $this->_elements;
         } else {
-            $ret   = array();
+            $ret   = [];
             $count = count($this->_elements);
             for ($i = 0; $i < $count; ++$i) {
                 if (!$this->_elements[$i]->isContainer()) {

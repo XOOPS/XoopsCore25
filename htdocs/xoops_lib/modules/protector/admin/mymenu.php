@@ -1,4 +1,5 @@
 <?php
+
 // Skip for ORETEKI XOOPS
 if (defined('XOOPS_ORETEKI')) {
     return null;
@@ -29,13 +30,13 @@ include dirname(__DIR__) . '/admin_menu.php';
 if (file_exists(XOOPS_TRUST_PATH . '/libs/altsys/mytplsadmin.php')) {
     // mytplsadmin (TODO check if this module has tplfile)
     $title       = defined('_MD_A_MYMENU_MYTPLSADMIN') ? _MD_A_MYMENU_MYTPLSADMIN : 'tplsadmin';
-    $adminmenu[] = array('title' => $title, 'link' => 'admin/index.php?mode=admin&lib=altsys&page=mytplsadmin');
+    $adminmenu[] = ['title' => $title, 'link' => 'admin/index.php?mode=admin&lib=altsys&page=mytplsadmin'];
 }
 
 if (file_exists(XOOPS_TRUST_PATH . '/libs/altsys/myblocksadmin.php')) {
     // myblocksadmin
     $title       = defined('_MD_A_MYMENU_MYBLOCKSADMIN') ? _MD_A_MYMENU_MYBLOCKSADMIN : 'blocksadmin';
-    $adminmenu[] = array('title' => $title, 'link' => 'admin/index.php?mode=admin&lib=altsys&page=myblocksadmin');
+    $adminmenu[] = ['title' => $title, 'link' => 'admin/index.php?mode=admin&lib=altsys&page=myblocksadmin'];
 }
 
 // preferences
@@ -45,12 +46,13 @@ if (count($config_handler->getConfigs(new Criteria('conf_modid', $xoopsModule->m
     if (file_exists(XOOPS_TRUST_PATH . '/libs/altsys/mypreferences.php')) {
         // mypreferences
         $title       = defined('_MD_A_MYMENU_MYPREFERENCES') ? _MD_A_MYMENU_MYPREFERENCES : _PREFERENCES;
-        $adminmenu[] = array('title' => $title, 'link' => 'admin/index.php?mode=admin&lib=altsys&page=mypreferences');
+        $adminmenu[] = ['title' => $title, 'link' => 'admin/index.php?mode=admin&lib=altsys&page=mypreferences'];
     } else {
         // system->preferences
-        $adminmenu[] = array(
+        $adminmenu[] = [
             'title' => _PREFERENCES,
-            'link'  => XOOPS_URL . '/modules/system/admin.php?fct=preferences&op=showmod&mod=' . $xoopsModule->mid());
+            'link'  => XOOPS_URL . '/modules/system/admin.php?fct=preferences&op=showmod&mod=' . $xoopsModule->mid(),
+        ];
     }
 }
 
@@ -69,7 +71,7 @@ foreach (array_keys($adminmenu) as $i) {
 }
 if (empty($adminmenu_hilighted)) {
     foreach (array_keys($adminmenu) as $i) {
-        if (false !== stripos($mymenu_uri, $adminmenu[$i]['link'])) {
+        if (false !== stripos($mymenu_uri, (string) $adminmenu[$i]['link'])) {
             $adminmenu[$i]['color']          = '#FFCCCC';
             $GLOBALS['altsysAdminPageTitle'] = $adminmenu[$i]['title'];
             break;
@@ -93,4 +95,3 @@ foreach( $adminmenu as $menuitem ) {
 echo "</div>\n<hr style='clear:left;display:block;' />\n" ;
 */
 // end hack by Mage
-

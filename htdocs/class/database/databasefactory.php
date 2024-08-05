@@ -28,9 +28,7 @@ class XoopsDatabaseFactory
     /**
      * XoopsDatabaseFactory constructor.
      */
-    public function __construct()
-    {
-    }
+    public function __construct() {}
 
     /**
      * Get a reference to the only instance of database class and connects to DB
@@ -56,7 +54,7 @@ class XoopsDatabaseFactory
                 }
 
                 $xoopsPreload = XoopsPreload::getInstance();
-                $xoopsPreload->triggerEvent('core.class.database.databasefactory.connection', array(&$class));
+                $xoopsPreload->triggerEvent('core.class.database.databasefactory.connection', [&$class]);
 
                 $instance = new $class();
                 $instance->setLogger(XoopsLogger::getInstance());

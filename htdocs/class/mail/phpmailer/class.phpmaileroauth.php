@@ -67,7 +67,7 @@ class PHPMailerOAuth extends PHPMailer
                 $this->oauthUserEmail,
                 $this->oauthClientSecret,
                 $this->oauthClientId,
-                $this->oauthRefreshToken
+                $this->oauthRefreshToken,
             );
         }
         return $this->oauth;
@@ -82,7 +82,7 @@ class PHPMailerOAuth extends PHPMailer
      * @return bool
      * @throws phpmailerException
      */
-    public function smtpConnect($options = array())
+    public function smtpConnect($options = [])
     {
         if (is_null($this->smtp)) {
             $this->smtp = $this->getSMTPInstance();
@@ -105,7 +105,7 @@ class PHPMailerOAuth extends PHPMailer
         $lastexception = null;
 
         foreach ($hosts as $hostentry) {
-            $hostinfo = array();
+            $hostinfo = [];
             if (!preg_match('/^((ssl|tls):\/\/)*([a-zA-Z0-9\.-]*):?([0-9]*)$/', trim($hostentry), $hostinfo)) {
                 // Not a valid host entry
                 continue;
@@ -132,12 +132,12 @@ class PHPMailerOAuth extends PHPMailer
             if ('tls' === $secure or 'ssl' === $secure) {
                 //Check for an OpenSSL constant rather than using extension_loaded, which is sometimes disabled
                 if (!$sslext) {
-                    throw new phpmailerException($this->lang('extension_missing').'openssl', self::STOP_CRITICAL);
+                    throw new phpmailerException($this->lang('extension_missing') . 'openssl', self::STOP_CRITICAL);
                 }
             }
             $host = $hostinfo[3];
             $port = $this->Port;
-            $tport = (integer)$hostinfo[4];
+            $tport = (int) $hostinfo[4];
             if ($tport > 0 and $tport < 65536) {
                 $port = $tport;
             }
@@ -171,7 +171,7 @@ class PHPMailerOAuth extends PHPMailer
                             $this->AuthType,
                             $this->Realm,
                             $this->Workstation,
-                            $this->oauth
+                            $this->oauth,
                         )
                         ) {
                             throw new phpmailerException($this->lang('authenticate'));

@@ -299,7 +299,7 @@ class HTMLPurifier_HTMLModuleManager
             foreach ($module->info_injector as $injector) {
                 if (!is_object($injector)) {
                     $class = "HTMLPurifier_Injector_$injector";
-                    $injector = new $class;
+                    $injector = new $class();
                 }
                 $n[$injector->name] = $injector;
             }

@@ -20,7 +20,7 @@ class Upgrade_256 extends XoopsUpgrade
     public function __construct()
     {
         parent::__construct(basename(__DIR__));
-        $this->tasks = array('com_user', 'com_email',  'com_url');
+        $this->tasks = ['com_user', 'com_email', 'com_url'];
     }
 
     /**
@@ -33,7 +33,8 @@ class Upgrade_256 extends XoopsUpgrade
         $result = $GLOBALS['xoopsDB']->queryF($sql);
         if (!$GLOBALS['xoopsDB']->isResultSet($result)) {
             throw new \RuntimeException(
-                \sprintf(_DB_QUERY_ERROR, $sql) . $GLOBALS['xoopsDB']->error(), E_USER_ERROR
+                \sprintf(_DB_QUERY_ERROR, $sql) . $GLOBALS['xoopsDB']->error(),
+                E_USER_ERROR,
             );
         }
 
@@ -51,7 +52,8 @@ class Upgrade_256 extends XoopsUpgrade
         $result = $GLOBALS['xoopsDB']->queryF($sql);
         if (!$GLOBALS['xoopsDB']->isResultSet($result)) {
             throw new \RuntimeException(
-                \sprintf(_DB_QUERY_ERROR, $sql) . $GLOBALS['xoopsDB']->error(), E_USER_ERROR
+                \sprintf(_DB_QUERY_ERROR, $sql) . $GLOBALS['xoopsDB']->error(),
+                E_USER_ERROR,
             );
         }
 
@@ -69,7 +71,8 @@ class Upgrade_256 extends XoopsUpgrade
         $result = $GLOBALS['xoopsDB']->queryF($sql);
         if (!$GLOBALS['xoopsDB']->isResultSet($result)) {
             throw new \RuntimeException(
-                \sprintf(_DB_QUERY_ERROR, $sql) . $GLOBALS['xoopsDB']->error(), E_USER_ERROR
+                \sprintf(_DB_QUERY_ERROR, $sql) . $GLOBALS['xoopsDB']->error(),
+                E_USER_ERROR,
             );
         }
 

@@ -24,11 +24,12 @@ class Protector_postcommon_post_need_multibyte extends ProtectorFilterAbstract
             return true;
         }
 
-        $lengths = array(
+        $lengths = [
             0          => 100, // default value
             'message'  => 2,
             'com_text' => 2,
-            'excerpt'  => 2);
+            'excerpt'  => 2,
+        ];
 
         foreach ($_POST as $key => $data) {
             // dare to ignore arrays/objects
@@ -36,7 +37,7 @@ class Protector_postcommon_post_need_multibyte extends ProtectorFilterAbstract
                 continue;
             }
 
-            $check_length = isset($lengths[$key]) ? $lengths[$key] : $lengths[0];
+            $check_length = $lengths[$key] ?? $lengths[0];
             if (strlen($data) > $check_length) {
                 if (strlen($data) == mb_strlen($data)) {
                     $this->protector->message .= "No multibyte character was found ($data)\n";

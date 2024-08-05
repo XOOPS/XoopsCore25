@@ -305,9 +305,9 @@ class XoopsImagecategoryHandler extends XoopsObjectHandler
      * @param  bool            $id_as_key if true, use id as array key
      * @return array of XoopsImagecategory objects
      */
-    public function getObjects(CriteriaElement $criteria = null, $id_as_key = false)
+    public function getObjects(?CriteriaElement $criteria = null, $id_as_key = false)
     {
-        $ret   = array();
+        $ret   = [];
         $limit = $start = 0;
         $sql   = 'SELECT DISTINCT c.* FROM ' . $this->db->prefix('imagecategory') . ' c LEFT JOIN ' . $this->db->prefix('group_permission') . " l ON l.gperm_itemid=c.imgcat_id WHERE (l.gperm_name = 'imgcat_read' OR l.gperm_name = 'imgcat_write')";
         if (isset($criteria) && is_subclass_of($criteria, 'CriteriaElement')) {
@@ -342,7 +342,7 @@ class XoopsImagecategoryHandler extends XoopsObjectHandler
      * @param  CriteriaElement $criteria {@link CriteriaElement}
      * @return int
      **/
-    public function getCount(CriteriaElement $criteria = null)
+    public function getCount(?CriteriaElement $criteria = null)
     {
         $sql = 'SELECT COUNT(*) FROM ' . $this->db->prefix('imagecategory') . ' i LEFT JOIN ' . $this->db->prefix('group_permission') . " l ON l.gperm_itemid=i.imgcat_id WHERE (l.gperm_name = 'imgcat_read' OR l.gperm_name = 'imgcat_write')";
         if (isset($criteria) && is_subclass_of($criteria, 'CriteriaElement')) {
@@ -353,7 +353,7 @@ class XoopsImagecategoryHandler extends XoopsObjectHandler
         if (!$this->db->isResultSet($result)) {
             return 0;
         }
-        list($count) = $this->db->fetchRow($result);
+        [$count] = $this->db->fetchRow($result);
 
         return (int)$count;
     }
@@ -369,7 +369,7 @@ class XoopsImagecategoryHandler extends XoopsObjectHandler
      * @internal param bool $image_display
      * @return array Array of {@link XoopsImage} objects
      */
-    public function getList($groups = array(), $perm = 'imgcat_read', $display = null, $storetype = null)
+    public function getList($groups = [], $perm = 'imgcat_read', $display = null, $storetype = null)
     {
         $criteria = new CriteriaCompo();
         if (!empty($groups) && \is_array($groups)) {
@@ -390,7 +390,7 @@ class XoopsImagecategoryHandler extends XoopsObjectHandler
             $criteria->add(new Criteria('imgcat_storetype', $storetype));
         }
         $categories = $this->getObjects($criteria, true);
-        $ret        = array();
+        $ret        = [];
         foreach (array_keys($categories) as $i) {
             $ret[$i] = $categories[$i]->getVar('imgcat_name');
         }

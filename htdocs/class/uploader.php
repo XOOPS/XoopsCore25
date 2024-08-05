@@ -85,20 +85,21 @@ class XoopsMediaUploader
     public $mediaError;
     public $mediaRealType           = '';
     public $uploadDir               = '';
-    public $allowedMimeTypes        = array();
-    public $deniedMimeTypes         = array(
-        'application/x-httpd-php');
+    public $allowedMimeTypes        = [];
+    public $deniedMimeTypes         = [
+        'application/x-httpd-php',
+    ];
     public $maxFileSize             = 0;
     public $maxWidth;
     public $maxHeight;
     public $targetFileName;
     public $prefix;
-    public $errors                  = array();
+    public $errors                  = [];
     public $savedDestination;
     public $savedFileName;
-    public $extensionToMime         = array();
+    public $extensionToMime         = [];
     public $checkImageType          = true;
-    public $extensionsToBeSanitized = array(
+    public $extensionsToBeSanitized = [
         'php',
         'phtml',
         'phtm',
@@ -109,9 +110,9 @@ class XoopsMediaUploader
         'asp',
         'php5',
         'php7',
-    );
+    ];
     // extensions needed image check (anti-IE Content-Type XSS)
-    public $imageExtensions = array(
+    public $imageExtensions = [
         1  => 'gif',
         2  => 'jpg',
         3  => 'png',
@@ -128,7 +129,8 @@ class XoopsMediaUploader
         14 => 'iff',
         15 => 'wbmp',
         16 => 'xbm',
-        17 => 'webp');
+        17 => 'webp',
+    ];
     public $randomFilename  = false;
 
     /**
@@ -146,16 +148,16 @@ class XoopsMediaUploader
     {
         $this->extensionToMime = include $GLOBALS['xoops']->path('include/mimetypes.inc.php');
         if (!is_array($this->extensionToMime)) {
-            $this->extensionToMime = array();
+            $this->extensionToMime = [];
 
             return false;
         }
         if (is_array($allowedMimeTypes)) {
-            $this->allowedMimeTypes =& $allowedMimeTypes;
+            $this->allowedMimeTypes = & $allowedMimeTypes;
         }
         $this->uploadDir = $uploadDir;
 
-        $limits = array();
+        $limits = [];
         $limits = $this->arrayPushIfPositive($limits, $maxFileSize);
         $limits = $this->arrayPushIfPositive($limits, $this->return_bytes(ini_get('upload_max_filesize')));
         $limits = $this->arrayPushIfPositive($limits, $this->return_bytes(ini_get('post_max_size')));
@@ -163,10 +165,10 @@ class XoopsMediaUploader
         $this->maxFileSize = min($limits);
 
         if (isset($maxWidth)) {
-            $this->maxWidth = (int)$maxWidth;
+            $this->maxWidth = (int) $maxWidth;
         }
         if (isset($maxHeight)) {
-            $this->maxHeight = (int)$maxHeight;
+            $this->maxHeight = (int) $maxHeight;
         }
         if (isset($randomFilename)) {
             $this->randomFilename = $randomFilename;
@@ -188,13 +190,13 @@ class XoopsMediaUploader
         switch (substr($size_str, -1)) {
             case 'K':
             case 'k':
-                return (int)$size_str * 1024;
+                return (int) $size_str * 1024;
             case 'M':
             case 'm':
-                return (int)$size_str * 1048576;
+                return (int) $size_str * 1048576;
             case 'G':
             case 'g':
-                return (int)$size_str * 1073741824;
+                return (int) $size_str * 1073741824;
             default:
                 return $size_str;
         }
@@ -206,7 +208,8 @@ class XoopsMediaUploader
      * @param  string $media_name Name of the file field
      * @return int|false
      */
-    public function countMedia($media_name) {
+    public function countMedia($media_name)
+    {
         if (!Request::hasVar($media_name, 'FILES')) {
             $this->setErrors(_ER_UP_FILENOTFOUND);
             return false;
@@ -238,7 +241,7 @@ class XoopsMediaUploader
         $files = Request::getArray($media_name, [], 'FILES');
 
         if (is_array($files['name']) && isset($index)) {
-            $index = (int)$index;
+            $index = (int) $index;
             $this->mediaName = $files['name'][$index];
             if ($this->randomFilename) {
                 $unique = uniqid();
@@ -270,9 +273,9 @@ class XoopsMediaUploader
                 $this->mediaRealType = $this->extensionToMime[$ext];
             }
         }
-        $this->errors = array();
+        $this->errors = [];
         if ($this->mediaError > 0) {
-            switch($this->mediaError){
+            switch($this->mediaError) {
                 case UPLOAD_ERR_INI_SIZE:
                     $this->setErrors(_ER_UP_INISIZE);
                     return false;
@@ -308,7 +311,7 @@ class XoopsMediaUploader
             }
         }
 
-        if ((int)$this->mediaSize < 0) {
+        if ((int) $this->mediaSize < 0) {
             $this->setErrors(_ER_UP_INVALIDFILESIZE);
 
             return false;
@@ -334,7 +337,7 @@ class XoopsMediaUploader
      */
     public function setTargetFileName($value)
     {
-        $this->targetFileName = (string)trim($value);
+        $this->targetFileName = (string) trim($value);
     }
 
     /**
@@ -344,7 +347,7 @@ class XoopsMediaUploader
      */
     public function setPrefix($value)
     {
-        $this->prefix = (string)trim($value);
+        $this->prefix = (string) trim($value);
     }
 
     /**
@@ -462,7 +465,7 @@ class XoopsMediaUploader
      */
     public function _copyFile($chmod)
     {
-        $matched = array();
+        $matched = [];
         if (!preg_match("/\.([a-zA-Z0-9]+)$/", $this->mediaName, $matched)) {
             $this->setErrors(_ER_UP_INVALIDFILENAME);
             return false;
@@ -631,8 +634,8 @@ class XoopsMediaUploader
             return null;
         }
 
-        $patterns = array();
-        $replaces = array();
+        $patterns = [];
+        $replaces = [];
         foreach ($this->extensionsToBeSanitized as $ext) {
             $patterns[] = "/\." . preg_quote($ext, '/') . "\./i";
             $replaces[] = '_' . $ext . '.';
@@ -682,7 +685,8 @@ class XoopsMediaUploader
      *
      * @return mixed
      */
-    protected function arrayPushIfPositive($set, $value) {
+    protected function arrayPushIfPositive($set, $value)
+    {
         if ($value > 0) {
             array_push($set, $value);
         }

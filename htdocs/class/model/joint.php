@@ -67,8 +67,9 @@ class XoopsModelJoint extends XoopsModelAbstract
      * @return array of objects <a href='psi_element://XoopsObject'>XoopsObject</a>
      * @internal param CriteriaElement $object <a href='psi_element://CriteriaElement'>CriteriaElement</a> to match to match
      */
-    public function &getByLink(CriteriaElement $criteria = null, $fields = null, $asObject = true, $field_link = null, $field_object = null)
+    public function getByLink(?CriteriaElement $criteria = null, $fields = null, $asObject = true, $field_link = null, $field_object = null)
     {
+        $ret = [];
         if (!empty($field_link)) {
             $this->handler->field_link = $field_link;
         }
@@ -76,7 +77,7 @@ class XoopsModelJoint extends XoopsModelAbstract
             $this->handler->field_object = $field_object;
         }
         if (!$this->validateLinks()) {
-            return null;
+            return $ret;
         }
 
         if (!empty($fields) && \is_array($fields)) {
@@ -106,10 +107,11 @@ class XoopsModelJoint extends XoopsModelAbstract
         $result = $this->handler->db->query($sql, $limit, $start);
         if (!$this->handler->db->isResultSet($result)) {
             throw new \RuntimeException(
-                \sprintf(_DB_QUERY_ERROR, $sql) . $this->handler->db->error(), E_USER_ERROR
+                \sprintf(_DB_QUERY_ERROR, $sql) . $this->handler->db->error(),
+                E_USER_ERROR,
             );
         }
-        $ret    = array();
+        $ret    = [];
         if ($asObject) {
             while (false !== ($myrow = $this->handler->db->fetchArray($result))) {
                 $object = $this->handler->create(false);
@@ -135,7 +137,7 @@ class XoopsModelJoint extends XoopsModelAbstract
      * @param  CriteriaElement|CriteriaCompo $criteria {@link CriteriaElement} to match
      * @return int|false    count of objects
      */
-    public function getCountByLink(CriteriaElement $criteria = null)
+    public function getCountByLink(?CriteriaElement $criteria = null)
     {
         if (!$this->validateLinks()) {
             return null;
@@ -160,7 +162,7 @@ class XoopsModelJoint extends XoopsModelAbstract
      * @param  CriteriaElement|CriteriaCompo $criteria {@link CriteriaElement} to match
      * @return int|false|array|null    count of objects
      */
-    public function getCountsByLink(CriteriaElement $criteria = null)
+    public function getCountsByLink(?CriteriaElement $criteria = null)
     {
         if (!$this->validateLinks()) {
             return null;
@@ -174,8 +176,8 @@ class XoopsModelJoint extends XoopsModelAbstract
         if (!$this->handler->db->isResultSet($result)) {
             return false;
         }
-        $ret = array();
-        while (false !== (list($id, $count) = $this->handler->db->fetchRow($result))) {
+        $ret = [];
+        while (false !== ([$id, $count] = $this->handler->db->fetchRow($result))) {
             $ret[$id] = $count;
         }
 
@@ -189,12 +191,12 @@ class XoopsModelJoint extends XoopsModelAbstract
      * @param  CriteriaElement|CriteriaCompo $criteria {@link CriteriaElement} to match
      * @return int|null    count of objects
      */
-    public function updateByLink($data, CriteriaElement $criteria = null)
+    public function updateByLink($data, ?CriteriaElement $criteria = null)
     {
         if (!$this->validateLinks()) {
             return null;
         }
-        $set = array();
+        $set = [];
         foreach ($data as $key => $val) {
             $set[] = "o.{$key}=" . $this->handler->db->quoteString($val);
         }
@@ -212,7 +214,7 @@ class XoopsModelJoint extends XoopsModelAbstract
      * @param  CriteriaElement|CriteriaCompo $criteria {@link CriteriaElement} to match
      * @return int|null    count of objects
      */
-    public function deleteByLink(CriteriaElement $criteria = null)
+    public function deleteByLink(?CriteriaElement $criteria = null)
     {
         if (!$this->validateLinks()) {
             return null;

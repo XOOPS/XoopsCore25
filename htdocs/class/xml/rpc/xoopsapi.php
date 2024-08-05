@@ -40,19 +40,19 @@ class XoopsApi extends XoopsXmlRpcApi
         if (!$this->_checkUser($this->params[1], $this->params[2])) {
             $this->response->add(new XoopsXmlRpcFault(104));
         } else {
-            if (!$fields =& $this->_getPostFields(null, $this->params[0])) {
+            if (!$fields = & $this->_getPostFields(null, $this->params[0])) {
                 $this->response->add(new XoopsXmlRpcFault(106));
             } else {
-                $missing = array();
+                $missing = [];
                 foreach ($fields as $tag => $detail) {
                     if (!isset($this->params[3][$tag])) {
                         $data = $this->_getTagCdata($this->params[3]['xoops_text'], $tag, true);
-                        if (trim($data) == '') {
+                        if ('' == trim($data)) {
                             if ($detail['required']) {
                                 $missing[] = $tag;
                             }
                         } else {
-                            $post[$tag] =& $data;
+                            $post[$tag] = & $data;
                         }
                     } else {
                         $post[$tag] = $this->params[3][$tag];
@@ -69,7 +69,7 @@ class XoopsApi extends XoopsXmlRpcApi
                     include_once XOOPS_ROOT_PATH . '/modules/news/class/class.newsstory.php';
                     $story = new NewsStory();
                     $error = false;
-                    if ((int)$this->params[4] > 0) {
+                    if ((int) $this->params[4] > 0) {
                         if (!$this->_checkAdmin()) {
                             // non admin users cannot publish
                             $error = true;
@@ -88,7 +88,7 @@ class XoopsApi extends XoopsXmlRpcApi
                     }
                     if (!$error) {
                         if (isset($post['categories']) && !empty($post['categories'][0])) {
-                            $story->setTopicId((int)$post['categories'][0]['categoryId']);
+                            $story->setTopicId((int) $post['categories'][0]['categoryId']);
                         } else {
                             $story->setTopicId(1);
                         }
@@ -128,13 +128,13 @@ class XoopsApi extends XoopsXmlRpcApi
         if (!$this->_checkUser($this->params[1], $this->params[2])) {
             $this->response->add(new XoopsXmlRpcFault(104));
         } else {
-            if (!$fields =& $this->_getPostFields($this->params[0])) {
+            if (!$fields = & $this->_getPostFields($this->params[0])) {
             } else {
-                $missing = array();
+                $missing = [];
                 foreach ($fields as $tag => $detail) {
                     if (!isset($this->params[3][$tag])) {
                         $data = $this->_getTagCdata($this->params[3]['xoops_text'], $tag, true);
-                        if (trim($data) == '') {
+                        if ('' == trim($data)) {
                             if ($detail['required']) {
                                 $missing[] = $tag;
                             }
@@ -214,20 +214,21 @@ class XoopsApi extends XoopsXmlRpcApi
      */
     public function &getPost($respond = true)
     {
+        $ret = [];
         if (!$this->_checkUser($this->params[1], $this->params[2])) {
             $this->response->add(new XoopsXmlRpcFault(104));
         } else {
             // will be removed... don't worry if this looks bad
             include_once XOOPS_ROOT_PATH . '/modules/news/class/class.newsstory.php';
             $story = new NewsStory($this->params[0]);
-            $ret   = array(
+            $ret   = [
                 'uid'       => $story->uid(),
                 'published' => $story->published(),
                 'storyid'   => $story->storyid(),
                 'title'     => $story->title('Edit'),
                 'hometext'  => $story->hometext('Edit'),
-                'moretext'  => $story->bodytext('Edit')
-            );
+                'moretext'  => $story->bodytext('Edit'),
+            ];
             if (!$respond) {
                 return $ret;
             } else {
@@ -252,7 +253,7 @@ class XoopsApi extends XoopsXmlRpcApi
                             case 'title':
                                 $struct->add('title', new XoopsXmlRpcString($value));
                                 break;
-                            default :
+                            default:
                                 $content .= '<' . $key . '>' . trim($value) . '</' . $key . '>';
                                 break;
                         }
@@ -263,7 +264,7 @@ class XoopsApi extends XoopsXmlRpcApi
             }
         }
 
-        return null;
+        return $ret;
     }
 
     /**
@@ -273,31 +274,32 @@ class XoopsApi extends XoopsXmlRpcApi
      */
     public function &getRecentPosts($respond = true)
     {
+        $ret = [];
         if (!$this->_checkUser($this->params[1], $this->params[2])) {
             $this->response->add(new XoopsXmlRpcFault(104));
         } else {
             include_once XOOPS_ROOT_PATH . '/modules/news/class/class.newsstory.php';
-            if (isset($this->params[4]) && (int)$this->params[4] > 0) {
-                $stories =& NewsStory::getAllPublished((int)$this->params[3], 0, $this->params[4]);
+            if (isset($this->params[4]) && (int) $this->params[4] > 0) {
+                $stories = & NewsStory::getAllPublished((int) $this->params[3], 0, $this->params[4]);
             } else {
-                $stories =& NewsStory::getAllPublished((int)$this->params[3]);
+                $stories = & NewsStory::getAllPublished((int) $this->params[3]);
             }
             $scount = count($stories);
-            $ret    = array();
+            $ret    = [];
             for ($i = 0; $i < $scount; ++$i) {
-                $ret[] = array(
+                $ret[] = [
                     'uid'       => $stories[$i]->uid(),
                     'published' => $stories[$i]->published(),
                     'storyid'   => $stories[$i]->storyId(),
                     'title'     => $stories[$i]->title('Edit'),
                     'hometext'  => $stories[$i]->hometext('Edit'),
-                    'moretext'  => $stories[$i]->bodytext('Edit')
-                );
+                    'moretext'  => $stories[$i]->bodytext('Edit'),
+                ];
             }
             if (!$respond) {
                 return $ret;
             } else {
-                if (count($ret) == 0) {
+                if (0 == count($ret)) {
                     $this->response->add(new XoopsXmlRpcFault(106, 'Found 0 Entries'));
                 } else {
                     $arr   = new XoopsXmlRpcArray();
@@ -321,7 +323,7 @@ class XoopsApi extends XoopsXmlRpcApi
                                 case 'title':
                                     $struct->add('title', new XoopsXmlRpcString($value));
                                     break;
-                                default :
+                                default:
                                     $content .= '<' . $key . '>' . trim($value) . '</' . $key . '>';
                                     break;
                             }
@@ -335,7 +337,7 @@ class XoopsApi extends XoopsXmlRpcApi
             }
         }
 
-        return null;
+        return $ret;
     }
 
     /**
@@ -345,6 +347,7 @@ class XoopsApi extends XoopsXmlRpcApi
      */
     public function &getCategories($respond = true)
     {
+        $ret = [];
         if (!$this->_checkUser($this->params[1], $this->params[2])) {
             $this->response->add(new XoopsXmlRpcFault(104));
         } else {
@@ -355,7 +358,7 @@ class XoopsApi extends XoopsXmlRpcApi
             if (!$respond) {
                 return $ret;
             } else {
-                if (count($ret) == 0) {
+                if (0 == count($ret)) {
                     $this->response->add(new XoopsXmlRpcFault(106, 'Found 0 Entries'));
                 } else {
                     $arr = new XoopsXmlRpcArray();
@@ -372,6 +375,6 @@ class XoopsApi extends XoopsXmlRpcApi
             }
         }
 
-        return null;
+        return $ret;
     }
 }

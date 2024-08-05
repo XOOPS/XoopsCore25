@@ -133,16 +133,16 @@ class XoopsMailer
         $this->fromName     = '';
         $this->fromUser     = null; // RMV-NOTIFY
         $this->priority     = '';
-        $this->toUsers      = array();
-        $this->toEmails     = array();
-        $this->headers      = array();
+        $this->toUsers      = [];
+        $this->toEmails     = [];
+        $this->headers      = [];
         $this->subject      = '';
         $this->body         = '';
-        $this->errors       = array();
-        $this->success      = array();
+        $this->errors       = [];
+        $this->success      = [];
         $this->isMail       = false;
         $this->isPM         = false;
-        $this->assignedTags = array();
+        $this->assignedTags = [];
         $this->template     = '';
         $this->templatedir  = '';
         // Change below to \r\n if you have problem sending mail
@@ -352,11 +352,11 @@ class XoopsMailer
             $text    = str_replace('{X_UID}', $user->getVar('uid'), $this->body);
             $text    = str_replace('{X_UEMAIL}', $user->getVar('email'), $text);
             $text    = str_replace('{X_UNAME}', $user->getVar('uname'), $text);
-			if ($user->getVar('name') == ''){
-				$x_name = $user->getVar('uname');
-			} else {
-				$x_name = $user->getVar('name');
-			}
+            if ($user->getVar('name') == '') {
+                $x_name = $user->getVar('uname');
+            } else {
+                $x_name = $user->getVar('name');
+            }
             $text    = str_replace('{X_NAME}', $x_name, $text);
             $text    = str_replace('{X_UACTLINK}', XOOPS_URL . '/register.php?op=actv&id=' . $user->getVar('uid') . '&actkey=' . $user->getVar('actkey'), $text);
             // send mail
@@ -615,7 +615,5 @@ class XoopsMailer
     /**
      * @param $text
      */
-    public function encodeBody(&$text)
-    {
-    }
+    public function encodeBody(&$text) {}
 }

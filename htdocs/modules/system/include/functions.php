@@ -26,8 +26,8 @@
  */
 function system_CleanVars(&$global, $key, $default = '', $type = 'int')
 {
-	$GLOBALS['xoopsLogger']->addDeprecated('Function ' . __FUNCTION__ . " is deprecated since XOOPS 2.5.11, please use 'Xmf\Request' instead");
-	switch ($type) {
+    $GLOBALS['xoopsLogger']->addDeprecated('Function ' . __FUNCTION__ . " is deprecated since XOOPS 2.5.11, please use 'Xmf\Request' instead");
+    switch ($type) {
         case 'array':
             $ret = (isset($global[$key]) && \is_array($global[$key])) ? $global[$key] : $default;
             break;
@@ -87,7 +87,7 @@ function system_loadLanguage($name, $domain = '', $language = null)
  */
 function system_adminVersion($version, $value = '')
 {
-    static $tblVersion = array();
+    static $tblVersion = [];
     if (is_array($tblVersion) && array_key_exists($version . '.' . $value, $tblVersion)) {
         return $tblVersion[$version . '.' . $value];
     }

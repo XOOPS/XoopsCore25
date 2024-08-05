@@ -39,36 +39,36 @@
  * @param $params
  * @param $smarty
  */
-function smarty_function_xoUserInfo($params, &$smarty)
+function smarty_function_xoUserInfo($params, $smarty)
 {
     global $xoopsUser, $xoopsConfig;
 
     /** @var array $usersInfo uid indexed cache of user data */
-    static $usersInfo = array();
+    static $usersInfo = [];
 
     $uid = 0;
     if (!empty($params['uid'])) {
-        $uid = (int)$params['uid'];
+        $uid = (int) $params['uid'];
     } elseif (isset($xoopsUser) && is_object($xoopsUser)) {
         $uid = $xoopsUser->getVar('uid');
     }
 
     $assign = empty($params['assign']) ? 'userInfo' : $params['assign'];
 
-    $infoFields = array(
+    $infoFields = [
         'uname', 'name', 'email', 'user_avatar', 'url', 'posts',
-        'user_from', 'user_occ', 'user_intrest', 'bio', 'user_sig'
-    );
+        'user_from', 'user_occ', 'user_intrest', 'bio', 'user_sig',
+    ];
 
     if (!isset($usersInfo[0])) {
-        $usersInfo[0] = array('uname' => $xoopsConfig['anonymous']);
+        $usersInfo[0] = ['uname' => $xoopsConfig['anonymous']];
     }
 
     $userHandler = xoops_getHandler('user');
     if (isset($usersInfo[$uid])) {
         $userData = $usersInfo[$uid];
     } elseif ($userObject = $userHandler->get($uid)) {
-        $userData =  array();
+        $userData =  [];
         foreach ($infoFields as $field) {
             $userData[$field] = $userObject->getVar($field, 'E');
         }

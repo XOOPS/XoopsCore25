@@ -31,13 +31,13 @@ global $upgradeControl;
     if (!empty($extraSources)) {
         echo $extraSources;
     }
-    ?>
+?>
     <?php
-    if (file_exists('language/' . $upgradeControl->upgradeLanguage . '/style.css')) {
-        echo '<link rel="stylesheet" type="text/css" media="all" href="language/'
-            . $upgradeControl->upgradeLanguage . '/style.css" />';
-    }
-    ?>
+if (file_exists('language/' . $upgradeControl->upgradeLanguage . '/style.css')) {
+    echo '<link rel="stylesheet" type="text/css" media="all" href="language/'
+        . $upgradeControl->upgradeLanguage . '/style.css" />';
+}
+?>
 
 </head>
 
@@ -62,22 +62,22 @@ global $upgradeControl;
                 <a href="#" class="dropdown-toggle" data-toggle="dropdown" title="<?php echo _LANGUAGE; ?>"><i class="fa fa-lg fa-language"></i> <b class="caret"></b></a>
                 <ul class="dropdown-menu">
                     <?php
-                    $languages = $upgradeControl->availableLanguages();
-                    foreach ($languages as $lang) {
-                        $upgradeControl->loadLanguage('support', $lang);
-                        echo '<li><a href="?lang=' . $lang . '">' . $lang . '</a></li>';
-                    }
-                    ?>
+                $languages = $upgradeControl->availableLanguages();
+foreach ($languages as $lang) {
+    $upgradeControl->loadLanguage('support', $lang);
+    echo '<li><a href="?lang=' . $lang . '">' . $lang . '</a></li>';
+}
+?>
                 </ul>
             </li>
             <li class="dropdown">
                 <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-book"></i> <?php echo _SUPPORT; ?> <b class="caret"></b></a>
                 <ul class="dropdown-menu">
                     <?php
-                    foreach ($upgradeControl->supportSites as $lang => $support) {
-                        echo '<li><a href="' . $support['url'] . '" target="_blank">' . $support['title'] . '</a></li>';
-                    }
-                    ?>
+foreach ($upgradeControl->supportSites as $lang => $support) {
+    echo '<li><a href="' . $support['url'] . '" target="_blank">' . $support['title'] . '</a></li>';
+}
+?>
                 </ul>
             </li>
             <li>
@@ -89,20 +89,20 @@ global $upgradeControl;
             <ul class="nav navbar-nav side-nav">
                 <?php
                 $firstNeeded = true;
-                foreach ($upgradeControl->upgradeQueue as $stepName => $info) {
-                    if (!$info->applied && $firstNeeded) {
-                        echo'<li class="active"><a><span class="fa fa-exclamation-triangle"></span> '
-                            . $stepName . '</a></li>';
-                        $firstNeeded = false;
-                    } elseif (!$info->applied) {
-                        echo'<li><a><span class="fa fa-exclamation-triangle text-warning"></span> '
-                            . $stepName . '</a></li>';
-                    } else {
-                        echo'<li><a><span class="fa fa-check text-success"></span> '
-                            . $stepName . '</a></li>';
-                    }
-                }
-                ?>
+foreach ($upgradeControl->upgradeQueue as $stepName => $info) {
+    if (!$info->applied && $firstNeeded) {
+        echo'<li class="active"><a><span class="fa fa-exclamation-triangle"></span> '
+            . $stepName . '</a></li>';
+        $firstNeeded = false;
+    } elseif (!$info->applied) {
+        echo'<li><a><span class="fa fa-exclamation-triangle text-warning"></span> '
+            . $stepName . '</a></li>';
+    } else {
+        echo'<li><a><span class="fa fa-check text-success"></span> '
+            . $stepName . '</a></li>';
+    }
+}
+?>
             </ul>
         </div>
         <!-- /.navbar-collapse -->
@@ -173,9 +173,9 @@ global $upgradeControl;
                     </div>
                 </div>
                 <?php
-                $versionParts=array();
-                $versionResult = preg_match ('/(^[a-z\s]*)([0-9\.]*)/i', XOOPS_VERSION, $versionParts);
-                ?>
+$versionParts = [];
+$versionResult = preg_match('/(^[a-z\s]*)([0-9\.]*)/i', XOOPS_VERSION, $versionParts);
+?>
 
                 <div class="col-lg-3 col-md-6">
                     <div class="panel panel-green">

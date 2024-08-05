@@ -24,6 +24,7 @@ $modversion['help']        = 'page=maintenance';
 $modversion['license']     = 'https://www.gnu.org/licenses/gpl-2.0.html';
 $modversion['official']    = 1;
 $modversion['image']       = 'maintenance.png';
+$modversion['icon']        = 'fa fa-bandcamp';
 
 $modversion['hasAdmin']  = 1;
 $modversion['adminpath'] = 'admin.php?fct=maintenance';

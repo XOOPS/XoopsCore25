@@ -13,8 +13,8 @@ require_once XOOPS_ROOT_PATH . '/class/database/database.php';
  */
 class ProtectorMySQLDatabase extends XoopsMySQLDatabaseProxy
 {
-    public $doubtful_requests = array();
-    public $doubtful_needles  = array(
+    public $doubtful_requests = [];
+    public $doubtful_needles  = [
         // 'order by' ,
         'concat',
         'information_schema',
@@ -22,7 +22,8 @@ class ProtectorMySQLDatabase extends XoopsMySQLDatabaseProxy
         'union',
         '/*', /**/
         '--',
-        '#');
+        '#',
+    ];
 
     /**
      * ProtectorMySQLDatabase constructor.
@@ -60,7 +61,7 @@ class ProtectorMySQLDatabase extends XoopsMySQLDatabaseProxy
         $string_start   = '';
         $in_string      = false;
         $sql_wo_string  = '';
-        $strings        = array();
+        $strings        = [];
         $current_string = '';
 
         for ($i = 0; $i < $sql_len; ++$i) {
@@ -107,7 +108,7 @@ class ProtectorMySQLDatabase extends XoopsMySQLDatabaseProxy
             // because unescaped ' or " have been already checked in stage1
         }
 
-        return array($sql_wo_string, $strings);
+        return [$sql_wo_string, $strings];
     }
 
     /**
@@ -115,7 +116,7 @@ class ProtectorMySQLDatabase extends XoopsMySQLDatabaseProxy
      */
     public function checkSql($sql)
     {
-        list($sql_wo_strings, $strings) = $this->separateStringsInSQL($sql);
+        [$sql_wo_strings, $strings] = $this->separateStringsInSQL($sql);
 
         // stage1: addslashes() processed or not
         foreach ($this->doubtful_requests as $request) {
@@ -124,7 +125,7 @@ class ProtectorMySQLDatabase extends XoopsMySQLDatabaseProxy
                     // check the request stayed inside of strings as whole
                     $ok_flag = false;
                     foreach ($strings as $string) {
-                        if (false !== strpos($string, $request)) {
+                        if (false !== strpos($string, (string) $request)) {
                             $ok_flag = true;
                             break;
                         }
@@ -170,7 +171,7 @@ class ProtectorMySQLDatabase extends XoopsMySQLDatabaseProxy
     {
         $sql4check = substr($sql, 7);
         foreach ($this->doubtful_needles as $needle) {
-            if (false !== stripos($sql4check, $needle)) {
+            if (false !== stripos($sql4check, (string) $needle)) {
                 $this->checkSql($sql);
                 break;
             }

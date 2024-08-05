@@ -44,7 +44,7 @@ EOH;
     function load($myts)
     {
         $myts->patterns[] = "/\[mycode\]([^\]]*)\[\/mycode\]/esU";
-        $myts->replacements[] = __CLASS__."::decode( '\\1' )";
+        $myts->replacements[] = self::class."::decode( '\\1' )";
     }
 
     // Processing the text

@@ -63,7 +63,7 @@ class XoopsObject
      * @var array
      * @access protected
      */
-    public $vars = array();
+    public $vars = [];
 
     /**
      * variables cleaned for store in DB
@@ -71,7 +71,7 @@ class XoopsObject
      * @var array
      * @access protected
      */
-    public $cleanVars = array();
+    public $cleanVars = [];
 
     /**
      * is it a newly created object?
@@ -95,14 +95,14 @@ class XoopsObject
      * @var array
      * @access private
      */
-    public $_errors = array();
+    public $_errors = [];
 
     /**
      * additional filters registered dynamically by a child class object
      *
      * @access private
      */
-    public $_filters = array();
+    public $_filters = [];
 
     /**
      * constructor
@@ -111,9 +111,7 @@ class XoopsObject
      *
      * @access public
      */
-    public function __construct()
-    {
-    }
+    public function __construct() {}
 
     /**
      * PHP 4 style constructor compatibility shim
@@ -195,14 +193,15 @@ class XoopsObject
      */
     public function initVar($key, $data_type, $value = null, $required = false, $maxlength = null, $options = '', $enumerations = '')
     {
-        $this->vars[$key] = array(
+        $this->vars[$key] = [
             'value'       => $value,
             'required'    => $required,
             'data_type'   => $data_type,
             'maxlength'   => $maxlength,
             'changed'     => false,
             'options'     => $options,
-            'enumeration' => $enumerations);
+            'enumeration' => $enumerations,
+        ];
     }
 
     /**
@@ -254,9 +253,9 @@ class XoopsObject
                         $this->vars[$key]['value'] = date(_DBTIMESTAMPSTRING, strtotime($value));
                     }
                     break;
-                // YOU SHOULD NOT USE THE ABOVE TYPES, THEY WILL BE REMOVED
+                    // YOU SHOULD NOT USE THE ABOVE TYPES, THEY WILL BE REMOVED
                 default:
-                    $this->vars[$key]['value'] =& $value;
+                    $this->vars[$key]['value'] = & $value;
             }
         }
     }
@@ -287,7 +286,7 @@ class XoopsObject
     public function setVar($key, $value, $not_gpc = false)
     {
         if (!empty($key) && isset($value) && isset($this->vars[$key])) {
-            $this->vars[$key]['value']   =& $value;
+            $this->vars[$key]['value']   = & $value;
             $this->vars[$key]['not_gpc'] = $not_gpc;
             $this->vars[$key]['changed'] = true;
             $this->setDirty();
@@ -324,7 +323,7 @@ class XoopsObject
         if (empty($var)) {
             return true;
         }
-        $var = !is_array($var) ? array($var) : $var;
+        $var = !is_array($var) ? [$var] : $var;
         foreach ($var as $key) {
             if (!isset($this->vars[$key])) {
                 continue;
@@ -401,7 +400,7 @@ class XoopsObject
         if (!isset($keys)) {
             $keys = array_keys($this->vars);
         }
-        $vars = array();
+        $vars = [];
         foreach ($keys as $key) {
             if (isset($this->vars[$key])) {
                 if (is_object($this->vars[$key]) && is_a($this->vars[$key], 'XoopsObject')) {
@@ -453,7 +452,7 @@ class XoopsObject
                     case 'preview':
                     case 'f':
                     case 'formpreview':
-                        return $myts->htmlSpecialChars($myts->stripSlashesGPC($ret));
+                        return $myts->htmlSpecialChars($ret);
                         break 1;
                     case 'n':
                     case 'none':
@@ -476,7 +475,7 @@ class XoopsObject
                         break 1;
                     case 'e':
                     case 'edit':
-                        return htmlspecialchars((string)$ret, ENT_QUOTES | ENT_HTML5);
+                        return htmlspecialchars((string) $ret, ENT_QUOTES | ENT_HTML5);
                         break 1;
                     case 'p':
                     case 'preview':
@@ -490,7 +489,7 @@ class XoopsObject
                         break 1;
                     case 'f':
                     case 'formpreview':
-                        return htmlspecialchars($myts->stripSlashesGPC($ret), ENT_QUOTES | ENT_HTML5);
+                        return htmlspecialchars($ret, ENT_QUOTES | ENT_HTML5);
                         break 1;
                     case 'n':
                     case 'none':
@@ -508,7 +507,7 @@ class XoopsObject
                             if ($ret != '') {
                                 $ret = unserialize($ret);
                             }
-                            $ret = is_array($ret) ? $ret : array();
+                            $ret = is_array($ret) ? $ret : [];
                             if (is_array($ret)) {
                                 $ret = array_walk($ret, 'xoops_aw_decode');
                             }
@@ -528,7 +527,7 @@ class XoopsObject
                             if ($ret != '') {
                                 $ret = unserialize($ret);
                             }
-                            $ret = is_array($ret) ? $ret : array();
+                            $ret = is_array($ret) ? $ret : [];
                         }
 
                         return $ret;
@@ -546,11 +545,11 @@ class XoopsObject
                         break 1;
                     case 'p':
                     case 'preview':
-                        return $myts->stripSlashesGPC($ret);
+                        return $ret;
                         break 1;
                     case 'f':
                     case 'formpreview':
-                        return htmlspecialchars($myts->stripSlashesGPC($ret), ENT_QUOTES | ENT_HTML5);
+                        return htmlspecialchars($ret, ENT_QUOTES | ENT_HTML5);
                         break 1;
                     case 'n':
                     case 'none':
@@ -579,17 +578,17 @@ class XoopsObject
                     case 'p':
                     case 'preview':
                         if (is_string($ret) && !is_numeric($ret)) {
-                            return $myts->stripSlashesGPC(date(_DBDATESTRING, strtotime($ret)));
+                            return date(_DBDATESTRING, strtotime($ret));
                         } else {
-                            return $myts->stripSlashesGPC(date(_DBDATESTRING, $ret));
+                            return date(_DBDATESTRING, $ret);
                         }
                         break 1;
                     case 'f':
                     case 'formpreview':
                         if (is_string($ret) && !is_numeric($ret)) {
-                            return htmlspecialchars($myts->stripSlashesGPC(date(_DBDATESTRING, strtotime($ret))), ENT_QUOTES | ENT_HTML5);
+                            return htmlspecialchars(date(_DBDATESTRING, strtotime($ret)), ENT_QUOTES | ENT_HTML5);
                         } else {
-                            return htmlspecialchars($myts->stripSlashesGPC(date(_DBDATESTRING, $ret)), ENT_QUOTES | ENT_HTML5);
+                            return htmlspecialchars(date(_DBDATESTRING, $ret), ENT_QUOTES | ENT_HTML5);
                         }
                         break 1;
                     case 'n':
@@ -619,17 +618,17 @@ class XoopsObject
                     case 'p':
                     case 'preview':
                         if (is_string($ret) && !is_numeric($ret)) {
-                            return $myts->stripSlashesGPC(date(_DBTIMESTRING, strtotime($ret)));
+                            return date(_DBTIMESTRING, strtotime($ret));
                         } else {
-                            return $myts->stripSlashesGPC(date(_DBTIMESTRING, $ret));
+                            return date(_DBTIMESTRING, $ret);
                         }
                         break 1;
                     case 'f':
                     case 'formpreview':
                         if (is_string($ret) && !is_numeric($ret)) {
-                            return htmlspecialchars($myts->stripSlashesGPC(date(_DBTIMESTRING, strtotime($ret))), ENT_QUOTES | ENT_HTML5);
+                            return htmlspecialchars(date(_DBTIMESTRING, strtotime($ret)), ENT_QUOTES | ENT_HTML5);
                         } else {
-                            return htmlspecialchars($myts->stripSlashesGPC(date(_DBTIMESTRING, $ret)), ENT_QUOTES | ENT_HTML5);
+                            return htmlspecialchars(date(_DBTIMESTRING, $ret), ENT_QUOTES | ENT_HTML5);
                         }
                         break 1;
                     case 'n':
@@ -659,17 +658,17 @@ class XoopsObject
                     case 'p':
                     case 'preview':
                         if (is_string($ret) && !is_numeric($ret)) {
-                            return $myts->stripSlashesGPC(date(_DBTIMESTAMPSTRING, strtotime($ret)));
+                            return date(_DBDATESTRING, strtotime($ret));
                         } else {
-                            return $myts->stripSlashesGPC(date(_DBTIMESTAMPSTRING, $ret));
+                            return date(_DBDATESTRING, $ret);
                         }
                         break 1;
                     case 'f':
                     case 'formpreview':
                         if (is_string($ret) && !is_numeric($ret)) {
-                            return htmlspecialchars($myts->stripSlashesGPC(date(_DBTIMESTAMPSTRING, strtotime($ret))), ENT_QUOTES | ENT_HTML5);
+                            return htmlspecialchars(date(_DBTIMESTAMPSTRING, strtotime($ret)), ENT_QUOTES | ENT_HTML5);
                         } else {
-                            return htmlspecialchars($myts->stripSlashesGPC(date(_DBTIMESTAMPSTRING, $ret)), ENT_QUOTES | ENT_HTML5);
+                            return htmlspecialchars(date(_DBTIMESTAMPSTRING, $ret), ENT_QUOTES | ENT_HTML5);
                         }
                         break 1;
                     case 'n':
@@ -686,7 +685,7 @@ class XoopsObject
                             $selected = explode('|', $ret);
                             $options  = explode('|', $this->vars[$key]['options']);
                             $i        = 1;
-                            $ret      = array();
+                            $ret      = [];
                             foreach ($options as $op) {
                                 if (in_array($i, $selected)) {
                                     $ret[] = $op;
@@ -722,7 +721,7 @@ class XoopsObject
     {
         $myts              = \MyTextSanitizer::getInstance();
         $existing_errors = $this->getErrors();
-        $this->_errors   = array();
+        $this->_errors   = [];
         foreach ($this->vars as $k => $v) {
             $cleanv = $v['value'];
             if (!$v['changed']) {
@@ -743,34 +742,24 @@ class XoopsObject
                             $this->setErrors(sprintf(_XOBJ_ERR_REQUIRED, $k));
                             continue 2;
                         }
-                        if (isset($v['maxlength']) && strlen($cleanv) > (int)$v['maxlength']) {
-                            $this->setErrors(sprintf(_XOBJ_ERR_SHORTERTHAN, $k, (int)$v['maxlength']));
+                        if (isset($v['maxlength']) && strlen($cleanv) > (int) $v['maxlength']) {
+                            $this->setErrors(sprintf(_XOBJ_ERR_SHORTERTHAN, $k, (int) $v['maxlength']));
                             continue 2;
                         }
-                        if (!$v['not_gpc']) {
-                            $cleanv = $myts->stripSlashesGPC($myts->censorString($cleanv));
-                        } else {
-                            $cleanv = $myts->censorString($cleanv);
-                        }
+                        $cleanv = $myts->censorString($cleanv);
                         break;
                     case XOBJ_DTYPE_TXTAREA:
                         if ($v['required'] && $cleanv != '0' && $cleanv == '') {
                             $this->setErrors(sprintf(_XOBJ_ERR_REQUIRED, $k));
                             continue 2;
                         }
-                        if (!$v['not_gpc']) {
-                            $cleanv = $myts->stripSlashesGPC($myts->censorString($cleanv));
-                        } else {
-                            $cleanv = $myts->censorString($cleanv);
-                        }
+                        $cleanv = $myts->censorString($cleanv);
                         break;
                     case XOBJ_DTYPE_SOURCE:
-                        if (!$v['not_gpc']) {
-                            $cleanv = $myts->stripSlashesGPC($cleanv);
-                        }
+                        // Perform any necessary operations for XOBJ_DTYPE_SOURCE, if needed
                         break;
                     case XOBJ_DTYPE_INT:
-                        $cleanv = (int)$cleanv;
+                        $cleanv = (int) $cleanv;
                         break;
 
                     case XOBJ_DTYPE_EMAIL:
@@ -782,9 +771,6 @@ class XoopsObject
                             $this->setErrors('Invalid Email'); //_XOBJ_ERR_INVALID_EMAIL
                             continue 2;
                         }
-                        if (!$v['not_gpc']) {
-                            $cleanv = $myts->stripSlashesGPC($cleanv);
-                        }
                         break;
                     case XOBJ_DTYPE_URL:
                         if ($v['required'] && $cleanv == '') {
@@ -794,24 +780,21 @@ class XoopsObject
                         if ($cleanv != '' && !preg_match("/^http[s]*:\/\//i", $cleanv)) {
                             $cleanv = XOOPS_PROT . $cleanv;
                         }
-                        if (!$v['not_gpc']) {
-                            $cleanv = $myts->stripSlashesGPC($cleanv);
-                        }
                         break;
                     case XOBJ_DTYPE_ARRAY:
-                        $cleanv = (array)$cleanv;
+                        $cleanv = (array) $cleanv;
                         $cleanv = serialize($cleanv);
                         break;
                     case XOBJ_DTYPE_STIME:
                     case XOBJ_DTYPE_MTIME:
                     case XOBJ_DTYPE_LTIME:
-                        $cleanv = !is_string($cleanv) ? (int)$cleanv : strtotime($cleanv);
+                        $cleanv = !is_string($cleanv) ? (int) $cleanv : strtotime($cleanv);
                         break;
                     case XOBJ_DTYPE_FLOAT:
-                        $cleanv = (float)$cleanv;
+                        $cleanv = (float) $cleanv;
                         break;
                     case XOBJ_DTYPE_DECIMAL:
-                        $cleanv = (float)$cleanv;
+                        $cleanv = (float) $cleanv;
                         break;
                     case XOBJ_DTYPE_ENUM:
                         if (!in_array($cleanv, $v['enumeration'])) {
@@ -825,15 +808,11 @@ class XoopsObject
                             continue 2;
                         }
                         $cleanv = xoops_convert_encode($cleanv);
-                        if (isset($v['maxlength']) && strlen($cleanv) > (int)$v['maxlength']) {
-                            $this->setErrors(sprintf(_XOBJ_ERR_SHORTERTHAN, $k, (int)$v['maxlength']));
+                        if (isset($v['maxlength']) && strlen($cleanv) > (int) $v['maxlength']) {
+                            $this->setErrors(sprintf(_XOBJ_ERR_SHORTERTHAN, $k, (int) $v['maxlength']));
                             continue 2;
                         }
-                        if (!$v['not_gpc']) {
-                            $cleanv = $myts->stripSlashesGPC($myts->censorString($cleanv));
-                        } else {
-                            $cleanv = $myts->censorString($cleanv);
-                        }
+                        $cleanv = $myts->censorString($cleanv);
                         break;
                     case XOBJ_DTYPE_UNICODE_TXTAREA:
                         if ($v['required'] && $cleanv != '0' && $cleanv == '') {
@@ -841,11 +820,7 @@ class XoopsObject
                             continue 2;
                         }
                         $cleanv = xoops_convert_encode($cleanv);
-                        if (!$v['not_gpc']) {
-                            $cleanv = $myts->stripSlashesGPC($myts->censorString($cleanv));
-                        } else {
-                            $cleanv = $myts->censorString($cleanv);
-                        }
+                        $cleanv = $myts->censorString($cleanv);
                         break;
                     case XOBJ_DTYPE_UNICODE_EMAIL:
                         if ($v['required'] && $cleanv == '') {
@@ -857,9 +832,6 @@ class XoopsObject
                             continue 2;
                         }
                         $cleanv = xoops_convert_encode($cleanv);
-                        if (!$v['not_gpc']) {
-                            $cleanv = $myts->stripSlashesGPC($cleanv);
-                        }
                         break;
                     case XOBJ_DTYPE_UNICODE_URL:
                         if ($v['required'] && $cleanv == '') {
@@ -870,9 +842,6 @@ class XoopsObject
                             $cleanv = XOOPS_PROT . $cleanv;
                         }
                         $cleanv = xoops_convert_encode($cleanv);
-                        if (!$v['not_gpc']) {
-                            $cleanv = $myts->stripSlashesGPC($cleanv);
-                        }
                         break;
                     case XOBJ_DTYPE_UNICODE_ARRAY:
                         $cleanv = serialize(array_walk($cleanv, 'xoops_aw_encode'));
@@ -960,7 +929,7 @@ class XoopsObject
             /** @var XoopsModuleHandler $module_handler */
             $module_handler = xoops_getHandler('module');
             $modules_obj    = $module_handler->getObjects(new Criteria('isactive', 1));
-            $modules_active = array();
+            $modules_active = [];
             foreach (array_keys($modules_obj) as $key) {
                 $modules_active[] = $modules_obj[$key]->getVar('dirname');
             }
@@ -971,7 +940,7 @@ class XoopsObject
             if (file_exists($file = XOOPS_ROOT_PATH . '/modules/' . $dirname . '/filter/' . $class . '.' . $method . '.php')) {
                 include_once $file;
                 if (function_exists($class . '_' . $method)) {
-                    call_user_func_array($dirname . '_' . $class . '_' . $method, array(&$this));
+                    call_user_func_array($dirname . '_' . $class . '_' . $method, [&$this]);
                 }
             }
         }
@@ -1116,9 +1085,7 @@ class XoopsObjectHandler
      * @abstract
      * @return XoopsObject
      */
-    public function create()
-    {
-    }
+    public function create() {}
 
     /**
      * gets a value object
@@ -1127,9 +1094,7 @@ class XoopsObjectHandler
      * @abstract
      * @return XoopsObject
      */
-    public function get($id)
-    {
-    }
+    public function get($id) {}
 
     /**
      * insert/update object
@@ -1137,9 +1102,7 @@ class XoopsObjectHandler
      * @param XoopsObject $object
      * @abstract
      */
-    public function insert(XoopsObject $object)
-    {
-    }
+    public function insert(XoopsObject $object) {}
 
     /**
      * delete object from database
@@ -1147,9 +1110,7 @@ class XoopsObjectHandler
      * @param XoopsObject $object
      * @abstract
      */
-    public function delete(XoopsObject $object)
-    {
-    }
+    public function delete(XoopsObject $object) {}
 }
 
 /**
@@ -1162,7 +1123,6 @@ class XoopsObjectHandler
  */
 class XoopsPersistableObjectHandler extends XoopsObjectHandler
 {
-
     //PHP 8.2 Dynamic properties deprecated
     public $table_link;
 
@@ -1191,7 +1151,7 @@ class XoopsPersistableObjectHandler extends XoopsObjectHandler
     /**
      * static protected
      */
-    public $handlers = array('read' => null, 'stats' => null, 'joint' => null, 'write' => null, 'sync' => null);
+    public $handlers = ['read' => null, 'stats' => null, 'joint' => null, 'write' => null, 'sync' => null];
 
     /**
      * Information about the class, the handler is managing
@@ -1235,7 +1195,7 @@ class XoopsPersistableObjectHandler extends XoopsObjectHandler
      * @param string             $identifierName Name of the property holding an identifier
      *                                            name (title, name ...), used on getList()
      */
-    public function __construct(XoopsDatabase $db = null, $table = '', $className = '', $keyName = '', $identifierName = '')
+    public function __construct(?\XoopsDatabase $db = null, $table = '', $className = '', $keyName = '', $identifierName = '')
     {
         $db    = XoopsDatabaseFactory::getDatabaseConnection();
         $table = $db->prefix($table);
@@ -1260,7 +1220,7 @@ class XoopsPersistableObjectHandler extends XoopsObjectHandler
      *
      * @deprecated all callers should be using parent::__construct()
      */
-    public function XoopsPersistableObjectHandler(XoopsDatabase $db = null, $table = '', $className = '', $keyName = '', $identifierName = '')
+    public function XoopsPersistableObjectHandler(?\XoopsDatabase $db = null, $table = '', $className = '', $keyName = '', $identifierName = '')
     {
         $trace = debug_backtrace(DEBUG_BACKTRACE_IGNORE_ARGS, 1);
         trigger_error("Should call parent::__construct in {$trace[0]['file']} line {$trace[0]['line']},", E_USER_DEPRECATED);
@@ -1337,13 +1297,13 @@ class XoopsPersistableObjectHandler extends XoopsObjectHandler
      */
     public function __call($name, $args)
     {
-        if (is_object($this->handler) && is_callable(array($this->handler, $name))) {
-            return call_user_func_array(array($this->handler, $name), $args);
+        if (is_object($this->handler) && is_callable([$this->handler, $name])) {
+            return call_user_func_array([$this->handler, $name], $args);
         }
         foreach (array_keys($this->handlers) as $_handler) {
             $handler = $this->loadHandler($_handler);
-            if (is_callable(array($handler, $name))) {
-                return call_user_func_array(array($handler, $name), $args);
+            if (is_callable([$handler, $name])) {
+                return call_user_func_array([$handler, $name], $args);
             }
         }
 
@@ -1452,7 +1412,7 @@ class XoopsPersistableObjectHandler extends XoopsObjectHandler
      * @param  bool            $asObject delete in object way: instantiate all objects and delete one by one
      * @return bool|int
      */
-    public function deleteAll(CriteriaElement $criteria = null, $force = true, $asObject = false)
+    public function deleteAll(?CriteriaElement $criteria = null, $force = true, $asObject = false)
     {
         $handler = $this->loadHandler('write');
 
@@ -1468,7 +1428,7 @@ class XoopsPersistableObjectHandler extends XoopsObjectHandler
      * @param  bool            $force      force to query
      * @return bool
      */
-    public function updateAll($fieldname, $fieldvalue, CriteriaElement $criteria = null, $force = false)
+    public function updateAll($fieldname, $fieldvalue, ?CriteriaElement $criteria = null, $force = false)
     {
         $handler = $this->loadHandler('write');
 
@@ -1490,7 +1450,7 @@ class XoopsPersistableObjectHandler extends XoopsObjectHandler
      * @param  bool            $as_object return an array of objects
      * @return array
      */
-    public function &getObjects(CriteriaElement $criteria = null, $id_as_key = false, $as_object = true)
+    public function &getObjects(?CriteriaElement $criteria = null, $id_as_key = false, $as_object = true)
     {
         $handler = $this->loadHandler('read');
         $ret     = $handler->getObjects($criteria, $id_as_key, $as_object);
@@ -1507,7 +1467,7 @@ class XoopsPersistableObjectHandler extends XoopsObjectHandler
      * @param  bool            $id_as_key use the ID as key for the array
      * @return array           of objects/array {@link XoopsObject}
      */
-    public function &getAll(CriteriaElement $criteria = null, $fields = null, $asObject = true, $id_as_key = true)
+    public function &getAll(?CriteriaElement $criteria = null, $fields = null, $asObject = true, $id_as_key = true)
     {
         $handler = $this->loadHandler('read');
         $ret     = $handler->getAll($criteria, $fields, $asObject, $id_as_key);
@@ -1523,7 +1483,7 @@ class XoopsPersistableObjectHandler extends XoopsObjectHandler
      * @param  int             $start    Which record to start at
      * @return array
      */
-    public function getList(CriteriaElement $criteria = null, $limit = 0, $start = 0)
+    public function getList(?CriteriaElement $criteria = null, $limit = 0, $start = 0)
     {
         $handler = $this->loadHandler('read');
         $ret     = $handler->getList($criteria, $limit, $start);
@@ -1537,7 +1497,7 @@ class XoopsPersistableObjectHandler extends XoopsObjectHandler
      * @param \CriteriaElement|null $criteria {@link CriteriaElement} to match
      * @return array           of object IDs
      */
-    public function &getIds(CriteriaElement $criteria = null)
+    public function &getIds(?CriteriaElement $criteria = null)
     {
         $handler = $this->loadHandler('read');
         $ret     = $handler->getIds($criteria);
@@ -1557,7 +1517,7 @@ class XoopsPersistableObjectHandler extends XoopsObjectHandler
      * @param  bool            $asObject flag indicating as object, otherwise as array
      * @return array           of objects     {@link XoopsObject}
      */
-    public function &getByLimit($limit = 0, $start = 0, CriteriaElement $criteria = null, $fields = null, $asObject = true)
+    public function &getByLimit($limit = 0, $start = 0, ?CriteriaElement $criteria = null, $fields = null, $asObject = true)
     {
         $handler = $this->loadHandler('read');
         $ret     = $handler->getByLimit($limit, $start, $criteria, $fields, $asObject);
@@ -1578,7 +1538,7 @@ class XoopsPersistableObjectHandler extends XoopsObjectHandler
      * @param \CriteriaElement|null $criteria {@link CriteriaElement} to match
      * @return int             count of objects
      */
-    public function getCount(CriteriaElement $criteria = null)
+    public function getCount(?CriteriaElement $criteria = null)
     {
         $handler = $this->loadHandler('stats');
 
@@ -1591,7 +1551,7 @@ class XoopsPersistableObjectHandler extends XoopsObjectHandler
      * @param \CriteriaElement|null $criteria {@link CriteriaElement} to match
      * @return array           of counts
      */
-    public function getCounts(CriteriaElement $criteria = null)
+    public function getCounts(?CriteriaElement $criteria = null)
     {
         $handler = $this->loadHandler('stats');
 
@@ -1610,12 +1570,12 @@ class XoopsPersistableObjectHandler extends XoopsObjectHandler
      *
      * @param \CriteriaElement|null $criteria     {@link CriteriaElement} to match
      * @param array|null            $fields       variables to fetch
-     * @param  bool            $asObject     flag indicating as object, otherwise as array
+     * @param bool                  $asObject     flag indicating as object, otherwise as array
      * @param string|null           $field_link   field of linked object for JOIN
      * @param string|null           $field_object field of current object for JOIN
      * @return array           of objects {@link XoopsObject}
      */
-    public function &getByLink(CriteriaElement $criteria = null, $fields = null, $asObject = true, $field_link = null, $field_object = null)
+    public function getByLink(?CriteriaElement $criteria = null, $fields = null, $asObject = true, $field_link = null, $field_object = null)
     {
         $handler = $this->loadHandler('joint');
         $ret     = $handler->getByLink($criteria, $fields, $asObject, $field_link, $field_object);
@@ -1629,7 +1589,7 @@ class XoopsPersistableObjectHandler extends XoopsObjectHandler
      * @param \CriteriaElement|null $criteria {@link CriteriaElement} to match
      * @return int             count of objects
      */
-    public function getCountByLink(CriteriaElement $criteria = null)
+    public function getCountByLink(?CriteriaElement $criteria = null)
     {
         $handler = $this->loadHandler('joint');
         $ret     = $handler->getCountByLink($criteria);
@@ -1643,7 +1603,7 @@ class XoopsPersistableObjectHandler extends XoopsObjectHandler
      * @param \CriteriaElement|null $criteria {@link CriteriaElement} to match
      * @return int             count of objects
      */
-    public function getCountsByLink(CriteriaElement $criteria = null)
+    public function getCountsByLink(?CriteriaElement $criteria = null)
     {
         $handler = $this->loadHandler('joint');
         $ret     = $handler->getCountsByLink($criteria);
@@ -1658,7 +1618,7 @@ class XoopsPersistableObjectHandler extends XoopsObjectHandler
      * @param \CriteriaElement|null $criteria {@link CriteriaElement} to match
      * @return int             count of objects
      */
-    public function updateByLink($data, CriteriaElement $criteria = null)
+    public function updateByLink($data, ?CriteriaElement $criteria = null)
     {
         $handler = $this->loadHandler('joint');
         $ret     = $handler->updateByLink($data, $criteria);
@@ -1672,7 +1632,7 @@ class XoopsPersistableObjectHandler extends XoopsObjectHandler
      * @param \CriteriaElement|null $criteria {@link CriteriaElement} to match
      * @return int|null             count of objects
      */
-    public function deleteByLink(CriteriaElement $criteria = null)
+    public function deleteByLink(?CriteriaElement $criteria = null)
     {
         $handler = $this->loadHandler('joint');
         $ret     = $handler->deleteByLink($criteria);

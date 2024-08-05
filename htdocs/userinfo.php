@@ -142,8 +142,7 @@ $var = $thisUser->getVar('user_sig', 'N');
 $xoopsTpl->assign('user_signature', $myts->displayTarea($var, 0, 1, 1));
 if ($thisUser->getVar('user_viewemail') == 1) {
     $xoopsTpl->assign('user_email', $thisUser->getVar('email', 'E'));
-} else {
-    if (is_object($xoopsUser)) {
+} elseif (is_object($xoopsUser)) {
         // All admins will be allowed to see emails, even those that are not allowed to edit users (I think it's ok like this)
         if ($xoopsUserIsAdmin || ($xoopsUser->getVar('uid') == $thisUser->getVar('uid'))) {
             $xoopsTpl->assign('user_email', $thisUser->getVar('email', 'E'));
@@ -151,7 +150,6 @@ if ($thisUser->getVar('user_viewemail') == 1) {
             $xoopsTpl->assign('user_email', '&nbsp;');
         }
     }
-}
 if (is_object($xoopsUser)) {
     $xoopsTpl->assign('user_pmlink', "<a href=\"javascript:openWithSelfMain('" . XOOPS_URL . '/pmlite.php?send2=1&amp;to_userid=' . $thisUser->getVar('uid') . "', 'pmlite', 565, 500);\"><img src=\"" . XOOPS_URL . "/images/icons/pm.gif\" alt=\"" . sprintf(_SENDPMTO, $thisUser->getVar('uname')) . "\" /></a>");
 } else {
@@ -186,7 +184,7 @@ foreach ($mids as $mid) {
                         $results[$i]['image'] = 'images/icons/posticon2.gif';
                     }
     
-                    if (!preg_match("/^http[s]*:\/\//i", $results[$i]['link'])) {
+                    if (!preg_match('/^http[s]*:\/\//i', $results[$i]['link'])) {
                         $results[$i]['link'] = 'modules/' . $module->getVar('dirname') . '/' . $results[$i]['link'];
                     }
     
@@ -197,10 +195,14 @@ foreach ($mids as $mid) {
                 if ($count == 5) {
                     $showall_link = '<a href="search.php?action=showallbyuser&amp;mid=' . $mid . '&amp;uid=' . $thisUser->getVar('uid') . '">' . _US_SHOWALL . '</a>';
                 }
-                $xoopsTpl->append('modules', array(
-                    'name'         => $module->getVar('name'),
-                    'results'      => $results,
-                    'showall_link' => $showall_link));
+                $xoopsTpl->append(
+                    'modules',
+                    [
+                        'name'         => $module->getVar('name'),
+                        'results'      => $results,
+                        'showall_link' => $showall_link,
+                    ],
+                );
             }
           }
         unset($module);

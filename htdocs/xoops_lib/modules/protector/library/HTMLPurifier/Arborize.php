@@ -27,7 +27,7 @@ class HTMLPurifier_Arborize
                 continue;
             }
             $node = $token->toNode();
-            $stack[count($stack)-1]->children[] = $node;
+            $stack[count($stack) - 1]->children[] = $node;
             if ($token instanceof HTMLPurifier_Token_Start) {
                 $stack[] = $node;
             }
@@ -48,7 +48,7 @@ class HTMLPurifier_Arborize
                 if ($level > 0) {
                     $tokens[] = $start;
                 }
-                if ($end !== NULL) {
+                if ($end !== null) {
                     $closingTokens[$level][] = $end;
                 }
                 if ($node instanceof HTMLPurifier_Node_Element) {

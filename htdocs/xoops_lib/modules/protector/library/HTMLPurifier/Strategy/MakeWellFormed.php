@@ -13,7 +13,6 @@
  */
 class HTMLPurifier_Strategy_MakeWellFormed extends HTMLPurifier_Strategy
 {
-
     /**
      * Array stream of tokens being processed.
      * @type HTMLPurifier_Token[]
@@ -58,7 +57,7 @@ class HTMLPurifier_Strategy_MakeWellFormed extends HTMLPurifier_Strategy
 
     /**
      * @param HTMLPurifier_Token[] $tokens
-     * @param HTMLPurifier_Config $config
+     * @param HTMLPurifier_Config  $config
      * @param HTMLPurifier_Context $context
      * @return HTMLPurifier_Token[]
      * @throws HTMLPurifier_Exception
@@ -75,17 +74,17 @@ class HTMLPurifier_Strategy_MakeWellFormed extends HTMLPurifier_Strategy
         $e = $context->get('ErrorCollector', true);
         $i = false; // injector index
         list($zipper, $token) = HTMLPurifier_Zipper::fromArray($tokens);
-        if ($token === NULL) {
+        if ($token === null) {
             return array();
         }
         $reprocess = false; // whether or not to reprocess the same token
         $stack = array();
 
         // member variables
-        $this->stack =& $stack;
-        $this->tokens =& $tokens;
-        $this->token =& $token;
-        $this->zipper =& $zipper;
+        $this->stack = &$stack;
+        $this->tokens = &$tokens;
+        $this->token = &$token;
+        $this->zipper = &$zipper;
         $this->config = $config;
         $this->context = $context;
 
@@ -111,7 +110,7 @@ class HTMLPurifier_Strategy_MakeWellFormed extends HTMLPurifier_Strategy
             if (!$b) {
                 continue;
             }
-            $this->injectors[] = new $injector;
+            $this->injectors[] = new $injector();
         }
         foreach ($def_injectors as $injector) {
             // assumed to be objects
@@ -123,7 +122,7 @@ class HTMLPurifier_Strategy_MakeWellFormed extends HTMLPurifier_Strategy
             }
             if (is_string($injector)) {
                 $injector = "HTMLPurifier_Injector_$injector";
-                $injector = new $injector;
+                $injector = new $injector();
             }
             $this->injectors[] = $injector;
         }
@@ -150,9 +149,9 @@ class HTMLPurifier_Strategy_MakeWellFormed extends HTMLPurifier_Strategy
         //      punt ($reprocess = true; continue;) and it does that for us.
 
         // isset is in loop because $tokens size changes during loop exec
-        for (;;
-             // only increment if we don't need to reprocess
-             $reprocess ? $reprocess = false : $token = $zipper->next($token)) {
+        for (; ;
+            // only increment if we don't need to reprocess
+            $reprocess ? $reprocess = false : $token = $zipper->next($token)) {
 
             // check for a rewind
             if (is_int($i)) {
@@ -162,7 +161,9 @@ class HTMLPurifier_Strategy_MakeWellFormed extends HTMLPurifier_Strategy
                 $rewind_offset = $this->injectors[$i]->getRewindOffset();
                 if (is_int($rewind_offset)) {
                     for ($j = 0; $j < $rewind_offset; $j++) {
-                        if (empty($zipper->front)) break;
+                        if (empty($zipper->front)) {
+                            break;
+                        }
                         $token = $zipper->prev($token);
                         // indicate that other injectors should not process this token,
                         // but we need to reprocess it.  See Note [Injector skips]
@@ -179,7 +180,7 @@ class HTMLPurifier_Strategy_MakeWellFormed extends HTMLPurifier_Strategy
             }
 
             // handle case of document end
-            if ($token === NULL) {
+            if ($token === null) {
                 // kill processing if stack is empty
                 if (empty($this->stack)) {
                     break;
@@ -530,9 +531,9 @@ class HTMLPurifier_Strategy_MakeWellFormed extends HTMLPurifier_Strategy
      * If $token is an integer, that number of tokens (with the first token
      * being the current one) will be deleted.
      *
-     * @param HTMLPurifier_Token|array|int|bool $token Token substitution value
-     * @param HTMLPurifier_Injector|int $injector Injector that performed the substitution; default is if
-     *        this is not an injector related operation.
+     * @param HTMLPurifier_Token|array|int|bool $token    Token substitution value
+     * @param HTMLPurifier_Injector|int         $injector Injector that performed the substitution; default is if
+     *                                                    this is not an injector related operation.
      * @throws HTMLPurifier_Exception
      */
     protected function processToken($token, $injector = -1)

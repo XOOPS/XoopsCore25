@@ -126,7 +126,7 @@ class XoopsConfigCategoryHandler extends XoopsObjectHandler
     public function get($id)
     {
         $confcat = false;
-        $id      = (int)$id;
+        $id      = (int) $id;
         if ($id > 0) {
             $sql = 'SELECT * FROM ' . $this->db->prefix('configcategory') . ' WHERE confcat_id=' . $id;
             $result = $this->db->query($sql);
@@ -212,17 +212,21 @@ class XoopsConfigCategoryHandler extends XoopsObjectHandler
      *
      * @return array Array of {@link XoopsConfigCategory}s
      */
-    public function getObjects(CriteriaElement $criteria = null, $id_as_key = false)
+    public function getObjects(?CriteriaElement $criteria = null, $id_as_key = false)
     {
-        $ret   = array();
+        $ret   = [];
         $limit = $start = 0;
         $sql   = 'SELECT * FROM ' . $this->db->prefix('configcategory');
         if (isset($criteria) && \method_exists($criteria, 'renderWhere')) {
             $sql .= ' ' . $criteria->renderWhere();
-            $sort = !in_array($criteria->getSort(), array(
-                'confcat_id',
-                'confcat_name',
-                'confcat_order')) ? 'confcat_order' : $criteria->getSort();
+            $sort = !in_array(
+                $criteria->getSort(),
+                [
+                    'confcat_id',
+                    'confcat_name',
+                    'confcat_order',
+                ],
+            ) ? 'confcat_order' : $criteria->getSort();
             $sql .= ' ORDER BY ' . $sort . ' ' . $criteria->getOrder();
             $limit = $criteria->getLimit();
             $start = $criteria->getStart();
@@ -236,7 +240,7 @@ class XoopsConfigCategoryHandler extends XoopsObjectHandler
             $confcat = new XoopsConfigCategory();
             $confcat->assignVars($myrow);
             if (!$id_as_key) {
-                $ret[] =& $confcat;
+                $ret[] = & $confcat;
             } else {
                 $ret[$myrow['confcat_id']] = &$confcat;
             }

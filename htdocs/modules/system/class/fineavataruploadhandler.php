@@ -44,15 +44,15 @@ class SystemFineAvatarUploadHandler extends SystemFineUploadHandler
     public function __construct(\stdClass $claims)
     {
         parent::__construct($claims);
-        $this->allowedMimeTypes = array('image/gif', 'image/jpeg', 'image/png');
-        $this->allowedExtensions = array('gif', 'jpeg', 'jpg', 'png');
+        $this->allowedMimeTypes = ['image/gif', 'image/jpeg', 'image/png'];
+        $this->allowedExtensions = ['gif', 'jpeg', 'jpg', 'png'];
     }
 
     protected function storeUploadedFile($target, $mimeType, $uuid)
     {
-        $pathParts = pathinfo($this->getName());
+        $pathParts = pathinfo((string) $this->getName());
         $avatarName = uniqid('savt', false) . '.' . strtolower($pathParts['extension']);
-        $avatarNicename = str_replace(array('_','-'), ' ', $pathParts['filename']);
+        $avatarNicename = str_replace(['_', '-'], ' ', $pathParts['filename']);
         $avatarPath = XOOPS_ROOT_PATH . '/uploads/avatars/' . $avatarName;
 
         if (false === move_uploaded_file($_FILES[$this->inputName]['tmp_name'], $avatarPath)) {
@@ -61,7 +61,7 @@ class SystemFineAvatarUploadHandler extends SystemFineUploadHandler
         /** @var  XoopsAvatarHandler $avt_handler */
         $avt_handler = xoops_getHandler('avatar');
         $avatar = $avt_handler->create();
-        
+
         $avatar->setVar('avatar_file', 'avatars/' . $avatarName);
         $avatar->setVar('avatar_name', $avatarNicename);
         $avatar->setVar('avatar_mimetype', $mimeType);
@@ -70,10 +70,10 @@ class SystemFineAvatarUploadHandler extends SystemFineUploadHandler
         $avatar->setVar('avatar_weight', 0);
         $avatar->setVar('avatar_type', 's');
         if (!$avt_handler->insert($avatar)) {
-            return array(
-                'error' => sprintf(_FAILSAVEIMG, $avatar->getVar('avatar_name'))
-            );
+            return [
+                'error' => sprintf(_FAILSAVEIMG, $avatar->getVar('avatar_name')),
+            ];
         }
-        return array('success'=> true, "uuid" => $uuid);
+        return ['success' => true, "uuid" => $uuid];
     }
 }

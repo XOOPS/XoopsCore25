@@ -26,6 +26,7 @@ $modversion['help']        = 'page=userrank';
 $modversion['license']     = 'GPL see LICENSE';
 $modversion['official']    = 1;
 $modversion['image']       = 'userrank.png';
+$modversion['icon']        = 'fa fa-star';
 
 $modversion['hasAdmin']  = 1;
 $modversion['adminpath'] = 'admin.php?fct=userrank';

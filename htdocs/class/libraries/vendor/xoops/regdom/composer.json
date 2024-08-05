@@ -1,0 +1,38 @@
+{
+  "name": "xoops/regdom",
+  "description": "OO adaptation of Florian Sager's regdom library for querying Mozilla Public Suffix List",
+  "keywords": [
+    "public",
+    "suffix",
+    "tld",
+    "regdom"
+  ],
+  "homepage": "https://github.com/XOOPS/RegDom",
+  "type": "library",
+  "license": "Apache-2.0",
+  "authors": [
+    {
+      "name": "Richard Griffith",
+      "email": "richard@geekwright.com"
+    }
+  ],
+  "require": {
+    "php": ">=7.4.0",
+    "symfony/polyfill-mbstring": "^1.30.0"
+  },
+  "require-dev": {
+    "phpunit/phpunit": "^9.6|^11.2.2"
+  },
+  "autoload": {
+    "psr-4": {
+      "Xoops\\RegDom\\": "src/"
+    }
+  },
+  "autoload-dev": {
+    "psr-4": {
+      "Xoops\\RegDom\\": "tests/unit/"
+    }
+  },
+
+  "bin": ["bin/reloadpsl"]
+}

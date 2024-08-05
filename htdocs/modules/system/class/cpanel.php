@@ -42,7 +42,7 @@ class XoopsSystemCpanel
     {
         static $instance;
         if (!isset($instance)) {
-            $class    = __CLASS__;
+            $class    = self::class;
             $instance = new $class();
         }
 
@@ -62,7 +62,7 @@ class XoopsSystemCpanel
                 include_once XOOPS_ADMINTHEME_PATH . '/' . $gui . '/' . $gui . '.php';
             }
             if (class_exists($class)) {
-                if (call_user_func(array($class, 'validate'))) {
+                if (call_user_func([$class, 'validate'])) {
                     $this->gui             = new $class();
                     $this->gui->foldername = $gui;
                 }
@@ -84,14 +84,14 @@ class XoopsSystemCpanel
      */
     public static function getGuis()
     {
-        $guis = array();
+        $guis = [];
         xoops_load('XoopsLists');
         $lists = XoopsLists::getDirListAsArray(XOOPS_ADMINTHEME_PATH);
         foreach (array_keys($lists) as $gui) {
             if (file_exists($file = XOOPS_ADMINTHEME_PATH . '/' . $gui . '/' . $gui . '.php')) {
                 include_once $file;
                 if (class_exists($class = 'XoopsGui' . ucfirst($gui))) {
-                    if (call_user_func(array($class, 'validate'))) {
+                    if (call_user_func([$class, 'validate'])) {
                         $guis[$gui] = $gui;
                     }
                 }
@@ -111,8 +111,8 @@ class XoopsSystemCpanel
         foreach ($guis as $gui) {
             if ($file = XOOPS_ADMINTHEME_PATH . '/' . $gui . '/' . $gui . '.php') {
                 include_once $file;
-                if (class_exists($class = 'XoopsGui' . ucfirst($gui))) {
-                    call_user_func(array($class, 'flush'));
+                if (class_exists($class = 'XoopsGui' . ucfirst((string) $gui))) {
+                    call_user_func([$class, 'flush']);
                 }
             }
         }

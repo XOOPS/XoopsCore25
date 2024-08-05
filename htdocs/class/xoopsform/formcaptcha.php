@@ -55,16 +55,16 @@ class XoopsFormCaptcha extends XoopsFormElement
      * @param boolean $skipmember Skip CAPTCHA check for members deprecated
      * @param array   $configs									 deprecated
      */
-    public function __construct($caption = '', $name = 'xoopscaptcha', $skipmember = '', $configs = array())
+    public function __construct($caption = '', $name = 'xoopscaptcha', $skipmember = '', $configs = [])
     {
         xoops_load('XoopsCaptcha');
         $this->captchaHandler  = XoopsCaptcha::getInstance();
-		if($skipmember !== '' || !empty($configs)){
-			$GLOBALS['xoopsLogger']->addDeprecated("In the class 'XoopsFormCaptcha' The settings 'skipmember' and 'configs' are deprecated since XOOPS 2.5.11");
-		}
-		$config['name'] = $name;
-		$this->captchaHandler->setConfigs($config);
-        
+        if($skipmember !== '' || !empty($configs)) {
+            $GLOBALS['xoopsLogger']->addDeprecated("In the class 'XoopsFormCaptcha' The settings 'skipmember' and 'configs' are deprecated since XOOPS 2.5.11");
+        }
+        $config['name'] = $name;
+        $this->captchaHandler->setConfigs($config);
+
         if (!$this->captchaHandler->isActive()) {
             $this->setHidden();
         } else {

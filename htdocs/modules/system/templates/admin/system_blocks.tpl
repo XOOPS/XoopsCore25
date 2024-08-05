@@ -1,8 +1,8 @@
 <!-- Breadcrumb Header -->
 <{include file="db:system_header.tpl"}>
 <script type="text/javascript">
-    IMG_ON = "<{xoAdminIcons 'success.png'}>";
-    IMG_OFF = "<{xoAdminIcons 'cancel.png'}>";
+    IMG_ON = '<{xoAdminIcons 'success.png'}>';
+    IMG_OFF = '<{xoAdminIcons 'cancel.png'}>';
 </script>
 <{if !empty($filterform)}>
     <div class="floatright">
@@ -22,7 +22,7 @@
                             <{$filterform.extra}> >
                         <div class="xo-blocksfilter">
                             <{foreach item=element from=$filterform.elements|default:null}>
-                                <{if $element.hidden != true}>
+                                <{if isset($element.hidden) && $element.hidden != true}>
                                     <div class="xo-caption"><{$element.caption}></div>
                                     <div class="xo-element"><{$element.body}></div>
                                 <{else}>

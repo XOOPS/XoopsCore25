@@ -38,7 +38,7 @@ class XoopsAuthProvisionning
      *
      * @return \XoopsAuthProvisionning
      */
-    public static function getInstance(XoopsAuth $auth_instance = null)
+    public static function getInstance(?XoopsAuth $auth_instance = null)
     {
         static $provis_instance;
         if (!isset($provis_instance)) {
@@ -52,7 +52,7 @@ class XoopsAuthProvisionning
      * Authentication Service constructor
      * @param XoopsAuth $auth_instance
      */
-    public function __construct(XoopsAuth $auth_instance = null)
+    public function __construct(?XoopsAuth $auth_instance = null)
     {
         $this->_auth_instance = $auth_instance;
         /** @var XoopsConfigHandler $config_handler */
@@ -166,7 +166,7 @@ class XoopsAuthProvisionning
      * @param  null $pwd
      * @return bool
      */
-    public function change(&$xoopsUser, $datas, $uname, $pwd = null)
+    public function change($xoopsUser, $datas, $uname, $pwd = null)
     {
         $ret            = false;
         /** @var XoopsMemberHandler $member_handler */
@@ -193,35 +193,26 @@ class XoopsAuthProvisionning
      *
      * @return bool
      */
-    public function delete()
-    {
-    }
+    public function delete() {}
 
     /**
      * Suspend a user
      *
      * @return bool
      */
-    public function suspend()
-    {
-    }
+    public function suspend() {}
 
     /**
      * Restore a user
      *
      * @return bool
      */
-    public function restore()
-    {
-    }
+    public function restore() {}
 
     /**
      * Add a new user to the system
      *
      * @return bool
      */
-    public function resetpwd()
-    {
-    }
+    public function resetpwd() {}
 } // end class
-

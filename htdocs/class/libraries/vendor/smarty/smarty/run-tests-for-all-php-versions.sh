@@ -1,46 +1,17 @@
 #!/bin/bash
-Help()
-{
-   # Display Help
-   echo "Runs PHPUnit tests for all PHP versions supported by this version of Smarty."
-   echo
-   echo "Syntax: $0 [-e|h]"
-   echo "options:"
-   echo "e     Exclude a group of unit tests, e.g. -e 'slow'"
-   echo "h     Print this Help."
-   echo
-}
-
-Exclude=""
-
-# Get the options
-while getopts ":he:" option; do
-   case $option in
-      e) # Exclude
-        echo $OPTARG
-         Exclude=$OPTARG;;
-      h) # display Help
-         Help
-         exit;;
-     \?) # Invalid option
-         echo "Error: Invalid option"
-         exit;;
-   esac
-done
-
-if [ -z $Exclude ];
-then
-  Entrypoint="./run-tests.sh"
-else
-   Entrypoint="./run-tests.sh $Exclude"
-fi
 
 # Runs tests for all supported PHP versions
-docker-compose run --entrypoint "$Entrypoint" php54 && \
-docker-compose run --entrypoint "$Entrypoint" php55 && \
-docker-compose run --entrypoint "$Entrypoint" php56 && \
-docker-compose run --entrypoint "$Entrypoint" php70 && \
-docker-compose run --entrypoint "$Entrypoint" php71 && \
-docker-compose run --entrypoint "$Entrypoint" php72 && \
-docker-compose run --entrypoint "$Entrypoint" php73 && \
-docker-compose run --entrypoint "$Entrypoint" php74
+# Usage examples:
+# - ./run-tests-for-all-php-versions.sh --group 20221124
+# - ./run-tests-for-all-php-versions.sh --exclude-group slow
+
+COMPOSE_CMD="mutagen-compose"
+
+$COMPOSE_CMD run --rm php71 ./run-tests.sh $@ && \
+$COMPOSE_CMD run --rm php72 ./run-tests.sh $@ && \
+$COMPOSE_CMD run --rm php73 ./run-tests.sh $@ && \
+$COMPOSE_CMD run --rm php74 ./run-tests.sh $@ && \
+$COMPOSE_CMD run --rm php80 ./run-tests.sh $@ && \
+$COMPOSE_CMD run --rm php81 ./run-tests.sh $@ && \
+$COMPOSE_CMD run --rm php82 ./run-tests.sh $@ && \
+$COMPOSE_CMD run --rm php83 ./run-tests.sh $@

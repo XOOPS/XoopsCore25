@@ -304,9 +304,9 @@ class XoopsImageHandler extends XoopsObjectHandler
      * @param  boolean         $getbinary
      * @return array           Array of {@link XoopsImage} objects
      **/
-    public function getObjects(CriteriaElement $criteria = null, $id_as_key = false, $getbinary = false)
+    public function getObjects(?CriteriaElement $criteria = null, $id_as_key = false, $getbinary = false)
     {
-        $ret   = array();
+        $ret   = [];
         $limit = $start = 0;
         if ($getbinary) {
             $sql = 'SELECT i.*, b.image_body FROM ' . $this->db->prefix('image') . ' i LEFT JOIN ' . $this->db->prefix('imagebody') . ' b ON b.image_id=i.image_id';
@@ -345,7 +345,7 @@ class XoopsImageHandler extends XoopsObjectHandler
      * @param  CriteriaElement|CriteriaCompo $criteria {@link CriteriaElement}
      * @return int
      **/
-    public function getCount(CriteriaElement $criteria = null)
+    public function getCount(?CriteriaElement $criteria = null)
     {
         $sql = 'SELECT COUNT(*) FROM ' . $this->db->prefix('image');
         if (isset($criteria) && \method_exists($criteria, 'renderWhere')) {
@@ -355,7 +355,7 @@ class XoopsImageHandler extends XoopsObjectHandler
         if (!$this->db->isResultSet($result)) {
             return 0;
         }
-        list($count) = $this->db->fetchRow($result);
+        [$count] = $this->db->fetchRow($result);
 
         return (int)$count;
     }
@@ -374,7 +374,7 @@ class XoopsImageHandler extends XoopsObjectHandler
             $criteria->add(new Criteria('image_display', (int)$image_display));
         }
         $images = $this->getObjects($criteria, false, true);
-        $ret    = array();
+        $ret    = [];
         foreach (array_keys($images) as $i) {
             $ret[$images[$i]->getVar('image_name')] = $images[$i]->getVar('image_nicename');
         }

@@ -55,7 +55,7 @@ class XoopsConfigHandler
      * @var array
      * @access  private
      */
-    public $_cachedConfigs = array();
+    public $_cachedConfigs = [];
 
     /**
      * Constructor
@@ -167,7 +167,7 @@ class XoopsConfigHandler
      *
      * @return array Array of {@link XoopsConfigItem} objects
      */
-    public function getConfigs(CriteriaElement $criteria = null, $id_as_key = false, $with_options = false)
+    public function getConfigs(?CriteriaElement $criteria = null, $id_as_key = false, $with_options = false)
     {
         return $this->_cHandler->getObjects($criteria, $id_as_key);
     }
@@ -179,7 +179,7 @@ class XoopsConfigHandler
      *
      * @return int
      */
-    public function getConfigCount(CriteriaElement $criteria = null)
+    public function getConfigCount(?CriteriaElement $criteria = null)
     {
         return $this->_cHandler->getCount($criteria);
     }
@@ -198,7 +198,7 @@ class XoopsConfigHandler
         if (!empty($_cachedConfigs[$module][$category])) {
             return $_cachedConfigs[$module][$category];
         } else {
-            $ret      = array();
+            $ret      = [];
             $criteria = new CriteriaCompo(new Criteria('conf_modid', (int)$module));
             if (!empty($category)) {
                 $criteria->add(new Criteria('conf_catid', (int)$category));
@@ -249,7 +249,7 @@ class XoopsConfigHandler
      *
      * @return array Array of {@link XoopsConfigOption}s
      */
-    public function getConfigOptions(CriteriaElement $criteria = null, $id_as_key = false)
+    public function getConfigOptions(?CriteriaElement $criteria = null, $id_as_key = false)
     {
         return $this->_oHandler->getObjects($criteria, $id_as_key);
     }
@@ -261,7 +261,7 @@ class XoopsConfigHandler
      *
      * @return int Count of {@link XoopsConfigOption}s matching $criteria
      */
-    public function getConfigOptionsCount(CriteriaElement $criteria = null)
+    public function getConfigOptionsCount(?CriteriaElement $criteria = null)
     {
         return $this->_oHandler->getCount($criteria);
     }
@@ -285,7 +285,7 @@ class XoopsConfigHandler
             }
             $configs   = $this->_cHandler->getObjects($criteria);
             $confcount = count($configs);
-            $ret       = array();
+            $ret       = [];
             for ($i = 0; $i < $confcount; ++$i) {
                 $ret[$configs[$i]->getVar('conf_name')] = $configs[$i]->getConfValueForOutput();
             }

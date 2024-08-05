@@ -5,4 +5,4 @@
 // Translator: XOOPS Translation Team
 
 // RSS feed URLs
-return array('https://xoops.org/modules/publisher/backend.php');
+return ['https://xoops.org/modules/publisher/backend.php'];

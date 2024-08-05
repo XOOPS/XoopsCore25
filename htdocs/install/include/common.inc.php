@@ -51,14 +51,14 @@ function fatalPhpErrorHandler($e = null) {
 register_shutdown_function('fatalPhpErrorHandler');
 set_exception_handler('fatalPhpErrorHandler');
 
-$options = array(
+$options = [
     'lifetime' => 0,
     'path'     => '/',
     'domain'   => null,
     'secure'   => false,
     'httponly' => true,
     'samesite' => 'strict',
-);
+];
 // options for mainfile.php
 if (empty($xoopsOption['hascommon'])) {
     $xoopsOption['nocommon'] = true;
@@ -97,5 +97,5 @@ if (!$wizard->xoInit()) {
 }
 
 if (!isset($_SESSION['settings']) || !is_array($_SESSION['settings'])) {
-    $_SESSION['settings'] = array();
+    $_SESSION['settings'] = [];
 }

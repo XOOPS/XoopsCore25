@@ -49,20 +49,21 @@ class SystemMaintenance
      */
     public function displayTables($array = true)
     {
-        $tables = array();
+        $tables = [];
         $sql = 'SHOW TABLES';
         $result = $this->db->queryF($sql);
         if (!$this->db->isResultSet($result)) {
             throw new \RuntimeException(
-                \sprintf(_DB_QUERY_ERROR, $sql) . $this->db->error(), E_USER_ERROR
+                \sprintf(_DB_QUERY_ERROR, $sql) . $this->db->error(),
+                E_USER_ERROR,
             );
         }
         while (false !== ($myrow = $this->db->fetchArray($result))) {
             $value          = array_values($myrow);
-            $value          = substr($value[0], strlen(XOOPS_DB_PREFIX) + 1);
+            $value          = substr((string) $value[0], strlen(XOOPS_DB_PREFIX) + 1);
             $tables[$value] = $value;
         }
-        if (true === (bool)$array) {
+        if (true === (bool) $array) {
             return $tables;
         } else {
             return implode(',', $tables);
@@ -96,7 +97,8 @@ class SystemMaintenance
         $result = $this->db->queryF($sql);
         if (!$this->db->isResultSet($result)) {
             throw new \RuntimeException(
-                \sprintf(_DB_QUERY_ERROR, $sql) . $this->db->error(), E_USER_ERROR
+                \sprintf(_DB_QUERY_ERROR, $sql) . $this->db->error(),
+                E_USER_ERROR,
             );
         }
 
@@ -131,7 +133,7 @@ class SystemMaintenance
                 }
                 closedir($dirHandle);
             }
-            file_put_contents($dir . 'index.php', '<?php' . PHP_EOL  . "header('HTTP/1.0 404 Not Found');" . PHP_EOL);
+            file_put_contents($dir . 'index.php', '<?php' . PHP_EOL . "header('HTTP/1.0 404 Not Found');" . PHP_EOL);
         }
     }
 
@@ -175,11 +177,11 @@ class SystemMaintenance
     public function CheckRepairAnalyzeOptimizeQueries($tables, $maintenance)
     {
         $ret = '<table class="outer"><th>' . _AM_SYSTEM_MAINTENANCE_TABLES1 . '</th><th>' . _AM_SYSTEM_MAINTENANCE_TABLES_OPTIMIZE . '</th><th>' . _AM_SYSTEM_MAINTENANCE_TABLES_CHECK . '</th><th>' . _AM_SYSTEM_MAINTENANCE_TABLES_REPAIR . '</th><th>' . _AM_SYSTEM_MAINTENANCE_TABLES_ANALYZE . '</th>';
-        $tab = array();
+        $tab = [];
         for ($i = 0; $i < 4; ++$i) {
             $tab[$i] = $i + 1;
         }
-        $tab1 = array();
+        $tab1 = [];
         for ($i = 0; $i < 4; ++$i) {
             if (in_array($tab[$i], $maintenance)) {
                 $tab1[$i] = $tab[$i];
@@ -246,7 +248,7 @@ class SystemMaintenance
      */
     public function dump_tables($tables, $drop)
     {
-        $ret    = array();
+        $ret    = [];
         $ret[0] = "# \n";
         $ret[0] .= "# Dump SQL, Generate by Xoops \n";
         $ret[0] .= '# Date : ' . date('d-m-Y - H:i') . " \n";
@@ -275,7 +277,7 @@ class SystemMaintenance
      */
     public function dump_modules($modules, $drop)
     {
-        $ret    = array();
+        $ret    = [];
         $ret[0] = "# \n";
         $ret[0] .= "# Dump SQL, Generate by Xoops \n";
         $ret[0] .= '# Date : ' . date('d-m-Y - H:i') . " \n";
@@ -287,7 +289,7 @@ class SystemMaintenance
             /** @var XoopsModuleHandler $module_handler */
             $module_handler = xoops_getHandler('module');
             $module         = $module_handler->getByDirname($modules[$i]);
-            $ret[1] .= '<tr><th colspan="3" align="left">' . ucfirst($modules[$i]) . '</th></tr>';
+            $ret[1] .= '<tr><th colspan="3" align="left">' . ucfirst((string) $modules[$i]) . '</th></tr>';
             $modtables = $module->getInfo('tables');
             if ($modtables !== false && \is_array($modtables)) {
                 foreach ($modtables as $table) {
@@ -359,7 +361,7 @@ class SystemMaintenance
             $num_fields = $this->db->getFieldsNum($result);
 
             if ($num_rows > 0) {
-                $field_type = array();
+                $field_type = [];
                 $i          = 0;
                 while ($i < $num_fields) {
                     $meta = mysqli_fetch_field($result);

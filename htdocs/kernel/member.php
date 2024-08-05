@@ -51,7 +51,7 @@ class XoopsMemberHandler
     /**
      * holds temporary user objects
      */
-    protected $membersWorkingList = array();
+    protected $membersWorkingList = [];
 
     /**
      * constructor
@@ -175,7 +175,7 @@ class XoopsMemberHandler
      * @param  bool            $id_as_key use the group's ID as key for the array?
      * @return array           array of {@link XoopsGroup} objects
      */
-    public function getGroups(CriteriaElement $criteria = null, $id_as_key = false)
+    public function getGroups(?CriteriaElement $criteria = null, $id_as_key = false)
     {
         return $this->groupHandler->getObjects($criteria, $id_as_key);
     }
@@ -187,7 +187,7 @@ class XoopsMemberHandler
      * @param  bool            $id_as_key use the group's ID as key for the array?
      * @return array           array of {@link XoopsUser} objects
      */
-    public function getUsers(CriteriaElement $criteria = null, $id_as_key = false)
+    public function getUsers(?CriteriaElement $criteria = null, $id_as_key = false)
     {
         return $this->userHandler->getObjects($criteria, $id_as_key);
     }
@@ -198,10 +198,10 @@ class XoopsMemberHandler
      * @param  CriteriaElement $criteria {@link CriteriaElement} object
      * @return array           associative array of group-IDs and names
      */
-    public function getGroupList(CriteriaElement $criteria = null)
+    public function getGroupList(?CriteriaElement $criteria = null)
     {
         $groups = $this->groupHandler->getObjects($criteria, true);
-        $ret    = array();
+        $ret    = [];
         foreach (array_keys($groups) as $i) {
             $ret[$i] = $groups[$i]->getVar('name');
         }
@@ -215,10 +215,10 @@ class XoopsMemberHandler
      * @param  CriteriaElement $criteria {@link CriteriaElement} object
      * @return array           associative array of user-IDs and names
      */
-    public function getUserList(CriteriaElement $criteria = null)
+    public function getUserList(?CriteriaElement $criteria = null)
     {
-        $users =& $this->userHandler->getObjects($criteria, true);
-        $ret   = array();
+        $users = & $this->userHandler->getObjects($criteria, true);
+        $ret   = [];
         foreach (array_keys($users) as $i) {
             $ret[$i] = $users[$i]->getVar('uname');
         }
@@ -249,7 +249,7 @@ class XoopsMemberHandler
      * @param  array $user_ids array of user-IDs
      * @return bool  success?
      */
-    public function removeUsersFromGroup($group_id, $user_ids = array())
+    public function removeUsersFromGroup($group_id, $user_ids = [])
     {
         $criteria = new CriteriaCompo();
         $criteria->add(new Criteria('groupid', $group_id));
@@ -278,7 +278,7 @@ class XoopsMemberHandler
         if (!$asobject) {
             return $user_ids;
         } else {
-            $ret = array();
+            $ret = [];
             foreach ($user_ids as $u_id) {
                 $user = $this->getUser($u_id);
                 if (is_object($user)) {
@@ -304,7 +304,7 @@ class XoopsMemberHandler
         if (!$asobject) {
             return $group_ids;
         } else {
-            $ret = array();
+            $ret = [];
             foreach ($group_ids as $g_id) {
                 $ret[] = $this->getGroup($g_id);
             }
@@ -327,7 +327,7 @@ class XoopsMemberHandler
         $uname = $db->escape($uname);
         $pwd = $db->escape($pwd);
         $criteria = new Criteria('uname', $uname);
-        $user =& $this->userHandler->getObjects($criteria, false);
+        $user = & $this->userHandler->getObjects($criteria, false);
         if (!$user || count($user) != 1) {
             return false;
         }
@@ -335,14 +335,14 @@ class XoopsMemberHandler
         $hash = $user[0]->pass();
         $type = substr($user[0]->pass(), 0, 1);
         // see if we have a crypt like signature, old md5 hash is just hex digits
-        if ($type==='$') {
+        if ($type === '$') {
             if (!password_verify($pwd, $hash)) {
                 return false;
             }
             // check if hash uses the best algorithm (i.e. after a PHP upgrade)
             $rehash = password_needs_rehash($hash, PASSWORD_DEFAULT);
         } else {
-            if ($hash!=md5($pwd)) {
+            if ($hash != md5($pwd)) {
                 return false;
             }
             $rehash = true; // automatically update old style
@@ -380,7 +380,7 @@ class XoopsMemberHandler
             . "WHERE TABLE_SCHEMA = '%s'AND TABLE_NAME = '%s' AND COLUMN_NAME = '%s'",
             $db->escape($dbname),
             $db->escape($table),
-            $db->escape($column)
+            $db->escape($column),
         );
 
         /** @var mysqli_result $result */
@@ -401,7 +401,7 @@ class XoopsMemberHandler
      * @param  CriteriaElement $criteria {@link CriteriaElement} object
      * @return int
      */
-    public function getUserCount(CriteriaElement $criteria = null)
+    public function getUserCount(?CriteriaElement $criteria = null)
     {
         return $this->userHandler->getCount($criteria);
     }
@@ -440,7 +440,7 @@ class XoopsMemberHandler
      * @param  CriteriaElement $criteria   {@link CriteriaElement} object
      * @return bool            TRUE if success or unchanged, FALSE on failure
      */
-    public function updateUsersByField($fieldName, $fieldValue, CriteriaElement $criteria = null)
+    public function updateUsersByField($fieldName, $fieldValue, ?CriteriaElement $criteria = null)
     {
         return $this->userHandler->updateAll($fieldName, $fieldValue, $criteria);
     }
@@ -474,9 +474,9 @@ class XoopsMemberHandler
      * @return array           Array of {@link XoopsUser} objects (if $asobject is TRUE)
      *                                    or of associative arrays matching the record structure in the database.
      */
-    public function getUsersByGroupLink($groups, CriteriaElement $criteria = null, $asobject = false, $id_as_key = false)
+    public function getUsersByGroupLink($groups, ?CriteriaElement $criteria = null, $asobject = false, $id_as_key = false)
     {
-        $ret           = array();
+        $ret           = [];
         $criteriaCompo = new CriteriaCompo();
         $select        = $asobject ? 'u.*' : 'u.uid';
         $sql = "SELECT {$select} FROM " . $this->userHandler->db->prefix('users') . " u WHERE ";
@@ -513,9 +513,9 @@ class XoopsMemberHandler
                 $user = new XoopsUser();
                 $user->assignVars($myrow);
                 if (!$id_as_key) {
-                    $ret[] =& $user;
+                    $ret[] = & $user;
                 } else {
-                    $ret[$myrow['uid']] =& $user;
+                    $ret[$myrow['uid']] = & $user;
                 }
                 unset($user);
             } else {
@@ -534,7 +534,7 @@ class XoopsMemberHandler
      * @param  CriteriaElement $criteria
      * @return int             count of users
      */
-    public function getUserCountByGroupLink(array $groups, CriteriaElement $criteria = null)
+    public function getUserCountByGroupLink(array $groups, ?CriteriaElement $criteria = null)
     {
         $ret           = 0;
         $criteriaCompo = new CriteriaCompo();
@@ -557,8 +557,8 @@ class XoopsMemberHandler
         if (!$this->userHandler->db->isResultSet($result)) {
             return $ret;
         }
-        list($ret) = $this->userHandler->db->fetchRow($result);
+        [$ret] = $this->userHandler->db->fetchRow($result);
 
-        return (int)$ret;
+        return (int) $ret;
     }
 }

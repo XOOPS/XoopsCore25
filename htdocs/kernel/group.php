@@ -231,9 +231,9 @@ class XoopsGroupHandler extends XoopsObjectHandler
      * @param  bool            $id_as_key should the groups' IDs be used as keys for the associative array?
      * @return mixed           Array of groups
      */
-    public function getObjects(CriteriaElement $criteria = null, $id_as_key = false)
+    public function getObjects(?CriteriaElement $criteria = null, $id_as_key = false)
     {
-        $ret   = array();
+        $ret   = [];
         $limit = $start = 0;
         $sql   = 'SELECT * FROM ' . $this->db->prefix('groups');
         if (isset($criteria) && \method_exists($criteria, 'renderWhere')) {
@@ -423,9 +423,9 @@ class XoopsMembershipHandler extends XoopsObjectHandler
      * @param  bool            $id_as_key should the ID be used as the array's key?
      * @return array           array of references
      */
-    public function getObjects(CriteriaElement $criteria = null, $id_as_key = false)
+    public function getObjects(?CriteriaElement $criteria = null, $id_as_key = false)
     {
-        $ret   = array();
+        $ret   = [];
         $limit = $start = 0;
         $sql   = 'SELECT * FROM ' . $this->db->prefix('groups_users_link');
         if (isset($criteria) && \method_exists($criteria, 'renderWhere')) {
@@ -458,7 +458,7 @@ class XoopsMembershipHandler extends XoopsObjectHandler
      * @param  CriteriaElement|CriteriaCompo $criteria {@link CriteriaElement} conditions to meet
      * @return int
      */
-    public function getCount(CriteriaElement $criteria = null)
+    public function getCount(?CriteriaElement $criteria = null)
     {
         $sql = 'SELECT COUNT(*) FROM ' . $this->db->prefix('groups_users_link');
         if (isset($criteria) && \method_exists($criteria, 'renderWhere')) {
@@ -468,7 +468,7 @@ class XoopsMembershipHandler extends XoopsObjectHandler
         if (!$result) {
             return 0;
         }
-        list($count) = $this->db->fetchRow($result);
+        [$count] = $this->db->fetchRow($result);
 
         return (int)$count;
     }
@@ -479,7 +479,7 @@ class XoopsMembershipHandler extends XoopsObjectHandler
      * @param  CriteriaElement|CriteriaCompo $criteria {@link CriteriaElement} with conditions to meet
      * @return bool
      */
-    public function deleteAll(CriteriaElement $criteria = null)
+    public function deleteAll(?CriteriaElement $criteria = null)
     {
         $sql = 'DELETE FROM ' . $this->db->prefix('groups_users_link');
         if (isset($criteria) && \method_exists($criteria, 'renderWhere')) {
@@ -504,7 +504,7 @@ class XoopsMembershipHandler extends XoopsObjectHandler
      */
     public function getGroupsByUser($uid)
     {
-        $ret    = array();
+        $ret    = [];
         $sql    = 'SELECT groupid FROM ' . $this->db->prefix('groups_users_link') . ' WHERE uid=' . (int)$uid;
         $result = $this->db->query($sql);
         if (!$this->db->isResultSet($result)) {
@@ -530,7 +530,7 @@ class XoopsMembershipHandler extends XoopsObjectHandler
      */
     public function getUsersByGroup($groupid, $limit = 0, $start = 0)
     {
-        $ret    = array();
+        $ret    = [];
         $sql    = 'SELECT uid FROM ' . $this->db->prefix('groups_users_link') . ' WHERE groupid=' . (int)$groupid;
         $result = $this->db->query($sql, $limit, $start);
         if (!$this->db->isResultSet($result)) {

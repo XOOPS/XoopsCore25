@@ -33,7 +33,7 @@ class XoopsFormElement
      *
      * @var array ()
      */
-    public $customValidationCode = array();
+    public $customValidationCode = [];
 
     /**
      * *#@+
@@ -66,7 +66,7 @@ class XoopsFormElement
      *
      * @var array
      */
-    public $_class = array();
+    public $_class = [];
 
     /**
      * hidden?
@@ -80,7 +80,7 @@ class XoopsFormElement
      *
      * @var array
      */
-    public $_extra = array();
+    public $_extra = [];
 
     /**
      * required field?
@@ -156,8 +156,8 @@ class XoopsFormElement
      */
     public function getName($encode = true)
     {
-        if (false !== (bool)$encode) {
-            return str_replace('&amp;', '&', htmlspecialchars((string)$this->_name, ENT_QUOTES | ENT_HTML5));
+        if (false !== (bool) $encode) {
+            return str_replace('&amp;', '&', htmlspecialchars((string) $this->_name, ENT_QUOTES | ENT_HTML5));
         }
 
         return $this->_name;
@@ -222,7 +222,7 @@ class XoopsFormElement
         if (empty($this->_class)) {
             return false;
         }
-        $classes = array();
+        $classes = [];
         foreach ($this->_class as $class) {
             $classes[] = htmlspecialchars($class, ENT_QUOTES | ENT_HTML5);
         }
@@ -259,10 +259,10 @@ class XoopsFormElement
      */
     public function getTitle($encode = true)
     {
-        if(!isset($this->_caption)) { 
+        if(!isset($this->_caption)) {
             $this->_caption = '';
         }
-        if (strlen($this->_description) > 0) {
+        if (strlen((string)$this->_description) > 0) {
             return $encode ? htmlspecialchars(strip_tags($this->_caption . ' - ' . $this->_description), ENT_QUOTES | ENT_HTML5) : strip_tags($this->_caption . ' - ' . $this->_description);
         } else {
             return $encode ? htmlspecialchars(strip_tags($this->_caption), ENT_QUOTES | ENT_HTML5) : strip_tags($this->_caption);
@@ -331,7 +331,7 @@ class XoopsFormElement
     public function setExtra($extra, $replace = false)
     {
         if ($replace) {
-            $this->_extra = array(trim($extra));
+            $this->_extra = [trim($extra)];
         } else {
             $this->_extra[] = trim($extra);
         }
@@ -350,7 +350,7 @@ class XoopsFormElement
         if (!$encode) {
             return ' ' . implode(' ', $this->_extra);
         }
-        $value = array();
+        $value = [];
         foreach ($this->_extra as $val) {
             $value[] = str_replace('>', '&gt;', str_replace('<', '&lt;', $val));
         }
@@ -425,7 +425,7 @@ class XoopsFormElement
             // $eltname    = $this->getName();
             $eltcaption = $this->getCaption();
             $eltmsg     = empty($eltcaption) ? sprintf(_FORM_ENTER, $eltname) : sprintf(_FORM_ENTER, $eltcaption);
-            $eltmsg     = str_replace(array(':', '?', '%'), '', $eltmsg);
+            $eltmsg     = str_replace([':', '?', '%'], '', $eltmsg);
             $eltmsg     = str_replace('"', '\"', stripslashes($eltmsg));
             $eltmsg     = strip_tags($eltmsg);
             echo $this->getFormType();
@@ -447,7 +447,5 @@ class XoopsFormElement
      *
      * @abstract
      */
-    public function render()
-    {
-    }
+    public function render() {}
 }

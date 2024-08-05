@@ -23,10 +23,10 @@
  */
 class XoopsUpgrade
 {
-    public $usedFiles      = array();
-    public $tasks          = array();
+    public $usedFiles      = [];
+    public $tasks          = [];
     public $languageFolder = null;
-    public $logs           = array();
+    public $logs           = [];
 
     /**
      * @param null $dirname

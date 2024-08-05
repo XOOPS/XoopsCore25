@@ -77,7 +77,7 @@ function &notificationCategoryInfo($category_name = '', $module_id = null)
     if (!isset($module_id)) {
         global $xoopsModule;
         $module_id = !empty($xoopsModule) ? $xoopsModule->getVar('mid') : 0;
-        $module    =& $xoopsModule;
+        $module    = & $xoopsModule;
     } else {
         /** @var XoopsModuleHandler $module_handler */
         $module_handler = xoops_getHandler('module');
@@ -113,12 +113,12 @@ function &notificationCategoryInfo($category_name = '', $module_id = null)
 function &notificationCommentCategoryInfo($module_id = null)
 {
     $ret            = false;
-    $all_categories =& notificationCategoryInfo('', $module_id);
+    $all_categories = & notificationCategoryInfo('', $module_id);
     if (empty($all_categories)) {
         return $ret;
     }
     foreach ($all_categories as $category) {
-        $all_events =& notificationEvents($category['name'], false, $module_id);
+        $all_events = & notificationEvents($category['name'], false, $module_id);
         if (empty($all_events)) {
             continue;
         }
@@ -148,7 +148,7 @@ function &notificationEvents($category_name, $enabled_only, $module_id = null)
     if (!isset($module_id)) {
         global $xoopsModule;
         $module_id = !empty($xoopsModule) ? $xoopsModule->getVar('mid') : 0;
-        $module    =& $xoopsModule;
+        $module    = & $xoopsModule;
     } else {
         /** @var XoopsModuleHandler $module_handler */
         $module_handler = xoops_getHandler('module');
@@ -159,10 +159,10 @@ function &notificationEvents($category_name, $enabled_only, $module_id = null)
     $config_handler = xoops_getHandler('config');
     $mod_config     = $config_handler->getConfigsByCat(0, $module_id);
 
-    $category =& notificationCategoryInfo($category_name, $module_id);
+    $category = & notificationCategoryInfo($category_name, $module_id);
 
     global $xoopsConfig;
-    $event_array = array();
+    $event_array = [];
 
     $override_comment       = false;
     $override_commentsubmit = false;
@@ -233,7 +233,7 @@ function &notificationEvents($category_name, $enabled_only, $module_id = null)
                 }
             }
             if ($insert_comment) {
-                $event = array(
+                $event = [
                     'name'              => 'comment',
                     'category'          => $category['name'],
                     'title'             => _NOT_COMMENT_NOTIFY,
@@ -241,13 +241,14 @@ function &notificationEvents($category_name, $enabled_only, $module_id = null)
                     'description'       => _NOT_COMMENT_NOTIFYDSC,
                     'mail_template_dir' => $mail_template_dir,
                     'mail_template'     => 'comment_notify',
-                    'mail_subject'      => _NOT_COMMENT_NOTIFYSBJ);
+                    'mail_subject'      => _NOT_COMMENT_NOTIFYSBJ,
+                ];
                 if (!$enabled_only || notificationEventEnabled($category, $event, $module)) {
                     $event_array[] = $event;
                 }
             }
             if ($insert_submit) {
-                $event = array(
+                $event = [
                     'name'              => 'comment_submit',
                     'category'          => $category['name'],
                     'title'             => _NOT_COMMENTSUBMIT_NOTIFY,
@@ -256,7 +257,8 @@ function &notificationEvents($category_name, $enabled_only, $module_id = null)
                     'mail_template_dir' => $mail_template_dir,
                     'mail_template'     => 'commentsubmit_notify',
                     'mail_subject'      => _NOT_COMMENTSUBMIT_NOTIFYSBJ,
-                    'admin_only'        => 1);
+                    'admin_only'        => 1,
+                ];
                 if (!$enabled_only || notificationEventEnabled($category, $event, $module)) {
                     $event_array[] = $event;
                 }
@@ -268,12 +270,13 @@ function &notificationEvents($category_name, $enabled_only, $module_id = null)
 
     if (!empty($category['allow_bookmark'])) {
         if (!$override_bookmark) {
-            $event = array(
+            $event = [
                 'name'        => 'bookmark',
                 'category'    => $category['name'],
                 'title'       => _NOT_BOOKMARK_NOTIFY,
                 'caption'     => _NOT_BOOKMARK_NOTIFYCAP,
-                'description' => _NOT_BOOKMARK_NOTIFYDSC);
+                'description' => _NOT_BOOKMARK_NOTIFYDSC,
+            ];
             if (!$enabled_only || notificationEventEnabled($category, $event, $module)) {
                 $event_array[] = $event;
             }
@@ -295,13 +298,13 @@ function &notificationEvents($category_name, $enabled_only, $module_id = null)
  * @param  object $module   Module
  * @return bool
  **/
-function notificationEventEnabled(&$category, &$event, &$module)
+function notificationEventEnabled($category, $event, $module)
 {
     /** @var XoopsConfigHandler $config_handler */
     $config_handler = xoops_getHandler('config');
     $mod_config     = $config_handler->getConfigsByCat(0, $module->getVar('mid'));
 
-    if (is_array($mod_config['notification_events']) && $mod_config['notification_events'] != array()) {
+    if (is_array($mod_config['notification_events']) && $mod_config['notification_events'] != []) {
         $option_name = notificationGenerateConfig($category, $event, 'option_name');
         if (in_array($option_name, $mod_config['notification_events'])) {
             return true;
@@ -323,7 +326,7 @@ function notificationEventEnabled(&$category, &$event, &$module)
  */
 function &notificationEventInfo($category_name, $event_name, $module_id = null)
 {
-    $all_events =& notificationEvents($category_name, false, $module_id);
+    $all_events = & notificationEvents($category_name, false, $module_id);
     foreach ($all_events as $event) {
         if ($event['name'] == $event_name) {
             return $event;
@@ -344,45 +347,47 @@ function &notificationEventInfo($category_name, $event_name, $module_id = null)
 
 function &notificationSubscribableCategoryInfo($module_id = null)
 {
-    $all_categories =& notificationCategoryInfo('', $module_id);
+    $all_categories = & notificationCategoryInfo('', $module_id);
 
     // FIXME: better or more standardized way to do this?
     $script_url  = explode('/', $_SERVER['PHP_SELF']);
     $script_name = $script_url[count($script_url) - 1];
 
-    $sub_categories = array();
+    $sub_categories = [];
     if (null != $all_categories) {
-    foreach ($all_categories as $category) {
-        // Check the script name
-        $subscribe_from = $category['subscribe_from'];
-        if (!is_array($subscribe_from)) {
-            if ($subscribe_from === '*') {
-                $subscribe_from = array(
-                    $script_name);
-                // FIXME: this is just a hack: force a match
+        foreach ($all_categories as $category) {
+            // Check the script name
+            $subscribe_from = $category['subscribe_from'];
+            if (!is_array($subscribe_from)) {
+                if ($subscribe_from === '*') {
+                    $subscribe_from = [
+                        $script_name,
+                    ];
+                    // FIXME: this is just a hack: force a match
+                } else {
+                    $subscribe_from = [
+                        $subscribe_from,
+                    ];
+                }
+            }
+            if (!in_array($script_name, $subscribe_from)) {
+                continue;
+            }
+            // If 'item_name' is missing, automatic match.  Otherwise,
+            // check if that argument exists...
+            if (empty($category['item_name'])) {
+                $category['item_name'] = '';
+                $category['item_id']   = 0;
+                $sub_categories[]      = $category;
             } else {
-                $subscribe_from = array(
-                    $subscribe_from);
+                $item_name = $category['item_name'];
+                $id        = ($item_name != '' && isset($_GET[$item_name])) ? Request::getInt($item_name, 0, 'GET') : 0;
+                if ($id > 0) {
+                    $category['item_id'] = $id;
+                    $sub_categories[]    = $category;
+                }
             }
         }
-        if (!in_array($script_name, $subscribe_from)) {
-            continue;
-        }
-        // If 'item_name' is missing, automatic match.  Otherwise,
-        // check if that argument exists...
-        if (empty($category['item_name'])) {
-            $category['item_name'] = '';
-            $category['item_id']   = 0;
-            $sub_categories[]      = $category;
-        } else {
-            $item_name = $category['item_name'];
-            $id        = ($item_name != '' && isset($_GET[$item_name])) ? Request::getInt($item_name, 0, 'GET'): 0;
-            if ($id > 0) {
-                $category['item_id'] = $id;
-                $sub_categories[]    = $category;
-            }
-        }
-    }
     }
     return $sub_categories;
 }
@@ -402,7 +407,7 @@ function &notificationSubscribableCategoryInfo($module_id = null)
  *
  * @return bool|string
  */
-function notificationGenerateConfig(&$category, &$event, $type)
+function notificationGenerateConfig($category, $event, $type)
 {
     switch ($type) {
         case 'option_value':

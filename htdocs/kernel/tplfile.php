@@ -408,9 +408,9 @@ class XoopsTplfileHandler extends XoopsObjectHandler
      * @param  bool            $id_as_key should the blocks' bid be the key for the returned array?
      * @return array           {@link XoopsBlock}s matching the conditions
      */
-    public function getObjects(CriteriaElement $criteria = null, $getsource = false, $id_as_key = false)
+    public function getObjects(?CriteriaElement $criteria = null, $getsource = false, $id_as_key = false)
     {
-        $ret   = array();
+        $ret   = [];
         $limit = $start = 0;
         if ($getsource) {
             $sql = 'SELECT f.*, s.tpl_source FROM ' . $this->db->prefix('tplfile') . ' f LEFT JOIN ' . $this->db->prefix('tplsource') . ' s ON s.tpl_id=f.tpl_id';
@@ -447,7 +447,7 @@ class XoopsTplfileHandler extends XoopsObjectHandler
      * @param  CriteriaElement|CriteriaCompo $criteria
      * @return int
      */
-    public function getCount(CriteriaElement $criteria = null)
+    public function getCount(?CriteriaElement $criteria = null)
     {
         $sql = 'SELECT COUNT(*) FROM ' . $this->db->prefix('tplfile');
         if (isset($criteria) && \method_exists($criteria, 'renderWhere')) {
@@ -457,7 +457,7 @@ class XoopsTplfileHandler extends XoopsObjectHandler
         if (!$this->db->isResultSet($result)) {
             return 0;
         }
-        list($count) = $this->db->fetchRow($result);
+        [$count] = $this->db->fetchRow($result);
 
         return (int)$count;
     }
@@ -470,7 +470,7 @@ class XoopsTplfileHandler extends XoopsObjectHandler
      */
     public function getModuleTplCount($tplset)
     {
-        $ret    = array();
+        $ret    = [];
         $sql    = 'SELECT tpl_module, COUNT(tpl_id) AS count FROM ' . $this->db->prefix('tplfile') . " WHERE tpl_tplset='" . $tplset . "' GROUP BY tpl_module";
         $result = $this->db->query($sql);
         if (!$this->db->isResultSet($result)) {

@@ -41,25 +41,35 @@ if (!$allowed) {
     $xoopsThemeFactory                = new xos_opal_ThemeFactory();
     $xoopsThemeFactory->allowedThemes = $xoopsConfig['theme_set_allowed'];
     $xoopsThemeFactory->defaultTheme  = $xoopsConfig['theme_set'];
-    $xoTheme                          = $xoopsThemeFactory->createInstance(array(
-                                                                                'plugins' => array()));
-    $xoTheme->addScript('/include/xoops.js', array(
-        'type' => 'text/javascript'));
+    $xoTheme                          = $xoopsThemeFactory->createInstance(
+        [
+            'plugins' => [],
+        ],
+    );
+    $xoTheme->addScript(
+        '/include/xoops.js',
+        [
+            'type' => 'text/javascript',
+        ],
+    );
     $xoopsTpl = $xoTheme->template;
-    $xoopsTpl->assign(array(
-                          'xoops_theme'       => $xoopsConfig['theme_set'],
-                          'xoops_imageurl'    => XOOPS_THEME_URL . '/' . $xoopsConfig['theme_set'] . '/',
-                          'xoops_themecss'    => xoops_getcss($xoopsConfig['theme_set']),
-                          'xoops_requesturi'  => htmlspecialchars($_SERVER['REQUEST_URI'], ENT_QUOTES | ENT_HTML5),
-                          'xoops_sitename'    => htmlspecialchars($xoopsConfig['sitename'], ENT_QUOTES | ENT_HTML5),
-                          'xoops_slogan'      => htmlspecialchars($xoopsConfig['slogan'], ENT_QUOTES | ENT_HTML5),
-                          'xoops_dirname'     => !empty($xoopsModule) ? $xoopsModule->getVar('dirname') : 'system',
-                          'xoops_banner'      => $xoopsConfig['banners'] ? xoops_getbanner() : '&nbsp;',
-                          'xoops_pagetitle'   => isset($xoopsModule) && is_object($xoopsModule) ? $xoopsModule->getVar('name') : htmlspecialchars($xoopsConfig['slogan'], ENT_QUOTES | ENT_HTML5),
-                          'lang_login'        => _LOGIN,
-                          'lang_username'     => _USERNAME,
-                          'lang_password'     => _PASSWORD,
-                          'lang_siteclosemsg' => $xoopsConfig['closesite_text']));
+    $xoopsTpl->assign(
+        [
+            'xoops_theme'       => $xoopsConfig['theme_set'],
+            'xoops_imageurl'    => XOOPS_THEME_URL . '/' . $xoopsConfig['theme_set'] . '/',
+            'xoops_themecss'    => xoops_getcss($xoopsConfig['theme_set']),
+            'xoops_requesturi'  => htmlspecialchars($_SERVER['REQUEST_URI'], ENT_QUOTES | ENT_HTML5),
+            'xoops_sitename'    => htmlspecialchars($xoopsConfig['sitename'], ENT_QUOTES | ENT_HTML5),
+            'xoops_slogan'      => htmlspecialchars($xoopsConfig['slogan'], ENT_QUOTES | ENT_HTML5),
+            'xoops_dirname'     => !empty($xoopsModule) ? $xoopsModule->getVar('dirname') : 'system',
+            'xoops_banner'      => $xoopsConfig['banners'] ? xoops_getbanner() : '&nbsp;',
+            'xoops_pagetitle'   => isset($xoopsModule) && is_object($xoopsModule) ? $xoopsModule->getVar('name') : htmlspecialchars($xoopsConfig['slogan'], ENT_QUOTES | ENT_HTML5),
+            'lang_login'        => _LOGIN,
+            'lang_username'     => _USERNAME,
+            'lang_password'     => _PASSWORD,
+            'lang_siteclosemsg' => $xoopsConfig['closesite_text'],
+        ],
+    );
     if (isset($_SESSION['redirect_message'])) {
         $xoopsTpl->assign('redirect_message', $_SESSION['redirect_message']);
         unset($_SESSION['redirect_message']);

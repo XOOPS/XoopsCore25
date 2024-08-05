@@ -17,7 +17,7 @@
  * @author       XOOPS Development Team, Kazumi Ono (AKA onokazu)
  */
 /** @var  XoopsUser $xoopsUser */
-include_once dirname(dirname(dirname(__DIR__))) . '/include/cp_header.php';
+include_once dirname(__DIR__, 3) . '/include/cp_header.php';
 $modid = isset($_POST['modid']) ? (int)$_POST['modid'] : 0;
 
 // we don't want system module permissions to be changed here
@@ -32,7 +32,7 @@ if (!is_object($module) || !$module->getVar('isactive')) {
     redirect_header(XOOPS_URL . '/admin.php', 1, _MODULENOEXIST);
 }
 
-$msg = array();
+$msg = [];
 
 /** @var XoopsMemberHandler $member_handler */
 $member_handler = xoops_getHandler('member');
@@ -48,7 +48,7 @@ if (is_array($_POST['perms']) && !empty($_POST['perms'])) {
                     if ($selected == 1) {
                         // make sure that all parent ids are selected as well
                         if ($perm_data['parents'][$item_id] !== '') {
-                            $parent_ids = explode(':', $perm_data['parents'][$item_id]);
+                            $parent_ids = explode(':', (string) $perm_data['parents'][$item_id]);
                             foreach ($parent_ids as $pid) {
                                 //                                if ($pid != 0 && !in_array($pid, array_keys($item_ids))) {
                                 if ($pid != 0 && !array_key_exists($pid, $item_ids)) {
@@ -81,7 +81,7 @@ if (is_array($_POST['perms']) && !empty($_POST['perms'])) {
 
 $backlink = xoops_getenv('HTTP_REFERER');
 if ($module->getVar('hasadmin')) {
-    $adminindex = isset($_POST['redirect_url']) ? $_POST['redirect_url'] : $module->getInfo('adminindex');
+    $adminindex = $_POST['redirect_url'] ?? $module->getInfo('adminindex');
     if ($adminindex) {
         $backlink = XOOPS_URL . '/modules/' . $module->getVar('dirname') . '/' . $adminindex;
     }

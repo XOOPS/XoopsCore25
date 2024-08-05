@@ -147,11 +147,11 @@ class XoopsMultiMailer extends PHPMailer
         $config_handler    = xoops_getHandler('config');
         $xoopsMailerConfig = $config_handler->getConfigsByCat(XOOPS_CONF_MAILER);
         $this->From        = $xoopsMailerConfig['from'];
-        if ($this->From == '') {
+        if ('' == $this->From) {
             $this->From = $GLOBALS['xoopsConfig']['adminmail'];
         }
         $this->Sender = $this->From;
-        if ($xoopsMailerConfig['mailmethod'] === 'smtpauth') {
+        if ('smtpauth' === $xoopsMailerConfig['mailmethod']) {
             $this->Mailer   = 'smtp';
             $this->SMTPAuth = true;
             // TODO: change value type of xoopsConfig 'smtphost' from array to text

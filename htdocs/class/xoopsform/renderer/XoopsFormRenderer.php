@@ -20,7 +20,7 @@
  */
 final class XoopsFormRenderer
 {
-    const NOT_PERMITTED = 'Not supported for Singleton';
+    public const NOT_PERMITTED = 'Not supported for Singleton';
 
     /**
      * @var XoopsFormRenderer The reference to *Singleton* instance of this class
@@ -50,9 +50,7 @@ final class XoopsFormRenderer
      * Protected constructor to prevent creating a new instance of the
      * *Singleton* via the `new` operator from outside of this class.
      */
-    protected function __construct()
-    {
-    }
+    protected function __construct() {}
 
     /**
      * Private clone method to prevent cloning of the instance of the

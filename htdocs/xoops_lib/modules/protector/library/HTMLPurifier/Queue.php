@@ -35,7 +35,7 @@ class HTMLPurifier_Queue {
             $this->input = array();
         }
         if (empty($this->output)) {
-            return NULL;
+            return null;
         }
         return array_pop($this->output);
     }

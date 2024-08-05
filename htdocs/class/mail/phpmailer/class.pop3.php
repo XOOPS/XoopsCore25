@@ -120,12 +120,12 @@ class POP3
      * @var array
      * @access protected
      */
-    protected $errors = array();
+    protected $errors = [];
 
     /**
      * Line break constant
      */
-    const CRLF = "\r\n";
+    public const CRLF = "\r\n";
 
     /**
      * Simple static wrapper for all-in-one POP before SMTP
@@ -145,7 +145,7 @@ class POP3
         $password = '',
         $debug_level = 0
     ) {
-        $pop = new POP3;
+        $pop = new POP3();
         return $pop->authorise($host, $port, $timeout, $username, $password, $debug_level);
     }
 
@@ -169,19 +169,19 @@ class POP3
         if (false === $port) {
             $this->port = $this->POP3_PORT;
         } else {
-            $this->port = (integer)$port;
+            $this->port = (int) $port;
         }
         // If no timeout value provided, use default
         if (false === $timeout) {
             $this->tval = $this->POP3_TIMEOUT;
         } else {
-            $this->tval = (integer)$timeout;
+            $this->tval = (int) $timeout;
         }
         $this->do_debug = $debug_level;
         $this->username = $username;
         $this->password = $password;
         //  Reset the error log
-        $this->errors = array();
+        $this->errors = [];
         //  connect
         $result = $this->connect($this->host, $this->port, $this->tval);
         if ($result) {
@@ -213,7 +213,7 @@ class POP3
 
         //On Windows this will raise a PHP Warning error if the hostname doesn't exist.
         //Rather than suppress it with @fsockopen, capture it cleanly instead
-        set_error_handler(array($this, 'catchWarning'));
+        set_error_handler([$this, 'catchWarning']);
 
         if (false === $port) {
             $port = $this->POP3_PORT;
@@ -225,7 +225,7 @@ class POP3
             $port, //  Port #
             $errno, //  Error Number
             $errstr, //  Error Message
-            $tval
+            $tval,
         ); //  Timeout (seconds)
         //  Restore the error handler
         restore_error_handler();
@@ -233,11 +233,13 @@ class POP3
         //  Did we connect?
         if (false === $this->pop_conn) {
             //  It would appear not...
-            $this->setError(array(
-                'error' => "Failed to connect to server $host on port $port",
-                'errno' => $errno,
-                'errstr' => $errstr
-            ));
+            $this->setError(
+                [
+                    'error' => "Failed to connect to server $host on port $port",
+                    'errno' => $errno,
+                    'errstr' => $errstr,
+                ],
+            );
             return false;
         }
 
@@ -348,11 +350,13 @@ class POP3
     protected function checkResponse($string)
     {
         if (substr($string, 0, 3) !== '+OK') {
-            $this->setError(array(
-                'error' => "Server reported an error: $string",
-                'errno' => 0,
-                'errstr' => ''
-            ));
+            $this->setError(
+                [
+                    'error' => "Server reported an error: $string",
+                    'errno' => 0,
+                    'errstr' => '',
+                ],
+            );
             return false;
         } else {
             return true;
@@ -396,12 +400,14 @@ class POP3
      */
     protected function catchWarning($errno, $errstr, $errfile, $errline)
     {
-        $this->setError(array(
-            'error' => "Connecting to the POP3 server raised a PHP warning: ",
-            'errno' => $errno,
-            'errstr' => $errstr,
-            'errfile' => $errfile,
-            'errline' => $errline
-        ));
+        $this->setError(
+            [
+                'error' => "Connecting to the POP3 server raised a PHP warning: ",
+                'errno' => $errno,
+                'errstr' => $errstr,
+                'errfile' => $errfile,
+                'errline' => $errline,
+            ],
+        );
     }
 }

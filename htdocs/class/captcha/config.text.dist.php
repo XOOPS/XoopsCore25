@@ -19,6 +19,6 @@
 
 defined('XOOPS_ROOT_PATH') || exit('Restricted access');
 
-return $config = array(
+return $config = [
     'num_chars' => 6,  // Maximum characters
-);
+];

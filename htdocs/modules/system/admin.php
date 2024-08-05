@@ -28,7 +28,7 @@ if (isset($fct) && $fct === 'users') {
 $error = false;
 if ($admintest != 0) {
     if (isset($fct) && $fct !== '') {
-        $fct = preg_replace("/[^a-z0-9_\-]/i", '', $fct);
+        $fct = preg_replace("/[^a-z0-9_\-]/i", '', (string) $fct);
         if (file_exists(XOOPS_ROOT_PATH . '/modules/' . $xoopsModule->getVar('dirname', 'n') . '/admin/' . $fct . '/xoops_version.php')) {
             // Load language file
             system_loadLanguage($fct, $xoopsModule->getVar('dirname', 'n'));
@@ -38,7 +38,7 @@ if ($admintest != 0) {
             /** @var XoopsGroupPermHandler $sysperm_handler */
             $sysperm_handler = xoops_getHandler('groupperm');
 
-            $category = !empty($modversion['category']) ? (int)$modversion['category'] : 0;
+            $category = !empty($modversion['category']) ? (int) $modversion['category'] : 0;
             unset($modversion);
 
             if ($category > 0) {
@@ -70,7 +70,7 @@ if ($admintest != 0) {
 }
 
 if (false !== $error) {
-	$op = Request::getString('op', '');
+    $op = Request::getString('op', '');
     if ($op === 'system_activate') {
         $part           = Request::getString('type', '');
         /** @var XoopsConfigHandler $config_handler */
@@ -111,27 +111,27 @@ if (false !== $error) {
 
     $admin_dir        = XOOPS_ROOT_PATH . '/modules/system/admin';
     $dirlist          = XoopsLists::getDirListAsArray($admin_dir);
-    $inactive_section = array('blocksadmin', 'groups', 'modulesadmin', 'preferences', 'tplsets');
+    $inactive_section = ['blocksadmin', 'groups', 'modulesadmin', 'preferences', 'tplsets'];
     foreach ($dirlist as $directory) {
         if (file_exists($admin_dir . '/' . $directory . '/xoops_version.php')) {
             require $admin_dir . '/' . $directory . '/xoops_version.php';
 
             if ($modversion['hasAdmin']) {
                 if (xoops_getModuleOption('active_' . $directory, 'system')) {
-                    $category = isset($modversion['category']) ? (int)$modversion['category'] : 0;
+                    $category = isset($modversion['category']) ? (int) $modversion['category'] : 0;
                     if (false !== $all_ok || in_array($modversion['category'], $ok_syscats)) {
                         $menu['file']   = $directory;
-                        $menu['title']  = trim($modversion['name']);
-                        $menu['desc']   = str_replace('<br>', ' ', $modversion['description']);
+                        $menu['title']  = trim((string) $modversion['name']);
+                        $menu['desc']   = str_replace('<br>', ' ', (string) $modversion['description']);
                         $menu['icon']   = $modversion['image'];
                         $menu['status'] = true;
                     }
                 } else {
-                    $category = isset($modversion['category']) ? (int)$modversion['category'] : 0;
+                    $category = isset($modversion['category']) ? (int) $modversion['category'] : 0;
                     if (false !== $all_ok || in_array($modversion['category'], $ok_syscats)) {
                         $menu['file']   = $directory;
-                        $menu['title']  = trim($modversion['name']);
-                        $menu['desc']   = str_replace('<br>', ' ', $modversion['description']);
+                        $menu['title']  = trim((string) $modversion['name']);
+                        $menu['desc']   = str_replace('<br>', ' ', (string) $modversion['description']);
                         $menu['icon']   = $modversion['image'];
                         $menu['status'] = false;
                     }

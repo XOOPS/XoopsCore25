@@ -41,12 +41,12 @@ class XoopsPreload
     /**
      * @var array $_preloads array containing information about the event observers
      */
-    public $_preloads = array();
+    public $_preloads = [];
 
     /**
      * @var array $_events array containing the events that are being observed
      */
-    public $_events = array();
+    public $_events = [];
 
     /**
      * Constructor
@@ -118,7 +118,7 @@ class XoopsPreload
             foreach ($class_methods as $method) {
                 if (strpos($method, 'event') === 0) {
                     $event_name                   = strtolower(str_replace('event', '', $method));
-                    $event                        = array('class_name' => $class_name, 'method' => $method);
+                    $event                        = ['class_name' => $class_name, 'method' => $method];
                     $this->_events[$event_name][] = $event;
                 }
             }
@@ -133,12 +133,12 @@ class XoopsPreload
      *
      * @return void
      */
-    public function triggerEvent($event_name, $args = array())
+    public function triggerEvent($event_name, $args = [])
     {
         $event_name = strtolower(str_replace('.', '', $event_name));
         if (isset($this->_events[$event_name])) {
             foreach ($this->_events[$event_name] as $event) {
-                call_user_func(array($event['class_name'], $event['method']), $args);
+                call_user_func([$event['class_name'], $event['method']], $args);
             }
         }
     }
@@ -160,7 +160,5 @@ class XoopsPreloadItem
     /**
      * XoopsPreloadItem constructor.
      */
-    public function __construct()
-    {
-    }
+    public function __construct() {}
 }

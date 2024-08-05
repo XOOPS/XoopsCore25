@@ -10,10 +10,9 @@
 
 class HTMLPurifier_Strategy_RemoveForeignElements extends HTMLPurifier_Strategy
 {
-
     /**
      * @param HTMLPurifier_Token[] $tokens
-     * @param HTMLPurifier_Config $config
+     * @param HTMLPurifier_Config  $config
      * @param HTMLPurifier_Context $context
      * @return array|HTMLPurifier_Token[]
      */
@@ -55,7 +54,7 @@ class HTMLPurifier_Strategy_RemoveForeignElements extends HTMLPurifier_Strategy
 
         $e = false;
         if ($config->get('Core.CollectErrors')) {
-            $e =& $context->get('ErrorCollector');
+            $e = &$context->get('ErrorCollector');
         }
 
         foreach ($tokens as $token) {
@@ -73,7 +72,7 @@ class HTMLPurifier_Strategy_RemoveForeignElements extends HTMLPurifier_Strategy
                     // there is a transformation for this tag
                     // DEFINITION CALL
                     $token = $definition->
-                        info_tag_transform[$token->name]->transform($token, $config, $context);
+                    info_tag_transform[$token->name]->transform($token, $config, $context);
                     if ($e) {
                         $e->send(E_NOTICE, 'Strategy_RemoveForeignElements: Tag transform', $original_name);
                     }

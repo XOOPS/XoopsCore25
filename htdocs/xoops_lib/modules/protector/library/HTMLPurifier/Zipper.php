@@ -44,9 +44,9 @@ class HTMLPurifier_Zipper
      * the hole with a value. (Usually you should supply a $t, unless you
      * are at the end of the array.)
      */
-    public function toArray($t = NULL) {
+    public function toArray($t = null) {
         $a = $this->front;
-        if ($t !== NULL) $a[] = $t;
+        if ($t !== null) $a[] = $t;
         for ($i = count($this->back)-1; $i >= 0; $i--) {
             $a[] = $this->back[$i];
         }
@@ -59,8 +59,8 @@ class HTMLPurifier_Zipper
      * @return Original contents of new hole.
      */
     public function next($t) {
-        if ($t !== NULL) array_push($this->front, $t);
-        return empty($this->back) ? NULL : array_pop($this->back);
+        if ($t !== null) array_push($this->front, $t);
+        return empty($this->back) ? null : array_pop($this->back);
     }
 
     /**
@@ -82,8 +82,8 @@ class HTMLPurifier_Zipper
      * @return Original contents of new hole.
      */
     public function prev($t) {
-        if ($t !== NULL) array_push($this->back, $t);
-        return empty($this->front) ? NULL : array_pop($this->front);
+        if ($t !== null) array_push($this->back, $t);
+        return empty($this->front) ? null : array_pop($this->front);
     }
 
     /**
@@ -92,7 +92,7 @@ class HTMLPurifier_Zipper
      * @return Original contents of new hole.
      */
     public function delete() {
-        return empty($this->back) ? NULL : array_pop($this->back);
+        return empty($this->back) ? null : array_pop($this->back);
     }
 
     /**
@@ -108,7 +108,7 @@ class HTMLPurifier_Zipper
      * @param Element to insert
      */
     public function insertBefore($t) {
-        if ($t !== NULL) array_push($this->front, $t);
+        if ($t !== null) array_push($this->front, $t);
     }
 
     /**
@@ -116,7 +116,7 @@ class HTMLPurifier_Zipper
      * @param Element to insert
      */
     public function insertAfter($t) {
-        if ($t !== NULL) array_push($this->back, $t);
+        if ($t !== null) array_push($this->back, $t);
     }
 
     /**

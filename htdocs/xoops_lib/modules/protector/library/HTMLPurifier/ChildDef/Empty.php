@@ -24,8 +24,8 @@ class HTMLPurifier_ChildDef_Empty extends HTMLPurifier_ChildDef
     }
 
     /**
-     * @param HTMLPurifier_Node[] $children
-     * @param HTMLPurifier_Config $config
+     * @param HTMLPurifier_Node[]  $children
+     * @param HTMLPurifier_Config  $config
      * @param HTMLPurifier_Context $context
      * @return array
      */

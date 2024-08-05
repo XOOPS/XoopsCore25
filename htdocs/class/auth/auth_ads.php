@@ -43,7 +43,7 @@ class XoopsAuthAds extends XoopsAuthLdap
      * Authentication Service constructor
      * @param XoopsDatabase $dao
      */
-    public function __construct(XoopsDatabase $dao = null)
+    public function __construct(?XoopsDatabase $dao = null)
     {
         parent::__construct($dao);
     }

@@ -3,10 +3,10 @@
 class UpgradeControl
 {
     /** @var PatchStatus[] */
-    public $upgradeQueue = array();
+    public $upgradeQueue = [];
 
     /** @var string[] */
-    public $needWriteFiles = array();
+    public $needWriteFiles = [];
 
     /** @var bool  */
     public $needUpgrade = false;
@@ -14,13 +14,13 @@ class UpgradeControl
     /**
      * @var array support sites pulled from language files -- support.php
      */
-    public $supportSites = array();
+    public $supportSites = [];
 
     /** @var bool */
     public $needMainfileRewrite = false;
 
     /** @var string[]  */
-    public $mainfileKeys = array();
+    public $mainfileKeys = [];
 
     /**
      * @var string language being used in the upgrade process
@@ -36,7 +36,7 @@ class UpgradeControl
      */
     public function getDirList($dirname)
     {
-        $dirlist = array();
+        $dirlist = [];
         if (is_dir($dirname) && $handle = opendir($dirname)) {
             while (false !== ($file = readdir($handle))) {
                 if (substr($file, 0, 1) !== '.' && strtolower($file) !== 'cvs') {
@@ -67,7 +67,7 @@ class UpgradeControl
     {
         $supports = null;
 
-        $language = (null === $language) ? $this->upgradeLanguage : $language;
+        $language = $language ?? $this->upgradeLanguage;
 
         if (file_exists(__DIR__ . "/../language/{$language}/{$domain}.php")) {
             include_once __DIR__ . "/../language/{$language}/{$domain}.php";
@@ -94,10 +94,7 @@ class UpgradeControl
     {
         global $xoopsConfig;
 
-        $upgrade_language = null;
-        if (isset($xoopsConfig['language'])) {
-            $upgrade_language = $xoopsConfig['language'];
-        }
+        $upgrade_language = $xoopsConfig['language'] ?? null;
         $upgrade_language = !empty($_COOKIE['xo_upgrade_lang']) ? $_COOKIE['xo_upgrade_lang'] : $upgrade_language;
         $upgrade_language = Xmf\Request::getString('lang', $upgrade_language);
         $upgrade_language = (null === $xoopsConfig['language']) ? 'english' : $upgrade_language;
@@ -121,8 +118,8 @@ class UpgradeControl
         $dirs = $this->getDirList('.');
 
         /** @var PatchStatus[] $results */
-        $results     = array();
-        $files       = array();
+        $results     = [];
+        $files       = [];
         $this->needUpgrade = false;
 
         foreach ($dirs as $dir) {
@@ -199,7 +196,7 @@ class UpgradeControl
      *
      * @return string
      */
-    public function oneButtonContinueForm($action = 'index.php', $parameters = array('action' =>'next'))
+    public function oneButtonContinueForm($action = 'index.php', $parameters = ['action' =>'next'])
     {
         $form  = '<form action="' . $action . '" method="post">';
         $form .= '<button class="btn btn-lg btn-success" type="submit">' . _CONTINUE;

@@ -31,9 +31,9 @@ if ( !is_object($xoopsUser) || !is_object($xoopsModule) || !$xoopsUser->isAdmin(
 function xoops_module_install($dirname)
 {
     global $xoopsUser, $xoopsConfig;
-    $dirname        = trim($dirname);
+    $dirname        = trim((string) $dirname);
     $db             =& $GLOBALS['xoopsDB'];
-    $reservedTables = array(
+    $reservedTables = [
         'avatar',
         'avatar_users_link',
         'block_module_link',
@@ -67,7 +67,8 @@ function xoops_module_install($dirname)
         'xoopsnotifications',
         'banner',
         'bannerclient',
-        'bannerfinish');
+        'bannerfinish',
+    ];
     /** @var XoopsModuleHandler $module_handler */
     $module_handler = xoops_getHandler('module');
     if ($module_handler->getCount(new Criteria('dirname', $dirname)) == 0) {
@@ -77,12 +78,12 @@ function xoops_module_install($dirname)
         $module->setVar('isactive', 1);
         $module->setVar('last_update', time());
         $error = false;
-        $errs  = array();
-        $msgs  = array();
+        $errs  = [];
+        $msgs  = [];
         $msgs[] = '<div id="xo-module-log"><div class="header">';
-        $msgs[] = $errs[] = '<h4>' . _AM_SYSTEM_MODULES_INSTALLING . $module->getInfo('name', 's') . '</h4>';
+        $msgs[] = $errs[] = '<h4>' . _AM_SYSTEM_MODULES_INSTALLING . $module->getInfo('name') . '</h4>';
         if ($module->getInfo('image') !== false && trim($module->getInfo('image')) != '') {
-            $msgs[] = '<a href="' . XOOPS_URL . '/modules/' . $module->getInfo('dirname', 'e') . '/' . $module->getInfo('adminindex') . '"><img src="' . XOOPS_URL . '/modules/' . $dirname . '/' . trim($module->getInfo('image')) . '" alt="" /></a>';
+            $msgs[] = '<a href="' . XOOPS_URL . '/modules/' . $module->getInfo('dirname') . '/' . $module->getInfo('adminindex') . '"><img src="' . XOOPS_URL . '/modules/' . $dirname . '/' . trim($module->getInfo('image')) . '" alt="" /></a>';
         }
         $msgs[] = '<strong>' . _VERSION . ':</strong> ' . $module->getInfo('version');
         if ($module->getInfo('author') !== false && trim($module->getInfo('author')) != '') {
@@ -121,7 +122,7 @@ function xoops_module_install($dirname)
                     $sql_query = fread(fopen($sql_file_path, 'r'), filesize($sql_file_path));
                     $sql_query = trim($sql_query);
                     SqlUtility::splitMySqlFile($pieces, $sql_query);
-                    $created_tables = array();
+                    $created_tables = [];
                     foreach ($pieces as $piece) {
                         // [0] contains the prefixed query
                         // [4] contains unprefixed table name
@@ -187,7 +188,7 @@ function xoops_module_install($dirname)
                     $msgs[] = _AM_SYSTEM_MODULES_TEMPLATES_ADD;
                     foreach ($templates as $tpl) {
                         $tplfile = $tplfile_handler->create();
-                        $type    = (isset($tpl['type']) ? $tpl['type'] : 'module');
+                        $type    = ($tpl['type'] ?? 'module');
                         $tpldata =&  xoops_module_gettemplate($dirname, $tpl['file'], $type);
                         $tplfile->setVar('tpl_source', $tpldata, true);
                         $tplfile->setVar('tpl_refid', $newmid);
@@ -232,21 +233,21 @@ function xoops_module_install($dirname)
                             } else {
                                 $options = $block['options'];
                             }
-                            $options = trim($options);
+                            $options = trim((string) $options);
                         }
                         $newbid    = $db->genId($db->prefix('newblocks') . '_bid_seq');
-                        $edit_func = isset($block['edit_func']) ? trim($block['edit_func']) : '';
+                        $edit_func = isset($block['edit_func']) ? trim((string) $block['edit_func']) : '';
                         $template  = '';
-                        if (isset($block['template']) && trim($block['template']) != '') {
+                        if (isset($block['template']) && trim((string) $block['template']) != '') {
                             $content =& xoops_module_gettemplate($dirname, $block['template'], 'blocks');
                         }
                         if (empty($content)) {
                             $content = '';
                         } else {
-                            $template = trim($block['template']);
+                            $template = trim((string) $block['template']);
                         }
-                        $block_name = addslashes(trim($block['name']));
-                        $sql        = 'INSERT INTO ' . $db->prefix('newblocks') . " (bid, mid, func_num, options, name, title, content, side, weight, visible, block_type, c_type, isactive, dirname, func_file, show_func, edit_func, template, bcachetime, last_modified) VALUES ($newbid, $newmid, " . (int)$blockkey . ", '$options', '" . $block_name . "','" . $block_name . "', '', 0, 0, 0, 'M', 'H', 1, '" . addslashes($dirname) . "', '" . addslashes(trim($block['file'])) . "', '" . addslashes(trim($block['show_func'])) . "', '" . addslashes($edit_func) . "', '" . $template . "', 0, " . time() . ')';
+                        $block_name = addslashes(trim((string) $block['name']));
+                        $sql        = 'INSERT INTO ' . $db->prefix('newblocks') . " (bid, mid, func_num, options, name, title, content, side, weight, visible, block_type, c_type, isactive, dirname, func_file, show_func, edit_func, template, bcachetime, last_modified) VALUES ($newbid, $newmid, " . (int)$blockkey . ", '$options', '" . $block_name . "','" . $block_name . "', '', 0, 0, 0, 'M', 'H', 1, '" . addslashes($dirname) . "', '" . addslashes(trim((string) $block['file'])) . "', '" . addslashes(trim((string) $block['show_func'])) . "', '" . addslashes($edit_func) . "', '" . $template . "', 0, " . time() . ')';
                         if (!$db->query($sql)) {
                             $msgs[] = '&nbsp;&nbsp;<span style="color:#ff0000;">' . sprintf(_AM_SYSTEM_MODULES_BLOCK_ADD_ERROR, '<strong>' . $block['name'] . '</strong>') . sprintf(_AM_SYSTEM_MODULES_BLOCK_ADD_ERROR_DATABASE, '<strong>' . $db->error() . '</strong>') . '</span>';
                         } else {
@@ -291,76 +292,83 @@ function xoops_module_install($dirname)
                 if ($configs !== false) {
                     if ($module->getVar('hascomments') != 0) {
                         include_once XOOPS_ROOT_PATH . '/include/comment_constants.php';
-                        $configs[] = array(
+                        $configs[] = [
                             'name'        => 'com_rule',
                             'title'       => '_CM_COMRULES',
                             'description' => '',
                             'formtype'    => 'select',
                             'valuetype'   => 'int',
                             'default'     => 1,
-                            'options'     => array(
+                            'options'     => [
                                 '_CM_COMNOCOM'        => XOOPS_COMMENT_APPROVENONE,
                                 '_CM_COMAPPROVEALL'   => XOOPS_COMMENT_APPROVEALL,
                                 '_CM_COMAPPROVEUSER'  => XOOPS_COMMENT_APPROVEUSER,
-                                '_CM_COMAPPROVEADMIN' => XOOPS_COMMENT_APPROVEADMIN));
-                        $configs[] = array(
+                                '_CM_COMAPPROVEADMIN' => XOOPS_COMMENT_APPROVEADMIN,
+                            ],
+                        ];
+                        $configs[] = [
                             'name'        => 'com_anonpost',
                             'title'       => '_CM_COMANONPOST',
                             'description' => '',
                             'formtype'    => 'yesno',
                             'valuetype'   => 'int',
-                            'default'     => 0);
+                            'default'     => 0,
+                        ];
                     }
                 } else {
                     if ($module->getVar('hascomments') != 0) {
-                        $configs = array();
+                        $configs = [];
                         include_once XOOPS_ROOT_PATH . '/include/comment_constants.php';
-                        $configs[] = array(
+                        $configs[] = [
                             'name'        => 'com_rule',
                             'title'       => '_CM_COMRULES',
                             'description' => '',
                             'formtype'    => 'select',
                             'valuetype'   => 'int',
                             'default'     => 1,
-                            'options'     => array(
+                            'options'     => [
                                 '_CM_COMNOCOM'        => XOOPS_COMMENT_APPROVENONE,
                                 '_CM_COMAPPROVEALL'   => XOOPS_COMMENT_APPROVEALL,
                                 '_CM_COMAPPROVEUSER'  => XOOPS_COMMENT_APPROVEUSER,
-                                '_CM_COMAPPROVEADMIN' => XOOPS_COMMENT_APPROVEADMIN));
-                        $configs[] = array(
+                                '_CM_COMAPPROVEADMIN' => XOOPS_COMMENT_APPROVEADMIN,
+                            ],
+                        ];
+                        $configs[] = [
                             'name'        => 'com_anonpost',
                             'title'       => '_CM_COMANONPOST',
                             'description' => '',
                             'formtype'    => 'yesno',
                             'valuetype'   => 'int',
-                            'default'     => 0);
+                            'default'     => 0,
+                        ];
                     }
                 }
                 // RMV-NOTIFY
                 if ($module->getVar('hasnotification') != 0) {
                     if (empty($configs)) {
-                        $configs = array();
+                        $configs = [];
                     }
                     // Main notification options
                     include_once XOOPS_ROOT_PATH . '/include/notification_constants.php';
                     include_once XOOPS_ROOT_PATH . '/include/notification_functions.php';
-                    $options                             = array();
+                    $options                             = [];
                     $options['_NOT_CONFIG_DISABLE']      = XOOPS_NOTIFICATION_DISABLE;
                     $options['_NOT_CONFIG_ENABLEBLOCK']  = XOOPS_NOTIFICATION_ENABLEBLOCK;
                     $options['_NOT_CONFIG_ENABLEINLINE'] = XOOPS_NOTIFICATION_ENABLEINLINE;
                     $options['_NOT_CONFIG_ENABLEBOTH']   = XOOPS_NOTIFICATION_ENABLEBOTH;
 
-                    $configs[] = array(
+                    $configs[] = [
                         'name'        => 'notification_enabled',
                         'title'       => '_NOT_CONFIG_ENABLE',
                         'description' => '_NOT_CONFIG_ENABLEDSC',
                         'formtype'    => 'select',
                         'valuetype'   => 'int',
                         'default'     => XOOPS_NOTIFICATION_ENABLEBOTH,
-                        'options'     => $options);
+                        'options'     => $options,
+                    ];
                     // Event-specific notification options
                     // FIXME: doesn't work when update module... can't read back the array of options properly...  " changing to &quot;
-                    $options    = array();
+                    $options    = [];
                     $categories =& notificationCategoryInfo('', $module->getVar('mid'));
                     foreach ($categories as $category) {
                         $events =& notificationEvents($category['name'], false, $module->getVar('mid'));
@@ -375,14 +383,15 @@ function xoops_module_install($dirname)
                         unset($events);
                     }
                     unset($categories);
-                    $configs[] = array(
+                    $configs[] = [
                         'name'        => 'notification_events',
                         'title'       => '_NOT_CONFIG_EVENTS',
                         'description' => '_NOT_CONFIG_EVENTSDSC',
                         'formtype'    => 'select_multi',
                         'valuetype'   => 'array',
                         'default'     => array_values($options),
-                        'options'     => $options);
+                        'options'     => $options,
+                    ];
                 }
 
                 if ($configs !== false) {
@@ -396,7 +405,7 @@ function xoops_module_install($dirname)
                         $confobj->setVar('conf_catid', 0);
                         $confobj->setVar('conf_name', $config['name']);
                         $confobj->setVar('conf_title', $config['title'], true);
-                        $confobj->setVar('conf_desc', isset($config['description']) ? $config['description'] : '', true);
+                        $confobj->setVar('conf_desc', $config['description'] ?? '', true);
                         $confobj->setVar('conf_formtype', $config['formtype']);
                         $confobj->setVar('conf_valuetype', $config['valuetype']);
                         $confobj->setConfValueForInput($config['default'], true);
@@ -423,9 +432,9 @@ function xoops_module_install($dirname)
                     unset($configs);
                 }
             }
-            $groups = array(XOOPS_GROUP_ADMIN);
+            $groups = [XOOPS_GROUP_ADMIN];
             if ($module->getInfo('hasMain')) {
-                $groups = array(XOOPS_GROUP_ADMIN, XOOPS_GROUP_USERS, XOOPS_GROUP_ANONYMOUS);
+                $groups = [XOOPS_GROUP_ADMIN, XOOPS_GROUP_USERS, XOOPS_GROUP_ANONYMOUS];
             }
             // retrieve all block ids for this module
             $blocks        = XoopsBlock::getByModule($newmid, false);
@@ -505,11 +514,11 @@ function xoops_module_install($dirname)
 				$msgs[] = '<div class="noininstall center">';
 			}
 			if ($module->getInfo('adminindex') != ''){
-				$msgs[] = '<a href="' . XOOPS_URL . '/modules/' . $module->getInfo('dirname', 'e') . '/' . $module->getInfo('adminindex') . '">' . _AM_SYSTEM_MODULES_INSTALL_THISMODULE . '</a>';
+				$msgs[] = '<a href="' . XOOPS_URL . '/modules/' . $module->getInfo('dirname') . '/' . $module->getInfo('adminindex') . '">' . _AM_SYSTEM_MODULES_INSTALL_THISMODULE . '</a>';
 			}
-            $testdataDirectory = XOOPS_ROOT_PATH . '/modules/' . $module->getInfo('dirname', 'e') . '/testdata';
+            $testdataDirectory = XOOPS_ROOT_PATH . '/modules/' . $module->getInfo('dirname') . '/testdata';
             if (file_exists($testdataDirectory)) {
-                $msgs[] = '<a href="' . XOOPS_URL . '/modules/' . $module->getInfo('dirname', 'e') . '/testdata/index.php?op=load' . '">' . _AM_SYSTEM_MODULES_INSTALL_TESTDATA . '</a></div>';
+                $msgs[] = '<a href="' . XOOPS_URL . '/modules/' . $module->getInfo('dirname') . '/testdata/index.php?op=load' . '">' . _AM_SYSTEM_MODULES_INSTALL_TESTDATA . '</a></div>';
             } else {
                 $msgs[] = '</div>';
             }
@@ -573,7 +582,7 @@ function &xoops_module_gettemplate($dirname, $template, $type = '')
 function xoops_module_uninstall($dirname)
 {
     global $xoopsConfig;
-    $reservedTables = array(
+    $reservedTables = [
         'avatar',
         'avatar_users_link',
         'block_module_link',
@@ -607,7 +616,8 @@ function xoops_module_uninstall($dirname)
         'xoopsnotifications',
         'banner',
         'bannerclient',
-        'bannerfinish');
+        'bannerfinish',
+    ];
     $db             = XoopsDatabaseFactory::getDatabaseConnection();
     /** @var XoopsModuleHandler $module_handler */
     $module_handler = xoops_getHandler('module');
@@ -619,7 +629,7 @@ function xoops_module_uninstall($dirname)
     } elseif ($module->getVar('dirname') == $xoopsConfig['startpage']) {
         return '<p>' . sprintf(_AM_SYSTEM_MODULES_FAILUNINS, '<strong>' . $module->getVar('name') . '</strong>') . '&nbsp;' . _AM_SYSTEM_MODULES_ERRORSC . '<br> - ' . _AM_SYSTEM_MODULES_STRTNO . '</p>';
     } else {
-        $msgs   = array();
+        $msgs   = [];
         $msgs[] = '<div id="xo-module-log"><div class="header">';
         $msgs[] = $errs[] = '<h4>' . _AM_SYSTEM_MODULES_UNINSTALL . ' ' . $module->getInfo('name', 's') . '</h4>';
         if ($module->getInfo('image') !== false && trim($module->getInfo('image')) != '') {
@@ -792,7 +802,7 @@ function xoops_module_uninstall($dirname)
 function xoops_module_update($dirname)
 {
     global $xoopsUser, $xoopsConfig, $xoopsTpl;
-    $dirname = trim($dirname);
+    $dirname = trim((string) $dirname);
     $xoopsDB =& $GLOBALS['xoopsDB'];
 
     $myts = \MyTextSanitizer::getInstance();
@@ -831,7 +841,7 @@ function xoops_module_update($dirname)
         echo "<br><div class='center'><a href='admin.php?fct=modulesadmin'>" . _AM_SYSTEM_MODULES_BTOMADMIN . '</a></div>';
     } else {
         $newmid = $module->getVar('mid');
-        $msgs   = array();
+        $msgs   = [];
         $msgs[] = '<div id="xo-module-log"><div class="header">';
         $msgs[] = $errs[] = '<h4>' . _AM_SYSTEM_MODULES_UPDATING . $module->getInfo('name', 's') . '</h4>';
         if ($module->getInfo('image') !== false && trim($module->getInfo('image')) != '') {
@@ -880,10 +890,10 @@ function xoops_module_update($dirname)
         if ($templates !== false) {
             $msgs[] = _AM_SYSTEM_MODULES_TEMPLATES_UPDATE;
             foreach ($templates as $tpl) {
-                $tpl['file'] = trim($tpl['file']);
+                $tpl['file'] = trim((string) $tpl['file']);
                 // START irmtfan solve templates duplicate issue
                 // if (!in_array($tpl['file'], $delng)) { // irmtfan bug fix: remove codes for delete templates
-                $type = (isset($tpl['type']) ? $tpl['type'] : 'module');
+                $type = ($tpl['type'] ?? 'module');
                 if (preg_match("/\.css$/i", $tpl['file'])) {
                     $type = 'css';
                 }
@@ -933,16 +943,16 @@ function xoops_module_update($dirname)
         $blocks = $module->getInfo('blocks');
         $msgs[] = _AM_SYSTEM_MODULES_BLOCKS_REBUILD;
         if ($blocks !== false) {
-            $showfuncs = array();
-            $funcfiles = array();
+            $showfuncs = [];
+            $funcfiles = [];
             foreach ($blocks as $i => $block) {
                 if (isset($block['show_func']) && $block['show_func'] != '' && isset($block['file']) && $block['file'] != '') {
-                    $editfunc    = isset($block['edit_func']) ? $block['edit_func'] : '';
+                    $editfunc    = $block['edit_func'] ?? '';
                     $showfuncs[] = $block['show_func'];
                     $funcfiles[] = $block['file'];
                     $content = '';
                     $template = '';
-                    if (isset($block['template']) && trim($block['template']) != '') {
+                    if (isset($block['template']) && trim((string) $block['template']) != '') {
                         $content =& xoops_module_gettemplate($dirname, $block['template'], 'blocks');
                     }
                     if (!$content) {
@@ -954,17 +964,18 @@ function xoops_module_update($dirname)
                     if (!empty($block['options'])) {
                         $options = $block['options'];
                     }
-                    $sql     = 'SELECT bid, name FROM ' . $xoopsDB->prefix('newblocks') . ' WHERE mid=' . $module->getVar('mid') . ' AND func_num=' . $i . " AND show_func='" . addslashes($block['show_func']) . "' AND func_file='" . addslashes($block['file']) . "'";
+                    $sql     = 'SELECT bid, name FROM ' . $xoopsDB->prefix('newblocks') . ' WHERE mid=' . $module->getVar('mid') . ' AND func_num=' . $i . " AND show_func='" . addslashes((string) $block['show_func']) . "' AND func_file='" . addslashes((string) $block['file']) . "'";
                     $fresult = $xoopsDB->query($sql);
                     if (!$xoopsDB->isResultSet($fresult)) {
                         throw new \RuntimeException(
-                            \sprintf(_DB_QUERY_ERROR, $sql) . $xoopsDB->error(), E_USER_ERROR
+                            \sprintf(_DB_QUERY_ERROR, $sql) . $xoopsDB->error(),
+                            E_USER_ERROR,
                         );
                     }
                     $fcount  = 0;
                     while (false !== ($fblock = $xoopsDB->fetchArray($fresult))) {
                         ++$fcount;
-                        $sql    = 'UPDATE ' . $xoopsDB->prefix('newblocks') . " SET name='" . addslashes($block['name']) . "', edit_func='" . addslashes($editfunc) . "', content='', template='" . $template . "', last_modified=" . time() . ' WHERE bid=' . $fblock['bid'];
+                        $sql    = 'UPDATE ' . $xoopsDB->prefix('newblocks') . " SET name='" . addslashes((string) $block['name']) . "', edit_func='" . addslashes((string) $editfunc) . "', content='', template='" . $template . "', last_modified=" . time() . ' WHERE bid=' . $fblock['bid'];
                         $result = $xoopsDB->query($sql);
                         if (!$result) {
                             $msgs[] = '&nbsp;&nbsp;' . sprintf(_AM_SYSTEM_MODULES_UPDATE_ERROR, $fblock['name']);
@@ -1004,9 +1015,9 @@ function xoops_module_update($dirname)
                     }
                     if ($fcount == 0) {
                         $newbid     = $xoopsDB->genId($xoopsDB->prefix('newblocks') . '_bid_seq');
-                        $block_name = addslashes($block['name']);
+                        $block_name = addslashes((string) $block['name']);
                         $block_type = ($module->getVar('dirname') === 'system') ? 'S' : 'M';
-                        $sql        = 'INSERT INTO ' . $xoopsDB->prefix('newblocks') . ' (bid, mid, func_num, options, name, title, content, side, weight, visible, block_type, isactive, dirname, func_file, show_func, edit_func, template, last_modified) VALUES (' . $newbid . ', ' . $module->getVar('mid') . ', ' . $i . ",'" . addslashes($options) . "','" . $block_name . "', '" . $block_name . "', '', 0, 0, 0, '{$block_type}', 1, '" . addslashes($dirname) . "', '" . addslashes($block['file']) . "', '" . addslashes($block['show_func']) . "', '" . addslashes($editfunc) . "', '" . $template . "', " . time() . ')';
+                        $sql        = 'INSERT INTO ' . $xoopsDB->prefix('newblocks') . ' (bid, mid, func_num, options, name, title, content, side, weight, visible, block_type, isactive, dirname, func_file, show_func, edit_func, template, last_modified) VALUES (' . $newbid . ', ' . $module->getVar('mid') . ', ' . $i . ",'" . addslashes((string) $options) . "','" . $block_name . "', '" . $block_name . "', '', 0, 0, 0, '{$block_type}', 1, '" . addslashes($dirname) . "', '" . addslashes((string) $block['file']) . "', '" . addslashes((string) $block['show_func']) . "', '" . addslashes((string) $editfunc) . "', '" . $template . "', " . time() . ')';
                         $result     = $xoopsDB->query($sql);
                         if (!$result) {
                             $msgs[] = '&nbsp;&nbsp;' . sprintf(_AM_SYSTEM_MODULES_SQL_NOT_CREATE, $block['name']);
@@ -1016,9 +1027,9 @@ function xoops_module_update($dirname)
                                 $newbid = $xoopsDB->getInsertId();
                             }
                             if ($module->getInfo('hasMain')) {
-                                $groups = array(XOOPS_GROUP_ADMIN, XOOPS_GROUP_USERS, XOOPS_GROUP_ANONYMOUS);
+                                $groups = [XOOPS_GROUP_ADMIN, XOOPS_GROUP_USERS, XOOPS_GROUP_ANONYMOUS];
                             } else {
-                                $groups = array(XOOPS_GROUP_ADMIN);
+                                $groups = [XOOPS_GROUP_ADMIN];
                             }
                             $gperm_handler = xoops_getHandler('groupperm');
                             foreach ($groups as $mygroup) {
@@ -1109,7 +1120,7 @@ function xoops_module_update($dirname)
         $config_handler = xoops_getHandler('config');
         $configs        = $config_handler->getConfigs(new Criteria('conf_modid', $module->getVar('mid')));
         $confcount      = count($configs);
-        $config_delng   = array();
+        $config_delng   = [];
         if ($confcount > 0) {
             $msgs[] = _AM_SYSTEM_MODULES_MODULE_DATA_DELETE;
             for ($i = 0; $i < $confcount; $i++) {
@@ -1131,78 +1142,91 @@ function xoops_module_update($dirname)
         if ($configs !== false) {
             if ($module->getVar('hascomments') != 0) {
                 include_once XOOPS_ROOT_PATH . '/include/comment_constants.php';
-                array_push($configs, array(
+                array_push(
+                    $configs,
+                    [
                     'name'        => 'com_rule',
                     'title'       => '_CM_COMRULES',
                     'description' => '',
                     'formtype'    => 'select',
                     'valuetype'   => 'int',
                     'default'     => 1,
-                    'options'     => array(
+                    'options'     => [
                         '_CM_COMNOCOM'        => XOOPS_COMMENT_APPROVENONE,
                         '_CM_COMAPPROVEALL'   => XOOPS_COMMENT_APPROVEALL,
                         '_CM_COMAPPROVEUSER'  => XOOPS_COMMENT_APPROVEUSER,
-                        '_CM_COMAPPROVEADMIN' => XOOPS_COMMENT_APPROVEADMIN)));
-                array_push($configs, array(
+                            '_CM_COMAPPROVEADMIN' => XOOPS_COMMENT_APPROVEADMIN,
+                        ],
+                    ],
+                );
+                array_push(
+                    $configs,
+                    [
                     'name'        => 'com_anonpost',
                     'title'       => '_CM_COMANONPOST',
                     'description' => '',
                     'formtype'    => 'yesno',
                     'valuetype'   => 'int',
-                    'default'     => 0));
+                        'default'     => 0,
+                    ],
+                );
             }
         } else {
             if ($module->getVar('hascomments') != 0) {
-                $configs = array();
+                $configs = [];
                 include_once XOOPS_ROOT_PATH . '/include/comment_constants.php';
-                $configs[] = array(
+                $configs[] = [
                     'name'        => 'com_rule',
                     'title'       => '_CM_COMRULES',
                     'description' => '',
                     'formtype'    => 'select',
                     'valuetype'   => 'int',
                     'default'     => 1,
-                    'options'     => array(
+                    'options'     => [
                         '_CM_COMNOCOM'        => XOOPS_COMMENT_APPROVENONE,
                         '_CM_COMAPPROVEALL'   => XOOPS_COMMENT_APPROVEALL,
                         '_CM_COMAPPROVEUSER'  => XOOPS_COMMENT_APPROVEUSER,
-                        '_CM_COMAPPROVEADMIN' => XOOPS_COMMENT_APPROVEADMIN));
-                $configs[] = array(
+                        '_CM_COMAPPROVEADMIN' => XOOPS_COMMENT_APPROVEADMIN,
+                    ],
+                ];
+                $configs[] = [
                     'name'        => 'com_anonpost',
                     'title'       => '_CM_COMANONPOST',
                     'description' => '',
                     'formtype'    => 'yesno',
                     'valuetype'   => 'int',
-                    'default'     => 0);
+                    'default'     => 0,
+                ];
             }
         }
         // RMV-NOTIFY
         if ($module->getVar('hasnotification') != 0) {
             if (empty($configs)) {
-                $configs = array();
+                $configs = [];
             }
             // Main notification options
             include_once XOOPS_ROOT_PATH . '/include/notification_constants.php';
             include_once XOOPS_ROOT_PATH . '/include/notification_functions.php';
-            $options                             = array();
+            $options                             = [];
             $options['_NOT_CONFIG_DISABLE']      = XOOPS_NOTIFICATION_DISABLE;
             $options['_NOT_CONFIG_ENABLEBLOCK']  = XOOPS_NOTIFICATION_ENABLEBLOCK;
             $options['_NOT_CONFIG_ENABLEINLINE'] = XOOPS_NOTIFICATION_ENABLEINLINE;
             $options['_NOT_CONFIG_ENABLEBOTH']   = XOOPS_NOTIFICATION_ENABLEBOTH;
 
             //$configs[] = array ('name' => 'notification_enabled', 'title' => '_NOT_CONFIG_ENABLED', 'description' => '_NOT_CONFIG_ENABLEDDSC', 'formtype' => 'yesno', 'valuetype' => 'int', 'default' => 1);
-            $configs[] = array(
+            $configs[] = [
                 'name'        => 'notification_enabled',
                 'title'       => '_NOT_CONFIG_ENABLE',
                 'description' => '_NOT_CONFIG_ENABLEDSC',
                 'formtype'    => 'select',
                 'valuetype'   => 'int',
                 'default'     => XOOPS_NOTIFICATION_ENABLEBOTH,
-                'options'     => $options);
+                'options'     => $options,
+            ];
             // Event specific notification options
             // FIXME: for some reason the default doesn't come up properly
             //  initially is ok, but not when 'update' module..
-            $options    = array();
+            $options    = [];
             $categories =& notificationCategoryInfo('', $module->getVar('mid'));
             foreach ($categories as $category) {
                 $events =& notificationEvents($category['name'], false, $module->getVar('mid'));
@@ -1216,14 +1240,15 @@ function xoops_module_update($dirname)
                     //$configs[] = array ('name' => notificationGenerateConfig($category,$event,'name'), 'title' => notificationGenerateConfig($category,$event,'title_constant'), 'description' => notificationGenerateConfig($category,$event,'description_constant'), 'formtype' => 'yesno', 'valuetype' => 'int', 'default' => 1);
                 }
             }
-            $configs[] = array(
+            $configs[] = [
                 'name'        => 'notification_events',
                 'title'       => '_NOT_CONFIG_EVENTS',
                 'description' => '_NOT_CONFIG_EVENTSDSC',
                 'formtype'    => 'select_multi',
                 'valuetype'   => 'array',
                 'default'     => array_values($options),
-                'options'     => $options);
+                'options'     => $options,
+            ];
         }
 
         if ($configs !== false) {
@@ -1331,7 +1356,7 @@ function xoops_module_activate($mid)
     include_once XOOPS_ROOT_PATH . '/class/template.php';
     xoops_template_clear_module_cache($module->getVar('mid'));
     // Display header
-    $msgs   = array();
+    $msgs   = [];
     $msgs[] = '<div id="xo-module-log">';
 
     $logHeader = xoops_module_log_header($module, _AM_SYSTEM_MODULES_ACTIVATE);
@@ -1350,7 +1375,7 @@ function xoops_module_activate($mid)
         }
         // provide a link to the activated module
         $moduleName = $module->getVar('name', 's');
-        $moduleLink = '<a href="' . XOOPS_URL . '/modules/' . $module->getInfo('dirname', 'e') . '/' . $module->getInfo('adminindex') . '">' . $moduleName . '</a>';
+        $moduleLink = '<a href="' . XOOPS_URL . '/modules/' . $module->getInfo('dirname') . '/' . $module->getInfo('adminindex') . '">' . $moduleName . '</a>';
         $msgs[] = '<p>' . sprintf(_AM_SYSTEM_MODULES_OKACT, '<strong>' . $moduleLink . '</strong>') . '</p></div>';
 
     }
@@ -1376,7 +1401,7 @@ function xoops_module_deactivate($mid)
     include_once XOOPS_ROOT_PATH . '/class/template.php';
     xoops_template_clear_module_cache($mid);
     // Display header
-    $msgs   = array();
+    $msgs   = [];
     $msgs[] = '<div id="xo-module-log">';
 
     $logHeader = xoops_module_log_header($module, _AM_SYSTEM_MODULES_DEACTIVATE);
@@ -1419,15 +1444,14 @@ function xoops_module_change($mid, $name)
     $module_handler = xoops_getHandler('module');
     $module         = $module_handler->get($mid);
     $module->setVar('name', $name);
-    $myts = \MyTextSanitizer::getInstance();
     if (!$module_handler->insert($module)) {
-        $ret = '<p>' . sprintf(_AM_SYSTEM_MODULES_FAILORDER, '<strong>' . $myts->stripSlashesGPC($name) . '</strong>') . '&nbsp;' . _AM_SYSTEM_MODULES_ERRORSC . '<br>';
+        $ret = '<p>' . sprintf(_AM_SYSTEM_MODULES_FAILORDER, '<strong>' . $name . '</strong>') . '&nbsp;' . _AM_SYSTEM_MODULES_ERRORSC . '<br>';
         $ret .= $module->getHtmlErrors() . '</p>';
 
         return $ret;
     }
 
-    return '<p>' . sprintf(_AM_SYSTEM_MODULES_OKORDER, '<strong>' . $myts->stripSlashesGPC($name) . '</strong>') . '</p>';
+    return '<p>' . sprintf(_AM_SYSTEM_MODULES_OKORDER, '<strong>' . $name . '</strong>') . '</p>';
 }
 
 /**
@@ -1441,16 +1465,16 @@ function xoops_module_log_header($module, $title)
     $msgs[] = '<div class="header">';
     $msgs[] = $errs[] = '<h4>' . $title . $module->getInfo('name', 's') . '</h4>';
 
-    if ($module->getInfo('image') !== false && trim($module->getInfo('image')) != '') {
+    if ($module->getInfo('image') !== false && trim((string) $module->getInfo('image')) != '') {
         if (_AM_SYSTEM_MODULES_ACTIVATE === $title) {
-            $msgs[] = '<a href="' . XOOPS_URL . '/modules/' . $module->getInfo('dirname', 'e') . '/' . $module->getInfo('adminindex') . '"><img src="' . XOOPS_URL . '/modules/' . $module->getInfo('dirname', 'e') . '/' . trim($module->getInfo('image')) . '" alt="" /></a>';
+            $msgs[] = '<a href="' . XOOPS_URL . '/modules/' . $module->getInfo('dirname', 'e') . '/' . $module->getInfo('adminindex') . '"><img src="' . XOOPS_URL . '/modules/' . $module->getInfo('dirname', 'e') . '/' . trim((string) $module->getInfo('image')) . '" alt="" /></a>';
         } else {
-            $msgs[] = '<img src="' . XOOPS_URL . '/modules/' . $module->getVar('dirname') . '/' . trim($module->getInfo('image')) . '" alt="" />';
+            $msgs[] = '<img src="' . XOOPS_URL . '/modules/' . $module->getVar('dirname') . '/' . trim((string) $module->getInfo('image')) . '" alt="" />';
         }
     }
     $msgs[] = '<strong>' . _VERSION . ':</strong> ' . $module->getInfo('version');
-    if ($module->getInfo('author') !== false && trim($module->getInfo('author')) != '') {
-        $msgs[] = '<strong>' . _AUTHOR . ':</strong> ' . htmlspecialchars(trim($module->getInfo('author')), ENT_QUOTES | ENT_HTML5);
+    if ($module->getInfo('author') !== false && trim((string) $module->getInfo('author')) != '') {
+        $msgs[] = '<strong>' . _AUTHOR . ':</strong> ' . htmlspecialchars(trim((string) $module->getInfo('author')), ENT_QUOTES | ENT_HTML5);
     }
     $msgs[] = '</div>';
 
@@ -1470,9 +1494,9 @@ function xoops_module_log_header($module, $title)
 function xoops_module_delayed_clean_cache($cacheList = null)
 {
     if (empty($cacheList)) {
-        $cacheList = array (1,2,3);
+        $cacheList = [1, 2, 3];
     }
     require_once XOOPS_ROOT_PATH . '/modules/system/class/maintenance.php';
     $maintenance = new SystemMaintenance();
-    register_shutdown_function(array($maintenance, 'CleanCache'), $cacheList);
+    register_shutdown_function([$maintenance, 'CleanCache'], $cacheList);
 }

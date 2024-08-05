@@ -44,8 +44,8 @@ class SystemFineImUploadHandler extends SystemFineUploadHandler
     public function __construct(\stdClass $claims)
     {
         parent::__construct($claims);
-        $this->allowedMimeTypes = array('image/gif', 'image/jpeg', 'image/png');
-        $this->allowedExtensions = array('gif', 'jpeg', 'jpg', 'png');
+        $this->allowedMimeTypes = ['image/gif', 'image/jpeg', 'image/png'];
+        $this->allowedExtensions = ['gif', 'jpeg', 'jpg', 'png'];
     }
 
     protected function storeUploadedFile($target, $mimeType, $uuid)
@@ -54,10 +54,10 @@ class SystemFineImUploadHandler extends SystemFineUploadHandler
         $imgcatHandler = xoops_getHandler('imagecategory');
         $imgcat = $imgcatHandler->get($this->claims->cat);
 
-        $pathParts = pathinfo($this->getName());
+        $pathParts = pathinfo((string) $this->getName());
 
         $imageName = uniqid('img', false) . '.' . strtolower($pathParts['extension']);
-        $imageNicename = str_replace(array('_','-'), ' ', $pathParts['filename']);
+        $imageNicename = str_replace(['_', '-'], ' ', $pathParts['filename']);
         $imagePath = XOOPS_ROOT_PATH . '/uploads/images/' . $imageName;
 
         $fbinary = null;
@@ -74,7 +74,7 @@ class SystemFineImUploadHandler extends SystemFineUploadHandler
         $image = $imageHandler->create();
 
         $image->setVar('image_nicename', $imageNicename);
-        $image->setVar('image_mimetype',  $mimeType);
+        $image->setVar('image_mimetype', $mimeType);
         $image->setVar('image_created', time());
         $image->setVar('image_display', 1);
         $image->setVar('image_weight', 0);
@@ -85,10 +85,10 @@ class SystemFineImUploadHandler extends SystemFineUploadHandler
             $image->setVar('image_name', 'images/' . $imageName);
         }
         if (!$imageHandler->insert($image)) {
-            return array(
-                'error' => sprintf(_FAILSAVEIMG, $image->getVar('image_nicename'))
-            );
+            return [
+                'error' => sprintf(_FAILSAVEIMG, $image->getVar('image_nicename')),
+            ];
         }
-        return array('success'=> true, "uuid" => $uuid);
+        return ['success' => true, "uuid" => $uuid];
     }
 }

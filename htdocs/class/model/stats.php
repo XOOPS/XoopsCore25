@@ -33,7 +33,7 @@ class XoopsModelStats extends XoopsModelAbstract
      * @param  CriteriaElement|CriteriaCompo $criteria {@link CriteriaElement} to match
      * @return int|array    count of objects
      */
-    public function getCount(CriteriaElement $criteria = null)
+    public function getCount(?CriteriaElement $criteria = null)
     {
         $field   = '';
         $groupby = false;
@@ -53,12 +53,12 @@ class XoopsModelStats extends XoopsModelAbstract
             return 0;
         }
         if ($groupby == false) {
-            list($count) = $this->handler->db->fetchRow($result);
+            [$count] = $this->handler->db->fetchRow($result);
 
             return (int) $count;
         } else {
-            $ret = array();
-            while (false !== (list($id, $count) = $this->handler->db->fetchRow($result))) {
+            $ret = [];
+            while (false !== ([$id, $count] = $this->handler->db->fetchRow($result))) {
                 $ret[$id] = (int) $count;
             }
 
@@ -72,9 +72,9 @@ class XoopsModelStats extends XoopsModelAbstract
      * @param  CriteriaElement|CriteriaCompo  $criteria {@link CriteriaElement} to match
      * @return array  of counts
      */
-    public function getCounts(CriteriaElement $criteria = null)
+    public function getCounts(?CriteriaElement $criteria = null)
     {
-        $ret         = array();
+        $ret         = [];
         $sql_where   = '';
         $limit       = null;
         $start       = null;
@@ -92,7 +92,7 @@ class XoopsModelStats extends XoopsModelAbstract
         if (!$this->handler->db->isResultSet($result)) {
             return $ret;
         }
-        while (false !== (list($id, $count) = $this->handler->db->fetchRow($result))) {
+        while (false !== ([$id, $count] = $this->handler->db->fetchRow($result))) {
             $ret[$id] = (int) $count;
         }
 

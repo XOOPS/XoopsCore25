@@ -219,9 +219,9 @@ class XoopsImagesetimgHandler extends XoopsObjectHandler
      * @internal param bool $getbinary
      * @return array Array of {@link XoopsImageSetImg} objects
      */
-    public function getObjects(CriteriaElement $criteria = null, $id_as_key = false)
+    public function getObjects(?CriteriaElement $criteria = null, $id_as_key = false)
     {
-        $ret   = array();
+        $ret   = [];
         $limit = $start = 0;
         $sql   = 'SELECT DISTINCT i.* FROM ' . $this->db->prefix('imgsetimg') . ' i LEFT JOIN ' . $this->db->prefix('imgset_tplset_link') . ' l ON l.imgset_id=i.imgsetimg_imgset LEFT JOIN ' . $this->db->prefix('imgset') . ' s ON s.imgset_id=l.imgset_id';
         if (isset($criteria) && \method_exists($criteria, 'renderWhere')) {
@@ -256,7 +256,7 @@ class XoopsImagesetimgHandler extends XoopsObjectHandler
      * @param  CriteriaElement|CriteriaCompo $criteria {@link CriteriaElement}
      * @return int
      **/
-    public function getCount(CriteriaElement $criteria = null)
+    public function getCount(?CriteriaElement $criteria = null)
     {
         $sql = 'SELECT COUNT(i.imgsetimg_id) FROM ' . $this->db->prefix('imgsetimg') . ' i LEFT JOIN ' . $this->db->prefix('imgset_tplset_link') . ' l ON l.imgset_id=i.imgsetimg_imgset';
         if (isset($criteria) && \method_exists($criteria, 'renderWhere')) {
@@ -266,7 +266,7 @@ class XoopsImagesetimgHandler extends XoopsObjectHandler
         if (!$this->db->isResultSet($result)) {
             return 0;
         }
-        list($count) = $this->db->fetchRow($result);
+        [$count] = $this->db->fetchRow($result);
 
         return (int)$count;
     }

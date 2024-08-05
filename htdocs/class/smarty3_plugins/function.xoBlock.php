@@ -35,7 +35,7 @@ function smarty_function_xoBlock($params, $smarty)
 
     $display_title = (isset($params['display']) && $params['display'] === 'title');
     $display_none  = (isset($params['display']) && $params['display'] === 'none');
-    $options       = isset($params['options']) ? $params['options'] : false;
+    $options       = $params['options'] ?? false;
     $groups        = isset($params['groups']) ? explode('|', $params['groups']) : false;
     $cache         = isset($params['cache']) ? (int)$params['cache'] : false;
 
@@ -56,7 +56,7 @@ function smarty_function_xoBlock($params, $smarty)
         $blockObj = $block_objs[$block_id];
     }
 
-    $user_groups = $GLOBALS['xoopsUser'] ? $GLOBALS['xoopsUser']->getGroups() : array(XOOPS_GROUP_ANONYMOUS);
+    $user_groups = $GLOBALS['xoopsUser'] ? $GLOBALS['xoopsUser']->getGroups() : [XOOPS_GROUP_ANONYMOUS];
 
     static $allowed_blocks;
     if (!is_array(@$allowed_blocks) || count($allowed_blocks) == 0) {

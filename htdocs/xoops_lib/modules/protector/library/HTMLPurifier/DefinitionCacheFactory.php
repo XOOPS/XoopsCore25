@@ -71,7 +71,7 @@ class HTMLPurifier_DefinitionCacheFactory
             return $this->caches[$method][$type];
         }
         if (isset($this->implementations[$method]) &&
-            class_exists($class = $this->implementations[$method], false)) {
+            class_exists($class = $this->implementations[$method])) {
             $cache = new $class($type);
         } else {
             if ($method != 'Serializer') {
@@ -97,7 +97,7 @@ class HTMLPurifier_DefinitionCacheFactory
     {
         if (is_string($decorator)) {
             $class = "HTMLPurifier_DefinitionCache_Decorator_$decorator";
-            $decorator = new $class;
+            $decorator = new $class();
         }
         $this->decorators[$decorator->name] = $decorator;
     }

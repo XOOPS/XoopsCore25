@@ -32,10 +32,15 @@ if (!is_object($xoopsUser)) {
             exit();
         } elseif (empty($_REQUEST['ok'])) {
             include $GLOBALS['xoops']->path('header.php');
-            xoops_confirm(array(
-                              'ok'              => 1,
-                              'delete_messages' => 1,
-                              'msg_ids'         => json_encode(array_map('intval', $_POST['msg_id']))), $_SERVER['REQUEST_URI'], _PM_SURE_TO_DELETE);
+            xoops_confirm(
+                [
+                    'ok'              => 1,
+                    'delete_messages' => 1,
+                    'msg_ids'         => json_encode(array_map('intval', $_POST['msg_id'])),
+                ],
+                $_SERVER['REQUEST_URI'],
+                _PM_SURE_TO_DELETE,
+            );
             include $GLOBALS['xoops']->path('footer.php');
             exit();
         }
@@ -44,9 +49,9 @@ if (!is_object($xoopsUser)) {
             $clean_msg_id = array_map('intval', $clean_msg_id);
         }
         $size = count($clean_msg_id);
-        $msg  =& $clean_msg_id;
+        $msg  = & $clean_msg_id;
         for ($i = 0; $i < $size; ++$i) {
-            $pm = $pm_handler->get((int)$msg[$i]);
+            $pm = $pm_handler->get((int) $msg[$i]);
             if ($pm->getVar('to_userid') == $xoopsUser->getVar('uid')) {
                 $pm_handler->delete($pm);
             }
@@ -77,7 +82,7 @@ if (!is_object($xoopsUser)) {
         } else {
             echo "<td class='aligntop width5 txtcenter'><img src='images/email_notread.png' alt='" . _PM_NOTREAD . "' title='" . _PM_NOTREAD . "' /></td>\n";
         }
-        $iconName = htmlspecialchars((string)$pm_arr[$i]->getVar('msg_image', 'E'), ENT_QUOTES | ENT_HTML5);
+        $iconName = htmlspecialchars((string) $pm_arr[$i]->getVar('msg_image', 'E'), ENT_QUOTES | ENT_HTML5);
         if ($iconName != '') {
             echo "<td class='aligntop width5 txtcenter'><img src='images/subject/" . $iconName . "' alt='' /></td>\n";
         } else {

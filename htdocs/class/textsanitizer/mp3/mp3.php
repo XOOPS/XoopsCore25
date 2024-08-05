@@ -53,9 +53,10 @@ class MytsMp3 extends MyTextSanitizerExtension
             }
 EOF;
 
-        return array(
+        return [
             $code,
-            $javascript);
+            $javascript,
+        ];
     }
 
     /**
@@ -76,7 +77,7 @@ EOF;
     public function load(MyTextSanitizer $myts)
     {
         $myts->callbackPatterns[] = "/\[mp3\](.*?)\[\/mp3\]/s";
-        $myts->callbacks[]        = __CLASS__ . '::myCallback';
+        $myts->callbacks[]        = self::class . '::myCallback';
 
         return true;
     }

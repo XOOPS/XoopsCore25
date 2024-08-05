@@ -65,17 +65,13 @@ class CriteriaElement
     /**
      * Constructor
      */
-    public function __construct()
-    {
-    }
+    public function __construct() {}
 
     /**
      * Render the criteria element
      * @return string
      */
-    public function render()
-    {
-    }
+    public function render() {}
 
     /**
      *
@@ -121,7 +117,7 @@ class CriteriaElement
      */
     public function setLimit($limit = 0)
     {
-        $this->limit = (int)$limit;
+        $this->limit = (int) $limit;
     }
 
     /**
@@ -139,7 +135,7 @@ class CriteriaElement
      */
     public function setStart($start = 0)
     {
-        $this->start = (int)$start;
+        $this->start = (int) $start;
     }
 
     /**
@@ -184,14 +180,14 @@ class CriteriaCompo extends CriteriaElement
      *
      * @var array Array of {@link CriteriaElement} objects
      */
-    public $criteriaElements = array();
+    public $criteriaElements = [];
 
     /**
      * Conditions
      *
      * @var array
      */
-    public $conditions = array();
+    public $conditions = [];
 
     /**
      * Constructor
@@ -199,7 +195,7 @@ class CriteriaCompo extends CriteriaElement
      * @param CriteriaElement|null $ele
      * @param string $condition
      */
-    public function __construct(CriteriaElement $ele = null, $condition = 'AND')
+    public function __construct(?CriteriaElement $ele = null, $condition = 'AND')
     {
         if (isset($ele)) {
             $this->add($ele, $condition);
@@ -216,7 +212,7 @@ class CriteriaCompo extends CriteriaElement
     public function &add(CriteriaElement $criteriaElement, $condition = 'AND')
     {
         if (is_object($criteriaElement)) {
-            $this->criteriaElements[] =& $criteriaElement;
+            $this->criteriaElements[] = & $criteriaElement;
             $this->conditions[]       = $condition;
         }
 
@@ -343,13 +339,13 @@ class Criteria extends CriteriaElement
         if (!empty($this->function)) {
             $clause = sprintf($this->function, $clause);
         }
-        if (in_array(strtoupper($this->operator), array('IS NULL', 'IS NOT NULL'))) {
+        if (in_array(strtoupper($this->operator), ['IS NULL', 'IS NOT NULL'])) {
             $clause .= ' ' . $this->operator;
         } else {
-            if ('' === ($value = trim((string)$this->value))) {
+            if ('' === ($value = trim((string) $this->value))) {
                 return '';
             }
-            if (!in_array(strtoupper($this->operator), array('IN', 'NOT IN'))) {
+            if (!in_array(strtoupper($this->operator), ['IN', 'NOT IN'])) {
                 if ((substr($value, 0, 1) !== '`') && (substr($value, -1) !== '`')) {
                     $value = "'{$value}'";
                 } elseif (!preg_match('/^[a-zA-Z0-9_\.\-`]*$/', $value)) {
@@ -382,7 +378,7 @@ class Criteria extends CriteriaElement
             $clause   = '(!(' . $this->column . $operator . $this->value . '))';
         } else {
             if ($this->operator === 'IN') {
-                $newvalue = str_replace(array('(', ')'), '', $this->value);
+                $newvalue = str_replace(['(', ')'], '', $this->value);
                 $tab      = explode(',', $newvalue);
                 $clause = '';
                 foreach ($tab as $uid) {

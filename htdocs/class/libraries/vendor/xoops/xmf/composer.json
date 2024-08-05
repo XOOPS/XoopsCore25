@@ -9,16 +9,16 @@
       }
     },
     "require": {
-      "php": ">=5.6.0",
-      "kint-php/kint": "^3.3",
-      "symfony/yaml": "^2.8",
-      "paragonie/random_compat": "^2",
-      "firebase/php-jwt": "6.0.0",
-      "webmozart/assert": "1.9.1"
+      "php": ">=7.4.0",
+      "kint-php/kint": "^5.1.1",
+      "symfony/yaml": "^5.4.39",
+      "paragonie/random_compat": "^9.99.100",
+      "firebase/php-jwt": "^6.10.0",
+      "webmozart/assert": "^1.11.0"
     },
     "require-dev": {
-      "phpunit/phpunit": "^7.0",
-      "roave/security-advisories": "dev-master"
+      "phpunit/phpunit": "^9.6",
+      "roave/security-advisories": "dev-latest"
     },
     "autoload-dev": {
       "psr-4": {

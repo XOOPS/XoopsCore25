@@ -59,11 +59,11 @@ class SystemUsers extends XoopsUser
         $imgtray_img        = new XoopsFormElementTray(_IMAGEFILE . '<br><br>' . $maxpixel . $maxsize, '<br>');
         $imageselect_img    = new XoopsFormSelect(sprintf(_AM_SYSTEM_AVATAR_USE_FILE, XOOPS_UPLOAD_PATH), 'avatar_file', $blank_img);
         $image_array_img    = XoopsLists::getImgListAsArray(XOOPS_UPLOAD_PATH);
-        $imageselect_img->addOption("$blank_img", $blank_img);
+        $imageselect_img->addOption((string)$blank_img, $blank_img);
         foreach ($image_array_img as $image_img) {
-//            if (preg_match('#avt#', $image_img)) {
+            //            if (preg_match('#avt#', $image_img)) {
             if (false !== strpos($image_img, 'avt')) {
-                $imageselect_img->addOption("$image_img", $image_img);
+                $imageselect_img->addOption((string)$image_img, $image_img);
             }
         }
         $imageselect_img->setExtra("onchange='showImgSelected(\"image_img\", \"avatar_file\", \"" . $uploadirectory_img . "\", \"\", \"" . XOOPS_UPLOAD_URL . "\")'");

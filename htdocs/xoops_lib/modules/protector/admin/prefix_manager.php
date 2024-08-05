@@ -1,4 +1,5 @@
 <?php
+
 include XOOPS_ROOT_PATH . '/include/cp_header.php';
 include __DIR__ . '/admin_header.php';
 require_once dirname(__DIR__) . '/class/gtickets.php';
@@ -22,7 +23,8 @@ if (!empty($_POST['copy']) && !empty($_POST['old_prefix'])) {
     $srs = $db->queryF($sql);
     if (!$db->isResultSet($srs)) {
         throw new \RuntimeException(
-            \sprintf(_DB_QUERY_ERROR, $sql) . $db->error(), E_USER_ERROR
+            \sprintf(_DB_QUERY_ERROR, $sql) . $db->error(),
+            E_USER_ERROR,
         );
     }
 
@@ -44,7 +46,8 @@ if (!empty($_POST['copy']) && !empty($_POST['old_prefix'])) {
         $crs = $db->queryF($sql);
         if (!$db->isResultSet($crs)) {
             throw new \RuntimeException(
-                \sprintf(_DB_QUERY_ERROR, $sql) . $db->error(), E_USER_ERROR
+                \sprintf(_DB_QUERY_ERROR, $sql) . $db->error(),
+                E_USER_ERROR,
             );
         }
 
@@ -91,7 +94,8 @@ if (!empty($_POST['copy']) && !empty($_POST['old_prefix'])) {
     $srs = $db->queryF($sql);
     if (!$db->isResultSet($srs)) {
         throw new \RuntimeException(
-            \sprintf(_DB_QUERY_ERROR, $sql) . $db->error(), E_USER_ERROR
+            \sprintf(_DB_QUERY_ERROR, $sql) . $db->error(),
+            E_USER_ERROR,
         );
     }
     if (!$db->getRowsNum($srs)) {
@@ -110,7 +114,8 @@ if (!empty($_POST['copy']) && !empty($_POST['old_prefix'])) {
         $drawCreate = $db->queryF($sql);
         if (!$db->isResultSet($drawCreate)) {
             throw new \RuntimeException(
-                \sprintf(_DB_QUERY_ERROR, $sql) . $db->error(), E_USER_ERROR
+                \sprintf(_DB_QUERY_ERROR, $sql) . $db->error(),
+                E_USER_ERROR,
             );
         }
 
@@ -122,15 +127,16 @@ if (!empty($_POST['copy']) && !empty($_POST['old_prefix'])) {
         $result = $db->query($sql);
         if (!$db->isResultSet($result)) {
             throw new \RuntimeException(
-                \sprintf(_DB_QUERY_ERROR, $sql) . $db->error(), E_USER_ERROR
+                \sprintf(_DB_QUERY_ERROR, $sql) . $db->error(),
+                E_USER_ERROR,
             );
         }
         $fieldCount  = $db->getFieldsNum($result);
 
         $insertValues = '';
 
-        if ($db->getRowsNum($result)>0) {
-            $fieldInfo = array();
+        if ($db->getRowsNum($result) > 0) {
+            $fieldInfo = [];
             $insertNames = "INSERT INTO `$table` (";
             for ($j = 0; $j < $fieldCount; ++$j) {
                 $field = $result->fetch_field_direct($j);
@@ -222,7 +228,8 @@ if (!empty($_POST['copy']) && !empty($_POST['old_prefix'])) {
     $srs = $db->queryF($sql);
     if (!$db->isResultSet($srs)) {
         throw new \RuntimeException(
-            \sprintf(_DB_QUERY_ERROR, $sql) . $db->error(), E_USER_ERROR
+            \sprintf(_DB_QUERY_ERROR, $sql) . $db->error(),
+            E_USER_ERROR,
         );
     }
     if (!$db->getRowsNum($srs)) {
@@ -252,7 +259,8 @@ $sql = 'SHOW TABLE STATUS FROM `' . XOOPS_DB_NAME . '`';
 $srs = $db->queryF($sql);
 if (!$db->isResultSet($srs)) {
     throw new \RuntimeException(
-        \sprintf(_DB_QUERY_ERROR, $sql) . $db->error(), E_USER_ERROR
+        \sprintf(_DB_QUERY_ERROR, $sql) . $db->error(),
+        E_USER_ERROR,
     );
 }
 if (!$db->getRowsNum($srs)) {
@@ -262,13 +270,14 @@ if (!$db->getRowsNum($srs)) {
 }
 
 // search prefixes
-$tables   = array();
-$prefixes = array();
+$tables   = [];
+$prefixes = [];
 while (false !== ($row_table = $db->fetchArray($srs))) {
     if (substr($row_table['Name'], -6) === '_users') {
-        $prefixes[] = array(
+        $prefixes[] = [
             'name'    => substr($row_table['Name'], 0, -6),
-            'updated' => $row_table['Update_time']);
+            'updated' => $row_table['Update_time'],
+        ];
     }
     $tables[] = $row_table['Name'];
 }

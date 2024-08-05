@@ -62,14 +62,15 @@ $cform->addElement($icons_radio);
 // editor
 $editor = xoops_getModuleOption('comments_editor', 'system');
 if (class_exists('XoopsFormEditor')) {
-    $configs = array(
+    $configs = [
         'name'   => 'com_text',
         'value'  => $com_text,
         'rows'   => 25,
         'cols'   => 90,
         'width'  => '100%',
         'height' => '400px',
-        'editor' => $editor);
+        'editor' => $editor,
+    ];
     $cform->addElement(new XoopsFormEditor(_CM_MESSAGE, 'com_text', $configs, false, $onfailure = 'textarea'), true);
 } else {
     $cform->addElement(new XoopsFormDhtmlTextArea(_CM_MESSAGE, 'com_text', $com_text, 10, 50), true);
@@ -92,21 +93,24 @@ if (is_object($xoopsUser)) {
         if (!empty($com_id)) {
             include_once $GLOBALS['xoops']->path('include/comment_constants.php');
             $status_select = new XoopsFormSelect(_CM_STATUS, 'com_status', $com_status);
-            $status_select->addOptionArray(array(
-                                               XOOPS_COMMENT_PENDING => _CM_PENDING,
-                                               XOOPS_COMMENT_ACTIVE  => _CM_ACTIVE,
-                                               XOOPS_COMMENT_HIDDEN  => _CM_HIDDEN));
+            $status_select->addOptionArray(
+                [
+                    XOOPS_COMMENT_PENDING => _CM_PENDING,
+                    XOOPS_COMMENT_ACTIVE  => _CM_ACTIVE,
+                    XOOPS_COMMENT_HIDDEN  => _CM_HIDDEN,
+                ],
+            );
             $cform->addElement($status_select);
             $button_tray->addElement(new XoopsFormButton('', 'com_dodelete', _DELETE, 'submit'));
         }
-        if (isset($editor) && in_array($editor, array('textarea', 'dhtmltextarea'))) {
+        if (isset($editor) && in_array($editor, ['textarea', 'dhtmltextarea'])) {
             $html_checkbox = new XoopsFormCheckBox('', 'dohtml', $dohtml);
             $html_checkbox->addOption(1, _CM_DOHTML);
             $option_tray->addElement($html_checkbox);
         }
     }
 }
-if (isset($editor) && in_array($editor, array('textarea', 'dhtmltextarea'))) {
+if (isset($editor) && in_array($editor, ['textarea', 'dhtmltextarea'])) {
 }
 $smiley_checkbox = new XoopsFormCheckBox('', 'dosmiley', $dosmiley);
 $smiley_checkbox->addOption(1, _CM_DOSMILEY);
@@ -114,7 +118,7 @@ $option_tray->addElement($smiley_checkbox);
 $xcode_checkbox = new XoopsFormCheckBox('', 'doxcode', $doxcode);
 $xcode_checkbox->addOption(1, _CM_DOXCODE);
 $option_tray->addElement($xcode_checkbox);
-if (isset($editor) && in_array($editor, array('textarea', 'dhtmltextarea'))) {
+if (isset($editor) && in_array($editor, ['textarea', 'dhtmltextarea'])) {
     $br_checkbox = new XoopsFormCheckBox('', 'dobr', $dobr);
     $br_checkbox->addOption(1, _CM_DOAUTOWRAP);
     $option_tray->addElement($br_checkbox);
@@ -126,8 +130,8 @@ $cform->addElement($option_tray);
 if (!$xoopsUser) {
     $cform->addElement(new XoopsFormCaptcha());
 }
-$cform->addElement(new XoopsFormHidden('com_pid', (int)$com_pid));
-$cform->addElement(new XoopsFormHidden('com_rootid', (int)$com_rootid));
+$cform->addElement(new XoopsFormHidden('com_pid', (int) $com_pid));
+$cform->addElement(new XoopsFormHidden('com_rootid', (int) $com_rootid));
 $cform->addElement(new XoopsFormHidden('com_id', $com_id));
 $cform->addElement(new XoopsFormHidden('com_itemid', $com_itemid));
 $cform->addElement(new XoopsFormHidden('com_order', $com_order));
@@ -142,9 +146,9 @@ if ('system' !== $xoopsModule->getVar('dirname')) {
             // This routine is included from forms accessed via both GET and POST
             $hidden_value = '';
             if (isset($_POST[$extra_param])) {
-                $hidden_value = $myts->stripSlashesGPC(Request::getString($extra_param, '', 'POST'));
+                $hidden_value = Request::getString($extra_param, '', 'POST');
             } elseif (isset($_GET[$extra_param])) {
-                $hidden_value = $myts->stripSlashesGPC(Request::getString($extra_param, '', 'GET'));
+                $hidden_value = Request::getString($extra_param, '', 'GET');
             }
             $cform->addElement(new XoopsFormHidden($extra_param, $hidden_value));
         }

@@ -89,7 +89,7 @@ if (!class_exists('\BaseStringHelper', false)) {
          */
         public static function byteSubstr($string, $start, $length = null)
         {
-            return mb_substr($string, $start, $length === null ? mb_strlen($string, '8bit') : $length, '8bit');
+            return mb_substr($string, $start, $length ?? mb_strlen($string, '8bit'), '8bit');
         }
 
         /**
@@ -208,10 +208,10 @@ if (!class_exists('\BaseStringHelper', false)) {
             $config = \HTMLPurifier_Config::create(null);
             $lexer = \HTMLPurifier_Lexer::create($config);
             $tokens = $lexer->tokenizeHTML($string, $config, new \HTMLPurifier_Context());
-            $openTokens = array();
+            $openTokens = [];
             $totalCount = 0;
             $depth = 0;
-            $truncated = array();
+            $truncated = [];
             foreach ($tokens as $token) {
                 if ($token instanceof \HTMLPurifier_Token_Start) { //Tag begins
                     $openTokens[$depth] = $token->name;
@@ -219,7 +219,7 @@ if (!class_exists('\BaseStringHelper', false)) {
                     ++$depth;
                 } elseif ($token instanceof \HTMLPurifier_Token_Text && $totalCount <= $count) { //Text
                     if (false === $encoding) {
-                        preg_match('/^(\s*)/um', $token->data, $prefixSpace) ?: $prefixSpace = array('', '');
+                        preg_match('/^(\s*)/um', $token->data, $prefixSpace) ?: $prefixSpace = ['', ''];
                         $token->data = $prefixSpace[1] . self::truncateWords(ltrim($token->data), $count - $totalCount, '');
                         $currentCount = self::countWords($token->data);
                     } else {
@@ -323,17 +323,13 @@ if (!class_exists('\BaseStringHelper', false)) {
                 if ($trim === true) {
                     $trim = 'trim';
                 } elseif (!is_callable($trim)) {
-                    $trim = function ($v) use ($trim) {
-                        return trim($v, $trim);
-                    };
+                    $trim = fn($v) => trim($v, $trim);
                 }
                 $result = array_map($trim, $result);
             }
             if ($skipEmpty) {
                 // Wrapped with array_values to make array keys sequential after empty values removing
-                $result = array_values(array_filter($result, function ($value) {
-                    return $value !== '';
-                }));
+                $result = array_values(array_filter($result, fn($value) => $value !== ''));
             }
 
             return $result;
@@ -367,7 +363,7 @@ if (!class_exists('\BaseStringHelper', false)) {
             $value = (string)$value;
 
             $localeInfo = localeconv();
-            $decimalSeparator = isset($localeInfo['decimal_point']) ? $localeInfo['decimal_point'] : null;
+            $decimalSeparator = $localeInfo['decimal_point'] ?? null;
 
             if ($decimalSeparator !== null && $decimalSeparator !== '.') {
                 $value = str_replace($decimalSeparator, '.', $value);
@@ -441,13 +437,13 @@ if (!class_exists('\BaseStringHelper', false)) {
          * @return bool whether the string matches pattern or not.
          * @since 2.0.14
          */
-        public static function matchWildcard($pattern, $string, $options = array())
+        public static function matchWildcard($pattern, $string, $options = [])
         {
             if ($pattern === '*' && empty($options['filePath'])) {
                 return true;
             }
 
-            $replacements = array(
+            $replacements = [
                 '\\\\\\\\' => '\\\\',
                 '\\\\\\*' => '[*]',
                 '\\\\\\?' => '[?]',
@@ -457,7 +453,7 @@ if (!class_exists('\BaseStringHelper', false)) {
                 '\[' => '[',
                 '\]' => ']',
                 '\-' => '-',
-            );
+            ];
 
             if (isset($options['escape']) && !$options['escape']) {
                 unset($replacements['\\\\\\\\']);

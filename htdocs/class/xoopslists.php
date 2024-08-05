@@ -38,7 +38,7 @@ if (!defined('XOOPS_LISTS_INCLUDED')) {
         {
             xoops_loadLanguage('timezone');
 
-            $time_zone_list = array(
+            $time_zone_list = [
                 '-12'  => _TZ_GMTM12,
                 '-11'  => _TZ_GMTM11,
                 '-10'  => _TZ_GMTM10,
@@ -68,7 +68,8 @@ if (!defined('XOOPS_LISTS_INCLUDED')) {
                 '9.5'  => _TZ_GMTP95,
                 '10'   => _TZ_GMTP10,
                 '11'   => _TZ_GMTP11,
-                '12'   => _TZ_GMTP12);
+                '12'   => _TZ_GMTP12,
+            ];
 
             return $time_zone_list;
         }
@@ -104,10 +105,11 @@ if (!defined('XOOPS_LISTS_INCLUDED')) {
          */
         public static function getDirListAsArray($dirname)
         {
-            $ignored = array(
+            $ignored = [
                 'cvs',
-                '_darcs');
-            $list    = array();
+                '_darcs',
+            ];
+            $list    = [];
             if (substr($dirname, -1) !== '/') {
                 $dirname .= '/';
             }
@@ -136,7 +138,7 @@ if (!defined('XOOPS_LISTS_INCLUDED')) {
          */
         public static function getFileListAsArray($dirname, $prefix = '')
         {
-            $filelist = array();
+            $filelist = [];
             if (substr($dirname, -1) === '/') {
                 $dirname = substr($dirname, 0, -1);
             }
@@ -166,11 +168,9 @@ if (!defined('XOOPS_LISTS_INCLUDED')) {
          */
         public static function getFileListByExtension($dirname, $extensions, $prefix = '')
         {
-            $filelist = array();
+            $filelist = [];
 
-            $extToLower = function($ext) {
-                return strtolower($ext);
-            };
+            $extToLower = fn($ext) => strtolower($ext);
 
             $extensionList = array_map($extToLower, $extensions);
 
@@ -202,7 +202,7 @@ if (!defined('XOOPS_LISTS_INCLUDED')) {
          */
         public static function getImgListAsArray($dirname, $prefix = '')
         {
-            $extensions = array('gif','jpeg','jpg','png');
+            $extensions = ['gif', 'jpeg', 'jpg', 'png'];
             return static::getFileListByExtension($dirname, $extensions, $prefix);
         }
 
@@ -214,7 +214,7 @@ if (!defined('XOOPS_LISTS_INCLUDED')) {
          */
         public static function getHtmlListAsArray($dirname, $prefix = '')
         {
-            $filelist = array();
+            $filelist = [];
             if ($handle = opendir($dirname)) {
                 while (false !== ($file = readdir($handle))) {
                     if (preg_match('/(\.htm|\.html|\.xhtml|\.tpl)$/i', $file) && !is_dir($file)) {
@@ -238,7 +238,7 @@ if (!defined('XOOPS_LISTS_INCLUDED')) {
          */
         public static function getAvatarsList($avatar_dir = '')
         {
-            $avatars = array();
+            $avatars = [];
             if ($avatar_dir != '') {
                 $avatars = XoopsLists::getImgListAsArray(XOOPS_ROOT_PATH . '/images/avatar/' . $avatar_dir . '/', $avatar_dir . '/');
             } else {
@@ -253,8 +253,8 @@ if (!defined('XOOPS_LISTS_INCLUDED')) {
          */
         public static function getAllAvatarsList()
         {
-            $avatars = array();
-            $dirlist = array();
+            $avatars = [];
+            $dirlist = [];
             $dirlist = XoopsLists::getDirListAsArray(XOOPS_ROOT_PATH . '/images/avatar/');
             if (count($dirlist) > 0) {
                 foreach ($dirlist as $dir) {
@@ -275,7 +275,7 @@ if (!defined('XOOPS_LISTS_INCLUDED')) {
          */
         public static function getSubjectsList($sub_dir = '')
         {
-            $subjects = array();
+            $subjects = [];
             if ($sub_dir != '') {
                 $subjects = XoopsLists::getImgListAsArray(XOOPS_ROOT_PATH . '/images/subject/' . $sub_dir, $sub_dir . '/');
             } else {
@@ -290,7 +290,7 @@ if (!defined('XOOPS_LISTS_INCLUDED')) {
          */
         public static function getLangList()
         {
-            $lang_list = array();
+            $lang_list = [];
             $lang_list = XoopsLists::getDirListAsArray(XOOPS_ROOT_PATH . '/language/');
 
             return $lang_list;
@@ -304,7 +304,7 @@ if (!defined('XOOPS_LISTS_INCLUDED')) {
         public static function getCountryList()
         {
             xoops_loadLanguage('countries');
-            $country_list = array(
+            $country_list = [
                 '' => '-',
                 'AD' => _COUNTRY_AD,
                 'AE' => _COUNTRY_AE,
@@ -558,7 +558,8 @@ if (!defined('XOOPS_LISTS_INCLUDED')) {
                 'ZA' => _COUNTRY_ZA,
                 'ZM' => _COUNTRY_ZM,
                 'ZR' => _COUNTRY_ZR,    //  Not listed in ISO 3166
-                'ZW' => _COUNTRY_ZW);
+                'ZW' => _COUNTRY_ZW,
+            ];
             asort($country_list);
             reset($country_list);
 
@@ -574,7 +575,7 @@ if (!defined('XOOPS_LISTS_INCLUDED')) {
          */
         public static function getHtmlList()
         {
-            $html_list = array(
+            $html_list = [
                 'a'          => '&lt;a&gt;',
                 'abbr'       => '&lt;abbr&gt;',
                 'acronym'    => '&lt;acronym&gt;',
@@ -632,7 +633,8 @@ if (!defined('XOOPS_LISTS_INCLUDED')) {
                 'tt'         => '&lt;tt&gt;',
                 'u'          => '&lt;u&gt;',
                 'ul'         => '&lt;ul&gt;',
-                'var'        => '&lt;var&gt;');
+                'var'        => '&lt;var&gt;',
+            ];
             asort($html_list);
             reset($html_list);
 
@@ -650,11 +652,12 @@ if (!defined('XOOPS_LISTS_INCLUDED')) {
             $db     = XoopsDatabaseFactory::getDatabaseConnection();
             $myts   = \MyTextSanitizer::getInstance();
             $sql    = sprintf('SELECT rank_id, rank_title FROM ' . $db->prefix('ranks') . ' WHERE rank_special = %u', 1);
-            $ret    = array();
+            $ret    = [];
             $result = $db->query($sql);
             if (!$db->isResultSet($result)) {
                 throw new \RuntimeException(
-                    \sprintf(_DB_QUERY_ERROR, $sql) . $db->error(), E_USER_ERROR
+                    \sprintf(_DB_QUERY_ERROR, $sql) . $db->error(),
+                    E_USER_ERROR,
                 );
             }
             while (false !== ($myrow = $db->fetchArray($result))) {

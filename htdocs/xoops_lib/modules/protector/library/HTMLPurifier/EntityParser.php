@@ -9,7 +9,6 @@
  */
 class HTMLPurifier_EntityParser
 {
-
     /**
      * Reference to entity lookup table.
      * @type HTMLPurifier_EntityLookup
@@ -43,31 +42,31 @@ class HTMLPurifier_EntityParser
         $this->_semiOptionalPrefixRegex = "/&()()()($semi_optional)/";
 
         $this->_textEntitiesRegex =
-            '/&(?:'.
+            '/&(?:' .
             // hex
-            '[#]x([a-fA-F0-9]+);?|'.
+            '[#]x([a-fA-F0-9]+);?|' .
             // dec
-            '[#]0*(\d+);?|'.
+            '[#]0*(\d+);?|' .
             // string (mandatory semicolon)
             // NB: order matters: match semicolon preferentially
-            '([A-Za-z_:][A-Za-z0-9.\-_:]*);|'.
+            '([A-Za-z_:][A-Za-z0-9.\-_:]*);|' .
             // string (optional semicolon)
-            "($semi_optional)".
+            "($semi_optional)" .
             ')/';
 
         $this->_attrEntitiesRegex =
-            '/&(?:'.
+            '/&(?:' .
             // hex
-            '[#]x([a-fA-F0-9]+);?|'.
+            '[#]x([a-fA-F0-9]+);?|' .
             // dec
-            '[#]0*(\d+);?|'.
+            '[#]0*(\d+);?|' .
             // string (mandatory semicolon)
             // NB: order matters: match semicolon preferentially
-            '([A-Za-z_:][A-Za-z0-9.\-_:]*);|'.
+            '([A-Za-z_:][A-Za-z0-9.\-_:]*);|' .
             // string (optional semicolon)
             // don't match if trailing is equals or alphanumeric (URL
             // like)
-            "($semi_optional)(?![=;A-Za-z0-9])".
+            "($semi_optional)(?![=;A-Za-z0-9])" .
             ')/';
 
     }
@@ -107,9 +106,9 @@ class HTMLPurifier_EntityParser
     /**
      * Callback function for substituteNonSpecialEntities() that does the work.
      *
-     * @param array $matches  PCRE matches array, with 0 the entire match, and
-     *                  either index 1, 2 or 3 set with a hex value, dec value,
-     *                  or string (respectively).
+     * @param array $matches PCRE matches array, with 0 the entire match, and
+     *                       either index 1, 2 or 3 set with a hex value, dec value,
+     *                       or string (respectively).
      * @return string Replacement string.
      */
 
@@ -119,10 +118,10 @@ class HTMLPurifier_EntityParser
         $hex_part = @$matches[1];
         $dec_part = @$matches[2];
         $named_part = empty($matches[3]) ? (empty($matches[4]) ? "" : $matches[4]) : $matches[3];
-        if ($hex_part !== NULL && $hex_part !== "") {
+        if ($hex_part !== null && $hex_part !== "") {
             return HTMLPurifier_Encoder::unichr(hexdec($hex_part));
-        } elseif ($dec_part !== NULL && $dec_part !== "") {
-            return HTMLPurifier_Encoder::unichr((int) $dec_part);
+        } elseif ($dec_part !== null && $dec_part !== "") {
+            return HTMLPurifier_Encoder::unichr((int)$dec_part);
         } else {
             if (!$this->_entity_lookup) {
                 $this->_entity_lookup = HTMLPurifier_EntityLookup::instance();
@@ -154,32 +153,32 @@ class HTMLPurifier_EntityParser
      */
     protected $_substituteEntitiesRegex =
         '/&(?:[#]x([a-fA-F0-9]+)|[#]0*(\d+)|([A-Za-z_:][A-Za-z0-9.\-_:]*));?/';
-        //     1. hex             2. dec      3. string (XML style)
+    //     1. hex             2. dec      3. string (XML style)
 
     /**
      * Decimal to parsed string conversion table for special entities.
      * @type array
      */
     protected $_special_dec2str =
-            array(
-                    34 => '"',
-                    38 => '&',
-                    39 => "'",
-                    60 => '<',
+        array(
+            34 => '"',
+            38 => '&',
+            39 => "'",
+            60 => '<',
                     62 => '>'
-            );
+        );
 
     /**
      * Stripped entity names to decimal conversion table for special entities.
      * @type array
      */
     protected $_special_ent2dec =
-            array(
-                    'quot' => 34,
-                    'amp'  => 38,
-                    'lt'   => 60,
+        array(
+            'quot' => 34,
+            'amp' => 38,
+            'lt' => 60,
                     'gt'   => 62
-            );
+        );
 
     /**
      * Substitutes non-special entities with their parsed equivalents. Since
@@ -202,9 +201,9 @@ class HTMLPurifier_EntityParser
     /**
      * Callback function for substituteNonSpecialEntities() that does the work.
      *
-     * @param array $matches  PCRE matches array, with 0 the entire match, and
-     *                  either index 1, 2 or 3 set with a hex value, dec value,
-     *                  or string (respectively).
+     * @param array $matches PCRE matches array, with 0 the entire match, and
+     *                       either index 1, 2 or 3 set with a hex value, dec value,
+     *                       or string (respectively).
      * @return string Replacement string.
      */
 
@@ -215,7 +214,7 @@ class HTMLPurifier_EntityParser
         $is_num = (@$matches[0][1] === '#');
         if ($is_num) {
             $is_hex = (@$entity[2] === 'x');
-            $code = $is_hex ? hexdec($matches[1]) : (int) $matches[2];
+            $code = $is_hex ? hexdec($matches[1]) : (int)$matches[2];
             // abort for special characters
             if (isset($this->_special_dec2str[$code])) {
                 return $entity;
@@ -259,9 +258,9 @@ class HTMLPurifier_EntityParser
      *
      * This callback has same syntax as nonSpecialEntityCallback().
      *
-     * @param array $matches  PCRE-style matches array, with 0 the entire match, and
-     *                  either index 1, 2 or 3 set with a hex value, dec value,
-     *                  or string (respectively).
+     * @param array $matches PCRE-style matches array, with 0 the entire match, and
+     *                       either index 1, 2 or 3 set with a hex value, dec value,
+     *                       or string (respectively).
      * @return string Replacement string.
      */
     protected function specialEntityCallback($matches)
@@ -270,7 +269,7 @@ class HTMLPurifier_EntityParser
         $is_num = (@$matches[0][1] === '#');
         if ($is_num) {
             $is_hex = (@$entity[2] === 'x');
-            $int = $is_hex ? hexdec($matches[1]) : (int) $matches[2];
+            $int = $is_hex ? hexdec($matches[1]) : (int)$matches[2];
             return isset($this->_special_dec2str[$int]) ?
                 $this->_special_dec2str[$int] :
                 $entity;
