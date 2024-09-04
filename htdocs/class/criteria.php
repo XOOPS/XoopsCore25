@@ -336,26 +336,27 @@ class Criteria extends CriteriaElement
         $backtick = (false === strpos($this->column, '.')) ? '`' : '';
         $backtick = (false !== strpos($this->column, '(')) ? '' : $backtick;
         $clause = (!empty($this->prefix) ? "{$this->prefix}." : '') . $backtick . $this->column . $backtick;
+
         if (!empty($this->function)) {
             $clause = sprintf($this->function, $clause);
         }
+
         if (in_array(strtoupper($this->operator), ['IS NULL', 'IS NOT NULL'])) {
             $clause .= ' ' . $this->operator;
         } else {
-            if ('' === ($value = trim((string) $this->value))) {
-                return '';
+            if ('' === ($value = trim((string)$this->value))) {
+                return ['', []];
             }
+
+            $placeholder = ':value_' . md5($this->column);
             if (!in_array(strtoupper($this->operator), ['IN', 'NOT IN'])) {
-                if ((substr($value, 0, 1) !== '`') && (substr($value, -1) !== '`')) {
-                    $value = "'{$value}'";
-                } elseif (!preg_match('/^[a-zA-Z0-9_\.\-`]*$/', $value)) {
-                    $value = '``';
-                }
+                $clause .= " {$this->operator} {$placeholder}";
+            } else {
+                $clause .= " {$this->operator} ({$placeholder})";
             }
-            $clause .= " {$this->operator} {$value}";
         }
 
-        return $clause;
+        return [$clause, [$placeholder => $this->value]];
     }
 
     /**
