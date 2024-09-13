@@ -97,7 +97,10 @@ class XoopsAuthAds extends XoopsAuthLdap
         } else {
             $this->setErrors(0, _AUTH_LDAP_SERVER_NOT_FOUND);
         }
-        @ldap_close($this->_ds);
+        if (is_resource($this->_ds)) {
+            ldap_unbind($this->_ds);
+        }
+
 
         return $authenticated;
     }
