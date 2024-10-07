@@ -345,18 +345,19 @@ class Criteria extends CriteriaElement
             $clause .= ' ' . $this->operator;
         } else {
             if ('' === ($value = trim((string)$this->value))) {
-                return ['', []];
+                return '';
             }
-
-            $placeholder = ':value_' . md5($this->column);
             if (!in_array(strtoupper($this->operator), ['IN', 'NOT IN'])) {
-                $clause .= " {$this->operator} {$placeholder}";
-            } else {
-                $clause .= " {$this->operator} ({$placeholder})";
+                if ((substr($value, 0, 1) !== '`') && (substr($value, -1) !== '`')) {
+                    $value = "'{$value}'";
+                } elseif (!preg_match('/^[a-zA-Z0-9_\.\-`]*$/', $value)) {
+                    $value = '``';
             }
         }
+            $clause .= " {$this->operator} {$value}";
+        }
 
-        return [$clause, [$placeholder => $this->value]];
+        return $clause;
     }
 
     /**
