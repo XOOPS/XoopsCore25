@@ -282,11 +282,11 @@ function b_system_waiting_show()
     }
 
     // waiting content for TDMDownloads
-    if (xoops_isActiveModule('TDMdownloads') && $module_handler->getCount(new Criteria('dirname', 'TDMDownloads'))) {
+    if (xoops_isActiveModule('tdmdownloads') && $module_handler->getCount(new Criteria('dirname', 'tdmdownloads'))) {
         $sql = 'SELECT COUNT(*) FROM ' . $xoopsDB->prefix('tdmdownloads_downloads') . ' WHERE status=0';
         $result = $xoopsDB->query($sql);
         if ($xoopsDB->isResultSet($result)) {
-            $block['modules'][8]['adminlink'] = XOOPS_URL . '/modules/TDMDownloads/admin/downloads.php?op=list&statut_display=0';
+            $block['modules'][8]['adminlink'] = XOOPS_URL . '/modules/tdmdownloads/admin/downloads.php?op=list&statut_display=0';
             [$block['modules'][8]['pendingnum']] = $xoopsDB->fetchRow($result);
             $block['modules'][8]['lang_linkname'] = _MB_SYSTEM_TDMDOWNLOADS;
         }
@@ -313,7 +313,7 @@ function b_system_waiting_show()
             $block['modules'][10]['lang_linkname'] = _MB_SYSTEM_SMARTSECTION;
         }
     }
-	$GLOBALS['xoopsLogger']->addDeprecated("Block 'Waiting Contents' is deprecated since XOOPS 2.5.11, please use waiting module");
+        $GLOBALS['xoopsLogger']->addDeprecated("Block 'Waiting Contents' is deprecated since XOOPS 2.5.11, please use Waiting module");
     return $block;
 }
 

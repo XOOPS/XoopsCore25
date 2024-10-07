@@ -47,8 +47,15 @@ if (!empty($_POST['action'])) {
         $lines   = empty($_POST['bad_ips']) ? [] : explode("\n", trim($_POST['bad_ips']));
         $bad_ips = [];
         foreach ($lines as $line) {
-            @[$bad_ip, $jailed_time] = explode('|', $line, 2);
-            $bad_ips[trim($bad_ip)] = empty($jailed_time) ? 0x7fffffff : (int) $jailed_time;
+            $parts = array_map('trim', explode('|', $line, 2));
+
+            if (count($parts) === 2) {
+                [$bad_ip, $jailed_time] = $parts;
+            } else {
+                $bad_ip = $parts[0];
+                $jailed_time = '';
+            }
+            $bad_ips[$bad_ip] = empty($jailed_time) ? 0x7fffffff : (int) $jailed_time;
         }
         if (!$protector->write_file_badips($bad_ips)) {
             $error_msg .= _AM_MSG_BADIPSCANTOPEN;
@@ -58,15 +65,31 @@ if (!empty($_POST['action'])) {
         foreach (array_keys($group1_ips) as $i) {
             $group1_ips[$i] = trim($group1_ips[$i]);
         }
-        $fp = @fopen($protector->get_filepath4group1ips(), 'w');
-        if ($fp) {
-            @flock($fp, LOCK_EX);
-            fwrite($fp, serialize(array_unique($group1_ips)) . "\n");
-            @flock($fp, LOCK_UN);
-            fclose($fp);
-        } else {
+        $filePath = $protector->get_filepath4group1ips();
+        $fp = fopen($filePath, 'w');
+
+        if ($fp === false) {
             $error_msg .= _AM_MSG_GROUP1IPSCANTOPEN;
+            error_log("Failed to open file for writing: $filePath");
+        } else {
+            if (flock($fp, LOCK_EX)) {
+                $data = serialize(array_unique($group1_ips)) . "\n";
+                $bytesWritten = fwrite($fp, $data);
+
+                if ($bytesWritten === false || $bytesWritten != strlen($data)) {
+                    $error_msg .= "Failed to write data to file: $filePath";
+                    error_log("Failed to write data to file: $filePath");
+                }
+
+                flock($fp, LOCK_UN);
+            } else {
+                $error_msg .= "Failed to acquire lock on file: $filePath";
+                error_log("Failed to acquire lock on file: $filePath");
+            }
+
+            fclose($fp);
         }
+
 
         $redirect_msg = $error_msg ?: _AM_MSG_IPFILESUPDATED;
         redirect_header('center.php?page=center', 2, $redirect_msg);

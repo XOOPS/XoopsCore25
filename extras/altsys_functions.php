@@ -128,13 +128,25 @@ function altsys_clear_templates_c()
 {
     $dh = opendir(XOOPS_COMPILE_PATH);
     while ($file = readdir($dh)) {
+        // Skip hidden files (those starting with a dot)
         if (substr($file, 0, 1) === '.') {
             continue;
         }
-        if (substr($file, -4) !== '.php') {
+
+        // Skip files that do not end with '.php'
+        if ('php' !== pathinfo($file, PATHINFO_EXTENSION) ) {
             continue;
         }
-        @unlink(XOOPS_COMPILE_PATH . '/' . $file);
+
+        // Construct the full path to the file
+        $filePath = XOOPS_COMPILE_PATH . '/' . $file;
+
+        // Attempt to delete the file and handle any errors
+        if (file_exists($filePath) && !unlink($filePath)) {
+            // Optionally log an error or handle the failure
+            error_log("Failed to delete file: $filePath");
+        }
     }
+
     closedir($dh);
 }

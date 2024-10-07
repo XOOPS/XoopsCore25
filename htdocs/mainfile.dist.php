@@ -30,7 +30,7 @@ if (!defined('XOOPS_MAINFILE_INCLUDED')) {
     define('XOOPS_TRUST_PATH', XOOPS_PATH);
 
     // URL Association for SSL and Protocol Compatibility
-    $http = 'http://';
+    $http = 'https://';
     if (!empty($_SERVER['HTTPS'])) {
         $http = ($_SERVER['HTTPS'] === 'on') ? 'https://' : 'http://';
     }
@@ -39,7 +39,7 @@ if (!defined('XOOPS_MAINFILE_INCLUDED')) {
     // XOOPS Virtual Path (URL)
     // Virtual path to your main XOOPS directory WITHOUT trailing slash
     // Example: define("XOOPS_URL", "http://url_to_xoops_directory");
-    define('XOOPS_URL', 'http://');
+    define('XOOPS_URL', 'https://');
 
     // XOOPS Cookie Domain to specify when creating cookies. May be blank (i.e. for IP address host),
     // full host from XOOPS_URL (i.e. www.example.com) or just the registered domain (i.e. example.com)
