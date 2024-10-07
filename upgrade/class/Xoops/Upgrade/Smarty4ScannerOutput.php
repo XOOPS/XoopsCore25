@@ -14,9 +14,9 @@ namespace Xoops\Upgrade;
 use ArrayObject;
 
 /**
- * XOOPS Upgrade Smarty3ScannerOutput
+ * XOOPS Upgrade Smarty4ScannerOutput
  *
- * Used to report Smarty3 issues found in scan
+ * Used to report Smarty4 issues found in scan
  *
  * @category  Xoops\Upgrade
  * @package   Xoops
@@ -25,7 +25,7 @@ use ArrayObject;
  * @license   GNU GPL 2 or later (https://www.gnu.org/licenses/gpl-2.0.html)
  * @link      https://xoops.org
  */
-class Smarty3ScannerOutput extends ScannerOutput
+class Smarty4ScannerOutput extends ScannerOutput
 {
     /**
      * @var string $content accumulated output
@@ -127,11 +127,11 @@ class Smarty3ScannerOutput extends ScannerOutput
      */
     public function outputStart()
     {
-        $this->outputAppend('<h2>' . _XOOPS_SMARTY3_SCANNER_RESULTS . '</h2>');
+        $this->outputAppend('<h2>' . _XOOPS_SMARTY4_SCANNER_RESULTS . '</h2>');
         $this->outputAppend('<table class="table"><tr><th>'
-            . _XOOPS_SMARTY3_SCANNER_RULE . '</th><th>'
-            . _XOOPS_SMARTY3_SCANNER_MATCH . '</th><th>'
-            . _XOOPS_SMARTY3_SCANNER_FILE . '</th></tr>');
+            . _XOOPS_SMARTY4_SCANNER_RULE . '</th><th>'
+            . _XOOPS_SMARTY4_SCANNER_MATCH . '</th><th>'
+            . _XOOPS_SMARTY4_SCANNER_FILE . '</th></tr>');
     }
 
     public function outputWrapUp()
@@ -162,12 +162,12 @@ class Smarty3ScannerOutput extends ScannerOutput
         $this->addToCount($rule);
 
         if (!$writable) {
-            $message = _XOOPS_SMARTY3_SCANNER_NOT_WRITABLE;
+            $message = _XOOPS_SMARTY4_SCANNER_NOT_WRITABLE;
             $this->addToCount('notwritable');
             $this->outputAppend("<tr class='warning'>"
                 . "<td>$rule</td><td>$match</td><td>$file<br>$message</td></tr>");
         } elseif ($rule == 'varname') {
-            $message = _XOOPS_SMARTY3_SCANNER_MANUAL_REVIEW            ;
+            $message = _XOOPS_SMARTY4_SCANNER_MANUAL_REVIEW            ;
             $this->outputAppend("<tr class='danger'>"
                 . "<td>$rule</td><td>$match</td><td>$file<br>$message</td></tr>");
         } else {

@@ -14,9 +14,9 @@ namespace Xoops\Upgrade;
 use SplFileInfo;
 
 /**
- * XOOPS Upgrade Smarty3TemplateChecks
+ * XOOPS Upgrade Smarty4TemplateChecks
  *
- * Scanner process to look for BC issues in existing templates when used with Smarty3
+ * Scanner process to look for BC issues in existing templates when used with Smarty4
  *
  * @category  Xoops\Upgrade
  * @package   Xoops
@@ -25,11 +25,13 @@ use SplFileInfo;
  * @license   GNU GPL 2 or later (https://www.gnu.org/licenses/gpl-2.0.html)
  * @link      https://xoops.org
  */
-class Smarty3TemplateChecks extends ScannerProcess
+class Smarty4TemplateChecks extends ScannerProcess
 {
     protected $patterns = [
         'varname' => '/<{foreach[[:space:]]+item=([a-zA-Z0-9\-_.]+)[[:space:]]from=\$([a-zA-Z0-9\-_.]+) *}>/',
-        'noquotes' =>'/(<{xo[a-zA-Z\d]*\b[^}>]*?)\s*([^\'"}]+)(}>)/',
+//        'noquotes' =>'/(<{xo[a-zA-Z\d]*\b[^}>]*?)\s*([^\'"}]+)(}>)/',
+        // Updated noquotes pattern to ignore cases with variables or assignments
+        'noquotes' => '/(<{xo[a-zA-Z\d]*\b)(?=[^}>]*[^\'"\$}>=]+[}>])([^}>]*?)(\s+)([^\$\'\"=]+)(\s*}>)/',
         'includeq' => '/(<{includeq[[:space:]]+[ -=\.\/_\'\"\$a-zA-Z0-9]+}>)/',
         'foreachq' => '/(<{foreachq[[:space:]]+[ -=\.\/_\'\"\$a-zA-Z0-9]+}>)/',
     ];
