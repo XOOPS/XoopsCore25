@@ -13,11 +13,13 @@ jobs:
 
     steps:
       - uses: actions/checkout@v2
+
       - name: Setup PHP
         uses: shivammathur/setup-php@v2
         with:
           php-version: ${{ matrix.php_version }}
           coverage: xdebug
+          tools: phpunit@${{ matrix.phpunit_version }}
 
       # Step to copy composer.dist.json to composer.json
       - name: Prepare composer.json
@@ -31,7 +33,7 @@ jobs:
 
       - name: Install Dependencies
         working-directory: htdocs/class/libraries
-        run: composer install --prefer-dist --no-interaction --no-suggest
+        run: composer install --prefer-dist --no-interaction
 
       # Run unit tests from the correct directory
       - name: Unit Tests
