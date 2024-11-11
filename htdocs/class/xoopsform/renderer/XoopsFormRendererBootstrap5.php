@@ -50,8 +50,8 @@ class XoopsFormRendererBootstrap5 implements XoopsFormRendererInterface
             $ret .= '<button type="submit" class="btn btn-danger me-1" name="delete" id="delete" onclick="this.form.elements.op.value=\'delete\'">' . _DELETE
             . '</button>';
         }
-        $ret .= '<button class="btn btn-danger me-1" onClick="history.go(-1);return true;">'
-            . _CANCEL . '</button>'
+        $ret .= '<input type="button" class="btn btn-danger me-1" name="cancel" id="cancel" onClick="history.go(-1);return true;" value="'
+            . _CANCEL . '">'
             . '<button type="reset" class="btn btn-warning me-1" name="reset" id="reset">' . _RESET . '</button>'
             . '<button type="' . $element->getType() . '" class="btn btn-success" name="' . $element->getName()
             . '"  id="' . $element->getName() . '" ' . $element->getExtra()
