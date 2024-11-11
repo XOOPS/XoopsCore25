@@ -17,5 +17,7 @@ jobs:
           fetch-depth: 0
       - name: 'Qodana Scan'
         uses: JetBrains/qodana-action@v2024.2
+        with:
+          linter: jetbrains/qodana-php:2024.2  # Pinning the linter version
         env:
           QODANA_TOKEN: ${{ secrets.QODANA_TOKEN }}
