@@ -144,7 +144,7 @@ class Upgrade_250 extends XoopsUpgrade
      */
     public function apply_templates()
     {
-        include_once __DIR__ . '/../modules/system/xoops_version.php';
+        include_once XOOPS_ROOT_PATH . '/modules/system/xoops_version.php';
 
         $dbm  = new Db_manager();
         $time = time();
