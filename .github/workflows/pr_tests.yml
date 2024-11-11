@@ -21,21 +21,15 @@ jobs:
           coverage: xdebug
           tools: phpunit@${{ matrix.phpunit_version }}
 
-      # Step to copy composer.dist.json to composer.json
+      # Copy composer.dist.json to composer.json
       - name: Prepare composer.json
         run: cp htdocs/class/libraries/composer.dist.json htdocs/class/libraries/composer.json
 
       # Install dependencies in the correct directory
-      - uses: php-actions/composer@v6
-        with:
-          php_version: ${{ matrix.php_version }}
-          working_dir: htdocs/class/libraries
-
       - name: Install Dependencies
-        working-directory: htdocs/class/libraries
-        run: composer install --prefer-dist --no-interaction
+        run: composer install --prefer-dist --no-interaction --working-dir=htdocs/class/libraries
 
-      # Run unit tests from the correct directory
+      # Run unit tests using the globally installed PHPUnit
       - name: Unit Tests
         working-directory: htdocs/class/libraries
-        run: vendor/bin/phpunit --stderr
+        run: phpunit --stderr
