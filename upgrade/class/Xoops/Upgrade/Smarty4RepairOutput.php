@@ -14,9 +14,9 @@ namespace Xoops\Upgrade;
 use ArrayObject;
 
 /**
- * XOOPS Upgrade Smarty3RepairOutput
+ * XOOPS Upgrade Smarty4RepairOutput
  *
- * Used to report Smarty3 issues corrected in migration fixes
+ * Used to report Smarty4 issues corrected in migration fixes
  *
  * @category  Xoops\Upgrade
  * @package   Xoops
@@ -25,7 +25,7 @@ use ArrayObject;
  * @license   GNU GPL 2 or later (https://www.gnu.org/licenses/gpl-2.0.html)
  * @link      https://xoops.org
  */
-class Smarty3RepairOutput extends ScannerOutput
+class Smarty4RepairOutput extends ScannerOutput
 {
     /**
      * @var string $content accumulated output
@@ -85,10 +85,10 @@ class Smarty3RepairOutput extends ScannerOutput
      */
     public function outputStart()
     {
-        $this->outputAppend('<h2>' . _XOOPS_SMARTY3_SCANNER_RESULTS . '</h2>');
+        $this->outputAppend('<h2>' . _XOOPS_SMARTY4_SCANNER_RESULTS . '</h2>');
         $this->outputAppend('<table class="table"><tr><th>'
-            . _XOOPS_SMARTY3_SCANNER_FILE . '</th><th>'
-            . _XOOPS_SMARTY3_SCANNER_FIXED . '</th></tr>');
+            . _XOOPS_SMARTY4_SCANNER_FILE . '</th><th>'
+            . _XOOPS_SMARTY4_SCANNER_FIXED . '</th></tr>');
     }
 
     public function outputWrapUp()

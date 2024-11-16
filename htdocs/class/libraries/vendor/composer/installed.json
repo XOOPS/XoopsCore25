@@ -242,17 +242,17 @@
         },
         {
             "name": "smarty/smarty",
-            "version": "v4.5.3",
-            "version_normalized": "4.5.3.0",
+            "version": "v4.5.4",
+            "version_normalized": "4.5.4.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/smarty-php/smarty.git",
-                "reference": "9fc96a13dbaf546c3d7bcf95466726578cd4e0fa"
+                "reference": "c11676e85aa71bc7c3cd9100f1655a9f4d14616e"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/smarty-php/smarty/zipball/9fc96a13dbaf546c3d7bcf95466726578cd4e0fa",
-                "reference": "9fc96a13dbaf546c3d7bcf95466726578cd4e0fa",
+                "url": "https://api.github.com/repos/smarty-php/smarty/zipball/c11676e85aa71bc7c3cd9100f1655a9f4d14616e",
+                "reference": "c11676e85aa71bc7c3cd9100f1655a9f4d14616e",
                 "shasum": ""
             },
             "require": {
@@ -262,7 +262,7 @@
                 "phpunit/phpunit": "^8.5 || ^7.5",
                 "smarty/smarty-lexer": "^3.1"
             },
-            "time": "2024-05-28T21:46:01+00:00",
+            "time": "2024-08-14T20:04:35+00:00",
             "type": "library",
             "extra": {
                 "branch-alias": {
@@ -305,7 +305,7 @@
             "support": {
                 "forum": "https://github.com/smarty-php/smarty/discussions",
                 "issues": "https://github.com/smarty-php/smarty/issues",
-                "source": "https://github.com/smarty-php/smarty/tree/v4.5.3"
+                "source": "https://github.com/smarty-php/smarty/tree/v4.5.4"
             },
             "install-path": "../smarty/smarty"
         },
@@ -671,17 +671,17 @@
         },
         {
             "name": "symfony/yaml",
-            "version": "v5.4.40",
-            "version_normalized": "5.4.40.0",
+            "version": "v5.4.43",
+            "version_normalized": "5.4.43.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/yaml.git",
-                "reference": "81cad0ceab3d61fe14fe941ff18a230ac9c80f83"
+                "reference": "62f96e1cfd4cf518882a36bfedcf1fe4093c1299"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/yaml/zipball/81cad0ceab3d61fe14fe941ff18a230ac9c80f83",
-                "reference": "81cad0ceab3d61fe14fe941ff18a230ac9c80f83",
+                "url": "https://api.github.com/repos/symfony/yaml/zipball/62f96e1cfd4cf518882a36bfedcf1fe4093c1299",
+                "reference": "62f96e1cfd4cf518882a36bfedcf1fe4093c1299",
                 "shasum": ""
             },
             "require": {
@@ -698,7 +698,7 @@
             "suggest": {
                 "symfony/console": "For validating YAML files using the lint command"
             },
-            "time": "2024-05-31T14:33:22+00:00",
+            "time": "2024-08-11T17:40:32+00:00",
             "bin": [
                 "Resources/bin/yaml-lint"
             ],
@@ -729,7 +729,7 @@
             "description": "Loads and dumps YAML files",
             "homepage": "https://symfony.com",
             "support": {
-                "source": "https://github.com/symfony/yaml/tree/v5.4.40"
+                "source": "https://github.com/symfony/yaml/tree/v5.4.43"
             },
             "funding": [
                 {
