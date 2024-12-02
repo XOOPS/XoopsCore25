@@ -55,6 +55,8 @@ class XoopsTpl extends Smarty
         $this->registerPlugin('modifier', 'count', 'count');
         // Register the strstr function
         $this->registerPlugin('modifier', 'strstr', 'strstr');
+        // Register the trim function
+        $this->registerPlugin('modifier', 'trim', 'trim');
 
         if ($xoopsConfig['debug_mode']) {
             $this->debugging_ctrl = 'URL';

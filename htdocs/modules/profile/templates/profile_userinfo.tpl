@@ -39,7 +39,7 @@
             <input type="button" value="<{$lang_logout}>" onclick="location='<{$xoops_url}>/modules/<{$xoops_dirname}>/user.php?op=logout'"/>
         </form>
     </div>
-<{elseif $xoops_isadmin != false}>
+<{elseif isset($xoops_isadmin) && $xoops_isadmin != false}>
     <div class="floatleft pad5">
         <form method="post" action="<{$xoops_url}>/modules/<{$xoops_dirname}>/admin/deactivate.php">
             <input type="button" value="<{$lang_editprofile}>"
