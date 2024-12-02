@@ -109,10 +109,10 @@ echo "<dl><dt>'databasefactory.php' : ";
 $db = XoopsDatabaseFactory::getDatabaseConnection();
 // Check if XOOPS_VERSION is defined and has a valid value
 $xoopsVersion = defined('XOOPS_VERSION') ? XOOPS_VERSION : '';
-$versionSubstring = substr($xoopsVersion, 6, 3);
-
+$versionSubstring = is_string($xoopsVersion) ? substr($xoopsVersion, 6, 3) : '';
+$dbClass = strtolower(get_class($db));
 // Check if the version is valid and the database class is not 'protectormysqldatabase'
-if ($versionSubstring !== false && $versionSubstring < 2.4 && strtolower(get_class($db)) !== 'protectormysqldatabase') {
+if ($versionSubstring && version_compare($versionSubstring, '2.4', '<') && $dbClass !== 'protectormysqldatabase') {
     echo "<span style='color:red;font-weight:bold;'>" . _AM_ADV_DBFACTORYUNPATCHED . "</span></dt>\n";
 } else {
     echo _AM_ADV_DBFACTORYPATCHED . "<span style='color:green;font-weight:bold;'> OK</span></dt>\n";

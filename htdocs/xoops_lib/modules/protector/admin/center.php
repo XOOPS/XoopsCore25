@@ -9,6 +9,11 @@ include __DIR__ . '/mymenu.php';
 require_once XOOPS_ROOT_PATH . '/class/pagenav.php';
 require_once dirname(__DIR__) . '/class/gtickets.php';
 
+// Define custom exception classes
+class FileOpenException extends RuntimeException {}
+class FileLockException extends RuntimeException {}
+class FileWriteException extends RuntimeException {}
+
 //dirty trick to get navigation working with system menus
 if (isset($_GET['num'])) {
     $_SERVER['REQUEST_URI'] = 'admin/center.php?page=center';
@@ -47,49 +52,53 @@ if (!empty($_POST['action'])) {
         $lines   = empty($_POST['bad_ips']) ? [] : explode("\n", trim($_POST['bad_ips']));
         $bad_ips = [];
         foreach ($lines as $line) {
-            $parts = array_map('trim', explode('|', $line, 2));
-
-            if (count($parts) === 2) {
-                [$bad_ip, $jailed_time] = $parts;
-            } else {
-                $bad_ip = $parts[0];
-                $jailed_time = '';
-            }
-            $bad_ips[$bad_ip] = empty($jailed_time) ? 0x7fffffff : (int) $jailed_time;
+            [$bad_ip, $jailed_time] = explode('|', $line, 2) + [1 => '']; // Ensure 2 elements
+            $bad_ips[trim($bad_ip)] = empty($jailed_time) ? 0x7fffffff : (int) $jailed_time;
         }
         if (!$protector->write_file_badips($bad_ips)) {
             $error_msg .= _AM_MSG_BADIPSCANTOPEN;
+            error_log("[File Write Error] Failed to write bad IPs to file.");
         }
 
         $group1_ips = empty($_POST['group1_ips']) ? [] : explode("\n", trim($_POST['group1_ips']));
-        foreach (array_keys($group1_ips) as $i) {
-            $group1_ips[$i] = trim($group1_ips[$i]);
-        }
+        $group1_ips = array_map('trim', $group1_ips); // Use array_map for trimming
+
         $filePath = $protector->get_filepath4group1ips();
+        try {
         $fp = fopen($filePath, 'w');
 
         if ($fp === false) {
-            $error_msg .= _AM_MSG_GROUP1IPSCANTOPEN;
-            error_log("Failed to open file for writing: $filePath");
-        } else {
-            if (flock($fp, LOCK_EX)) {
+                throw new FileOpenException("Failed to open file for writing: $filePath (mode: 'w')");
+        }
+
+            if (!flock($fp, LOCK_EX)) {
+                throw new FileLockException("Failed to acquire lock on file: $filePath");
+            }
+
                 $data = serialize(array_unique($group1_ips)) . "\n";
                 $bytesWritten = fwrite($fp, $data);
 
                 if ($bytesWritten === false || $bytesWritten != strlen($data)) {
-                    $error_msg .= "Failed to write data to file: $filePath";
-                    error_log("Failed to write data to file: $filePath");
+                throw new FileWriteException(
+                    "Failed to write data to file: $filePath " .
+                    "(bytes written: $bytesWritten, expected: " . strlen($data) . ")"
+                );
                 }
-
+        } catch (FileOpenException $e) {
+            $error_msg .= _AM_MSG_GROUP1IPSCANTOPEN;
+            error_log("[File Open Error] " . $e->getMessage());
+        } catch (FileLockException $e) {
+            $error_msg .= "Failed to acquire lock on file.";
+            error_log("[File Lock Error] " . $e->getMessage());
+        } catch (FileWriteException $e) {
+            $error_msg .= "Failed to write data to file.";
+            error_log("[File Write Error] " . $e->getMessage());
+        } finally {
+            if (isset($fp) && is_resource($fp)) {
                 flock($fp, LOCK_UN);
-            } else {
-                $error_msg .= "Failed to acquire lock on file: $filePath";
-                error_log("Failed to acquire lock on file: $filePath");
-            }
-
             fclose($fp);
         }
-
+        }
 
         $redirect_msg = $error_msg ?: _AM_MSG_IPFILESUPDATED;
         redirect_header('center.php?page=center', 2, $redirect_msg);
