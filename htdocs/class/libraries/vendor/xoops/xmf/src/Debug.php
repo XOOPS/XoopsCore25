@@ -11,6 +11,7 @@
 
 namespace Xmf;
 
+use Kint\Kint;
 /**
  * Debugging tools for developers
  *
@@ -22,7 +23,7 @@ namespace Xmf;
  * @license   GNU GPL 2.0 or later (https://www.gnu.org/licenses/gpl-2.0.html)
  * @link      https://xoops.org
  */
-class Debug extends \Kint
+class Debug extends Kint
 {
     /**
      * doOnce - do some local housekeeping on first use. Any method needing this
@@ -39,7 +40,7 @@ class Debug extends \Kint
             parent::$aliases[] = array($class, 'dump');
             parent::$aliases[] = array($class, 'backtrace');
             parent::$enabled_mode = true;
-            parent::$mode_default = \Kint::MODE_RICH;
+            parent::$mode_default = Kint::MODE_RICH;
             // display output inline ::folder = false, true puts all output at bottom of window
             \Kint\Renderer\RichRenderer::$folder = false;
             // options: 'original' (default), 'solarized', 'solarized-dark' and 'aante-light'
@@ -50,16 +51,14 @@ class Debug extends \Kint
     /**
      * Dump one or more variables
      *
-     * @param mixed $data variable(s) to dump
-     *
+    * @psalm-param array ...$args
      * @return void
      */
-    public static function dump($data = null)
+    public static function dump(...$args)
     {
-        $args = func_get_args();
 
         static::doOnce();
-        forward_static_call_array(array('parent', 'dump'), $args);
+        parent::dump(...$args);
     }
 
     /**
