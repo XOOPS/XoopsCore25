@@ -61,10 +61,7 @@ class HTMLPurifier_Context
     public function destroy($name)
     {
         if (!array_key_exists($name, $this->_storage)) {
-            trigger_error(
-                "Attempted to destroy non-existent variable $name",
-                E_USER_ERROR
-            );
+            throw new \Exception("Attempted to destroy non-existent variable $name");
             return;
         }
         unset($this->_storage[$name]);

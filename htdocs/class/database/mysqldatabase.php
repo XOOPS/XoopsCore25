@@ -48,7 +48,7 @@ abstract class XoopsMySQLDatabase extends XoopsDatabase
     public function connect($selectdb = true)
     {
         if (!extension_loaded('mysqli')) {
-            trigger_error('notrace:mysqli extension not loaded', E_USER_ERROR);
+            throw new \Exception('notrace:mysqli extension not loaded');
 
             return false;
         }
