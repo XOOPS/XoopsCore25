@@ -1,6 +1,6 @@
 <table class="table table-hover" cellspacing="1">
 
-    <{if isset($block.disp_mode) &&  $block.disp_mod == 0}>
+    <{if isset($block.disp_mode) &&  $block.disp_mode == 0}>
         <tr>
             <th><{$smarty.const._MB_NEWBB_AUTHOR}></th>
             <th><{$smarty.const._MB_NEWBB_COUNT}></th>
