@@ -57,7 +57,7 @@ $options = [
     'domain'   => null,
     'secure'   => false,
     'httponly' => true,
-    'samesite' => 'strict',
+    'samesite' => 'Lax',
 ];
 // options for mainfile.php
 if (empty($xoopsOption['hascommon'])) {

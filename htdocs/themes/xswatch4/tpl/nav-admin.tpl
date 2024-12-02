@@ -89,7 +89,7 @@
             toolbar_cookie = 'off';
             xswatchToolbarIndOff();
         }
-        Cookies.set('xswatch-toolbar', toolbar_cookie, { expires: 365, sameSite: 'strict' });
+        Cookies.set('xswatch-toolbar', toolbar_cookie, { expires: 365, sameSite: 'Lax' });
     }
     // set initial conditions based on cookie
     var toolbar_cookie = Cookies.get('xswatch-toolbar');

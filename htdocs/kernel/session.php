@@ -89,7 +89,7 @@ class XoopsSessionHandler implements SessionHandlerInterface
                 'domain'   => XOOPS_COOKIE_DOMAIN,
                 'secure'   => $secure,
                 'httponly' => true,
-                'samesite' => 'strict',
+                'samesite' => 'Lax',
             ];
             session_set_cookie_params($options);
         } else {
