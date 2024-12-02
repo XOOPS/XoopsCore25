@@ -336,13 +336,15 @@ class Criteria extends CriteriaElement
         $backtick = (false === strpos($this->column, '.')) ? '`' : '';
         $backtick = (false !== strpos($this->column, '(')) ? '' : $backtick;
         $clause = (!empty($this->prefix) ? "{$this->prefix}." : '') . $backtick . $this->column . $backtick;
+
         if (!empty($this->function)) {
             $clause = sprintf($this->function, $clause);
         }
+
         if (in_array(strtoupper($this->operator), ['IS NULL', 'IS NOT NULL'])) {
             $clause .= ' ' . $this->operator;
         } else {
-            if ('' === ($value = trim((string) $this->value))) {
+            if ('' === ($value = trim((string)$this->value))) {
                 return '';
             }
             if (!in_array(strtoupper($this->operator), ['IN', 'NOT IN'])) {
@@ -350,8 +352,8 @@ class Criteria extends CriteriaElement
                     $value = "'{$value}'";
                 } elseif (!preg_match('/^[a-zA-Z0-9_\.\-`]*$/', $value)) {
                     $value = '``';
-                }
             }
+        }
             $clause .= " {$this->operator} {$value}";
         }
 

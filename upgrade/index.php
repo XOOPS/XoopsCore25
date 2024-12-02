@@ -83,10 +83,10 @@ if (file_exists(__DIR__ . "../language/{$upgradeControl->upgradeLanguage}/user.p
     include_once XOOPS_ROOT_PATH . '/language/english/user.php';
 }
 
-if (file_exists(__DIR__ . "/language/{$upgradeControl->upgradeLanguage}/smarty3.php")) {
-    include_once __DIR__ . "/language/{$upgradeControl->upgradeLanguage}/smarty3.php";
+if (file_exists(__DIR__ . "/language/{$upgradeControl->upgradeLanguage}/smarty4.php")) {
+    include_once __DIR__ . "/language/{$upgradeControl->upgradeLanguage}/smarty4.php";
 } else {
-    include_once __DIR__ . "/language/english/smarty3.php";
+    include_once __DIR__ . "/language/english/smarty4.php";
 }
 
 

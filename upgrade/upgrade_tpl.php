@@ -121,12 +121,12 @@ foreach ($upgradeControl->upgradeQueue as $stepName => $info) {
                                     <span class="fa fa fa-hand-paper-o fa-5x"></span>
                                 </div>
                                 <div class="col-xs-9 text-right">
-                                    <div class="huge">Smarty3</div>
+                                    <div class="huge">Smarty4</div>
                                 </div>
                             </div>
                         </div>
                         <div class="panel-footer text-primary">
-                            <?php echo _XOOPS_SMARTY3_MIGRATION; ?>
+                            <?php echo _XOOPS_SMARTY4_MIGRATION; ?>
                             <div class="clearfix"></div>
                         </div>
                     </div>

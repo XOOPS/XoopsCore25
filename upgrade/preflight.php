@@ -22,10 +22,10 @@
 use Xoops\Upgrade\ScannerOutput;
 use Xoops\Upgrade\ScannerProcess;
 use Xoops\Upgrade\ScannerWalker;
-use Xoops\Upgrade\Smarty3ScannerOutput;
-use Xoops\Upgrade\Smarty3TemplateChecks;
-use Xoops\Upgrade\Smarty3TemplateRepair;
-use Xoops\Upgrade\Smarty3RepairOutput;
+use Xoops\Upgrade\Smarty4ScannerOutput;
+use Xoops\Upgrade\Smarty4TemplateChecks;
+use Xoops\Upgrade\Smarty4TemplateRepair;
+use Xoops\Upgrade\Smarty4RepairOutput;
 
 function fatalPhpErrorHandler($e = null)
 {
@@ -84,10 +84,10 @@ set_exception_handler('fatalPhpErrorHandler'); // should have been changed by no
 require __DIR__ . '/class/Xoops/Upgrade/ScannerOutput.php';
 require __DIR__ . '/class/Xoops/Upgrade/ScannerProcess.php';
 require __DIR__ . '/class/Xoops/Upgrade/ScannerWalker.php';
-require __DIR__ . '/class/Xoops/Upgrade/Smarty3ScannerOutput.php';
-require __DIR__ . '/class/Xoops/Upgrade/Smarty3TemplateChecks.php';
-require __DIR__ . '/class/Xoops/Upgrade/Smarty3TemplateRepair.php';
-require __DIR__ . '/class/Xoops/Upgrade/Smarty3RepairOutput.php';
+require __DIR__ . '/class/Xoops/Upgrade/Smarty4ScannerOutput.php';
+require __DIR__ . '/class/Xoops/Upgrade/Smarty4TemplateChecks.php';
+require __DIR__ . '/class/Xoops/Upgrade/Smarty4TemplateRepair.php';
+require __DIR__ . '/class/Xoops/Upgrade/Smarty4RepairOutput.php';
 
 require __DIR__ . '/class/abstract.php';
 require __DIR__ . '/class/patchstatus.php';
@@ -103,10 +103,10 @@ if (file_exists(__DIR__ . "../language/{$upgradeControl->upgradeLanguage}/user.p
 } else {
     include_once XOOPS_ROOT_PATH . "/language/english/user.php";
 }
-if (file_exists(__DIR__ . "/language/{$upgradeControl->upgradeLanguage}/smarty3.php")) {
-    include_once __DIR__ . "/language/{$upgradeControl->upgradeLanguage}/smarty3.php";
+if (file_exists(__DIR__ . "/language/{$upgradeControl->upgradeLanguage}/smarty4.php")) {
+    include_once __DIR__ . "/language/{$upgradeControl->upgradeLanguage}/smarty4.php";
 } else {
-    include_once __DIR__ . "/language/english/smarty3.php";
+    include_once __DIR__ . "/language/english/smarty4.php";
 }
 
 /**
@@ -121,29 +121,29 @@ function tplScannerForm($parameters=null)
 {
     $action = XOOPS_URL . '/upgrade/preflight.php';
 
-    $form = '<h2>' . _XOOPS_SMARTY3_RESCAN_OPTIONS . '</h2>';
+    $form = '<h2>' . _XOOPS_SMARTY4_RESCAN_OPTIONS . '</h2>';
     $form .= '<form action="' . $action . '" method="post" class="form-horizontal">';
 
     $form .= '<div class="form-group">';
     $form .= '<input name="template_dir" class="form-control" type="text" placeholder="/themes/">';
-    $form .= '<label for="template_dir">' . _XOOPS_SMARTY3_TEMPLATE_DIR  . '</label>';
+    $form .= '<label for="template_dir">' . _XOOPS_SMARTY4_TEMPLATE_DIR  . '</label>';
     $form .= '</div>';
 
     $form .= '<div class="form-group">';
     $form .= '<input name="template_ext" class="form-control" type="text" placeholder="tpl">';
-    $form .= '<label for="template_ext">' . _XOOPS_SMARTY3_TEMPLATE_EXT  . '</label>';
+    $form .= '<label for="template_ext">' . _XOOPS_SMARTY4_TEMPLATE_EXT  . '</label>';
     $form .= '</div>';
 
     $form .= '<div class="form-group row">';
     $form .= '<div class="form-check">';
-    $form .= '<legend class="col-form-label">' . _XOOPS_SMARTY3_FIX_BUTTON . '</legend>';
+    $form .= '<legend class="col-form-label">' . _XOOPS_SMARTY4_FIX_BUTTON . '</legend>';
     $form .= '<input class="form-check-input" type="checkbox" name="runfix" >';
     $form .= '<label class="form-check-label" for="runfix">' . _YES . '</label>';
     $form .= '</div>';
     $form .= '</div>';
 
     $form .= '<div class="form-group">';
-    $form .= '<button class="btn btn-lg btn-success" type="submit">' . _XOOPS_SMARTY3_SCANNER_RUN;
+    $form .= '<button class="btn btn-lg btn-success" type="submit">' . _XOOPS_SMARTY4_SCANNER_RUN;
     $form .= '  <span class="fa fa-caret-right"></span></button>';
     $form .= '</div>';
 
@@ -151,7 +151,7 @@ function tplScannerForm($parameters=null)
 
     $form .= '<form action="' . $action . '" method="post" class="form-horizontal">';
     $form .= '<div class="form-group">';
-    $form .= '<button class="btn btn-lg btn-danger" type="submit">' . _XOOPS_SMARTY3_SCANNER_END;
+    $form .= '<button class="btn btn-lg btn-danger" type="submit">' . _XOOPS_SMARTY4_SCANNER_END;
     $form .= '  <span class="fa fa-caret-right"></span></button>';
     $form .= '<input type="hidden" name="endscan" value="yes">';
     $form .= '</div>';
@@ -173,15 +173,15 @@ if (!$xoopsUser || !$xoopsUser->isAdmin()) {
     // Xmf\Debug::dump($_POST, $runfix, $template_dir, $template_ext);
     if (empty($op)) {
         $upgradeControl->loadLanguage('welcome');
-        echo _XOOPS_SMARTY3_SCANNER_OFFER;
+        echo _XOOPS_SMARTY4_SCANNER_OFFER;
     }
 
     if ($runfix==='on') {
-        $output = new Smarty3RepairOutput();
-        $process = new Smarty3TemplateRepair($output);
+        $output = new Smarty4RepairOutput();
+        $process = new Smarty4TemplateRepair($output);
     } else {
-        $output = new Smarty3ScannerOutput();
-        $process = new Smarty3TemplateChecks($output);
+        $output = new Smarty4ScannerOutput();
+        $process = new Smarty4TemplateChecks($output);
     }
     $scanner = new ScannerWalker($process, $output);
     if('' === $template_dir) {

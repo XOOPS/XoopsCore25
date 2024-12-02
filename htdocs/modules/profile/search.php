@@ -183,25 +183,57 @@ switch ($op) {
         $criteria = new CriteriaCompo(new Criteria('level', 0, '>'));
 
         if (isset($_REQUEST['uname']) && $_REQUEST['uname'] !== '') {
-            $string = $myts->addSlashes(trim($_REQUEST['uname']));
+            $uname = trim($_REQUEST['uname']);
+            // Basic input validation - only allow alphanumeric characters and underscores
+            if (!preg_match('/^[a-zA-Z0-9_]+$/', $uname)) {
+                redirect_header(XOOPS_URL . '/', 3, 'Invalid username provided.');
+            }
+
+            // Adjust the search pattern based on the match type
             switch ($_REQUEST['uname_match']) {
                 case XOOPS_MATCH_START:
-                    $string .= '%';
+                    $uname .= '%';
                     break;
-
                 case XOOPS_MATCH_END:
-                    $string = '%' . $string;
+                    $uname = '%' . $uname;
                     break;
-
                 case XOOPS_MATCH_CONTAIN:
-                    $string = '%' . $string . '%';
+                    $uname = '%' . $uname . '%';
                     break;
             }
-            $criteria->add(new Criteria('uname', $string, 'LIKE'));
-            $search_url[] = 'uname=' . $_REQUEST['uname'];
-            $search_url[] = 'uname_match=' . $_REQUEST['uname_match'];
-            $searchvars[] = 'uname';
+
+            // Create criteria for the SQL query
+            $criteria = new Criteria('uname', $uname, 'LIKE');
+            [$clause, $params] = $criteria->render();
+
+            // Prepare and execute the SQL query
+            $sql = "SELECT * FROM " . $xoopsDB->prefix('users') . " WHERE " . $clause;
+            $stmt = $xoopsDB->prepare($sql);
+
+            foreach ($params as $placeholder => $value) {
+                $stmt->bindValue($placeholder, $value);
+            }
+
+            $stmt->execute();
+            $results = $stmt->fetchAll();
+
+            // Process results
+            $search_url = [];
+            $searchvars = [];
+
+            if ($results) {
+                foreach ($results as $row) {
+                    // Populate search URL and search variables based on the results
+                    $search_url[] = 'uname=' . urlencode($row['uname']);
+                    $search_url[] = 'uname_match=' . urlencode($_REQUEST['uname_match']);
+                    $searchvars[] = 'uname';
+                }
+            }
+
+            // Further processing or usage of $search_url, $searchvars
+            // You might render a page or redirect the user based on these results
         }
+
         if (isset($_REQUEST['email']) && $_REQUEST['email'] !== '') {
             $string = $myts->addSlashes(trim($_REQUEST['email']));
             switch ($_REQUEST['email_match']) {

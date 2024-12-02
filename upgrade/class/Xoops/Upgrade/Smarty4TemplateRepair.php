@@ -14,9 +14,9 @@ namespace Xoops\Upgrade;
 use SplFileInfo;
 
 /**
- * XOOPS Upgrade Smarty3TemplateRepair
+ * XOOPS Upgrade Smarty4TemplateRepair
  *
- * Scanner process to look for and repair BC issues in existing templates when used with Smarty3
+ * Scanner process to look for and repair BC issues in existing templates when used with Smarty4
  *
  * @category  Xoops\Upgrade
  * @package   Xoops
@@ -25,7 +25,7 @@ use SplFileInfo;
  * @license   GNU GPL 2 or later (https://www.gnu.org/licenses/gpl-2.0.html)
  * @link      https://xoops.org
  */
-class Smarty3TemplateRepair extends ScannerProcess
+class Smarty4TemplateRepair extends ScannerProcess
 {
     /**
      * @var int count of changes made
@@ -71,6 +71,10 @@ class Smarty3TemplateRepair extends ScannerProcess
         // For single quotes
         $this->patterns[] = "/(\'<{xo[a-zA-Z\d]*\b[^}>]*?)\s*([^\'\"=]+(?:=[^\'\"=]*)*)\s?}>/";
         $this->replacements[] = '$1 "$2"}>';
+
+        // For no surrounding quotes
+        $this->patterns[] = '/(<{xo[a-zA-Z\d]*\b[^}>]*?)\s+([^\s\'\"=]+)(\s*}>)/';
+        $this->replacements[] = '$1 \'$2\'$3';
     }
 
     /**
