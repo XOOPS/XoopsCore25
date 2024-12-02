@@ -455,9 +455,9 @@ class xos_opal_Theme
             $this->template->caching        = 2;
             $this->template->cache_lifetime = $this->contentCacheLifetime;
             $uri                            = str_replace(XOOPS_URL, '', $_SERVER['REQUEST_URI']);
-            // Clean uri by removing session id
-            if (defined('SID') && SID && strpos($uri, SID)) {
-                $uri = preg_replace("/([\?&])(" . SID . "$|" . SID . '&)/', "\\1", $uri);
+
+            if (session_id() && strpos($uri, session_id())) {
+                $uri = preg_replace("/([\?&])(" . session_id() . "$|" . session_id() . '&)/', "\\1", $uri);
             }
             $this->contentCacheId = $this->generateCacheId('page_' . substr(md5($uri), 0, 8));
             if ($this->template->isCached($template, $this->contentCacheId)) {
