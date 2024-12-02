@@ -65,7 +65,8 @@ class MytsCensor extends MyTextSanitizerExtension
                     continue;
                 }
                 if (!empty($censorConf['censor_terminate'])) {
-                    trigger_error('Censor words found', E_USER_ERROR);
+                    throw new \Exception('Censor words found');
+                    // The below lines are now redundant and won't be executed.
                     $text = '';
 
                     return $text;

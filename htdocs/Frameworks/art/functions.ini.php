@@ -11,7 +11,7 @@
  */
 
 if (substr(XOOPS_VERSION, 0, 9) < 'XOOPS 2.3') {
-    trigger_error('The package only works for XOOPS 2.3+', E_USER_ERROR);
+    throw new \Exception('The package only works for XOOPS 2.3+');
 }
 
 if (!defined('FRAMEWORKS_ART_FUNCTIONS_INI')):

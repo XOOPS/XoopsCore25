@@ -454,7 +454,7 @@ class HTMLPurifier_Encoder
             $str = mb_convert_encoding($str, 'ISO-8859-1', 'UTF-8');
             return $str;
         }
-        trigger_error('Encoding not supported', E_USER_ERROR);
+        throw new \Exception('Encoding not supported');
         // You might be tempted to assume that the ASCII representation
         // might be OK, however, this is *not* universally true over all
         // encodings.  So we take the conservative route here, rather
