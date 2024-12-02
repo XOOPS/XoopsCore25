@@ -36,6 +36,7 @@ $myts           = \MyTextSanitizer::getInstance();
 include_once $GLOBALS['xoops']->path('class/auth/authfactory.php');
 
 xoops_loadLanguage('auth');
+/** @var XoopsMySQLDatabase $xoopsDB */
 $xoopsDB = XoopsDatabaseFactory::getDatabaseConnection();
 $xoopsAuth = XoopsAuthFactory::getAuthConnection($xoopsDB->escape($uname));
 $user      = $xoopsAuth->authenticate($uname, $pass);
