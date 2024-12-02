@@ -313,7 +313,9 @@ function b_system_waiting_show()
             $block['modules'][10]['lang_linkname'] = _MB_SYSTEM_SMARTSECTION;
         }
     }
+    if (count($block) > 0) {
         $GLOBALS['xoopsLogger']->addDeprecated("Block 'Waiting Contents' is deprecated since XOOPS 2.5.11, please use Waiting module");
+    }
     return $block;
 }
 

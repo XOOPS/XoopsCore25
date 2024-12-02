@@ -265,7 +265,7 @@ function xoops_module_install($dirname)
                                 $tplfile->setVar('tpl_file', $block['template']);
                                 $tplfile->setVar('tpl_module', $dirname);
                                 $tplfile->setVar('tpl_type', 'block');
-                                $tplfile->setVar('tpl_desc', $block['description'], true);
+                                $tplfile->setVar('tpl_desc', $block['description']??'', true);
                                 $tplfile->setVar('tpl_lastimported', 0);
                                 $tplfile->setVar('tpl_lastmodified', time());
                                 if (!$tplfile_handler->insert($tplfile)) {
