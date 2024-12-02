@@ -1,6 +1,14 @@
 xmf ChangeLog
 =============
 
+Nov 27, 2024 v1.2.31
+------------------
+* updated Debug for Kint changes (mamba)
+* added Issues Template (mamba)
+* PHP 8.4 Implicitly nullable parameters (mamba)
+* Update PhpUnit versions (mamba)
+* upgrade Smarty to 4.5.5 
+
 May 30, 2024 v1.2.30
 ------------------
 * upgrade Smarty to 4.5.3
