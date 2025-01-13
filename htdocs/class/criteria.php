@@ -293,6 +293,7 @@ class Criteria extends CriteriaElement
     public $column;
     public $operator;
     public $value;
+    protected $allowEmptyValue = false;
 
     /**
      * Constructor
@@ -302,14 +303,16 @@ class Criteria extends CriteriaElement
      * @param string $operator
      * @param string $prefix
      * @param string $function
+     * @param boolean $allowEmptyValue Flag to allow empty string values in criteria, defaults to false.
      */
-    public function __construct($column, $value = '', $operator = '=', $prefix = '', $function = '')
+    public function __construct($column, $value = '', $operator = '=', $prefix = '', $function = '', $allowEmptyValue = false)
     {
         $this->prefix   = $prefix;
         $this->function = $function;
         $this->column   = $column;
         $this->value    = $value;
         $this->operator = $operator;
+        $this->allowEmptyValue = $allowEmptyValue;
 
         /**
          * A common custom in some older programs was to use "new Criteria(1, '1')" to
@@ -344,7 +347,7 @@ class Criteria extends CriteriaElement
         if (in_array(strtoupper($this->operator), ['IS NULL', 'IS NOT NULL'])) {
             $clause .= ' ' . $this->operator;
         } else {
-            if ('' === ($value = trim((string)$this->value))) {
+            if ('' === ($value = trim((string)$this->value)) && !$this->allowEmptyValue) {
                 return '';
             }
             if (!in_array(strtoupper($this->operator), ['IN', 'NOT IN'])) {
