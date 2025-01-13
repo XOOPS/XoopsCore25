@@ -307,7 +307,7 @@ class Criteria extends CriteriaElement
      * @param string $operator
      * @param string $prefix
      * @param string $function
-     * @param boolean $allowEmptyValue
+     * @param boolean $allowEmptyValue Flag to allow empty string values in criteria, defaults to false.
      */
     public function __construct($column, $value = '', $operator = '=', $prefix = '', $function = '', $allowEmptyValue = false)
     {
