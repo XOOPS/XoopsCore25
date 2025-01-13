@@ -1,6 +1,34 @@
 XOOPS 2.5.x Changelog (Language changes: see: /docs/lang_diff.txt)
 
 ===================================
+2.5.12 Beta4             NOT RELEASED
+===================================
+- updates for PHP 8.4 (mamba)
+- fix for XOOPS reading blocks from deactivated modules (mamba)
+
+Updated libraries and assets:
+- Smarty 4.5.5 (mamba)
+- HTML Purifier 4.18 (mamba)
+- jQuery UI 1.14.1 (mamba)
+- jGrowl 1.4.10 (mamba)
+- tablesorter 2.32.0 (mamba)
+- jquery.form 4.3.1 (mamba)
+===================================
+2.5.12 Beta3             2024/12/05
+===================================
+- fixing bug with button cancel by @ggoffy in #1481
+- fixed bug in search tpl by @ggoffy in #1482
+- improvements by @mambax7 in #1477
+- XMF 1.2.31 by @mambax7 in #1485
+- Kint by @mambax7 in #1486
+- replace trigger_error with \Exception by @mambax7 in #1487
+- change samesite to Lax by @mambax7 in #1488
+- Various changes by @mambax7 in #1489
+
+Updated libraries and assets:
+- Smarty 4.5.4 by @mambax7 in #1475
+
+===================================
 2.5.12 Beta1             2024/07/28
 ===================================
 - Update to Smarty v4.5.3 (mamba)
