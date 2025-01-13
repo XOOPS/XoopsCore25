@@ -805,8 +805,10 @@ class XoopsBlock extends XoopsObject
                 return $blockids;
             }
         }
-        $sql = 'SELECT b.* FROM ' . $db->prefix('newblocks') . ' b, ' . $db->prefix('block_module_link') . ' m WHERE m.block_id=b.bid';
-        $sql .= ' AND b.isactive=' . $isactive;
+        $sql = 'SELECT b.* FROM ' . $db->prefix('newblocks') . ' b
+            JOIN ' . $db->prefix('block_module_link') . ' m ON m.block_id = b.bid
+            JOIN ' . $db->prefix('modules') . ' mo ON mo.mid = b.mid
+            WHERE b.isactive =' . $isactive . ' AND mo.isactive =' . $isactive;
         if (isset($visible)) {
             $sql .= ' AND b.visible=' . (int) $visible;
         }
