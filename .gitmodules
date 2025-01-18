@@ -1,0 +1,6 @@
+[submodule "htdocs/modules/news"]
+	path = htdocs/modules/news
+	url = git@github.com:koreus/news.git
+[submodule "htdocs/modules/newbb"]
+	path = htdocs/modules/newbb
+	url = git@github.com:koreus/newbb.git
