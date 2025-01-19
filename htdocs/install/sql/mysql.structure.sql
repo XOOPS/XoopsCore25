@@ -13,7 +13,7 @@ CREATE TABLE avatar (
   avatar_type char(1) NOT NULL default '',
   PRIMARY KEY  (avatar_id),
   KEY avatar_type (avatar_type, avatar_display)
-) ENGINE=MyISAM;
+) ENGINE=InnoDB;
 # --------------------------------------------------------
 
 #
@@ -24,7 +24,7 @@ CREATE TABLE avatar_user_link (
   avatar_id mediumint(8) unsigned NOT NULL default '0',
   user_id mediumint(8) unsigned NOT NULL default '0',
   KEY avatar_user_id (avatar_id,user_id)
-) ENGINE=MyISAM;
+) ENGINE=InnoDB;
 # --------------------------------------------------------
 
 #
@@ -45,7 +45,7 @@ CREATE TABLE banner (
   PRIMARY KEY  (bid),
   KEY idxbannercid (cid),
   KEY idxbannerbidcid (bid,cid)
-) ENGINE=MyISAM;
+) ENGINE=InnoDB;
 # --------------------------------------------------------
 
 #
@@ -62,7 +62,7 @@ CREATE TABLE bannerclient (
   extrainfo text,
   PRIMARY KEY  (cid),
   KEY login (login)
-) ENGINE=MyISAM;
+) ENGINE=InnoDB;
 # --------------------------------------------------------
 
 #
@@ -78,7 +78,7 @@ CREATE TABLE bannerfinish (
   dateend int(10) unsigned NOT NULL default '0',
   PRIMARY KEY  (bid),
   KEY cid (cid)
-) ENGINE=MyISAM;
+) ENGINE=InnoDB;
 # --------------------------------------------------------
 
 #
@@ -89,7 +89,7 @@ CREATE TABLE block_module_link (
   block_id mediumint(8) unsigned NOT NULL default '0',
   module_id smallint(5) NOT NULL default '0',
   PRIMARY KEY (`module_id`, `block_id`)
-) ENGINE=MyISAM;
+) ENGINE=InnoDB;
 # --------------------------------------------------------
 
 #
@@ -128,7 +128,7 @@ CREATE TABLE xoopscomments (
   KEY `com_status` (`com_status`),
   KEY `com_user` (`com_user`),
   KEY `com_email` (`com_email`)
-) ENGINE=MyISAM;
+) ENGINE=InnoDB;
 # --------------------------------------------------------
 
 # RMV-NOTIFY
@@ -149,7 +149,7 @@ CREATE TABLE xoopsnotifications (
   KEY not_class (not_category),
   KEY not_uid (not_uid),
   KEY not_event (not_event)
-) ENGINE=MyISAM;
+) ENGINE=InnoDB;
 # --------------------------------------------------------
 
 #
@@ -170,7 +170,7 @@ CREATE TABLE config (
   PRIMARY KEY  (conf_id),
   KEY conf_mod_cat_id (conf_modid, conf_catid),
   KEY conf_order (conf_order)
-) ENGINE=MyISAM;
+) ENGINE=InnoDB;
 # --------------------------------------------------------
 
 #
@@ -182,7 +182,7 @@ CREATE TABLE configcategory (
   confcat_name varchar(255) NOT NULL default '',
   confcat_order smallint(5) unsigned NOT NULL default '0',
   PRIMARY KEY  (confcat_id)
-) ENGINE=MyISAM;
+) ENGINE=InnoDB;
 # --------------------------------------------------------
 
 #
@@ -196,7 +196,7 @@ CREATE TABLE configoption (
   conf_id smallint(5) unsigned NOT NULL default '0',
   PRIMARY KEY  (confop_id),
   KEY conf_id (conf_id)
-) ENGINE=MyISAM;
+) ENGINE=InnoDB;
 # --------------------------------------------------------
 
 #
@@ -211,7 +211,7 @@ CREATE TABLE groups (
 
   PRIMARY KEY  (groupid),
   KEY group_type (group_type)
-) ENGINE=MyISAM;
+) ENGINE=InnoDB;
 # --------------------------------------------------------
 
 #
@@ -228,7 +228,7 @@ CREATE TABLE group_permission (
   KEY groupid (gperm_groupid),
   KEY itemid (gperm_itemid),
   KEY gperm_modid (gperm_modid,gperm_name(10))
-) ENGINE=MyISAM;
+) ENGINE=InnoDB;
 # --------------------------------------------------------
 
 
@@ -243,7 +243,7 @@ CREATE TABLE groups_users_link (
   PRIMARY KEY  (linkid),
   KEY groupid_uid (groupid,uid),
   KEY uid (uid)
-) ENGINE=MyISAM;
+) ENGINE=InnoDB;
 # --------------------------------------------------------
 
 #
@@ -262,7 +262,7 @@ CREATE TABLE image (
   PRIMARY KEY  (image_id),
   KEY imgcat_id (imgcat_id),
   KEY image_display (image_display)
-) ENGINE=MyISAM;
+) ENGINE=InnoDB;
 # --------------------------------------------------------
 
 #
@@ -273,7 +273,7 @@ CREATE TABLE imagebody (
   image_id mediumint(8) unsigned NOT NULL default '0',
   image_body mediumblob,
   KEY image_id (image_id)
-) ENGINE=MyISAM;
+) ENGINE=InnoDB;
 # --------------------------------------------------------
 
 #
@@ -292,7 +292,7 @@ CREATE TABLE imagecategory (
   imgcat_storetype varchar(5) NOT NULL default '',
   PRIMARY KEY  (imgcat_id),
   KEY imgcat_display (imgcat_display)
-) ENGINE=MyISAM;
+) ENGINE=InnoDB;
 # --------------------------------------------------------
 
 
@@ -306,7 +306,7 @@ CREATE TABLE imgset (
   imgset_refid mediumint(8) unsigned NOT NULL default '0',
   PRIMARY KEY  (imgset_id),
   KEY imgset_refid (imgset_refid)
-) ENGINE=MyISAM;
+) ENGINE=InnoDB;
 # --------------------------------------------------------
 
 #
@@ -317,7 +317,7 @@ CREATE TABLE imgset_tplset_link (
   imgset_id smallint(5) unsigned NOT NULL default '0',
   tplset_name varchar(50) NOT NULL default '',
   KEY tplset_name (tplset_name(10))
-) ENGINE=MyISAM;
+) ENGINE=InnoDB;
 # --------------------------------------------------------
 
 #
@@ -331,7 +331,7 @@ CREATE TABLE imgsetimg (
   imgsetimg_imgset smallint(5) unsigned NOT NULL default '0',
   PRIMARY KEY  (imgsetimg_id),
   KEY imgsetimg_imgset (imgsetimg_imgset)
-) ENGINE=MyISAM;
+) ENGINE=InnoDB;
 # --------------------------------------------------------
 
 #
@@ -362,7 +362,7 @@ CREATE TABLE modules (
   KEY isactive (isactive),
   KEY weight (weight),
   KEY hascomments (hascomments)
-) ENGINE=MyISAM;
+) ENGINE=InnoDB;
 # --------------------------------------------------------
 
 #
@@ -395,7 +395,7 @@ CREATE TABLE newblocks (
   KEY visible (visible),
   KEY isactive_visible_mid (isactive,visible,mid),
   KEY mid_funcnum (mid,func_num)
-) ENGINE=MyISAM;
+) ENGINE=InnoDB;
 # --------------------------------------------------------
 
 #
@@ -411,7 +411,7 @@ CREATE TABLE online (
   KEY online_module (online_module),
   KEY online_updated (online_updated),
   KEY online_uid (online_uid)
-) ENGINE=MyISAM;
+) ENGINE=InnoDB;
 # --------------------------------------------------------
 
 #
@@ -436,7 +436,7 @@ CREATE TABLE priv_msgs (
   KEY touseridreadmsg (to_userid,read_msg),
   KEY msgidfromuserid (from_userid, msg_id),
   KEY prune (`msg_time`, `read_msg`, `from_save`, `to_delete`)
-) ENGINE=MyISAM;
+) ENGINE=InnoDB;
 # --------------------------------------------------------
 
 #
@@ -455,7 +455,7 @@ CREATE TABLE ranks (
   KEY rank_max (rank_max),
   KEY rankminrankmaxranspecial (rank_min,rank_max,rank_special),
   KEY rankspecial (rank_special)
-) ENGINE=MyISAM;
+) ENGINE=InnoDB;
 # --------------------------------------------------------
 
 #
@@ -469,7 +469,7 @@ CREATE TABLE session (
   sess_data text,
   PRIMARY KEY  (sess_id),
   KEY updated (sess_updated)
-) ENGINE=MyISAM;
+) ENGINE=InnoDB;
 # --------------------------------------------------------
 
 #
@@ -483,7 +483,7 @@ CREATE TABLE smiles (
   emotion varchar(75) NOT NULL default '',
   display tinyint(1) NOT NULL default '0',
   PRIMARY KEY  (id)
-) ENGINE=MyISAM;
+) ENGINE=InnoDB;
 # --------------------------------------------------------
 
 #
@@ -497,7 +497,7 @@ CREATE TABLE tplset (
   tplset_credits text,
   tplset_created int(10) unsigned NOT NULL default '0',
   PRIMARY KEY  (tplset_id)
-) ENGINE=MyISAM;
+) ENGINE=InnoDB;
 # --------------------------------------------------------
 
 #
@@ -518,7 +518,7 @@ CREATE TABLE tplfile (
   KEY tpl_refid (tpl_refid,tpl_type),
   KEY tpl_tplset (tpl_tplset,tpl_file(10)) ,
   UNIQUE tpl_refid_module_set_file_type (tpl_refid, tpl_module, tpl_tplset, tpl_file, tpl_type)
-) ENGINE=MyISAM;
+) ENGINE=InnoDB;
 # --------------------------------------------------------
 
 #
@@ -529,7 +529,7 @@ CREATE TABLE tplsource (
   tpl_id mediumint(7) unsigned NOT NULL default '0',
   tpl_source mediumtext,
   KEY tpl_id (tpl_id)
-) ENGINE=MyISAM;
+) ENGINE=InnoDB;
 # --------------------------------------------------------
 
 # Table structure for table `users`
@@ -572,7 +572,7 @@ CREATE TABLE users (
   KEY email (email),
   KEY uiduname (uid,uname),
   KEY level (level)
-) ENGINE=MyISAM;
+) ENGINE=InnoDB;
 # --------------------------------------------------------
 
 #
@@ -586,5 +586,5 @@ CREATE TABLE cache_model (
 
   PRIMARY KEY  (`cache_key`),
   KEY `cache_expires` (`cache_expires`)
-) ENGINE=MyISAM;
+) ENGINE=InnoDB;
 # --------------------------------------------------------
