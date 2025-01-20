@@ -10,7 +10,7 @@ class ComposerInfo
 
         try {
             // Define the path to the composer.lock file
-            $composerLockPath = XOOPS_ROOT_PATH . '/class/libraries/composer';
+            $composerLockPath = XOOPS_TRUST_PATH . '/composer';
             // Get the packages data from composer.lock file
             $packages = self::readComposerLockFile($composerLockPath);
             // Extract package name and version
