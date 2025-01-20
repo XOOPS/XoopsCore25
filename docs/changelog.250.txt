@@ -1,7 +1,7 @@
 XOOPS 2.5.x Changelog (Language changes: see: /docs/lang_diff.txt)
 
 ===================================
-22.5.12 Beta4             NOT RELEASED
+2.5.12 Beta4             NOT RELEASED
 ===================================
 - added in Admin Composer packages info (mamba)
 - updates for PHP 8.4 (mamba)
