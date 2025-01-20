@@ -1,18 +1,24 @@
 XOOPS 2.5.x Changelog (Language changes: see: /docs/lang_diff.txt)
 
 ===================================
-2.5.12 Beta4             NOT RELEASED
+22.5.12 Beta4             NOT RELEASED
 ===================================
+- added in Admin Composer packages info (mamba)
 - updates for PHP 8.4 (mamba)
-- fix for XOOPS reading blocks from deactivated modules (mamba)
+- fix for /issue #1464 (GregMage)
+- fix for XOOPS reading blocks from deactivated modules  #1335 (mamba)
+- moved all Composer packages to /xoops_lib/ (mamba)
+- moved PhpMailer and HTML Purifier to /xoops_lib/ (mamba)
 
 Updated libraries and assets:
 - Smarty 4.5.5 (mamba)
-- HTML Purifier 4.18 (mamba)
+- HTML Purifier to 4.18 (mamba)
 - jQuery UI 1.14.1 (mamba)
 - jGrowl 1.4.10 (mamba)
 - tablesorter 2.32.0 (mamba)
 - jquery.form 4.3.1 (mamba)
+- PhpMailer to 6.9.3 (mamba)
+
 ===================================
 2.5.12 Beta3             2024/12/05
 ===================================
