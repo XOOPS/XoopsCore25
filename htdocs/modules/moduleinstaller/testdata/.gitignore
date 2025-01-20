@@ -1,0 +1,5 @@
+# no backup files, editor temp
+*~
+\#*
+*.bak
+.idea/

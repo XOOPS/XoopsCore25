@@ -1,0 +1,7 @@
+Credits
+===============
+
+ModuleInstaller developed by Michael Beck (Mamba)
+
+Based on code from the XOOPS Install script developed by:  Haruki Setoyama, Kazumi Ono, Skalpa Keo, Taiwen Jiang,  DuGris
+

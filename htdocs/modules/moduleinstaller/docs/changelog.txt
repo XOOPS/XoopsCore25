@@ -1,0 +1,82 @@
+<h5>1.5.1 Final  [2022-12-15]</h5>  Dev: XOOPS 2.5.11, PHP 7.4.33, PHP 8.1.13, PHP 8.2.0
+<hr>
+- PHP 8.2 cosmetics, fixes (mamba)
+
+<h5>1.5.1 Beta 1  [2022-02-20]</h5>  Dev: XOOPS 2.5.11, PHP 7.4.27, PHP 8.0.16
+<hr>
+- index.html in /preloads (mamba)
+
+<h5>1.05 Final  [2021-08-08]</h5>  Dev: Xoops 2.5.11, PHP 7.4.22, PHP 8.0.8
+<hr>
+- add (float) cast to $module->getInfo('version') in updates
+- 1.05 Final Release
+
+<h5>1.04 Final  [2021-08-08]</h5>  Dev: Xoops 2.5.11, PHP 7.4.22, PHP 8.0.8
+<hr>
+- 1.04 Final Release
+
+<h5>1.04 RC-2  [2020-12-01]</h5>  Dev: Xoops 2.5.11, PHP 7.4.13, PHP 8.0
+<hr>
+- fixed InstallWizard name (SebT34/mamba)
+- simplify loading of language files (mamba)
+- language updates (mamba)
+- image update for PHP8 (mamba)
+- add round((float) (mamba)
+- remove function cloneRecord (mamba)
+- min PHP 7.3 (mamba)
+- Unqualified function/constant reference (mamba)
+
+<h5>1.04 RC-1  [2020-12-01]</h5>  Dev: Xoops 2.5.11, PHP 7.4.13, PHP 8.0
+<hr>
+- updates, fixes (mamba)
+
+<h5>1.04 Beta 1  [2020-09-26]</h5>  Dev: Xoops 2.5.11, PHP 7.4.10, PHP 8.0 Beta 4
+<hr>
+- PHP 8 (mamba)
+- is_dir (mamba)
+- PSR-12 elseif (mamba)
+- testdata save Permissions (goffy)
+- PhpDoc, code cosmetics  (mamba)
+- added activate/deactive modules (mamba)
+- replaced index.html with index.php (geekwright/mamba)
+
+<h5>1.03 Final  [2020-05-23]</h5>  Dev: Xoops 2.5.10, PHP 7.4.6
+<hr>
+- namespaces, autoloading (mamba)
+- fix missing checks for wizard (mamba)
+
+1.02 Final        2016-07-10
+=================================
+- code cosmetics (mamba)
+- removed @version (mamba)
+- addNavigation(basename(__FILE__))  (mamba)
+- dirname(__FILE__) to __DIR__ (mamba)
+- XOOPS 2.5.8, PHP 7 (mamba)
+- replaced < b /> with < b > (mamba)
+- Unnecessary double quotes (mamba)
+- reference mismatch (mamba)
+- Hardening to type safe (mamba)
+- update Help (mamba)
+- updated Prototype.js to 1.7.3
+
+1.02 RC 1         2016-03-27
+=================================
+- moved all images, CSS, and JS files to /assets (mamba)
+- added tab for bulk Updates (mamba)
+- added patches for Core files, required for "bulk Update" to work, located in /extras (mamba)
+- XOOPS 2.5.8 and PHP 7 (mamba)
+
+1.01 Beta 1         2014-03-18
+=================================
+- added option to select and un-select ALL modules (mamba)
+
+1.00 Final          2014-02-15
+=================================
+- fixed highlight of selected modules (mamba)
+- removed System and ModuleInstaller from the list of modules that can be uninstalled (mamba)
+- updated to prototype.js 1.71
+
+
+1.00 Beta           2011-07-22
+=================================
+First beta release    (Mamba)
