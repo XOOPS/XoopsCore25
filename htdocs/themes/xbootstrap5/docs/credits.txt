@@ -1,0 +1,11 @@
+============== Credits ==============
+xBootstrap XOOPS theme originally developed by Angelo Rocha (www.angelorocha.com.br)
+Thanks to the Bootstrap Team (http://getbootstrap.com)
+
+============== Contributors ==============
+- Bleekk: https://xoops.org/modules/profile/userinfo.php?uid=5513
+- Heyula: https://xoops.org/modules/profile/userinfo.php?uid=69371
+- Mamba:  https://xoops.org/modules/profile/userinfo.php?uid=19563
+
+XOOPS UX/UI Team
+www.xoops.org
