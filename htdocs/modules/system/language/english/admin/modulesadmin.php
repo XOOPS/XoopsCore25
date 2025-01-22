@@ -172,3 +172,5 @@ define('_AM_SYSTEM_MODULES_INSTALL_THISMODULE', 'This Module Admin');
 define('_AM_SYSTEM_MODULES_TOUPDATE', 'Update a module');
 define('_AM_SYSTEM_MODULES_RUSUREUPDS', 'Press the button below to update these modules');
 define('_AM_SYSTEM_MODULES_ERRORNOUPDATE', 'There are no modules to update');
+define('_AM_SYSTEM_MODULES_INSTALLALL', 'Install all modules');
+define('_AM_SYSTEM_MODULES_RUSUREINSS', 'Press the button below to install these modules');

@@ -366,9 +366,107 @@ switch ($op) {
         xoops_cp_footer();
         break;
 
+    case 'installall':
+        $GLOBALS['xoopsOption']['template_main'] = 'system_header.tpl';
+        $msgs = '';
+        $i = 0;
+        $module_handler = xoops_getHandler('module');
+        // Get all installed modules
+        $installed_mods = $module_handler->getObjects();
+        foreach ($installed_mods as $module) {
+            $install_mods[] = $module->getInfo('dirname');
+        }
+        // Get module to install
+        $dirlist = XoopsLists::getModulesList();
+        foreach ($dirlist as $file) {
+            if (file_exists(XOOPS_ROOT_PATH . '/modules/' . $file . '/xoops_version.php')) {
+                clearstatcache();
+                $file = trim((string) $file);
+                if (!in_array($file, $install_mods)) {
+                    $module = $module_handler->create();
+                    $module->loadInfo($file);
+                    if ($module->getInfo('image') !== false && trim($module->getInfo('image')) != '') {
+                        $msgs .= '<img src="' . XOOPS_URL . '/modules/' . $module->getInfo('dirname', 'n') . '/' . trim($module->getInfo('image')) . '" alt="" />';
+                    }
+                    $msgs .= '<br><span style="font-size:smaller;">' . $module->getInfo('name', 's') . '</span><br>';
+                    unset($module);
+                    ++$i;
+                }
+            }
+        }
+        if ($i == 1 ){
+            $msgs .= '<br>' . _AM_SYSTEM_MODULES_RUSUREINS;
+        } else {
+            $msgs .= '<br>' . _AM_SYSTEM_MODULES_RUSUREINSS;
+        }
+        // Call Header
+        xoops_cp_header();
+        // Define Stylesheet
+        $xoTheme->addStylesheet(XOOPS_URL . '/modules/system/css/admin.css');
+        // Define Breadcrumb and tips
+        $xoBreadCrumb->addLink(_AM_SYSTEM_MODULES_ADMIN, system_adminVersion('modulesadmin', 'adminpath'));
+        $xoBreadCrumb->addLink(_AM_SYSTEM_MODULES_INSTALL);
+        $xoBreadCrumb->addHelp(system_adminVersion('modulesadmin', 'help') . '#install');
+        $xoBreadCrumb->render();
+        // Display message
+        xoops_confirm(['op' => 'installall_ok', 'fct' => 'modulesadmin'], 'admin.php', $msgs, _AM_SYSTEM_MODULES_INSTALL);
+        // Call Footer
+        xoops_cp_footer();
+        break;
+
     case 'install_ok':
         $ret   = [];
         $ret[] = xoops_module_install($module);
+        // Flush cache files for cpanel GUIs
+        xoops_load('cpanel', 'system');
+        XoopsSystemCpanel::flush();
+        //Set active modules in cache folder
+        xoops_setActiveModules();
+        // Define main template
+        $GLOBALS['xoopsOption']['template_main'] = 'system_header.tpl';
+        // Call Header
+        xoops_cp_header();
+        // Define Stylesheet
+        $xoTheme->addStylesheet(XOOPS_URL . '/modules/system/css/admin.css');
+        // Define Breadcrumb and tips
+        $xoBreadCrumb->addLink(_AM_SYSTEM_MODULES_ADMIN, system_adminVersion('modulesadmin', 'adminpath'));
+        $xoBreadCrumb->addLink(_AM_SYSTEM_MODULES_INSTALL);
+        $xoBreadCrumb->addHelp(system_adminVersion('modulesadmin', 'help') . '#install');
+        $xoBreadCrumb->render();
+        if (count($ret) > 0) {
+            foreach ($ret as $msg) {
+                if ($msg != '') {
+                    echo $msg;
+                }
+            }
+        }
+        xoops_module_delayed_clean_cache();
+        // Call Footer
+        xoops_cp_footer();
+        break;
+
+    case 'installall_ok':
+        $ret   = [];
+        $module_handler = xoops_getHandler('module');
+        // Get all installed modules
+        $installed_mods = $module_handler->getObjects();
+        foreach ($installed_mods as $module) {
+            $install_mods[] = $module->getInfo('dirname');
+        }
+        // Get module to install
+        $dirlist = XoopsLists::getModulesList();
+        foreach ($dirlist as $file) {
+            if (file_exists(XOOPS_ROOT_PATH . '/modules/' . $file . '/xoops_version.php')) {
+                clearstatcache();
+                $file = trim((string) $file);
+                if (!in_array($file, $install_mods)) {
+                    $module = $module_handler->create();
+                    $module->loadInfo($file);
+                    $ret[] = xoops_module_install($module->getInfo('dirname', 'n'));
+                    unset($module);
+                }
+            }
+        }
         // Flush cache files for cpanel GUIs
         xoops_load('cpanel', 'system');
         XoopsSystemCpanel::flush();

@@ -229,6 +229,13 @@
         <img class="cursorpointer tooltip" onclick="system_moduleListView();" src="<{xoAdminIcons 'view_small.png'}>"
              alt="<{$smarty.const._AM_SYSTEM_MODULES_VIEWLINE}>" title="<{$smarty.const._AM_SYSTEM_MODULES_VIEWLINE}>"/>
     </div>
+    <div class="floatright">
+        <div class="xo-buttons">
+            <a class="ui-corner-all tooltip" href="admin.php?fct=modulesadmin&amp;op=installall" title="<{$smarty.const._AM_SYSTEM_MODULES_INSTALLALL}>">
+                <img src="<{xoAdminIcons 'install.png'}>" alt="<{$smarty.const._AM_SYSTEM_MODULES_INSTALLALL}>"/>
+                <{$smarty.const._AM_SYSTEM_MODULES_INSTALLALL}></a>
+        </div>
+    </div>
     <div class="clear spacer"></div>
     <table class="outer" cellspacing="1">
         <thead>
