@@ -12,6 +12,9 @@
     </div>
     <div class="floatright">
         <div class="xo-buttons">
+            <a class="ui-corner-all tooltip" href="admin.php?fct=modulesadmin&amp;op=updateall" title="<{$smarty.const._AM_SYSTEM_MODULES_TOUPDATE}>">
+                <img src="<{xoAdminIcons 'reload.png'}>" alt="<{$smarty.const._AM_SYSTEM_MODULES_TOUPDATE}>"/>
+                <{$smarty.const._AM_SYSTEM_MODULES_TOUPDATE}>&nbsp;<span class="red">(<{$toupdate_nb}>)</span></a>
             <a class="ui-corner-all tooltip" href="admin.php?fct=modulesadmin&amp;op=installlist" title="<{$smarty.const._AM_SYSTEM_MODULES_TOINSTALL}>">
                 <img src="<{xoAdminIcons 'install.png'}>" alt="<{$smarty.const._AM_SYSTEM_MODULES_TOINSTALL}>"/>
                 <{$smarty.const._AM_SYSTEM_MODULES_TOINSTALL}>&nbsp;<span class="red">(<{$toinstall_nb}>)</span></a>

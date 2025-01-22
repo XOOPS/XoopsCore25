@@ -168,3 +168,7 @@ define('_AM_SYSTEM_MODULES_INSTALL_TESTDATA', 'Add Test Data');
 define('_AM_SYSTEM_MODULES_INSTALL_MORE', 'Install more modules');
 // 2.5.11
 define('_AM_SYSTEM_MODULES_INSTALL_THISMODULE', 'This Module Admin');
+// 2.5.12
+define('_AM_SYSTEM_MODULES_TOUPDATE', 'Update a module');
+define('_AM_SYSTEM_MODULES_RUSUREUPDS', 'Press the button below to update these modules');
+define('_AM_SYSTEM_MODULES_ERRORNOUPDATE', 'There are no modules to update');

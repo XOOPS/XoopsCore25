@@ -73,6 +73,7 @@ switch ($op) {
         $listed_mods    = [];
         $i              = 0;
         $install_mods   = [];
+        $update_mods    = 0;
         $module = Request::getArray('module', []);
         foreach ($installed_mods as $module) {
             /** @var XoopsModule $module */
@@ -89,6 +90,7 @@ switch ($op) {
 
             if (true === $module->versionCompare($listed_mods[$i]['version'], $module->getInfo('version'))) {
                 $listed_mods[$i]['warning_update'] = true;
+                $update_mods++;
             } else {
                 $listed_mods[$i]['warning_update'] = false;
             }
@@ -101,6 +103,8 @@ switch ($op) {
             unset($module);
             ++$i;
         }
+        $xoopsTpl->assign('toupdate_nb', $update_mods);
+
         // Get module to install
         $dirlist        = XoopsLists::getModulesList();
         $toinstall_mods = [];
@@ -394,6 +398,7 @@ switch ($op) {
         break;
 
     case 'uninstall':
+        $GLOBALS['xoopsOption']['template_main'] = 'system_header.tpl';
         $module = Request::getString('module', '');
         $module = $myts->htmlSpecialChars($module);
         $msgs = '';
@@ -454,6 +459,7 @@ switch ($op) {
         break;
 
     case 'update':
+        $GLOBALS['xoopsOption']['template_main'] = 'system_modules.tpl';
         $module = Request::getString('module', '');
         $module = $myts->htmlSpecialChars($module);
         // Get module handler
@@ -480,10 +486,94 @@ switch ($op) {
         xoops_cp_footer();
         break;
 
+    case 'updateall':
+        $GLOBALS['xoopsOption']['template_main'] = 'system_header.tpl';
+        $msgs = '';
+        $i = 0;
+        $module_handler = xoops_getHandler('module');
+        $criteria       = new CriteriaCompo();
+        $criteria->setSort('weight');
+        $criteria->setOrder('ASC');
+        // Get all installed modules
+        $installed_mods = $module_handler->getObjects($criteria);
+        foreach ($installed_mods as $module) {
+            if (true === $module->versionCompare($module->getVar('version'), $module->getInfo('version'))) {
+                if ($module->getInfo('image') !== false && trim($module->getInfo('image')) != '') {
+                    $msgs .= '<img src="' . XOOPS_URL . '/modules/' . $module->getVar('dirname', 'n') . '/' . trim($module->getInfo('image')) . '" alt="" />';
+                }
+                $msgs .= '<br><span style="font-size:smaller;">' . $module->getVar('name', 's') . '</span><br>';
+                $i++;
+            }
+            unset($module);
+        }
+        if ($i == 1 ){
+            $msgs .= '<br>' . _AM_SYSTEM_MODULES_RUSUREUPD;
+        } else {
+            $msgs .= '<br>' . _AM_SYSTEM_MODULES_RUSUREUPDS;
+        }
+
+        // Call Header
+        xoops_cp_header();
+        // Define Stylesheet
+        $xoTheme->addStylesheet(XOOPS_URL . '/modules/system/css/admin.css');
+        // Define Breadcrumb and tips
+        $xoBreadCrumb->addLink(_AM_SYSTEM_MODULES_ADMIN, system_adminVersion('modulesadmin', 'adminpath'));
+        $xoBreadCrumb->addLink(_AM_SYSTEM_MODULES_UPDATE);
+        $xoBreadCrumb->addHelp(system_adminVersion('modulesadmin', 'help') . '#update');
+        $xoBreadCrumb->render();
+        // Display message
+        if ($i == 0) {
+            xoops_error(_AM_SYSTEM_MODULES_ERRORNOUPDATE, _AM_SYSTEM_MODULES_ERRORSC);
+        } else {
+            xoops_confirm(['op' => 'updateall_ok', 'fct' => 'modulesadmin'], 'admin.php', $msgs, _AM_SYSTEM_MODULES_UPDATE);
+        }
+        // Call Footer
+        xoops_cp_footer();
+        break;
+
     case 'update_ok':
         $module = Request::getString('module', '');
         $ret   = [];
         $ret[] = xoops_module_update($module);
+        // Flush cache files for cpanel GUIs
+        xoops_load('cpanel', 'system');
+        XoopsSystemCpanel::flush();
+        //Set active modules in cache folder
+        xoops_setActiveModules();
+        // Define main template
+        $GLOBALS['xoopsOption']['template_main'] = 'system_header.tpl';
+        // Call Header
+        xoops_cp_header();
+        // Define Stylesheet
+        $xoTheme->addStylesheet(XOOPS_URL . '/modules/system/css/admin.css');
+        // Define Breadcrumb and tips
+        $xoBreadCrumb->addLink(_AM_SYSTEM_MODULES_ADMIN, system_adminVersion('modulesadmin', 'adminpath'));
+        $xoBreadCrumb->addLink(_AM_SYSTEM_MODULES_UPDATE);
+        $xoBreadCrumb->addHelp(system_adminVersion('modulesadmin', 'help') . '#update');
+        $xoBreadCrumb->render();
+        if (count($ret) > 0) {
+            foreach ($ret as $msg) {
+                if ($msg != '') {
+                    echo $msg;
+                }
+            }
+        }
+        xoops_module_delayed_clean_cache();
+        // Call Footer
+        xoops_cp_footer();
+        break;
+
+    case 'updateall_ok':
+        $ret   = [];
+        $module_handler = xoops_getHandler('module');
+        // Get all installed modules
+        $installed_mods = $module_handler->getObjects();
+        foreach ($installed_mods as $module) {
+            if (true === $module->versionCompare($module->getVar('version'), $module->getInfo('version'))) {
+                $ret[] = xoops_module_update($module->getVar('dirname', 'n'));
+            }
+            unset($module);
+        }
         // Flush cache files for cpanel GUIs
         xoops_load('cpanel', 'system');
         XoopsSystemCpanel::flush();
