@@ -274,4 +274,4 @@ class XoopsLoad
 /**
  * XMF libraries
  */
-include_once XOOPS_ROOT_PATH . '/class/libraries/vendor/autoload.php';
+include_once XOOPS_TRUST_PATH . '/vendor/autoload.php';

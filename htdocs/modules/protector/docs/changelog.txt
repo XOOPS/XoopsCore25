@@ -1,4 +1,12 @@
 = CHANGES =
+
+3.63 (2025/01/19)
+- updated HTML Purifier to 4.18.0 (mamba)
+- moved HTML Purifier to /xoops_lib/vendor/ (ezyang/htmlpurifier)  (mamba)
+
+3.62 (2023/12/24)
+- various updates (Geekwright)
+
 3.61 (2019/02/18)
 - the prefix setting is in secure.php. The text in prefix manager is now up to date.
 

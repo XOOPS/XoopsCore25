@@ -26,16 +26,18 @@
  */
 
 defined('XOOPS_ROOT_PATH') || exit('Restricted access');
+
+use PHPMailer\PHPMailer\PHPMailer;
+use PHPMailer\PHPMailer\Exception as PHPMailerException;
+
+
+// bridge class for PhpMailer 6.x PHPMailer\PHPMailer\Exception
+require_once __DIR__ . '/phpmailerException.php';
+
 /**
  * load the base class
  */
-if (!file_exists($file = XOOPS_ROOT_PATH . '/class/mail/phpmailer/class.phpmailer.php')) {
-    trigger_error('Required File  ' . str_replace(XOOPS_ROOT_PATH, '', $file) . ' was not found in file ' . __FILE__ . ' at line ' . __LINE__, E_USER_WARNING);
 
-    return false;
-}
-require_once XOOPS_ROOT_PATH . '/class/mail/phpmailer/PHPMailerAutoload.php';
-//include_once XOOPS_ROOT_PATH . '/class/mail/phpmailer/class.phpmailer.php';
 
 /**
  * Mailer Class.
@@ -142,7 +144,8 @@ class XoopsMultiMailer extends PHPMailer
      */
     public function __construct()
     {
-        parent::__construct();
+        parent::__construct(true); // Enable exceptions in PHPMailer
+
         /** @var XoopsConfigHandler $config_handler */
         $config_handler    = xoops_getHandler('config');
         $xoopsMailerConfig = $config_handler->getConfigsByCat(XOOPS_CONF_MAILER);
