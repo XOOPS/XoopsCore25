@@ -86,7 +86,7 @@ include_once __DIR__ . '/../../include/version.php';
 require_once __DIR__ . '/../../include/xoopssetcookie.php';
 include_once __DIR__ . '/../include/functions.php';
 include_once __DIR__ . '/../../class/module.textsanitizer.php';
-include_once __DIR__ . '/../../class/libraries/vendor/autoload.php';
+include_once __DIR__ . '/../../xoops_lib/vendor/autoload.php';
 
 $pageHasHelp = false;
 $pageHasForm = false;
