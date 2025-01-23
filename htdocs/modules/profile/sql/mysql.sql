@@ -5,7 +5,7 @@ CREATE TABLE `profile_category` (
   `cat_weight`      smallint(5) unsigned    NOT NULL default '0',
   
   PRIMARY KEY  (`cat_id`)
-) ENGINE=MyISAM;
+) ENGINE=InnoDB;
 
 CREATE TABLE `profile_field` (
   `field_id`            int(12) unsigned        NOT NULL auto_increment,
@@ -29,7 +29,7 @@ CREATE TABLE `profile_field` (
   PRIMARY KEY  (`field_id`),
   UNIQUE KEY `field_name` (`field_name`),
   KEY `step` (`step_id`, `field_weight`)
-) ENGINE=MyISAM;
+) ENGINE=InnoDB;
 
 CREATE TABLE `profile_visibility` (
   `field_id`        int(12) unsigned        NOT NULL default '0',
@@ -38,7 +38,7 @@ CREATE TABLE `profile_visibility` (
   
   PRIMARY KEY (`field_id`, `user_group`, `profile_group`),
   KEY `visible` (`user_group`, `profile_group`)
-) ENGINE=MyISAM;
+) ENGINE=InnoDB;
 
 CREATE TABLE `profile_regstep` (
   `step_id`         smallint(3) unsigned    NOT NULL auto_increment,
@@ -49,10 +49,10 @@ CREATE TABLE `profile_regstep` (
   
   PRIMARY KEY (`step_id`),
   KEY `sort` (`step_order`, `step_name`(100))
-) ENGINE=MyISAM;
+) ENGINE=InnoDB;
 
 CREATE TABLE `profile_profile` (
   `profile_id`      int(12) unsigned        NOT NULL default '0',
   
   PRIMARY KEY  (`profile_id`)
-) ENGINE=MyISAM;
+) ENGINE=InnoDB;
