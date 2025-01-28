@@ -1,0 +1,42 @@
+<div id="help-template" class="outer">
+    <h1 class="head">Aide : Templates</h1>
+
+    <h4 class="odd">Description</h4>
+
+    <p class="even">
+        XOOPS permet une certaine séparation entre la présentation actuelle du site (le « <em>revêtement</em> » ou interface utilisateur) et le code qui tourne derrière. Le premier est géré par un mécanisme sophistiqué basé sur des thèmes graphiques. Un thème peut comprendre, dans sa forme de base, l'essentiel du HTML
+        qui définit l'interface visuelle du site, ainsi que les feuilles de style et les images nécessaires pour compléter cette interface visuelle. Les thèmes sont commutables dans l'interface d'administration, afin de changer toute l'apparence d'un site XOOPS, il s'agit juste de changer la valeur d'un
+        sélecteur et en cliquant sur « Accepter ». XOOPS fournit également les administrateurs de site avec la possibilité de permettre aux utilisateurs de choisir parmi des thèmes disponibles.<br><br>
+
+        De manière générale, un <strong><em>thème </em></strong>est le cadre visuel de haut niveau d'un site: le thème définit, par exemple, la disposition générale du site; d'un autre côté, il ne définit généralement pas la distribution spécifique du contenu dans un bloc. Ceci est géré par une
+        entité différente appelée un <em><strong>template set (ensemble de modèles)</strong></em>. Un ensemble de modèles est un ensemble de modèles HTML qui définissent la présentation du contenu dans tous les blocs formant un site Web XOOPS. Si nous voulons une métaphore plus claire pour cela, nous pourrions dire que le thème est comme
+        l'architecte d'une maison, alors que l'ensemble de modèles est comme le décorateur d'intérieurs. Le premier définit les murs et définit la distribution générale, mais c'est le second qui est chargé "<em>d'habiller</em>" ces murs.<br><br>
+
+        Si le thème actif est un thème simple qui ne comprend qu'un fichier de thème, des fichiers CSS et certaines images, XOOPS utilise le jeu de modèles par défaut pour définir la présentation des blocs. Cependant, certains thèmes complexes sont assez sophistiqués pour inclure leur propre ensemble de modèles. Dans ce cas, 
+        l'administrateur du site doit utiliser l'interface d'administration pour définir à la fois le thème et l'ensemble de modèles.<br><br>
+
+        Comment la <em>magie</em> du thème s'accomplit-elle? Autrement dit, comment les modèles HTML peuvent-ils inclure du contenu dynamique? Cela ne se fait pas avec des miroirs et de la fumée, mais avec un moteur de template intelligent appelé
+        <strong><a rel="external" href="http://www.smarty.net/">Smarty</a></strong> qui fait la fonction de ce qu'on appelait
+        <em><strong>interpolation de variables</strong></em>. Exprimé de manière simple, on pourrait dire que le système XOOPS utilise des fichiers PHP pour contenir la logique des modules (accès à la base de données, allocation des variables, gestion des droits ...), des fichiers HTML avec des variables Smarty insérées pour gérer le
+        Les derniers thèmes basés sur des modèles d'architecture comme BlankTheme, Xdt_Standard, Mor.Pho.GEN.e.sis ou Css_100, offrent des possibilités étonnantes pour la personnalisation "<em>fine</em>" en fonction des modules affichés. La seule limite étant votre imagination.
+        XOOPS offre donc aux concepteurs de sites la possibilité de réaliser des sites  <a href="http://themes.xoops.org" title="Galerie de thèmes pour XOOPS">visuellement superbes</a> sans avoir à trop se préoccuper de ce qui se passe sous le capot.
+    </p>
+    <h4 class="odd">Cloner  et surcharger un set de templates</h4>
+
+    <p class="even">
+        Si vous souhaitez créer un template personnalisé, vous pouvez faire une copie du template par défaut (ou tout autre) en cliquant sur '<em>cloner</em>' (vous serez invité à donner le nouvel ensemble un nom ). Contrairement au template par défaut, les autres templates peuvent être édités librement. Vous pouvez également enregistrer une copie d'un
+        template depuis votre ordinateur en sélectionnant '<em>télécharger</em>', ou supprimer le avec le bouton '<em>supprimer</em>'. Vous pouvez également voir parfois un bouton '<em>Générer</em>' supplémentaire à côté des nouveaux modules pour lesquels les templates ne sont pas encore créés.
+    </p>
+
+    <h4 class="odd">Edition des templates</h4>
+
+    <p class="even">
+        Vous pouvez voir une liste complète des modèles disponibles en parcourant l'arborescence du répertoire. Lorsque vous sélectionnez un modèle, XOOPS l'ouvre dans un éditeur où vous pouvez le modifier.<br><br>
+
+        Lorsque vous éditez des fichiers et/ou templates, vous devez activer  la mise à jour automatique des fichiers du thème à partir de son répertoire (Panneau de Contrôle - Préférences - Paramètres généraux - Contrôler les modifications de templates ? - "<em>Oui</em>").
+        dans thèmes / votre thèmes / répertoire templates? -> '<em>Oui</em>'). Cela devrait être désactivé une fois que le site devient public.<br><br>
+        Si malencontreusement, vous détériorez un template, n'oubliez pas que vous pouvez retrouver une version originale' depuis le dossier des templates du module concerné. Si vous travaillez avec des templates déjà modifiés, il est recommandé de faire une copie de sauvegarde  avant de commencer à le modifier.
+
+    </p>
+
+</div>
