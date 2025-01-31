@@ -18,6 +18,5 @@ htdocs/xoops_data/protector/*
 htdocs/xoops_data/data/secure.php
 htdocs/xoops_data/data/license.php
 htdocs/xoops_data/data/*key*
-htdocs/uploads/newbb/*
-htdocs/uploads/news/*
+htdocs/uploads/
 

@@ -7,3 +7,6 @@
 [submodule "htdocs/themes/xswatch5"]
 	path = htdocs/themes/xswatch5
 	url = git@github.com:koreus/xswatch5.git
+[submodule "htdocs/super"]
+	path = htdocs/super
+	url = git@github.com:koreus/super.git
