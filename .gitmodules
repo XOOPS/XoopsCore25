@@ -10,3 +10,6 @@
 [submodule "htdocs/super"]
 	path = htdocs/super
 	url = git@github.com:koreus/super.git
+[submodule "htdocs/themes/xboost"]
+	path = htdocs/themes/xboost
+	url = git@github.com:koreus/xboost.git
