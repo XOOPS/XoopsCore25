@@ -50,7 +50,7 @@
     <{/if}>
 </div>
 
-<{if isset($tags)}>
+<{if isset($tags) and $tag == true}>
     <{include file="db:tag_bar.tpl"}>
 <{/if}>
 
