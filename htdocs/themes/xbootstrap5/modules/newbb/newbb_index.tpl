@@ -123,7 +123,7 @@
                     <{/if}>
                 </div><!-- .panel-heading -->
 
-                <div id="<{$category.cat_element_id}>" class="panel-collapse collapse <{if $subforum_display == 'expand'}>in<{/if}>">
+                <div id="<{$category.cat_element_id}>" class="panel-collapse collapse <{if $subforum_display == 'expand'}>show<{/if}>">
                     <div class="panel-body">
                         <{if $category.forums}>
                             <div class="row hidden-xs">
