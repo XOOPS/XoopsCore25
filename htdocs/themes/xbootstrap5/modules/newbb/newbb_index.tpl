@@ -140,7 +140,7 @@
                         <{foreach item=forum from=$category.forums|default:null}>
                         <div class="row newbb-list-foruns mb10">
                             <div class="col-sm-6 col-md-6">
-                                <{if $forum.subforum}>
+                                <{if $forum.subforum|default:false}>
                                     <div class="<{if $forum.forum_read == 1 }>forum-read<{else}>forum-new2<{/if}> pull-left">
                                         <{$forum.forum_folder}>
                                     </div>
@@ -221,7 +221,7 @@
                                     <{$smarty.const._MD_NEWBB_NOTOPIC}>
                                 <{/if}>
 
-                                <{if $forum.subforum}>
+                                <{if $forum.subforum|default:false}>
                                     <{$smarty.const._MD_NEWBB_SUBFORUMS}><{$img_subforum}>
                                     <{foreach item=subforum from=$forum.subforum|default:null}>
                                     [
