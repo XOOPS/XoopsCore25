@@ -82,7 +82,7 @@ if ($op === 'save') {
         } else {
             $profile->setVar('profile_id', $edituser->getVar('uid'));
             $profile_handler->insert($profile);
-            unset($_SESSION['xoopsUserTheme']);
+            $_SESSION['xoopsUserTheme']=$edituser->getVar('theme');
             redirect_header(XOOPS_URL . '/modules/' . $GLOBALS['xoopsModule']->getVar('dirname', 'n') . '/userinfo.php?uid=' . $edituser->getVar('uid'), 2, _US_PROFUPDATED);
         }
     }
