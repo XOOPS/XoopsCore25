@@ -140,7 +140,7 @@
                         <{foreach item=forum from=$category.forums|default:null}>
                         <div class="row newbb-list-foruns mb10">
                             <div class="col-sm-6 col-md-6">
-                                <{if $forum.subforum|default:false}>
+                                <{if !empty($forum.subforum)}>
                                     <div class="<{if $forum.forum_read == 1 }>forum-read<{else}>forum-new2<{/if}> pull-left">
                                         <{$forum.forum_folder}>
                                     </div>
@@ -161,7 +161,7 @@
                                     </a>
                                 <{/if}>
                                 <!-- Forum description -->
-                                <{if $forum.forum_desc|default:'' != ''}>
+                                <{if !empty($forum.forum_desc)}>
                                     <button class="btn btn-primary btn-xs pull-right" data-bs-toggle="modal" data-bs-target="#forumDesc-<{$forum.forum_id}>"><span
                                                 class="fa fa-info-sign"></span></button>
                                     <div class="modal fade" id="forumDesc-<{$forum.forum_id}>" tabindex="-1" role="dialog" aria-labelledby="ForumDescription"
@@ -221,7 +221,7 @@
                                     <{$smarty.const._MD_NEWBB_NOTOPIC}>
                                 <{/if}>
 
-                                <{if $forum.subforum|default:false}>
+                                <{if !empty($forum.subforum)}>
                                     <{$smarty.const._MD_NEWBB_SUBFORUMS}><{$img_subforum}>
                                     <{foreach item=subforum from=$forum.subforum|default:null}>
                                     [
