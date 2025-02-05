@@ -3,7 +3,7 @@ description: Report a bug or error, providing details about the issue, steps to 
 title: "[Bug]: "
 labels: ['Triage', 'Bug']
 body:
-- type: input
+- type: dropdown
   attributes:
     label: XOOPS Version
     description: Provide the XOOPS version that you are using.
