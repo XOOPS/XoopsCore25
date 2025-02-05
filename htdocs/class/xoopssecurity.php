@@ -69,7 +69,8 @@ class XoopsSecurity
             'expire' => time() + (int) $timeout,
         ];
         $_SESSION[$name . '_SESSION'][] = $token_data;
-
+        // Force update of session in base
+        session_write_close();
         return md5($token_id . $_SERVER['HTTP_USER_AGENT'] . XOOPS_DB_PREFIX);
     }
 

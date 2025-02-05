@@ -137,7 +137,7 @@ class XoopsSessionHandler implements SessionHandlerInterface
             $this->db->quoteString($sessionId)
         );
 
-        $result = $this->db->query($sql);
+        $result = $this->db->queryF($sql);
         if ($this->db->isResultSet($result)) {
             if ([$sess_data, $sess_ip] = $this->db->fetchRow($result)) {
                 if ($this->securityLevel > 1) {
@@ -168,26 +168,22 @@ class XoopsSessionHandler implements SessionHandlerInterface
         $myReturn = true;
         $remoteAddress = \Xmf\IPAddress::fromRequest()->asReadable();
         $sessionId = $this->db->quoteString($sessionId);
-        $sql = sprintf(
-            'UPDATE %s SET sess_updated = %u, sess_data = %s WHERE sess_id = %s',
-            $this->db->prefix('session'),
-            time(),
-            $this->db->quoteString($data),
-            $sessionId
+        
+        $sql= sprintf('INSERT INTO %s (sess_id, sess_updated, sess_ip, sess_data)
+        VALUES (%s, %u, %s, %s)
+        ON DUPLICATE KEY UPDATE
+        sess_updated = %u, 
+        sess_data = %s
+        ',
+              $this->db->prefix('session'),
+              $sessionId,
+              time(),
+              $this->db->quote($remoteAddress),
+              $this->db->quote($data),
+              time(),
+              $this->db->quote($data),
         );
-        $this->db->queryF($sql);
-        if (!$this->db->getAffectedRows()) {
-            $sql = sprintf(
-                'INSERT INTO %s (sess_id, sess_updated, sess_ip, sess_data) VALUES (%s, %u, %s, %s)',
-                $this->db->prefix('session'),
-                $sessionId,
-                time(),
-                $this->db->quote($remoteAddress),
-                $this->db->quote($data)
-            );
-
-            $myReturn = $this->db->queryF($sql);
-        }
+        $myReturn = $this->db->queryF($sql);
         $this->update_cookie();
         return $myReturn;
     }

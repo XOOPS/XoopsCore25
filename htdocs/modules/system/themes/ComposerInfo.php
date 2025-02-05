@@ -1,6 +1,10 @@
 <?php
 
-header('HTTP/1.0 404 Not Found');
+// Prevent direct access
+if (basename($_SERVER['SCRIPT_FILENAME']) === 'ComposerInfo.php') {
+    header("HTTP/1.0 403 Forbidden");
+    exit('Access Denied');
+}
 
 class ComposerInfo
 {
