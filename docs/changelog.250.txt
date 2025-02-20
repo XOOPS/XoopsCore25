@@ -1,7 +1,14 @@
 XOOPS 2.5.x Changelog (Language changes: see: /docs/lang_diff.txt)
 
 ===================================
-2.5.12 Beta4             NOT RELEASED
+2.5.12 RC1            NOT RELEASED
+===================================
+- added Font Awesome 6.7.2 (mamba)
+- fixed path for Composer (koreus)
+
+
+===================================
+2.5.12 Beta4             2025-01-21
 ===================================
 - added in Admin Composer packages info (mamba)
 - updates for PHP 8.4 (mamba)

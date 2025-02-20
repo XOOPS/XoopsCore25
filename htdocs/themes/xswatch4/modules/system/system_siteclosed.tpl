@@ -28,7 +28,7 @@
         <link rel="stylesheet" media="(prefers-color-scheme: dark)" href="<{$xoops_imageurl}><{$xswatchDarkCss}>/bootstrap.min.css">
     <{/if}>
 
-    <link rel="stylesheet" type="text/css" href="<{xoAppUrl 'media/font-awesome/css/font-awesome.min.css'}>">
+    <link rel="stylesheet" type="text/css" href="<{xoAppUrl 'media/font-awesome6/css/fontawesome.min.css'}>">
     <link rel="stylesheet" type="text/css" media="all" href="<{$xoops_themecss}>">
     <script src="<{$xoops_url}>/browse.php?Frameworks/jquery/jquery.js"></script>
     <script src="<{$xoops_imageurl}>js/bootstrap.bundle.min.js"></script>

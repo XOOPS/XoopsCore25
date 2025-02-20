@@ -264,7 +264,7 @@ function xoops_header($closehead = true)
     $headItems = [];
     $headItems[] = '<script type="text/javascript" src="' . XOOPS_URL . '/include/xoops.js"></script>';
     $headItems[] = '<link rel="stylesheet" type="text/css" media="all" href="' . XOOPS_URL . '/xoops.css">';
-    $headItems[] = '<link rel="stylesheet" type="text/css" media="all" href="' . XOOPS_URL . '/media/font-awesome/css/font-awesome.min.css">';
+    $headItems[] = '<link rel="stylesheet" type="text/css" media="all"  as="font" crossorigin="anonymous" href="' . XOOPS_URL . '/media/font-awesome6/css/fontawesome.min.css">';
     $languageFile = 'language/' . $GLOBALS['xoopsConfig']['language'] . '/style.css';
     if (file_exists($GLOBALS['xoops']->path($languageFile))) {
         $headItems[] = '<link rel="stylesheet" type="text/css" media="all" href="' . $GLOBALS['xoops']->url($languageFile) . '">';

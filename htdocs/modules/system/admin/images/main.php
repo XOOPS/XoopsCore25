@@ -721,7 +721,7 @@ switch ($op) {
         // Define Stylesheet
         $xoTheme->addStylesheet(XOOPS_URL . '/media/fine-uploader/fine-uploader-new.css');
         $xoTheme->addStylesheet(XOOPS_URL . '/media/fine-uploader/ManuallyTriggerUploads.css');
-        $xoTheme->addStylesheet(XOOPS_URL . '/media/font-awesome/css/font-awesome.min.css');
+        $xoTheme->addStylesheet(XOOPS_URL . '/media/font-awesome6/css/fontawesome.min.css');
         $xoTheme->addStylesheet(XOOPS_URL . '/modules/system/css/admin.css');
         // Define scripts
         $xoTheme->addScript('browse.php?Frameworks/jquery/jquery.js');
