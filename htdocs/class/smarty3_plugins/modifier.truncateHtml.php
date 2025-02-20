@@ -30,8 +30,7 @@ function smarty_modifier_truncateHtml($string, $count = 80, $etc = '…')
 }
 
 if (!class_exists('\HTMLPurifier_Bootstrap', false)) {
-    require_once XOOPS_PATH . '/modules/protector/library/HTMLPurifier/Bootstrap.php';
-    HTMLPurifier_Bootstrap::registerAutoload();
+    require_once XOOPS_TRUST_PATH . '/vendor/ezyang/htmlpurifier/library/HTMLPurifier.auto.php';
 }
 
 if (!class_exists('\BaseStringHelper', false)) {
