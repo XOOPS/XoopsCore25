@@ -42,7 +42,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET' && @$_GET['var'] && Request::getString(
     $path                   = $_GET['var'];
     $ctrl->xoopsPath[$path] = htmlspecialchars(trim($_GET['path']), ENT_QUOTES | ENT_HTML5);
     echo genPathCheckHtml($path, $ctrl->checkPath($path));
-    exit();
+     exit(); // Important: Stop execution after AJAX response
 }
 $ctrl->execute();
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {

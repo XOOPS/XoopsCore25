@@ -796,7 +796,7 @@ function xoops_module_uninstall($dirname)
 }
 
 /**
- * @param $dirname
+ * @param string $dirname
  * @return string
  */
 function xoops_module_update($dirname)
