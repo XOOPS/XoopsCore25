@@ -6,7 +6,7 @@
     "require": {
         "php": ">=7.4.0",
         "xoops/regdom": "^2.0.1",
-        "xoops/xmf": "^1.2.31",
+        "xoops/xmf": "^1.2.32",
         "symfony/polyfill-iconv": "^1.31.0",
         "symfony/polyfill-mbstring": "^1.31.0",
         "smarty/smarty": "^4.5.5",
