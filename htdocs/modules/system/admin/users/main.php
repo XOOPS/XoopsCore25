@@ -488,7 +488,7 @@ switch ($op) {
             $requete_search  = '<br><br><strong>See search request: </strong><br><br>';
             $requete_pagenav = '';
 
-            $user_uname = Request::getString('user_uname');
+            $user_uname = Request::getString('useruname');
             $user_uname_match = Request::getInt('user_uname_match', 0);
 
             $criteria = new CriteriaCompo();
@@ -666,8 +666,8 @@ switch ($op) {
                 $requete_search .= 'location : ' . Request::getString('user_occ') . '<br>';
             }
 
-            if (Request::hasVar('user_name_match')) {
-                $f_user_lastlog_more = Request::getString('user_name_match', XOOPS_MATCH_START);
+            if (Request::hasVar('user_lastlog_more','POST')) {
+                $f_user_lastlog_more = Request::getInt('user_lastlog_more', 0, 'POST');
                 $time                = time() - (60 * 60 * 24 * $f_user_lastlog_more);
                 if ($time > 0) {
                     $criteria->add(new Criteria('last_login', $time, '<'));
@@ -676,14 +676,16 @@ switch ($op) {
                 $requete_search .= 'derniere connexion apres : ' . Request::getString('user_lastlog_more') . '<br>';
             }
 
-            if (Request::hasVar('user_name_match')) {
-                $f_user_lastlog_less = Request::getString('user_name_match', XOOPS_MATCH_START);
-                $time                = time() - (60 * 60 * 24 * $f_user_lastlog_less);
-                if ($time > 0) {
-                    $criteria->add(new Criteria('last_login', $time, '>'));
+            if (Request::hasVar('user_lastlog_less','POST')) {
+                $f_user_lastlog_less = Request::getInt('user_lastlog_less', 0, 'POST');
+                if ($f_user_lastlog_less > 0) {
+                    $time                = time() - (60 * 60 * 24 * $f_user_lastlog_less);
+                    if ($time > 0) {
+                        $criteria->add(new Criteria('last_login', $time, '>'));
+                    }
+                    $requete_pagenav .= '&amp;user_lastlog_less=' . htmlspecialchars(Request::getString('user_lastlog_less'), ENT_QUOTES | ENT_HTML5);
+                    $requete_search .= 'derniere connexion avant : ' . Request::getString('user_lastlog_less') . '<br>';
                 }
-                $requete_pagenav .= '&amp;user_lastlog_less=' . htmlspecialchars(Request::getString('user_lastlog_less'), ENT_QUOTES | ENT_HTML5);
-                $requete_search .= 'derniere connexion avant : ' . Request::getString('user_lastlog_less') . '<br>';
             }
 
             if (Request::hasVar('user_reg_more') && is_numeric(Request::getString('user_reg_more'))) {
