@@ -1358,3 +1358,9 @@ div.order-by a {
 }
 
 /* dropdown hover */
+
+
+.navbar.bg-dark {
+    background-color: #0d6efd !important;
+}
+

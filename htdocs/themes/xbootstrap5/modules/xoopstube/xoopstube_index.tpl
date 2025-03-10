@@ -24,7 +24,7 @@
         <{$catarray.letters}>
     </div><!-- .xoopstube-navigation -->
 
-    <{if count($categories) >= 0}>
+    <{if isset($categories) && is_array($categories) && count($categories) > 0}>
         <h1 class="xoops-default-title"><{$smarty.const._MD_XOOPSTUBE_MAINLISTING}></h1>
         <div class="row">
             <{foreach item=category from=$categories|default:null}>
