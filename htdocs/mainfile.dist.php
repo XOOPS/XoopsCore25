@@ -30,7 +30,7 @@ if (!defined('XOOPS_MAINFILE_INCLUDED')) {
     define('XOOPS_TRUST_PATH', XOOPS_PATH);
 
     // URL Association for SSL and Protocol Compatibility
-    $http = 'https://';
+    $http = 'http://';
     if (!empty($_SERVER['HTTPS'])) {
         $http = ($_SERVER['HTTPS'] === 'on') ? 'https://' : 'http://';
     }
