@@ -956,17 +956,17 @@
         },
         {
             "name": "xoops/base-requires25",
-            "version": "v1.1.8",
-            "version_normalized": "1.1.8.0",
+            "version": "v1.1.9",
+            "version_normalized": "1.1.9.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/XOOPS/base-requires25.git",
-                "reference": "40d119fd60fed9e3e9cf75f5acc05469c71cc4ee"
+                "reference": "8d9d16d3325fc366d64dd56df9c9426113a872f9"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/XOOPS/base-requires25/zipball/40d119fd60fed9e3e9cf75f5acc05469c71cc4ee",
-                "reference": "40d119fd60fed9e3e9cf75f5acc05469c71cc4ee",
+                "url": "https://api.github.com/repos/XOOPS/base-requires25/zipball/8d9d16d3325fc366d64dd56df9c9426113a872f9",
+                "reference": "8d9d16d3325fc366d64dd56df9c9426113a872f9",
                 "shasum": ""
             },
             "require": {
@@ -979,9 +979,9 @@
                 "symfony/polyfill-iconv": "^1.31.0",
                 "symfony/polyfill-mbstring": "^1.31.0",
                 "xoops/regdom": "^2.0.1",
-                "xoops/xmf": "^1.2.31"
+                "xoops/xmf": "^1.2.32"
             },
-            "time": "2025-01-05T17:26:17+00:00",
+            "time": "2025-03-10T10:52:04+00:00",
             "type": "project",
             "installation-source": "dist",
             "notification-url": "https://packagist.org/downloads/",
@@ -991,7 +991,7 @@
             "description": "Primary dependencies for XOOPS/XoopsCore25",
             "support": {
                 "issues": "https://github.com/XOOPS/base-requires25/issues",
-                "source": "https://github.com/XOOPS/base-requires25/tree/v1.1.8"
+                "source": "https://github.com/XOOPS/base-requires25/tree/v1.1.9"
             },
             "install-path": "../xoops/base-requires25"
         },
@@ -1053,21 +1053,21 @@
         },
         {
             "name": "xoops/xmf",
-            "version": "v1.2.31",
-            "version_normalized": "1.2.31.0",
+            "version": "v1.2.32",
+            "version_normalized": "1.2.32.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/XOOPS/xmf.git",
-                "reference": "e97a4aa2909ba1359020d2073f788bd6195ab253"
+                "reference": "d6362ec9dec5e641e43a16414ef7b30b8d2bd431"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/XOOPS/xmf/zipball/e97a4aa2909ba1359020d2073f788bd6195ab253",
-                "reference": "e97a4aa2909ba1359020d2073f788bd6195ab253",
+                "url": "https://api.github.com/repos/XOOPS/xmf/zipball/d6362ec9dec5e641e43a16414ef7b30b8d2bd431",
+                "reference": "d6362ec9dec5e641e43a16414ef7b30b8d2bd431",
                 "shasum": ""
             },
             "require": {
-                "firebase/php-jwt": "^6.10.0",
+                "firebase/php-jwt": "^6.10.0|^6.11.0",
                 "kint-php/kint": "^6.0",
                 "paragonie/random_compat": "^9.99.100",
                 "php": ">=7.4.0",
@@ -1078,7 +1078,7 @@
                 "phpunit/phpunit": "^9.6",
                 "roave/security-advisories": "dev-latest"
             },
-            "time": "2024-11-28T04:18:44+00:00",
+            "time": "2025-03-10T10:43:16+00:00",
             "type": "project",
             "installation-source": "dist",
             "autoload": {
@@ -1093,7 +1093,7 @@
             "description": "XMF - XOOPS Module Framework",
             "support": {
                 "issues": "https://github.com/XOOPS/xmf/issues",
-                "source": "https://github.com/XOOPS/xmf/tree/v1.2.31"
+                "source": "https://github.com/XOOPS/xmf/tree/v1.2.32"
             },
             "install-path": "../xoops/xmf"
         }
