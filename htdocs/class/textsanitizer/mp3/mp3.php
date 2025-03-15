@@ -1,4 +1,5 @@
 <?php
+
 /**
  * TextSanitizer extension
  *
@@ -24,73 +25,55 @@ defined('XOOPS_ROOT_PATH') || exit('Restricted access');
 class MytsMp3 extends MyTextSanitizerExtension
 {
     /**
-     * @param $textarea_id
-     *
+     * @param string $textarea_id
      * @return array
      */
     public function encode($textarea_id)
     {
-        $code = "<button type='button' class='btn btn-default' onclick='xoopsCodeMp3(\"{$textarea_id}\",\""
-            . htmlspecialchars(_XOOPS_FORM_ENTERMP3URL, ENT_QUOTES | ENT_HTML5)
-            . "\");' onmouseover='style.cursor=\"hand\"' title='" . _XOOPS_FORM_ALTMP3
-            . "'><span class='fa fa-fw fa-music' aria-hidden='true'></span></button>";
+        $buttonHtml = "<button type='button' class='btn btn-default' onclick='xoopsCodeMp3(\"{$textarea_id}\");' title='"
+                      . _XOOPS_FORM_ALTMP3 . "'>"
+                      . "<span class='fa fa-fw fa-music' aria-hidden='true'></span></button>";
 
         $javascript = <<<EOF
-            function xoopsCodeMp3(id, enterMp3Phrase)
-            {
-                var selection = xoopsGetSelect(id);
-                if (selection.length > 0) {
-                    var text = selection;
-                } else {
-                    var text = prompt(enterMp3Phrase, "");
-                }
-                var domobj = xoopsGetElementById(id);
-                if (text.length > 0) {
-                    var result = "[mp3]" + text + "[/mp3]";
-                    xoopsInsertText(domobj, result);
-                }
-                domobj.focus();
-            }
+function xoopsCodeMp3(id) {
+    var text = prompt("Enter MP3 URL (e.g., https://example.com/audio.mp3)", xoopsGetSelect(id));
+    while (text !== null && !text.trim().match(/^https?:\/\/[\w\-\.]+(\:\d+)?\/.+\.mp3(\?.*)?$/i)) {
+        alert("Invalid MP3 URL. The URL must begin with http or https and end with .mp3");
+        text = prompt("Enter MP3 URL (e.g., https://example.com/audio.mp3)", text);
+    }
+    if (text && text.trim().length > 0) {
+        xoopsInsertText(document.getElementById(id), "[mp3]" + text.trim() + "[/mp3]");
+    }
+}
 EOF;
 
-        return [
-            $code,
-            $javascript,
-        ];
+
+        return [$buttonHtml, $javascript];
     }
 
     /**
-     * @param $match
-     *
-     * @return string
-     */
-    public static function myCallback($match)
-    {
-        return self::decode($match[1]);
-    }
-
-    /**
-     * @param MyTextSanitizer $myts
-     *
      * @return bool
      */
     public function load(MyTextSanitizer $myts)
     {
-        $myts->callbackPatterns[] = "/\[mp3\](.*?)\[\/mp3\]/s";
-        $myts->callbacks[]        = self::class . '::myCallback';
-
+        $myts->callbackPatterns[] = '/\[mp3\](.*?)\[\/mp3\]/s';
+        $myts->callbacks[]        = __CLASS__ . '::decode';
         return true;
     }
 
     /**
-     * @param $url
-     *
+     * @param string|array $url
+     * @param string|int   $width
+     * @param string|int   $height
      * @return string
      */
-    public static function decode($url, $width, $height)
+    public static function decode($url, $width = 0, $height = 0)
     {
-        $rp = "<embed flashvars=\"playerID=1&amp;bg=0xf8f8f8&amp;leftbg=0x3786b3&amp;lefticon=0x78bee3&amp;rightbg=0x3786b3&amp;rightbghover=0x78bee3&amp;righticon=0x78bee3&amp;righticonhover=0x3786b3&amp;text=0x666666&amp;slider=0x3786b3&amp;track=0xcccccc&amp;border=0x666666&amp;loader=0x78bee3&amp;loop=no&amp;soundFile={$url}\" quality='high' menu='false' wmode='transparent' pluginspage='http://www.macromedia.com/go/getflashplayer' src='" . XOOPS_URL . "/images/form/player.swf'  width=290 height=24 type='application/x-shockwave-flash'></embed>";
-
-        return $rp;
+        if (is_array($url)) {
+            $url = htmlspecialchars($url[1], ENT_QUOTES, 'UTF-8', false); // Prevent double-encoding
+        } else {
+            $url = htmlspecialchars($url, ENT_QUOTES, 'UTF-8', false); // Prevent double-encoding
+        }
+        return "<audio controls><source src='{$url}' type='audio/mpeg'>Your browser does not support the audio element.</audio>";
     }
 }

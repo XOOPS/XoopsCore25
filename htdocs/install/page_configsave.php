@@ -332,7 +332,7 @@ function copyConfigDistFiles($vars)
     $textsanitizerConfigFiles = [
         'config.dist.php'                 => 'config.php',
         'censor/config.dist.php'          => 'config.censor.php',
-        'flash/config.dist.php'           => 'config.flash.php',
+//        'flash/config.dist.php'           => 'config.flash.php',
         'image/config.dist.php'           => 'config.image.php',
         'mms/config.dist.php'             => 'config.mms.php',
         'rtsp/config.dist.php'            => 'config.rtsp.php',

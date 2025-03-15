@@ -185,12 +185,18 @@ function bannerstats()
             if (!empty($htmlbanner) && !empty($htmlcode)) {
                 echo $myts->displayTarea($htmlcode);
             } else {
-                if (strtolower(substr($imageurl, strrpos($imageurl, '.'))) === '.swf') {
-                    echo "<object type='application/x-shockwave-flash' width='468' height='60' data='{$imageurl}'>";
-                    echo "<param name='movie' value='{$imageurl}' />";
-                    echo "<param name='quality' value='high' />";
-                    echo '</object>';
+                $extension = strtolower(substr($imageurl, strrpos($imageurl, '.')));
+                if ($extension === '.swf') {
+                    // Inform user that SWF is unsupported
+                    echo "<p>Sorry, Flash (.swf) files are no longer supported. Please use a modern video format.</p>";
+                } elseif (in_array($extension, ['.mp4', '.webm', '.ogg'])) {
+                    // Handle actual video files
+                    echo "<video width='468' height='60' controls>
+                <source src='{$imageurl}' type='video/" . substr($extension, 1) . "'>
+                Your browser does not support the video tag.
+              </video>";
                 } else {
+                    // Assume it’s an image otherwise
                     echo "<img src='{$imageurl}' alt='' />";
                 }
             }
