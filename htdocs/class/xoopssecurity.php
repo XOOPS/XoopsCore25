@@ -70,7 +70,7 @@ class XoopsSecurity
         ];
         $_SESSION[$name . '_SESSION'][] = $token_data;
         // Force update of session in base
-        session_write_close();
+//        session_write_close();
         return md5($token_id . $_SERVER['HTTP_USER_AGENT'] . XOOPS_DB_PREFIX);
     }
 
@@ -85,6 +85,11 @@ class XoopsSecurity
      */
     public function validateToken($token = false, $clearIfValid = true, $name = 'XOOPS_TOKEN')
     {
+        // Optional: Ensure a session is active, keep this as a safeguard, but it’s likely unnecessary
+        if (session_status() !== PHP_SESSION_ACTIVE) {
+            session_start();
+        }
+
         global $xoopsLogger;
         $token = ($token !== false) ? $token : ($_REQUEST[$name . '_REQUEST'] ?? '');
         if (empty($token) || empty($_SESSION[$name . '_SESSION'])) {
