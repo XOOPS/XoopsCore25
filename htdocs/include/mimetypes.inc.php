@@ -58,7 +58,7 @@ return [
     'phtml' => 'application/x-httpd-php',
     'js'    => 'application/x-javascript',
     'sh'    => 'application/x-sh',
-    'swf'   => 'application/x-shockwave-flash',
+//    'swf'   => 'application/x-shockwave-flash',
     'sit'   => 'application/x-stuffit',
     'tar'   => 'application/x-tar',
     'tcl'   => 'application/x-tcl',
