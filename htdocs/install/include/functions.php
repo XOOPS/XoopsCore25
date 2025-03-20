@@ -175,7 +175,7 @@ function xoDiag($status = -1, $str = '')
     if ($status == -1) {
         $GLOBALS['error'] = true;
     }
-    $classes = [-1 => 'fa fa-fw fa-ban text-danger', 0 => 'fa fa-fw fa-square-o text-warning', 1 => 'fa fa-fw fa-check text-success'];
+    $classes = [-1 => 'fa fa-fw fa-ban text-danger', 0 => 'far fa-fw fa-square text-warning', 1 => 'fa fa-fw fa-check text-success'];
     $strings = [-1 => FAILED, 0 => WARNING, 1 => SUCCESS];
     if (empty($str)) {
         $str = $strings[$status];

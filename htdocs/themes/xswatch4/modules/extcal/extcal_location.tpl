@@ -34,10 +34,10 @@
     <{if !empty($xoops_isadmin)}>
     <div class="float-right">
         <a title="<{$smarty.const._MD_EXTCAL_LOCATION_EDIT}>" href="<{$xoops_url}>/modules/extcal/admin/location.php?op=edit_location&location_id=<{$location.id}>">
-            <span class="fa fa-fw fa-2x fa-pencil-square-o"></span>
+            <span class="far fa-fw fa-2x fa-pen-to-square"></span>
         </a>
         <a title="<{$smarty.const._MD_EXTCAL_LOCATION_DELETE}>" href="<{$xoops_url}>/modules/extcal/admin/location.php?op=delete_location&location_id=<{$location.id}>">
-            <span class="fa fa-fw fa-2x fa-trash-o"></span>
+            <span class="far fa-fw fa-2x  fa-trash-can"></span>
         </a>
     </div>
     <{/if}>

@@ -189,7 +189,7 @@
         <{if !empty($isAdmin) || !empty($canEdit)}>
         <a href="<{$smarty.const._EXTCAL_FILE_NEW_EVENT}>?event=<{$event.event_id}>&action=edit"
            title="<{$smarty.const._MD_EXTCAL_ICONE_EDIT}>">
-            <span class="fa fa-fw fa-2x fa-pencil-square-o"></span>
+            <span class="far fa-fw fa-2x fa-pen-to-square"></span>
         </a>
         <a href="<{$smarty.const._EXTCAL_FILE_NEW_EVENT}>?event=<{$event.event_id}>&action=clone"
            title="<{$smarty.const._MD_EXTCAL_ICONE_CLONE}>">
@@ -199,7 +199,7 @@
         <{if !empty($isAdmin)}>
         <a href="admin/event.php?op=delete&event_id=<{$event.event_id|default:''}>"
            title="<{$smarty.const._MD_EXTCAL_ICONE_DELETE}>">
-            <span class="fa fa-fw fa-2x fa-trash-o"></span>
+            <span class="far fa-fw fa-2x  fa-trash-can"></span>
         </a>
         <{/if}>
     </div>

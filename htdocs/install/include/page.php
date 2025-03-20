@@ -91,6 +91,6 @@ $pages = [
     'end'             => [
         'name'  => WELCOME,
         'title' => WELCOME_TITLE,
-        'icon'  => 'fa fa-fw fa-thumbs-o-up',
+        'icon'  => 'far fa-fw fa-thumbs-up',
     ],
 ];
