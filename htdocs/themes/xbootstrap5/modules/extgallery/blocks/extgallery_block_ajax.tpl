@@ -25,7 +25,7 @@
                 <div class="carousel-caption">
                     <h3><{$photo.photo_title}></h3>
                     <p><{$photo.photo_desc}></p>
-                    <a class="btn btn-xs btn-primary" title="<{$photo.photo_title}>" href="<{$xoops_url}>/modules/extgallery/public-photo.php?photoId=<{$photo.photo_id}>">
+                    <a class="btn btn-sm btn-primary" title="<{$photo.photo_title}>" href="<{$xoops_url}>/modules/extgallery/public-photo.php?photoId=<{$photo.photo_id}>">
                         <{$smarty.const._MB_EXTGALLERY_MOREINFO}>
                     </a>
                 </div>

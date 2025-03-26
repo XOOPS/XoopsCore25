@@ -1,17 +1,17 @@
 <a title="<{$smarty.const._MD_NEWBB_SUBFORUMS}>" data-bs-toggle="collapse" href="#xoops-subforum" class="btn btn-primary pull-right">
-    <span class="fa fa-plus-sign"></span> <{$smarty.const._MD_NEWBB_SUBFORUMS}>
+    <span class="fa-solid fa-circle-plus"></span> <{$smarty.const._MD_NEWBB_SUBFORUMS}>
 </a>
 <div class="newbb-subforum mb10 clearfix">
     <div class="collapse" id="xoops-subforum">
         <{foreach item=sforum from=$subforum|default:null}>
         <ul class="subforum-loop list-unstyled clearfix">
-        <li class="col-xs-12 col-md-6">
+        <li class="col-12 col-md-6">
             <a href="<{$xoops_url}>/modules/<{$xoops_dirname}>/viewforum.php?forum=<{$sforum.forum_id}>" title="<{$sforum.forum_name}>">
                 <{$sforum.forum_folder}> <strong><{$sforum.forum_name}></strong>
             </a>
         </li>
 
-        <li class="col-xs-12 col-md-6 text-end">
+        <li class="col-12 col-md-6 text-end">
             <strong><{$smarty.const._MD_NEWBB_LASTPOST}>:</strong>
             <{$sforum.forum_lastpost_time}> <strong><{$smarty.const._MD_NEWBB_BY}></strong> <{$sforum.forum_lastpost_user}>
         </li>
@@ -27,8 +27,8 @@
             <!-- If subforum description -->
             <{if $sforum.forum_desc|default:'' != ''}>
                 <li>
-                    <button class="btn btn-xs btn-info" data-bs-toggle="modal" data-bs-target="#subforum-<{$sforum.forum_id}>">
-                        <span class="fa fa-info-sign"></span>
+                    <button class="btn btn-sm btn-info" data-bs-toggle="modal" data-bs-target="#subforum-<{$sforum.forum_id}>">
+                        <span class="fa-solid fa-circle-info"></span>
                     </button>
                 </li>
             <{/if}>

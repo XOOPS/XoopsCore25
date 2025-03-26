@@ -8,7 +8,7 @@
     <form action="<{$navigSelectBox.action}>" method="<{$navigSelectBox.method}>">
         <ul class="list-inline">
             <{foreach item=element from=$navigSelectBox.elements|default:null}>
-            <li><{$element.body}></li>
+                <li><{$element.body}></li>
             <{/foreach}>
         </ul>
     </form>
@@ -17,20 +17,16 @@
 <{include file="db:extcal_navbar.tpl"}>
 
 <div class="table-responsive">
-
-    <{foreach item=event from=$events|default:null}>
-
-    <{/foreach}>
     <table class="table table-bordered table-hover">
         <tbody>
         <tr style="text-align:center;">
-            <td class="even" style="width:33%;"><a href="<{$xoops_url}>/modules/extcal/view_day.php?<{$navig.prev.uri}>">
-                    <<&nbsp;&nbsp;<{$navig.prev.name}></a></td>
+            <td class="even" style="width:33%;"><a href="<{$xoops_url}>/modules/extcal/view_day.php?<{$navig.prev.uri}>"> <<&nbsp;&nbsp;<{$navig.prev.name}></a></td>
             <td class="even" style="width:33%;"><span style="font-weight:bold;"><{$navig.this.name}></span>
             </td>
             <td class="even" style="width:33%;"><a href="<{$xoops_url}>/modules/extcal/view_day.php?<{$navig.next.uri}>"><{$navig.next.name}>&nbsp;&nbsp;>></a>
             </td>
         </tr>
+        <{foreach item=event from=$events|default:null}>
         <tr>
             <td colspan="3" class="odd" style="vertical-align:middle;">
                 <div style="height:20px; width:5px; background-color:#<{$event.cat.cat_color|default:''}>; border:1px solid black; float:left; margin-right:5px;"></div>
@@ -39,6 +35,7 @@
             </td>
         </tr>
         <tr>
+            <{/foreach}>
             <th colspan="3">
                 <{foreach item=cat from=$cats|default:null}>
                     <div style="float:left; margin-left:5px;">

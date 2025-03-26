@@ -76,7 +76,7 @@
         <{section name=photo loop=$photos}>
             <div class="col-xs-6 col-sm-6 col-md-4 album-thumb">
 
-                <{if $photos[photo].photo_id}>
+                <{if !empty($photos[photo].photo_id)}>
                     <ul class="adminlinks list-unstyled">
                         <{if isset($xoops_isadmin)}>
                             <li><a title="edit" href="<{xoAppUrl 'modules/extgallery/'}>public-modify.php?op=edit&id=<{$photos[photo].photo_id}>"><span

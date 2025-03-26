@@ -22,7 +22,7 @@
             <{/if}>
         </div>
         <div class="pull-right">
-            <a href="<{$item.itemurl}>" class="btn btn-primary btn-xs"> <{$smarty.const._MD_PUBLISHER_VIEW_MORE}></a>
+            <a href="<{$item.itemurl}>" class="btn btn-primary btn-sm"> <{$smarty.const._MD_PUBLISHER_VIEW_MORE}></a>
         </div>
         <div class="clearfix"></div>
     </div>

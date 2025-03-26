@@ -4,7 +4,7 @@
     }
 </style>
 <form class="publisher-search-block" name="search" action="<{$block.publisher_url}>/search.php" method="post">
-    <div class="input-group input-group-sm col-xs-12 col-sm-12 col-md-12 col-lg-12" style="margin-top:8px;">
+    <div class="input-group input-group-sm col-12 col-sm-12 col-md-12 col-lg-12" style="margin-top:8px;">
         <input type="text" class="form-control" placeholder="<{$smarty.const._SR_KEYWORDS}>" name="term" value="<{$block.search_term}>">
     </div>
     <div style="margin-top:8px;">
@@ -12,7 +12,7 @@
             <{$block.category_select|default:''}>
         <{/if}>
     </div>
-    <div class="input-group input-group-sm col-xs-12 col-sm-12 col-md-12 col-lg-12" style="margin-top:8px;">
+    <div class="input-group input-group-sm col-12 col-sm-12 col-md-12 col-lg-12" style="margin-top:8px;">
         <input type="text" class="form-control" placeholder="<{$smarty.const._CO_PUBLISHER_UID}>" name="uname" value="<{$block.search_user}>">
     </div>
     <{if !empty($block.search_rule)}>

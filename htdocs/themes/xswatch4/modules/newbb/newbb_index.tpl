@@ -22,15 +22,15 @@
                 <div class="col">
                     <strong><{$smarty.const._MD_NEWBB_TOPIC}>:</strong>
                         <a href="<{$xoops_url}>/modules/<{$xoops_dirname}>/list.topic.php?status=active#admin" title="<{$smarty.const._MD_NEWBB_TYPE_ADMIN}>" class="btn btn-primary">
-                            <span class="fa fa-tasks" aria-hidden="true"></span>
+                            <span class="fa-solid fa-list-check" aria-hidden="true"></span>
                         </a>
 
                         <a href="<{$xoops_url}>/modules/<{$xoops_dirname}>/list.topic.php?status=pending#admin" title="<{$smarty.const._MD_NEWBB_TYPE_PENDING}>" class="btn btn-primary">
-                            <span class="fa fa-check-square-o" aria-hidden="true"></span> <{if !empty($wait_new_topic)}><span class="badge badge-light badge-pill"><{$wait_new_topic}></span><{/if}>
+                            <span class="fa-solid fa-square-check" aria-hidden="true"></span> <{if !empty($wait_new_topic)}><span class="badge badge-light badge-pill"><{$wait_new_topic}></span><{/if}>
                         </a>
 
                         <a href="<{$xoops_url}>/modules/<{$xoops_dirname}>/list.topic.php?status=deleted#admin" title="<{$smarty.const._MD_NEWBB_TYPE_DELETED}>" class="btn btn-danger">
-                            <span class="fa fa-trash-o" aria-hidden="true"></span> <{if !empty($delete_topic)}><span class="badge badge-light badge-pill"><{$delete_topic}></span><{/if}>
+                            <span class="fa-solid fa-trash-can" aria-hidden="true"></span> <{if !empty($delete_topic)}><span class="badge badge-light badge-pill"><{$delete_topic}></span><{/if}>
                         </a>
                 </div>
             </div>
@@ -40,30 +40,30 @@
                     <strong><{$smarty.const._MD_NEWBB_POST2}>:</strong>
 
                     <a href="<{$xoops_url}>/modules/<{$xoops_dirname}>/viewpost.php?status=active#admin" title="<{$smarty.const._MD_NEWBB_TYPE_ADMIN}>" class="btn btn-primary">
-                        <span class="fa fa-tasks" aria-hidden="true"></span>
+                        <span class="fa-solid fa-list-check" aria-hidden="true"></span>
                     </a>
 
                     <a href="<{$xoops_url}>/modules/<{$xoops_dirname}>/viewpost.php?status=pending#admin" title="<{$smarty.const._MD_NEWBB_TYPE_PENDING}>" class="btn btn-primary">
-                        <span class="fa fa-check-square-o" aria-hidden="true"></span> <{if !empty($wait_new_post)}><span class="badge badge-light badge-pill"><{$wait_new_post}></span><{/if}>
+                        <span class="fa-solid fa-square-check" aria-hidden="true"></span> <{if !empty($wait_new_post)}><span class="badge badge-light badge-pill"><{$wait_new_post}></span><{/if}>
                     </a>
 
                     <a href="<{$xoops_url}>/modules/<{$xoops_dirname}>/viewpost.php?status=deleted#admin" title="<{$smarty.const._MD_NEWBB_TYPE_DELETED}>" class="btn btn-primary">
-                        <span class="fa fa-trash-o" aria-hidden="true"></span> <{if !empty($delete_post)}><span class="badge badge-light badge-pill"><{$delete_post}></span><{/if}>
+                        <span class="fa-solid fa-trash-can" aria-hidden="true"></span> <{if !empty($delete_post)}><span class="badge badge-light badge-pill"><{$delete_post}></span><{/if}>
                     </a>
 
                     <{if !empty($report_post)}>
                     <a href="<{$xoops_url}>/modules/<{$xoops_dirname}>/admin/admin_report.php" title="_MD_NEWBB_REPORT" class="btn btn-primary">
-                        <span class="fa fa-thumbs-o-down" aria-hidden="true"></span> <span class="badge badge-light badge-pill"><{$reported_count}></span>
+                        <span class="fa-solid fa-thumbs-down" aria-hidden="true"></span> <span class="badge badge-light badge-pill"><{$reported_count}></span>
                     </a>
                     <{/if}>
 
 
                     <a href="<{$xoops_url}>/modules/<{$xoops_dirname}>/moderate.php" title="<{$smarty.const._MD_NEWBB_TYPE_SUSPEND}>" class="btn btn-primary">
-                        <span class="fa fa-ban" aria-hidden="true">
+                        <span class="fa-solid fa-ban" aria-hidden="true">
                     </a>
 
                     <a href="<{$xoops_url}>/modules/<{$xoops_dirname}>/admin/index.php" title="<{$smarty.const._MD_NEWBB_ADMINCP}>" class="btn btn-primary">
-                        <span class="fa fa-cogs" aria-hidden="true"></span>
+                        <span class="fa-solid fa-gear" aria-hidden="true"></span>
                     </a>
                 </div>
             </div>
@@ -76,7 +76,7 @@
         <thead>
         <tr class="thead-light">
             <th scope="col" colspan="5">
-                <span class="fa fa-list"></span>
+                <span class="fa-solid fa-list"></span>
                 <span class="font-weight-bold"><a href="<{$xoops_url}>/modules/<{$xoops_dirname}>/index.php?cat=<{$category.cat_id}>" title="<{$category.cat_title}>"><{$category.cat_title}></a></span>
                 <br><small><{$category.cat_description}></small>
             </th>
@@ -103,13 +103,13 @@
                 <br>
                 <a href="<{$xoops_url}>/modules/<{$xoops_dirname}>/viewtopic.php?post_id=<{$forum.forum_lastpost_id}>">
                     <{$forum.forum_lastpost_subject}>
-                    <span class="fa fa-forward" aria-hidden="true" title="<{$smarty.const._MD_NEWBB_GOTOLASTPOST}>"></span>
+                    <span class="fa-solid fa-forward" aria-hidden="true" title="<{$smarty.const._MD_NEWBB_GOTOLASTPOST}>"></span>
                 </a>
                 <{else}>
                 <{$smarty.const._MD_NEWBB_NOTOPIC}>
                 <{/if}>
                 <{if !empty($forum.subforum)}>
-                <br><{$smarty.const._MD_NEWBB_SUBFORUMS}> <i class="fa fa-chevron-down" aria-hidden="true"></i>
+                <br><{$smarty.const._MD_NEWBB_SUBFORUMS}> <i class="fa-solid fa-chevron-down" aria-hidden="true"></i>
                 <{foreach item=subforum from=$forum.subforum|default:null}><br>
                 [<a href="<{$xoops_url}>/modules/<{$xoops_dirname}>/viewforum.php?forum=<{$subforum.forum_id}>"><{$subforum.forum_name}></a>]
                 <{/foreach}>
@@ -167,7 +167,7 @@
                         <{if !empty($stats[0].digest.total)}>
                             <li><{$smarty.const._MD_NEWBB_TOTALDIGESTSC}>
                                 <a href="<{$xoops_url}>/modules/<{$xoops_dirname}>/list.topic.php?status=digest" title="<{$smarty.const._MD_NEWBB_TOTALDIGESTSC}>">
-                                    <{$stats[0].digest.total}>
+                                    <{$stats[0].digest.total|default:''}>
                                 </a></li>
                         <{/if}>
 
@@ -182,7 +182,7 @@
                     <ul class="list-unstyled lw30">
                         <{if !empty($userstats)}>
                             <li><{*$userstats.lastvisit*}>
-                                <{$userstats.lastpost}>
+                                <{$userstats.lastpost|default:''}>
                             </li>
                         <{/if}>
 
@@ -190,9 +190,9 @@
                         <li><{$smarty.const._MD_NEWBB_TODAYPOSTSC}> <{$stats[0].post.day|default:0}></li>
 
                         <{if !empty($userstats)}>
-                            <li><{$userstats.topics}> | <{$userstats.posts}></li>
+                            <li><{$userstats.topics|default:''}> | <{$userstats.posts|default:''}></li>
                             <{if !empty($userstats.digests)}>
-                                <li><{$userstats.digests}></li>
+                                <li><{$userstats.digests|default:''}></li>
                             <{/if}>
                         <{/if}>
                     </ul>

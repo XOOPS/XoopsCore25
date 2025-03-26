@@ -4,7 +4,7 @@
 		<label for="profile-uname"><{$lang_username}></label>
 		<div class="input-group">
 			<div class="input-group-prepend">
-				<span class="input-group-text"><i class="fa fa-user" aria-hidden="true"></i></span>
+				<span class="input-group-text"><i class="fa-solid fa-user" aria-hidden="true"></i></span>
 			</div>
 			<input class="form-control" type="text" name="uname" id="profile-uname" value="" placeholder="<{$smarty.const.THEME_LOGIN}>">
 		</div>
@@ -12,7 +12,7 @@
 		<label for="profile-pass"><{$lang_password}></label>
 		<div class="input-group">
 			<div class="input-group-prepend">
-				<span class="input-group-text"><i class="fa fa-lock" aria-hidden="true"></i></span>
+				<span class="input-group-text"><i class="fa-solid fa-lock" aria-hidden="true"></i></span>
 			</div>
 			<input class="form-control" type="password" name="pass" id="profile-pass" placeholder="<{$smarty.const.THEME_PASS}>">
 		</div>

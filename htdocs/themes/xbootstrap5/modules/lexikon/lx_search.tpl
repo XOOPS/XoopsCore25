@@ -18,7 +18,7 @@
 </div>
 
 <div class="row">
-    <div class="col-md-6 col-xs-12">
+    <div class="col-md-6 col-12">
         <h3><{$smarty.const._MD_LEXIKON_WEHAVE}></h3>
 
         <{$smarty.const._MD_LEXIKON_DEFS}><{$publishedwords}><br>
@@ -27,7 +27,7 @@
         <input class="btn btn-primary btn-sm form-control" type="button" value="<{$smarty.const._MD_LEXIKON_SUBMITENTRY}>" onclick="location.href = 'submit.php'">
         <input class="btn btn-info btn-sm form-control" type="button" value="<{$smarty.const._MD_LEXIKON_REQUESTDEF}>" onclick="location.href = 'request.php'">
     </div>
-    <div class="col-md-6 col-xs-12">
+    <div class="col-md-6 col-12">
         <hr class="visible-sm">
         <h3><{$smarty.const._MD_LEXIKON_SEARCHENTRY}></h3>
         <{$searchform}>

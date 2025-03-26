@@ -628,17 +628,17 @@ ul.profile-values > li.profile-category-title {
     min-height: 40px;
 }
 
-.xoops-message-list div.col-xs-1,
+.xoops-message-list div.col-1,
 .xoops-message-list div.col-md-1 {
     max-width: 14px;
     text-align: center;
 }
 
-.xoops-message-list div.col-xs-1 .btn,
+.xoops-message-list div.col-1 .btn,
 .xoops-message-list div.col-md-1 .btn {
-    padding: 3px;
+    padding: 0.25rem;
     display: inline-block;
-    font-size: 0.9em;
+    font-size: 0.875rem;
 }
 
 .xoops-message-loop {
@@ -1364,3 +1364,11 @@ div.order-by a {
     background-color: #0d6efd !important;
 }
 
+.form-check .form-check-input:checked {
+    background-color: #0d6efd;
+    border-color: #0d6efd;
+    background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20'%3e%3cpath fill='none' stroke='%23fff' stroke-linecap='round' stroke-linejoin='round' stroke-width='3' d='m6 10 3 3 6-6'/%3e%3c/svg%3e");
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: contain;
+}

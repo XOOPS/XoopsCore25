@@ -22,7 +22,7 @@
             </h5>
             <p class="card-text text-muted"><{$obituaries_user.obituaries_formated_date}></p>
             <p class="card-text"><{$obituaries_user.obituaries_description|truncateHtml:20:'...'}>
-            <a class="stretched-link" href="<{$smarty.const.OBITUARIES_URL}>user.php?obituaries_id=<{$obituaries_user.obituaries_id}>" title="<{$obituaries_user.obituaries_href_title}>"><span class="fa fa-forward"></span></a>
+            <a class="stretched-link" href="<{$smarty.const.OBITUARIES_URL}>user.php?obituaries_id=<{$obituaries_user.obituaries_id}>" title="<{$obituaries_user.obituaries_href_title}>"><span class="fa-solid fa-forward"></span></a>
             </p>
         </div>
     </div>

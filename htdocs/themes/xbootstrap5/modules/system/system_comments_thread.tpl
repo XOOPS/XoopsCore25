@@ -1,8 +1,8 @@
 <div class="xoops-comment-body">
     <{section name=i loop=$comments}>
         <div class="row">
-            <div class="col-xs-2 col-md-2"><strong><{$lang_poster}></strong></div>
-            <div class="col-xs-10 col-md-10"><strong><{$lang_thread}></strong></div>
+            <div class="col-2 col-md-2"><strong><{$lang_poster}></strong></div>
+            <div class="col-10 col-md-10"><strong><{$lang_thread}></strong></div>
         </div>
         <{include file="db:system_comment.tpl" comment=$comments[i]}>
 
@@ -47,7 +47,7 @@
     <{if isset($commentform)}>
         <div class="aligncenter">
             <button class="btn-comment btn btn-primary btn-md" data-bs-toggle="modal" data-bs-target="#comments-form">
-                <span class="fa fa-comment"></span> Add Comment
+                <span class="fa-solid fa-comment"></span> Add Comment
             </button>
         </div>
         <!-- Modal -->

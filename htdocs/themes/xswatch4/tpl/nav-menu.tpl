@@ -64,7 +64,7 @@
 						<div class="input-group mb-3">
 							<input class="form-control" type="text" name="query" placeholder="<{$smarty.const.THEME_SEARCH_TEXT}>">
 							<div class="input-group-append">
-								<button class="btn btn-secondary" type="submit"><i class="fa fa-search" aria-hidden="true"></i></button>
+								<button class="btn btn-secondary" type="submit"><i class="fa-solid fa-magnifying-glass" aria-hidden="true"></i></button>
 							</div>
 						</div>
 						<input type="hidden" name="action" value="results">

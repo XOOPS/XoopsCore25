@@ -26,7 +26,7 @@ $modversion['help']        = 'page=groups';
 $modversion['license']     = 'GPL see LICENSE';
 $modversion['official']    = 1;
 $modversion['image']       = 'groups.png';
-$modversion['icon']        = 'fa fa-users';
+$modversion['icon']        = 'fa-solid fa-users';
 
 $modversion['hasAdmin']  = 1;
 $modversion['adminpath'] = 'admin.php?fct=groups';

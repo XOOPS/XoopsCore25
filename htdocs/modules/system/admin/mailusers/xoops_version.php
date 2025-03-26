@@ -27,7 +27,7 @@ $modversion['help']        = 'page=mailusers';
 $modversion['license']     = 'GPL see LICENSE';
 $modversion['official']    = 1;
 $modversion['image']       = 'mailuser.png';
-$modversion['icon']        = 'fa fa-envelope-o';
+$modversion['icon']        = 'fa-solid fa-envelope';
 
 $modversion['hasAdmin']  = 1;
 $modversion['adminpath'] = 'admin.php?fct=mailusers';

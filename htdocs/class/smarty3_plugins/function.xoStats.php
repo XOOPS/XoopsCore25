@@ -86,7 +86,7 @@ function xoStatsRegen()
     }
 
     //Getting Total Registered Users
-    $levelCriteria = new \Criteria('level', 0, '>');
+    $levelCriteria = new \Criteria('level', '0', '>');
     $criteria = new \CriteriaCompo($levelCriteria);
     $criteria24 = new \CriteriaCompo($levelCriteria);
     $criteria24->add(new \Criteria('user_regdate', (mktime(0, 0, 0) - (24 * 3600)), '>='), 'AND');

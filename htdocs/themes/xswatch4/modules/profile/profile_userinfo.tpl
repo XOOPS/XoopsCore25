@@ -15,41 +15,41 @@
     <div class="col-md-6">
         <{if !$user_ownpage && $xoops_isuser == true}>
             <form name="usernav" action="user.php" method="post">
-                <input class="btn btn-primary btn-xs btn-block" type="button" value="<{$smarty.const._PROFILE_MA_SENDPM}>"
+                <input class="btn btn-primary btn-sm btn-block" type="button" value="<{$smarty.const._PROFILE_MA_SENDPM}>"
                        onclick="openWithSelfMain('<{$xoops_url}>/pmlite.php?send2=1&amp;to_userid=<{$user_uid}>', 'pmlite', 565, 500);">
             </form>
         <{/if}>
 
         <{if isset($user_ownpage) && $user_ownpage == true}>
             <form name="usernav" action="user.php" method="post">
-                <input class="btn btn-primary btn-xs btn-block" type="button" value="<{$lang_editprofile}>"
+                <input class="btn btn-primary btn-sm btn-block" type="button" value="<{$lang_editprofile}>"
                        onclick="location='<{$xoops_url}>/modules/<{$xoops_dirname}>/edituser.php'">
-                <input class="btn btn-primary btn-xs btn-block" type="button" value="<{$lang_changepassword}>"
+                <input class="btn btn-primary btn-sm btn-block" type="button" value="<{$lang_changepassword}>"
                        onclick="location='<{$xoops_url}>/modules/<{$xoops_dirname}>/changepass.php'">
                 <{if isset($user_changeemail)}>
-                    <input class="btn btn-primary btn-xs btn-block" type="button" value="<{$smarty.const._PROFILE_MA_CHANGEMAIL}>"
+                    <input class="btn btn-primary btn-sm btn-block" type="button" value="<{$smarty.const._PROFILE_MA_CHANGEMAIL}>"
                            onclick="location='<{$xoops_url}>/modules/<{$xoops_dirname}>/changemail.php'">
                 <{/if}>
                 <{if isset($user_candelete) && $user_candelete == true}>
-                    <input class="btn btn-primary btn-xs btn-block" type="button" value="<{$lang_deleteaccount}>" onclick="location='user.php?op=delete'">
+                    <input class="btn btn-primary btn-sm btn-block" type="button" value="<{$lang_deleteaccount}>" onclick="location='user.php?op=delete'">
                 <{/if}>
-                <input class="btn btn-primary btn-xs btn-block" type="button" value="<{$lang_avatar}>" onclick="location='edituser.php?op=avatarform'">
-                <input class="btn btn-primary btn-xs btn-block" type="button" value="<{$lang_inbox}>" onclick="location='<{$xoops_url}>/viewpmsg.php'">
-                <input class="btn btn-primary btn-xs btn-block" type="button" value="<{$lang_logout}>"
+                <input class="btn btn-primary btn-sm btn-block" type="button" value="<{$lang_avatar}>" onclick="location='edituser.php?op=avatarform'">
+                <input class="btn btn-primary btn-sm btn-block" type="button" value="<{$lang_inbox}>" onclick="location='<{$xoops_url}>/viewpmsg.php'">
+                <input class="btn btn-primary btn-sm btn-block" type="button" value="<{$lang_logout}>"
                        onclick="location='<{$xoops_url}>/modules/<{$xoops_dirname}>/user.php?op=logout'">
             </form>
         <{elseif $xoops_isadmin != false}>
             <form method="post" action="<{$xoops_url}>/modules/<{$xoops_dirname}>/admin/deactivate.php">
-                <input class="btn btn-warning btn-xs btn-block" type="button" value="<{$lang_editprofile}>"
+                <input class="btn btn-warning btn-sm btn-block" type="button" value="<{$lang_editprofile}>"
                        onclick="location='<{$xoops_url}>/modules/<{$xoops_dirname}>/admin/user.php?op=edit&amp;id=<{$user_uid}>'">
                 <input type="hidden" name="uid" value="<{$user_uid}>">
                 <{securityToken}>
                 <{if isset($userlevel) && $userlevel == 1}>
                     <input type="hidden" name="level" value="0">
-                    <input class="btn btn-danger btn-xs btn-block" type="button" value="<{$smarty.const._PROFILE_MA_DEACTIVATE}>" onclick="submit();">
+                    <input class="btn btn-danger btn-sm btn-block" type="button" value="<{$smarty.const._PROFILE_MA_DEACTIVATE}>" onclick="submit();">
                 <{else}>
                     <input type="hidden" name="level" value="1">
-                    <input class="btn btn-warning btn-xs btn-block" type="button" value="<{$smarty.const._PROFILE_MA_ACTIVATE}>" onclick="submit();">
+                    <input class="btn btn-warning btn-sm btn-block" type="button" value="<{$smarty.const._PROFILE_MA_ACTIVATE}>" onclick="submit();">
                 <{/if}>
             </form>
         <{/if}>
@@ -84,10 +84,10 @@
                             <{if file_exists($path_image_overloaded)}>
                                 <div class="d-inline"><img src="<{$url_image_overloaded}>" alt="<{$module.name}>"> <a href="<{$result.link}>"><{$result.title}></a></div>
                                 <span class="d-inline d-sm-none"><br /></span>
-                                <div class="d-inline text-muted"><small><span class="fa fa-calendar fa-sm ml-2"></span> <{$result.time}></small></div>
+                                <div class="d-inline text-muted"><small><span class="fa-solid fa-calendar fa-sm ml-2"></span> <{$result.time}></small></div>
                                 <br />
                             <{else}>
-                                <img src="<{$result.image}>" alt="<{$module.name}>"> <a href="<{$result.link}>"><{$result.title}></a> <small><span class="fa fa-calendar fa-sm ml-2"></span> <{$result.time}></small><br />
+                                <img src="<{$result.image}>" alt="<{$module.name}>"> <a href="<{$result.link}>"><{$result.title}></a> <small><span class="fa-solid fa-calendar fa-sm ml-2"></span> <{$result.time}></small><br />
                             <{/if}>
                         </li>
                         <{/foreach}>

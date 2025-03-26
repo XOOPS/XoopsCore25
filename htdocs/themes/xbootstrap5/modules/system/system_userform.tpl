@@ -5,13 +5,13 @@
         <form action="user.php" method="post">
             <label for="profile-uname"><{$lang_username}></label>
             <div class="input-group">
-                <span class="input-group-addon"><i class="fa fa-user"></i></span>
+                <span class="input-group-addon"><i class="fa-solid fa-user"></i></span>
                 <input class="form-control" type="text" name="uname" id="profile-uname" value="" placeholder="<{$smarty.const.THEME_LOGIN}>">
             </div>
 
             <label for="profile-pass"><{$lang_password}></label>
             <div class="input-group">
-                <span class="input-group-addon"><i class="fa fa-lock"></i></span>
+                <span class="input-group-addon"><i class="fa-solid fa-lock"></i></span>
                 <input class="form-control" type="password" name="pass" id="profile-pass" placeholder="<{$smarty.const.THEME_PASS}>">
             </div>
             <div class="checkbox">
@@ -40,7 +40,7 @@
         <form action="lostpass.php" method="post">
             <label for="profile-lostpass"><{$lang_youremail}></label>
             <div class="input-group">
-                <span class="input-group-addon"><i class="fa fa-envelope"></i></span>
+                <span class="input-group-addon"><i class="fa-solid fa-envelope"></i></span>
                 <input class="form-control" type="text" name="email" id="profile-lostpass">
             </div>
             <input type="hidden" name="op" value="mailpasswd"/>
