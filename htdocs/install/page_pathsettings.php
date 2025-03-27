@@ -36,12 +36,12 @@ include_once __DIR__ . '/../include/functions.php';
 $pageHasForm = true;
 $pageHasHelp = true;
 
-$ctrl = new PathStuffController($wizard->configs['xoopsPathDefault'], $wizard->configs['dataPath']);
+$pathController = new PathStuffController($wizard->configs['xoopsPathDefault'], $wizard->configs['dataPath']);
 
 //if ($_SERVER['REQUEST_METHOD'] === 'GET' && @$_GET['var'] && Xmf\Request::getString('action', '', 'GET') === 'checkpath') {
 //    $path                   = $_GET['var'];
-//    $ctrl->xoopsPath[$path] = htmlspecialchars(trim($_GET['path']), ENT_QUOTES | ENT_HTML5);
-//    echo genPathCheckHtml($path, $ctrl->checkPath($path));
+//    $pathController->xoopsPath[$path] = htmlspecialchars(trim($_GET['path']), ENT_QUOTES | ENT_HTML5);
+//    echo genPathCheckHtml($path, $pathController->checkPath($path));
 //    exit();
 //}
 
@@ -58,7 +58,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET' && isset($_GET['var']) && isset($_GET['
     if (!is_dir($newPath)) {
         echo "Error: The specified path does not exist. Please verify the folder and try again.";
         exit();
-}
+    }
 
     // Update the XOOPS_TRUST_PATH dynamically if it's the library path
     if ($pathKey === 'lib') {
@@ -73,18 +73,18 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET' && isset($_GET['var']) && isset($_GET['
 //redefine XOOPS_TRUST_PATH if it is different from $newPath, because obviously the XOOPS_TRUST_PATH has been changed
         }
 
-        $ctrl->updateXoopsTrustPath($newPath);
+        $pathController->updateXoopsTrustPath($newPath);
 
 //        if ($newPath) {
 //            try {
-//                $ctrl->updateXoopsTrustPath($newPath);
+//                $pathController->updateXoopsTrustPath($newPath);
 //            } catch (RuntimeException $e) {
-//                $ctrl->validPath['lib'] = false;
-//                $ctrl->errorMessage = $e->getMessage();
+//                $pathController->validPath['lib'] = false;
+//                $pathController->errorMessage = $e->getMessage();
 //            }
 //        } else {
-//            $ctrl->validPath['lib'] = false;
-//            $ctrl->errorMessage = "Invalid XOOPS library directory. Please check the path.";
+//            $pathController->validPath['lib'] = false;
+//            $pathController->errorMessage = "Invalid XOOPS library directory. Please check the path.";
 //        }
 //
 
@@ -105,8 +105,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET' && isset($_GET['var']) && isset($_GET['
     }
 
     // Perform the path check
-    $ctrl->xoopsPath[$pathKey] = $newPath;
-    echo genPathCheckHtml($pathKey, $ctrl->checkPath($pathKey));
+    $pathController->xoopsPath[$pathKey] = $newPath;
+    echo genPathCheckHtml($pathKey, $pathController->checkPath($pathKey));
     exit();
 }
 
@@ -130,7 +130,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET' && isset($_GET['var']) && isset($_GET['
         $_SESSION['settings']['TRUST_PATH'] = $newPath;
         $xoopsTrustPath = $newPath;
 
-        $ctrl->updateXoopsTrustPath($newPath);
+        $pathController->updateXoopsTrustPath($newPath);
 
         // Check for Composer autoloader
         $composerAutoloader = $xoopsTrustPath . '/vendor/autoload.php';
@@ -147,13 +147,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET' && isset($_GET['var']) && isset($_GET['
     }
 
     // Perform the path check
-    $ctrl->xoopsPath[$pathKey] = $newPath;
-    echo genPathCheckHtml($pathKey, $ctrl->checkPath($pathKey));
+    $pathController->xoopsPath[$pathKey] = $newPath;
+    echo genPathCheckHtml($pathKey, $pathController->checkPath($pathKey));
     exit();
 }
 
 
-$ctrl->execute();
+$pathController->execute();
 //if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 //    return null;
 //}
@@ -161,19 +161,19 @@ $ctrl->execute();
 /*
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    if (isset($_POST['lib']) && $_POST['lib'] !== $ctrl->xoopsPath['lib']) {
-        $newTrustPath = $ctrl->sanitizePath(trim($_POST['lib']));
+    if (isset($_POST['lib']) && $_POST['lib'] !== $pathController->xoopsPath['lib']) {
+        $newTrustPath = $pathController->sanitizePath(trim($_POST['lib']));
 
         if ($newTrustPath) {
             try {
-                $ctrl->updateXoopsTrustPath($newTrustPath);
+                $pathController->updateXoopsTrustPath($newTrustPath);
             } catch (RuntimeException $e) {
-                $ctrl->validPath['lib'] = false;
-                $ctrl->errorMessage = $e->getMessage();
-}
+                $pathController->validPath['lib'] = false;
+                $pathController->errorMessage = $e->getMessage();
+            }
         } else {
-            $ctrl->validPath['lib'] = false;
-            $ctrl->errorMessage = "Invalid XOOPS library directory. Please check the path.";
+            $pathController->validPath['lib'] = false;
+            $pathController->errorMessage = "Invalid XOOPS library directory. Please check the path.";
         }
     }
 }
@@ -182,22 +182,22 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
 // Handle POST request for updating paths
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    if (isset($_POST['lib']) && $_POST['lib'] !== $ctrl->xoopsPath['lib']) {
-        $newTrustPath = $ctrl->sanitizePath(trim($_POST['lib']));
+    if (isset($_POST['lib']) && $_POST['lib'] !== $pathController->xoopsPath['lib']) {
+        $newTrustPath = $pathController->sanitizePath(trim($_POST['lib']));
 
         if ($newTrustPath && is_dir($newTrustPath)) {
             $xoopsTrustPath = $newTrustPath;
             $_SESSION['settings']['TRUST_PATH'] = $newTrustPath;
 
             try {
-                $ctrl->updateXoopsTrustPath($newTrustPath);
+                $pathController->updateXoopsTrustPath($newTrustPath);
             } catch (RuntimeException $e) {
-                $ctrl->validPath['lib'] = false;
-                $ctrl->errorMessage = $e->getMessage();
+                $pathController->validPath['lib'] = false;
+                $pathController->errorMessage = $e->getMessage();
             }
         } else {
-            $ctrl->validPath['lib'] = false;
-            $ctrl->errorMessage = "Invalid XOOPS library directory. Please check the path.";
+            $pathController->validPath['lib'] = false;
+            $pathController->errorMessage = "Invalid XOOPS library directory. Please check the path.";
         }
     }
 }
@@ -223,13 +223,22 @@ ob_start();
             return val;
         }
 
+        //function updPath(key, val) {
+        //    val = removeTrailing(key, val);
+        //    $.get( "<?php //echo $_SERVER['PHP_SELF']; ?>//", { action: "checkpath", var: key, path: val } )
+        //        .done(function( data ) {
+        //            $("#" + key + 'pathimg').html(data);
+        //        });
+        //    $("#" + key + 'perms').style.display = 'none';
+        //}
+
         function updPath(key, val) {
             // Remove trailing slashes
             val = removeTrailing(key, val);
 
             // Perform AJAX request to validate the path
-            $.get( "<?php echo $_SERVER['PHP_SELF']; ?>", { action: "checkpath", var: key, path: val } )
-                .done(function( data ) {
+            $.get("<?php echo $_SERVER['PHP_SELF']; ?>", { action: "checkpath", var: key, path: val })
+                .done(function(data) {
                     // Update the path check result
                     $("#" + key + 'pathimg').html(data);
                 })
@@ -243,8 +252,8 @@ ob_start();
                 permsElement.style.display = 'none';
             } else {
                 console.warn("Permissions element with ID '" + key + "perms' not found.");
+            }
         }
-     }
 
     </script>
     <div class="panel panel-info">
@@ -254,16 +263,16 @@ ob_start();
             <div class="form-group">
                 <label class="xolabel" for="root"><?php echo XOOPS_ROOT_PATH_LABEL; ?></label>
                 <div class="xoform-help alert alert-info"><?php echo XOOPS_ROOT_PATH_HELP; ?></div>
-                <input type="text" class="form-control" name="root" id="root" value="<?php echo $ctrl->xoopsPath['root']; ?>" onchange="updPath('root', this.value)"/>
-                <span id="rootpathimg"><?php echo genPathCheckHtml('root', $ctrl->validPath['root']); ?></span>
+                <input type="text" class="form-control" name="root" id="root" value="<?php echo $pathController->xoopsPath['root']; ?>" onchange="updPath('root', this.value)"/>
+                <span id="rootpathimg"><?php echo genPathCheckHtml('root', $pathController->validPath['root']); ?></span>
             </div>
 
             <?php
-            if ($ctrl->validPath['root'] && !empty($ctrl->permErrors['root'])) {
+            if ($pathController->validPath['root'] && !empty($pathController->permErrors['root'])) {
                 echo '<div id="rootperms" class="x2-note">';
                 echo CHECKING_PERMISSIONS . '<br><p>' . ERR_NEED_WRITE_ACCESS . '</p>';
                 echo '<ul class="diags">';
-                foreach ($ctrl->permErrors['root'] as $path => $result) {
+                foreach ($pathController->permErrors['root'] as $path => $result) {
                     if ($result) {
                         echo '<li class="success">' . sprintf(IS_WRITABLE, $path) . '</li>';
                     } else {
@@ -279,15 +288,15 @@ ob_start();
             <div class="form-group">
                 <label for="data"><?php echo XOOPS_DATA_PATH_LABEL; ?></label>
                 <div class="xoform-help alert alert-info"><?php echo XOOPS_DATA_PATH_HELP; ?></div>
-                <input type="text" class="form-control" name="data" id="data" value="<?php echo $ctrl->xoopsPath['data']; ?>" onchange="updPath('data', this.value)"/>
-                <span id="datapathimg"><?php echo genPathCheckHtml('data', $ctrl->validPath['data']); ?></span>
+                <input type="text" class="form-control" name="data" id="data" value="<?php echo $pathController->xoopsPath['data']; ?>" onchange="updPath('data', this.value)"/>
+                <span id="datapathimg"><?php echo genPathCheckHtml('data', $pathController->validPath['data']); ?></span>
             </div>
             <?php
-            if ($ctrl->validPath['data'] && !empty($ctrl->permErrors['data'])) {
+            if ($pathController->validPath['data'] && !empty($pathController->permErrors['data'])) {
                 echo '<div id="dataperms" class="x2-note">';
                 echo CHECKING_PERMISSIONS . '<br><p>' . ERR_NEED_WRITE_ACCESS . '</p>';
                 echo '<ul class="diags">';
-                foreach ($ctrl->permErrors['data'] as $path => $result) {
+                foreach ($pathController->permErrors['data'] as $path => $result) {
                     if ($result) {
                         echo '<li class="success">' . sprintf(IS_WRITABLE, $path) . '</li>';
                     } else {
@@ -303,11 +312,18 @@ ob_start();
             <div class="form-group">
                 <label class="xolabel" for="lib"><?php echo XOOPS_LIB_PATH_LABEL; ?></label>
                 <div class="xoform-help alert alert-info"><?php echo XOOPS_LIB_PATH_HELP; ?></div>
-                <input type="text" class="form-control" name="lib" id="lib" value="<?php echo $ctrl->xoopsPath['lib']; ?>" onchange="updPath('lib', this.value)"/>
-                <span id="libpathimg"><?php echo genPathCheckHtml('lib', $ctrl->validPath['lib']); ?></span>
+                <input type="text" class="form-control" name="lib" id="lib" value="<?php echo $pathController->xoopsPath['lib']; ?>" onchange="updPath('lib', this.value)"/>
+                <span id="libpathimg"><?php echo genPathCheckHtml('lib', $pathController->validPath['lib']); ?></span>
             </div>
 
             <div id="libperms" class="x2-note" style="display: none;"></div>
+            <?php
+            if (!empty($pathController->getErrorMessage())) {
+                echo '<div class="alert alert-danger" role="alert">';
+                echo $pathController->getErrorMessage();
+                echo '</div>';
+            }
+            ?>
         </div>
     </div>
 
@@ -319,13 +335,13 @@ ob_start();
             <div class="form-group">
                 <label class="xolabel" for="url"><?php echo XOOPS_URL_LABEL; ?></label>
                 <div class="xoform-help alert alert-info"><?php echo XOOPS_URL_HELP; ?></div>
-                <input type="text" class="form-control" name="URL" id="url" value="<?php echo $ctrl->xoopsUrl; ?>" onchange="removeTrailing('url', this.value)"/>
+                <input type="text" class="form-control" name="URL" id="url" value="<?php echo $pathController->xoopsUrl; ?>" onchange="removeTrailing('url', this.value)"/>
             </div>
 
             <div class="form-group">
                 <label class="xolabel" for="cookie_domain"><?php echo XOOPS_COOKIE_DOMAIN_LABEL; ?></label>
                 <div class="xoform-help alert alert-info"><?php echo XOOPS_COOKIE_DOMAIN_HELP; ?></div>
-                <input type="text" class="form-control" name="COOKIE_DOMAIN" id="cookie_domain" value="<?php echo $ctrl->xoopsCookieDomain; ?>" onchange="removeTrailing('url', this.value)"/>
+                <input type="text" class="form-control" name="COOKIE_DOMAIN" id="cookie_domain" value="<?php echo $pathController->xoopsCookieDomain; ?>" onchange="removeTrailing('url', this.value)"/>
             </div>
         </div>
     </div>
