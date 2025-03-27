@@ -38,16 +38,179 @@ $pageHasHelp = true;
 
 $ctrl = new PathStuffController($wizard->configs['xoopsPathDefault'], $wizard->configs['dataPath']);
 
-if ($_SERVER['REQUEST_METHOD'] === 'GET' && @$_GET['var'] && Request::getString('action', '', 'GET') === 'checkpath') {
-    $path                   = $_GET['var'];
-    $ctrl->xoopsPath[$path] = htmlspecialchars(trim($_GET['path']), ENT_QUOTES | ENT_HTML5);
-    echo genPathCheckHtml($path, $ctrl->checkPath($path));
-     exit(); // Important: Stop execution after AJAX response
+//if ($_SERVER['REQUEST_METHOD'] === 'GET' && @$_GET['var'] && Xmf\Request::getString('action', '', 'GET') === 'checkpath') {
+//    $path                   = $_GET['var'];
+//    $ctrl->xoopsPath[$path] = htmlspecialchars(trim($_GET['path']), ENT_QUOTES | ENT_HTML5);
+//    echo genPathCheckHtml($path, $ctrl->checkPath($path));
+//    exit();
+//}
+
+// install/page_pathsettings.php
+
+/*
+
+if ($_SERVER['REQUEST_METHOD'] === 'GET' && isset($_GET['var']) && isset($_GET['action']) && $_GET['action'] === 'checkpath') {
+    // Sanitize the input
+    $pathKey = htmlspecialchars(trim($_GET['var']), ENT_QUOTES | ENT_HTML5);
+    $newPath = htmlspecialchars(trim($_GET['path']), ENT_QUOTES | ENT_HTML5);
+
+    // Perform basic validation for the new path
+    if (!is_dir($newPath)) {
+        echo "Error: The specified path does not exist. Please verify the folder and try again.";
+        exit();
 }
+
+    // Update the XOOPS_TRUST_PATH dynamically if it's the library path
+    if ($pathKey === 'lib') {
+        // Update session and constant
+        $_SESSION['settings']['TRUST_PATH'] = $newPath;
+
+        if (!defined('XOOPS_TRUST_PATH')) {
+            define('XOOPS_TRUST_PATH', $newPath);
+        }
+
+        if (defined('XOOPS_TRUST_PATH') && XOOPS_TRUST_PATH !== $newPath ){
+//redefine XOOPS_TRUST_PATH if it is different from $newPath, because obviously the XOOPS_TRUST_PATH has been changed
+        }
+
+        $ctrl->updateXoopsTrustPath($newPath);
+
+//        if ($newPath) {
+//            try {
+//                $ctrl->updateXoopsTrustPath($newPath);
+//            } catch (RuntimeException $e) {
+//                $ctrl->validPath['lib'] = false;
+//                $ctrl->errorMessage = $e->getMessage();
+//            }
+//        } else {
+//            $ctrl->validPath['lib'] = false;
+//            $ctrl->errorMessage = "Invalid XOOPS library directory. Please check the path.";
+//        }
+//
+
+
+
+
+
+        // Check for the autoloader in the new path
+        $composerAutoloader = XOOPS_TRUST_PATH . '/vendor/autoload.php';
+        echo "$composerAutoloader";
+        if (!file_exists($composerAutoloader)) {
+            echo "Error: Could not find the Composer autoloader in the specified path.";
+            exit();
+        }
+
+        // Include the autoloader
+        require_once $composerAutoloader;
+    }
+
+    // Perform the path check
+    $ctrl->xoopsPath[$pathKey] = $newPath;
+    echo genPathCheckHtml($pathKey, $ctrl->checkPath($pathKey));
+    exit();
+}
+
+*/
+
+
+// Handle GET request for path checking
+if ($_SERVER['REQUEST_METHOD'] === 'GET' && isset($_GET['var']) && isset($_GET['action']) && $_GET['action'] === 'checkpath') {
+    // Sanitize input
+    $pathKey = htmlspecialchars(trim($_GET['var']), ENT_QUOTES | ENT_HTML5);
+    $newPath = htmlspecialchars(trim($_GET['path']), ENT_QUOTES | ENT_HTML5);
+
+    // Validate directory
+    if (!is_dir($newPath)) {
+        echo "Error: The specified path does not exist. Please verify the folder and try again.";
+        exit();
+    }
+
+    if ($pathKey === 'lib') {
+        // Update session and variable
+        $_SESSION['settings']['TRUST_PATH'] = $newPath;
+        $xoopsTrustPath = $newPath;
+
+        $ctrl->updateXoopsTrustPath($newPath);
+
+        // Check for Composer autoloader
+        $composerAutoloader = $xoopsTrustPath . '/vendor/autoload.php';
+        echo "$composerAutoloader";
+        if (!file_exists($composerAutoloader)) {
+            echo "Error: Could not find the Composer autoloader in the specified path.";
+            exit();
+        }
+
+        // Include the autoloader only once
+//        if (!class_exists('ComposerAutoloaderInit401aa2fe6008ca63602daf4ec1d196f2')) {
+        include_once $composerAutoloader;
+//        }
+    }
+
+    // Perform the path check
+    $ctrl->xoopsPath[$pathKey] = $newPath;
+    echo genPathCheckHtml($pathKey, $ctrl->checkPath($pathKey));
+    exit();
+}
+
+
 $ctrl->execute();
+//if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+//    return null;
+//}
+
+/*
+
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    return null;
+    if (isset($_POST['lib']) && $_POST['lib'] !== $ctrl->xoopsPath['lib']) {
+        $newTrustPath = $ctrl->sanitizePath(trim($_POST['lib']));
+
+        if ($newTrustPath) {
+            try {
+                $ctrl->updateXoopsTrustPath($newTrustPath);
+            } catch (RuntimeException $e) {
+                $ctrl->validPath['lib'] = false;
+                $ctrl->errorMessage = $e->getMessage();
 }
+        } else {
+            $ctrl->validPath['lib'] = false;
+            $ctrl->errorMessage = "Invalid XOOPS library directory. Please check the path.";
+        }
+    }
+}
+
+*/
+
+// Handle POST request for updating paths
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    if (isset($_POST['lib']) && $_POST['lib'] !== $ctrl->xoopsPath['lib']) {
+        $newTrustPath = $ctrl->sanitizePath(trim($_POST['lib']));
+
+        if ($newTrustPath && is_dir($newTrustPath)) {
+            $xoopsTrustPath = $newTrustPath;
+            $_SESSION['settings']['TRUST_PATH'] = $newTrustPath;
+
+            try {
+                $ctrl->updateXoopsTrustPath($newTrustPath);
+            } catch (RuntimeException $e) {
+                $ctrl->validPath['lib'] = false;
+                $ctrl->errorMessage = $e->getMessage();
+            }
+        } else {
+            $ctrl->validPath['lib'] = false;
+            $ctrl->errorMessage = "Invalid XOOPS library directory. Please check the path.";
+        }
+    }
+}
+
+// Include Composer autoloader if not already included
+//if (!class_exists('ComposerAutoloaderInit401aa2fe6008ca63602daf4ec1d196f2')) {
+//   include_once $xoopsTrustPath . '/vendor/autoload.php';
+//}
+
+
+
+
+
 ob_start();
 ?>
     <script type="text/javascript">
@@ -61,13 +224,28 @@ ob_start();
         }
 
         function updPath(key, val) {
+            // Remove trailing slashes
             val = removeTrailing(key, val);
+
+            // Perform AJAX request to validate the path
             $.get( "<?php echo $_SERVER['PHP_SELF']; ?>", { action: "checkpath", var: key, path: val } )
                 .done(function( data ) {
+                    // Update the path check result
                     $("#" + key + 'pathimg').html(data);
+                })
+                .fail(function() {
+                    console.error("Error while checking path for key:", key);
                 });
-            $("#" + key + 'perms').style.display = 'none';
+
+            // Hide permissions element if it exists
+            const permsElement = $("#" + key + 'perms')[0];
+            if (permsElement) {
+                permsElement.style.display = 'none';
+            } else {
+                console.warn("Permissions element with ID '" + key + "perms' not found.");
         }
+     }
+
     </script>
     <div class="panel panel-info">
         <div class="panel-heading"><?php echo XOOPS_PATHS; ?></div>

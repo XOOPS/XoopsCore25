@@ -265,6 +265,9 @@ function xoops_header($closehead = true)
     $headItems[] = '<script type="text/javascript" src="' . XOOPS_URL . '/include/xoops.js"></script>';
     $headItems[] = '<link rel="stylesheet" type="text/css" media="all" href="' . XOOPS_URL . '/xoops.css">';
     $headItems[] = '<link rel="stylesheet" type="text/css" media="all"  as="font" crossorigin="anonymous" href="' . XOOPS_URL . '/media/font-awesome6/css/fontawesome.min.css">';
+    $headItems[] = '<link rel="stylesheet" type="text/css" media="all"  as="font" crossorigin="anonymous" href="' . XOOPS_URL . '/media/font-awesome6/css/solid.min.css">';
+    $headItems[] = '<link rel="stylesheet" type="text/css" media="all"  as="font" crossorigin="anonymous" href="' . XOOPS_URL . '/media/font-awesome6/css/brands.min.css">';
+    $headItems[] = '<link rel="stylesheet" type="text/css" media="all"  as="font" crossorigin="anonymous" href="' . XOOPS_URL . '/media/font-awesome6/css/v4-shims.min.css">';
     $languageFile = 'language/' . $GLOBALS['xoopsConfig']['language'] . '/style.css';
     if (file_exists($GLOBALS['xoops']->path($languageFile))) {
         $headItems[] = '<link rel="stylesheet" type="text/css" media="all" href="' . $GLOBALS['xoops']->url($languageFile) . '">';

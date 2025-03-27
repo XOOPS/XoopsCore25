@@ -26,71 +26,73 @@ $pages = [
     'langselect'      => [
         'name'  => LANGUAGE_SELECTION,
         'title' => LANGUAGE_SELECTION_TITLE,
-        'icon'  => 'fa fa-fw fa-language',
+        'icon'  => 'fa-solid fa-language',
     ],
     'start'           => [
         'name'  => INTRODUCTION,
         'title' => INTRODUCTION_TITLE,
-        'icon'  => 'fa fa-fw fa-exclamation-circle',
+        'icon'  => 'fa-solid fa-circle-exclamation',
     ],
     'modcheck'        => [
         'name'  => CONFIGURATION_CHECK,
         'title' => CONFIGURATION_CHECK_TITLE,
-        'icon'  => 'fa fa-fw fa-server',
+        'icon'  => 'fa-solid fa-server',
     ],
     'pathsettings'    => [
         'name'  => PATHS_SETTINGS,
         'title' => PATHS_SETTINGS_TITLE,
-        'icon'  => 'fa fa-fw fa-folder-open',
+        'icon'  => 'fa-solid fa-folder-open',
     ],
     'dbconnection'    => [
         'name'  => DATABASE_CONNECTION,
         'title' => DATABASE_CONNECTION_TITLE,
-        'icon'  => 'fa fa-fw fa-exchange',
+        'icon'  => 'fa-solid fa-exchange',
     ],
     'dbsettings'      => [
         'name'  => DATABASE_CONFIG,
         'title' => DATABASE_CONFIG_TITLE,
-        'icon'  => 'fa fa-fw fa-database',
+        'icon'  => 'fa-solid fa-database',
     ],
     'configsave'      => [
         'name'  => CONFIG_SAVE,
         'title' => CONFIG_SAVE_TITLE,
-        'icon'  => 'fa fa-fw fa-download',
+        'icon'  => 'fa-solid fa-download',
     ],
     'tablescreate'    => [
         'name'  => TABLES_CREATION,
         'title' => TABLES_CREATION_TITLE,
-        'icon'  => 'fa fa-fw fa-sitemap',
+        'icon'  => 'fa-solid fa-sitemap',
     ],
     'siteinit'        => [
         'name'  => INITIAL_SETTINGS,
         'title' => INITIAL_SETTINGS_TITLE,
-        'icon'  => 'fa fa-fw fa-sliders',
+        'icon'  => 'fa-solid fa-sliders',
     ],
     'tablesfill'      => [
         'name'  => DATA_INSERTION,
         'title' => DATA_INSERTION_TITLE,
-        'icon'  => 'fa fa-fw fa-cloud-upload',
+        'icon'  => 'fa-solid fa-cloud-arrow-up',
     ],
     'configsite'      => [
         'name'  => CONFIG_SITE,
         'title' => CONFIG_SITE_TITLE,
-        'icon'  => 'fa fa-fw fa-edit',
+        'icon'  => 'fa-solid fa-edit',
     ],
     'theme'           => [
         'name'  => THEME,
         'title' => THEME_TITLE,
-        'icon'  => 'fa fa-fw fa-object-group',
+        'icon'  => 'fa-solid fa-object-group',
     ],
     'moduleinstaller' => [
         'name'  => MODULES,
         'title' => MODULES_TITLE,
-        'icon'  => 'fa fa-fw fa-cubes',
+        'icon'  => 'fa-solid fa-cubes',
     ],
     'end'             => [
         'name'  => WELCOME,
         'title' => WELCOME_TITLE,
-        'icon'  => 'fa fa-fw fa-thumbs-o-up',
+        'icon'  => 'fa-solid fa-thumbs-up',
     ],
 ];
+
+return $pages;
