@@ -30,31 +30,30 @@ defined('XOOPS_INSTALL') || die('XOOPS Installation wizard die');
 
 $pageHasForm = false;
 
-$content = '';
-include __DIR__ . "/language/{$wizard->language}/welcome.php";
+$content = include __DIR__ . "/language/{$wizard->language}/welcome.php";
 
 $writable = '<div class="alert alert-warning"><ul style="list-style: none;">';
 foreach ($wizard->configs['writable'] as $key => $value) {
     if (is_dir('../' . $value)) {
-        $writable .= '<li><span class="fa fa-fw fa-folder-open-o"></span> <strong>' . $value . '</strong></li>';
+        $writable .= '<li><span class="fa-solid fa-folder-open"></span> <strong>' . $value . '</strong></li>';
     } else {
-        $writable .= '<li><span class="fa fa-fw fa-file-code-o"></span> <strong>' . $value . '</strong></li>';
+        $writable .= '<li><span class="fa-solid fa-file-code"></span> <strong>' . $value . '</strong></li>';
     }
 }
 $writable .= '</ul></div>';
 
 $xoops_trust = '<div class="alert alert-warning"><ul style="list-style: none;">';
 foreach ($wizard->configs['xoopsPathDefault'] as $key => $value) {
-    $xoops_trust .= '<li><span class="fa fa-fw fa-folder-open-o"></span> <strong>' . $value . '</strong></li>';
+    $xoops_trust .= '<li><span class="fa-solid fa-folder-open"></span> <strong>' . $value . '</strong></li>';
 }
 $xoops_trust .= '</ul></div>';
 
 $writable_trust = '<div class="alert alert-warning"><ul style="list-style: none;">';
 foreach ($wizard->configs['dataPath'] as $key => $value) {
-    $writable_trust .= '<li><span class="fa fa-fw fa-folder-open-o"></span> <strong>' . $wizard->configs['xoopsPathDefault']['data'] . '/' . $key . '</strong></li>';
+    $writable_trust .= '<li><span class="fa-solid fa-folder-open"></span> <strong>' . $wizard->configs['xoopsPathDefault']['data'] . '/' . $key . '</strong></li>';
     if (is_array($value)) {
         foreach ($value as $key2 => $value2) {
-            $writable_trust .= '<li><span class="fa fa-fw fa-folder-open-o"></span> <strong>' . $wizard->configs['xoopsPathDefault']['data'] . '/' . $key . '/' . $value2 . '</strong></li>';
+            $writable_trust .= '<li><span class="fa-solid fa-folder-open"></span> <strong>' . $wizard->configs['xoopsPathDefault']['data'] . '/' . $key . '/' . $value2 . '</strong></li>';
         }
     }
 }

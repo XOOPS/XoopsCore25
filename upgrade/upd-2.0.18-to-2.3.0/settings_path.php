@@ -62,8 +62,8 @@ function genPathCheckHtml($path, $valid)
 }
 
 $vars = & $_SESSION['settings'];
-$ctrl = new PathStuffController();
-if ($res = $ctrl->execute()) {
+$pathController = new PathStuffController();
+if ($res = $pathController->execute()) {
     return $res;
 }
 
@@ -78,14 +78,14 @@ $myts = \MyTextSanitizer::getInstance();
         <label for="data"><?php echo XOOPS_DATA_PATH_LABEL; ?></label>
 
         <div class="xoform-help"><?php echo $myts->htmlSpecialChars(XOOPS_DATA_PATH_HELP, ENT_QUOTES, _UPGRADE_CHARSET, false); ?></div>
-        <span class="bold"><?php echo $ctrl->xoopsPath['data']; ?></span>
+        <span class="bold"><?php echo $pathController->xoopsPath['data']; ?></span>
 
-        <div><?php echo genPathCheckHtml('data', $ctrl->validPath['data']); ?></div>
-        <?php if ($ctrl->validPath['data'] && !empty($ctrl->permErrors['data'])) { ?>
+        <div><?php echo genPathCheckHtml('data', $pathController->validPath['data']); ?></div>
+        <?php if ($pathController->validPath['data'] && !empty($pathController->permErrors['data'])) { ?>
         <div id="dataperms" class="x2-note">
             <?php echo CHECKING_PERMISSIONS . '<br><p>' . ERR_NEED_WRITE_ACCESS . '</p>'; ?>
             <ul class="diags">
-                <?php foreach ($ctrl->permErrors['data'] as $path => $result) {
+                <?php foreach ($pathController->permErrors['data'] as $path => $result) {
                     if ($result) {
                         echo '<li class="success">' . sprintf(IS_WRITABLE, $path) . '</li>';
                     } else {
@@ -102,8 +102,8 @@ $myts = \MyTextSanitizer::getInstance();
         <label for="lib"><?php echo XOOPS_LIB_PATH_LABEL; ?></label>
 
         <div class="xoform-help"><?php echo $myts->htmlSpecialChars(XOOPS_LIB_PATH_HELP, ENT_QUOTES, _UPGRADE_CHARSET, false); ?></div>
-        <span class="bold"><?php echo $ctrl->xoopsPath['lib']; ?></span><br/>
-        <span><?php echo genPathCheckHtml('lib', $ctrl->validPath['lib']); ?></span>
+        <span class="bold"><?php echo $pathController->xoopsPath['lib']; ?></span><br/>
+        <span><?php echo genPathCheckHtml('lib', $pathController->validPath['lib']); ?></span>
 
     </fieldset>
     <input type="hidden" name="action" value="next"/>

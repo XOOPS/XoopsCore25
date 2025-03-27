@@ -110,3 +110,5 @@ $configs['dataPath'] = [
     'data'      => null,
     'protector' => null,
 ];
+
+return $configs;

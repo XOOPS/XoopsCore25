@@ -175,7 +175,7 @@ function xoDiag($status = -1, $str = '')
     if ($status == -1) {
         $GLOBALS['error'] = true;
     }
-    $classes = [-1 => 'fa fa-fw fa-ban text-danger', 0 => 'fa fa-fw fa-square-o text-warning', 1 => 'fa fa-fw fa-check text-success'];
+    $classes = [-1 => 'fa-solid fa-ban text-danger', 0 => 'fa-solid fa-square text-warning', 1 => 'fa-solid fa-check text-success'];
     $strings = [-1 => FAILED, 0 => WARNING, 1 => SUCCESS];
     if (empty($str)) {
         $str = $strings[$status];
@@ -259,7 +259,7 @@ function genPathCheckHtml($path, $valid)
                 break;
         }
 
-        return '<span class="pathmessage"><span class="fa fa-fw fa-check text-success"></span> ' . $msg . '</span>';
+        return '<span class="pathmessage"><span class="fa-solid fa-check text-success"></span> ' . $msg . '</span>';
     } else {
         switch ($path) {
             case 'root':
@@ -273,7 +273,7 @@ function genPathCheckHtml($path, $valid)
                 break;
         }
         $GLOBALS['error'] = true;
-        return '<div class="alert alert-danger"><span class="fa fa-fw fa-ban text-danger"></span> ' . $msg . '</div>';
+        return '<div class="alert alert-danger"><span class="fa-solid fa-ban text-danger"></span> ' . $msg . '</div>';
     }
 }
 
@@ -429,17 +429,55 @@ function xoFormFieldCharset($name, $value, $label, $help, $link)
  */
 function xoPutLicenseKey($system_key, $licensefile, $license_file_dist = 'license.dist.php')
 {
-    //chmod($licensefile, 0777);
+    // If file exists, ensure it's writable first
+    if (file_exists($licensefile)) {
+        if (!is_writable($licensefile)) {
+            // Try to make it writable
+            if (!chmod($licensefile, 0666)) {
+                return 'Error: Unable to make license file writable';
+            }
+        }
+    } else {
+        // Check if directory is writable
+        $dir = dirname($licensefile);
+        if (!is_writable($dir)) {
+            return 'Error: Directory is not writable';
+        }
+    }
+
+    // Open file with error checking
     $fver     = fopen($licensefile, 'w');
+    if ($fver === false) {
+        return 'Error: Unable to open license file for writing';
+    }
+
+    // Read distribution file with error checking
+    if (!is_readable($license_file_dist)) {
+        fclose($fver);
+        return 'Error: Distribution license file is not readable';
+    }
+
     $fver_buf = file($license_file_dist);
+    if ($fver_buf === false) {
+        fclose($fver);
+        return 'Error: Unable to read distribution license file';
+    }
+
+
+    // Write the contents
     foreach ($fver_buf as $line => $value) {
         $ret = $value;
         if (strpos($value, 'XOOPS_LICENSE_KEY') > 0) {
-            $ret = 'define(\'XOOPS_LICENSE_KEY\', \'' . $system_key . "');";
+            $ret = 'define(\'XOOPS_LICENSE_KEY\', \'' . $system_key . "');\n";
         }
-        fwrite($fver, $ret, strlen($ret));
+        if (fwrite($fver, $ret) === false) {
+            fclose($fver);
+            return 'Error: Failed to write to license file';
+        }
     }
     fclose($fver);
+
+    // Set final permissions
     chmod($licensefile, 0444);
 
     return sprintf(WRITTEN_LICENSE, XOOPS_LICENSE_CODE, $system_key);
@@ -448,12 +486,13 @@ function xoPutLicenseKey($system_key, $licensefile, $license_file_dist = 'licens
 /**
  * *#@+
  * Xoops Build Licence System Key
+ * @throws \Random\RandomException
  */
 function xoBuildLicenceKey()
 {
     $xoops_serdat = [];
     $checksums = [1 => 'md5', 2 => 'sha1'];
-    $type      = mt_rand(1, 2);
+    $type      = random_int(1, 2);
     $func      = $checksums[$type];
 
     error_reporting(0);
@@ -487,7 +526,7 @@ function xoBuildLicenceKey()
         $xoops_key .= $data;
     }
     while (strlen($xoops_key) > 40) {
-        $lpos      = mt_rand(18, strlen($xoops_key));
+        $lpos      = random_int(18, strlen($xoops_key));
         $xoops_key = substr($xoops_key, 0, $lpos) . substr($xoops_key, $lpos + 1, strlen($xoops_key) - ($lpos + 1));
     }
 

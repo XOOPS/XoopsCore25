@@ -19,13 +19,24 @@ $xoopsOption['hascommon']  = true;
 require_once __DIR__ . '/include/common.inc.php';
 defined('XOOPS_INSTALL') || die('XOOPS Installation wizard die');
 
-if (!@include_once __DIR__ . "/../language/{$wizard->language}/global.php") {
+$adminLangFile = __DIR__ . "/../language/{$wizard->language}/global.php";
+if (file_exists($adminLangFile)) {
+    include_once $adminLangFile;
+} else {
     include_once __DIR__ . '/../language/english/global.php';
 }
-if (!@include_once __DIR__ . "/../modules/system/language/{$wizard->language}/admin.php") {
+
+$adminLangFile = __DIR__ . "/../modules/system/language/{$wizard->language}/admin.php";
+if (file_exists($adminLangFile)) {
+    include_once $adminLangFile;
+} else {
     include_once __DIR__ . '/../modules/system/language/english/admin.php';
 }
-if (!@include_once __DIR__ . "/../modules/system/language/{$wizard->language}/admin/modulesadmin.php") {
+
+$adminPrefsLangFile = __DIR__ . "/../modules/system/language/{$wizard->language}/admin/modulesadmin.php";
+if (file_exists($adminPrefsLangFile)) {
+    include_once $adminPrefsLangFile;
+} else {
     include_once __DIR__ . '/../modules/system/language/english/admin/modulesadmin.php';
 }
 
@@ -58,7 +69,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $pageHasForm = false;
 
     if (count($msgs) > 0) {
-        $content = '<div class="alert alert-success"><span class="fa fa-check text-success"></span> '
+        $content = '<div class="alert alert-success"><span class="fa-solid fa-check text-success"></span> '
             . INSTALLED_MODULES . '</div><div class="well"><ul class="list-unstyled">';
         foreach ($msgs as $msg) {
             $noAnchors = preg_replace(['"<a (.*?)>"', '"</a>"'], ['', ''], $msg);
@@ -66,7 +77,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         }
         $content .= '</ul></div>';
     } else {
-        $content = '<div class="alert alert-info"><span class="fa fa-info-circle text-info"></span> ' . NO_INSTALLED_MODULES . '</div>';
+        $content = '<div class="alert alert-info"><span class="fa-solid fa-circle-info text-info"></span> ' . NO_INSTALLED_MODULES . '</div>';
     }
 
     // Flush cache files for cpanel GUIs
@@ -152,7 +163,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $content .= "<script type='text/javascript'>" . $javascript . '</script>';
     if ($toinstal == 0) {
         $pageHasForm = false;
-        $content     = '<div class="alert alert-info"><span class="fa fa-info-circle text-info"></span> ' . NO_MODULES_FOUND . '</div>';
+        $content     = '<div class="alert alert-info"><span class="fa-solid fa-circle-info text-info"></span> ' . NO_MODULES_FOUND . '</div>';
     }
 }
 

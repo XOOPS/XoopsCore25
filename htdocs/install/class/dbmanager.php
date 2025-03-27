@@ -40,9 +40,9 @@ include_once XOOPS_ROOT_PATH . '/class/database/sqlutility.php';
  **/
 class Db_manager
 {
-    public $s_tables = [];
-    public $f_tables = [];
-    public $db;
+    public array $s_tables = [];
+    public array $f_tables = [];
+    public object $db;
 
     /**
      * Db_manager constructor.
@@ -159,13 +159,13 @@ class Db_manager
         return true;
     }
 
-    public $successStrings = [
+    public array $successStrings = [
         'create' => TABLE_CREATED,
         'insert' => ROWS_INSERTED,
         'alter'  => TABLE_ALTERED,
         'drop'   => TABLE_DROPPED,
     ];
-    public $failureStrings = [
+    public array $failureStrings = [
         'create' => TABLE_NOT_CREATED,
         'insert' => ROWS_FAILED,
         'alter'  => TABLE_NOT_ALTERED,
@@ -257,15 +257,15 @@ class Db_manager
             }
 
             return false;
-        } else {
-            if (!isset($this->s_tables['insert'][$table])) {
-                $this->s_tables['insert'][$table] = 1;
-            } else {
-                $this->s_tables['insert'][$table]++;
-            }
-
-            return $this->db->getInsertId();
         }
+        if (!isset($this->s_tables['insert'][$table])) {
+            $this->s_tables['insert'][$table] = 1;
+        } else {
+            $this->s_tables['insert'][$table]++;
+        }
+
+        return $this->db->getInsertId();
+
     }
 
     /**

@@ -25,11 +25,11 @@
  */
 class XoopsInstallWizard
 {
-    public $language    = 'english';
-    public $pages       = [];
-    public $currentPage = 'langselect';
-    public $pageIndex   = 0;
-    public $configs     = [];
+    public string $language    = 'english';
+    public array $pages       = [];
+    public string $currentPage = 'langselect';
+    public int $pageIndex   = 0;
+    public array $configs     = [];
     public $form;
 
     /**
@@ -37,18 +37,18 @@ class XoopsInstallWizard
      */
     public function xoInit()
     {
-        if (@empty($_SERVER['REQUEST_URI'])) {
+        if (!isset($_SERVER['REQUEST_URI']) || empty($_SERVER['REQUEST_URI'])) {
             $_SERVER['REQUEST_URI'] = $_SERVER['PHP_SELF'];
         }
 
         // Load the main language file
         $this->initLanguage(!empty($_COOKIE['xo_install_lang']) ? $_COOKIE['xo_install_lang'] : 'english');
         // Setup pages
-        include_once __DIR__ . '/../include/page.php';
+        $pages = include __DIR__ . '/../include/page.php';
         $this->pages = $pages;
 
         // Load default configs
-        include_once __DIR__ . '/../include/config.php';
+        $configs = include __DIR__ . '/../include/config.php';
         $this->configs = $configs;
         /*
         // Database type
@@ -210,9 +210,9 @@ class XoopsInstallWizard
         $pageIndex = $this->pageIndex;
         if (!(int)$page[0]) {
             if ($page[0] == '+') {
-                $pageIndex += substr($page, 1);
+                $pageIndex += (int)substr($page, 1);
             } elseif ($page[0] == '-') {
-                $pageIndex -= substr($page, 1);
+                $pageIndex -= (int)substr($page, 1);
             } else {
                 $pageIndex = (int)array_search($page, $pages);
             }

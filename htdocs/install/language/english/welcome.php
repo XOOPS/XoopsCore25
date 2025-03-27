@@ -4,7 +4,7 @@
 // _CHARSET : UTF-8
 // Translator: XOOPS Translation Team
 
-$content .= '
+$content = '
 <p>
     <abbr title="eXtensible Object-Oriented Portal System">XOOPS</abbr> is an open-source
     Object-Oriented Web publishing system written in PHP. It is an ideal tool for
@@ -47,3 +47,6 @@ $content .= '
  Consult your system documentation and/or systems administrator.
 </p>
 ';
+
+return $content;
+
