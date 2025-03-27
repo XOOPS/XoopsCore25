@@ -26,7 +26,7 @@ $modversion['help']        = 'page=blocksadmin';
 $modversion['license']     = 'GPL see LICENSE';
 $modversion['official']    = 1;
 $modversion['image']       = 'blocks.png';
-$modversion['icon']        = 'fa fa-cubes';
+$modversion['icon']        = 'fa-solid fa-cubes';
 
 $modversion['hasAdmin']  = 1;
 $modversion['adminpath'] = 'admin.php?fct=blocksadmin';

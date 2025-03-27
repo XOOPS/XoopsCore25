@@ -38,18 +38,18 @@
 
     <{if isset($xoops_iscommentadmin) && $xoops_iscommentadmin == true}>
         <td class="even txtright">
-            <button type="button" class="btn btn-default" onclick="window.location.href = '<{$editcomment_link}>&amp;com_id=<{$comment.id}>'" title="<{$lang_edit}>"><span class="fa fa-pencil-square-o fa-fw"></span></button>
-            <button type="button" class="btn btn-default" onclick="window.location.href = '<{$deletecomment_link}>&amp;com_id=<{$comment.id}>'" title="<{$lang_delete}>"><span class="fa fa-remove fa-fw"></span></button>
-            <button type="button" class="btn btn-default" onclick="window.location.href = '<{$replycomment_link}>&amp;com_id=<{$comment.id}>'" title="<{$lang_reply}>"><span class="fa fa-reply fa-fw"></span></button>
+            <button type="button" class="btn btn-default" onclick="window.location.href = '<{$editcomment_link}>&amp;com_id=<{$comment.id}>'" title="<{$lang_edit}>"><span class="fa-solid fa-pen-to-square fa-fw"></span></button>
+            <button type="button" class="btn btn-default" onclick="window.location.href = '<{$deletecomment_link}>&amp;com_id=<{$comment.id}>'" title="<{$lang_delete}>"><span class="fa-solid fa-xmark fa-fw"></span></button>
+            <button type="button" class="btn btn-default" onclick="window.location.href = '<{$replycomment_link}>&amp;com_id=<{$comment.id}>'" title="<{$lang_reply}>"><span class="fa-solid fa-reply fa-fw"></span></button>
         </td>
     <{elseif $xoops_isuser == true && $xoops_userid == $comment.poster.id}>
         <td class="even txtright">
-            <button type="button" class="btn btn-default" onclick="window.location.href = '<{$editcomment_link}>&amp;com_id=<{$comment.id}>'" title="<{$lang_edit}>"><span class="fa fa-pencil-square-o fa-fw"></span></button>
-            <button type="button" class="btn btn-default" onclick="window.location.href = '<{$replycomment_link}>&amp;com_id=<{$comment.id}>'" title="<{$lang_reply}>"><span class="fa fa-reply fa-fw"></span></button>
+            <button type="button" class="btn btn-default" onclick="window.location.href = '<{$editcomment_link}>&amp;com_id=<{$comment.id}>'" title="<{$lang_edit}>"><span class="fa-solid fa-pen-to-square fa-fw"></span></button>
+            <button type="button" class="btn btn-default" onclick="window.location.href = '<{$replycomment_link}>&amp;com_id=<{$comment.id}>'" title="<{$lang_reply}>"><span class="fa-solid fa-reply fa-fw"></span></button>
         </td>
     <{elseif $xoops_isuser == true || $anon_canpost == true}>
         <td class="even txtright">
-            <button type="button" class="btn btn-default" onclick="window.location.href = '<{$replycomment_link}>&amp;com_id=<{$comment.id}>'" title="<{$lang_reply}>"><span class="fa fa-reply fa-fw"></span></button>
+            <button type="button" class="btn btn-default" onclick="window.location.href = '<{$replycomment_link}>&amp;com_id=<{$comment.id}>'" title="<{$lang_reply}>"><span class="fa-solid fa-reply fa-fw"></span></button>
         </td>
     <{else}>
         <td class="even"></td>

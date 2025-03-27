@@ -20,8 +20,7 @@
 <div class="table-responsive">
     <table class="table table-bordered table-hover">
         <tr style="text-align:center;">
-            <td colspan="2" class="even"><a
-                        href="<{$xoops_url}>/modules/extcal/view_calendar-week.php?<{$navig.prev.uri}>">
+            <td colspan="2" class="even"><a href="<{$xoops_url}>/modules/extcal/view_calendar-week.php?<{$navig.prev.uri}>">
                     &lt;&lt; <{$navig.prev.name}></a></td>
             <td colspan="3" class="even"><span style="font-weight:bold;"><{$navig.this.name}></span>
             </td>
@@ -71,7 +70,6 @@
     </table>
 </div>
 
-<div style="text-align:right;"><a
-            href="<{$xoops_url}>/modules/extcal/rss.php?cat=<{$selectedCat|default:''}>"><img
-                src="assets/images/icons/rss.gif" alt="RSS Feed"/></a></div>
+<div style="text-align:right;"><a href="<{$xoops_url}>/modules/extcal/rss.php?cat=<{$selectedCat|default:''}>">
+    <img src="assets/images/icons/rss.gif" alt="RSS Feed"/></a></div>
 <{include file='db:system_notification_select.tpl'}>

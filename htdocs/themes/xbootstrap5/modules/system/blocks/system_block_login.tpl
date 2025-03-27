@@ -24,7 +24,7 @@
         <input type="submit" class="btn btn-primary w-100 btn-sm" value="<{$block.lang_login}>">
         <{$block.sslloginlink|default:''}>
     </form>
-    <a class="btn btn-info btn-xs w-100" href="<{xoAppUrl 'user.php#lost'}>" title="<{$block.lang_lostpass}>"><{$block.lang_lostpass}></a>
+    <a class="btn btn-info btn-sm w-100" href="<{xoAppUrl 'user.php#lost'}>" title="<{$block.lang_lostpass}>"><{$block.lang_lostpass}></a>
 
-    <a class="btn btn-info btn-xs w-100" href="<{xoAppUrl 'register.php'}>" title="<{$block.lang_registernow}>"><{$block.lang_registernow}></a>
+    <a class="btn btn-info btn-sm w-100" href="<{xoAppUrl 'register.php'}>" title="<{$block.lang_registernow}>"><{$block.lang_registernow}></a>
 </div>

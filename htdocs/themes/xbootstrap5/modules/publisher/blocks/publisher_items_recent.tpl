@@ -22,5 +22,5 @@
 </table>
 
 <div style="text-align:right; padding: 5px;">
-    <a class="btn btn-primary btn-xs" href="<{$publisher_url|default:''}>"><{$block.lang_visitItem}></a>
+    <a class="btn btn-primary btn-sm" href="<{$publisher_url|default:''}>"><{$block.lang_visitItem}></a>
 </div>

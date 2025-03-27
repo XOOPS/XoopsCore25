@@ -144,7 +144,7 @@ function tplScannerForm($parameters=null)
 
     $form .= '<div class="form-group">';
     $form .= '<button class="btn btn-lg btn-success" type="submit">' . _XOOPS_SMARTY4_SCANNER_RUN;
-    $form .= '  <span class="fa fa-caret-right"></span></button>';
+    $form .= '  <span class="fa-solid fa-caret-right"></span></button>';
     $form .= '</div>';
 
     $form .= '</form>';
@@ -152,7 +152,7 @@ function tplScannerForm($parameters=null)
     $form .= '<form action="' . $action . '" method="post" class="form-horizontal">';
     $form .= '<div class="form-group">';
     $form .= '<button class="btn btn-lg btn-danger" type="submit">' . _XOOPS_SMARTY4_SCANNER_END;
-    $form .= '  <span class="fa fa-caret-right"></span></button>';
+    $form .= '  <span class="fa-solid fa-caret-right"></span></button>';
     $form .= '<input type="hidden" name="endscan" value="yes">';
     $form .= '</div>';
 

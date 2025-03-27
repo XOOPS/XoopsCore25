@@ -8,11 +8,11 @@
         <div class="col-sm-4 col-md-4" style="margin-bottom: 10px;">
             <{/if}>
             <{if $selected_category|default:0 == $category.categoryid}>
-                <h4 class="info"><span class="fa fa-paperclip"></span>&nbsp;
+                <h4 class="info"><span class="fa-solid fa-paperclip"></span>&nbsp;
                     <{$category.name}>
                 </h4>
             <{else}>
-                <h4 class="info"><span class="fa fa-paperclip" style="color:#4087C4;"></span>&nbsp;
+                <h4 class="info"><span class="fa-solid fa-paperclip" style="color:#4087C4;"></span>&nbsp;
                     <{$category.categorylink}>
                 </h4>
             <{/if}>

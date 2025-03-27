@@ -12,7 +12,7 @@
     <{/if}>
     <div style="padding: 10px;">
         <h4><{$item.titlelink}></h4>
-        <{if isset($display_whowhen_link)}>
+        <{if !empty($display_whowhen_link)}>
             <small><{$item.who_when}> (<{$item.counter}> <{$lang_reads}>)</small>
         <{/if}>
         <div style="margin-top:10px;">

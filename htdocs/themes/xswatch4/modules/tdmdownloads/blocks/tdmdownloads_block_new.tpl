@@ -1,6 +1,6 @@
 <ul class="list-unstyled tdm-new-download-block">
     <{foreach item=downloads from=$block|default:null}>
-    <li><i class="fa fa-fw fa-cloud-download"></i>
+    <li><i class="fa-solid fa-cloud-arrow-down"></i>
         <a title="<{$downloads.title}>" href="<{$xoops_url}>/modules/tdmdownloads/singlefile.php?lid=<{$downloads.lid}>">
             <{$downloads.title}>
         </a>

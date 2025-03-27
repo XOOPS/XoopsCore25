@@ -32,7 +32,7 @@
     <{/if}>
 
         <br><a class="btn btn-warning" title="<{$smarty.const._MD_TDMDOWNLOADS_RSS}>" href="<{$xoops_url}>/modules/tdmdownloads/rss.php?cid=<{$category_id}>">
-            <span class="fa fa-fw fa-rss"></span>
+            <span class="fa-solid fa-rss"></span>
         </a>
     </div>
     </div>
@@ -41,7 +41,7 @@
                 <div class="col-md-12"><h2><{$smarty.const._MD_TDMDOWNLOADS_INDEX_BLNAME}>:</h1></div>
                 <div class="col-sm-4 col-md-4">
                 <{if !empty($bl_date)}>
-                    <h3 class="tdm-title"><span class="fa fa-calendar"></span> <{$smarty.const._MD_TDMDOWNLOADS_INDEX_BLDATE}></h3>
+                    <h3 class="tdm-title"><span class="fa-solid fa-calendar"></span> <{$smarty.const._MD_TDMDOWNLOADS_INDEX_BLDATE}></h3>
                     <ul class="list-unstyled">
                         <{foreach item=bl_dateitem from=$bl_date|default:null}>
                             <li>
@@ -55,7 +55,7 @@
                 <{/if}>
                 <{if !empty($bl_pop)}>
                     <div class="col-sm-4 col-md-4">
-                        <h3 class="tdm-title"><span class="fa fa-star"></span> <{$smarty.const._MD_TDMDOWNLOADS_INDEX_BLPOP}></h3>
+                        <h3 class="tdm-title"><span class="fa-solid fa-star"></span> <{$smarty.const._MD_TDMDOWNLOADS_INDEX_BLPOP}></h3>
                         <ul class="list-unstyled">
                             <{foreach item=bl_popitem from=$bl_pop|default:null}>
                                 <li>
@@ -69,7 +69,7 @@
                 <{/if}>
                 <{if !empty($bl_rating)}>
                     <div class="col-sm-4 col-md-4">
-                        <h3 class="tdm-title"><span class="fa fa-thumbs-o-up"></span> <{$smarty.const._MD_TDMDOWNLOADS_INDEX_BLRATING}></h3>
+                        <h3 class="tdm-title"><span class="fa-solid fa-thumbs-up"></span> <{$smarty.const._MD_TDMDOWNLOADS_INDEX_BLRATING}></h3>
                         <ul class="list-unstyled">
                             <{foreach item=bl_ratingitem from=$bl_rating|default:null}>
                                 <li>
@@ -93,49 +93,49 @@
         <div class="row order-by">
             <{if isset($navigation) && $navigation == true}>
                 <div class="col-md-12"><h3 class="tdm-title"><{$smarty.const._MD_TDMDOWNLOADS_CAT_SORTBY}></h3></div>
-                <div class="col-xs-3 col-sm-3 col-md-3">
+                <div class="col-3 col-sm-3 col-md-3">
                     <{$smarty.const._MD_TDMDOWNLOADS_CAT_TITLE}>
                     <a title="<{$smarty.const._MD_TDMDOWNLOADS_CAT_TITLEATOZ}>"
                        href="<{$xoops_url}>/modules/tdmdownloads/viewcat.php?cid=<{$category_id}>&amp;sort=title&amp;order=ASC">
-                        <span class="fa fa-chevron-up"></span>
+                        <span class="fa-solid fa-chevron-up"></span>
                     </a>
 
                     <a title="<{$smarty.const._MD_TDMDOWNLOADS_CAT_TITLEZTOA}>"
                        href="<{$xoops_url}>/modules/tdmdownloads/viewcat.php?cid=<{$category_id}>&amp;sort=title&amp;order=DESC">
-                        <span class="fa fa-chevron-down"></span>
+                        <span class="fa-solid fa-chevron-down"></span>
                     </a>
                 </div>
-                <div class="col-xs-3 col-sm-3 col-md-3">
+                <div class="col-3 col-sm-3 col-md-3">
                     <{$smarty.const._MD_TDMDOWNLOADS_CAT_DATE}>
                     <a title="<{$smarty.const._MD_TDMDOWNLOADS_CAT_DATEOLD}>"
                        href="<{$xoops_url}>/modules/tdmdownloads/viewcat.php?cid=<{$category_id}>&amp;sort=date&amp;order=ASC">
-                        <span class="fa fa-chevron-up"></span>
+                        <span class="fa-solid fa-chevron-up"></span>
                     </a>
                     <a title="<{$smarty.const._MD_TDMDOWNLOADS_CAT_DATENEW}>"
                        href="<{$xoops_url}>/modules/tdmdownloads/viewcat.php?cid=<{$category_id}>&amp;sort=date&amp;order=DESC">
-                        <span class="fa fa-chevron-down"></span>
+                        <span class="fa-solid fa-chevron-down"></span>
                     </a>
                 </div>
-                <div class="col-xs-3 col-sm-3 col-md-3">
+                <div class="col-3 col-sm-3 col-md-3">
                     <{$smarty.const._MD_TDMDOWNLOADS_CAT_RATING}>
                     <a title="<{$smarty.const._MD_TDMDOWNLOADS_CAT_RATINGLTOH}>"
                        href="<{$xoops_url}>/modules/tdmdownloads/viewcat.php?cid=<{$category_id}>&amp;sort=rating&amp;order=ASC">
-                        <span class="fa fa-chevron-up"></span>
+                        <span class="fa-solid fa-chevron-up"></span>
                     </a>
                     <a title="<{$smarty.const._MD_TDMDOWNLOADS_CAT_RATINGHTOL}>"
                        href="<{$xoops_url}>/modules/tdmdownloads/viewcat.php?cid=<{$category_id}>&amp;sort=rating&amp;order=DESC">
-                        <span class="fa fa-chevron-down"></span>
+                        <span class="fa-solid fa-chevron-down"></span>
                     </a>
                 </div>
-                <div class="col-xs-3 col-sm-3 col-md-3">
+                <div class="col-3 col-sm-3 col-md-3">
                     <{$smarty.const._MD_TDMDOWNLOADS_CAT_POPULARITY}>
                     <a title="<{$smarty.const._MD_TDMDOWNLOADS_CAT_POPULARITYLTOM}>"
                        href="<{$xoops_url}>/modules/tdmdownloads/viewcat.php?cid=<{$category_id}>&amp;sort=hits&amp;order=ASC">
-                        <span class="fa fa-chevron-up"></span>
+                        <span class="fa-solid fa-chevron-up"></span>
                     </a>
                     <a title="<{$smarty.const._MD_TDMDOWNLOADS_CAT_POPULARITYMTOL}>"
                        href="<{$xoops_url}>/modules/tdmdownloads/viewcat.php?cid=<{$category_id}>&amp;sort=hits&amp;order=DESC">
-                        <span class="fa fa-chevron-down"></span>
+                        <span class="fa-solid fa-chevron-down"></span>
                     </a>
                 </div>
                 <div class="clearfix"></div>

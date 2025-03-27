@@ -19,16 +19,16 @@
                 <div class="article_wf_title">
                     <h3><{$item.titlelink}></h3>
                     <span>
-                        <span class="fa fa-tag"></span>&nbsp;<{$item.category}>
+                        <span class="fa-solid fa-tag"></span>&nbsp;<{$item.category}>
                     </span>
                     <span>
-                        <span class="fa fa-user"></span>&nbsp;<{$item.who}>
+                        <span class="fa-solid fa-user"></span>&nbsp;<{$item.who}>
                     </span>
                     <span>
-                        <span class="fa fa-calendar"></span>&nbsp;<{$item.when}>
+                        <span class="fa-solid fa-calendar"></span>&nbsp;<{$item.when}>
                     </span>
                     <span>
-                        <span class="fa fa-comment"></span>&nbsp;<{$item.comments}>
+                        <span class="fa-solid fa-comment"></span>&nbsp;<{$item.comments}>
                     </span>
                 </div>
                 <{if !empty($item.image_path)}>
@@ -42,7 +42,7 @@
 
                 <{if $block.truncate}>
                     <div class="pull-right" style="margin-top: 15px;">
-                        <a href="<{$item.itemurl}>" class="btn btn-primary btn-xs">
+                        <a href="<{$item.itemurl}>" class="btn btn-primary btn-sm">
                             <{$block.lang_readmore}>
                         </a>
                     </div>

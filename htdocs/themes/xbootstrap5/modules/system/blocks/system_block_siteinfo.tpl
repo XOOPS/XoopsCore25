@@ -1,6 +1,6 @@
 <table class="outer">
 
-    <{if $block.showgroups == true}>
+    <{if isset($block.showgroups) && $block.showgroups == true}>
 
         <!-- start group loop -->
         <{foreach item=group from=$block.groups|default:null}>
@@ -16,7 +16,7 @@
                     </td>
                     <td class="odd width20 txtright alignmiddle">
                         <a href="javascript:openWithSelfMain('<{$xoops_url}>/pmlite.php?send2=1&to_userid=<{$user.id}>','pmlite',565,500);">
-                            <span class="fa fa-envelope fa-lg" aria-hidden="true"></span>
+                            <span class="fa-solid fa-envelope fa-lg" aria-hidden="true"></span>
                         </a>
                     </td>
                 </tr>

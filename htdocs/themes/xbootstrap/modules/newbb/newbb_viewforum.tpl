@@ -29,7 +29,7 @@
 
         <{if !empty($forum_topictype)}><{$forum_topictype}><{/if}>
 
-        <{if isset($forum_topicstatus)}>
+            <{if !empty($forum_topicstatus)}>
             <span class="btn btn-info"><{$forum_topicstatus}></span>
         <{else}>
             <a href="<{$xoops_url}>/modules/<{$xoops_dirname}>/viewforum.php?forum=<{$forum_id}>&amp;status=digest" title="<{$smarty.const._MD_NEWBB_DIGEST}>" class="btn btn-info">

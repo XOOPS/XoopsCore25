@@ -2,7 +2,7 @@
     <div class="alert alert-success">
         <{$search_info}>
     </div>
-    <{if isset($results)}>
+    <{if !empty($results)}>
         <{foreach item=result from=$results|default:null}>
         <div class="item" style="font-size: 12px;">
             <h4 style="margin-bottom: 1px; padding-bottom: 0;"><a href="<{$result.link|default:''}>"><{$result.title|default:''}></a></h4>
@@ -37,7 +37,7 @@
         <label class="col-sm-2 control-label"><{$smarty.const._CO_PUBLISHER_CATEGORY}></label>
 
         <div class="col-sm-10">
-            <{$category_select}>
+            <{$category_select|default:''}>
         </div>
     </div>
     <div class="form-group">

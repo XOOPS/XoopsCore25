@@ -112,7 +112,7 @@ if (!$xoopsUser || !$xoopsUser->isAdmin()) {
                 . '<div class="panel-heading">' . _SET_FILES_WRITABLE . '</div>'
                 . '<div class="panel-body"><ul class="fa-ul">';
             foreach ($upgradeControl->needWriteFiles as $file) {
-                echo '<li><i class="fa-li fa fa-ban text-danger"></i>' . $file . '</li>';
+                echo '<li><i class="fa-li fa-solid fa-ban text-danger"></i>' . $file . '</li>';
                 $GLOBALS['error'] = true;
             }
             echo '</ul></div></div>';

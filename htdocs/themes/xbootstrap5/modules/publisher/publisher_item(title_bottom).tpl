@@ -49,7 +49,7 @@
     </header>
     <div class="pub_article_t_bottom_info">
         <div class="">
-            <span class="fa fa-paperclip"></span>&nbsp;<{$item.category}>
+            <span class="fa-solid fa-paperclip"></span>&nbsp;<{$item.category}>
             &nbsp;&nbsp;<{$item.who_when}>
         </div>
         <div class="">

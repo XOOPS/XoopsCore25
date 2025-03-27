@@ -27,19 +27,19 @@
         <h2>
             <{$item.titlelink}>
             <span style="font-size: 11px; padding: 0; margin: 0; line-height: 12px; opacity:0.8;-moz-opacity:0.8;">
-                    <span class="fa fa-tag"></span>&nbsp;<{$item.category}>
+                    <span class="fa-solid fa-tag"></span>&nbsp;<{$item.category}>
                 </span>
             <span style="font-size: 11px; padding: 0 0 0 16px; margin: 0; line-height: 12px; opacity:0.8;-moz-opacity:0.8;">
-                    <span class="fa fa-user"></span>&nbsp;<{$item.who}>
+                    <span class="fa-solid fa-user"></span>&nbsp;<{$item.who}>
                 </span>
             <span style="font-size: 11px; padding: 0 0 0 16px; margin: 0; line-height: 12px; opacity:0.8;-moz-opacity:0.8;">
-                    <span class="fa fa-calendar"></span>&nbsp;<{$item.when}>
+                    <span class="fa-solid fa-calendar"></span>&nbsp;<{$item.when}>
                 </span>
             <span style="font-size: 11px; padding: 0 0 0 16px; margin: 0; line-height: 12px; opacity:0.8;-moz-opacity:0.8;">
-                    <span class="fa fa-comment"></span>&nbsp;<{$item.comments}>
+                    <span class="fa-solid fa-comment"></span>&nbsp;<{$item.comments}>
                 </span>
             <span style="font-size: 11px; padding: 0 0 0 16px; margin: 0; line-height: 12px; opacity:0.8;-moz-opacity:0.8;">
-                    <span class="fa fa-check-circle"></span>&nbsp;<{$item.counter}> <{$smarty.const._MD_PUBLISHER_READS}>
+                    <span class="fa-solid fa-circle-check"></span>&nbsp;<{$item.counter}> <{$smarty.const._MD_PUBLISHER_READS}>
                 </span>
         </h2>
 

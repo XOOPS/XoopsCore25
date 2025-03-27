@@ -1,11 +1,11 @@
-<{if isset($search_info)}>
+<{if !empty($search_info)}>
     <div class="alert alert-success">
         <{$search_info}>
     </div>
-    <{if isset($results)}>
+    <{if !empty($results)}>
         <{foreach item=result from=$results|default:null}>
         <div class="item" style="font-size: 12px;">
-            <h4 style="margin-bottom: 1px; padding-bottom: 0;"><a href="<{$result.link}>"><{$result.title}></a></h4>
+            <h4 style="margin-bottom: 1px; padding-bottom: 0;"><a href="<{$result.link|default:''}>"><{$result.title|default:''}></a></h4>
             <{$result.author}> <{$result.datesub}>
             <{if $result.text}>
                 <br>

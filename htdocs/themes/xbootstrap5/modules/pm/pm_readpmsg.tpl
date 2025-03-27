@@ -25,7 +25,7 @@
 
 <div class="row message-body">
     <form name="<{$pmform.name}>" id="<{$pmform.name}>" action="<{$pmform.action}>" method="<{$pmform.method}>" <{$pmform.extra}>="">
-    <div class="col-xs-4 col-md-4 sender-info">
+    <div class="col-4 col-md-4 sender-info">
     <{if $op==out}><strong><{$smarty.const._PM_TO}>: </strong><{else}><strong><{$smarty.const._PM_FROM}>: </strong><{/if}>
     <{if ( $poster != false ) }>
         <a href="<{$xoops_url}>/userinfo.php?uid=<{$poster->getVar('uid')}>"><{$poster->getVar('uname')}></a>
@@ -43,7 +43,7 @@
     <{/if}>
 </div><!-- .sender-info -->
 
-<div class="col-xs-8 col-md-8 message-read">
+<div class="col-8 col-md-8 message-read">
     <p class="label label-info"><strong><{$smarty.const._PM_SENTC}> </strong><{$message.msg_time}></p>
 
     <p><{$message.msg_text}></p>
@@ -51,9 +51,9 @@
 </div><!-- .message-read -->
 </form></div>
 <div class="row message-body">
-    <div class="col-xs-4 col-md-4">
+    <div class="col-4 col-md-4">
     </div>
-    <div class="col-xs-8 col-md-8">
+    <div class="col-8 col-md-8">
         <{foreach item=element from=$pmform.elements|default:null}>
             <{$element.body}>
         <{/foreach}>
@@ -61,20 +61,20 @@
         <div class="alignright">
             <{if ($previous >= 0 )}>
                 <a class="btn btn-primary btn-sm" href="readpmsg.php?start=<{$previous}>&total_messages=<{$total_messages}>&op=<{$op}>" title="<{$smarty.const._PM_PREVIOUS}>">
-                    <span class="fa fa-circle-arrow-left"></span>
+                    <span class="fa-solid fa-circle-left"></span>
                 </a>
             <{else}>
                 <button class="btn btn-primary btn-sm" disabled="disabled">
-                    <span class="fa fa-circle-arrow-left"></span>
+                    <span class="fa-solid fa-circle-left"></span>
                 </button>
             <{/if}>
             <{if ( $next < $total_messages ) }>
                 <a class="btn btn-primary btn-sm" href="readpmsg.php?start=<{$next}>&total_messages=<{$total_messages}>&op=<{$op}>" title="<{$smarty.const._PM_NEXT}>">
-                    <span class="fa fa-circle-arrow-right"></span>
+                    <span class="fa-solid fa-circle-right"></span>
                 </a>
             <{else}>
                 <button class="btn btn-primary btn-sm" disabled="disabled">
-                    <span class="fa fa-circle-arrow-right"></span>
+                    <span class="fa-solid fa-circle-right"></span>
                 </button>
             <{/if}>
         </div>

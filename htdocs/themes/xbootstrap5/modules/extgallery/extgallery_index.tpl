@@ -1,13 +1,13 @@
 <div class="row">
     <div class="col-md-12"><a title="<{$extgalleryName}>" href="<{xoAppUrl 'modules/extgallery/'}>"><h4><{$extgalleryName}></h4></a></div>
-    <div class="col-xs-4 col-sm-4 col-md-4"><{$lang.categoriesAlbums}></div>
-    <!-- <div class="col-xs-4 col-sm-4 col-md-4"><{$lang.nbAlbums}></div> -->
-    <!-- <div class="col-xs-4 col-sm-4 col-md-4"><{$lang.nbPhotos}></div> -->
+    <div class="col-4 col-sm-4 col-md-4"><{$lang.categoriesAlbums}></div>
+    <!-- <div class="col-4 col-sm-4 col-md-4"><{$lang.nbAlbums}></div> -->
+    <!-- <div class="col-4 col-sm-4 col-md-4"><{$lang.nbPhotos}></div> -->
 </div>
 
 <div id="xoopsgrid" class="row">
     <{foreach item=child from=$cats|default:null}>
-    <div class="col-xs-6 col-sm-4 col-md-4 xoops-gallery-thumb">
+    <div class="col-6 col-sm-4 col-md-4 xoops-gallery-thumb">
         <{if $disp_cat_img == 1 }>
             <{if $child.cat_imgurl != "" }>
                 <{if $child.cat_isalbum}>

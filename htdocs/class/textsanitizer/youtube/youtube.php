@@ -32,7 +32,7 @@ class MytsYoutube extends MyTextSanitizerExtension
             . htmlspecialchars(_XOOPS_FORM_ALT_ENTERHEIGHT, ENT_QUOTES | ENT_HTML5) . "\",\""
             . htmlspecialchars(_XOOPS_FORM_ALT_ENTERWIDTH, ENT_QUOTES | ENT_HTML5)
             . "\");' onmouseover='style.cursor=\"hand\"' title='" . _XOOPS_FORM_ALTYOUTUBE
-            . "'><span class='fa fa-fw fa-youtube' aria-hidden='true'></span></button>";
+            . "'><span class='fa-brands fa-youtube' aria-hidden='true'></span></button>";
         $javascript = <<<EOH
             function xoopsCodeYoutube(id, enterYouTubePhrase, enterYouTubeHeightPhrase, enterYouTubeWidthPhrase)
             {

@@ -13,7 +13,7 @@
                 <div><{$smarty.const._SELECTFILES}></div>
             </div>
             <button type="button" id="trigger-upload" class="btn btn-primary" title="Upload">
-                <span class="fa fa-upload"></span> <{$smarty.const._UPLOAD}>
+                <span class="fa-solid fa-upload"></span> <{$smarty.const._UPLOAD}>
             </button>
         </div>
         <span class="qq-drop-processing-selector qq-drop-processing">

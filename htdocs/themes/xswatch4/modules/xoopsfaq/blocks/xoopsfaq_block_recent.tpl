@@ -11,7 +11,7 @@
       <{* requires xoopsfaq 2.0 addition of id and cid in faq variable for link support *}>
       <{if !empty($faq.id)}>
       <a class="card-link stretched-link" href="<{$xoops_url}>/modules/xoopsfaq/index.php?cat_id=<{$faq.cid}>#q<{$faq.id}>">
-        <i class="fa fa-forward alignright" aria-hidden="true"></i>
+        <i class="fa-solid fa-forward alignright" aria-hidden="true"></i>
       </a>
       <{/if}>
       </li>

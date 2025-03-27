@@ -18,41 +18,41 @@
             <ul class="list-unstyled">
                 <li>
                     <a href="<{xoAppUrl 'modules/extgallery/'}>public-album.php?id=<{$extgalleryID}>&start=<{$extgalleryStart}>&sortby=photo_date&orderby=DESC" title="<{$smarty.const._MD_EXTGALLERY_SORTDATEDESC}>">
-                        <span class="fa fa-collapse-up"></span>
+                        <span class="fa-solid fa-caret-up"></span>
                     </a>
                     <span><{$smarty.const._MD_EXTGALLERY_SORTDATE}></span>
                     <a href="<{xoAppUrl 'modules/extgallery/'}>public-album.php?id=<{$extgalleryID}>&start=<{$extgalleryStart}>&sortby=photo_date&orderby=ASC" title="<{$smarty.const._MD_EXTGALLERY_SORTDATEASC}>">
-                        <span class="fa fa-collapse-down"></span>
+                        <span class="fa-solid fa-caret-down"></span>
                     </a>
                 </li>
 
                 <li>
                     <a href="<{xoAppUrl 'modules/extgallery/'}>public-album.php?id=<{$extgalleryID}>&start=<{$extgalleryStart}>&sortby=photo_title&orderby=ASC" title="<{$smarty.const._MD_EXTGALLERY_SORTNAMEASC}>">
-                        <span class="fa fa-collapse-up"></span>
+                        <span class="fa-solid fa-caret-up"></span>
                     </a>
                     <span><{$smarty.const._MD_EXTGALLERY_SORTNAME}></span>
                     <a href="<{xoAppUrl 'modules/extgallery/'}>public-album.php?id=<{$extgalleryID}>&start=<{$extgalleryStart}>&sortby=photo_title&orderby=DESC" title="<{$smarty.const._MD_EXTGALLERY_SORTNAMEDESC}>">
-                        <span class="fa fa-collapse-down"></span>
+                        <span class="fa-solid fa-caret-down"></span>
                     </a>
                 </li>
 
                 <li>
                     <a href="<{xoAppUrl 'modules/extgallery/'}>public-album.php?id=<{$extgalleryID}>&start=<{$extgalleryStart}>&sortby=photo_hits&orderby=DESC" title="<{$smarty.const._MD_EXTGALLERY_SORTHITSDESC}>">
-                        <span class="fa fa-collapse-up"></span>
+                        <span class="fa-solid fa-caret-up"></span>
                     </a>
                     <span><{$smarty.const._MD_EXTGALLERY_SORTHITS}></span>
                     <a href="<{xoAppUrl 'modules/extgallery/'}>public-album.php?id=<{$extgalleryID}>&start=<{$extgalleryStart}>&sortby=photo_hits&orderby=ASC" title="<{$smarty.const._MD_EXTGALLERY_SORTHITSASC}>">
-                        <span class="fa fa-collapse-down"></span>
+                        <span class="fa-solid fa-caret-down"></span>
                     </a>
                 </li>
 
                 <li>
                     <a href="<{xoAppUrl 'modules/extgallery/'}>public-album.php?id=<{$extgalleryID}>&start=<{$extgalleryStart}>&sortby=photo_rating&orderby=DESC" title="<{$smarty.const._MD_EXTGALLERY_SORTNOTEDESC}>">
-                        <span class="fa fa-collapse-up"></span>
+                        <span class="fa-solid fa-caret-up"></span>
                     </a>
                     <span><{$smarty.const._MD_EXTGALLERY_SORTNOTE}></span>
                     <a href="<{xoAppUrl 'modules/extgallery/'}>public-album.php?id=<{$extgalleryID}>&start=<{$extgalleryStart}>&sortby=photo_rating&orderby=ASC" title="<{$smarty.const._MD_EXTGALLERY_SORTNOTEASC}>">
-                        <span class="fa fa-collapse-down"></span>
+                        <span class="fa-solid fa-caret-down"></span>
                     </a>
                 </li>
             </ul>
@@ -65,30 +65,30 @@
     <div id="xoopsgrid">
 
         <{section name=photo loop=$photos}>
-            <div class="col-xs-6 col-sm-6 col-md-4 album-thumb">
+            <div class="col-6 col-md-4 album-thumb">
 
-                <{if $photos[photo].photo_id}>
+                <{if !empty($photos[photo].photo_id)}>
                     <ul class="adminlinks list-unstyled">
-                        <{if isset($xoops_isadmin)}>
-                            <li><a title="edit" href="<{xoAppUrl 'modules/extgallery/'}>public-modify.php?op=edit&id=<{$photos[photo].photo_id}>"><span class="fa fa-pencil-square-o"></span></a></li>
-                            <li><a title="delete" href="<{xoAppUrl 'modules/extgallery/'}>public-modify.php?op=delete&id=<{$photos[photo].photo_id}>"><span class="fa fa-trash"></span></a></li>
+                        <{if !empty($xoops_isadmin)}>
+                            <li><a title="edit" href="<{xoAppUrl 'modules/extgallery/'}>public-modify.php?op=edit&id=<{$photos[photo].photo_id}>"><span class="fa-solid fa-pen-to-square"></span></a></li>
+                            <li><a title="delete" href="<{xoAppUrl 'modules/extgallery/'}>public-modify.php?op=delete&id=<{$photos[photo].photo_id}>"><span class="fa-solid fa-trash-can"></span></a></li>
                         <{/if}>
 
-                        <{if isset($enable_show_comments)}>
+                        <{if !empty($enable_show_comments)}>
                             <li><{$photos[photo].photo_comment}> <{$lang.comments}></li>
                         <{/if}>
-                        <{if isset($enable_photo_hits)}>
+                        <{if !empty($enable_photo_hits)}>
                             <li><{$photos[photo].photo_hits}> <{$lang.hits}></li>
                         <{/if}>
-                        <{if isset($enable_date)}>
-                            <li><span class="fa fa-calendar"></span> <{$photos[photo].photo_date}></li>
+                        <{if !empty($enable_date)}>
+                            <li><span class="fa-solid fa-calendar"></span> <{$photos[photo].photo_date}></li>
                         <{/if}>
-                        <{if isset($enable_submitter_lnk)}>
+                        <{if !empty($enable_submitter_lnk)}>
                             <li><a title="<{$photos[photo].user.uname}>" href="<{$xoops_url}>/userinfo.php?uid=<{$photos[photo].user.uid}>"><{$photos[photo].user.uname}></a>
                             </li>
                         <{/if}>
                     </ul>
-                    <{if $photos[photo].photo_serveur && $photos[photo].photo_name}>
+                    <{if !empty($photos[photo].photo_serveur) && !empty($photos[photo].photo_name)}>
                         <a href="<{xoAppUrl 'modules/extgallery/'}>public-photo.php?photoId=<{$photos[photo].photo_id}>" title="<{$photos[photo].photo_title}>">
                             <img src="<{$photos[photo].photo_serveur}>thumb_<{$photos[photo].photo_name}>" alt="<{$photos[photo].photo_title}>">
                         </a>
@@ -98,7 +98,7 @@
                         </a>
                     <{/if}>
 
-                    <{if isset($enableRating)}>
+                    <{if !empty($enableRating)}>
                         <div class="photoRating"><img src="<{xoAppUrl 'modules/extgallery/'}>assets/images/rating_<{$photos[photo].photo_rating}>.gif" alt="<{$lang.rate_score}> : <{$photos[photo].photo_rating}>" title="<{$lang.rate_score}>"></div>
                     <{/if}>
 
@@ -118,7 +118,7 @@
     <{$pageNav}>
 </div>
 
-<{if isset($show_rss)}>
+<{if !empty($show_rss)}>
     <div id="rss">
         <a href="<{xoAppUrl 'modules/extgallery/public-rss.php?id='}><{$extgalleryID}>" title="<{$smarty.const._MD_EXTGALLERY_ALBUMRSS}>">
             <img src="<{xoAppUrl 'modules/extgallery/assets/images/feedblue.png'}>" alt="<{$smarty.const._MD_EXTGALLERY_ALBUMRSS}>">

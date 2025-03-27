@@ -570,13 +570,13 @@ ul.profile-values > li.profile-category-title {
     min-height: 40px;
 }
 
-.xoops-message-list div.col-xs-1,
+.xoops-message-list div.col-1,
 .xoops-message-list div.col-md-1 {
     max-width: 14px;
     text-align: center;
 }
 
-.xoops-message-list div.col-xs-1 .btn,
+.xoops-message-list div.col-1 .btn,
 .xoops-message-list div.col-md-1 .btn {
     padding: 3px;
     display: inline-block;

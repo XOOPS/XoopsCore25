@@ -23,8 +23,8 @@
                 </ul>
             <{/if}>
 
-                <{if isset($infobox.show)}>
-                    <button  data-toggle="collapse" data-target="#p<{$topic_post.post_id}>" title="<{$smarty.const.THEME_INFO}>" class="btn btn-primary btn-sm mb10"><span class="fa fa-info"></span></button>
+                <{if !empty($infobox.show)}>
+                    <button  data-toggle="collapse" data-target="#p<{$topic_post.post_id}>" title="<{$smarty.const.THEME_INFO}>" class="btn btn-primary btn-sm mb10"><span class="fa-solid fa-info"></span></button>
                     <div id="p<{$topic_post.post_id}>" class="collapse">
                         <ul class="list-unstyled text-left">
                             <li><{$smarty.const._MD_NEWBB_JOINED}>: <{$topic_post.poster.regdate}></li>
@@ -56,7 +56,7 @@
                             </li>
                             <{/if}>
 
-                            <{if isset($topic_post.poster.level)}>
+                            <{if !empty($topic_post.poster.level)}>
                                 <li><{$topic_post.poster.level}></li>
                             <{/if}>
 
@@ -152,10 +152,10 @@
                 <{assign var='banprompt' value=">$bantext<"}>
 
                 <{foreach item=btn from=$topic_post.thread_buttons|default:null}>
-                   <a class="btn btn-primary btn-xs" href="<{$btn.link}>&amp;post_id=<{$topic_post.post_id}>" title="<{$btn.name}>"><{$btn.image|replace:$banprompt:'><span class="fa fa-ban" aria-hidden="true"><'|replace:forum_button:xforum_button}></a>
+                   <a class="btn btn-primary btn-sm" href="<{$btn.link}>&amp;post_id=<{$topic_post.post_id}>" title="<{$btn.name}>"><{$btn.image|replace:$banprompt:'><span class="fa-solid fa-ban" aria-hidden="true"><'|replace:forum_button:xforum_button}></a>
                 <{/foreach}>
         <{/if}>
     <{/if}>
-    <a class="btn btn-success btn-xs" href="#threadtop" title="<{$smarty.const._MD_NEWBB_TOP}>"><span class="fa fa-arrow-circle-up"></span></a>
+    <a class="btn btn-success btn-sm" href="#threadtop" title="<{$smarty.const._MD_NEWBB_TOP}>"><span class="fa-solid fa-circle-up"></span></a>
     </div>
 </div>

@@ -19,9 +19,7 @@
 
 <div class="table-responsive">
 
-    <{foreach item=event from=$events|default:null}>
 
-    <{/foreach}>
     <table class="table table-bordered table-hover">
         <tbody>
         <tr style="text-align:center;">
@@ -32,6 +30,7 @@
             <td class="even" style="width:33%;"><a href="<{$xoops_url}>/modules/extcal/view_week.php?<{$navig.next.uri}>"><{$navig.next.name}>&nbsp;&nbsp;>></a>
             </td>
         </tr>
+        <{foreach item=event from=$events|default:null}>
         <tr>
             <td colspan="3" class="odd" style="vertical-align:middle;">
                 <div style="height:20px; width:5px; background-color:#<{$event.cat.cat_color}>; border:1px solid black; float:left; margin-right:5px;"></div>
@@ -39,6 +38,7 @@
                                                               title="<{$event.event_title}> :: <b><{$lang.start}></b> <{$event.formated_event_start}><br /><b><{$lang.end}></b> <{$event.formated_event_end}>"><{$event.event_title}></a>
             </td>
         </tr>
+        <{/foreach}>
         <tr>
             <th colspan="3">
                 <{foreach item=cat from=$cats|default:null}>
@@ -54,5 +54,5 @@
         </tbody>
     </table>
 </div>
-<div style="text-align:right;"><a href="<{$xoops_url}>/modules/extcal/rss.php?cat=<{$selectedCat}>"><img src="assets/images/icons/rss.gif" alt="RSS Feed"></a></div>
+<div style="text-align:right;"><a href="<{$xoops_url}>/modules/extcal/rss.php?cat=<{$selectedCat|default:''}>"><img src="assets/images/icons/rss.gif" alt="RSS Feed"></a></div>
 <{include file='db:system_notification_select.tpl'}>

@@ -6,23 +6,23 @@
 <div class="col-sm-3 col-md-3 text-center newbb-user-data">
     <{$topic_post.poster.link}>
 
-    <{if $topic_post.poster.uid >= -1}>
-        <{if $topic_post.poster.uid|default:0 != 0}>
-            <{if $topic_post.poster.avatar != "blank.gif"}>
+    <{if isset($topic_post.poster.uid) &&  $topic_post.poster.uid > -1}>
+        <{if isset($topic_post.poster.uid) && $topic_post.poster.uid != 0}>
+             <{if isset($topic_post.poster.avatar) && $topic_post.poster.avatar != "blank.gif"}>
                     <img src="<{$xoops_upload_url}>/<{$topic_post.poster.avatar}>" alt="<{$topic_post.poster.name}>" class="img-circle img-fluid img-thumbnail">
                 <{else}>
                    <img src="<{$xoops_imageurl}>images/newbb-noavatar.png" alt="<{$topic_post.poster.name}>" class="img-circle img-fluid img-thumbnail">
             <{/if}>
 
-            <{if $topic_post.poster.rank.title !=""}>
+            <{if !empty($topic_post.poster.rank.title)}>
                 <ul class="list-unstyled">
                     <li><{$topic_post.poster.rank.title}></li>
                     <li><img src="<{$xoops_upload_url}>/<{$topic_post.poster.rank.image}>" alt="<{$topic_post.poster.rank.title}>"></li>
                 </ul>
             <{/if}>
 
-                <{if $infobox.show}>
-                    <a data-bs-toggle="collapse" href="#<{$topic_post.post_id}>" title="<{$smarty.const.THEME_INFO}>" class="btn btn-primary btn-sm mb10"><span class="fa fa-info-sign"></span></a>
+                 <{if !empty($infobox.show)}>
+                    <a data-bs-toggle="collapse" href="#<{$topic_post.post_id}>" title="<{$smarty.const.THEME_INFO}>" class="btn btn-primary btn-sm mb10"><span class="fa-solid fa-circle-info"></span></a>
                     <div id="<{$topic_post.post_id}>" class="collapse">
                         <ul class="list-unstyled text-start">
                             <li><{$smarty.const._MD_NEWBB_JOINED}>: <{$topic_post.poster.regdate}></li>
@@ -40,7 +40,7 @@
 
                             <li>
                             <{$smarty.const._MD_NEWBB_POSTS}>:
-                            <{if $topic_post.poster.posts >= 0}>
+                            <{if isset($topic_post.poster.posts) && $topic_post.poster.posts > 0}>
                                 <a href="<{$xoops_url}>/modules/<{$xoops_dirname}>/viewpost.php?uid=<{$topic_post.poster.uid}>" title="<{$smarty.const._ALL}>">
                                     <{$topic_post.poster.posts}>
                                 </a>
@@ -49,17 +49,17 @@
                             <{/if}>
                             </li>
 
-                            <{if $topic_post.poster.digests >= 0}>
+                                <{if isset($topic_post.poster.digests) && is_array($topic_post.poster.digests) && $topic_post.poster.digests|count > 0}>
                             <li>
                                 <{$smarty.const._MD_NEWBB_DIGESTS}>: <{$topic_post.poster.digests}>
                             </li>
                             <{/if}>
 
-                            <{if $topic_post.poster.level}>
+                            <{if !empty($topic_post.poster.level)}>
                                 <li><{$topic_post.poster.level}></li>
                             <{/if}>
 
-                            <{if $topic_post.poster.status}>
+                            <{if !empty($topic_post.poster.status)}>
                                 <li><{$topic_post.poster.status}></li>
                             <{/if}>
                         </ul>
@@ -73,11 +73,11 @@
         <{/if}>
 
         <ul class="list-unstyled">
-            <{if $topic_post.poster_ip}>
+            <{if !empty($topic_post.poster_ip)}>
                 <li>IP: <a href="https://www.whois.sc/<{$topic_post.poster_ip}>" target="_blank"><{$topic_post.poster_ip}></a></li>
             <{/if}>
 
-            <{if $topic_post.poster.uid >= 0}>
+            <{if isset($topic_post.poster.uid) &&  $topic_post.poster.uid > 0}>
                 <li><{$smarty.const._MD_NEWBB_POSTEDON}><{$topic_post.post_date}></li>
             <{/if}>
         </ul>
@@ -122,7 +122,7 @@
     <{if $topic_post.thread_action}>
         <{foreach item=btn from=$topic_post.thread_action|default:null}>
             <a href="<{$btn.link}>&amp;post_id=<{$topic_post.post_id}>" title="<{$btn.name}>" <{if $btn.target}>target="<{$btn.target}>"<{/if}>>
-                <{$btn.image}>
+                <{$btn.image|default:''}>
             </a>
         <{/foreach}>
     <{/if}>
@@ -144,10 +144,10 @@
         <{if $topic_post.thread_buttons}>
 
                 <{foreach item=btn from=$topic_post.thread_buttons|default:null}>
-                    <a class="btn btn-primary btn-xs" href="<{$btn.link}>&amp;post_id=<{$topic_post.post_id}>" title="<{$btn.name}>"><{$btn.image}></a>
+                    <a class="btn btn-primary btn-sm" href="<{$btn.link}>&amp;post_id=<{$topic_post.post_id}>" title="<{$btn.name}>"><{$btn.image}></a>
                 <{/foreach}>
         <{/if}>
     <{/if}>
-    <a class="btn btn-primary btn-xs" href="#threadtop" title="<{$smarty.const._MD_NEWBB_TOP}>"><span class="fa fa-circle-arrow-up"></span></a>
+    <a class="btn btn-primary btn-sm" href="#threadtop" title="<{$smarty.const._MD_NEWBB_TOP}>"><span class="fa-solid fa-circle-arrow-up"></span></a>
     </div>
 </div>

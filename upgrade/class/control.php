@@ -200,7 +200,7 @@ class UpgradeControl
     {
         $form  = '<form action="' . $action . '" method="post">';
         $form .= '<button class="btn btn-lg btn-success" type="submit">' . _CONTINUE;
-        $form .= '  <span class="fa fa-caret-right"></span></button>';
+        $form .= '  <span class="fa-solid fa-caret-right"></span></button>';
         foreach ($parameters as $name => $value) {
             $form .= '<input type="hidden" name="' . $name . '" value="' . $value . '">';
         }

@@ -62,7 +62,7 @@
 <div class="clear"></div>
 <div class="text-right">
 <a id="threadtop"></a><a class="btn btn-info" href="#threadbottom" title="<{$smarty.const._MD_NEWBB_BOTTOM}>">
-    <span class="fa fa-arrow-circle-down"></span>
+    <span class="fa-solid fa-circle-down"></span>
 </a>
 </div>
 <div>
@@ -123,7 +123,7 @@
 <div>
     <div class="text-right">
         <a id="threadbottom"></a><a class="btn btn-info" href="#threadtop" title="<{$smarty.const._MD_NEWBB_TOP}>">
-            <span class="fa fa-arrow-circle-up"></span>
+            <span class="fa-solid fa-circle-up"></span>
         </a>
     </div>
     <!-- irmtfan hardcode removed style="float: right; text-align:right;" -->

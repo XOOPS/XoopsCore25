@@ -141,11 +141,11 @@
                         <div class="row newbb-list-foruns mb10">
                             <div class="col-sm-6 col-md-6">
                                 <{if !empty($forum.subforum)}>
-                                    <div class="<{if isset($forum.forum_read) && $forum.forum_read == 1 }>forum-read<{else}>forum-new2<{/if}> pull-left">
+                                    <div class="<{if !empty($forum.forum_read) && $forum.forum_read == 1 }>forum-read<{else}>forum-new2<{/if}> pull-left">
                                         <{$forum.forum_folder|default:'' }>
                                     </div>
                                 <{else}>
-                                    <div class="<{if isset($forum.forum_read) && $forum.forum_read == 1}>forum-read<{else}>forum-new2<{/if}> pull-left">
+                                    <div class="<{if !empty($forum.forum_read) && $forum.forum_read == 1}>forum-read<{else}>forum-new2<{/if}> pull-left">
                                         <{$forum.forum_folder|default:'' }>
                                     </div>
                                 <{/if}>
@@ -161,7 +161,7 @@
                                     </a>
                                 <{/if}>
                                 <!-- Forum description -->
-                                <{if isset($forum.forum_desc)}>
+                                <{if !empty($forum.forum_desc)}>
                                     <button class="btn btn-primary btn-xs pull-right" data-toggle="modal" data-target="#forumDesc-<{$forum.forum_id}>"><span
                                                 class="glyphicon glyphicon-info-sign"></span></button>
                                     <div class="modal fade" id="forumDesc-<{$forum.forum_id}>" tabindex="-1" role="dialog" aria-labelledby="ForumDescription"
@@ -264,7 +264,7 @@
             </div>
         </div>
 
-        <{if isset($currenttime)}>
+        <{if !empty($currenttime)}>
             <div class="row">
                 <div class="col-lg-12"><h3 class="nompl"><{$online.statistik}> <{$smarty.const._MD_NEWBB_STATS}></h3></div>
                 <div class="col-sm-6 col-md-6">
@@ -281,7 +281,7 @@
                             <a href="<{$xoops_url}>/modules/<{$xoops_dirname}>/viewpost.php" title="<{$smarty.const._MD_NEWBB_ALLPOSTS}>">
                                 <{$stats[0].post.total|default:''}>
                             </a></li>
-                        <{if isset($stats[0].digest.total)}>
+                        <{if !empty($stats[0].digest.total)}>
                             <li><{$smarty.const._MD_NEWBB_TOTALDIGESTSC}>
                                 <a href="<{$xoops_url}>/modules/<{$xoops_dirname}>/list.topic.php?status=digest" title="<{$smarty.const._MD_NEWBB_TOTALDIGESTSC}>">
                                     <{$stats[0].digest.total|default:''}>
@@ -297,19 +297,19 @@
 
                 <div class="col-sm-6 col-md-6">
                     <ul class="list-unstyled lw30">
-                        <{if isset($userstats)}>
+                        <{if !empty($userstats)}>
                             <li><{*$userstats.lastvisit*}>
-                                <{$userstats.lastpost}>
+                                <{$userstats.lastpost|default:''}>
                             </li>
                         <{/if}>
 
                         <li><{$smarty.const._MD_NEWBB_TODAYTOPICSC}> <{$stats[0].topic.day|default:0}></li>
                         <li><{$smarty.const._MD_NEWBB_TODAYPOSTSC}> <{$stats[0].post.day|default:0}></li>
 
-                        <{if isset($userstats)}>
-                            <li><{$userstats.topics}> | <{$userstats.posts}></li>
-                            <{if $userstats.digests}>
-                                <li><{$userstats.digests}></li>
+                        <{if !empty($userstats)}>
+                            <li><{$userstats.topics|default:''}> | <{$userstats.posts|default:''}></li>
+                            <{if !empty($userstats.digests)}>
+                                <li><{$userstats.digests|default:''}></li>
                             <{/if}>
                         <{/if}>
                     </ul>
@@ -318,12 +318,12 @@
             </div>
         <{/if}>
 
-        <{if isset($online)}>
+        <{if !empty($online)}>
             <{include file="db:newbb_online.tpl"}>
         <{/if}>
 
         <a title="NewBB" href="https://xoops.org" class="btn btn-xs btn-success">NewBB Version <{$version}></a>
-        <{if isset($rss_button)}>
+        <{if !empty($rss_button)}>
             <div class="text-right">
                 <a href="<{$xoops_url}>/modules/<{$xoops_dirname}>/rss.php?c=<{$viewcat}>" target="_blank" title="RSS FEED">
                     <{$rss_button}>

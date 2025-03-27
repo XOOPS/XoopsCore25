@@ -9,11 +9,11 @@
     <div class="tdm-download-data row">
         <{if isset($show_screenshot) && $show_screenshot == true}>
             <{if !empty($logourl)}>
-                <div class="tdm-screenshot-single col-xs-8 col-sm-8 col-md-8">
+                <div class="tdm-screenshot-single col-8 col-sm-8 col-md-8">
                     <img src="<{$logourl}>" alt="<{$title}>">
                 </div>
             <{else}>
-                <div class="tdm-screenshot-single col-xs-8 col-sm-8 col-md-8">
+                <div class="tdm-screenshot-single col-8 col-sm-8 col-md-8">
                     <img src="<{$xoops_imageurl}>images/tdm-no-image.jpg" alt="<{$title}>">
                 </div>
             <{/if}>
@@ -46,16 +46,16 @@
 
 
                 <{if !empty($perm_vote)}>
-                    <li><a class="btn btn-xs btn-primary" href="<{$xoops_url}>/modules/tdmdownloads/ratefile.php?lid=<{$lid}>"
+                    <li><a class="btn btn-sm btn-primary" href="<{$xoops_url}>/modules/tdmdownloads/ratefile.php?lid=<{$lid}>"
                            title="<{$smarty.const._MD_TDMDOWNLOADS_SINGLEFILE_RATHFILE}>"><{$smarty.const._MD_TDMDOWNLOADS_SINGLEFILE_RATHFILE}></a></li>
                 <{/if}>
 
                 <{if !empty($perm_modif)}>
-                    <li><a class="btn btn-xs btn-primary" href="<{$xoops_url}>/modules/tdmdownloads/modfile.php?lid=<{$lid}>"
+                    <li><a class="btn btn-sm btn-primary" href="<{$xoops_url}>/modules/tdmdownloads/modfile.php?lid=<{$lid}>"
                            title="<{$smarty.const._MD_TDMDOWNLOADS_SINGLEFILE_MODIFY}>"><{$smarty.const._MD_TDMDOWNLOADS_SINGLEFILE_MODIFY}></a></li>
                 <{/if}>
 
-                <li><a class="btn btn-xs btn-primary" href="<{$xoops_url}>/modules/tdmdownloads/brokenfile.php?lid=<{$lid}>"
+                <li><a class="btn btn-sm btn-primary" href="<{$xoops_url}>/modules/tdmdownloads/brokenfile.php?lid=<{$lid}>"
                        title="<{$smarty.const._MD_TDMDOWNLOADS_SINGLEFILE_REPORTBROKEN}>"><{$smarty.const._MD_TDMDOWNLOADS_SINGLEFILE_REPORTBROKEN}></a>
                 </li>
 

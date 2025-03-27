@@ -1,5 +1,5 @@
 <div class='col-sm-12 wgg-album-panel'>
-    <div class='col-xs-12 col-sm-6'>
+    <div class='col-12 col-sm-6'>
         <{if $category.image}>
             <div class='center'>
                 <a class='' href='index.php?op=list&amp;alb_pid=<{$category.id}>' title='<{$smarty.const._CO_WGGALLERY_COLL_ALBUMS}>'>
@@ -7,7 +7,7 @@
             </div>
         <{/if}>
     </div>
-    <div class='col-xs-12 col-sm-6'>
+    <div class='col-12 col-sm-6'>
         <div class='center wgg-album-name'><{$category.name}></div>
         <div class='center wgg-album-desc'><{$category.desc}></div>
         <div class='center wgg-album-footer'>

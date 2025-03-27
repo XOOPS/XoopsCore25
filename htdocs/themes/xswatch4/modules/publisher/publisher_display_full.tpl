@@ -18,7 +18,7 @@
 
 <{if isset($items)}>
 <div class="container">
-    <h4 class="pub_last_articles_full"><span class="fa fa-newspaper-o"></span>&nbsp;<{$lang_items_title}></h4>
+    <h4 class="pub_last_articles_full"><span class="fa-solid fa-newspaper"></span>&nbsp;<{$lang_items_title}></h4>
     <div class="row mb-3">
         <{foreach item=item from=$items|default:null}>
         <div class="card col-12 col-md-6 mt-2">

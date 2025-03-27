@@ -37,7 +37,7 @@
                     <div class="caption">
                         <div style="text-align: center;"><h3><a href="<{$smarty.const.OBITUARIES_URL}>user.php?obituaries_id=<{$obituaries_user.obituaries_id}>"
                                                                 title="<{$obituaries_user.obituaries_href_title}>"><{$obituaries_user.obituaries_fullname}></a></h3></div>
-                        <div style="text-align: center;"><p><span class="fa fa-calendar"></span>&nbsp;<span class="label label-danger"><{$obituaries_user.obituaries_formated_date}></span>&nbsp;<span
+                        <div style="text-align: center;"><p><span class="fa-solid fa-calendar"></span>&nbsp;<span class="label label-danger"><{$obituaries_user.obituaries_formated_date}></span>&nbsp;<span
                                         class="label label-success"><a
                                             href="<{$smarty.const.OBITUARIES_URL}>user.php?obituaries_id=<{$obituaries_user.obituaries_id}>"
                                             title="<{$obituaries_user.obituaries_href_title}>">more</a></span></p></div>

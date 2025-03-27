@@ -30,7 +30,7 @@
                 <{/foreach}>
             <{/foreach}>
             <tr>
-                <td class="foot txtcenter" colspan="3"><button class="btn btn-primary" type="submit" name="not_submit"><span class="fa fa-download"></span> <{$lang_updatenow}></button></td>
+                <td class="foot txtcenter" colspan="3"><button class="btn btn-primary" type="submit" name="not_submit"><span class="fa-solid fa-download"></span> <{$lang_updatenow}></button></td>
             </tr>
         </table>
         <div class="txtcenter">

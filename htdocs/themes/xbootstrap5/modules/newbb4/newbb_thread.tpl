@@ -22,7 +22,7 @@
                 <{/if}>
 
                 <{if $infobox.show}>
-                    <a data-bs-toggle="collapse" href="#<{$topic_post.post_id}>" title="<{$smarty.const.THEME_INFO}>" class="btn btn-primary btn-sm mb10"><span class="fa fa-info-sign"></span></a>
+                    <a data-bs-toggle="collapse" href="#<{$topic_post.post_id}>" title="<{$smarty.const.THEME_INFO}>" class="btn btn-primary btn-sm mb10"><span class="fa-solid fa-circle-info"></span></a>
                     <div id="<{$topic_post.post_id}>" class="collapse">
                         <ul class="list-unstyled text-start">
                             <li><{$smarty.const._MD_JOINED}>: <{$topic_post.poster.regdate}></li>
@@ -144,10 +144,10 @@
             <{if $topic_post.thread_buttons}>
 
                 <{foreach item=btn from=$topic_post.thread_buttons|default:null}>
-                <a class="btn btn-primary btn-xs" href="<{$btn.link}>&post_id=<{$topic_post.post_id}>" title="<{$btn.name}>"><{$btn.image}></a>
+                <a class="btn btn-primary btn-sm" href="<{$btn.link}>&post_id=<{$topic_post.post_id}>" title="<{$btn.name}>"><{$btn.image}></a>
             <{/foreach}>
             <{/if}>
         <{/if}>
-        <a class="btn btn-primary btn-xs" href="#threadtop" title="<{$smarty.const._MD_TOP}>"><span class="fa fa-circle-arrow-up"></span></a>
+        <a class="btn btn-primary btn-sm" href="#threadtop" title="<{$smarty.const._MD_TOP}>"><span class="fa-solid fa-circle-up"></span></a>
     </div>
 </div>

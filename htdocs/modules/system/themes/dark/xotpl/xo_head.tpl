@@ -7,13 +7,13 @@
     <ul id="xo-headnav">
         <li>
             <a class="tooltip" href="<{xoAppUrl}>" title="<{$smarty.const._YOURHOME}>">
-                <span class="fa fa-home"></span>
+                <span class="fa-solid fa-home"></span>
                 <{$smarty.const._YOURHOME}>
             </a>
         </li>
         <li>
             <a class="tooltip" href="<{xoAppUrl 'user.php?op=logout'}>" title="<{$smarty.const._LOGOUT}>">
-                <span class="fa fa-sign-out"></span>
+                <span class="fa-solid fa-right-from-bracket"></span>
                 <{$smarty.const._LOGOUT}>
             </a>
         </li>

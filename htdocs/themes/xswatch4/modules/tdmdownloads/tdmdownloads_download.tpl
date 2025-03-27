@@ -9,11 +9,11 @@
     <div class="card-body">
         <h5 class="card-title"><{$down.title}></h5>
         <p class="card-text text-muted">
-            <span class="fa fa-calendar" title="<{$smarty.const._MD_TDMDOWNLOADS_INDEX_SUBMITDATE}>"></span> <{$down.updated}>
-            <span class="fa fa-user" title="<{$smarty.const._MD_TDMDOWNLOADS_INDEX_SUBMITTER}>"></span> <{$down.submitter}>
+            <span class="fa-solid fa-calendar" title="<{$smarty.const._MD_TDMDOWNLOADS_INDEX_SUBMITDATE}>"></span> <{$down.updated}>
+            <span class="fa-solid fa-user" title="<{$smarty.const._MD_TDMDOWNLOADS_INDEX_SUBMITTER}>"></span> <{$down.submitter}>
         </p>
         <p class="card-text"><{$down.description_short}>
-            <a class="stretched-link" href="<{$xoops_url}>/modules/tdmdownloads/singlefile.php?cid=<{$down.cid}>&amp;lid=<{$down.id}>" title="<{$down.title}>"><span class="fa fa-forward"></span></a>
+            <a class="stretched-link" href="<{$xoops_url}>/modules/tdmdownloads/singlefile.php?cid=<{$down.cid}>&amp;lid=<{$down.id}>" title="<{$down.title}>"><span class="fa-solid fa-forward"></span></a>
         </p>
     </div>
     <{if !empty($down.perm_download)}>
@@ -21,7 +21,7 @@
         <{if $down.new}><{$down.new}><{/if}><{if $down.pop}><{$down.pop}><{/if}>
         <a title="<{$smarty.const._MD_TDMDOWNLOADS_INDEX_DLNOW}>" href="visit.php?cid=<{$down.cid}>&amp;lid=<{$down.id}>"
            class="btn btn-success">
-            <span class="fa fa-fw fa-cloud-download"></span>
+            <span class="fa-solid fa-cloud-arrow-down"></span>
         </a>
     </div>
     <{/if}>

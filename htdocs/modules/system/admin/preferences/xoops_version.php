@@ -26,7 +26,7 @@ $modversion['help']        = 'page=preferences';
 $modversion['license']     = 'GPL see LICENSE';
 $modversion['official']    = 1;
 $modversion['image']       = 'prefs.png';
-$modversion['icon']        = 'fa fa-wrench';
+$modversion['icon']        = 'fa-solid fa-wrench';
 
 $modversion['hasAdmin']  = 1;
 $modversion['adminpath'] = 'admin.php?fct=preferences';

@@ -9,9 +9,9 @@
             <img class="card-img-top img-fluid" src="<{$category.image}>" alt="<{$category.title}>">
             <{/if}>
             <div class="card-body">
-                <p class="card-text text-muted"><span class="fa fa-file-o"></span> <{$category.totaldownloads}></p>
+                <p class="card-text text-muted"><span class="fa-solid fa-file"></span> <{$category.totaldownloads}></p>
                 <p class="card-text"><{$category.description_main|default:''|truncateHtml:20:'...'}>
-                    <a class="stretched-link"title="<{$category.title}>" href="<{$xoops_url}>/modules/tdmdownloads/viewcat.php?cid=<{$category.id}>"><span class="fa fa-forward"></span></a>
+                    <a class="stretched-link"title="<{$category.title}>" href="<{$xoops_url}>/modules/tdmdownloads/viewcat.php?cid=<{$category.id}>"><span class="fa-solid fa-forward"></span></a>
                 </p>
             </div>
         </div>
@@ -19,7 +19,7 @@
     </div><!-- .tdm-category -->
     <div>
         <a class="btn btn-warning" title="<{$smarty.const._MD_TDMDOWNLOADS_RSS}>" href="<{$xoops_url}>/modules/tdmdownloads/rss.php?cid=<{$category_id}>">
-            <span class="fa fa-fw fa-rss"></span>
+            <span class="fa-solid fa-rss"></span>
         </a>
     </div>
 
@@ -28,7 +28,7 @@
             <div class="col-md-12"><h3><{$smarty.const._MD_TDMDOWNLOADS_INDEX_BLNAME}>:</h3></div>
             <{if !empty($bl_date)}>
                 <div class="col-sm-4 col-md-4">
-                    <h3 class="tdm-title"><span class="fa fa-calendar"></span> <{$smarty.const._MD_TDMDOWNLOADS_INDEX_BLDATE}></h3>
+                    <h3 class="tdm-title"><span class="fa-solid fa-calendar"></span> <{$smarty.const._MD_TDMDOWNLOADS_INDEX_BLDATE}></h3>
                     <ul class="list-unstyled">
                         <{foreach item=bl_dateitem from=$bl_date|default:null}>
                             <li>
@@ -43,7 +43,7 @@
 
             <{if !empty($bl_pop)}>
                 <div class="col-sm-4 col-md-4">
-                    <h3 class="tdm-title"><span class="fa fa-star"></span> <{$smarty.const._MD_TDMDOWNLOADS_INDEX_BLPOP}></h3>
+                    <h3 class="tdm-title"><span class="fa-solid fa-star"></span> <{$smarty.const._MD_TDMDOWNLOADS_INDEX_BLPOP}></h3>
                     <ul class="list-unstyled">
                         <{foreach item=bl_popitem from=$bl_pop|default:null}>
                             <li>
@@ -57,7 +57,7 @@
 
             <{if !empty($bl_rating)}>
                 <div class="col-sm-4 col-md-4">
-                    <h3 class="tdm-title"><span class="fa fa-thumbs-o-up"></span> <{$smarty.const._MD_TDMDOWNLOADS_INDEX_BLRATING}></h3>
+                    <h3 class="tdm-title"><span class="fa-solid fa-thumbs-up"></span> <{$smarty.const._MD_TDMDOWNLOADS_INDEX_BLRATING}></h3>
                     <ul class="list-unstyled">
                         <{foreach item=bl_ratingitem from=$bl_rating|default:null}>
                             <li>

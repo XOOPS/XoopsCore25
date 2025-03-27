@@ -6,7 +6,7 @@
         <a href="<{$xoops_url}>/modules/<{$xoops_dirname}>/index.php"><{$smarty.const._MD_NEWBB_FORUMINDEX}></a>
         <span class="delimiter">&raquo;</span>
         <a href="<{$xoops_url}>/modules/<{$xoops_dirname}>/index.php?cat=<{$category.id}>"><{$category.title}></a>
-        <{if isset($parentforum)}>
+        <{if !empty($parentforum)}>
             <{foreach item=forum from=$parentforum|default:null}>
             <span class="delimiter">&raquo;</span>
             &nbsp;
@@ -92,5 +92,3 @@
         <{/foreach}>
     </table>
 <{/if}>
-
-

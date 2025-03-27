@@ -17,7 +17,7 @@
 <{/if}>
 
 <{if isset($items)}>
-    <h4 class="pub_last_articles_full"><span class="fa fa-chevron-right"></span>&nbsp;<{$lang_items_title}></h4>
+    <h4 class="pub_last_articles_full"><span class="fa-solid fa-circle-chevron-right"></span>&nbsp;<{$lang_items_title}></h4>
     <!-- Start item loop -->
     <{foreach item=item from=$items|default:null}>
         <div class="article_full">

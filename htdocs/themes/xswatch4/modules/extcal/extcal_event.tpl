@@ -9,7 +9,7 @@
         <h3><{$event.event_title|default:''}></h3>
         <div class="mb-2"><{$event.formated_event_start|default:''}></div>
         <{assign var='desctext' value=$smarty.const._MD_EXTCAL_LOCATION_DESCRIPTION}>
-        <{assign var='desclink' value="… <a href=\"#desc\" title=\"$desctext\"><span class=\"fa fa-forward\"></span></a>"}>
+        <{assign var='desclink' value="… <a href=\"#desc\" title=\"$desctext\"><span class=\"fa-solid fa-forward\"></span></a>"}>
         <div><{$event.event_desc|truncateHtml:60:$desclink}></div>
     </div>
     <div class="col-12 col-md-6">
@@ -184,22 +184,22 @@
         <div class="float-right">
         <a href="<{$xoops_url}>/modules/extcal/print.php?event=<{$event.event_id|default:''}>"
            title="<{$smarty.const._MD_EXTCAL_ICONE_PRINT}>">
-            <span class="fa fa-fw fa-2x fa-print"></span>
+            <span class="fa-solid fa-2x fa-print"></span>
         </a>
         <{if !empty($isAdmin) || !empty($canEdit)}>
         <a href="<{$smarty.const._EXTCAL_FILE_NEW_EVENT}>?event=<{$event.event_id}>&action=edit"
            title="<{$smarty.const._MD_EXTCAL_ICONE_EDIT}>">
-            <span class="fa fa-fw fa-2x fa-pencil-square-o"></span>
+            <span class="fa-solid fa-2x fa-pen-to-square"></span>
         </a>
         <a href="<{$smarty.const._EXTCAL_FILE_NEW_EVENT}>?event=<{$event.event_id}>&action=clone"
            title="<{$smarty.const._MD_EXTCAL_ICONE_CLONE}>">
-            <span class="fa fa-fw fa-2x fa-clone"></span>
+            <span class="fa-solid fa-2x fa-clone"></span>
         </a>
         <{/if}>
         <{if !empty($isAdmin)}>
         <a href="admin/event.php?op=delete&event_id=<{$event.event_id|default:''}>"
            title="<{$smarty.const._MD_EXTCAL_ICONE_DELETE}>">
-            <span class="fa fa-fw fa-2x fa-trash-o"></span>
+            <span class="fa-solid fa-2x  fa-trash-can"></span>
         </a>
         <{/if}>
     </div>

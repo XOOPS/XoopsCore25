@@ -22,7 +22,7 @@
                     <{if $video.published > 0 }>
                         <span class="pull-right">
             <a href="<{$xoops_url}>/modules/<{$video.module_dir}>/singlevideo.php?cid=<{$video.cid}>&amp;lid=<{$video.id}>">
-                <i title="Play" class="fa fa-play"></i>
+                <i title="Play" class="fa-solid fa-play"></i>
             </a>
             </span>
                     <{/if}>

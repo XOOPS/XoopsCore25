@@ -4,7 +4,7 @@
             <ul class="list-unstyled">
                 <li class="tag-title"><{$tagbar.title}>:</li>
                 <{foreach item=tag from=$tagbar.tags|default:null}>
-                    <li><span class="fa fa-tag"></span> <{$tag}></li>
+                    <li><span class="fa-solid fa-tag"></span> <{$tag}></li>
                 <{/foreach}>
             </ul>
         </div><!-- .xoops-tags -->

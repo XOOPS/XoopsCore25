@@ -29,6 +29,9 @@
     <{/if}>
 
     <link rel="stylesheet" type="text/css" href="<{xoAppUrl 'media/font-awesome6/css/fontawesome.min.css'}>">
+    <link rel="stylesheet" type="text/css" href="<{xoAppUrl 'media/font-awesome6/css/solid.min.css'}>">
+    <link rel="stylesheet" type="text/css" href="<{xoAppUrl 'media/font-awesome6/css/brands.min.css'}>">
+    <link rel="stylesheet" type="text/css" href="<{xoAppUrl 'media/font-awesome6/css/v4-shims.min.css'}>">
     <link rel="stylesheet" type="text/css" media="all" href="<{$xoops_themecss}>">
     <script src="<{$xoops_url}>/browse.php?Frameworks/jquery/jquery.js"></script>
     <script src="<{$xoops_imageurl}>js/bootstrap.bundle.min.js"></script>
@@ -55,7 +58,7 @@
                     <label for="xo-login-uname"><{$lang_username}></label>
                     <div class="input-group mb-3">
                         <div class="input-group-prepend">
-                            <span class="input-group-text" id="basic-addon1"><i class="fa fa-user"> </i></span>
+                            <span class="input-group-text" id="basic-addon1"><i class="fa-solid fa-user"> </i></span>
                         </div>
                         <input class="form-control" type="text" name="uname" id="xo-login-uname" placeholder="<{$smarty.const.THEME_LOGIN}>" aria-label="<{$lang_username}>" aria-describedby="basic-addon1">
                     </div>
@@ -63,7 +66,7 @@
                     <label for="xo-login-pass"><{$lang_password}></label>
                     <div class="input-group">
                         <div class="input-group-prepend">
-                            <span class="input-group-text" id="basic-addon2"><i class="fa fa-lock"> </i></span>
+                            <span class="input-group-text" id="basic-addon2"><i class="fa-solid fa-lock"> </i></span>
                         </div>
                         <input class="form-control" type="password" name="pass" id="xo-login-pass" placeholder="<{$smarty.const.THEME_PASS}>" aria-label="<{$lang_password}>" aria-describedby="basic-addon2">
                     </div>
@@ -74,7 +77,7 @@
                     <label for="xo-login-button"> </label>
                     <div class="aligncenter">
                         <button id="xo-login-button" type="submit" class="btn btn-secondary">
-                            <span class="fa fa-sign-in" aria-hidden="true"></span>
+                            <span class="fa-solid fa-right-to-bracket" aria-hidden="true"></span>
                             <{$lang_login}>
                         </button>
                     </div>
