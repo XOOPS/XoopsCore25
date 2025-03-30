@@ -4,6 +4,12 @@ LANGUAGE DIFFERENCES
 Below are language differences from a version to next version.
 
 ================================
+2025/03/30: Version 2.5.12-Beta5
+================================
+/htdocs/modules/system/language/english/blocks.php
+-added define('_MB_SYSTEM_WAITING_CONTENT_DEPRECATED', "Block 'Waiting Contents' is deprecated since XOOPS 2.5.11, please use Waiting module");
+
+================================
 2023/10/01: Version 2.5.11-Final
 ================================
 /language/english/uploader.php
