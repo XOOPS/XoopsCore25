@@ -46,3 +46,5 @@ define('_MB_SYSTEM_THWIDTH', 'Screenshot image width');
 define('_MB_SYSTEM_REMEMBERME', 'Remember me');
 //2.5.8
 define('_MB_SYSTEM_BLOCK_HEIGHT', 'Block Height (lines)');
+//2.5.12
+define('_MB_SYSTEM_WAITING_CONTENT_DEPRECATED', "Block 'Waiting Contents' is deprecated since XOOPS 2.5.11, please use Waiting module");

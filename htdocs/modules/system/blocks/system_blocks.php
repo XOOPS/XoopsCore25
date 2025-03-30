@@ -61,6 +61,7 @@ function b_system_online_show()
         }
         $members = implode(', ', $member_links);
         $block['online_names'] = $members;
+        $block['online_total'] = sprintf(_ONLINEPHRASE, $total);
 
         if (is_object($xoopsModule)) {
             $mytotal = $online_handler->getCount(new Criteria('online_module', $xoopsModule->getVar('mid')));
@@ -199,10 +200,13 @@ function b_system_user_show()
 }
 
 
-function checkPendingContent($module, $table, $condition, $adminlink, $lang_linkname, &$block, $index, $xoopsDB) {
-
-    if (xoops_isActiveModule($module) && $GLOBALS['module_handler']->getCount(new Criteria('dirname', $module))) {
-        $sql = "SELECT COUNT(*) FROM " . $xoopsDB->prefix($table) . " WHERE $condition";
+function checkPendingContent($module, $table, $condition, $adminlink, $lang_linkname, &$block, $xoopsDB) {
+    $module_handler = xoops_getHandler('module');
+    if (xoops_isActiveModule($module) && $module_handler->getCount(new Criteria('dirname', $module))) {
+        $sql = "SELECT COUNT(*) FROM " . $xoopsDB->prefix($table);
+        if ('' !== $condition) {
+            $sql .= " WHERE $condition";
+        }
         $result = $xoopsDB->query($sql);
         if ($xoopsDB->isResultSet($result)) {
             [$count] = $xoopsDB->fetchRow($result);
@@ -230,54 +234,54 @@ function b_system_waiting_show()
     $block = [];
 
     // waiting content for news
-    checkPendingContent('news', 'stories', 'published=0',
-        '/modules/news/admin/index.php?op=newarticle', _MB_SYSTEM_SUBMS, $block, 0, $xoopsDB);
+    checkPendingContent('news', 'news_stories', 'published=0',
+        '/modules/news/admin/index.php?op=newarticle', _MB_SYSTEM_SUBMS, $block, $xoopsDB);
 
     // waiting content for mylinks
     checkPendingContent('mylinks', 'mylinks_links', 'status=0',
-        '/modules/mylinks/admin/index.php?op=listNewLinks', _MB_SYSTEM_WLNKS, $block, 1, $xoopsDB);
+        '/modules/mylinks/admin/index.php?op=listNewLinks', _MB_SYSTEM_WLNKS, $block, $xoopsDB);
 
     checkPendingContent('mylinks', 'mylinks_broken', '',
-        '/modules/mylinks/admin/index.php?op=listBrokenLinks', _MB_SYSTEM_BLNK, $block, 2, $xoopsDB);
+        '/modules/mylinks/admin/index.php?op=listBrokenLinks', _MB_SYSTEM_BLNK, $block, $xoopsDB);
 
     checkPendingContent('mylinks', 'mylinks_mod', '',
-        '/modules/mylinks/admin/index.php?op=listModReq', _MB_SYSTEM_MLNKS, $block, 3, $xoopsDB);
+        '/modules/mylinks/admin/index.php?op=listModReq', _MB_SYSTEM_MLNKS, $block, $xoopsDB);
 
     // waiting content for mydownloads
     if (xoops_isActiveModule('mydownloads') && $module_handler->getCount(new Criteria('dirname', 'mydownloads'))) {
 
         checkPendingContent('mydownloads', 'mydownloads_downloads', 'status=0',
-            '/modules/mydownloads/admin/index.php?op=listNewDownloads', _MB_SYSTEM_WDLS, $block, 4, $xoopsDB);
+            '/modules/mydownloads/admin/index.php?op=listNewDownloads', _MB_SYSTEM_WDLS, $block, $xoopsDB);
 
         checkPendingContent('mydownloads', 'mydownloads_broken', '',
-            '/modules/mydownloads/admin/index.php?op=listBrokenDownloads', _MB_SYSTEM_BFLS, $block, 5, $xoopsDB);
+            '/modules/mydownloads/admin/index.php?op=listBrokenDownloads', _MB_SYSTEM_BFLS, $block, $xoopsDB);
 
         checkPendingContent('mydownloads', 'mydownloads_mod', '',
-            '/modules/mydownloads/admin/index.php?op=listModReq', _MB_SYSTEM_MFLS, $block, 6, $xoopsDB);
+            '/modules/mydownloads/admin/index.php?op=listModReq', _MB_SYSTEM_MFLS, $block, $xoopsDB);
     }
 
     // waiting content for xoops comments
     checkPendingContent('system', 'xoopscomments', 'com_status=1',
-        '/modules/system/admin.php?module=0&amp;status=1&fct=comments', _MB_SYSTEM_COMPEND, $block, 7, $xoopsDB);
+        '/modules/system/admin.php?module=0&amp;status=1&fct=comments', _MB_SYSTEM_COMPEND, $block, $xoopsDB);
 
 
     // waiting content for TDMDownloads
     checkPendingContent('tdmdownloads', 'tdmdownloads_downloads', 'status=0',
-        '/modules/tdmdownloads/admin/downloads.php?op=list&statut_display=0', _MB_SYSTEM_TDMDOWNLOADS, $block, 8, $xoopsDB);
+        '/modules/tdmdownloads/admin/downloads.php?op=list&statut_display=0', _MB_SYSTEM_TDMDOWNLOADS, $block, $xoopsDB);
 
 
     // waiting content for extgallery
     checkPendingContent('extgallery', 'extgallery_publicphoto', 'photo_approved=0',
-        '/modules/extgallery/admin/photo.php#pending-photo', _MB_SYSTEM_EXTGALLERY, $block, 9, $xoopsDB);
+        '/modules/extgallery/admin/photo.php#pending-photo', _MB_SYSTEM_EXTGALLERY, $block, $xoopsDB);
 
 
     // waiting content for smartsection
     checkPendingContent('smartsection', 'smartsection_items', 'status=1',
-        '/modules/smartsection/admin/item.php', _MB_SYSTEM_SMARTSECTION, $block, 10, $xoopsDB);
+        '/modules/smartsection/admin/item.php', _MB_SYSTEM_SMARTSECTION, $block, $xoopsDB);
 
 
     if (count($block) > 0) {
-        $GLOBALS['xoopsLogger']->addDeprecated("Block 'Waiting Contents' is deprecated since XOOPS 2.5.11, please use Waiting module");
+        $GLOBALS['xoopsLogger']->addDeprecated(_MB_SYSTEM_WAITING_CONTENT_DEPRECATED);
     }
     return $block;
 }
