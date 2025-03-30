@@ -25,224 +25,184 @@
  * @author           Taiwen Jiang <phppp@users.sourceforge.net>
  * @author           Kris <kris@frxoops.org>
  * @author           DuGris (aka L. JEN) <dugris@frxoops.org>
+ * @author           Mamba
  **/
 
 defined('XOOPS_INSTALL') || die('XOOPS Installation wizard die');
+
 include_once __DIR__ . '/../../language/' . $wizard->language . '/global.php';
-?><!doctype html>
+
+$versionParts = [];
+preg_match('/(^[a-z\s]*)([0-9\.]*)/i', XOOPS_VERSION, $versionParts);
+?>
+
+<!doctype html>
 <html lang="<?php echo _LANGCODE; ?>">
-
 <head>
-
     <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="description" content="">
-    <meta name="author" content="">
+    <title><?php echo XOOPS_VERSION . ' : ' . XOOPS_INSTALL_WIZARD; ?> (<?php echo ($wizard->pageIndex + 1) . '/' . count($wizard->pages); ?>)</title>
 
-    <title><?php echo XOOPS_VERSION . ' : ' . XOOPS_INSTALL_WIZARD; ?>
-        (<?php echo ($wizard->pageIndex + 1) . '/' . count($wizard->pages); ?>)</title>
-
-    <!-- Bootstrap Core CSS -->
-    <link href="assets/css/bootstrap.min.css" rel="stylesheet">
-
+    <!-- Bootstrap CSS -->
+        <link href="assets/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome 6 -->
+    <link href="../media/font-awesome6/css/fontawesome.min.css" rel="stylesheet" as="font" crossorigin="anonymous">
+    <link href="../media/font-awesome6/css/solid.min.css" rel="stylesheet" as="font" crossorigin="anonymous">
+    <link href="../media/font-awesome6/css/brands.min.css" rel="stylesheet" as="font" crossorigin="anonymous">
+    <link href="../media/font-awesome6/css/v4-shims.min.css" rel="stylesheet" as="font" crossorigin="anonymous">
     <!-- Custom CSS -->
     <link href="assets/css/style.css" rel="stylesheet">
-
-    <!-- Custom Fonts -->
-    <link href="../media/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
-
-    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
-    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
-    <!--[if lt IE 9]>
-    <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
-    <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
-    <![endif]-->
-    <?php
-    if (!empty($extraSources)) {
-        echo $extraSources;
-    }
-    ?>
-    <?php
-    if (file_exists('language/' . $wizard->language . '/style.css')) {
-        echo '<link rel="stylesheet" type="text/css" media="all" href="language/' . $wizard->language . '/style.css" />';
-    }
-    ?>
-    <script type="text/javascript" src="./assets/js/xo-installer.js"></script>
-
+    <?php if (file_exists('language/' . $wizard->language . '/style.css')): ?>
+        <link rel="stylesheet" href="language/<?php echo $wizard->language; ?>/style.css">
+    <?php endif; ?>
 </head>
 
 <body>
-
-<div id="wrapper">
-
+<div class="wrapper">
     <!-- Navigation -->
-    <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
-        <!-- Brand and toggle get grouped for better mobile display -->
-        <div class="navbar-header">
-            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
-                <span class="sr-only">Toggle navigation</span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="#"><img src="assets/img/logo_small.png" alt="XOOPS"></a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
             </button>
-            <div class="navbar-brand"><img src="assets/img/logo_small.png"></div>
-        </div>
-        <!-- Top Menu Items -->
-        <ul class="nav navbar-right top-nav">
-            <li class="dropdown">
-                <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-book"></i> <?php echo SUPPORT; ?> <b class="caret"></b></a>
-                <ul class="dropdown-menu">
-                    <?php
-                    @include_once __DIR__ . '/../language/' . $wizard->language . '/support.php';
-                    foreach ($supports as $lang => $support) {
-                        echo '<li><a href="' . $support['url'] . '" target="_blank">' . $support['title'] . '</a></li>';
-                    }
-                    ?>
+
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <!-- Left sidebar -->
+                <ul class="navbar-nav flex-column side-nav me-auto">
+                    <?php foreach (array_keys($wizard->pages) as $k => $page): ?>
+                        <li class="nav-item">
+                            <?php if ($k == $wizard->pageIndex): ?>
+                                <a class="nav-link active"><i class="<?php echo str_replace('fa fa-', 'fa-solid fa-', $wizard->pages[$page]['icon']); ?>"></i> <?php echo $wizard->pages[$page]['name']; ?></a>
+                            <?php elseif ($k > $wizard->pageIndex): ?>
+                                <a class="nav-link disabled"><i class="<?php echo str_replace('fa fa-', 'fa-solid fa-', $wizard->pages[$page]['icon']); ?>"></i> <?php echo $wizard->pages[$page]['name']; ?></a>
+                            <?php else: ?>
+                                <a class="nav-link" href="<?php echo $wizard->pageURI($page); ?>"><i class="<?php echo str_replace('fa fa-', 'fa-solid fa-', $wizard->pages[$page]['icon']); ?> text-success"></i> <?php echo $wizard->pages[$page]['name']; ?></a>
+                            <?php endif; ?>
+                        </li>
+                    <?php endforeach; ?>
                 </ul>
-            </li>
-            <li>
-                <a href="https://github.com/XOOPS/XoopsCore25" target="_blank" title="<?php echo XOOPS_SOURCE_CODE; ?>"><i class="fa fa-lg fa-github"></i></a>
-            </li>
-            <?php if ($pageHasHelp) { ?>
-                <li>
-                    <a onclick="showHideHelp(this);" title="<?php echo SHOW_HIDE_HELP; ?>"><i class="fa fa-lg fa-life-ring"></i></a>
-                </li>
-            <?php } ?>
-        </ul>
-        <!-- Sidebar Menu Items - These collapse to the responsive navigation menu on small screens -->
-        <div class="collapse navbar-collapse navbar-ex1-collapse">
-            <ul class="nav navbar-nav side-nav">
-                <?php
-                foreach (array_keys($wizard->pages) as $k => $page) {
-                    if ($k == $wizard->pageIndex) {
-                        echo'<li class="active"><a><i class="' . $wizard->pages[$page]['icon'] . '"></i> '
-                            . $wizard->pages[$page]['name'] . '</a></li>';
-                    } elseif ($k > $wizard->pageIndex) {
-                        echo'<li class="disabled"><a><i class="' . $wizard->pages[$page]['icon'] . '"></i> '
-                            . $wizard->pages[$page]['name'] . '</a></li>';
-                    } else {
-                        echo'<li><a href="' . $wizard->pageURI($page) . '"><i class="'
-                            . $wizard->pages[$page]['icon'] . ' text-success"></i> ' . $wizard->pages[$page]['name']
-                            . '</a></li>';
-                    }
-                }
-                ?>
-            </ul>
+
+                <!-- Right menu -->
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#"><i class="fa-solid fa-book"></i> <?php echo SUPPORT; ?></a>
+                        <ul class="dropdown-menu dropdown-menu-end">
+                            <?php
+                            $supportFile = __DIR__ . '/../language/' . $wizard->language . '/support.php';
+                            if (file_exists($supportFile)) {
+                                $supports =  include $supportFile;
+                            }
+                            if (isset($supports) && is_array($supports)) { foreach ($supports as $support): ?>
+                                <li><a class="dropdown-item" href="<?php echo $support['url']; ?>" target="_blank"><?php echo $support['title']; ?></a></li>
+                            <?php endforeach; } ?>
+                        </ul>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="https://github.com/XOOPS/XoopsCore25" target="_blank" title="<?php echo XOOPS_SOURCE_CODE; ?>">
+                            <i class="fa-brands fa-github fa-lg"></i>
+                        </a>
+                    </li>
+                </ul>
+            </div>
         </div>
-        <!-- /.navbar-collapse -->
     </nav>
 
-    <div id="page-wrapper">
-
+    <div class="content-wrapper">
         <div class="container-fluid">
-
-            <div class="row">
-                <?php if (!empty($error)) { ?>
-                <div class="col-lg-3 col-md-6">
-                    <div class="panel panel-red">
-                        <div class="panel-heading">
-                            <div class="row">
-                                <div class="col-xs-3">
-                                    <span class="<?php echo $wizard->pages[$wizard->currentPage]['icon']; ?> fa-5x"></span>
-                                </div>
-                                <div class="col-xs-9 text-right">
-                                    <div class="huge"><span class="fa fa-ban"></span></div>
-                                    <div><?php echo XOOPS_ERROR_ENCOUNTERED; ?></div>
+            <!-- Status Cards -->
+            <div class="row g-4 mb-4">
+                <?php if (!empty($error)): ?>
+                    <div class="col-lg-4">
+                        <div class="card border-danger">
+                            <div class="card-body bg-danger text-white">
+                                <div class="row">
+                                    <div class="col-3">
+                                        <i class="<?php echo str_replace('fa fa-', 'fa-solid fa-', $wizard->pages[$wizard->currentPage]['icon']); ?> fa-3x"></i>
+                                    </div>
+                                    <div class="col-9 text-end">
+                                        <div class="display-6"><i class="fa-solid fa-ban"></i></div>
+                                        <div><?php echo XOOPS_ERROR_ENCOUNTERED; ?></div>
+                                    </div>
                                 </div>
                             </div>
                         </div>
-                        <div class="panel-footer">
-                            <?php echo XOOPS_ERROR_SEE_BELOW; ?>
-                            <div class="clearfix"></div>
-                        </div>
                     </div>
-                <?php } ?>
-            </div>
-                <div class="col-lg-3 col-md-6">
-                    <div class="panel panel-primary">
-                        <div class="panel-heading">
+                <?php endif; ?>
+
+                <!-- Progress Card -->
+                <div class="col-lg-4">
+                    <div class="card border-primary">
+                        <div class="card-body bg-primary text-white">
                             <div class="row">
-                                <div class="col-xs-3">
-                                    <span class="<?php echo $wizard->pages[$wizard->currentPage]['icon']; ?> fa-5x"></span>
+                                <div class="col-3">
+                                    <i class="<?php echo str_replace('fa fa-', 'fa-solid fa-', $wizard->pages[$wizard->currentPage]['icon']); ?> fa-3x"></i>
                                 </div>
-                                <div class="col-xs-9 text-right">
-                                    <div class="huge"><?php echo ($wizard->pageIndex + 1) . '/' . count($wizard->pages); ?></div>
+                                <div class="col-9 text-end">
+                                    <div class="display-6"><?php echo ($wizard->pageIndex + 1) . '/' . count($wizard->pages); ?></div>
                                     <div><?php echo XOOPS_INSTALLING; ?></div>
                                 </div>
                             </div>
                         </div>
-                        <div class="panel-footer text-primary">
+                        <div class="card-footer text-primary">
                             <?php echo $wizard->pages[$wizard->currentPage]['name']; ?>
-                            <div class="clearfix"></div>
                         </div>
                     </div>
                 </div>
-                <?php
-                $versionParts=[];
-                $versionResult = preg_match ('/(^[a-z\s]*)([0-9\.]*)/i', XOOPS_VERSION, $versionParts);
-                ?>
 
-                <div class="col-lg-3 col-md-6">
-                    <div class="panel panel-green">
-                        <div class="panel-heading">
+                <!-- Version Card -->
+                <div class="col-lg-4">
+                    <div class="card border-success">
+                        <div class="card-body bg-success text-white">
                             <div class="row">
-                                <div class="col-xs-3">
-                                    <i class="fa fa-tag fa-5x"></i>
+                                <div class="col-3">
+                                    <i class="fa-solid fa-tag fa-3x"></i>
                                 </div>
-                                <div class="col-xs-9 text-right">
-                                    <div class="huge"><?php echo $versionParts[2]; ?></div>
+                                <div class="col-9 text-end">
+                                    <div class="display-6"><?php echo $versionParts[2]; ?></div>
                                     <div>Version</div>
                                 </div>
                             </div>
                         </div>
-                        <div class="panel-footer text-success">
+                        <div class="card-footer text-success">
                             <?php echo XOOPS_VERSION; ?>
-                            <div class="clearfix"></div>
                         </div>
                     </div>
                 </div>
             </div>
-            <!-- /.row -->
+
+            <!-- Wizard Form -->
             <div class="row">
-                <div id="wizard">
-                    <form id='<?php echo $wizard->pages[$wizard->currentPage]['name']; ?>' action='<?php echo $_SERVER['PHP_SELF']; ?>' method='post'>
+                <div class="col-12">
+                    <div class="card">
+                        <div class="card-body">
+                            <form id="<?php echo $wizard->pages[$wizard->currentPage]['name']; ?>" action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post">
+                                <h2><?php echo $wizard->pages[$wizard->currentPage]['title']; ?></h2>
+                                <?php echo $content; ?>
 
-                        <div class="page" id="<?php echo $wizard->pages[$wizard->currentPage]['name']; ?>">
-                            <h2><?php echo $wizard->pages[$wizard->currentPage]['title']; ?></h2>
-                            <?php echo $content; ?>
+                                <div class="text-end mt-4">
+                                    <button class="btn btn-lg btn-success" type="<?php echo !empty($pageHasForm) ? 'submit' : 'button'; ?>"
+                                            <?php if (empty($pageHasForm)): ?>onclick="location.href='<?php echo $wizard->pageURI('+1'); ?>'"<?php endif; ?>>
+                                        <?php echo BUTTON_NEXT; ?> <i class="fa-solid fa-caret-right"></i>
+                                    </button>
+                                </div>
+                            </form>
                         </div>
-
-                        <div id="buttons">
-                            <?php if (!empty($pageHasForm)) { ?>
-                            <button class="btn btn-lg btn-success" type="submit">
-                            <?php } else { ?>
-                            <button class="btn btn-lg btn-success" type="button" accesskey="n" onclick="location.href='<?php echo $wizard->pageURI('+1'); ?>'">
-                            <?php } ?>
-                            <?php echo BUTTON_NEXT; ?>  <span class="fa fa-caret-right"></span>
-                            </button>
-                        </div>
-                    </form>
+                    </div>
                 </div>
             </div>
-
         </div>
-        <!-- /.container-fluid -->
-
     </div>
-    <!-- /#page-wrapper -->
-
 </div>
-<!-- /#wrapper -->
 
+<!-- Scripts -->
 <!-- jQuery -->
-<script src="assets/js/jquery.js"></script>
+<!--<script src="assets/js/bootstrap.bundle.min.js"></script>-->
 
 <!-- Bootstrap Core JavaScript -->
-<script src="assets/js/bootstrap.min.js"></script>
-
+<script src="assets/js/jquery.min.js"></script>
+<script src="assets/js/xo-installer.js"></script>
 </body>
-
 </html>
 <script type="text/javascript">
     $(document).ready(function () {

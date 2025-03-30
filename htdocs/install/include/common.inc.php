@@ -30,8 +30,8 @@
  */
 define('INSTALL_USER', '');
 define('INSTALL_PASSWORD', '');
-
 define('XOOPS_INSTALL', 1);
+define('XOOPS_INSTALL_PATH', dirname(__DIR__));
 
 function fatalPhpErrorHandler($e = null) {
     $messageFormat = '<br><div>Fatal %s %s file: %s : %d </div>';
@@ -75,25 +75,65 @@ if (empty($xoopsOption['hascommon'])) {
 
 }
 
-@include __DIR__ . '/../../mainfile.php';
+//@include __DIR__ . '/../../mainfile.php';
+$mainfile = dirname(__DIR__, 2) . '/mainfile.php';
+if (file_exists($mainfile)) {
+    include $mainfile;
+}
+
 if (!defined('XOOPS_ROOT_PATH')) {
     define('XOOPS_ROOT_PATH', str_replace("\\", '/', realpath('../')));
+    define("XOOPS_PATH", $_SESSION['settings']['PATH'] ?? "");
+    define("XOOPS_VAR_PATH", $_SESSION['settings']['VAR_PATH'] ?? "");
+    define("XOOPS_URL", $_SESSION['settings']['URL'] ?? "");
 }
 
 date_default_timezone_set(@date_default_timezone_get());
-include __DIR__ . '/../class/installwizard.php';
-include_once __DIR__ . '/../../include/version.php';
-require_once __DIR__ . '/../../include/xoopssetcookie.php';
-include_once __DIR__ . '/../include/functions.php';
-include_once __DIR__ . '/../../class/module.textsanitizer.php';
-include_once __DIR__ . '/../../xoops_lib/vendor/autoload.php';
+//include __DIR__ . '/../class/installwizard.php';
+//include_once __DIR__ . '/../../include/version.php';
+include XOOPS_INSTALL_PATH . '/class/installwizard.php';
+include_once XOOPS_ROOT_PATH . '/include/version.php';
+
+//require_once __DIR__ . '/../../include/xoopssetcookie.php';
+include_once XOOPS_ROOT_PATH . '/include/xoopssetcookie.php';
+
+//include_once __DIR__ . '/../include/functions.php';
+include_once XOOPS_INSTALL_PATH . '/include/functions.php';
+
+//include_once __DIR__ . '/../../class/module.textsanitizer.php';
+//include_once XOOPS_ROOT_PATH . '/class/module.textsanitizer.php';
+
+//include_once __DIR__ . '/../../xoops_lib/vendor/autoload.php';
+//include_once XOOPS_TRUST_PATH . '/vendor/autoload.php';
+
+
+if (defined('XOOPS_TRUST_PATH')) {
+    include_once XOOPS_TRUST_PATH . '/vendor/autoload.php';
+} elseif(isset($_SESSION['settings']['TRUST_PATH'])) {
+
+    include_once $_SESSION['settings']['TRUST_PATH'] . '/vendor/autoload.php';
+
+    } else {
+    $possiblePaths = [
+        dirname(__DIR__, 2) . '/xoops_lib/vendor/autoload.php',
+        dirname(__DIR__, 2) . '/class/libraries/vendor/autoload.php'
+    ];
+    foreach ($possiblePaths as $path) {
+        if (file_exists($path)) {
+            include_once $path;
+            break;
+        }
+    }
+}
+
+
 
 $pageHasHelp = false;
 $pageHasForm = false;
 
 $wizard = new XoopsInstallWizard();
 if (!$wizard->xoInit()) {
-    exit();
+    exit('Init Error');
 }
 
 if (!isset($_SESSION['settings']) || !is_array($_SESSION['settings'])) {

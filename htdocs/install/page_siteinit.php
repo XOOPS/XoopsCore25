@@ -111,14 +111,14 @@ if ($isadmin) {
 
         if (isset($error['name'])) {
             foreach ($error['name'] as $errmsg) {
-                echo '<div class="alert alert-danger"><span class="fa fa-ban text-danger"></span> ' . $errmsg . '</div>';
+                echo '<div class="alert alert-danger"><span class="fa-solid fa-ban text-danger"></span> ' . $errmsg . '</div>';
             }
         }
 
         xoFormField('adminmail', $vars['adminmail'] ?? '', ADMIN_EMAIL_LABEL);
         if (isset($error['email'])) {
             foreach ($error['email'] as $errmsg) {
-                echo '<div class="alert alert-danger"><span class="fa fa-ban text-danger"></span> ' . $errmsg . '</div>';
+                echo '<div class="alert alert-danger"><span class="fa-solid fa-ban text-danger"></span> ' . $errmsg . '</div>';
             }
         }
         ?>
@@ -130,7 +130,7 @@ if ($isadmin) {
                 echo xoPassField('adminpass2', '', ADMIN_CONFIRMPASS_LABEL);
                 if (isset($error['pass'])) {
                     foreach ($error['pass'] as $errmsg) {
-                        echo '<div class="alert alert-danger"><span class="fa fa-ban text-danger"></span> ' . $errmsg . '</div>';
+                        echo '<div class="alert alert-danger"><span class="fa-solid fa-ban text-danger"></span> ' . $errmsg . '</div>';
                     }
                 }
                 ?>
@@ -148,7 +148,7 @@ if ($isadmin) {
 
                 <div id="passwordgenerator">
                     <label for='password_generator'><?php echo PASSWORD_GENERATOR; ?></label>
-                    <input type="text" class="form-control" name="generated_pw" id="generated_pw" value=""  onclick="this.setSelectionRange(0, this.value.length); document.execCommand('copy');"><br>
+                    <label for="generated_pw"></label><input type="text" class="form-control" name="generated_pw" id="generated_pw" value="" onclick="this.setSelectionRange(0, this.value.length); document.execCommand('copy');"><br>
                     <button type="button" class="btn btn-default" onclick="suggestPassword(16);">
                     <?php echo PASSWORD_GENERATE; ?></button>
                     <button type="button" class="btn btn-default" onclick="suggestPasswordCopy();">
@@ -156,8 +156,6 @@ if ($isadmin) {
                 </div>
             </div>
         </div>
-    </div>
-    </div>
     </div>
     <?php
 

@@ -9,7 +9,7 @@ if (empty($_POST['uname']) || empty($_POST['pass'])) {
         <label for="uname"><?php echo _USERNAME; ?></label>
         <div class="input-group">
             <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
-            <input class="form-control" type="text" name="uname" id="uname" value="" placeholder="<?php echo _USERNAME_PLACEHOLDER; ?>">
+            <input class="form-control" type="text" name="uname" id="uname" value="" placeholder="<?php echo _USERNAME_PLACEHOLDER; ?>" autocomplete="current-password">
         </div>
 
         <label for="pass"><?php echo _PASSWORD; ?></label>

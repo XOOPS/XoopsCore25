@@ -19,7 +19,7 @@ class PathStuffController
     /**
      * @var array
      */
-    public $xoopsPath = [
+    public array $xoopsPath = [
         'root' => '',
         'data' => '',
         'lib'  => '',
@@ -27,14 +27,14 @@ class PathStuffController
     /**
      * @var array
      */
-    public $xoopsPathDefault = [
+    public array $xoopsPathDefault = [
         'data' => 'xoops_data',
         'lib'  => 'xoops_lib',
     ];
     /**
      * @var array
      */
-    public $dataPath = [
+    public array $dataPath = [
         'caches'    => [
             'smarty_cache',
             'smarty_compile',
@@ -50,17 +50,17 @@ class PathStuffController
     /**
      * @var array
      */
-    public $path_lookup = [
+    public array $path_lookup       = [
         'root' => 'ROOT_PATH',
         'data' => 'VAR_PATH',
         'lib'  => 'PATH',
     ];
-    public $xoopsUrl = '';
-    public $xoopsCookieDomain = '';
+    public       $xoopsUrl          = '';
+    public       $xoopsCookieDomain = '';
     /**
      * @var array
      */
-    public $validPath = [
+    public array $validPath = [
         'root' => 0,
         'data' => 0,
         'lib'  => 0,
@@ -68,14 +68,19 @@ class PathStuffController
     /**
      * @var bool
      */
-    public $validUrl = false;
+    public bool $validUrl = false;
     /**
      * @var array
      */
-    public $permErrors = [
+    public array $permErrors = [
         'root' => null,
         'data' => null,
     ];
+
+    /**
+     * @var string Stores the error message
+     */
+    public $errorMessage = '';
 
     /**
      * @param $xoopsPathDefault
@@ -120,10 +125,115 @@ class PathStuffController
         if (isset($_SESSION['settings']['COOKIE_DOMAIN'])) {
             $this->xoopsCookieDomain = $_SESSION['settings']['COOKIE_DOMAIN'];
         } else {
-            $this->xoopsCookieDomain = xoops_getBaseDomain($this->xoopsUrl);
+            //            $this->xoopsCookieDomain = xoops_getBaseDomain($this->xoopsUrl);
+            $this->xoopsCookieDomain = $this->xoops_getBaseDomain($this->xoopsUrl);
         }
     }
 
+    //=================================================
+
+    /**
+     * Determine the base domain name for a URL. The primary use for this is to set the domain
+     * used for cookies to represent any subdomains.
+     *
+     * The registrable domain is determined using the public suffix list. If the domain is not
+     * registrable, an empty string is returned. This empty string can be used in setcookie()
+     * as the domain, which restricts cookie to just the current host.
+     *
+     * @param string $url URL or hostname to process
+     *
+     * @return string the registrable domain or an empty string
+     */
+    private function xoops_getBaseDomain($url)
+    {
+        $parts = parse_url($url);
+        $host  = '';
+        if (!empty($parts['host'])) {
+            $host = $parts['host'];
+            if (strtolower($host) === 'localhost') {
+                return 'localhost';
+            }
+            // bail if this is an IPv4 address (IPv6 will fail later)
+            if (false !== filter_var($host, FILTER_VALIDATE_IP, FILTER_FLAG_IPV4)) {
+                return '';
+            }
+            //            $regdom = new \Xoops\RegDom\RegisteredDomain();
+            //            $host = $regdom->getRegisteredDomain($host);
+
+            $host = $this->getRegisteredDomain($host);
+        }
+        return $host ?? '';
+    }
+
+    // Define a simplified getRegisteredDomain function
+    function getRegisteredDomain($host)
+    {
+        $hostParts = explode('.', $host);
+        $numParts  = count($hostParts);
+
+        if ($numParts >= 2) {
+            // For simplicity, assume the domain is the last two parts
+            return $hostParts[$numParts - 2] . '.' . $hostParts[$numParts - 1];
+        }
+
+        return $host; // Return as is if it's a top-level domain
+    }
+
+    public function updateXoopsTrustPath($newTrustPath)
+    {
+        // 1. Update the session variable
+        $_SESSION['settings']['TRUST_PATH'] = $newTrustPath;
+
+        // 2. Update the defined constant (if not already defined)
+        if (!defined('XOOPS_TRUST_PATH')) {
+            define('XOOPS_TRUST_PATH', $newTrustPath);
+        }
+
+        // Firstly, locate XOOPS lib folder out of XOOPS root folder
+        //        $this->xoopsPath['lib'] = dirname($path) . '/' . $this->xoopsPathDefault['lib'];
+        $this->xoopsPath['lib'] = $newTrustPath;
+        // If the folder is not created, re-locate XOOPS lib folder inside XOOPS root folder
+        //        if (!is_dir($this->xoopsPath['lib'] . '/')) {
+        //            $this->xoopsPath['lib'] = $path . '/' . $this->xoopsPathDefault['lib'];
+        //        }
+
+        // 3. Re-register the autoloader
+        try {
+            $this->registerAutoloader($newTrustPath);
+        } catch (Exception $e) {
+            // Log or handle error
+            error_log('Failed to register autoloader: ' . $e->getMessage());
+            throw new RuntimeException("Could not configure autoloader for the new library path.");
+        }
+    }
+
+    private function registerAutoloader($trustPath)
+    {
+        // Composer's autoloader (if it exists)
+        $composerAutoloader = $trustPath . '/vendor/autoload.php';
+        if (file_exists($composerAutoloader)) {
+            include_once $composerAutoloader;
+            return;
+        }
+
+        // Notify about missing Composer autoloader
+        throw new RuntimeException("Autoloader not found in {$trustPath}. Ensure the vendor folder is intact.");
+    }
+
+    // install/class/pathcontroller.php
+
+    public function sanitizePath($path)
+    {
+        // Normalize the path and resolve symbolic links
+        $realPath = realpath($path);
+        if ($realPath && is_dir($realPath)) {
+            // Ensure no trailing slashes for consistency
+            return rtrim(str_replace('\\', '/', $realPath), '/');
+        }
+        return false; // Return false for invalid paths
+    }
+
+    //========================================
     public function execute()
     {
         $this->readRequest();
@@ -132,7 +242,7 @@ class PathStuffController
             foreach ($this->path_lookup as $req => $sess) {
                 $_SESSION['settings'][$sess] = $this->xoopsPath[$req];
             }
-            $_SESSION['settings']['URL'] = $this->xoopsUrl;
+            $_SESSION['settings']['URL']           = $this->xoopsUrl;
             $_SESSION['settings']['COOKIE_DOMAIN'] = $this->xoopsCookieDomain;
             if ($valid) {
                 $GLOBALS['wizard']->redirectToPage('+1');
@@ -164,12 +274,12 @@ class PathStuffController
             }
             if (isset($request['COOKIE_DOMAIN'])) {
                 $tempCookieDomain = trim($request['COOKIE_DOMAIN']);
-                $tempParts = parse_url($tempCookieDomain);
+                $tempParts        = parse_url($tempCookieDomain);
                 if (!empty($tempParts['host'])) {
                     $tempCookieDomain = $tempParts['host'];
                 }
                 $request['COOKIE_DOMAIN'] = $tempCookieDomain;
-                $this->xoopsCookieDomain = $tempCookieDomain;
+                $this->xoopsCookieDomain  = $tempCookieDomain;
             }
         }
     }
@@ -213,8 +323,11 @@ class PathStuffController
         if ($PATH === 'root' || empty($PATH)) {
             $path = 'root';
             if (is_dir($this->xoopsPath[$path]) && is_readable($this->xoopsPath[$path])) {
-                @include_once "{$this->xoopsPath[$path]}/include/version.php";
-                if (file_exists("{$this->xoopsPath[$path]}/mainfile.dist.php") && defined('XOOPS_VERSION')) {
+                $versionFile = "{$this->xoopsPath[$path]}/include/version.php";
+                if (file_exists($versionFile)) {
+                    include_once $versionFile;
+                }
+                if (defined('XOOPS_VERSION') && file_exists("{$this->xoopsPath[$path]}/mainfile.dist.php")) {
                     $this->validPath[$path] = 1;
                 }
             }
@@ -306,8 +419,8 @@ class PathStuffController
      * @param string $path
      * @param bool   $create
      *
-     * @internal param bool $recurse
      * @return false on failure, method (u-ser,g-roup,w-orld) on success
+     * @internal param bool $recurse
      */
     public function makeWritable($path, $create = true)
     {
@@ -316,7 +429,9 @@ class PathStuffController
             if (!$create) {
                 return false;
             } else {
-                mkdir($path, $mode);
+                if (!mkdir($path, $mode) && !is_dir($path)) {
+                    throw new \RuntimeException(sprintf('Directory "%s" was not created', $path));
+                }
             }
         }
         if (!is_writable($path)) {
