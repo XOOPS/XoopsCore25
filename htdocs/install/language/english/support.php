@@ -20,3 +20,5 @@ $supports["french"] = array(
     "title" => "Support francophone"
 );
 */
+
+return $supports;
