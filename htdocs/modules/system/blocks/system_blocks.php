@@ -211,7 +211,7 @@ function checkPendingContent($module, $table, $condition, $adminlink, $lang_link
         if ($xoopsDB->isResultSet($result)) {
             [$count] = $xoopsDB->fetchRow($result);
             if ((int)$count > 0) {
-                $block['modules'][$index] = [
+                $block['modules'][] = [
                     'adminlink' => XOOPS_URL . $adminlink,
                     'pendingnum' => $count, // Use $count directly, no second fetch
                     'lang_linkname' => $lang_linkname,
