@@ -1,0 +1,109 @@
+.xoops-comment-body {
+    margin-top: 20px;
+}
+
+.xoops-comment-template {
+    margin-bottom: 20px;
+}
+
+.xoops-comment-author img {
+    display: inline-block;
+}
+
+.xoops-comment-author ul.poster-info {
+    text-align: left;
+}
+
+.xoops-comment-author li.poster-rank {
+    margin-bottom: 10px;
+}
+
+.xoops-comment-author strong.poster-rank {
+    font-size: 0.8em;
+}
+
+.xoops-comment-author img.image-avatar {
+    width: 100%;
+    border: 1px solid #CCC;
+}
+
+.xoops-comment-author.col-md-2 {
+    padding-right: 0;
+}
+
+.xoops-comment-text > div {
+    display: block;
+}
+
+.xoops-comment-text p.message-text {
+    background: #EAEAEA;
+    padding: 10px;
+    border-radius: 5px;
+    -moz-border-radius: 5px;
+    -webkit-border-radius: 5px;
+    position: relative;
+}
+
+.xoops-comment-text p.message-text:after {
+    content: "";
+    display: block;
+    position: absolute;
+    width: 20px;
+    height: 20px;
+    top: 0;
+    left: -10px;
+    background: url(../../images/comment-arrow.png) 50% 50% no-repeat;
+    background-size: contain;
+}
+
+.xoops-comment-form {
+}
+
+.xoops-comment-form input[type=text], div.xoops-comment-form textarea {
+    background: #EEE;
+    padding: 5px;
+    min-width: 100%;
+    border: 1px solid #DDD;
+    margin-bottom: 10px;
+    border-radius: 5px;
+    -moz-border-radius: 5px;
+    -webkit-border-radius: 5px;
+}
+
+.xoops-comment-form input[type=text]:focus, div.xoops-comment-form textarea:focus {
+    background: #FFF;
+}
+
+.xoops-comment-form textarea {
+    max-height: 150px;
+    max-width: 150px;
+}
+
+.xoops-comment-form input[type=submit] {
+    background: #5BC0DE;
+    border: 1px solid #09C;
+    padding: 5px;
+    color: #FFF;
+    border-radius: 5px;
+    -moz-border-radius: 5px;
+    -webkit-border-radius: 5px;
+    float: right;
+}
+
+.xoops-comment-form span {
+    font-weight: bold;
+    color: #999;
+}
+
+.xoops-comment-form span.caption-marker {
+    color: #F00;
+    padding-left: 10px;
+    font-size: 1.5em;
+}
+
+.modal-dialog.comments-modal {
+}
+
+.comments-nav {
+    padding: 10px;
+}

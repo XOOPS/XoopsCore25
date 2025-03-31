@@ -1,0 +1,132 @@
+.xoopstube {
+}
+
+.xoopstube .col-md-12 {
+    margin-bottom: 10px;
+}
+
+.xoopstube .xoopstube-header {
+    margin-bottom: 10px;
+}
+
+.xoopstube .xoopstube-header > a > img {
+    max-width: 100%;
+}
+
+.xoopstube .xoopstube-header-text {
+    margin-bottom: 10px;
+}
+
+.xoopstube .xoopstube-description {
+    margin-bottom: 10px;
+}
+
+.xoopstube .xoopstube-navigation {
+}
+
+.xoopstube .xoopstube-navigation span {
+    margin-bottom: 10px;
+}
+
+.xoopstube .xoopstube-navigation a {
+    background: #FAFAFA;
+    border: 1px solid #EEE;
+    font-size: 0.9em;
+    padding: 5px 10px 5px 10px;
+    display: inline-block;
+    margin: 0 0 5px 0;
+    border-radius: 5px;
+}
+
+.xoopstube .xoopstube-navigation a:hover {
+    background: #EBEBEB;
+    color: #979797;
+}
+
+.xoopstube-loop {
+    margin-bottom: 20px;
+}
+
+.xoopstube-loop ul li {
+    margin-bottom: 5px;
+}
+
+.xoopstube-video-title {
+    font-size: 1.5em;
+    line-height: inherit;
+    margin: 0;
+}
+
+.xoopstube-video-thumb {
+    padding: 0;
+    position: relative;
+}
+
+.xoopstube-video-thumb span {
+    position: absolute;
+    left: 5px;
+    bottom: 5px;
+    color: #666;
+}
+
+.xoopstube-video-thumb img {
+    max-width: 100%;
+}
+
+.xoopstube .xoopstube-video-info {
+}
+
+.xoopstube .xoopstube-video-info [class*=col] {
+    margin-bottom: 10px;
+}
+
+.xoopstube .category-titles {
+    margin-bottom: 10px;
+}
+
+.xoopstube .xoopstube-data {
+    margin-bottom: 10px;
+}
+
+.xoopstube ul.xoopstube-list li {
+    margin-bottom: 10px;
+}
+
+.xoopstube .xoopstube-footer {
+    margin-bottom: 20px;
+}
+
+.xoopstube-other-video {
+    background: #F9F9F9;
+    border-top: 1px solid #EEE;
+}
+
+.xoopstube-credits {
+    background: #333;
+    color: #EEE;
+    padding: 10px;
+}
+
+.xoopstube-blocks {
+}
+
+.xoopstube-blocks img {
+    max-width: 100%;
+}
+
+.xoopstube-thumb {
+    position: relative;
+    margin-bottom: 20px;
+}
+
+.xoopstube-thumb span {
+    background: #000;
+    display: block;
+}
+
+.xoopstube-video-play {
+}
+
+.xoopstube-video-play embed {
+    max-width: 100%;
+}
