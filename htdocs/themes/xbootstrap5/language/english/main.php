@@ -21,7 +21,12 @@ define('THEME_SLIDE_LABEL2', 'Second slide label');
 define('THEME_SLIDE_SUBLABEL2', 'Some representative placeholder content for the second slide.');
 define('THEME_SLIDE_LABEL3', 'Third slide label');
 define('THEME_SLIDE_SUBLABEL3', 'Some representative placeholder content for the third slide.');
-
+define('THEME_SLIDE_LABEL4', 'Fourth slide label');
+define('THEME_SLIDE_SUBLABEL4', 'Some representative placeholder content for the fourth slide.');
+define('THEME_SLIDE_LABEL5', 'Fifth slide label');
+define('THEME_SLIDE_SUBLABEL5', 'Some representative placeholder content for the fifth slide.');
+define('THEME_SLIDE_LABEL6', 'Sixth slide label');
+define('THEME_SLIDE_SUBLABEL6', 'Some representative placeholder content for the Sixth slide.');
 //Home Message
 define('THEME_ABOUTUS', 'About Us');
 define('THEME_LEARNINGMORE', 'Learning More...');

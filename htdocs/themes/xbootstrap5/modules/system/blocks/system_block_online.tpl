@@ -1,4 +1,4 @@
-<p><{$block.online_total}></p>
+<p><{$block.online_total|default:0}></p>
 <p><{$block.lang_members}>: <{$block.online_members}></p>
 <p><{$block.lang_guests}>: <{$block.online_guests}></p>
 <p><{$block.online_names}></p>

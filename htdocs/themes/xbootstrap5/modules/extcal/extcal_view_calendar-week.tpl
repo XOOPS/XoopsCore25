@@ -39,8 +39,10 @@
                 <{if $day.isEmpty}>&nbsp;<{else}><a href="<{$xoops_url}>/modules/extcal/view_day.php?year=<{$day.year}>&month=<{$day.month}>&day=<{$day.dayNumber}>"><{$day.dayNumber}></a><{/if}><br>
                 <{foreach item=event from=$day.events|default:null}>
                     <{if isset($event)}>
-                        <div style="font-size:0.8em; margin-top:5px;"><img src="assets/images/icons/event-<{$event.status}>.gif"> <a href="<{$xoops_url}>/modules/extcal/event.php?event=<{$event.event_id}>" class="extcalTips"
-                                                                                                                                     title="<{$event.event_title}> :: <b><{$lang.start}></b> <{$event.formated_event_start}><br /><b><{$lang.end}></b> <{$event.formated_event_end}>"><{$event.event_title}></a>
+                        <div style="font-size:0.8em; margin-top:5px;">
+                        <img src="assets/images/icons/event-<{$event.status}>.gif"> 
+                        <a href="<{$xoops_url}>/modules/extcal/event.php?event=<{$event.event_id}>" 
+                        class="extcalTips" title="<{$event.event_title}> :: <b><{$lang.start}></b> <{$event.formated_event_start}><br /><b><{$lang.end}></b> <{$event.formated_event_end}>"><{$event.event_title}></a>
                         </div>
                         <div style="background-color:#<{$event.cat.cat_color}>; height:2px; font-size:2px;">
                             &nbsp;

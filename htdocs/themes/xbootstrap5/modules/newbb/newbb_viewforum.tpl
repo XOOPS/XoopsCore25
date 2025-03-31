@@ -127,7 +127,7 @@
     </div><!-- .newbb-topic-options -->
     <div><strong><{$smarty.const._MD_NEWBB_FORUMDESCRIPTION}></strong> <{$forumDescription}></div>
     <div class="newbb-topiclist-loop">
-        <div class="newbb-topiclist-header clearfix">
+        <div class="newbb-topiclist-header row">
         <div class="col-6 col-md-3"><a href="<{$h_topic_link}>" title="<{$smarty.const._MD_NEWBB_TOPICS}>"><{$smarty.const._MD_NEWBB_TOPICS}></a></div>
         <div class="col-md-2 visible-lg visible-md"><a href="<{$h_poster_link}>" title="<{$smarty.const._MD_NEWBB_TOPICPOSTER}>"><{$smarty.const._MD_NEWBB_TOPICPOSTER}></a></div>
         <div class="col-md-2 visible-lg visible-md"><a href="<{$h_publish_link}>" title="<{$smarty.const._MD_NEWBB_TOPICTIME}>"><{$smarty.const._MD_NEWBB_TOPICTIME}></a></div>
@@ -150,7 +150,7 @@
         <{/if}>
 
     <{foreach name=loop item=topic from=$topics}>
-    <div class="clearfix newbb-topiclist-itens <{cycle values="even,odd"}>">
+    <div class="newbb-topiclist-itens row <{cycle values="even,odd"}>">
 <!--
         <{if $topic.stick AND $smarty.foreach.loop.iteration == $sticky+1}>
             <{if isset($rating_enable)}>
@@ -181,7 +181,7 @@
         <div class="col-md-1 visible-lg visible-md text-center"><{$topic.topic_replies}></div>
         <div class="col-md-1 visible-lg visible-md text-center"><{$topic.topic_views}></div>
         <{if isset($rating_enable)}><div class="col-md-1 visible-lg"><{$topic.rating_img}></div><{/if}>
-        <div class="<{if isset($rating_enable)}>col-6 col-md-2<{else}>col-6 col-md-3<{/if}>"><{$topic.topic_last_posttime}> <{$smarty.const._MD_NEWBB_BY}> <{$topic.topic_last_poster}> <{$topic.topic_page_jump_icon}></div>
+        <div class="<{if isset($rating_enable)}>col-6 col-md-2<{else}>col-6 col-md-3<{/if}>"><{$topic.topic_last_posttime}> <{$smarty.const._MD_BY}> <{$topic.topic_last_poster}> <{$topic.topic_page_jump_icon}></div>
 
     </div><!-- .newbb-topiclist-itens -->
     <{/foreach}>
@@ -205,7 +205,7 @@
     <div class="col-md-12">
         <{strip}>
             <form class="xoopsform" method="get" action="<{$xoops_url}>/modules/<{$xoops_dirname}>/viewforum.php">
-            <ul class="list-inline">
+                <ul class="d-flex list-unstyled gap-2 align-items-center">
             <li><strong><{$smarty.const._MD_NEWBB_SORTEDBY}>:</strong></li>
             <li><{$forum_selection_sort}></li>
             <li><{$forum_selection_order}></li>

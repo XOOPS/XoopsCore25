@@ -45,3 +45,16 @@ jQuery(document).ready(function($){
     $('.newbb-thread-attachment').find('hr').remove();
 });
 
+function initSlider() {
+    $('.carousel').carousel({
+        interval: 5000,
+        ride: 'carousel'
+    });
+}
+
+// Load when browser is idle
+if ('requestIdleCallback' in window) {
+    requestIdleCallback(initSlider);
+} else {
+    setTimeout(initSlider, 200); // fallback
+}
