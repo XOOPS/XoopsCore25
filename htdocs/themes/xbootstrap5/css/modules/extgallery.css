@@ -1,0 +1,178 @@
+.xoops-gallery-thumb {
+    margin-bottom: 20px;
+}
+
+.xoops-gallery-thumb img {
+    max-width: 100%;
+}
+
+a.extgallery-album-name {
+    background: #000;
+    padding: 5px 0 5px 0;
+    text-align: center;
+    color: #FFF;
+    display: block;
+}
+
+strong.number-photos {
+    background: #000;
+    opacity: 0.8;
+    color: #FFF;
+    font-size: 0.8em;
+    position: absolute;
+    top: 5%;
+    left: 10%;
+    padding: 0 10px 0 10px;
+}
+
+.extGalleryAlbum {
+}
+
+.extGalleryAlbum > .col-md-12 {
+    padding: 0;
+}
+
+h3.gallerytitle {
+    font-size: 1.3em;
+}
+
+.orderbyicons {
+    font-size: 1.2em;
+    font-weight: bold;
+    color: #999;
+}
+
+.orderbyicons ul li {
+    display: inline-block;
+    margin: 0 10px 0 10px;
+    line-height: 30px;
+}
+
+.orderbyicons a {
+    color: #333;
+    font-size: 1.2em;
+}
+
+.album-thumb {
+    margin-bottom: 20px;
+    overflow: hidden;
+    position: relative;
+}
+
+ul.adminlinks {
+    background: url(../../images/alpha.png);
+    color: #EAEAEA;
+    font-size: 0.9em;
+    position: absolute;
+    top: 0;
+    right: -300px;
+    height: 100%;
+    -moz-transition: all linear 300ms;
+    -webkit-transition: all linear 300ms;
+    transition: all linear 300ms;
+}
+
+.album-thumb:hover > ul.adminlinks {
+    right: 0;
+    text-align: center;
+}
+
+ul.adminlinks > li {
+    padding: 2px 5px 2px 5px;
+    position: relative;
+}
+
+ul.adminlinks > li > a {
+    color: #FFF;
+}
+
+.photoRating {
+    position: absolute;
+    bottom: 0;
+    padding: 3px;
+    background: #FFF;
+    opacity: 0.8;
+    border-radius: 0 5px 0 0;
+}
+
+.photo-nav-controls {
+}
+
+.photo-nav-controls ul {
+    background: url(../../images/alpha.png);
+    position: relative;
+    right: 5px;
+    color: #FFF;
+    font-weight: bold;
+    border-radius: 5px 5px 0 0;
+    -moz-border-radius: 5px 5px 0 0;
+    -webkit-border-radius: 5px 5px 0 0;
+    margin: 0;
+    overflow: hidden;
+}
+
+.photo-nav-controls ul li {
+    display: inline-table;
+    padding: 5px 0 0 0
+}
+
+.photo-nav-controls ul li.nav-btn {
+    background: url(../../images/alpha.png);
+    width: 30px;
+    font-size: 1.5em;
+}
+
+.photo-nav-controls ul li a {
+    color: #555;
+    text-shadow: 1px 1px 0 #111;
+}
+
+.photo-nav-controls ul li.small {
+    font-size: 0.9em;
+    margin: 0 5px 0 5px;
+    position: relative;
+    bottom: 5px;
+}
+
+.gallery-single-photo {
+}
+
+.gallery-single-photo img.img-thumbnail {
+    position: relative;
+    width: 100%;
+}
+
+ul.photo-info li {
+    margin-bottom: 10px;
+    border-bottom: 1px dotted #999;
+}
+
+ul.photo-info li:last-child {
+    border-bottom: none;
+}
+
+ul.form-send-e-card li {
+    max-width: 100%;
+    overflow: hidden;
+    margin-bottom: 10px;
+}
+
+ul.form-send-e-card input[type=submit] {
+    background: #09C;
+    min-width: 20%;
+    color: #FFF;
+}
+
+ul.form-send-e-card input, ul.form-send-e-card textarea {
+    min-width: 50%;
+    max-width: 50%;
+    border: 1px solid #E6E6E6;
+    padding: 5px;
+    border-radius: 5px;
+    -moz-border-radius: 5px;
+    -webkit-border-radius: 5px;
+}
+
+ul.form-send-e-card input:focus, ul.form-send-e-card textarea:focus {
+    background: #EEE;
+}

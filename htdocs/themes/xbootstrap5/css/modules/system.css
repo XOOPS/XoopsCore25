@@ -1,0 +1,88 @@
+.loginform input[type=submit] {
+    margin-bottom: 5px;
+}
+
+.usermenu li span {
+    margin-right: 10px;
+}
+
+.usermenu li a.info span {
+    color: #F00;
+}
+
+.usermenu li a.info span.badge {
+    background: #F00;
+    color: #FFF;
+}
+
+.xoops-theme-select {
+    text-align: center;
+}
+
+.xoops-theme-select form select {
+    border: 1px solid #D6D6D6;
+    width: 100%;
+}
+
+.xoops-theme-select img {
+    max-width: 100%;
+}
+
+ul.userblock {
+    border-bottom: 1px solid #EEE;
+    margin-bottom: 0;
+    padding: 5px 0 5px 0;
+}
+
+ul.userblock:nth-child(odd) {
+    background: #F9F9F9;
+}
+
+ul.userblock:hover {
+    background: #EEE;
+}
+
+ul.userblock:last-child {
+    border-bottom: none;
+}
+
+ul.userblock > li {
+    display: inline-block;
+    position: relative;
+}
+
+ul.userblock > li.avatar-image {
+    max-width: 20%;
+}
+
+ul.userblock > li.avatar-image img {
+    max-width: 100%;
+}
+
+ul.userblock > li.user-name {
+    padding: 0 0 0 10px;
+    width: 49%;
+}
+
+ul.userblock > li.join-date {
+    padding: 0 5px 0 0;
+    width: 9%;
+}
+
+ul.userblock > li span.badge {
+    background: #47A447;
+    position: absolute;
+    bottom: 0;
+    right: 0;
+}
+
+.userinfo {
+    border: 1px solid #DDD;
+    border-radius: 5px;
+}
+
+.userinfo .welcome {
+    padding: 6px;
+    font-weight: bold;
+    margin-bottom: 5px;
+}

@@ -1,0 +1,103 @@
+.news-home {
+}
+
+.news-home .text-center form {
+    margin-bottom: 20px;
+}
+
+.home-news-loop {
+    margin-bottom: 20px;
+}
+
+.home-thumbnails {
+    height: 200px;
+    overflow: hidden;
+    border: 3px solid #EEE;
+}
+
+.home-thumbnails img {
+    position: relative;
+    width: 100%;
+    height: 100%;
+}
+
+section.news-item {
+    margin-bottom: 20px;
+}
+
+.news-header {
+    position: relative;
+}
+
+.news-header img {
+    position: relative;
+    min-width: 100%;
+    max-width: 100%;
+}
+
+.news-header > h2.news-title {
+    background: url(../../images/alpha.png);
+    position: absolute;
+    bottom: 10%;
+    left: 0;
+    padding: 10px;
+    margin: 0;
+    color: #FFF;
+    font-size: 1.8em;
+    z-index: 5;
+}
+
+.news-header > h2.news-title > a {
+    color: #CF9;
+}
+
+.news-header > h2.news-title > a:after {
+    content: ": ";
+}
+
+h2.news-no-image {
+    font-size: 1.5em;
+    margin: 0;
+    line-height: inherit;
+}
+
+strong.hit-counter {
+    background: #333;
+    color: #FFF;
+    border-radius: 5px 5px 0 0;
+    padding: 0 10px 0 10px;
+    font-size: 0.8em;
+    line-height: 20px;
+}
+
+.xoops-news-navigation {
+    padding: 10px 0 10px 0;
+}
+
+.xoops-news-navigation a {
+    background: #222;
+    padding: 5px 10px 5px 10px;
+    color: #EEE;
+    border-radius: 50px;
+    -moz-border-radius: 50px;
+    -webkit-border-radius: 50px;
+    letter-spacing: 0.5px;
+    transition: all linear 300ms;
+    -moz-transition: all linear 300ms;
+    -webkit-transition: all linear 300ms;
+}
+
+.xoops-news-navigation a:hover {
+    background: #EEE;
+    box-shadow: 0 0 5px #222;
+    color: #333;
+}
+
+.xoops-news-icons {
+    padding: 10px;
+}
+
+.xoops-news-icons a {
+    font-size: 1.5em;
+    margin: 0 10px 0 10px;
+}

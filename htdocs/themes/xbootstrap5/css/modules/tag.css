@@ -1,0 +1,19 @@
+.xoops-tag-bar {
+}
+
+.xoops-tag-bar > ul {
+}
+
+.xoops-tag-bar > ul > li.tag-title {
+    font-weight: bold;
+    margin: 0 10px 0 0;
+}
+
+.xoops-tag-bar > ul > li {
+    display: inline-table;
+    line-height: 25px;
+    margin-right: 10px;
+}
+
+.xoops-tag-bar > ul > li > span {
+}

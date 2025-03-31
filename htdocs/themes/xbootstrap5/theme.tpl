@@ -13,7 +13,6 @@
     <meta name="generator" content="XOOPS">
     <title><{$xoops_sitename}> - <{$xoops_pagetitle}></title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
     <!-- Owl Carousel Assets -->
     <link href="<{xoImgUrl}>js/owl/assets/owl.carousel.css" rel="stylesheet">
     <link href="<{xoImgUrl}>js/owl/assets/owl.theme.default.css" rel="stylesheet">
@@ -23,11 +22,10 @@
     <link rel="stylesheet" type="text/css" href="<{xoImgUrl}>css/xoops.css">
     <link rel="stylesheet" type="text/css" href="<{xoImgUrl}>css/reset.css">
 
-
 <{*    <link rel="stylesheet" type="text/css" href="<{xoImgUrl}>css/style.css" >*}>
-    <link rel="stylesheet" type="text/css" href="<{xoImgUrl}>css/modules/_contact.css">
-    <link rel="stylesheet" type="text/css" href="<{xoImgUrl}>css/modules/_downloads.css">
-    <link rel="stylesheet" type="text/css" href="<{xoImgUrl}>css/modules/_gallery.css">
+<{*    <link rel="stylesheet" type="text/css" href="<{xoImgUrl}>css/modules/_contact.css">*}>
+<{*    <link rel="stylesheet" type="text/css" href="<{xoImgUrl}>css/modules/_downloads.css">*}>
+<{*    <link rel="stylesheet" type="text/css" href="<{xoImgUrl}>css/modules/_gallery.css">*}>
 
     <link rel="stylesheet" type="text/css" media="all" href="<{$xoops_themecss}>">
 
@@ -40,13 +38,16 @@
         <link rel="stylesheet" type="text/css" media="screen" href="<{xoImgUrl}>css/forums.css">
     <{/if}>
 
+    <link rel="stylesheet" type="text/css" href="<{xoAppUrl 'media/font-awesome6/css/fontawesome.min.css'}>">
+    <link rel="stylesheet" type="text/css" href="<{xoAppUrl 'media/font-awesome6/css/solid.min.css'}>">
+    <link rel="stylesheet" type="text/css" href="<{xoAppUrl 'media/font-awesome6/css/brands.min.css'}>">
+    <link rel="stylesheet" type="text/css" href="<{xoAppUrl 'media/font-awesome6/css/v4-shims.min.css'}>">
+
+
     <script src="<{$xoops_url}>/browse.php?Frameworks/jquery/jquery.js"></script>
 
     <script src="<{xoImgUrl}>js/bootstrap.min.js"></script>
     <script src="<{xoImgUrl}>js/masonry.pkgd.min.js"></script>
-
-<{*    <script defer="" src="<{xoops_url}>/media/font-awesome6/js/fontawesome.min.js"></script>*}>
-<{*    <script defer="" src="<{xoops_url}>/media/font-awesome6/js/v4-shims.min.js"></script>*}>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
 
@@ -68,6 +69,7 @@
 
     <{$xoops_module_header}>
 
+
 </head>
 <body>
 
@@ -76,20 +78,20 @@
 <{include file="$theme_name/tpl/nav-menu.tpl"}>
 <{if isset($xoops_page) && $xoops_page == "index"}>
     <{include file="$theme_name/tpl/slider.tpl"}>
-    <{/if}>
+<{/if}>
 
 <main class="container maincontainer pt-4">
 <{*<main class="container maincontainer">*}>
 
     <button id="theme-toggle" class="btn btn-sm btn-outline-light position-fixed top-0 end-0 m-2 z-3">🌙</button>
 
-            <div class="row">
+    <div class="row">
         <aside class="col-md-3 xoops-side-blocks">
             <{foreach item=block from=$xoops_lblocks}>
                 <div class="mb-4">
                     <h4 class="block-title"><{$block.title}></h4>
                     <div class="block-content"><{$block.content}></div>
-    </div>
+                </div>
             <{/foreach}>
         </aside>
 
@@ -102,10 +104,10 @@
                 <div class="mb-4">
                     <h4 class="block-title"><{$block.title}></h4>
                     <div class="block-content"><{$block.content}></div>
-            </div>
+                </div>
             <{/foreach}>
         </aside>
-        </div>
+    </div>
 </main>
 
 <script>

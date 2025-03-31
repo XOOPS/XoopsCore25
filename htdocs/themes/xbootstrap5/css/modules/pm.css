@@ -1,0 +1,28 @@
+.xoops-message-header {
+    min-height: 40px;
+}
+
+.xoops-message-list div.col-xs-1,
+.xoops-message-list div.col-md-1 {
+    max-width: 14px;
+    text-align: center;
+}
+
+.xoops-message-list div.col-xs-1 .btn,
+.xoops-message-list div.col-md-1 .btn {
+    padding: 3px;
+    display: inline-block;
+    font-size: 0.9em;
+}
+
+.xoops-message-loop {
+    margin-bottom: 10px;
+}
+
+.current-tab {
+    margin-bottom: 20px;
+}
+
+.message-current-tab div.alert {
+    padding: 10px 30px 10px 10px;
+}
