@@ -37,7 +37,7 @@ class MytsWiki extends MyTextSanitizerExtension
         $code = "<button type='button' class='btn btn-default btn-sm' onclick='xoopsCodeWiki(\"{$textarea_id}\",\""
             . htmlspecialchars(_XOOPS_FORM_ENTERWIKITERM, ENT_QUOTES | ENT_HTML5)
             . "\");' onmouseover='style.cursor=\"hand\"' title='" . _XOOPS_FORM_ALTWIKI
-            . "'><span class='fa fa-fw fa-globe' aria-hidden='true'></span></button>";
+            . "'><span class='fa-solid fa-globe' aria-hidden='true'></span></button>";
 
         $javascript = <<<EOH
             function xoopsCodeWiki(id, enterWikiPhrase)

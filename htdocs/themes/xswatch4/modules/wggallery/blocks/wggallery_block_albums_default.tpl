@@ -2,11 +2,11 @@
 <{if isset($balbums_list)}>
     <{foreach item=album from=$balbums_list|default:null name=album}>
         <{if $album.newrow}><div class="row wgg-row-block"><{/if}>
-        <{if isset($bnbAlbumsRow) && $bnbAlbumsRow == 2}><div class='col-xs-12 col-sm-6'>
-        <{elseif $bnbAlbumsRow == 3}><div class='col-xs-12 col-sm-4'>
-        <{elseif $bnbAlbumsRow == 4}><div class='col-xs-12 col-sm-3'>
-        <{elseif $bnbAlbumsRow == 6}><div class='col-xs-12 col-sm-2'>
-        <{else}><div class='col-xs-12 col-sm-12'>
+        <{if isset($bnbAlbumsRow) && $bnbAlbumsRow == 2}><div class='col-12 col-sm-6'>
+        <{elseif $bnbAlbumsRow == 3}><div class='col-12 col-sm-4'>
+        <{elseif $bnbAlbumsRow == 4}><div class='col-12 col-sm-3'>
+        <{elseif $bnbAlbumsRow == 6}><div class='col-12 col-sm-2'>
+        <{else}><div class='col-12 col-sm-12'>
         <{/if}>
             <{if isset($ba_template) && $ba_template == 'hovereffectideas'}>
                 <{if $album.newrow}><div class="grid"><{/if}>

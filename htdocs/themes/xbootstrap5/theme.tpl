@@ -1,5 +1,7 @@
-<!doctype html>
-<html lang="<{$xoops_langcode}>">
+<!-- theme.tpl (XOOPS + Bootstrap 5 layout example) -->
+
+<!DOCTYPE html>
+<html lang="<{$xoops_langcode}>" data-theme="light">
 <head>
     <{assign var=theme_name value=$xoTheme->folderName}>
     <meta charset="<{$xoops_charset}>">
@@ -9,8 +11,7 @@
     <meta name="rating" content="<{$xoops_meta_rating}>">
     <meta name="author" content="<{$xoops_meta_author}>">
     <meta name="generator" content="XOOPS">
-    <!--[if IE]>
-    <meta http-equiv="X-UA-Compatible" content="IE=edge"><![endif]-->
+    <title><{$xoops_sitename}> - <{$xoops_pagetitle}></title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <!-- Owl Carousel Assets -->
@@ -21,6 +22,12 @@
     <link rel="stylesheet" type="text/css" href="<{xoImgUrl}>css/bootstrap.min.css">
     <link rel="stylesheet" type="text/css" href="<{xoImgUrl}>css/xoops.css">
     <link rel="stylesheet" type="text/css" href="<{xoImgUrl}>css/reset.css">
+
+
+<{*    <link rel="stylesheet" type="text/css" href="<{xoImgUrl}>css/style.css" >*}>
+    <link rel="stylesheet" type="text/css" href="<{xoImgUrl}>css/modules/_contact.css">
+    <link rel="stylesheet" type="text/css" href="<{xoImgUrl}>css/modules/_downloads.css">
+    <link rel="stylesheet" type="text/css" href="<{xoImgUrl}>css/modules/_gallery.css">
 
     <link rel="stylesheet" type="text/css" media="all" href="<{$xoops_themecss}>">
 
@@ -38,8 +45,8 @@
     <script src="<{xoImgUrl}>js/bootstrap.min.js"></script>
     <script src="<{xoImgUrl}>js/masonry.pkgd.min.js"></script>
 
-    <script defer="" src="<{xoImgUrl}>js/fontawesome-all.min.js"></script>
-    <script defer="" src="<{xoImgUrl}>js/fa-v4-shims.min.js"></script>
+<{*    <script defer="" src="<{xoops_url}>/media/font-awesome6/js/fontawesome.min.js"></script>*}>
+<{*    <script defer="" src="<{xoops_url}>/media/font-awesome6/js/v4-shims.min.js"></script>*}>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
 
@@ -48,11 +55,10 @@
     <script src="<{xoImgUrl}>js/jquery.scrollUp.min.js"></script>
     <script src="<{xoImgUrl}>js/imagesloaded.pkgd.min.js"></script>
 
-    <!--[if < IE 9]>
-<script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
-<script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
-<script src="<{xoImgUrl}>js/selectivizr-min.js"></script>
-<![endif]-->
+
+    <script src="<{xoImgUrl}>js/theme-toggle.js"></script>
+
+<{*    <script src="<{$xoImgUrl}>/js/theme-toggle.js" defer></script>*}>
     <script src="<{xoImgUrl}>js/js.js"></script>
     <link rel="alternate" type="application/rss+xml" title="" href="<{xoAppUrl 'backend.php'}>">
 
@@ -63,75 +69,44 @@
     <{$xoops_module_header}>
 
 </head>
+<body>
 
 <body id="<{$xoops_dirname}>">
 
 <{include file="$theme_name/tpl/nav-menu.tpl"}>
-<{include file="$theme_name/tpl/slider.tpl"}>
-
-<div class="container maincontainer">
-    <a id="stickyMenuHere"></a>
 <{if isset($xoops_page) && $xoops_page == "index"}>
-        <div class="aligncenter home-message row">
-    <div class="<{if !empty($xoops_banner)}>col-md-6<{else}>col-md-12<{/if}>">
-                <h2><{$smarty.const.THEME_ABOUTUS}></h2>
-
-                <p class="lead"><{$xoops_meta_description}></p>
-
-                <p><a href="javascript:;" class="btn btn-md btn-success"><{$smarty.const.THEME_LEARNINGMORE}></a></p>
-            </div>
-
-            <{if !empty($xoops_banner)}>
-                <div class="col-md-6">
-                    <div class="xoops-banner pull-right">
-                        <{$xoops_banner}>
-                    </div>
-                </div>
-            <{/if}>
-        </div>
-        <!-- .home-message -->
+    <{include file="$theme_name/tpl/slider.tpl"}>
     <{/if}>
 
-    <div class="row">
-        <{include file="$theme_name/tpl/leftBlock.tpl"}>
+<main class="container maincontainer pt-4">
+<{*<main class="container maincontainer">*}>
 
-        <{include file="$theme_name/tpl/content-zone.tpl"}>
+    <button id="theme-toggle" class="btn btn-sm btn-outline-light position-fixed top-0 end-0 m-2 z-3">🌙</button>
 
-        <{include file="$theme_name/tpl/rightBlock.tpl"}>
-    </div>
-
-</div><!-- .maincontainer -->
-
-<{if $xoBlocks.page_bottomcenter || $xoBlocks.page_bottomright || $xoBlocks.page_bottomleft}>
-    <div class="bottom-blocks">
-        <div class="container">
             <div class="row">
-                <{include file="$theme_name/tpl/leftBottom.tpl"}>
-
-                <{include file="$theme_name/tpl/centerBottom.tpl"}>
-
-                <{include file="$theme_name/tpl/rightBottom.tpl"}>
-            </div>
-        </div>
+        <aside class="col-md-3 xoops-side-blocks">
+            <{foreach item=block from=$xoops_lblocks}>
+                <div class="mb-4">
+                    <h4 class="block-title"><{$block.title}></h4>
+                    <div class="block-content"><{$block.content}></div>
     </div>
-    <!-- .bottom-blocks -->
-<{/if}>
+            <{/foreach}>
+        </aside>
 
-<{if $xoBlocks.footer_center || $xoBlocks.footer_right || $xoBlocks.footer_left}>
-    <div class="footer-blocks">
-        <div class="container">
-            <div class="row">
-                <{include file="$theme_name/tpl/leftFooter.tpl"}>
+        <section class="col-md-6">
+            <{$xoops_contents}>
+        </section>
 
-                <{include file="$theme_name/tpl/centerFooter.tpl"}>
-
-                <{include file="$theme_name/tpl/rightFooter.tpl"}>
+        <aside class="col-md-3 xoops-side-blocks">
+            <{foreach item=block from=$xoops_rblocks}>
+                <div class="mb-4">
+                    <h4 class="block-title"><{$block.title}></h4>
+                    <div class="block-content"><{$block.content}></div>
             </div>
+            <{/foreach}>
+        </aside>
         </div>
-    </div>
-    <!-- .footer-blocks -->
-<{/if}>
-<!-- end of new footer blocks  -->
+</main>
 
 <script>
     // Set options
@@ -149,21 +124,12 @@
     // adhesiveHeader.destroy();
 </script>
 
-<footer class='footer'>
+<footer class="footer mt-4">
     <h3>
-        <{$xoops_footer}>
-        <a href="https://xoops.org" title="Design by: XOOPS UI/UX Team" target="_blank" class="credits visible-md visible-sm visible-lg">
-            <img src="<{xoImgUrl}>images/favicon.png" alt="Design by: XOOPS UI/UX Team">
-        </a>
+        <{$xoops_slogan}>
+        <a class="credits" href="https://xoops.org">XOOPS CMS</a>
     </h3>
 </footer>
-
-
-<{*<div class="aligncenter comments-nav visible-xs">*}>
-<{*    <a href="https://xoops.org" title="Design by: XOOPS UI/UX Team" target="_blank">*}>
-<{*        <img src="<{xoImgUrl}>images/favicon.png" alt="Design by: XOOPS UI/UX Team">*}>
-<{*    </a>*}>
-<{*</div>*}>
 
 </body>
 </html>

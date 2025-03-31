@@ -26,7 +26,7 @@ $modversion['help']        = 'page=users';
 $modversion['license']     = 'GPL see LICENSE';
 $modversion['official']    = 1;
 $modversion['image']       = 'edituser.png';
-$modversion['icon']        = 'fa fa-user';
+$modversion['icon']        = 'fa-solid fa-user';
 
 $modversion['hasAdmin']  = 1;
 $modversion['adminpath'] = 'admin.php?fct=users';

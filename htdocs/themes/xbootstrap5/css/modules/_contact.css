@@ -1,0 +1,17 @@
+.contact-module input,
+.contact-module textarea {
+    background: var(--light-color);
+    border: 1px solid var(--gray-light);
+    padding: 0.75rem;
+    border-radius: 0.25rem;
+    margin-bottom: 1rem;
+    width: 100%;
+}
+
+.contact-module input[type="submit"] {
+    background: var(--primary-color);
+    color: #fff;
+    font-weight: bold;
+    border: none;
+    padding: 0.5rem 1rem;
+}

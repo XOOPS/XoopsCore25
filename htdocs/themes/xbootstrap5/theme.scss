@@ -1,0 +1,20 @@
+// theme.scss
+
+// 1. Variables
+@import "variables";
+
+// 2. Base and Layout
+@import "base";
+@import "layout";
+
+// 3. Components
+@import "navbar";
+@import "blocks";
+@import "footer";
+@import "utilities";
+
+// 4. Modules
+@import "modules/news";
+@import "modules/contact";
+@import "modules/downloads";
+@import "modules/gallery";

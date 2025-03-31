@@ -28,17 +28,17 @@
 		<div class="row mb-3">
 			<div class="col-12 btn-group" role="group" aria-label="Basic example">
 				<{if $op == "in" || (!($op == "out") && !($op == "save"))}>
-					<a class="btn btn-primary" href="viewpmsg.php?op=in" title="<{$smarty.const._PM_INBOX}>"><span class="fa fa-inbox fa-2x fa-fw"></span><br /><{$smarty.const._PM_INBOX}></a>
-					<a class="btn btn-secondary" href="viewpmsg.php?op=out" title="<{$smarty.const._PM_OUTBOX}>"><span class="fa fa-paper-plane fa-2x fa-fw"></span><br /><{$smarty.const._PM_OUTBOX}></a>
-					<a class="btn btn-secondary" href="viewpmsg.php?op=save" title="<{$smarty.const._PM_SAVEBOX}>"><span class="fa fa-archive fa-2x fa-fw"></span><br /><{$smarty.const._PM_SAVEBOX}></a>
+					<a class="btn btn-primary" href="viewpmsg.php?op=in" title="<{$smarty.const._PM_INBOX}>"><span class="fa-solid fa-inbox fa-2x fa-fw"></span><br /><{$smarty.const._PM_INBOX}></a>
+					<a class="btn btn-secondary" href="viewpmsg.php?op=out" title="<{$smarty.const._PM_OUTBOX}>"><span class="fa-solid fa-paper-plane fa-2x fa-fw"></span><br /><{$smarty.const._PM_OUTBOX}></a>
+					<a class="btn btn-secondary" href="viewpmsg.php?op=save" title="<{$smarty.const._PM_SAVEBOX}>"><span class="fa-solid fa-box-archive fa-2x fa-fw"></span><br /><{$smarty.const._PM_SAVEBOX}></a>
 				<{elseif $op == "out"}>
-					<a class="btn btn-secondary" href="viewpmsg.php?op=in" title="<{$smarty.const._PM_INBOX}>"><span class="fa fa-inbox fa-2x fa-fw"></span><br /><{$smarty.const._PM_INBOX}></a>
-					<a class="btn btn-primary" href="viewpmsg.php?op=out" title="<{$smarty.const._PM_OUTBOX}>"><span class="fa fa-paper-plane fa-2x fa-fw"></span><br /><{$smarty.const._PM_OUTBOX}></a>
-					<a class="btn btn-secondary" href="viewpmsg.php?op=save" title="<{$smarty.const._PM_SAVEBOX}>"><span class="fa fa-archive fa-2x fa-fw"></span><br /><{$smarty.const._PM_SAVEBOX}></a>
+					<a class="btn btn-secondary" href="viewpmsg.php?op=in" title="<{$smarty.const._PM_INBOX}>"><span class="fa-solid fa-inbox fa-2x fa-fw"></span><br /><{$smarty.const._PM_INBOX}></a>
+					<a class="btn btn-primary" href="viewpmsg.php?op=out" title="<{$smarty.const._PM_OUTBOX}>"><span class="fa-solid fa-paper-plane fa-2x fa-fw"></span><br /><{$smarty.const._PM_OUTBOX}></a>
+					<a class="btn btn-secondary" href="viewpmsg.php?op=save" title="<{$smarty.const._PM_SAVEBOX}>"><span class="fa-solid fa-box-archive fa-2x fa-fw"></span><br /><{$smarty.const._PM_SAVEBOX}></a>
 				<{elseif $op == "save"}>
-					<a class="btn btn-secondary" href="viewpmsg.php?op=in" title="<{$smarty.const._PM_INBOX}>"><span class="fa fa-inbox fa-2x fa-fw"></span><br /><{$smarty.const._PM_INBOX}></a>
-					<a class="btn btn-secondary" href="viewpmsg.php?op=out" title="<{$smarty.const._PM_OUTBOX}>"><span class="fa fa-paper-plane fa-2x fa-fw"></span><br /><{$smarty.const._PM_OUTBOX}></a>
-					<a class="btn btn-primary" href="viewpmsg.php?op=save" title="<{$smarty.const._PM_SAVEBOX}>"><span class="fa fa-archive fa-2x fa-fw"></span><br /><{$smarty.const._PM_SAVEBOX}></a>
+					<a class="btn btn-secondary" href="viewpmsg.php?op=in" title="<{$smarty.const._PM_INBOX}>"><span class="fa-solid fa-inbox fa-2x fa-fw"></span><br /><{$smarty.const._PM_INBOX}></a>
+					<a class="btn btn-secondary" href="viewpmsg.php?op=out" title="<{$smarty.const._PM_OUTBOX}>"><span class="fa-solid fa-paper-plane fa-2x fa-fw"></span><br /><{$smarty.const._PM_OUTBOX}></a>
+					<a class="btn btn-primary" href="viewpmsg.php?op=save" title="<{$smarty.const._PM_SAVEBOX}>"><span class="fa-solid fa-box-archive fa-2x fa-fw"></span><br /><{$smarty.const._PM_SAVEBOX}></a>
 				<{/if}>
 			</div>
 		</div>
@@ -48,7 +48,7 @@
 					<!-- Table - Head -->
 					<tr class="table-secondary">
 						<th class="text-center"><input name='allbox' id='allbox' onclick='xoopsCheckAll("<{$pmform.name}>", "allbox");' type='checkbox' value='Check All' title="<{$smarty.const.THEME_SELECT_ALL}>"/></th>
-						<th class="text-center d-none d-sm-table-cell"><span class="fa fa-envelope text-primary"></span> <span class="fa fa-envelope-open text-secondary"></span></th>
+						<th class="text-center d-none d-sm-table-cell"><span class="fa-solid fa-envelope text-primary"></span> <span class="fa-solid fa-envelope-open text-secondary"></span></th>
 						<{if isset($op) && $op == "out"}>
 							<th class="text-center"><{$smarty.const._PM_TO}></th>
 						<{else}>
@@ -73,17 +73,17 @@
 							</td>
 							<td class='d-table-cell d-sm-none aligntop text-center'>
 								<{if isset($message.read_msg) && $message.read_msg == 1}>
-									<span class="fa fa-envelope-open fa-2x text-secondary"></span>
+									<span class="fa-solid fa-envelope-open fa-2x text-secondary"></span>
 								<{else}>
-									<span class="fa fa-envelope fa-2x text-primary"></span>
+									<span class="fa-solid fa-envelope fa-2x text-primary"></span>
 								<{/if}>
 							</td>
 
 							<td class="text-center d-none d-sm-table-cell">
 								<{if isset($message.read_msg) && $message.read_msg == 1}>
-									<span class="fa fa-envelope-open fa-2x text-secondary"></span>
+									<span class="fa-solid fa-envelope-open fa-2x text-secondary"></span>
 								<{else}>
-									<span class="fa fa-envelope fa-2x text-primary"></span>
+									<span class="fa-solid fa-envelope fa-2x text-primary"></span>
 								<{/if}>
 							</td>
 
@@ -134,9 +134,9 @@
 		</div>
 		<hr />
 		<{if isset($display)}>
-			<{$pmform.elements.move_messages.body|replace:'formButton':'btn btn-success'|replace:'" >':'" ><span class="fa fa-sign-in fa-2x"></span><br />'}>
-			<{$pmform.elements.delete_messages.body|replace:'formButton':'btn btn-secondary'|replace:'" >':'" ><span class="fa fa-times fa-2x"></span><br />'}>
-			<{$pmform.elements.empty_messages.body|replace:'formButton':'btn btn-secondary'|replace:'" >':'" ><span class="fa fa-trash fa-2x"></span><br />'}>
+			<{$pmform.elements.move_messages.body|replace:'formButton':'btn btn-success'|replace:'" >':'" ><span class="fa-solid fa-right-to-bracket fa-2x"></span><br />'}>
+			<{$pmform.elements.delete_messages.body|replace:'formButton':'btn btn-secondary'|replace:'" >':'" ><span class="fa-solid fa-times fa-2x"></span><br />'}>
+			<{$pmform.elements.empty_messages.body|replace:'formButton':'btn btn-secondary'|replace:'" >':'" ><span class="fa-solid fa-trash-can fa-2x"></span><br />'}>
 		<{/if}>
 		<{foreach item=element from=$pmform.elements|default:null}>
 			<{if isset($element.hidden) && $element.hidden == 1}>

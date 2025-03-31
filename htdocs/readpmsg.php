@@ -90,12 +90,12 @@ if (!is_object($xoopsUser)) {
         echo $pm_arr[0]->getVar('msg_text') . "<br><br></td></tr><tr class='foot'><td class='width20 txtleft' colspan='2'>";
         // we don't want to reply to a deleted user!
         if ($poster != false) {
-            echo "<button type='button' class='btn btn-default btn-secondary' onclick='openWithSelfMain(\"" . XOOPS_URL . '/pmlite.php?reply=1&amp;msg_id=' . $pm_arr[0]->getVar('msg_id') . "\",\"pmlite\",565,500);' title='" . _PM_REPLY . "'><span class='fa fa-fw fa-reply'></span></button>\n";
+            echo "<button type='button' class='btn btn-default btn-secondary' onclick='openWithSelfMain(\"" . XOOPS_URL . '/pmlite.php?reply=1&amp;msg_id=' . $pm_arr[0]->getVar('msg_id') . "\",\"pmlite\",565,500);' title='" . _PM_REPLY . "'><span class='fa-solid fa-reply'></span></button>\n";
         }
         echo "<input type='hidden' name='delete' value='1' />";
         echo $GLOBALS['xoopsSecurity']->getTokenHTML();
         echo "<input type='hidden' name='msg_id' value='" . $pm_arr[0]->getVar('msg_id') . "' />";
-        echo "<button type='button' class='btn btn-default btn-secondary' onclick='document.delete" . $pm_arr[0]->getVar('msg_id') . ".submit();' title='" . _PM_DELETE . "'><span class='fa fa-fw fa-remove'></span></button>";
+        echo "<button type='button' class='btn btn-default btn-secondary' onclick='document.delete" . $pm_arr[0]->getVar('msg_id') . ".submit();' title='" . _PM_DELETE . "'><span class='fa-solid fa-xmark'></span></button>";
         echo "</td></tr><tr><td class='txtright' colspan='2'>";
         $previous = $start - 1;
         $next     = $start + 1;

@@ -46,7 +46,7 @@
 
                     <div class="input-container">
                         <input type="text" name="uname" class="form-control" placeholder="<{$smarty.const.THEME_LOGIN}>">
-                        <span class="fa fa-user"></span>
+                        <span class="fa-solid fa-user"></span>
                     </div>
 
 
@@ -54,7 +54,7 @@
 
                     <div class="input-container">
                         <input type="password" name="pass" class="form-control" placeholder="<{$smarty.const.THEME_PASS}>">
-                        <span class="fa fa-lock"></span>
+                        <span class="fa-solid fa-lock"></span>
                     </div>
 
                     <input type="hidden" name="xoops_redirect" value="<{$xoops_requesturi}>">

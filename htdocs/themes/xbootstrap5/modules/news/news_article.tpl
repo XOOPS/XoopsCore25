@@ -13,14 +13,14 @@
         <div class="col-md-6 alignleft">
             <{if isset($previous_story_id) && $previous_story_id != -1}>
                 <a href="<{$xoops_url}>/modules/news/article.php?storyid=<{$previous_story_id}>" title="<{$previous_story_title}>">
-                    <span class="fa fa-circle-arrow-left"></span> <{$lang_previous_story}>
+                    <span class="fa-solid fa-circle-left"></span> <{$lang_previous_story}>
                 </a>
             <{/if}>
         </div>
         <div class="col-md-6 alignright">
             <{if  isset($next_story_id) && $next_story_id != -1}>
                 <a href="<{$xoops_url}>/modules/news/article.php?storyid=<{$next_story_id}>" title="<{$next_story_title}>">
-                    <{$lang_next_story}> <span class="fa fa-circle-arrow-right"></span>
+                    <{$lang_next_story}> <span class="fa-solid fa-circle-right"></span>
                 </a>
             <{/if}>
         </div>
@@ -30,27 +30,27 @@
 <div class="xoops-news-icons aligncenter">
     <{if isset($showicons) && $showicons == true}>
         <a href="<{$xoops_url}>/modules/news/print.php?storyid=<{$story.id}>" title="<{$lang_printerpage}>">
-            <span class="fa fa-print"></span>
+            <span class="fa-solid fa-print"></span>
         </a>
         <a target="_top" href="<{$mail_link}>" title="<{$lang_sendstory}>">
-            <span class="fa fa-envelope"></span>
+            <span class="fa-solid fa-envelope"></span>
         </a>
         <a target="_blank" href="<{$xoops_url}>/modules/news/makepdf.php?storyid=<{$story.id}>" title="<{$lang_pdfstory}>">
-            <span class="fa fa-file"></span>
+            <span class="fa-solid fa-file"></span>
         </a>
     <{/if}>
 
     <{if isset($xoops_isadmin)}>
         <a href="<{$xoops_url}>/modules/news/submit.php?op=edit&storyid=<{$story.id}>" title="Edit">
-            <span class="fa fa-pencil-square-o"></span>
+            <span class="fa-solid fa-pen-to-square"></span>
         </a>
         <a href="<{$xoops_url}>/modules/news/admin/index.php?op=delete&storyid=<{$story.id}>" title="Delete">
-            <span class="fa fa-trash"></span>
+            <span class="fa-solid fa-trash-can"></span>
         </a>
     <{/if}>
 </div>
 
-<{if isset($tags) && $tag == true}>
+<{if isset($tags) && $tags == true}>
     <{include file="db:tag_bar.tpl"}>
 <{/if}>
 

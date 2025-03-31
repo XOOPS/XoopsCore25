@@ -14,26 +14,26 @@
     <div class="col-md-12 aligncenter gallery-single-photo">
         <!-- Start Admin link -->
         <div class="row photo-nav-controls">
-            <div class="col-xs-6 col-sm-6 col-md-6">
+            <div class="col-6 col-md-6">
                 <{if isset($xoops_isadmin)}>
                     <div class="pull-left">
-                        <a title="edit" class="btn btn-primary btn-xs" href="<{xoAppUrl 'modules/extgallery/'}>public-modify.php?op=edit&id=<{$photo.photo_id}>"><span class="fa fa-pencil-square-o"></span></a>
-                        <a title="delete" class="btn btn-danger btn-xs" href="<{xoAppUrl 'modules/extgallery/'}>public-modify.php?op=delete&id=<{$photo.photo_id}>"><span class="fa fa-trash"></span></a>
+                        <a title="edit" class="btn btn-primary btn-sm" href="<{xoAppUrl 'modules/extgallery/'}>public-modify.php?op=edit&id=<{$photo.photo_id}>"><span class="fa-solid fa-pen-to-square"></span></a>
+                        <a title="delete" class="btn btn-danger btn-sm" href="<{xoAppUrl 'modules/extgallery/'}>public-modify.php?op=delete&id=<{$photo.photo_id}>"><span class="fa-solid fa-trash-can"></span></a>
                     </div>
                 <{/if}>
             </div>
 
-            <div class="col-xs-6 col-sm-6 col-md-6">
+            <div class="col-6 col-md-6">
                 <ul class="pull-right list-unstyled">
                     <{if $prevId|default:0 != 0}>
-                        <li class="nav-btn"><a href="<{xoAppUrl 'modules/extgallery/'}>public-photo.php?photoId=<{$prevId}>"><span class="fa fa-circle-arrow-left"></span></a><{else}>
+                        <li class="nav-btn"><a href="<{xoAppUrl 'modules/extgallery/'}>public-photo.php?photoId=<{$prevId}>"><span class="fa-solid fa-circle-left"></span></a><{else}>
                         </li>
                     <{/if}>
                     <li class="small"><{$currentPhoto}></li>
                     <li class="small"><{$lang.of}></li>
                     <li class="small"><{$totalPhoto}></li>
                     <{if $nextId|default:0 != 0}>
-                        <li class="nav-btn"><a href="<{xoAppUrl 'modules/extgallery/'}>public-photo.php?photoId=<{$nextId}>"><span class="fa fa-circle-arrow-right"></span></a><{else}>
+                        <li class="nav-btn"><a href="<{xoAppUrl 'modules/extgallery/'}>public-photo.php?photoId=<{$nextId}>"><span class="fa-solid fa-circle-right"></span></a><{else}>
                         </li>
                     <{/if}>
                 </ul>
@@ -105,7 +105,7 @@
     <!-- Start Photo Information -->
     <{if $enable_info }>
         <div class="text-center">
-            <a href="#gallery-info" data-bs-toggle="collapse" class="big-info-icon-link" title="Info"><span class="fa fa-info-sign"></span></a>
+            <a href="#gallery-info" data-bs-toggle="collapse" class="big-info-icon-link" title="Info"><span class="fa-solid fa-circle-info"></span></a>
         </div>
         <div class="panel-collapse collapse" id="gallery-info">
 

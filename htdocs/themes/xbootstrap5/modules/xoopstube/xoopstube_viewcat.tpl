@@ -34,40 +34,40 @@
                 <div class="col-sm-3 col-md-3">
                     <{$smarty.const._MD_XOOPSTUBE_TITLE}>
                     <a href="viewcat.php?cid=<{$category_id}>&orderby=titleA">
-                        <span class="fa fa-collapse-up"></span>
+                        <span class="fa-solid fa-caret-up"></span>
                     </a>
                     <a href="viewcat.php?cid=<{$category_id}>&orderby=titleD">
-                        <span class="fa fa-collapse-down"></span>
+                        <span class="fa-solid fa-caret-down"></span>
                     </a>
                 </div>
 
                 <div class="col-sm-3 col-md-3">
                     <{$smarty.const._MD_XOOPSTUBE_DATE}>
                     <a href="viewcat.php?cid=<{$category_id}>&orderby=dateA">
-                        <span class="fa fa-collapse-up"></span>
+                        <span class="fa-solid fa-caret-up"></span>
                     </a>
                     <a href="viewcat.php?cid=<{$category_id}>&orderby=dateD">
-                        <span class="fa fa-collapse-down"></span>
+                        <span class="fa-solid fa-caret-down"></span>
                     </a>
                 </div>
 
                 <div class="col-sm-3 col-md-3">
                     <{$smarty.const._MD_XOOPSTUBE_RATING}>
                     <a href="viewcat.php?cid=<{$category_id}>&orderby=ratingA">
-                        <span class="fa fa-collapse-up"></span>
+                        <span class="fa-solid fa-caret-up"></span>
                     </a>
                     <a href="viewcat.php?cid=<{$category_id}>&orderby=ratingD">
-                        <span class="fa fa-collapse-down"></span>
+                        <span class="fa-solid fa-caret-down"></span>
                     </a>
                 </div>
 
                 <div class="col-sm-3 col-md-3">
                     <{$smarty.const._MD_XOOPSTUBE_POPULARITY}>
                     <a href="viewcat.php?cid=<{$category_id}>&orderby=hitsA">
-                        <span class="fa fa-collapse-up"></span>
+                        <span class="fa-solid fa-caret-up"></span>
                     </a>
                     <a href="viewcat.php?cid=<{$category_id}>&orderby=hitsD">
-                        <span class="fa fa-collapse-down"></span>
+                        <span class="fa-solid fa-caret-down"></span>
                     </a>
                 </div>
 

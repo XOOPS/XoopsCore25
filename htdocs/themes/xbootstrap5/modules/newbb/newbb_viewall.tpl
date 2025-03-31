@@ -1,20 +1,20 @@
 <ol class="breadcrumb">
-    <li class="nav-item"><a class="nav-link" href="<{$xoops_url}>/modules/<{$xoops_dirname}>/index.php"><{$smarty.const._MD_NEWBB_FORUMHOME}></a></li>
+    <li class="breadcrumb-item"><a class="nav-link" href="<{$xoops_url}>/modules/<{$xoops_dirname}>/index.php"><{$smarty.const._MD_NEWBB_FORUMHOME}></a></li>
     <{if isset($parent_forum)}>
-        <li class="nav-item"><a class="nav-link" href="<{$xoops_url}>/modules/<{$xoops_dirname}>/viewforum.php?forum=<{$parent_forum}>"><{$parent_name}></a></li>
-        <li class="nav-item"><a class="nav-link" href="<{$xoops_url}>/modules/<{$xoops_dirname}>/viewforum.php?forum=<{$forum_id}>"><{$forum_name}></a></li>
-    <{elseif $forum_name}>
-        <li class="nav-item"><a class="nav-link" href="<{$xoops_url}>/modules/<{$xoops_dirname}>/viewforum.php?forum=<{$forum_id}>"><{$forum_name}></a></li>
+        <li class="breadcrumb-item"><a class="nav-link" href="<{$xoops_url}>/modules/<{$xoops_dirname}>/viewforum.php?forum=<{$parent_forum}>"><{$parent_name}></a></li>
+        <li class="breadcrumb-item"><a class="nav-link" href="<{$xoops_url}>/modules/<{$xoops_dirname}>/viewforum.php?forum=<{$forum_id}>"><{$forum_name}></a></li>
+    <{elseif !empty($forum_name)}>
+        <li class="breadcrumb-item"><a class="nav-link" href="<{$xoops_url}>/modules/<{$xoops_dirname}>/viewforum.php?forum=<{$forum_id}>"><{$forum_name}></a></li>
     <{/if}>
     <{if isset($current)}>
-        <li class="nav-item"><a class="nav-link" href="<{$current.link}>"><{$current.title}></a></li>
+        <li class="breadcrumb-item"><a class="nav-link" href="<{$current.link}>"><{$current.title}></a></li>
     <{/if}>
 </ol>
 <div class="row">
-    <div class="col-md-6 col-xs-12">
+    <div class="col-md-6 col-12">
         <h3><a href="<{$xoops_url}>/modules/<{$xoops_dirname}>/index.php"><{$forum_index_title}></a></h3>
     </div>
-    <div class="col-md-6 col-xs-12 pull-right">
+    <div class="col-md-6 col-12 pull-right">
         <{if $mode >= 1}>
         <form name="form_topics_admin" action="<{$xoops_url}>/modules/<{$xoops_dirname}>/action.topic.php" method="POST" onsubmit="if(window.document.form_topics_admin.op.value &lt; 1){return false;}">
         <{/if}>

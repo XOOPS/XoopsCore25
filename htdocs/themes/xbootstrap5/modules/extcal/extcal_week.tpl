@@ -11,7 +11,7 @@
     <form action="<{$navigSelectBox.action}>" method="<{$navigSelectBox.method}>">
         <ul class="list-inline">
             <{foreach item=element from=$navigSelectBox.elements|default:null}>
-            <li><{$element.body}></li>
+                <li><{$element.body}></li>
             <{/foreach}>
         </ul>
     </form>
@@ -21,26 +21,24 @@
 
 <div class="table-responsive">
 
-    <{foreach item=event from=$events|default:null}>
-
-    <{/foreach}>
     <table class="table table-bordered table-hover">
         <tbody>
         <tr style="text-align:center;">
-            <td class="even" style="width:33%;"><a href="<{$xoops_url}>/modules/extcal/week.php?<{$navig.prev.uri}>">
-                    <<&nbsp;&nbsp;<{$navig.prev.name}></a></td>
+            <td class="even" style="width:33%;"><a href="<{$xoops_url}>/modules/extcal/week.php?<{$navig.prev.uri}>"> <<&nbsp;&nbsp;<{$navig.prev.name}></a></td>
             <td class="even" style="width:33%;"><span style="font-weight:bold;"><{$navig.this.name}></span>
             </td>
             <td class="even" style="width:33%;"><a href="<{$xoops_url}>/modules/extcal/week.php?<{$navig.next.uri}>"><{$navig.next.name}>&nbsp;&nbsp;>></a>
             </td>
         </tr>
-        <tr>
-            <td colspan="3" class="odd" style="vertical-align:middle;">
-                <div style="height:20px; width:5px; background-color:#<{$event.cat.cat_color}>; border:1px solid black; float:left; margin-right:5px;"></div>
-                <{$event.formated_event_start}>&nbsp;&nbsp;<a href="<{$xoops_url}>/modules/extcal/event.php?event=<{$event.event_id}>" class="extcalTips"
-                                                              title="<{$event.event_title}> :: <b><{$lang.start}></b> <{$event.formated_event_start}><br /><b><{$lang.end}></b> <{$event.formated_event_end}>"><{$event.event_title}></a>
-            </td>
-        </tr>
+        <{foreach item=event from=$events|default:null}>
+            <tr>
+                <td colspan="3" class="odd" style="vertical-align:middle;">
+                    <div style="height:20px; width:5px; background-color:#<{$event.cat.cat_color}>; border:1px solid black; float:left; margin-right:5px;"></div>
+                    <{$event.formated_event_start}>&nbsp;&nbsp;<a href="<{$xoops_url}>/modules/extcal/event.php?event=<{$event.event_id}>" class="extcalTips"
+                                                                  title="<{$event.event_title}> :: <b><{$lang.start}></b> <{$event.formated_event_start}><br /><b><{$lang.end}></b> <{$event.formated_event_end}>"><{$event.event_title}></a>
+                </td>
+            </tr>
+        <{/foreach}>
         <tr>
             <th colspan="3">
                 <{foreach item=cat from=$cats|default:null}>

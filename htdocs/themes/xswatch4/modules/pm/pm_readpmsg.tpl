@@ -3,17 +3,17 @@
 <div class="message-current-tab mb-3">
     <div class="">
         <a class="btn btn-secondary" href="viewpmsg.php?op=<{$op}>">
-			<span class="fa fa-arrow-left fa-lg fa-fw"></span>
+			<span class="fa-solid fa-arrow-left fa-lg fa-fw"></span>
             <{if isset($op)}>
                 <{if $op == "out"}>
-                    <span class="fa fa-paper-plane fa-lg fa-fw"></span>
+                    <span class="fa-solid fa-paper-plane fa-lg fa-fw"></span>
                     <{$smarty.const._PM_OUTBOX}>
                 <{elseif $op == "save"}>
-                    <span class="fa fa-archive fa-lg fa-fw"></span>
+                    <span class="fa-solid fa-box-archive fa-lg fa-fw"></span>
                     <{$smarty.const._PM_SAVEBOX}>
                 <{/if}>
             <{else}>
-                <span class="fa fa-inbox fa-lg fa-fw"></span>
+                <span class="fa-solid fa-inbox fa-lg fa-fw"></span>
                 <{$smarty.const._PM_INBOX}>
             <{/if}>
         </a>
@@ -24,17 +24,17 @@
 	<div class="col-12 btn-group" role="group" aria-label="Basic example">
         <{if isset($op)}>
             <{if $op == "in" || (!($op == "out") && !($op == "save"))}>
-                <a class="btn btn-primary" href="viewpmsg.php?op=in" title="<{$smarty.const._PM_INBOX}>"><span class="fa fa-inbox fa-2x fa-fw"></span><br/><{$smarty.const._PM_INBOX}></a>
-                <a class="btn btn-secondary" href="viewpmsg.php?op=out" title="<{$smarty.const._PM_OUTBOX}>"><span class="fa fa-paper-plane fa-2x fa-fw"></span><br/><{$smarty.const._PM_OUTBOX}></a>
-                <a class="btn btn-secondary" href="viewpmsg.php?op=save" title="<{$smarty.const._PM_SAVEBOX}>"><span class="fa fa-archive fa-2x fa-fw"></span><br/><{$smarty.const._PM_SAVEBOX}></a>
+                <a class="btn btn-primary" href="viewpmsg.php?op=in" title="<{$smarty.const._PM_INBOX}>"><span class="fa-solid fa-inbox fa-2x fa-fw"></span><br/><{$smarty.const._PM_INBOX}></a>
+                <a class="btn btn-secondary" href="viewpmsg.php?op=out" title="<{$smarty.const._PM_OUTBOX}>"><span class="fa-solid fa-paper-plane fa-2x fa-fw"></span><br/><{$smarty.const._PM_OUTBOX}></a>
+                <a class="btn btn-secondary" href="viewpmsg.php?op=save" title="<{$smarty.const._PM_SAVEBOX}>"><span class="fa-solid fa-box-archive fa-2x fa-fw"></span><br/><{$smarty.const._PM_SAVEBOX}></a>
             <{elseif $op == "out"}>
-                <a class="btn btn-secondary" href="viewpmsg.php?op=in" title="<{$smarty.const._PM_INBOX}>"><span class="fa fa-inbox fa-lg fa-fw"></span><br/><{$smarty.const._PM_INBOX}></a>
-                <a class="btn btn-primary" href="viewpmsg.php?op=out" title="<{$smarty.const._PM_OUTBOX}>"><span class="fa fa-paper-plane fa-lg fa-fw"></span><br/><{$smarty.const._PM_OUTBOX}></a>
-                <a class="btn btn-secondary" href="viewpmsg.php?op=save" title="<{$smarty.const._PM_SAVEBOX}>"><span class="fa fa-archive fa-lg fa-fw"></span><br/><{$smarty.const._PM_SAVEBOX}></a>
+                <a class="btn btn-secondary" href="viewpmsg.php?op=in" title="<{$smarty.const._PM_INBOX}>"><span class="fa-solid fa-inbox fa-lg fa-fw"></span><br/><{$smarty.const._PM_INBOX}></a>
+                <a class="btn btn-primary" href="viewpmsg.php?op=out" title="<{$smarty.const._PM_OUTBOX}>"><span class="fa-solid fa-paper-plane fa-lg fa-fw"></span><br/><{$smarty.const._PM_OUTBOX}></a>
+                <a class="btn btn-secondary" href="viewpmsg.php?op=save" title="<{$smarty.const._PM_SAVEBOX}>"><span class="fa-solid fa-box-archive fa-lg fa-fw"></span><br/><{$smarty.const._PM_SAVEBOX}></a>
             <{elseif $op == "save"}>
-                <a class="btn btn-secondary" href="viewpmsg.php?op=in" title="<{$smarty.const._PM_INBOX}>"><span class="fa fa-inbox fa-lg fa-fw"></span><br/><{$smarty.const._PM_INBOX}></a>
-                <a class="btn btn-secondary" href="viewpmsg.php?op=out" title="<{$smarty.const._PM_OUTBOX}>"><span class="fa fa-paper-plane fa-lg fa-fw"></span><br/><{$smarty.const._PM_OUTBOX}></a>
-                <a class="btn btn-primary" href="viewpmsg.php?op=save" title="<{$smarty.const._PM_SAVEBOX}>"><span class="fa fa-archive fa-lg fa-fw"></span><br/><{$smarty.const._PM_SAVEBOX}></a>
+                <a class="btn btn-secondary" href="viewpmsg.php?op=in" title="<{$smarty.const._PM_INBOX}>"><span class="fa-solid fa-inbox fa-lg fa-fw"></span><br/><{$smarty.const._PM_INBOX}></a>
+                <a class="btn btn-secondary" href="viewpmsg.php?op=out" title="<{$smarty.const._PM_OUTBOX}>"><span class="fa-solid fa-paper-plane fa-lg fa-fw"></span><br/><{$smarty.const._PM_OUTBOX}></a>
+                <a class="btn btn-primary" href="viewpmsg.php?op=save" title="<{$smarty.const._PM_SAVEBOX}>"><span class="fa-solid fa-box-archive fa-lg fa-fw"></span><br/><{$smarty.const._PM_SAVEBOX}></a>
             <{/if}>
         <{/if}>
 	</div>
@@ -58,7 +58,7 @@
 							<{$smarty.const._PM_FROMC}><{$poster->getVar("user_from")}>
 						<{/if}>
 					   <{if ( $poster->isOnline() ) }>
-							<br><br><button type="button" class="btn btn-danger btn-sm"><i class="fa fa-user-circle-o"></i> <{$smarty.const._PM_ONLINE}></button><br>
+							<br><br><button type="button" class="btn btn-danger btn-sm"><i class="fa-solid fa-circle-user"></i> <{$smarty.const._PM_ONLINE}></button><br>
 					   <{/if}>
 					<{else}>
 						<{$anonymous}>
@@ -68,7 +68,7 @@
 					<h5><{if !empty($message.msg_image)}><img src='<{$xoops_url}>/images/subject/<{$message.msg_image}>' alt='' /><{/if}>
 						<{$message.subject}>
 					</h5>
-					<div class="text-muted text-left"><small><i class="fa fa-calendar-o"></i>&nbsp;<{$smarty.const._PM_SENTC}>&nbsp;<{$message.msg_time}></small></div>
+					<div class="text-muted text-left"><small><i class="fa-solid fa-calendar"></i>&nbsp;<{$smarty.const._PM_SENTC}>&nbsp;<{$message.msg_time}></small></div>
 					<hr />
 					<{$message.msg_text}><br><br>
 				</div>
@@ -88,23 +88,23 @@
 					<{if ( $previous >= 0 ) }>
 						<li class="page-item">
 							<a class="page-link" href='readpmsg.php?start=<{$previous}>&amp;total_messages=<{$total_messages}>&amp;op=<{$op}>' title='<{$smarty.const._PM_PREVIOUS}>'>
-								<span class="fa fa-arrow-left"></span> <{$smarty.const._PM_PREVIOUS}>
+								<span class="fa-solid fa-arrow-left"></span> <{$smarty.const._PM_PREVIOUS}>
 							</a>
 						</li>
 					<{else}>
 						<li class="page-item disabled">
-							<a class="page-link" href="#"><span class="fa fa-arrow-left"></span> <{$smarty.const._PM_PREVIOUS}></a>
+							<a class="page-link" href="#"><span class="fa-solid fa-arrow-left"></span> <{$smarty.const._PM_PREVIOUS}></a>
 						</li>
 					<{/if}>
 					<{if ( $next < $total_messages ) }>
 						<li class="page-item">
 							<a class="page-link" href='readpmsg.php?start=<{$next}>&amp;total_messages=<{$total_messages}>&amp;op=<{$op}>' title='<{$smarty.const._PM_NEXT}>'>
-								<{$smarty.const._PM_NEXT}> <span class="fa fa-arrow-right"></span>
+								<{$smarty.const._PM_NEXT}> <span class="fa-solid fa-arrow-right"></span>
 							</a>
 						</li>
 					<{else}>
 						<li class="page-item disabled">
-							<a class="page-link" href="#"><{$smarty.const._PM_NEXT}> <span class="fa fa-arrow-right"></a>
+							<a class="page-link" href="#"><{$smarty.const._PM_NEXT}> <span class="fa-solid fa-arrow-right"></a>
 						</li>
 					<{/if}>
 				</ul>

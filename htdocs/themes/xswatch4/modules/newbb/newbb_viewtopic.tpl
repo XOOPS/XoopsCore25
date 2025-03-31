@@ -110,7 +110,7 @@
             <{/if}>
 
             <a data-toggle="collapse" href="#forum-search" title="<{$smarty.const.THEME_FORUM_SEARCH}>" class="btn btn-info">
-                <span class="fa fa-search"></span>
+                <span class="fa-solid fa-magnifying-glass"></span>
             </a>
 
             <a href="<{$xoops_url}>/modules/<{$xoops_dirname}>/polls.php?op=add&topic_id=<{$topic_id}>" title="<{$smarty.const.THEME_ADD_POLL}>" class="btn btn-info"><{$smarty.const.THEME_ADD_POLL}></a>
@@ -120,13 +120,14 @@
         <div class="col-sm-6 col-md-6 text-right hidden-xs">
             <a id="threadtop"></a>
             <a class="btn btn-info" href="<{$xoops_url}>/modules/<{$xoops_dirname}>/viewtopic.php?order=<{$order_current}>&amp;topic_id=<{$topic_id}>&amp;forum=<{$forum_id}>&amp;move=prev" title="<{$smarty.const._MD_NEWBB_PREVTOPIC}>">
-                <span class="fa fa-arrow-circle-left"></span>
+                <span class="fa-solid fa-circle-left"></span>
             </a>
             <a class="btn btn-info" href="#threadbottom" title="<{$smarty.const._MD_NEWBB_BOTTOM}>">
-                <span class="fa fa-arrow-circle-down"></span>
+<{*                <span class="fa-solid fa-circle-down"></span>*}>
+                <span class="fa-solid fa-circle-down"></span>
             </a>
             <a class="btn btn-info" href="<{$xoops_url}>/modules/<{$xoops_dirname}>/viewtopic.php?order=<{$order_current}>&amp;topic_id=<{$topic_id}>&amp;forum=<{$forum_id}>&amp;move=next" title="<{$smarty.const._MD_NEWBB_NEXTTOPIC}>">
-                <span class="fa fa-arrow-circle-right"></span>
+                <span class="fa-solid fa-circle-right"></span>
             </a>
         </div>
     </div>
@@ -229,13 +230,13 @@
         <div class="col-sm-2 col-md-2 text-right nompl hidden-xs">
             <a id="threadbottom"></a>
             <a class="btn btn-info" href="<{$xoops_url}>/modules/<{$xoops_dirname}>/viewtopic.php?order=<{$order_current}>&amp;topic_id=<{$topic_id}>&amp;forum=<{$forum_id}>&amp;move=prev" title="<{$smarty.const._MD_NEWBB_PREVTOPIC}>">
-                <span class="fa fa-arrow-circle-left"></span>
+                <span class="fa-solid fa-circle-left"></span>
             </a>
             <a class="btn btn-info" href="#threadtop" title="<{$smarty.const._MD_NEWBB_TOP}>">
-                <span class="fa fa-arrow-circle-up"></span>
+                <span class="fa-solid fa-circle-up"></span>
             </a>
             <a class="btn btn-info" href="<{$xoops_url}>/modules/<{$xoops_dirname}>/viewtopic.php?order=<{$order_current}>&amp;topic_id=<{$topic_id}>&amp;forum=<{$forum_id}>&amp;move=next" title="<{$smarty.const._MD_NEWBB_NEXTTOPIC}>">
-                <span class="fa fa-arrow-circle-right"></span>
+                <span class="fa-solid fa-circle-right"></span>
             </a>
         </div>
     </div>

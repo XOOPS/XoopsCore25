@@ -37,8 +37,8 @@
         </tr>
         <{foreach item=row from=$tableRows|default:null}>
         <tr>
-            <th style="text-align:center; vertical-align:middle;"><a
-                        href="view_calendar-week.php?year=<{$row.weekInfo.year}>&amp;month=<{$row.weekInfo.month}>&amp;day=<{$row.weekInfo.day}>"><{$row.weekInfo.week}></a>
+            <th style="text-align:center; vertical-align:middle;">
+            <a href="view_calendar-week.php?year=<{$row.weekInfo.year}>&amp;month=<{$row.weekInfo.month}>&amp;day=<{$row.weekInfo.day}>"><{$row.weekInfo.week}></a>
             </th>
             <{foreach item=cell from=$row.week|default:null}>
             <td class="<{if $cell.isEmpty}>even<{else}>odd<{/if}>"
@@ -77,7 +77,7 @@
     </table>
 </div>
 
-<div style="text-align:right;"><a
-            href="<{$xoops_url}>/modules/extcal/rss.php?cat=<{$selectedCat|default:''}>"><img
-                src="assets/images/icons/rss.gif" alt="RSS Feed"/></a></div>
+<div style="text-align:right;">
+<a href="<{$xoops_url}>/modules/extcal/rss.php?cat=<{$selectedCat|default:''}>">
+            <img src="assets/images/icons/rss.gif" alt="RSS Feed"/></a></div>
 <{include file='db:system_notification_select.tpl'}>
