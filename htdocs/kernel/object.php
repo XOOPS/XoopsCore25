@@ -426,7 +426,7 @@ class XoopsObject
      * @param string|null $format format to use for the output
      * @return mixed  formatted value of the variable
      */
-    public function getVar($key, $format = null)
+    public function getVar($key, ?string $format = null)
     {
         $format = (null === $format) ? 's' : (string) $format;
         $ret = null;
@@ -437,7 +437,7 @@ class XoopsObject
         $myts  = \MyTextSanitizer::getInstance();
         switch ($this->vars[$key]['data_type']) {
             case XOBJ_DTYPE_INT:
-                $ret = (null === $ret) ? null : (int) $ret;
+                $ret = (null === $ret) ? '' : (int) $ret;
                 break;
             case XOBJ_DTYPE_UNICODE_TXTBOX:
             case XOBJ_DTYPE_TXTBOX:
@@ -446,13 +446,13 @@ class XoopsObject
                     case 'show':
                     case 'e':
                     case 'edit':
-                        return $myts->htmlSpecialChars($ret);
+                        return $myts->htmlSpecialChars((string)$ret);
                         break 1;
                     case 'p':
                     case 'preview':
                     case 'f':
                     case 'formpreview':
-                        return $myts->htmlSpecialChars($ret);
+                        return $myts->htmlSpecialChars((string)$ret);
                         break 1;
                     case 'n':
                     case 'none':
@@ -489,7 +489,7 @@ class XoopsObject
                         break 1;
                     case 'f':
                     case 'formpreview':
-                        return htmlspecialchars($ret, ENT_QUOTES | ENT_HTML5);
+                        return htmlspecialchars((string)$ret, ENT_QUOTES | ENT_HTML5);
                         break 1;
                     case 'n':
                     case 'none':
@@ -541,7 +541,7 @@ class XoopsObject
                         break 1;
                     case 'e':
                     case 'edit':
-                        return htmlspecialchars($ret, ENT_QUOTES | ENT_HTML5);
+                        return htmlspecialchars((string)$ret, ENT_QUOTES | ENT_HTML5);
                         break 1;
                     case 'p':
                     case 'preview':
@@ -549,7 +549,7 @@ class XoopsObject
                         break 1;
                     case 'f':
                     case 'formpreview':
-                        return htmlspecialchars($ret, ENT_QUOTES | ENT_HTML5);
+                        return htmlspecialchars((string)$ret, ENT_QUOTES | ENT_HTML5);
                         break 1;
                     case 'n':
                     case 'none':

@@ -42,9 +42,9 @@ class XoopsObjectTree
      * @param array  $objectArr Array of {@link XoopsObject}s
      * @param string $myId      field name of object ID
      * @param string $parentId  field name of parent object ID
-     * @param string $rootId    field name of root object ID
+     * @param string|null $rootId    field name of root object ID
      */
-    public function __construct($objectArr, $myId, $parentId, $rootId = null)
+    public function __construct($objectArr, $myId, $parentId, ?string $rootId = null)
     {
         $this->objects = $objectArr;
         $this->myId     = $myId;

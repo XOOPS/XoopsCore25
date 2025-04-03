@@ -21,7 +21,6 @@
     <{*<script src="<{$xoops_imageurl}>js/jquery-1.10.2.js"></script>*}>
     <script src="<{$xoops_url}>/browse.php?Frameworks/jquery/jquery.js"></script>
     <script src="<{$xoops_imageurl}>js/bootstrap.min.js"></script>
-    <script src="<{$xoops_imageurl}>js/modernizr.custom.95845.js"></script>
     <script src="<{$xoops_imageurl}>js/js.js"></script>
     <link rel="alternate" type="application/rss+xml" title="" href="<{xoAppUrl 'backend.php'}>">
     <title><{if isset($xoops_dirname) && $xoops_dirname == "system"}><{$xoops_sitename}><{if !empty($xoops_pagetitle)}> - <{$xoops_pagetitle}><{/if}><{else}><{if !empty($xoops_pagetitle)}><{$xoops_pagetitle}> - <{$xoops_sitename}><{/if}><{/if}></title>

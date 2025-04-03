@@ -32,7 +32,7 @@ class MytsMp3 extends MyTextSanitizerExtension
     {
         $buttonHtml = "<button type='button' class='btn btn-default' onclick='xoopsCodeMp3(\"{$textarea_id}\");' title='"
                       . _XOOPS_FORM_ALTMP3 . "'>"
-                      . "<span class='fa fa-fw fa-music' aria-hidden='true'></span></button>";
+                      . "<span class='fa-solid fa-music' aria-hidden='true'></span></button>";
 
         $javascript = <<<EOF
 function xoopsCodeMp3(id) {

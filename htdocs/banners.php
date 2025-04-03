@@ -188,7 +188,7 @@ function bannerstats()
                 $extension = strtolower(substr($imageurl, strrpos($imageurl, '.')));
                 if ($extension === '.swf') {
                     // Inform user that SWF is unsupported
-                    echo "<p>Sorry, Flash (.swf) files are no longer supported. Please use a modern video format.</p>";
+                    echo "<p>" ._BANNERS_NO_FLASH  ."</p>";
                 } elseif (in_array($extension, ['.mp4', '.webm', '.ogg'])) {
                     // Handle actual video files
                     echo "<video width='468' height='60' controls>

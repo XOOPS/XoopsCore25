@@ -36,7 +36,7 @@ include_once __DIR__ . '/../include/functions.php';
 $pageHasForm = true;
 $pageHasHelp = true;
 
-$pathController = new PathStuffController($wizard->configs['xoopsPathDefault'], $wizard->configs['dataPath']);
+$pathController = new PathController($wizard->configs['xoopsPathDefault'], $wizard->configs['dataPath']);
 
 //if ($_SERVER['REQUEST_METHOD'] === 'GET' && @$_GET['var'] && Xmf\Request::getString('action', '', 'GET') === 'checkpath') {
 //    $path                   = $_GET['var'];
@@ -318,9 +318,9 @@ ob_start();
 
             <div id="libperms" class="x2-note" style="display: none;"></div>
             <?php
-            if (!empty($pathController->getErrorMessage())) {
+            if (!empty($pathController->errorMessage)) {
                 echo '<div class="alert alert-danger" role="alert">';
-                echo $pathController->getErrorMessage();
+                echo $pathController->errorMessage;
                 echo '</div>';
             }
             ?>

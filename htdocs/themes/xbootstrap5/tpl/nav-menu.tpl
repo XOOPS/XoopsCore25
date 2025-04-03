@@ -11,7 +11,9 @@
                     <button data-bs-target=".navbar-collapse" data-bs-toggle="collapse" class="navbar-toggler" type="button">
                         <span class="navbar-toggler-icon"></span>
                     </button>
-                    <a href="<{$xoops_url}>" class="navbar-brand xlogo" title="<{$xoops_sitename}>"> <img src="<{$xoops_imageurl}>images/logo.png" alt="<{$xoops_sitename}>"> </a>
+                    <a href="<{$xoops_url}>" class="navbar-brand xlogo" title="<{$xoops_sitename}>"> 
+                        <img src="<{$xoops_imageurl}>images/logo.png" alt="<{$xoops_sitename}>"> 
+                    </a>
                 </div>
 
                 
@@ -77,6 +79,7 @@
                     <{/if}>
                 </div>
             </div>
+        </div>
     </div><!-- .navbar-wrapper -->
         <{if $stickyHeader === 'yes'}>
 </header>

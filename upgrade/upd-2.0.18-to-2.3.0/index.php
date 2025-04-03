@@ -205,7 +205,7 @@ class Upgrade_230 extends XoopsUpgrade
         if (!(defined('XOOPS_PATH') && defined('XOOPS_VAR_PATH') && defined('XOOPS_TRUST_PATH'))) {
             return false;
         }
-        $ctrl = new PathStuffController();
+        $ctrl = new PathController();
         if (!$ctrl->checkPath()) {
             return false;
         }

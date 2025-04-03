@@ -1,6 +1,6 @@
 <div class="d-flex flex-row mt-1 mb-3">
    <div class=""><span class="fa-solid fa-users fa-lg text-success"></span></div>
-   <div class="ml-2"><{$block.online_total}></div>
+   <div class="ml-2"><{$block.online_total|default:0}></div>
 </div>
 <p>
    <{if $block.online_guests > 1}>

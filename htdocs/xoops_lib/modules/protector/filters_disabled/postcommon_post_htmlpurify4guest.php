@@ -19,9 +19,7 @@ class Protector_postcommon_post_htmlpurify4guest extends ProtectorFilterAbstract
             return true;
         }
         // use HTMLPurifier inside Protector
-        require_once dirname(__DIR__) . '/library/HTMLPurifier.auto.php';
-//      TODO in XOOPS 2.7.0        
-//      require_once XOOPS_ROOT_PATH . '/class/libraries/vendor/vendor/ezyang/htmlpurifier/library/HTMLPurifier.auto.php';
+        require_once XOOPS_TRUST_PATH . '/vendor/ezyang/htmlpurifier/library/HTMLPurifier.auto.php';
         $config = HTMLPurifier_Config::createDefault();
         $config->set('Cache', 'SerializerPath', XOOPS_VAR_PATH . '/configs/protector');
         $config->set('Core', 'Encoding', _CHARSET);
