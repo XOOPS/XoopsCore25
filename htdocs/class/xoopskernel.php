@@ -74,10 +74,10 @@ class xos_kernel_Xoops2
 
     /**
      * Convert a XOOPS path to a URL
-     * @param $url
+     * @param string $url
      * @return mixed|string
      */
-    public function url($url)
+    public function url(?string $url='')
     {
         return (false !== strpos($url, '://') ? $url : $this->path($url, true));
     }

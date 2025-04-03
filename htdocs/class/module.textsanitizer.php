@@ -855,11 +855,11 @@ class MyTextSanitizer
      *
      * @param  string $text    string being converted
      * @param  int|null    $quote_style
-     * @param  string $charset character set used in conversion
+     * @param  string|null $charset character set used in conversion
      * @param  bool   $double_encode
      * @return string
      */
-    public function htmlSpecialChars($text, $quote_style = null, $charset = null, $double_encode = true)
+    public function htmlSpecialChars(string $text, ?int $quote_style = null, ?string $charset = null, $double_encode = true)
     {
         if ($quote_style === null) {
             $quote_style = ENT_QUOTES;

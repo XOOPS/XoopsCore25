@@ -28,8 +28,13 @@ if (!function_exists('protector_oninstall_base')) {
 
         global $ret; // TODO :-D
 
-        if (!isset($ret) || !is_array($ret)) {
+
+        // Initialize $ret as array if not already an array
+        if (!isset($ret)) {
             $ret = [];
+        } elseif (!is_array($ret)) {
+            // Convert to array if it's not one
+            $ret = [$ret];
         }
 
         /** @var XoopsMySQLDatabase $db */

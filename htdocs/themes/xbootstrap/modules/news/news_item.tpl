@@ -1,6 +1,6 @@
 <section role="main" class="news-item">
     <article role="article">
-        <{if !empty($story.picture)'}>
+        <{if !empty($story.picture)}>
             <div class="news-header">
                 <{if !empty($story.poster)}><em><strong><{$lang_postedby}>: </strong><{$story.poster}><{/if}> <{$lang_on}> <{$story.posttime}></em>
 

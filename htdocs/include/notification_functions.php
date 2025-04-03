@@ -67,12 +67,12 @@ function notificationEnabled($style, $module_id = null)
  * return an array of info for all categories.
  *
  * @param string $category_name
- * @param  int   $module_id ID of the module (default current module)
+ * @param  int|null   $module_id ID of the module (default current module)
  *
  * @internal param string $name Category name (default all categories)
  * @return mixed
  */
-function &notificationCategoryInfo($category_name = '', $module_id = null)
+function &notificationCategoryInfo($category_name = '', ?int $module_id = null)
 {
     if (!isset($module_id)) {
         global $xoopsModule;
@@ -83,7 +83,10 @@ function &notificationCategoryInfo($category_name = '', $module_id = null)
         $module_handler = xoops_getHandler('module');
         $module         = $module_handler->get($module_id);
     }
+
+    if (null !== $module) {
     $not_config = &$module->getInfo('notification');
+    }
     if (empty($category_name)) {
         return $not_config['category'];
     }
@@ -341,11 +344,11 @@ function &notificationEventInfo($category_name, $event_name, $module_id = null)
  * Get an array of associative info arrays for subscribable categories
  * for the selected module.
  *
- * @param  int $module_id ID of the module
+ * @param  int|null $module_id ID of the module
  * @return mixed
  */
 
-function &notificationSubscribableCategoryInfo($module_id = null)
+function &notificationSubscribableCategoryInfo(?int $module_id = null)
 {
     $all_categories = & notificationCategoryInfo('', $module_id);
 

@@ -62,7 +62,7 @@ function genPathCheckHtml($path, $valid)
 }
 
 $vars = & $_SESSION['settings'];
-$pathController = new PathStuffController();
+$pathController = new PathController();
 if ($res = $pathController->execute()) {
     return $res;
 }

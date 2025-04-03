@@ -27,15 +27,17 @@ if (!function_exists('protector_onuninstall_base')) {
 
         global $ret; // TODO :-D
 
-        if (!is_array($ret)) {
-            $ret = [];
-        }
 
         /** @var XoopsMySQLDatabase $db */
         $db  = XoopsDatabaseFactory::getDatabaseConnection();
         $mid = $module->getVar('mid');
-        if (!is_array($ret)) {
+
+        // Initialize $ret as array if not already an array
+        if (!isset($ret)) {
             $ret = [];
+        } elseif (!is_array($ret)) {
+            // Convert to array if it's not one
+            $ret = [$ret];
         }
 
         // TABLES (loading mysql.sql)
