@@ -37,6 +37,9 @@ $modversion['dirmoduleadmin'] = '/Frameworks/moduleclasses/moduleadmin';
 $modversion['icons16']        = '../../Frameworks/moduleclasses/icons/16';
 $modversion['icons32']        = '../../Frameworks/moduleclasses/icons/32';
 
+$modversion['icon']           = 'fa-solid fa-user';
+
+
 //about
 $modversion['release_date']        = '2022/09/09';
 $modversion['module_website_url']  = 'https://xoops.org/';
@@ -68,6 +71,10 @@ if ($GLOBALS['xoopsUser']) {
     $modversion['sub'][2]['url']  = 'search.php';
     $modversion['sub'][3]['name'] = _PROFILE_MI_CHANGEPASS;
     $modversion['sub'][3]['url']  = 'changepass.php';
+
+    $modversion['sub'][1]['icon'] = 'fa-solid fa-wrench';
+    $modversion['sub'][2]['icon'] = 'fa-solid fa-magnifying-glass';
+    $modversion['sub'][3]['icon'] = 'fa-solid fa-key';
 }
 
 // Mysql file

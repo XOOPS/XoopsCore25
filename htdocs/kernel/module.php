@@ -233,6 +233,9 @@ class XoopsModule extends XoopsObject
                 $ret[] = [
                     'name' => $submenu['name'],
                     'url'  => $submenu['url'],
+
+                    'icon' => $submenu['icon']?? '',
+
                 ];
             }
         }
@@ -490,6 +493,18 @@ class XoopsModule extends XoopsObject
 
         return $inst;
     }
+
+
+    /**
+     * Returns Class Base Variable icon
+     * @param  string $format
+     * @return mixed
+     */
+    public function icon($format = '')
+    {
+        return $this->getVar('icon', $format);
+    }
+
 
     ##################### Deprecated Methods ######################
 
