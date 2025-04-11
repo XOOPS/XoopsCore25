@@ -887,12 +887,12 @@ body {
     background-color: transparent; /* Ensure submenus have no background color */
 }
 
-/* Highlight the active main menu item */
+/* Highlight the active main menu item 
 .nav-item.active > a.nav-link {
-    font-weight: bold;
-    background-color: #f0f0f0; /* Set the desired background color */
-    color: #000; /* Optional: Adjust text color for better contrast */
+    #background-color: #f0f0f0; /* Set the desired background color 
+    color: #000; /* Optional: Adjust text color for better contrast 
 }
+*/
 
 /* Highlight the active submenu item */
 .no-bullets li a.dropdown.active {
