@@ -130,6 +130,10 @@ function b_system_main_show()
         if (in_array($i, $read_allowed)) {
             $block['modules'][$i]['name']      = $modules[$i]->getVar('name');
             $block['modules'][$i]['directory'] = $modules[$i]->getVar('dirname');
+
+            $icon = $module_handler->getByDirname($modules[$i]->getVar('dirname'))->getInfo('icon');
+            $block['modules'][$i]['icon'] = $icon ? $icon : 'fa-solid fa-caret-right';
+
             $sublinks                          = $modules[$i]->subLink();
             if ((!empty($xoopsModule)) && ($i == $xoopsModule->getVar('mid'))) {
                 $block['modules'][$i]['highlight'] = true;
@@ -144,6 +148,8 @@ function b_system_main_show()
                     $block['modules'][$i]['sublinks'][] = [
                         'name' => $sublink['name'],
                         'url'  => XOOPS_URL . '/modules/' . $modules[$i]->getVar('dirname') . '/' . $sublink['url'],
+
+                        'icon' => $sublink['icon'] !== '' ? $sublink['icon'] : 'fa-solid fa-caret-right'
                     ];
                 }
             } else {
