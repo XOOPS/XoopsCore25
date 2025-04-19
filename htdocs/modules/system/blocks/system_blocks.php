@@ -116,49 +116,58 @@ function b_system_main_show()
     $block               = [];
     $block['lang_home']  = _MB_SYSTEM_HOME;
     $block['lang_close'] = _CLOSE;
+
+    /** @var XoopsModuleHandler $module_handler */
     $module_handler      = xoops_getHandler('module');
     $criteria            = new CriteriaCompo(new Criteria('hasmain', 1));
     $criteria->add(new Criteria('isactive', 1));
     $criteria->add(new Criteria('weight', 0, '>'));
     $modules            = $module_handler->getObjects($criteria, true);
+
     /** @var XoopsGroupPermHandler $moduleperm_handler */
     $moduleperm_handler = xoops_getHandler('groupperm');
     $groups             = is_object($xoopsUser) ? $xoopsUser->getGroups() : XOOPS_GROUP_ANONYMOUS;
     $read_allowed       = $moduleperm_handler->getItemIds('module_read', $groups);
+
     $block['modules'] = [];
     foreach (array_keys($modules) as $i) {
         if (in_array($i, $read_allowed)) {
+            $moduleDirname = $modules[$i]->getVar('dirname');
             $block['modules'][$i]['name']      = $modules[$i]->getVar('name');
-            $block['modules'][$i]['directory'] = $modules[$i]->getVar('dirname');
-
-            $icon = $module_handler->getByDirname($modules[$i]->getVar('dirname'))->getInfo('icon');
-            $block['modules'][$i]['icon'] = $icon ? $icon : 'fa-solid fa-caret-right';
+            $block['modules'][$i]['directory'] = $moduleDirname;
+            $block['modules'][$i]['icon'] = $module_handler->getByDirname($moduleDirname)->getInfo('icon') ?: 'fa-solid fa-caret-right';
 
             $sublinks                          = $modules[$i]->subLink();
-            if ((!empty($xoopsModule)) && ($i == $xoopsModule->getVar('mid'))) {
+            if (!empty($xoopsModule) && $i == $xoopsModule->getVar('mid')) {
                 $block['modules'][$i]['highlight'] = true;
                 $block['nothome']                  = true;
             }
-            if ((!empty($xoopsModule)) && ($i == $xoopsModule->getVar('mid'))) {
-                $block['modules'][$i]['highlight'] = true;
-                $block['nothome']                  = true;
-            }
-            if ((count($sublinks) > 0) && (!empty($xoopsModule)) && ($i == $xoopsModule->getVar('mid'))) {
-                foreach ($sublinks as $sublink) {
-                    $block['modules'][$i]['sublinks'][] = [
-                        'name' => $sublink['name'],
-                        'url'  => XOOPS_URL . '/modules/' . $modules[$i]->getVar('dirname') . '/' . $sublink['url'],
 
-                        'icon' => $sublink['icon'] !== '' ? $sublink['icon'] : 'fa-solid fa-caret-right'
+            $block['modules'][$i]['sublinks'] = [];
+            if (count($sublinks) > 0 && !empty($xoopsModule) && $i == $xoopsModule->getVar('mid')) {
+                foreach ($sublinks as $sublink) {
+                    if (hasSublinkPermission($sublink, $groups)) {
+                        // Normalize URL for backward compatibility
+                        $url = parse_url($sublink['url'], PHP_URL_PATH) ?: $sublink['url'];
+                    $block['modules'][$i]['sublinks'][] = [
+                            'id'       => !empty($sublink['id']) ? $sublink['id'] : basename($url), // Fallback
+                        'name' => $sublink['name'],
+                            'url'      => $sublink['url'],
+                            'full_url' => XOOPS_URL . '/modules/' . $moduleDirname . '/' . $sublink['url'],
+                            'icon'     => !empty($sublink['icon']) ? $sublink['icon'] : 'fa-solid fa-caret-right',
                     ];
                 }
-            } else {
-                $block['modules'][$i]['sublinks'] = [];
+                }
             }
         }
     }
 
     return $block;
+}
+
+function hasSublinkPermission($sublink, $groups)
+{
+    return true; // Placeholder
 }
 
 /**
