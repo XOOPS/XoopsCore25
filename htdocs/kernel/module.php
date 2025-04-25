@@ -231,11 +231,10 @@ class XoopsModule extends XoopsObject
         if ($this->getInfo('sub') && \is_array($this->getInfo('sub'))) {
             foreach ($this->getInfo('sub') as $submenu) {
                 $ret[] = [
+                    'id' => $submenu['id']?? '',
                     'name' => $submenu['name'],
                     'url'  => $submenu['url'],
-
                     'icon' => $submenu['icon']?? '',
-
                 ];
             }
         }

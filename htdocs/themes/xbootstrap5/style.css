@@ -889,7 +889,7 @@ body {
 
 /* Highlight the active main menu item */
 .nav-item.active > a.nav-link {
-    font-weight: bold;
+    /*font-weight: bold;*/
     background-color: #f0f0f0; /* Set the desired background color */
     color: #000; /* Optional: Adjust text color for better contrast */
 }
@@ -898,4 +898,38 @@ body {
 .no-bullets li a.dropdown.active {
     background-color: #e0e0e0; /* Set the desired background color for submenus */
     color: #000; /* Optional: Adjust text color for better contrast */
+}
+
+
+a {
+    color: #2fa4e7;
+    text-decoration: none;
+}
+a:hover,
+a:focus {
+    color: #2196d3;
+    text-decoration: underline;
+}
+.text-primary,
+.link-primary {
+    color: #2fa4e7 !important;
+}
+.text-primary:hover,
+.text-primary:focus,
+.link-primary:hover,
+.link-primary:focus {
+    color: #2196d3 !important;
+}
+.btn-primary {
+    background-color: #2fa4e7;
+    border-color: #2fa4e7;
+}
+.btn-primary:hover,
+.btn-primary:focus {
+    background-color: #2196d3;
+    border-color: #2196d3;
+}
+
+.nav-item > a.nav-link {
+    color: #2fa4e7;
 }
