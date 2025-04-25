@@ -78,7 +78,13 @@ class TinyMCE
         $configured = [];
 
         // Load default settings
-        if (!($this->setting = @include($GLOBALS['xoops']->path('var/configs/tinymce.php')))) {
+//        if (!($this->setting = @include($GLOBALS['xoops']->path('var/configs/tinymce.php')))) {
+//            $this->setting = include __DIR__ . '/settings.php';
+//        }
+
+        if (file_exists($GLOBALS['xoops']->path('var/configs/tinymce.php')) && is_readable($GLOBALS['xoops']->path('var/configs/tinymce.php'))) {
+            $this->setting = include($GLOBALS['xoops']->path('var/configs/tinymce.php'));
+        } else {
             $this->setting = include __DIR__ . '/settings.php';
         }
 
