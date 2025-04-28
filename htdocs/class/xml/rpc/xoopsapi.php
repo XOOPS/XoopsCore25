@@ -353,7 +353,7 @@ class XoopsApi extends XoopsXmlRpcApi
         } else {
             include_once XOOPS_ROOT_PATH . '/class/xoopstopic.php';
             $this->db = XoopsDatabaseFactory::getDatabaseConnection();
-            $xt       = new XoopsTopic($db->prefix('topics'));
+            $xt       = new XoopsTopic($this->db->prefix('topics'));
             $ret      = $xt->getTopicsList();
             if (!$respond) {
                 return $ret;

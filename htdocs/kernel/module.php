@@ -223,7 +223,7 @@ class XoopsModule extends XoopsObject
     /**
      * Get links to the subpages
      *
-     * @return string
+     * @return array
      */
     public function subLink()
     {

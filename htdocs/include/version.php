@@ -24,9 +24,12 @@ defined('XOOPS_ROOT_PATH') || exit('Restricted access');
  * It is highly discouraged to use the license file
  * It will be depreciated and removed
  */
-@include_once __DIR__ . '/license.php';
+$licenseFile = __DIR__ . '/license.php';
+if (file_exists($licenseFile)) {
+    include_once $licenseFile;
+}
 
 /**
  *  Define XOOPS version
  */
-define('XOOPS_VERSION', 'XOOPS 2.5.12-Beta6');
+define('XOOPS_VERSION', 'XOOPS 2.5.12-Beta7');
