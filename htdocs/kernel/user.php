@@ -153,7 +153,7 @@ class XoopsUser extends XoopsObject
      * find the username for a given ID
      *
      * @param  int  $userid  ID of the user to find
-     * @param  int  $usereal switch for usename or realname
+     * @param  int  $usereal switch for username or realname
      * @param  bool $linked add a link
      * @return string name of the user. name for 'anonymous' if not found.
      */

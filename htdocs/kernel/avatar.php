@@ -167,7 +167,7 @@ class XoopsAvatar extends XoopsObject
 }
 
 /**
- * XOOPS avatar handler class. (Singelton)
+ * XOOPS avatar handler class. (Singleton)
  *
  * This class is responsible for providing data access mechanisms to the data source
  * of XOOPS block class objects.

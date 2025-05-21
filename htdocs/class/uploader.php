@@ -203,7 +203,7 @@ class XoopsMediaUploader
     }
 
     /**
-     * Count the uploaded files (in case of miltiple upload)
+     * Count the uploaded files (in case of multiple upload)
      *
      * @param  string $media_name Name of the file field
      * @return int|false

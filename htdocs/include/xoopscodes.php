@@ -23,7 +23,7 @@ defined('XOOPS_ROOT_PATH') || exit('Restricted access');
  */
 
 /**
- * Displayes xoopsCode buttons and target textarea to which xoopscodes are inserted
+ * Displays xoopsCode buttons and target textarea to which xoopscodes are inserted
  *
  * @param   string $textarea_id a unique id of the target textarea
  * @param int      $cols

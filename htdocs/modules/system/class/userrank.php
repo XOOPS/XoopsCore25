@@ -110,7 +110,7 @@ class SystemUserrank extends XoopsObject
 }
 
 /**
- * System user ranks handler class. (Singelton)
+ * System user ranks handler class. (Singleton)
  *
  * This class is responsible for providing data access mechanisms to the data source
  * of XOOPS block class objects.

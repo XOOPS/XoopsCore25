@@ -67,7 +67,7 @@ define('_PM_NEXTP', 'Next');
 define('_PM_MAILNOTIFY', "%s-You've got a new PM from %s");
 define('_PM_MAILMESSAGE', "Hello!\nA New PM has arrived from %s\n\nTitle of PM is\n%s\n\nYou can view the PM here\n%s\n\n-----------\nYou are receiving this message because you selected to be notified when you receive a new PM\n\nYou can change your PM-Config\n%s\n\nPlease do not reply to this message\n\n---------\nBest Regards\n%s\n%s\n%s");
 define('_PM_EMAIL', 'Forward to email');
-define('_PM_EMAIL_DESC', 'Dear %s, this is a message transfered from your account at ' . $GLOBALS['xoopsConfig']['sitename']);
+define('_PM_EMAIL_DESC', 'Dear %s, this is a message transferred from your account at ' . $GLOBALS['xoopsConfig']['sitename']);
 define('_PM_EMAIL_FROM', 'From %s');
 define('_PM_EMAIL_TO', 'To %s');
 define('_PM_EMAIL_SUBJECT', '[message]%s');

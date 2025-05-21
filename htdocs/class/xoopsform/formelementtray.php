@@ -45,7 +45,7 @@ class XoopsFormElementTray extends XoopsFormElement
     protected $orientation;
 
     /**
-     * HTML to seperate the elements
+     * HTML to separate the elements
      *
      * @var string
      * @access private

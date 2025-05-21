@@ -311,7 +311,7 @@ switch ($op) {
         }
         break;
 
-        // Activ member
+        // Active member
     case 'users_active':
         if (Request::hasVar('uid')) {
             $obj = $member_handler->getUser($uid);

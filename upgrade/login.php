@@ -64,7 +64,7 @@ if (empty($_POST['uname']) || empty($_POST['pass'])) {
         $user->setVar('last_login', time());
         if (!$member_handler->insertUser($user)) {
         }
-        // Regenrate a new session id and destroy old session
+        // Regenerate a new session id and destroy old session
         $GLOBALS['sess_handler']->regenerate_id(true);
         $_SESSION                    = [];
         $_SESSION['xoopsUserId']     = $user->getVar('uid');

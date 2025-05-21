@@ -43,7 +43,7 @@ var XoopsmlcontentDialog = {
         }
     },
 
-    // limit to 10000 caracters to prevent preg_replace bug
+    // limit to 10000 characters to prevent preg_replace bug
     onkeyupMLC : function()
     {
         var f = document.forms[0];

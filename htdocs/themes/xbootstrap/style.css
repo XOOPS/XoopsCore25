@@ -1319,7 +1319,7 @@ div.order-by a {
     line-height: inherit;
 }
 
-/* No margin, paddind and lineweight -> use in title tags if necessary... */
+/* No margin, padding and lineweight -> use in title tags if necessary... */
 
 /* Media Queries */
 @media (min-width: 320px) and (max-width: 768px) {

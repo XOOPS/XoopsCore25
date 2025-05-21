@@ -136,7 +136,7 @@ if (!empty($_POST['action'])) {
         redirect_header('center.php?page=center', 2, _AM_MSG_REMOVED);
         exit;
     } elseif ($_POST['action'] === 'compactlog') {
-        // compactize records (removing duplicated records (ip,type)
+        // compact records (remove duplicated records (ip,type)
         $sql = "SELECT `lid`,`ip`,`type` FROM $log_table ORDER BY lid DESC";
         $result = $db->query($sql);
         if (!$db->isResultSet($result)) {
@@ -199,7 +199,7 @@ foreach ($num_array as $n) {
     }
 }
 
-// beggining of Output
+// begin of Output
 
 // title
 echo "<h3 style='text-align:left;'>" . $xoopsModule->name() . "</h3>\n";

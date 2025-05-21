@@ -41,7 +41,7 @@ class XoopsTree
     public $db;
 
     //constructor of class XoopsTree
-    //sets the names of table, unique id, and parend id
+    //sets the names of table, unique id, and parent id
     /**
      * @param $table_name
      * @param $id_name
@@ -187,7 +187,7 @@ class XoopsTree
     }
 
     //generates path from the root id to a given id($sel_id)
-    // the path is delimetered with "/"
+    // the path is delimited with "/"
     /**
      * @param string|int $sel_id
      * @param string     $title
@@ -317,7 +317,7 @@ class XoopsTree
     }
 
     //generates id path from the root id to a given id
-    // the path is delimetered with "/"
+    // the path is delimited with "/"
     /**
      * @param string|int $sel_id
      * @param string     $path

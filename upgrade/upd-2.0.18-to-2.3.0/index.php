@@ -348,7 +348,7 @@ class Upgrade_230 extends XoopsUpgrade
                     }
                 }
 
-                // Analyze table indexs for any FULLTEXT-Type of index in the table.
+                // Analyze table indexes for any FULLTEXT-Type of index in the table.
                 $fulltext_indexes = [];
                 $sql         = "SHOW INDEX FROM `$table`";
                 $result = $GLOBALS['xoopsDB']->queryF($sql);

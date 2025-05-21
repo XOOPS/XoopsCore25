@@ -50,7 +50,7 @@ class XoopsFormRadio extends XoopsFormElement
     public $columns;
 
     /**
-     * HTML to seperate the elements
+     * HTML to separate the elements
      *
      * @var string
      * @access private

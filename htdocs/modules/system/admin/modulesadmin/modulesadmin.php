@@ -681,7 +681,7 @@ function xoops_module_uninstall($dirname)
             }
             unset($templates);
 
-            // delete blocks and block tempalte files
+            // delete blocks and block template files
             $block_arr = XoopsBlock::getByModule($module->getVar('mid'));
             if (is_array($block_arr)) {
                 $bcount = count($block_arr);

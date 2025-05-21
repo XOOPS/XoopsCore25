@@ -51,7 +51,7 @@ class XoopsFormTextArea extends XoopsFormElement
     public $_value;
 
     /**
-     * Constuctor
+     * Constructor
      *
      * @param string $caption caption
      * @param string $name    name

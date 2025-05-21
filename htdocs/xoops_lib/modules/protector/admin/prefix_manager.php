@@ -250,7 +250,7 @@ if (!empty($_POST['copy']) && !empty($_POST['old_prefix'])) {
     exit;
 }
 
-// beggining of Output
+// begin of Output
 xoops_cp_header();
 include __DIR__ . '/mymenu.php';
 

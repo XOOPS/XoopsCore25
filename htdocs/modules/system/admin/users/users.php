@@ -118,7 +118,7 @@ function form_user($add_or_edit, $user = '')
         }
     }
 
-    //Affichage du formulaire
+    //Form display
     $form = new XoopsThemeForm($form_title, 'form_user', 'admin.php', 'post', true);
 
     $form->addElement(new XoopsFormText(_AM_SYSTEM_USERS_NICKNAME, 'username', 25, 25, $uname_value), true);

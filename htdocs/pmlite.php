@@ -125,7 +125,7 @@ if (is_object($xoopsUser)) {
 
         if (1 == $reply) {
             $subject = $pm->getVar('subject', 'E');
-            //TODO Fix harcoded string
+            //TODO Fix hardcoded string
             if (!preg_match('/^' . _RE . '/i', $subject)) {
                 $subject = _RE . ' ' . $subject;
             }

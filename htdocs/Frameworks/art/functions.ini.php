@@ -97,7 +97,7 @@ function mod_loadFunctions($group = '', $dirname = '')
  * Load renderer for a class
  *
  * The class file should be located in /modules/MODULE/{$class}.renderer.php
- * The classf name should be defined as Capitalized(module_dirname)Capitalized(class_name)Renderer
+ * The class file name should be defined as Capitalized(module_dirname)Capitalized(class_name)Renderer
  *
  * @param  string $class   name of  the classname
  * @param  string $dirname module dirname, optional

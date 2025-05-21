@@ -74,7 +74,7 @@ var ImageDialog = {
         if (isVisible('outbrowser'))
             document.getElementById('onmouseoutsrc').style.width = '260px';
 
-        // If option enabled default contrain proportions to checked
+        // If option enabled default constrain proportions to checked
         if (ed.getParam("advimage_constrain_proportions", true))
             f.constrain.checked = true;
 

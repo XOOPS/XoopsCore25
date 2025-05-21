@@ -132,7 +132,7 @@ class XoopsCaptchaImageHandler
     }
 
     /**
-     *  Create CAPTCHA iamge with GD
+     *  Create CAPTCHA image with GD
      *  Originated by DuGris' SecurityImage
      *  --------------------------------------------------------------------------- //
      *  Class : SecurityImage 1.5                                                    //

@@ -39,7 +39,7 @@ class SystemBlockLinkModule extends XoopsObject
 }
 
 /**
- * System block handler class. (Singelton)
+ * System block handler class. (Singleton)
  *
  * This class is responsible for providing data access mechanisms to the data source
  * of XOOPS block class objects.

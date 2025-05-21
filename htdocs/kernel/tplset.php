@@ -307,7 +307,7 @@ class XoopsTplsetHandler extends XoopsObjectHandler
     }
 
     /**
-     * get a list of tplsets matchich certain conditions
+     * get a list of tplsets matching certain conditions
      *
      * @param  CriteriaElement $criteria conditions to match
      * @return array           array of tplsets matching the conditions

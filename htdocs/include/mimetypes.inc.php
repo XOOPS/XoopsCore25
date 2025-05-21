@@ -115,7 +115,7 @@ return [
     'rtf'   => 'text/rtf',
     'sgml'  => 'text/x-sgml',
     'sgm'   => 'text/x-sgml',
-    'tsv'   => 'text/tab-seperated-values',
+    'tsv'   => 'text/tab-separated-values',
     'wml'   => 'text/vnd.wap.wml',
     'wmls'  => 'text/vnd.wap.wmlscript',
     'xsl'   => 'text/xml',
