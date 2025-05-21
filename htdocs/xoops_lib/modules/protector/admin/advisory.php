@@ -127,7 +127,7 @@ echo "</div><br>\n";
 echo "<br>\n<div style='border: 2px solid #2F5376;padding:8px;width:95%;' class='bg4'>\n";
 
 echo '<h3>' . _AM_ADV_SUBTITLECHECK . "</h3>\n";
-// Check contamination's
+// Check contaminations
 $uri_contami = XOOPS_URL . '/index.php?xoopsConfig%5Bnocommon%5D=1';
 echo '<dl><dt>' . _AM_ADV_CHECKCONTAMI . ":</dt>\n";
 echo "<dd><a href='$uri_contami' target='_blank'>$uri_contami</a></dd>";
