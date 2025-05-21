@@ -83,7 +83,7 @@ var XoopsimagemanagerDialog = {
         if (isVisible('outbrowser'))
             document.getElementById('onmouseoutsrc').style.width = '260px';
 
-        // If option enabled, default contains properties to check
+        // If option enabled, default contrain proportions to check
         if (ed.getParam("xoopsimagemanager_constrain_proportions", true))
             f.constrain.checked = true;
 
