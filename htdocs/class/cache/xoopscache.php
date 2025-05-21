@@ -414,7 +414,7 @@ class XoopsCacheEngine
     public $settings;
 
     /**
-     * Iitialize the cache engine
+     * Initialize the cache engine
      *
      * Called automatically by the cache frontend
      *

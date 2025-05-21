@@ -292,7 +292,7 @@ EOAVJS;
  * @param string         $template  smarty template to user
  * @param array          $variables array of variables to assign for template
  * @param bool           $closehead if true, close the head element and open the body
- * @param XoopsForm|null $xoopsForm optioal form
+ * @param XoopsForm|null $xoopsForm optional form
  * @return void  echos rendered template
  */
 function xoops_misc_popup_body($template, $variables, $closehead = true, $closebutton = true, $xoopsForm = null)

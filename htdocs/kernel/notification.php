@@ -861,7 +861,7 @@ class XoopsNotificationHandler extends XoopsObjectHandler
     }
 
     /**
-     * Perform notification maintenance activites at login time.
+     * Perform notification maintenance activities at login time.
      * In particular, any notifications for the newly logged-in
      * user with mode XOOPS_NOTIFICATION_MODE_WAITFORLOGIN are
      * switched to mode XOOPS_NOTIFICATION_MODE_SENDONCETHENWAIT.

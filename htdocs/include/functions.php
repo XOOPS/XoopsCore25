@@ -105,7 +105,7 @@ function xoops_getModuleHandler($name = null, $module_dir = null, $optional = fa
 /**
  * XOOPS class loader wrapper
  *
- * Temporay solution for XOOPS 2.3
+ * Temporary solution for XOOPS 2.3
  *
  * @param string $name                                          Name of class to be loaded
  * @param string $type                                          domain of the class, potential values:   core - located in /class/;
@@ -126,7 +126,7 @@ function xoops_load($name, $type = 'core')
 /**
  * XOOPS language loader wrapper
  *
- * Temporay solution, not encouraged to use
+ * Temporary solution, not encouraged to use
  *
  * @param   string $name     Name of language file to be loaded, without extension
  * @param   string $domain   Module dirname; global language file will be loaded if $domain is set to 'global' or not specified

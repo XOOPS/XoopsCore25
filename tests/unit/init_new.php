@@ -9,11 +9,11 @@ if (defined('XOOPS_TU_ROOT_PATH')) return;
 use PHPUnit\Framework\TestCase;
 
 if (version_compare(PHP_VERSION, '7.4.0', '<')) {
-    die('XOOP check: PHP version require 7.4.0 or more');
+    die('XOOPS check: PHP version require 7.4.0 or more');
 }
 
 //if (version_compare(PHP_VERSION, '8.2.0', '<')) {
-//    die("XOOP check: PHP version require 8.2.0 or more");
+//    die("XOOPS check: PHP version require 8.2.0 or more");
 //}
 
 

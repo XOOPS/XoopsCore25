@@ -24,7 +24,7 @@ class XoopsSystemCpanel
     public $gui;
 
     /**
-     * Constructer
+     * Constructor
      *
      */
     public function __construct()

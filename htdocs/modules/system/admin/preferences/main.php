@@ -447,7 +447,7 @@ switch ($op) {
                         if ($xoopsConfig['template_set'] != ${$config->getVar('conf_name')}) {
                             $newtplset = ${$config->getVar('conf_name')};
 
-                            // clear all compiled and cachedfiles
+                            // clear all compiled and cached files
                             $xoopsTpl->clearCompiledTemplate();
 
                             // generate compiled files for the new theme

@@ -26,7 +26,7 @@ In addition, please include the following information along with your report:
 * Your name and affiliation (if any).
 * A description of the technical details of the vulnerabilities. It is very
   important to let us know how we can reproduce your findings.
-* Type of issue (e.g. buffer overflow, SQL injection, cross-site scripting, etc.)
+* Type of issue (e.g., buffer overflow, SQL injection, cross-site scripting, etc.)
 * Full paths of source file(s) related to the manifestation of the issue
 * The location of the affected source code (tag/branch/commit or direct URL)
 * Any special configuration required to reproduce the issue

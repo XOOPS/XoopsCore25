@@ -213,7 +213,7 @@ class TinyMCE
         return true;
     }
 
-    // load all plugins execpt the plugins in setting["exclude_plugins"]
+    // load all plugins except the plugins in setting["exclude_plugins"]
     /**
      * @return array
      */

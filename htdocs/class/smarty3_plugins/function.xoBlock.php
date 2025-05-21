@@ -19,7 +19,7 @@
 //  <{xoBlock id=1}>                   displays just the block content
 //  <{xoBlock id=7 display="none"}>    does not display nothing but executes the block, this can go for online block or to trigger some cron block
 //  <{xoBlock id=600 groups="0|1" cache=20}>  display block just for this 2 groups and sets a cache of 20 seconds
-//  <{xoBlock id=600 options="100|100|s_poweredby.gif|0"}> displays block with diferent options
+//  <{xoBlock id=600 options="100|100|s_poweredby.gif|0"}> displays block with different options
 
 /**
  * @param string[] $params

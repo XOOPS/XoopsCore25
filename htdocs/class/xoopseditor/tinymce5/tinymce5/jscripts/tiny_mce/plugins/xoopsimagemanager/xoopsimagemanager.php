@@ -202,7 +202,7 @@ if ($isadmin || ($catreadcount > 0) || ($catwritecount > 0)) {
     }
     // Add new category - end
 
-    // Update categorie - start
+    // Update category - start
     if (!empty($_POST['op']) && $op === 'updatecat') {
         if (!$GLOBALS['xoopsSecurity']->check() || $imgcat_id <= 0) {
             redirect_header($current_file . '?target=' . $target, 3, implode('<br>', $GLOBALS['xoopsSecurity']->getErrors()));
@@ -261,9 +261,9 @@ if ($isadmin || ($catreadcount > 0) || ($catwritecount > 0)) {
         }
         redirect_header($current_file . '?target=' . $target, 3, _AM_SYSTEM_DBUPDATED);
     }
-    // Update categorie - end
+    // Update category - end
 
-    // Confirm delete categorie - start
+    // Confirm delete category - start
     if (!empty($_GET['op']) && $op === 'delcat') {
         xoops_header();
         echo "<link href='css/xoopsimagebrowser.css' rel='stylesheet' type='text/css' />";
@@ -271,9 +271,9 @@ if ($isadmin || ($catreadcount > 0) || ($catwritecount > 0)) {
         xoops_footer();
         exit();
     }
-    // Confirm delete categorie - end
+    // Confirm delete category - end
 
-    // Delete categorie - start
+    // Delete category - start
     if (!empty($_POST['op']) && $op === 'delcatok') {
         if (!$GLOBALS['xoopsSecurity']->check()) {
             redirect_header($current_file . '?target=' . $target, 3, implode('<br>', $GLOBALS['xoopsSecurity']->getErrors()));
@@ -310,7 +310,7 @@ if ($isadmin || ($catreadcount > 0) || ($catwritecount > 0)) {
         }
         redirect_header($current_file . '?target=' . $target, 3, _AM_SYSTEM_DBUPDATED);
     }
-    // Delete categorie - end
+    // Delete category - end
 
     // ************************* NOT USED ************************************
     // Confirm delete file - start

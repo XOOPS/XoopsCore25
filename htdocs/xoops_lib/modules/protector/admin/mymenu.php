@@ -87,7 +87,7 @@ foreach (array_keys($adminmenu) as $i) {
 }
 // start hack by Mage
 /*
-// display (you can customize htmls)
+// display (you can customize html)
 echo "<div style='text-align:left;width:98%;'>" ;
 foreach( $adminmenu as $menuitem ) {
     echo "<div style='float:left;height:1.5em;'><nobr><a href='".htmlspecialchars($menuitem['link'],ENT_QUOTES | ENT_HTML5)."' style='background-color:{$menuitem['color']};font:normal normal bold 9pt/12pt;'>".htmlspecialchars($menuitem['title'],ENT_QUOTES | ENT_HTML5)."</a> | </nobr></div>\n" ;

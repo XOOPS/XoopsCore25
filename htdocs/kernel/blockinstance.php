@@ -73,14 +73,14 @@ class XoopsBlockInstance
      */
     public function __get($name)
     {
-        $GLOBALS['xoopsLogger']->addDeprecated("Class '" . self::class . "' is deprecated" . (empty($name) ? '' : " thus the variable '{$name}' is not vailable") . '!');
+        $GLOBALS['xoopsLogger']->addDeprecated("Class '" . self::class . "' is deprecated" . (empty($name) ? '' : " thus the variable '{$name}' is not available") . '!');
 
         return null;
     }
 }
 
 /**
- * XOOPS Block Instance Handler Class. (Singelton)
+ * XOOPS Block Instance Handler Class. (Singleton)
  *
  * This class is responsible for providing data access mechanisms to the data source
  * of XOOPS block class objects.

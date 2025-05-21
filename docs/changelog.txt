@@ -201,7 +201,7 @@ Third-party updates:
 Updates from Sourceforge trackers:
 - Fixed bug #2761876: Indexes issues/improvements (trabis/Instant-Zero)
 - Fixed bug #2788739: missing language definition _XOOPS_FORM_ALTYOUTUBE (trabis/voltan)
-- Added feature req #2414148 : removing harcoded 'administration' from cpanels (trabis/mowaffaq)
+- Added feature req #2414148 : removing hardcoded 'administration' from cpanels (trabis/mowaffaq)
 - Fixed bug #2782360: Profile Module - Registration steps and user creation (trabis/instantzero)
 - Fixed bug #2730373: Removing content from homepage template (trabis/instantzero)
 - Fixed bug #2704179: CaritaFoto and Link to image with a space in the dir name (trabis)
@@ -210,7 +210,7 @@ Updates from Sourceforge trackers:
 - Fixed bug #2661850: Bug on [mp3] tags and update player.swf (trabis)
 
 Updates upon community:
-- Fixed bug: Updating countries list and moving harcoded names to language folder (trabis)
+- Fixed bug: Updating countries list and moving hardcoded names to language folder (trabis)
 - Fixed bug: Parsing issues with Oxigen(class mapper) (trabis/mamba)
 - Fixed bug: Blocksadmin - Cookies for remembering display list settings (trabis)
 - Fixed bug: Undefined 'OS' in logger/render.php (trabis)

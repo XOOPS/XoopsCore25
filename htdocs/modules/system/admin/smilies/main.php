@@ -140,7 +140,7 @@ switch ($op) {
         } else {
             $obj = $smilies_Handler->create();
         }
-        // erreur
+        // error
         $err = [];
         $obj->setVar('code', Request::getString('code', ''));
 

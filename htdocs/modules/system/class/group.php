@@ -186,7 +186,7 @@ class SystemGroup extends XoopsGroup
 }
 
 /**
- * System group handler class. (Singelton)
+ * System group handler class. (Singleton)
  *
  * This class is responsible for providing data access mechanisms to the data source
  * of XOOPS block class objects.

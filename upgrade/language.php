@@ -23,7 +23,7 @@
 /**
  * All the supported languages have to be listed in the array below.
  * 1. The key must be the "official" ISO 639 language code and, if required,
- *     the dialect code. It can also contains some informations about the
+ *     the dialect code. It can also contain some information about the
  *     charset (see the Russian case).
  * 2. The first of the values associated to the key is used in a regular
  *     expression to find some keywords corresponding to the language inside two
@@ -144,7 +144,7 @@ function xoops_detectLanguage()
 
     $lang       = '';
     $xoops_lang = '';
-    // 1. try to findout user's language by checking its HTTP_ACCEPT_LANGUAGE
+    // 1. try to find out user's language by checking its HTTP_ACCEPT_LANGUAGE
     // variable
     if (empty($lang) && !empty($HTTP_ACCEPT_LANGUAGE)) {
         $accepted    = explode(',', $HTTP_ACCEPT_LANGUAGE);
@@ -157,7 +157,7 @@ function xoops_detectLanguage()
             }
         }
     }
-    // 2. try to findout user's language by checking its HTTP_USER_AGENT variable
+    // 2. try to find out user's language by checking its HTTP_USER_AGENT variable
     if (empty($lang) && !empty($HTTP_USER_AGENT)) {
         $lang = xoops_analyzeLanguage($HTTP_USER_AGENT, 2);
     }

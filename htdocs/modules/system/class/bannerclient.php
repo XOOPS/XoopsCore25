@@ -85,7 +85,7 @@ class SystemBannerclient extends XoopsObject
 }
 
 /**
- * System banner client handler class. (Singelton)
+ * System banner client handler class. (Singleton)
  *
  * This class is responsible for providing data access mechanisms to the data source
  * of XOOPS block class objects.

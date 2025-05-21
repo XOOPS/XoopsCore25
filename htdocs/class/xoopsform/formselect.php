@@ -59,7 +59,7 @@ class XoopsFormSelect extends XoopsFormElement
     public $_size;
 
     /**
-     * Pre-selcted values
+     * Pre-selected values
      *
      * @var array
      * @access private
