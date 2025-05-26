@@ -18,7 +18,7 @@
                style="background-image:url('<{xoAdminNav}>bc_separator_end.png'); display: inline;"><img src="<{xoAdminIcons 'help.png'}>"
                                                                                                            alt="<{$smarty.const._AM_SYSTEM_HELP_VIEW}>"/></a>
             <a class="cursorhelp tooltip help_hide" title="<{$smarty.const._AM_SYSTEM_HELP_HIDE}>"
-               style="background-image:url('<{xoAdminNav}>bc_separator_end.png');"><img src="<{xoAdminIcons 'help.png'}>"
+               style="background-image:url('<{xoAdminNav}>bc_separator_end.png'); display: inline;"><img src="<{xoAdminIcons 'help_bw.png'}>"
                                                                                                         alt="<{$smarty.const._AM_SYSTEM_HELP_HIDE}>"/></a>
         </li>
     <{/if}>

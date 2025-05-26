@@ -27,16 +27,19 @@
 
 $(document).ready(function () {
 
+// Initially hide the "help_bw.png" and show only "help.png"
+    $("a.help_hide").hide();
+
     $("a.help_view").click(function () {
         $("div#xo-system-help").slideToggle(1000);
-        $("a.help_view").toggle();
-        $("a.help_hide").toggle();
+        $("a.help_view").hide();
+        $("a.help_hide").show();
     });
 
     $("a.help_hide").click(function () {
         $("div#xo-system-help").slideToggle(1000);
-        $("a.help_view").toggle();
-        $("a.help_hide").toggle();
+        $("a.help_hide").hide();
+        $("a.help_view").show();
     });
 
     if ('function' == typeof($("").tablesorter)) {
