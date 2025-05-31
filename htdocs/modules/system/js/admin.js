@@ -20,24 +20,34 @@
  *
  * @author   MusS
  *
- * @array   data    store of data
- * @string  img     id of image
- * @file    file    file to call
+ * @array   data store of data
+ * @string  img id of image
+ * @file    file file to call
  */
 
 $(document).ready(function () {
 
-    $("a.help_view").click(function () {
-        $("div#xo-system-help").slideToggle(1000);
-        $("a.help_view").toggle();
-        $("a.help_hide").toggle();
+// Cache selectors for performance
+    const $helpView = $("a.help_view");
+    const $helpHide = $("a.help_hide");
+    const $helpPanel = $("div#xo-system-help");
+
+    $(document).on('click', 'a.help_view', function(e) {
+        e.preventDefault();
+        $helpPanel.slideToggle(1000);
+        $helpView.addClass('hidden');
+        $helpHide.removeClass('hidden');
     });
 
-    $("a.help_hide").click(function () {
-        $("div#xo-system-help").slideToggle(1000);
-        $("a.help_view").toggle();
-        $("a.help_hide").toggle();
+    $(document).on('click', 'a.help_hide', function(e) {
+        e.preventDefault();
+        $helpPanel.slideToggle(1000);
+        $helpHide.addClass('hidden');
+        $helpView.removeClass('hidden');
     });
+
+
+
 
     if ('function' == typeof($("").tablesorter)) {
         // Banners

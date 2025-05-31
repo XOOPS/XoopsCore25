@@ -14,13 +14,13 @@
     <{/foreach}>
     <{if !empty($xo_sys_help)}>
         <li class="xo-help">
-            <a class="cursorhelp tooltip help_view" title="<{$smarty.const._AM_SYSTEM_HELP_VIEW}>"
-               style="background-image:url('<{xoAdminNav}>bc_separator_end.png'); display: inline;"><img src="<{xoAdminIcons 'help.png'}>"
-                                                                                                           alt="<{$smarty.const._AM_SYSTEM_HELP_VIEW}>"/></a>
-            <a class="cursorhelp tooltip help_hide" title="<{$smarty.const._AM_SYSTEM_HELP_HIDE}>"
-               style="background-image:url('<{xoAdminNav}>bc_separator_end.png');"><img src="<{xoAdminIcons 'help.png'}>"
-                                                                                                        alt="<{$smarty.const._AM_SYSTEM_HELP_HIDE}>"/></a>
-        </li>
+           <a class="cursorhelp tooltip help_view xo-help-button" title="<{$smarty.const._AM_SYSTEM_HELP_VIEW}>">
+                <img src="<{xoAdminIcons 'help.png'}>" alt="<{$smarty.const._AM_SYSTEM_HELP_VIEW}>"/>
+            </a>
+            <a class="cursorhelp tooltip help_hide xo-help-button hidden" title="<{$smarty.const._AM_SYSTEM_HELP_HIDE}>">
+                <img src="<{xoAdminIcons 'help_bw.png'}>" alt="<{$smarty.const._AM_SYSTEM_HELP_HIDE}>"/>
+            </a>
+       </li>
     <{/if}>
 </ul>
 <{if !empty($help_content)}>

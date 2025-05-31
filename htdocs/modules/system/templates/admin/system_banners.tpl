@@ -2,7 +2,7 @@
 <!--Banner-->
 <table class='width100 bnone' cellspacing='1'>
     <tr>
-        <{if isset($banner_count) && $banner_count == true}>}>
+        <{if isset($banner_count) && $banner_count == true}>
             <td>
                 <h4><{$smarty.const._AM_SYSTEM_BANNERS_CURACTBNR}></h4>
             </td>
