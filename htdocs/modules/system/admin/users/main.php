@@ -147,12 +147,12 @@ switch ($op) {
                 redirect_header('admin.php?fct=users', 3, implode('<br>', $GLOBALS['xoopsSecurity']->getErrors()));
             }
             // RMV-NOTIFY
-            $user_avatar = $theme = null;
+            $user_avatar = $theme = '';
             if (!Request::hasVar('attachsig')) {
-                $attachsig = null;
+                $attachsig = 0;
             }
             if (!Request::hasVar('user_viewemail')) {
-                $user_viewemail = null;
+                $user_viewemail = 0;
             }
 
             $edituser = $member_handler->getUser($uid);
@@ -173,12 +173,12 @@ switch ($op) {
                 $edituser->setVar('user_icq', Request::getString('user_icq'));
                 $edituser->setVar('user_from', Request::getString('user_from'));
                 $edituser->setVar('user_sig', Request::getString('user_sig'));
-                $user_viewemail = (Request::hasVar('user_viewemail') && Request::getInt('user_viewemail') == 1) ? 1 : 0;
+                $user_viewemail = (int)(Request::getInt('user_viewemail', 0) == 1);
                 $edituser->setVar('user_viewemail', $user_viewemail);
                 $edituser->setVar('user_aim', Request::getString('user_aim'));
                 $edituser->setVar('user_yim', Request::getString('user_yim'));
                 $edituser->setVar('user_msnm', Request::getString('user_msnm'));
-                $attachsig = (Request::hasVar('attachsig') && Request::getInt('attachsig') == 1) ? 1 : 0;
+                $attachsig = (int)(Request::getInt('attachsig', 0) == 1);
                 $edituser->setVar('attachsig', $attachsig);
                 $edituser->setVar('timezone_offset', Request::getString('timezone_offset'));
                 $edituser->setVar('uorder', Request::getString('uorder'));
@@ -244,12 +244,10 @@ switch ($op) {
                     $adduser_errormsg = 'User name ' . htmlspecialchars(Request::getString('uname'), ENT_QUOTES | ENT_HTML5) . ' already exists';
                 } else {
                     $newuser = $member_handler->createUser();
-                    if (isset($user_viewemail)) {
-                        $newuser->setVar('user_viewemail', Request::getString('user_viewemail'));
-                    }
-                    if (isset($attachsig)) {
-                        $newuser->setVar('attachsig', Request::getString('attachsig'));
-                    }
+                    $user_viewemail = Request::getInt('user_viewemail', 0);
+                    $newuser->setVar('user_viewemail', $user_viewemail);
+                    $attachsig = Request::getInt('attachsig', 0);
+                    $newuser->setVar('attachsig', $attachsig);
                     $newuser->setVar('name', Request::getString('name'));
                     $newuser->setVar('uname', Request::getString('uname'));
                     $newuser->setVar('email', Request::getEmail('email'));
@@ -558,7 +556,7 @@ switch ($op) {
             $user_url_match = Request::getInt('user_url_match', 0);
             if (Request::hasVar('user_url')) {
                 $url = formatURL(Request::getUrl('user_url'));
-                $criteria->add(new Criteria('url', '%' . $xoopsDB->escape(Request::getString('url', '')) . '%', 'LIKE'));
+                $criteria->add(new Criteria('url', '%' . $xoopsDB->escape(Request::getString('user_url', '')) . '%', 'LIKE'));
                 $requete_pagenav .= '&amp;user_url=' . htmlspecialchars(Request::getString('user_url'), ENT_QUOTES | ENT_HTML5);
                 $requete_search .= 'url: ' . Request::getString('user_url') . '<br>';
             }
@@ -826,7 +824,7 @@ switch ($op) {
             //User type
             $user_type = Request::getString('user_type');
             //selgroups
-            $selgroups = Request::getString('selgroups'); //TODO should it be an array?
+            $selgroups = Request::getArray('selgroups', []); //TODO should it be an array?
             $user_uname = Request::getString('uname');
 
             //User search form
@@ -858,7 +856,7 @@ switch ($op) {
                 <input type="submit" value="' . _AM_SYSTEM_USERS_ADVANCED_SEARCH . '" name="complet_search"></form>
                 ';
 
-            //select groupe
+            //select group
             $form_select_groups = '<select  name="selgroups" id="selgroups"   style="display:none;"><option value="">---------</option>';
             //$module_array[0] = _AM_SYSTEM_USERS_COMMENTS_FORM_ALL_MODS;
             $group_handler = xoops_getHandler('group');
