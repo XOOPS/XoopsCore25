@@ -472,8 +472,9 @@ switch ($op) {
             //$form->addElement($op_hidden);
 
             // if this is to find users for a specific group
-            if (!empty($_GET['group']) && Request::getInt('group', 0, 'GET') > 0) {
-                $group_hidden = new XoopsFormHidden('group', Request::getInt('group', 0, 'GET'));
+            $groupId = Request::getInt('group', 0, 'GET');
+            if ($groupId > 0) {
+                $group_hidden = new XoopsFormHidden('group', $groupId);
                 $form->addElement($group_hidden);
             }
             $form->addElement($submit_button);
@@ -526,7 +527,7 @@ switch ($op) {
                         $criteria->add(new Criteria('name', $xoopsDB->escape(Request::getString('user_name', ''))));
                         break;
                     case XOOPS_MATCH_CONTAIN:
-                        $criteria->add(new Criteria('name', '%' . $myts->addSlashes(Request::getString('user_name', '', 'POST')) . '%', 'LIKE'));
+                        $criteria->add(new Criteria('name', '%' . $xoopsDB->escape(Request::getString('user_name', '', 'POST')) . '%', 'LIKE'));
                         break;
                 }
                 $requete_pagenav .= '&amp;user_name=' . htmlspecialchars($user_name, ENT_QUOTES | ENT_HTML5) . '&amp;user_name_match=' . htmlspecialchars(Request::getString('user_name_match'), ENT_QUOTES | ENT_HTML5);
@@ -785,7 +786,7 @@ switch ($op) {
             $start = Request::getInt('start');
             $groups = [];
             $selgroups = [];
-            if (Request::hasVar('selgroups') && $_REQUEST['selgroups'] != '') {
+            if (Request::hasVar('selgroups') && Request::getVar('selgroups') != '') {
                 $selgroups = Request::getArray('selgroups', []); // Default to an empty array if 'selgroups' is not set
                 if (empty($selgroups)) {
                     // If 'selgroups' is an empty array, try to get it as an integer
