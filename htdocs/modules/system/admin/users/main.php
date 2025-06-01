@@ -156,7 +156,7 @@ switch ($op) {
             }
 
             $edituser = $member_handler->getUser($uid);
-            if ($edituser->getVar('uname', 'n') != Request::getString('uname') && ($member_handler->getUserCount(new Criteria('uname', $xoopsDB->escape(Request::getString('uname')))) > 0) {
+            if (($edituser->getVar('uname', 'n') != Request::getString('uname')) && ($member_handler->getUserCount(new Criteria('uname', $xoopsDB->escape(Request::getString('uname'))))) > 0) {
                 xoops_cp_header();
                 xoops_error(sprintf(_AM_SYSTEM_USERS_PSEUDO_ERROR, htmlspecialchars(Request::getString('uname'), ENT_QUOTES | ENT_HTML5)));
                 xoops_cp_footer();
