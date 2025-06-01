@@ -489,7 +489,6 @@ switch ($op) {
             $requete_pagenav = '';
 
             $user_uname = Request::getString('uname');
-            $user_uname2 = Request::getString('uname');
             $user_uname_match = Request::getInt('user_uname_match', 0);
 
             $criteria = new CriteriaCompo();
