@@ -156,9 +156,9 @@ switch ($op) {
             }
 
             $edituser = $member_handler->getUser($uid);
-            if ($edituser->getVar('uname', 'n') != Request::getString('username') && $member_handler->getUserCount(new Criteria('uname', $myts->addSlashes(Request::getString('username')))) > 0) {
+            if ($edituser->getVar('uname', 'n') != Request::getString('uname') && $member_handler->getUserCount(new Criteria('uname', $myts->addSlashes(Request::getString('uname')))) > 0) {
                 xoops_cp_header();
-                xoops_error(sprintf(_AM_SYSTEM_USERS_PSEUDO_ERROR, htmlspecialchars(Request::getString('username'), ENT_QUOTES | ENT_HTML5)));
+                xoops_error(sprintf(_AM_SYSTEM_USERS_PSEUDO_ERROR, htmlspecialchars(Request::getString('uname'), ENT_QUOTES | ENT_HTML5)));
                 xoops_cp_footer();
             } elseif ($edituser->getVar('email', 'n') != Request::getEmail('email') && $member_handler->getUserCount(new Criteria('email', $myts->addSlashes(Request::getEmail('email')))) > 0) {
                 xoops_cp_header();
@@ -166,7 +166,7 @@ switch ($op) {
                 xoops_cp_footer();
             } else {
                 $edituser->setVar('name', Request::getString('name'));
-                $edituser->setVar('uname', Request::getString('username'));
+                $edituser->setVar('uname', Request::getString('uname'));
                 $edituser->setVar('email', Request::getEmail('email'));
                 $url = formatURL(Request::getUrl('url'));
                 $edituser->setVar('url', $url);
@@ -234,14 +234,14 @@ switch ($op) {
             if (!$GLOBALS['xoopsSecurity']->check()) {
                 redirect_header('admin.php?fct=users', 3, implode('<br>', $GLOBALS['xoopsSecurity']->getErrors()));
             }
-            if (!Request::getString('username') || !Request::getString('email') || !Request::getString('password')) {
+            if (!Request::getString('uname') || !Request::getString('email') || !Request::getString('password')) {
                 $adduser_errormsg = _AM_SYSTEM_USERS_YMCACF;
             } else {
                 /** @var XoopsMemberHandler $member_handler */
                 $member_handler = xoops_getHandler('member');
                 // make sure the username doesnt exist yet
-                if ($member_handler->getUserCount(new Criteria('uname', $myts->addSlashes(Request::getString('username')))) > 0) {
-                    $adduser_errormsg = 'User name ' . htmlspecialchars(Request::getString('username'), ENT_QUOTES | ENT_HTML5) . ' already exists';
+                if ($member_handler->getUserCount(new Criteria('uname', $myts->addSlashes(Request::getString('uname')))) > 0) {
+                    $adduser_errormsg = 'User name ' . htmlspecialchars(Request::getString('uname'), ENT_QUOTES | ENT_HTML5) . ' already exists';
                 } else {
                     $newuser = $member_handler->createUser();
                     if (isset($user_viewemail)) {
@@ -251,7 +251,7 @@ switch ($op) {
                         $newuser->setVar('attachsig', Request::getString('attachsig'));
                     }
                     $newuser->setVar('name', Request::getString('name'));
-                    $newuser->setVar('uname', Request::getString('username'));
+                    $newuser->setVar('uname', Request::getString('uname'));
                     $newuser->setVar('email', Request::getEmail('email'));
                     $newuser->setVar('url', formatURL(Request::getUrl('url')));
                     $newuser->setVar('user_avatar', 'avatars/blank.gif');
@@ -367,7 +367,7 @@ switch ($op) {
                 }
             }
 
-            $uname_text  = new XoopsFormText('', 'username', 30, 60);
+            $uname_text  = new XoopsFormText('', 'uname', 30, 60);
             $uname_match = new XoopsFormSelectMatchOption('', 'user_uname_match');
             $uname_tray  = new XoopsFormElementTray(_AM_SYSTEM_USERS_UNAME, '&nbsp;');
             $uname_tray->addElement($uname_match);
@@ -488,7 +488,8 @@ switch ($op) {
             $requete_search  = '<br><br><strong>See search request: </strong><br><br>';
             $requete_pagenav = '';
 
-            $user_uname = Request::getString('useruname');
+            $user_uname = Request::getString('uname');
+            $user_uname2 = Request::getString('uname');
             $user_uname_match = Request::getInt('user_uname_match', 0);
 
             $criteria = new CriteriaCompo();
@@ -496,20 +497,20 @@ switch ($op) {
                 $match = (!empty($user_uname_match)) ? $user_uname_match : XOOPS_MATCH_START;
                 switch ($match) {
                     case XOOPS_MATCH_START:
-                        $criteria->add(new Criteria('uname', $myts->addSlashes($user_uname) . '%', 'LIKE'));
+                        $criteria->add(new Criteria('uname', $xoopsDB->escape(Request::getString('uname', '')) . '%', 'LIKE'));
                         break;
                     case XOOPS_MATCH_END:
-                        $criteria->add(new Criteria('uname', '%' . $myts->addSlashes($user_uname), 'LIKE'));
+                        $criteria->add(new Criteria('uname', '%' . $xoopsDB->escape(Request::getString('uname', '')), 'LIKE'));
                         break;
                     case XOOPS_MATCH_EQUAL:
-                        $criteria->add(new Criteria('uname', $myts->addSlashes($user_uname)));
+                        $criteria->add(new Criteria('uname', $xoopsDB->escape(Request::getString('uname', ''))));
                         break;
                     case XOOPS_MATCH_CONTAIN:
-                        $criteria->add(new Criteria('uname', '%' . $myts->addSlashes($user_uname) . '%', 'LIKE'));
+                        $criteria->add(new Criteria('uname', '%' . $xoopsDB->escape(Request::getString('uname', '')) . '%', 'LIKE'));
                         break;
                 }
-                $requete_pagenav .= '&amp;user_uname=' . htmlspecialchars($user_uname, ENT_QUOTES | ENT_HTML5) . '&amp;user_uname_match=' . htmlspecialchars($user_uname_match, ENT_QUOTES | ENT_HTML5);
-                $requete_search .= 'uname : ' . $user_uname . ' et user_uname_match=' . $user_uname_match . '<br>';
+                $requete_pagenav .= '&amp;uname=' . htmlspecialchars($user_uname, ENT_QUOTES | ENT_HTML5) . '&amp;user_uname_match=' . htmlspecialchars($user_uname_match, ENT_QUOTES | ENT_HTML5);
+                $requete_search .= 'uname: ' . $user_uname . ' and user_uname_match=' . $user_uname_match . '<br>';
             }
             $user_name = Request::getString('user_name');
             $user_name_match = Request::getInt('user_name_match', 0);
@@ -517,20 +518,20 @@ switch ($op) {
                 $match = Request::getString('user_name_match', XOOPS_MATCH_START);
                 switch ($match) {
                     case XOOPS_MATCH_START:
-                        $criteria->add(new Criteria('name', $myts->addSlashes($user_name) . '%', 'LIKE'));
+                        $criteria->add(new Criteria('name', $xoopsDB->escape(Request::getString('user_name', '')) . '%', 'LIKE'));
                         break;
                     case XOOPS_MATCH_END:
-                        $criteria->add(new Criteria('name', '%' . $myts->addSlashes($user_name)), 'LIKE');
+                        $criteria->add(new Criteria('name', '%' . $xoopsDB->escape(Request::getString('user_name', ''))), 'LIKE');
                         break;
                     case XOOPS_MATCH_EQUAL:
-                        $criteria->add(new Criteria('name', $myts->addSlashes($user_name)));
+                        $criteria->add(new Criteria('name', $xoopsDB->escape(Request::getString('user_name', ''))));
                         break;
                     case XOOPS_MATCH_CONTAIN:
                         $criteria->add(new Criteria('name', '%' . $myts->addSlashes(Request::getString('user_name', '', 'POST')) . '%', 'LIKE'));
                         break;
                 }
                 $requete_pagenav .= '&amp;user_name=' . htmlspecialchars($user_name, ENT_QUOTES | ENT_HTML5) . '&amp;user_name_match=' . htmlspecialchars(Request::getString('user_name_match'), ENT_QUOTES | ENT_HTML5);
-                $requete_search .= 'name : ' . $user_name . ' et user_name_match=' . $user_name_match . '<br>';
+                $requete_search .= 'name: ' . $user_name . ' and user_name_match=' . $user_name_match . '<br>';
             }
             $user_email = Request::getString('user_email');
             $user_email_match = Request::getInt('user_email_match', 0);
@@ -538,28 +539,28 @@ switch ($op) {
                 $match = Request::getString('user_email_match', XOOPS_MATCH_START);
                 switch ($match) {
                     case XOOPS_MATCH_START:
-                        $criteria->add(new Criteria('email', $myts->addSlashes($user_email) . '%', 'LIKE'));
+                        $criteria->add(new Criteria('email', $xoopsDB->escape(Request::getString('user_email', '')) . '%', 'LIKE'));
                         break;
                     case XOOPS_MATCH_END:
-                        $criteria->add(new Criteria('email', '%' . $myts->addSlashes($user_email), 'LIKE'));
+                        $criteria->add(new Criteria('email', '%' . $xoopsDB->escape(Request::getString('user_email', '')), 'LIKE'));
                         break;
                     case XOOPS_MATCH_EQUAL:
-                        $criteria->add(new Criteria('email', $myts->addSlashes($user_email)));
+                        $criteria->add(new Criteria('email', $xoopsDB->escape(Request::getString('user_email', ''))));
                         break;
                     case XOOPS_MATCH_CONTAIN:
-                        $criteria->add(new Criteria('email', '%' . $myts->addSlashes($user_email) . '%', 'LIKE'));
+                        $criteria->add(new Criteria('email', '%' . $xoopsDB->escape(Request::getString('user_email', '')) . '%', 'LIKE'));
                         break;
                 }
                 $requete_pagenav .= '&amp;user_email=' . htmlspecialchars($user_email, ENT_QUOTES | ENT_HTML5) . '&amp;user_email_match=' . htmlspecialchars($user_email_match, ENT_QUOTES | ENT_HTML5);
-                $requete_search .= 'email : ' . $user_email . ' et user_email_match=' . $user_email_match . '<br>';
+                $requete_search .= 'email: ' . $user_email . ' and user_email_match=' . $user_email_match . '<br>';
             }
             $user_url = Request::getString('user_url');
             $user_url_match = Request::getInt('user_url_match', 0);
             if (Request::hasVar('user_url')) {
                 $url = formatURL(Request::getUrl('user_url'));
-                $criteria->add(new Criteria('url', '%' . $myts->addSlashes($url) . '%', 'LIKE'));
+                $criteria->add(new Criteria('url', '%' . $xoopsDB->escape(Request::getString('url', '')) . '%', 'LIKE'));
                 $requete_pagenav .= '&amp;user_url=' . htmlspecialchars(Request::getString('user_url'), ENT_QUOTES | ENT_HTML5);
-                $requete_search .= 'url : ' . Request::getString('user_url') . '<br>';
+                $requete_search .= 'url: ' . Request::getString('user_url') . '<br>';
             }
             $user_icq = Request::getString('user_icq');
             $user_icq_match = Request::getString('user_icq_match');
@@ -567,20 +568,20 @@ switch ($op) {
                 $match = Request::getString('user_icq_match', XOOPS_MATCH_START);
                 switch ($match) {
                     case XOOPS_MATCH_START:
-                        $criteria->add(new Criteria('user_icq', $myts->addSlashes($user_icq) . '%', 'LIKE'));
+                        $criteria->add(new Criteria('user_icq', $xoopsDB->escape(Request::getString('user_icq', '')) . '%', 'LIKE'));
                         break;
                     case XOOPS_MATCH_END:
-                        $criteria->add(new Criteria('user_icq', '%' . $myts->addSlashes($user_icq), 'LIKE'));
+                        $criteria->add(new Criteria('user_icq', '%' . $xoopsDB->escape(Request::getString('user_icq', '')), 'LIKE'));
                         break;
                     case XOOPS_MATCH_EQUAL:
-                        $criteria->add(new Criteria('user_icq', $myts->addSlashes($user_icq)));
+                        $criteria->add(new Criteria('user_icq', $xoopsDB->escape(Request::getString('user_icq', ''))));
                         break;
                     case XOOPS_MATCH_CONTAIN:
-                        $criteria->add(new Criteria('user_icq', '%' . $myts->addSlashes($user_icq) . '%', 'LIKE'));
+                        $criteria->add(new Criteria('user_icq', '%' . $xoopsDB->escape(Request::getString('user_icq', '')) . '%', 'LIKE'));
                         break;
                 }
                 $requete_pagenav .= '&amp;user_icq=' . htmlspecialchars($user_icq, ENT_QUOTES | ENT_HTML5) . '&amp;user_icq_match=' . htmlspecialchars($user_icq_match, ENT_QUOTES | ENT_HTML5);
-                $requete_search .= 'icq : ' . $user_icq . ' et user_icq_match=' . $user_icq_match . '<br>';
+                $requete_search .= 'icq: ' . $user_icq . ' and user_icq_match=' . $user_icq_match . '<br>';
             }
 
             $user_aim = Request::getString('user_aim');
@@ -589,20 +590,20 @@ switch ($op) {
                 $match = Request::getString('user_aim_match', XOOPS_MATCH_START);
                 switch ($match) {
                     case XOOPS_MATCH_START:
-                        $criteria->add(new Criteria('user_aim', $myts->addSlashes($user_aim) . '%', 'LIKE'));
+                        $criteria->add(new Criteria('user_aim', $xoopsDB->escape(Request::getString('user_aim', '')) . '%', 'LIKE'));
                         break;
                     case XOOPS_MATCH_END:
-                        $criteria->add(new Criteria('user_aim', '%' . $myts->addSlashes($user_aim), 'LIKE'));
+                        $criteria->add(new Criteria('user_aim', '%' . $xoopsDB->escape(Request::getString('user_aim', '')), 'LIKE'));
                         break;
                     case XOOPS_MATCH_EQUAL:
-                        $criteria->add(new Criteria('user_aim', $myts->addSlashes($user_aim)));
+                        $criteria->add(new Criteria('user_aim', $xoopsDB->escape(Request::getString('user_aim', ''))));
                         break;
                     case XOOPS_MATCH_CONTAIN:
-                        $criteria->add(new Criteria('user_aim', '%' . $myts->addSlashes($user_aim) . '%', 'LIKE'));
+                        $criteria->add(new Criteria('user_aim', '%' . $xoopsDB->escape(Request::getString('user_aim', '')) . '%', 'LIKE'));
                         break;
                 }
                 $requete_pagenav .= '&amp;user_aim=' . htmlspecialchars($user_aim, ENT_QUOTES | ENT_HTML5) . '&amp;user_aim_match=' . htmlspecialchars($user_aim_match, ENT_QUOTES | ENT_HTML5);
-                $requete_search .= 'aim : ' . $user_aim . ' et user_aim_match=' . $user_aim_match . '<br>';
+                $requete_search .= 'aim: ' . $user_aim . ' and user_aim_match=' . $user_aim_match . '<br>';
             }
             $user_yim = Request::getString('user_yim');
             $user_yim_match = Request::getString('user_yim_match');
@@ -623,7 +624,7 @@ switch ($op) {
                         break;
                 }
                 $requete_pagenav .= '&amp;user_yim=' . htmlspecialchars(Request::getString('user_yim'), ENT_QUOTES | ENT_HTML5) . '&amp;user_yim_match=' . htmlspecialchars(Request::getString('user_yim_match'), ENT_QUOTES | ENT_HTML5);
-                $requete_search .= 'yim : ' . Request::getString('user_yim') . ' et user_yim_match=' . Request::getString('user_yim_match') . '<br>';
+                $requete_search .= 'yim: ' . Request::getString('user_yim') . ' and user_yim_match=' . Request::getString('user_yim_match') . '<br>';
             }
 
             $user_msnm = Request::getString('user_msnm');
@@ -632,38 +633,38 @@ switch ($op) {
                 $match = Request::getString('user_msnm_match', XOOPS_MATCH_START);
                 switch ($match) {
                     case XOOPS_MATCH_START:
-                        $criteria->add(new Criteria('user_msnm', $myts->addSlashes($user_msnm) . '%', 'LIKE'));
+                        $criteria->add(new Criteria('user_msnm', $xoopsDB->escape(Request::getString('user_msnm', '')) . '%', 'LIKE'));
                         break;
                     case XOOPS_MATCH_END:
-                        $criteria->add(new Criteria('user_msnm', '%' . $myts->addSlashes($user_msnm), 'LIKE'));
+                        $criteria->add(new Criteria('user_msnm', '%' . $xoopsDB->escape(Request::getString('user_msnm', '')), 'LIKE'));
                         break;
                     case XOOPS_MATCH_EQUAL:
-                        $criteria->add(new Criteria('user_msnm', $myts->addSlashes($user_msnm)));
+                        $criteria->add(new Criteria('user_msnm', $xoopsDB->escape(Request::getString('user_msnm', ''))));
                         break;
                     case XOOPS_MATCH_CONTAIN:
-                        $criteria->add(new Criteria('user_msnm', '%' . $myts->addSlashes($user_msnm) . '%', 'LIKE'));
+                        $criteria->add(new Criteria('user_msnm', '%' . $xoopsDB->escape(Request::getString('user_msnm', '')) . '%', 'LIKE'));
                         break;
                 }
                 $requete_pagenav .= '&amp;user_msnm=' . htmlspecialchars($user_msnm . '&amp;user_msnm_match=' . htmlspecialchars($user_msnm_match, ENT_QUOTES | ENT_HTML5), ENT_QUOTES | ENT_HTML5);
-                $requete_search .= 'msn : ' . $user_msnm . ' et user_msnm_match=' . $user_msnm_match . '<br>';
+                $requete_search .= 'msn: ' . $user_msnm . ' and user_msnm_match=' . $user_msnm_match . '<br>';
             }
 
             if (Request::hasVar('user_from')) {
                 $criteria->add(new Criteria('user_from', '%' . $myts->addSlashes(Request::getString('user_from')) . '%', 'LIKE'));
                 $requete_pagenav .= '&amp;user_from=' . htmlspecialchars(Request::getString('user_from'), ENT_QUOTES | ENT_HTML5);
-                $requete_search .= 'from : ' . Request::getString('user_from') . '<br>';
+                $requete_search .= 'from: ' . Request::getString('user_from') . '<br>';
             }
 
             if (Request::hasVar('user_intrest')) {
                 $criteria->add(new Criteria('user_intrest', '%' . $myts->addSlashes(Request::getString('user_intrest')) . '%', 'LIKE'));
                 $requete_pagenav .= '&amp;user_intrest=' . htmlspecialchars(Request::getString('user_intrest'), ENT_QUOTES | ENT_HTML5);
-                $requete_search .= 'interet : ' . Request::getString('user_intrest') . '<br>';
+                $requete_search .= 'interest: ' . Request::getString('user_intrest') . '<br>';
             }
 
             if (Request::hasVar('user_occ')) {
                 $criteria->add(new Criteria('user_occ', '%' . $myts->addSlashes(Request::getString('user_occ')) . '%', 'LIKE'));
                 $requete_pagenav .= '&amp;user_occ=' . htmlspecialchars(Request::getString('user_occ'), ENT_QUOTES | ENT_HTML5);
-                $requete_search .= 'location : ' . Request::getString('user_occ') . '<br>';
+                $requete_search .= 'location: ' . Request::getString('user_occ') . '<br>';
             }
 
             if (Request::hasVar('user_lastlog_more','POST')) {
@@ -673,7 +674,7 @@ switch ($op) {
                     $criteria->add(new Criteria('last_login', $time, '<'));
                 }
                 $requete_pagenav .= '&amp;user_lastlog_more=' . htmlspecialchars(Request::getString('user_lastlog_more'), ENT_QUOTES | ENT_HTML5);
-                $requete_search .= 'derniere connexion apres : ' . Request::getString('user_lastlog_more') . '<br>';
+                $requete_search .= 'last connection after: ' . Request::getString('user_lastlog_more') . '<br>';
             }
 
             if (Request::hasVar('user_lastlog_less','POST')) {
@@ -684,7 +685,7 @@ switch ($op) {
                         $criteria->add(new Criteria('last_login', $time, '>'));
                     }
                     $requete_pagenav .= '&amp;user_lastlog_less=' . htmlspecialchars(Request::getString('user_lastlog_less'), ENT_QUOTES | ENT_HTML5);
-                    $requete_search .= 'derniere connexion avant : ' . Request::getString('user_lastlog_less') . '<br>';
+                    $requete_search .= 'last connection before: ' . Request::getString('user_lastlog_less') . '<br>';
                 }
             }
 
@@ -695,7 +696,7 @@ switch ($op) {
                     $criteria->add(new Criteria('user_regdate', $time, '<'));
                 }
                 $requete_pagenav .= '&amp;user_regdate=' . htmlspecialchars(Request::getString('user_regdate'), ENT_QUOTES | ENT_HTML5);
-                $requete_search .= 'enregistre apres : ' . Request::getString('user_reg_more') . '<br>';
+                $requete_search .= 'record after: ' . Request::getString('user_reg_more') . '<br>';
             }
 
 
@@ -706,19 +707,19 @@ switch ($op) {
                     $criteria->add(new Criteria('user_regdate', $time, '>'));
                 }
                 $requete_pagenav .= '&amp;user_reg_less=' . htmlspecialchars(Request::getString('user_reg_less'), ENT_QUOTES | ENT_HTML5);
-                $requete_search .= 'enregistre avant : ' . Request::getString('user_reg_less') . '<br>';
+                $requete_search .= 'record before: ' . Request::getString('user_reg_less') . '<br>';
             }
 
             if (Request::hasVar('user_posts_more') && is_numeric(Request::getString('user_posts_more'))) {
                 $criteria->add(new Criteria('posts', (int) Request::getString('user_posts_more'), '>'));
                 $requete_pagenav .= '&amp;user_posts_more=' . htmlspecialchars(Request::getString('user_posts_more'), ENT_QUOTES | ENT_HTML5);
-                $requete_search .= 'posts plus de : ' . Request::getString('user_posts_more') . '<br>';
+                $requete_search .= 'posts over: ' . Request::getString('user_posts_more') . '<br>';
             }
 
             if (Request::hasVar('user_posts_less') && is_numeric(Request::getString('user_posts_less'))) {
                 $criteria->add(new Criteria('posts', (int) Request::getString('user_posts_less'), '<'));
                 $requete_pagenav .= '&amp;user_posts_less=' . htmlspecialchars(Request::getString('user_posts_less'), ENT_QUOTES | ENT_HTML5);
-                $requete_search .= 'post moins de : ' . Request::getString('user_posts_less') . '<br>';
+                $requete_search .= 'post less than: ' . Request::getString('user_posts_less') . '<br>';
             }
 
             if (Request::hasVar('user_mailok')) {
@@ -730,24 +731,24 @@ switch ($op) {
                     $criteria->add(new Criteria('user_mailok', 0, '>='));
                 }
                 $requete_pagenav .= '&amp;user_mailok=' . htmlspecialchars(Request::getString('user_mailok'), ENT_QUOTES | ENT_HTML5);
-                $requete_search .= 'accept email : ' . Request::getString('user_mailok') . '<br>';
+                $requete_search .= 'accept email: ' . Request::getString('user_mailok') . '<br>';
             }
 
             if (Request::hasVar('user_type')) {
                 if (Request::getString('user_type') === 'inactv') {
                     $criteria->add(new Criteria('level', 0, '='));
                     $user_type = 'inactv';
-                    $requete_search .= 'actif ou inactif : inactif<br>';
+                    $requete_search .= 'active or inactive : inactive<br>';
                 } elseif (Request::getString('user_type') === 'actv') {
                     $criteria->add(new Criteria('level', 0, '>'));
                     $user_type = 'actv';
-                    $requete_search .= 'actif ou inactif : actif<br>';
+                    $requete_search .= 'active or inactive: active<br>';
                 }
                 $requete_pagenav .= '&amp;user_type=' . htmlspecialchars(Request::getString('user_type'), ENT_QUOTES | ENT_HTML5);
             } else {
                 $criteria->add(new Criteria('level', 0, '>='));
                 $user_type = '';
-                $requete_search .= 'actif ou inactif : admin et user<br>';
+                $requete_search .= 'active or inactive: admin & user<br>';
             }
 
             $validsort = ['uname', 'email', 'last_login', 'user_regdate', 'posts'];
@@ -755,31 +756,31 @@ switch ($op) {
                 $userSort = Request::getString('user_sort');
                 $sort = (!in_array($userSort, $validsort)) ? 'uid' : $userSort;
                 $requete_pagenav .= '&amp;user_sort=' . htmlspecialchars($userSort, ENT_QUOTES | ENT_HTML5);
-                $requete_search .= 'order by : ' . $sort . '<br>';
+                $requete_search .= 'order by: ' . $sort . '<br>';
             } else {
                 $sort = 'uid';
                 $requete_pagenav .= '&amp;user_sort=uid';
-                $requete_search .= 'order by : ' . $sort . '<br>';
+                $requete_search .= 'order by: ' . $sort . '<br>';
             }
 
             $order = 'DESC';
             if (Request::hasVar('user_order') && Request::getString('user_order') === 'ASC') {
                 $requete_pagenav .= '&amp;user_order=ASC';
-                $requete_search .= 'tris : ' . $order . '<br>';
+                $requete_search .= 'sort: ' . $order . '<br>';
             } else {
                 //$order = "ASC";
                 $requete_pagenav .= '&amp;user_order=DESC';
-                $requete_search .= 'tris : ' . $order . '<br>';
+                $requete_search .= 'sort: ' . $order . '<br>';
             }
 
             $user_limit = (int) xoops_getModuleOption('users_pager', 'system');
             if (Request::hasVar('user_limit')) {
                 $user_limit = Request::getInt('user_limit');
                 $requete_pagenav .= '&amp;user_limit=' . htmlspecialchars(Request::getString('user_limit'), ENT_QUOTES | ENT_HTML5);
-                $requete_search .= 'limit : ' . $user_limit . '<br>';
+                $requete_search .= 'limit: ' . $user_limit . '<br>';
             } else {
                 $requete_pagenav .= '&amp;user_limit=' . xoops_getModuleOption('users_pager', 'system');
-                $requete_search .= 'limit : ' . $user_limit . '<br>';
+                $requete_search .= 'limit: ' . $user_limit . '<br>';
             }
 
             $start = Request::getInt('start');
@@ -826,11 +827,11 @@ switch ($op) {
             $user_type = Request::getString('user_type');
             //selgroups
             $selgroups = Request::getString('selgroups'); //TODO should it be an array?
-            $user_uname = Request::getString('username');
+            $user_uname = Request::getString('uname');
 
-            //Form tris
+            //Form sorting
             $form          = '<form action="admin.php?fct=users" method="post">
-                    ' . _AM_SYSTEM_USERS_SEARCH_USER . '<input type="text" name="user_uname" value="' . $myts->htmlSpecialChars($user_uname) . '" size="15">
+                    ' . _AM_SYSTEM_USERS_SEARCH_USER . '<input type="text" name="uname" value="' . $myts->htmlSpecialChars($user_uname) . '" size="15">
                     <select name="selgroups">
                         <option value="" selected>' . _AM_SYSTEM_USERS_ALLGROUP . '</option>';
             /** @var XoopsGroupHandler $group_handler */
@@ -838,19 +839,19 @@ switch ($op) {
             $group_arr     = $group_handler->getObjects();
             foreach (array_keys($group_arr) as $i) {
                 if ($group_arr[$i]->getVar('groupid') != XOOPS_GROUP_ANONYMOUS) {
-                    $form .= '<option value="' . $group_arr[$i]->getVar('groupid') . '"  ' . ($selgroups == $group_arr[$i]->getVar('groupid') ? ' selected' : '') . '>' . $group_arr[$i]->getVar('name') . '</option>';
+                    $form .= '<option value="' . $group_arr[$i]->getVar('groupid') . '"  ' . ($selgroups == $group_arr[$i]->getVar('groupid') ? ' selected': '') . '>' . $group_arr[$i]->getVar('name') . '</option>';
                 }
             }
             $form .= '</select>&nbsp;
                 <select name="user_type">
-                    <option value="" ' . ($user_type === '' ? ' selected' : '') . '>' . _AM_SYSTEM_USERS_ALLUSER . '</option>
-                    <option value="actv" ' . ($user_type === 'actv' ? ' selected' : '') . '>' . _AM_SYSTEM_USERS_ACTIVEUSER . '</option>
-                    <option value="inactv" ' . ($user_type === 'inactv' ? ' selected' : '') . '>' . _AM_SYSTEM_USERS_INACTIVEUSER . '</option>
+                    <option value="" ' . ($user_type === '' ? ' selected': '') . '>' . _AM_SYSTEM_USERS_ALLUSER . '</option>
+                    <option value="actv" ' . ($user_type === 'actv' ? ' selected': '') . '>' . _AM_SYSTEM_USERS_ACTIVEUSER . '</option>
+                    <option value="inactv" ' . ($user_type === 'inactv' ? ' selected': '') . '>' . _AM_SYSTEM_USERS_INACTIVEUSER . '</option>
                 </select>&nbsp;
                 <select name="user_limit">
-                    <option value="20" ' . ($user_limit == 20 ? ' selected' : '') . '>20</option>
-                    <option value="50" ' . ($user_limit == 50 ? ' selected' : '') . '>50</option>
-                    <option value="100" ' . ($user_limit == 100 ? ' selected' : '') . '>100</option>
+                    <option value="20" ' . ($user_limit == 20 ? ' selected': '') . '>20</option>
+                    <option value="50" ' . ($user_limit == 50 ? ' selected': '') . '>50</option>
+                    <option value="100" ' . ($user_limit == 100 ? ' selected': '') . '>100</option>
                 </select>&nbsp;
                 <input type="hidden" name="user_uname_match" value="XOOPS_MATCH_START" />
                 <input type="submit" value="' . _AM_SYSTEM_USERS_SEARCH . '" name="speed_search">&nbsp;
@@ -864,7 +865,7 @@ switch ($op) {
             $group_arr     = $group_handler->getObjects();
             foreach (array_keys($group_arr) as $i) {
                 if ($group_arr[$i]->getVar('groupid') != XOOPS_GROUP_ANONYMOUS) {
-                    $form_select_groups .= '<option value="' . $group_arr[$i]->getVar('groupid') . '"  ' . ($selgroups == $group_arr[$i]->getVar('groupid') ? ' selected' : '') . '>' . $group_arr[$i]->getVar('name') . '</option>';
+                    $form_select_groups .= '<option value="' . $group_arr[$i]->getVar('groupid') . '"  ' . ($selgroups == $group_arr[$i]->getVar('groupid') ? ' selected': '') . '>' . $group_arr[$i]->getVar('name') . '</option>';
                 }
             }
             $form_select_groups .= '</select><input type="hidden" name="op" value="users_add_delete_group">';
@@ -877,7 +878,7 @@ switch ($op) {
             $token = $tokenElement->render();
             $xoopsTpl->assign('form_token', $token);
 
-            //echo $requete_search;
+            // echo $requete_search;
             if ($users_count > 0) {
                 //echo $requete_search;
                 foreach (array_keys($users_arr) as $i) {
