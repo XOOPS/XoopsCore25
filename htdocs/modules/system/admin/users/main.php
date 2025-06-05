@@ -662,7 +662,7 @@ switch ($op) {
             if (Request::hasVar('user_occ')) {
                 $criteria->add(new Criteria('user_occ', '%' . $xoopsDB->escape(Request::getString('user_occ')) . '%', 'LIKE'));
                 $requete_pagenav .= '&amp;user_occ=' . htmlspecialchars(Request::getString('user_occ'), ENT_QUOTES | ENT_HTML5);
-                $requete_search .= 'location: ' . Request::getString('user_occ') . '<br>';
+                $requete_search .= 'occupation: ' . Request::getString('user_occ') . '<br>';
             }
 
             if (Request::hasVar('user_lastlog_more','POST')) {
