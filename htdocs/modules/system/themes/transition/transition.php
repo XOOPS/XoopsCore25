@@ -324,7 +324,7 @@ class XoopsGuiTransition extends XoopsSystemGui
         }
 
         if (is_object($xoopsModule) || !empty($_GET['xoopsorgnews'])) {
-            if (is_object($xoopsModule) && file_exists($file = XOOPS_ROOT_PATH . '/modules/' . $xoopsModule->getVar('dirname') . '/' . $xoopsModule->getInfo('adminmenu'))) {
+            if (is_object($xoopsModule) && (!empty($xoopsModule->getInfo('adminmenu')) && file_exists($file = XOOPS_ROOT_PATH . '/modules/' . $xoopsModule->getVar('dirname') . '/' . $xoopsModule->getInfo('adminmenu')))) {
                 include $file;
             }
 
