@@ -22,7 +22,7 @@
                 <td><{$lang_mysql_version}></td>
             </tr>
             <tr>
-                <td><{$smarty.const._OXYGEN_Server_API}></td>
+                <td><{$smarty.const._OXYGEN_SERVER_API}></td>
                 <td><{$lang_server_api}></td>
             </tr>
             <tr>
