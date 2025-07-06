@@ -24,22 +24,24 @@
  */
 class TinyMCE
 {
-    public $rootpath;
-    public $config                = [];
-    public $setting               = [];
-    public static $LastOfElementsTinymce = '';
-    public static $ListOfElementsTinymce = [];
+    public string $rootpath;
+    public array $config                = [];
+    public array $setting               = [];
+    public static $lastOfElementsTinymce = '';
+    public static $listOfElementsTinymce = [];
 
-    // PHP 5 Constructor
+    // Constructor
     /**
-     * @param $config
+     * @param array $config
      */
-    public function __construct($config)
+    public function __construct(array $config)
     {
+        $this->config = [];
         $this->setConfig($config);
-        $this->rootpath                = $this->config['rootpath'] . '/tinymce5/jscripts/tiny_mce';
-        self::$LastOfElementsTinymce   = $this->config['elements'];
-        self::$ListOfElementsTinymce[] = self::$LastOfElementsTinymce;
+//        $this->rootpath                = $this->config['rootpath'] . '/tinymce5/jscripts/tiny_mce';
+        $this->rootpath                = $this->config['rootpath'] . '/js/tinymce';
+        self::$lastOfElementsTinymce   = $this->config['elements'];
+        self::$listOfElementsTinymce[] = self::$lastOfElementsTinymce;
     }
 
     /**
@@ -51,7 +53,7 @@ class TinyMCE
     {
         static $instance;
         if (!isset($instance)) {
-            $instance = new TinyMCE($config);
+            $instance = new self($config);
         } else {
             $instance->setConfig($config);
         }
@@ -60,9 +62,9 @@ class TinyMCE
     }
 
     /**
-     * @param $config
+     * @param array $config
      */
-    public function setConfig($config)
+    public function setConfig(array $config)
     {
         foreach ($config as $key => $val) {
             $this->config[$key] = $val;
@@ -153,7 +155,7 @@ class TinyMCE
      *
      * @return array
      */
-    public function loadCss($css_file = 'tinymce.css')
+    public function loadCss(string $css_file = 'tinymce.css')
     {
         static $css_url, $css_path;
 
@@ -183,12 +185,12 @@ class TinyMCE
         static $isTinyMceJsLoaded = false;
 
         $this->init();
-        if (isset($this->setting['elements']) && self::$LastOfElementsTinymce != $this->setting['elements']) {
-            $ret = "\n<!-- 'tinymce.js' SCRIPT NOT YET " . $this->setting['elements'] . " -->\n"; //debug
+        if (isset($this->setting['elements']) && self::$lastOfElementsTinymce != $this->setting['elements']) {
+            $ret = "\n<!-- 'tinymce.min.js' SCRIPT NOT YET " . $this->setting['elements'] . " -->\n"; //debug
 
             return $ret;
         } else {
-            $this->setting['elements'] = implode(',', self::$ListOfElementsTinymce);
+            $this->setting['elements'] = implode(',', self::$listOfElementsTinymce);
         }
         if (!empty($this->setting['callback'])) {
             $callback = $this->setting['callback'];
@@ -197,14 +199,14 @@ class TinyMCE
             $callback = '';
         }
         if (!empty($this->setting['file_browser_callback'])) {
-            $fbc_name = XOOPS_ROOT_PATH . '/class/xoopseditor/tinymce5/include/' . $this->setting['file_browser_callback'] . '.js';
-            //suis passé la /lesrevespossibles/x244/class/xoopseditor/tinymce/tinymce/jscripts/include/openFinder.js
+            $fbc_name = XOOPS_ROOT_PATH . '/class/xoopseditor/tinymce7/include/' . $this->setting['file_browser_callback'] . '.js';
+            //it went through to /lesrevespossibles/x244/class/xoopseditor/tinymce/tinymce/jscripts/include/openFinder.js
             $file_browser_callback = "MyXoopsUrl ='" . XOOPS_URL . "';\n";
             $file_browser_callback .= file_get_contents($fbc_name);
-            $file_browser_callback .= "\n//suis passé la " . $fbc_name;
+            $file_browser_callback .= "\n//passed " . $fbc_name;
             //unset($this->setting["file_browser_callback"]);
         } else {
-            $file_browser_callback = '//suis absent';
+            $file_browser_callback = '//is absent';
         }
 
         // create returned string - start
@@ -214,7 +216,7 @@ class TinyMCE
         if ($isTinyMceJsLoaded) {
             $ret .= "<!-- 'tinymce.js' SCRIPT IS ALREADY LOADED -->\n"; //debug
         } else {
-            $ret .= "<script type='text/javascript' src='" . XOOPS_URL . $this->rootpath . "/tinymce.js'></script>\n";
+            $ret .= "<script type='text/javascript' src='" . XOOPS_URL . $this->rootpath . "/tinymce.min.js'></script>\n";
             $isTinyMceJsLoaded = true;
         }
         $ret .= "<script type='text/javascript'>\n";
