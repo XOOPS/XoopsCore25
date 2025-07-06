@@ -55,7 +55,7 @@ class XoopsAuthAds extends XoopsAuthLdap
      *         Authenticate with manager, search the dn
      *
      * @param  string $uname Username
-     * @param  string $pwd   Password
+     * @param  string|null $pwd   Password
      * @return bool
      */
     public function authenticate($uname, $pwd = null)
@@ -82,7 +82,7 @@ class XoopsAuthAds extends XoopsAuthLdap
                 return false;
             }
             // We bind as user to test the credentials
-            $authenticated = ldap_bind($this->_ds, $userUPN, $this->cp1252_to_utf8(stripslashes($pwd)));
+            $authenticated = ldap_bind($this->_ds, $userUPN, $this->cp1252_to_utf8(stripslashes((string) $pwd)));
             if ($authenticated) {
                 // We load the Xoops User database
                 $dn = $this->getUserDN($uname);
@@ -111,11 +111,11 @@ class XoopsAuthAds extends XoopsAuthLdap
      *         looks like an email address.  Very useful for logging on especially in
      *         a large Forest.   Note UPN must be unique in the forest.
      *
-     * @param $uname
+     * @param string $uname
      *
-     * @return userDN or false
+     * @return string userDN or false
      */
-    public function getUPN($uname)
+    public function getUPN(string $uname): string
     {
         $userDN = $uname . '@' . $this->ldap_domain_name;
 

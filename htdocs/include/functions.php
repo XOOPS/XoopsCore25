@@ -507,18 +507,20 @@ function formatTimestamp($time, $format = 'l', $timeoffset = '')
 }
 
 /**
- * Function to calculate server timestamp from user entered time (timestamp)
- * @param      $timestamp
- * @param null $userTZ
- * @return
+ * Function to calculate server timestamp from user-entered time (timestamp)
+ * @param int     $timestamp
+ * @param float|null $userTZ
+ * @return int
  */
-function userTimeToServerTime($timestamp, $userTZ = null)
+function userTimeToServerTime(int $timestamp, ?float $userTZ = null): int
+
 {
     global $xoopsConfig;
     if (!isset($userTZ)) {
-        $userTZ = $xoopsConfig['default_TZ'];
+        $userTZ = (float) $xoopsConfig['default_TZ'];
     }
-    $timestamp -= (($userTZ - $xoopsConfig['server_TZ']) * 3600);
+    $serverTZ = (float)$xoopsConfig['server_TZ'];
+    $timestamp -= (int)(($userTZ - $serverTZ) * 3600);
 
     return $timestamp;
 }
@@ -1222,7 +1224,7 @@ function xoops_getConfigOption($option, $type = 'XOOPS_CONF')
  * xoops_setConfigOption()
  *
  * @param mixed $option
- * @param null  $new
+ * @param mixed  $new
  * @return void
 @deprecated
  */

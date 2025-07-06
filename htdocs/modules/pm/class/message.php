@@ -68,7 +68,7 @@ class PmMessage extends XoopsObject
 class PmMessageHandler extends XoopsPersistableObjectHandler
 {
     /**
-     * @param null|XoopsDatabase $db
+     * @param XoopsDatabase|null $db
      */
     public function __construct(XoopsDatabase $db)
     {
