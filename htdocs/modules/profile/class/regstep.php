@@ -49,7 +49,7 @@ class ProfileRegstep extends XoopsObject
 class ProfileRegstepHandler extends XoopsPersistableObjectHandler
 {
     /**
-     * @param null|object $db
+     * @param XoopsDatabase|null $db database connection
      */
     public function __construct($db)
     {
@@ -58,12 +58,12 @@ class ProfileRegstepHandler extends XoopsPersistableObjectHandler
 
     /**
      * Delete an object from the database
-     * @see XoopsPersistableObjectHandler
-     *
      * @param XoopsObject $obj
-     * @param bool           $force
+     * @param bool        $force
      *
      * @return bool
+     * @see XoopsPersistableObjectHandler
+     *
      */
     public function delete(XoopsObject $obj, $force = false)
     {
