@@ -53,7 +53,7 @@ class XoopsFormTinymce5 extends XoopsEditor
         $this->configs['area_width']  = $this->configs['width'] ?? $this->width;
         $this->configs['area_height'] = $this->configs['height'] ?? $this->height;
 
-        require_once __DIR__ . '/tinymce5.php';
+        require_once __DIR__ . '/tinymce.php';
         $this->editor = new TinyMCE($this->configs);
     }
 
@@ -73,8 +73,8 @@ class XoopsFormTinymce5 extends XoopsEditor
             $eltmsg     = empty($eltcaption) ? sprintf(_FORM_ENTER, $eltname) : sprintf(_FORM_ENTER, $eltcaption);
             $eltmsg     = str_replace('"', '\"', stripslashes($eltmsg));
             $ret        = "\n";
-            $ret .= "if ( tinyMCE.get('{$eltname}').getContent() == \"\" || tinyMCE.get('{$eltname}').getContent() == null) ";
-            $ret .= "{ window.alert(\"{$eltmsg}\"); tinyMCE.get('{$eltname}').focus(); return false; }";
+			$ret .= "if ( tinymce.get('{$eltname}').getContent() == \"\" || tinymce.get('{$eltname}').getContent() == null) ";
+			$ret .= "{ window.alert(\"{$eltmsg}\"); tinymce.get('{$eltname}').focus(); return false; }";
 
             return $ret;
         }
@@ -124,6 +124,7 @@ class XoopsFormTinymce5 extends XoopsEditor
      */
     public function isActive()
     {
-        return is_readable(XOOPS_ROOT_PATH . $this->rootPath . '/tinymce5.php');
+		return is_readable(XOOPS_ROOT_PATH . $this->rootPath . '/tinymce.php')
+			&& is_readable(XOOPS_ROOT_PATH . $this->rootPath . '/js/tinymce/tinymce.min.js');
     }
 }

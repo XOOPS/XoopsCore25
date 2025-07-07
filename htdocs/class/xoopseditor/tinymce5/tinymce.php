@@ -38,7 +38,6 @@ class TinyMCE
     {
         $this->config = [];
         $this->setConfig($config);
-//        $this->rootpath                = $this->config['rootpath'] . '/tinymce5/jscripts/tiny_mce';
         $this->rootpath                = $this->config['rootpath'] . '/js/tinymce';
         self::$lastOfElementsTinymce   = $this->config['elements'];
         self::$listOfElementsTinymce[] = self::$lastOfElementsTinymce;
@@ -114,13 +113,14 @@ class TinyMCE
         $configured[]             = 'plugins';
 
         $configured = array_unique($configured);
+        if (!empty($this->config)) {
         foreach ($this->config as $key => $val) {
             if (isset($this->setting[$key]) || in_array($key, $configured)) {
                 continue;
             }
             $this->setting[$key] = $val;
         }
-
+		}
         if (!is_dir(XOOPS_ROOT_PATH . $this->rootpath . '/themes/' . $this->setting['theme'] . '/docs/' . $this->setting['language'] . '/')) {
             $this->setting['docs_language'] = 'en';
         }
@@ -185,63 +185,55 @@ class TinyMCE
         static $isTinyMceJsLoaded = false;
 
         $this->init();
-        if (isset($this->setting['elements']) && self::$lastOfElementsTinymce != $this->setting['elements']) {
-            $ret = "\n<!-- 'tinymce.min.js' SCRIPT NOT YET " . $this->setting['elements'] . " -->\n"; //debug
-
-            return $ret;
-        } else {
-            $this->setting['elements'] = implode(',', self::$listOfElementsTinymce);
+        // Prevent duplicate initialization if 'elements' changed
+		if (isset($this->setting['elements']) && self::$lastOfElementsTinymce !== $this->setting['elements']) {
+			return "\n<!-- TinyMCE SKIPPED: 'elements' setting has changed. -->\n";
         }
-        if (!empty($this->setting['callback'])) {
-            $callback = $this->setting['callback'];
+		$this->setting['elements'] = implode(',', self::$listOfElementsTinymce);
+
+		// Extract custom JS callbacks for later insertion
+		$customCallbackJs = !empty($this->setting['callback']) ? $this->setting['callback'] : '';
             unset($this->setting['callback']);
-        } else {
-            $callback = '';
-        }
+
+		// Handle file browser callback (external JS)
+		$fileBrowserCallbackJs = '';
         if (!empty($this->setting['file_browser_callback'])) {
-            $fbc_name = XOOPS_ROOT_PATH . '/class/xoopseditor/tinymce7/include/' . $this->setting['file_browser_callback'] . '.js';
-            //it went through to /lesrevespossibles/x244/class/xoopseditor/tinymce/tinymce/jscripts/include/openFinder.js
-            $file_browser_callback = "MyXoopsUrl ='" . XOOPS_URL . "';\n";
-            $file_browser_callback .= file_get_contents($fbc_name);
-            $file_browser_callback .= "\n//passed " . $fbc_name;
-            //unset($this->setting["file_browser_callback"]);
+			$fbc_path = XOOPS_ROOT_PATH . '/class/xoopseditor/tinymce7/include/' . $this->setting['file_browser_callback'] . '.js';
+			if (is_readable($fbc_path)) {
+				$fileBrowserCallbackJs = "var MyXoopsUrl = '" . XOOPS_URL . "';\n";
+				$fileBrowserCallbackJs .= file_get_contents($fbc_path);
+				$fileBrowserCallbackJs .= "\n// Callback loaded from: " . $fbc_path;
         } else {
-            $file_browser_callback = '//is absent';
+				$fileBrowserCallbackJs = "// FAILED to load callback from: " . $fbc_path;
+			}
+			unset($this->setting['file_browser_callback']);
         }
 
-        // create returned string - start
-        $ret = "\n";
+		// Safely encode all settings to JS object
+		$jsonOptions = json_encode($this->setting, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES);
 
-        $ret .= "<!-- Start TinyMce Rendering -->\n"; //debug
-        if ($isTinyMceJsLoaded) {
-            $ret .= "<!-- 'tinymce.js' SCRIPT IS ALREADY LOADED -->\n"; //debug
-        } else {
-            $ret .= "<script type='text/javascript' src='" . XOOPS_URL . $this->rootpath . "/tinymce.min.js'></script>\n";
+		// Only include TinyMCE core script once
+		$tinyMceScriptTag = $isTinyMceJsLoaded
+			? "<!-- 'tinymce.min.js' SCRIPT IS ALREADY LOADED -->"
+			: "<script type='text/javascript' src='" . XOOPS_URL . $this->rootpath . "/tinymce.min.js'></script>";
+
             $isTinyMceJsLoaded = true;
+
+		// Output final script
+		$output = <<<HTML
+<!-- Start TinyMce Rendering -->
+{$tinyMceScriptTag}
+<script type='text/javascript'>
+//<![CDATA[
+tinymce.init({$jsonOptions});
+{$customCallbackJs}
+{$fileBrowserCallbackJs}
+//]]>
+</script>
+<!-- End TinyMce Rendering -->
+HTML;
+
+		return $output;
         }
-        $ret .= "<script type='text/javascript'>\n";
-        $ret .= "tinymce.init({\n";
-        // set options - start
-        foreach ($this->setting as $key => $val) {
-            $ret .= $key . ':';
-            if ($val === true) {
-                $ret .= 'true,';
-            } elseif ($val === false) {
-                $ret .= 'false,';
-            } else {
-                $ret .= "'{$val}',";
-            }
-            $ret .= "\n";
-        }
-        // set options - end
-        $ret .= "tinymceload: true\n";
-        $ret .= "});\n";
-        $ret .= $callback . "\n";
-        $ret .= $file_browser_callback . "\n";
-        //$ret .= "function toggleEditor(id) {tinyMCE.execCommand('mceToggleEditor',false, id);}\n";
-        $ret .= "</script>\n";
-        $ret .= "<!-- End TinyMce Rendering -->\n";//debug
-        // create returned string - end
-        return $ret;
-    }
+
 }
