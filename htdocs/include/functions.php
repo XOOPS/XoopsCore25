@@ -512,7 +512,7 @@ function formatTimestamp($time, $format = 'l', $timeoffset = '')
  * @param float|null $userTZ
  * @return int
  */
-function userTimeToServerTime(int $timestamp, ?float $userTZ = null): int
+function userTimeToServerTime($timestamp, $userTZ = null)
 
 {
     global $xoopsConfig;

@@ -24,11 +24,6 @@ require_once $path . '/include' . '/cp_header.php';
  * @param string|null $oldversion
  * @return bool
  */
-/**
- * @param XoopsModule $module
- * @param string|null $oldversion
- * @return bool
- */
 function xoops_module_update_profile(XoopsModule $module, $oldversion = null)
 {
     if ($oldversion < '1.6.2') {

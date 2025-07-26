@@ -115,7 +115,7 @@ class XoopsAuthAds extends XoopsAuthLdap
      *
      * @return string userDN or false
      */
-    public function getUPN(string $uname): string
+    public function getUPN($uname)
     {
         $userDN = $uname . '@' . $this->ldap_domain_name;
 
