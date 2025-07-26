@@ -38,7 +38,7 @@ switch ($op) {
     case 'list':
         include_once $GLOBALS['xoops']->path('/class/xoopsformloader.php');
         $form = new XoopsThemeForm(_PROFILE_AM_EDITUSER, 'form', 'user.php');
-        $lastUid = \Xmf\Request::getInt('lastuid', null, 'GET');
+        $lastUid = \Xmf\Request::getInt('lastuid', 0, 'GET');
         $form->addElement(new XoopsFormSelectUser(_PROFILE_AM_SELECTUSER, 'id', false, $lastUid));
         $form->addElement(new XoopsFormHidden('op', 'editordelete'));
         $button_tray = new XoopsFormElementTray('');

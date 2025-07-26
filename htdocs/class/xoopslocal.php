@@ -178,9 +178,9 @@ class XoopsLocalAbstract
      * Function to display formatted times in user timezone
      *
      * Setting $timeoffset to null (by default) will skip timezone calculation for user, using default timezone instead, which is a MUST for cached contents
-     * @param        $time
+     * @param mixed $time
      * @param string $format
-     * @param null|string   $timeoffset
+     * @param string|null   $timeoffset
      * @return string
      */
     public static function formatTimestamp($time, $format = 'l', $timeoffset = null)
