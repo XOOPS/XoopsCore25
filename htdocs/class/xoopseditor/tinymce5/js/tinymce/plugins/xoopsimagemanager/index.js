@@ -4,4 +4,4 @@
 //     require('tinymce/plugins/xoopsemoticons')
 //   ES2015:
 //     import 'tinymce/plugins/xoopsemoticons'
-require('./plugin.js');
+require('./plugin.min.js');

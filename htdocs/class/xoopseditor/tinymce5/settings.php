@@ -19,12 +19,11 @@
  * @license   GNU GPL 2 or later (http://www.gnu.org/licenses/gpl-2.0.html)
  * @link      http://xoops.org
  */
-
 return [
     'theme' => 'silver',
     'mode' => 'exact',
     'plugins' => 'advlist,anchor,autolink,charmap,code,hr,image,imagetools,lists,link,media,preview,searchreplace,table,xoopsemoticons,xoopscode,xoopsimagemanager',
-    'toolbar' => 'undo redo | styleselect | bold italic | forecolor backcolor removeformat  | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | table tabledelete | insertfile image media link | hr | xoopsemoticons xoopscode | code',
+    'toolbar' => 'undo redo | styleselect | bold italic | forecolor backcolor removeformat  | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | table tabledelete | insertfile image media link | hr | xoopsimagemanager xoopsemoticons xoopscode | code',
     'image_title' => true,
     'table_use_colgroups' => true,
     /*'image_class_list' => [
@@ -37,5 +36,7 @@ return [
     // Use of relative urls?
     'relative_urls' => false,
     'body_class' => 'tinymce5-body',
-    'menubar' => false,
+    'menubar' => true,
+	'width' => '100%', // newly added
+	'height' => '400px', // newly added
 ];

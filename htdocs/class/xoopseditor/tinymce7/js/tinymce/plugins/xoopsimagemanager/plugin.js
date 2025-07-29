@@ -1,10 +1,10 @@
 /**
- * XOOOPS Image Manager plugin
+ * XOOPS Image Manager plugin - TinyMCE 7 Compatible
  *
  * @category  XoopsEditor
  * @package   TinyMCE7
  * @author    ForMuss
- * @copyright 2020 XOOPS Project (http://xoops.org)
+ * @copyright 2025 XOOPS Project (http://xoops.org)
  * @license   GNU GPL 2 or later (http://www.gnu.org/licenses/gpl-2.0.html)
  * @link      http://xoops.org
  */

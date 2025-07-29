@@ -15,7 +15,7 @@
  * @package   TinyMCE7
  * @author    Gregory Mage
  * @author    Taiwen Jiang <phppp@users.sourceforge.net>
- * @copyright 2020 XOOPS Project (http://xoops.org)
+ * @copyright 2000-2025 XOOPS Project (https://xoops.org)
  * @license   GNU GPL 2 or later (http://www.gnu.org/licenses/gpl-2.0.html)
  * @link      http://xoops.org
  */
@@ -47,7 +47,8 @@ class XoopsFormTinymce7 extends XoopsEditor
 
         $this->rootPath = '/class/xoopseditor/tinymce7';
         parent::__construct($configs);
-        $this->configs['elements']    = $this->getName();
+//        $this->configs['elements']    = $this->getName();
+		$this->configs['selector'] = '#' . $this->getName();
         $this->configs['language']    = $this->getLanguage();
         $this->configs['rootpath']    = $this->rootPath;
         $this->configs['area_width']  = $this->configs['width'] ?? $this->width;
