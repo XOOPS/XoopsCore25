@@ -30,7 +30,7 @@
 	<!-- Alain01 -->
 								<{assign var="url_image_overloaded" value=$xoops_imageurl|cat:$data.image_link}>
 								<{assign var="path_image_overloaded" value=$xoops_rootpath|cat:"/themes/"|cat:$xoops_theme|cat:"/"|cat:$data.image_link}>
-								<{if file_exists($path_image_overloaded)}>
+                                <{if $path_image_overloaded|file_exists}>
 									<div class="d-inline"><img src="<{$url_image_overloaded}>" title="<{$data.image_title}>" alt="<{$data.image_title}>"/> <a href="<{$data.link}>"><{$data.link_title}></a></div>
 								<{else}>
 									<div class="d-inline"><img src="<{$data.image_link}>" title="<{$data.image_title}>" alt="<{$data.image_title}>"/> <a href="<{$data.link}>"><{$data.link_title}></a></div>
@@ -100,7 +100,7 @@
 							<{assign var="url_image_overloaded" value=$xoops_imageurl|cat:$data.image_link}>
 							<{assign var="path_image_overloaded" value=$xoops_rootpath|cat:"/themes/"|cat:$xoops_theme|cat:"/"|cat:$data.image_link}>
 
-							<{if file_exists($path_image_overloaded)}>
+                            <{if $path_image_overloaded|file_exists}>
 								<div class="d-inline"><img src="<{$url_image_overloaded}>" title="<{$data.image_title}>" alt="<{$data.image_title}>"/> <a href="<{$data.link}>"><{$data.link_title}></a></div>
 							<{else}>
 								<div class="d-inline"><img src="<{$data.image_link}>" title="<{$data.image_title}>" alt="<{$data.image_title}>"/> <a href="<{$data.link}>"><{$data.link_title}></a></div>

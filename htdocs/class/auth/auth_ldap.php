@@ -46,7 +46,7 @@ if (!class_exists('XoopsAuthProvisionning')) {
  */
 class XoopsAuthLdap extends XoopsAuth
 {
-    public $cp1252_map = [
+    public array $cp1252_map = [
         "\xc2\x80" => "\xe2\x82\xac",
         /**
          * EURO SIGN
@@ -207,7 +207,7 @@ class XoopsAuthLdap extends XoopsAuth
      *         Authenticate with manager, search the dn
      *
      * @param  string $uname Username
-     * @param  string $pwd   Password
+     * @param  string|null $pwd   Password
      * @return bool
      */
     public function authenticate($uname, $pwd = null)
@@ -253,8 +253,8 @@ class XoopsAuthLdap extends XoopsAuth
     /**
      * Compose the user DN with the configuration.
      *
-     * @param $uname
-     * @return userDN or false
+     * @param string $uname
+     * @return string|false userDN or false
      */
     public function getUserDN($uname)
     {
@@ -269,7 +269,7 @@ class XoopsAuthLdap extends XoopsAuth
             $filter = $this->getFilter($uname);
             $sr     = ldap_search($this->_ds, $this->ldap_base_dn, $filter);
             $info   = ldap_get_entries($this->_ds, $sr);
-            if ($info['count'] > 0) {
+            if (is_array($info) && $info['count'] > 0) {
                 $userDN = $info[0]['dn'];
             } else {
                 $this->setErrors(0, sprintf(_AUTH_LDAP_USER_NOT_FOUND, $uname, $filter, $this->ldap_base_dn));
@@ -284,7 +284,7 @@ class XoopsAuthLdap extends XoopsAuth
     /**
      * Load user from XOOPS Database
      *
-     * @param $uname
+     * @param string $uname
      * @return XoopsUser object
      */
     public function getFilter($uname)
@@ -312,7 +312,7 @@ class XoopsAuthLdap extends XoopsAuth
         $provisHandler = XoopsAuthProvisionning::getInstance($this);
         $sr            = ldap_read($this->_ds, $userdn, '(objectclass=*)');
         $entries       = ldap_get_entries($this->_ds, $sr);
-        if ($entries['count'] > 0) {
+        if (is_array($entries) && $entries['count'] > 0) {
             $xoopsUser = $provisHandler->sync($entries[0], $uname, $pwd);
         } else {
             $this->setErrors(0, sprintf('loadXoopsUser - ' . _AUTH_LDAP_CANT_READ_ENTRY, $userdn));

@@ -20,8 +20,8 @@
  * the file that will include this file must be located under xoops_url/modules/module_directory_name/admin_directory_name/
  */
 $xoopsOption['pagetype'] = 'admin';
-include_once dirname(__DIR__) . '/mainfile.php';
-include_once $GLOBALS['xoops']->path('include/cp_functions.php');
+require_once dirname(__DIR__) . '/mainfile.php';
+require_once $GLOBALS['xoops']->path('include/cp_functions.php');
 
 /** @var XoopsGroupPermHandler $moduleperm_handler */
 $moduleperm_handler = xoops_getHandler('groupperm');
