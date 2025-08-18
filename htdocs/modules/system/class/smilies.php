@@ -116,7 +116,7 @@ class SystemSmilies extends XoopsObject
 class SystemsmiliesHandler extends XoopsPersistableObjectHandler
 {
     /**
-     * @param null|XoopsDatabase $db
+     * @param XoopsDatabase|null $db
      */
     public function __construct(XoopsDatabase $db)
     {

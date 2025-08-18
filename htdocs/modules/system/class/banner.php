@@ -112,7 +112,7 @@ class SystemBanner extends XoopsObject
 class SystemBannerHandler extends XoopsPersistableObjectHandler
 {
     /**
-     * @param null|object $db
+     * @param XoopsDatabase|null $db
      */
     public function __construct($db)
     {

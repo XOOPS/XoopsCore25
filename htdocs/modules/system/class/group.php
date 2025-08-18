@@ -198,7 +198,7 @@ class SystemGroup extends XoopsGroup
 class SystemGroupHandler extends XoopsPersistableObjectHandler
 {
     /**
-     * @param null|XoopsDatabase $db
+     * @param XoopsDatabase|null $db
      */
     public function __construct(XoopsDatabase $db)
     {

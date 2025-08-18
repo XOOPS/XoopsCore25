@@ -59,8 +59,8 @@ class XoopsComments extends XoopsObject
     public $prefix;
 
     /**
-     * @param      $ctable
-     * @param null|array $id
+     * @param string|null $ctable
+     * @param array|int|string|null $id
      */
     public function __construct($ctable, $id = null)
     {

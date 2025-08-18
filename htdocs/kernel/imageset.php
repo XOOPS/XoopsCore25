@@ -294,8 +294,8 @@ class XoopsImageSetHandler extends XoopsObjectHandler
     /**
      * Get a list of XoopsImageSet
      *
-     * @param null $refid
-     * @param null $tplset
+     * @param int|string|null $refid
+     * @param string|null $tplset
      * @internal param int $imgcat_id
      * @internal param bool $image_display
      * @return array Array of {@link XoopsImage} objects

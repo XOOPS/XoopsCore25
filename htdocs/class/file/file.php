@@ -382,8 +382,8 @@ class XoopsFileHandler
     /**
      * makes filename safe for saving
      *
-     * @param  string $name the name of the file to make safe if different from $this->name
-     * @param  null|string   $ext
+     * @param  string|null $name the name of the file to make safe if different from $this->name
+     * @param  string|null   $ext
      * @return string $ext the extension of the file
      * @access public
      */

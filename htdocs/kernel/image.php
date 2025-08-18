@@ -364,7 +364,7 @@ class XoopsImageHandler extends XoopsObjectHandler
      * Get a list of images
      *
      * @param  int  $imgcat_id
-     * @param  bool $image_display
+     * @param  bool|null $image_display
      * @return array Array of {@link XoopsImage} objects
      **/
     public function getList($imgcat_id, $image_display = null)

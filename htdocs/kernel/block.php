@@ -569,18 +569,18 @@ class XoopsBlock extends XoopsObject
 
     /**
      * get all the blocks that match the supplied parameters
-     * @param int|array $groupid  groupid (can be an array)
-     * @param bool   $asobject
-     * @param null|string $side     0: sideblock - left
-     *                         1: sideblock - right
-     *                         2: sideblock - left and right
-     *                         3: centerblock - left
-     *                         4: centerblock - right
-     *                         5: centerblock - center
-     *                         6: centerblock - left, right, center
-     * @param        $visible  0: not visible 1: visible
-     * @param string $orderby  order of the blocks
-     * @param int    $isactive
+     * @param int|array   $groupid groupid (can be an array)
+     * @param bool        $asobject
+     * @param string|null $side    0: sideblock - left
+     *                             1: sideblock - right
+     *                             2: sideblock - left and right
+     *                             3: centerblock - left
+     *                             4: centerblock - right
+     *                             5: centerblock - center
+     *                             6: centerblock - left, right, center
+     * @param             $visible 0: not visible 1: visible
+     * @param string      $orderby order of the blocks
+     * @param int         $isactive
      * @returns array of block objects
      *
      * @deprecated
@@ -1214,10 +1214,10 @@ class XoopsBlockHandler extends XoopsObjectHandler
     }
 
     /**
-     * @param        $groupid
+     * @param mixed  $groupid
      * @param int    $module_id
      * @param bool   $toponlyblock
-     * @param null   $visible
+     * @param mixed   $visible
      * @param string $orderby
      * @param int    $isactive
      *

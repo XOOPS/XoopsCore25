@@ -62,7 +62,7 @@ class SystemBannerFinish extends XoopsObject
 class SystemBannerfinishHandler extends XoopsPersistableObjectHandler
 {
     /**
-     * @param null|XoopsDatabase $db
+     * @param XoopsDatabase|null $db
      */
     public function __construct(XoopsDatabase $db)
     {

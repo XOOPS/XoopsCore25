@@ -1010,7 +1010,7 @@ class XoopsModuleHandler extends XoopsObjectHandler
     /**
      * returns an array of module names
      *
-     * @param  CriteriaElement $criteria
+     * @param  CriteriaElement|null $criteria
      * @param  boolean         $dirname_as_key if true, array keys will be module directory names
      *                                         if false, array keys will be module id
      * @return array

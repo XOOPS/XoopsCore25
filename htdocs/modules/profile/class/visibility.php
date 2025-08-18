@@ -45,7 +45,7 @@ class ProfileVisibility extends XoopsObject
 class ProfileVisibilityHandler extends XoopsPersistableObjectHandler
 {
     /**
-     * @param null|XoopsDatabase $db
+     * @param XoopsDatabase|null $db
      */
     public function __construct(XoopsDatabase $db)
     {

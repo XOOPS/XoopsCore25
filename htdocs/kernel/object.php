@@ -1188,7 +1188,7 @@ class XoopsPersistableObjectHandler extends XoopsObjectHandler
     /**
      * Constructor
      *
-     * @param null|XoopsDatabase $db             database connection
+     * @param XoopsDatabase|null $db             database connection
      * @param string             $table          Name of database table
      * @param string             $className      Name of the XoopsObject class this handler manages
      * @param string             $keyName        Name of the property holding the key
@@ -1211,7 +1211,7 @@ class XoopsPersistableObjectHandler extends XoopsObjectHandler
     /**
      * PHP 4 style constructor compatibility shim
      *
-     * @param null|XoopsDatabase $db             database connection
+     * @param XoopsDatabase|null $db             database connection
      * @param string             $table          Name of database table
      * @param string             $className      Name of the XoopsObject class this handler manages
      * @param string             $keyName        Name of the property holding the key
@@ -1231,9 +1231,9 @@ class XoopsPersistableObjectHandler extends XoopsObjectHandler
      * Set custom handler
      *
      * @access   protected
-     * @param null|string   $handler
-     * @param null   $args
-     * @param string $path path to class
+     * @param mixed       $handler
+     * @param mixed       $args
+     * @param string|null $path path to class
      * @internal param object $handler
      * @internal param mixed  $args
      * @return object of handler

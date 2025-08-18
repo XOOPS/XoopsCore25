@@ -29,7 +29,15 @@ defined('XOOPS_ROOT_PATH') || exit('Restricted access');
  */
 class XoopsAuthProvisionning
 {
-    protected $_auth_instance;
+    protected ?XoopsAuth $_auth_instance;
+    protected string $ldap_provisionning;
+    protected string $ldap_provisionning_upd;
+    protected array $ldap_provisionning_group;
+    protected string $ldap_field_mapping;
+    protected string $default_TZ;
+    protected string $theme_set;
+    protected string $com_mode;
+    protected string $com_order;
 
     /**
      * XoopsAuthProvisionning::getInstance()
@@ -50,7 +58,7 @@ class XoopsAuthProvisionning
 
     /**
      * Authentication Service constructor
-     * @param XoopsAuth $auth_instance
+     * @param XoopsAuth|null $auth_instance
      */
     public function __construct(?XoopsAuth $auth_instance = null)
     {
@@ -71,8 +79,8 @@ class XoopsAuthProvisionning
     /**
      * Return a Xoops User Object
      *
-     * @param $uname
-     * @return XoopsUser or false
+     * @param string $uname
+     * @return XoopsUser|false
      */
     public function getXoopsUser($uname)
     {
@@ -90,10 +98,10 @@ class XoopsAuthProvisionning
     /**
      * Launch the synchronisation process
      *
-     * @param       $datas
-     * @param       $uname
-     * @param  null $pwd
-     * @return bool
+     * @param array  $datas
+     * @param string $uname
+     * @param string|null  $pwd
+     * @return XoopsUser|false
      */
     public function sync($datas, $uname, $pwd = null)
     {
@@ -116,10 +124,10 @@ class XoopsAuthProvisionning
     /**
      * Add a new user to the system
      *
-     * @param       $datas
-     * @param       $uname
-     * @param  null $pwd
-     * @return bool
+     * @param  array     $datas
+     * @param  string    $uname
+     * @param  string|null $pwd
+     * @return XoopsUser|false
      */
     public function add($datas, $uname, $pwd = null)
     {
@@ -160,11 +168,11 @@ class XoopsAuthProvisionning
     /**
      * Modify user information
      *
-     * @param       $xoopsUser
-     * @param       $datas
-     * @param       $uname
-     * @param  null $pwd
-     * @return bool
+     * @param  XoopsUser      $xoopsUser
+     * @param  array     $datas
+     * @param  string $uname
+     * @param  string|null $pwd
+     * @return XoopsUser|false
      */
     public function change($xoopsUser, $datas, $uname, $pwd = null)
     {

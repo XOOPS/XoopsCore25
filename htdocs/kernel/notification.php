@@ -588,10 +588,8 @@ class XoopsNotificationHandler extends XoopsObjectHandler
      *
      * @param int    $module_id Module ID
      * @param int    $item_id   Item ID
-     * @param string $order     Sort order
-     * @param int    $mode      not_mode    see include/notification_constants.php
-     *
-     * @param null   $status
+     * @param string|null $order     Sort order
+     * @param int|null    $mode      not_mode    see include/notification_constants.php
      *
      * @return array Array of {@link XoopsNotification} objects
      */

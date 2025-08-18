@@ -10,7 +10,7 @@
  */
 
 /**
- * @copyright    XOOPS Project https://xoops.org/
+ * @copyright    2000-2025 XOOPS Project (https://xoops.org)
  * @license      GNU GPL 2.0 or later (https://www.gnu.org/licenses/gpl-2.0.html)
  * @package
  * @since
@@ -146,8 +146,8 @@ class XoopsXmlRpcFault extends XoopsXmlRpcTag
     public $_extra;
 
     /**
-     * @param      $code
-     * @param null $extra
+     * @param int $code
+     * @param string|null $extra
      */
     public function __construct($code, $extra = null)
     {

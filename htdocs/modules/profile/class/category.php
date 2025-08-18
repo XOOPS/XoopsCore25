@@ -80,7 +80,7 @@ class ProfileCategory extends XoopsObject
 class ProfileCategoryHandler extends XoopsPersistableObjectHandler
 {
     /**
-     * @param null|XoopsDatabase $db
+     * @param XoopsDatabase|null $db
      */
     public function __construct(XoopsDatabase $db)
     {

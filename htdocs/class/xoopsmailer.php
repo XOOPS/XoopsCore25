@@ -151,7 +151,7 @@ class XoopsMailer
 
     // public
     /**
-     * @param null $value
+     * @param string|null $value
      */
     public function setTemplateDir($value = null)
     {
@@ -503,8 +503,8 @@ class XoopsMailer
 
     // public
     /**
-     * @param      $tag
-     * @param null $value
+     * @param array|string $tag
+     * @param mixed $value
      */
     public function assign($tag, $value = null)
     {

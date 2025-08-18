@@ -69,7 +69,7 @@ class ProfileProfileHandler extends XoopsPersistableObjectHandler
     public $_fields = [];
 
     /**
-     * @param null|XoopsDatabase $db
+     * @param XoopsDatabase|null $db
      */
     public function __construct(XoopsDatabase $db)
     {

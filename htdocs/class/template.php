@@ -87,7 +87,7 @@ class XoopsTpl extends Smarty
      *
      * @param string $tplSource The template to render
      * @param bool   $display   If rendered text should be output or returned
-     * @param null   $vars
+     * @param mixed   $vars
      *
      * @return string Rendered output if $display was false
      */

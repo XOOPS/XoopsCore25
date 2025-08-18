@@ -62,7 +62,7 @@ class XoopsThemeSetParser extends SaxParser
     }
 
     /**
-     * @param null $name
+     * @param string|null  $name
      *
      * @return array|bool
      */

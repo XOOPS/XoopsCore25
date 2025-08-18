@@ -24,7 +24,7 @@ defined('XOOPS_ROOT_PATH') || exit('Restricted access');
 class XoopsLocalWrapper
 {
     /**
-     * @param null $language
+     * @param mixed $language
      *
      * @return bool
      */

@@ -98,7 +98,7 @@ class SystemUsers extends XoopsUser
 class SystemUsersHandler extends XoopsUserHandler
 {
     /**
-     * @param null|XoopsDatabase $db
+     * @param XoopsDatabase|null $db
      */
     public function __construct(XoopsDatabase $db)
     {

@@ -361,13 +361,13 @@ class XoopsImagecategoryHandler extends XoopsObjectHandler
     /**
      * Get a list of image categories
      *
-     * @param array  $groups
-     * @param string $perm
-     * @param null   $display
-     * @param null   $storetype
-     * @internal param int $imgcat_id
-     * @internal param bool $image_display
+     * @param array                $groups
+     * @param string               $perm
+     * @param int|string|bool|null $display
+     * @param string|null          $storetype
      * @return array Array of {@link XoopsImage} objects
+     * @internal param bool $image_display
+     * @internal param int $imgcat_id
      */
     public function getList($groups = [], $perm = 'imgcat_read', $display = null, $storetype = null)
     {
