@@ -420,7 +420,6 @@ function notificationGenerateConfig($category, $event, $type)
             return 'notify:' . $category['name'] . '-' . $event['name'];
             break;
         case 'option_name':
-            \Xmf\debug::dump($category['name'],  $event['name'], $type);
             return $category['name'] . '-' . $event['name'];
             break;
         default:
