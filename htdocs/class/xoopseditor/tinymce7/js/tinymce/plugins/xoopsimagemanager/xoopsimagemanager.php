@@ -26,7 +26,9 @@ if (DIRECTORY_SEPARATOR !== '/') {
 }
 $xoops_root_path = substr($current_path, 0, strpos(strtolower($current_path), '/class/xoopseditor/tinymce7/'));
 include_once $xoops_root_path . '/mainfile.php';
-defined('XOOPS_ROOT_PATH') || exit('XOOPS root path not defined');
+if (!defined('XOOPS_ROOT_PATH')) {
+    throw new \RuntimeException('XOOPS root path not defined');
+}
 
 /**
  * This code was moved to the top to avoid overriding variables that do not come from post

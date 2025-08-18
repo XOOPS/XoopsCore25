@@ -3,7 +3,9 @@
 //  URL: https://xoops.org
 //  E-Mail: lusopoemas@gmail.com
 
-defined('XOOPS_ROOT_PATH') || exit('XOOPS root path not defined');
+if (!defined('XOOPS_ROOT_PATH')) {
+    throw new \RuntimeException('XOOPS root path not defined');
+}
 
 /**
  * Class ProtectorRegistry

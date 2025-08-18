@@ -22,7 +22,9 @@ use Xmf\Request;
 require dirname(__DIR__, 4) . '/mainfile.php';
 require XOOPS_ROOT_PATH . '/header.php';
 
-// defined('XOOPS_ROOT_PATH') || exit('XOOPS root path not defined');
+//if (!defined('XOOPS_ROOT_PATH')) {
+//    throw new \RuntimeException('XOOPS root path not defined');
+//}
 
 if (!is_object($xoopsUser) || !is_object($xoopsModule) || !$xoopsUser->isAdmin($xoopsModule->mid())) {
     exit(_NOPERM);

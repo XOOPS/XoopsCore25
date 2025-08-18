@@ -10,7 +10,9 @@
  * @author              Laurent JEN <dugris@frxoops.org>
  */
 
-defined('XOOPS_ROOT_PATH') || exit('XOOPS root path not defined');
+if (!defined('XOOPS_ROOT_PATH')) {
+    throw new \RuntimeException('XOOPS root path not defined');
+}
 
 // Xlanguage
 if ($GLOBALS['module_handler']->getByDirname('xlanguage') && defined('XLANGUAGE_LANG_TAG')) {

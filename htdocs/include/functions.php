@@ -15,7 +15,9 @@
  * @since               2.0.0
  */
 
-defined('XOOPS_ROOT_PATH') || exit('Restricted access');
+if (!defined('XOOPS_ROOT_PATH')) {
+    throw new \RuntimeException('Restricted access');
+}
 
 /** @var \XoopsNotificationHandler $notification_handler */
 

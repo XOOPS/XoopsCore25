@@ -19,7 +19,9 @@
 
 use Xmf\Request;
 
-defined('XOOPS_ROOT_PATH') || exit('Restricted access');
+if (!defined('XOOPS_ROOT_PATH')) {
+    throw new \RuntimeException('Restricted access');
+}
 
 // RMV-NOTIFY
 
@@ -418,6 +420,7 @@ function notificationGenerateConfig($category, $event, $type)
             return 'notify:' . $category['name'] . '-' . $event['name'];
             break;
         case 'option_name':
+            \Xmf\debug::dump($category['name'],  $event['name'], $type);
             return $category['name'] . '-' . $event['name'];
             break;
         default:

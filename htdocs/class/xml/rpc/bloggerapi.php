@@ -17,7 +17,9 @@
  * @author       XOOPS Development Team, Kazumi Ono (AKA onokazu)
  */
 
-defined('XOOPS_ROOT_PATH') || exit('XOOPS root path not defined');
+if (!defined('XOOPS_ROOT_PATH')) {
+    throw new \RuntimeException('XOOPS root path not defined');
+}
 require_once XOOPS_ROOT_PATH . '/class/xml/rpc/xmlrpcapi.php';
 
 /**

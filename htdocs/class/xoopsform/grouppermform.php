@@ -16,7 +16,9 @@
  * @since               2.0.0
  */
 
-defined('XOOPS_ROOT_PATH') || exit('Restricted access');
+if (!defined('XOOPS_ROOT_PATH')) {
+    throw new \RuntimeException('Restricted access');
+}
 
 xoops_load('XoopsFormElement');
 xoops_load('XoopsFormHidden');

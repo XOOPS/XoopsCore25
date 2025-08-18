@@ -16,7 +16,9 @@
  * @since               1.0.0
  * @author              Author: Kazumi Ono (AKA onokazu)
  */
-defined('XOOPS_ROOT_PATH') || exit('Restricted access');
+if (!defined('XOOPS_ROOT_PATH')) {
+    throw new \RuntimeException('Restricted access');
+}
 
 include_once XOOPS_ROOT_PATH . '/class/xml/saxparser.php';
 include_once XOOPS_ROOT_PATH . '/class/xml/xmltaghandler.php';

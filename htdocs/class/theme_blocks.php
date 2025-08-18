@@ -19,7 +19,9 @@
 /**
  * This file cannot be requested directly
  */
-defined('XOOPS_ROOT_PATH') || exit('Restricted access');
+if (!defined('XOOPS_ROOT_PATH')) {
+    throw new \RuntimeException('Restricted access');
+}
 
 include_once $GLOBALS['xoops']->path('class/xoopsblock.php');
 include_once $GLOBALS['xoops']->path('class/template.php');
