@@ -16,7 +16,9 @@
  * @since               2.5.11
  * @author              mamba <mambax7@gmail.com>
  */
-defined('XOOPS_ROOT_PATH') || exit('Restricted access');
+if (!defined('XOOPS_ROOT_PATH')) {
+    throw new \RuntimeException('Restricted access');
+}
 
 return $config = [
     'enable_mp3_entry' => true, // Set to false to disable the MP3 button in the textarea editor

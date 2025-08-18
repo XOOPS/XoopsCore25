@@ -16,7 +16,9 @@
  * @author              Taiwen Jiang <phppp@users.sourceforge.net>
  * @todo                For PHP 5 compliant
  */
-defined('XOOPS_ROOT_PATH') || exit('Restricted access');
+if (!defined('XOOPS_ROOT_PATH')) {
+    throw new \RuntimeException('Restricted access');
+}
 
 /**
  * Class XoopsLoad

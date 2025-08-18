@@ -37,6 +37,6 @@ return [
     'relative_urls' => false,
     'body_class' => 'tinymce5-body',
     'menubar' => true,
-	'width' => '100%', // newly added
-	'height' => '400px', // newly added
+    'width' => '100%', // newly added
+    'height' => '400px', // newly added
 ];

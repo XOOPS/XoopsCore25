@@ -10,7 +10,7 @@
  */
 
 /**
- * @copyright    XOOPS Project https://xoops.org/
+ * @copyright    2000-2025 XOOPS Project (https://xoops.org)
  * @license      GNU GPL 2.0 or later (https://www.gnu.org/licenses/gpl-2.0.html)
  * @package
  * @since
@@ -18,8 +18,8 @@
  */
 
 /**
- * @param      $module
- * @param null $prev_version
+ * @param XoopsModule $module
+ * @param string|null $prev_version
  *
  * @return bool|null
  */
@@ -43,7 +43,7 @@ function xoops_module_update_system(XoopsModule $module, $prev_version = null)
 
 // irmtfan bug fix: solve templates duplicate issue
 /**
- * @param $module
+ * @param XoopsModule $module
  *
  * @return bool
  */

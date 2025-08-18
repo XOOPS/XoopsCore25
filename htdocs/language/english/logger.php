@@ -19,7 +19,9 @@
  * @since               2.4.0
  * @author              trabis <lusopoemas@gmail.com>
  */
-defined('XOOPS_ROOT_PATH') || exit('Restricted access');
+if (!defined('XOOPS_ROOT_PATH')) {
+    throw new \RuntimeException('Restricted access');
+}
 
 // _LANGCODE: en
 // _CHARSET : UTF-8

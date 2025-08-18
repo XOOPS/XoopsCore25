@@ -17,7 +17,9 @@
  * @author              Kazumi Ono <onokazu@xoops.org>
  * @author              Rodney Fulk <redheadedrod@hotmail.com>
  */
-defined('XOOPS_ROOT_PATH') || die('Restricted access');
+if (!defined('XOOPS_ROOT_PATH')) {
+    throw new \RuntimeException('Restricted access');
+}
 
 include_once XOOPS_ROOT_PATH . '/class/database/database.php';
 

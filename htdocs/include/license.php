@@ -19,7 +19,9 @@
  * @license             GNU GPL 2.0 or later (https://www.gnu.org/licenses/gpl-2.0.html)
  * @deprecated
  */
-defined('XOOPS_ROOT_PATH') || exit('Restricted access');
+if (!defined('XOOPS_ROOT_PATH')) {
+    throw new \RuntimeException('Restricted access');
+}
 
 $licenseFile = (defined('XOOPS_VAR_PATH')) ? XOOPS_VAR_PATH . '/data/license.php' : '';
 

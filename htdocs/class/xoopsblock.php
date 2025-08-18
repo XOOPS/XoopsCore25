@@ -28,6 +28,8 @@
  * previously define. Eventually, that compatibility will be removed, and any
  * surviving logic will be moved to the handler
  */
-defined('XOOPS_ROOT_PATH') || exit('Restricted access');
+if (!defined('XOOPS_ROOT_PATH')) {
+    throw new \RuntimeException('Restricted access');
+}
 
 xoops_getHandler('block');

@@ -36,7 +36,7 @@ class Protector_postcommon_register_insert_js_check extends ProtectorFilterAbstr
 
     // import from D3forumAntispamDefault.clas.php
     /**
-     * @param null|int $time
+     * @param int|null $time
      *
      * @return string
      */

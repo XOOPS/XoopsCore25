@@ -16,7 +16,9 @@
  * @author              Kazumi Ono (AKA onokazu) http://www.myweb.ne.jp/, http://jp.xoops.org/
  */
 
-defined('XOOPS_ROOT_PATH') || exit('Restricted access');
+if (!defined('XOOPS_ROOT_PATH')) {
+    throw new \RuntimeException('Restricted access');
+}
 
 include_once XOOPS_ROOT_PATH . '/class/xoopstree.php';
 require_once XOOPS_ROOT_PATH . '/kernel/object.php';
@@ -59,8 +61,8 @@ class XoopsComments extends XoopsObject
     public $prefix;
 
     /**
-     * @param      $ctable
-     * @param null|array $id
+     * @param string|null $ctable
+     * @param array|int|string|null $id
      */
     public function __construct($ctable, $id = null)
     {

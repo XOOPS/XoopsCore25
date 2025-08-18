@@ -73,8 +73,8 @@ class XoopsFormTinymce5 extends XoopsEditor
             $eltmsg     = empty($eltcaption) ? sprintf(_FORM_ENTER, $eltname) : sprintf(_FORM_ENTER, $eltcaption);
             $eltmsg     = str_replace('"', '\"', stripslashes($eltmsg));
             $ret        = "\n";
-			$ret .= "if ( tinymce.get('{$eltname}').getContent() == \"\" || tinymce.get('{$eltname}').getContent() == null) ";
-			$ret .= "{ window.alert(\"{$eltmsg}\"); tinymce.get('{$eltname}').focus(); return false; }";
+            $ret .= "if ( tinymce.get('{$eltname}').getContent() == \"\" || tinymce.get('{$eltname}').getContent() == null) ";
+            $ret .= "{ window.alert(\"{$eltmsg}\"); tinymce.get('{$eltname}').focus(); return false; }";
 
             return $ret;
         }
@@ -124,7 +124,7 @@ class XoopsFormTinymce5 extends XoopsEditor
      */
     public function isActive()
     {
-		return is_readable(XOOPS_ROOT_PATH . $this->rootPath . '/tinymce.php')
-			&& is_readable(XOOPS_ROOT_PATH . $this->rootPath . '/js/tinymce/tinymce.min.js');
+        return is_readable(XOOPS_ROOT_PATH . $this->rootPath . '/tinymce.php')
+            && is_readable(XOOPS_ROOT_PATH . $this->rootPath . '/js/tinymce/tinymce.min.js');
     }
 }

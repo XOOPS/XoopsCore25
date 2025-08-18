@@ -20,7 +20,9 @@
  * @since               2.3.0
  * @author              John Neill <catzwolf@xoops.org>
  */
-defined('XOOPS_ROOT_PATH') || exit('Restricted access');
+if (!defined('XOOPS_ROOT_PATH')) {
+    throw new \RuntimeException('Restricted access');
+}
 
 xoops_load('XoopsFormCheckBox');
 

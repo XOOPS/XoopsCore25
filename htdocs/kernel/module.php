@@ -14,7 +14,9 @@
  * @package             kernel
  * @since               2.0.0
  */
-defined('XOOPS_ROOT_PATH') || exit('Restricted access');
+if (!defined('XOOPS_ROOT_PATH')) {
+    throw new \RuntimeException('Restricted access');
+}
 
 /**
  * A Module
@@ -1010,7 +1012,7 @@ class XoopsModuleHandler extends XoopsObjectHandler
     /**
      * returns an array of module names
      *
-     * @param  CriteriaElement $criteria
+     * @param  CriteriaElement|null $criteria
      * @param  boolean         $dirname_as_key if true, array keys will be module directory names
      *                                         if false, array keys will be module id
      * @return array

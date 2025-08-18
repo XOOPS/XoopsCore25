@@ -17,7 +17,9 @@
  * @author              Pierre-Eric MENUET <pemphp@free.fr>
  */
 
-defined('XOOPS_ROOT_PATH') || exit('Restricted access');
+if (!defined('XOOPS_ROOT_PATH')) {
+    throw new \RuntimeException('Restricted access');
+}
 
 /**
  *
@@ -43,8 +45,8 @@ class XoopsAuthXoops extends XoopsAuth
      * Authenticate user
      *
      * @param  string $uname
-     * @param  string $pwd
-     * @return bool
+     * @param  string|null $pwd
+     * @return XoopsUser|bool
      */
     public function authenticate($uname, $pwd = null)
     {

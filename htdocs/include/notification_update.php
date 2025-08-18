@@ -17,7 +17,7 @@
  * @author              Kazumi Ono (AKA onokazu) http://www.myweb.ne.jp/, http://jp.xoops.org/
  */
 if (!defined('XOOPS_ROOT_PATH') || !is_object($xoopsModule)) {
-    die('Restricted access');
+    throw new \RuntimeException('Restricted access');
 }
 // RMV-NOTIFY
 

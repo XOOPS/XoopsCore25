@@ -15,7 +15,9 @@
  * @since               2.0.0
  * @author              Kazumi Ono (AKA onokazu) http://www.myweb.ne.jp/, http://jp.xoops.org/
  */
-defined('XOOPS_ROOT_PATH') || exit('Restricted access');
+if (!defined('XOOPS_ROOT_PATH')) {
+    throw new \RuntimeException('Restricted access');
+}
 
 /**
  * @author              Kazumi Ono <onokazu@xoops.org>
@@ -294,8 +296,8 @@ class XoopsImageSetHandler extends XoopsObjectHandler
     /**
      * Get a list of XoopsImageSet
      *
-     * @param null $refid
-     * @param null $tplset
+     * @param int|string|null $refid
+     * @param string|null $tplset
      * @internal param int $imgcat_id
      * @internal param bool $image_display
      * @return array Array of {@link XoopsImage} objects
@@ -304,7 +306,7 @@ class XoopsImageSetHandler extends XoopsObjectHandler
     {
         $criteria = new CriteriaCompo();
         if (isset($refid)) {
-            $criteria->add(new Criteria('imgset_refid', (int)$refid));
+            $criteria->add(new Criteria('imgset_refid', (string) ((int)$refid)));
         }
         if (isset($tplset)) {
             $criteria->add(new Criteria('tplset_name', $tplset));

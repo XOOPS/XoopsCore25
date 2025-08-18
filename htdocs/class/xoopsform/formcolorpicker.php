@@ -16,7 +16,9 @@
  * @since               2.0.0
  * @author              Zoullou <webmaster@zoullou.org>
  */
-defined('XOOPS_ROOT_PATH') || exit('Restricted access');
+if (!defined('XOOPS_ROOT_PATH')) {
+    throw new \RuntimeException('Restricted access');
+}
 
 /**
  * Color Selection Field

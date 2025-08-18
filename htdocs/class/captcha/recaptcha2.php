@@ -23,7 +23,9 @@ use Xmf\IPAddress;
  * @link        https://xoops.org
  */
 
-defined('XOOPS_ROOT_PATH') || exit('Restricted access');
+if (!defined('XOOPS_ROOT_PATH')) {
+    throw new \RuntimeException('Restricted access');
+}
 
 /**
  * Class XoopsCaptchaRecaptcha2

@@ -18,7 +18,9 @@
  * @subpackage          core
  */
 
-defined('XOOPS_ROOT_PATH') || exit('Restricted access');
+if (!defined('XOOPS_ROOT_PATH')) {
+    throw new \RuntimeException('Restricted access');
+}
 
 xoops_loadLanguage('global');
 
@@ -87,7 +89,7 @@ class XoopsTpl extends Smarty
      *
      * @param string $tplSource The template to render
      * @param bool   $display   If rendered text should be output or returned
-     * @param null   $vars
+     * @param mixed   $vars
      *
      * @return string Rendered output if $display was false
      */

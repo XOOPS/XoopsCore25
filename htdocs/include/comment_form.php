@@ -19,7 +19,7 @@
 use Xmf\Request;
 
 if (!defined('XOOPS_ROOT_PATH') || !is_object($xoopsModule)) {
-    die('Restricted access');
+    throw new \RuntimeException('Restricted access');
 }
 
 $com_modid = $xoopsModule->getVar('mid');

@@ -17,7 +17,9 @@
  * @author              Pierre-Eric MENUET <pemphp@free.fr>
  */
 
-defined('XOOPS_ROOT_PATH') || exit('Restricted access');
+if (!defined('XOOPS_ROOT_PATH')) {
+    throw new \RuntimeException('Restricted access');
+}
 
 /**
  *

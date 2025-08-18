@@ -16,7 +16,9 @@
  * @author              Michael van Dam <mvandam@caltech.edu>
  * @author              Kazumi Ono (AKA onokazu) http://www.myweb.ne.jp/, http://jp.xoops.org/
  */
-defined('XOOPS_ROOT_PATH') || exit('Restricted access');
+if (!defined('XOOPS_ROOT_PATH')) {
+    throw new \RuntimeException('Restricted access');
+}
 
 // RMV-NOTIFY
 include_once $GLOBALS['xoops']->path('include/notification_constants.php');
@@ -588,10 +590,8 @@ class XoopsNotificationHandler extends XoopsObjectHandler
      *
      * @param int    $module_id Module ID
      * @param int    $item_id   Item ID
-     * @param string $order     Sort order
-     * @param int    $mode      not_mode    see include/notification_constants.php
-     *
-     * @param null   $status
+     * @param string|null $order     Sort order
+     * @param int|null    $mode      not_mode    see include/notification_constants.php
      *
      * @return array Array of {@link XoopsNotification} objects
      */

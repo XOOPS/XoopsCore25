@@ -44,23 +44,6 @@
     <link rel="stylesheet" type="text/css" href="<{xoAppUrl 'media/font-awesome6/css/v4-shims.min.css'}>">
 
 
-    <script src="<{$xoops_url}>/browse.php?Frameworks/jquery/jquery.js"></script>
-
-    <script src="<{xoImgUrl}>js/bootstrap.min.js"></script>
-    <script src="<{xoImgUrl}>js/masonry.pkgd.min.js"></script>
-
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
-
-    <script src="<{xoImgUrl}>js/headhesive.min.js"></script>
-    <{*<script src="<{xoImgUrl}>js/headhesive.js"></script>*}>
-    <script src="<{xoImgUrl}>js/jquery.scrollUp.min.js"></script>
-    <script src="<{xoImgUrl}>js/imagesloaded.pkgd.min.js"></script>
-
-
-    <script src="<{xoImgUrl}>js/theme-toggle.js"></script>
-
-<{*    <script src="<{$xoImgUrl}>/js/theme-toggle.js" defer></script>*}>
-    <script src="<{xoImgUrl}>js/js.js"></script>
     <link rel="alternate" type="application/rss+xml" title="" href="<{xoAppUrl 'backend.php'}>">
 
     <title><{if isset($xoops_dirname) && $xoops_dirname == "system"}><{$xoops_sitename}><{if !empty($xoops_pagetitle)}> - <{$xoops_pagetitle}><{/if}><{else}><{if !empty($xoops_pagetitle)}><{$xoops_pagetitle}> - <{$xoops_sitename}><{/if}><{/if}></title>
@@ -110,6 +93,34 @@
     </div>
 </main>
 
+
+
+<{*=============================  JS   ==================================*}>
+
+<!-- 1. jQuery must be first -->
+<script src="<{$xoops_url}>/browse.php?Frameworks/jquery/jquery.js"></script>
+
+<!-- 2. Bootstrap (if using Bootstrap JS) -->
+<{*<script src="<{xoImgUrl}>js/bootstrap.bundle.min.js"></script>*}>
+
+<!-- 3. Plugins that require jQuery -->
+<script src="<{xoImgUrl}>js/jquery.scrollUp.min.js"></script>
+<script src="<{xoImgUrl}>js/masonry.pkgd.min.js"></script>
+<script src="<{xoImgUrl}>js/imagesloaded.pkgd.min.js"></script>
+<script src="<{xoImgUrl}>js/headhesive.min.js"></script>
+
+
+<!-- 4. Your custom scripts (js.js etc.) -->
+
+<script src="<{xoImgUrl}>js/bootstrap.bundle.min.js"></script>
+
+<script src="<{xoImgUrl}>js/theme-toggle.js"></script>
+<script src="<{xoImgUrl}>js/js.js"></script>
+
+<!-- 5. XOOPS module header (injects module-specific JS if needed) -->
+<{$xoops_module_header}>
+
+<!-- 6. Inline scripts (AFTER all libraries) -->
 <script>
     // Set options
     var options = {

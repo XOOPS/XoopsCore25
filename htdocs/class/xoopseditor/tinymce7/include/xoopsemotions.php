@@ -10,7 +10,9 @@
  * @author              Laurent JEN <dugris@frxoops.org>
  */
 
-defined('XOOPS_ROOT_PATH') || exit('XOOPS root path not defined');
+if (!defined('XOOPS_ROOT_PATH')) {
+    throw new \RuntimeException('XOOPS root path not defined');
+}
 
 include_once XOOPS_ROOT_PATH . '/modules/system/constants.php';
 // Add your code here to check access by groups

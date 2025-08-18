@@ -19,7 +19,9 @@
  * @license             GNU GPL 2.0 or later (https://www.gnu.org/licenses/gpl-2.0.html)
  * @deprecated
  */
-defined('XOOPS_ROOT_PATH') || exit('Restricted access');
+if (!defined('XOOPS_ROOT_PATH')) {
+    throw new \RuntimeException('Restricted access');
+}
 
 define('XOOPS_LICENSE_CODE', 'GPL');
 define('XOOPS_LICENSE_TEXT', 'GPL General Public License (GPL) (v. 2.0)');
