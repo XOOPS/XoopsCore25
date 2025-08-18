@@ -109,8 +109,12 @@ class XoopsAuthProvisionning
         if (!$xoopsUser) { // Xoops User Database not exists
             if ($this->ldap_provisionning) {
                 $xoopsUser = $this->add($datas, $uname, $pwd);
-            } else {
+            } elseif ($this->_auth_instance) {
                 $this->_auth_instance->setErrors(0, sprintf(_AUTH_LDAP_XOOPS_USER_NOTFOUND, $uname));
+            } else {
+                // If no auth instance, we cannot set errors
+                // This is a fallback for legacy code
+                trigger_error(sprintf(_AUTH_LDAP_XOOPS_USER_NOTFOUND, $uname), E_USER_WARNING);
             }
         } else { // Xoops User Database exists
             if ($this->ldap_provisionning && $this->ldap_provisionning_upd) {
@@ -124,20 +128,20 @@ class XoopsAuthProvisionning
     /**
      * Add a new user to the system
      *
-     * @param  array     $datas
-     * @param  string    $uname
-     * @param  string|null $pwd
+     * @param array       $datas
+     * @param string      $uname
+     * @param string|null $pwd
      * @return XoopsUser|false
      */
     public function add($datas, $uname, $pwd = null)
     {
-        $ret            = false;
+        $ret = false;
         /** @var XoopsMemberHandler $member_handler */
         $member_handler = xoops_getHandler('member');
         // Create XOOPS Database User
         $newuser = $member_handler->createUser();
         $newuser->setVar('uname', $uname);
-        $newuser->setVar('pass', password_hash(stripslashes($pwd), PASSWORD_DEFAULT));
+        $newuser->setVar('pass', password_hash(stripslashes((string)$pwd), PASSWORD_DEFAULT));
         $newuser->setVar('rank', 0);
         $newuser->setVar('level', 1);
         $newuser->setVar('timezone_offset', $this->default_TZ);
@@ -168,18 +172,18 @@ class XoopsAuthProvisionning
     /**
      * Modify user information
      *
-     * @param  XoopsUser      $xoopsUser
-     * @param  array     $datas
-     * @param  string $uname
-     * @param  string|null $pwd
+     * @param XoopsUser   $xoopsUser
+     * @param array       $datas
+     * @param string      $uname
+     * @param string|null $pwd
      * @return XoopsUser|false
      */
     public function change($xoopsUser, $datas, $uname, $pwd = null)
     {
-        $ret            = false;
+        $ret = false;
         /** @var XoopsMemberHandler $member_handler */
         $member_handler = xoops_getHandler('member');
-        $xoopsUser->setVar('pass', password_hash(stripcslashes($pwd), PASSWORD_DEFAULT));
+        $xoopsUser->setVar('pass', password_hash(stripcslashes((string)$pwd), PASSWORD_DEFAULT));
         $tab_mapping = explode('|', $this->ldap_field_mapping);
         foreach ($tab_mapping as $mapping) {
             $fields = explode('=', trim($mapping));
