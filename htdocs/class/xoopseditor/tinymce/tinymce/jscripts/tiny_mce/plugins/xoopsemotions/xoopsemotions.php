@@ -90,7 +90,7 @@ if ($admin && $op === 'SmilesAdd') {
 }
 
 $time = time();
-if (!isset($_SESSION['XoopsEmotions']) && (isset($_SESSION['XoopsEmotions_expire']) && $_SESSION['XoopsEmotions_expire'] < $time)) {
+if (!isset($_SESSION['XoopsEmotions']) || (isset($_SESSION['XoopsEmotions_expire']) && $_SESSION['XoopsEmotions_expire'] < $time)) {
     $_SESSION['XoopsEmotions']        = $myts->getSmileys();
     $_SESSION['XoopsEmotions_expire'] = $time + 300;
 }

@@ -64,8 +64,8 @@ xoops_load('xoopsformloader');
 //xoops_load("xoopsmodule");
 include_once XOOPS_ROOT_PATH . '/include/cp_functions.php';
 include_once XOOPS_ROOT_PATH . '/modules/system/constants.php';
-include_once __DIR__ . '/XoopsFormRendererBootstrap4.php';
-XoopsFormRenderer::getInstance()->set(new XoopsFormRendererBootstrap4());
+include_once __DIR__ . '/XoopsFormRendererBootstrap5.php';
+XoopsFormRenderer::getInstance()->set(new XoopsFormRendererBootstrap5());
 
 
 global $xoopsConfig;
@@ -94,6 +94,9 @@ if ($isadmin || ($catreadcount > 0) || ($catwritecount > 0)) {
         if (!$GLOBALS['xoopsSecurity']->check()) {
             redirect_header($current_file . '?target=' . $target, 3, implode('<br>', $GLOBALS['xoopsSecurity']->getErrors()));
         }
+
+
+        $imgcat_id = Request::getInt('imgcat_id', 0, 'POST');
         $imgcat = $imgcat_handler->get($imgcat_id);
         if (!is_object($imgcat)) {
             redirect_header($current_file . '?target=' . $target, 3);
