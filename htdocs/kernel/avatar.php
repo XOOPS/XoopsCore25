@@ -421,7 +421,7 @@ class XoopsAvatarHandler extends XoopsObjectHandler
             $criteria->add(new Criteria('avatar_type', $avatar_type));
         }
         if (isset($avatar_display)) {
-            $criteria->add(new Criteria('avatar_display', (int) $avatar_display));
+            $criteria->add(new Criteria('avatar_display',  (string) ((int) $avatar_display)));
         }
         $avatars = &$this->getObjects($criteria, true);
         $ret     = ['blank.gif' => _NONE];

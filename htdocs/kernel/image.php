@@ -373,7 +373,7 @@ class XoopsImageHandler extends XoopsObjectHandler
     {
         $criteria = new CriteriaCompo(new Criteria('imgcat_id', (int)$imgcat_id));
         if (isset($image_display)) {
-            $criteria->add(new Criteria('image_display', (int)$image_display));
+            $criteria->add(new Criteria('image_display', (string) ((int)$image_display)));
         }
         $images = $this->getObjects($criteria, false, true);
         $ret    = [];
