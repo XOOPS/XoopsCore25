@@ -116,8 +116,8 @@ class XoopsModelAbstract
      * normally, this is called from child classes only
      *
      * @access protected
-     * @param null $args
-     * @param null $handler
+     * @param array|null $args
+     * @param mixed $handler
      */
     public function __construct($args = null, $handler = null)
     {

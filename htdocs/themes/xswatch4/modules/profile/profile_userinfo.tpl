@@ -81,7 +81,7 @@
                             <{assign var="url_image_overloaded" value=$xoops_imageurl|cat:"modules/"|cat:$result.image|replace:"$xoops_url/modules/":''}>
                             <{assign var="path_image_overloaded" value=$xoops_rootpath|cat:"/themes/"|cat:$xoops_theme|cat:"/"|cat:$url_image_overloaded|replace:$xoops_imageurl:''}>
 
-                            <{if file_exists($path_image_overloaded)}>
+                            <{if $path_image_overloaded|file_exists}>
                                 <div class="d-inline"><img src="<{$url_image_overloaded}>" alt="<{$module.name}>"> <a href="<{$result.link}>"><{$result.title}></a></div>
                                 <span class="d-inline d-sm-none"><br /></span>
                                 <div class="d-inline text-muted"><small><span class="fa-solid fa-calendar fa-sm ml-2"></span> <{$result.time}></small></div>

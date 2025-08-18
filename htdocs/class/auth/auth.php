@@ -29,9 +29,9 @@ defined('XOOPS_ROOT_PATH') || exit('Restricted access');
  */
 class XoopsAuth
 {
-    public $_dao;
-    public $_errors;
-    public $auth_method;
+    public ?XoopsDatabase $_dao;
+    public array $_errors = [];
+    public string $auth_method = '';
 
     /**
      * Authentication Service constructor
