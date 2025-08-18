@@ -91,8 +91,8 @@ class XoopsBlock extends XoopsObject
             if (is_array($id)) {
                 $this->assignVars($id);
             } else {
-                $blkhandler = xoops_getHandler('block');
-                $obj        = $blkhandler->get($id);
+                $blockHandler = xoops_getHandler('block');
+                $obj        = $blockHandler->get($id);
                 foreach (array_keys($obj->getVars()) as $i) {
                     $this->assignVar($i, $obj->getVar($i, 'n'));
                 }
@@ -437,9 +437,9 @@ class XoopsBlock extends XoopsObject
     public function load($id)
     {
         $id  = (int) $id;
-        /** @var XoopsBlockHandler $blkhandler */
-        $blkhandler = xoops_getHandler('block');
-        $obj        = $blkhandler->get($id);
+        /** @var XoopsBlockHandler $blockHandler */
+        $blockHandler = xoops_getHandler('block');
+        $obj        = $blockHandler->get($id);
         foreach (array_keys($obj->getVars()) as $i) {
             $this->assignVar($i, $obj->getVar($i, 'n'));
         }
@@ -454,9 +454,9 @@ class XoopsBlock extends XoopsObject
      */
     public function store()
     {
-        /** @var XoopsBlockHandler $blkhandler */
-        $blkhandler = xoops_getHandler('block');
-        if (false === $blkhandler->insert($this)) {
+        /** @var XoopsBlockHandler $blockHandler */
+        $blockHandler = xoops_getHandler('block');
+        if (false === $blockHandler->insert($this)) {
             return false;
         }
         return (int) $this->bid();
@@ -471,9 +471,9 @@ class XoopsBlock extends XoopsObject
      */
     public function delete()
     {
-        /** @var XoopsBlockHandler $blkhandler */
-        $blkhandler = xoops_getHandler('block');
-        return $blkhandler->delete($this);
+        /** @var XoopsBlockHandler $blockHandler */
+        $blockHandler = xoops_getHandler('block');
+        return $blockHandler->delete($this);
     }
 
     /**
