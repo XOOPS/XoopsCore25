@@ -689,7 +689,7 @@ class XoopsMemberHandler
                     $qs = '';
                     if (!empty($parts['query'])) {
                         parse_str($parts['query'], $q);
-                        $redact = ['token', 'access_token', 'id_token', 'password', 'pass', 'pwd', 'secret', 'key', 'api_key', 'apikey', 'auth', 'authorization', 'session', 'sid', 'code'];
+                        $redact = self::SENSITIVE_PARAMS;
                         foreach ($q as $k => &$v) {
                             $kLower = strtolower((string)$k);
                             if (in_array($kLower, $redact, true)) {
