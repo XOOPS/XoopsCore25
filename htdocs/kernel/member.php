@@ -604,6 +604,11 @@ class XoopsMemberHandler
                             . " m WHERE m.uid = u.uid AND m.groupid IN {$group_in})";
         }
 
+        // Initialize criteria-dependent variables
+        $limit   = 0;
+        $start   = 0;
+        $orderBy = '';
+
         // Handle criteria - compatible with CriteriaElement and subclasses
         if ($criteria instanceof \CriteriaElement) {
             $criteriaCompo->add($criteria, 'AND');
@@ -611,34 +616,34 @@ class XoopsMemberHandler
 
             // Remove WHERE keyword if present
             $sqlCriteria = preg_replace('/^\s*WHERE\s+/i', '', $sqlCriteria ?? '');
-
-            if ('' !== $sqlCriteria) {
+            if ($sqlCriteria !== '') {
                 $whereParts[] = $sqlCriteria;
         }
 
+            // LIMIT/OFFSET
             $limit = (int)$criteria->getLimit();
             $start = (int)$criteria->getStart();
+
+            // ORDER BY (whitelist)
+            $sort  = trim((string)$criteria->getSort());
+            $order = trim((string)$criteria->getOrder());
+            if ($sort !== '') {
+                $allowedSorts = $this->allowedSortMap();
+                if (isset($allowedSorts[$sort])) {
+                    $orderDirection = (strtoupper($order) === 'DESC') ? ' DESC' : ' ASC';
+                    $orderBy        = ' ORDER BY ' . $allowedSorts[$sort] . $orderDirection;
+                }
+            }
         }
 
-        // Build WHERE clause
+        // Emit WHERE once
         if (!empty($whereParts)) {
             $sql .= ' WHERE ' . implode(' AND ', $whereParts);
         }
 
-        // Handle ORDER BY with enhanced security whitelist
-        if ($criteria instanceof \CriteriaElement) {
-            $sort = trim($criteria->getSort());
-            $order = trim($criteria->getOrder());
-            if ('' !== $sort) {
-                // Use the whitelist method for safe sorting columns
-                $allowedSorts = $this->allowedSortMap();
+        // Then ORDER BY (if any)
+        $sql .= $orderBy;
 
-                if (isset($allowedSorts[$sort])) {
-                    $orderDirection = ('DESC' === strtoupper($order)) ? ' DESC' : ' ASC';
-                    $sql .= ' ORDER BY ' . $allowedSorts[$sort] . $orderDirection;
-                }
-            }
-        }
 
         // Execute query with comprehensive error handling
         $result = $this->userHandler->db->query($sql, $limit, $start);
@@ -701,16 +706,10 @@ class XoopsMemberHandler
 
                 // Add correlation context for easier debugging
                 $context = [
-                    'user_id' => isset($GLOBALS['xoopsUser']) && $GLOBALS['xoopsUser']
-                        ? (int)$GLOBALS['xoopsUser']->getVar('uid')
-                        : 'anonymous',
-                    'uri'          => isset($_SERVER['REQUEST_URI'])
-                        ? $sanitizeUri($_SERVER['REQUEST_URI'])
-                        : 'cli',
-                    'method'       => isset($_SERVER['REQUEST_METHOD'])
-                        ? $sanitizeMethod($_SERVER['REQUEST_METHOD'])
-                        : 'CLI',
-                    'groups_count' => (int)count($validGroups),
+                    'user_id'      => isset($GLOBALS['xoopsUser']) && $GLOBALS['xoopsUser'] ? (int)$GLOBALS['xoopsUser']->getVar('uid') : 'anonymous',
+                    'uri'          => isset($_SERVER['REQUEST_URI']) ? $sanitizeUri($_SERVER['REQUEST_URI']) : 'cli',
+                    'method'       => isset($_SERVER['REQUEST_METHOD']) ? $sanitizeMethod($_SERVER['REQUEST_METHOD']) : 'CLI',
+                    'groups_count' => count($validGroups),
                 ];
                 $msg .= ' Context: ' . json_encode($context, JSON_UNESCAPED_SLASHES);
                 $msg .= ' SQL: ' . $redactSql($sql);
