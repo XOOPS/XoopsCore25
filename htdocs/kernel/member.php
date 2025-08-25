@@ -465,6 +465,8 @@ class XoopsMemberHandler
 
     protected function allowedSortMap()
     {
+        // Maps both prefixed and non-prefixed column names for flexibility
+        // This allows sorting by 'uid' or 'u.uid' while maintaining security
         return [
             'uid'            => 'u.uid',
             'uname'          => 'u.uname',
@@ -473,6 +475,7 @@ class XoopsMemberHandler
             'last_login'     => 'u.last_login',
             'user_avatar'    => 'u.user_avatar',
             'name'           => 'u.name',
+            // Prefixed versions for explicit table references
             'u.uid'          => 'u.uid',
             'u.uname'        => 'u.uname',
             'u.email'        => 'u.email',
@@ -534,10 +537,28 @@ class XoopsMemberHandler
             }
         }
 
-        // Production safety check using hostname detection
-        $isProd = isset($_SERVER['SERVER_NAME'])
-                  && !in_array($_SERVER['SERVER_NAME'], ['localhost','127.0.0.1','::1','dev.local'], true);
+        // Production safety check - use secure environment detection
+        // Note: SERVER_NAME can be spoofed via Host header, so it's not secure for production detection
+        // For security, set XOOPS_ENV=production in your server environment or use a config constant
+        $isProd = false;
 
+        if (defined('XOOPS_PRODUCTION') && XOOPS_PRODUCTION) {
+            // Most secure: use a defined constant set in configuration
+            $isProd = true;
+        } elseif (getenv('XOOPS_ENV') === 'production') {
+            // Secure: use environment variable (not spoofable by clients)
+            $isProd = true;
+        } else {
+            // Fallback: assume production unless explicitly in known development environments
+            // This is more secure than the old approach - defaults to restrictive mode
+            $isProd = true;
+            // Only allow debug in explicitly known safe development indicators
+            if ((defined('XOOPS_DEBUG') && XOOPS_DEBUG) ||
+                (php_sapi_name() === 'cli') ||
+                (isset($_SERVER['SERVER_ADDR']) && $_SERVER['SERVER_ADDR'] === '127.0.0.1')) {
+                $isProd = false;
+            }
+        }
 
         // Enable SQL logging only if XOOPS PHP debug is allowed and not in production
         $isDebug = $xoopsDebugAllowed && !$isProd;
@@ -566,31 +587,17 @@ class XoopsMemberHandler
         $limit = 0;
         $start = 0;
 
-        // Sanitize and validate groups with enhanced security
-        $validGroups = [];
-        foreach ($groups as $groupId) {
-            // Extra validation to ensure we have clean integers
-            if (is_numeric($groupId)) {
-            $groupId = (int)$groupId;
-            if ($groupId > 0) {
-                $validGroups[] = $groupId;
-            }
-        }
-        }
-
-        // Build group filtering with EXISTS subquery for better performance
-        if (!empty($validGroups)) {
-            // Additional safety: ensure all values are actually integers
+        // Sanitize and validate groups once - clean and efficient
             $validGroups = array_values(array_unique(array_filter(
-                array_map('intval', (array)$groups),
+            array_map('intval', $groups),
                 static fn($id) => $id > 0
             )));
 
+        // Build group filtering with EXISTS subquery (no re-validation needed)
         if (!empty($validGroups)) {
             $group_in = '(' . implode(', ', $validGroups) . ')';
             $whereParts[] = 'EXISTS (SELECT 1 FROM ' . $this->membershipHandler->db->prefix('groups_users_link')
                             . " m WHERE m.uid = u.uid AND m.groupid IN {$group_in})";
-        }
         }
 
         // Handle criteria - compatible with CriteriaElement and subclasses
@@ -619,7 +626,7 @@ class XoopsMemberHandler
             $sort = trim($criteria->getSort());
             $order = trim($criteria->getOrder());
             if ('' !== $sort) {
-                // Comprehensive whitelist for safe sorting columns
+                // Use the whitelist method for safe sorting columns
                 $allowedSorts = $this->allowedSortMap();
 
                 if (isset($allowedSorts[$sort])) {
