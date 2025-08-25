@@ -651,28 +651,16 @@ class XoopsMemberHandler
             $msg = "Database query failed in " . __METHOD__ . ": {$error}";
 
             if ($isDebug) {
-                // Sanitize URI and method to prevent log injection
-                $sanitizeLogValue = function ($value) {
-                    // Remove control characters and limit length
-                    $value = preg_replace('/[\x00-\x1F\x7F]+/', '', (string)$value);
-                    return mb_substr($value, 0, 256); // Limit to 256 chars
-                };
-
-                // Add correlation context for easier debugging
-                // --- log-sanitizers ---
+                // Comprehensive log sanitizers to prevent injection and spoofing attacks
                 $sanitizeLogValue = static function ($value): string {
                     $s = (string)$value;
-
                     // Strip ASCII control chars (including CR/LF) and DEL
                     $s = preg_replace('/[\x00-\x1F\x7F]/', '', $s);
-
                     // Strip Unicode bidi/isolation controls that can spoof log layout
                     // U+202A..U+202E (LRE..RLO) and U+2066..U+2069 (LRI..PDI)
                     $s = preg_replace('/[\x{202A}-\x{202E}\x{2066}-\x{2069}]/u', '', $s);
-
                     // Collapse excessive whitespace
                     $s = preg_replace('/\s+/', ' ', $s);
-
                     // Length cap with mbstring fallback
                     if (function_exists('mb_substr')) {
                         $s = mb_substr($s, 0, 256, 'UTF-8');
@@ -692,7 +680,6 @@ class XoopsMemberHandler
                     $u     = (string)$uri;
                     $parts = parse_url($u);
                     $path  = $sanitizeLogValue($parts['path'] ?? '/');
-
                     // Redact sensitive query params
                     $qs = '';
                     if (!empty($parts['query'])) {
@@ -712,7 +699,7 @@ class XoopsMemberHandler
                     return $qs !== '' ? $path . '?' . $qs : $path;
                 };
 
-                // Usage in your context array
+                // Add correlation context for easier debugging
                 $context = [
                     'user_id' => isset($GLOBALS['xoopsUser']) && $GLOBALS['xoopsUser']
                         ? (int)$GLOBALS['xoopsUser']->getVar('uid')
