@@ -575,7 +575,7 @@ class XoopsMemberHandler
             // Replace hex literals
             $sql = preg_replace("/x'[0-9A-Fa-f]+'/", "x'?'", $sql);
             // Replace large numbers (potential IDs) but keep small ones
-            $sql = preg_replace('/\b\d{6,}\b/', '[ID]', $sql);
+            // Removed overzealous redaction of large numbers to preserve legitimate identifiers
             return $sql;
         };
 
