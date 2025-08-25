@@ -663,7 +663,7 @@ class XoopsMemberHandler
                     $s = preg_replace('/[\x00-\x1F\x7F]/', '', $s);
                     // Strip Unicode bidi/isolation controls that can spoof log layout
                     // U+202A..U+202E (LRE..RLO) and U+2066..U+2069 (LRI..PDI)
-                    $s = preg_replace('/[\x{202A}-\x{202E}\x{2066}-\x{2069}]/u', '', $s);
+                    $s = preg_replace(\XoopsMemberHandler::BIDI_CONTROL_REGEX, '', $s);
                     // Collapse excessive whitespace
                     $s = preg_replace('/\s+/', ' ', $s);
                     // Length cap with mbstring fallback
