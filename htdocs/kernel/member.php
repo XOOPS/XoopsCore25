@@ -463,6 +463,27 @@ class XoopsMemberHandler
         return $this->userHandler->insert($user, true);
     }
 
+    protected function allowedSortMap()
+    {
+        return [
+            'uid'            => 'u.uid',
+            'uname'          => 'u.uname',
+            'email'          => 'u.email',
+            'user_regdate'   => 'u.user_regdate',
+            'last_login'     => 'u.last_login',
+            'user_avatar'    => 'u.user_avatar',
+            'name'           => 'u.name',
+            'u.uid'          => 'u.uid',
+            'u.uname'        => 'u.uname',
+            'u.email'        => 'u.email',
+            'u.user_regdate' => 'u.user_regdate',
+            'u.last_login'   => 'u.last_login',
+            'u.user_avatar'  => 'u.user_avatar',
+            'u.name'         => 'u.name',
+        ];
+    }
+
+
     /**
      * Get a list of users belonging to certain groups and matching criteria
      * Temporary solution
@@ -486,6 +507,57 @@ class XoopsMemberHandler
         $asobject = (bool)$asobject;
         $id_as_key = (bool)$id_as_key;
 
+        // Debug configuration using only current XOOPS debug system
+        // Check XOOPS debug mode - we only want PHP debugging (1=inline, 2=popup)
+        $xoopsDebugMode = isset($GLOBALS['xoopsConfig']['debug_mode']) ? (int)$GLOBALS['xoopsConfig']['debug_mode'] : 0;
+        $xoopsPhpDebugEnabled = ($xoopsDebugMode === 1 || $xoopsDebugMode === 2);
+
+        // Check if debug is allowed for current user based on debugLevel
+        $xoopsDebugAllowed = $xoopsPhpDebugEnabled;
+        if ($xoopsPhpDebugEnabled && isset($GLOBALS['xoopsConfig']['debugLevel'])) {
+            $debugLevel = (int)$GLOBALS['xoopsConfig']['debugLevel'];
+            $xoopsUser = $GLOBALS['xoopsUser'] ?? null;
+            $xoopsUserIsAdmin = isset($GLOBALS['xoopsUserIsAdmin']) ? $GLOBALS['xoopsUserIsAdmin'] : false;
+
+            // Apply XOOPS debug level restrictions
+            switch ($debugLevel) {
+                case 2: // Admins only
+                    $xoopsDebugAllowed = $xoopsUserIsAdmin;
+                    break;
+                case 1: // Members only
+                    $xoopsDebugAllowed = ($xoopsUser !== null);
+                    break;
+                case 0: // All users
+                default:
+                    $xoopsDebugAllowed = true;
+                    break;
+            }
+        }
+
+        // Production safety check using hostname detection
+        $isProd = isset($_SERVER['SERVER_NAME'])
+                  && !in_array($_SERVER['SERVER_NAME'], ['localhost','127.0.0.1','::1','dev.local'], true);
+
+
+        // Enable SQL logging only if XOOPS PHP debug is allowed and not in production
+        $isDebug = $xoopsDebugAllowed && !$isProd;
+
+        /**
+         * Redact sensitive SQL literals in debug logs while preserving query structure
+         * @param string $sql The SQL query to redact
+         * @return string Redacted SQL query
+         */
+        $redactSql = static function (string $sql): string {
+            // Replace quoted strings with placeholders
+            $sql = preg_replace("/'[^']*'/", "'?'", $sql);
+            $sql = preg_replace('/"[^"]*"/', '"?"', $sql);
+            // Replace hex literals
+            $sql = preg_replace("/x'[0-9A-Fa-f]+'/", "x'?'", $sql);
+            // Replace large numbers (potential IDs) but keep small ones
+            $sql = preg_replace('/\b\d{6,}\b/', '[ID]', $sql);
+            return $sql;
+        };
+
         $ret           = [];
         $criteriaCompo = new CriteriaCompo();
         $select        = $asobject ? 'u.*' : 'u.uid';
@@ -494,20 +566,31 @@ class XoopsMemberHandler
         $limit = 0;
         $start = 0;
 
-        // Sanitize and validate groups
+        // Sanitize and validate groups with enhanced security
         $validGroups = [];
         foreach ($groups as $groupId) {
+            // Extra validation to ensure we have clean integers
+            if (is_numeric($groupId)) {
             $groupId = (int)$groupId;
             if ($groupId > 0) {
                 $validGroups[] = $groupId;
             }
         }
+        }
 
-        // Use EXISTS subquery to avoid GROUP BY complications
+        // Build group filtering with EXISTS subquery for better performance
+        if (!empty($validGroups)) {
+            // Additional safety: ensure all values are actually integers
+            $validGroups = array_values(array_unique(array_filter(
+                array_map('intval', (array)$groups),
+                static fn($id) => $id > 0
+            )));
+
         if (!empty($validGroups)) {
             $group_in = '(' . implode(', ', $validGroups) . ')';
             $whereParts[] = 'EXISTS (SELECT 1 FROM ' . $this->membershipHandler->db->prefix('groups_users_link')
                             . " m WHERE m.uid = u.uid AND m.groupid IN {$group_in})";
+        }
         }
 
         // Handle criteria - compatible with CriteriaElement and subclasses
@@ -531,24 +614,14 @@ class XoopsMemberHandler
             $sql .= ' WHERE ' . implode(' AND ', $whereParts);
         }
 
-        // Handle ORDER BY with whitelist for security
+        // Handle ORDER BY with enhanced security whitelist
         if ($criteria instanceof \CriteriaElement) {
             $sort = trim($criteria->getSort());
             $order = trim($criteria->getOrder());
             if ('' !== $sort) {
-                // Whitelist for safe sorting columns (extend as needed)
-                $allowedSorts = [
-                    'uid'            => 'u.uid',
-                    'uname'          => 'u.uname',
-                    'email'          => 'u.email',
-                    'user_regdate'   => 'u.user_regdate',
-                    'last_login'     => 'u.last_login',
-                    'u.uid'          => 'u.uid',
-                    'u.uname'        => 'u.uname',
-                    'u.email'        => 'u.email',
-                    'u.user_regdate' => 'u.user_regdate',
-                    'u.last_login'   => 'u.last_login',
-                ];
+                // Comprehensive whitelist for safe sorting columns
+                $allowedSorts = $this->allowedSortMap();
+
                 if (isset($allowedSorts[$sort])) {
                     $orderDirection = ('DESC' === strtoupper($order)) ? ' DESC' : ' ASC';
                     $sql .= ' ORDER BY ' . $allowedSorts[$sort] . $orderDirection;
@@ -556,21 +629,40 @@ class XoopsMemberHandler
             }
         }
 
-        // Execute query with error handling
+        // Execute query with comprehensive error handling
         $result = $this->userHandler->db->query($sql, $limit, $start);
+
         if (!$this->userHandler->db->isResultSet($result)) {
-            // XOOPS-compatible error logging
-            if (class_exists('XoopsLogger')) {
-                $logger = XoopsLogger::getInstance();
+            // Enhanced error logging with security considerations
+            $logger = class_exists('XoopsLogger') ? \XoopsLogger::getInstance() : null;
                 $error = $this->userHandler->db->error();
-                $logger->handleError(E_USER_WARNING,
-                    "Database query failed: {$error}. SQL: {$sql}",
-                    __FILE__, __LINE__);
+
+            $msg = "Database query failed in " . __METHOD__ . ": {$error}";
+
+            if ($isDebug) {
+                // Add correlation context for easier debugging
+                $context = [
+                    'user_id' => isset($GLOBALS['xoopsUser']) && $GLOBALS['xoopsUser']
+                        ? $GLOBALS['xoopsUser']->getVar('uid') : 'anonymous',
+                    'uri' => $_SERVER['REQUEST_URI'] ?? 'cli',
+                    'method' => $_SERVER['REQUEST_METHOD'] ?? 'CLI',
+                    'groups_count' => count($validGroups)
+                ];
+                $msg .= ' Context: ' . json_encode($context, JSON_UNESCAPED_SLASHES);
+                $msg .= ' SQL: ' . $redactSql($sql);
             }
+
+            if ($logger) {
+                $logger->handleError(E_USER_WARNING, $msg, __FILE__, __LINE__);
+            } else {
+                // Enhanced fallback logging with file/line info
+                error_log($msg . " in " . __FILE__ . " on line " . __LINE__);
+            }
+
             return $ret;
         }
 
-        // Process results
+        // Process results with enhanced type safety
         while (false !== ($myrow = $this->userHandler->db->fetchArray($result))) {
             if ($asobject) {
                 $user = new XoopsUser();
@@ -581,6 +673,7 @@ class XoopsMemberHandler
                     $ret[] = $user;
                 }
             } else {
+                // Ensure consistent integer return for UIDs
                 $ret[] = (int)$myrow['uid'];
             }
         }
