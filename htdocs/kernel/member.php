@@ -474,52 +474,114 @@ class XoopsMemberHandler
      * @return array           Array of {@link XoopsUser} objects (if $asobject is TRUE)
      *                                    or of associative arrays matching the record structure in the database.
      */
-    public function getUsersByGroupLink($groups, ?CriteriaElement $criteria = null, $asobject = false, $id_as_key = false)
-    {
+
+    public function getUsersByGroupLink(
+        $groups,
+        $criteria = null,
+        $asobject = false,
+        $id_as_key = false
+    ) {
+        // Type coercion for backwards compatibility
+        $groups = is_array($groups) ? $groups : [$groups];
+        $asobject = (bool)$asobject;
+        $id_as_key = (bool)$id_as_key;
+
         $ret           = [];
         $criteriaCompo = new CriteriaCompo();
         $select        = $asobject ? 'u.*' : 'u.uid';
-        $sql = "SELECT {$select} FROM " . $this->userHandler->db->prefix('users') . " u WHERE ";
-        if (!empty($groups)) {
-            $group_in = '(' . implode(', ', $groups) . ')';
-            $sql .= " EXISTS (SELECT * FROM " . $this->membershipHandler->db->prefix('groups_users_link')
-                . " m " . "WHERE m.groupid IN {$group_in} and m.uid = u.uid) AND ";
-        }
+        $sql = "SELECT {$select} FROM " . $this->userHandler->db->prefix('users') . ' u';
+        $whereParts = [];
+        $limit = 0;
+        $start = 0;
 
-        $limit = $start = 0;
-        if (isset($criteria) && is_subclass_of($criteria, 'CriteriaElement')) {
-            $criteriaCompo->add($criteria, 'AND');
-            $sql_criteria = $criteriaCompo->render();
-            if ($criteria->getSort() != '') {
-                $sql_criteria .= ' ORDER BY ' . $criteria->getSort() . ' ' . $criteria->getOrder();
+        // Sanitize and validate groups
+        $validGroups = [];
+        foreach ($groups as $groupId) {
+            $groupId = (int)$groupId;
+            if ($groupId > 0) {
+                $validGroups[] = $groupId;
             }
-            $limit = $criteria->getLimit();
-            $start = $criteria->getStart();
-        } else {
-            $sql_criteria = $criteriaCompo->render();
         }
 
-        if ($sql_criteria) {
-            $sql .= $sql_criteria;
+        // Use EXISTS subquery to avoid GROUP BY complications
+        if (!empty($validGroups)) {
+            $group_in = '(' . implode(', ', $validGroups) . ')';
+            $whereParts[] = 'EXISTS (SELECT 1 FROM ' . $this->membershipHandler->db->prefix('groups_users_link')
+                            . " m WHERE m.uid = u.uid AND m.groupid IN {$group_in})";
         }
 
+        // Handle criteria - compatible with CriteriaElement and subclasses
+        if ($criteria instanceof \CriteriaElement) {
+            $criteriaCompo->add($criteria, 'AND');
+            $sqlCriteria = trim($criteriaCompo->render());
+
+            // Remove WHERE keyword if present
+            $sqlCriteria = preg_replace('/^\s*WHERE\s+/i', '', $sqlCriteria ?? '');
+
+            if ('' !== $sqlCriteria) {
+                $whereParts[] = $sqlCriteria;
+        }
+
+            $limit = (int)$criteria->getLimit();
+            $start = (int)$criteria->getStart();
+        }
+
+        // Build WHERE clause
+        if (!empty($whereParts)) {
+            $sql .= ' WHERE ' . implode(' AND ', $whereParts);
+        }
+
+        // Handle ORDER BY with whitelist for security
+        if ($criteria instanceof \CriteriaElement) {
+            $sort = trim($criteria->getSort());
+            $order = trim($criteria->getOrder());
+            if ('' !== $sort) {
+                // Whitelist for safe sorting columns (extend as needed)
+                $allowedSorts = [
+                    'uid'            => 'u.uid',
+                    'uname'          => 'u.uname',
+                    'email'          => 'u.email',
+                    'user_regdate'   => 'u.user_regdate',
+                    'last_login'     => 'u.last_login',
+                    'u.uid'          => 'u.uid',
+                    'u.uname'        => 'u.uname',
+                    'u.email'        => 'u.email',
+                    'u.user_regdate' => 'u.user_regdate',
+                    'u.last_login'   => 'u.last_login',
+                ];
+                if (isset($allowedSorts[$sort])) {
+                    $orderDirection = ('DESC' === strtoupper($order)) ? ' DESC' : ' ASC';
+                    $sql .= ' ORDER BY ' . $allowedSorts[$sort] . $orderDirection;
+                }
+            }
+        }
+
+        // Execute query with error handling
         $result = $this->userHandler->db->query($sql, $limit, $start);
         if (!$this->userHandler->db->isResultSet($result)) {
+            // XOOPS-compatible error logging
+            if (class_exists('XoopsLogger')) {
+                $logger = XoopsLogger::getInstance();
+                $error = $this->userHandler->db->error();
+                $logger->handleError(E_USER_WARNING,
+                    "Database query failed: {$error}. SQL: {$sql}",
+                    __FILE__, __LINE__);
+            }
             return $ret;
         }
-        /** @var array $myrow */
+
+        // Process results
         while (false !== ($myrow = $this->userHandler->db->fetchArray($result))) {
             if ($asobject) {
                 $user = new XoopsUser();
                 $user->assignVars($myrow);
-                if (!$id_as_key) {
-                    $ret[] = & $user;
+                if ($id_as_key) {
+                    $ret[(int)$myrow['uid']] = $user;
                 } else {
-                    $ret[$myrow['uid']] = & $user;
+                    $ret[] = $user;
                 }
-                unset($user);
             } else {
-                $ret[] = $myrow['uid'];
+                $ret[] = (int)$myrow['uid'];
             }
         }
 
