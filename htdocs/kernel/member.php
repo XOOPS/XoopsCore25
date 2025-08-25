@@ -553,9 +553,9 @@ class XoopsMemberHandler
             // This is more secure than the old approach - defaults to restrictive mode
             $isProd = true;
             // Only allow debug in explicitly known safe development indicators
-            if ((defined('XOOPS_DEBUG') && XOOPS_DEBUG) ||
-                (php_sapi_name() === 'cli') ||
-                (isset($_SERVER['SERVER_ADDR']) && $_SERVER['SERVER_ADDR'] === '127.0.0.1')) {
+            if ((defined('XOOPS_DEBUG') && XOOPS_DEBUG)
+                || (php_sapi_name() === 'cli')
+                || (isset($_SERVER['SERVER_ADDR']) && $_SERVER['SERVER_ADDR'] === '127.0.0.1')) {
                 $isProd = false;
             }
         }
@@ -588,10 +588,14 @@ class XoopsMemberHandler
         $start = 0;
 
         // Sanitize and validate groups once - clean and efficient
-            $validGroups = array_values(array_unique(array_filter(
+        $validGroups = array_values(
+            array_unique(
+                array_filter(
             array_map('intval', $groups),
                 static fn($id) => $id > 0
-            )));
+                )
+            )
+        );
 
         // Build group filtering with EXISTS subquery (no re-validation needed)
         if (!empty($validGroups)) {
@@ -647,13 +651,79 @@ class XoopsMemberHandler
             $msg = "Database query failed in " . __METHOD__ . ": {$error}";
 
             if ($isDebug) {
+                // Sanitize URI and method to prevent log injection
+                $sanitizeLogValue = function ($value) {
+                    // Remove control characters and limit length
+                    $value = preg_replace('/[\x00-\x1F\x7F]+/', '', (string)$value);
+                    return mb_substr($value, 0, 256); // Limit to 256 chars
+                };
+
                 // Add correlation context for easier debugging
+                // --- log-sanitizers ---
+                $sanitizeLogValue = static function ($value): string {
+                    $s = (string)$value;
+
+                    // Strip ASCII control chars (including CR/LF) and DEL
+                    $s = preg_replace('/[\x00-\x1F\x7F]/', '', $s);
+
+                    // Strip Unicode bidi/isolation controls that can spoof log layout
+                    // U+202A..U+202E (LRE..RLO) and U+2066..U+2069 (LRI..PDI)
+                    $s = preg_replace('/[\x{202A}-\x{202E}\x{2066}-\x{2069}]/u', '', $s);
+
+                    // Collapse excessive whitespace
+                    $s = preg_replace('/\s+/', ' ', $s);
+
+                    // Length cap with mbstring fallback
+                    if (function_exists('mb_substr')) {
+                        $s = mb_substr($s, 0, 256, 'UTF-8');
+                    } else {
+                        $s = substr($s, 0, 256);
+                    }
+                    return $s;
+                };
+
+                $sanitizeMethod = static function ($method) use ($sanitizeLogValue): string {
+                    $m     = strtoupper($sanitizeLogValue($method));
+                    $allow = ['GET', 'POST', 'PUT', 'DELETE', 'PATCH', 'HEAD', 'OPTIONS'];
+                    return in_array($m, $allow, true) ? $m : 'OTHER';
+                };
+
+                $sanitizeUri = static function ($uri) use ($sanitizeLogValue): string {
+                    $u     = (string)$uri;
+                    $parts = parse_url($u);
+                    $path  = $sanitizeLogValue($parts['path'] ?? '/');
+
+                    // Redact sensitive query params
+                    $qs = '';
+                    if (!empty($parts['query'])) {
+                        parse_str($parts['query'], $q);
+                        $redact = ['token', 'access_token', 'id_token', 'password', 'pass', 'pwd', 'secret', 'key', 'api_key', 'apikey', 'auth', 'authorization', 'session', 'sid', 'code'];
+                        foreach ($q as $k => &$v) {
+                            $kLower = strtolower((string)$k);
+                            if (in_array($kLower, $redact, true)) {
+                                $v = 'REDACTED';
+                            } else {
+                                $v = is_array($v) ? $sanitizeLogValue(json_encode($v)) : $sanitizeLogValue($v);
+                            }
+                        }
+                        unset($v);
+                        $qs = $sanitizeLogValue(http_build_query($q));
+                    }
+                    return $qs !== '' ? $path . '?' . $qs : $path;
+                };
+
+                // Usage in your context array
                 $context = [
                     'user_id' => isset($GLOBALS['xoopsUser']) && $GLOBALS['xoopsUser']
-                        ? $GLOBALS['xoopsUser']->getVar('uid') : 'anonymous',
-                    'uri' => $_SERVER['REQUEST_URI'] ?? 'cli',
-                    'method' => $_SERVER['REQUEST_METHOD'] ?? 'CLI',
-                    'groups_count' => count($validGroups)
+                        ? (int)$GLOBALS['xoopsUser']->getVar('uid')
+                        : 'anonymous',
+                    'uri'          => isset($_SERVER['REQUEST_URI'])
+                        ? $sanitizeUri($_SERVER['REQUEST_URI'])
+                        : 'cli',
+                    'method'       => isset($_SERVER['REQUEST_METHOD'])
+                        ? $sanitizeMethod($_SERVER['REQUEST_METHOD'])
+                        : 'CLI',
+                    'groups_count' => (int)count($validGroups),
                 ];
                 $msg .= ' Context: ' . json_encode($context, JSON_UNESCAPED_SLASHES);
                 $msg .= ' SQL: ' . $redactSql($sql);
