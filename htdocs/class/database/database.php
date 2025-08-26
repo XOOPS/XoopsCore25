@@ -115,6 +115,36 @@ abstract class XoopsDatabase
      * @return bool true if $result is a database result set, otherwise false
      */
     abstract public function isResultSet($result);
+
+    /**
+     * Return a human-readable description of the last DB error.
+     * Subclasses must override to provide engine-specific details.
+     *
+     * @return string Error message or empty string if no error.
+     */
+    abstract public function error();
+
+    /**
+     * Return an engine-specific error code for the last DB error.
+     * Subclasses must override to provide engine-specific details.
+     *
+     * @return int Error code (e.g., MySQL errno) or 0 if no error.
+     */
+    abstract public function errno();
+
+    /**
+     * Perform a query on the database.
+     *
+     * This method allows only SELECT queries for safety.
+     * Subclasses must override to provide engine-specific execution.
+     *
+     * @param string $sql   A valid SQL query (restricted to SELECT for safety).
+     * @param int    $limit Number of records to return (default: 0 for unlimited).
+     * @param int    $start Offset of first record to return (default: 0).
+     *
+     * @return mixed Query result resource/object or false on failure (subclass-specific).
+     */
+    abstract public function query($sql, $limit = 0, $start = 0);
 }
 
 /**
