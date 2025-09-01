@@ -483,7 +483,7 @@ class XoopsMemberHandler
         if (!empty($groups)) {
             $group_in = '(' . implode(', ', $groups) . ')';
             $sql .= " EXISTS (SELECT * FROM " . $this->membershipHandler->db->prefix('groups_users_link')
-                . " m " . "WHERE m.groupid IN {$group_in} and m.uid = u.uid) AND ";
+                . " m " . "WHERE m.groupid IN {$group_in} AND m.uid = u.uid)";
         }
 
         $limit = $start = 0;
@@ -500,7 +500,7 @@ class XoopsMemberHandler
         }
 
         if ($sql_criteria) {
-            $sql .= $sql_criteria;
+            $sql .= ' AND ' . $sql_criteria;
         }
 
         $result = $this->userHandler->db->query($sql, $limit, $start);
