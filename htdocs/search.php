@@ -111,9 +111,9 @@ if ($action !== 'showallbyuser') {
         foreach ($temp_queries as $q) {
             $q = trim($q);
             if (strlen($q) >= $xoopsConfigSearch['keyword_min']) {
-                $queries[] = $myts->addSlashes($q);
+                $queries[] = $xoopsDB->escape($q);
             } else {
-                $ignored_queries[] = $myts->addSlashes($q);
+                $ignored_queries[] = $xoopsDB->escape($q);
             }
         }
         if (count($queries) == 0) {
@@ -124,7 +124,7 @@ if ($action !== 'showallbyuser') {
         if (strlen($query) < $xoopsConfigSearch['keyword_min']) {
             redirect_header('search.php', 2, sprintf(_SR_KEYTOOSHORT, $xoopsConfigSearch['keyword_min']));
         }
-        $queries = [$myts->addSlashes($query)];
+        $queries = [$xoopsDB->escape($query)];
     }
 }
 switch ($action) {

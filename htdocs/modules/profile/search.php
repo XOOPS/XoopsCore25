@@ -18,7 +18,6 @@
  */
 
 include __DIR__ . '/header.php';
-$myts = \MyTextSanitizer::getInstance();
 
 $limit_default    = 20;
 $op               = $_REQUEST['op'] ?? 'search';
@@ -235,7 +234,7 @@ switch ($op) {
         }
 
         if (isset($_REQUEST['email']) && $_REQUEST['email'] !== '') {
-            $string = $myts->addSlashes(trim($_REQUEST['email']));
+            $string = $xoopsDB->escape(trim($_REQUEST['email']));
             switch ($_REQUEST['email_match']) {
                 case XOOPS_MATCH_START:
                     $string .= '%';
@@ -355,7 +354,7 @@ switch ($op) {
                     case XOBJ_DTYPE_TXTBOX:
                     case XOBJ_DTYPE_TXTAREA:
                         if (isset($_REQUEST[$fieldname]) && $_REQUEST[$fieldname] !== '') {
-                            $value = $myts->addSlashes(trim($_REQUEST[$fieldname]));
+                            $value = $xoopsDB->escape(trim($_REQUEST[$fieldname]));
                             switch ($_REQUEST[$fieldname . '_match']) {
                                 case XOOPS_MATCH_START:
                                     $value .= '%';
