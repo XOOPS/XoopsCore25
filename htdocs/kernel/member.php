@@ -463,6 +463,30 @@ class XoopsMemberHandler
         return $this->userHandler->insert($user, true);
     }
 
+    protected function allowedSortMap()
+    {
+        // Maps both prefixed and non-prefixed column names for flexibility
+        // This allows sorting by 'uid' or 'u.uid' while maintaining security
+        return [
+            'uid'            => 'u.uid',
+            'uname'          => 'u.uname',
+            'email'          => 'u.email',
+            'user_regdate'   => 'u.user_regdate',
+            'last_login'     => 'u.last_login',
+            'user_avatar'    => 'u.user_avatar',
+            'name'           => 'u.name',
+            // Prefixed versions for explicit table references
+            'u.uid'          => 'u.uid',
+            'u.uname'        => 'u.uname',
+            'u.email'        => 'u.email',
+            'u.user_regdate' => 'u.user_regdate',
+            'u.last_login'   => 'u.last_login',
+            'u.user_avatar'  => 'u.user_avatar',
+            'u.name'         => 'u.name',
+        ];
+    }
+
+
     /**
      * Get a list of users belonging to certain groups and matching criteria
      * Temporary solution
@@ -474,52 +498,246 @@ class XoopsMemberHandler
      * @return array           Array of {@link XoopsUser} objects (if $asobject is TRUE)
      *                                    or of associative arrays matching the record structure in the database.
      */
-    public function getUsersByGroupLink($groups, ?CriteriaElement $criteria = null, $asobject = false, $id_as_key = false)
-    {
+
+    public function getUsersByGroupLink(
+        $groups,
+        $criteria = null,
+        $asobject = false,
+        $id_as_key = false
+    ) {
+        // Type coercion for backwards compatibility
+        $groups = is_array($groups) ? $groups : [$groups];
+        $asobject = (bool)$asobject;
+        $id_as_key = (bool)$id_as_key;
+
+        // Debug configuration using only current XOOPS debug system
+        // Check XOOPS debug mode - we only want PHP debugging (1=inline, 2=popup)
+        $xoopsDebugMode = isset($GLOBALS['xoopsConfig']['debug_mode']) ? (int)$GLOBALS['xoopsConfig']['debug_mode'] : 0;
+        $xoopsPhpDebugEnabled = ($xoopsDebugMode === 1 || $xoopsDebugMode === 2);
+
+        // Check if debug is allowed for current user based on debugLevel
+        $xoopsDebugAllowed = $xoopsPhpDebugEnabled;
+        if ($xoopsPhpDebugEnabled && isset($GLOBALS['xoopsConfig']['debugLevel'])) {
+            $debugLevel = (int)$GLOBALS['xoopsConfig']['debugLevel'];
+            $xoopsUser = $GLOBALS['xoopsUser'] ?? null;
+            $xoopsUserIsAdmin = isset($GLOBALS['xoopsUserIsAdmin']) ? $GLOBALS['xoopsUserIsAdmin'] : false;
+
+            // Apply XOOPS debug level restrictions
+            switch ($debugLevel) {
+                case 2: // Admins only
+                    $xoopsDebugAllowed = $xoopsUserIsAdmin;
+                    break;
+                case 1: // Members only
+                    $xoopsDebugAllowed = ($xoopsUser !== null);
+                    break;
+                case 0: // All users
+                default:
+                    $xoopsDebugAllowed = true;
+                    break;
+            }
+        }
+
+        // Production safety check - use secure environment detection
+        // Note: SERVER_NAME can be spoofed via Host header, so it's not secure for production detection
+        // For security, set XOOPS_ENV=production in your server environment or use a config constant
+        $isProd = false;
+
+        if (defined('XOOPS_PRODUCTION') && XOOPS_PRODUCTION) {
+            // Most secure: use a defined constant set in configuration
+            $isProd = true;
+        } elseif (getenv('XOOPS_ENV') === 'production') {
+            // Secure: use environment variable (not spoofable by clients)
+            $isProd = true;
+        } else {
+            // Fallback: assume production unless explicitly in known development environments
+            // This is more secure than the old approach - defaults to restrictive mode
+            $isProd = true;
+            // Only allow debug in explicitly known safe development indicators
+            if ((defined('XOOPS_DEBUG') && XOOPS_DEBUG)
+                || (php_sapi_name() === 'cli')
+                || (isset($_SERVER['SERVER_ADDR']) && $_SERVER['SERVER_ADDR'] === '127.0.0.1')) {
+                $isProd = false;
+            }
+        }
+
+        // Enable SQL logging only if XOOPS PHP debug is allowed and not in production
+        $isDebug = $xoopsDebugAllowed && !$isProd;
+
+        /**
+         * Redact sensitive SQL literals in debug logs while preserving query structure
+         * @param string $sql The SQL query to redact
+         * @return string Redacted SQL query
+         */
+        $redactSql = static function (string $sql): string {
+            // Replace quoted strings with placeholders
+            $sql = preg_replace("/'[^']*'/", "'?'", $sql);
+            $sql = preg_replace('/"[^"]*"/', '"?"', $sql);
+            // Replace hex literals
+            $sql = preg_replace("/x'[0-9A-Fa-f]+'/", "x'?'", $sql);
+            // Replace large numbers (potential IDs) but keep small ones
+            // Removed overzealous redaction of large numbers to preserve legitimate identifiers
+            return $sql;
+        };
+
         $ret           = [];
         $criteriaCompo = new CriteriaCompo();
         $select        = $asobject ? 'u.*' : 'u.uid';
-        $sql = "SELECT {$select} FROM " . $this->userHandler->db->prefix('users') . " u WHERE ";
-        if (!empty($groups)) {
-            $group_in = '(' . implode(', ', $groups) . ')';
-            $sql .= " EXISTS (SELECT * FROM " . $this->membershipHandler->db->prefix('groups_users_link')
-                . " m " . "WHERE m.groupid IN {$group_in} and m.uid = u.uid) AND ";
+        $sql = "SELECT {$select} FROM " . $this->userHandler->db->prefix('users') . ' u';
+        $whereParts = [];
+        $limit = 0;
+        $start = 0;
+
+        // Sanitize and validate groups once - clean and efficient
+        $validGroups = array_values(
+            array_unique(
+                array_filter(
+            array_map('intval', $groups),
+                static fn($id) => $id > 0
+                )
+            )
+        );
+
+        // Build group filtering with EXISTS subquery (no re-validation needed)
+        if (!empty($validGroups)) {
+            $group_in = '(' . implode(', ', $validGroups) . ')';
+            $whereParts[] = 'EXISTS (SELECT 1 FROM ' . $this->membershipHandler->db->prefix('groups_users_link')
+                            . " m WHERE m.uid = u.uid AND m.groupid IN {$group_in})";
         }
 
-        $limit = $start = 0;
-        if (isset($criteria) && is_subclass_of($criteria, 'CriteriaElement')) {
+        // Initialize criteria-dependent variables
+        $limit   = 0;
+        $start   = 0;
+        $orderBy = '';
+
+        // Handle criteria - compatible with CriteriaElement and subclasses
+        if ($criteria instanceof \CriteriaElement) {
             $criteriaCompo->add($criteria, 'AND');
-            $sql_criteria = $criteriaCompo->render();
-            if ($criteria->getSort() != '') {
-                $sql_criteria .= ' ORDER BY ' . $criteria->getSort() . ' ' . $criteria->getOrder();
+            $sqlCriteria = trim($criteriaCompo->render());
+
+            // Remove WHERE keyword if present
+            $sqlCriteria = preg_replace('/^\s*WHERE\s+/i', '', $sqlCriteria ?? '');
+            if ($sqlCriteria !== '') {
+                $whereParts[] = $sqlCriteria;
+        }
+
+            // LIMIT/OFFSET
+            $limit = (int)$criteria->getLimit();
+            $start = (int)$criteria->getStart();
+
+            // ORDER BY (whitelist)
+            $sort  = trim((string)$criteria->getSort());
+            $order = trim((string)$criteria->getOrder());
+            if ($sort !== '') {
+                $allowedSorts = $this->allowedSortMap();
+                if (isset($allowedSorts[$sort])) {
+                    $orderDirection = (strtoupper($order) === 'DESC') ? ' DESC' : ' ASC';
+                    $orderBy        = ' ORDER BY ' . $allowedSorts[$sort] . $orderDirection;
+                }
             }
-            $limit = $criteria->getLimit();
-            $start = $criteria->getStart();
-        } else {
-            $sql_criteria = $criteriaCompo->render();
         }
 
-        if ($sql_criteria) {
-            $sql .= $sql_criteria;
+        // Emit WHERE once
+        if (!empty($whereParts)) {
+            $sql .= ' WHERE ' . implode(' AND ', $whereParts);
         }
 
+        // Then ORDER BY (if any)
+        $sql .= $orderBy;
+
+
+        // Execute query with comprehensive error handling
         $result = $this->userHandler->db->query($sql, $limit, $start);
+
         if (!$this->userHandler->db->isResultSet($result)) {
+            // Enhanced error logging with security considerations
+            $logger = class_exists('XoopsLogger') ? \XoopsLogger::getInstance() : null;
+                $error = $this->userHandler->db->error();
+
+            $msg = "Database query failed in " . __METHOD__ . ": {$error}";
+
+            if ($isDebug) {
+                // Comprehensive log sanitizers to prevent injection and spoofing attacks
+                $sanitizeLogValue = static function ($value): string {
+                    $s = (string)$value;
+                    // Strip ASCII control chars (including CR/LF) and DEL
+                    $s = preg_replace('/[\x00-\x1F\x7F]/', '', $s);
+                    // Strip Unicode bidi/isolation controls that can spoof log layout
+                    // U+202A..U+202E (LRE..RLO) and U+2066..U+2069 (LRI..PDI)
+                    $s = preg_replace(\XoopsMemberHandler::BIDI_CONTROL_REGEX, '', $s);
+                    // Collapse excessive whitespace
+                    $s = preg_replace('/\s+/', ' ', $s);
+                    // Length cap with mbstring fallback
+                    if (function_exists('mb_substr')) {
+                        $s = mb_substr($s, 0, 256, 'UTF-8');
+                    } else {
+                        $s = substr($s, 0, 256);
+                    }
+                    return $s;
+                };
+
+                $sanitizeMethod = static function ($method) use ($sanitizeLogValue): string {
+                    $m     = strtoupper($sanitizeLogValue($method));
+                    $allow = ['GET', 'POST', 'PUT', 'DELETE', 'PATCH', 'HEAD', 'OPTIONS'];
+                    return in_array($m, $allow, true) ? $m : 'OTHER';
+                };
+
+                $sanitizeUri = static function ($uri) use ($sanitizeLogValue): string {
+                    $u     = (string)$uri;
+                    $parts = parse_url($u);
+                    $path  = $sanitizeLogValue($parts['path'] ?? '/');
+                    // Redact sensitive query params
+                    $qs = '';
+                    if (!empty($parts['query'])) {
+                        parse_str($parts['query'], $q);
+                        $redact = self::SENSITIVE_PARAMS;
+                        foreach ($q as $k => &$v) {
+                            $kLower = strtolower((string)$k);
+                            if (in_array($kLower, $redact, true)) {
+                                $v = 'REDACTED';
+                            } else {
+                                $v = is_array($v) ? $sanitizeLogValue(json_encode($v)) : $sanitizeLogValue($v);
+                            }
+                        }
+                        unset($v);
+                        $qs = $sanitizeLogValue(http_build_query($q));
+                    }
+                    return $qs !== '' ? $path . '?' . $qs : $path;
+                };
+
+                // Add correlation context for easier debugging
+                $context = [
+                    'user_id'      => isset($GLOBALS['xoopsUser']) && $GLOBALS['xoopsUser'] ? (int)$GLOBALS['xoopsUser']->getVar('uid') : 'anonymous',
+                    'uri'          => isset($_SERVER['REQUEST_URI']) ? $sanitizeUri($_SERVER['REQUEST_URI']) : 'cli',
+                    'method'       => isset($_SERVER['REQUEST_METHOD']) ? $sanitizeMethod($_SERVER['REQUEST_METHOD']) : 'CLI',
+                    'groups_count' => count($validGroups),
+                ];
+                $msg .= ' Context: ' . json_encode($context, JSON_UNESCAPED_SLASHES);
+                $msg .= ' SQL: ' . $redactSql($sql);
+            }
+
+            if ($logger) {
+                $logger->handleError(E_USER_WARNING, $msg, __FILE__, __LINE__);
+            } else {
+                // Enhanced fallback logging with file/line info
+                error_log($msg . " in " . __FILE__ . " on line " . __LINE__);
+            }
+
             return $ret;
         }
-        /** @var array $myrow */
+
+        // Process results with enhanced type safety
         while (false !== ($myrow = $this->userHandler->db->fetchArray($result))) {
             if ($asobject) {
                 $user = new XoopsUser();
                 $user->assignVars($myrow);
-                if (!$id_as_key) {
-                    $ret[] = & $user;
+                if ($id_as_key) {
+                    $ret[(int)$myrow['uid']] = $user;
                 } else {
-                    $ret[$myrow['uid']] = & $user;
+                    $ret[] = $user;
                 }
-                unset($user);
             } else {
-                $ret[] = $myrow['uid'];
+                // Ensure consistent integer return for UIDs
+                $ret[] = (int)$myrow['uid'];
             }
         }
 
