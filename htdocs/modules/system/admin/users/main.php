@@ -160,7 +160,7 @@ switch ($op) {
                 xoops_cp_header();
                 xoops_error(sprintf(_AM_SYSTEM_USERS_PSEUDO_ERROR, htmlspecialchars(Request::getString('uname'), ENT_QUOTES | ENT_HTML5)));
                 xoops_cp_footer();
-            } elseif ($edituser->getVar('email', 'n') != Request::getEmail('email') && $member_handler->getUserCount(new Criteria('email', $myts->addSlashes(Request::getEmail('email')))) > 0) {
+            } elseif ($edituser->getVar('email', 'n') != Request::getEmail('email') && $member_handler->getUserCount(new Criteria('email', $xoopsDB->escape(Request::getEmail('email')))) > 0) {
                 xoops_cp_header();
                 xoops_error(sprintf(_AM_SYSTEM_USERS_MAIL_ERROR, htmlspecialchars(Request::getEmail('email'), ENT_QUOTES | ENT_HTML5)));
                 xoops_cp_footer();
