@@ -32,6 +32,11 @@ require_once __DIR__ . '/group.php';
  */
 class XoopsMemberHandler
 {
+    
+    private const BIDI_CONTROL_REGEX = '/[\x{202A}-\x{202E}\x{2066}-\x{2069}]/u';
+    private const SENSITIVE_PARAMS = ['token', 'access_token', 'id_token', 'password', 'pass', 'pwd', 'secret', 'key', 'api_key', 'apikey', 'auth', 'authorization', 'session', 'sid', 'code'];
+
+
     /**
      * holds reference to group handler(DAO) class
      * @access private
