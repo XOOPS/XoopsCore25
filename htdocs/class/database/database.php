@@ -178,6 +178,15 @@ abstract class XoopsDatabase
         $start = max(0, $start ?? 0);
         return [$limit, $start];
     }
+
+    /**
+     * Returns a safely quoted SQL string literal for this connection.
+     * MUST include surrounding single quotes and perform driver-appropriate escaping.
+     *
+     * @param string $str Raw, unescaped string
+     * @return string Quoted SQL literal, e.g.  "O''Reilly" for input "O'Reilly"
+     */
+    abstract public function quoteString(string $str): string;
 }
 
 /**
