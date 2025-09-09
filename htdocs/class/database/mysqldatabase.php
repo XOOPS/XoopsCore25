@@ -27,6 +27,16 @@ include_once XOOPS_ROOT_PATH . '/class/database/database.php';
 abstract class XoopsMySQLDatabase extends XoopsDatabase
 {
     /**
+     * Strict guard is active in dev or when XOOPS debug mode is on.
+     */
+    private function isStrict(): bool
+    {
+        // Respect environment switch and also auto-enable when XOOPS debug is on
+        $envStrict  = (defined('XOOPS_DB_STRICT') && XOOPS_DB_STRICT);
+        $xoopsDebug = !empty($GLOBALS['xoopsConfig']['debug_mode']);
+        return $envStrict || $xoopsDebug;
+    }
+    /**
      * Database connection
      *
      * @var XoopsDatabase|mysqli
@@ -298,47 +308,56 @@ abstract class XoopsMySQLDatabase extends XoopsDatabase
      * @param int|null    $limit number of records to return
      * @param int|null    $start offset of first record to return
      *
-     * @return \mysqli_result|bool query result or FALSE if successful
-     *                      or TRUE if successful and no result
+     * @return \mysqli_result|bool false on failure; true only if a write slipped through (BC)
      */
     public function query(string $sql, ?int $limit = null, ?int $start = null)
     {
-        // Optional: dev-only guard to catch misuse (writes via query()).
-        if (defined('XOOPS_DB_STRICT') && XOOPS_DB_STRICT) {
-            // Treat these as read-like; everything else is suspicious in query().
+        // Dev-only guard: query() should be read-like
+        if ($this->isStrict()) {
             if (!preg_match('/^\s*(SELECT|WITH|SHOW|DESCRIBE|EXPLAIN)\b/i', $sql)) {
                 if (is_object($this->logger)) {
-                    $this->logger->warning('query() called with a mutating statement; use exec() instead');
-                } else {
-                    trigger_error('query() called with a mutating statement; use exec() instead', E_USER_WARNING);
+                    $this->logger->addExtra('DB', 'query() called with a mutating statement; use exec()');
                 }
+                trigger_error('query() called with a mutating statement; use exec()', E_USER_WARNING);
+                // continue for BC
             }
         }
 
-        // Append pagination if requested (null = no pagination)
+        // Pagination if requested (null = no pagination)
         if ($limit !== null) {
             $start = max(0, $start ?? 0);
-            // MySQL supports both "LIMIT count OFFSET start" and "LIMIT start, count".
-            // Using the former improves cross-driver readability.
             $sql .= ' LIMIT ' . (int)$limit . ' OFFSET ' . $start;
         }
 
-        // No error suppression: handle failures explicitly
+        // Connection type guard for static analyzers and safety
+        if (!($this->conn instanceof \mysqli)) {
+            trigger_error('Invalid or uninitialized mysqli connection', E_USER_WARNING);
+            return false;
+        }
+
+        // Timing + execution
+        if (is_object($this->logger)) $this->logger->startTime('query_time');
         $res = \mysqli_query($this->conn, $sql);
+        if (is_object($this->logger)) {
+            $this->logger->stopTime('query_time');
+            $t = $this->logger->dumpTime('query_time', true);
+        } else {
+            $t = 0;
+        }
 
         if ($res === false) {
-            // Uniform SQL logging (time already measured above)
-            $this->logger->addQuery($sql, $this->error(), $this->errno(), $t);
-
-            // Optional extra breadcrumb (safe on 2.5.x)
             if (is_object($this->logger)) {
-                $this->logger->addExtra('DB', 'Query failed: errno ' . $this->errno() . ' - ' . $this->error());
+                $this->logger->addQuery($sql, $this->error(), $this->errno(), $t);
             }
             return false;
         }
 
-        // For proper SELECT-like statements, $res is a mysqli_result.
-        // If someone sent a write by mistake, mysqli_query() returns true; we pass it through.
+        // Log success
+        if (is_object($this->logger)) {
+            $this->logger->addQuery($sql, null, null, $t);
+        }
+
+        // If a write slipped into query() (rare), mysqli returns true — keep BC
         return $res;
     }
 
@@ -517,39 +536,48 @@ abstract class XoopsMySQLDatabase extends XoopsDatabase
 
     public function exec(string $sql): bool
     {
-        // Optional dev-only guard: flag accidental read statements passed to exec()
-        if (defined('XOOPS_DB_STRICT') && XOOPS_DB_STRICT) {
-            if (preg_match('/^\s*(?:SELECT|WITH|SHOW|DESCRIBE|EXPLAIN)\b/i', $sql)) {
+        // Dev-only guard: exec() should be write-like
+        if ($this->isStrict()) {
+            if (preg_match('/^\s*(SELECT|WITH|SHOW|DESCRIBE|EXPLAIN)\b/i', $sql)) {
                 if (is_object($this->logger)) {
                     $this->logger->addExtra('DB', 'exec() called with a read-only statement');
                 }
                 trigger_error('exec() called with a read-only statement', E_USER_WARNING);
+                // continue for BC
             }
         }
 
-        // No error suppression: let us see and handle failures explicitly
+        if (!($this->conn instanceof \mysqli)) {
+            trigger_error('Invalid or uninitialized mysqli connection', E_USER_WARNING);
+            return false;
+        }
+
+        // Timing + execution
+        if (is_object($this->logger)) $this->logger->startTime('query_time');
         $res = \mysqli_query($this->conn, $sql);
+        if (is_object($this->logger)) {
+            $this->logger->stopTime('query_time');
+            $t = $this->logger->dumpTime('query_time', true);
+        } else {
+            $t = 0;
+        }
 
         if ($res === false) {
             if (is_object($this->logger)) {
                 $this->logger->addQuery($sql, $this->error(), $this->errno(), $t);
-
-                // Optional: keep only if you want a human-friendly breadcrumb in the debug pane
-                // Consider gating it behind XOOPS_DB_STRICT to reduce noise in production.
-                if (defined('XOOPS_DB_STRICT') && XOOPS_DB_STRICT) {
-                    $this->logger->addExtra('DB', 'Exec failed: errno ' . $this->errno() . ' - ' . $this->error());
-            }
         }
             return false;
+        }
 
-        // If someone passes a SELECT by mistake, mysqli returns a result; free it and treat as success
+        // If someone passes a SELECT by mistake, mysqli returns a result; free it and treat as success (BC)
         if ($res instanceof \mysqli_result) {
                 \mysqli_free_result($res);
         }
 
-        return true; // mysqli_query() returned true or a freed result set
+        if (is_object($this->logger)) {
+            $this->logger->addQuery($sql, null, null, $t);
     }
-
+        return true;
     }
 }
 
