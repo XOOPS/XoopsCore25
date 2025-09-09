@@ -20,9 +20,9 @@
  *
  * @author   MusS
  *
- * @array   data store of data
- * @string  img id of image
- * @file    file file to call
+ * @array   data    store of data
+ * @string  img     id of image
+ * @file    file    file to call
  */
 
 $(document).ready(function () {
