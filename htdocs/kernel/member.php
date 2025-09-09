@@ -327,12 +327,12 @@ class XoopsMemberHandler
      */
     public function loginUser($uname, $pwd)
     {
-        // Use Criteria for safe querying (no manual escaping of password)
+        // Use Criteria for safe querying of username; password is handled separately for verification
         $criteria = new Criteria('uname', (string)$uname);
         $criteria->setLimit(2); // Fetch at most 2 to detect duplicates
 
-        $users = $this->userHandler->getObjects($criteria, false);
-        if (!$users || count($users) != 1) {
+        $users = $this->userHandler->getObjects($criteria, false) ?: [];
+        if (count($users) !== 1) {
             return false;
         }
 
@@ -613,13 +613,13 @@ class XoopsMemberHandler
         if (!$db->isResultSet($result)) {
             $this->logDatabaseError('Query failed in getUserCountByGroupLink', $sql, [
                 'groups_count' => count($validGroups),
-                'has_criteria' => isset($criteria)
+                'has_criteria' => $criteria instanceof \CriteriaElement,
             ], $isDebug);
             return 0;
         }
-
-        list($count) = $db->fetchRow($result);
-        return (int)$count;
+        /** @var \mysqli_result $result */
+        $row = $db->fetchRow($result);
+        return $row ? (int)$row[0] : 0;
     }
 
     // =========================================================================
@@ -716,47 +716,24 @@ class XoopsMemberHandler
      * @param int $length Desired token length in HEX characters (4 bits per char). Clamped to [8, 32].
      * @return string Random token
      */
-    private function generateSecureToken($length = 32)
+    private function generateSecureToken(int $length = 32): string
     {
-        $length = max(8, min(128, (int)$length));
-        $bytes  = (int)ceil($length / 2);
+        $length = max(8, min(128, $length));
+        $bytes  = intdiv($length + 1, 2); // ceil($length/2)
 
-        // Prefer the OS CSPRNG
         try {
-            if (function_exists('random_bytes')) {
-                return substr(bin2hex(random_bytes($bytes)), 0, $length);
-            }
+            $raw = random_bytes($bytes);
         } catch (\Throwable $e) {
-            // fall through to OpenSSL
-        }
-
-        // Fallback: OpenSSL with strength check
-        if (function_exists('openssl_random_pseudo_bytes')) {
-            $strong = false;
-            $raw = openssl_random_pseudo_bytes($bytes, $strong);
-            if ($raw !== false && $strong === true) {
-                return substr(bin2hex($raw), 0, $length);
-            }
-        }
-
-        // Log once per request to avoid spam, then fail closed
-        static $logged = false;
-        if (!$logged) {
-            $logged = true;
-            $ctx = sprintf(
-                'php=%s; openssl=%s',
-                PHP_VERSION,
-                defined('OPENSSL_VERSION_TEXT') ? OPENSSL_VERSION_TEXT : 'n/a'
-            );
-            $msg = '[CRITICAL] No CSPRNG available to generate a secure token in ' . __METHOD__ . " ({$ctx})";
+            $msg = '[CRITICAL] No CSPRNG available to generate a secure token in ' . __METHOD__;
             if (class_exists('XoopsLogger')) {
                 \XoopsLogger::getInstance()->handleError(E_USER_ERROR, $msg, __FILE__, __LINE__);
             } else {
                 error_log($msg);
             }
+            throw new \RuntimeException('No CSPRNG available to generate a secure token.', 0, $e);
         }
 
-        throw new \RuntimeException('No CSPRNG available to generate a secure token.');
+        return substr(bin2hex($raw), 0, $length);
     }
 
     /**
@@ -791,7 +768,7 @@ class XoopsMemberHandler
     private function isProductionEnvironment()
     {
         // Check explicit production flag
-        if (defined('XOOPS_PRODUCTION') && XOOPS_PRODUCTION) {
+        if (\defined('XOOPS_PRODUCTION') && \constant('XOOPS_PRODUCTION')) {
             return true;
         }
 
@@ -801,8 +778,8 @@ class XoopsMemberHandler
         }
 
         // Check for development indicators
-        if ((defined('XOOPS_DEBUG') && XOOPS_DEBUG) ||
-            (php_sapi_name() === 'cli') ||
+        if ((\defined('XOOPS_DEBUG') && \constant('XOOPS_DEBUG')) ||
+            (PHP_SAPI === 'cli') ||
             (isset($_SERVER['SERVER_ADDR']) && in_array($_SERVER['SERVER_ADDR'], ['127.0.0.1', '::1'], true))) {
             return false;
         }
@@ -848,9 +825,10 @@ class XoopsMemberHandler
     /**
      * Log database errors with context
      * @param string $message Error message
-     * @param string $sql SQL query that failed
-     * @param array $context Additional context
-     * @param bool $isDebug Whether debug mode is enabled
+     * @param string $sql     SQL query that failed
+     * @param array  $context Additional context
+     * @param bool   $isDebug Whether debug mode is enabled
+     * @return void
      */
     private function logDatabaseError($message, $sql, array $context, $isDebug)
     {
