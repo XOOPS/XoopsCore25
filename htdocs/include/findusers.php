@@ -116,7 +116,7 @@ class XoopsRankHandler extends XoopsObjectHandler
     public function get($id = 0)
     {
         $object = $this->create(false);
-        $sql    = 'SELECT * FROM ' . $this->db->prefix('ranks') . ' WHERE rank_id = ' . $this->db->quoteString($id);
+        $sql    = 'SELECT * FROM ' . $this->db->prefix('ranks') . ' WHERE rank_id = ' . $this->db->quote($id);
         $result = $this->db->query($sql);
         if (!$this->db->isResultSet($result)) {
             $ret = null;

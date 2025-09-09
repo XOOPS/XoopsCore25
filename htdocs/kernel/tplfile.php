@@ -306,7 +306,7 @@ class XoopsTplfileHandler extends XoopsObjectHandler
         }
         if ($tplfile->isNew()) {
             $tpl_id = $this->db->genId('tpltpl_file_id_seq');
-            $sql    = sprintf('INSERT INTO %s (tpl_id, tpl_module, tpl_refid, tpl_tplset, tpl_file, tpl_desc, tpl_lastmodified, tpl_lastimported, tpl_type) VALUES (%u, %s, %u, %s, %s, %s, %u, %u, %s)', $this->db->prefix('tplfile'), $tpl_id, $this->db->quoteString($tpl_module), $tpl_refid, $this->db->quoteString($tpl_tplset), $this->db->quoteString($tpl_file), $this->db->quoteString($tpl_desc), $tpl_lastmodified, $tpl_lastimported, $this->db->quoteString($tpl_type));
+            $sql    = sprintf('INSERT INTO %s (tpl_id, tpl_module, tpl_refid, tpl_tplset, tpl_file, tpl_desc, tpl_lastmodified, tpl_lastimported, tpl_type) VALUES (%u, %s, %u, %s, %s, %s, %u, %u, %s)', $this->db->prefix('tplfile'), $tpl_id, $this->db->quote($tpl_module), $tpl_refid, $this->db->quote($tpl_tplset), $this->db->quote($tpl_file), $this->db->quote($tpl_desc), $tpl_lastmodified, $tpl_lastimported, $this->db->quote($tpl_type));
             if (!$result = $this->db->query($sql)) {
                 return false;
             }
@@ -314,7 +314,7 @@ class XoopsTplfileHandler extends XoopsObjectHandler
                 $tpl_id = $this->db->getInsertId();
             }
             if (isset($tpl_source) && $tpl_source != '') {
-                $sql = sprintf('INSERT INTO %s (tpl_id, tpl_source) VALUES (%u, %s)', $this->db->prefix('tplsource'), $tpl_id, $this->db->quoteString($tpl_source));
+                $sql = sprintf('INSERT INTO %s (tpl_id, tpl_source) VALUES (%u, %s)', $this->db->prefix('tplsource'), $tpl_id, $this->db->quote($tpl_source));
                 if (!$result = $this->db->query($sql)) {
                     $this->db->query(sprintf('DELETE FROM %s WHERE tpl_id = %u', $this->db->prefix('tplfile'), $tpl_id));
 
@@ -323,12 +323,12 @@ class XoopsTplfileHandler extends XoopsObjectHandler
             }
             $tplfile->assignVar('tpl_id', $tpl_id);
         } else {
-            $sql = sprintf('UPDATE %s SET tpl_tplset = %s, tpl_file = %s, tpl_desc = %s, tpl_lastimported = %u, tpl_lastmodified = %u WHERE tpl_id = %u', $this->db->prefix('tplfile'), $this->db->quoteString($tpl_tplset), $this->db->quoteString($tpl_file), $this->db->quoteString($tpl_desc), $tpl_lastimported, $tpl_lastmodified, $tpl_id);
+            $sql = sprintf('UPDATE %s SET tpl_tplset = %s, tpl_file = %s, tpl_desc = %s, tpl_lastimported = %u, tpl_lastmodified = %u WHERE tpl_id = %u', $this->db->prefix('tplfile'), $this->db->quote($tpl_tplset), $this->db->quote($tpl_file), $this->db->quote($tpl_desc), $tpl_lastimported, $tpl_lastmodified, $tpl_id);
             if (!$result = $this->db->query($sql)) {
                 return false;
             }
             if (isset($tpl_source) && $tpl_source != '') {
-                $sql = sprintf('UPDATE %s SET tpl_source = %s WHERE tpl_id = %u', $this->db->prefix('tplsource'), $this->db->quoteString($tpl_source), $tpl_id);
+                $sql = sprintf('UPDATE %s SET tpl_source = %s WHERE tpl_id = %u', $this->db->prefix('tplsource'), $this->db->quote($tpl_source), $tpl_id);
                 if (!$result = $this->db->query($sql)) {
                     return false;
                 }
@@ -360,12 +360,12 @@ class XoopsTplfileHandler extends XoopsObjectHandler
             ${$k} = $v;
         }
         if (!$tplfile->isNew()) {
-            $sql = sprintf('UPDATE %s SET tpl_tplset = %s, tpl_file = %s, tpl_desc = %s, tpl_lastimported = %u, tpl_lastmodified = %u WHERE tpl_id = %u', $this->db->prefix('tplfile'), $this->db->quoteString($tpl_tplset), $this->db->quoteString($tpl_file), $this->db->quoteString($tpl_desc), $tpl_lastimported, $tpl_lastmodified, $tpl_id);
+            $sql = sprintf('UPDATE %s SET tpl_tplset = %s, tpl_file = %s, tpl_desc = %s, tpl_lastimported = %u, tpl_lastmodified = %u WHERE tpl_id = %u', $this->db->prefix('tplfile'), $this->db->quote($tpl_tplset), $this->db->quote($tpl_file), $this->db->quote($tpl_desc), $tpl_lastimported, $tpl_lastmodified, $tpl_id);
             if (!$result = $this->db->queryF($sql)) {
                 return false;
             }
             if (isset($tpl_source) && $tpl_source != '') {
-                $sql = sprintf('UPDATE %s SET tpl_source = %s WHERE tpl_id = %u', $this->db->prefix('tplsource'), $this->db->quoteString($tpl_source), $tpl_id);
+                $sql = sprintf('UPDATE %s SET tpl_source = %s WHERE tpl_id = %u', $this->db->prefix('tplsource'), $this->db->quote($tpl_source), $tpl_id);
                 if (!$result = $this->db->queryF($sql)) {
                     return false;
                 }

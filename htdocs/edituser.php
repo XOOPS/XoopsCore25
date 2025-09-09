@@ -314,7 +314,7 @@ if ($op === 'avatarupload') {
                             }
                         }
                     }
-                    $sql = sprintf('UPDATE %s SET user_avatar = %s WHERE uid = %u', $xoopsDB->prefix('users'), $xoopsDB->quoteString('avatars/' . $uploader->getSavedFileName()), $xoopsUser->getVar('uid'));
+                    $sql = sprintf('UPDATE %s SET user_avatar = %s WHERE uid = %u', $xoopsDB->prefix('users'), $xoopsDB->quote('avatars/' . $uploader->getSavedFileName()), $xoopsUser->getVar('uid'));
                     $xoopsDB->query($sql);
                     $avt_handler->addUser($avatar->getVar('avatar_id'), $xoopsUser->getVar('uid'));
                     redirect_header('userinfo.php?t=' . time() . '&amp;uid=' . $xoopsUser->getVar('uid'), 3, _US_PROFUPDATED);
