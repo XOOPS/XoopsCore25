@@ -148,14 +148,14 @@ abstract class XoopsDatabase
      * Executes a mutating statement (INSERT/UPDATE/DELETE/DDL).
      * New code should prefer exec().
      */
-    abstract public function exec(string $sql): bool;
+    abstract public function exec(string $sql);
 
     /**
      * Legacy alias for writes; kept for BC.
-     * @deprecated Use exec() for mutating statements.
      */
-    public function queryF(string $sql): bool
+    public function queryF(string $sql)
     {
+        // Deprecated: delegate to exec().
         // Optional: behind a dev flag, emit a deprecation warning.
 //        if (is_object($GLOBALS['xoopsLogger'])) {
 //            $GLOBALS['xoopsLogger']->addDeprecated(__METHOD__ . " is deprecated since XOOPS 2.5.12, please use 'exec()' instead.");
