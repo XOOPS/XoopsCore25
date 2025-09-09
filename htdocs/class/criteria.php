@@ -410,7 +410,7 @@ class Criteria extends CriteriaElement
                 if (is_int($v) || (is_string($v) && preg_match('/^-?\d+$/', $v))) {
                     $parts[] = (string)(int)$v;
                 } else {
-                    $parts[] = $xoopsDB->quoteString((string)$v);
+                    $parts[] = $xoopsDB->quote((string)$v);
                 }
             }
             return $clause . ' ' . $op . ' (' . implode(',', $parts) . ')';
@@ -448,7 +448,7 @@ class Criteria extends CriteriaElement
                 $final = $left . $core . $right;
             }
 
-            $quoted = $xoopsDB->quoteString($final);
+            $quoted = $xoopsDB->quote($final);
             // IMPORTANT: no ESCAPE clause for MySQL/MariaDB
             return $clause . ' ' . $op . ' ' . $quoted;
         }
@@ -458,7 +458,7 @@ class Criteria extends CriteriaElement
         if (is_int($v) || (is_string($v) && preg_match('/^-?\d+$/', $v))) {
             $safe = (string)(int)$v;
         } else {
-            $safe = $xoopsDB->quoteString((string)$v);
+            $safe = $xoopsDB->quote((string)$v);
         }
 
         return $clause . ' ' . $op . ' ' . $safe;

@@ -942,7 +942,7 @@ class XoopsBlock extends XoopsObject
         $db = XoopsDatabaseFactory::getDatabaseConnection();
         if (isset($showFunc)) {
             // showFunc is set for more strict comparison
-            $sql = sprintf('SELECT COUNT(*) FROM %s WHERE mid = %d AND func_num = %d AND show_func = %s', $db->prefix('newblocks'), $moduleId, $funcNum, $db->quoteString(trim($showFunc)));
+            $sql = sprintf('SELECT COUNT(*) FROM %s WHERE mid = %d AND func_num = %d AND show_func = %s', $db->prefix('newblocks'), $moduleId, $funcNum, $db->quote(trim($showFunc)));
         } else {
             $sql = sprintf('SELECT COUNT(*) FROM %s WHERE mid = %d AND func_num = %d', $db->prefix('newblocks'), $moduleId, $funcNum);
         }

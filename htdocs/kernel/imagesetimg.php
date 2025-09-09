@@ -174,9 +174,9 @@ class XoopsImagesetimgHandler extends XoopsObjectHandler
         }
         if ($imgsetimg->isNew()) {
             $imgsetimg_id = $this->db->genId('imgsetimg_imgsetimg_id_seq');
-            $sql          = sprintf('INSERT INTO %s (imgsetimg_id, imgsetimg_file, imgsetimg_body, imgsetimg_imgset) VALUES (%u, %s, %s, %s)', $this->db->prefix('imgsetimg'), $imgsetimg_id, $this->db->quoteString($imgsetimg_file), $this->db->quoteString($imgsetimg_body), $this->db->quoteString($imgsetimg_imgset));
+            $sql          = sprintf('INSERT INTO %s (imgsetimg_id, imgsetimg_file, imgsetimg_body, imgsetimg_imgset) VALUES (%u, %s, %s, %s)', $this->db->prefix('imgsetimg'), $imgsetimg_id, $this->db->quote($imgsetimg_file), $this->db->quote($imgsetimg_body), $this->db->quote($imgsetimg_imgset));
         } else {
-            $sql = sprintf('UPDATE %s SET imgsetimg_file = %s, imgsetimg_body = %s, imgsetimg_imgset = %s WHERE imgsetimg_id = %u', $this->db->prefix('imgsetimg'), $this->db->quoteString($imgsetimg_file), $this->db->quoteString($imgsetimg_body), $this->db->quoteString($imgsetimg_imgset), $imgsetimg_id);
+            $sql = sprintf('UPDATE %s SET imgsetimg_file = %s, imgsetimg_body = %s, imgsetimg_imgset = %s WHERE imgsetimg_id = %u', $this->db->prefix('imgsetimg'), $this->db->quote($imgsetimg_file), $this->db->quote($imgsetimg_body), $this->db->quote($imgsetimg_imgset), $imgsetimg_id);
         }
         if (!$result = $this->db->query($sql)) {
             return false;

@@ -363,9 +363,9 @@ class XoopsConfigItemHandler extends XoopsObjectHandler
 
         if ($config->isNew()) {
             $conf_id = $this->db->genId('config_conf_id_seq');
-            $sql     = sprintf('INSERT INTO %s (conf_id, conf_modid, conf_catid, conf_name, conf_title, conf_value, conf_desc, conf_formtype, conf_valuetype, conf_order) VALUES (%u, %u, %u, %s, %s, %s, %s, %s, %s, %u)', $this->db->prefix('config'), $conf_id, $conf_modid, $conf_catid, $this->db->quoteString($conf_name), $this->db->quoteString($conf_title), $this->db->quoteString($conf_value), $this->db->quoteString($conf_desc), $this->db->quoteString($conf_formtype), $this->db->quoteString($conf_valuetype), $conf_order);
+            $sql     = sprintf('INSERT INTO %s (conf_id, conf_modid, conf_catid, conf_name, conf_title, conf_value, conf_desc, conf_formtype, conf_valuetype, conf_order) VALUES (%u, %u, %u, %s, %s, %s, %s, %s, %s, %u)', $this->db->prefix('config'), $conf_id, $conf_modid, $conf_catid, $this->db->quote($conf_name), $this->db->quote($conf_title), $this->db->quote($conf_value), $this->db->quote($conf_desc), $this->db->quote($conf_formtype), $this->db->quote($conf_valuetype), $conf_order);
         } else {
-            $sql = sprintf('UPDATE %s SET conf_modid = %u, conf_catid = %u, conf_name = %s, conf_title = %s, conf_value = %s, conf_desc = %s, conf_formtype = %s, conf_valuetype = %s, conf_order = %u WHERE conf_id = %u', $this->db->prefix('config'), $conf_modid, $conf_catid, $this->db->quoteString($conf_name), $this->db->quoteString($conf_title), $this->db->quoteString($conf_value), $this->db->quoteString($conf_desc), $this->db->quoteString($conf_formtype), $this->db->quoteString($conf_valuetype), $conf_order, $conf_id);
+            $sql = sprintf('UPDATE %s SET conf_modid = %u, conf_catid = %u, conf_name = %s, conf_title = %s, conf_value = %s, conf_desc = %s, conf_formtype = %s, conf_valuetype = %s, conf_order = %u WHERE conf_id = %u', $this->db->prefix('config'), $conf_modid, $conf_catid, $this->db->quote($conf_name), $this->db->quote($conf_title), $this->db->quote($conf_value), $this->db->quote($conf_desc), $this->db->quote($conf_formtype), $this->db->quote($conf_valuetype), $conf_order, $conf_id);
         }
         if (!$result = $this->db->query($sql)) {
             return false;

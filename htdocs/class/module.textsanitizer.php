@@ -848,7 +848,7 @@ class MyTextSanitizer
     {
         global $xoopsDB;
         $GLOBALS['xoopsLogger']->addDeprecated(
-            __METHOD__ . ' is deprecated. Use $xoopsDB->escape() or $xoopsDB->quoteString() instead.'
+            __METHOD__ . ' is deprecated. Use $xoopsDB->escape() or $xoopsDB->quote() instead.'
         );
         return $xoopsDB->escape($text);
     }

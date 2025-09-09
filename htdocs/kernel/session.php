@@ -134,7 +134,7 @@ class XoopsSessionHandler implements SessionHandlerInterface
         $sql = sprintf(
             'SELECT sess_data, sess_ip FROM %s WHERE sess_id = %s',
             $this->db->prefix('session'),
-            $this->db->quoteString($sessionId)
+            $this->db->quote($sessionId)
         );
 
         $result = $this->db->queryF($sql);
@@ -167,7 +167,7 @@ class XoopsSessionHandler implements SessionHandlerInterface
     {
         $myReturn = true;
         $remoteAddress = \Xmf\IPAddress::fromRequest()->asReadable();
-        $sessionId = $this->db->quoteString($sessionId);
+        $sessionId = $this->db->quote($sessionId);
         
         $sql= sprintf('INSERT INTO %s (sess_id, sess_updated, sess_ip, sess_data)
         VALUES (%s, %u, %s, %s)
@@ -200,7 +200,7 @@ class XoopsSessionHandler implements SessionHandlerInterface
         $sql = sprintf(
             'DELETE FROM %s WHERE sess_id = %s',
             $this->db->prefix('session'),
-            $this->db->quoteString($sessionId)
+            $this->db->quote($sessionId)
         );
         if (!$result = $this->db->queryF($sql)) {
             return false;

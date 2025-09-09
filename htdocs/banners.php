@@ -102,7 +102,7 @@ function bannerstats()
     if ($_SESSION['banner_login'] == '' || $_SESSION['banner_pass'] == '') {
         redirect_header('banners.php', 2, _BANNERS_NO_LOGIN_DATA);
     }
-    $sql = sprintf('SELECT cid, name, passwd FROM %s WHERE login=%s', $xoopsDB->prefix('bannerclient'), $xoopsDB->quoteString($_SESSION['banner_login']));
+    $sql = sprintf('SELECT cid, name, passwd FROM %s WHERE login=%s', $xoopsDB->prefix('bannerclient'), $xoopsDB->quote($_SESSION['banner_login']));
     $result = $xoopsDB->query($sql);
     if (!$xoopsDB->isResultSet($result)) {
         throw new \RuntimeException(
@@ -265,7 +265,7 @@ function emailStats($cid, $bid)
     if ($_SESSION['banner_login'] != '' && $_SESSION['banner_pass'] != '') {
         $cid     = (int) $cid;
         $bid     = (int) $bid;
-        $sql     = sprintf('SELECT name, email, passwd FROM %s WHERE cid=%u AND login=%s', $xoopsDB->prefix('bannerclient'), $cid, $xoopsDB->quoteString($_SESSION['banner_login']));
+        $sql     = sprintf('SELECT name, email, passwd FROM %s WHERE cid=%u AND login=%s', $xoopsDB->prefix('bannerclient'), $cid, $xoopsDB->quote($_SESSION['banner_login']));
         $result2 = $xoopsDB->query($sql);
         if ($xoopsDB->isResultSet($result2)) {
             [$name, $email, $passwd] = $xoopsDB->fetchRow($result2);
@@ -321,12 +321,12 @@ function change_banner_url_by_client($cid, $bid, $url)
     if ($_SESSION['banner_login'] != '' && $_SESSION['banner_pass'] != '' && $url != '') {
         $cid    = (int) $cid;
         $bid    = (int) $bid;
-        $sql    = sprintf('SELECT passwd FROM %s WHERE cid=%u AND login=%s', $xoopsDB->prefix('bannerclient'), $cid, $xoopsDB->quoteString($_SESSION['banner_login']));
+        $sql    = sprintf('SELECT passwd FROM %s WHERE cid=%u AND login=%s', $xoopsDB->prefix('bannerclient'), $cid, $xoopsDB->quote($_SESSION['banner_login']));
         $result = $xoopsDB->query($sql);
         if ($xoopsDB->isResultSet($result)) {
             [$passwd] = $xoopsDB->fetchRow($result);
             if ($_SESSION['banner_pass'] == $passwd) {
-                $sql = sprintf('UPDATE %s SET clickurl=%s WHERE bid=%u AND cid=%u', $xoopsDB->prefix('banner'), $xoopsDB->quoteString($url), $bid, $cid);
+                $sql = sprintf('UPDATE %s SET clickurl=%s WHERE bid=%u AND cid=%u', $xoopsDB->prefix('banner'), $xoopsDB->quote($url), $bid, $cid);
                 if ($xoopsDB->query($sql)) {
                     redirect_header('banners.php?op=Ok', 3, _BANNERS_DBUPDATED);
                 }
