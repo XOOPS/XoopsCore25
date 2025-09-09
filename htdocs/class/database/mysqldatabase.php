@@ -226,9 +226,15 @@ abstract class XoopsMySQLDatabase extends XoopsDatabase
      *
      * @param string $str unescaped string text
      * @return string escaped string text with single quotes around
+     * @deprecated : delegate to exec().
      */
     public function quoteString($str)
     {
+
+        if (is_object($GLOBALS['xoopsLogger'])) {
+            $GLOBALS['xoopsLogger']->addDeprecated(__METHOD__ . " is deprecated since XOOPS 2.5.12, please use 'quote()' instead.");
+        }
+
         return $this->quote($str);
     }
 

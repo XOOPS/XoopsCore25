@@ -315,9 +315,9 @@ class Criteria extends CriteriaElement
      * @param bool $on
      * @return void
      */
-    public static function setDefaultAllowInnerWildcards($on = true)
+    public static function setDefaultAllowInnerWildcards(bool $on = true): void
     {
-        self::$defaultAllowInnerWildcards = (bool)$on;
+        self::$defaultAllowInnerWildcards = $on;
     }
 
     /**
@@ -327,9 +327,9 @@ class Criteria extends CriteriaElement
      * @param bool $on
      * @return $this
      */
-    public function allowInnerWildcards($on = true)
+    public function allowInnerWildcards(bool $on = true): self
     {
-        $this->allowInnerWildcards = (bool)$on;
+        $this->allowInnerWildcards = $on;
         return $this;
     }
 
@@ -432,8 +432,10 @@ class Criteria extends CriteriaElement
             $coreLen = $len - $lead - $trail;
 
             if ($coreLen <= 0) {
-                // Pattern is entirely %'s (NOT LIKE case falls through above, only applies to LIKE)
-                $final = $pattern; // unreachable for LIKE due to early return
+                // With the all-% early-return handled above, reaching here means we have a core.
+                // If you keep this guard at all, it should not mention LIKE/NOT LIKE reachability.
+                // Most implementations can simply drop this guard entirely.
+                $final = $pattern;
             } else {
                 $left  = substr($pattern, 0, $lead);
                 $core  = substr($pattern, $lead, $coreLen);
