@@ -395,8 +395,7 @@ class XoopsMemberHandler
         $quoteFn = method_exists($db, 'quoteString') ? 'quoteString' : 'escape';
 
         $sql = sprintf(
-            'SELECT `CHARACTER_MAXIMUM_LENGTH` FROM `information_schema`.`COLUMNS` 
-             WHERE `TABLE_SCHEMA` = %s AND `TABLE_NAME` = %s AND `COLUMN_NAME` = %s',
+            'SELECT `CHARACTER_MAXIMUM_LENGTH` FROM `information_schema`.`COLUMNS` WHERE `TABLE_SCHEMA` = %s AND `TABLE_NAME` = %s AND `COLUMN_NAME` = %s',
             $db->$quoteFn($dbname),
             $db->$quoteFn($table),
             $db->$quoteFn($column)
@@ -731,20 +730,34 @@ class XoopsMemberHandler
             // fall through to OpenSSL
         }
 
-        // OpenSSL fallback with mandatory checks
+        // Fallback: OpenSSL with strength check
         if (function_exists('openssl_random_pseudo_bytes')) {
-            $crypto_strong = false;                // initialize for static analyzers
-            $raw = openssl_random_pseudo_bytes($bytes, $crypto_strong);
-            if ($raw !== false && $crypto_strong === true) {
+            $strong = false;
+            $raw = openssl_random_pseudo_bytes($bytes, $strong);
+            if ($raw !== false && $strong === true) {
                 return substr(bin2hex($raw), 0, $length);
             }
         }
 
-        // Best practice: fail closed (or return false) rather than a weak fallback
+        // Log once per request to avoid spam, then fail closed
+        static $logged = false;
+        if (!$logged) {
+            $logged = true;
+            $ctx = sprintf(
+                'php=%s; openssl=%s',
+                PHP_VERSION,
+                defined('OPENSSL_VERSION_TEXT') ? OPENSSL_VERSION_TEXT : 'n/a'
+            );
+            $msg = '[CRITICAL] No CSPRNG available to generate a secure token in ' . __METHOD__ . " ({$ctx})";
+            if (class_exists('XoopsLogger')) {
+                \XoopsLogger::getInstance()->handleError(E_USER_ERROR, $msg, __FILE__, __LINE__);
+            } else {
+                error_log($msg);
+            }
+        }
+
         throw new \RuntimeException('No CSPRNG available to generate a secure token.');
     }
-
-
 
     /**
      * Check if debug output is allowed
