@@ -22,13 +22,7 @@ defined('XOOPS_ROOT_PATH') || die('Restricted access');
 include_once XOOPS_ROOT_PATH . '/class/database/database.php';
 
 /**
- * connection to a mysql database using MySQLi extension
- *
- * @abstract
- * @author              Kazumi Ono <onokazu@xoops.org>
- * @copyright       (c) 2000-2025 XOOPS Project (https://xoops.org)
- * @package             class
- * @subpackage          database
+ * Connection to a MySQL database using MySQLi extension
  */
 abstract class XoopsMySQLDatabase extends XoopsDatabase
 {
@@ -98,7 +92,7 @@ abstract class XoopsMySQLDatabase extends XoopsDatabase
     /**
      * Get a result row as an enumerated array
      *
-     * @param mysqli_result $result
+     * @param \mysqli_result $result
      *
      * @return array|false false on end of data
      */
@@ -111,7 +105,7 @@ abstract class XoopsMySQLDatabase extends XoopsDatabase
     /**
      * Fetch a result row as an associative array
      *
-     * @param mysqli_result $result
+     * @param \mysqli_result $result
      *
      * @return array|false false on end of data
      */
@@ -125,7 +119,7 @@ abstract class XoopsMySQLDatabase extends XoopsDatabase
     /**
      * Fetch a result row as an associative array
      *
-     * @param mysqli_result $result
+     * @param \mysqli_result $result
      *
      * @return array|false false on end of data
      */
@@ -138,7 +132,7 @@ abstract class XoopsMySQLDatabase extends XoopsDatabase
     /**
      * XoopsMySQLDatabase::fetchObject()
      *
-     * @param mysqli_result $result
+     * @param \mysqli_result $result
      * @return stdClass|false false on end of data
      */
     public function fetchObject($result)
@@ -160,7 +154,7 @@ abstract class XoopsMySQLDatabase extends XoopsDatabase
     /**
      * Get number of rows in result
      *
-     * @param mysqli_result $result
+     * @param \mysqli_result $result
      *
      * @return int
      */
@@ -192,7 +186,7 @@ abstract class XoopsMySQLDatabase extends XoopsDatabase
     /**
      * will free all memory associated with the result identifier result.
      *
-     * @param mysqli_result $result result
+     * @param \mysqli_result $result result
      *
      * @return void
      */
@@ -278,19 +272,18 @@ abstract class XoopsMySQLDatabase extends XoopsDatabase
             if (empty($start)) {
                 $start = 0;
             }
-            $sql = $sql . ' LIMIT ' . (int)$start . ', ' . (int)$limit;
+            $sql .= ' LIMIT ' . (int)$start . ', ' . (int)$limit;
         }
         $this->logger->startTime('query_time');
         $result = mysqli_query($this->conn, $sql);
         $this->logger->stopTime('query_time');
-        $query_time = $this->logger->dumpTime('query_time', true);
+        $t = $this->logger->dumpTime('query_time', true);
+
         if ($result) {
-            $this->logger->addQuery($sql, null, null, $query_time);
-
-            return $result;
+            $this->logger->addQuery($sql, null, null, $t);
+            return $result;             // mysqli_result for SELECT, true for writes
         } else {
-            $this->logger->addQuery($sql, $this->error(), $this->errno(), $query_time);
-
+            $this->logger->addQuery($sql, $this->error(), $this->errno(), $t);
             return false;
         }
     }
@@ -302,13 +295,54 @@ abstract class XoopsMySQLDatabase extends XoopsDatabase
      * used if nothing is exactly what you want done! ;-)
      *
      * @param string $sql   a valid MySQL query
-     * @param int    $limit number of records to return
-     * @param int    $start offset of first record to return
+     * @param int|null    $limit number of records to return
+     * @param int|null    $start offset of first record to return
      *
-     * @return mysqli_result|bool query result or FALSE if successful
+     * @return \mysqli_result|bool query result or FALSE if successful
      *                      or TRUE if successful and no result
      */
-    abstract public function query($sql, $limit = 0, $start = 0);
+    public function query(string $sql, ?int $limit = null, ?int $start = null)
+    {
+        // Optional: dev-only guard to catch misuse (writes via query()).
+        if (defined('XOOPS_DB_STRICT') && XOOPS_DB_STRICT) {
+            // Treat these as read-like; everything else is suspicious in query().
+            if (!preg_match('/^\s*(SELECT|WITH|SHOW|DESCRIBE|EXPLAIN)\b/i', $sql)) {
+                if (isset($GLOBALS['xoopsLogger']) && is_object($GLOBALS['xoopsLogger'])) {
+                    $GLOBALS['xoopsLogger']->warning('query() called with a mutating statement; use exec() instead');
+                } else {
+                    trigger_error('query() called with a mutating statement; use exec() instead', E_USER_WARNING);
+                }
+            }
+        }
+
+        // Append pagination if requested (null = no pagination)
+        if ($limit !== null) {
+            $start = max(0, $start ?? 0);
+            // MySQL supports both "LIMIT count OFFSET start" and "LIMIT start, count".
+            // Using the former improves cross-driver readability.
+            $sql .= ' LIMIT ' . (int)$limit . ' OFFSET ' . $start;
+        }
+
+        // No error suppression: handle failures explicitly
+        $res = mysqli_query($this->conn, $sql);
+
+        if ($res === false) {
+            // Surface diagnostics; error()/errno() will also reflect this.
+            if (isset($GLOBALS['xoopsLogger']) && is_object($GLOBALS['xoopsLogger'])) {
+                $GLOBALS['xoopsLogger']->error('DB query failed', [
+                    'errno' => mysqli_errno($this->conn),
+                    'error' => mysqli_error($this->conn),
+                    // 'sql' => $this->redactSql($sql), // if you have a redactor
+                ]);
+            }
+            return false;
+        }
+
+        // For proper SELECT-like statements, $res is a mysqli_result.
+        // If someone sent a write by mistake, mysqli_query() returns true; we pass it through.
+        return $res;
+    }
+
 
     /**
      * perform queries from SQL dump file in a batch
@@ -340,7 +374,7 @@ abstract class XoopsMySQLDatabase extends XoopsDatabase
     /**
      * Get field name
      *
-     * @param mysqli_result $result query result
+     * @param \mysqli_result $result query result
      * @param int           $offset numerical field index
      *
      * @return string
@@ -353,7 +387,7 @@ abstract class XoopsMySQLDatabase extends XoopsDatabase
     /**
      * Get field type
      *
-     * @param mysqli_result $result query result
+     * @param \mysqli_result $result query result
      * @param int           $offset numerical field index
      *
      * @return string
@@ -451,7 +485,7 @@ abstract class XoopsMySQLDatabase extends XoopsDatabase
     /**
      * Get number of fields in result
      *
-     * @param mysqli_result $result query result
+     * @param \mysqli_result $result query result
      *
      * @return int
      */
@@ -481,15 +515,48 @@ abstract class XoopsMySQLDatabase extends XoopsDatabase
     {
         return is_a($result, 'mysqli_result');
     }
+
+    public function exec(string $sql): bool
+    {
+        // Optional dev-only guard: flag accidental read statements passed to exec()
+        if (defined('XOOPS_DB_STRICT') && XOOPS_DB_STRICT) {
+            if (preg_match('/^\s*(?:SELECT|WITH|SHOW|DESCRIBE|EXPLAIN)\b/i', $sql)) {
+                if (isset($GLOBALS['xoopsLogger']) && is_object($GLOBALS['xoopsLogger'])) {
+                    $GLOBALS['xoopsLogger']->warning('exec() called with a read-only statement');
+                } else {
+                    trigger_error('exec() called with a read-only statement', E_USER_WARNING);
+                }
+            }
+        }
+
+        // No error suppression: let us see and handle failures explicitly
+        $res = mysqli_query($this->conn, $sql);
+
+        if ($res === false) {
+            // Normalize failure handling; error() / errno() will reflect these too
+            if (isset($GLOBALS['xoopsLogger']) && is_object($GLOBALS['xoopsLogger'])) {
+                $GLOBALS['xoopsLogger']->error('DB exec failed', [
+                    'errno' => mysqli_errno($this->conn),
+                    'error' => mysqli_error($this->conn),
+                    // 'sql' => $this->redactSql($sql)  // use if you have a redactor
+                ]);
+            }
+            return false;
+        }
+
+        // If someone passes a SELECT by mistake, mysqli returns a result; free it and treat as success
+        if ($res instanceof \mysqli_result) {
+            mysqli_free_result($res);
+        }
+
+        return true; // mysqli_query() returned true or a freed result set
+    }
 }
 
 /**
  * Safe Connection to a MySQL database.
  *
- * @author              Kazumi Ono <onokazu@xoops.org>
- * @copyright       (c) 2000-2025 XOOPS Project (https://xoops.org)
- * @package             kernel
- * @subpackage          database
+ * Delegates to parent; signature matches parent for LSP.
  */
 class XoopsMySQLDatabaseSafe extends XoopsMySQLDatabase
 {
@@ -504,7 +571,7 @@ class XoopsMySQLDatabaseSafe extends XoopsMySQLDatabase
      */
     public function query($sql, $limit = 0, $start = 0)
     {
-        return $this->queryF($sql, $limit, $start);
+        return parent::query($sql, $limit ?: null, $start ?: null);
     }
 }
 
@@ -533,15 +600,20 @@ class XoopsMySQLDatabaseProxy extends XoopsMySQLDatabase
      * @return mysqli_result|bool query result or FALSE if successful
      *                      or TRUE if successful and no result
      */
-    public function query($sql, $limit = 0, $start = 0)
+    public function query(string $sql, ?int $limit = null, ?int $start = null)
     {
         $sql = ltrim($sql);
-        if (!$this->allowWebChanges && strtolower(substr($sql, 0, 6)) !== 'select') {
+        if (!$this->allowWebChanges && stripos($sql, 'select') !== 0) {
             trigger_error('Database updates are not allowed during processing of a GET request', E_USER_WARNING);
 
             return false;
         }
-
-        return $this->queryF($sql, $limit, $start);
+        // Execute via queryF() to preserve legacy path (and LIMIT semantics)
+        if ($limit !== null) {
+            $start = max(0, $start ?? 0);
+            return $this->queryF($sql, (int)$limit, (int)$start);
     }
+        return $this->queryF($sql);
+    }
+
 }
