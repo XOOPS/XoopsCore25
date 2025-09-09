@@ -225,8 +225,8 @@ abstract class XoopsMySQLDatabase extends XoopsDatabase
     public function quoteString($str)
     {
 
-        if (is_object($GLOBALS['xoopsLogger'])) {
-            $GLOBALS['xoopsLogger']->addDeprecated(__METHOD__ . " is deprecated since XOOPS 2.5.12, please use 'quote()' instead.");
+        if (is_object($this->logger)) {
+            $this->logger->addDeprecated(__METHOD__ . " is deprecated since XOOPS 2.5.12, please use 'quote()' instead.");
         }
 
         return $this->quote($str);
@@ -307,8 +307,8 @@ abstract class XoopsMySQLDatabase extends XoopsDatabase
         if (defined('XOOPS_DB_STRICT') && XOOPS_DB_STRICT) {
             // Treat these as read-like; everything else is suspicious in query().
             if (!preg_match('/^\s*(SELECT|WITH|SHOW|DESCRIBE|EXPLAIN)\b/i', $sql)) {
-                if (isset($GLOBALS['xoopsLogger']) && is_object($GLOBALS['xoopsLogger'])) {
-                    $GLOBALS['xoopsLogger']->warning('query() called with a mutating statement; use exec() instead');
+                if (is_object($this->logger)) {
+                    $this->logger->warning('query() called with a mutating statement; use exec() instead');
                 } else {
                     trigger_error('query() called with a mutating statement; use exec() instead', E_USER_WARNING);
                 }
@@ -324,16 +324,15 @@ abstract class XoopsMySQLDatabase extends XoopsDatabase
         }
 
         // No error suppression: handle failures explicitly
-        $res = mysqli_query($this->conn, $sql);
+        $res = \mysqli_query($this->conn, $sql);
 
         if ($res === false) {
-            // Surface diagnostics; error()/errno() will also reflect this.
-            if (isset($GLOBALS['xoopsLogger']) && is_object($GLOBALS['xoopsLogger'])) {
-                $GLOBALS['xoopsLogger']->error('DB query failed', [
-                    'errno' => mysqli_errno($this->conn),
-                    'error' => mysqli_error($this->conn),
-                    // 'sql' => $this->redactSql($sql), // if you have a redactor
-                ]);
+            // Uniform SQL logging (time already measured above)
+            $this->logger->addQuery($sql, $this->error(), $this->errno(), $t);
+
+            // Optional extra breadcrumb (safe on 2.5.x)
+            if (is_object($this->logger)) {
+                $this->logger->addExtra('DB', 'Query failed: errno ' . $this->errno() . ' - ' . $this->error());
             }
             return false;
         }
@@ -521,35 +520,36 @@ abstract class XoopsMySQLDatabase extends XoopsDatabase
         // Optional dev-only guard: flag accidental read statements passed to exec()
         if (defined('XOOPS_DB_STRICT') && XOOPS_DB_STRICT) {
             if (preg_match('/^\s*(?:SELECT|WITH|SHOW|DESCRIBE|EXPLAIN)\b/i', $sql)) {
-                if (isset($GLOBALS['xoopsLogger']) && is_object($GLOBALS['xoopsLogger'])) {
-                    $GLOBALS['xoopsLogger']->warning('exec() called with a read-only statement');
-                } else {
-                    trigger_error('exec() called with a read-only statement', E_USER_WARNING);
+                if (is_object($this->logger)) {
+                    $this->logger->addExtra('DB', 'exec() called with a read-only statement');
                 }
+                trigger_error('exec() called with a read-only statement', E_USER_WARNING);
             }
         }
 
         // No error suppression: let us see and handle failures explicitly
-        $res = mysqli_query($this->conn, $sql);
+        $res = \mysqli_query($this->conn, $sql);
 
         if ($res === false) {
-            // Normalize failure handling; error() / errno() will reflect these too
-            if (isset($GLOBALS['xoopsLogger']) && is_object($GLOBALS['xoopsLogger'])) {
-                $GLOBALS['xoopsLogger']->error('DB exec failed', [
-                    'errno' => mysqli_errno($this->conn),
-                    'error' => mysqli_error($this->conn),
-                    // 'sql' => $this->redactSql($sql)  // use if you have a redactor
-                ]);
+            if (is_object($this->logger)) {
+                $this->logger->addQuery($sql, $this->error(), $this->errno(), $t);
+
+                // Optional: keep only if you want a human-friendly breadcrumb in the debug pane
+                // Consider gating it behind XOOPS_DB_STRICT to reduce noise in production.
+                if (defined('XOOPS_DB_STRICT') && XOOPS_DB_STRICT) {
+                    $this->logger->addExtra('DB', 'Exec failed: errno ' . $this->errno() . ' - ' . $this->error());
             }
-            return false;
         }
+            return false;
 
         // If someone passes a SELECT by mistake, mysqli returns a result; free it and treat as success
         if ($res instanceof \mysqli_result) {
-            mysqli_free_result($res);
+                \mysqli_free_result($res);
         }
 
         return true; // mysqli_query() returned true or a freed result set
+    }
+
     }
 }
 
