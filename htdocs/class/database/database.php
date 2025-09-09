@@ -164,6 +164,29 @@ abstract class XoopsDatabase
         return $this->exec($sql);
     }
 
+
+    /**
+         * Canonical quoting API — returns a single-quoted SQL literal.
+         * MUST include surrounding single quotes and perform driver-appropriate escaping.
+         *
+         * @param string $str Raw, unescaped string
+         * @return string Quoted SQL literal, e.g. 'O''Reilly' for input "O'Reilly"
+         */
+
+        abstract public function quote(string $str);
+
+        /**
+          Legacy alias. Returns a single-quoted SQL literal.
+         * @deprecated Use quote()
+         */
+    public function quoteString(string $str)
+    {
+           if (is_object($GLOBALS['xoopsLogger'])) {
+             $GLOBALS['xoopsLogger']->addDeprecated(__METHOD__ ." is deprecated since XOOPS 2.5.12, use quote() instead.");
+         }
+        return $this->quote($str);
+    }
+
     /**
      * Helper: normalize pagination semantics for drivers.
      * - limit=null  => [null, null]  (no pagination)
@@ -178,15 +201,6 @@ abstract class XoopsDatabase
         $start = max(0, $start ?? 0);
         return [$limit, $start];
     }
-
-    /**
-     * Returns a safely quoted SQL string literal for this connection.
-     * MUST include surrounding single quotes and perform driver-appropriate escaping.
-     *
-     * @param string $str Raw, unescaped string
-     * @return string Quoted SQL literal, e.g.  "O''Reilly" for input "O'Reilly"
-     */
-    abstract public function quoteString(string $str): string;
 }
 
 /**
