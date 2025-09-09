@@ -133,27 +133,50 @@ abstract class XoopsDatabase
     abstract public function errno();
 
     /**
-     * Executes a SELECT-like statement and returns a result set handle.
-     * Implementations may append LIMIT/OFFSET if provided.
+     * Executes a SELECT-like statement and returns a result handle.
+     * If $limit is null, no LIMIT/OFFSET is applied.
+     * If $limit is not null and $start is null, $start defaults to 0.
      *
-     * @return mixed A driver result object/resource, or false on failure.
+     * @param string   $sql
+     * @param int|null $limit
+     * @param int|null $start
+     * @return mixed   driver result/resource|false
      */
-    abstract public function query(string $sql, int $limit = 0, int $start = 0);
+    abstract public function query(string $sql, ?int $limit = null, ?int $start = null);
 
     /**
      * Executes a mutating statement (INSERT/UPDATE/DELETE/DDL).
-     * Historically named "queryF" in XOOPS.
-     * @deprecated Use exec() for mutating statements.
+     * New code should prefer exec().
      */
-    abstract public function queryF(string $sql);
+    abstract public function exec(string $sql): bool;
 
     /**
-     * Modern alias for mutating statements. Defaults to queryF() for BC.
+     * Legacy alias for writes; kept for BC.
+     * @deprecated Use exec() for mutating statements.
      */
-    public function exec(string $sql)
+    public function queryF(string $sql): bool
     {
-        // Route to legacy method for BC.
-        return $this->queryF($sql);
+        // Optional: behind a dev flag, emit a deprecation warning.
+//        if (is_object($GLOBALS['xoopsLogger'])) {
+//            $GLOBALS['xoopsLogger']->addDeprecated(__METHOD__ . " is deprecated since XOOPS 2.5.12, please use 'exec()' instead.");
+//        }
+
+        return $this->exec($sql);
+    }
+
+    /**
+     * Helper: normalize pagination semantics for drivers.
+     * - limit=null  => [null, null]  (no pagination)
+     * - limit>=0    => [limit, max(0, start??0)]
+     */
+    final protected function normalizeLimitStart(?int $limit, ?int $start): array
+    {
+        if ($limit === null) {
+            return [null, null];
+        }
+        $limit = max(0, $limit);
+        $start = max(0, $start ?? 0);
+        return [$limit, $start];
     }
 }
 
