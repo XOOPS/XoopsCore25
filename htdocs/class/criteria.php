@@ -432,21 +432,25 @@ class Criteria extends CriteriaElement
             $coreLen = $len - $lead - $trail;
 
             if ($coreLen <= 0) {
-                // With the all-% early-return handled above, reaching here means we have a core.
-                // If you keep this guard at all, it should not mention LIKE/NOT LIKE reachability.
-                // Most implementations can simply drop this guard entirely.
-                $final = $pattern;
-            } else {
-                $left  = substr($pattern, 0, $lead);
-                $core  = substr($pattern, $lead, $coreLen);
-                $right = substr($pattern, $len - $trail);
+                // Defensive: unreachable if "all-wildcards" early return is active.
+                // Keep for future-proofing, or remove entirely if you prefer.
+                return $pattern;
+            }
 
+            // Assemble pieces
+            $left  = $lead  > 0 ? substr($pattern, 0, $lead)     : '';
+                $core  = substr($pattern, $lead, $coreLen);
+            $right = $trail > 0 ? substr($pattern, -$trail)       : '';
+
+            // Escape inner core only
+            // - Always escape backslashes
+            // - If inner wildcards are NOT allowed, escape '%' and '_' inside the core
                 $core = str_replace('\\', '\\\\', $core);
                 if (!$this->allowInnerWildcards) {
-                    $core = str_replace(['%', '_'], ['\\%', '\\_'], $core);
+                // strtr is a touch faster and clearer for one-pass mapping
+                $core = strtr($core, ['%' => '\\%', '_' => '\\_']);
                 }
                 $final = $left . $core . $right;
-            }
 
             $quoted = $xoopsDB->quote($final);
             // IMPORTANT: no ESCAPE clause for MySQL/MariaDB
