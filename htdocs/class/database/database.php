@@ -133,18 +133,28 @@ abstract class XoopsDatabase
     abstract public function errno();
 
     /**
-     * Perform a query on the database.
+     * Executes a SELECT-like statement and returns a result set handle.
+     * Implementations may append LIMIT/OFFSET if provided.
      *
-     * This method allows only SELECT queries for safety.
-     * Subclasses must override to provide engine-specific execution.
-     *
-     * @param string $sql   A valid SQL query (restricted to SELECT for safety).
-     * @param int    $limit Number of records to return (default: 0 for unlimited).
-     * @param int    $start Offset of first record to return (default: 0).
-     *
-     * @return mixed Query result resource/object or false on failure (subclass-specific).
+     * @return mixed A driver result object/resource, or false on failure.
      */
-    abstract public function query($sql, $limit = 0, $start = 0);
+    abstract public function query(string $sql, int $limit = 0, int $start = 0);
+
+    /**
+     * Executes a mutating statement (INSERT/UPDATE/DELETE/DDL).
+     * Historically named "queryF" in XOOPS.
+     * @deprecated Use exec() for mutating statements.
+     */
+    abstract public function queryF(string $sql);
+
+    /**
+     * Modern alias for mutating statements. Defaults to queryF() for BC.
+     */
+    public function exec(string $sql)
+    {
+        // Route to legacy method for BC.
+        return $this->queryF($sql);
+    }
 }
 
 /**
