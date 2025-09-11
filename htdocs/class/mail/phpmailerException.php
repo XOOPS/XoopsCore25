@@ -20,7 +20,7 @@ namespace { // Global namespace
                         E_USER_DEPRECATED
                     );
                 }
-                parent::__construct($message, (int)$code, $previous);
+                parent::__construct($message, $code, $previous);
             }
 
             /** @deprecated */
