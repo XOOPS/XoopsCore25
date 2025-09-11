@@ -27,12 +27,10 @@
 
 defined('XOOPS_ROOT_PATH') || exit('Restricted access');
 
+use Xmf\Mail\SendmailRunner;
 use PHPMailer\PHPMailer\PHPMailer;
-use PHPMailer\PHPMailer\Exception as PHPMailerException;
-
 
 // bridge class for PhpMailer 6.x PHPMailer\PHPMailer\Exception
-require_once __DIR__ . '/phpmailerException.php';
 
 /**
  * load the base class
@@ -178,5 +176,37 @@ class XoopsMultiMailer extends PHPMailer
         //$this->pluginDir = XOOPS_ROOT_PATH . '/class/mail/phpmailer/';
     }
 
+    /**
+     * Use XOOPS' hardened runner for sendmail delivery.
+     *
+     * PHPMailer calls this when $this->Mailer === 'sendmail'.
+     * @param string $header RFC 5322 headers (LF line endings)
+     * @param string $body   Message body (LF line endings)
+     * @return bool
+     * @throws PHPMailerException when exceptions are enabled
+     */
+    protected function sendmailSend($header, $body): bool
+    {
+        // Build a complete RFC 5322 message. PHPMailer gives LF; runner normalizes to CRLF.
+        $rfc822 = rtrim($header, "\r\n") . "\n\n" . $body;
+
+        // XOOPS config already set this in ctor from preferences:
+        $path = (string)$this->Sendmail;
+        // Prefer Sender (envelope-from), fall back to From if Sender is empty:
+        $envelopeFrom = $this->Sender ?: $this->From ?: null;
+
+        try {
+            $runner = new SendmailRunner();           // optionally pass a custom allowlist/policy
+            $runner->deliver($path, $rfc822, $envelopeFrom);
+            return true;
+        } catch (\RuntimeException $e) {
+            // Preserve PHPMailer’s error/exception contract
+            if ($this->exceptions) {
+                throw new \PHPMailer\PHPMailer\Exception($e->getMessage(), 0, $e);
+            }
+            $this->setError($e->getMessage());
+            return false;
+        }
+    }
 
 }

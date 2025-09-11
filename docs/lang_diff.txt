@@ -20,10 +20,12 @@ define('_PM_EMAIL_DESC', 'Dear %s, this is a message transferred from your accou
 define('_XOOPS_EDITOR_TINYMCE_LANGUAGE5', 'en');
 define('_XOOPS_EDITOR_TINYMCE5_LANGUAGE', 'en');
 
-/htdocs/\modules\system\themes\transition\language\english\admin.php
+/htdocs/modules/system/themes/transition/language/english/admin.php
 - renamed _OXYGEN_Server_API to _OXYGEN_SERVER_API
 
-
+/htdocs/modules/system/language/english/admin/preferences.php.
+define('_MD_AM_SENDMAIL_NOT_FOUND', 'Sendmail binary not found. Please check your server configuration.');
+define('_MD_AM_SENDMAIL_HELP_MISSING_BIN', 'No valid sendmail-compatible binary was detected. Install an MTA (e.g. Postfix, msmtp) or switch to SMTP in Preferences.');
 
 ================================
 2023/10/01: Version 2.5.11-Final

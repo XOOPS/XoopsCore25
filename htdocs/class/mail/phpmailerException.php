@@ -13,18 +13,17 @@ namespace { // Global namespace
         {
             public function __construct($message = '', $code = 0, $previous = null)
             {
-                // Raise a deprecation notice (suppressed by @ to avoid disrupting UI)
-                @trigger_error(
-                    'The phpmailerException class is deprecated. Use \PHPMailer\PHPMailer\Exception instead.',
-                    E_USER_DEPRECATED
-                );
-
-                parent::__construct($message, $code, $previous);
+                // Only raise in debug/dev environments to avoid log noise
+                if (defined('XOOPS_DEBUG') && XOOPS_DEBUG) {
+                    trigger_error(
+                        'The phpmailerException class is deprecated. Use \PHPMailer\PHPMailer\Exception instead.',
+                        E_USER_DEPRECATED
+                    );
+                }
+                parent::__construct($message, (int)$code, $previous);
             }
 
-            /**
-             * @deprecated
-             */
+            /** @deprecated */
             public function errorMessage()
             {
                 return $this->getMessage();
