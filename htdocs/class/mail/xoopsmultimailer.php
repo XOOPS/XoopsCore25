@@ -177,13 +177,16 @@ class XoopsMultiMailer extends PHPMailer
     }
 
     /**
-     * Use XOOPS' hardened runner for sendmail delivery.
+     * Overrides PHPMailer's protected sendmailSend method to use XOOPS' hardened runner for sendmail delivery.
      *
-     * PHPMailer calls this when $this->Mailer === 'sendmail'.
-     * @param string $header RFC 5322 headers (LF line endings)
-     * @param string $body   Message body (LF line endings)
-     * @return bool
-     * @throws PHPMailerException when exceptions are enabled
+     * Security enhancement: Instead of directly invoking the sendmail binary, this method uses XOOPS' SendmailRunner,
+     * which applies additional security checks and policies to the delivery process.
+     *
+     * @param string $header RFC 5322-compliant message headers, with LF line endings.
+     * @param string $body   Message body, with LF line endings.
+     *                       Both parameters are expected to be formatted as provided by PHPMailer.
+     * @return bool True on successful delivery, false otherwise.
+     * @throws PHPMailer\PHPMailer\Exception when exceptions are enabled and delivery fails.
      */
     protected function sendmailSend($header, $body): bool
     {
