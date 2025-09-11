@@ -173,7 +173,7 @@ class PublicSuffixList
     private function readPSL()
     {
         $parts = \parse_url($this->url);
-        $remote = isset($parts['scheme']) || isset($parts['host']);
+        $remote = \is_array($parts) && !empty($parts) && (isset($parts['scheme']) || isset($parts['host']));
         // try to read with file_get_contents
         $newPSL = \file_get_contents(($remote ? '' : __DIR__) . $this->url);
         if (false !== $newPSL) {
