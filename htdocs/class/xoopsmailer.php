@@ -431,9 +431,9 @@ class XoopsMailer
         $this->encodeBody($body);
         $this->multimailer->clearAllRecipients();
         $this->multimailer->addAddress($email);
-        $this->multimailer->Subject  = $subject;
-        $this->multimailer->Body     = $body;
-        $this->multimailer->CharSet  = $this->charSet;
+        $this->multimailer->Subject = $subject;
+        $this->multimailer->Body = $body;
+        $this->multimailer->CharSet = $this->charSet;
         $this->multimailer->Encoding = $this->encoding;
         if (!empty($this->fromName)) {
             $this->multimailer->FromName = $this->encodeFromName($this->fromName);
@@ -446,9 +446,14 @@ class XoopsMailer
         foreach ($this->headers as $header) {
             $this->multimailer->addCustomHeader($header);
         }
-        if (!$this->multimailer->send()) {
-            $this->errors[] = $this->multimailer->ErrorInfo;
-
+        try {
+            if (!$this->multimailer->send()) {
+                $this->errors[] = $this->multimailer->ErrorInfo;
+                return false;
+            }
+        } catch (\PHPMailer\PHPMailer\Exception $e) {
+            // Normalize PHPMailer exceptions to XOOPS' error array
+            $this->errors[] = $e->getMessage();
             return false;
         }
 
