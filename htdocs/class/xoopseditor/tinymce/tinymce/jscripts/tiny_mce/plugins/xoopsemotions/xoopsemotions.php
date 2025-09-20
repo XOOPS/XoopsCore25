@@ -71,7 +71,7 @@ if ($admin && $op === 'SmilesAdd') {
             $smile_display = (int) $_POST['smile_display'] > 0 ? 1 : 0;
             $newid         = $db->genId($db->prefix('smilies') . '_id_seq');
             $sql           = sprintf('INSERT INTO %s (id, code, smile_url, emotion, display) VALUES (%d, %s, %s, %s, %d)', $db->prefix('smiles'), $newid, $db->quote($smile_code), $db->quote($smile_url), $db->quote($smile_desc), $smile_display);
-            if (!$db->query($sql)) {
+            if (!$db->exec($sql)) {
                 $err = 'Failed storing smiley data into the database';
             }
         }

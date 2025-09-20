@@ -142,7 +142,7 @@ class XoopsTopic
         } else {
             $sql = sprintf("UPDATE %s SET topic_pid = %u, topic_imgurl = '%s', topic_title = '%s' WHERE topic_id = %u", $this->table, $this->topic_pid, $imgurl, $title, $this->topic_id);
         }
-        if (!$result = $this->db->query($sql)) {
+        if (!$result = $this->db->exec($sql)) {
             ErrorHandler::show('0022');
         }
         if ($this->use_permission == true) {
@@ -220,7 +220,7 @@ class XoopsTopic
     public function delete()
     {
         $sql = sprintf('DELETE FROM %s WHERE topic_id = %u', $this->table, $this->topic_id);
-        $this->db->query($sql);
+        $this->db->exec($sql);
     }
 
     /**

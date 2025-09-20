@@ -327,7 +327,7 @@ function change_banner_url_by_client($cid, $bid, $url)
             [$passwd] = $xoopsDB->fetchRow($result);
             if ($_SESSION['banner_pass'] == $passwd) {
                 $sql = sprintf('UPDATE %s SET clickurl=%s WHERE bid=%u AND cid=%u', $xoopsDB->prefix('banner'), $xoopsDB->quote($url), $bid, $cid);
-                if ($xoopsDB->query($sql)) {
+                if ($xoopsDB->exec($sql)) {
                     redirect_header('banners.php?op=Ok', 3, _BANNERS_DBUPDATED);
                 }
             }

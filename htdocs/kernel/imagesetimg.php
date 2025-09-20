@@ -178,7 +178,7 @@ class XoopsImagesetimgHandler extends XoopsObjectHandler
         } else {
             $sql = sprintf('UPDATE %s SET imgsetimg_file = %s, imgsetimg_body = %s, imgsetimg_imgset = %s WHERE imgsetimg_id = %u', $this->db->prefix('imgsetimg'), $this->db->quote($imgsetimg_file), $this->db->quote($imgsetimg_body), $this->db->quote($imgsetimg_imgset), $imgsetimg_id);
         }
-        if (!$result = $this->db->query($sql)) {
+        if (!$result = $this->db->exec($sql)) {
             return false;
         }
         if (empty($imgsetimg_id)) {
@@ -204,7 +204,7 @@ class XoopsImagesetimgHandler extends XoopsObjectHandler
         }
 
         $sql = sprintf('DELETE FROM %s WHERE imgsetimg_id = %u', $this->db->prefix('imgsetimg'), $imgsetimg->getVar('imgsetimg_id'));
-        if (!$result = $this->db->query($sql)) {
+        if (!$result = $this->db->exec($sql)) {
             return false;
         }
 

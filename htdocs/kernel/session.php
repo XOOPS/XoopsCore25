@@ -183,7 +183,7 @@ class XoopsSessionHandler implements SessionHandlerInterface
               time(),
               $this->db->quote($data),
         );
-        $myReturn = $this->db->queryF($sql);
+        $myReturn = $this->db->exec($sql);
         $this->update_cookie();
         return $myReturn;
     }
@@ -202,7 +202,7 @@ class XoopsSessionHandler implements SessionHandlerInterface
             $this->db->prefix('session'),
             $this->db->quote($sessionId)
         );
-        if (!$result = $this->db->queryF($sql)) {
+        if (!$result = $this->db->exec($sql)) {
             return false;
         }
         return true;
@@ -224,7 +224,7 @@ class XoopsSessionHandler implements SessionHandlerInterface
         $mintime = time() - (int)$expire;
         $sql = sprintf('DELETE FROM %s WHERE sess_updated < %u', $this->db->prefix('session'), $mintime);
 
-        if ($this->db->queryF($sql)) {
+        if ($this->db->exec($sql)) {
             return $this->db->getAffectedRows();
         }
         return false;

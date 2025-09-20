@@ -205,7 +205,7 @@ class XoopsModelJoint extends XoopsModelAbstract
             $sql .= ' ' . $criteria->renderWhere();
         }
 
-        return $this->handler->db->query($sql);
+        return $this->handler->db->exec($sql);
     }
 
     /**
@@ -224,6 +224,6 @@ class XoopsModelJoint extends XoopsModelAbstract
             $sql .= ' ' . $criteria->renderWhere();
         }
 
-        return $this->handler->db->query($sql);
+        return $this->handler->db->exec($sql);
     }
 }

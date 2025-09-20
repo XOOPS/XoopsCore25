@@ -77,7 +77,7 @@ class SystemMaintenance
      */
     public function CleanSession()
     {
-        $result = $this->db->queryF('TRUNCATE TABLE ' . $this->db->prefix('session'));
+        $result = $this->db->exec('TRUNCATE TABLE ' . $this->db->prefix('session'));
 
         return true;
     }
@@ -107,10 +107,10 @@ class SystemMaintenance
             //delete file
             @unlink(XOOPS_UPLOAD_PATH . '/' . $myrow['avatar_file']);
             //clean avatar table
-            $result1 = $this->db->queryF('DELETE FROM ' . $this->db->prefix('avatar') . ' WHERE avatar_id=' . $myrow['avatar_id']);
+            $result1 = $this->db->exec('DELETE FROM ' . $this->db->prefix('avatar') . ' WHERE avatar_id=' . $myrow['avatar_id']);
         }
         //clean any deleted users from avatar_user_link table
-        $result2 = $this->db->queryF('DELETE FROM ' . $this->db->prefix('avatar_user_link') . ' WHERE user_id NOT IN (SELECT uid FROM ' . $this->db->prefix('users') . ')');
+        $result2 = $this->db->exec('DELETE FROM ' . $this->db->prefix('avatar_user_link') . ' WHERE user_id NOT IN (SELECT uid FROM ' . $this->db->prefix('users') . ')');
 
         return true;
     }
@@ -197,7 +197,7 @@ class SystemMaintenance
             for ($j = 0; $j < 4; ++$j) {
                 if ($tab1[$j] == 1) {
                     // Optimize
-                    $result = $this->db->queryF('OPTIMIZE TABLE ' . $this->prefix . $tables[$i]);
+                    $result = $this->db->exec('OPTIMIZE TABLE ' . $this->prefix . $tables[$i]);
                     if ($result) {
                         $ret .= '<td class="xo-actions txtcenter"><img src="' . system_AdminIcons('success.png') . '" /></td>';
                     } else {
@@ -205,7 +205,7 @@ class SystemMaintenance
                     }
                 } elseif ($tab1[$j] == 2) {
                     // Check tables
-                    $result = $this->db->queryF('CHECK TABLE ' . $this->prefix . $tables[$i]);
+                    $result = $this->db->exec('CHECK TABLE ' . $this->prefix . $tables[$i]);
                     if ($result) {
                         $ret .= '<td class="xo-actions txtcenter"><img src="' . system_AdminIcons('success.png') . '" /></td>';
                     } else {
@@ -213,7 +213,7 @@ class SystemMaintenance
                     }
                 } elseif ($tab1[$j] == 3) {
                     // Repair
-                    $result = $this->db->queryF('REPAIR TABLE ' . $this->prefix . $tables[$i]);
+                    $result = $this->db->exec('REPAIR TABLE ' . $this->prefix . $tables[$i]);
                     if ($result) {
                         $ret .= '<td class="xo-actions txtcenter"><img src="' . system_AdminIcons('success.png') . '" /></td>';
                     } else {
@@ -221,7 +221,7 @@ class SystemMaintenance
                     }
                 } elseif ($tab1[$j] == 4) {
                     // Analyze
-                    $result = $this->db->queryF('ANALYZE TABLE ' . $this->prefix . $tables[$i]);
+                    $result = $this->db->exec('ANALYZE TABLE ' . $this->prefix . $tables[$i]);
                     if ($result) {
                         $ret .= '<td class="xo-actions txtcenter"><img src="' . system_AdminIcons('success.png') . '" /></td>';
                     } else {

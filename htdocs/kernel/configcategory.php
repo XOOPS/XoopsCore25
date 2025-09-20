@@ -171,7 +171,7 @@ class XoopsConfigCategoryHandler extends XoopsObjectHandler
         } else {
             $sql = sprintf('UPDATE %s SET confcat_name = %s, confcat_order = %u WHERE confcat_id = %u', $this->db->prefix('configcategory'), $this->db->quote($confcat_name), $confcat_order, $confcat_id);
         }
-        if (!$result = $this->db->query($sql)) {
+        if (!$result = $this->db->exec($sql)) {
             return false;
         }
         if (empty($confcat_id)) {
@@ -197,7 +197,7 @@ class XoopsConfigCategoryHandler extends XoopsObjectHandler
         }
 
         $sql = sprintf('DELETE FROM %s WHERE confcat_id = %u', $this->db->prefix('configcategory'), $confcat->getVar('confcat_id'));
-        if (!$result = $this->db->query($sql)) {
+        if (!$result = $this->db->exec($sql)) {
             return false;
         }
 

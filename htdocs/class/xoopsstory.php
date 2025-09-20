@@ -255,7 +255,7 @@ class XoopsStory
             }
             $newstoryid = $this->storyid;
         }
-        if (!$result = $this->db->query($sql)) {
+        if (!$result = $this->db->exec($sql)) {
             return false;
         }
         if (empty($newstoryid)) {
@@ -300,7 +300,7 @@ class XoopsStory
     public function delete()
     {
         $sql = sprintf('DELETE FROM %s WHERE storyid = %u', $this->table, $this->storyid);
-        if (!$result = $this->db->query($sql)) {
+        if (!$result = $this->db->exec($sql)) {
             return false;
         }
 
@@ -313,7 +313,7 @@ class XoopsStory
     public function updateCounter()
     {
         $sql = sprintf('UPDATE %s SET counter = counter+1 WHERE storyid = %u', $this->table, $this->storyid);
-        if (!$result = $this->db->queryF($sql)) {
+        if (!$result = $this->db->exec($sql)) {
             return false;
         }
 
@@ -328,7 +328,7 @@ class XoopsStory
     public function updateComments($total)
     {
         $sql = sprintf('UPDATE %s SET comments = %u WHERE storyid = %u', $this->table, $total, $this->storyid);
-        if (!$result = $this->db->queryF($sql)) {
+        if (!$result = $this->db->exec($sql)) {
             return false;
         }
 

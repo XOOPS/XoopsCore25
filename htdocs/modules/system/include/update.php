@@ -88,7 +88,7 @@ function update_system_v211($module)
         return true;
     }
     $sql = 'ALTER TABLE ' . $xoopsDB->prefix('tplfile') . ' ADD UNIQUE tpl_refid_module_set_file_type ( tpl_refid, tpl_module, tpl_tplset, tpl_file, tpl_type )';
-    if (!$result = $xoopsDB->queryF($sql)) {
+    if (!$result = $xoopsDB->exec($sql)) {
         xoops_error($xoopsDB->error() . '<br>' . $sql);
         $module->setErrors("'tpl_refid_module_set_file_type' unique index is not added to 'tplfile' table. Warning: do not use XOOPS until you add this unique index.");
 

@@ -251,7 +251,7 @@ class XoopsAvatarHandler extends XoopsObjectHandler
         } else {
             $sql = sprintf('UPDATE %s SET avatar_file = %s, avatar_name = %s, avatar_created = %u, avatar_mimetype= %s, avatar_display = %u, avatar_weight = %u, avatar_type = %s WHERE avatar_id = %u', $this->db->prefix('avatar'), $this->db->quote($avatar_file), $this->db->quote($avatar_name), $avatar_created, $this->db->quote($avatar_mimetype), $avatar_display, $avatar_weight, $this->db->quote($avatar_type), $avatar_id);
         }
-        if (!$result = $this->db->query($sql)) {
+        if (!$result = $this->db->exec($sql)) {
             return false;
         }
         if (empty($avatar_id)) {
@@ -278,11 +278,11 @@ class XoopsAvatarHandler extends XoopsObjectHandler
 
         $id  = $avatar->getVar('avatar_id');
         $sql = sprintf('DELETE FROM %s WHERE avatar_id = %u', $this->db->prefix('avatar'), $id);
-        if (!$result = $this->db->query($sql)) {
+        if (!$result = $this->db->exec($sql)) {
             return false;
         }
         $sql    = sprintf('DELETE FROM %s WHERE avatar_id = %u', $this->db->prefix('avatar_user_link'), $id);
-        $result = $this->db->query($sql);
+        $result = $this->db->exec($sql);
 
         return true;
     }
@@ -367,9 +367,9 @@ class XoopsAvatarHandler extends XoopsObjectHandler
             return false;
         }
         $sql = sprintf('DELETE FROM %s WHERE user_id = %u', $this->db->prefix('avatar_user_link'), $user_id);
-        $this->db->query($sql);
+        $this->db->exec($sql);
         $sql = sprintf('INSERT INTO %s (avatar_id, user_id) VALUES (%u, %u)', $this->db->prefix('avatar_user_link'), $avatar_id, $user_id);
-        if (!$result = $this->db->query($sql)) {
+        if (!$result = $this->db->exec($sql)) {
             return false;
         }
 

@@ -73,7 +73,7 @@ switch ($op) {
         }
 
         $sql = 'UPDATE ' . $xoopsDB->prefix('users') . " SET posts = '" . $total_posts . "' WHERE uid = '" . $uid . "'";
-        if (!$result = $xoopsDB->queryF($sql)) {
+        if (!$result = $xoopsDB->exec($sql)) {
             redirect_header('admin.php?fct=users', 1, _AM_SYSTEM_USERS_CNUUSER);
         } else {
             echo $total_posts;

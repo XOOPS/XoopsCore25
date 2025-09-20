@@ -534,6 +534,13 @@ abstract class XoopsMySQLDatabase extends XoopsDatabase
         return is_a($result, 'mysqli_result');
     }
 
+    /**
+     * Perform a mutating statement (INSERT/UPDATE/DELETE/DDL).
+     *
+     * @param string $sql
+     * @return bool
+     */
+
     public function exec(string $sql): bool
     {
         // Dev-only guard: exec() should be write-like
