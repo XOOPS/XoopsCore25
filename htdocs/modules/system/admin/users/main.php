@@ -891,6 +891,20 @@ switch ($op) {
                         //$users['icon'] = '<img src="'.XOOPS_URL.'/modules/system/images/icons/user.png" alt="'._AM_SYSTEM_USERS_USER.'" title="'._AM_SYSTEM_USERS_USER.'" />';
                         $users['checkbox_user'] = true;
                     }
+                    // get group name
+                    $groupsList = [];
+                    $countGroups = 0;
+                    $groupHandler = xoops_getHandler('group');
+                    foreach ($user_group as $groupid) {
+                        $countGroups++;
+                        if ($countGroups > 10) {
+                            $groupsList[] = '...';
+                        } else {
+                            $group = $groupHandler->get($groupid);
+                            $groupsList[$groupid] = $group->getVar('name');
+                        }
+                    }
+                    
                     $users['uid']         = $users_arr[$i]->getVar('uid');
                     $users['name']        = $users_arr[$i]->getVar('name');
                     $users['uname']       = $users_arr[$i]->getVar('uname');
@@ -910,6 +924,8 @@ switch ($op) {
                     $users['user_msnm']  = $users_arr[$i]->getVar('user_msnm');
 
                     $users['posts'] = $users_arr[$i]->getVar('posts');
+
+                    $users['groupslist'] = $groupsList;
 
                     $xoopsTpl->appendByRef('users', $users);
                     $xoopsTpl->appendByRef('users_popup', $users);
