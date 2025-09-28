@@ -9,7 +9,7 @@
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  *
- * @copyright       (c) 2000-2016 XOOPS Project (www.xoops.org)
+ * @copyright       (c) 2000-2025 XOOPS Project (https://xoops.org)
  * @license             GNU GPL 2 (https://www.gnu.org/licenses/gpl-2.0.html)
  * @package             kernel
  * @since               2.0.0
@@ -58,7 +58,7 @@ return [
     'phtml' => 'application/x-httpd-php',
     'js'    => 'application/x-javascript',
     'sh'    => 'application/x-sh',
-    'swf'   => 'application/x-shockwave-flash',
+//    'swf'   => 'application/x-shockwave-flash',
     'sit'   => 'application/x-stuffit',
     'tar'   => 'application/x-tar',
     'tcl'   => 'application/x-tcl',
@@ -115,7 +115,7 @@ return [
     'rtf'   => 'text/rtf',
     'sgml'  => 'text/x-sgml',
     'sgm'   => 'text/x-sgml',
-    'tsv'   => 'text/tab-seperated-values',
+    'tsv'   => 'text/tab-separated-values',
     'wml'   => 'text/vnd.wap.wml',
     'wmls'  => 'text/vnd.wap.wmlscript',
     'xsl'   => 'text/xml',

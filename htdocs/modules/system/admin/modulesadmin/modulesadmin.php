@@ -265,7 +265,7 @@ function xoops_module_install($dirname)
                                 $tplfile->setVar('tpl_file', $block['template']);
                                 $tplfile->setVar('tpl_module', $dirname);
                                 $tplfile->setVar('tpl_type', 'block');
-                                $tplfile->setVar('tpl_desc', $block['description'], true);
+                                $tplfile->setVar('tpl_desc', $block['description']??'', true);
                                 $tplfile->setVar('tpl_lastimported', 0);
                                 $tplfile->setVar('tpl_lastmodified', time());
                                 if (!$tplfile_handler->insert($tplfile)) {
@@ -681,7 +681,7 @@ function xoops_module_uninstall($dirname)
             }
             unset($templates);
 
-            // delete blocks and block tempalte files
+            // delete blocks and block template files
             $block_arr = XoopsBlock::getByModule($module->getVar('mid'));
             if (is_array($block_arr)) {
                 $bcount = count($block_arr);
@@ -796,7 +796,7 @@ function xoops_module_uninstall($dirname)
 }
 
 /**
- * @param $dirname
+ * @param string $dirname
  * @return string
  */
 function xoops_module_update($dirname)

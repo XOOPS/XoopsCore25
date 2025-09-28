@@ -9,7 +9,7 @@
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  *
- * @copyright       (c) 2000-2016 XOOPS Project (www.xoops.org)
+ * @copyright       (c) 2000-2025 XOOPS Project (https://xoops.org)
  * @license             GNU GPL 2 (https://www.gnu.org/licenses/gpl-2.0.html)
  * @package             kernel
  * @since               2.0.0
@@ -20,7 +20,7 @@ defined('XOOPS_ROOT_PATH') || exit('Restricted access');
 /**
  * a group of users
  *
- * @copyright       (c) 2000-2016 XOOPS Project (www.xoops.org)
+ * @copyright       (c) 2000-2025 XOOPS Project (https://xoops.org)
  * @author              Kazumi Ono <onokazu@xoops.org>
  * @package             kernel
  */
@@ -101,7 +101,7 @@ class XoopsGroup extends XoopsObject
  * of XOOPS group class objects.
  *
  * @author              Kazumi Ono <onokazu@xoops.org>
- * @copyright       (c) 2000-2016 XOOPS Project (www.xoops.org)
+ * @copyright       (c) 2000-2025 XOOPS Project (https://xoops.org)
  * @package             kernel
  * @subpackage          member
  */
@@ -188,9 +188,9 @@ class XoopsGroupHandler extends XoopsObjectHandler
         }
         if ($group->isNew()) {
             $groupid = $this->db->genId('group_groupid_seq');
-            $sql     = sprintf('INSERT INTO %s (groupid, name, description, group_type) VALUES (%u, %s, %s, %s)', $this->db->prefix('groups'), $groupid, $this->db->quoteString($name), $this->db->quoteString($description), $this->db->quoteString($group_type));
+            $sql     = sprintf('INSERT INTO %s (groupid, name, description, group_type) VALUES (%u, %s, %s, %s)', $this->db->prefix('groups'), $groupid, $this->db->quote($name), $this->db->quote($description), $this->db->quote($group_type));
         } else {
-            $sql = sprintf('UPDATE %s SET name = %s, description = %s, group_type = %s WHERE groupid = %u', $this->db->prefix('groups'), $this->db->quoteString($name), $this->db->quoteString($description), $this->db->quoteString($group_type), $groupid);
+            $sql = sprintf('UPDATE %s SET name = %s, description = %s, group_type = %s WHERE groupid = %u', $this->db->prefix('groups'), $this->db->quote($name), $this->db->quote($description), $this->db->quote($group_type), $groupid);
         }
         if (!$result = $this->db->query($sql)) {
             return false;
@@ -265,7 +265,7 @@ class XoopsGroupHandler extends XoopsObjectHandler
  * membership of a user in a group
  *
  * @author              Kazumi Ono <onokazu@xoops.org>
- * @copyright       (c) 2000-2016 XOOPS Project (www.xoops.org)
+ * @copyright       (c) 2000-2025 XOOPS Project (https://xoops.org)
  * @package             kernel
  */
 class XoopsMembership extends XoopsObject
@@ -294,7 +294,7 @@ class XoopsMembership extends XoopsObject
  * of XOOPS group membership class objects.
  *
  * @author              Kazumi Ono <onokazu@xoops.org>
- * @copyright       (c) 2000-2016 XOOPS Project (www.xoops.org)
+ * @copyright       (c) 2000-2025 XOOPS Project (https://xoops.org)
  * @package             kernel
  */
 class XoopsMembershipHandler extends XoopsObjectHandler

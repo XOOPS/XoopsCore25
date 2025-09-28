@@ -9,7 +9,7 @@
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  *
- * @copyright       (c) 2000-2016 XOOPS Project (www.xoops.org)
+ * @copyright       (c) 2000-2025 XOOPS Project (https://xoops.org)
  * @license             GNU GPL 2 (https://www.gnu.org/licenses/gpl-2.0.html)
  * @package             profile
  * @since               2.3.0
@@ -272,7 +272,7 @@ function profile_getFieldForm(ProfileField $field, $action = false)
     $options = $field->getVar('field_options');
     if (count($options) > 0) {
         $linkText = defined('_PROFILE_AM_EDIT_OPTION_STRINGS') ? _PROFILE_AM_EDIT_OPTION_STRINGS : 'Edit Option Strings';
-        $editOptionsButton = new XoopsFormLabel('', '<a href="' . $action . '&op=edit-option-strings"><i class="fa fa-fw fa-2x fa-language" aria-hidden="true"></i> ' . $linkText . '</a>');
+        $editOptionsButton = new XoopsFormLabel('', '<a href="' . $action . '&op=edit-option-strings"><i class="fa-solid fa-2x fa-language" aria-hidden="true"></i> ' . $linkText . '</a>');
         $form->addElement($editOptionsButton);
     }
 

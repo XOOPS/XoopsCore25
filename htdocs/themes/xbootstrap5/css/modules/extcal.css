@@ -1,0 +1,23 @@
+.tdm-downloads-info ul {
+    list-style: square;
+    padding-left: 1.25rem;
+    font-size: 0.9em;
+    color: var(--gray-dark);
+}
+
+.tdm-short-description {
+    overflow: hidden;
+    text-align: justify;
+    max-height: 80px;
+    margin: 0.5rem 0;
+    color: var(--text-color);
+}
+
+.tdm-download-btn {
+    display: inline-block;
+    font-size: 1.25em;
+    background: var(--primary-color);
+    color: #fff;
+    padding: 0.5rem 1rem;
+    border-radius: 0.25rem;
+}

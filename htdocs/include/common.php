@@ -9,7 +9,7 @@
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  *
- * @copyright       (c) 2000-2021 XOOPS Project (https://xoops.org)
+ * @copyright       (c) 2000-2025 XOOPS Project (https://xoops.org)
  * @license             GNU GPL 2 (https://www.gnu.org/licenses/gpl-2.0.html)
  * @package             kernel
  */
@@ -69,7 +69,7 @@ $xoopsPreload->triggerEvent('core.include.common.start');
  */
 /**
  * Create Instance of xos_kernel_Xoops2 Object
- * Atention, not all methods can be used at this point
+ * Attention, not all methods can be used at this point
  */
 XoopsLoad::load('xoopskernel');
 $xoops = new xos_kernel_Xoops2();
@@ -77,14 +77,14 @@ $xoops->pathTranslation();
 $xoopsRequestUri = & $_SERVER['REQUEST_URI'];// Deprecated (use the corrected $_SERVER variable now)
 
 /**
- * Create Instance of xoopsSecurity Object and check Supergolbals
+ * Create Instance of XoopsSecurity Object and check Superglobals
  */
 XoopsLoad::load('xoopssecurity');
 $xoopsSecurity = new XoopsSecurity();
 $xoopsSecurity->checkSuperglobals();
 
 /**
- * Create Instantance XoopsLogger Object
+ * Create Instance of XoopsLogger Object
  */
 XoopsLoad::load('xoopslogger');
 $xoopsLogger       = XoopsLogger::getInstance();

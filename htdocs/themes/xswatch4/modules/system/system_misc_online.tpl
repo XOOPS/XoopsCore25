@@ -35,9 +35,9 @@
             <{/if}>
             <{if !empty($isadmin)}>
                 <div class="ml-5 ml-sm-0">
-                    <span class="fa fa-map-marker fa-fw "></span> <{$online.ip}>
+                    <span class="fa-solid fa-location-dot"></span> <{$online.ip}>
                     <br>
-                    <span class="fa fa-calendar fa-fw "></span> <{$online.updated}>
+                    <span class="fa-solid fa-calendar"></span> <{$online.updated}>
                 </div>
             <{/if}>
         </div>

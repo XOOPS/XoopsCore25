@@ -15,7 +15,7 @@
  * @package   TinyMCE5
  * @author    Gregory Mage
  * @author    Taiwen Jiang <phppp@users.sourceforge.net>
- * @copyright 2020 XOOPS Project (http://xoops.org)
+ * @copyright 2000-2025 XOOPS Project (https://xoops.org)
  * @license   GNU GPL 2 or later (http://www.gnu.org/licenses/gpl-2.0.html)
  * @link      http://xoops.org
  */
@@ -23,4 +23,4 @@
 define('_XOOPS_EDITOR_TINYMCE5', 'TinyMCE5');
 // The value must be the same as /tinymce/jscripts/langs/your_language_code, for example, "en" for English, "fr" for French
 // For details, check http://tinymce.moxiecode.com/download_i18n.php
-define('_XOOPS_EDITOR_TINYMCE_LANGUAGE5', 'en');
+define('_XOOPS_EDITOR_TINYMCE5_LANGUAGE', 'en');

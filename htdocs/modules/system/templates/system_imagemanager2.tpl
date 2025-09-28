@@ -7,7 +7,10 @@
     <{$image_form.javascript}>
     <link rel="stylesheet" type="text/css" media="screen" href="<{xoAppUrl 'xoops.css'}>">
     <link rel="stylesheet" type="text/css" media="screen" href="<{xoAppUrl 'modules/system/css/imagemanager.css'}>">
-    <link rel="stylesheet" type="text/css" media="screen" href="<{xoAppUrl 'media/font-awesome/css/font-awesome.min.css'}>">
+    <link rel="stylesheet" type="text/css" media="screen" as="font" crossorigin="anonymous"  href="<{xoAppUrl 'media/font-awesome6/css/fontawesome.min.css'}>">
+    <link rel="stylesheet" type="text/css" media="screen" as="font" crossorigin="anonymous"  href="<{xoAppUrl 'media/font-awesome6/css/solid.min.css'}>">
+    <link rel="stylesheet" type="text/css" media="screen" as="font" crossorigin="anonymous"  href="<{xoAppUrl 'media/font-awesome6/css/brands.min.css'}>">
+    <link rel="stylesheet" type="text/css" media="screen" as="font" crossorigin="anonymous"  href="<{xoAppUrl 'media/font-awesome6/css/v4-shims.min.css'}>">    
 
     <{php}>
         $language = $GLOBALS['xoopsConfig']['language'];

@@ -1,0 +1,12 @@
+# no backup files, editor temp
+*~
+\#*
+*.bak
+.idea/
+
+build/
+vendor/
+composer.lock
+*.neon
+*.cache
+phpunit.xml

@@ -9,7 +9,7 @@
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  *
- * @copyright       (c) 2000-2016 XOOPS Project (www.xoops.org)
+ * @copyright       (c) 2000-2025 XOOPS Project (https://xoops.org)
  * @license             GNU GPL 2 (https://www.gnu.org/licenses/gpl-2.0.html)
  * @package             profile
  * @since               2.3.0
@@ -37,6 +37,9 @@ $modversion['dirmoduleadmin'] = '/Frameworks/moduleclasses/moduleadmin';
 $modversion['icons16']        = '../../Frameworks/moduleclasses/icons/16';
 $modversion['icons32']        = '../../Frameworks/moduleclasses/icons/32';
 
+$modversion['icon']           = 'fa-solid fa-user';
+
+
 //about
 $modversion['release_date']        = '2022/09/09';
 $modversion['module_website_url']  = 'https://xoops.org/';
@@ -62,12 +65,25 @@ $modversion['onUpdate']  = 'include/update.php';
 // Menu
 $modversion['hasMain'] = 1;
 if ($GLOBALS['xoopsUser']) {
-    $modversion['sub'][1]['name'] = _PROFILE_MI_EDITACCOUNT;
-    $modversion['sub'][1]['url']  = 'edituser.php';
-    $modversion['sub'][2]['name'] = _PROFILE_MI_PAGE_SEARCH;
-    $modversion['sub'][2]['url']  = 'search.php';
-    $modversion['sub'][3]['name'] = _PROFILE_MI_CHANGEPASS;
-    $modversion['sub'][3]['url']  = 'changepass.php';
+
+    $modversion['sub'][] = [
+        'id'   => 'editaccount',
+        'name' => _PROFILE_MI_EDITACCOUNT,
+        'url'  => 'edituser.php',
+        'icon' => 'fa-solid fa-wrench',
+    ];
+    $modversion['sub'][] = [
+        'id'   => 'search',
+        'name' => _PROFILE_MI_PAGE_SEARCH,
+        'url'  => 'search.php',
+        'icon' => 'fa-solid fa-magnifying-glass',
+    ];
+    $modversion['sub'][] = [
+        'id'   => 'changepass',
+        'name' => _PROFILE_MI_CHANGEPASS,
+        'url'  => 'changepass.php',
+        'icon' => 'fa-solid fa-key',
+    ];
 }
 
 // Mysql file

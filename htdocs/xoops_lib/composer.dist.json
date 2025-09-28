@@ -1,0 +1,28 @@
+{
+  "name": "xoopscore25/libraries",
+  "description": "Libraries for XOOPS 2.5.12 (meta-package, no code)",
+  "type": "metapackage",
+  "license": "GPL-2.0-or-later",
+  "homepage": "https://xoops.org",
+  "authors": [
+    {
+      "name": "XOOPS Project",
+      "email": "contact@xoops.org",
+      "role": "Maintainer"
+    }
+  ],
+  "require": {
+    "php": "^7.4.0 || ^8.4.0",
+    "xoops/base-requires25": "^1.1.10-beta1"
+  },
+  "config": {
+    "sort-packages": true,
+    "preferred-install": "dist"
+  },
+  "minimum-stability": "beta",
+  "prefer-stable": true,
+  "support": {
+    "issues": "https://github.com/XOOPS/XoopsCore25/issues",
+    "source": "https://github.com/XOOPS/XoopsCore25"
+  }
+}

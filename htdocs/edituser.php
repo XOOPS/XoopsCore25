@@ -9,7 +9,7 @@
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  *
- * @copyright       (c) 2000-2016 XOOPS Project (www.xoops.org)
+ * @copyright       (c) 2000-2025 XOOPS Project (https://xoops.org)
  * @license             GNU GPL 2 (https://www.gnu.org/licenses/gpl-2.0.html)
  * @package             kernel
  * @since               2.0.0
@@ -314,7 +314,7 @@ if ($op === 'avatarupload') {
                             }
                         }
                     }
-                    $sql = sprintf('UPDATE %s SET user_avatar = %s WHERE uid = %u', $xoopsDB->prefix('users'), $xoopsDB->quoteString('avatars/' . $uploader->getSavedFileName()), $xoopsUser->getVar('uid'));
+                    $sql = sprintf('UPDATE %s SET user_avatar = %s WHERE uid = %u', $xoopsDB->prefix('users'), $xoopsDB->quote('avatars/' . $uploader->getSavedFileName()), $xoopsUser->getVar('uid'));
                     $xoopsDB->query($sql);
                     $avt_handler->addUser($avatar->getVar('avatar_id'), $xoopsUser->getVar('uid'));
                     redirect_header('userinfo.php?t=' . time() . '&amp;uid=' . $xoopsUser->getVar('uid'), 3, _US_PROFUPDATED);
@@ -340,7 +340,7 @@ if ($op === 'avatarchoose') {
     /** @var \XoopsAvatarHandler $avt_handler */
     $avt_handler = xoops_getHandler('avatar');
     if (!empty($_POST['user_avatar'])) {
-        $user_avatar     = $myts->addSlashes(trim($_POST['user_avatar']));
+        $user_avatar     = $xoopsDB->escape(trim($_POST['user_avatar']));
         $criteria_avatar = new CriteriaCompo(new Criteria('avatar_file', $user_avatar));
         $criteria_avatar->add(new Criteria('avatar_type', 'S'));
         $avatars = $avt_handler->getObjects($criteria_avatar);

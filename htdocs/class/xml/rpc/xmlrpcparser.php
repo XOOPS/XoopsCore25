@@ -28,7 +28,7 @@ require_once XOOPS_ROOT_PATH . '/class/xml/xmltaghandler.php';
  *
  * @link          https://xoops.org/ Latest release of this class
  * @package       class
- * @copyright (c) 2000-2016 XOOPS Project (www.xoops.org)
+ * @copyright (c) 2000-2025 XOOPS Project (https://xoops.org)
  * @author        Kazumi Ono <onokazu@xoops.org>
  * @access        public
  */

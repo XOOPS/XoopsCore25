@@ -12,7 +12,7 @@
 /**
  * TextSanitizer extension
  *
- * @copyright       (c) 2000-2016 XOOPS Project (www.xoops.org)
+ * @copyright       (c) 2000-2025 XOOPS Project (https://xoops.org)
  * @license             GNU GPL 2 (https://www.gnu.org/licenses/gpl-2.0.html)
  * @package             class
  * @subpackage          textsanitizer
@@ -37,7 +37,7 @@ class MytsWiki extends MyTextSanitizerExtension
         $code = "<button type='button' class='btn btn-default btn-sm' onclick='xoopsCodeWiki(\"{$textarea_id}\",\""
             . htmlspecialchars(_XOOPS_FORM_ENTERWIKITERM, ENT_QUOTES | ENT_HTML5)
             . "\");' onmouseover='style.cursor=\"hand\"' title='" . _XOOPS_FORM_ALTWIKI
-            . "'><span class='fa fa-fw fa-globe' aria-hidden='true'></span></button>";
+            . "'><span class='fa-solid fa-globe' aria-hidden='true'></span></button>";
 
         $javascript = <<<EOH
             function xoopsCodeWiki(id, enterWikiPhrase)

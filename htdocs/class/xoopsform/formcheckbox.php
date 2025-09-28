@@ -9,7 +9,7 @@
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  *
- * @copyright       (c) 2000-2017 XOOPS Project (www.xoops.org)
+ * @copyright       (c) 2000-2025 XOOPS Project (https://xoops.org)
  * @license             GNU GPL 2 (https://www.gnu.org/licenses/gpl-2.0.html)
  * @package             kernel
  * @since               2.0
@@ -27,7 +27,7 @@ xoops_load('XoopsFormElement');
 class XoopsFormCheckBox extends XoopsFormElement
 {
     /**
-     * Availlable options
+     * Available options
      *
      * @var array
      * @access private
@@ -43,7 +43,7 @@ class XoopsFormCheckBox extends XoopsFormElement
     public $_value = [];
 
     /**
-     * HTML to seperate the elements
+     * HTML to separate the elements
      *
      * @var string
      * @access private

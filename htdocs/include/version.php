@@ -9,7 +9,7 @@
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  *
- * @copyright       (c) 2000-2023 XOOPS Project (https://xoops.org)
+ * @copyright       (c) 2000-2025 XOOPS Project (https://xoops.org)
  * @license             GNU GPL 2 (https://www.gnu.org/licenses/gpl-2.0.html)
  * @package             kernel
  */
@@ -24,9 +24,12 @@ defined('XOOPS_ROOT_PATH') || exit('Restricted access');
  * It is highly discouraged to use the license file
  * It will be depreciated and removed
  */
-@include_once __DIR__ . '/license.php';
+$licenseFile = __DIR__ . '/license.php';
+if (file_exists($licenseFile)) {
+    include_once $licenseFile;
+}
 
 /**
  *  Define XOOPS version
  */
-define('XOOPS_VERSION', 'XOOPS 2.5.12-Beta3');
+define('XOOPS_VERSION', 'XOOPS 2.5.12-Beta8');

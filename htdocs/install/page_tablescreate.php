@@ -14,7 +14,7 @@
  * See the enclosed file license.txt for licensing information.
  * If you did not receive this file, get it at https://www.gnu.org/licenses/gpl-2.0.html
  *
- * @copyright    (c) 2000-2016 XOOPS Project (www.xoops.org)
+ * @copyright    (c) 2000-2025 XOOPS Project (https://xoops.org)
  * @license          GNU GPL 2.0 or later (https://www.gnu.org/licenses/gpl-2.0.html)
  * @package          installer
  * @since            2.3.0
@@ -43,10 +43,10 @@ if (!$dbm->isConnectable()) {
 }
 
 if ($dbm->tableExists('users')) {
-    $content = '<div class="alert alert-info"><span class="fa fa-info-circle text-info"></span> ' . XOOPS_TABLES_FOUND . '</div>';
+    $content = '<div class="alert alert-info"><span class="fa-solid fa-circle-info text-info"></span> ' . XOOPS_TABLES_FOUND . '</div>';
 } else {
     $result  = $dbm->queryFromFile('./sql/' . XOOPS_DB_TYPE . '.structure.sql');
-    $content = '<div class="alert alert-success"><span class="fa fa-check text-success"></span> ' . XOOPS_TABLES_CREATED
+    $content = '<div class="alert alert-success"><span class="fa-solid fa-check text-success"></span> ' . XOOPS_TABLES_CREATED
         . '</div><div class="well">' . $dbm->report() . '</div>';
 }
 include __DIR__ . '/include/install_tpl.php';

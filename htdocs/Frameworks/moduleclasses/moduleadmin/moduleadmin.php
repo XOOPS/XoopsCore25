@@ -11,7 +11,7 @@
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  *
  * @copyright       Grégory Mage (Aka Mage)
- * @copyright   (c) 2000-2016 XOOPS Project (www.xoops.org)
+ * @copyright   (c) 2000-2025 XOOPS Project (https://xoops.org)
  * @license         GNU GPL 2 (https://www.gnu.org/licenses/gpl-2.0.html)
  * @author          Grégory Mage (Aka Mage)
  */
@@ -503,7 +503,7 @@ class ModuleAdmin
         $date         = explode('/', $date);
         $author       = explode(',', $this->_obj->getInfo('author'));
         $nickname     = explode(',', $this->_obj->getInfo('nickname'));
-        $release_date = formatTimestamp(mktime(0, 0, 0, $date[1], $date[2], $date[0]), 's');
+        $release_date = formatTimestamp(mktime(0, 0, 0, (int)$date[1], (int)$date[2], (int)$date[0]), 's');
         $module_dir   = $this->_obj->getVar('dirname');
         $module_info  = "<div id=\"about\"><label class=\"label_after\">" . _AM_MODULEADMIN_ABOUT_DESCRIPTION . "</label>\n"
                       . "<text>" . $this->_obj->getInfo('description') . "</text><br>\n"

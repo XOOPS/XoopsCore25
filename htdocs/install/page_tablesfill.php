@@ -14,7 +14,7 @@
  * See the enclosed file license.txt for licensing information.
  * If you did not receive this file, get it at https://www.gnu.org/licenses/gpl-2.0.html
  *
- * @copyright    (c) 2000-2016 XOOPS Project (www.xoops.org)
+ * @copyright    (c) 2000-2025 XOOPS Project (https://xoops.org)
  * @license          GNU GPL 2.0 or later (https://www.gnu.org/licenses/gpl-2.0.html)
  * @package          installer
  * @since            2.3.0
@@ -87,10 +87,10 @@ $wizard->loadLangFile('install2');
 $licenseFile = XOOPS_VAR_PATH . '/data/license.php';
 $touched = touch($licenseFile);
 if ($touched) {
-    $licenseReport = '<div class="alert alert-success"><span class="fa fa-check text-success"></span> '
+    $licenseReport = '<div class="alert alert-success"><span class="fa-solid fa-check text-success"></span> '
         . writeLicenseKey() . '</div>';
 } else {
-    $licenseReport = '<div class="alert alert-danger"><span class="fa fa-ban text-danger"></span> '
+    $licenseReport = '<div class="alert alert-danger"><span class="fa-solid fa-ban text-danger"></span> '
         . sprintf(LICENSE_NOT_WRITEABLE, $licenseFile) . '</div>';
 }
 $error = false;
@@ -102,10 +102,10 @@ if ($process) {
     $result  = $dbm->queryFromFile('./language/' . $wizard->language . '/' . XOOPS_DB_TYPE . '.lang.data.sql');
     $group   = make_groups($dbm);
     $result  = make_data($dbm, $adminname, $hashedAdminPass, $adminmail, $wizard->language, $group);
-    $content = '<div class="alert alert-success"><span class="fa fa-check text-success"></span> '
+    $content = '<div class="alert alert-success"><span class="fa-solid fa-check text-success"></span> '
         . DATA_INSERTED . '</div><div class="well">' . $dbm->report() . '</div>';
 } else {
-    $content = '<div class="alert alert-info"><span class="fa fa-info-circle text-info"></span> '
+    $content = '<div class="alert alert-info"><span class="fa-solid fa-circle-info text-info"></span> '
         . DATA_ALREADY_INSERTED . '</div>';
 }
 $content .= $licenseReport;

@@ -9,7 +9,7 @@
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  *
- * @copyright       (c) 2000-2016 XOOPS Project (www.xoops.org)
+ * @copyright       (c) 2000-2025 XOOPS Project (https://xoops.org)
  * @license             GNU GPL 2 (https://www.gnu.org/licenses/gpl-2.0.html)
  * @package             kernel
  * @since               2.0.0
@@ -19,7 +19,7 @@ defined('XOOPS_ROOT_PATH') || exit('Restricted access');
 
 /**
  * @author              Kazumi Ono <onokazu@xoops.org>
- * @copyright       (c) 2000-2016 XOOPS Project (www.xoops.org)
+ * @copyright       (c) 2000-2025 XOOPS Project (https://xoops.org)
  **/
 
 /**
@@ -167,9 +167,9 @@ class XoopsImageSetHandler extends XoopsObjectHandler
         }
         if ($imgset->isNew()) {
             $imgset_id = $this->db->genId('imgset_imgset_id_seq');
-            $sql       = sprintf('INSERT INTO %s (imgset_id, imgset_name, imgset_refid) VALUES (%u, %s, %u)', $this->db->prefix('imgset'), $imgset_id, $this->db->quoteString($imgset_name), $imgset_refid);
+            $sql       = sprintf('INSERT INTO %s (imgset_id, imgset_name, imgset_refid) VALUES (%u, %s, %u)', $this->db->prefix('imgset'), $imgset_id, $this->db->quote($imgset_name), $imgset_refid);
         } else {
-            $sql = sprintf('UPDATE %s SET imgset_name = %s, imgset_refid = %u WHERE imgset_id = %u', $this->db->prefix('imgset'), $this->db->quoteString($imgset_name), $imgset_refid, $imgset_id);
+            $sql = sprintf('UPDATE %s SET imgset_name = %s, imgset_refid = %u WHERE imgset_id = %u', $this->db->prefix('imgset'), $this->db->quote($imgset_name), $imgset_refid, $imgset_id);
         }
         if (!$result = $this->db->query($sql)) {
             return false;
@@ -259,7 +259,7 @@ class XoopsImageSetHandler extends XoopsObjectHandler
         if (!$this->unlinkThemeset($imgset_id, $tplset_name)) {
             return false;
         }
-        $sql    = sprintf('INSERT INTO %s (imgset_id, tplset_name) VALUES (%u, %s)', $this->db->prefix('imgset_tplset_link'), $imgset_id, $this->db->quoteString($tplset_name));
+        $sql    = sprintf('INSERT INTO %s (imgset_id, tplset_name) VALUES (%u, %s)', $this->db->prefix('imgset_tplset_link'), $imgset_id, $this->db->quote($tplset_name));
         $result = $this->db->query($sql);
         if (!$result) {
             return false;
@@ -282,7 +282,7 @@ class XoopsImageSetHandler extends XoopsObjectHandler
         if ($imgset_id <= 0 || $tplset_name == '') {
             return false;
         }
-        $sql    = sprintf('DELETE FROM %s WHERE imgset_id = %u AND tplset_name = %s', $this->db->prefix('imgset_tplset_link'), $imgset_id, $this->db->quoteString($tplset_name));
+        $sql    = sprintf('DELETE FROM %s WHERE imgset_id = %u AND tplset_name = %s', $this->db->prefix('imgset_tplset_link'), $imgset_id, $this->db->quote($tplset_name));
         $result = $this->db->query($sql);
         if (!$result) {
             return false;

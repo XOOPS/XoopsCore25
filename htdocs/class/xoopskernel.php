@@ -11,7 +11,7 @@
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  *
- * @copyright       (c) 2000-2016 XOOPS Project (www.xoops.org)
+ * @copyright       (c) 2000-2025 XOOPS Project (https://xoops.org)
  * @license             GNU GPL 2 (https://www.gnu.org/licenses/gpl-2.0.html)
  * @package             kernel
  * @since               2.0.0
@@ -32,10 +32,10 @@ class xos_kernel_Xoops2
      */
     public function __construct()
     {
-        $this->paths['XOOPS']   = [XOOPS_PATH, XOOPS_URL . 'browse.php'];
+        $this->paths['XOOPS']   = [XOOPS_PATH, XOOPS_URL . '/browse.php'];
         $this->paths['www']     = [XOOPS_ROOT_PATH, XOOPS_URL];
         $this->paths['var']     = [XOOPS_VAR_PATH, null];
-        $this->paths['lib']     = [XOOPS_PATH, XOOPS_URL . 'browse.php'];
+        $this->paths['lib']     = [XOOPS_PATH, XOOPS_URL . '/browse.php'];
         $this->paths['modules'] = [XOOPS_ROOT_PATH . '/modules', XOOPS_URL . '/modules'];
         $this->paths['themes']  = [XOOPS_ROOT_PATH . '/themes', XOOPS_URL . '/themes'];
     }
@@ -74,10 +74,10 @@ class xos_kernel_Xoops2
 
     /**
      * Convert a XOOPS path to a URL
-     * @param $url
+     * @param string $url
      * @return mixed|string
      */
-    public function url($url)
+    public function url(?string $url='')
     {
         return (false !== strpos($url, '://') ? $url : $this->path($url, true));
     }

@@ -1,0 +1,64 @@
+name: CI
+
+on: [push, pull_request]
+
+jobs:
+  phpunit-9-6:
+    strategy:
+      fail-fast: false
+      matrix:
+        php_version: ["7.4", "8.1", "8.2", "8.3"]
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v2
+      - uses: php-actions/composer@v6
+        with:
+          php_version: "7.4"
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: ${{ matrix.php_version }}
+          coverage: xdebug
+      - name: Unit Tests with PHPUnit 9.6
+        run: vendor/bin/phpunit --stderr --version 9.6
+        
+  phpunit-10-5:
+    strategy:
+      fail-fast: false
+      matrix:
+        php_version: ["8.1", "8.2", "8.3" ]
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v2
+      - uses: php-actions/composer@v6
+        with:
+          php_version: "8.1"
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: ${{ matrix.php_version }}
+          coverage: xdebug
+      - name: Unit Tests with PHPUnit 10.5
+        run: vendor/bin/phpunit --stderr --version 10.5
+
+  phpunit-11-2:
+    strategy:
+      fail-fast: false
+      matrix:
+        php_version: ["8.2", "8.3", "8.4"]
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v2
+      - uses: php-actions/composer@v6
+        with:
+          php_version: "8.2"
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: ${{ matrix.php_version }}
+          coverage: xdebug
+      - name: Unit Tests with PHPUnit 11.2
+        run: vendor/bin/phpunit --stderr --version 11.2

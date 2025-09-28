@@ -9,7 +9,7 @@
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  *
- * @copyright       (c) 2000-2021 XOOPS Project (https://xoops.org)
+ * @copyright       (c) 2000-2025 XOOPS Project (https://xoops.org)
  * @license             GNU GPL 2 (https://www.gnu.org/licenses/gpl-2.0.html)
  * @package             class
  * @since               2.0.0
@@ -22,7 +22,7 @@
  * Abstract class for extensions
  *
  * @author              Taiwen Jiang <phppp@users.sourceforge.net>
- * @copyright       (c) 2000-2021 XOOPS Project (https://xoops.org)
+ * @copyright       (c) 2000-2025 XOOPS Project (https://xoops.org)
  */
 class MyTextSanitizerExtension
 {
@@ -131,7 +131,7 @@ class MyTextSanitizerExtension
  * @author        Kazumi Ono <onokazu@xoops.org>
  * @author        Taiwen Jiang <phppp@users.sourceforge.net>
  * @author        Goghs Cheng
- * @copyright (c) 2000-2021 XOOPS Project (https://xoops.org)
+ * @copyright (c) 2000-2025 XOOPS Project (https://xoops.org)
  */
 class MyTextSanitizer
 {
@@ -846,8 +846,11 @@ class MyTextSanitizer
      */
     public function addSlashes($text)
     {
-        $GLOBALS['xoopsLogger']->addDeprecated(__METHOD__ . ' is deprecated');
-        return $text;
+        global $xoopsDB;
+        $GLOBALS['xoopsLogger']->addDeprecated(
+            __METHOD__ . ' is deprecated. Use $xoopsDB->escape() or $xoopsDB->quote() instead.'
+        );
+        return $xoopsDB->escape($text);
     }
 
     /**
@@ -855,11 +858,11 @@ class MyTextSanitizer
      *
      * @param  string $text    string being converted
      * @param  int|null    $quote_style
-     * @param  string $charset character set used in conversion
+     * @param  string|null $charset character set used in conversion
      * @param  bool   $double_encode
      * @return string
      */
-    public function htmlSpecialChars($text, $quote_style = null, $charset = null, $double_encode = true)
+    public function htmlSpecialChars(string $text, ?int $quote_style = null, ?string $charset = null, $double_encode = true)
     {
         if ($quote_style === null) {
             $quote_style = ENT_QUOTES;

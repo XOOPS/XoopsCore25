@@ -9,7 +9,7 @@
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  *
- * @copyright       (c) 2000-2016 XOOPS Project (www.xoops.org)
+ * @copyright       (c) 2000-2025 XOOPS Project (https://xoops.org)
  * @license             GNU GPL 2 (https://www.gnu.org/licenses/gpl-2.0.html)
  * @package             kernel
  * @since               2.0.0
@@ -25,7 +25,7 @@ defined('XOOPS_ROOT_PATH') || exit('Restricted access');
  *
  * @author              Kazumi Ono    <onokazu@xoops.org>
  * @author              Taiwen Jiang <phppp@users.sourceforge.net>
- * @copyright       (c) 2000-2016 XOOPS Project (www.xoops.org)
+ * @copyright       (c) 2000-2025 XOOPS Project (https://xoops.org)
  */
 class XoopsSessionHandler implements SessionHandlerInterface
 {
@@ -89,7 +89,7 @@ class XoopsSessionHandler implements SessionHandlerInterface
                 'domain'   => XOOPS_COOKIE_DOMAIN,
                 'secure'   => $secure,
                 'httponly' => true,
-                'samesite' => 'strict',
+                'samesite' => 'Lax',
             ];
             session_set_cookie_params($options);
         } else {
@@ -134,10 +134,10 @@ class XoopsSessionHandler implements SessionHandlerInterface
         $sql = sprintf(
             'SELECT sess_data, sess_ip FROM %s WHERE sess_id = %s',
             $this->db->prefix('session'),
-            $this->db->quoteString($sessionId)
+            $this->db->quote($sessionId)
         );
 
-        $result = $this->db->query($sql);
+        $result = $this->db->queryF($sql);
         if ($this->db->isResultSet($result)) {
             if ([$sess_data, $sess_ip] = $this->db->fetchRow($result)) {
                 if ($this->securityLevel > 1) {
@@ -167,27 +167,23 @@ class XoopsSessionHandler implements SessionHandlerInterface
     {
         $myReturn = true;
         $remoteAddress = \Xmf\IPAddress::fromRequest()->asReadable();
-        $sessionId = $this->db->quoteString($sessionId);
-        $sql = sprintf(
-            'UPDATE %s SET sess_updated = %u, sess_data = %s WHERE sess_id = %s',
-            $this->db->prefix('session'),
-            time(),
-            $this->db->quoteString($data),
-            $sessionId
+        $sessionId = $this->db->quote($sessionId);
+        
+        $sql= sprintf('INSERT INTO %s (sess_id, sess_updated, sess_ip, sess_data)
+        VALUES (%s, %u, %s, %s)
+        ON DUPLICATE KEY UPDATE
+        sess_updated = %u, 
+        sess_data = %s
+        ',
+              $this->db->prefix('session'),
+              $sessionId,
+              time(),
+              $this->db->quote($remoteAddress),
+              $this->db->quote($data),
+              time(),
+              $this->db->quote($data),
         );
-        $this->db->queryF($sql);
-        if (!$this->db->getAffectedRows()) {
-            $sql = sprintf(
-                'INSERT INTO %s (sess_id, sess_updated, sess_ip, sess_data) VALUES (%s, %u, %s, %s)',
-                $this->db->prefix('session'),
-                $sessionId,
-                time(),
-                $this->db->quote($remoteAddress),
-                $this->db->quote($data)
-            );
-
-            $myReturn = $this->db->queryF($sql);
-        }
+        $myReturn = $this->db->queryF($sql);
         $this->update_cookie();
         return $myReturn;
     }
@@ -204,7 +200,7 @@ class XoopsSessionHandler implements SessionHandlerInterface
         $sql = sprintf(
             'DELETE FROM %s WHERE sess_id = %s',
             $this->db->prefix('session'),
-            $this->db->quoteString($sessionId)
+            $this->db->quote($sessionId)
         );
         if (!$result = $this->db->queryF($sql)) {
             return false;

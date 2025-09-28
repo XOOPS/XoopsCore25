@@ -10,7 +10,7 @@
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  *
- * @copyright       (c) 2000-2021 XOOPS Project (www.xoops.org)
+ * @copyright       (c) 2000-2025 XOOPS Project (https://xoops.org)
  * @license             GNU GPL 2 (https://www.gnu.org/licenses/gpl-2.0.html)
  * @package             class
  * @subpackage          textsanitizer
@@ -32,7 +32,7 @@ class MytsYoutube extends MyTextSanitizerExtension
             . htmlspecialchars(_XOOPS_FORM_ALT_ENTERHEIGHT, ENT_QUOTES | ENT_HTML5) . "\",\""
             . htmlspecialchars(_XOOPS_FORM_ALT_ENTERWIDTH, ENT_QUOTES | ENT_HTML5)
             . "\");' onmouseover='style.cursor=\"hand\"' title='" . _XOOPS_FORM_ALTYOUTUBE
-            . "'><span class='fa fa-fw fa-youtube' aria-hidden='true'></span></button>";
+            . "'><span class='fa-brands fa-youtube' aria-hidden='true'></span></button>";
         $javascript = <<<EOH
             function xoopsCodeYoutube(id, enterYouTubePhrase, enterYouTubeHeightPhrase, enterYouTubeWidthPhrase)
             {

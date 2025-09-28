@@ -1,0 +1,29 @@
+.contact-module {
+    font-weight: bold;
+}
+
+.contact-module input,
+.contact-module textarea {
+    background: #EEE;
+    border: 1px solid #EAEAEA;
+    padding: 10px;
+    display: block;
+    min-width: 100%;
+    max-width: 100%;
+    max-height: 250px;
+    margin-bottom: 10px;
+    border-radius: 5px;
+    -moz-border-radius: 5px;
+    -webkit-border-radius: 5px;
+}
+
+.contact-module input[type=text]:focus,
+.contact-module textarea:focus {
+    background: #FFF;
+}
+
+.contact-module input[type=submit] {
+    background: #5BC0DE;
+    color: #FFF;
+    font-weight: bold;
+}

@@ -9,7 +9,7 @@
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  *
- * @copyright       (c) 2000-2016 XOOPS Project (www.xoops.org)
+ * @copyright       (c) 2000-2025 XOOPS Project (https://xoops.org)
  * @license             GNU GPL 2 (https://www.gnu.org/licenses/gpl-2.0.html)
  * @package             kernel
  * @subpackage          logger
@@ -186,7 +186,7 @@ if (empty($mode)) {
             date.setTime(date.getTime()+(days*24*60*60*1000));
             var expires = "; expires="+date.toGMTString();
         } else var expires = "";
-        document.cookie = name+"="+value+expires+";path=/;samesite=strict;";
+        document.cookie = name+"="+value+expires+";path=/;samesite=Lax;";
     }
     function xoLogReadCookie(name)
     {

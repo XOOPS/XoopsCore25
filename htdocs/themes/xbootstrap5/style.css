@@ -1,0 +1,935 @@
+/*
+ * xBootstrap5 XOOPS Theme - Modernized Style
+ * Rewritten with Bootstrap 5 compatibility and best practices
+ */
+
+/*
+    xBootstrap5 XOOPS Theme - Modernized Style
+    Rewritten with Bootstrap 5 compatibility and best practices
+    Original Author:   Angelo Rocha (www.angelorocha.com.br)    Contacts
+    Twitter:            https://twitter.com/_AngeloRocha
+    Google Plus:        https://plus.google.com/+AngeloRocha/posts
+    Linkedin:           https://br.linkedin.com/in/angelorocha
+    Github:             https://github.com/angelorocha
+    Author:             Michael Beck & XOOPS Development Team
+    Licence:           GPL v3
+*/
+
+/**
+    * Table of Contents:
+    *
+    * 1. CSS Variables (Custom Properties)
+    * 2. Global Styles & Core Layout
+    * 3. Navigation, Header & Footer
+    * 4. Block Styling (General)
+    * 5. Common XOOPS Elements (Quotes, Code)
+    * 6. Component Styling (Forms, Badges, Pagination, etc.)
+    * 7. Utility Classes
+    * 8. Media Queries & Responsive
+**/
+
+/*====================================================
+1. CSS Variables (Custom Properties)
+======================================================*/
+:root {
+    /* Bootstrap Colors (adapt if your BS5 build uses different values) */
+    --bs-primary: #0d6efd;
+    --bs-secondary: #6c757d;
+    --bs-success: #198754;
+    --bs-info: #0dcaf0;
+    --bs-warning: #ffc107;
+    --bs-danger: #dc3545;
+    --bs-light: #f8f9fa;  /* Standard light background */
+    --bs-gray-100: #f8f9fa;
+    --bs-gray-200: #e9ecef; /* Slightly darker light */
+    --bs-gray-300: #dee2e6; /* Borders */
+    --bs-gray-600: #6c757d; /* Secondary text */
+    --bs-gray-800: #343a40;
+    --bs-dark: #212529;    /* Standard dark background/text */
+    --bs-white: #fff;
+    --bs-body-bg: #fff;
+    --bs-body-color: var(--bs-dark);
+
+    /* XOOPS Specific Variables */
+    --xoops-block-bg: var(--bs-light);
+    --xoops-block-border-color: var(--bs-gray-300);
+    --xoops-block-header-bg: var(--bs-gray-200);
+    --xoops-footer-bg: #111111; /* Keep original dark footer */
+    --xoops-footer-color: #eaeaea;
+    --xoops-link-color: var(--bs-primary);
+    --xoops-link-hover-color: #0a58ca; /* Darker primary */
+    --xoops-accent-color: #99cc66; /* Green accent from Alternative D */
+
+    /* Spacing (using Bootstrap's logic) */
+    --spacer-1: 0.25rem;
+    --spacer-2: 0.5rem;
+    --spacer-3: 1rem;
+    --spacer-4: 1.5rem;
+    --spacer-5: 3rem;
+
+    /* Transitions */
+    --transition-base: all 0.2s ease-in-out;
+}
+
+/* Optional Basic Dark Theme Support */
+[data-theme="dark"] {
+    --bs-body-bg: #121212;
+    --bs-body-color: #dee2e6; /* Lighter text */
+    --bs-light: #1e1e1e;       /* Darker light bg */
+    --bs-gray-100: #1e1e1e;
+    --bs-gray-200: #2a2a2a;
+    --bs-gray-300: #444;       /* Darker borders */
+    --bs-gray-600: #adb5bd;    /* Lighter secondary text */
+    --bs-dark: #ced4da;        /* Lighter dark color */
+    --xoops-block-bg: #1e1e1e;
+    --xoops-block-border-color: #444;
+    --xoops-block-header-bg: #2a2a2a;
+    /* Keep footer dark or adjust if needed */
+    /* --xoops-footer-bg: #000; */
+    /* --xoops-footer-color: #ccc; */
+}
+
+/*====================================================
+2. Global Styles & Core Layout
+======================================================*/
+body {
+    font-family: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    line-height: 1.6;
+    background-color: var(--bs-body-bg);
+    color: var(--bs-body-color);
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    overflow-x: hidden;
+}
+
+a {
+    color: var(--xoops-link-color);
+    text-decoration: none; /* Assuming BS5 removes underline by default */
+    transition: var(--transition-base);
+}
+a:hover {
+    color: var(--xoops-link-hover-color);
+}
+
+.maincontainer {
+    margin-top: var(--spacer-4);
+    margin-bottom: var(--spacer-4);
+    flex: 1; /* Allows footer to stick to bottom */
+}
+
+/* Homepage specific message box */
+.home-message {
+    background-color: var(--xoops-block-bg);
+    padding: var(--spacer-3);
+    border-left: 3px solid var(--xoops-accent-color);
+    margin-top: -60px; /* Adjust as needed for overlap effect */
+    margin-bottom: var(--spacer-3);
+    position: relative;
+    z-index: 5;
+    border-radius: 0.25rem;
+}
+
+/* Common style for bottom/footer block area wrappers */
+.bottom-blocks,
+.footer-blocks {
+    border-radius: 0.25rem;
+    padding: var(--spacer-4); /* More padding for these sections */
+    background-color: var(--xoops-block-bg);
+    border: 1px solid var(--xoops-block-border-color);
+    margin-top: var(--spacer-4);
+}
+
+.footer-blocks {
+    color: var(--bs-body-color); /* Use standard text color */
+}
+
+.xoops-banner {
+    margin-bottom: var(--spacer-3);
+}
+
+.xoops-banner img {
+    max-width: 100%;
+    height: auto; /* Ensure responsiveness */
+}
+
+/*====================================================
+3. Navigation, Header & Footer
+======================================================*/
+/* Navbar */
+.global-nav {
+    margin-bottom: 0; /* Keep navbar attached to top */
+}
+.navbar.bg-dark {
+    background-color: var(--bs-primary) !important; /* Override BS5 .bg-dark if needed */
+}
+
+a.navbar-brand.xlogo img {
+    max-height: 40px; /* Adjust as needed */
+    width: auto;
+}
+a.navbar-brand.xlogo {
+    padding: var(--spacer-1) var(--spacer-3) var(--spacer-1) var(--spacer-1);
+}
+
+/* Dropdown Menu */
+.dropdown-menu {
+    margin: 0.125rem 0 0; /* BS5 default margin */
+    box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15); /* Add shadow */
+}
+.dropdown-submenu {
+    position: relative;
+}
+.dropdown-submenu .dropdown-menu {
+    top: 0;
+    left: 100%;
+    margin-top: -0.125rem; /* Align with parent */
+}
+
+/* Carousel/Slideshow */
+.slideshow .carousel-caption {
+    bottom: 10%;
+    background-color: rgba(0, 0, 0, 0.5);
+    padding: var(--spacer-3);
+    border-radius: 0.25rem;
+}
+.slideshow .carousel-indicators {
+    bottom: var(--spacer-3);
+}
+.slideshow .carousel-item {
+    text-align: center;
+}
+/* No need for display: inline-block on img if using standard BS5 carousel */
+
+/* Footer */
+.footer {
+    background-color: var(--xoops-footer-bg);
+    color: var(--xoops-footer-color);
+    padding: var(--spacer-3) 0;
+    margin-top: var(--spacer-5); /* Ensure space above footer */
+    text-align: center;
+}
+.footer h3 {
+    font-size: 0.9rem;
+    line-height: 1.5;
+    max-width: 960px;
+    margin: 0 auto;
+    padding: 0 var(--spacer-3);
+    position: relative; /* For credits positioning */
+}
+.footer h3 a.credits {
+    display: inline-block; /* Better flow */
+    margin-left: var(--spacer-3);
+    vertical-align: middle;
+    /* position: absolute; top: 3px; right: 10px;  <- Avoid if possible */
+}
+.footer h3 a.credits img {
+    height: 20px; /* Adjust size */
+    width: auto;
+    vertical-align: middle;
+}
+
+/* Adhesive Header (Requires headhesive.js) */
+.adhesiveHeader--clone {
+    transition: top 0.3s ease-in-out;
+    position: fixed; /* Should be added by JS */
+    top: 0;          /* Should be added by JS */
+    left: 0;
+    right: 0;
+    z-index: 1030; /* Ensure it's above content, below modals */
+}
+/* Ensure original header takes up space initially */
+.adhesiveHeader:not(.adhesiveHeader--clone) {
+    visibility: visible; /* Or height matching cloned header */
+}
+
+/*====================================================
+4. Block Styling (General)
+======================================================*/
+
+/* Consolidated Block Styles (Sidebar, Center, Bottom, Footer) */
+.xoops-blocks,
+.xoops-side-blocks > aside,
+.xoops-bottom-blocks, /* Targets blocks *inside* the .bottom-blocks wrapper */
+.xoops-footer-blocks { /* Targets blocks *inside* the .footer-blocks wrapper */
+    margin-bottom: var(--spacer-4);
+    border-radius: 0.25rem;
+    padding: var(--spacer-3);
+    background-color: var(--xoops-block-bg);
+    border: 1px solid var(--xoops-block-border-color);
+    transition: var(--transition-base);
+    box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.075); /* Subtle shadow */
+}
+/* Remove bottom margin from last block in a container */
+.xoops-side-blocks > aside:last-child,
+.bottom-blocks > .row > *:last-child > .xoops-bottom-blocks,
+.footer-blocks > .row > *:last-child > .xoops-footer-blocks {
+    margin-bottom: 0;
+}
+
+.xoops-blocks:hover,
+.xoops-side-blocks > aside:hover,
+.xoops-bottom-blocks:hover,
+.xoops-footer-blocks:hover {
+    box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15); /* Larger shadow on hover */
+}
+
+/* Block Titles */
+.xoops-blocks h4,
+.xoops-side-blocks > aside > h4.block-title,
+.xoops-bottom-blocks h4,
+.xoops-footer-blocks h4 {
+    font-size: 1.1rem;
+    margin: calc(-1 * var(--spacer-3)) calc(-1 * var(--spacer-3)) var(--spacer-3) calc(-1 * var(--spacer-3)); /* Negative margin to touch edges */
+    padding: var(--spacer-2) var(--spacer-3);
+    border-bottom: 1px solid var(--xoops-block-border-color);
+    background-color: var(--xoops-block-header-bg);
+    border-top-left-radius: 0.25rem;
+    border-top-right-radius: 0.25rem;
+    color: var(--bs-body-color); /* Use standard text color */
+}
+
+/* Tables within Blocks */
+.xoops-side-blocks table,
+.xoops-blocks table,
+.xoops-bottom-blocks table,
+.xoops-footer-blocks table {
+    width: 100%;
+    margin-bottom: var(--spacer-3);
+    /* Recommend adding .table class in templates */
+}
+/* Basic table cell styling if .table not used */
+.xoops-side-blocks td, .xoops-side-blocks th,
+.xoops-blocks td, .xoops-blocks th,
+.xoops-bottom-blocks td, .xoops-bottom-blocks th,
+.xoops-footer-blocks td, .xoops-footer-blocks th {
+    padding: var(--spacer-2);
+    vertical-align: top;
+    border-top: 1px solid var(--xoops-block-border-color);
+}
+.xoops-side-blocks th,
+.xoops-blocks th,
+.xoops-bottom-blocks th,
+.xoops-footer-blocks th {
+    font-weight: bold;
+}
+
+/*====================================================
+5. Common XOOPS Elements (Quotes, Code)
+======================================================*/
+.xoopsQuote blockquote {
+    margin: var(--spacer-3) 0;
+    padding: var(--spacer-2) var(--spacer-3);
+    font-size: 1rem;
+    color: var(--bs-gray-600);
+    border-left: 0.25rem solid var(--bs-gray-200);
+    font-style: italic;
+}
+.xoopsQuote blockquote > *:last-child {
+    margin-bottom: 0;
+}
+
+.xoopsCode {
+    background-color: var(--xoops-block-bg);
+    border: 1px solid var(--xoops-block-border-color);
+    padding: var(--spacer-3);
+    margin: var(--spacer-3) 0;
+    overflow-x: auto;
+    border-radius: 0.25rem;
+    font-family: SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+    font-size: 0.875em;
+}
+.xoopsCode code {
+    background-color: transparent;
+    line-height: 1.5;
+    padding: 0;
+    white-space: pre;
+    color: inherit;
+    font-size: inherit;
+}
+
+/*====================================================
+6. Component Styling (Forms, Badges, Pagination, etc.)
+======================================================*/
+/* Forms - Rely mostly on BS5 classes, add focus style */
+.form-control:focus,
+.form-select:focus {
+    border-color: var(--bs-primary);
+    box-shadow: 0 0 0 0.25rem rgba(13, 110, 253, 0.25);
+}
+/* Custom checkbox styling */
+.form-check-input:checked {
+    background-color: var(--bs-primary);
+    border-color: var(--bs-primary);
+    background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20'%3e%3cpath fill='none' stroke='%23fff' stroke-linecap='round' stroke-linejoin='round' stroke-width='3' d='m6 10 3 3 6-6'/%3e%3c/svg%3e");
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: contain;
+}
+
+/* Badges */
+.badge {
+    font-size: 0.75em;
+    padding: 0.35em 0.65em;
+}
+
+/* Pagination */
+.generic-pagination {
+    display: flex;
+    justify-content: center;
+    padding-left: 0;
+    list-style: none;
+    margin: var(--spacer-4) 0;
+}
+/* Style links like BS5 pagination */
+.generic-pagination a,
+.generic-pagination span { /* Span for current page */
+    padding: 0.375rem 0.75rem;
+    margin-left: -1px; /* Collapse borders */
+    line-height: 1.5;
+    color: var(--xoops-link-color);
+    background-color: var(--bs-white);
+    border: 1px solid var(--bs-gray-300);
+    text-decoration: none;
+    transition: color 0.15s ease-in-out, background-color 0.15s ease-in-out, border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+}
+.generic-pagination a:hover {
+    z-index: 2;
+    color: var(--xoops-link-hover-color);
+    background-color: var(--bs-gray-200);
+    border-color: var(--bs-gray-300);
+}
+.generic-pagination .xo-pagact { /* Current page */
+    z-index: 3;
+    color: var(--bs-white);
+    background-color: var(--bs-primary);
+    border-color: var(--bs-primary);
+    padding: 0.375rem 0.75rem; /* Match link padding */
+    margin-left: -1px;
+}
+/* Round corners for first/last items */
+.generic-pagination li:first-child a,
+.generic-pagination li:first-child span {
+    margin-left: 0;
+    border-top-left-radius: 0.25rem;
+    border-bottom-left-radius: 0.25rem;
+}
+.generic-pagination li:last-child a,
+.generic-pagination li:last-child span {
+    border-top-right-radius: 0.25rem;
+    border-bottom-right-radius: 0.25rem;
+}
+
+/*====================================================
+7. Utility Classes
+======================================================*/
+/* Text alignment */
+.aligncenter {
+    text-align: center !important;
+    margin-left: auto;
+    margin-right: auto;
+}
+.alignleft {
+    float: left !important;
+    margin-right: var(--spacer-3); /* Added margin */
+    text-align: left !important;
+}
+.alignright {
+    float: right !important;
+    margin-left: var(--spacer-3); /* Added margin */
+    text-align: right !important;
+}
+
+/* Legacy float classes (kept for compatibility) */
+.pull-right {
+    float: right !important;
+}
+.pull-left {
+    float: left !important;
+}
+
+/* Old margin classes - replace with bs5 (e.g., .mb-3) in templates */
+.mb10 {
+    margin-bottom: var(--spacer-3) !important;
+}
+.mt10 {
+    margin-top: var(--spacer-3) !important;
+}
+.lw30 {
+    line-height: 1.875rem !important;
+}
+.nompl {
+    margin: 0 !important;
+    padding: 0 !important;
+    line-height: inherit;
+}
+
+/* Modern spacing utilities */
+.mb-xs { margin-bottom: 0.25rem !important; }
+.mb-sm { margin-bottom: 0.5rem !important; }
+.mb-md { margin-bottom: 1rem !important; }
+.mb-lg { margin-bottom: 1.5rem !important; }
+.mb-xl { margin-bottom: 3rem !important; }
+
+.mt-xs { margin-top: 0.25rem !important; }
+.mt-sm { margin-top: 0.5rem !important; }
+.mt-md { margin-top: 1rem !important; }
+.mt-lg { margin-top: 1.5rem !important; }
+.mt-xl { margin-top: 3rem !important; }
+
+/* Visual helpers */
+.rounded {
+    border-radius: 0.25rem !important;
+}
+.rounded-circle {
+    border-radius: 50% !important;
+}
+.shadow-sm {
+    box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.075) !important;
+}
+.shadow {
+    box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15) !important;
+}
+
+/*====================================================
+8. Media Queries & Responsive
+======================================================*/
+/* Dropdown hover for larger screens */
+@media (min-width: 768px) { /* BS5 'md' breakpoint */
+    .dropdown:hover > .dropdown-menu {
+        display: block;
+        margin-top: 0;
+    }
+}
+
+/* Mobile Banner Adjustments */
+@media (max-width: 767.98px) { /* Below 'md' */
+    .xoops-banner {
+        float: none !important;
+        text-align: center;
+        margin-bottom: var(--spacer-3);
+    }
+
+    .xoops-side-blocks {
+        margin-top: var(--spacer-4);
+    }
+
+    /* On mobile, show elements in this order: content, right blocks, left blocks */
+    .row {
+        display: flex;
+        flex-direction: column;
+    }
+
+    .col-md-8, .col-md-6 {
+        order: 1;
+    }
+
+    .xoops-side-blocks:last-of-type {
+        order: 2;
+    }
+
+    .xoops-side-blocks:first-of-type {
+        order: 3;
+    }
+
+    .carousel-caption {
+        position: static;
+        background-color: var(--bs-dark);
+        padding: var(--spacer-3);
+        border-radius: 0;
+    }
+}
+
+/* Reduced Motion */
+@media (prefers-reduced-motion: reduce) {
+    * {
+        transition-duration: 0.01ms !important;
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        scroll-behavior: auto !important;
+    }
+}
+
+
+/*======================================================================================================================*/
+
+
+
+
+:root {
+    --primary-color: #0d6efd;
+    --secondary-color: #6c757d;
+    --light-color: #f8f9fa;
+    --dark-color: #212529;
+    --accent-color: #09c;
+    --gray-light: #eee;
+    --gray-medium: #ccc;
+    --gray-dark: #333;
+    --body-bg: #fff;
+    --text-color: var(--dark-color);
+}
+
+[data-theme="dark"] {
+    --body-bg: #121212;
+    --text-color: #f1f1f1;
+    --light-color: #1e1e1e;
+    --gray-light: #2a2a2a;
+    --gray-medium: #444;
+    --gray-dark: #bbb;
+}
+
+body {
+    font-family: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    line-height: 1.6;
+    background-color: var(--body-bg);
+    color: var(--text-color);
+}
+
+/* Navbar */
+.navbar {
+    margin-bottom: 0;
+}
+
+.navbar.bg-dark {
+    background-color: var(--primary-color) !important;
+}
+
+.navbar-brand.xlogo {
+    padding: 0.25rem 1rem 0 0.25rem;
+}
+
+/* Carousel */
+.slideshow .carousel-caption {
+    bottom: 10%;
+}
+
+.slideshow .carousel-indicators {
+    bottom: 2.5rem;
+}
+
+.slideshow .carousel-item {
+    text-align: center;
+}
+
+.slideshow .carousel-item img {
+    display: inline-block;
+}
+
+/* Layout */
+.maincontainer {
+    padding-top: 2rem;  /* pushes content down without collapsing margins */
+}
+
+/* Footer */
+.footer {
+    background: var(--dark-color);
+    color: var(--gray-light);
+    text-align: center;
+    padding: 1rem;
+}
+
+.footer h3 {
+    font-size: 0.9rem;
+    margin: 0 auto;
+    position: relative;
+    max-width: 960px;
+}
+
+.footer h3 .credits {
+    position: absolute;
+    top: 0.25rem;
+    right: 0.625rem;
+}
+
+/* XOOPS Blocks */
+.xoops-side-blocks aside {
+    margin-bottom: 1.5rem;
+    border-radius: 0.25rem;
+    padding: 0.75rem;
+    background-color: var(--light-color);
+    border: 1px solid rgba(0, 0, 0, 0.125);
+}
+
+.xoops-side-blocks h4.block-title,
+.xoops-blocks h4 {
+    font-size: 1.25rem;
+    margin-bottom: 0.75rem;
+    padding-bottom: 0.5rem;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.125);
+}
+
+/* XOOPS Quote/Code */
+.xoopsQuote blockquote {
+    font-size: 0.9em;
+    border-left: 2px solid var(--gray-light);
+    padding-left: 0.625rem;
+    font-style: italic;
+    color: #969696;
+}
+
+.xoopsCode {
+    background: var(--light-color);
+    overflow-x: auto;
+    border: 1px solid var(--gray-light);
+    padding: 0.625rem;
+}
+
+.xoopsCode code {
+    background-color: transparent;
+    line-height: 1.5;
+    padding: 0;
+    white-space: nowrap;
+}
+
+/* News Module */
+.news-header {
+    position: relative;
+    margin-bottom: 1rem;
+}
+
+.news-header img {
+    width: 100%;
+    height: auto;
+}
+
+.news-header > h2.news-title {
+    background: rgba(0, 0, 0, 0.5);
+    position: absolute;
+    bottom: 10%;
+    left: 0;
+    padding: 0.75rem;
+    margin: 0;
+    color: #fff;
+    font-size: 1.8em;
+    z-index: 5;
+}
+
+.news-header > h2.news-title > a {
+    color: #cf9;
+}
+
+.home-news-loop,
+.news-item,
+.xoops-news-navigation {
+    margin-bottom: 1.25rem;
+}
+
+.xoops-news-navigation a {
+    background: var(--dark-color);
+    color: var(--gray-light);
+    padding: 0.5rem 1rem;
+    border-radius: 999px;
+    transition: background 0.3s ease;
+}
+
+.xoops-news-navigation a:hover {
+    background: var(--gray-light);
+    color: var(--dark-color);
+    box-shadow: 0 0 5px var(--gray-dark);
+}
+
+/* NewBB Forum */
+.newbb-thread {
+    background: var(--light-color);
+    border: 1px solid var(--gray-medium);
+    padding: 1rem;
+    border-radius: 0.25rem;
+    margin-bottom: 1rem;
+}
+
+.newbb-post-anchor {
+    background: var(--accent-color);
+    color: #fff;
+    position: absolute;
+    right: 0;
+    top: 0;
+    padding: 0.25rem 0.5rem;
+    font-size: 0.8em;
+}
+
+.newbb-user-signature {
+    border-top: 1px dotted var(--gray-medium);
+    color: var(--gray-dark);
+    font-style: italic;
+    padding-top: 0.5rem;
+    margin-top: 1rem;
+}
+
+.newbb-topiclist-header {
+    background: var(--light-color);
+    border-bottom: 1px solid var(--gray-medium);
+    padding: 0.5rem 0;
+}
+
+.newbb-topiclist-itens {
+    border-top: 1px solid var(--gray-medium);
+    border-bottom: 1px solid #fff;
+    padding: 0.75rem 0;
+}
+
+.newbb-topiclist-itens.odd {
+    background: #f6f6f6;
+}
+
+.newbb-topiclist-itens.even {
+    background: #fafafa;
+}
+
+/* XOOPS Comment Form */
+.xoops-comment-form textarea {
+    max-height: 150px;
+}
+
+.xoops-comment-form span.caption-marker {
+    color: #f00;
+    padding-left: 0.625rem;
+    font-size: 1.5em;
+}
+
+/* Utilities */
+.aligncenter {
+    text-align: center !important;
+}
+
+.alignleft {
+    float: left !important;
+    text-align: left !important;
+}
+
+.alignright {
+    float: right !important;
+    text-align: right !important;
+}
+
+.mt10 {
+    margin-top: 0.625rem;
+}
+
+.mb10 {
+    margin-bottom: 0.625rem;
+}
+
+/* Responsive Adjustments */
+@media (max-width: 767.98px) {
+    .xoops-side-blocks {
+        margin-top: 1.5rem;
+        order: 2;
+    }
+
+    .col-md-6 {
+        order: 1;
+    }
+}
+
+@media (min-width: 768px) {
+    .dropdown:hover > .dropdown-menu {
+        display: block;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    * {
+        transition: none !important;
+        animation: none !important;
+    }
+}
+
+/* Bootstrap 5 Fixes */
+.badge {
+    font-size: 0.75em;
+    padding: 0.35em 0.65em;
+}
+
+.dropdown-menu {
+    margin: 0;
+}
+
+.form-check .form-check-input:checked {
+    background-color: var(--primary-color);
+    border-color: var(--primary-color);
+}
+
+.adhesiveHeader--clone {
+    transition: top 0.3s ease-in-out;
+}
+
+.adhesiveHeader,
+.adhesiveHeader--clone {
+    width: 100%;
+}
+
+.adhesiveHeader .container,
+.adhesiveHeader--clone .container {
+    max-width: 1140px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.navbar-wrapper {
+    width: 100%;
+    max-width: 1140px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+body {
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    overflow-x: hidden;
+}
+
+
+.nav-item ul {
+    background-color: transparent; /* Ensure submenus have no background color */
+}
+
+/* Highlight the active main menu item */
+.nav-item.active > a.nav-link {
+    /*font-weight: bold;*/
+    background-color: #f0f0f0; /* Set the desired background color */
+    color: #000; /* Optional: Adjust text color for better contrast */
+}
+
+/* Highlight the active submenu item */
+.no-bullets li a.dropdown.active {
+    background-color: #e0e0e0; /* Set the desired background color for submenus */
+    color: #000; /* Optional: Adjust text color for better contrast */
+}
+
+
+a {
+    color: #2fa4e7;
+    text-decoration: none;
+}
+a:hover,
+a:focus {
+    color: #2196d3;
+    text-decoration: underline;
+}
+.text-primary,
+.link-primary {
+    color: #2fa4e7 !important;
+}
+.text-primary:hover,
+.text-primary:focus,
+.link-primary:hover,
+.link-primary:focus {
+    color: #2196d3 !important;
+}
+.btn-primary {
+    background-color: #2fa4e7;
+    border-color: #2fa4e7;
+}
+.btn-primary:hover,
+.btn-primary:focus {
+    background-color: #2196d3;
+    border-color: #2196d3;
+}
+
+.nav-item > a.nav-link {
+    color: #2fa4e7;
+}

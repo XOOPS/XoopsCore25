@@ -9,7 +9,7 @@
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  *
- * @copyright       (c) 2000-2016 XOOPS Project (www.xoops.org)
+ * @copyright       (c) 2000-2025 XOOPS Project (https://xoops.org)
  * @license             GNU GPL 2 (https://www.gnu.org/licenses/gpl-2.0.html)
  * @author              Cointin Maxime (AKA Kraven30)
  * @author              Andricq Nicolas (AKA MusS)
@@ -57,7 +57,10 @@ class SystemCorePreload extends XoopsPreloadItem
      */
     public static function eventCoreHeaderAddmeta($args)
     {
-        $GLOBALS['xoTheme']->addStylesheet('media/font-awesome/css/font-awesome.min.css');
+        $GLOBALS['xoTheme']->addStylesheet('media/font-awesome6/css/fontawesome.min.css');
+        $GLOBALS['xoTheme']->addStylesheet('media/font-awesome6/css/solid.min.css');
+        $GLOBALS['xoTheme']->addStylesheet('media/font-awesome6/css/brands.min.css');
+        $GLOBALS['xoTheme']->addStylesheet('media/font-awesome6/css/v4-shims.min.css');
         if (defined('XOOPS_STARTPAGE_REDIRECTED') || (isset($GLOBALS['xoopsOption']['template_main']) && $GLOBALS['xoopsOption']['template_main'] === 'db:system_homepage.tpl')) {
             if (is_object($GLOBALS['xoopsTpl'])) {
                 $GLOBALS['xoopsTpl']->assign('homepage', true);
@@ -93,7 +96,10 @@ class SystemCorePreload extends XoopsPreloadItem
      */
     public static function eventSystemClassGuiHeader($args)
     {
-        $GLOBALS['xoTheme']->addStylesheet('media/font-awesome/css/font-awesome.min.css');
+        $GLOBALS['xoTheme']->addStylesheet('media/font-awesome6/css/fontawesome.min.css');
+        $GLOBALS['xoTheme']->addStylesheet('media/font-awesome6/css/solid.min.css');
+        $GLOBALS['xoTheme']->addStylesheet('media/font-awesome6/css/brands.min.css');
+        $GLOBALS['xoTheme']->addStylesheet('media/font-awesome6/css/v4-shims.min.css');
         if (!empty($_SESSION['redirect_message'])) {
             //$GLOBALS['xoTheme']->addStylesheet('xoops.css');
             $GLOBALS['xoTheme']->addScript('browse.php?Frameworks/jquery/jquery.js');

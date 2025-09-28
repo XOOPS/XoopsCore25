@@ -9,7 +9,7 @@
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  *
- * @copyright       (c) 2000-2016 XOOPS Project (www.xoops.org)
+ * @copyright       (c) 2000-2025 XOOPS Project (https://xoops.org)
  * @license             GNU GPL 2 (https://www.gnu.org/licenses/gpl-2.0.html)
  * @package             kernel
  * @since               2.3.0
@@ -24,7 +24,7 @@ defined('XOOPS_ROOT_PATH') || exit('Restricted access');
  * Xoops Block Instance
  *
  * @author              Taiwen Jiang <phppp@users.sourceforge.net>
- * @copyright       (c) 2000-2016 XOOPS Project (www.xoops.org)
+ * @copyright       (c) 2000-2025 XOOPS Project (https://xoops.org)
  *
  * @package             kernel
  */
@@ -73,20 +73,20 @@ class XoopsBlockInstance
      */
     public function __get($name)
     {
-        $GLOBALS['xoopsLogger']->addDeprecated("Class '" . self::class . "' is deprecated" . (empty($name) ? '' : " thus the variable '{$name}' is not vailable") . '!');
+        $GLOBALS['xoopsLogger']->addDeprecated("Class '" . self::class . "' is deprecated" . (empty($name) ? '' : " thus the variable '{$name}' is not available") . '!');
 
         return null;
     }
 }
 
 /**
- * XOOPS Block Instance Handler Class. (Singelton)
+ * XOOPS Block Instance Handler Class. (Singleton)
  *
  * This class is responsible for providing data access mechanisms to the data source
  * of XOOPS block class objects.
  *
  * @author              Taiwen Jiang <phppp@users.sourceforge.net>
- * @copyright       (c) 2000-2016 XOOPS Project (www.xoops.org)
+ * @copyright       (c) 2000-2025 XOOPS Project (https://xoops.org)
  * @package             kernel
  * @subpackage          block
  */

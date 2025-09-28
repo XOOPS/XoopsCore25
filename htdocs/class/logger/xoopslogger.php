@@ -9,7 +9,7 @@
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  *
- * @copyright       (c) 2000-2020 XOOPS Project (https://xoops.org)
+ * @copyright       (c) 2000-2025 XOOPS Project (https://xoops.org)
  * @license             GNU GPL 2 (https://www.gnu.org/licenses/gpl-2.0.html)
  * @package             kernel
  * @subpackage          logger
@@ -193,13 +193,15 @@ class XoopsLogger
     {
         if ($this->activated) {
             $backTrace = debug_backtrace(DEBUG_BACKTRACE_IGNORE_ARGS);
-            $miniTrace = ' trace: ';
+            $miniTrace = "<br> trace: ";
             foreach ($backTrace as $i => $trace) {
-                $miniTrace .= $trace['file'] . ':' . $trace['line'] . ' ';
+                // Check if 'file' and 'line' exist in the current trace step
+                $file = $trace['file'] ?? '(unknown file)';
+                $line = $trace['line'] ?? '(unknown line)';
+                $miniTrace .= $file . ':' . $line . "<br>";
             }
-            $miniTrace = str_replace(XOOPS_VAR_PATH, '', $miniTrace);
-            $miniTrace = str_replace(XOOPS_PATH, '', $miniTrace);
-            $miniTrace = str_replace(XOOPS_ROOT_PATH, '', $miniTrace);
+            // Replace paths to keep the output clean
+            $miniTrace = str_replace([XOOPS_VAR_PATH, XOOPS_PATH, XOOPS_ROOT_PATH], '', $miniTrace);
 
             $this->deprecated[] = $msg . $miniTrace;
         }

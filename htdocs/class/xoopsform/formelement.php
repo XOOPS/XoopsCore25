@@ -9,7 +9,7 @@
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  *
- * @copyright       (c) 2000-2016 XOOPS Project (www.xoops.org)
+ * @copyright       (c) 2000-2025 XOOPS Project (https://xoops.org)
  * @license             GNU GPL 2 (https://www.gnu.org/licenses/gpl-2.0.html)
  * @package             kernel
  * @subpackage          form
@@ -104,7 +104,7 @@ class XoopsFormElement
      * CAtzwolf: Modified for No Colspan
      *
      * Lets a developer have only one column in a form element rather than two.
-     * Example of usgage: Allows text editors to span 2 columns rathe than pushed into one column
+     * Example of usage: Allows text editors to span 2 columns rather than pushed into one column
      *
      * @deprecated  PLEASE AVOID USING THIS METHOD
      *
@@ -186,8 +186,8 @@ class XoopsFormElement
     /**
      * If the accesskey is found in the specified string, underlines it
      *
-     * @param  string $str String where to search the accesskey occurence
-     * @return string Enhanced string with the 1st occurence of accesskey underlined
+     * @param  string $str String where to search the accesskey occurrence
+     * @return string Enhanced string with the 1st occurrence of accesskey underlined
      */
     public function getAccessString($str)
     {

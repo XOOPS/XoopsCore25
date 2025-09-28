@@ -2,7 +2,7 @@
 /**
  * Initial functions
  *
- * @copyright       (c) 2000-2016 XOOPS Project (www.xoops.org)
+ * @copyright       (c) 2000-2025 XOOPS Project (https://xoops.org)
  * @license             GNU GPL 2 (https://www.gnu.org/licenses/gpl-2.0.html)
  * @author              Taiwen Jiang <phppp@users.sourceforge.net>
  * @since               1.00
@@ -11,7 +11,7 @@
  */
 
 if (substr(XOOPS_VERSION, 0, 9) < 'XOOPS 2.3') {
-    trigger_error('The package only works for XOOPS 2.3+', E_USER_ERROR);
+    throw new \Exception('The package only works for XOOPS 2.3+');
 }
 
 if (!defined('FRAMEWORKS_ART_FUNCTIONS_INI')):
@@ -97,7 +97,7 @@ function mod_loadFunctions($group = '', $dirname = '')
  * Load renderer for a class
  *
  * The class file should be located in /modules/MODULE/{$class}.renderer.php
- * The classf name should be defined as Capitalized(module_dirname)Capitalized(class_name)Renderer
+ * The class file name should be defined as Capitalized(module_dirname)Capitalized(class_name)Renderer
  *
  * @param  string $class   name of  the classname
  * @param  string $dirname module dirname, optional

@@ -43,24 +43,24 @@
 		<div class="col-12 col-md-12 alignright">
 			<{if isset($xoops_iscommentadmin) && $xoops_iscommentadmin == true}>
 				<a href="<{$editcomment_link}>&amp;com_id=<{$comment.id}>" title="<{$lang_edit}>" class="btn btn-secondary btn-sm">
-					<span class="fa fa-edit"></span>
+					<span class="fa-solid fa-edit"></span>
 				</a>
 				<a href="<{$replycomment_link}>&amp;com_id=<{$comment.id}>" title="<{$lang_reply}>" class="btn btn-secondary btn-sm">
-					<span class="fa fa-comment"></span>
+					<span class="fa-solid fa-comment"></span>
 				</a>
 				<a href="<{$deletecomment_link}>&amp;com_id=<{$comment.id}>" title="<{$lang_delete}>" class="btn btn-secondary btn-sm">
-					<span class="fa fa-trash"></span>
+					<span class="fa-solid fa-trash-can"></span>
 				</a>
 			<{elseif $xoops_isuser == true && $xoops_userid == $comment.poster.id}>
 				<a href="<{$editcomment_link}>&amp;com_id=<{$comment.id}>" title="<{$lang_edit}>" class="btn btn-secondary btn-sm">
-					<span class="fa fa-edit"></span>
+					<span class="fa-solid fa-edit"></span>
 				</a>
 				<a href="<{$replycomment_link}>&amp;com_id=<{$comment.id}>" title="<{$lang_reply}>" class="btn btn-secondary btn-sm">
-					<span class="fa fa-comment"></span>
+					<span class="fa-solid fa-comment"></span>
 				</a>
 			<{elseif $xoops_isuser == true || $anon_canpost == true}>
 				<a href="<{$replycomment_link}>&amp;com_id=<{$comment.id}>" class="btn btn-secondary btn-sm">
-					<span class="fa fa-comment"></span>
+					<span class="fa-solid fa-comment"></span>
 				</a>
 			<{else}>
 				&nbsp;

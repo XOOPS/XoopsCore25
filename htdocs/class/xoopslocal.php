@@ -9,7 +9,7 @@
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  *
- * @copyright       (c) 2000-2016 XOOPS Project (www.xoops.org)
+ * @copyright       (c) 2000-2025 XOOPS Project (https://xoops.org)
  * @license             GNU GPL 2 (https://www.gnu.org/licenses/gpl-2.0.html)
  * @package             kernel
  * @since               2.3.0
@@ -178,9 +178,9 @@ class XoopsLocalAbstract
      * Function to display formatted times in user timezone
      *
      * Setting $timeoffset to null (by default) will skip timezone calculation for user, using default timezone instead, which is a MUST for cached contents
-     * @param        $time
+     * @param mixed $time
      * @param string $format
-     * @param null|string   $timeoffset
+     * @param string|null   $timeoffset
      * @return string
      */
     public static function formatTimestamp($time, $format = 'l', $timeoffset = null)

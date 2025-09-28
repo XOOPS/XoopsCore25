@@ -76,9 +76,12 @@
         <p><a href="javascript:;" class="btn btn-md btn-success"><{$smarty.const.THEME_LEARNINGMORE}></a></p>
     </div>
 
-    <{if !empty($xoops_banner)}><div class="col-md-6"><div class="xoops-banner pull-right"><{$xoops_banner}></div></div><{/if}>
+            <{if !empty($xoops_banner)}>
+                <div class="col-md-6">
+                <div class="xoops-banner pull-right"><{$xoops_banner}></div></div><{/if}>
 
-    </div><!-- .home-message -->
+        </div>
+        <!-- .home-message -->
 <{/if}>
 
 <div class="row">
@@ -102,7 +105,8 @@
                 <{include file="$theme_name/tpl/rightBottom.tpl"}>
             </div>
         </div>
-    </div><!-- .bottom-blocks -->
+    </div>
+    <!-- .bottom-blocks -->
 <{/if}>
 
 <{if $xoBlocks.footer_center || $xoBlocks.footer_right || $xoBlocks.footer_left}>
@@ -116,7 +120,8 @@
                 <{include file="$theme_name/tpl/rightFooter.tpl"}>
             </div>
         </div>
-    </div><!-- .footer-blocks -->
+    </div>
+    <!-- .footer-blocks -->
 <{/if}>
 <!-- end of new footer blocks  -->
 

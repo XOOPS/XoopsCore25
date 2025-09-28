@@ -52,14 +52,14 @@
         <{foreach item=element from=$form_post.elements|default:null}>
         <{assign var="legend_required" value=false}>
         <{if isset($element.hidden) && $element.hidden != true}>
-			<label class="col-xs-12 col-sm-2 col-form-label text-sm-right">
+			<label class="col-12 col-sm-2 col-form-label text-sm-right">
 				<{$element.caption|default:''}>
                 <{if !empty($element.required)}>
                     <span class="xo-caption-required">*</span>
                     <{assign var="legend_required" value=true}>
                 <{/if}>
             </label>
-			<div class="col-xs-12 col-sm-10">
+			<div class="col-12 col-sm-10">
 				<{$element.body}>
 				<{if !empty($element.description)}>
 					<p class="form-text text-muted"><{$element.description}></p>

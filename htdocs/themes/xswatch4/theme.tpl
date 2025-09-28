@@ -95,7 +95,8 @@
             </div>
             <{/if}>
         </div>
-    </div><!-- .bottom-blocks -->
+    </div>
+    <!-- .bottom-blocks -->
 <{/if}>
 
 <{if $xoBlocks.footer_center || $xoBlocks.footer_right || $xoBlocks.footer_left}>
@@ -109,7 +110,8 @@
                 <{include file="$theme_name/tpl/rightFooter.tpl"}>
             </div>
         </div>
-    </div><!-- .footer-blocks -->
+    </div>
+    <!-- .footer-blocks -->
 <{/if}>
 
 <footer class="footer">

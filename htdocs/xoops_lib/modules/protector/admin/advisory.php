@@ -3,7 +3,7 @@ include XOOPS_ROOT_PATH . '/include/cp_header.php';
 include __DIR__ . '/admin_header.php';
 $db = XoopsDatabaseFactory::getDatabaseConnection();
 
-// beggining of Output
+// begin of Output
 xoops_cp_header();
 include __DIR__ . '/mymenu.php';
 
@@ -107,11 +107,17 @@ echo "</b><br><br></dl>\n";
 // patch to databasefactory.php
 echo "<dl><dt>'databasefactory.php' : ";
 $db = XoopsDatabaseFactory::getDatabaseConnection();
-if (substr(@XOOPS_VERSION, 6, 3) < 2.4 && strtolower(get_class($db)) !== 'protectormysqldatabase') {
+// Check if XOOPS_VERSION is defined and has a valid value
+$xoopsVersion = defined('XOOPS_VERSION') ? XOOPS_VERSION : '';
+$versionSubstring = is_string($xoopsVersion) ? substr($xoopsVersion, 6, 3) : '';
+$dbClass = strtolower(get_class($db));
+// Check if the version is valid and the database class is not 'protectormysqldatabase'
+if ($versionSubstring && version_compare($versionSubstring, '2.4', '<') && $dbClass !== 'protectormysqldatabase') {
     echo "<span style='color:red;font-weight:bold;'>" . _AM_ADV_DBFACTORYUNPATCHED . "</span></dt>\n";
 } else {
     echo _AM_ADV_DBFACTORYPATCHED . "<span style='color:green;font-weight:bold;'> OK</span></dt>\n";
 }
+
 echo "</dl>\n";
 
 // close table for ADVISORY

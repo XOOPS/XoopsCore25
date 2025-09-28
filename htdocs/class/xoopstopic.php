@@ -9,7 +9,7 @@
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  *
- * @copyright       (c) 2000-2016 XOOPS Project (www.xoops.org)
+ * @copyright       (c) 2000-2025 XOOPS Project (https://xoops.org)
  * @license             GNU GPL 2 (https://www.gnu.org/licenses/gpl-2.0.html)
  * @package             kernel
  * @since               2.0.0
@@ -124,14 +124,14 @@ class XoopsTopic
      */
     public function store()
     {
-        $myts   = \MyTextSanitizer::getInstance();
+        global $xoopsDB;
         $title  = '';
         $imgurl = '';
         if (isset($this->topic_title) && $this->topic_title != '') {
-            $title = $myts->addSlashes($this->topic_title);
+            $title = $xoopsDB->escape($this->topic_title);
         }
         if (isset($this->topic_imgurl) && $this->topic_imgurl != '') {
-            $imgurl = $myts->addSlashes($this->topic_imgurl);
+            $imgurl = $xoopsDB->escape($this->topic_imgurl);
         }
         if (!isset($this->topic_pid) || !is_numeric($this->topic_pid)) {
             $this->topic_pid = 0;

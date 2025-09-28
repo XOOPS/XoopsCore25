@@ -216,7 +216,7 @@ class Tar
                 $this->numFiles++;
                 // Create us a new file in our array
                 $activeFile = & $this->files[];
-                // Asign Values
+                // Assign Values
                 $activeFile['name']       = $file_name;
                 $activeFile['mode']       = $file_mode;
                 $activeFile['size']       = $file_size;

@@ -9,7 +9,7 @@
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  *
- * @copyright       (c) 2000-2016 XOOPS Project (www.xoops.org)
+ * @copyright       (c) 2000-2025 XOOPS Project (https://xoops.org)
  * @license             GNU GPL 2 (https://www.gnu.org/licenses/gpl-2.0.html)
  * @package             kernel
  * @since               2.0.0
@@ -431,9 +431,9 @@ class XoopsMailer
         $this->encodeBody($body);
         $this->multimailer->clearAllRecipients();
         $this->multimailer->addAddress($email);
-        $this->multimailer->Subject  = $subject;
-        $this->multimailer->Body     = $body;
-        $this->multimailer->CharSet  = $this->charSet;
+        $this->multimailer->Subject = $subject;
+        $this->multimailer->Body = $body;
+        $this->multimailer->CharSet = $this->charSet;
         $this->multimailer->Encoding = $this->encoding;
         if (!empty($this->fromName)) {
             $this->multimailer->FromName = $this->encodeFromName($this->fromName);
@@ -446,9 +446,14 @@ class XoopsMailer
         foreach ($this->headers as $header) {
             $this->multimailer->addCustomHeader($header);
         }
-        if (!$this->multimailer->send()) {
-            $this->errors[] = $this->multimailer->ErrorInfo;
-
+        try {
+            if (!$this->multimailer->send()) {
+                $this->errors[] = $this->multimailer->ErrorInfo;
+                return false;
+            }
+        } catch (\PHPMailer\PHPMailer\Exception $e) {
+            // Normalize PHPMailer exceptions to XOOPS' error array
+            $this->errors[] = $e->getMessage();
             return false;
         }
 

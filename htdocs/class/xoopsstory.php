@@ -9,7 +9,7 @@
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  *
- * @copyright       (c) 2000-2016 XOOPS Project (www.xoops.org)
+ * @copyright       (c) 2000-2025 XOOPS Project (https://xoops.org)
  * @license             GNU GPL 2 (https://www.gnu.org/licenses/gpl-2.0.html)
  * @package             kernel
  * @since               2.0.0
@@ -218,14 +218,15 @@ class XoopsStory
      */
     public function store($approved = false)
     {
+        global $xoopsDB;
         //$newpost = 0;
         $myts     = \MyTextSanitizer::getInstance();
         $title    = $myts->censorString($this->title);
         $hometext = $myts->censorString($this->hometext);
         $bodytext = $myts->censorString($this->bodytext);
-        $title    = $myts->addSlashes($title);
-        $hometext = $myts->addSlashes($hometext);
-        $bodytext = $myts->addSlashes($bodytext);
+        $title    = $xoopsDB->escape($title);
+        $hometext = $xoopsDB->escape($hometext);
+        $bodytext = $xoopsDB->escape($bodytext);
         if (!isset($this->nohtml) || $this->nohtml != 1) {
             $this->nohtml = 0;
         }

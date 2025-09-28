@@ -9,7 +9,7 @@
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  *
- * @copyright       (c) 2000-2016 XOOPS Project (www.xoops.org)
+ * @copyright       (c) 2000-2025 XOOPS Project (https://xoops.org)
  * @license             GNU GPL 2 (https://www.gnu.org/licenses/gpl-2.0.html)
  * @package             profile
  * @since               2.3.0
@@ -82,7 +82,7 @@ if ($op === 'save') {
         } else {
             $profile->setVar('profile_id', $edituser->getVar('uid'));
             $profile_handler->insert($profile);
-            unset($_SESSION['xoopsUserTheme']);
+            $_SESSION['xoopsUserTheme']=$edituser->getVar('theme');
             redirect_header(XOOPS_URL . '/modules/' . $GLOBALS['xoopsModule']->getVar('dirname', 'n') . '/userinfo.php?uid=' . $edituser->getVar('uid'), 2, _US_PROFUPDATED);
         }
     }
@@ -192,7 +192,7 @@ if ($op === 'avatarupload') {
                             }
                         }
                     }
-                    $sql = sprintf('UPDATE %s SET user_avatar = %s WHERE uid = %u', $GLOBALS['xoopsDB']->prefix('users'), $GLOBALS['xoopsDB']->quoteString('avatars/' . $uploader->getSavedFileName()), $GLOBALS['xoopsUser']->getVar('uid'));
+                    $sql = sprintf('UPDATE %s SET user_avatar = %s WHERE uid = %u', $GLOBALS['xoopsDB']->prefix('users'), $GLOBALS['xoopsDB']->quote('avatars/' . $uploader->getSavedFileName()), $GLOBALS['xoopsUser']->getVar('uid'));
                     $GLOBALS['xoopsDB']->query($sql);
                     $avt_handler->addUser($avatar->getVar('avatar_id'), $GLOBALS['xoopsUser']->getVar('uid'));
                     redirect_header('userinfo.php?t=' . time() . '&amp;uid=' . $GLOBALS['xoopsUser']->getVar('uid'), 3, _US_PROFUPDATED);
@@ -218,7 +218,7 @@ if ($op === 'avatarchoose') {
     $user_avatar = '';
     $avt_handler = xoops_getHandler('avatar');
     if (!empty($_POST['user_avatar'])) {
-        $user_avatar     = $myts->addSlashes(trim($_POST['user_avatar']));
+        $user_avatar     = $xoopsDB->escape(trim($_POST['user_avatar']));
         $criteria_avatar = new CriteriaCompo(new Criteria('avatar_file', $user_avatar));
         $criteria_avatar->add(new Criteria('avatar_type', 'S'));
         $avatars = $avt_handler->getObjects($criteria_avatar);

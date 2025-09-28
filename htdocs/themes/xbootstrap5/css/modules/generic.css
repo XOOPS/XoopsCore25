@@ -1,0 +1,111 @@
+/* 5. Useful Classes */
+.big-info-icon-link {
+    color: #333;
+    font-size: 1.8em;
+    margin: 10px 0 10px 0;
+    display: inline-table;
+    cursor: pointer;
+}
+
+.xoops-default-title {
+    font-size: 1.3em;
+    margin: 0;
+    line-height: inherit;
+}
+
+.generic-pagination {
+}
+
+.generic-pagination a {
+    background: #FAFAFA;
+    border: 1px solid #EEE;
+    padding: 5px 10px;
+    border-radius: 5px;
+}
+
+.generic-pagination a:hover {
+    background: #EBEBEB;
+}
+
+.generic-pagination .xo-pagact {
+    background: #09C;
+    color: #FFF;
+    border: 1px solid #EEE;
+    padding: 5px;
+    border-radius: 5px;
+}
+
+div.order-by {
+    font-size: 1.2em;
+}
+
+div.order-by a {
+    color: #999;
+    font-size: 1.2em;
+}
+
+.mb10 {
+    margin-bottom: 10px;
+}
+
+/* Only Add Margin Bottom of 10px */
+.mt10 {
+    margin-top: 10px;
+}
+
+/* Only add Margin Top of 10px */
+.lw30 {
+    line-height: 30px;
+}
+
+/* Only Add Line Height 30px */
+.nompl {
+    margin: 0;
+    padding: 0;
+    line-height: inherit;
+}
+
+/* No margin, padding and lineweight -> use in title tags if necessary... */
+
+/* Media Queries */
+@media (min-width: 320px) and (max-width: 768px) {
+    .xoops-banner {
+        top: 0;
+    }
+
+    .xoops-banner.pull-right {
+        float: none !important;
+    }
+}
+
+/* bla, bla, bla */
+.aligncenter {
+    text-align: center;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.alignleft {
+    text-align: left;
+    float: left;
+}
+
+.alignright {
+    text-align: right;
+    float: right;
+}
+
+/* Oswaldo */
+/* add hover dropdown*/
+@media (min-width: 769px) {
+    .dropdown:hover > .dropdown-menu {
+        display: block;
+    }
+}
+
+/* dropdown hover */
+
+
+.navbar.bg-dark {
+    background-color: #0d6efd !important;
+}

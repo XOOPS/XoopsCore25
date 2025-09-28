@@ -2,7 +2,7 @@
 /**
  *  Xoopsemotions plugin for tinymce
  *
- * @copyright       (c) 2000-2016 XOOPS Project (www.xoops.org)
+ * @copyright       (c) 2000-2025 XOOPS Project (https://xoops.org)
  * @license             GNU GPL 2.0 or later (https://www.gnu.org/licenses/gpl-2.0.html)
  * @package             class / xoopseditor
  * @subpackage          tinymce / xoops plugins
@@ -70,7 +70,7 @@ if ($admin && $op === 'SmilesAdd') {
             $smile_desc = Request::getString('smile_desc', '', 'POST');
             $smile_display = (int) $_POST['smile_display'] > 0 ? 1 : 0;
             $newid         = $db->genId($db->prefix('smilies') . '_id_seq');
-            $sql           = sprintf('INSERT INTO %s (id, code, smile_url, emotion, display) VALUES (%d, %s, %s, %s, %d)', $db->prefix('smiles'), $newid, $db->quoteString($smile_code), $db->quoteString($smile_url), $db->quoteString($smile_desc), $smile_display);
+            $sql           = sprintf('INSERT INTO %s (id, code, smile_url, emotion, display) VALUES (%d, %s, %s, %s, %d)', $db->prefix('smiles'), $newid, $db->quote($smile_code), $db->quote($smile_url), $db->quote($smile_desc), $smile_display);
             if (!$db->query($sql)) {
                 $err = 'Failed storing smiley data into the database';
             }

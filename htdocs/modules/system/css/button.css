@@ -60,3 +60,12 @@
     background: #fff url(../images/bg_button.gif) repeat-x bottom;
     border: 1px solid #ccc;
 }
+
+.xo-help-button {
+    background-image: url('../images/breadcrumb/default/bc_separator_end.png');
+    display: inline;
+}
+
+.xo-help-button.hidden {
+    display: none;
+}

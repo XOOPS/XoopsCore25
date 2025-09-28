@@ -2417,7 +2417,7 @@ var Chartist = {
           // If guided we take the value that was put aside in timeout and trigger the animation manually with a timeout
           setTimeout(function() {
             // If beginElement fails we set the animated attribute to the end position and remove the animate element
-            // This happens if the SMIL ElementTimeControl interface is not supported or any other problems occured in
+            // This happens if the SMIL ElementTimeControl interface is not supported or any other problems occurred in
             // the browser. (Currently FF 34 does not support animate elements in foreignObjects)
             try {
               animate._node.beginElement();

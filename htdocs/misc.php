@@ -9,7 +9,7 @@
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  *
- * @copyright       (c) 2000-2016 XOOPS Project (www.xoops.org)
+ * @copyright       (c) 2000-2025 XOOPS Project (https://xoops.org)
  * @license         GNU GPL 2 (https://www.gnu.org/licenses/gpl-2.0.html)
  * @package         core
  * @since           2.0.0
@@ -292,7 +292,7 @@ EOAVJS;
  * @param string         $template  smarty template to user
  * @param array          $variables array of variables to assign for template
  * @param bool           $closehead if true, close the head element and open the body
- * @param XoopsForm|null $xoopsForm optioal form
+ * @param XoopsForm|null $xoopsForm optional form
  * @return void  echos rendered template
  */
 function xoops_misc_popup_body($template, $variables, $closehead = true, $closebutton = true, $xoopsForm = null)

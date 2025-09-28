@@ -1,6 +1,6 @@
 <?php
 /**
- * @copyright       (c) 2000-2016 XOOPS Project (www.xoops.org)
+ * @copyright       (c) 2000-2025 XOOPS Project (https://xoops.org)
  * @license         GNU GPL 2.0 or later (https://www.gnu.org/licenses/gpl-2.0.html)
  * _LANGCODE    en
  * _CHARSET     UTF-8
@@ -301,3 +301,7 @@ define('_MD_AM_DEFAULT_NOTIFICATION_METHOD_DESC', 'For new users when they subsc
 define('_MD_AM_MODULEPREF', 'Module Preferences');
 // Preference module system
 define('_AM_SYSTEM_PREFERENCES_SETTINGS', 'System Module Settings');
+
+//2.5.12
+define('_MD_AM_SENDMAIL_NOT_FOUND', 'Sendmail binary not found. Please check your server configuration.');
+define('_MD_AM_SENDMAIL_HELP_MISSING_BIN', 'No valid sendmail-compatible binary was detected. Install an MTA (e.g. Postfix, msmtp) or switch to SMTP in Preferences.');

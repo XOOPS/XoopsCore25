@@ -4,7 +4,7 @@
  *
  * For backward compatibility
  *
- * @copyright       (c) 2000-2016 XOOPS Project (www.xoops.org)
+ * @copyright       (c) 2000-2025 XOOPS Project (https://xoops.org)
  * @license             GNU GPL 2 (https://www.gnu.org/licenses/gpl-2.0.html)
  * @author              Taiwen Jiang <phppp@users.sourceforge.net>
  * @since               1.00
@@ -21,7 +21,7 @@ if (class_exists('ArtObject')) {
  * Art Object
  *
  * @author              D.J. (phppp)
- * @copyright       (c) 2000-2016 XOOPS Project (www.xoops.org)
+ * @copyright       (c) 2000-2025 XOOPS Project (https://xoops.org)
  * @package             module::article
  *
  * @deprecated ArtObject is deprecated since XOOPS 2.5.8 and will be removed in the next major release
@@ -51,7 +51,7 @@ class ArtObject extends XoopsObject
  * @package             module::article
  *
  * @author              D.J. (phppp)
- * @copyright       (c) 2000-2016 XOOPS Project (www.xoops.org)
+ * @copyright       (c) 2000-2025 XOOPS Project (https://xoops.org)
  *
  * @deprecated ArtObjectHandler is deprecated since XOOPS 2.5.8 and will be removed in the next major release
  */

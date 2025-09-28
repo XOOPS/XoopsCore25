@@ -9,7 +9,7 @@
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  *
- * @copyright       (c) 2000-2016 XOOPS Project (www.xoops.org)
+ * @copyright       (c) 2000-2025 XOOPS Project (https://xoops.org)
  * @license             GNU GPL 2 (https://www.gnu.org/licenses/gpl-2.0.html)
  * @package             core
  * @since               2.0.0
@@ -28,7 +28,7 @@ $sql    = 'SELECT storyid, title FROM ' . $xoopsDB->prefix('stories') . ' WHERE 
 $result = $xoopsDB->query($sql, 10, 0);
 //TODO Remove this hardcoded string
 if (!$xoopsDB->isResultSet($result)) {
-    //    echo 'An error occured';
+    //    echo 'An error occurred';
     throw new \RuntimeException(
         \sprintf(_DB_QUERY_ERROR, $sql) . $xoopsDB->error(),
         E_USER_ERROR,

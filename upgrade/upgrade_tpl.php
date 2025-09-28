@@ -25,7 +25,10 @@ global $upgradeControl;
     <link href="assets/css/style.css" rel="stylesheet">
 
     <!-- Custom Fonts -->
-    <link href="../media/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+    <link href="../media/font-awesome6/css/fontawesome.min.css" rel="stylesheet" type="text/css" as="font" crossorigin="anonymous">
+    <link href="../media/font-awesome6/css/solid.min.css" rel="stylesheet" as="font" crossorigin="anonymous">
+    <link href="../media/font-awesome6/css/brands.min.css" rel="stylesheet" as="font" crossorigin="anonymous">
+    <link href="../media/font-awesome6/css/v4-shims.min.css" rel="stylesheet" as="font" crossorigin="anonymous">
 
     <?php
     if (!empty($extraSources)) {
@@ -59,7 +62,7 @@ if (file_exists('language/' . $upgradeControl->upgradeLanguage . '/style.css')) 
         <!-- Top Menu Items -->
         <ul class="nav navbar-right top-nav">
             <li class="dropdown">
-                <a href="#" class="dropdown-toggle" data-toggle="dropdown" title="<?php echo _LANGUAGE; ?>"><i class="fa fa-lg fa-language"></i> <b class="caret"></b></a>
+                <a href="#" class="dropdown-toggle" data-toggle="dropdown" title="<?php echo _LANGUAGE; ?>"><i class="fa-solid fa-lg fa-language"></i> <b class="caret"></b></a>
                 <ul class="dropdown-menu">
                     <?php
                 $languages = $upgradeControl->availableLanguages();
@@ -71,7 +74,7 @@ foreach ($languages as $lang) {
                 </ul>
             </li>
             <li class="dropdown">
-                <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-book"></i> <?php echo _SUPPORT; ?> <b class="caret"></b></a>
+                <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa-solid fa-book"></i> <?php echo _SUPPORT; ?> <b class="caret"></b></a>
                 <ul class="dropdown-menu">
                     <?php
 foreach ($upgradeControl->supportSites as $lang => $support) {
@@ -81,7 +84,7 @@ foreach ($upgradeControl->supportSites as $lang => $support) {
                 </ul>
             </li>
             <li>
-                <a href="https://github.com/XOOPS/XoopsCore25" target="_blank" title="<?php echo _XOOPS_SOURCE_CODE; ?>"><i class="fa fa-lg fa-github"></i></a>
+                <a href="https://github.com/XOOPS/XoopsCore25" target="_blank" title="<?php echo _XOOPS_SOURCE_CODE; ?>"><i class="fa-brands fa-lg fa-github"></i></a>
             </li>
         </ul>
         <!-- Sidebar Menu Items - These collapse to the responsive navigation menu on small screens -->
@@ -91,14 +94,14 @@ foreach ($upgradeControl->supportSites as $lang => $support) {
                 $firstNeeded = true;
 foreach ($upgradeControl->upgradeQueue as $stepName => $info) {
     if (!$info->applied && $firstNeeded) {
-        echo'<li class="active"><a><span class="fa fa-exclamation-triangle"></span> '
+        echo'<li class="active"><a><span class="fa-solid fa-exclamation-triangle"></span> '
             . $stepName . '</a></li>';
         $firstNeeded = false;
     } elseif (!$info->applied) {
-        echo'<li><a><span class="fa fa-exclamation-triangle text-warning"></span> '
+        echo'<li><a><span class="fa-solid fa-exclamation-triangle text-warning"></span> '
             . $stepName . '</a></li>';
     } else {
-        echo'<li><a><span class="fa fa-check text-success"></span> '
+        echo'<li><a><span class="fa-solid fa-check text-success"></span> '
             . $stepName . '</a></li>';
     }
 }
@@ -118,15 +121,15 @@ foreach ($upgradeControl->upgradeQueue as $stepName => $info) {
                         <div class="panel-heading">
                             <div class="row">
                                 <div class="col-xs-3">
-                                    <span class="fa fa fa-hand-paper-o fa-5x"></span>
+                                    <span class="fa-solid fa-hand-paper-o fa-5x"></span>
                                 </div>
                                 <div class="col-xs-9 text-right">
-                                    <div class="huge">Smarty3</div>
+                                    <div class="huge">Smarty4</div>
                                 </div>
                             </div>
                         </div>
                         <div class="panel-footer text-primary">
-                            <?php echo _XOOPS_SMARTY3_MIGRATION; ?>
+                            <?php echo _XOOPS_SMARTY4_MIGRATION; ?>
                             <div class="clearfix"></div>
                         </div>
                     </div>
@@ -138,10 +141,10 @@ foreach ($upgradeControl->upgradeQueue as $stepName => $info) {
                         <div class="panel-heading">
                             <div class="row">
                                 <div class="col-xs-3">
-                                    <span class="fa fa-hand-stop-o fa-5x"></span>
+                                    <span class="fa-solid fa-hand-stop-o fa-5x"></span>
                                 </div>
                                 <div class="col-xs-9 text-right">
-                                    <div class="huge"><span class="fa fa-ban"></span></div>
+                                    <div class="huge"><span class="fa-solid fa-ban"></span></div>
                                     <div><?php echo XOOPS_ERROR_ENCOUNTERED; ?></div>
                                 </div>
                             </div>
@@ -158,7 +161,7 @@ foreach ($upgradeControl->upgradeQueue as $stepName => $info) {
                         <div class="panel-heading">
                             <div class="row">
                                 <div class="col-xs-3">
-                                    <span class="fa fa-dashboard fa-5x"></span>
+                                    <span class="fa-solid fa-gauge fa-5x"></span>
                                 </div>
                                 <div class="col-xs-9 text-right">
                                     <div class="huge"><?php echo $upgradeControl->countUpgradeQueue(); ?></div>
@@ -182,7 +185,7 @@ $versionResult = preg_match('/(^[a-z\s]*)([0-9\.]*)/i', XOOPS_VERSION, $versionP
                         <div class="panel-heading">
                             <div class="row">
                                 <div class="col-xs-3">
-                                    <i class="fa fa-tag fa-5x"></i>
+                                    <i class="fa-solid fa-tag fa-5x"></i>
                                 </div>
                                 <div class="col-xs-9 text-right">
                                     <div class="huge"><?php echo $versionParts[2]; ?></div>

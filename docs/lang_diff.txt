@@ -4,6 +4,30 @@ LANGUAGE DIFFERENCES
 Below are language differences from a version to next version.
 
 ================================
+2025/03/30: Version 2.5.12-Betas
+================================
+/htdocs/modules/system/language/english/blocks.php
+-added define('_MB_SYSTEM_WAITING_CONTENT_DEPRECATED', "Block 'Waiting Contents' is deprecated since XOOPS 2.5.11, please use Waiting module");
+
+/htdocs/install/language/english/welcome.php
+- updated PHP & MySQL versions
+
+/htdocs/modules/pm/language/english/main.php
+define('_PM_EMAIL_DESC', 'Dear %s, this is a message transfered from your account at ' . $GLOBALS['xoopsConfig']['sitename']);
+define('_PM_EMAIL_DESC', 'Dear %s, this is a message transferred from your account at ' . $GLOBALS['xoopsConfig']['sitename']);
+
+/htdocs/class/xoopseditor/tinymce5/language/english.php
+define('_XOOPS_EDITOR_TINYMCE_LANGUAGE5', 'en');
+define('_XOOPS_EDITOR_TINYMCE5_LANGUAGE', 'en');
+
+/htdocs/modules/system/themes/transition/language/english/admin.php
+- renamed _OXYGEN_Server_API to _OXYGEN_SERVER_API
+
+/htdocs/modules/system/language/english/admin/preferences.php.
+define('_MD_AM_SENDMAIL_NOT_FOUND', 'Sendmail binary not found. Please check your server configuration.');
+define('_MD_AM_SENDMAIL_HELP_MISSING_BIN', 'No valid sendmail-compatible binary was detected. Install an MTA (e.g. Postfix, msmtp) or switch to SMTP in Preferences.');
+
+================================
 2023/10/01: Version 2.5.11-Final
 ================================
 /language/english/uploader.php

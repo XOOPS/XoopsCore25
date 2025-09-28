@@ -9,7 +9,7 @@
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  *
- * @copyright       (c) 2000-2016 XOOPS Project (www.xoops.org)
+ * @copyright       (c) 2000-2025 XOOPS Project (https://xoops.org)
  * @license             GNU GPL 2 (https://www.gnu.org/licenses/gpl-2.0.html)
  * @package             kernel
  * @since               2.0.0
@@ -21,7 +21,7 @@ defined('XOOPS_ROOT_PATH') || exit('Restricted access');
  * Private Messages
  *
  * @author              Kazumi Ono <onokazu@xoops.org>
- * @copyright       (c) 2000-2016 XOOPS Project (www.xoops.org)
+ * @copyright       (c) 2000-2025 XOOPS Project (https://xoops.org)
  *
  * @package             kernel
  **/
@@ -153,7 +153,7 @@ class XoopsPrivmessage extends XoopsObject
  * @package             kernel
  *
  * @author              Kazumi Ono    <onokazu@xoops.org>
- * @copyright       (c) 2000-2016 XOOPS Project (www.xoops.org)
+ * @copyright       (c) 2000-2025 XOOPS Project (https://xoops.org)
  *
  *
  * @todo Why is this not a XoopsPersistableObjectHandler?
@@ -227,9 +227,9 @@ class XoopsPrivmessageHandler extends XoopsObjectHandler
         }
         if ($pm->isNew()) {
             $msg_id = $this->db->genId('priv_msgs_msg_id_seq');
-            $sql    = sprintf('INSERT INTO %s (msg_id, msg_image, subject, from_userid, to_userid, msg_time, msg_text, read_msg) VALUES (%u, %s, %s, %u, %u, %u, %s, %u)', $this->db->prefix('priv_msgs'), $msg_id, $this->db->quoteString($msg_image), $this->db->quoteString($subject), $from_userid, $to_userid, time(), $this->db->quoteString($msg_text), 0);
+            $sql    = sprintf('INSERT INTO %s (msg_id, msg_image, subject, from_userid, to_userid, msg_time, msg_text, read_msg) VALUES (%u, %s, %s, %u, %u, %u, %s, %u)', $this->db->prefix('priv_msgs'), $msg_id, $this->db->quote($msg_image), $this->db->quote($subject), $from_userid, $to_userid, time(), $this->db->quote($msg_text), 0);
         } else {
-            $sql = sprintf('UPDATE %s SET msg_image = %s, subject = %s, from_userid = %u, to_userid = %u, msg_text = %s, read_msg = %u WHERE msg_id = %u', $this->db->prefix('priv_msgs'), $this->db->quoteString($msg_image), $this->db->quoteString($subject), $from_userid, $to_userid, $this->db->quoteString($msg_text), $read_msg, $msg_id);
+            $sql = sprintf('UPDATE %s SET msg_image = %s, subject = %s, from_userid = %u, to_userid = %u, msg_text = %s, read_msg = %u WHERE msg_id = %u', $this->db->prefix('priv_msgs'), $this->db->quote($msg_image), $this->db->quote($subject), $from_userid, $to_userid, $this->db->quote($msg_text), $read_msg, $msg_id);
         }
         $queryFunc = empty($force) ? 'query' : 'queryF';
         if (!$result = $this->db->{$queryFunc}($sql)) {

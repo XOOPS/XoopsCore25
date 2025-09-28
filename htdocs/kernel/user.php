@@ -9,7 +9,7 @@
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  *
- * @copyright       (c) 2000-2016 XOOPS Project (www.xoops.org)
+ * @copyright       (c) 2000-2025 XOOPS Project (https://xoops.org)
  * @license             GNU GPL 2 (https://www.gnu.org/licenses/gpl-2.0.html)
  * @package             kernel
  * @since               2.0.0
@@ -23,7 +23,7 @@ require_once XOOPS_ROOT_PATH . '/include/notification_constants.php';
 /**
  * Class for users
  * @author              Kazumi Ono <onokazu@xoops.org>
- * @copyright       (c) 2000-2016 XOOPS Project (www.xoops.org)
+ * @copyright       (c) 2000-2025 XOOPS Project (https://xoops.org)
  * @package             kernel
  */
 class XoopsUser extends XoopsObject
@@ -153,7 +153,7 @@ class XoopsUser extends XoopsObject
      * find the username for a given ID
      *
      * @param  int  $userid  ID of the user to find
-     * @param  int  $usereal switch for usename or realname
+     * @param  int  $usereal switch for username or realname
      * @param  bool $linked add a link
      * @return string name of the user. name for 'anonymous' if not found.
      */
@@ -604,7 +604,7 @@ class XoopsUser extends XoopsObject
 /**
  * Class that represents a guest user
  * @author              Kazumi Ono <onokazu@xoops.org>
- * @copyright       (c) 2000-2016 XOOPS Project (www.xoops.org)
+ * @copyright       (c) 2000-2025 XOOPS Project (https://xoops.org)
  * @package             kernel
  */
 class XoopsGuestUser extends XoopsUser

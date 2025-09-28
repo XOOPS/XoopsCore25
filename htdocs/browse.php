@@ -9,7 +9,7 @@
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  *
- * @copyright       (c) 2000-2016 XOOPS Project (www.xoops.org)
+ * @copyright       (c) 2000-2025 XOOPS Project (https://xoops.org)
  * @license             GNU GPL 2 (https://www.gnu.org/licenses/gpl-2.0.html)
  * @package             core
  * @since               2.4.0
@@ -52,7 +52,7 @@ if ($path_type === 'var') {
 $file = realpath($xoops->path($path));
 $dir  = realpath($xoops->paths[$path_type][0]);
 
-//We are not allowing directory travessal either
+//We are not allowing directory traversal either
 if (false === strpos($file, (string) $dir)) {
     header('HTTP/1.0 404 Not Found');
     exit();

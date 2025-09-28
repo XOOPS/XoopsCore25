@@ -132,7 +132,7 @@
      }
     });
     // Dirty hack...  onLoad, currentPant will be empty and nextPane will be the first pane
-    // If this is the case, manually run callback since the animation never occured, and reset animating
+    // If this is the case, manually run callback since the animation never occurred, and reset animating
     if (!currentPane.length){ 
       done.call(); 
       animating = false;

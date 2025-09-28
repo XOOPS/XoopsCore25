@@ -9,7 +9,7 @@
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  *
- * @copyright       (c) 2000-2016 XOOPS Project (www.xoops.org)
+ * @copyright       (c) 2000-2025 XOOPS Project (https://xoops.org)
  * @license             GNU GPL 2 (https://www.gnu.org/licenses/gpl-2.0.html)
  * @package             kernel
  * @subpackage          model
@@ -116,8 +116,8 @@ class XoopsModelAbstract
      * normally, this is called from child classes only
      *
      * @access protected
-     * @param null $args
-     * @param null $handler
+     * @param array|null $args
+     * @param mixed $handler
      */
     public function __construct($args = null, $handler = null)
     {

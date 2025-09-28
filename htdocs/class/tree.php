@@ -9,7 +9,7 @@
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  *
- * @copyright       (c) 2000-2016 XOOPS Project (www.xoops.org)
+ * @copyright       (c) 2000-2025 XOOPS Project (https://xoops.org)
  * @license             GNU GPL 2 (https://www.gnu.org/licenses/gpl-2.0.html)
  * @package             kernel
  * @since               2.0.0
@@ -42,9 +42,9 @@ class XoopsObjectTree
      * @param array  $objectArr Array of {@link XoopsObject}s
      * @param string $myId      field name of object ID
      * @param string $parentId  field name of parent object ID
-     * @param string $rootId    field name of root object ID
+     * @param string|null $rootId    field name of root object ID
      */
-    public function __construct($objectArr, $myId, $parentId, $rootId = null)
+    public function __construct($objectArr, $myId, $parentId, ?string $rootId = null)
     {
         $this->objects = $objectArr;
         $this->myId     = $myId;

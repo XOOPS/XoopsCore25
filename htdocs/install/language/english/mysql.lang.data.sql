@@ -23,7 +23,7 @@ INSERT INTO smiles VALUES (6, '8-)', 'smilies/smil3dbd4daabd491.gif', 'Cool', 1)
 INSERT INTO smiles VALUES (7, ':lol:', 'smilies/smil3dbd4dbc14f3f.gif', 'Laughing', 1);
 INSERT INTO smiles VALUES (8, ':-x', 'smilies/smil3dbd4dcd7b9f4.gif', 'Mad', 1);
 INSERT INTO smiles VALUES (9, ':-P', 'smilies/smil3dbd4ddd6835f.gif', 'Razz', 1);
-INSERT INTO smiles VALUES (10, ':oops:', 'smilies/smil3dbd4df1944ee.gif', 'Embaressed', 0);
+INSERT INTO smiles VALUES (10, ':oops:', 'smilies/smil3dbd4df1944ee.gif', 'Embarrassed', 0);
 INSERT INTO smiles VALUES (11, ':cry:', 'smilies/smil3dbd4e02c5440.gif', 'Crying (very sad)', 0);
 INSERT INTO smiles VALUES (12, ':evil:', 'smilies/smil3dbd4e1748cc9.gif', 'Evil or Very Mad', 0);
 INSERT INTO smiles VALUES (13, ':roll:', 'smilies/smil3dbd4e29bbcc7.gif', 'Rolling Eyes', 0);

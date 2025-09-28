@@ -15,7 +15,7 @@
  * See the enclosed file license.txt for licensing information.
  * If you did not receive this file, get it at https://www.gnu.org/licenses/gpl-2.0.html
  *
- * @copyright       (c) 2000-2016 XOOPS Project (www.xoops.org)
+ * @copyright       (c) 2000-2025 XOOPS Project (https://xoops.org)
  * @license             GNU GPL 2.0 or later (https://www.gnu.org/licenses/gpl-2.0.html)
  * @package             core
  * @since               2.0.0
@@ -98,33 +98,50 @@ if ($thisUser->getVar('user_avatar') && 'blank.gif' !== $thisUser->getVar('user_
     $avatar = XOOPS_UPLOAD_URL . '/' . $thisUser->getVar('user_avatar');
 }
 $xoopsTpl->assign('user_avatarurl', $avatar);
-$xoopsTpl->assign('lang_realname', _US_REALNAME);
-$xoopsTpl->assign('user_realname', $thisUser->getVar('name'));
-$xoopsTpl->assign('lang_website', _US_WEBSITE);
-if ($thisUser->getVar('url', 'E') == '') {
-    $xoopsTpl->assign('user_websiteurl', '');
-} else {
+if ($thisUser->getVar('name') != '') {
+    $xoopsTpl->assign('lang_realname', _US_REALNAME);
+    $xoopsTpl->assign('user_realname', $thisUser->getVar('name'));
+}
+if ($thisUser->getVar('url', 'E') != '') {
+    $xoopsTpl->assign('lang_website', _US_WEBSITE);
     $xoopsTpl->assign('user_websiteurl', '<a href="' . $thisUser->getVar('url', 'E') . '" rel="external">' . $thisUser->getVar('url') . '</a>');
 }
 $xoopsTpl->assign('lang_email', _US_EMAIL);
 $xoopsTpl->assign('lang_privmsg', _US_PM);
-$xoopsTpl->assign('lang_icq', _US_ICQ);
-$xoopsTpl->assign('user_icq', $thisUser->getVar('user_icq'));
-$xoopsTpl->assign('lang_aim', _US_AIM);
-$xoopsTpl->assign('user_aim', $thisUser->getVar('user_aim'));
-$xoopsTpl->assign('lang_yim', _US_YIM);
-$xoopsTpl->assign('user_yim', $thisUser->getVar('user_yim'));
-$xoopsTpl->assign('lang_msnm', _US_MSNM);
-$xoopsTpl->assign('user_msnm', $thisUser->getVar('user_msnm'));
-$xoopsTpl->assign('lang_location', _US_LOCATION);
-$xoopsTpl->assign('user_location', $thisUser->getVar('user_from'));
-$xoopsTpl->assign('lang_occupation', _US_OCCUPATION);
-$xoopsTpl->assign('user_occupation', $thisUser->getVar('user_occ'));
-$xoopsTpl->assign('lang_interest', _US_INTEREST);
-$xoopsTpl->assign('user_interest', $thisUser->getVar('user_intrest'));
-$xoopsTpl->assign('lang_extrainfo', _US_EXTRAINFO);
-$var = $thisUser->getVar('bio', 'N');
-$xoopsTpl->assign('user_extrainfo', $myts->displayTarea($var, 0, 1, 1));
+
+if ($thisUser->getVar('user_icq') != '') {
+    $xoopsTpl->assign('lang_icq', _US_ICQ);
+    $xoopsTpl->assign('user_icq', $thisUser->getVar('user_icq'));
+}
+if ($thisUser->getVar('user_aim') != '') {
+    $xoopsTpl->assign('lang_aim', _US_AIM);
+    $xoopsTpl->assign('user_aim', $thisUser->getVar('user_aim'));
+}
+if ($thisUser->getVar('user_yim') != '') {
+    $xoopsTpl->assign('lang_yim', _US_YIM);
+    $xoopsTpl->assign('user_yim', $thisUser->getVar('user_yim'));
+}
+if ($thisUser->getVar('user_msnm') != '') {
+    $xoopsTpl->assign('lang_msnm', _US_MSNM);
+    $xoopsTpl->assign('user_msnm', $thisUser->getVar('user_msnm'));
+}
+if ($thisUser->getVar('user_from') != '') {
+    $xoopsTpl->assign('lang_location', _US_LOCATION);
+    $xoopsTpl->assign('user_location', $thisUser->getVar('user_from'));
+}
+if ($thisUser->getVar('user_occ') != '') {
+    $xoopsTpl->assign('lang_occupation', _US_OCCUPATION);
+    $xoopsTpl->assign('user_occupation', $thisUser->getVar('user_occ'));
+}
+if ($thisUser->getVar('user_intrest') != '') {
+    $xoopsTpl->assign('lang_interest', _US_INTEREST);
+    $xoopsTpl->assign('user_interest', $thisUser->getVar('user_intrest'));
+}
+if ($thisUser->getVar('bio') != '') {
+    $xoopsTpl->assign('lang_extrainfo', _US_EXTRAINFO);
+    $var = $thisUser->getVar('bio', 'N');
+    $xoopsTpl->assign('user_extrainfo', $myts->displayTarea($var, 0, 1, 1));
+}
 $xoopsTpl->assign('lang_statistics', _US_STATISTICS);
 $xoopsTpl->assign('lang_membersince', _US_MEMBERSINCE);
 $var = $thisUser->getVar('user_regdate');
@@ -137,9 +154,11 @@ $xoopsTpl->assign('lang_myinfo', _US_MYINFO);
 $xoopsTpl->assign('user_posts', $thisUser->getVar('posts'));
 $xoopsTpl->assign('lang_lastlogin', _US_LASTLOGIN);
 $xoopsTpl->assign('lang_notregistered', _US_NOTREGISTERED);
-$xoopsTpl->assign('lang_signature', _US_SIGNATURE);
-$var = $thisUser->getVar('user_sig', 'N');
-$xoopsTpl->assign('user_signature', $myts->displayTarea($var, 0, 1, 1));
+if ($thisUser->getVar('user_sig') != '') {
+    $xoopsTpl->assign('lang_signature', _US_SIGNATURE);
+    $var = $thisUser->getVar('user_sig', 'N');
+    $xoopsTpl->assign('user_signature', $myts->displayTarea($var, 0, 1, 1));
+}
 if ($thisUser->getVar('user_viewemail') == 1) {
     $xoopsTpl->assign('user_email', $thisUser->getVar('email', 'E'));
 } elseif (is_object($xoopsUser)) {
@@ -183,11 +202,11 @@ foreach ($mids as $mid) {
                     } else {
                         $results[$i]['image'] = 'images/icons/posticon2.gif';
                     }
-    
+
                     if (!preg_match('/^http[s]*:\/\//i', $results[$i]['link'])) {
                         $results[$i]['link'] = 'modules/' . $module->getVar('dirname') . '/' . $results[$i]['link'];
                     }
-    
+
                     $results[$i]['title'] = $myts->htmlSpecialChars($results[$i]['title']);
     				$results[$i]['time']  = isset($results[$i]['time']) ? formatTimestamp($results[$i]['time']) : '';
                 }

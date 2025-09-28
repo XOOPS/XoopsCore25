@@ -15,7 +15,7 @@ use Xmf\IPAddress;
  * @author    Kazumi Ono <onokazu@xoops.org>
  * @author    Jan Pedersen <mithrandir@xoops.org>
  * @author    John Neill <catzwolf@xoops.org>
- * @copyright (c) 2000-2016 XOOPS Project (www.xoops.org)
+ * @copyright (c) 2000-2025 XOOPS Project (https://xoops.org)
  * @license   GNU GPL 2 (https://www.gnu.org/licenses/gpl-2.0.html)
  * @package   kernel
  * @since     2.0.0
@@ -69,7 +69,8 @@ class XoopsSecurity
             'expire' => time() + (int) $timeout,
         ];
         $_SESSION[$name . '_SESSION'][] = $token_data;
-
+        // Force update of session in base
+//        session_write_close();
         return md5($token_id . $_SERVER['HTTP_USER_AGENT'] . XOOPS_DB_PREFIX);
     }
 
@@ -84,6 +85,11 @@ class XoopsSecurity
      */
     public function validateToken($token = false, $clearIfValid = true, $name = 'XOOPS_TOKEN')
     {
+        // Optional: Ensure a session is active, keep this as a safeguard, but it’s likely unnecessary
+        if (session_status() !== PHP_SESSION_ACTIVE) {
+            session_start();
+        }
+
         global $xoopsLogger;
         $token = ($token !== false) ? $token : ($_REQUEST[$name . '_REQUEST'] ?? '');
         if (empty($token) || empty($_SESSION[$name . '_SESSION'])) {

@@ -9,7 +9,7 @@
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  *
- * @copyright       (c) 2000-2016 XOOPS Project (www.xoops.org)
+ * @copyright       (c) 2000-2025 XOOPS Project (https://xoops.org)
  * @license             GNU GPL 2 (https://www.gnu.org/licenses/gpl-2.0.html)
  * @package             kernel
  * @since               2.0.0
@@ -23,7 +23,7 @@ defined('XOOPS_ROOT_PATH') || exit('Restricted access');
  *
  * @author              Kazumi Ono <onokazu@xoops.org>
  * @author              John Neill <catzwolf@xoops.org>
- * @copyright       (c) 2000-2016 XOOPS Project (www.xoops.org)
+ * @copyright       (c) 2000-2025 XOOPS Project (https://xoops.org)
  * @package             kernel
  * @subpackage          XoopsTree
  * @access              public
@@ -41,7 +41,7 @@ class XoopsTree
     public $db;
 
     //constructor of class XoopsTree
-    //sets the names of table, unique id, and parend id
+    //sets the names of table, unique id, and parent id
     /**
      * @param $table_name
      * @param $id_name
@@ -187,7 +187,7 @@ class XoopsTree
     }
 
     //generates path from the root id to a given id($sel_id)
-    // the path is delimetered with "/"
+    // the path is delimited with "/"
     /**
      * @param string|int $sel_id
      * @param string     $title
@@ -317,7 +317,7 @@ class XoopsTree
     }
 
     //generates id path from the root id to a given id
-    // the path is delimetered with "/"
+    // the path is delimited with "/"
     /**
      * @param string|int $sel_id
      * @param string     $path

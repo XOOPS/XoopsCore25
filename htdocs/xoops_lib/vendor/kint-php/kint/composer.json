@@ -1,0 +1,78 @@
+{
+    "name": "kint-php/kint",
+    "description": "Kint - Advanced PHP dumper",
+    "keywords": ["dump", "debug"],
+    "type": "library",
+    "homepage": "https://kint-php.github.io/kint/",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Jonathan Vollebregt",
+            "homepage": "https://github.com/jnvsor"
+        },
+        {
+            "name": "Contributors",
+            "homepage": "https://github.com/kint-php/kint/graphs/contributors"
+        }
+    ],
+    "require": {
+        "php": ">=7.4"
+    },
+    "require-dev": {
+        "friendsofphp/php-cs-fixer": "^3",
+        "phpunit/phpunit": "^9",
+        "symfony/finder": ">=7",
+        "seld/phar-utils": "^1",
+        "vimeo/psalm": "^5"
+    },
+    "autoload": {
+        "files": ["init.php"],
+        "psr-4": {
+            "Kint\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Kint\\Test\\": "tests/"
+        }
+    },
+    "config": {
+        "platform": {
+            "php": "8.3"
+        }
+    },
+    "scripts": {
+        "post-update-cmd": "npm ci",
+        "post-install-cmd": "@post-update-cmd",
+        "clean": [
+            "rm -rf resources/compiled/",
+            "rm -rf build/"
+        ],
+        "format": [
+            "@format:php",
+            "@format:js",
+            "@format:sass"
+        ],
+        "format:php": "PHP_CS_FIXER_IGNORE_ENV=1 php-cs-fixer fix",
+        "format:js": "npm run format:js",
+        "format:sass": "npm run format:sass",
+        "build": [
+            "@build:sass",
+            "@build:js",
+            "@build:php"
+        ],
+        "build:sass": "npm run build:sass",
+        "build:js": "npm run build:js",
+        "build:php": "php ./build.php",
+        "analyze": [
+            "@analyze:php",
+            "@analyze:js"
+        ],
+        "analyze:php": "psalm --no-cache",
+        "analyze:js": "npm run analyze:js"
+    },
+    "suggest": {
+        "kint-php/kint-helpers": "Provides extra helper functions",
+        "kint-php/kint-twig": "Provides d() and s() functions in twig templates"
+    }
+}

@@ -8,7 +8,7 @@
 
     <{if isset($topic_post.poster.uid) && $topic_post.poster.uid > -1}>
         <{if isset($topic_post.poster.uid) && $topic_post.poster.uid != 0}>
-            <{if $topic_post.poster.avatar != "blank.gif"}>
+            <{if isset($topic_post.poster.avatar) && $topic_post.poster.avatar != "blank.gif"}>
                     <img src="<{$xoops_upload_url}>/<{$topic_post.poster.avatar}>" alt="<{$topic_post.poster.name}>" class="img-circle img-thumbnail">
                 <{else}>
                    <img src="<{$xoops_imageurl}>images/newbb-noavatar.png" alt="<{$topic_post.poster.name}>" class="img-circle img-thumbnail">
@@ -21,7 +21,7 @@
                 </ul>
             <{/if}>
 
-                <{if isset($infobox.show)}>
+                <{if !empty($infobox.show)}>
                     <a data-toggle="collapse" href="#<{$topic_post.post_id}>" title="<{$smarty.const.THEME_INFO}>" class="btn btn-primary btn-sm mb10"><span class="glyphicon glyphicon-info-sign"></span></a>
                     <div id="<{$topic_post.post_id}>" class="collapse">
                         <ul class="list-unstyled text-left">
@@ -40,7 +40,7 @@
 
                             <li>
                             <{$smarty.const._MD_NEWBB_POSTS}>:
-                            <{if $topic_post.poster.posts > 0}>
+                            <{if isset($topic_post.poster.posts) && $topic_post.poster.posts > 0}>
                                 <a href="<{$xoops_url}>/modules/<{$xoops_dirname}>/viewpost.php?uid=<{$topic_post.poster.uid}>" title="<{$smarty.const._ALL}>">
                                     <{$topic_post.poster.posts}>
                                 </a>
@@ -49,17 +49,17 @@
                             <{/if}>
                             </li>
 
-                            <{if isset($topic_post.poster.digests) && $topic_post.poster.digests > 0}>
+                                <{if isset($topic_post.poster.digests) && is_array($topic_post.poster.digests) && $topic_post.poster.digests|count > 0}>
                             <li>
                                 <{$smarty.const._MD_NEWBB_DIGESTS}>: <{$topic_post.poster.digests}>
                             </li>
                             <{/if}>
 
-                            <{if isset($topic_post.poster.level)}>
+                            <{if !empty($topic_post.poster.level)}>
                                 <li><{$topic_post.poster.level}></li>
                             <{/if}>
 
-                            <{if $topic_post.poster.status}>
+                            <{if !empty($topic_post.poster.status)}>
                                 <li><{$topic_post.poster.status}></li>
                             <{/if}>
                         </ul>
@@ -73,7 +73,7 @@
         <{/if}>
 
         <ul class="list-unstyled">
-            <{if $topic_post.poster_ip}>
+           <{if !empty($topic_post.poster_ip)}>
                 <li>IP: <a href="https://www.whois.sc/<{$topic_post.poster_ip}>" target="_blank"><{$topic_post.poster_ip}></a></li>
             <{/if}>
 

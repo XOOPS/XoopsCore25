@@ -9,7 +9,7 @@
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  *
- * @copyright       (c) 2000-2016 XOOPS Project (www.xoops.org)
+ * @copyright       (c) 2000-2025 XOOPS Project (https://xoops.org)
  * @license             GNU GPL 2 (https://www.gnu.org/licenses/gpl-2.0.html)
  * @package             kernel
  * @subpackage          database
@@ -60,7 +60,7 @@ class XoopsDatabaseFactory
                 $instance->setLogger(XoopsLogger::getInstance());
                 $instance->setPrefix(XOOPS_DB_PREFIX);
                 if (!$instance->connect()) {
-                    trigger_error('notrace:Unable to connect to database', E_USER_ERROR);
+                    throw new \Exception('notrace:Unable to connect to database');
                 }
             } else {
                 trigger_error('notrace:Failed to load database of type: ' . XOOPS_DB_TYPE . ' in file: ' . __FILE__ . ' at line ' . __LINE__, E_USER_WARNING);

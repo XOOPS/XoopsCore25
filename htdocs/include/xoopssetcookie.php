@@ -17,7 +17,7 @@
  * @author          Richard Griffith <richard@geekwright.com>
  *
  * This exists to bring samesite support to php versions before 7.3, and
- * it treats the default as samesite=strict
+ * it treats the default as samesite=Lax
  *
  * It supports both of the two declared signatures:
  * - setcookie ( string $name , string $value = "" , int $expires = 0 , string $path = "" , string $domain = "" , bool $secure = false , bool $httponly = false ) : bool
@@ -51,8 +51,8 @@ function xoops_setcookie()
         }
     }
 
-    // make samesite=strict the default
-    $args['options']['samesite'] ??= 'strict';
+    // make samesite=Lax the default
+    $args['options']['samesite'] ??= 'Lax';
     if (!isset($args['value'])){
         $args['value'] = '';
     }

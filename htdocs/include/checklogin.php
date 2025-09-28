@@ -9,7 +9,7 @@
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  *
- * @copyright       (c) 2000-2016 XOOPS Project (www.xoops.org)
+ * @copyright       (c) 2000-2025 XOOPS Project (https://xoops.org)
  * @license             GNU GPL 2 (https://www.gnu.org/licenses/gpl-2.0.html)
  * @package             core
  * @since               2.0.0
@@ -36,8 +36,9 @@ $myts           = \MyTextSanitizer::getInstance();
 include_once $GLOBALS['xoops']->path('class/auth/authfactory.php');
 
 xoops_loadLanguage('auth');
-
-$xoopsAuth = XoopsAuthFactory::getAuthConnection($myts->addSlashes($uname));
+/** @var XoopsMySQLDatabase $xoopsDB */
+$xoopsDB = XoopsDatabaseFactory::getDatabaseConnection();
+$xoopsAuth = XoopsAuthFactory::getAuthConnection($xoopsDB->escape($uname));
 $user      = $xoopsAuth->authenticate($uname, $pass);
 
 if (false !== $user) {
@@ -59,7 +60,7 @@ if (false !== $user) {
     $user->setVar('last_login', time());
     if (!$member_handler->insertUser($user)) {
     }
-    // Regenrate a new session id and destroy old session
+    // Regenerate a new session id and destroy old session
     $GLOBALS['sess_handler']->regenerate_id(true);
     $_SESSION                    = [];
     $_SESSION['xoopsUserId']     = $user->getVar('uid');

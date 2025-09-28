@@ -527,7 +527,7 @@ class Protector
                 switch (strtolower(substr($ip, -1))) {
                     case '.':
                     case ':':
-                        // foward match
+                        // forward match
                         if (substr($requestIp, 0, strlen($ip)) == $ip) {
                             $this->ip_matched_info = $info;
                             return true;

@@ -15,7 +15,7 @@
  * See the enclosed file license.txt for licensing information.
  * If you did not receive this file, get it at https://www.gnu.org/licenses/gpl-2.0.html
  *
- * @copyright    (c) 2000-2021 XOOPS Project (www.xoops.org)
+ * @copyright    (c) 2000-2025 XOOPS Project (https://xoops.org)
  * @license          GNU GPL 2.0 or later (https://www.gnu.org/licenses/gpl-2.0.html)
  * @package          installer
  * @since            2.3.0
@@ -75,7 +75,7 @@ if (true === $writeCheck) {
         ob_start();
         ?>
 
-        <div class="alert alert-success"><span class="fa fa-check text-success"></span> <?php echo SAVED_MAINFILE; ?></div>
+        <div class="alert alert-success"><span class="fa-solid fa-check text-success"></span> <?php echo SAVED_MAINFILE; ?></div>
         <div class='well'><?php echo SAVED_MAINFILE_MSG; ?>
         <ul class='diags'>
             <?php
@@ -94,14 +94,14 @@ if (true === $writeCheck) {
     } else {
         $GLOBALS['error'] = true;
         $pageHasForm = true; // will redirect to same page
-        $content = '<div class="alert alert-danger"><span class="fa fa-ban text-danger"></span> ' . $result . '</div>';
+        $content = '<div class="alert alert-danger"><span class="fa-solid fa-ban text-danger"></span> ' . $result . '</div>';
     }
 } else {
     $content = '';
     foreach ($writeCheck as $errorMsg) {
         $GLOBALS['error'] = true;
         $pageHasForm = true; // will redirect to same page
-        $content .= '<div class="alert alert-danger"><span class="fa fa-ban text-danger"></span> ' . $errorMsg . '</div>' . "\n";
+        $content .= '<div class="alert alert-danger"><span class="fa-solid fa-ban text-danger"></span> ' . $errorMsg . '</div>' . "\n";
     }
 }
 include __DIR__ . '/include/install_tpl.php';
@@ -121,37 +121,61 @@ function writeConfigurationFile($vars, $path, $sourceName, $fileName)
     $path .= '/';
     if (!@copy($path . $sourceName, $path . $fileName)) {
         return sprintf(ERR_COPY_MAINFILE, $fileName);
-    } else {
-        clearstatcache();
-        if (!$file = fopen($path . $fileName, 'r')) {
-            return sprintf(ERR_READ_MAINFILE, $fileName);
-        } else {
-            $content = fread($file, filesize($path . $fileName));
-            fclose($file);
+    }
 
-            foreach ($vars as $key => $val) {
-                if ($key === 'XOOPS_URL') {
-                    $content = preg_replace("/(define\()([\"'])(XOOPS_{$key})\\2,\s*([\"'])(.*?)\\4\s*\)/", "define('XOOPS_{$key}', XOOPS_PROT . {$val})", $content);
-                    continue;
-                }
-                if (is_int($val) && preg_match("/(define\()([\"'])(XOOPS_{$key})\\2,\s*(\d+)\s*\)/", $content)) {
-                    $content = preg_replace("/(define\()([\"'])(XOOPS_{$key})\\2,\s*(\d+)\s*\)/", "define('XOOPS_{$key}', {$val})", $content);
-                } elseif (preg_match("/(define\()([\"'])(XOOPS_{$key})\\2,\s*([\"'])(.*?)\\4\s*\)/", $content)) {
-                    $val     = str_replace('$', '\$', addslashes($val));
-                    $content = preg_replace("/(define\()([\"'])(XOOPS_{$key})\\2,\s*([\"'])(.*?)\\4\s*\)/", "define('XOOPS_{$key}', '{$val}')", $content);
-                }
-            }
-            $file = fopen($path . $fileName, 'w');
-            if (false === $file) {
-                return sprintf(ERR_WRITE_MAINFILE, $fileName);
-            }
-            $writeResult = fwrite($file, $content);
-            fclose($file);
-            if (false === $writeResult) {
-                return sprintf(ERR_WRITE_MAINFILE, $fileName);
-            }
+    clearstatcache();
+    if (!$file = fopen($path . $fileName, 'r')) {
+        return sprintf(ERR_READ_MAINFILE, $fileName);
+    }
+
+    $content = fread($file, filesize($path . $fileName));
+    fclose($file);
+
+    // First, update the XOOPS_PROT detection code
+    $protDetection = <<<'EOD'
+    // Protocol detection for SSL and proxy compatibility
+    $IS_HTTPS = (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on')
+        || (isset($_SERVER['SERVER_PORT']) && (int)$_SERVER['SERVER_PORT'] === 443)
+        || (isset($_SERVER['HTTP_X_FORWARDED_PROTO']) && $_SERVER['HTTP_X_FORWARDED_PROTO'] === 'https')
+        || (isset($_SERVER['HTTP_X_FORWARDED_SSL']) && $_SERVER['HTTP_X_FORWARDED_SSL'] === 'on')
+        || (isset($_SERVER['HTTP_X_FORWARDED_PORT']) && (int)$_SERVER['HTTP_X_FORWARDED_PORT'] === 443)
+        || (isset($_SERVER['REDIRECT_HTTPS']) && $_SERVER['REDIRECT_HTTPS'] === 'on');
+    
+    define('XOOPS_PROT', $IS_HTTPS ? 'https://' : 'http://');
+    unset($IS_HTTPS);
+EOD;
+
+    // Replace the old XOOPS_PROT detection code
+    $content = preg_replace(
+        '/\/\/ URL Association for SSL.*?define\(\'XOOPS_PROT\',.*?\);/s',
+        $protDetection,
+        $content
+    );
+
+    // Then handle the rest of the configuration variables
+    foreach ($vars as $key => $val) {
+        if ($key === 'XOOPS_URL') {
+            $content = preg_replace("/(define\()([\"'])(XOOPS_{$key})\\2,\s*([\"'])(.*?)\\4\s*\)/", "define('XOOPS_{$key}', XOOPS_PROT . {$val})", $content );
+            continue;
+        }
+        if (is_int($val) && preg_match("/(define\()([\"'])(XOOPS_{$key})\\2,\s*(\d+)\s*\)/", $content)) {
+            $content = preg_replace("/(define\()([\"'])(XOOPS_{$key})\\2,\s*(\d+)\s*\)/", "define('XOOPS_{$key}', {$val})", $content);
+        } elseif (preg_match("/(define\()([\"'])(XOOPS_{$key})\\2,\s*([\"'])(.*?)\\4\s*\)/", $content)) {
+            $val = str_replace('$', '\$', addslashes($val));
+            $content = preg_replace("/(define\()([\"'])(XOOPS_{$key})\\2,\s*([\"'])(.*?)\\4\s*\)/", "define('XOOPS_{$key}', '{$val}')", $content);
         }
     }
+
+    $file = fopen($path . $fileName, 'w');
+    if (false === $file) {
+        return sprintf(ERR_WRITE_MAINFILE, $fileName);
+    }
+    $writeResult = fwrite($file, $content);
+    fclose($file);
+    if (false === $writeResult) {
+        return sprintf(ERR_WRITE_MAINFILE, $fileName);
+    }
+
     return true;
 }
 
@@ -246,10 +270,10 @@ function checkFileWriteablity($files)
             $uid = $tmpStats['uid'];
             $gid = $tmpStats['gid'];
             if (!(
-                ($uid === $dirStat['uid'] && $dirStat['user']['write'])
+                (false !== stripos(PHP_OS, 'WIN'))
+                || ($uid === $dirStat['uid'] && $dirStat['user']['write'])
                 || ($gid === $dirStat['gid'] && $dirStat['group']['write'])
                 || (file_exists($file) && is_writable($file))
-                || (false !== stripos(PHP_OS, 'WIN'))
             )
             ) {
                 $uidStr = (string) $uid;
@@ -332,7 +356,7 @@ function copyConfigDistFiles($vars)
     $textsanitizerConfigFiles = [
         'config.dist.php'                 => 'config.php',
         'censor/config.dist.php'          => 'config.censor.php',
-        'flash/config.dist.php'           => 'config.flash.php',
+//        'flash/config.dist.php'           => 'config.flash.php',
         'image/config.dist.php'           => 'config.image.php',
         'mms/config.dist.php'             => 'config.mms.php',
         'rtsp/config.dist.php'            => 'config.rtsp.php',

@@ -9,7 +9,7 @@
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  *
- * @copyright       (c) 2000-2016 XOOPS Project (www.xoops.org)
+ * @copyright       (c) 2000-2025 XOOPS Project (https://xoops.org)
  * @license             GNU GPL 2 (https://www.gnu.org/licenses/gpl-2.0.html)
  * @package             upgrader
  * @since               2.3.0
@@ -83,10 +83,10 @@ if (file_exists(__DIR__ . "../language/{$upgradeControl->upgradeLanguage}/user.p
     include_once XOOPS_ROOT_PATH . '/language/english/user.php';
 }
 
-if (file_exists(__DIR__ . "/language/{$upgradeControl->upgradeLanguage}/smarty3.php")) {
-    include_once __DIR__ . "/language/{$upgradeControl->upgradeLanguage}/smarty3.php";
+if (file_exists(__DIR__ . "/language/{$upgradeControl->upgradeLanguage}/smarty4.php")) {
+    include_once __DIR__ . "/language/{$upgradeControl->upgradeLanguage}/smarty4.php";
 } else {
-    include_once __DIR__ . "/language/english/smarty3.php";
+    include_once __DIR__ . "/language/english/smarty4.php";
 }
 
 
@@ -112,7 +112,7 @@ if (!$xoopsUser || !$xoopsUser->isAdmin()) {
                 . '<div class="panel-heading">' . _SET_FILES_WRITABLE . '</div>'
                 . '<div class="panel-body"><ul class="fa-ul">';
             foreach ($upgradeControl->needWriteFiles as $file) {
-                echo '<li><i class="fa-li fa fa-ban text-danger"></i>' . $file . '</li>';
+                echo '<li><i class="fa-li fa-solid fa-ban text-danger"></i>' . $file . '</li>';
                 $GLOBALS['error'] = true;
             }
             echo '</ul></div></div>';

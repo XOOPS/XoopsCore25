@@ -9,7 +9,7 @@
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  *
- * @copyright       (c) 2000-2016 XOOPS Project (www.xoops.org)
+ * @copyright       (c) 2000-2025 XOOPS Project (https://xoops.org)
  * @license             GNU GPL 2 (https://www.gnu.org/licenses/gpl-2.0.html)
  * @package             kernel
  * @since               2.0.0
@@ -236,7 +236,7 @@ class XoopsImageHandler extends XoopsObjectHandler
         }
         if ($image->isNew()) {
             $image_id = $this->db->genId('image_image_id_seq');
-            $sql      = sprintf('INSERT INTO %s (image_id, image_name, image_nicename, image_mimetype, image_created, image_display, image_weight, imgcat_id) VALUES (%u, %s, %s, %s, %u, %u, %u, %u)', $this->db->prefix('image'), $image_id, $this->db->quoteString($image_name), $this->db->quoteString($image_nicename), $this->db->quoteString($image_mimetype), time(), $image_display, $image_weight, $imgcat_id);
+            $sql      = sprintf('INSERT INTO %s (image_id, image_name, image_nicename, image_mimetype, image_created, image_display, image_weight, imgcat_id) VALUES (%u, %s, %s, %s, %u, %u, %u, %u)', $this->db->prefix('image'), $image_id, $this->db->quote($image_name), $this->db->quote($image_nicename), $this->db->quote($image_mimetype), time(), $image_display, $image_weight, $imgcat_id);
             if (!$result = $this->db->query($sql)) {
                 return false;
             }
@@ -244,7 +244,7 @@ class XoopsImageHandler extends XoopsObjectHandler
                 $image_id = $this->db->getInsertId();
             }
             if (isset($image_body) && $image_body != '') {
-                $sql = sprintf('INSERT INTO %s (image_id, image_body) VALUES (%u, %s)', $this->db->prefix('imagebody'), $image_id, $this->db->quoteString($image_body));
+                $sql = sprintf('INSERT INTO %s (image_id, image_body) VALUES (%u, %s)', $this->db->prefix('imagebody'), $image_id, $this->db->quote($image_body));
                 if (!$result = $this->db->query($sql)) {
                     $sql = sprintf('DELETE FROM %s WHERE image_id = %u', $this->db->prefix('image'), $image_id);
                     $this->db->query($sql);
@@ -254,12 +254,12 @@ class XoopsImageHandler extends XoopsObjectHandler
             }
             $image->assignVar('image_id', $image_id);
         } else {
-            $sql = sprintf('UPDATE %s SET image_name = %s, image_nicename = %s, image_display = %u, image_weight = %u, imgcat_id = %u WHERE image_id = %u', $this->db->prefix('image'), $this->db->quoteString($image_name), $this->db->quoteString($image_nicename), $image_display, $image_weight, $imgcat_id, $image_id);
+            $sql = sprintf('UPDATE %s SET image_name = %s, image_nicename = %s, image_display = %u, image_weight = %u, imgcat_id = %u WHERE image_id = %u', $this->db->prefix('image'), $this->db->quote($image_name), $this->db->quote($image_nicename), $image_display, $image_weight, $imgcat_id, $image_id);
             if (!$result = $this->db->query($sql)) {
                 return false;
             }
             if (isset($image_body) && $image_body != '') {
-                $sql = sprintf('UPDATE %s SET image_body = %s WHERE image_id = %u', $this->db->prefix('imagebody'), $this->db->quoteString($image_body), $image_id);
+                $sql = sprintf('UPDATE %s SET image_body = %s WHERE image_id = %u', $this->db->prefix('imagebody'), $this->db->quote($image_body), $image_id);
                 if (!$result = $this->db->query($sql)) {
                     $this->db->query(sprintf('DELETE FROM %s WHERE image_id = %u', $this->db->prefix('image'), $image_id));
 

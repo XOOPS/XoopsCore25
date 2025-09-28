@@ -9,7 +9,7 @@
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  *
- * @copyright       (c) 2000-2021 XOOPS Project (https://xoops.org)
+ * @copyright       (c) 2000-2025 XOOPS Project (https://xoops.org)
  * @license             GNU GPL 2 (https://www.gnu.org/licenses/gpl-2.0.html)
  * @since               2.3.0
  * @author              Taiwen Jiang <phppp@users.sourceforge.net>
@@ -132,7 +132,7 @@ class XoopsCaptchaImageHandler
     }
 
     /**
-     *  Create CAPTCHA iamge with GD
+     *  Create CAPTCHA image with GD
      *  Originated by DuGris' SecurityImage
      *  --------------------------------------------------------------------------- //
      *  Class : SecurityImage 1.5                                                    //

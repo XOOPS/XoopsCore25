@@ -49,7 +49,7 @@ abstract class SystemFineUploadHandler
     public $chunksCleanupProbability = 0.001; // Once in 1000 requests on avg
     public $chunksExpireIn = 604800; // One week
 
-    protected $uploadName;
+    public $uploadName;
     public $claims;
 
     /**

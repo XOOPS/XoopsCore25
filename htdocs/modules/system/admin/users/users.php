@@ -118,10 +118,10 @@ function form_user($add_or_edit, $user = '')
         }
     }
 
-    //Affichage du formulaire
+    //Form display
     $form = new XoopsThemeForm($form_title, 'form_user', 'admin.php', 'post', true);
 
-    $form->addElement(new XoopsFormText(_AM_SYSTEM_USERS_NICKNAME, 'username', 25, 25, $uname_value), true);
+    $form->addElement(new XoopsFormText(_AM_SYSTEM_USERS_NICKNAME, 'uname', 25, 25, $uname_value), true);
     $form->addElement(new XoopsFormText(_AM_SYSTEM_USERS_NAME, 'name', 30, 60, $name_value));
     $email_tray = new XoopsFormElementTray(_AM_SYSTEM_USERS_EMAIL, '<br>');
     $email_text = new XoopsFormText('', 'email', 30, 60, $email_value);

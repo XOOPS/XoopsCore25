@@ -9,7 +9,7 @@
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  *
- * @copyright       (c) 2000-2016 XOOPS Project (www.xoops.org)
+ * @copyright       (c) 2000-2025 XOOPS Project (https://xoops.org)
  * @license             GNU GPL 2 (https://www.gnu.org/licenses/gpl-2.0.html)
  * @package             kernel
  * @since               2.0.0
@@ -70,7 +70,7 @@ function xoops_getModuleHandler($name = null, $module_dir = null, $optional = fa
         if (isset($GLOBALS['xoopsModule']) && is_object($GLOBALS['xoopsModule'])) {
             $module_dir = $GLOBALS['xoopsModule']->getVar('dirname', 'n');
         } else {
-            trigger_error('No Module is loaded', E_USER_ERROR);
+            throw new \Exception('No Module is loaded');
         }
     } else {
         $module_dir = trim($module_dir);
@@ -87,8 +87,13 @@ function xoops_getModuleHandler($name = null, $module_dir = null, $optional = fa
         }
     }
     if (!isset($handlers[$module_dir][$name])) {
-        trigger_error('Handler does not exist<br>Module: ' . $module_dir . '<br>Name: ' . $name, $optional ? E_USER_WARNING : E_USER_ERROR);
+    $message = 'Handler does not exist<br>Module: ' . $module_dir . '<br>Name: ' . $name;
+    if ($optional) {
+        trigger_error($message, E_USER_WARNING); 
+    } else {
+        throw new \Exception($message); 
     }
+}
     if (isset($handlers[$module_dir][$name])) {
         return $handlers[$module_dir][$name];
     }
@@ -100,7 +105,7 @@ function xoops_getModuleHandler($name = null, $module_dir = null, $optional = fa
 /**
  * XOOPS class loader wrapper
  *
- * Temporay solution for XOOPS 2.3
+ * Temporary solution for XOOPS 2.3
  *
  * @param string $name                                          Name of class to be loaded
  * @param string $type                                          domain of the class, potential values:   core - located in /class/;
@@ -121,7 +126,7 @@ function xoops_load($name, $type = 'core')
 /**
  * XOOPS language loader wrapper
  *
- * Temporay solution, not encouraged to use
+ * Temporary solution, not encouraged to use
  *
  * @param   string $name     Name of language file to be loaded, without extension
  * @param   string $domain   Module dirname; global language file will be loaded if $domain is set to 'global' or not specified
@@ -259,7 +264,10 @@ function xoops_header($closehead = true)
     $headItems = [];
     $headItems[] = '<script type="text/javascript" src="' . XOOPS_URL . '/include/xoops.js"></script>';
     $headItems[] = '<link rel="stylesheet" type="text/css" media="all" href="' . XOOPS_URL . '/xoops.css">';
-    $headItems[] = '<link rel="stylesheet" type="text/css" media="all" href="' . XOOPS_URL . '/media/font-awesome/css/font-awesome.min.css">';
+    $headItems[] = '<link rel="stylesheet" type="text/css" media="all"  as="font" crossorigin="anonymous" href="' . XOOPS_URL . '/media/font-awesome6/css/fontawesome.min.css">';
+    $headItems[] = '<link rel="stylesheet" type="text/css" media="all"  as="font" crossorigin="anonymous" href="' . XOOPS_URL . '/media/font-awesome6/css/solid.min.css">';
+    $headItems[] = '<link rel="stylesheet" type="text/css" media="all"  as="font" crossorigin="anonymous" href="' . XOOPS_URL . '/media/font-awesome6/css/brands.min.css">';
+    $headItems[] = '<link rel="stylesheet" type="text/css" media="all"  as="font" crossorigin="anonymous" href="' . XOOPS_URL . '/media/font-awesome6/css/v4-shims.min.css">';
     $languageFile = 'language/' . $GLOBALS['xoopsConfig']['language'] . '/style.css';
     if (file_exists($GLOBALS['xoops']->path($languageFile))) {
         $headItems[] = '<link rel="stylesheet" type="text/css" media="all" href="' . $GLOBALS['xoops']->url($languageFile) . '">';
@@ -499,18 +507,20 @@ function formatTimestamp($time, $format = 'l', $timeoffset = '')
 }
 
 /**
- * Function to calculate server timestamp from user entered time (timestamp)
- * @param      $timestamp
- * @param null $userTZ
- * @return
+ * Function to calculate server timestamp from user-entered time (timestamp)
+ * @param int     $timestamp
+ * @param float|null $userTZ
+ * @return int
  */
 function userTimeToServerTime($timestamp, $userTZ = null)
+
 {
     global $xoopsConfig;
     if (!isset($userTZ)) {
-        $userTZ = $xoopsConfig['default_TZ'];
+        $userTZ = (float) $xoopsConfig['default_TZ'];
     }
-    $timestamp -= (($userTZ - $xoopsConfig['server_TZ']) * 3600);
+    $serverTZ = (float)$xoopsConfig['server_TZ'];
+    $timestamp -= (int)(($userTZ - $serverTZ) * 3600);
 
     return $timestamp;
 }
@@ -1214,7 +1224,7 @@ function xoops_getConfigOption($option, $type = 'XOOPS_CONF')
  * xoops_setConfigOption()
  *
  * @param mixed $option
- * @param null  $new
+ * @param mixed  $new
  * @return void
 @deprecated
  */

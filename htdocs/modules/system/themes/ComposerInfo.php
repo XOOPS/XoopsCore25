@@ -1,6 +1,10 @@
 <?php
 
-header('HTTP/1.0 404 Not Found');
+// Prevent direct access
+if (basename($_SERVER['SCRIPT_FILENAME']) === 'ComposerInfo.php') {
+    header("HTTP/1.0 403 Forbidden");
+    exit('Access Denied');
+}
 
 class ComposerInfo
 {
@@ -10,7 +14,7 @@ class ComposerInfo
 
         try {
             // Define the path to the composer.lock file
-            $composerLockPath = XOOPS_ROOT_PATH . '/class/libraries/composer';
+            $composerLockPath = XOOPS_TRUST_PATH . '/composer';
             // Get the packages data from composer.lock file
             $packages = self::readComposerLockFile($composerLockPath);
             // Extract package name and version

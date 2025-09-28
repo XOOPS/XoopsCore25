@@ -9,7 +9,7 @@
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  *
- * @copyright       (c) 2000-2016 XOOPS Project (www.xoops.org)
+ * @copyright       (c) 2000-2025 XOOPS Project (https://xoops.org)
  * @license             GNU GPL 2 (https://www.gnu.org/licenses/gpl-2.0.html)
  * @package             kernel
  * @since               2.0.0
@@ -21,7 +21,7 @@ defined('XOOPS_ROOT_PATH') || exit('Restricted access');
  * A category of configs
  *
  * @author              Kazumi Ono    <onokazu@xoops.org>
- * @copyright       (c) 2000-2016 XOOPS Project (www.xoops.org)
+ * @copyright       (c) 2000-2025 XOOPS Project (https://xoops.org)
  *
  * @package             kernel
  */
@@ -92,7 +92,7 @@ class XoopsConfigCategory extends XoopsObject
  * of XOOPS configuration category class objects.
  *
  * @author              Kazumi Ono <onokazu@xoops.org>
- * @copyright       (c) 2000-2016 XOOPS Project (www.xoops.org)
+ * @copyright       (c) 2000-2025 XOOPS Project (https://xoops.org)
  *
  * @package             kernel
  * @subpackage          config
@@ -167,9 +167,9 @@ class XoopsConfigCategoryHandler extends XoopsObjectHandler
         }
         if ($confcat->isNew()) {
             $confcat_id = $this->db->genId('configcategory_confcat_id_seq');
-            $sql        = sprintf('INSERT INTO %s (confcat_id, confcat_name, confcat_order) VALUES (%u, %s, %u)', $this->db->prefix('configcategory'), $confcat_id, $this->db->quoteString($confcat_name), $confcat_order);
+            $sql        = sprintf('INSERT INTO %s (confcat_id, confcat_name, confcat_order) VALUES (%u, %s, %u)', $this->db->prefix('configcategory'), $confcat_id, $this->db->quote($confcat_name), $confcat_order);
         } else {
-            $sql = sprintf('UPDATE %s SET confcat_name = %s, confcat_order = %u WHERE confcat_id = %u', $this->db->prefix('configcategory'), $this->db->quoteString($confcat_name), $confcat_order, $confcat_id);
+            $sql = sprintf('UPDATE %s SET confcat_name = %s, confcat_order = %u WHERE confcat_id = %u', $this->db->prefix('configcategory'), $this->db->quote($confcat_name), $confcat_order, $confcat_id);
         }
         if (!$result = $this->db->query($sql)) {
             return false;

@@ -9,7 +9,7 @@
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  *
- * @copyright       (c) 2000-2016 XOOPS Project (www.xoops.org)
+ * @copyright       (c) 2000-2025 XOOPS Project (https://xoops.org)
  * @license             GNU GPL 2 (https://www.gnu.org/licenses/gpl-2.0.html)
  * @package             core
  * @since               2.3.0
@@ -49,19 +49,19 @@ class XoopsEditor extends XoopsFormTextArea
         } else {
             $configs = $args[0];
         }
-        // TODO: switch to property_exists() as of PHP 5.1.0
-        $vars = get_class_vars(self::class);
-        foreach ($configs as $key => $val) {
-            if (method_exists($this, 'set' . ucfirst($key))) {
-                $this->{'set' . ucfirst($key)}($val);
-            } elseif (array_key_exists("_{$key}", $vars)) {
-                $this->{"_{$key}"} = $val;
-            } elseif (array_key_exists($key, $vars)) {
-                $this->{$key} = $val;
-            } else {
-                $this->configs[$key] = $val;
-            }
-        }
+		foreach ($configs as $key => $val) {
+			$method = 'set' . ucfirst($key);
+			if (method_exists($this, $method)) {
+				$this->{$method}($val);
+			} elseif (property_exists($this, "_{$key}")) {
+				$this->{"_{$key}"} = $val;
+			} elseif (property_exists($this, $key)) {
+				$this->{$key} = $val;
+			} else {
+				$this->configs[$key] = $val;
+			}
+		}
+
         $this->isActive();
     }
 
@@ -79,7 +79,7 @@ class XoopsEditor extends XoopsFormTextArea
 /**
  * Editor handler
  *
- * @copyright       (c) 2000-2016 XOOPS Project (www.xoops.org)
+ * @copyright       (c) 2000-2025 XOOPS Project (https://xoops.org)
  * @license             GNU GPL 2 (https://www.gnu.org/licenses/gpl-2.0.html)
  * @package             core
  * @since               2.3.0

@@ -9,7 +9,7 @@
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  *
- * @copyright       (c) 2000-2016 XOOPS Project (www.xoops.org)
+ * @copyright       (c) 2000-2025 XOOPS Project (https://xoops.org)
  * @license             GNU GPL 2 (https://www.gnu.org/licenses/gpl-2.0.html)
  * @package             kernel
  * @since               2.0.0
@@ -223,7 +223,7 @@ class XoopsModule extends XoopsObject
     /**
      * Get links to the subpages
      *
-     * @return string
+     * @return array
      */
     public function subLink()
     {
@@ -231,8 +231,10 @@ class XoopsModule extends XoopsObject
         if ($this->getInfo('sub') && \is_array($this->getInfo('sub'))) {
             foreach ($this->getInfo('sub') as $submenu) {
                 $ret[] = [
+                    'id' => $submenu['id']?? '',
                     'name' => $submenu['name'],
                     'url'  => $submenu['url'],
+                    'icon' => $submenu['icon']?? '',
                 ];
             }
         }
@@ -490,6 +492,18 @@ class XoopsModule extends XoopsObject
 
         return $inst;
     }
+
+
+    /**
+     * Returns Class Base Variable icon
+     * @param  string $format
+     * @return mixed
+     */
+    public function icon($format = '')
+    {
+        return $this->getVar('icon', $format);
+    }
+
 
     ##################### Deprecated Methods ######################
 
@@ -823,9 +837,9 @@ class XoopsModuleHandler extends XoopsObjectHandler
         }
         if ($module->isNew()) {
             $mid = $this->db->genId('modules_mid_seq');
-            $sql = sprintf('INSERT INTO %s (mid, name, version, last_update, weight, isactive, dirname, hasmain, hasadmin, hassearch, hasconfig, hascomments, hasnotification) VALUES (%u, %s, %s, %u, %u, %u, %s, %u, %u, %u, %u, %u, %u)', $this->db->prefix('modules'), $mid, $this->db->quoteString($name), $this->db->quoteString($version), time(), $weight, 1, $this->db->quoteString($dirname), $hasmain, $hasadmin, $hassearch, $hasconfig, $hascomments, $hasnotification);
+            $sql = sprintf('INSERT INTO %s (mid, name, version, last_update, weight, isactive, dirname, hasmain, hasadmin, hassearch, hasconfig, hascomments, hasnotification) VALUES (%u, %s, %s, %u, %u, %u, %s, %u, %u, %u, %u, %u, %u)', $this->db->prefix('modules'), $mid, $this->db->quote($name), $this->db->quote($version), time(), $weight, 1, $this->db->quote($dirname), $hasmain, $hasadmin, $hassearch, $hasconfig, $hascomments, $hasnotification);
         } else {
-            $sql = sprintf('UPDATE %s SET name = %s, dirname = %s, version = %s, last_update = %u, weight = %u, isactive = %u, hasmain = %u, hasadmin = %u, hassearch = %u, hasconfig = %u, hascomments = %u, hasnotification = %u WHERE mid = %u', $this->db->prefix('modules'), $this->db->quoteString($name), $this->db->quoteString($dirname), $this->db->quoteString($version), time(), $weight, $isactive, $hasmain, $hasadmin, $hassearch, $hasconfig, $hascomments, $hasnotification, $mid);
+            $sql = sprintf('UPDATE %s SET name = %s, dirname = %s, version = %s, last_update = %u, weight = %u, isactive = %u, hasmain = %u, hasadmin = %u, hassearch = %u, hasconfig = %u, hascomments = %u, hasnotification = %u WHERE mid = %u', $this->db->prefix('modules'), $this->db->quote($name), $this->db->quote($dirname), $this->db->quote($version), time(), $weight, $isactive, $hasmain, $hasadmin, $hassearch, $hasconfig, $hascomments, $hasnotification, $mid);
         }
         if (!$result = $this->db->query($sql)) {
             return false;

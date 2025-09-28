@@ -34,7 +34,7 @@ function smarty_function_xoPageNav($params, &$smarty)
     $minPage = min(1, ceil($currentPage - $linksCount / 2));
     $maxPage = max($lastPage, floor($currentPage + $linksCount / 2));
 
-    //TODO Remove this hardocded strings
+    //TODO Remove this hardcoded strings
     if ($currentPage > 1) {
         $str .= '<a href="' . $xoops->url(str_replace('%s', $offset - $pageSize, $url)) . '">Previous</a>';
     }

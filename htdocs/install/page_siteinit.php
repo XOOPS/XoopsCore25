@@ -14,7 +14,7 @@
  * See the enclosed file license.txt for licensing information.
  * If you did not receive this file, get it at https://www.gnu.org/licenses/gpl-2.0.html
  *
- * @copyright    (c) 2000-2016 XOOPS Project (www.xoops.org)
+ * @copyright    (c) 2000-2025 XOOPS Project (https://xoops.org)
  * @license          GNU GPL 2.0 or later (https://www.gnu.org/licenses/gpl-2.0.html)
  * @package          installer
  * @since            2.3.0
@@ -111,14 +111,14 @@ if ($isadmin) {
 
         if (isset($error['name'])) {
             foreach ($error['name'] as $errmsg) {
-                echo '<div class="alert alert-danger"><span class="fa fa-ban text-danger"></span> ' . $errmsg . '</div>';
+                echo '<div class="alert alert-danger"><span class="fa-solid fa-ban text-danger"></span> ' . $errmsg . '</div>';
             }
         }
 
         xoFormField('adminmail', $vars['adminmail'] ?? '', ADMIN_EMAIL_LABEL);
         if (isset($error['email'])) {
             foreach ($error['email'] as $errmsg) {
-                echo '<div class="alert alert-danger"><span class="fa fa-ban text-danger"></span> ' . $errmsg . '</div>';
+                echo '<div class="alert alert-danger"><span class="fa-solid fa-ban text-danger"></span> ' . $errmsg . '</div>';
             }
         }
         ?>
@@ -130,7 +130,7 @@ if ($isadmin) {
                 echo xoPassField('adminpass2', '', ADMIN_CONFIRMPASS_LABEL);
                 if (isset($error['pass'])) {
                     foreach ($error['pass'] as $errmsg) {
-                        echo '<div class="alert alert-danger"><span class="fa fa-ban text-danger"></span> ' . $errmsg . '</div>';
+                        echo '<div class="alert alert-danger"><span class="fa-solid fa-ban text-danger"></span> ' . $errmsg . '</div>';
                     }
                 }
                 ?>
@@ -148,7 +148,7 @@ if ($isadmin) {
 
                 <div id="passwordgenerator">
                     <label for='password_generator'><?php echo PASSWORD_GENERATOR; ?></label>
-                    <input type="text" class="form-control" name="generated_pw" id="generated_pw" value=""  onclick="this.setSelectionRange(0, this.value.length); document.execCommand('copy');"><br>
+                    <label for="generated_pw"></label><input type="text" class="form-control" name="generated_pw" id="generated_pw" value="" onclick="this.setSelectionRange(0, this.value.length); document.execCommand('copy');"><br>
                     <button type="button" class="btn btn-default" onclick="suggestPassword(16);">
                     <?php echo PASSWORD_GENERATE; ?></button>
                     <button type="button" class="btn btn-default" onclick="suggestPasswordCopy();">
@@ -156,8 +156,6 @@ if ($isadmin) {
                 </div>
             </div>
         </div>
-    </div>
-    </div>
     </div>
     <?php
 

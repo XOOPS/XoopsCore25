@@ -9,7 +9,7 @@
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  *
- * @copyright       (c) 2000-2016 XOOPS Project (www.xoops.org)
+ * @copyright       (c) 2000-2025 XOOPS Project (https://xoops.org)
  * @license             GNU GPL 2 (https://www.gnu.org/licenses/gpl-2.0.html)
  * @package             kernel
  * @since               2.0.0
@@ -29,7 +29,7 @@ include_once $GLOBALS['xoops']->path('include/notification_functions.php');
  * @subpackage          notification
  *
  * @author              Michael van Dam    <mvandam@caltech.edu>
- * @copyright       (c) 2000-2016 XOOPS Project (www.xoops.org)
+ * @copyright       (c) 2000-2025 XOOPS Project (https://xoops.org)
  */
 class XoopsNotification extends XoopsObject
 {
@@ -231,7 +231,7 @@ class XoopsNotification extends XoopsObject
  * @subpackage          notification
  *
  * @author              Michael van Dam <mvandam@caltech.edu>
- * @copyright       (c) 2000-2016 XOOPS Project (www.xoops.org)
+ * @copyright       (c) 2000-2025 XOOPS Project (https://xoops.org)
  */
 class XoopsNotificationHandler extends XoopsObjectHandler
 {
@@ -303,9 +303,9 @@ class XoopsNotificationHandler extends XoopsObjectHandler
         }
         if ($notification->isNew()) {
             $not_id = $this->db->genId('xoopsnotifications_not_id_seq');
-            $sql    = sprintf('INSERT INTO %s (not_id, not_modid, not_itemid, not_category, not_uid, not_event, not_mode) VALUES (%u, %u, %u, %s, %u, %s, %u)', $this->db->prefix('xoopsnotifications'), $not_id, $not_modid, $not_itemid, $this->db->quoteString($not_category), $not_uid, $this->db->quoteString($not_event), $not_mode);
+            $sql    = sprintf('INSERT INTO %s (not_id, not_modid, not_itemid, not_category, not_uid, not_event, not_mode) VALUES (%u, %u, %u, %s, %u, %s, %u)', $this->db->prefix('xoopsnotifications'), $not_id, $not_modid, $not_itemid, $this->db->quote($not_category), $not_uid, $this->db->quote($not_event), $not_mode);
         } else {
-            $sql = sprintf('UPDATE %s SET not_modid = %u, not_itemid = %u, not_category = %s, not_uid = %u, not_event = %s, not_mode = %u WHERE not_id = %u', $this->db->prefix('xoopsnotifications'), $not_modid, $not_itemid, $this->db->quoteString($not_category), $not_uid, $this->db->quoteString($not_event), $not_mode, $not_id);
+            $sql = sprintf('UPDATE %s SET not_modid = %u, not_itemid = %u, not_category = %s, not_uid = %u, not_event = %s, not_mode = %u WHERE not_id = %u', $this->db->prefix('xoopsnotifications'), $not_modid, $not_itemid, $this->db->quote($not_category), $not_uid, $this->db->quote($not_event), $not_mode, $not_id);
         }
         if (!$result = $this->db->query($sql)) {
             return false;
@@ -861,7 +861,7 @@ class XoopsNotificationHandler extends XoopsObjectHandler
     }
 
     /**
-     * Perform notification maintenance activites at login time.
+     * Perform notification maintenance activities at login time.
      * In particular, any notifications for the newly logged-in
      * user with mode XOOPS_NOTIFICATION_MODE_WAITFORLOGIN are
      * switched to mode XOOPS_NOTIFICATION_MODE_SENDONCETHENWAIT.

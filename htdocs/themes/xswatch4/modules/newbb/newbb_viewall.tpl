@@ -11,10 +11,10 @@
     <{/if}>
 </ol>
 <div class="row">
-    <div class="col-md-6 col-xs-12">
+    <div class="col-md-6 col-12">
         <h3><a href="<{$xoops_url}>/modules/<{$xoops_dirname}>/index.php"><{$forum_index_title}></a></h3>
     </div>
-    <div class="col-md-6 col-xs-12 pull-right">
+    <div class="col-md-6 col-12 pull-right">
         <{if isset($mode) && $mode > 1}>
         <form name="form_topics_admin" action="<{$xoops_url}>/modules/<{$xoops_dirname}>/action.topic.php" method="POST" onsubmit="if(window.document.form_topics_admin.op.value &lt; 1){return false;}">
         <{/if}>

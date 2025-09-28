@@ -9,7 +9,7 @@
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  *
- * @copyright       (c) 2000-2016 XOOPS Project (www.xoops.org)
+ * @copyright       (c) 2000-2025 XOOPS Project (https://xoops.org)
  * @license             GNU GPL 2 (https://www.gnu.org/licenses/gpl-2.0.html)
  * @package             profile
  * @since               2.3.0
@@ -38,7 +38,7 @@ switch ($op) {
     case 'list':
         include_once $GLOBALS['xoops']->path('/class/xoopsformloader.php');
         $form = new XoopsThemeForm(_PROFILE_AM_EDITUSER, 'form', 'user.php');
-        $lastUid = \Xmf\Request::getInt('lastuid', null, 'GET');
+        $lastUid = \Xmf\Request::getInt('lastuid', 0, 'GET');
         $form->addElement(new XoopsFormSelectUser(_PROFILE_AM_SELECTUSER, 'id', false, $lastUid));
         $form->addElement(new XoopsFormHidden('op', 'editordelete'));
         $button_tray = new XoopsFormElementTray('');

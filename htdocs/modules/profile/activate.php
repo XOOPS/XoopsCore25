@@ -9,7 +9,7 @@
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  *
- * @copyright       (c) 2000-2016 XOOPS Project (www.xoops.org)
+ * @copyright       (c) 2000-2025 XOOPS Project (https://xoops.org)
  * @license             GNU GPL 2 (https://www.gnu.org/licenses/gpl-2.0.html)
  * @package             profile
  * @since               2.3.0
@@ -79,7 +79,7 @@ if (!empty($_GET['id']) && !empty($_GET['actkey'])) {
     $myts           = \MyTextSanitizer::getInstance();
     /** @var XoopsMemberHandler $member_handler */
     $member_handler = xoops_getHandler('member');
-    $getuser        = $member_handler->getUsers(new Criteria('email', $myts->addSlashes(trim($_REQUEST['email']))));
+    $getuser        = $member_handler->getUsers(new Criteria('email', $xoopsDB->escape(trim($_REQUEST['email']))));
     if (count($getuser) == 0) {
         redirect_header(XOOPS_URL, 2, _US_SORRYNOTFOUND);
     }

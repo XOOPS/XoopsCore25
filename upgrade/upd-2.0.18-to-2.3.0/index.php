@@ -17,7 +17,7 @@ use Xmf\Database\Tables;
  * See the enclosed file license.txt for licensing information.
  * If you did not receive this file, get it at https://www.gnu.org/licenses/gpl-2.0.html
  *
- * @copyright    (c) 2000-2016 XOOPS Project (www.xoops.org)
+ * @copyright    (c) 2000-2025 XOOPS Project (https://xoops.org)
  * @license          GNU GPL 2.0 or later (https://www.gnu.org/licenses/gpl-2.0.html)
  * @package          upgrader
  * @since            2.3.0
@@ -205,7 +205,7 @@ class Upgrade_230 extends XoopsUpgrade
         if (!(defined('XOOPS_PATH') && defined('XOOPS_VAR_PATH') && defined('XOOPS_TRUST_PATH'))) {
             return false;
         }
-        $ctrl = new PathStuffController();
+        $ctrl = new PathController();
         if (!$ctrl->checkPath()) {
             return false;
         }
@@ -348,7 +348,7 @@ class Upgrade_230 extends XoopsUpgrade
                     }
                 }
 
-                // Analyze table indexs for any FULLTEXT-Type of index in the table.
+                // Analyze table indexes for any FULLTEXT-Type of index in the table.
                 $fulltext_indexes = [];
                 $sql         = "SHOW INDEX FROM `$table`";
                 $result = $GLOBALS['xoopsDB']->queryF($sql);
