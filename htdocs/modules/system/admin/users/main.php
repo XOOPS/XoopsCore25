@@ -898,7 +898,7 @@ switch ($op) {
                     foreach ($user_group as $groupid) {
                         $countGroups++;
                         if ($countGroups > 10) {
-                            $groupsList[] = '...';
+                            $groupsList[$groupid] = '...';
                             break;
                         } else {
                             $group = $groupHandler->get($groupid);
