@@ -899,12 +899,13 @@ switch ($op) {
                         $countGroups++;
                         if ($countGroups > 10) {
                             $groupsList[] = '...';
+                            break;
                         } else {
                             $group = $groupHandler->get($groupid);
                             $groupsList[$groupid] = $group->getVar('name');
                         }
                     }
-                    
+
                     $users['uid']         = $users_arr[$i]->getVar('uid');
                     $users['name']        = $users_arr[$i]->getVar('name');
                     $users['uname']       = $users_arr[$i]->getVar('uname');
