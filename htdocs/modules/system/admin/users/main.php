@@ -902,7 +902,11 @@ switch ($op) {
                             break;
                         } else {
                             $group = $groupHandler->get($groupid);
-                            $groupsList[$groupid] = $group->getVar('name');
+                            if ($group) {
+                                $groupsList[$groupid] = $group->getVar('name');
+                            } else {
+                                $groupsList[$groupid] = 'Unknown group';
+                            }
                         }
                     }
 
