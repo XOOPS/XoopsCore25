@@ -25,6 +25,12 @@ if (!is_object($xoopsUser) || !is_object($xoopsModule) || !$xoopsUser->isAdmin($
     exit(_NOPERM);
 }
 
+// define the value for max groups per user, which will be shon on user list
+// if exceeding this number then ... will be shown
+if (!defined('USER_MAX_GROUPS_DISPLAY')) {
+    define('USER_MAX_GROUPS_DISPLAY', 10);
+}
+
 include_once XOOPS_ROOT_PATH . '/modules/system/admin/users/users.php';
 // Get Action type
 $op = Request::getString('op', 'default');
@@ -893,19 +899,19 @@ switch ($op) {
                         $users['checkbox_user'] = true;
                     }
                     // get group names
-                    $groupsList = [];
+                    $group_list = [];
                     $countGroups = 0;
                     foreach ($user_group as $groupid) {
                         $countGroups++;
-                        if ($countGroups > 10) {
-                            $groupsList[$groupid] = '...';
+                        if ($countGroups > USER_MAX_GROUPS_DISPLAY) {
+                            $group_list[] = '...';
                             break;
                         } else {
                             $group = $groupHandler->get($groupid);
                             if ($group) {
-                                $groupsList[$groupid] = $group->getVar('name');
+                                $group_list[] = $group->getVar('name');
                             } else {
-                                $groupsList[$groupid] = 'Unknown group';
+                                $group_list[] = 'Unknown group';
                             }
                         }
                     }
@@ -930,7 +936,7 @@ switch ($op) {
 
                     $users['posts'] = $users_arr[$i]->getVar('posts');
 
-                    $users['groupslist'] = $groupsList;
+                    $users['group_list'] = $group_list;
 
                     $xoopsTpl->appendByRef('users', $users);
                     $xoopsTpl->appendByRef('users_popup', $users);
