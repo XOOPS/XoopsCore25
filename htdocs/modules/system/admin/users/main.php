@@ -25,7 +25,7 @@ if (!is_object($xoopsUser) || !is_object($xoopsModule) || !$xoopsUser->isAdmin($
     exit(_NOPERM);
 }
 
-// define the value for max groups per user, which will be shon on user list
+// define the value for max groups per user, which will be shown on user list
 // if exceeding this number then ... will be shown
 if (!defined('USER_MAX_GROUPS_DISPLAY')) {
     define('USER_MAX_GROUPS_DISPLAY', 10);
