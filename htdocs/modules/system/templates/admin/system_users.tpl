@@ -51,11 +51,13 @@
                         <td class="txtcenter"><{$user.reg_date}></td>
                         <td class="txtcenter"><{$user.last_login}></td>
                         <td class="txtleft">
-                            <ul>
-                            <{foreach item=usergroup from=$user.group_list|default:null}>
-                                <li><{$usergroup}></li>
-                            <{/foreach}>
-                            </ul>
+                            <{if $user.group_list|@count}>
+                                <ul>
+                                <{foreach item=usergroup from=$user.group_list|default:null}>
+                                    <li><{$usergroup}></li>
+                                <{/foreach}>
+                                </ul>
+                            <{/if}>
                         </td>
                         <td class="txtcenter">
                             <div id="display_post_<{$user.uid}>"><{$user.posts}></div>
