@@ -83,7 +83,10 @@ class XoopsSessionHandler implements SessionHandlerInterface
             : ini_get('session.cookie_lifetime');
         $secure = (XOOPS_PROT === 'https://');
 // --- START: New Domain Validation Logic ---
-        $host = $_SERVER['HTTP_HOST'] ?? '';
+        $host = parse_url(XOOPS_URL, PHP_URL_HOST);
+        if (!is_string($host)) {
+            $host = ''; // Fallback in case of invalid XOOPS_URL
+        }
         $cookieDomain = XOOPS_COOKIE_DOMAIN;
         if (class_exists('\Xoops\RegDom\RegisteredDomain')) {
             if (!\Xoops\RegDom\RegisteredDomain::domainMatches($host, $cookieDomain)) {
@@ -106,7 +109,6 @@ class XoopsSessionHandler implements SessionHandlerInterface
             session_set_cookie_params($lifetime, '/', $cookieDomain, $secure, true);
         }
     }
-
 
     /**
      * Open a session

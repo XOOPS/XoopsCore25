@@ -46,8 +46,10 @@ function xoops_setcookie(
 
     // THE FIX: Ensure a null value is converted to an empty string.
     $value = $value ?? '';
-
-    $host = $_SERVER['HTTP_HOST'] ?? '';
+    $host = parse_url(XOOPS_URL, PHP_URL_HOST);
+    if (!is_string($host)) {
+        $host = ''; // Fallback for invalid XOOPS_URL
+    }
 
     // Validate the domain BEFORE using it.
     if (class_exists('\Xoops\RegDom\RegisteredDomain')) {
