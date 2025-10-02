@@ -911,7 +911,7 @@ switch ($op) {
                             if ($group) {
                                 $group_list[] = $group->getVar('name');
                             } else {
-                                $group_list[] = 'Unknown group';
+                                $group_list[] = _AM_SYSTEM_USERS_UNKNOWN_GROUP;
                             }
                         }
                     }
