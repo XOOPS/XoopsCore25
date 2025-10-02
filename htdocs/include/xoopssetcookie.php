@@ -44,7 +44,7 @@ function xoops_setcookie(
         return false;
     }
 
-    // THE FIX: Ensure a null value is converted to an empty string.
+    // Convert null values to empty string for compatibility with setcookie.
     $value = $value ?? '';
     $host = parse_url(XOOPS_URL, PHP_URL_HOST);
     if (!is_string($host)) {
