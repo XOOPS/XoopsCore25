@@ -540,7 +540,6 @@ abstract class XoopsMySQLDatabase extends XoopsDatabase
      * @param string $sql
      * @return bool
      */
-
     public function exec(string $sql): bool
     {
         // Dev-only guard: exec() should be write-like
