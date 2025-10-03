@@ -145,7 +145,7 @@ class XoopsLogger
      * @param string $sql   SQL string
      * @param string|null $error error message (if any)
      * @param int|null    $errno error number (if any)
-     * @param float   $query_time
+     * @param float|null   $query_time
      */
     public function addQuery($sql, $error = null, $errno = null, $query_time = null)
     {
