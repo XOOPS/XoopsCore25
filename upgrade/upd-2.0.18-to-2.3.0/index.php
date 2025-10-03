@@ -138,7 +138,7 @@ class Upgrade_230 extends XoopsUpgrade
         $prefixedName = $GLOBALS['xoopsDB']->prefix('block_module_link');
         $sql = 'INSERT INTO `' . $prefixedName . '` (`block_id`, `module_id`) ' .
             'SELECT DISTINCT `block_id`, `module_id` FROM `' . $prefixedName . '_old`';
-        $result = $GLOBALS['xoopsDB']->queryF($sql);
+        $result = $GLOBALS['xoopsDB']->exec($sql);
         if (true !== $result) {
             throw new \RuntimeException(
                 __METHOD__ . ' failed.',
@@ -158,7 +158,7 @@ class Upgrade_230 extends XoopsUpgrade
         if (!isset($GLOBALS['xoopsConfig']['cpanel'])) {
             $sql = 'INSERT INTO ' . $GLOBALS['xoopsDB']->prefix('config') . ' (conf_id, conf_modid, conf_catid, conf_name, conf_title, conf_value, conf_desc, conf_formtype, conf_valuetype, conf_order) ' . ' VALUES ' . " (NULL, 0, 1, 'cpanel', '_MD_AM_CPANEL', 'default', '_MD_AM_CPANELDSC', 'cpanel', 'other', 11)";
 
-            $result *= $GLOBALS['xoopsDB']->queryF($sql);
+            $result *= $GLOBALS['xoopsDB']->exec($sql);
         }
 
         $welcometype_installed = false;
@@ -173,13 +173,13 @@ class Upgrade_230 extends XoopsUpgrade
         if (!$welcometype_installed) {
             $sql = 'INSERT INTO ' . $GLOBALS['xoopsDB']->prefix('config') . ' (conf_id, conf_modid, conf_catid, conf_name, conf_title, conf_value, conf_desc, conf_formtype, conf_valuetype, conf_order) ' . ' VALUES ' . " (NULL, 0, 2, 'welcome_type', '_MD_AM_WELCOMETYPE', '1', '_MD_AM_WELCOMETYPE_DESC', 'select', 'int', 3)";
 
-            if (!$GLOBALS['xoopsDB']->queryF($sql)) {
+            if (!$GLOBALS['xoopsDB']->exec($sql)) {
                 return false;
             }
             $config_id = $GLOBALS['xoopsDB']->getInsertId();
 
             $sql = 'INSERT INTO ' . $GLOBALS['xoopsDB']->prefix('configoption') . ' (confop_id, confop_name, confop_value, conf_id)' . ' VALUES' . " (NULL, '_NO', '0', {$config_id})," . " (NULL, '_MD_AM_WELCOMETYPE_EMAIL', '1', {$config_id})," . " (NULL, '_MD_AM_WELCOMETYPE_PM', '2', {$config_id})," . " (NULL, '_MD_AM_WELCOMETYPE_BOTH', '3', {$config_id})";
-            if (!$result = $GLOBALS['xoopsDB']->queryF($sql)) {
+            if (!$result = $GLOBALS['xoopsDB']->exec($sql)) {
                 return false;
             }
         }
@@ -281,7 +281,7 @@ class Upgrade_230 extends XoopsUpgrade
     public function convert_db($charset, $collation)
     {
         $sql = 'ALTER DATABASE `' . XOOPS_DB_NAME . '` DEFAULT CHARACTER SET ' . $GLOBALS['xoopsDB']->quote($charset) . ' COLLATE ' . $GLOBALS['xoopsDB']->quote($collation);
-        $result = $GLOBALS['xoopsDB']->queryF($sql);
+        $result = $GLOBALS['xoopsDB']->exec($sql);
         if (!$GLOBALS['xoopsDB']->isResultSet($result)) {
             return false;
         }
@@ -294,8 +294,8 @@ class Upgrade_230 extends XoopsUpgrade
         $tables = [];
         while (false !== (list($table) = $GLOBALS['xoopsDB']->fetchRow($result))) {
             $tables[] = $table;
-            //$GLOBALS["xoopsDB"]->queryF( "ALTER TABLE `{$table}` DEFAULT CHARACTER SET " . $GLOBALS["xoopsDB"]->quote($charset) . " COLLATE " . $GLOBALS["xoopsDB"]->quote($collation) );
-            //$GLOBALS["xoopsDB"]->queryF( "ALTER TABLE `{$table}` CONVERT TO CHARACTER SET " . $GLOBALS["xoopsDB"]->quote($charset) . " COLLATE " . $GLOBALS["xoopsDB"]->quote($collation) );
+            //$GLOBALS["xoopsDB"]->exec( "ALTER TABLE `{$table}` DEFAULT CHARACTER SET " . $GLOBALS["xoopsDB"]->quote($charset) . " COLLATE " . $GLOBALS["xoopsDB"]->quote($collation) );
+            //$GLOBALS["xoopsDB"]->exec( "ALTER TABLE `{$table}` CONVERT TO CHARACTER SET " . $GLOBALS["xoopsDB"]->quote($charset) . " COLLATE " . $GLOBALS["xoopsDB"]->quote($collation) );
         }
         $this->convert_table($tables, $charset, $collation);
         return null;
@@ -325,7 +325,7 @@ class Upgrade_230 extends XoopsUpgrade
             foreach ((array) $tables as $table) {
                 // Analyze tables for string types columns and generate his binary and string correctness sql sentences.
                 $sql = "DESCRIBE $table";
-                $result = $GLOBALS['xoopsDB']->queryF($sql);
+                $result = $GLOBALS['xoopsDB']->exec($sql);
                 if (!$GLOBALS['xoopsDB']->isResultSet($result)) {
                     throw new \RuntimeException(
                         \sprintf(_DB_QUERY_ERROR, $sql) . $GLOBALS['xoopsDB']->error(),
@@ -390,7 +390,7 @@ class Upgrade_230 extends XoopsUpgrade
         $final_querys = array_merge((array) $drop_index_querys, (array) $binary_querys, (array) $tables_querys, (array) $string_querys, (array) $gen_index_querys, (array) $optimize_querys);
 
         foreach ($final_querys as $sql) {
-            $GLOBALS['xoopsDB']->queryF($sql);
+            $GLOBALS['xoopsDB']->exec($sql);
         }
 
         // Time to return.

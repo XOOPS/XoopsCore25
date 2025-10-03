@@ -66,7 +66,7 @@ class Upgrade_255 extends XoopsUpgrade
             foreach ($keys as $key) {
                 if (!in_array($key, $existing_keys)) {
                     $sql = 'ALTER TABLE `' . $GLOBALS['xoopsDB']->prefix($table) . "` ADD INDEX `{$key}` (`{$key}`)";
-                    if (!$result = $GLOBALS['xoopsDB']->queryF($sql)) {
+                    if (!$result = $GLOBALS['xoopsDB']->exec($sql)) {
                         return false;
                     }
                 }

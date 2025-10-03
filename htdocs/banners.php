@@ -356,7 +356,7 @@ function clickbanner($bid)
         [$clickurl] = $xoopsDB->fetchRow($result);
         if ($clickurl) {
             if ($GLOBALS['xoopsSecurity']->checkReferer()) {
-                $xoopsDB->queryF('UPDATE ' . $xoopsDB->prefix('banner') . " SET clicks=clicks+1 WHERE bid=$bid");
+                $xoopsDB->exec('UPDATE ' . $xoopsDB->prefix('banner') . " SET clicks=clicks+1 WHERE bid=$bid");
                 header('Location: ' . $clickurl);
             } else {
                 //No valid referer found so some javascript error or direct access found

@@ -813,7 +813,7 @@ class Upgrade_2511 extends XoopsUpgrade
         if (!$notification_method) {
             $sql = 'INSERT INTO ' . $GLOBALS['xoopsDB']->prefix('config') . ' (conf_id, conf_modid, conf_catid, conf_name, conf_title, conf_value, conf_desc, conf_formtype, conf_valuetype, conf_order) ' . ' VALUES ' . " (NULL, 0, 2, 'default_notification', '_MD_AM_DEFAULT_NOTIFICATION_METHOD', '1', '_MD_AM_DEFAULT_NOTIFICATION_METHOD_DESC', 'select', 'int', 3)";
 
-            if (!$GLOBALS['xoopsDB']->queryF($sql)) {
+            if (!$GLOBALS['xoopsDB']->exec($sql)) {
                 return false;
             }
             $config_id = $GLOBALS['xoopsDB']->getInsertId();
@@ -822,7 +822,7 @@ class Upgrade_2511 extends XoopsUpgrade
                 . " (NULL, '_MI_DEFAULT_NOTIFICATION_METHOD_DISABLE', '0', {$config_id}),"
                 . " (NULL, '_MI_DEFAULT_NOTIFICATION_METHOD_PM', '1', {$config_id}),"
                 . " (NULL, '_MI_DEFAULT_NOTIFICATION_METHOD_EMAIL', '2', {$config_id})";
-            if (!$result = $GLOBALS['xoopsDB']->queryF($sql)) {
+            if (!$result = $GLOBALS['xoopsDB']->exec($sql)) {
                 return false;
             }
         }

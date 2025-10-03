@@ -101,7 +101,7 @@ class Db_manager
                         }
                     }
                 } elseif ($prefixed_query[1] === 'INSERT INTO') {
-                    if ($this->db->query($prefixed_query[0]) != false) {
+                    if ($this->db->exec($prefixed_query[0]) != false) {
                         if (!isset($this->s_tables['insert'][$table])) {
                             $this->s_tables['insert'][$table] = 1;
                         } else {
@@ -115,7 +115,7 @@ class Db_manager
                         }
                     }
                 } elseif ($prefixed_query[1] === 'ALTER TABLE') {
-                    if ($this->db->query($prefixed_query[0]) != false) {
+                    if ($this->db->exec($prefixed_query[0]) != false) {
                         if (!isset($this->s_tables['alter'][$table])) {
                             $this->s_tables['alter'][$table] = 1;
                         }
@@ -125,7 +125,7 @@ class Db_manager
                         }
                     }
                 } elseif ($prefixed_query[1] === 'DROP TABLE') {
-                    if ($this->db->query('DROP TABLE ' . $table) != false) {
+                    if ($this->db->exec('DROP TABLE ' . $table) != false) {
                         if (!isset($this->s_tables['drop'][$table])) {
                             $this->s_tables['drop'][$table] = 1;
                         }
@@ -231,7 +231,7 @@ class Db_manager
         $this->db->connect();
         $table = $this->db->prefix($table);
         $query = 'INSERT INTO ' . $table . ' ' . $query;
-        if (!$this->db->queryF($query)) {
+        if (!$this->db->exec($query)) {
             if (!isset($this->f_tables['insert'][$table])) {
                 $this->f_tables['insert'][$table] = 1;
             } else {

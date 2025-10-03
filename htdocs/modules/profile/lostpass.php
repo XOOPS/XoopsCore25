@@ -64,7 +64,7 @@ if (empty($user)) {
             password_hash($newpass, PASSWORD_DEFAULT),
             $user->getVar('uid'),
         );
-        if (!$GLOBALS['xoopsDB']->queryF($sql)) {
+        if (!$GLOBALS['xoopsDB']->exec($sql)) {
             include $GLOBALS['xoops']->path('header.php');
             echo _US_MAILPWDNG;
             include __DIR__ . '/footer.php';

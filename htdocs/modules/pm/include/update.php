@@ -67,7 +67,7 @@ function xoops_module_update_pm(XoopsModule $module, $oldversion = null)
         $folderHandler->delete($imagesDirectory);
         //delete .html entries from the tpl table
         $sql = 'DELETE FROM ' . $xoopsDB->prefix('tplfile') . " WHERE `tpl_module` = '" . $module->getVar('dirname', 'n') . "' AND `tpl_file` LIKE '%.html%'";
-        $xoopsDB->queryF($sql);
+        $xoopsDB->exec($sql);
     }
 
     return true;
