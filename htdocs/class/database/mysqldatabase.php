@@ -539,6 +539,7 @@ abstract class XoopsMySQLDatabase extends XoopsDatabase
      *
      * @param string $sql
      * @return bool
+     * @throws \mysqli_sql_exception If a MySQLi error occurs and MySQLi is configured to throw exceptions.
      */
     public function exec(string $sql): bool
     {
