@@ -155,7 +155,7 @@ class Upgrade_2014 extends XoopsUpgrade
         ];
         foreach ($data as $name => $values) {
             if (!$this->getDbValue($db, 'config', 'conf_id', "`conf_modid`=0 AND `conf_catid`=7 AND `conf_name`='$name'")) {
-                $this->exec("INSERT INTO `$table` (conf_modid,conf_catid,conf_name,conf_title,conf_value,conf_desc,conf_formtype,conf_valuetype,conf_order) " . "VALUES ( 0,7,'$name',$values)");
+                $this->query("INSERT INTO `$table` (conf_modid,conf_catid,conf_name,conf_title,conf_value,conf_desc,conf_formtype,conf_valuetype,conf_order) " . "VALUES ( 0,7,'$name',$values)");
             }
         }
         // Insert auth_method config options
@@ -166,9 +166,9 @@ class Upgrade_2014 extends XoopsUpgrade
             '_MD_AM_AUTH_CONFOPTION_LDAP'  => 'ldap',
             '_MD_AM_AUTH_CONFOPTION_AD'    => 'ad',
         ];
-        $this->exec("DELETE FROM `$table` WHERE `conf_id`=$id");
+        $this->query("DELETE FROM `$table` WHERE `conf_id`=$id");
         foreach ($data as $name => $value) {
-            $this->exec("INSERT INTO `$table` (confop_name, confop_value, conf_id) VALUES ('$name', '$value', $id)");
+            $this->query("INSERT INTO `$table` (confop_name, confop_value, conf_id) VALUES ('$name', '$value', $id)");
         }
 
         return true;
