@@ -27,6 +27,10 @@ define('_XOOPS_EDITOR_TINYMCE5_LANGUAGE', 'en');
 define('_MD_AM_SENDMAIL_NOT_FOUND', 'Sendmail binary not found. Please check your server configuration.');
 define('_MD_AM_SENDMAIL_HELP_MISSING_BIN', 'No valid sendmail-compatible binary was detected. Install an MTA (e.g. Postfix, msmtp) or switch to SMTP in Preferences.');
 
+/htdocs/modules/system/language/english/admin/users.php
+define('_AM_SYSTEM_USERS_UNKNOWN_GROUP', 'Unknown group');
+
+
 ================================
 2023/10/01: Version 2.5.11-Final
 ================================
