@@ -962,68 +962,7 @@ switch ($op) {
             } else {
                 $xoopsTpl->assign('users_no_found', true);
             }
-                //echo $requete_search;
-                $groupHandler = xoops_getHandler('group');
-                foreach (array_keys($users_arr) as $i) {
-                    //Display group
-                    $user_group = $member_handler->getGroupsByUser($users_arr[$i]->getVar('uid'));
-                    if (in_array(XOOPS_GROUP_ADMIN, $user_group)) {
-                        $users['group'] = system_AdminIcons('xoops/group_1.png');
-                        //$users['icon'] = '<img src="'.XOOPS_URL.'/modules/system/images/icons/admin.png" alt="'._AM_SYSTEM_USERS_ADMIN.'" title="'._AM_SYSTEM_USERS_ADMIN.'" />';
-                        $users['checkbox_user'] = false;
-                    } else {
-                        $users['group'] = system_AdminIcons('xoops/group_2.png');
-                        //$users['icon'] = '<img src="'.XOOPS_URL.'/modules/system/images/icons/user.png" alt="'._AM_SYSTEM_USERS_USER.'" title="'._AM_SYSTEM_USERS_USER.'" />';
-                        $users['checkbox_user'] = true;
-                    }
-                    // get group names
-                    $group_list = [];
-                    $countGroups = 0;
-                    foreach ($user_group as $groupid) {
-                        $countGroups++;
-                        if ($countGroups > USER_MAX_GROUPS_DISPLAY) {
-                            $group_list[] = '...';
-                            break;
-                        } else {
-                            $group = $groupHandler->get($groupid);
-                            if ($group) {
-                                $group_list[] = $group->getVar('name');
-                            } else {
-                                $group_list[] = _AM_SYSTEM_USERS_UNKNOWN_GROUP;
-                            }
-                        }
-                    }
-
-                    $users['uid']         = $users_arr[$i]->getVar('uid');
-                    $users['name']        = $users_arr[$i]->getVar('name');
-                    $users['uname']       = $users_arr[$i]->getVar('uname');
-                    $users['email']       = $users_arr[$i]->getVar('email');
-                    $users['url']         = $users_arr[$i]->getVar('url');
-                    $users['user_avatar'] = ($users_arr[$i]->getVar('user_avatar') === 'blank.gif') ? system_AdminIcons('anonymous.png') : XOOPS_URL . '/uploads/' . $users_arr[$i]->getVar('user_avatar');
-                    $users['reg_date']    = formatTimestamp($users_arr[$i]->getVar('user_regdate'), 'm');
-                    if ($users_arr[$i]->getVar('last_login') > 0) {
-                        $users['last_login'] = formatTimestamp($users_arr[$i]->getVar('last_login'), 'm');
-                    } else {
-                        $users['last_login'] = _AM_SYSTEM_USERS_NOT_CONNECT;
-                    }
-                    $users['user_level'] = $users_arr[$i]->getVar('level');
-                    $users['user_icq']   = $users_arr[$i]->getVar('user_icq');
-                    $users['user_aim']   = $users_arr[$i]->getVar('user_aim');
-                    $users['user_yim']   = $users_arr[$i]->getVar('user_yim');
-                    $users['user_msnm']  = $users_arr[$i]->getVar('user_msnm');
-
-                    $users['posts'] = $users_arr[$i]->getVar('posts');
-
-                    $users['group_list'] = $group_list;
-
-                    $xoopsTpl->appendByRef('users', $users);
-                    $xoopsTpl->appendByRef('users_popup', $users);
-                    unset($users);
-                }
-            } else {
-                $xoopsTpl->assign('users_no_found', true);
-            }
-
+ 
             if ($users_count > $user_limit) {
                 include_once XOOPS_ROOT_PATH . '/class/pagenav.php';
                 $nav = new XoopsPageNav($users_count, $user_limit, $start, 'start', 'fct=users&amp;op=default' . $requete_pagenav);
