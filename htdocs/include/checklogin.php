@@ -104,7 +104,11 @@ if (false !== $user) {
                 $url .= ':' . $parsed['port'];
             }
         } else {
-            $url .= $_SERVER['HTTP_HOST'];
+            $host = parse_url(XOOPS_URL, PHP_URL_HOST);
+            if (!is_string($host)) {
+                $host = ''; // Or a safe default/fallback
+            }
+            $url .= $host;
         }
         if (isset($parsed['path']) && $parsed['path']) {
             if (strncmp($parsed['path'], $xoops_redirect, strlen($parsed['path']))) {

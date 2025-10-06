@@ -73,7 +73,11 @@ if (isset($xoopsConfig['startpage']) && $xoopsConfig['startpage'] != '' && $xoop
             $url .= ':' . $parsed['port'];
         }
     } else {
-        $url .= $_SERVER['HTTP_HOST'];
+        $host = parse_url(XOOPS_URL, PHP_URL_HOST);
+        if (!is_string($host)) {
+            $host = ''; // Or a safe default/fallback
+        }
+        $url .= $host;
     }
 
     $_SERVER['REQUEST_URI'] = substr(XOOPS_URL, strlen($url)) . '/modules/' . $xoopsConfig['startpage'] . '/index.php';

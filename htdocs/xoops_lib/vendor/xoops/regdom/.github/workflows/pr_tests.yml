@@ -3,62 +3,68 @@ name: CI
 on: [push, pull_request]
 
 jobs:
-  phpunit-9-6:
+  tests:
+    name: PHP ${{ matrix.php }} / Deps ${{ matrix.deps }}${{ matrix.coverage && ' / Coverage' || '' }}
+    runs-on: ubuntu-latest
+
     strategy:
       fail-fast: false
       matrix:
-        php_version: ["7.4", "8.1", "8.2", "8.3"]
-    runs-on: ubuntu-latest
+        php: ['7.4', '8.0', '8.1', '8.2']
+        deps: ['latest']
+        coverage: [false]
+        include:
+          - php: '7.4'
+            deps: 'lowest'
+            coverage: false
+          - php: '8.3'
+            deps: 'latest'
+            coverage: true
 
     steps:
-      - uses: actions/checkout@v2
-      - uses: php-actions/composer@v6
-        with:
-          php_version: "7.4"
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
       - name: Setup PHP
         uses: shivammathur/setup-php@v2
         with:
-          php-version: ${{ matrix.php_version }}
-          coverage: xdebug
-      - name: Unit Tests with PHPUnit 9.6
-        run: vendor/bin/phpunit --stderr --version 9.6
-        
-  phpunit-10-5:
-    strategy:
-      fail-fast: false
-      matrix:
-        php_version: ["8.1", "8.2", "8.3"]
-    runs-on: ubuntu-latest
+          php-version: ${{ matrix.php }}
+          extensions: intl, mbstring
+          coverage: ${{ matrix.coverage && 'xdebug' || 'none' }}
 
-    steps:
-      - uses: actions/checkout@v2
-      - uses: php-actions/composer@v6
-        with:
-          php_version: "8.1"
-      - name: Setup PHP
-        uses: shivammathur/setup-php@v2
-        with:
-          php-version: ${{ matrix.php_version }}
-          coverage: xdebug
-      - name: Unit Tests with PHPUnit 10.5
-        run: vendor/bin/phpunit --stderr --version 10.5
+      - name: Get Composer Cache Directory
+        id: composer-cache
+        run: echo "dir=$(composer config cache-files-dir)" >> $GITHUB_OUTPUT
 
-  phpunit-11-2:
-    strategy:
-      fail-fast: false
-      matrix:
-        php_version: ["8.2", "8.3"]
-    runs-on: ubuntu-latest
+      - name: Cache Composer Dependencies
+        uses: actions/cache@v4
+        with:
+          path: ${{ steps.composer-cache.outputs.dir }}
+          key: ${{ runner.os }}-php-${{ matrix.php }}-deps-${{ matrix.deps }}-${{ hashFiles('**/composer.json') }}
+          restore-keys: |
+            ${{ runner.os }}-php-${{ matrix.php }}-deps-
 
-    steps:
-      - uses: actions/checkout@v2
-      - uses: php-actions/composer@v6
+      - name: Install Dependencies
+        run: |
+          if [ "${{ matrix.deps }}" = "lowest" ]; then
+            composer update --prefer-lowest --prefer-stable --no-interaction
+          else
+            composer update --prefer-dist --no-interaction
+          fi
+
+      - name: Validate composer.json
+        run: composer validate --strict
+
+      - name: Ensure Build Directory Exists
+        run: mkdir -p build/logs
+
+      - name: Run All CI Checks
+        run: composer ci
+
+      - name: Upload Coverage to Codecov
+        if: ${{ matrix.coverage }}
+        uses: codecov/codecov-action@v4
         with:
-          php_version: "8.2"
-      - name: Setup PHP
-        uses: shivammathur/setup-php@v2
-        with:
-          php-version: ${{ matrix.php_version }}
-          coverage: xdebug
-      - name: Unit Tests with PHPUnit 11.2
-        run: vendor/bin/phpunit --stderr --version 11.2
+          token: ${{ secrets.CODECOV_TOKEN }} # Recommended for private repos
+          file: build/logs/clover.xml
+          fail_ci_if_error: false # Optional: Prevents CI failure if upload fails

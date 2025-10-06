@@ -41,6 +41,11 @@ if (!defined('XOOPS_MAINFILE_INCLUDED')) {
     // Example: define("XOOPS_URL", "http://url_to_xoops_directory");
     define('XOOPS_URL', 'https://');
 
+    // in mainfile.php - add this if it doesn't exist
+    if (!defined('XOOPS_COOKIE_DOMAIN_USE_PSL')) {
+        define('XOOPS_COOKIE_DOMAIN_USE_PSL', true);
+    }
+
     // XOOPS Cookie Domain to specify when creating cookies. May be blank (i.e. for IP address host),
     // full host from XOOPS_URL (i.e. www.example.com) or just the registered domain (i.e. example.com)
     // to share cookies across multiple subdomains (i.e. www.example.com and blog.example.com)
