@@ -341,7 +341,7 @@ class XoopsPrivmessageHandler extends XoopsObjectHandler
         }
 
         $sql = sprintf('UPDATE %s SET read_msg = 1 WHERE msg_id = %u', $this->db->prefix('priv_msgs'), $pm->getVar('msg_id'));
-        if (!$this->db->queryF($sql)) {
+        if (!$this->db->exec($sql)) {
             return false;
         }
 

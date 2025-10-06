@@ -109,7 +109,7 @@ class Db_manager
             if ($prefixed_query != false) {
                 $table = $this->db->prefix($prefixed_query[4]);
                 if ($prefixed_query[1] === 'CREATE TABLE') {
-                    if ($this->db->query($prefixed_query[0]) != false) {
+                    if ($this->db->exec($prefixed_query[0]) != false) {
                         if (!isset($this->s_tables['create'][$table])) {
                             $this->s_tables['create'][$table] = 1;
                         }
@@ -119,7 +119,7 @@ class Db_manager
                         }
                     }
                 } elseif ($prefixed_query[1] === 'INSERT INTO') {
-                    if ($this->db->query($prefixed_query[0]) != false) {
+                    if ($this->db->exec($prefixed_query[0]) != false) {
                         if (!isset($this->s_tables['insert'][$table])) {
                             $this->s_tables['insert'][$table] = 1;
                         } else {
@@ -133,7 +133,7 @@ class Db_manager
                         }
                     }
                 } elseif ($prefixed_query[1] === 'ALTER TABLE') {
-                    if ($this->db->query($prefixed_query[0]) != false) {
+                    if ($this->db->exec($prefixed_query[0]) != false) {
                         if (!isset($this->s_tables['alter'][$table])) {
                             $this->s_tables['alter'][$table] = 1;
                         }
@@ -143,7 +143,7 @@ class Db_manager
                         }
                     }
                 } elseif ($prefixed_query[1] === 'DROP TABLE') {
-                    if ($this->db->query('DROP TABLE ' . $table) != false) {
+                    if ($this->db->exec('DROP TABLE ' . $table) != false) {
                         if (!isset($this->s_tables['drop'][$table])) {
                             $this->s_tables['drop'][$table] = 1;
                         }
@@ -249,7 +249,7 @@ class Db_manager
         $this->db->connect();
         $table = $this->db->prefix($table);
         $query = 'INSERT INTO ' . $table . ' ' . $query;
-        if (!$this->db->queryF($query)) {
+        if (!$this->db->exec($query)) {
             if (!isset($this->f_tables['insert'][$table])) {
                 $this->f_tables['insert'][$table] = 1;
             } else {
@@ -286,7 +286,7 @@ class Db_manager
         $deleted = [];
         $this->db->connect();
         foreach ($tables as $key => $val) {
-            if (!$this->db->query('DROP TABLE ' . $this->db->prefix($key))) {
+            if (!$this->db->exec('DROP TABLE ' . $this->db->prefix($key))) {
                 $deleted[] = $ct;
             }
         }

@@ -431,7 +431,7 @@ class XoopsCommentHandler extends XoopsObjectHandler
             $sql = sprintf('UPDATE %s SET com_pid = %u, com_icon = %s, com_title = %s, com_text = %s, com_created = %u, com_modified = %u, com_uid = %u, com_user = %s, com_email = %s, com_url = %s, com_ip = %s, com_sig = %u, com_itemid = %u, com_rootid = %u, com_status = %u, com_exparams = %s, dohtml = %u, dosmiley = %u, doxcode = %u, doimage = %u, dobr = %u WHERE com_id = %u', $this->db->prefix('xoopscomments'), $com_pid, $this->db->quote($com_icon), $this->db->quote($com_title), $this->db->quote($com_text), $com_created, $com_modified, $com_uid, $this->db->quote($com_user), $this->db->quote($com_email), $this->db->quote($com_url), $this->db->quote($com_ip), $com_sig, $com_itemid, $com_rootid, $com_status, $this->db->quote($com_exparams), $dohtml, $dosmiley, $doxcode, $doimage, $dobr, $com_id);
         }
         // End edit by voltan
-        if (!$result = $this->db->query($sql)) {
+        if (!$result = $this->db->exec($sql)) {
             return false;
         }
         if (empty($com_id)) {
@@ -456,7 +456,7 @@ class XoopsCommentHandler extends XoopsObjectHandler
             return false;
         }
         $sql = sprintf('DELETE FROM %s WHERE com_id = %u', $this->db->prefix('xoopscomments'), $comment->getVar('com_id'));
-        if (!$result = $this->db->query($sql)) {
+        if (!$result = $this->db->exec($sql)) {
             return false;
         }
 
@@ -537,7 +537,7 @@ class XoopsCommentHandler extends XoopsObjectHandler
         if (isset($criteria) && \method_exists($criteria, 'renderWhere')) {
             $sql .= ' ' . $criteria->renderWhere();
         }
-        if (!$result = $this->db->query($sql)) {
+        if (!$result = $this->db->exec($sql)) {
             return false;
         }
 

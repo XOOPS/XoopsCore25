@@ -779,7 +779,7 @@ class Tables
     protected function execSql($sql, $force = false)
     {
         if ($force) {
-            $result = $this->db->queryF($sql);
+            $result = $this->db->exec($sql);
         } else {
             $result = $this->db->query($sql);
         }

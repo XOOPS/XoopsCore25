@@ -64,7 +64,7 @@ class TableLoad
 
             $sql = $insertInto . ') ' . $valueClause . ')';
 
-            $result = $db->queryF($sql);
+            $result = $db->exec($sql);
             if (false !== $result) {
                 ++$count;
             }
@@ -107,7 +107,7 @@ class TableLoad
 
         $prefixedTable = $db->prefix($table);
         $sql = 'TRUNCATE TABLE ' . $prefixedTable;
-        $result = $db->queryF($sql);
+        $result = $db->exec($sql);
         if (false !== $result) {
             $result = $db->getAffectedRows();
         }

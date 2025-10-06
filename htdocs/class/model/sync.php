@@ -72,7 +72,7 @@ class XoopsModelSync extends XoopsModelAbstract
             // for 4.0+
             $sql = "DELETE `{$this->handler->table}` FROM `{$this->handler->table}`" . " LEFT JOIN `{$this->handler->table_link}` AS aa ON `{$this->handler->table}`.`{$this->handler->field_object}` = aa.`{$this->handler->field_link}`" . " WHERE (aa.`{$this->handler->field_link}` IS NULL)";
         }
-        if (!$result = $this->handler->db->queryF($sql)) {
+        if (!$result = $this->handler->db->exec($sql)) {
             return false;
         }
 

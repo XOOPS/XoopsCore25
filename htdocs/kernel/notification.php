@@ -307,7 +307,7 @@ class XoopsNotificationHandler extends XoopsObjectHandler
         } else {
             $sql = sprintf('UPDATE %s SET not_modid = %u, not_itemid = %u, not_category = %s, not_uid = %u, not_event = %s, not_mode = %u WHERE not_id = %u', $this->db->prefix('xoopsnotifications'), $not_modid, $not_itemid, $this->db->quote($not_category), $not_uid, $this->db->quote($not_event), $not_mode, $not_id);
         }
-        if (!$result = $this->db->query($sql)) {
+        if (!$result = $this->db->exec($sql)) {
             return false;
         }
         if (empty($not_id)) {
@@ -333,7 +333,7 @@ class XoopsNotificationHandler extends XoopsObjectHandler
         }
 
         $sql = sprintf('DELETE FROM %s WHERE not_id = %u', $this->db->prefix('xoopsnotifications'), $notification->getVar('not_id'));
-        if (!$result = $this->db->query($sql)) {
+        if (!$result = $this->db->exec($sql)) {
             return false;
         }
 
@@ -415,7 +415,7 @@ class XoopsNotificationHandler extends XoopsObjectHandler
         if (isset($criteria) && \method_exists($criteria, 'renderWhere')) {
             $sql .= ' ' . $criteria->renderWhere();
         }
-        if (!$result = $this->db->query($sql)) {
+        if (!$result = $this->db->exec($sql)) {
             return false;
         }
 

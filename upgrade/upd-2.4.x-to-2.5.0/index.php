@@ -69,7 +69,7 @@ class Upgrade_250 extends XoopsUpgrade
         $count = $GLOBALS['xoopsDB']->fetchRow($result);
 
         $sql = 'UPDATE `' . $GLOBALS['xoopsDB']->prefix('config') . "` SET `conf_value` = 'default' WHERE `conf_id` = " . $count[0];
-        if (!$result = $GLOBALS['xoopsDB']->queryF($sql)) {
+        if (!$result = $GLOBALS['xoopsDB']->exec($sql)) {
             return false;
         }
 

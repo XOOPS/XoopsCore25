@@ -367,7 +367,7 @@ class XoopsConfigItemHandler extends XoopsObjectHandler
         } else {
             $sql = sprintf('UPDATE %s SET conf_modid = %u, conf_catid = %u, conf_name = %s, conf_title = %s, conf_value = %s, conf_desc = %s, conf_formtype = %s, conf_valuetype = %s, conf_order = %u WHERE conf_id = %u', $this->db->prefix('config'), $conf_modid, $conf_catid, $this->db->quote($conf_name), $this->db->quote($conf_title), $this->db->quote($conf_value), $this->db->quote($conf_desc), $this->db->quote($conf_formtype), $this->db->quote($conf_valuetype), $conf_order, $conf_id);
         }
-        if (!$result = $this->db->query($sql)) {
+        if (!$result = $this->db->exec($sql)) {
             return false;
         }
         if (empty($conf_id)) {
@@ -392,7 +392,7 @@ class XoopsConfigItemHandler extends XoopsObjectHandler
             return false;
         }
         $sql = sprintf('DELETE FROM %s WHERE conf_id = %u', $this->db->prefix('config'), $config->getVar('conf_id'));
-        if (!$result = $this->db->query($sql)) {
+        if (!$result = $this->db->exec($sql)) {
             return false;
         }
 

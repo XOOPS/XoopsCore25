@@ -58,13 +58,13 @@ if (!empty($_POST['copy']) && !empty($_POST['old_prefix'])) {
         $row_create = $db->fetchArray($crs);
         $create_sql = preg_replace("/^CREATE TABLE `$old_table`/", "CREATE TABLE `$new_table`", $row_create['Create Table'], 1);
 
-        $crs = $db->queryF($create_sql);
+        $crs = $db->exec($create_sql);
         if (!$crs) {
             echo "error: CREATE TABLE ($new_table)<br>\n";
             continue;
         }
 
-        $irs = $db->queryF("INSERT INTO `$new_table` SELECT * FROM `$old_table`");
+        $irs = $db->exec("INSERT INTO `$new_table` SELECT * FROM `$old_table`");
         if (!$irs) {
             echo "error: INSERT INTO ($new_table)<br>\n";
             continue;
@@ -241,7 +241,7 @@ if (!empty($_POST['copy']) && !empty($_POST['old_prefix'])) {
         if (substr($table, 0, strlen($prefix) + 1) !== $prefix . '_') {
             continue;
         }
-        $drs = $db->queryF("DROP TABLE `$table`");
+        $drs = $db->exec("DROP TABLE `$table`");
     }
 
     $_SESSION['protector_logger'] = $xoopsLogger->dump('queries');

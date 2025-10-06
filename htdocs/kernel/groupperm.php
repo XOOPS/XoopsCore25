@@ -210,7 +210,7 @@ class XoopsGroupPermHandler extends XoopsObjectHandler
         } else {
             $sql = sprintf('UPDATE %s SET gperm_groupid = %u, gperm_itemid = %u, gperm_modid = %u WHERE gperm_id = %u', $this->db->prefix('group_permission'), $gperm_groupid, $gperm_itemid, $gperm_modid, $gperm_id);
         }
-        if (!$result = $this->db->query($sql)) {
+        if (!$result = $this->db->exec($sql)) {
             return false;
         }
         if (empty($gperm_id)) {
@@ -235,7 +235,7 @@ class XoopsGroupPermHandler extends XoopsObjectHandler
             return false;
         }
         $sql = sprintf('DELETE FROM %s WHERE gperm_id = %u', $this->db->prefix('group_permission'), $perm->getVar('gperm_id'));
-        if (!$result = $this->db->query($sql)) {
+        if (!$result = $this->db->exec($sql)) {
             return false;
         }
 
@@ -314,7 +314,7 @@ class XoopsGroupPermHandler extends XoopsObjectHandler
         if (isset($criteria) && \method_exists($criteria, 'renderWhere')) {
             $sql .= ' ' . $criteria->renderWhere();
         }
-        if (!$result = $this->db->query($sql)) {
+        if (!$result = $this->db->exec($sql)) {
             return false;
         }
 

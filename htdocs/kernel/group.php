@@ -192,7 +192,7 @@ class XoopsGroupHandler extends XoopsObjectHandler
         } else {
             $sql = sprintf('UPDATE %s SET name = %s, description = %s, group_type = %s WHERE groupid = %u', $this->db->prefix('groups'), $this->db->quote($name), $this->db->quote($description), $this->db->quote($group_type), $groupid);
         }
-        if (!$result = $this->db->query($sql)) {
+        if (!$result = $this->db->exec($sql)) {
             return false;
         }
         if (empty($groupid)) {
@@ -217,7 +217,7 @@ class XoopsGroupHandler extends XoopsObjectHandler
             return false;
         }
         $sql = sprintf('DELETE FROM %s WHERE groupid = %u', $this->db->prefix('groups'), $group->getVar('groupid'));
-        if (!$result = $this->db->query($sql)) {
+        if (!$result = $this->db->exec($sql)) {
             return false;
         }
 
@@ -383,7 +383,7 @@ class XoopsMembershipHandler extends XoopsObjectHandler
         } else {
             $sql = sprintf('UPDATE %s SET groupid = %u, uid = %u WHERE linkid = %u', $this->db->prefix('groups_users_link'), $groupid, $uid, $linkid);
         }
-        if (!$result = $this->db->query($sql)) {
+        if (!$result = $this->db->exec($sql)) {
             return false;
         }
         if (empty($linkid)) {
@@ -409,7 +409,7 @@ class XoopsMembershipHandler extends XoopsObjectHandler
         }
 
         $sql = sprintf('DELETE FROM %s WHERE linkid = %u', $this->db->prefix('groups_users_link'), $mship->getVar('linkid'));
-        if (!$result = $this->db->query($sql)) {
+        if (!$result = $this->db->exec($sql)) {
             return false;
         }
 

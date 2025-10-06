@@ -157,7 +157,7 @@ function xoops_module_install($dirname)
                     // if there was an error, delete the tables created so far, so the next installation will not fail
                     if ($error === true) {
                         foreach ($created_tables as $ct) {
-                            $db->query('DROP TABLE ' . $db->prefix($ct));
+                            $db->exec('DROP TABLE ' . $db->prefix($ct));
                         }
                     }
                 }
@@ -168,7 +168,7 @@ function xoops_module_install($dirname)
             if (!$module_handler->insert($module)) {
                 $errs[] = '<p>' . sprintf(_AM_SYSTEM_MODULES_INSERT_DATA_FAILD, '<strong>' . $module->getVar('name') . '</strong>');
                 foreach ($created_tables as $ct) {
-                    $db->query('DROP TABLE ' . $db->prefix($ct));
+                    $db->exec('DROP TABLE ' . $db->prefix($ct));
                 }
                 $ret = '<p>' . sprintf(_AM_SYSTEM_MODULES_FAILINS, '<strong>' . $module->name() . '</strong>') . '&nbsp;' . _AM_SYSTEM_MODULES_ERRORSC . '<br>';
                 foreach ($errs as $err) {
@@ -248,7 +248,7 @@ function xoops_module_install($dirname)
                         }
                         $block_name = addslashes(trim((string) $block['name']));
                         $sql        = 'INSERT INTO ' . $db->prefix('newblocks') . " (bid, mid, func_num, options, name, title, content, side, weight, visible, block_type, c_type, isactive, dirname, func_file, show_func, edit_func, template, bcachetime, last_modified) VALUES ($newbid, $newmid, " . (int)$blockkey . ", '$options', '" . $block_name . "','" . $block_name . "', '', 0, 0, 0, 'M', 'H', 1, '" . addslashes($dirname) . "', '" . addslashes(trim((string) $block['file'])) . "', '" . addslashes(trim((string) $block['show_func'])) . "', '" . addslashes($edit_func) . "', '" . $template . "', 0, " . time() . ')';
-                        if (!$db->query($sql)) {
+                        if (!$db->exec($sql)) {
                             $msgs[] = '&nbsp;&nbsp;<span style="color:#ff0000;">' . sprintf(_AM_SYSTEM_MODULES_BLOCK_ADD_ERROR, '<strong>' . $block['name'] . '</strong>') . sprintf(_AM_SYSTEM_MODULES_BLOCK_ADD_ERROR_DATABASE, '<strong>' . $db->error() . '</strong>') . '</span>';
                         } else {
                             if (empty($newbid)) {
@@ -256,7 +256,7 @@ function xoops_module_install($dirname)
                             }
                             $msgs[] = '&nbsp;&nbsp;' . sprintf(_AM_SYSTEM_MODULES_BLOCK_ADD, '<strong>' . $block['name'] . '</strong>') . sprintf(_AM_SYSTEM_MODULES_BLOCK_ID, '<strong>' . $newbid . '</strong>');
                             $sql    = 'INSERT INTO ' . $db->prefix('block_module_link') . ' (block_id, module_id) VALUES (' . $newbid . ', -1)';
-                            $db->query($sql);
+                            $db->exec($sql);
                             if ($template != '') {
                                 $tplfile = $tplfile_handler->create();
                                 $tplfile->setVar('tpl_refid', $newbid);
@@ -717,7 +717,7 @@ function xoops_module_uninstall($dirname)
                     // prevent deletion of reserved core tables!
                     if (!in_array($table, $reservedTables)) {
                         $sql = 'DROP TABLE ' . $db->prefix($table);
-                        if (!$db->query($sql)) {
+                        if (!$db->exec($sql)) {
                             $msgs[] = '&nbsp;&nbsp;<span style="color:#ff0000;">' . sprintf(_AM_SYSTEM_MODULES_TABLE_DROPPED_ERROR, '<strong>' . $db->prefix($table) . '</strong>') . '</span>';
                         } else {
                             $msgs[] = '&nbsp;&nbsp;' . sprintf(_AM_SYSTEM_MODULES_TABLE_DROPPED, '<strong>' . $db->prefix($table) . '</strong>');
@@ -976,7 +976,7 @@ function xoops_module_update($dirname)
                     while (false !== ($fblock = $xoopsDB->fetchArray($fresult))) {
                         ++$fcount;
                         $sql    = 'UPDATE ' . $xoopsDB->prefix('newblocks') . " SET name='" . addslashes((string) $block['name']) . "', edit_func='" . addslashes((string) $editfunc) . "', content='', template='" . $template . "', last_modified=" . time() . ' WHERE bid=' . $fblock['bid'];
-                        $result = $xoopsDB->query($sql);
+                        $result = $xoopsDB->exec($sql);
                         if (!$result) {
                             $msgs[] = '&nbsp;&nbsp;' . sprintf(_AM_SYSTEM_MODULES_UPDATE_ERROR, $fblock['name']);
                         } else {
@@ -1018,7 +1018,7 @@ function xoops_module_update($dirname)
                         $block_name = addslashes((string) $block['name']);
                         $block_type = ($module->getVar('dirname') === 'system') ? 'S' : 'M';
                         $sql        = 'INSERT INTO ' . $xoopsDB->prefix('newblocks') . ' (bid, mid, func_num, options, name, title, content, side, weight, visible, block_type, isactive, dirname, func_file, show_func, edit_func, template, last_modified) VALUES (' . $newbid . ', ' . $module->getVar('mid') . ', ' . $i . ",'" . addslashes((string) $options) . "','" . $block_name . "', '" . $block_name . "', '', 0, 0, 0, '{$block_type}', 1, '" . addslashes($dirname) . "', '" . addslashes((string) $block['file']) . "', '" . addslashes((string) $block['show_func']) . "', '" . addslashes((string) $editfunc) . "', '" . $template . "', " . time() . ')';
-                        $result     = $xoopsDB->query($sql);
+                        $result     = $xoopsDB->exec($sql);
                         if (!$result) {
                             $msgs[] = '&nbsp;&nbsp;' . sprintf(_AM_SYSTEM_MODULES_SQL_NOT_CREATE, $block['name']);
                             echo $sql;
@@ -1072,7 +1072,7 @@ function xoops_module_update($dirname)
                             }
                             $msgs[] = '&nbsp;&nbsp;' . sprintf(_AM_SYSTEM_MODULES_BLOCK_CREATED, '<strong>' . $block['name'] . '</strong>') . sprintf(_AM_SYSTEM_MODULES_BLOCK_ID, '<strong>' . $newbid . '</strong>');
                             $sql    = 'INSERT INTO ' . $xoopsDB->prefix('block_module_link') . ' (block_id, module_id) VALUES (' . $newbid . ', -1)';
-                            $xoopsDB->query($sql);
+                            $xoopsDB->exec($sql);
                         }
                     }
                 }
@@ -1082,7 +1082,7 @@ function xoops_module_update($dirname)
             foreach ($block_arr as $block) {
                 if (!in_array($block->getVar('show_func'), $showfuncs) || !in_array($block->getVar('func_file'), $funcfiles)) {
                     $sql = sprintf('DELETE FROM %s WHERE bid = %u', $xoopsDB->prefix('newblocks'), $block->getVar('bid'));
-                    if (!$xoopsDB->query($sql)) {
+                    if (!$xoopsDB->exec($sql)) {
                         $msgs[] = '&nbsp;&nbsp;<span style="color:#ff0000;">' . sprintf(_AM_SYSTEM_MODULES_BLOCK_DELETE_ERROR, '<strong>' . $block->getVar('name') . '</strong>') . sprintf(_AM_SYSTEM_MODULES_BLOCK_ID, '<strong>' . $block->getVar('bid') . '</strong>') . '</span>';
                     } else {
                         $msgs[] = '&nbsp;&nbsp;Block <strong>' . $block->getVar('name') . '</strong> deleted. Block ID: <strong>' . $block->getVar('bid') . '</strong>';

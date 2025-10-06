@@ -248,7 +248,7 @@ class XoopsModelWrite extends XoopsModelAbstract
 
             return $object->getVar($this->handler->keyName);
         }
-        $queryFunc = empty($force) ? 'query' : 'queryF';
+        $queryFunc = empty($force) ? 'query' : 'exec';
 
         if ($object->isNew()) {
             $sql = 'INSERT INTO `' . $this->handler->table . '`';
@@ -301,7 +301,7 @@ class XoopsModelWrite extends XoopsModelAbstract
             $whereclause = '`' . $this->handler->keyName . '` = ' . $this->handler->db->quote($object->getVar($this->handler->keyName));
         }
         $sql       = 'DELETE FROM `' . $this->handler->table . '` WHERE ' . $whereclause;
-        $queryFunc = empty($force) ? 'query' : 'queryF';
+        $queryFunc = empty($force) ? 'query' : 'exec';
         $result    = $this->handler->db->{$queryFunc}($sql);
 
         return empty($result) ? false : true;
@@ -327,7 +327,7 @@ class XoopsModelWrite extends XoopsModelAbstract
 
             return $num;
         }
-        $queryFunc = empty($force) ? 'query' : 'queryF';
+        $queryFunc = empty($force) ? 'query' : 'exec';
         $sql       = 'DELETE FROM ' . $this->handler->table;
         if (!empty($criteria)) {
             if (is_subclass_of($criteria, 'CriteriaElement')) {
@@ -366,7 +366,7 @@ class XoopsModelWrite extends XoopsModelAbstract
         if (isset($criteria) && \method_exists($criteria, 'renderWhere')) {
             $sql .= ' ' . $criteria->renderWhere();
         }
-        $queryFunc = empty($force) ? 'query' : 'queryF';
+        $queryFunc = empty($force) ? 'query' : 'exec';
         $result    = $this->handler->db->{$queryFunc}($sql);
 
         return empty($result) ? false : true;

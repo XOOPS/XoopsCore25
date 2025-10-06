@@ -215,7 +215,7 @@ class XoopsTplsetHandler extends XoopsObjectHandler
         } else {
             $sql = sprintf('UPDATE %s SET tplset_name = %s, tplset_desc = %s, tplset_credits = %s, tplset_created = %u WHERE tplset_id = %u', $this->db->prefix('tplset'), $this->db->quote($tplset_name), $this->db->quote($tplset_desc), $this->db->quote($tplset_credits), $tplset_created, $tplset_id);
         }
-        if (!$result = $this->db->query($sql)) {
+        if (!$result = $this->db->exec($sql)) {
             return false;
         }
         if (empty($tplset_id)) {
