@@ -30,6 +30,7 @@
             <th class="txtcenter"><{$smarty.const._AM_SYSTEM_USERS_EMAIL}></th>
             <th class="txtcenter"><{$smarty.const._AM_SYSTEM_USERS_REG_DATE}></th>
             <th class="txtcenter"><{$smarty.const._AM_SYSTEM_USERS_LAST_LOGIN}></th>
+            <th class="txtcenter"><{$smarty.const._AM_SYSTEM_USERS_GROUPS}></th>
             <th class="txtcenter"><{$smarty.const._AM_SYSTEM_USERS_POSTS}></th>
             <th class="txtcenter" width='11%'><{$smarty.const._AM_SYSTEM_USERS_ACTION}></th>
         </tr>
@@ -49,6 +50,15 @@
                         <td class="txtcenter"><{$user.email}></td>
                         <td class="txtcenter"><{$user.reg_date}></td>
                         <td class="txtcenter"><{$user.last_login}></td>
+                        <td class="txtleft">
+                            <{if $user.group_list|@count}>
+                                <ul>
+                                <{foreach item=usergroup from=$user.group_list|default:null}>
+                                    <li><{$usergroup}></li>
+                                <{/foreach}>
+                                </ul>
+                            <{/if}>
+                        </td>
                         <td class="txtcenter">
                             <div id="display_post_<{$user.uid}>"><{$user.posts}></div>
                             <div id='loading_<{$user.uid}>' class="txtcenter" style="display:none;"><img src="./images/mimetypes/spinner.gif" title="Loading"
