@@ -34,8 +34,8 @@ function xoops_setcookie(
     string $name,
     ?string $value = '',
     int $expire = 0,
-     $path = '/',
-     $domain = '',
+    ?string $path = '/',
+    ?string $domain = '',
     ?bool $secure = null,
     bool $httponly = true,
     string $samesite = 'Lax'
@@ -49,6 +49,9 @@ function xoops_setcookie(
     $host = parse_url(XOOPS_URL, PHP_URL_HOST);
     if (!is_string($host)) {
         $host = ''; // Fallback for invalid XOOPS_URL
+    }
+    if (!is_string($domain)) {
+        $domain = ''; // Fallback for invalid domain
     }
 
     // Validate the domain BEFORE using it.
