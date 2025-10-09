@@ -118,7 +118,7 @@ if (!empty($_SESSION['settings']['authorized']) && !empty($adminname) && !empty(
     ];
     $token = \Xmf\Jwt\TokenFactory::build('install', $claims, 60 * 60);
 
-    xoops_setcookie('xo_install_user', $token, 0, null, null, null, true);
+    xoops_setcookie('xo_install_user', $token, 0, '', '', null, true);
 }
 
 include __DIR__ . '/include/install_tpl.php';
