@@ -117,12 +117,13 @@ if (!empty($_POST['action'])) {
             $lid = (int) $lid;
             $sql = "SELECT `ip` FROM $log_table WHERE lid='$lid'";
             $result = $db->query($sql);
-
             if (!$db->isResultSet($result)) {
-                [$ip] = $db->fetchRow($result);
-                $protector->register_bad_ips(0, $ip);
+                $row = $db->fetchRow($result);
+                if (false !== $row) {
+                    [$ip] = $row;
+                    $protector->register_bad_ips(0, $ip);
+                }
             }
-
             if ($db->isResultSet($result)) {
                 $db->freeRecordSet($result);
             }
@@ -147,7 +148,8 @@ if (!empty($_POST['action'])) {
         }
         $buf    = [];
         $ids    = [];
-        while (false !== ([$lid, $ip, $type] = $db->fetchRow($result))) {
+        while (false !== ($row = $db->fetchRow($result))) {
+            [$lid, $ip, $type] = $row;
             if (isset($buf[$ip . $type])) {
                 $ids[] = $lid;
             } else {
@@ -294,7 +296,8 @@ echo "
 
 // body of log listing
 $oddeven = 'odd';
-while (false !== ([$lid, $uid, $ip, $agent, $type, $description, $timestamp, $uname] = $db->fetchRow($result))) {
+while (false !== ($row = $db->fetchRow($result))) {
+    [$lid, $uid, $ip, $agent, $type, $description, $timestamp, $uname] = $row;
     $oddeven = ($oddeven === 'odd' ? 'even' : 'odd');
     $style = '';
 
