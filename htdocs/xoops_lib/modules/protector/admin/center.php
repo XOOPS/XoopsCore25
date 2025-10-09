@@ -117,7 +117,7 @@ if (!empty($_POST['action'])) {
             $lid = (int) $lid;
             $sql = "SELECT `ip` FROM $log_table WHERE lid='$lid'";
             $result = $db->query($sql);
-            if (!$db->isResultSet($result)) {
+            if ($db->isResultSet($result)) {
                 $row = $db->fetchRow($result);
                 if (false !== $row) {
                     [$ip] = $row;
