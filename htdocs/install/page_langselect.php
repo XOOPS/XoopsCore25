@@ -29,17 +29,17 @@
 require_once __DIR__ . '/include/common.inc.php';
 defined('XOOPS_INSTALL') || die('XOOPS Installation wizard die');
 
-xoops_setcookie('xo_install_lang', 'english', null, null, null);
+xoops_setcookie('xo_install_lang', 'english', 0, '', '');
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_REQUEST['lang'])) {
     $lang = $_REQUEST['lang'];
-    xoops_setcookie('xo_install_lang', $lang, null, null, null);
+    xoops_setcookie('xo_install_lang', $lang, 0, '', '');
 
     $wizard->redirectToPage('+1');
     exit();
 }
 
 $_SESSION['settings'] = [];
-xoops_setcookie('xo_install_user', '', null, null, null);
+xoops_setcookie('xo_install_user', '', 0, '', '');
 
 $pageHasForm = true;
 $title = LANGUAGE_SELECTION;
