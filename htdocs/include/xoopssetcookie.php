@@ -22,8 +22,8 @@
  * @param string $name The name of the cookie.
  * @param string|null $value The value of the cookie.
  * @param int $expire The time the cookie expires. This is a Unix timestamp.
- * @param string $path The path on the server in which the cookie will be available on.
- * @param string $domain The (sub)domain that the cookie is available to.
+ * @param string|null $path The path on the server in which the cookie will be available on.
+ * @param string|null $domain The (sub)domain that the cookie is available to.
  * @param bool|null $secure Indicates that the cookie should only be transmitted over a secure HTTPS connection.
  * If null, it will be auto-detected.
  * @param bool $httponly When TRUE the cookie will be made accessible only through the HTTP protocol.
@@ -34,8 +34,8 @@ function xoops_setcookie(
     string $name,
     ?string $value = '',
     int $expire = 0,
-    string $path = '/',
-    string $domain = '',
+    ?string $path = '/',
+    ?string $domain = '',
     ?bool $secure = null,
     bool $httponly = true,
     string $samesite = 'Lax'
@@ -49,6 +49,9 @@ function xoops_setcookie(
     $host = parse_url(XOOPS_URL, PHP_URL_HOST);
     if (!is_string($host)) {
         $host = ''; // Fallback for invalid XOOPS_URL
+    }
+    if (!is_string($domain)) {
+        $domain = ''; // Fallback for invalid domain
     }
 
     // Validate the domain BEFORE using it.
