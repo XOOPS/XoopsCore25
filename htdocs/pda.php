@@ -37,7 +37,8 @@ if (!$xoopsDB->isResultSet($result)) {
     echo "<img src='images/logo.gif' alt='" . htmlspecialchars($xoopsConfig['sitename'], ENT_QUOTES | ENT_HTML5) . "' border='0' /><br>";
     echo '<h2>' . htmlspecialchars($xoopsConfig['slogan'], ENT_QUOTES | ENT_HTML5) . '</h2>';
     echo '<div>';
-    while (false !== ([$storyid, $title] = $xoopsDB->fetchRow($result))) {
+    while (false !== ($row = $xoopsDB->fetchRow($result))) {
+        [$storyid, $title] = $row;
         echo "<a href='" . XOOPS_URL . "/modules/news/print.php?storyid=$storyid'>" . htmlspecialchars($title, ENT_QUOTES | ENT_HTML5) . '</a><br>';
     }
     echo '</div>';

@@ -59,7 +59,8 @@ function update_system_v211($module)
         );
     }
     $tplids = [];
-    while (false !== ([$tplid] = $xoopsDB->fetchRow($result))) {
+    while (false !== ($row = $xoopsDB->fetchRow($result))) {
+        [$tplid] = $row;
         $tplids[] = $tplid;
     }
     if (count($tplids) > 0) {
