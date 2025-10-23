@@ -165,6 +165,14 @@ define('NO_MODULES_FOUND', 'No modules found.');
 define('NO_INSTALLED_MODULES', 'No module installed.');
 define('THEME_NO_SCREENSHOT', 'No screenshot found');
 define('IS_VALOR', ' => ');
+// website name and slogan
+define('_WEBSITE_NAME', 'XOOPS Site');
+define('_WEBSITE_SLOGAN', 'Just use it!');
+define('_WEBSITE_META_KEYWORDS', 'xoops, web application framework, cms, content management system');
+define('_WEBSITE_FOOTER', "Powered by XOOPS © 2001-{X_YEAR} <a href='https://xoops.org' rel='external' title='The XOOPS Project'>The XOOPS Project</a>");
+define('_WEBSITE_COPYRIGHT', 'Copyright © 2001-{X_YEAR}');
+define('_WEBSITE_DESCRIPTION', 'XOOPS is a dynamic Object Oriented based open source portal script written in PHP.');
+define('_WEBSITE_CENSOR_REPLACE', 'OOPS');
 // password message
 define('PASSWORD_LABEL', 'Password strength');
 define('PASSWORD_DESC', 'Password not entered');
