@@ -61,7 +61,7 @@ function xoops_getLinkedUnameFromId($userid)
     return XoopsUserUtility::getUnameFromId($userid, false, true);
 }
 
-/*
+/**
  * Function to display banners in all pages
 * @deprecated
 */
@@ -71,7 +71,7 @@ function showbanner()
     echo xoops_getbanner();
 }
 
-/*
+/**
  * This function is deprecated. Do not use!
 * @deprecated
 */
@@ -111,7 +111,7 @@ function getMailer()
     return $mailer;
 }
 
-/*
+/**
  * Functions to display dhtml loading image box
 * @deprecated
 */
