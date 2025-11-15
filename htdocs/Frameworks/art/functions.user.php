@@ -18,6 +18,7 @@ if (!defined('FRAMEWORKS_ART_FUNCTIONS_USER')):
      * @param bool $asString
      *
      * @return mixed
+     * @deprecated
      */
     function mod_getIP($asString = false)
     {
@@ -32,6 +33,7 @@ if (!defined('FRAMEWORKS_ART_FUNCTIONS_USER')):
      * @param bool $linked
      *
      * @return array
+     * @deprecated
      */
     function &mod_getUnameFromIds($uid, $usereal = false, $linked = false)
     {
@@ -47,6 +49,7 @@ if (!defined('FRAMEWORKS_ART_FUNCTIONS_USER')):
      * @param bool $linked
      *
      * @return string
+     * @deprecated
      */
     function mod_getUnameFromId($uid, $usereal = 0, $linked = false)
     {

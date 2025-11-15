@@ -152,6 +152,7 @@ abstract class XoopsDatabase
 
     /**
      * Legacy alias for writes; kept for BC.
+     * @deprecated
      */
     public function queryF(string $sql)
     {

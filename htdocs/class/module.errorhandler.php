@@ -27,6 +27,7 @@ $GLOBALS['xoopsLogger']->addDeprecated("'/class/module.errorhandler.php' is depr
  * @package    kernel
  * @subpackage core
  * @author     Goghs (http://www.eqiao.com/)
+ * @deprecated
  */
 class ErrorHandler
 {

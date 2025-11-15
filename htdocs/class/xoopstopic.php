@@ -25,6 +25,7 @@ include_once XOOPS_ROOT_PATH . '/class/xoopstree.php';
 
 /**
  * Class XoopsTopic
+ * @deprecated
  */
 class XoopsTopic
 {
