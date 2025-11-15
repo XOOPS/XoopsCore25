@@ -21,6 +21,7 @@
 if (!function_exists('opentable')) {
     /**
      * @param string $width
+     * @deprecated
      */
     function openTable($width = '100%')
     {
@@ -30,6 +31,10 @@ if (!function_exists('opentable')) {
 }
 
 if (!function_exists('closetable')) {
+    /**
+     * @return void
+     * @deprecated
+     */
     function closeTable()
     {
         $GLOBALS['xoopsLogger']->addDeprecated("Function '" . __FUNCTION__ . "' in '" . __FILE__ . "' is deprecated, should not be used any more");
@@ -41,6 +46,7 @@ if (!function_exists('themecenterposts')) {
     /**
      * @param $title
      * @param $content
+     * @deprecated
      */
     function themecenterposts($title, $content)
     {

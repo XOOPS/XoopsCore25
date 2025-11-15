@@ -198,6 +198,7 @@ class XoopsModelRead extends XoopsModelAbstract
      * @param  array           $fields   variables to fetch
      * @param  bool            $asObject flag indicating as object, otherwise as array
      * @return array           of objects    {@link XoopsObject}
+     * @deprecated
      */
     public function &getByLimit($limit = 0, $start = 0, ?CriteriaElement $criteria = null, $fields = null, $asObject = true)
     {
@@ -222,6 +223,7 @@ class XoopsModelRead extends XoopsModelAbstract
      * @param  bool   $id_as_key - should NOT be used with joint keys
      * @param  bool   $as_object
      * @return array
+     * @deprecated
      */
     public function convertResultSet($result, $id_as_key = false, $as_object = true)
     {

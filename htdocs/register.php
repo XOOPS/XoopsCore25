@@ -49,6 +49,7 @@ require_once $GLOBALS['xoops']->path('include/notification_constants.php');
  * @param $vpass
  *
  * @return bool|string
+ * @deprecated
  */
 function userCheck($uname, $email, $pass, $vpass)
 {

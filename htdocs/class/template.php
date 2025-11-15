@@ -298,6 +298,7 @@ class XoopsTpl extends Smarty
      *
      * @param string $tpl_var the template variable name
      * @param mixed  &$value  the referenced value to assign
+     * @deprecated
      */
     public function assign_by_ref($tpl_var, &$value)
     {
@@ -311,6 +312,7 @@ class XoopsTpl extends Smarty
      * @param string  $tpl_var the template variable name
      * @param mixed   &$value  the referenced value to append
      * @param boolean $merge   flag if array elements shall be merged
+     * @deprecated
      */
     public function append_by_ref($tpl_var, &$value, $merge = false)
     {
@@ -322,6 +324,7 @@ class XoopsTpl extends Smarty
      * deprecated clear_assign
      *
      * @param string $tpl_var the template variable to clear
+     * @deprecated
      */
     public function clear_assign($tpl_var)
     {
@@ -338,6 +341,7 @@ class XoopsTpl extends Smarty
      * @param mixed  $cache_attrs
      *
      * @throws \SmartyException
+     * @deprecated
      */
     public function register_function($function, $function_impl, $cacheable = true, $cache_attrs = null)
     {
@@ -349,6 +353,7 @@ class XoopsTpl extends Smarty
      * deprecated unregister_function
      *
      * @param string $function name of template function
+     * @deprecated
      */
     public function unregister_function($function)
     {
@@ -367,6 +372,7 @@ class XoopsTpl extends Smarty
      *
      * @throws   SmartyException
      * @internal param array $block_functs list of methods that are block format
+     * @deprecated
      */
     public function register_object(
         $object,
@@ -385,6 +391,7 @@ class XoopsTpl extends Smarty
      * deprecated unregister_object
      *
      * @param string $object name of template object
+     * @deprecated
      */
     public function unregister_object($object)
     {
@@ -401,6 +408,7 @@ class XoopsTpl extends Smarty
      * @param mixed  $cache_attrs
      *
      * @throws \SmartyException
+     * @deprecated
      */
     public function register_block($block, $block_impl, $cacheable = true, $cache_attrs = null)
     {
@@ -412,6 +420,7 @@ class XoopsTpl extends Smarty
      * deprecated unregister_block
      *
      * @param string $block name of template function
+     * @deprecated
      */
     public function unregister_block($block)
     {
@@ -427,6 +436,7 @@ class XoopsTpl extends Smarty
      * @param bool   $cacheable
      *
      * @throws \SmartyException
+     * @deprecated
      */
     public function register_compiler_function($function, $function_impl, $cacheable = true)
     {
@@ -438,6 +448,7 @@ class XoopsTpl extends Smarty
      * deprecated unregister_compiler_function
      *
      * @param string $function name of template function
+     * @deprecated
      */
     public function unregister_compiler_function($function)
     {
@@ -452,6 +463,7 @@ class XoopsTpl extends Smarty
      * @param string $modifier_impl name of PHP function to register
      *
      * @throws \SmartyException
+     * @deprecated
      */
     public function register_modifier($modifier, $modifier_impl)
     {
@@ -463,6 +475,7 @@ class XoopsTpl extends Smarty
      * deprecated unregister_modifier
      *
      * @param string $modifier name of template modifier
+     * @deprecated
      */
     public function unregister_modifier($modifier)
     {
@@ -475,6 +488,7 @@ class XoopsTpl extends Smarty
      *
      * @param string $type      name of resource
      * @param array  $functions array of functions to handle resource
+     * @deprecated
      */
     public function register_resource($type, $functions)
     {
@@ -486,6 +500,7 @@ class XoopsTpl extends Smarty
      * deprecated unregister_resource
      *
      * @param string $type name of resource
+     * @deprecated
      */
     public function unregister_resource($type)
     {
@@ -499,6 +514,7 @@ class XoopsTpl extends Smarty
      * @param callable $function
      *
      * @throws \SmartyException
+     * @deprecated
      */
     public function register_prefilter($function)
     {
@@ -510,6 +526,7 @@ class XoopsTpl extends Smarty
      * deprecated unregister_prefilter
      *
      * @param callable $function
+     * @deprecated
      */
     public function unregister_prefilter($function)
     {
@@ -523,6 +540,7 @@ class XoopsTpl extends Smarty
      * @param callable $function
      *
      * @throws \SmartyException
+     * @deprecated
      */
     public function register_postfilter($function)
     {
@@ -534,6 +552,7 @@ class XoopsTpl extends Smarty
      * deprecated unregister_postfilter
      *
      * @param callable $function
+     * @deprecated
      */
     public function unregister_postfilter($function)
     {
@@ -547,6 +566,7 @@ class XoopsTpl extends Smarty
      * @param callable $function
      *
      * @throws \SmartyException
+     * @deprecated
      */
     public function register_outputfilter($function)
     {
@@ -558,6 +578,7 @@ class XoopsTpl extends Smarty
      * deprecated unregister_outputfilter
      *
      * @param callable $function
+     * @deprecated
      */
     public function unregister_outputfilter($function)
     {
@@ -572,6 +593,7 @@ class XoopsTpl extends Smarty
      * @param string $name filter name
      *
      * @throws \SmartyException
+     * @deprecated
      */
     public function load_filter($type, $name)
     {
@@ -588,6 +610,7 @@ class XoopsTpl extends Smarty
      * @param string $exp_time   expiration time
      *
      * @return boolean
+     * @deprecated
      */
     public function clear_cache($tpl_file = null, $cache_id = null, $compile_id = null, $exp_time = null)
     {
@@ -601,6 +624,7 @@ class XoopsTpl extends Smarty
      * @param string $exp_time expire time
      *
      * @return boolean
+     * @deprecated
      */
     public function clear_all_cache($exp_time = null)
     {
@@ -618,6 +642,7 @@ class XoopsTpl extends Smarty
      * @return bool
      * @throws \Exception
      * @throws \SmartyException
+     * @deprecated
      */
     public function is_cached($tpl_file, $cache_id = null, $compile_id = null)
     {
@@ -627,6 +652,7 @@ class XoopsTpl extends Smarty
 
     /**
      * deprecated clear_all_assign
+     * @deprecated
      */
     public function clear_all_assign()
     {
@@ -642,6 +668,7 @@ class XoopsTpl extends Smarty
      * @param string $exp_time
      *
      * @return boolean results of {@link smarty_core_rm_auto()}
+     * @deprecated
      */
     public function clear_compiled_tpl($tpl_file = null, $compile_id = null, $exp_time = null)
     {
@@ -656,6 +683,7 @@ class XoopsTpl extends Smarty
      *
      * @return bool
      * @throws \SmartyException
+     * @deprecated
      */
     public function template_exists($tpl_file)
     {
@@ -669,6 +697,7 @@ class XoopsTpl extends Smarty
      * @param string $name
      *
      * @return array
+     * @deprecated
      */
     public function get_template_vars($name = null)
     {
@@ -682,6 +711,7 @@ class XoopsTpl extends Smarty
      * @param string $name
      *
      * @return array
+     * @deprecated
      */
     public function get_config_vars($name = null)
     {
@@ -695,6 +725,7 @@ class XoopsTpl extends Smarty
      * @param string $file
      * @param string $section
      * @param string $scope
+     * @deprecated
      */
     public function config_load($file, $section = null, $scope = 'global')
     {
@@ -708,6 +739,7 @@ class XoopsTpl extends Smarty
      * @param string $name
      *
      * @return object
+     * @deprecated
      */
     public function get_registered_object($name)
     {
@@ -719,6 +751,7 @@ class XoopsTpl extends Smarty
      * deprecated clear_config
      *
      * @param string $var
+     * @deprecated
      */
     public function clear_config($var = null)
     {
