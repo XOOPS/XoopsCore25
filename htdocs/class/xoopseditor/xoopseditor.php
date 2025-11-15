@@ -206,7 +206,7 @@ class XoopsEditorHandler
      * XoopsEditorHandler::render()
      *
      * @param mixed $editor
-     * @return
+     * @return string
      * @deprecated
      */
     public function render($editor)
