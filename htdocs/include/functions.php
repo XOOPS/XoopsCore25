@@ -838,13 +838,13 @@ function redirect_header($url, $time = 3, $message = '', $addredirect = true, $a
             $url .= '&amp;xoops_redirect=' . urlencode($_SERVER['REQUEST_URI']);
         }
     }
-    if (defined('SID') && SID && (!isset($_COOKIE[session_name()]) || ($xoopsConfig['use_mysession'] && $xoopsConfig['session_name'] != '' && !isset($_COOKIE[$xoopsConfig['session_name']])))) {
-        if (false === strpos($url, '?')) {
-            $url .= '?' . SID;
-        } else {
-            $url .= '&amp;' . SID;
-        }
-    }
+//    if (defined('SID') && SID && (!isset($_COOKIE[session_name()]) || ($xoopsConfig['use_mysession'] && $xoopsConfig['session_name'] != '' && !isset($_COOKIE[$xoopsConfig['session_name']])))) {
+//        if (false === strpos($url, '?')) {
+//            $url .= '?' . SID;
+//        } else {
+//            $url .= '&amp;' . SID;
+//        }
+//    }
     $url = preg_replace('/&amp;/i', '&', htmlspecialchars($url, ENT_QUOTES | ENT_HTML5));
     $xoopsTpl->assign('url', $url);
     $message = trim($message) != '' ? $message : _TAKINGBACK;
