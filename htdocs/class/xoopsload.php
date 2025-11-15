@@ -31,7 +31,6 @@ class XoopsLoad
      * @param string $type
      *
      * @return bool
-     * @deprecated
      */
     public static function load($name, $type = 'core')
     {
