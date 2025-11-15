@@ -20,7 +20,7 @@ $content = '
 <ul>
     <li>WWW Server (<a href="https://www.apache.org/" rel="external">Apache</a>, <a href="https://www.nginx.com/" rel="external">NGINX</a>, IIS, etc)</li>
     <li><a href="https://www.php.net/" rel="external">PHP</a> 7.4 or higher, 8.3.0+ recommended</li>
-    <li><a href="https://www.mysql.com/" rel="external">MySQL</a> 5.7 or higher, 8.4.5+ recommended </li>
+    <li><a href="https://www.mysql.com/" rel="external">MySQL</a> 5.7.8 or higher, 8.4.5+ recommended </li>
 </ul>
 <h3>Before you install</h3>
 <ol>
