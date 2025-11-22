@@ -412,7 +412,11 @@ class Criteria extends CriteriaElement
         }
 
         if ($db === null && class_exists('\XoopsDatabaseFactory')) {
-            $db = \XoopsDatabaseFactory::getDatabaseConnection();
+            try {
+                $db = \XoopsDatabaseFactory::getDatabaseConnection();
+            } catch (\Throwable $e) {
+                throw new \RuntimeException('Database connection required to render Criteria: ' . $e->getMessage(), 0, $e);
+            }
         }
 
         if (!$db) {
