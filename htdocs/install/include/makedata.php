@@ -162,8 +162,8 @@ function make_data($dbm, $adminname, $hashedAdminPass, $adminmail, $language, $g
         }
     }
     // data for table 'config'
-    $dbm->insert('config', " VALUES (1, 0, 1, 'sitename', '_MD_AM_SITENAME', 'XOOPS Site', '_MD_AM_SITENAMEDSC', 'textbox', 'text', 0)");
-    $dbm->insert('config', " VALUES (2, 0, 1, 'slogan', '_MD_AM_SLOGAN', 'Just Use it!', '_MD_AM_SLOGANDSC', 'textbox', 'text', 2)");
+    $dbm->insert('config', " VALUES (1, 0, 1, 'sitename', '_MD_AM_SITENAME', '" . _WEBSITE_NAME . "', '_MD_AM_SITENAMEDSC', 'textbox', 'text', 0)");
+    $dbm->insert('config', " VALUES (2, 0, 1, 'slogan', '_MD_AM_SLOGAN', '" . _WEBSITE_SLOGAN . "', '_MD_AM_SLOGANDSC', 'textbox', 'text', 2)");
     $dbm->insert('config', " VALUES (3, 0, 1, 'language', '_MD_AM_LANGUAGE', '" . addslashes($language) . "', '_MD_AM_LANGUAGEDSC', 'language', 'other', 4)");
     $dbm->insert('config', " VALUES (4, 0, 1, 'startpage', '_MD_AM_STARTPAGE', '--', '_MD_AM_STARTPAGEDSC', 'startpage', 'other', 6)");
     $dbm->insert('config', " VALUES (5, 0, 1, 'server_TZ', '_MD_AM_SERVERTZ', '0', '_MD_AM_SERVERTZDSC', 'timezone', 'float', 8)");
@@ -203,8 +203,8 @@ function make_data($dbm, $adminname, $hashedAdminPass, $adminmail, $language, $g
     $dbm->insert('config', " VALUES (35, 0, 2, 'bad_emails', '_MD_AM_BADEMAILS', '" . addslashes(serialize(['xoops.org$'])) . "', '_MD_AM_BADEMAILSDSC', 'textarea', 'array', 26)");
     $dbm->insert('config', " VALUES (36, 0, 2, 'maxuname', '_MD_AM_MAXUNAME', '10', '_MD_AM_MAXUNAMEDSC', 'textbox', 'int', 3)");
     $dbm->insert('config', " VALUES (37, 0, 1, 'bad_ips', '_MD_AM_BADIPS', '" . addslashes(serialize(['127\.0\.0\.1'])) . "', '_MD_AM_BADIPSDSC', 'textarea', 'array', 42)");
-    $dbm->insert('config', " VALUES (38, 0, 3, 'meta_keywords', '_MD_AM_METAKEY', 'xoops, web application framework, cms, content management system', '_MD_AM_METAKEYDSC', 'textarea', 'text', 0)");
-    $dbm->insert('config', " VALUES (39, 0, 3, 'footer', '_MD_AM_FOOTER', 'Powered by XOOPS &#169; 2001-{X_YEAR} <a href=\"https://xoops.org\" rel=\"external\" title=\"The XOOPS Project\">The XOOPS Project</a>', '_MD_AM_FOOTERDSC', 'textarea', 'text', 20)");
+    $dbm->insert('config', " VALUES (38, 0, 3, 'meta_keywords', '_MD_AM_METAKEY', '" . _WEBSITE_META_KEYWORDS . "', '_MD_AM_METAKEYDSC', 'textarea', 'text', 0)");
+    $dbm->insert('config', " VALUES (39, 0, 3, 'footer', '_MD_AM_FOOTER', '" . addslashes(_WEBSITE_FOOTER) . "', '_MD_AM_FOOTERDSC', 'textarea', 'text', 20)");
     $dbm->insert('config', " VALUES (40, 0, 4, 'censor_enable', '_MD_AM_DOCENSOR', '0', '_MD_AM_DOCENSORDSC', 'yesno', 'int', 0)");
     $dbm->insert('config', " VALUES (41, 0, 4, 'censor_words', '_MD_AM_CENSORWRD', '" . addslashes(serialize(
         [
@@ -212,7 +212,7 @@ function make_data($dbm, $adminname, $hashedAdminPass, $adminmail, $language, $g
             'shit',
         ],
     )) . "', '_MD_AM_CENSORWRDDSC', 'textarea', 'array', 1)");
-    $dbm->insert('config', " VALUES (42, 0, 4, 'censor_replace', '_MD_AM_CENSORRPLC', '#OOPS#', '_MD_AM_CENSORRPLCDSC', 'textbox', 'text', 2)");
+    $dbm->insert('config', " VALUES (42, 0, 4, 'censor_replace', '_MD_AM_CENSORRPLC', '" . _WEBSITE_CENSOR_REPLACE . "', '_MD_AM_CENSORRPLCDSC', 'textbox', 'text', 2)");
     $dbm->insert('config', " VALUES (43, 0, 3, 'meta_robots', '_MD_AM_METAROBOTS', 'index,follow', '_MD_AM_METAROBOTSDSC', 'textbox', 'text', 2)");
     $dbm->insert('config', " VALUES (44, 0, 5, 'enable_search', '_MD_AM_DOSEARCH', '1', '_MD_AM_DOSEARCHDSC', 'yesno', 'int', 0)");
     $dbm->insert('config', " VALUES (45, 0, 5, 'keyword_min', '_MD_AM_MINSEARCH', '5', '_MD_AM_MINSEARCHDSC', 'textbox', 'int', 1)");
@@ -220,8 +220,8 @@ function make_data($dbm, $adminname, $hashedAdminPass, $adminmail, $language, $g
     $dbm->insert('config', " VALUES (47, 0, 1, 'enable_badips', '_MD_AM_DOBADIPS', '0', '_MD_AM_DOBADIPSDSC', 'yesno', 'int', 40)");
     $dbm->insert('config', " VALUES (48, 0, 3, 'meta_rating', '_MD_AM_METARATING', 'general', '_MD_AM_METARATINGDSC', 'select', 'text', 4)");
     $dbm->insert('config', " VALUES (49, 0, 3, 'meta_author', '_MD_AM_METAAUTHOR', 'XOOPS', '_MD_AM_METAAUTHORDSC', 'textbox', 'text', 6)");
-    $dbm->insert('config', " VALUES (50, 0, 3, 'meta_copyright', '_MD_AM_METACOPYR', 'Copyright &#169; 2001-{X_YEAR}', '_MD_AM_METACOPYRDSC', 'textbox', 'text', 8)");
-    $dbm->insert('config', " VALUES (51, 0, 3, 'meta_description', '_MD_AM_METADESC', 'XOOPS is a dynamic Object Oriented based open source portal script written in PHP.', '_MD_AM_METADESCDSC', 'textarea', 'text', 1)");
+    $dbm->insert('config', " VALUES (50, 0, 3, 'meta_copyright', '_MD_AM_METACOPYR', '" . _WEBSITE_COPYRIGHT . "', '_MD_AM_METACOPYRDSC', 'textbox', 'text', 8)");
+    $dbm->insert('config', " VALUES (51, 0, 3, 'meta_description', '_MD_AM_METADESC', '" . _WEBSITE_DESCRIPTION . "', '_MD_AM_METADESCDSC', 'textarea', 'text', 1)");
     $dbm->insert('config', " VALUES (52, 0, 2, 'allow_chgmail', '_MD_AM_ALLWCHGMAIL', '0', '_MD_AM_ALLWCHGMAILDSC', 'yesno', 'int', 3)");
     $dbm->insert('config', " VALUES (53, 0, 1, 'use_mysession', '_MD_AM_USEMYSESS', '1', '_MD_AM_USEMYSESSDSC', 'yesno', 'int', 19)");
     $dbm->insert('config', " VALUES (54, 0, 2, 'reg_dispdsclmr', '_MD_AM_DSPDSCLMR', 1, '_MD_AM_DSPDSCLMRDSC', 'yesno', 'int', 30)");
