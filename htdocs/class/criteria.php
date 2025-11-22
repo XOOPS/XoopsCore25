@@ -476,18 +476,18 @@ class Criteria extends CriteriaElement
         }
 
             // Build log message
-                $message = sprintf(
-                    'Legacy Criteria IN format used for column "%s" with value "%s"',
-                    $this->column,
+            $message = sprintf(
+                'Legacy Criteria IN format used for column "%s" with value "%s"',
+                $this->column,
                 $legacy
-                );
+            );
 
             // Only pay backtrace cost in debug mode
             if (defined('XOOPS_DEBUG') && XOOPS_DEBUG) {
-            $bt = debug_backtrace(DEBUG_BACKTRACE_IGNORE_ARGS, 3);
+                $bt = debug_backtrace(DEBUG_BACKTRACE_IGNORE_ARGS, 3);
                 $caller = $bt[1] ?? [];
-            $file = $caller['file'] ?? 'unknown';
-            $line = $caller['line'] ?? 0;
+                $file = $caller['file'] ?? 'unknown';
+                $line = $caller['line'] ?? 0;
                 $message .= sprintf(' at %s:%d', $file, $line);
             }
 
