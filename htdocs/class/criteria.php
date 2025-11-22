@@ -252,7 +252,7 @@ class CriteriaCompo extends CriteriaElement
     public function renderWhere(?\XoopsDatabase $db = null): string
     {
         $ret = $this->render($db);
-        $ret = ($ret !== '') ? 'WHERE ' . $ret : $ret;
+        $ret = ($ret !== '') ? 'WHERE ' . $ret : '';
 
         return $ret;
     }
