@@ -307,6 +307,19 @@ class Criteria extends CriteriaElement
 
     /** @var bool Global default for allowing inner wildcards in LIKE across all instances */
     protected static $defaultAllowInnerWildcards = false;
+    /** @var bool|null Cached legacy log flag */
+    private static $legacyLogEnabled = null;
+
+    /**
+     * Initialize logging flag once
+     */
+    private static function isLegacyLogEnabled(): bool
+    {
+        if (self::$legacyLogEnabled === null) {
+            self::$legacyLogEnabled = defined('XOOPS_DB_LEGACY_LOG') && XOOPS_DB_LEGACY_LOG;
+        }
+        return self::$legacyLogEnabled;
+    }
 
     /**
      * Set the global default for allowing inner wildcards in LIKE patterns.
@@ -363,29 +376,27 @@ class Criteria extends CriteriaElement
     /**
      * Render the SQL fragment (no leading WHERE)
      *
-     * @return string
+     * @param \XoopsDatabase|null $db Database connection
+     * @return string SQL fragment
+     * @throws RuntimeException if database connection is not available
      */
-    public function render($xoopsDB = null)
-
+    public function render(?\XoopsDatabase $db = null): string
     {
-        // Fallback for legacy support if needed
-        /** @var \XoopsDatabase|null $xoopsDB */
-        if ($xoopsDB === null && isset($GLOBALS['xoopsDB'])) {
-            $xoopsDB = $GLOBALS['xoopsDB'];
+        if ($db === null) {
+            $db = \XoopsDatabaseFactory::getDatabaseConnection();
         }
 
-        if (!$xoopsDB) {
-            // In a real environment, this might need to be silent or throw an error.
-            // For legacy compatibility, throwing ensures we don't silently wipe tables.
+        if (!$db) {
             throw new RuntimeException("Database connection required to render Criteria");
         }
 
         $col = (string)($this->column ?? '');
-        $backtick = (strpos($col, '.') === false) ? '`' : '';
-        if (strpos($col, '(') !== false) { // function/expression like COUNT(col)
-            $backtick = '';
+
+        if ($col === '') {
+            return '';
         }
 
+        $backtick = (strpos($col, '.') === false && strpos($col, '(') === false) ? '`' : '';
         $clause = (empty($this->prefix) ? '' : "{$this->prefix}.") . $backtick . $col . $backtick;
 
         if (!empty($this->function)) {
@@ -400,96 +411,105 @@ class Criteria extends CriteriaElement
             return $clause . ' ' . $op;
         }
 
-        // Skip empty values unless explicitly allowed
-        $rawValue = (string)$this->value;
-        if (trim($rawValue) === '' && !$this->allowEmptyValue) {
+        $valStr = (string)$this->value;
+        if (trim($valStr) === '' && !$this->allowEmptyValue) {
             return '';
         }
 
-        // IN / NOT IN: accept arrays or "(a,b)" string
+        // IN / NOT IN
         if ($op === 'IN' || $op === 'NOT IN') {
             if (is_array($this->value)) {
-                // Modern usage: Pass an array, we quote it safely
-                $parts = array_map(fn($v) => $xoopsDB->quote($v), $this->value);
+                $parts = [];
+                foreach ($this->value as $v) {
+                    if (is_int($v) || (is_string($v) && preg_match('/^-?\d+$/', $v))) {
+                        $parts[] = (string)(int)$v;
+                    } else {
+                        $parts[] = $db->quote((string)$v);
+                    }
+                }
             return $clause . ' ' . $op . ' (' . implode(',', $parts) . ')';
         }
 
-            // Legacy usage: User passed a pre-formatted string like '("A", "B")'
-            // We MUST pass this through raw to maintain BC.
+            // Legacy format: preformatted string "(...)"
+            // Early return if logging disabled (performance optimization)
+            if (!self::isLegacyLogEnabled()) {
             return $clause . ' ' . $op . ' ' . $this->value;
         }
 
-        // --- BACKTICK BYPASS LOGIC ---
-        // The Old Class allowed values wrapped in backticks to pass through unquoted.
-        // e.g. `other_table`.`col`
-        $valStr = (string)$this->value;
-        if (strlen($valStr) > 1 && $valStr[0] === '`' && $valStr[strlen($valStr)-1] === '`') {
-            $safeValue = $valStr;
+            // Log for migration tracking (only when enabled)
+            $bt = debug_backtrace(DEBUG_BACKTRACE_IGNORE_ARGS, 3);
+            $caller = $bt[1] ?? []; // 0 = render(), 1 = immediate caller
+            $file = $caller['file'] ?? 'unknown';
+            $line = $caller['line'] ?? 0;
+            $message = sprintf(
+                'Legacy Criteria IN format used for column "%s" with value "%s" at %s:%d',
+                $this->column,
+                is_scalar($this->value) ? (string)$this->value : gettype($this->value),
+                $file,
+                $line
+            );
+
+            // Prefer XoopsLogger if available
+            if (class_exists('XoopsLogger')) {
+                \XoopsLogger::getInstance()->addExtra('CriteriaLegacyIN', $message);
         } else {
-            // Standard quoting (Fixes SQL Injection, Failure #5)
-            $safeValue = $xoopsDB->quote($this->value);
+                error_log($message);
         }
 
-        return $clause . ' ' . $op . ' ' . $safeValue;
+            // Optional: deprecation notice in debug mode
+            if (defined('XOOPS_DEBUG') && XOOPS_DEBUG) {
+                trigger_error($message, E_USER_DEPRECATED);
+            }
 
-        // LIKE / NOT LIKE: preserve leading/trailing % runs; escape inner unless opted-in
+            return $clause . ' ' . $op . ' ' . $this->value;
+        }
+
+        // LIKE / NOT LIKE – BC: just quote the pattern
         if ($op === 'LIKE' || $op === 'NOT LIKE') {
             $pattern = (string)$this->value;
-
-            // NEW: if pattern is only % signs, it's effectively a no-op for LIKE;
-            // don't emit a predicate so we don't exclude NULL rows.
-            if ($op === 'LIKE' && $pattern !== '' && strspn($pattern, '%') === strlen($pattern)) {
-                return '';
-            }
-
-            $len     = strlen($pattern);
-            $lead    = strspn($pattern, '%');
-            $trail   = strspn(strrev($pattern), '%');
-            $coreLen = $len - $lead - $trail;
-
-            if ($coreLen <= 0) {
-                // Defensive: unreachable if "all-wildcards" early return is active.
-                // Keep for future-proofing, or remove entirely if you prefer.
-                return $pattern;
-            }
-
-            // Assemble pieces
-            $left  = $lead  > 0 ? substr($pattern, 0, $lead)     : '';
-                $core  = substr($pattern, $lead, $coreLen);
-            $right = $trail > 0 ? substr($pattern, -$trail)       : '';
-
-            // Escape inner core only
-            // - Always escape backslashes
-            // - If inner wildcards are NOT allowed, escape '%' and '_' inside the core
-                $core = str_replace('\\', '\\\\', $core);
-                if (!$this->allowInnerWildcards) {
-                // strtr is a touch faster and clearer for one-pass mapping
-                $core = strtr($core, ['%' => '\\%', '_' => '\\_']);
-                }
-                $final = $left . $core . $right;
-
-            $quoted = $xoopsDB->quote($final);
-            // IMPORTANT: no ESCAPE clause for MySQL/MariaDB
+            $quoted  = $db->quote($pattern);
             return $clause . ' ' . $op . ' ' . $quoted;
         }
 
-        // Equality/comparisons: keep integers numeric; quote strings via DB layer
-        $v = $this->value;
-        if (is_int($v) || (is_string($v) && preg_match('/^-?\d+$/', $v))) {
-            $safe = (string)(int)$v;
+        // All other operators: =, <, >, <=, >=, !=, <>
+        // Backtick bypass for column-to-column comparisons
+        if (strlen($valStr) > 1 && $valStr[0] === '`' && $valStr[strlen($valStr)-1] === '`') {
+            // Validate backticked value (security: only allow safe chars)
+            if (preg_match('/^[a-zA-Z0-9_\.\-`]*$/', $valStr)) {
+                $safeValue = $valStr;
         } else {
-            $safe = $xoopsDB->quote((string)$v);
+                // Invalid chars in backticked value → use empty backticks (old behavior)
+                $safeValue = '``';
+            }
+        } else {
+            // Regular value - keep integers unquoted, quote strings
+            if (is_int($this->value) || (is_string($this->value) && preg_match('/^-?\d+$/', $this->value))) {
+                $safeValue = (string)(int)$this->value;
+            } else {
+                $safeValue = $db->quote((string)$this->value);
+            }
         }
 
-        return $clause . ' ' . $op . ' ' . $safe;
+        return $clause . ' ' . $op . ' ' . $safeValue;
     }
 
     /**
-     * Generate an LDAP filter from criteria (unchanged semantics)
+     * Render with leading WHERE clause
      *
-     * @return string
+     * @return string SQL WHERE clause or empty string
      */
-    public function renderLdap()
+    public function renderWhere(): string
+    {
+        $cond = $this->render();
+        return empty($cond) ? '' : "WHERE {$cond}";
+    }
+
+    /**
+     * Generate an LDAP filter from criteria
+     *
+     * @return string LDAP filter
+     */
+    public function renderLdap(): string
     {
         if ($this->operator === '>') {
             $this->operator = '>=';
@@ -516,16 +536,5 @@ class Criteria extends CriteriaElement
         }
 
         return $clause;
-    }
-
-    /**
-     * Convenience: render with leading WHERE (or empty if no condition)
-     *
-     * @return string
-     */
-    public function renderWhere()
-    {
-        $cond = $this->render();
-        return empty($cond) ? '' : "WHERE {$cond}";
     }
 }
