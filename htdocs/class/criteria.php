@@ -365,12 +365,19 @@ class Criteria extends CriteriaElement
      *
      * @return string
      */
-    public function render()
+    public function render($xoopsDB = null)
+
     {
+        // Fallback for legacy support if needed
         /** @var \XoopsDatabase|null $xoopsDB */
-        $xoopsDB = isset($GLOBALS['xoopsDB']) ? $GLOBALS['xoopsDB'] : null;
+        if ($xoopsDB === null && isset($GLOBALS['xoopsDB'])) {
+            $xoopsDB = $GLOBALS['xoopsDB'];
+        }
+
         if (!$xoopsDB) {
-            return '';
+            // In a real environment, this might need to be silent or throw an error.
+            // For legacy compatibility, throwing ensures we don't silently wipe tables.
+            throw new RuntimeException("Database connection required to render Criteria");
         }
 
         $col = (string)($this->column ?? '');
@@ -401,20 +408,29 @@ class Criteria extends CriteriaElement
 
         // IN / NOT IN: accept arrays or "(a,b)" string
         if ($op === 'IN' || $op === 'NOT IN') {
-            $vals = is_array($this->value)
-                ? $this->value
-                : array_map('trim', explode(',', trim((string)$this->value, " ()")));
-
-            $parts = [];
-            foreach ($vals as $v) {
-                if (is_int($v) || (is_string($v) && preg_match('/^-?\d+$/', $v))) {
-                    $parts[] = (string)(int)$v;
-                } else {
-                    $parts[] = $xoopsDB->quote((string)$v);
-                }
-            }
+            if (is_array($this->value)) {
+                // Modern usage: Pass an array, we quote it safely
+                $parts = array_map(fn($v) => $xoopsDB->quote($v), $this->value);
             return $clause . ' ' . $op . ' (' . implode(',', $parts) . ')';
         }
+
+            // Legacy usage: User passed a pre-formatted string like '("A", "B")'
+            // We MUST pass this through raw to maintain BC.
+            return $clause . ' ' . $op . ' ' . $this->value;
+        }
+
+        // --- BACKTICK BYPASS LOGIC ---
+        // The Old Class allowed values wrapped in backticks to pass through unquoted.
+        // e.g. `other_table`.`col`
+        $valStr = (string)$this->value;
+        if (strlen($valStr) > 1 && $valStr[0] === '`' && $valStr[strlen($valStr)-1] === '`') {
+            $safeValue = $valStr;
+        } else {
+            // Standard quoting (Fixes SQL Injection, Failure #5)
+            $safeValue = $xoopsDB->quote($this->value);
+        }
+
+        return $clause . ' ' . $op . ' ' . $safeValue;
 
         // LIKE / NOT LIKE: preserve leading/trailing % runs; escape inner unless opted-in
         if ($op === 'LIKE' || $op === 'NOT LIKE') {
