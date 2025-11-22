@@ -69,9 +69,10 @@ class CriteriaElement
 
     /**
      * Render the criteria element
+     * @param \XoopsDatabase|null $db
      * @return string
      */
-    public function render() {}
+    public function render(?\XoopsDatabase $db = null) {}
 
     /**
      *
@@ -229,6 +230,7 @@ class CriteriaCompo extends CriteriaElement
         $ret   = '';
         $count = count($this->criteriaElements);
         if ($count > 0) {
+            // Pass the DB connection down to children
             $renderString = $this->criteriaElements[0]->render($db);
             for ($i = 1; $i < $count; ++$i) {
                 if (!$render = $this->criteriaElements[$i]->render($db)) {
@@ -244,7 +246,7 @@ class CriteriaCompo extends CriteriaElement
 
     /**
      * Make the criteria into a SQL "WHERE" clause
-     *
+     * @param \XoopsDatabase|null $db
      * @return string
      */
     public function renderWhere(?\XoopsDatabase $db = null): string
@@ -437,7 +439,6 @@ class Criteria extends CriteriaElement
         }
 
         $op = strtoupper((string)$this->operator);
-        // REMOVE THIS LINE: $valStr = (string)$this->value;
 
         // NULL operators
         if ($op === 'IS NULL' || $op === 'IS NOT NULL') {
