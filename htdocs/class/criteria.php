@@ -315,6 +315,35 @@ class Criteria extends CriteriaElement
     }
 
     /**
+     * Check if a legacy IN value is a safe, parenthesized list of quoted literals.
+     * Supports both single and double quotes: ("foo","bar") or ('foo','bar')
+     */
+    private static function isSafeLegacyInList(string $raw): bool
+    {
+        $raw = trim($raw);
+
+        // 0) Empty list is valid
+        if ($raw === '()') {
+            return true;
+        }
+
+        // 1) Safe numeric list: (1,2,3) or with spaces
+        if (preg_match('/^\(\s*\d+(?:\s*,\s*\d+)*\s*\)$/', $raw)) {
+            return true;
+        }
+
+        // 2) Safe quoted list: ("foo","bar") or ('foo','bar')
+        //    Keep your existing, more complex quoted-string pattern here.
+        //    Example shape (adjust to match what you already use):
+        $pattern = '/^\(\s*'
+                   . '(?:"(?:[^"\\\\]|\\\\.)*"|\'(?:[^\'\\\\]|\\\\.)*\')'
+                   . '(?:\s*,\s*(?:"(?:[^"\\\\]|\\\\.)*"|\'(?:[^\'\\\\]|\\\\.)*\'))*'
+                   . '\s*\)$/';
+
+        return (bool)preg_match($pattern, $raw);
+    }
+
+    /**
      * Set the global default for allowing inner wildcards in LIKE patterns.
      * Useful during migrations of legacy modules that intentionally use inner wildcards.
      *
@@ -377,7 +406,7 @@ class Criteria extends CriteriaElement
     {
         // 1) Explicit injection
         // 2) Legacy global
-        // 3) Factory
+        // 3) Factory (if available)
         if ($db === null && isset($GLOBALS['xoopsDB']) && $GLOBALS['xoopsDB'] instanceof \XoopsDatabase) {
             $db = $GLOBALS['xoopsDB'];
         }
@@ -393,7 +422,6 @@ class Criteria extends CriteriaElement
         $col = (string)($this->column ?? '');
 
         if ($col === '') {
-            // Legacy "always true" workaround → no predicate at all
             return '';
         }
 
@@ -401,23 +429,22 @@ class Criteria extends CriteriaElement
         $clause = (empty($this->prefix) ? '' : "{$this->prefix}.") . $backtick . $col . $backtick;
 
         if (!empty($this->function)) {
-            // function should be a trusted sprintf pattern, e.g. 'LOWER(%s)'
             $clause = sprintf($this->function, $clause);
         }
 
         $op = strtoupper((string)$this->operator);
-        $valStr = (string)$this->value;
+        // REMOVE THIS LINE: $valStr = (string)$this->value;
 
+        // NULL operators
         if ($op === 'IS NULL' || $op === 'IS NOT NULL') {
             return $clause . ' ' . $op;
         }
 
-        if (trim($valStr) === '' && !$this->allowEmptyValue) {
-            return '';
-        }
-
-        // IN / NOT IN
+        /**
+         * IN / NOT IN
+         */
         if ($op === 'IN' || $op === 'NOT IN') {
+            // Modern safe path: array input
             if (is_array($this->value)) {
                 $parts = [];
                 foreach ($this->value as $v) {
@@ -430,22 +457,28 @@ class Criteria extends CriteriaElement
             return $clause . ' ' . $op . ' (' . implode(',', $parts) . ')';
         }
 
-            // Legacy format: validate before passing through
-            if (!preg_match('/^\s*\([^)]*\)\s*$/', (string)$this->value)) {
-                return $clause . ' ' . $op . ' (' . $db->quote((string)$this->value) . ')';
+            // Legacy format: preformatted string in parentheses
+            $legacy = (string)$this->value;
+
+            // FIRST: strict validation of legacy syntax
+            if (!self::isSafeLegacyInList($legacy)) {
+                // Malformed → treat as a single literal safely
+                return $clause . ' ' . $op . ' (' . $db->quote($legacy) . ')';
             }
 
+            // If legacy logging is not enabled, just pass through
             if (!self::isLegacyLogEnabled()) {
-            return $clause . ' ' . $op . ' ' . $this->value;
+                return $clause . ' ' . $op . ' ' . $legacy;
         }
 
-            // Build message
+            // Build log message
                 $message = sprintf(
                     'Legacy Criteria IN format used for column "%s" with value "%s"',
                     $this->column,
-                    is_scalar($this->value) ? (string)$this->value : gettype($this->value)
+                $legacy
                 );
 
+            // Only pay backtrace cost in debug mode
             if (defined('XOOPS_DEBUG') && XOOPS_DEBUG) {
             $bt = debug_backtrace(DEBUG_BACKTRACE_IGNORE_ARGS, 3);
                 $caller = $bt[1] ?? [];
@@ -454,41 +487,90 @@ class Criteria extends CriteriaElement
                 $message .= sprintf(' at %s:%d', $file, $line);
             }
 
-            // Prefer XoopsLogger if available
             if (class_exists('XoopsLogger')) {
-                \XoopsLogger::getInstance()->addExtra('CriteriaLegacyIN', $message);
+                \XoopsLogger::getInstance()
+                            ->addExtra('CriteriaLegacyIN', $message);
         } else {
                 error_log($message);
         }
 
-            // Optional: deprecation notice in debug mode
             if (defined('XOOPS_DEBUG') && XOOPS_DEBUG) {
                 trigger_error($message, E_USER_DEPRECATED);
             }
 
-            return $clause . ' ' . $op . ' ' . $this->value;
+            return $clause . ' ' . $op . ' ' . $legacy;
         }
 
-        // LIKE / NOT LIKE
+        // NOW it's safe to cast to string for other operators
+        $valStr = (string)$this->value;
+
+        // Empty value check
+        if (trim($valStr) === '' && !$this->allowEmptyValue) {
+            return '';
+        }
+
+        /**
+         * LIKE / NOT LIKE
+         * - Preserves leading/trailing % as wildcards
+         * - Escapes inner backslashes
+         * - Optionally escapes inner % and _ when allowInnerWildcards is false
+         */
         if ($op === 'LIKE' || $op === 'NOT LIKE') {
             $pattern = (string)$this->value;
-            $quoted  = $db->quote($pattern);
+
+            // If pattern is only % signs, it's effectively "match everything" → no predicate
+            if ($op === 'LIKE' && $pattern !== '' && strspn($pattern, '%') === strlen($pattern)) {
+                return '';
+            }
+
+            $len     = strlen($pattern);
+            $lead    = strspn($pattern, '%');
+            $trail   = strspn(strrev($pattern), '%');
+            $coreLen = $len - $lead - $trail;
+
+            if ($coreLen <= 0) {
+                $final = $pattern;
+            } else {
+                $left  = $lead > 0 ? substr($pattern, 0, $lead) : '';
+                $core  = substr($pattern, $lead, $coreLen);
+                $right = $trail > 0 ? substr($pattern, -$trail) : '';
+
+                // Always escape backslashes in the core
+                $core = str_replace('\\', '\\\\', $core);
+
+                // If inner wildcards are NOT allowed, escape % and _ inside core
+                if (!$this->allowInnerWildcards) {
+                    $core = strtr($core, [
+                        '%' => '\\%',
+                        '_' => '\\_',
+                    ]);
+                }
+
+                $final = $left . $core . $right;
+            }
+
+            $quoted = $db->quote($final);
             return $clause . ' ' . $op . ' ' . $quoted;
         }
 
-        // All other operators
+        /**
+         * All other operators: =, <, >, <=, >=, !=, <>
+         */
+
+        // Backtick bypass for column-to-column comparisons
         if (strlen($valStr) > 2 && $valStr[0] === '`' && $valStr[strlen($valStr) - 1] === '`') {
             $inner = substr($valStr, 1, -1);
 
-            // Allow alphanumeric, underscore, dot, hyphen (valid MySQL identifiers when backticked)
-            if (preg_match('/^[a-zA-Z0-9_.\-]+$/', $inner)) {
+            // Allow alphanumeric, underscore, dot, and dollar sign
+            // (valid in MySQL identifiers when backticked, incl. db.table)
+            if (preg_match('/^[a-zA-Z0-9_.$\-]+$/', $inner)) {
                 $safeValue = $valStr;
         } else {
-                // Invalid chars in backticked value → use empty backticks (old behavior)
+                // Old behavior: empty backticks on invalid identifier content
                 $safeValue = '``';
             }
         } else {
-            // Regular value - keep integers unquoted, quote strings
+            // Regular value - keep integers numeric; quote strings
             if (is_int($this->value) || (is_string($this->value) && preg_match('/^-?\d+$/', $this->value))) {
                 $safeValue = (string)(int)$this->value;
             } else {
@@ -502,11 +584,12 @@ class Criteria extends CriteriaElement
     /**
      * Render with leading WHERE clause
      *
+     * @param \XoopsDatabase|null $db Database connection
      * @return string SQL WHERE clause or empty string
      */
-    public function renderWhere()
+    public function renderWhere(?\XoopsDatabase $db = null)
     {
-        $cond = $this->render();
+        $cond = $this->render($db);
         return empty($cond) ? '' : "WHERE {$cond}";
     }
 
