@@ -563,7 +563,7 @@ class Criteria extends CriteriaElement
 
             // Allow alphanumeric, underscore, dot, and dollar sign
             // (valid in MySQL identifiers when backticked, incl. db.table)
-            if (preg_match('/^[a-zA-Z0-9_.$\-]+$/', $inner)) {
+            if (preg_match('/^[a-zA-Z0-9_.$\\-]+$/', $inner)) {
                 $safeValue = $valStr;
         } else {
                 // Old behavior: empty backticks on invalid identifier content
