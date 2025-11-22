@@ -563,7 +563,8 @@ class Criteria extends CriteriaElement
          */
 
         // Backtick bypass for column-to-column comparisons
-        if (strlen($valStr) > 2 && $valStr[0] === '`' && $valStr[strlen($valStr) - 1] === '`') {
+        $len = strlen($valStr);
+        if ($len > 2 && $valStr[0] === '`' && $valStr[$len - 1] === '`') {
             $inner = substr($valStr, 1, -1);
 
             // Allow alphanumeric, underscore, dot, and dollar sign
