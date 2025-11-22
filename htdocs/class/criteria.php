@@ -224,19 +224,19 @@ class CriteriaCompo extends CriteriaElement
      *
      * @return string
      */
-    public function render()
+    public function render(?\XoopsDatabase $db = null): string
     {
         $ret   = '';
         $count = count($this->criteriaElements);
         if ($count > 0) {
-            $render_string = $this->criteriaElements[0]->render();
+            $renderString = $this->criteriaElements[0]->render($db);
             for ($i = 1; $i < $count; ++$i) {
-                if (!$render = $this->criteriaElements[$i]->render()) {
+                if (!$render = $this->criteriaElements[$i]->render($db)) {
                     continue;
                 }
-                $render_string .= (empty($render_string) ? '' : ' ' . $this->conditions[$i] . ' ') . $render;
+                $renderString .= (empty($renderString) ? '' : ' ' . $this->conditions[$i] . ' ') . $render;
             }
-            $ret = empty($render_string) ? '' : "({$render_string})";
+            $ret = empty($renderString) ? '' : "({$renderString})";
         }
 
         return $ret;
@@ -247,10 +247,10 @@ class CriteriaCompo extends CriteriaElement
      *
      * @return string
      */
-    public function renderWhere()
+    public function renderWhere(?\XoopsDatabase $db = null): string
     {
-        $ret = $this->render();
-        $ret = ($ret != '') ? 'WHERE ' . $ret : $ret;
+        $ret = $this->render($db);
+        $ret = ($ret !== '') ? 'WHERE ' . $ret : $ret;
 
         return $ret;
     }
@@ -286,25 +286,18 @@ class Criteria extends CriteriaElement
 {
     /** @var string|null Optional table prefix (alias) like "u" for "u.`uname`" */
     public $prefix;
-
     /** @var string|null Optional column wrapper function with sprintf format, e.g. 'LOWER(%s)' */
     public $function;
-
     /** @var string Column name or expression (backticks handled for simple columns) */
     public $column;
-
     /** @var string SQL operator (=, <, >, LIKE, IN, IS NULL, etc.) */
     public $operator;
-
     /** @var mixed Value for the operator: scalar for most ops, array or "(a,b)" for IN/NOT IN */
     public $value;
-
     /** @var bool Allow empty string values to render (default false = skip empty) */
     protected $allowEmptyValue = false;
-
     /** @var bool Allow inner wildcards in LIKE (default false = escape inner % and _) */
     protected $allowInnerWildcards = false;
-
     /** @var bool Global default for allowing inner wildcards in LIKE across all instances */
     protected static $defaultAllowInnerWildcards = false;
     /** @var bool|null Cached legacy log flag */
@@ -378,21 +371,29 @@ class Criteria extends CriteriaElement
      *
      * @param \XoopsDatabase|null $db Database connection
      * @return string SQL fragment
-     * @throws RuntimeException if database connection is not available
+     * @throws \RuntimeException if database connection is not available
      */
-    public function render(?\XoopsDatabase $db = null): string
+    public function render(?\XoopsDatabase $db = null)
     {
-        if ($db === null) {
+        // 1) Explicit injection
+        // 2) Legacy global
+        // 3) Factory
+        if ($db === null && isset($GLOBALS['xoopsDB']) && $GLOBALS['xoopsDB'] instanceof \XoopsDatabase) {
+            $db = $GLOBALS['xoopsDB'];
+        }
+
+        if ($db === null && class_exists('\XoopsDatabaseFactory')) {
             $db = \XoopsDatabaseFactory::getDatabaseConnection();
         }
 
         if (!$db) {
-            throw new RuntimeException("Database connection required to render Criteria");
+            throw new \RuntimeException('Database connection required to render Criteria');
         }
 
         $col = (string)($this->column ?? '');
 
         if ($col === '') {
+            // Legacy "always true" workaround → no predicate at all
             return '';
         }
 
@@ -405,13 +406,12 @@ class Criteria extends CriteriaElement
         }
 
         $op = strtoupper((string)$this->operator);
+        $valStr = (string)$this->value;
 
-        // Null checks require no value
         if ($op === 'IS NULL' || $op === 'IS NOT NULL') {
             return $clause . ' ' . $op;
         }
 
-        $valStr = (string)$this->value;
         if (trim($valStr) === '' && !$this->allowEmptyValue) {
             return '';
         }
@@ -430,24 +430,29 @@ class Criteria extends CriteriaElement
             return $clause . ' ' . $op . ' (' . implode(',', $parts) . ')';
         }
 
-            // Legacy format: preformatted string "(...)"
-            // Early return if logging disabled (performance optimization)
+            // Legacy format: validate before passing through
+            if (!preg_match('/^\s*\([^)]*\)\s*$/', (string)$this->value)) {
+                return $clause . ' ' . $op . ' (' . $db->quote((string)$this->value) . ')';
+            }
+
             if (!self::isLegacyLogEnabled()) {
             return $clause . ' ' . $op . ' ' . $this->value;
         }
 
-            // Log for migration tracking (only when enabled)
+            // Build message
+                $message = sprintf(
+                    'Legacy Criteria IN format used for column "%s" with value "%s"',
+                    $this->column,
+                    is_scalar($this->value) ? (string)$this->value : gettype($this->value)
+                );
+
+            if (defined('XOOPS_DEBUG') && XOOPS_DEBUG) {
             $bt = debug_backtrace(DEBUG_BACKTRACE_IGNORE_ARGS, 3);
-            $caller = $bt[1] ?? []; // 0 = render(), 1 = immediate caller
+                $caller = $bt[1] ?? [];
             $file = $caller['file'] ?? 'unknown';
             $line = $caller['line'] ?? 0;
-            $message = sprintf(
-                'Legacy Criteria IN format used for column "%s" with value "%s" at %s:%d',
-                $this->column,
-                is_scalar($this->value) ? (string)$this->value : gettype($this->value),
-                $file,
-                $line
-            );
+                $message .= sprintf(' at %s:%d', $file, $line);
+            }
 
             // Prefer XoopsLogger if available
             if (class_exists('XoopsLogger')) {
@@ -464,18 +469,19 @@ class Criteria extends CriteriaElement
             return $clause . ' ' . $op . ' ' . $this->value;
         }
 
-        // LIKE / NOT LIKE – BC: just quote the pattern
+        // LIKE / NOT LIKE
         if ($op === 'LIKE' || $op === 'NOT LIKE') {
             $pattern = (string)$this->value;
             $quoted  = $db->quote($pattern);
             return $clause . ' ' . $op . ' ' . $quoted;
         }
 
-        // All other operators: =, <, >, <=, >=, !=, <>
-        // Backtick bypass for column-to-column comparisons
-        if (strlen($valStr) > 1 && $valStr[0] === '`' && $valStr[strlen($valStr)-1] === '`') {
-            // Validate backticked value (security: only allow safe chars)
-            if (preg_match('/^[a-zA-Z0-9_\.\-`]*$/', $valStr)) {
+        // All other operators
+        if (strlen($valStr) > 2 && $valStr[0] === '`' && $valStr[strlen($valStr) - 1] === '`') {
+            $inner = substr($valStr, 1, -1);
+
+            // Allow alphanumeric, underscore, dot, hyphen (valid MySQL identifiers when backticked)
+            if (preg_match('/^[a-zA-Z0-9_.\-]+$/', $inner)) {
                 $safeValue = $valStr;
         } else {
                 // Invalid chars in backticked value → use empty backticks (old behavior)
@@ -498,7 +504,7 @@ class Criteria extends CriteriaElement
      *
      * @return string SQL WHERE clause or empty string
      */
-    public function renderWhere(): string
+    public function renderWhere()
     {
         $cond = $this->render();
         return empty($cond) ? '' : "WHERE {$cond}";
@@ -509,7 +515,7 @@ class Criteria extends CriteriaElement
      *
      * @return string LDAP filter
      */
-    public function renderLdap(): string
+    public function renderLdap()
     {
         if ($this->operator === '>') {
             $this->operator = '>=';
