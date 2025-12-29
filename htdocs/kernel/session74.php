@@ -164,7 +164,7 @@ class XoopsSessionHandler implements \SessionHandlerInterface
 
     public function gc($max_lifetime)
     {
-        if (empty($max_lifetime)) {
+        if ($max_lifetime <= 0) {
             return 0; // return int for 7.4
         }
 
