@@ -143,7 +143,11 @@ class XoopsAuthProvisionning
         // Create XOOPS Database User
         $newuser = $member_handler->createUser();
         $newuser->setVar('uname', $uname);
-        $newuser->setVar('pass', password_hash(stripslashes((string)$pwd), PASSWORD_DEFAULT));
+        if ($pwd === null || trim($pwd) === '') {
+            redirect_header(XOOPS_URL . '/user.php', 5, 'Password cannot be empty.');
+        }
+        $passwordValue = trim($pwd);
+        $newuser->setVar('pass', password_hash(stripslashes($passwordValue), PASSWORD_DEFAULT));
         $newuser->setVar('rank', 0);
         $newuser->setVar('level', 1);
         $newuser->setVar('timezone_offset', $this->default_TZ);
