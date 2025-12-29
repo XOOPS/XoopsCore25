@@ -373,7 +373,7 @@ class SystemMaintenance
 
                 $ret[0] .= 'INSERT INTO `' . $table . "` values\n";
                 $index = 0;
-                while ($row = $this->db->fetchRow($result)) {
+                while (false !== ($row = $this->db->fetchRow($result))) {
                     ++$count;
                     $ret[0] .= '(';
                     for ($i = 0; $i < $num_fields; ++$i) {

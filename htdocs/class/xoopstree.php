@@ -113,7 +113,8 @@ class XoopsTree
         if ($count == 0) {
             return $idarray;
         }
-        while (false !== ([$id] = $this->db->fetchRow($result))) {
+        while (false !== ($row = $this->db->fetchRow($result))) {
+            [$id] = $row;
             $idarray[] = $id;
         }
 
@@ -146,7 +147,8 @@ class XoopsTree
         if ($count == 0) {
             return $idarray;
         }
-        while (false !== ([$r_id] = $this->db->fetchRow($result))) {
+        while (false !== ($row = $this->db->fetchRow($result))) {
+            [$r_id] = $row;
             $idarray[] = $r_id;
             $idarray   = $this->getAllChildId($r_id, $order, $idarray);
         }
@@ -260,7 +262,8 @@ class XoopsTree
         if ($none) {
             echo "<option value='0'>----</option>\n";
         }
-        while (false !== ([$catid, $name] = $this->db->fetchRow($result))) {
+        while (false !== ($row = $this->db->fetchRow($result))) {
+            [$catid, $name] = $row;
             $sel = '';
             if ($catid == $preset_id) {
                 $sel = " selected";

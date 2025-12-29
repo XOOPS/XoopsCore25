@@ -154,7 +154,9 @@ class XoopsSessionHandler implements SessionHandlerInterface
 
         $result = $this->db->queryF($sql);
         if ($this->db->isResultSet($result)) {
-            if ([$sess_data, $sess_ip] = $this->db->fetchRow($result)) {
+            $row = $this->db->fetchRow($result);
+            if (false !== $row) {
+                [$sess_data, $sess_ip] = $row;
                 if ($this->securityLevel > 1) {
                     if (false === $ip->sameSubnet(
                             $sess_ip,

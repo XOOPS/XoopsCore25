@@ -60,7 +60,8 @@ class XoopsModelStats extends XoopsModelAbstract
             return (int) $count;
         } else {
             $ret = [];
-            while (false !== ([$id, $count] = $this->handler->db->fetchRow($result))) {
+            while (false !== ($row = $this->handler->db->fetchRow($result))) {
+                [$id, $count] = $row;
                 $ret[$id] = (int) $count;
             }
 
@@ -94,7 +95,8 @@ class XoopsModelStats extends XoopsModelAbstract
         if (!$this->handler->db->isResultSet($result)) {
             return $ret;
         }
-        while (false !== ([$id, $count] = $this->handler->db->fetchRow($result))) {
+        while (false !== ($row = $this->handler->db->fetchRow($result))) {
+            [$id, $count] = $row;
             $ret[$id] = (int) $count;
         }
 
