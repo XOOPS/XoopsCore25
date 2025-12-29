@@ -190,7 +190,7 @@ function xoops_module_get_admin_menu()
  *
  * @param string $content
  * @return bool
- * @deprecated
+ * @deprecated since version 2.5.0 This function is deprecated and should not be used. No replacement available.
  */
 function xoops_module_write_admin_menu($content)
 {
