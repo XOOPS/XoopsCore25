@@ -136,14 +136,15 @@ class XoopsSessionHandler implements
             'INSERT INTO %s (sess_id, sess_updated, sess_ip, sess_data)
              VALUES (%s, %u, %s, %s)
              ON DUPLICATE KEY UPDATE
-             sess_updated = %u, sess_data = %s',
+             sess_updated = %u, sess_data = %s, sess_ip = %s',
             $this->db->prefix('session'),
             $sid,
             $now,
             $this->db->quote($remoteAddress),
             $this->db->quote($data),
             $now,
-            $this->db->quote($data)
+            $this->db->quote($data),
+            $this->db->quote($remoteAddress)
         );
 
         $ok = $this->db->exec($sql);
