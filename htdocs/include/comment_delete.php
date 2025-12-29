@@ -17,7 +17,7 @@
  */
 
 if (!defined('XOOPS_ROOT_PATH') || !is_object($xoopsModule)) {
-    die('Restricted access');
+    throw new \RuntimeException('Restricted access');
 }
 
 include_once $GLOBALS['xoops']->path('include/comment_constants.php');

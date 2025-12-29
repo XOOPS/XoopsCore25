@@ -16,7 +16,9 @@
  * @since               2.0
  * @author              Pierre-Eric MENUET <pemphp@free.fr>
  */
-defined('XOOPS_ROOT_PATH') || exit('Restricted access');
+if (!defined('XOOPS_ROOT_PATH')) {
+    throw new \RuntimeException('Restricted access');
+}
 
 /**
  *
@@ -157,19 +159,36 @@ class XoopsAuthLdap extends XoopsAuth
      * LATIN CAPITAL LETTER Y WITH DIAERESIS
      */
 
-    public $ldap_server;
-    public $ldap_port    = '389';
-    public $ldap_version = '3';
-    public $ldap_base_dn;
-    public $ldap_loginname_asdn;
-    public $ldap_loginldap_attr;
-    public $ldap_mail_attr;
-    public $ldap_name_attr;
-    public $ldap_surname_attr;
-    public $ldap_givenname_attr;
-    public $ldap_manager_dn;
-    public $ldap_manager_pass;
-    public $_ds;
+    public ?string $ldap_server = null;
+    public int $ldap_port = 389;
+    public string $ldap_version = '3';
+    public ?string $ldap_base_dn = null;
+    public ?bool $ldap_loginname_asdn = null;
+    public ?string $ldap_loginldap_attr = null;
+    public ?string $ldap_mail_attr = null;
+    public ?string $ldap_name_attr = null;
+    public ?string $ldap_surname_attr = null;
+    public ?string $ldap_givenname_attr = null;
+    public ?string $ldap_manager_dn = null;
+    public ?string $ldap_manager_pass = null;
+    public ?string $ldap_filter_person = null;
+    public ?bool $ldap_use_TLS = null;
+    public ?string $ldap_domain_name = null;
+    public ?string $ldap_provisionning = null;
+    public ?string $ldap_provisionning_upd = null;
+    public ?array $ldap_provisionning_group = null;
+    public ?string $ldap_field_mapping = null;
+    public ?array $ldap_users_bypass = null;
+    public ?string $ldap_filter_person_adv = null;
+    public ?string $ldap_filter_attr = null;
+    public ?string $ldap_filter_value = null;
+    public string $ldap_filter_operator;
+    public string $ldap_filter_groupattr;
+    public string $ldap_filter_groupvalue;
+    public string $ldap_filter_member;
+    public string $ldap_filter_memberattr;
+    public string $ldap_filter_membervalue;
+    public mixed $_ds;
 
     /**
      * Authentication Service constructor
@@ -285,7 +304,7 @@ class XoopsAuthLdap extends XoopsAuth
      * Load user from XOOPS Database
      *
      * @param string $uname
-     * @return XoopsUser object
+     * @return string XoopsUser object
      */
     public function getFilter($uname)
     {

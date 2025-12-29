@@ -29,7 +29,7 @@ class XoopsUpgrade
     public $logs           = [];
 
     /**
-     * @param null $dirname
+     * @param string|null $dirname
      */
     public function __construct($dirname = null)
     {

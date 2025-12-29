@@ -16,7 +16,9 @@
  * @since               2.3.0
  * @author              Taiwen Jiang <phppp@users.sourceforge.net>
  */
-defined('XOOPS_ROOT_PATH') || exit('Restricted access');
+if (!defined('XOOPS_ROOT_PATH')) {
+    throw new \RuntimeException('Restricted access');
+}
 
 /**
  * Object joint handler class.
@@ -177,7 +179,8 @@ class XoopsModelJoint extends XoopsModelAbstract
             return false;
         }
         $ret = [];
-        while (false !== ([$id, $count] = $this->handler->db->fetchRow($result))) {
+        while (false !== ($row = $this->handler->db->fetchRow($result))) {
+            [$id, $count] = $row;
             $ret[$id] = $count;
         }
 

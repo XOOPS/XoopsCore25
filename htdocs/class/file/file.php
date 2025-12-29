@@ -16,7 +16,9 @@
  * @since               2.3.0
  * @author              Taiwen Jiang <phppp@users.sourceforge.net>
  */
-defined('XOOPS_ROOT_PATH') || exit('Restricted access');
+if (!defined('XOOPS_ROOT_PATH')) {
+    throw new \RuntimeException('Restricted access');
+}
 
 /**
  * Convenience class for reading, writing and appending to files.
@@ -382,8 +384,8 @@ class XoopsFileHandler
     /**
      * makes filename safe for saving
      *
-     * @param  string $name the name of the file to make safe if different from $this->name
-     * @param  null|string   $ext
+     * @param  string|null $name the name of the file to make safe if different from $this->name
+     * @param  string|null   $ext
      * @return string $ext the extension of the file
      * @access public
      */

@@ -73,6 +73,14 @@ if (!defined('XOOPS_MAINFILE_INCLUDED')) {
         }
     }
 
+    // Production: disable logging for performance
+    define('XOOPS_DB_LEGACY_LOG', false);
+    define('XOOPS_DEBUG', false);
+
+    // Development/Staging: enable to track legacy usage
+    //    define('XOOPS_DB_LEGACY_LOG', true);
+    //    define('XOOPS_DEBUG', true); // Also shows E_USER_DEPRECATED notices
+
     // Secure file
     require XOOPS_VAR_PATH . '/data/secure.php';
 

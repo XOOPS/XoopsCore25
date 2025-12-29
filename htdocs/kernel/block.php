@@ -15,7 +15,9 @@
  * @since               2.0.0
  * @author              Kazumi Ono (AKA onokazu) http://www.myweb.ne.jp/, http://jp.xoops.org/
  */
-defined('XOOPS_ROOT_PATH') || exit('Restricted access');
+if (!defined('XOOPS_ROOT_PATH')) {
+    throw new \RuntimeException('Restricted access');
+}
 
 /**
  * A block
@@ -89,8 +91,8 @@ class XoopsBlock extends XoopsObject
             if (is_array($id)) {
                 $this->assignVars($id);
             } else {
-                $blkhandler = xoops_getHandler('block');
-                $obj        = $blkhandler->get($id);
+                $blockHandler = xoops_getHandler('block');
+                $obj        = $blockHandler->get($id);
                 foreach (array_keys($obj->getVars()) as $i) {
                     $this->assignVar($i, $obj->getVar($i, 'n'));
                 }
@@ -435,9 +437,9 @@ class XoopsBlock extends XoopsObject
     public function load($id)
     {
         $id  = (int) $id;
-        /** @var XoopsBlockHandler $blkhandler */
-        $blkhandler = xoops_getHandler('block');
-        $obj        = $blkhandler->get($id);
+        /** @var XoopsBlockHandler $blockHandler */
+        $blockHandler = xoops_getHandler('block');
+        $obj        = $blockHandler->get($id);
         foreach (array_keys($obj->getVars()) as $i) {
             $this->assignVar($i, $obj->getVar($i, 'n'));
         }
@@ -452,9 +454,9 @@ class XoopsBlock extends XoopsObject
      */
     public function store()
     {
-        /** @var XoopsBlockHandler $blkhandler */
-        $blkhandler = xoops_getHandler('block');
-        if (false === $blkhandler->insert($this)) {
+        /** @var XoopsBlockHandler $blockHandler */
+        $blockHandler = xoops_getHandler('block');
+        if (false === $blockHandler->insert($this)) {
             return false;
         }
         return (int) $this->bid();
@@ -469,9 +471,9 @@ class XoopsBlock extends XoopsObject
      */
     public function delete()
     {
-        /** @var XoopsBlockHandler $blkhandler */
-        $blkhandler = xoops_getHandler('block');
-        return $blkhandler->delete($this);
+        /** @var XoopsBlockHandler $blockHandler */
+        $blockHandler = xoops_getHandler('block');
+        return $blockHandler->delete($this);
     }
 
     /**
@@ -569,18 +571,18 @@ class XoopsBlock extends XoopsObject
 
     /**
      * get all the blocks that match the supplied parameters
-     * @param int|array $groupid  groupid (can be an array)
-     * @param bool   $asobject
-     * @param null|string $side     0: sideblock - left
-     *                         1: sideblock - right
-     *                         2: sideblock - left and right
-     *                         3: centerblock - left
-     *                         4: centerblock - right
-     *                         5: centerblock - center
-     *                         6: centerblock - left, right, center
-     * @param        $visible  0: not visible 1: visible
-     * @param string $orderby  order of the blocks
-     * @param int    $isactive
+     * @param int|array   $groupid groupid (can be an array)
+     * @param bool        $asobject
+     * @param string|null $side    0: sideblock - left
+     *                             1: sideblock - right
+     *                             2: sideblock - left and right
+     *                             3: centerblock - left
+     *                             4: centerblock - right
+     *                             5: centerblock - center
+     *                             6: centerblock - left, right, center
+     * @param             $visible 0: not visible 1: visible
+     * @param string      $orderby order of the blocks
+     * @param int         $isactive
      * @returns array of block objects
      *
      * @deprecated
@@ -1214,10 +1216,10 @@ class XoopsBlockHandler extends XoopsObjectHandler
     }
 
     /**
-     * @param        $groupid
+     * @param mixed  $groupid
      * @param int    $module_id
      * @param bool   $toponlyblock
-     * @param null   $visible
+     * @param mixed   $visible
      * @param string $orderby
      * @param int    $isactive
      *

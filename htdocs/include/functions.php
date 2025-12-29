@@ -15,7 +15,9 @@
  * @since               2.0.0
  */
 
-defined('XOOPS_ROOT_PATH') || exit('Restricted access');
+if (!defined('XOOPS_ROOT_PATH')) {
+    throw new \RuntimeException('Restricted access');
+}
 
 /** @var \XoopsNotificationHandler $notification_handler */
 
@@ -1245,8 +1247,8 @@ function xoops_setConfigOption($option, $new = null)
  *
  * @param mixed  $option
  * @param string $dirname
- * @return bool
-@deprecated
+ * @return mixed
+ * @deprecated
  */
 function xoops_getModuleOption($option, $dirname = '')
 {

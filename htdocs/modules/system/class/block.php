@@ -13,7 +13,9 @@
  * @license             GNU GPL 2 (https://www.gnu.org/licenses/gpl-2.0.html)
  * @package             system
  */
-// defined('XOOPS_ROOT_PATH') || exit('XOOPS root path not defined');
+//if (!defined('XOOPS_ROOT_PATH')) {
+//    throw new \RuntimeException('XOOPS root path not defined');
+//}
 
 require_once XOOPS_ROOT_PATH . '/kernel/block.php';
 
@@ -312,7 +314,7 @@ class SystemBlock extends XoopsBlock
 class SystemBlockHandler extends XoopsPersistableObjectHandler
 {
     /**
-     * @param null|XoopsDatabase $db
+     * @param XoopsDatabase|null $db
      */
     public function __construct(XoopsDatabase $db)
     {
@@ -507,10 +509,10 @@ class SystemBlockHandler extends XoopsPersistableObjectHandler
     }
 
     /**
-     * @param        $groupid
+     * @param mixed $groupid
      * @param int $module_id
      * @param bool $toponlyblock
-     * @param null $visible
+     * @param mixed $visible
      * @param string $orderby
      * @param int $isactive
      *
@@ -587,7 +589,7 @@ class SystemBlockHandler extends XoopsPersistableObjectHandler
     /**
      * @param int $module_id
      * @param bool $toponlyblock
-     * @param null $visible
+     * @param int|bool|null $visible
      * @param string $orderby
      * @param int $isactive
      *

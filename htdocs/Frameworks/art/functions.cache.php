@@ -14,7 +14,7 @@ if (!defined('FRAMEWORKS_ART_FUNCTIONS_CACHE')):
     define('FRAMEWORKS_ART_FUNCTIONS_CACHE', true);
 
     /**
-     * @param null|array $groups
+     * @param array|null $groups
      *
      * @return string
      */
@@ -37,7 +37,7 @@ if (!defined('FRAMEWORKS_ART_FUNCTIONS_CACHE')):
     }
 
 /**
- * @param null $groups
+ * @param mixed $groups
  *
  * @return string
  */
@@ -47,9 +47,9 @@ function mod_generateCacheId($groups = null)
 }
 
 /**
- * @param        $data
- * @param null|string   $name
- * @param null|string   $dirname
+ * @param mixed $data
+ * @param string|null   $name
+ * @param string|null   $dirname
  * @param string $root_path
  *
  * @return bool
@@ -68,9 +68,9 @@ function mod_createFile($data, $name = null, $dirname = null, $root_path = XOOPS
 }
 
 /**
- * @param      $data
- * @param null $name
- * @param null $dirname
+ * @param mixed $data
+ * @param string|null $name
+ * @param string|null $dirname
  *
  * @return bool
  */
@@ -80,10 +80,10 @@ function mod_createCacheFile($data, $name = null, $dirname = null)
 }
 
 /**
- * @param      $data
- * @param null|string $name
- * @param null $dirname
- * @param null $groups
+ * @param mixed $data
+ * @param string|null $name
+ * @param string|null $dirname
+ * @param mixed $groups
  *
  * @return bool
  */
@@ -95,8 +95,8 @@ function mod_createCacheFile_byGroup($data, $name = null, $dirname = null, $grou
 }
 
 /**
- * @param        $name
- * @param null|string   $dirname
+ * @param string $name
+ * @param string|null   $dirname
  * @param string $root_path
  *
  * @return mixed|null
@@ -118,10 +118,10 @@ function mod_loadFile($name, $dirname = null, $root_path = XOOPS_CACHE_PATH)
 }
 
 /**
- * @param      $name
- * @param null $dirname
+ * @param string $name
+ * @param string|null $dirname
  *
- * @return mixed|null
+ * @return mixed
  */
 function mod_loadCacheFile($name, $dirname = null)
 {
@@ -131,11 +131,11 @@ function mod_loadCacheFile($name, $dirname = null)
 }
 
 /**
- * @param      $name
- * @param null $dirname
- * @param null $groups
+ * @param string $name
+ * @param string|null $dirname
+ * @param mixed $groups
  *
- * @return mixed|null
+ * @return mixed
  */
 function mod_loadCacheFile_byGroup($name, $dirname = null, $groups = null)
 {
@@ -149,7 +149,7 @@ function mod_loadCacheFile_byGroup($name, $dirname = null, $groups = null)
 
 /**
  * @param string $name
- * @param null   $dirname
+ * @param string|null   $dirname
  * @param string $root_path
  *
  * @return bool
@@ -178,7 +178,7 @@ function mod_clearFile($name = '', $dirname = null, $root_path = XOOPS_CACHE_PAT
 
 /**
  * @param string $name
- * @param null   $dirname
+ * @param string|null   $dirname
  *
  * @return bool
  */

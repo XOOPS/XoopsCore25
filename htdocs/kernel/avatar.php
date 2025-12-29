@@ -15,7 +15,9 @@
  * @since               2.0.0
  * @author              Kazumi Ono (AKA onokazu) http://www.myweb.ne.jp/, http://jp.xoops.org/
  */
-defined('XOOPS_ROOT_PATH') || exit('Restricted access');
+if (!defined('XOOPS_ROOT_PATH')) {
+    throw new \RuntimeException('Restricted access');
+}
 
 /**
  * A Avatar
@@ -419,7 +421,7 @@ class XoopsAvatarHandler extends XoopsObjectHandler
             $criteria->add(new Criteria('avatar_type', $avatar_type));
         }
         if (isset($avatar_display)) {
-            $criteria->add(new Criteria('avatar_display', (int) $avatar_display));
+            $criteria->add(new Criteria('avatar_display',  (string) ((int) $avatar_display)));
         }
         $avatars = &$this->getObjects($criteria, true);
         $ret     = ['blank.gif' => _NONE];

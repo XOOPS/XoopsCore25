@@ -16,7 +16,9 @@
  * @author              Kazumi Ono (AKA onokazu) http://www.myweb.ne.jp/, http://jp.xoops.org/
  */
 
-defined('XOOPS_ROOT_PATH') || exit('Restricted access');
+if (!defined('XOOPS_ROOT_PATH')) {
+    throw new \RuntimeException('Restricted access');
+}
 
 /**
  * Abstract base class for forms
@@ -111,7 +113,8 @@ class XoopsTree
         if ($count == 0) {
             return $idarray;
         }
-        while (false !== ([$id] = $this->db->fetchRow($result))) {
+        while (false !== ($row = $this->db->fetchRow($result))) {
+            [$id] = $row;
             $idarray[] = $id;
         }
 
@@ -144,7 +147,8 @@ class XoopsTree
         if ($count == 0) {
             return $idarray;
         }
-        while (false !== ([$r_id] = $this->db->fetchRow($result))) {
+        while (false !== ($row = $this->db->fetchRow($result))) {
+            [$r_id] = $row;
             $idarray[] = $r_id;
             $idarray   = $this->getAllChildId($r_id, $order, $idarray);
         }
@@ -258,7 +262,8 @@ class XoopsTree
         if ($none) {
             echo "<option value='0'>----</option>\n";
         }
-        while (false !== ([$catid, $name] = $this->db->fetchRow($result))) {
+        while (false !== ($row = $this->db->fetchRow($result))) {
+            [$catid, $name] = $row;
             $sel = '';
             if ($catid == $preset_id) {
                 $sel = " selected";
