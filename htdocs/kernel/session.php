@@ -23,8 +23,8 @@ if (!defined('XOOPS_ROOT_PATH')) {
 
 /**
  * Loader shim: include the correct handler for this PHP version.
- * - PHP < 8.0:  untyped handler (no unions), 7.4-safe
- * - PHP >= 8.0: fully typed handler with union returns and lazy timestamp updates
+ * - PHP < 8.0:  PHP 7.4-compatible handler (no union types, no SessionUpdateTimestampHandlerInterface)
+ * - PHP >= 8.0: handler using union types and lazy timestamp updates
  */
 if (PHP_VERSION_ID < 80000) {
     require_once __DIR__ . '/session74.php';
