@@ -18,7 +18,9 @@
 
 use Xmf\Request;
 
-defined('XOOPS_ROOT_PATH') || exit('Restricted access');
+if (!defined('XOOPS_ROOT_PATH')) {
+    throw new \RuntimeException('Restricted access');
+}
 
 include_once $GLOBALS['xoops']->path('include/comment_constants.php');
 

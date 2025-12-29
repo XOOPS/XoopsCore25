@@ -15,7 +15,9 @@
  * @since               2.0.0
  * @author              Kazumi Ono (AKA onokazu) http://www.myweb.ne.jp/, http://jp.xoops.org/
  */
-defined('XOOPS_ROOT_PATH') || exit('Restricted access');
+if (!defined('XOOPS_ROOT_PATH')) {
+    throw new \RuntimeException('Restricted access');
+}
 
 /**
  * An Image
@@ -364,14 +366,14 @@ class XoopsImageHandler extends XoopsObjectHandler
      * Get a list of images
      *
      * @param  int  $imgcat_id
-     * @param  bool $image_display
+     * @param  bool|null $image_display
      * @return array Array of {@link XoopsImage} objects
      **/
     public function getList($imgcat_id, $image_display = null)
     {
         $criteria = new CriteriaCompo(new Criteria('imgcat_id', (int)$imgcat_id));
         if (isset($image_display)) {
-            $criteria->add(new Criteria('image_display', (int)$image_display));
+            $criteria->add(new Criteria('image_display', (string) ((int)$image_display)));
         }
         $images = $this->getObjects($criteria, false, true);
         $ret    = [];

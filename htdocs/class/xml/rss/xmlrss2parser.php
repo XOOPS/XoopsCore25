@@ -10,14 +10,16 @@
  */
 
 /**
- * @copyright    XOOPS Project https://xoops.org/
+ * @copyright    2000-2025 XOOPS Project (https://xoops.org)
  * @license      GNU GPL 2.0 or later (https://www.gnu.org/licenses/gpl-2.0.html)
  * @package
  * @since
  * @author       XOOPS Development Team, Kazumi Ono (AKA onokazu)
  */
 
-defined('XOOPS_ROOT_PATH') || exit('XOOPS root path not defined');
+if (!defined('XOOPS_ROOT_PATH')) {
+    throw new \RuntimeException('XOOPS root path not defined');
+}
 require_once(XOOPS_ROOT_PATH . '/class/xml/saxparser.php');
 require_once(XOOPS_ROOT_PATH . '/class/xml/xmltaghandler.php');
 
@@ -77,7 +79,7 @@ class XoopsXmlRss2Parser extends SaxParser
     }
 
     /**
-     * @param null $name
+     * @param string|null  $name
      *
      * @return array|bool
      */
@@ -100,7 +102,7 @@ class XoopsXmlRss2Parser extends SaxParser
     }
 
     /**
-     * @param null $name
+     * @param string|null  $name
      *
      * @return array|bool
      */

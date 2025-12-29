@@ -20,7 +20,9 @@
  *
  * @todo                Not well written, just keep as it is. Refactored in 3.0
  */
-defined('XOOPS_ROOT_PATH') || exit('Restricted access');
+if (!defined('XOOPS_ROOT_PATH')) {
+    throw new \RuntimeException('Restricted access');
+}
 
 /**
  * Collects information for a page request

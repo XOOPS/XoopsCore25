@@ -16,9 +16,8 @@
  * @author          Kazumi Ono (AKA onokazu) http://www.myweb.ne.jp/, http://jp.xoops.org/
  * @version         2.0.0 - Enhanced with security hardening and PHP 7.4-8.4 compatibility
  */
-
 if (!defined('XOOPS_ROOT_PATH')) {
-    throw new RuntimeException('Restricted access');
+    throw new \RuntimeException('Restricted access');
 }
 
 require_once __DIR__ . '/user.php';

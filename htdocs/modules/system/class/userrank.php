@@ -15,7 +15,9 @@
  * @package             system
  */
 
-// defined('XOOPS_ROOT_PATH') || exit('XOOPS root path not defined');
+//if (!defined('XOOPS_ROOT_PATH')) {
+//    throw new \RuntimeException('XOOPS root path not defined');
+//}
 
 /**
  * System User ranks
@@ -122,7 +124,7 @@ class SystemUserrank extends XoopsObject
 class SystemuserrankHandler extends XoopsPersistableObjectHandler
 {
     /**
-     * @param null|XoopsDatabase $db
+     * @param XoopsDatabase|null $db
      */
     public function __construct(XoopsDatabase $db)
     {

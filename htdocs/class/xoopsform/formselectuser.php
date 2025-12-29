@@ -18,7 +18,9 @@
  * @since           2.0.0
  * @author          Taiwen Jiang <phppp@users.sourceforge.net>
  */
-defined('XOOPS_ROOT_PATH') || exit('Restricted access');
+if (!defined('XOOPS_ROOT_PATH')) {
+    throw new \RuntimeException('Restricted access');
+}
 
 xoops_load('XoopsFormElementTray');
 xoops_load('XoopsFormSelect');

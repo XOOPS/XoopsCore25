@@ -80,7 +80,7 @@ class ArtObjectHandler extends XoopsPersistableObjectHandler
     /**
      * get MySQL server version
      *
-     * @param null|XoopsDatabase|mysqli $conn
+     * @param XoopsDatabase|mysqli|null $conn
      *
      * @return string
      */

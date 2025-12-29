@@ -17,7 +17,9 @@
  * @author              Taiwen Jiang <phppp@users.sourceforge.net>
  */
 
-// defined('XOOPS_ROOT_PATH') || exit("XOOPS root path not defined");
+//if (!defined('XOOPS_ROOT_PATH')) {
+//    throw new \RuntimeException('XOOPS root path not defined');
+//}
 
 /**
  * Class ProfileVisibility
@@ -45,7 +47,7 @@ class ProfileVisibility extends XoopsObject
 class ProfileVisibilityHandler extends XoopsPersistableObjectHandler
 {
     /**
-     * @param null|XoopsDatabase $db
+     * @param XoopsDatabase|null $db
      */
     public function __construct(XoopsDatabase $db)
     {
