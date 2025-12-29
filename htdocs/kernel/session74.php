@@ -108,7 +108,7 @@ class XoopsSessionHandler implements \SessionHandlerInterface
         );
         $result = $this->db->queryF($sql);
         if (!$this->db->isResultSet($result)) {
-            return ''; // failure -> empty string (7.4-safe)
+            return false; // failure -> false for consistency with session80.php
         }
         $row = $this->db->fetchRow($result);
         if ($row === false) {
