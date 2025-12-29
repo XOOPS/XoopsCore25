@@ -33,7 +33,7 @@ $GLOBALS['xoopsLogger']->addDeprecated("'/class/xoopscommments.php' is deprecate
  * @package             kernel
  * @subpackage          comments
  * @access              public
- * @deprecated
+ * @deprecated since 2.5.4 Use \XoopsComment in /kernel/comment.php instead.
  */
 class XoopsComments extends XoopsObject
 {
