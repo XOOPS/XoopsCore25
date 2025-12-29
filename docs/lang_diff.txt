@@ -17,7 +17,7 @@ Below are language differences from a version to next version.
 - updated define('_PM_EMAIL_DESC', 'Dear %s, this is a message transferred from your account at ' . $GLOBALS['xoopsConfig']['sitename']);
 
 /htdocs/class/xoopseditor/tinymce5/language/english.php
-- ranamed _XOOPS_EDITOR_TINYMCE_LANGUAGE5 to _XOOPS_EDITOR_TINYMCE5_LANGUAGE
+- renamed _XOOPS_EDITOR_TINYMCE_LANGUAGE5 to _XOOPS_EDITOR_TINYMCE5_LANGUAGE
 
 /htdocs/modules/system/themes/transition/language/english/admin.php
 - renamed _OXYGEN_Server_API to _OXYGEN_SERVER_API
