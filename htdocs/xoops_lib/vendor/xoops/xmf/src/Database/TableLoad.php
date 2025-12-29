@@ -21,7 +21,7 @@ use Xmf\Yaml;
  * @category  Xmf\Database\TableLoad
  * @package   Xmf
  * @author    Richard Griffith <richard@geekwright.com>
- * @copyright 2013-2018 XOOPS Project (https://xoops.org)
+ * @copyright 2000-2025 XOOPS Project (https://xoops.org)
  * @license   GNU GPL 2.0 or later (https://www.gnu.org/licenses/gpl-2.0.html)
  * @link      https://xoops.org
  */
@@ -64,7 +64,7 @@ class TableLoad
 
             $sql = $insertInto . ') ' . $valueClause . ')';
 
-            $result = $db->queryF($sql);
+            $result = $db->exec($sql);
             if (false !== $result) {
                 ++$count;
             }
@@ -107,7 +107,7 @@ class TableLoad
 
         $prefixedTable = $db->prefix($table);
         $sql = 'TRUNCATE TABLE ' . $prefixedTable;
-        $result = $db->queryF($sql);
+        $result = $db->exec($sql);
         if (false !== $result) {
             $result = $db->getAffectedRows();
         }

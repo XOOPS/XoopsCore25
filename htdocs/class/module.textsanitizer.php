@@ -846,8 +846,11 @@ class MyTextSanitizer
      */
     public function addSlashes($text)
     {
-        $GLOBALS['xoopsLogger']->addDeprecated(__METHOD__ . ' is deprecated');
-        return $text;
+        global $xoopsDB;
+        $GLOBALS['xoopsLogger']->addDeprecated(
+            __METHOD__ . ' is deprecated. Use $xoopsDB->escape() or $xoopsDB->quote() instead.'
+        );
+        return $xoopsDB->escape($text);
     }
 
     /**

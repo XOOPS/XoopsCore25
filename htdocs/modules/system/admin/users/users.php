@@ -266,7 +266,7 @@ function synchronize($uid, $type)
                 }
             }
             $sql = 'UPDATE ' . $xoopsDB->prefix('users') . " SET posts = '" . $total_posts . "' WHERE uid = '" . $uid . "'";
-            $result = $xoopsDB->queryF($sql);
+            $result = $xoopsDB->exec($sql);
             if (!$xoopsDB->isResultSet($result)) {
                 redirect_header('admin.php?fct=users', 1, _AM_SYSTEM_USERS_CNUUSER);
             }

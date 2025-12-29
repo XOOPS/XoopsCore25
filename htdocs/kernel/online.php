@@ -102,7 +102,7 @@ class XoopsOnlineHandler
                 // this condition (no entry for a real user) exists when a user first signs in
                 // first, cleanup the uid == 0 row the user generated before signing in
                 $loginSql = sprintf('DELETE FROM %s WHERE online_uid = 0 AND online_ip=%s', $this->db->prefix('online'), $ip);
-                $this->db->queryF($loginSql);
+                $this->db->exec($loginSql);
             }
             $sql = sprintf(
                 'INSERT INTO %s (online_uid, online_uname, online_updated, online_ip, online_module)'
@@ -115,7 +115,7 @@ class XoopsOnlineHandler
                 $module,
             );
         }
-        if (!$this->db->queryF($sql)) {
+        if (!$this->db->exec($sql)) {
             return false;
         }
 
@@ -132,7 +132,7 @@ class XoopsOnlineHandler
     public function destroy($uid)
     {
         $sql = sprintf('DELETE FROM %s WHERE online_uid = %u', $this->db->prefix('online'), $uid);
-        if (!$result = $this->db->queryF($sql)) {
+        if (!$result = $this->db->exec($sql)) {
             return false;
         }
 
@@ -153,7 +153,7 @@ class XoopsOnlineHandler
             $this->db->prefix('online'),
             time() - (int) $expire,
         );
-        $this->db->queryF($sql);
+        $this->db->exec($sql);
     }
 
     /**

@@ -944,7 +944,7 @@ class XoopsBlock extends XoopsObject
         $db = XoopsDatabaseFactory::getDatabaseConnection();
         if (isset($showFunc)) {
             // showFunc is set for more strict comparison
-            $sql = sprintf('SELECT COUNT(*) FROM %s WHERE mid = %d AND func_num = %d AND show_func = %s', $db->prefix('newblocks'), $moduleId, $funcNum, $db->quoteString(trim($showFunc)));
+            $sql = sprintf('SELECT COUNT(*) FROM %s WHERE mid = %d AND func_num = %d AND show_func = %s', $db->prefix('newblocks'), $moduleId, $funcNum, $db->quote(trim($showFunc)));
         } else {
             $sql = sprintf('SELECT COUNT(*) FROM %s WHERE mid = %d AND func_num = %d', $db->prefix('newblocks'), $moduleId, $funcNum);
         }
@@ -1110,7 +1110,7 @@ class XoopsBlockHandler extends XoopsObjectHandler
                 $bid,
             );
         }
-        if (!$result = $this->db->query($sql)) {
+        if (!$result = $this->db->exec($sql)) {
             return false;
         }
         if (empty($bid)) {
@@ -1136,11 +1136,11 @@ class XoopsBlockHandler extends XoopsObjectHandler
         }
         $id  = $block->getVar('bid');
         $sql = sprintf('DELETE FROM %s WHERE bid = %u', $this->db->prefix('newblocks'), $id);
-        if (!$result = $this->db->query($sql)) {
+        if (!$result = $this->db->exec($sql)) {
             return false;
         }
         $sql = sprintf('DELETE FROM %s WHERE block_id = %u', $this->db->prefix('block_module_link'), $id);
-        $this->db->query($sql);
+        $this->db->exec($sql);
 
         return true;
     }

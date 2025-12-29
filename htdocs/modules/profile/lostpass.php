@@ -29,10 +29,9 @@ if ($email == '') {
     redirect_header('user.php', 2, _US_SORRYNOTFOUND, false);
 }
 
-$myts           = \MyTextSanitizer::getInstance();
 /** @var XoopsMemberHandler $member_handler */
 $member_handler = xoops_getHandler('member');
-[$user] = $member_handler->getUsers(new Criteria('email', $myts->addSlashes($email)));
+[$user] = $member_handler->getUsers(new Criteria('email', $xoopsDB->escape($email)));
 
 if (empty($user)) {
     $msg = _US_SORRYNOTFOUND;
@@ -65,7 +64,7 @@ if (empty($user)) {
             password_hash($newpass, PASSWORD_DEFAULT),
             $user->getVar('uid'),
         );
-        if (!$GLOBALS['xoopsDB']->queryF($sql)) {
+        if (!$GLOBALS['xoopsDB']->exec($sql)) {
             include $GLOBALS['xoops']->path('header.php');
             echo _US_MAILPWDNG;
             include __DIR__ . '/footer.php';

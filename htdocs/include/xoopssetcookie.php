@@ -10,59 +10,93 @@
  */
 
 /**
- * Near drop-in replacement for PHP's setcookie()
+ * Safe, modern cookie setter with RFC 6265 domain validation and SameSite support.
  *
- * @copyright       Copyright 2021 The XOOPS Project https://xoops.org
+ * This function replaces the legacy func_get_args() version with an explicit
+ * signature, making it more robust and easier for static analysis to validate.
+ *
+ * @copyright       Copyright 2021-2025 The XOOPS Project https://xoops.org
  * @license         GNU GPL 2.0 or later (https://www.gnu.org/licenses/gpl-2.0.html)
  * @author          Richard Griffith <richard@geekwright.com>
  *
- * This exists to bring samesite support to php versions before 7.3, and
- * it treats the default as samesite=Lax
- *
- * It supports both of the two declared signatures:
- * - setcookie ( string $name , string $value = "" , int $expires = 0 , string $path = "" , string $domain = "" , bool $secure = false , bool $httponly = false ) : bool
- * - setcookie ( string $name , string $value = "" , array $options = [] ) : bool
+ * @param string $name The name of the cookie.
+ * @param string|null $value The value of the cookie.
+ * @param int $expire The time the cookie expires. This is a Unix timestamp.
+ * @param string|null $path The path on the server in which the cookie will be available on.
+ * @param string|null $domain The (sub)domain that the cookie is available to.
+ * @param bool|null $secure Indicates that the cookie should only be transmitted over a secure HTTPS connection.
+ * If null, it will be auto-detected.
+ * @param bool $httponly When TRUE the cookie will be made accessible only through the HTTP protocol.
+ * @param string $samesite The SameSite attribute ('Lax', 'Strict', 'None').
+ * @return bool True on success, false on failure.
  */
-function xoops_setcookie()
-{
+function xoops_setcookie(
+    string $name,
+    ?string $value = '',
+    int $expire = 0,
+    ?string $path = '/',
+    ?string $domain = '',
+    ?bool $secure = null,
+    bool $httponly = true,
+    string $samesite = 'Lax'
+): bool {
     if (headers_sent()) {
         return false;
     }
-    $argNames    = ['name', 'value', 'expires', 'path', 'domain', 'secure', 'httponly'];
-    //$argDefaults = array(null,   '',       0,        '',     '',        false,    false);
-    //$optionsKeys = array('expires', 'path', 'domain', 'secure', 'httponly', 'samesite');
-    $rawArgs = func_get_args();
-    $args = [];
-    foreach ($rawArgs as $key => $value) {
-        if (2 === $key && \is_array($value)) {
-            // modern call
-            $args['options'] = [];
-            foreach ($value as $optionKey => $optionValue) {
-                $args['options'][strtolower($optionKey)] = $optionValue;
+
+    // Convert null values to empty string for compatibility with setcookie.
+    $value = $value ?? '';
+    $host = parse_url(XOOPS_URL, PHP_URL_HOST);
+    if (!is_string($host)) {
+        $host = ''; // Fallback for invalid XOOPS_URL
+    }
+    if (!is_string($domain)) {
+        $domain = ''; // Fallback for invalid domain
+    }
+
+    // Validate the domain BEFORE using it.
+    if (class_exists('\Xoops\RegDom\RegisteredDomain')) {
+        if (!\Xoops\RegDom\RegisteredDomain::domainMatches($host, $domain)) {
+            $originalDomain = $domain;
+            $domain = ''; // Auto-correct to a safe, host-only cookie
+
+            if (defined('XOOPS_DEBUG_MODE') && XOOPS_DEBUG_MODE) {
+                error_log(
+                    sprintf(
+                        '[XOOPS Cookie] Invalid domain "%s" for host "%s" (cookie: %s) - using host-only.',
+                        $originalDomain,
+                        $host,
+                        $name
+                    )
+                );
             }
-            break;
-        }
-        if ($key>1) {
-            if (null !== $value) {
-                $args['options'][$argNames[$key]] = $value;
-            }
-        } else {
-            $args[$argNames[$key]] = $value;
         }
     }
 
-    // make samesite=Lax the default
-    $args['options']['samesite'] ??= 'Lax';
-    if (!isset($args['value'])){
-        $args['value'] = '';
+    // Auto-detect 'secure' flag if not explicitly set
+    if ($secure === null) {
+        $secure = (!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off')
+            || (!empty($_SERVER['SERVER_PORT']) && $_SERVER['SERVER_PORT'] == 443)
+            || (!empty($_SERVER['HTTP_X_FORWARDED_PROTO']) && $_SERVER['HTTP_X_FORWARDED_PROTO'] === 'https');
     }
-    // after php 7.3 we just let php do it
+
+    // Use modern array syntax for PHP 7.3+
     if (PHP_VERSION_ID >= 70300) {
-        return setcookie($args['name'], (string)$args['value'], $args['options']);
+        $options = [
+            'expires'  => $expire,
+            'path'     => $path,
+            'secure'   => $secure,
+            'httponly' => $httponly,
+            'samesite' => $samesite,
+        ];
+        if ($domain !== '') {
+            $options['domain'] = $domain;
+        }
+        return setcookie($name, $value, $options);
     }
-    // render and send our own headers below php 7.3
-    header(xoops_buildCookieHeader($args), false);
-    return true;
+
+    // Fallback for older PHP versions
+    return setcookie($name, $value, $expire, $path, $domain, $secure, $httponly);
 }
 
 /**

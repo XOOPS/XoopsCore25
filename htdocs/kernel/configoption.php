@@ -199,7 +199,7 @@ class XoopsConfigOptionHandler extends XoopsObjectHandler
                 $confop_id,
             );
         }
-        if (!$result = $this->db->query($sql)) {
+        if (!$result = $this->db->exec($sql)) {
             return false;
         }
         if (empty($confop_id)) {
@@ -224,7 +224,7 @@ class XoopsConfigOptionHandler extends XoopsObjectHandler
             return false;
         }
         $sql = sprintf('DELETE FROM %s WHERE confop_id = %u', $this->db->prefix('configoption'), $confoption->getVar('confop_id'));
-        if (!$result = $this->db->query($sql)) {
+        if (!$result = $this->db->exec($sql)) {
             return false;
         }
 

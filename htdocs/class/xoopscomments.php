@@ -135,7 +135,7 @@ class XoopsComments extends XoopsObject
         } else {
             $sql = sprintf("UPDATE %s SET subject = '%s', comment = '%s', nohtml = %u, nosmiley = %u, noxcode = %u, icon = '%s'  WHERE comment_id = %u", $this->ctable, $subject, $comment, $nohtml, $nosmiley, $noxcode, $icon, $comment_id);
         }
-        if (!$result = $this->db->query($sql)) {
+        if (!$result = $this->db->exec($sql)) {
             //echo $sql;
             return false;
         }
@@ -144,7 +144,7 @@ class XoopsComments extends XoopsObject
         }
         if ($isnew != false) {
             $sql = sprintf('UPDATE %s SET posts = posts+1 WHERE uid = %u', $this->db->prefix('users'), $user_id);
-            if (!$result = $this->db->query($sql)) {
+            if (!$result = $this->db->exec($sql)) {
                 echo 'Could not update user posts.';
             }
         }
@@ -160,11 +160,11 @@ class XoopsComments extends XoopsObject
     public function delete()
     {
         $sql = sprintf('DELETE FROM %s WHERE comment_id = %u', $this->ctable, $this->getVar('comment_id'));
-        if (!$result = $this->db->query($sql)) {
+        if (!$result = $this->db->exec($sql)) {
             return false;
         }
         $sql = sprintf('UPDATE %s SET posts = posts-1 WHERE uid = %u', $this->db->prefix('users'), $this->getVar('user_id'));
-        if (!$result = $this->db->query($sql)) {
+        if (!$result = $this->db->exec($sql)) {
             echo 'Could not update user posts.';
         }
         $mytree = new XoopsTree($this->ctable, 'comment_id', 'pid');
@@ -173,11 +173,11 @@ class XoopsComments extends XoopsObject
         if ($size > 0) {
             for ($i = 0; $i < $size; ++$i) {
                 $sql = sprintf('DELETE FROM %s WHERE comment_bid = %u', $this->ctable, $arr[$i]['comment_id']);
-                if (!$result = $this->db->query($sql)) {
+                if (!$result = $this->db->exec($sql)) {
                     echo 'Could not delete comment.';
                 }
                 $sql = sprintf('UPDATE %s SET posts = posts-1 WHERE uid = %u', $this->db->prefix('users'), $arr[$i]['user_id']);
-                if (!$result = $this->db->query($sql)) {
+                if (!$result = $this->db->exec($sql)) {
                     echo 'Could not update user posts.';
                 }
             }

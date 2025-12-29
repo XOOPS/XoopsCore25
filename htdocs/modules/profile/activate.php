@@ -79,7 +79,7 @@ if (!empty($_GET['id']) && !empty($_GET['actkey'])) {
     $myts           = \MyTextSanitizer::getInstance();
     /** @var XoopsMemberHandler $member_handler */
     $member_handler = xoops_getHandler('member');
-    $getuser        = $member_handler->getUsers(new Criteria('email', $myts->addSlashes(trim($_REQUEST['email']))));
+    $getuser        = $member_handler->getUsers(new Criteria('email', $xoopsDB->escape(trim($_REQUEST['email']))));
     if (count($getuser) == 0) {
         redirect_header(XOOPS_URL, 2, _US_SORRYNOTFOUND);
     }

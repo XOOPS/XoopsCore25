@@ -7,7 +7,7 @@ $baseDir = dirname($vendorDir);
 
 return array(
     'Xoops\\RegDom\\' => array($vendorDir . '/xoops/regdom/src'),
-    'Xmf\\' => array($baseDir . '/xoops_lib/vendor/xoops/Xmf', $vendorDir . '/xoops/xmf/src'),
+    'Xmf\\' => array($vendorDir . '/xoops/xmf/src'),
     'Webmozart\\Assert\\' => array($vendorDir . '/webmozart/assert/src'),
     'Symfony\\Polyfill\\Mbstring\\' => array($vendorDir . '/symfony/polyfill-mbstring'),
     'Symfony\\Polyfill\\Iconv\\' => array($vendorDir . '/symfony/polyfill-iconv'),

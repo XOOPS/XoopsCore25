@@ -1,0 +1,11 @@
+includes:
+#	- ../../phpstan.neon
+parameters:
+	level: max
+	paths:
+		- .
+	fileExtensions:
+		- php
+		- phtml
+	excludePaths:
+		- tests/*

@@ -263,7 +263,7 @@ if (!empty($_SESSION['xoopsUserId'])) {
             $sql = 'UPDATE ' . $xoopsDB->prefix('users') . " SET last_login = '" . time()
                    . "' WHERE uid = " . $_SESSION['xoopsUserId'];
             try {
-                $xoopsDB->queryF($sql);
+                $xoopsDB->exec($sql);
             } catch (Exception $e) {
                 throw new \RuntimeException(
                     \sprintf(_DB_QUERY_ERROR, $sql) . $db->error(),

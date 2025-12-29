@@ -43,7 +43,7 @@ if (!function_exists('protector_onupdate_base')) {
         $result = $db->query($sql);
         if ($result !== false && $db->isResultSet($result)) {
             if ($result instanceof mysqli_result && ($myrow = $db->fetchArray($result)) && isset($myrow['Type']) && $myrow['Type'] === 'varchar(30)') {
-                $db->queryF('ALTER TABLE ' . $db->prefix('config') . " MODIFY `conf_title` varchar(255) NOT NULL default '', MODIFY `conf_desc` varchar(255) NOT NULL default ''");
+                $db->exec('ALTER TABLE ' . $db->prefix('config') . " MODIFY `conf_title` varchar(255) NOT NULL default '', MODIFY `conf_desc` varchar(255) NOT NULL default ''");
             }
         }
 
@@ -61,10 +61,10 @@ if (!function_exists('protector_onupdate_base')) {
 
         foreach (explode('KEY', $create_string) as $line) {
             if (preg_match('/(\`conf\_title_\d+\`) \(\`conf\_title\`\)/', $line, $regs)) {
-                $db->query('ALTER TABLE ' . $db->prefix('config') . ' DROP KEY ' . $regs[1]);
+                $db->exec('ALTER TABLE ' . $db->prefix('config') . ' DROP KEY ' . $regs[1]);
             }
         }
-        $db->query('ALTER TABLE ' . $db->prefix('config') . ' ADD KEY `conf_title` (`conf_title`)');
+        $db->exec('ALTER TABLE ' . $db->prefix('config') . ' ADD KEY `conf_title` (`conf_title`)');
 
         // 2.x -> 3.0
         $sql = 'SHOW CREATE TABLE ' . $db->prefix($mydirname . '_log');
@@ -81,7 +81,7 @@ if (!function_exists('protector_onupdate_base')) {
 
 
         if (preg_match('/timestamp\(/i', $create_string)) {
-            $db->query('ALTER TABLE ' . $db->prefix($mydirname . '_log') . ' MODIFY `timestamp` DATETIME');
+            $db->exec('ALTER TABLE ' . $db->prefix($mydirname . '_log') . ' MODIFY `timestamp` DATETIME');
         }
 
         // TEMPLATES (all templates have been already removed by modulesadmin)

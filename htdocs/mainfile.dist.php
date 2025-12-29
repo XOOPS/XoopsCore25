@@ -41,6 +41,11 @@ if (!defined('XOOPS_MAINFILE_INCLUDED')) {
     // Example: define("XOOPS_URL", "http://url_to_xoops_directory");
     define('XOOPS_URL', 'https://');
 
+    // in mainfile.php - add this if it doesn't exist
+    if (!defined('XOOPS_COOKIE_DOMAIN_USE_PSL')) {
+        define('XOOPS_COOKIE_DOMAIN_USE_PSL', true);
+    }
+
     // XOOPS Cookie Domain to specify when creating cookies. May be blank (i.e. for IP address host),
     // full host from XOOPS_URL (i.e. www.example.com) or just the registered domain (i.e. example.com)
     // to share cookies across multiple subdomains (i.e. www.example.com and blog.example.com)
@@ -67,6 +72,14 @@ if (!defined('XOOPS_MAINFILE_INCLUDED')) {
             exit('XOOPS path check: Script is not inside XOOPS_ROOT_PATH and cannot run.');
         }
     }
+
+    // Production: disable logging for performance
+    define('XOOPS_DB_LEGACY_LOG', false);
+    define('XOOPS_DEBUG', false);
+
+    // Development/Staging: enable to track legacy usage
+    //    define('XOOPS_DB_LEGACY_LOG', true);
+    //    define('XOOPS_DEBUG', true); // Also shows E_USER_DEPRECATED notices
 
     // Secure file
     require XOOPS_VAR_PATH . '/data/secure.php';

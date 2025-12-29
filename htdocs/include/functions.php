@@ -727,15 +727,15 @@ function xoops_getbanner()
         } else {
             ++$impmade;
             $sql = sprintf('UPDATE %s SET impmade = %u WHERE bid = %u', $db->prefix('banner'), $impmade, $bid);
-            $db->queryF($sql);
+            $db->exec($sql);
             /**
              * Check if this impression is the last one
              */
             if ($imptotal > 0 && $impmade >= $imptotal) {
                 $newid = $db->genId($db->prefix('bannerfinish') . '_bid_seq');
                 $sql   = sprintf('INSERT INTO %s (bid, cid, impressions, clicks, datestart, dateend) VALUES (%u, %u, %u, %u, %u, %u)', $db->prefix('bannerfinish'), $newid, $cid, $impmade, $clicks, $date, time());
-                $db->queryF($sql);
-                $db->queryF(sprintf('DELETE FROM %s WHERE bid = %u', $db->prefix('banner'), $bid));
+                $db->exec($sql);
+                $db->exec(sprintf('DELETE FROM %s WHERE bid = %u', $db->prefix('banner'), $bid));
             }
         }
         /**

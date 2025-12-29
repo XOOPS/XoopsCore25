@@ -84,18 +84,31 @@ class XoopsSessionHandler implements SessionHandlerInterface
             ? $xoopsConfig['session_expire'] * 60
             : ini_get('session.cookie_lifetime');
         $secure = (XOOPS_PROT === 'https://');
+// --- START: New Domain Validation Logic ---
+        $host = parse_url(XOOPS_URL, PHP_URL_HOST);
+        if (!is_string($host)) {
+            $host = ''; // Fallback in case of invalid XOOPS_URL
+        }
+        $cookieDomain = XOOPS_COOKIE_DOMAIN;
+        if (class_exists('\Xoops\RegDom\RegisteredDomain')) {
+            if (!\Xoops\RegDom\RegisteredDomain::domainMatches($host, $cookieDomain)) {
+                $cookieDomain = ''; // The corrected, safe domain
+            }
+        }
+// --- END: New Domain Validation Logic ---
+
         if (PHP_VERSION_ID >= 70300) {
             $options = [
                 'lifetime' => $lifetime,
-                'path'     => '/',
-                'domain'   => XOOPS_COOKIE_DOMAIN,
-                'secure'   => $secure,
+                'path' => '/',
+                'domain' => $cookieDomain,
+                'secure' => $secure,
                 'httponly' => true,
                 'samesite' => 'Lax',
             ];
             session_set_cookie_params($options);
         } else {
-            session_set_cookie_params($lifetime, '/', XOOPS_COOKIE_DOMAIN, $secure, true);
+            session_set_cookie_params($lifetime, '/', $cookieDomain, $secure, true);
         }
     }
 
@@ -136,7 +149,7 @@ class XoopsSessionHandler implements SessionHandlerInterface
         $sql = sprintf(
             'SELECT sess_data, sess_ip FROM %s WHERE sess_id = %s',
             $this->db->prefix('session'),
-            $this->db->quoteString($sessionId)
+            $this->db->quote($sessionId)
         );
 
         $result = $this->db->queryF($sql);
@@ -169,7 +182,7 @@ class XoopsSessionHandler implements SessionHandlerInterface
     {
         $myReturn = true;
         $remoteAddress = \Xmf\IPAddress::fromRequest()->asReadable();
-        $sessionId = $this->db->quoteString($sessionId);
+        $sessionId = $this->db->quote($sessionId);
         
         $sql= sprintf('INSERT INTO %s (sess_id, sess_updated, sess_ip, sess_data)
         VALUES (%s, %u, %s, %s)
@@ -185,7 +198,7 @@ class XoopsSessionHandler implements SessionHandlerInterface
               time(),
               $this->db->quote($data),
         );
-        $myReturn = $this->db->queryF($sql);
+        $myReturn = $this->db->exec($sql);
         $this->update_cookie();
         return $myReturn;
     }
@@ -202,9 +215,9 @@ class XoopsSessionHandler implements SessionHandlerInterface
         $sql = sprintf(
             'DELETE FROM %s WHERE sess_id = %s',
             $this->db->prefix('session'),
-            $this->db->quoteString($sessionId)
+            $this->db->quote($sessionId)
         );
-        if (!$result = $this->db->queryF($sql)) {
+        if (!$result = $this->db->exec($sql)) {
             return false;
         }
         return true;
@@ -226,7 +239,7 @@ class XoopsSessionHandler implements SessionHandlerInterface
         $mintime = time() - (int)$expire;
         $sql = sprintf('DELETE FROM %s WHERE sess_updated < %u', $this->db->prefix('session'), $mintime);
 
-        if ($this->db->queryF($sql)) {
+        if ($this->db->exec($sql)) {
             return $this->db->getAffectedRows();
         }
         return false;

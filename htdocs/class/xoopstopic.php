@@ -126,14 +126,14 @@ class XoopsTopic
      */
     public function store()
     {
-        $myts   = \MyTextSanitizer::getInstance();
+        global $xoopsDB;
         $title  = '';
         $imgurl = '';
         if (isset($this->topic_title) && $this->topic_title != '') {
-            $title = $myts->addSlashes($this->topic_title);
+            $title = $xoopsDB->escape($this->topic_title);
         }
         if (isset($this->topic_imgurl) && $this->topic_imgurl != '') {
-            $imgurl = $myts->addSlashes($this->topic_imgurl);
+            $imgurl = $xoopsDB->escape($this->topic_imgurl);
         }
         if (!isset($this->topic_pid) || !is_numeric($this->topic_pid)) {
             $this->topic_pid = 0;
@@ -144,7 +144,7 @@ class XoopsTopic
         } else {
             $sql = sprintf("UPDATE %s SET topic_pid = %u, topic_imgurl = '%s', topic_title = '%s' WHERE topic_id = %u", $this->table, $this->topic_pid, $imgurl, $title, $this->topic_id);
         }
-        if (!$result = $this->db->query($sql)) {
+        if (!$result = $this->db->exec($sql)) {
             ErrorHandler::show('0022');
         }
         if ($this->use_permission == true) {
@@ -222,7 +222,7 @@ class XoopsTopic
     public function delete()
     {
         $sql = sprintf('DELETE FROM %s WHERE topic_id = %u', $this->table, $this->topic_id);
-        $this->db->query($sql);
+        $this->db->exec($sql);
     }
 
     /**

@@ -592,7 +592,7 @@ class ProfileFieldHandler extends XoopsPersistableObjectHandler
             }
 
             $sql = 'ALTER TABLE `' . $profile_handler->table . '` ' . $changetype . ' `' . $obj->cleanVars['field_name'] . '` ' . $type . $maxlengthstring . ' NULL';
-            $result = $force ? $this->db->queryF($sql) : $this->db->query($sql);
+            $result = $force ? $this->db->exec($sql) : $this->db->query($sql);
             if (!$result) {
                 $obj->setErrors($this->db->error());
                 return false;

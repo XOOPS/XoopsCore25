@@ -200,14 +200,14 @@ class XoopsModelJoint extends XoopsModelAbstract
         }
         $set = [];
         foreach ($data as $key => $val) {
-            $set[] = "o.{$key}=" . $this->handler->db->quoteString($val);
+            $set[] = "o.{$key}=" . $this->handler->db->quote($val);
         }
         $sql = " UPDATE {$this->handler->table} AS o" . ' SET ' . implode(', ', $set) . " LEFT JOIN {$this->handler->table_link} AS l ON o.{$this->handler->field_object} = l.{$this->handler->field_link}";
         if (isset($criteria) && \method_exists($criteria, 'renderWhere')) {
             $sql .= ' ' . $criteria->renderWhere();
         }
 
-        return $this->handler->db->query($sql);
+        return $this->handler->db->exec($sql);
     }
 
     /**
@@ -226,6 +226,6 @@ class XoopsModelJoint extends XoopsModelAbstract
             $sql .= ' ' . $criteria->renderWhere();
         }
 
-        return $this->handler->db->query($sql);
+        return $this->handler->db->exec($sql);
     }
 }

@@ -220,14 +220,15 @@ class XoopsStory
      */
     public function store($approved = false)
     {
+        global $xoopsDB;
         //$newpost = 0;
         $myts     = \MyTextSanitizer::getInstance();
         $title    = $myts->censorString($this->title);
         $hometext = $myts->censorString($this->hometext);
         $bodytext = $myts->censorString($this->bodytext);
-        $title    = $myts->addSlashes($title);
-        $hometext = $myts->addSlashes($hometext);
-        $bodytext = $myts->addSlashes($bodytext);
+        $title    = $xoopsDB->escape($title);
+        $hometext = $xoopsDB->escape($hometext);
+        $bodytext = $xoopsDB->escape($bodytext);
         if (!isset($this->nohtml) || $this->nohtml != 1) {
             $this->nohtml = 0;
         }
@@ -256,7 +257,7 @@ class XoopsStory
             }
             $newstoryid = $this->storyid;
         }
-        if (!$result = $this->db->query($sql)) {
+        if (!$result = $this->db->exec($sql)) {
             return false;
         }
         if (empty($newstoryid)) {
@@ -301,7 +302,7 @@ class XoopsStory
     public function delete()
     {
         $sql = sprintf('DELETE FROM %s WHERE storyid = %u', $this->table, $this->storyid);
-        if (!$result = $this->db->query($sql)) {
+        if (!$result = $this->db->exec($sql)) {
             return false;
         }
 
@@ -314,7 +315,7 @@ class XoopsStory
     public function updateCounter()
     {
         $sql = sprintf('UPDATE %s SET counter = counter+1 WHERE storyid = %u', $this->table, $this->storyid);
-        if (!$result = $this->db->queryF($sql)) {
+        if (!$result = $this->db->exec($sql)) {
             return false;
         }
 
@@ -329,7 +330,7 @@ class XoopsStory
     public function updateComments($total)
     {
         $sql = sprintf('UPDATE %s SET comments = %u WHERE storyid = %u', $this->table, $total, $this->storyid);
-        if (!$result = $this->db->queryF($sql)) {
+        if (!$result = $this->db->exec($sql)) {
             return false;
         }
 

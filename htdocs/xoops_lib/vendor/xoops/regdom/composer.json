@@ -1,27 +1,43 @@
 {
   "name": "xoops/regdom",
-  "description": "OO adaptation of Florian Sager's regdom library for querying Mozilla Public Suffix List",
+  "description": "A robust domain parser for PHP, using the Mozilla Public Suffix List to determine the registrable domain and validate cookie domains per RFC 6265.",
   "keywords": [
     "public",
     "suffix",
     "tld",
-    "regdom"
+    "regdom",
+    "domain",
+    "parser",
+    "psl",
+    "cookie",
+    "rfc6265"
   ],
   "homepage": "https://github.com/XOOPS/RegDom",
   "type": "library",
-  "license": "Apache-2.0",
+  "license": "(Apache-2.0 OR MPL-2.0)",
   "authors": [
     {
       "name": "Richard Griffith",
-      "email": "richard@geekwright.com"
+      "email": "richard@geekwright.com",
+      "role": "Original Author"
+    },
+    {
+      "name": "XOOPS Development Team",
+      "email": "info@xoops.org",
+      "homepage": "https://xoops.org",
+      "role": "Maintainer"
     }
   ],
   "require": {
-    "php": ">=7.4.0",
-    "symfony/polyfill-mbstring": "^1.31.0"
+    "php": "^7.4 || ^8.0",
+    "symfony/polyfill-mbstring": "^1.23"
   },
   "require-dev": {
-    "phpunit/phpunit": "^9.6|^11.2.2"
+    "friendsofphp/php-cs-fixer": "^3.88",
+    "phpstan/phpstan": "^1.10 || ^2.0",
+    "phpunit/phpunit": "^9.6 || ^10.0 || ^11.0",
+    "roave/security-advisories": "dev-latest",
+    "squizlabs/php_codesniffer": "^3.7"
   },
   "autoload": {
     "psr-4": {
@@ -30,9 +46,75 @@
   },
   "autoload-dev": {
     "psr-4": {
-      "Xoops\\RegDom\\": "tests/unit/"
+      "Xoops\\RegDom\\Tests\\": "tests/"
     }
   },
-
-  "bin": ["bin/reloadpsl"]
+  "bin": [
+    "bin/update-psl.php"
+  ],
+  "scripts": {
+    "test": "phpunit --colors=always",
+    "phpunit": "phpunit --colors=always",
+    "lint": "phpcs",
+    "analyse": "phpstan analyse --level=max src",
+    "fix": "phpcbf --standard=PSR12 src",
+    "update-psl": "@php bin/update-psl.php",
+    "auto-update-psl": [
+      "@php -r \"if (getenv('XOOPS_SKIP_PSL_UPDATE')) { echo 'Skipping PSL update (XOOPS_SKIP_PSL_UPDATE set)\\n'; exit(0); }\"",
+      "@update-psl"
+    ],
+    "post-install-cmd": [
+      "@auto-update-psl"
+    ],
+    "post-update-cmd": [
+      "@auto-update-psl"
+    ],
+    "ci": [
+      "@lint",
+      "@analyse",
+      "@test"
+    ]
+  },
+  "scripts-descriptions": {
+    "test": "Run linting and unit tests",
+    "phpunit": "Run PHPUnit tests only",
+    "lint": "Check code style (PSR-12)",
+    "analyse": "Run static analysis (PHPStan)",
+    "fix": "Auto-fix code style issues",
+    "update-psl": "Update Public Suffix List from Mozilla",
+    "auto-update-psl": "Conditionally update PSL (respects XOOPS_SKIP_PSL_UPDATE)",
+    "ci": "Run all CI checks"
+  },
+  "config": {
+    "sort-packages": true,
+    "optimize-autoloader": true,
+    "preferred-install": "dist",
+    "platform": {
+      "php": "7.4.0"
+    },
+    "allow-plugins": {
+      "symfony/polyfill": true
+    }
+  },
+  "minimum-stability": "stable",
+  "prefer-stable": true,
+  "support": {
+    "issues": "https://github.com/XOOPS/RegDom/issues",
+    "source": "https://github.com/XOOPS/RegDom",
+    "docs": "https://github.com/XOOPS/RegDom#readme"
+  },
+  "funding": [
+    {
+      "type": "github",
+      "url": "https://github.com/sponsors/XOOPS"
+    },
+    {
+      "type": "opencollective",
+      "url": "https://opencollective.com/xoops"
+    },
+    {
+      "type": "custom",
+      "url": "https://xoops.org/modules/donations/"
+    }
+  ]
 }

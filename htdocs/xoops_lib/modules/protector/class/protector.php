@@ -1189,7 +1189,7 @@ class Protector
         $uri4sql = $xoopsDB->quote($uri);
 
         // gargage collection
-        $result = $xoopsDB->queryF(
+        $result = $xoopsDB->exec(
             'DELETE FROM ' . $xoopsDB->prefix($this->mydirname . '_access')
             . ' WHERE expire < UNIX_TIMESTAMP()',
         );
@@ -1292,7 +1292,7 @@ class Protector
         [$crawler_count] = $xoopsDB->fetchRow($result);
 
         // delayed insert
-        $xoopsDB->queryF($sql4insertlog);
+        $xoopsDB->exec($sql4insertlog);
 
         if ($crawler_count > $this->_conf['dos_crcount']) {
 
@@ -1361,7 +1361,7 @@ class Protector
         $mal4sql = $xoopsDB->quote("BRUTE FORCE: $victim_uname");
 
         // gargage collection
-        $result = $xoopsDB->queryF(
+        $result = $xoopsDB->exec(
             'DELETE FROM ' . $xoopsDB->prefix($this->mydirname . '_access') . ' WHERE expire < UNIX_TIMESTAMP()',
         );
 
@@ -1392,7 +1392,7 @@ class Protector
             }
         }
         // delayed insert
-        $xoopsDB->queryF($sql4insertlog);
+        $xoopsDB->exec($sql4insertlog);
         return null;
     }
 

@@ -1,11 +1,74 @@
 XOOPS 2.5.x Changelog (Language changes: see: /docs/lang_diff.txt)
 
 ===================================
-2.5.12 RC1            NOT RELEASED
+2.5.12 Beta9            NOT RELEASED
 ===================================
-- added Font Awesome 6.7.2 (mamba)
-- fixed path for Composer (koreus)
+- add _AM_SYSTEM_USERS_UNKNOWN_GROUP
+- add groups to member list view (Ggoffy) in # 1577
+- fix for XOOPS_COOKIE_DOMAIN (mamba) in #1578 (see: https://xoops.org/modules/newbb/viewtopic.php?topic_id=79632&post_id=367525#forumpost367525)
+- Improve Validating $_SERVER['HTTP_HOST']  (mamba) in #1578
+- Update htdocs/include/xoopssetcookie.php  (mamba) in #1578
+- refactor RegDom 2.0.2 Beta 2  (mamba) in #1578
+- add RTL support to (mamba, عبدالعزيز الجهني)
 
+===================================
+2.5.12 Beta8             2025-09-11
+===================================
+- language fixes by @mambax7 in #1550
+- copyright update by @mambax7 in #1551
+- fix Admin help toggle by @mambax7 in #1553
+- fix for Admin users search by @mambax7 in #1554
+- Bootstrap 5.3.7 by @mambax7 in #1557
+- Feature/updates by @mambax7 in #1555
+- Fix Deprecated addSlashes by @GregMage in #1566
+- Fix: #1564 by @GregMage in #1565
+- Hide empty userinfo value by @GregMage in #1568
+- User Search Issue #1559 by @mambax7 in #1560
+- add abstract methods for error(), errorno(), query() to XoopsDatabase by @mambax7 in #1571
+- cosmetics by @mambax7 in #1570
+- Criteria cleanup by @mambax7 in #1572
+- cleanup mailer by @mambax7 in #1574
+- update XMF by @mambax7 in #1573
+
+===================================
+2.5.12 Beta7             2025-04-27
+===================================
+- Bootstrap 5.3.4
+- New feature: menu icons for modules
+- Adding "id" to sublinks for custom menu icons
+- Updating minimum requirements
+- TinyMCE 5.10.9
+
+===================================
+2.5.12 Beta6             2025-04-03
+===================================
+- fix for PathController
+
+
+===================================
+2.5.12 Beta5             2025-03-31
+===================================
+- New path for composer files in install file by @koreus in #1504
+- fix in xbootstrap5 is system_siteclosed.tpl by @mambax7 in #1506
+- Fix tag.tpl always loading in modules/news by @koreus in #1510
+- Subforum not expanding by @koreus in #1513
+- Fix problem with admin save preference by @koreus in #1511
+- fix for #1515 by @mambax7 in #1516
+- adding Font Awesome 6.7.2 by @mambax7 in #1505
+- Update main.php by @CHCCD in #1517
+- http is default by @koreus in #1520
+- fix for #1519 by @mambax7 in #1521
+- template cosmetics by @mambax7 in #1522
+- composer updates by @mambax7 in #1523
+- version updates by @mambax7 in #1524
+- fix for new bug from PR#1511 by @mambax7 in #1525
+- fix for waiting block deprecated messages by @mambax7 in #1527
+- updated install, Bootstrap 5.3.3 by @mambax7 in #1531
+- updates for Font Awesome 6 by @mambax7 in #1529
+- remove flash by @mambax7 in #1526
+- extracting module CSS by @mambax7 in #1532
+
+New Contributors: @CHCCD, @koreus
 
 ===================================
 2.5.12 Beta4             2025-01-21

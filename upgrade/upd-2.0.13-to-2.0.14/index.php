@@ -125,13 +125,13 @@ class Upgrade_2014 extends XoopsUpgrade
         $cat = $this->getDbValue($db, 'configcategory', 'confcat_id', "`confcat_name` ='_MD_AM_AUTHENTICATION'");
         if ($cat !== false && $cat != XOOPS_CONF_AUTH) {
             // 2.2 downgrade bug: LDAP cat is here but has a catid of 0
-            $db->queryF('DELETE FROM ' . $db->prefix('configcategory') . " WHERE `confcat_name` ='_MD_AM_AUTHENTICATION' ");
-            $db->queryF('DELETE FROM ' . $db->prefix('config') . " WHERE `conf_modid`=0 AND `conf_catid` = $cat");
+            $db->exec('DELETE FROM ' . $db->prefix('configcategory') . " WHERE `confcat_name` ='_MD_AM_AUTHENTICATION' ");
+            $db->exec('DELETE FROM ' . $db->prefix('config') . " WHERE `conf_modid`=0 AND `conf_catid` = $cat");
             $cat = false;
         }
         if (empty($cat)) {
             // Insert config category ( always XOOPS_CONF_AUTH = 7 )
-            $db->queryF(' INSERT INTO ' . $db->prefix('configcategory') . " (confcat_id,confcat_name) VALUES (7,'_MD_AM_AUTHENTICATION')");
+            $db->exec(' INSERT INTO ' . $db->prefix('configcategory') . " (confcat_id,confcat_name) VALUES (7,'_MD_AM_AUTHENTICATION')");
         }
         // Insert config values
         $table = $db->prefix('config');

@@ -25,6 +25,12 @@ if (!is_object($xoopsUser) || !is_object($xoopsModule) || !$xoopsUser->isAdmin($
     exit(_NOPERM);
 }
 
+// define the value for max groups per user, which will be shown on user list
+// if exceeding this number then ... will be shown
+if (!defined('USER_MAX_GROUPS_DISPLAY')) {
+    define('USER_MAX_GROUPS_DISPLAY', 10);
+}
+
 include_once XOOPS_ROOT_PATH . '/modules/system/admin/users/users.php';
 // Get Action type
 $op = Request::getString('op', 'default');
@@ -138,176 +144,189 @@ switch ($op) {
         break;
 
         // Save user
-    case 'users_save':
-        global $xoopsConfig, $xoopsModule, $xoopsUser;
+    // Save user
+case 'users_save':
+    global $xoopsConfig, $xoopsModule, $xoopsUser;
 
-        if (Request::hasVar('uid')) {
-            //Update user
-            if (!$GLOBALS['xoopsSecurity']->check()) {
-                redirect_header('admin.php?fct=users', 3, implode('<br>', $GLOBALS['xoopsSecurity']->getErrors()));
-            }
-            // RMV-NOTIFY
-            $user_avatar = $theme = '';
-            if (!Request::hasVar('attachsig')) {
-                $attachsig = 0;
-            }
-            if (!Request::hasVar('user_viewemail')) {
-                $user_viewemail = 0;
-            }
-
-            $edituser = $member_handler->getUser($uid);
-            if (($edituser->getVar('uname', 'n') != Request::getString('uname')) && ($member_handler->getUserCount(new Criteria('uname', $xoopsDB->escape(Request::getString('uname'))))) > 0) {
-                xoops_cp_header();
-                xoops_error(sprintf(_AM_SYSTEM_USERS_PSEUDO_ERROR, htmlspecialchars(Request::getString('uname'), ENT_QUOTES | ENT_HTML5)));
-                xoops_cp_footer();
-            } elseif ($edituser->getVar('email', 'n') != Request::getEmail('email') && $member_handler->getUserCount(new Criteria('email', $myts->addSlashes(Request::getEmail('email')))) > 0) {
-                xoops_cp_header();
-                xoops_error(sprintf(_AM_SYSTEM_USERS_MAIL_ERROR, htmlspecialchars(Request::getEmail('email'), ENT_QUOTES | ENT_HTML5)));
-                xoops_cp_footer();
-            } else {
-                $edituser->setVar('name', Request::getString('name'));
-                $edituser->setVar('uname', Request::getString('uname'));
-                $edituser->setVar('email', Request::getEmail('email'));
-                $url = formatURL(Request::getUrl('url'));
-                $edituser->setVar('url', $url);
-                $edituser->setVar('user_icq', Request::getString('user_icq'));
-                $edituser->setVar('user_from', Request::getString('user_from'));
-                $edituser->setVar('user_sig', Request::getString('user_sig'));
-                $user_viewemail = (int)(Request::getInt('user_viewemail', 0) == 1);
-                $edituser->setVar('user_viewemail', $user_viewemail);
-                $edituser->setVar('user_aim', Request::getString('user_aim'));
-                $edituser->setVar('user_yim', Request::getString('user_yim'));
-                $edituser->setVar('user_msnm', Request::getString('user_msnm'));
-                $attachsig = (int)(Request::getInt('attachsig', 0) == 1);
-                $edituser->setVar('attachsig', $attachsig);
-                $edituser->setVar('timezone_offset', Request::getString('timezone_offset'));
-                $edituser->setVar('uorder', Request::getString('uorder'));
-                $edituser->setVar('umode', Request::getString('umode'));
-                // RMV-NOTIFY
-                $edituser->setVar('notify_method', Request::getString('notify_method'));
-                $edituser->setVar('notify_mode', Request::getString('notify_mode'));
-                $edituser->setVar('bio', Request::getString('bio'));
-                $edituser->setVar('rank', Request::getString('rank'));
-                $edituser->setVar('user_occ', Request::getString('user_occ'));
-                $edituser->setVar('user_intrest', Request::getString('user_intrest'));
-                $edituser->setVar('user_mailok', Request::getString('user_mailok'));
-                if ('' !== Request::getString('pass2')) {
-                    if (Request::getString('password') != Request::getString('pass2')) {
-                        xoops_cp_header();
-                        echo '
-                        <strong>' . _AM_SYSTEM_USERS_STNPDNM . '</strong>';
-                        xoops_cp_footer();
-                        exit();
-                    }
-                    $edituser->setVar('pass', password_hash(Request::getString('password'), PASSWORD_DEFAULT));
-                }
-                if (!$member_handler->insertUser($edituser)) {
-                    xoops_cp_header();
-                    echo $edituser->getHtmlErrors();
-                    xoops_cp_footer();
-                } else {
-                    $groups = Request::getArray('groups', []);
-                    if (!empty($groups)) {
-                        global $xoopsUser;
-                        $oldgroups = $edituser->getGroups();
-                        //If the edited user is the current user and the current user WAS in the webmaster's group and is NOT in the new groups array
-                        if ($edituser->getVar('uid') == $xoopsUser->getVar('uid') && in_array(XOOPS_GROUP_ADMIN, $oldgroups) && !in_array(XOOPS_GROUP_ADMIN, $groups)) {
-                            //Add the webmaster's group to the groups array to prevent accidentally removing oneself from the webmaster's group
-                            $groups[] = XOOPS_GROUP_ADMIN;
-                            $_REQUEST['groups'] = $groups;  // Update the global variable
-                        }
-                        /** @var XoopsMemberHandler $member_handler */
-                        $member_handler = xoops_getHandler('member');
-                        foreach ($oldgroups as $groupid) {
-                            $member_handler->removeUsersFromGroup($groupid, [$edituser->getVar('uid')]);
-                        }
-                        foreach ($groups as $groupid) {
-                            $member_handler->addUserToGroup($groupid, $edituser->getVar('uid'));
-                        }
-                    }
-                    redirect_header('admin.php?fct=users', 1, _AM_SYSTEM_DBUPDATED);
-                }
-            }
-            exit();
-        } else {
-            //Add user
-            if (!$GLOBALS['xoopsSecurity']->check()) {
-                redirect_header('admin.php?fct=users', 3, implode('<br>', $GLOBALS['xoopsSecurity']->getErrors()));
-            }
-            if (!Request::getString('uname') || !Request::getString('email') || !Request::getString('password')) {
-                $adduser_errormsg = _AM_SYSTEM_USERS_YMCACF;
-            } else {
-                /** @var XoopsMemberHandler $member_handler */
-                $member_handler = xoops_getHandler('member');
-                // make sure the username doesnt exist yet
-                if ($member_handler->getUserCount(new Criteria('uname', $xoopsDB->escape(Request::getString('uname')))) > 0) {
-                    $adduser_errormsg = 'User name ' . htmlspecialchars(Request::getString('uname'), ENT_QUOTES | ENT_HTML5) . ' already exists';
-                } else {
-                    $newuser = $member_handler->createUser();
-                    $user_viewemail = Request::getInt('user_viewemail', 0);
-                    $newuser->setVar('user_viewemail', $user_viewemail);
-                    $attachsig = Request::getInt('attachsig', 0);
-                    $newuser->setVar('attachsig', $attachsig);
-                    $newuser->setVar('name', Request::getString('name'));
-                    $newuser->setVar('uname', Request::getString('uname'));
-                    $newuser->setVar('email', Request::getEmail('email'));
-                    $newuser->setVar('url', formatURL(Request::getUrl('url')));
-                    $newuser->setVar('user_avatar', 'avatars/blank.gif');
-                    $newuser->setVar('user_regdate', time());
-                    $newuser->setVar('user_icq', Request::getString('user_icq'));
-                    $newuser->setVar('user_from', Request::getString('user_from'));
-                    $newuser->setVar('user_sig', Request::getString('user_sig'));
-                    $newuser->setVar('user_aim', Request::getString('user_aim'));
-                    $newuser->setVar('user_yim', Request::getString('user_yim'));
-                    $newuser->setVar('user_msnm', Request::getString('user_msnm'));
-                    if ('' !== Request::getString('pass2')) {
-                        if (Request::getString('password') != Request::getString('pass2')) {
-                            xoops_cp_header();
-                            echo '<strong>' . _AM_SYSTEM_USERS_STNPDNM . '</strong>';
-                            xoops_cp_footer();
-                            exit();
-                        }
-                        $newuser->setVar('pass', password_hash(Request::getString('password'), PASSWORD_DEFAULT));
-                    }
-                    $newuser->setVar('timezone_offset', Request::getString('timezone_offset'));
-                    $newuser->setVar('uorder', Request::getString('uorder'));
-                    $newuser->setVar('umode', Request::getString('umode'));
-                    // RMV-NOTIFY
-                    $newuser->setVar('notify_method', Request::getString('notify_method'));
-                    $newuser->setVar('notify_mode', Request::getString('notify_mode'));
-                    $newuser->setVar('bio', Request::getString('bio'));
-                    $newuser->setVar('rank', Request::getString('rank'));
-                    $newuser->setVar('level', 1);
-                    $newuser->setVar('user_occ', Request::getString('user_occ'));
-                    $newuser->setVar('user_intrest', Request::getString('user_intrest'));
-                    $newuser->setVar('user_mailok', Request::getString('user_mailok'));
-                    if (!$member_handler->insertUser($newuser)) {
-                        $adduser_errormsg = _AM_SYSTEM_USERS_CNRNU;
-                    } else {
-                        $groups_failed = [];
-                        $groups = Request::getArray('groups', []);
-                        if (!empty($groups)) {
-                            foreach ($groups as $group) {
-                                $group = (int) $group;
-                                if (!$member_handler->addUserToGroup($group, $newuser->getVar('uid'))) {
-                                    $groups_failed[] = $group;
-                                }
-                            }
-                        }
-                        if (!empty($groups_failed)) {
-                            $group_names      = $member_handler->getGroupList(new Criteria('groupid', '(' . implode(', ', $groups_failed) . ')', 'IN'));
-                            $adduser_errormsg = sprintf(_AM_SYSTEM_USERS_CNRNU2, implode(', ', $group_names));
-                        } else {
-                            xoops_load('XoopsUserUtility');
-                            XoopsUserUtility::sendWelcome($newuser);
-                            redirect_header('admin.php?fct=users', 1, _AM_SYSTEM_DBUPDATED);
-                        }
-                    }
-                }
-            }
-            xoops_error($adduser_errormsg);
+    if (Request::hasVar('uid')) {
+        // --- Update user ---
+        if (!$GLOBALS['xoopsSecurity']->check()) {
+            redirect_header('admin.php?fct=users', 3, implode('<br>', $GLOBALS['xoopsSecurity']->getErrors()));
+            break;
         }
+
+        $edituser = $member_handler->getUser($uid);
+        if (!$edituser) {
+            xoops_error(_AM_SYSTEM_USERS_NO_SUCH_USER);
+            break;
+        }
+
+        // --- Validation ---
+        if (($edituser->getVar('uname', 'n') != Request::getString('uname')) &&
+            $member_handler->getUserCount(new Criteria('uname', $xoopsDB->escape(Request::getString('uname')))) > 0) {
+            xoops_error(sprintf(_AM_SYSTEM_USERS_PSEUDO_ERROR, htmlspecialchars(Request::getString('uname'), ENT_QUOTES | ENT_HTML5)));
+            break;
+        }
+
+        if ($edituser->getVar('email', 'n') != Request::getEmail('email') &&
+            $member_handler->getUserCount(new Criteria('email', $xoopsDB->escape(Request::getEmail('email')))) > 0) {
+            xoops_error(sprintf(_AM_SYSTEM_USERS_MAIL_ERROR, htmlspecialchars(Request::getEmail('email'), ENT_QUOTES | ENT_HTML5)));
+            break;
+        }
+
+        if ('' !== Request::getString('pass2') &&
+            Request::getString('password') != Request::getString('pass2')) {
+            xoops_error(_AM_SYSTEM_USERS_STNPDNM);
+            break;
+        }
+        // --- End Validation ---
+
+        // Apply changes
+        $edituser->setVar('name', Request::getString('name'));
+        $edituser->setVar('uname', Request::getString('uname'));
+        $edituser->setVar('email', Request::getEmail('email'));
+        $edituser->setVar('url', formatURL(Request::getUrl('url')));
+        $edituser->setVar('user_icq', Request::getString('user_icq'));
+        $edituser->setVar('user_from', Request::getString('user_from'));
+        $edituser->setVar('user_sig', Request::getString('user_sig'));
+        $edituser->setVar('user_viewemail', (int)(Request::getInt('user_viewemail', 0) == 1));
+        $edituser->setVar('user_aim', Request::getString('user_aim'));
+        $edituser->setVar('user_yim', Request::getString('user_yim'));
+        $edituser->setVar('user_msnm', Request::getString('user_msnm'));
+        $edituser->setVar('attachsig', (int)(Request::getInt('attachsig', 0) == 1));
+        $edituser->setVar('timezone_offset', Request::getString('timezone_offset'));
+        $edituser->setVar('uorder', Request::getString('uorder'));
+        $edituser->setVar('umode', Request::getString('umode'));
+        // RMV-NOTIFY
+        $edituser->setVar('notify_method', Request::getString('notify_method'));
+        $edituser->setVar('notify_mode', Request::getString('notify_mode'));
+        $edituser->setVar('bio', Request::getString('bio'));
+        $edituser->setVar('rank', Request::getString('rank'));
+        $edituser->setVar('user_occ', Request::getString('user_occ'));
+        $edituser->setVar('user_intrest', Request::getString('user_intrest'));
+        $edituser->setVar('user_mailok', Request::getInt('user_mailok', 0));
+
+        if ('' !== Request::getString('pass2')) {
+            $edituser->setVar('pass', password_hash(Request::getString('password'), PASSWORD_DEFAULT));
+        }
+
+        if (!$member_handler->insertUser($edituser)) {
+            xoops_error($edituser->getHtmlErrors());
+            break;
+        }
+
+        // Groups
+        $groups = Request::getArray('groups', []);
+        if (!empty($groups)) {
+            $oldgroups = $edituser->getGroups();
+            // Prevent removing yourself from webmasters
+            if ($edituser->getVar('uid') == $xoopsUser->getVar('uid')
+                && in_array(XOOPS_GROUP_ADMIN, $oldgroups)
+                && !in_array(XOOPS_GROUP_ADMIN, $groups)) {
+                $groups[] = XOOPS_GROUP_ADMIN;
+                $_REQUEST['groups'] = $groups;
+            }
+            /** @var XoopsMemberHandler $member_handler */
+            $member_handler = xoops_getHandler('member');
+            foreach ($oldgroups as $groupid) {
+                $member_handler->removeUsersFromGroup($groupid, [$edituser->getVar('uid')]);
+            }
+            foreach ($groups as $groupid) {
+                $member_handler->addUserToGroup($groupid, $edituser->getVar('uid'));
+            }
+        }
+
+        redirect_header('admin.php?fct=users', 1, _AM_SYSTEM_DBUPDATED);
         break;
+
+    } else {
+        // --- Add user ---
+        if (!$GLOBALS['xoopsSecurity']->check()) {
+            redirect_header('admin.php?fct=users', 3, implode('<br>', $GLOBALS['xoopsSecurity']->getErrors()));
+            break;
+        }
+
+        if (!Request::getString('uname') || !Request::getString('email') || !Request::getString('password')) {
+            xoops_error(_AM_SYSTEM_USERS_YMCACF);
+            break;
+        }
+
+        /** @var XoopsMemberHandler $member_handler */
+        $member_handler = xoops_getHandler('member');
+
+        // Unique username
+        if ($member_handler->getUserCount(new Criteria('uname', $xoopsDB->escape(Request::getString('uname')))) > 0) {
+            xoops_error('User name ' . htmlspecialchars(Request::getString('uname'), ENT_QUOTES | ENT_HTML5) . ' already exists');
+            break;
+        }
+
+        // Password match (if confirm provided)
+        if ('' !== Request::getString('pass2') &&
+            Request::getString('password') != Request::getString('pass2')) {
+            xoops_error(_AM_SYSTEM_USERS_STNPDNM);
+            break;
+        }
+
+        $newuser = $member_handler->createUser();
+        $newuser->setVar('user_viewemail', Request::getInt('user_viewemail', 0));
+        $newuser->setVar('attachsig', Request::getInt('attachsig', 0));
+        $newuser->setVar('name', Request::getString('name'));
+        $newuser->setVar('uname', Request::getString('uname'));
+        $newuser->setVar('email', Request::getEmail('email'));
+        $newuser->setVar('url', formatURL(Request::getUrl('url')));
+        $newuser->setVar('user_avatar', 'avatars/blank.gif');
+        $newuser->setVar('user_regdate', time());
+        $newuser->setVar('user_icq', Request::getString('user_icq'));
+        $newuser->setVar('user_from', Request::getString('user_from'));
+        $newuser->setVar('user_sig', Request::getString('user_sig'));
+        $newuser->setVar('user_aim', Request::getString('user_aim'));
+        $newuser->setVar('user_yim', Request::getString('user_yim'));
+        $newuser->setVar('user_msnm', Request::getString('user_msnm'));
+        if ('' !== Request::getString('pass2')) {
+            $newuser->setVar('pass', password_hash(Request::getString('password'), PASSWORD_DEFAULT));
+        }
+        $newuser->setVar('timezone_offset', Request::getString('timezone_offset'));
+        $newuser->setVar('uorder', Request::getString('uorder'));
+        $newuser->setVar('umode', Request::getString('umode'));
+        // RMV-NOTIFY
+        $newuser->setVar('notify_method', Request::getString('notify_method'));
+        $newuser->setVar('notify_mode', Request::getString('notify_mode'));
+        $newuser->setVar('bio', Request::getString('bio'));
+        $newuser->setVar('rank', Request::getString('rank'));
+        $newuser->setVar('level', 1);
+        $newuser->setVar('user_occ', Request::getString('user_occ'));
+        $newuser->setVar('user_intrest', Request::getString('user_intrest'));
+        $newuser->setVar('user_mailok', Request::getString('user_mailok'));
+
+        if (!$member_handler->insertUser($newuser)) {
+            xoops_error(_AM_SYSTEM_USERS_CNRNU);
+            break;
+        }
+
+        $groups_failed = [];
+        $groups = Request::getArray('groups', []);
+        if (!empty($groups)) {
+            foreach ($groups as $group) {
+                $group = (int)$group;
+                if (!$member_handler->addUserToGroup($group, $newuser->getVar('uid'))) {
+                    $groups_failed[] = $group;
+                }
+            }
+        }
+
+        if (!empty($groups_failed)) {
+            $group_names = $member_handler->getGroupList(new Criteria('groupid', '(' . implode(', ', $groups_failed) . ')', 'IN'));
+            xoops_error(sprintf(_AM_SYSTEM_USERS_CNRNU2, implode(', ', $group_names)));
+            break;
+        }
+
+        xoops_load('XoopsUserUtility');
+        XoopsUserUtility::sendWelcome($newuser);
+        redirect_header('admin.php?fct=users', 1, _AM_SYSTEM_DBUPDATED);
+        break;
+    }
+    // end users_save
+
 
         // Active member
     case 'users_active':
@@ -877,20 +896,59 @@ switch ($op) {
             $xoopsTpl->assign('form_token', $token);
 
             // echo $requete_search;
+
             if ($users_count > 0) {
                 //echo $requete_search;
+
+                // --- START: CORRECTED N+1 Query Fix ---
+
+                // Step 1: Collect all unique group IDs from the users ON THIS PAGE
+                $all_group_ids_on_page = [];
+                foreach ($users_arr as $user_object) {
+                    foreach ($user_object->getGroups() as $group_id) {
+                        $all_group_ids_on_page[$group_id] = 1;
+                    }
+                }
+
+                // Step 2: Fetch all required group objects in a SINGLE query
+                $groups_map = [];
+                if (!empty($all_group_ids_on_page)) {
+                    $groupHandler   = xoops_getHandler('group');
+                    $group_criteria = new \Criteria('groupid', '(' . implode(',', array_keys($all_group_ids_on_page)) . ')', 'IN');
+                    $groups_map     = $groupHandler->getObjects($group_criteria, true);
+                }
+
+                // --- END: CORRECTED N+1 Query Fix ---
+
+                // Now, loop through the users for display
                 foreach (array_keys($users_arr) as $i) {
                     //Display group
-                    $user_group = $member_handler->getGroupsByUser($users_arr[$i]->getVar('uid'));
+                    $user_group = $users_arr[$i]->getGroups();
                     if (in_array(XOOPS_GROUP_ADMIN, $user_group)) {
-                        $users['group'] = system_AdminIcons('xoops/group_1.png');
-                        //$users['icon'] = '<img src="'.XOOPS_URL.'/modules/system/images/icons/admin.png" alt="'._AM_SYSTEM_USERS_ADMIN.'" title="'._AM_SYSTEM_USERS_ADMIN.'" />';
+                        $users['group']         = system_AdminIcons('xoops/group_1.png');
                         $users['checkbox_user'] = false;
                     } else {
-                        $users['group'] = system_AdminIcons('xoops/group_2.png');
-                        //$users['icon'] = '<img src="'.XOOPS_URL.'/modules/system/images/icons/user.png" alt="'._AM_SYSTEM_USERS_USER.'" title="'._AM_SYSTEM_USERS_USER.'" />';
+                        $users['group']         = system_AdminIcons('xoops/group_2.png');
                         $users['checkbox_user'] = true;
                     }
+
+                    // Get group names using the pre-fetched map (FAST)
+                    $group_list  = [];
+                    $countGroups = 0;
+                    foreach ($user_group as $groupid) {
+                        $countGroups++;
+                        if ($countGroups > USER_MAX_GROUPS_DISPLAY) {
+                            $group_list[] = '...';
+                            break;
+                        }
+                        // Look up from the map - no new database query here!
+                        if (isset($groups_map[$groupid])) {
+                            $group_list[] = $groups_map[$groupid]->getVar('name');
+                        } else {
+                            $group_list[] = _AM_SYSTEM_USERS_UNKNOWN_GROUP;
+                        }
+                    }
+
                     $users['uid']         = $users_arr[$i]->getVar('uid');
                     $users['name']        = $users_arr[$i]->getVar('name');
                     $users['uname']       = $users_arr[$i]->getVar('uname');
@@ -908,8 +966,8 @@ switch ($op) {
                     $users['user_aim']   = $users_arr[$i]->getVar('user_aim');
                     $users['user_yim']   = $users_arr[$i]->getVar('user_yim');
                     $users['user_msnm']  = $users_arr[$i]->getVar('user_msnm');
-
-                    $users['posts'] = $users_arr[$i]->getVar('posts');
+                    $users['posts']      = $users_arr[$i]->getVar('posts');
+                    $users['group_list'] = $group_list;
 
                     $xoopsTpl->appendByRef('users', $users);
                     $xoopsTpl->appendByRef('users_popup', $users);
@@ -918,7 +976,7 @@ switch ($op) {
             } else {
                 $xoopsTpl->assign('users_no_found', true);
             }
-
+ 
             if ($users_count > $user_limit) {
                 include_once XOOPS_ROOT_PATH . '/class/pagenav.php';
                 $nav = new XoopsPageNav($users_count, $user_limit, $start, 'start', 'fct=users&amp;op=default' . $requete_pagenav);
