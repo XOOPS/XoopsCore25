@@ -73,7 +73,7 @@ function showbanner()
 
 /**
  * This function is deprecated. Do not use!
-* @deprecated
+ * @deprecated
 */
 function getTheme()
 {
