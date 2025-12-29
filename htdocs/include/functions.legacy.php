@@ -113,7 +113,7 @@ function getMailer()
 
 /**
  * Functions to display dhtml loading image box
-* @deprecated
+ * @deprecated
 */
 function OpenWaitBox()
 {
