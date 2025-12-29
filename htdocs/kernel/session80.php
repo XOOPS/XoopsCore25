@@ -181,15 +181,109 @@ class XoopsSessionHandler implements
 
     // --- SessionUpdateTimestampHandlerInterface (8.0+) ---
 
+    /**
+     * Validate that the stored session IP matches the current client IP
+     * according to the configured security level and bit masks.
+     */
+    private function validateSessionIp(?string $storedIp): bool
+    {
+        // Low security levels or missing configuration do not enforce IP checks
+        if ($this->securityLevel <= 1) {
+            return true;
+        }
+
+        if (empty($storedIp) || !isset($_SERVER['REMOTE_ADDR'])) {
+            // If we cannot reliably determine either side, keep previous behavior
+            return true;
+        }
+
+        $clientIp = (string)$_SERVER['REMOTE_ADDR'];
+
+        $levelMasks = $this->bitMasks[$this->securityLevel] ?? null;
+        if ($levelMasks === null) {
+            return true;
+        }
+
+        // Determine IP version and ensure both addresses are of the same family
+        $isClientV4 = filter_var($clientIp, FILTER_VALIDATE_IP, FILTER_FLAG_IPV4) !== false;
+        $isClientV6 = filter_var($clientIp, FILTER_VALIDATE_IP, FILTER_FLAG_IPV6) !== false;
+        $isStoredV4 = filter_var($storedIp, FILTER_VALIDATE_IP, FILTER_FLAG_IPV4) !== false;
+        $isStoredV6 = filter_var($storedIp, FILTER_VALIDATE_IP, FILTER_FLAG_IPV6) !== false;
+
+        if ($isClientV4 && $isStoredV4) {
+            $version = 'v4';
+        } elseif ($isClientV6 && $isStoredV6) {
+            $version = 'v6';
+        } else {
+            // Mixed or invalid IP families - do not enforce IP binding
+            return true;
+        }
+
+        $bits = $levelMasks[$version] ?? null;
+        if ($bits === null) {
+            return true;
+        }
+
+        $clientBin = @inet_pton($clientIp);
+        $storedBin = @inet_pton($storedIp);
+        if ($clientBin === false || $storedBin === false || $clientBin === null || $storedBin === null) {
+            // If binary conversion fails, fall back to previous permissive behavior
+            return true;
+        }
+
+        return $this->applyIpMask($clientBin, $bits) === $this->applyIpMask($storedBin, $bits);
+    }
+
+    /**
+     * Apply an N-bit network mask to a binary IP address.
+     */
+    private function applyIpMask(string $ipBin, int $bits): string
+    {
+        $bytes      = strlen($ipBin);
+        $masked     = '';
+        $fullBytes  = intdiv($bits, 8);
+        $remaining  = $bits % 8;
+
+        for ($i = 0; $i < $bytes; $i++) {
+            $byte = ord($ipBin[$i]);
+            if ($i < $fullBytes) {
+                // Completely within the network portion
+                $masked .= chr($byte);
+            } elseif ($i === $fullBytes && $remaining > 0) {
+                // Partially masked byte
+                $mask   = (0xFF << (8 - $remaining)) & 0xFF;
+                $masked .= chr($byte & $mask);
+            } else {
+                // Host portion is zeroed
+                $masked .= chr(0);
+            }
+        }
+
+        return $masked;
+    }
+
     public function validateId(string $id): bool
     {
         $sql = sprintf(
-            'SELECT 1 FROM %s WHERE sess_id = %s',
+            'SELECT sess_ip FROM %s WHERE sess_id = %s',
             $this->db->prefix('session'),
             $this->db->quote($id)
         );
         $res = $this->db->queryF($sql, 1, 0);
-        return $this->db->isResultSet($res) && $this->db->fetchRow($res) !== false;
+        if (!$this->db->isResultSet($res)) {
+            return false;
+        }
+        $row = $this->db->fetchRow($res);
+        if ($row === false) {
+            return false;
+        }
+
+        $storedIp = $row[0] ?? null;
+        if (!$this->validateSessionIp(is_string($storedIp) ? $storedIp : null)) {
+            return false;
+        }
+
+        return true;
     }
 
     public function updateTimestamp(string $id, string $data): bool
