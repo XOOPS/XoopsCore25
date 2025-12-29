@@ -147,7 +147,7 @@ class XoopsSessionHandler implements
         );
 
         $ok = $this->db->exec($sql);
-        // update_cookie() only affects <7.3 in your code; on 8+ it is effectively a no-op
+        // update_cookie() only affects PHP versions with PHP_VERSION_ID < 70300 (see session74.php); on PHP 8+ it is effectively a no-op
         $this->update_cookie();
         return (bool)$ok;
     }
