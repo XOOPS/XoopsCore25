@@ -13,22 +13,34 @@ Below are language differences from a version to next version.
 - updated PHP & MySQL versions
 
 /htdocs/modules/pm/language/english/main.php
-define('_PM_EMAIL_DESC', 'Dear %s, this is a message transfered from your account at ' . $GLOBALS['xoopsConfig']['sitename']);
-define('_PM_EMAIL_DESC', 'Dear %s, this is a message transferred from your account at ' . $GLOBALS['xoopsConfig']['sitename']);
+- updated define('_PM_EMAIL_DESC', 'Dear %s, this is a message transfered from your account at ' . $GLOBALS['xoopsConfig']['sitename']);
+- updated define('_PM_EMAIL_DESC', 'Dear %s, this is a message transferred from your account at ' . $GLOBALS['xoopsConfig']['sitename']);
 
 /htdocs/class/xoopseditor/tinymce5/language/english.php
-define('_XOOPS_EDITOR_TINYMCE_LANGUAGE5', 'en');
-define('_XOOPS_EDITOR_TINYMCE5_LANGUAGE', 'en');
+- renamed _XOOPS_EDITOR_TINYMCE_LANGUAGE5 to _XOOPS_EDITOR_TINYMCE5_LANGUAGE
 
 /htdocs/modules/system/themes/transition/language/english/admin.php
 - renamed _OXYGEN_Server_API to _OXYGEN_SERVER_API
 
 /htdocs/modules/system/language/english/admin/preferences.php.
-define('_MD_AM_SENDMAIL_NOT_FOUND', 'Sendmail binary not found. Please check your server configuration.');
-define('_MD_AM_SENDMAIL_HELP_MISSING_BIN', 'No valid sendmail-compatible binary was detected. Install an MTA (e.g. Postfix, msmtp) or switch to SMTP in Preferences.');
+- added define('_MD_AM_SENDMAIL_NOT_FOUND', 'Sendmail binary not found. Please check your server configuration.');
+- added define('_MD_AM_SENDMAIL_HELP_MISSING_BIN', 'No valid sendmail-compatible binary was detected. Install an MTA (e.g. Postfix, msmtp) or switch to SMTP in Preferences.');
 
 /htdocs/modules/system/language/english/admin/users.php
-define('_AM_SYSTEM_USERS_UNKNOWN_GROUP', 'Unknown group');
+- added define('_AM_SYSTEM_USERS_UNKNOWN_GROUP', 'Unknown group');
+
+/htdocs/modules/system/language/english/comment.php
+- added define('_CM_ADDCOMMENT', 'Add Comment');
+
+
+/htdocs/install/language/english/install.php
+- added define('_WEBSITE_NAME', 'XOOPS Site');
+- added define('_WEBSITE_SLOGAN', 'Just use it!');
+- added define('_WEBSITE_META_KEYWORDS', 'xoops, web application framework, cms, content management system');
+- added define('_WEBSITE_FOOTER', "Powered by XOOPS © 2001-{X_YEAR} <a href='https://xoops.org' rel='external' title='The XOOPS Project'>The XOOPS Project</a>");
+- added define('_WEBSITE_COPYRIGHT', 'Copyright © 2001-{X_YEAR}');
+- added define('_WEBSITE_DESCRIPTION', 'XOOPS is a dynamic Object Oriented based open source portal script written in PHP.');
+- added define('_WEBSITE_CENSOR_REPLACE', 'OOPS');
 
 
 ================================
