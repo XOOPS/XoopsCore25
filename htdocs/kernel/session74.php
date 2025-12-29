@@ -114,7 +114,7 @@ class XoopsSessionHandler implements \SessionHandlerInterface
         if ($row === false) {
             return ''; // not found -> empty string
         }
-        list($sess_data, $sess_ip) = $row;
+        [$sess_data, $sess_ip] = $row;
         if ($this->securityLevel > 1) {
             if (false === $ip->sameSubnet(
                     $sess_ip,
