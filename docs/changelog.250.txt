@@ -1,7 +1,7 @@
 XOOPS 2.5.x Changelog (Language changes: see: /docs/lang_diff.txt)
 
 ===================================
-2.5.12 Beta9            NOT RELEASED
+2.5.12 RC1            NOT RELEASED
 ===================================
 - add _AM_SYSTEM_USERS_UNKNOWN_GROUP
 - add groups to member list view (Ggoffy) in # 1577
@@ -10,6 +10,7 @@ XOOPS 2.5.x Changelog (Language changes: see: /docs/lang_diff.txt)
 - Update htdocs/include/xoopssetcookie.php  (mamba) in #1578
 - refactor RegDom 2.0.2 Beta 2  (mamba) in #1578
 - add RTL support to (mamba, عبدالعزيز الجهني)
+- add Font Awesome 7.1.0 (mamba)
 
 ===================================
 2.5.12 Beta8             2025-09-11
