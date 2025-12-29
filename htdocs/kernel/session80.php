@@ -207,6 +207,15 @@ class XoopsSessionHandler implements
 
     public function gc_force(): void
     {
+        /*
+         * Probabilistic garbage collection:
+         * - We run GC with approximately 10% probability on each call.
+         * - \random_int() is used instead of mt_rand() for modern, secure randomness.
+         *   The range [1, 100] and threshold < 11 are chosen to preserve the
+         *   original ~10% behavior from the mt_rand()-based implementation.
+         * - Any failure of \random_int() is ignored so that session handling
+         *   is not disrupted if a random source is temporarily unavailable.
+         */
         try {
             if (\random_int(1, 100) < 11) {
                 $expire = (int) @ini_get('session.gc_maxlifetime');
