@@ -29,7 +29,6 @@ defined('XOOPS_ROOT_PATH') || exit('Restricted access');
  * @copyright       (c) 2000-2025 XOOPS Project (https://xoops.org)
  */
 
-defined('XOOPS_ROOT_PATH') || exit('Restricted access');
 
 class XoopsSessionHandler implements \SessionHandlerInterface
 {
