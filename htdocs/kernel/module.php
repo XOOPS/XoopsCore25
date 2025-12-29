@@ -523,6 +523,7 @@ class XoopsModule extends XoopsObject
      * @param string $type
      *
      * @return bool
+     * @deprecated
      */
     public function loadLanguage($type = 'main')
     {
@@ -533,6 +534,7 @@ class XoopsModule extends XoopsObject
 
     /**
      * @return bool
+     * @deprecated
      */
     public function loadErrorMessages()
     {
@@ -543,6 +545,7 @@ class XoopsModule extends XoopsObject
 
     /**
      * @return bool
+     * @deprecated
      */
     public function getCurrentPage()
     {
@@ -556,6 +559,7 @@ class XoopsModule extends XoopsObject
      * @param array $accessgroups
      *
      * @return bool
+     * @deprecated
      */
     public function install($admingroups = [], $accessgroups = [])
     {
@@ -566,6 +570,7 @@ class XoopsModule extends XoopsObject
 
     /**
      * @return bool
+     * @deprecated
      */
     public function update()
     {
@@ -576,6 +581,7 @@ class XoopsModule extends XoopsObject
 
     /**
      * @return bool
+     * @deprecated
      */
     public function insert()
     {
@@ -596,6 +602,7 @@ class XoopsModule extends XoopsObject
 
     /**
      * @return bool
+     * @deprecated
      */
     public function insertTemplates()
     {
@@ -609,6 +616,7 @@ class XoopsModule extends XoopsObject
      * @param bool $block
      *
      * @return bool
+     * @deprecated
      */
     public function gettemplate($template, $block = false)
     {
@@ -619,6 +627,7 @@ class XoopsModule extends XoopsObject
 
     /**
      * @return bool
+     * @deprecated
      */
     public function insertBlocks()
     {
@@ -629,6 +638,7 @@ class XoopsModule extends XoopsObject
 
     /**
      * @return bool
+     * @deprecated
      */
     public function insertConfigCategories()
     {
@@ -639,6 +649,7 @@ class XoopsModule extends XoopsObject
 
     /**
      * @return bool
+     * @deprecated
      */
     public function insertConfig()
     {
@@ -649,6 +660,7 @@ class XoopsModule extends XoopsObject
 
     /**
      * @return bool
+     * @deprecated
      */
     public function insertProfileFields()
     {
@@ -662,6 +674,7 @@ class XoopsModule extends XoopsObject
      * @param int $state
      *
      * @return bool
+     * @deprecated
      */
     public function executeScript($type, $state = 2)
     {
@@ -675,6 +688,7 @@ class XoopsModule extends XoopsObject
      * @param $type
      *
      * @return bool
+     * @deprecated
      */
     public function insertGroupPermissions($groups, $type)
     {

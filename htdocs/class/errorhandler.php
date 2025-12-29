@@ -36,6 +36,7 @@ $GLOBALS['xoopsLogger']->addDeprecated("'/class/errorhandler.php' is deprecated 
  * @author              Kazumi Ono <onokazu@xoops.org>
  * @author              John Neill <catzwolf@xoops.org>
  * @copyright       (c) 2000-2025 XOOPS Project (https://xoops.org)
+ * @deprecated
  */
 class XoopsErrorHandler extends XoopsLogger
 {
