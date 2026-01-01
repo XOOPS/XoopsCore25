@@ -16,9 +16,8 @@
  * @since               2.3.0
  * @author              Taiwen Jiang <phppp@users.sourceforge.net>
  */
-if (!defined('XOOPS_ROOT_PATH')) {
-    throw new \RuntimeException('Restricted access');
-}
+
+defined('XOOPS_ROOT_PATH') || exit('Restricted access');
 
 /**
  * Caching for CakePHP.
@@ -108,15 +107,30 @@ class XoopsCache
     public function config($name = 'default', $settings = [])
     {
         $_this = XoopsCache::getInstance();
+
         if (is_array($name)) {
-            extract($name);
+            if (isset($name['name']) && is_string($name['name'])) {
+                $name = $name['name'];
+            }
+            if (isset($name['settings']) && is_array($name['settings'])) {
+                $settings = array_merge($settings, $name['settings']);
+            }
+        }
+
+        if (!is_string($name) || $name === '') {
+            $name = 'default';
         }
 
         if (isset($_this->configs[$name])) {
             $settings = array_merge($_this->configs[$name], $settings);
         } elseif (!empty($settings)) {
             $_this->configs[$name] = $settings;
-        } elseif ($_this->configs !== null && isset($_this->configs[$_this->name])) {
+        } elseif (
+            $_this->configs !== null
+            && is_string($_this->name)
+            && $_this->name !== ''
+            && isset($_this->configs[$_this->name])
+        ) {
             $name     = $_this->name;
             $settings = $_this->configs[$_this->name];
         } else {
@@ -129,10 +143,8 @@ class XoopsCache
                 ];
             }
         }
-        $engine = 'file';
-        if (!empty($settings['engine'])) {
-            $engine = $settings['engine'];
-        }
+
+        $engine = !empty($settings['engine']) ? $settings['engine'] : 'file';
 
         if ($name !== $_this->name) {
             if ($_this->engine($engine, $settings) === false) {
@@ -216,14 +228,29 @@ class XoopsCache
     {
         $key    = substr(md5(XOOPS_URL), 0, 8) . '_' . $key;
         $_this  = XoopsCache::getInstance();
+
         $config = null;
+
         if (is_array($duration)) {
-            extract($duration);
-        } elseif (isset($_this->configs[$duration])) {
+            if (isset($duration['config']) && is_string($duration['config'])) {
+                $config = $duration['config'];
+            }
+            if (isset($duration['duration'])) {
+                $duration = $duration['duration'];
+            } else {
+                $duration = null;
+            }
+        } elseif (
+            is_string($duration)
+            && $duration !== ''
+            && isset($_this->configs[$duration])
+        ) {
             $config   = $duration;
             $duration = null;
         }
+
         $config = $_this->config($config);
+
 
         if (!is_array($config)) {
             return null;
@@ -294,7 +321,7 @@ class XoopsCache
      * Delete a key from the cache
      *
      * @param  string $key    Identifier for the data
-     * @param  string $config name of the configuration to use
+     * @param string|null $config name of the configuration to use
      * @return boolean True if the value was successfully deleted, false if it didn't exist or couldn't be removed
      * @access public
      */
@@ -324,7 +351,7 @@ class XoopsCache
      * Delete all keys from the cache
      *
      * @param  boolean $check  if true will check expiration, otherwise delete all
-     * @param  string  $config name of the configuration to use
+     * @param string|null $config name of the configuration to use
      * @return boolean True if the cache was successfully cleared, false otherwise
      * @access public
      */
@@ -346,7 +373,7 @@ class XoopsCache
     /**
      * Check if Cache has initialized a working storage engine
      *
-     * @param  string $engine Name of the engine
+     * @param  string|null $engine Name of the engine
      * @return bool
      * @internal param string $configs Name of the configuration setting
      * @access   public
@@ -364,7 +391,7 @@ class XoopsCache
     /**
      * Return the settings for current cache engine
      *
-     * @param  string $engine Name of the engine
+     * @param  string|null $engine Name of the engine
      * @return array  list of settings for this engine
      * @access public
      */
