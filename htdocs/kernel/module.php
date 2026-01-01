@@ -193,34 +193,28 @@ class XoopsModule extends XoopsObject
      * @param  string $operator
      * @return boolean The function will return true if the relationship is the one specified by the operator, false otherwise.
      */
-    public function versionCompare($version1 = '', $version2 = '', $operator = '<')
+    public function versionCompare($version1 = '', $version2 = '', $operator = '<'): bool
     {
-        $normalize = static function ($ver) {
+        $normalize = static function ($ver): string {
             $ver = strtolower(trim((string)$ver));
-            // Normalize legacy "-stable" (keep behavior consistent)
-            if (($pos = strpos($ver, '-stable')) !== false) {
-                $ver = substr($ver, 0, $pos);
-                $ver = rtrim($ver);
-            }
-
-            // Strip any suffix after first '-': -beta, -alpha, -rc, -dev, etc.
             if (($pos = strpos($ver, '-')) !== false) {
                 $ver = substr($ver, 0, $pos);
             }
-
             return trim($ver);
         };
 
         $n1 = $normalize($version1);
         $n2 = $normalize($version2);
 
-        // If the normalized strings are identical, treat as equal (covers 2.5.12-beta vs 2.5.12)
-        if ($n1 === $n2) {
-            return version_compare('0', '0', $operator);
+        $op = (string)$operator;
+        $allowed = ['<', '<=', '>', '>=', '==', '!=', '<>'];
+        if (!in_array($op, $allowed, true)) {
+            $op = '<';
         }
 
-        return version_compare($n1, $n2, $operator);
+        return (bool)version_compare($n1, $n2, $op);
     }
+
 
     /**
      * Get a link to the modules main page
