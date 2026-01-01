@@ -195,15 +195,28 @@ class XoopsModule extends XoopsObject
      */
     public function versionCompare($version1 = '', $version2 = '', $operator = '<')
     {
-        $version1 = strtolower($version1);
-        $version2 = strtolower($version2);
-        if (false !== strpos($version2, '-stable')) {
-            $version2 = substr($version2, 0, strpos($version2, '-stable'));
+        $normalize = static function ($ver) {
+            $ver = strtolower($ver);
+            // strip suffix like -beta, -alpha, -rc, -stable
+            if (false !== ($pos = strpos($ver, '-'))) {
+                $ver = substr($ver, 0, $pos);
+            }
+            return $ver;
+        };
+
+        $base1 = $normalize($version1);
+        $base2 = $normalize($version2);
+
+        // Compare only the base versions first
+        $cmp = version_compare($base1, $base2);
+
+        if ($cmp === 0) {
+            // Same base version → treat as equal, regardless of suffix
+            return version_compare('0', '0', $operator);
         }
-        if (false !== strpos($version1, '-stable')) {
-            $version1 = substr($version1, 0, strpos($version1, '-stable'));
-        }
-        return version_compare($version1, $version2, $operator);
+
+        // Otherwise, just use the base numeric comparison
+        return version_compare($base1, $base2, $operator);
     }
 
     /**
