@@ -196,27 +196,30 @@ class XoopsModule extends XoopsObject
     public function versionCompare($version1 = '', $version2 = '', $operator = '<')
     {
         $normalize = static function ($ver) {
-            $ver = strtolower($ver);
-            // strip suffix like -beta, -alpha, -rc, -stable
-            if (false !== ($pos = strpos($ver, '-'))) {
+            $ver = strtolower(trim((string)$ver));
+            // Normalize legacy "-stable" (keep behavior consistent)
+            if (($pos = strpos($ver, '-stable')) !== false) {
+                $ver = substr($ver, 0, $pos);
+                $ver = rtrim($ver);
+            }
+
+            // Strip any suffix after first '-': -beta, -alpha, -rc, -dev, etc.
+            if (($pos = strpos($ver, '-')) !== false) {
                 $ver = substr($ver, 0, $pos);
             }
-            return $ver;
+
+            return trim($ver);
         };
 
-        $base1 = $normalize($version1);
-        $base2 = $normalize($version2);
+        $n1 = $normalize($version1);
+        $n2 = $normalize($version2);
 
-        // Compare only the base versions first
-        $cmp = version_compare($base1, $base2);
-
-        if ($cmp === 0) {
-            // Same base version → treat as equal, regardless of suffix
+        // If the normalized strings are identical, treat as equal (covers 2.5.12-beta vs 2.5.12)
+        if ($n1 === $n2) {
             return version_compare('0', '0', $operator);
         }
 
-        // Otherwise, just use the base numeric comparison
-        return version_compare($base1, $base2, $operator);
+        return version_compare($n1, $n2, $operator);
     }
 
     /**
