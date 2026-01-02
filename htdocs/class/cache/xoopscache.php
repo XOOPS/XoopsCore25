@@ -80,7 +80,7 @@ class XoopsCache
      * @param string|array|null $config Configuration name or array
      * @return array{engine: string, settings: array<string, mixed>}|false
      */
-    protected function resolveEngineConfig($config)
+    private function resolveEngineConfig($config)
     {
         $config = $this->config($config);
 
@@ -104,7 +104,7 @@ class XoopsCache
      */
     private function resolveEngineName($engine)
     {
-        if (is_string($engine) && $engine !== '') {
+        if ($engine !== null && is_string($engine) && $engine !== '') {
             return $engine;
         }
 
@@ -161,10 +161,11 @@ class XoopsCache
 
             if (isset($config['name']) && is_string($config['name'])) {
                 $name = $config['name'];
+            } else {
+                $name = 'default';
             }
 
             if (isset($config['settings']) && is_array($config['settings'])) {
-                // Preserve legacy behavior: overwrite settings, do NOT merge
                 $settings = $config['settings'];
             }
         }
@@ -238,11 +239,24 @@ class XoopsCache
                 trigger_error("Cache Engine {$name} is not loaded", E_USER_WARNING);
                 return false;
             }
+
             $_this->engine[$name] = new $cacheClass();
+
+            // Validate that the engine implements the required interface
+            if (!$_this->engine[$name] instanceof XoopsCacheEngineInterface) {
+                $_this->engine[$name] = null;
+                trigger_error(
+                    "Cache engine {$name} must implement XoopsCacheEngineInterface",
+                    E_USER_WARNING
+                );
+                return false;
+            }
         }
 
         if ($_this->engine[$name]->init($settings)) {
-            if (time() % $_this->engine[$name]->settings['probability'] == 0) {
+            // Safely check probability before using it
+            $probability = $_this->engine[$name]->settings['probability'] ?? 0;
+            if ($probability > 0 && time() % $probability === 0) {
                 $_this->engine[$name]->gc();
             }
             return true;
@@ -273,7 +287,7 @@ class XoopsCache
 
         $engine = $config['engine'];
 
-        // Check if engine is initialized before calling gc()
+// Engine configuration is valid, but runtime initialization may have failed
         if (!$_this->isInitialized($engine)) {
             trigger_error("Cache engine {$engine} not initialized for garbage collection", E_USER_WARNING);
             return false;
@@ -472,17 +486,17 @@ class XoopsCache
 
         return is_string($engine)
             && isset($_this->engine[$engine])
-            && $_this->engine[$engine] !== null;
+            && $_this->engine[$engine] instanceof XoopsCacheEngineInterface;
     }
 
     /**
      * Return the settings for current cache engine
      *
      * @param  string|null $engine Name of the engine
-     * @return array list of settings for this engine
+     * @return array<string, mixed> list of settings for this engine
      * @access public
      */
-    public function settings($engine = null)
+    public function settings($engine = null): array
     {
         $_this = XoopsCache::getInstance();
         $engine = $_this->resolveEngineName($engine);
@@ -490,7 +504,7 @@ class XoopsCache
         if (
             is_string($engine) &&
             isset($_this->engine[$engine]) &&
-            $_this->engine[$engine] !== null
+            $_this->engine[$engine] instanceof XoopsCacheEngineInterface
         ) {
             return $_this->engine[$engine]->settings();
         }
@@ -517,12 +531,34 @@ class XoopsCache
 }
 
 /**
+ * Interface for XOOPS cache engine implementations
+ *
+ * Defines the contract that all cache engines must implement.
+ * Third-party cache engines should implement this interface.
+ *
+ * @package    core
+ * @subpackage cache
+ * @since      2.5.12
+ * @deprecated 4.0.0 Use Xoops\Core\Cache\EngineInterface instead
+ */
+interface XoopsCacheEngineInterface
+{
+    public function init($settings = []);
+    public function gc();
+    public function write($key, $value, $duration = null);
+    public function read($key);
+    public function delete($key);
+    public function clear($check);
+    public function settings();
+}
+
+/**
  * Abstract class for storage engine for caching
  *
  * @package    core
  * @subpackage cache
  */
-class XoopsCacheEngine
+abstract class XoopsCacheEngine implements XoopsCacheEngineInterface
 {
     /**
      * settings of current engine instance
