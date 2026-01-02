@@ -109,11 +109,14 @@ class XoopsCache
         $_this = XoopsCache::getInstance();
 
         if (is_array($name)) {
-            if (isset($name['name']) && is_string($name['name'])) {
-                $name = $name['name'];
+            $config = $name;
+
+            if (isset($config['name']) && is_string($config['name'])) {
+                $name = $config['name'];
             }
-            if (isset($name['settings']) && is_array($name['settings'])) {
-                $settings = array_merge($settings, $name['settings']);
+
+            if (isset($config['settings']) && is_array($config['settings'])) {
+                $settings = array_merge($settings, $config['settings']);
             }
         }
 
