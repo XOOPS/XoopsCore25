@@ -96,13 +96,34 @@ class XoopsCache
         return $config;
     }
 
+    /**
+     * Resolve engine name from parameter or current configuration
+     *
+     * @param string|null $engine Engine name or null to use current
+     * @return string|null Engine name or null if cannot be resolved
+     */
+    private function resolveEngineName($engine)
+    {
+        if (is_string($engine) && $engine !== '') {
+            return $engine;
+        }
 
+        if (
+            is_string($this->name) &&
+            $this->name !== '' &&
+            isset($this->configs[$this->name]['engine'])
+        ) {
+            return $this->configs[$this->name]['engine'];
+        }
+
+        return null;
+    }
 
     /**
-     * Tries to find and include a file for a cache engine and returns object instance
+     * Tries to find and include a file for a cache engine
      *
      * @param  string $name Name of the engine
-     * @return mixed $engine object or null
+     * @return bool True if the engine was successfully loaded, false on failure
      * @access private
      */
     private function loadEngine($name)
@@ -112,7 +133,6 @@ class XoopsCache
                 include $file;
             } else {
                 trigger_error('File :' . $file . ' not found in file : ' . __FILE__ . ' at line: ' . __LINE__, E_USER_WARNING);
-
                 return false;
             }
         }
@@ -131,6 +151,10 @@ class XoopsCache
     public function config($name = 'default', $settings = [])
     {
         $_this = XoopsCache::getInstance();
+
+        if (!is_array($settings)) {
+            $settings = [];
+        }
 
         if (is_array($name)) {
             $config = $name;
@@ -194,21 +218,24 @@ class XoopsCache
      *
      * @param  string $name     Name of the engine (without 'Engine')
      * @param  array  $settings Optional associative array of settings passed to the engine
-     * @return boolean True on success, false on failure
+     * @return bool True on success, false on failure
      * @access public
      */
-    public function engine($name = 'file', $settings = [])
+    public function engine($name = 'file', $settings = []): bool
     {
-        if (!$name) {
+        if (!is_string($name) || $name === '') {
             return false;
+        }
+        if (!is_array($settings)) {
+            $settings = [];
         }
 
         $cacheClass = 'XoopsCache' . ucfirst($name);
         $_this      = XoopsCache::getInstance();
+
         if (!isset($_this->engine[$name])) {
             if ($_this->loadEngine($name) === false) {
                 trigger_error("Cache Engine {$name} is not loaded", E_USER_WARNING);
-
                 return false;
             }
             $_this->engine[$name] = new $cacheClass();
@@ -218,9 +245,9 @@ class XoopsCache
             if (time() % $_this->engine[$name]->settings['probability'] == 0) {
                 $_this->engine[$name]->gc();
             }
-
             return true;
         }
+
         $_this->engine[$name] = null;
         trigger_error("Cache Engine {$name} is not initialized", E_USER_WARNING);
 
@@ -231,6 +258,7 @@ class XoopsCache
      * Garbage collection
      *
      * Permanently remove all expired and deleted data
+     *
      * @return bool True on success, false on failure
      * @access public
      */
@@ -238,11 +266,18 @@ class XoopsCache
     {
         $_this  = XoopsCache::getInstance();
         $config = $_this->resolveEngineConfig(null);
+
         if ($config === false) {
             return false;
         }
 
         $engine = $config['engine'];
+
+        // Check if engine is initialized before calling gc()
+        if (!$_this->isInitialized($engine)) {
+            trigger_error("Cache engine {$engine} not initialized for garbage collection", E_USER_WARNING);
+            return false;
+        }
 
         $_this->engine[$engine]->gc();
 
@@ -324,8 +359,12 @@ class XoopsCache
      * Read a key from the cache
      *
      * @param  string $key    Identifier for the data
-     * @param  string|array $config name of the configuration to use
-     * @return mixed  The cached data, or false if the data doesn't exist, has expired, or if there was an error fetching it
+     * @param  string|array|null $config name of the configuration to use
+     * @return mixed The cached data, or false if:
+     *               - Configuration is invalid
+     *               - Data doesn't exist
+     *               - Data has expired
+     *               - Error occurred during retrieval
      * @access public
      */
     public static function read($key, $config = null)
@@ -361,7 +400,7 @@ class XoopsCache
      * @return boolean True if the value was successfully deleted, false if it didn't exist or couldn't be removed
      * @access public
      */
-    public static function delete($key, $config = null)
+    public static function delete($key, $config = null): bool
     {
         $key   = substr(md5(XOOPS_URL), 0, 8) . '_' . $key;
         $_this = XoopsCache::getInstance();
@@ -396,7 +435,7 @@ class XoopsCache
      * @return boolean True if the cache was successfully cleared, false otherwise
      * @access public
      */
-    public function clear($check = false, $config = null)
+    public function clear($check = false, $config = null): bool
     {
         $_this = XoopsCache::getInstance();
 
@@ -424,33 +463,35 @@ class XoopsCache
      *
      * @param  string|null $engine Name of the engine
      * @return bool
-     * @internal param string $configs Name of the configuration setting
-     * @access   public
+     * @access public
      */
-    public function isInitialized($engine = null): bool
+    public function isInitialized($engine = null)
     {
         $_this = XoopsCache::getInstance();
-        if (!$engine && isset($_this->configs[$_this->name]['engine'])) {
-            $engine = $_this->configs[$_this->name]['engine'];
-        }
+        $engine = $_this->resolveEngineName($engine);
 
-        return isset($_this->engine[$engine]);
+        return is_string($engine)
+            && isset($_this->engine[$engine])
+            && $_this->engine[$engine] !== null;
     }
 
     /**
      * Return the settings for current cache engine
      *
      * @param  string|null $engine Name of the engine
-     * @return array  list of settings for this engine
+     * @return array list of settings for this engine
      * @access public
      */
-    public function settings($engine = null): array
+    public function settings($engine = null)
     {
         $_this = XoopsCache::getInstance();
-        if (!$engine && isset($_this->configs[$_this->name]['engine'])) {
-            $engine = $_this->configs[$_this->name]['engine'];
-        }
-        if (isset($_this->engine[$engine]) && null !== $_this->engine[$engine]) {
+        $engine = $_this->resolveEngineName($engine);
+
+        if (
+            is_string($engine) &&
+            isset($_this->engine[$engine]) &&
+            $_this->engine[$engine] !== null
+        ) {
             return $_this->engine[$engine]->settings();
         }
 
@@ -494,7 +535,9 @@ class XoopsCacheEngine
     /**
      * Initialize the cache engine
      *
-     * Called automatically by the cache frontend
+     * Called automatically by the cache frontend. This method may be called
+     * multiple times to reconfigure the engine with different settings.
+     * Implementations should handle repeated initialization gracefully.
      *
      * @param  array $settings Associative array of parameters for the engine
      * @return boolean True if the engine has been successfully initialized, false if not
