@@ -254,6 +254,7 @@ class XoopsModelWrite extends XoopsModelAbstract
 
         if ($object->isNew()) {
             $sql = 'INSERT INTO `' . $this->handler->table . '`';
+            $queryFunc = 'exec';
             if (!empty($object->cleanVars)) {
                 $keys = array_keys($object->cleanVars);
                 $vals = array_values($object->cleanVars);
@@ -275,6 +276,7 @@ class XoopsModelWrite extends XoopsModelAbstract
                 $keys[] = " `{$k}` = {$v}";
             }
             $sql = 'UPDATE `' . $this->handler->table . '` SET ' . implode(',', $keys) . ' WHERE `' . $this->handler->keyName . '` = ' . $this->handler->db->quote($object->getVar($this->handler->keyName));
+            $queryFunc = 'exec';
             if (!$result = $this->handler->db->{$queryFunc}($sql)) {
                 return false;
             }
@@ -303,7 +305,8 @@ class XoopsModelWrite extends XoopsModelAbstract
             $whereclause = '`' . $this->handler->keyName . '` = ' . $this->handler->db->quote($object->getVar($this->handler->keyName));
         }
         $sql       = 'DELETE FROM `' . $this->handler->table . '` WHERE ' . $whereclause;
-        $queryFunc = empty($force) ? 'query' : 'exec';
+//        $queryFunc = empty($force) ? 'query' : 'exec';
+        $queryFunc = 'exec';
         $result    = $this->handler->db->{$queryFunc}($sql);
 
         return empty($result) ? false : true;
@@ -329,7 +332,8 @@ class XoopsModelWrite extends XoopsModelAbstract
 
             return $num;
         }
-        $queryFunc = empty($force) ? 'query' : 'exec';
+//        $queryFunc = empty($force) ? 'query' : 'exec';
+        $queryFunc = 'exec';
         $sql       = 'DELETE FROM ' . $this->handler->table;
         if (!empty($criteria)) {
             if (is_subclass_of($criteria, 'CriteriaElement')) {
@@ -368,7 +372,8 @@ class XoopsModelWrite extends XoopsModelAbstract
         if (isset($criteria) && \method_exists($criteria, 'renderWhere')) {
             $sql .= ' ' . $criteria->renderWhere();
         }
-        $queryFunc = empty($force) ? 'query' : 'exec';
+//        $queryFunc = empty($force) ? 'query' : 'exec';
+        $queryFunc = 'exec';
         $result    = $this->handler->db->{$queryFunc}($sql);
 
         return empty($result) ? false : true;
