@@ -61,7 +61,7 @@ if (!function_exists('protector_oninstall_base')) {
 
                     return false;
                 }
-                if (!$db->query($prefixed_query[0])) {
+                if (!$db->exec($prefixed_query[0])) {
                     $ret[] = '<b>' . htmlspecialchars($db->error(), ENT_QUOTES | ENT_HTML5) . '</b><br>';
 
                     //var_dump( $db->error() ) ;

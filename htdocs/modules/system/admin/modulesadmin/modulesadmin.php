@@ -135,7 +135,7 @@ function xoops_module_install($dirname)
                         // check if the table name is reserved
                         if (!in_array($prefixed_query[4], $reservedTables)) {
                             // not reserved, so try to create one
-                            if (!$db->query($prefixed_query[0])) {
+                            if (!$db->exec($prefixed_query[0])) {
                                 $errs[] = $db->error();
                                 $error  = true;
                                 break;
