@@ -157,7 +157,7 @@ CREATE TABLE xoopsnotifications (
 #
 
 CREATE TABLE config (
-  conf_id smallint(5) unsigned NOT NULL auto_increment,
+  conf_id int(10) unsigned NOT NULL auto_increment,
   conf_modid smallint(5) unsigned NOT NULL default '0',
   conf_catid smallint(5) unsigned NOT NULL default '0',
   conf_name varchar(25) NOT NULL default '',
