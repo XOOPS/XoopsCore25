@@ -22,8 +22,8 @@
 /tests_codex2/** export-ignore
 /extras/** export-ignore
 /docs/** export-ignore
-.ai/** export-ignore
-.github/** export-ignore
+/.ai/** export-ignore
+/.github/** export-ignore
 .gitattributes export-ignore
 .gitignore export-ignore
 .editorconfig export-ignore

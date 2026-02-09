@@ -43,6 +43,7 @@ Code must run on PHP 7.4 through 8.5. Do not use features exclusive to PHP 8.0+ 
 
 - Follow PSR-12 coding standard.
 - Every source file begins with the XOOPS copyright header block:
+
   ```php
   <?php
   /*
@@ -55,6 +56,7 @@ Code must run on PHP 7.4 through 8.5. Do not use features exclusive to PHP 8.0+ 
    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
    */
   ```
+
 - Class docblocks include `@category`, `@package`, `@author`, `@copyright`, `@license`, and `@link` tags.
 - Use `self::` for class constants (not `static::`). PHPStan level max cannot resolve late static binding on constants and reports `mixed`.
 - Prefer `\Throwable` in catch blocks over `\Exception` to cover both exceptions and errors on PHP 7+.

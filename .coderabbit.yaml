@@ -24,7 +24,7 @@ reviews:
         match expressions, enums, readonly, constructor promotion, fibers,
         intersection types, never return type, or first-class callable syntax).
         Check for proper PSR-12 code style. Flag any direct superglobal access
-        ($\_GET, $\_POST, $\_REQUEST) that should use Xmf\Request instead.
+        ($_GET, $_POST, $_REQUEST) that should use Xmf\Request instead.
         Check for SQL injection risks — all queries must use parameterized
         statements via XOOPS database handlers.
     - path: "htdocs/kernel/**/*.php"
