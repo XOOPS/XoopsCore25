@@ -250,11 +250,8 @@ class XoopsModelWrite extends XoopsModelAbstract
 
             return $object->getVar($this->handler->keyName);
         }
-        $queryFunc = empty($force) ? 'query' : 'exec';
-
         if ($object->isNew()) {
             $sql = 'INSERT INTO `' . $this->handler->table . '`';
-            $queryFunc = 'exec';
             if (!empty($object->cleanVars)) {
                 $keys = array_keys($object->cleanVars);
                 $vals = array_values($object->cleanVars);
@@ -264,7 +261,7 @@ class XoopsModelWrite extends XoopsModelAbstract
 
                 return $object->getVar($this->handler->keyName);
             }
-            if (!$result = $this->handler->db->{$queryFunc}($sql)) {
+            if (!$result = $this->handler->db->exec($sql)) {
                 return false;
             }
             if (!$object->getVar($this->handler->keyName) && $object_id = $this->handler->db->getInsertId()) {
@@ -276,8 +273,7 @@ class XoopsModelWrite extends XoopsModelAbstract
                 $keys[] = " `{$k}` = {$v}";
             }
             $sql = 'UPDATE `' . $this->handler->table . '` SET ' . implode(',', $keys) . ' WHERE `' . $this->handler->keyName . '` = ' . $this->handler->db->quote($object->getVar($this->handler->keyName));
-            $queryFunc = 'exec';
-            if (!$result = $this->handler->db->{$queryFunc}($sql)) {
+            if (!$result = $this->handler->db->exec($sql)) {
                 return false;
             }
         }
@@ -304,10 +300,8 @@ class XoopsModelWrite extends XoopsModelAbstract
         } else {
             $whereclause = '`' . $this->handler->keyName . '` = ' . $this->handler->db->quote($object->getVar($this->handler->keyName));
         }
-        $sql       = 'DELETE FROM `' . $this->handler->table . '` WHERE ' . $whereclause;
-//        $queryFunc = empty($force) ? 'query' : 'exec';
-        $queryFunc = 'exec';
-        $result    = $this->handler->db->{$queryFunc}($sql);
+        $sql    = 'DELETE FROM `' . $this->handler->table . '` WHERE ' . $whereclause;
+        $result = $this->handler->db->exec($sql);
 
         return empty($result) ? false : true;
     }
@@ -332,9 +326,7 @@ class XoopsModelWrite extends XoopsModelAbstract
 
             return $num;
         }
-//        $queryFunc = empty($force) ? 'query' : 'exec';
-        $queryFunc = 'exec';
-        $sql       = 'DELETE FROM ' . $this->handler->table;
+        $sql = 'DELETE FROM ' . $this->handler->table;
         if (!empty($criteria)) {
             if (is_subclass_of($criteria, 'CriteriaElement')) {
                 $sql .= ' ' . $criteria->renderWhere();
@@ -342,7 +334,7 @@ class XoopsModelWrite extends XoopsModelAbstract
                 return false;
             }
         }
-        if (!$this->handler->db->{$queryFunc}($sql)) {
+        if (!$this->handler->db->exec($sql)) {
             return false;
         }
 
@@ -372,9 +364,7 @@ class XoopsModelWrite extends XoopsModelAbstract
         if (isset($criteria) && \method_exists($criteria, 'renderWhere')) {
             $sql .= ' ' . $criteria->renderWhere();
         }
-//        $queryFunc = empty($force) ? 'query' : 'exec';
-        $queryFunc = 'exec';
-        $result    = $this->handler->db->{$queryFunc}($sql);
+        $result = $this->handler->db->exec($sql);
 
         return empty($result) ? false : true;
     }
