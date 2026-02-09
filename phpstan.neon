@@ -10,6 +10,7 @@ parameters:
     excludePaths:
         analyseAndScan:
             - htdocs/xoops_data/caches
+            - htdocs/class/libraries/vendor/
             - tests/
             - tests_codex2/
         analyse:
