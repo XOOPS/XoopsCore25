@@ -1,0 +1,24 @@
+parameters:
+    level: 2
+    parallel:
+        processTimeout: 500.0
+    paths:
+        - htdocs
+    fileExtensions:
+        - php
+        - phtml
+    excludePaths:
+        analyseAndScan:
+            - htdocs/xoops_data/caches
+            - htdocs/class/libraries/vendor/
+            - tests/
+            - tests_codex2/
+        analyse:
+            - htdocs/class/auth/
+            - htdocs/install/
+            - htdocs/xoops_lib/vendor/
+    scanFiles:
+        - htdocs/xoops_lib/vendor/kint-php/kint/src/Kint.php
+    bootstrapFiles:
+        - constants.php
+    treatPhpDocTypesAsCertain: false

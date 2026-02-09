@@ -1,66 +1,19 @@
-# .scrutinizer.yml
-
 build:
-  environment:
-    variables:
-      APP_ENV: test
-
   nodes:
     analysis:
       tests:
         override:
           - php-scrutinizer-run
 
-    php74:
-      environment:
-        php: 7.4
-      tests:
-        override:
-          - command: php -v
-
-    php80:
-      environment:
-        php: 8.0
-      tests:
-        override:
-          - command: php -v
-
-    php81:
-      environment:
-        php: 8.1
-      tests:
-        override:
-          - command: php -v
-
-    php82:
-      environment:
-        php: 8.2
-      tests:
-        override:
-          - command: php -v
-
-#    php83:
-#      environment:
-#        php: 8.3
-#      tests:
-#        override:
-#          - command: php -v
-
-#    php84:
-#      environment:
-#        php: 8.4
-#      tests:
-#        override:
-#          - command: php -v
-
 filter:
   excluded_paths:
-    - '_archive/*'
-    - 'tests/*'
-    - 'docs/*'
-#    - 'vendor/*'
+    - '_archive/'
+    - 'tests/'
+    - 'tests_codex2/'
+    - 'extras/'
+    - 'docs/'
+    - 'htdocs/xoops_lib/vendor/'
+    - 'htdocs/install/'
 
 tools:
   php_analyzer: true
-#  external_code_coverage:
-#    timeout: 300 # Timeout in seconds.
