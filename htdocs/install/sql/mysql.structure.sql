@@ -193,7 +193,7 @@ CREATE TABLE configoption (
   confop_id mediumint(8) unsigned NOT NULL auto_increment,
   confop_name varchar(255) NOT NULL default '',
   confop_value varchar(255) NOT NULL default '',
-  conf_id smallint(5) unsigned NOT NULL default '0',
+  conf_id int(10) unsigned NOT NULL default '0',
   PRIMARY KEY  (confop_id),
   KEY conf_id (conf_id)
 ) ENGINE=MyISAM;

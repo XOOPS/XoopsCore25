@@ -261,7 +261,7 @@ class XoopsModelWrite extends XoopsModelAbstract
 
                 return $object->getVar($this->handler->keyName);
             }
-            if (!$result = $this->handler->db->exec($sql)) {
+            if (!$this->handler->db->exec($sql)) {
                 return false;
             }
             if (!$object->getVar($this->handler->keyName) && $object_id = $this->handler->db->getInsertId()) {
@@ -273,7 +273,7 @@ class XoopsModelWrite extends XoopsModelAbstract
                 $keys[] = " `{$k}` = {$v}";
             }
             $sql = 'UPDATE `' . $this->handler->table . '` SET ' . implode(',', $keys) . ' WHERE `' . $this->handler->keyName . '` = ' . $this->handler->db->quote($object->getVar($this->handler->keyName));
-            if (!$result = $this->handler->db->exec($sql)) {
+            if (!$this->handler->db->exec($sql)) {
                 return false;
             }
         }
