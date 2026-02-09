@@ -88,7 +88,7 @@ class FileStorage implements StorageInterface
             throw new \DomainException('Invalid key data');
         }
         $fileContents = "<?php\n//**Warning** modifying this file will break things!\n"
-            . "return '{$data}';\n";
+            . "return " . var_export($data, true) . ";\n";
         return (false !== file_put_contents($this->fileName($name), $fileContents));
     }
 

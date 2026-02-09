@@ -1,0 +1,56 @@
+# yaml-language-server: $schema=https://coderabbit.ai/integrations/schema.v2.json
+language: "en-US"
+early_access: false
+tone_instructions: >-
+  Expert PHP code reviewer. Focus on type safety, PSR-12 compliance,
+  PHP 7.4 compatibility, and security. This is a full CMS application
+  supporting PHP 7.4 through 8.5 — no PHP 8.0+ language features allowed
+  in core code.
+
+reviews:
+  profile: "assertive"
+  request_changes_workflow: true
+  high_level_summary: true
+  poem: false
+  review_status: true
+  collapse_walkthrough: false
+  auto_review:
+    enabled: true
+    drafts: false
+  path_instructions:
+    - path: "htdocs/**/*.php"
+      instructions: >-
+        Review for PHP 7.4 compatibility (no union types, named arguments,
+        match expressions, enums, readonly, constructor promotion, fibers,
+        intersection types, never return type, or first-class callable syntax).
+        Check for proper PSR-12 code style. Flag any direct superglobal access
+        ($\_GET, $\_POST, $\_REQUEST) that should use Xmf\Request instead.
+        Check for SQL injection risks — all queries must use parameterized
+        statements via XOOPS database handlers.
+    - path: "htdocs/kernel/**/*.php"
+      instructions: >-
+        Core kernel classes. Pay special attention to security: input
+        filtering, output escaping, SQL parameterization, and proper
+        use of XOOPS database API. Check for backward compatibility.
+    - path: "tests/**/*.php"
+      instructions: >-
+        Review test code for proper assertions, test isolation, and edge
+        case coverage. Tests must work across PHPUnit 9.6, 10, and 11.
+
+chat:
+  auto_reply: true
+
+tools:
+  phpcs:
+    enabled: true
+  phpstan:
+    enabled: true
+  gitleaks:
+    enabled: true
+  markdownlint:
+    enabled: true
+  yamllint:
+    enabled: true
+  github-checks:
+    enabled: true
+    timeout_ms: 90000

@@ -1,24 +1,59 @@
-Composer support in XOOPS 2.5.x
+# XOOPS Libraries (`xoops_lib`)
 
-The libraries directory in XOOPS 2.5.8 and above is managed by composer.
-Composer is a tool for managing PHP library dependencies. You can learn
-more about composer at:
-https://getcomposer.org/
+Third-party PHP libraries for XOOPS CMS 2.5.12+, managed by [Composer](https://getcomposer.org/).
 
-You are not required to know about or use composer to use XOOPS, but
-power users may wish to take advantage of its capabilities to extend
-and customize their systems.
+> ## Security Notice: 
+> For production deployments, move this folder outside the document root. The included `.htaccess` and `index.php` block direct web access, but placing it outside the web root is the strongest protection.
 
-We build the libraries directory for our distribution package using
-the composer.json.dist file included in the class/libraries directory.
-To customize your composer environment, we recommend copying the
-supplied composer.json.dist to composer.json as your starting point.
+## For XOOPS Users
 
-When XOOPS is updated, the composer.json.dist file may be updated, but
-we will NOT update your composer.json file. You will be responsible for
-moving any changes forward, but your customized requirements will not
-be disturbed.
+You do **not** need Composer to run XOOPS. The distribution ships with all libraries pre-built in the `vendor/` directory.
 
-The actual requirements for XOOPS/XoopsCore25 are kept in a separate
-package, XOOPS/base-requires25, so changes to composer.json.dist should
-be minimal.
+## For Developers
+
+Power users may use Composer to manage or customize dependencies.
+
+### Getting Started
+
+1. Copy `composer.dist.json` to `composer.json`:
+   ```
+   cp composer.dist.json composer.json
+   ```
+2. Run Composer:
+   ```
+   composer install --prefer-dist --no-dev
+   ```
+
+### How It Works
+
+- `composer.dist.json` defines a single dependency: [`xoops/base-requires25`](https://github.com/XOOPS/base-requires25), which is a metapackage that pulls in all required libraries.
+- When XOOPS is updated, `composer.dist.json` may change, but your custom `composer.json` will not be overwritten.
+- You are responsible for merging any upstream changes into your customized file.
+
+### Build Script
+
+The `build` script rebuilds the vendor directory for distribution:
+
+```bash
+COMPOSER='composer.dist.json' composer update --prefer-dist --no-dev -a
+# remove unneeded files from wideimage (no .gitattributes in package)
+rm -r vendor/smottt/wideimage/demo
+rm -r vendor/smottt/wideimage/test
+# freshen public suffix list
+vendor/bin/update-psl.php
+```
+
+### Managed Libraries
+
+All runtime dependencies are defined in [`xoops/base-requires25`](https://github.com/XOOPS/base-requires25). Key packages include:
+
+| Package | Purpose |
+|---|---|
+| [xoops/xmf](https://github.com/XOOPS/xmf) | XOOPS Module Framework |
+| [xoops/regdom](https://github.com/XOOPS/RegDom) | Registered domain detection (PSL) |
+| [smarty/smarty](https://github.com/smarty-php/smarty) | Template engine (v4) |
+| [ezyang/htmlpurifier](https://github.com/ezyang/htmlpurifier) | HTML sanitization |
+| [phpmailer/phpmailer](https://github.com/PHPMailer/PHPMailer) | Email sending |
+| [tecnickcom/tcpdf](https://github.com/tecnickcom/TCPDF) | PDF generation |
+
+See the full dependency list in the [base-requires25 composer.json](https://github.com/XOOPS/base-requires25/blob/master/composer.json).

@@ -1,5 +1,15 @@
 <?php
 
+/*
+ You may not change or alter any portion of this comment or credits
+ of supporting developers from this source code or any supporting source code
+ which is considered copyrighted (c) material of the original comment or credit authors.
+
+ This program is distributed in the hope that it will be useful,
+ but WITHOUT ANY WARRANTY; without even the implied warranty of
+ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ */
+
 declare(strict_types=1);
 
 namespace Xoops\RegDom;
@@ -26,6 +36,9 @@ class PublicSuffixList
      */
     private static ?array $rules = null;
 
+    /**
+     * @throws \Xoops\RegDom\Exception\PslCacheNotFoundException If no valid PSL cache file is found.
+     */
     public function __construct()
     {
         if (self::$rules === null) {
@@ -35,6 +48,7 @@ class PublicSuffixList
 
     /**
      * @return array{'NORMAL': array<string, true>, 'WILDCARD': array<string, true>, 'EXCEPTION': array<string, true>}
+     * @throws \Xoops\RegDom\Exception\PslCacheNotFoundException If no valid PSL cache file is found.
      */
     private function loadRules(): array
     {
@@ -46,6 +60,11 @@ class PublicSuffixList
 
         foreach ($paths as $path) {
             if (is_file($path) && is_readable($path)) {
+                $fileSize = filesize($path);
+                if ($fileSize === false || $fileSize < 100000 || $fileSize > 10000000) {
+                    continue;
+                }
+
                 $rules = include $path;
 
                 if (
@@ -53,6 +72,7 @@ class PublicSuffixList
                     && isset($rules['NORMAL'], $rules['WILDCARD'], $rules['EXCEPTION'])
                     && is_array($rules['NORMAL'])
                     && is_array($rules['WILDCARD'])
+                    && is_array($rules['EXCEPTION'])
                 ) {
                     $totalRules = count($rules['NORMAL']) + count($rules['WILDCARD']);
                     if ($totalRules > 1000 && $totalRules < 100000) {
@@ -71,7 +91,7 @@ class PublicSuffixList
      */
     public function isPublicSuffix(string $domain): bool
     {
-        $domain = $this->normalizeDomain($domain);
+        $domain = self::normalizeDomain($domain);
         if ($domain === '' || filter_var($domain, FILTER_VALIDATE_IP)) {
             return false;
         }
@@ -100,7 +120,7 @@ class PublicSuffixList
      */
     public function getPublicSuffix(string $domain): ?string
     {
-        $domain = $this->normalizeDomain($domain);
+        $domain = self::normalizeDomain($domain);
         if ($domain === '' || filter_var($domain, FILTER_VALIDATE_IP)) {
             return null;
         }
@@ -110,7 +130,9 @@ class PublicSuffixList
         for ($i = 0; $i < $n; $i++) {
             $testSuffix = implode('.', array_slice($parts, $i));
             if (isset(self::$rules['EXCEPTION'][$testSuffix])) {
-                return $i > 0 ? implode('.', array_slice($parts, $i - 1)) : null;
+                // PSL exception: the public suffix is the exception rule minus its leftmost label.
+                // e.g. exception "!city.kawasaki.jp" → public suffix is "kawasaki.jp"
+                return ($i + 1 < $n) ? implode('.', array_slice($parts, $i + 1)) : null;
             }
             if (isset(self::$rules['NORMAL'][$testSuffix])) {
                 return $testSuffix;
@@ -194,13 +216,13 @@ class PublicSuffixList
     /**
      * Normalizes a domain string for consistent processing.
      */
-    private function normalizeDomain(string $domain): string
+    private static function normalizeDomain(string $domain): string
     {
         $domain = strtolower(trim($domain));
         // Handles both leading and trailing dots
         $domain = trim($domain, '.');
 
-        if (function_exists('idn_to_ascii')) {
+        if ($domain !== '' && function_exists('idn_to_ascii')) {
             $domain = idn_to_ascii($domain, IDNA_DEFAULT, INTL_IDNA_VARIANT_UTS46) ?: $domain;
         }
 
@@ -214,7 +236,7 @@ class PublicSuffixList
      */
     public function isException(string $domain): bool
     {
-        $domain = $this->normalizeDomain($domain);
+        $domain = self::normalizeDomain($domain);
         return isset(self::$rules['EXCEPTION'][$domain]);
     }
 }

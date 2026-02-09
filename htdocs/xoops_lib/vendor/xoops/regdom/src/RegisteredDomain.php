@@ -1,5 +1,15 @@
 <?php
 
+/*
+ You may not change or alter any portion of this comment or credits
+ of supporting developers from this source code or any supporting source code
+ which is considered copyrighted (c) material of the original comment or credit authors.
+
+ This program is distributed in the hope that it will be useful,
+ but WITHOUT ANY WARRANTY; without even the implied warranty of
+ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ */
+
 declare(strict_types=1);
 
 namespace Xoops\RegDom;
@@ -103,15 +113,27 @@ class RegisteredDomain
 
     private static function normalizeHost(string $input): string
     {
-        $host = (strpos($input, '/') !== false) ? parse_url($input, PHP_URL_HOST) : $input;
+        $host = str_contains($input, '/') ? parse_url($input, PHP_URL_HOST) : $input;
         if (!is_string($host)) {
             $host = '';
         }
         $host = trim(mb_strtolower($host, 'UTF-8'));
         if ($host !== '' && $host[0] === '[') {
-            $host = trim($host, '[]');
+            // Bracketed IPv6 literal, e.g. [::1] or [::1]:443
+            // Extract the address between brackets, discarding any trailing port.
+            if (preg_match('/^\[([^\]]+)]/', $host, $m)) {
+                $host = $m[1];
+            } else {
+                // Malformed bracket expression — strip brackets as fallback
+                $host = trim($host, '[]');
+            }
+        } elseif ($host !== '' && filter_var($host, FILTER_VALIDATE_IP, FILTER_FLAG_IPV6)) {
+            // Unbracketed IPv6 — parse_url() returns IPv6 without brackets.
+            // Skip port stripping to avoid corrupting the address.
+        } else {
+            // Non-IPv6: strip trailing :port (e.g. example.com:8080 → example.com)
+            $host = preg_replace('/:\d+$/', '', $host) ?? $host;
         }
-        $host = preg_replace('/:\d+$/', '', $host) ?? $host;
         return rtrim($host, '.');
     }
 
