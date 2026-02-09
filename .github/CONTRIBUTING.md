@@ -1,11 +1,11 @@
 ![alt XOOPS CMS](https://xoops.org/images/logoXoopsPhp81.png)
 # Contributing to [XOOPS CMS](https://xoops.org)
-[![XOOPS CMS Module](https://img.shields.io/badge/XOOPS%20CMS-Module-blue.svg)](https://xoops.org)
+[![XOOPS CMS](https://img.shields.io/badge/XOOPS%20CMS-Core-blue.svg)](https://xoops.org)
 [![Software License](https://img.shields.io/badge/license-GPL-brightgreen.svg?style=flat)](https://www.gnu.org/licenses/gpl-2.0.html)
 
 Contributions are **welcome** and will be fully **credited**.
 
-We accept contributions via Pull Requests on [GitHub](https://github.com/XoopsModules25x/mymenus).
+We accept contributions via Pull Requests on [GitHub](https://github.com/XOOPS/XoopsCore25).
 
 ## Pull Requests
 
