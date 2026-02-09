@@ -24,7 +24,7 @@ reviews:
         match expressions, enums, readonly, constructor promotion, fibers,
         intersection types, never return type, or first-class callable syntax).
         Check for proper PSR-12 code style. Flag any direct superglobal access
-        ($\_GET, $\_POST, $\_REQUEST) that should use Xmf\Request instead.
+        ($_GET, $_POST, $_REQUEST) that should use Xmf\Request instead.
         Check for SQL injection risks — all queries must use parameterized
         statements via XOOPS database handlers.
     - path: "htdocs/kernel/**/*.php"
@@ -36,21 +36,20 @@ reviews:
       instructions: >-
         Review test code for proper assertions, test isolation, and edge
         case coverage. Tests must work across PHPUnit 9.6, 10, and 11.
+  tools:
+    phpcs:
+      enabled: true
+    phpstan:
+      enabled: true
+    gitleaks:
+      enabled: true
+    markdownlint:
+      enabled: true
+    yamllint:
+      enabled: true
+    github-checks:
+      enabled: true
+      timeout_ms: 90000
 
 chat:
   auto_reply: true
-
-tools:
-  phpcs:
-    enabled: true
-  phpstan:
-    enabled: true
-  gitleaks:
-    enabled: true
-  markdownlint:
-    enabled: true
-  yamllint:
-    enabled: true
-  github-checks:
-    enabled: true
-    timeout_ms: 90000

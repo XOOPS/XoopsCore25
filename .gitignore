@@ -5,6 +5,10 @@
 .idea/
 
 # Composer
+htdocs/class/libraries/composer.json
+htdocs/class/libraries/composer.lock
+
+# Test artifacts
 coverage.clover
 git-phpcs.phar
 

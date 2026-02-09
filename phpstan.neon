@@ -1,6 +1,3 @@
-includes:
-    - phpstan-baseline.neon
-
 parameters:
     level: 2
     parallel:
@@ -13,8 +10,9 @@ parameters:
     excludePaths:
         analyseAndScan:
             - htdocs/xoops_data/caches
-            - tests/*
-            - tests_codex2/*
+            - htdocs/class/libraries/vendor/
+            - tests/
+            - tests_codex2/
         analyse:
             - htdocs/class/auth/
             - htdocs/install/

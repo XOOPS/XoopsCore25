@@ -7,13 +7,13 @@ build:
 
 filter:
   excluded_paths:
-    - '_archive/*'
-    - 'tests/*'
-    - 'tests_codex2/*'
-    - 'extras/*'
-    - 'docs/*'
-    - 'htdocs/xoops_lib/vendor/*'
-    - 'htdocs/install/*'
+    - '_archive/'
+    - 'tests/'
+    - 'tests_codex2/'
+    - 'extras/'
+    - 'docs/'
+    - 'htdocs/xoops_lib/vendor/'
+    - 'htdocs/install/'
 
 tools:
   php_analyzer: true

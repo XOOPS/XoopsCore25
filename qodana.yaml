@@ -12,6 +12,7 @@ exclude:
   - name: All
     paths:
       - htdocs/xoops_lib/vendor
+      - htdocs/class/libraries/vendor
       - htdocs/install
       - htdocs/xoops_data
       - extras
