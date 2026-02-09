@@ -517,7 +517,7 @@ class FilterInput
                 if ($attrSubSet[1]) {
                     // attr has value
                     $newSet[] = $attrSubSet[0] . '="' . $attrSubSet[1] . '"';
-                } elseif ($attrSubSet[1] == "0") {
+                } elseif ($attrSubSet[1] === "0") {
                     // attr has decimal zero as value
                     $newSet[] = $attrSubSet[0] . '="0"';
                 } else {
@@ -545,16 +545,16 @@ class FilterInput
         // convert decimal
         $source = preg_replace_callback(
             '/&#(\d+);/m',
-            function ($matches) {
-                return chr($matches[1]);
+            function ($matches) use ($charset) {
+                return html_entity_decode('&#' . $matches[1] . ';', ENT_NOQUOTES, $charset);
             },
             $source
         );
         // convert hex notation
         $source = preg_replace_callback(
             '/&#x([a-f0-9]+);/mi',
-            function ($matches) {
-                return chr('0x' . $matches[1]);
+            function ($matches) use ($charset) {
+                return html_entity_decode('&#x' . $matches[1] . ';', ENT_NOQUOTES, $charset);
             },
             $source
         );

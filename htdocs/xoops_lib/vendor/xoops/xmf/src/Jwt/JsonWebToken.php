@@ -84,7 +84,6 @@ class JsonWebToken
         try {
             $values = JWT::decode($jwtString, new Key($this->key->getVerifying(), $this->algorithm));
         } catch (\Exception $e) {
-            trigger_error($e->getMessage(), E_USER_NOTICE);
             return false;
         }
         foreach ($assertClaims as $claim => $assert) {
@@ -108,16 +107,16 @@ class JsonWebToken
      *
      * @return string encoded and signed jwt string
      *
-     * @throws \DomainException;
-     * @throws \InvalidArgumentException;
-     * @throws \UnexpectedValueException;
+     * @throws \DomainException
+     * @throws \InvalidArgumentException
+     * @throws \UnexpectedValueException
      */
     public function create($payload, $expirationOffset = 0)
     {
         if ((int) $expirationOffset > 0) {
             $payload['exp'] = time() + (int) $expirationOffset;
         }
-        $value = JWT::encode($payload, $this->key->getSigning(), $this->algorithm);
+        $value = JWT::encode((array) $payload, $this->key->getSigning(), $this->algorithm);
         return $value;
     }
 }

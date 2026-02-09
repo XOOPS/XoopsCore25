@@ -115,13 +115,6 @@ class Request
             // Get the variable from the input hash and clean it
             $var = static::cleanVar($input[$name], $mask, $type);
 
-            // Handle magic quotes compatibility
-            if (function_exists('get_magic_quotes_gpc')
-                && @get_magic_quotes_gpc() && ($var != $default)
-                && ('FILES' !== $hash)
-            ) {
-                $var = static::stripSlashesRecursive($var);
-            }
         } elseif (null !== $default) {
             // Clean the default value
             $var = static::cleanVar($default, $mask, $type);
@@ -148,7 +141,7 @@ class Request
      */
     public static function getInt($name, $default = 0, $hash = 'default')
     {
-        return static::getVar($name, $default, $hash, 'int');
+        return (int) static::getVar($name, $default, $hash, 'int');
     }
 
     /**
@@ -166,7 +159,7 @@ class Request
      */
     public static function getFloat($name, $default = 0.0, $hash = 'default')
     {
-        return static::getVar($name, $default, $hash, 'float');
+        return (float) static::getVar($name, $default, $hash, 'float');
     }
 
     /**
@@ -184,7 +177,7 @@ class Request
      */
     public static function getBool($name, $default = false, $hash = 'default')
     {
-        return static::getVar($name, $default, $hash, 'bool');
+        return (bool) static::getVar($name, $default, $hash, 'bool');
     }
 
     /**
@@ -439,10 +432,10 @@ class Request
                 $_FILES[$name] = $value;
                 break;
             case 'ENV':
-                $_ENV['name'] = $value;
+                $_ENV[$name] = $value;
                 break;
             case 'SERVER':
-                $_SERVER['name'] = $value;
+                $_SERVER[$name] = $value;
                 break;
         }
 
@@ -502,11 +495,6 @@ class Request
             default:
                 $input = $_REQUEST;
                 break;
-        }
-
-        // Handle magic quotes compatibility
-        if (function_exists('get_magic_quotes_gpc') && @get_magic_quotes_gpc() && ('FILES' !== $hash)) {
-            $input = static::stripSlashesRecursive($input);
         }
 
         $result = static::cleanVars($input, $mask);

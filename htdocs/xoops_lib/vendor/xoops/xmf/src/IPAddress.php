@@ -64,7 +64,11 @@ class IPAddress
      */
     protected function normalize($ip)
     {
-        return inet_ntop(inet_pton($ip));
+        $packed = inet_pton($ip);
+        if ($packed === false) {
+            return false;
+        }
+        return inet_ntop($packed);
     }
 
     /**

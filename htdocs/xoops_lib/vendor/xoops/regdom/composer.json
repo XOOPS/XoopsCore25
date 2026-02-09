@@ -30,14 +30,14 @@
   ],
   "require": {
     "php": "^7.4 || ^8.0",
-    "symfony/polyfill-mbstring": "^1.23"
+    "symfony/polyfill-mbstring": "^1.33",
+    "symfony/polyfill-php80": "^1.33"
   },
   "require-dev": {
-    "friendsofphp/php-cs-fixer": "^3.88",
     "phpstan/phpstan": "^1.10 || ^2.0",
     "phpunit/phpunit": "^9.6 || ^10.0 || ^11.0",
     "roave/security-advisories": "dev-latest",
-    "squizlabs/php_codesniffer": "^3.7"
+    "squizlabs/php_codesniffer": "^3.11"
   },
   "autoload": {
     "psr-4": {
@@ -46,7 +46,8 @@
   },
   "autoload-dev": {
     "psr-4": {
-      "Xoops\\RegDom\\Tests\\": "tests/"
+      "Xoops\\RegDom\\Tests\\": "tests/unit/",
+      "Xoops\\RegDom\\Tests\\Integration\\": "tests/integration/"
     }
   },
   "bin": [
@@ -56,8 +57,8 @@
     "test": "phpunit --colors=always",
     "phpunit": "phpunit --colors=always",
     "lint": "phpcs",
-    "analyse": "phpstan analyse --level=max src",
-    "fix": "phpcbf --standard=PSR12 src",
+    "analyse": "phpstan analyse",
+    "fix": "phpcbf",
     "update-psl": "@php bin/update-psl.php",
     "auto-update-psl": [
       "@php -r \"if (getenv('XOOPS_SKIP_PSL_UPDATE')) { echo 'Skipping PSL update (XOOPS_SKIP_PSL_UPDATE set)\\n'; exit(0); }\"",
@@ -76,25 +77,22 @@
     ]
   },
   "scripts-descriptions": {
-    "test": "Run linting and unit tests",
+    "test": "Run unit tests",
     "phpunit": "Run PHPUnit tests only",
     "lint": "Check code style (PSR-12)",
     "analyse": "Run static analysis (PHPStan)",
     "fix": "Auto-fix code style issues",
     "update-psl": "Update Public Suffix List from Mozilla",
     "auto-update-psl": "Conditionally update PSL (respects XOOPS_SKIP_PSL_UPDATE)",
-    "ci": "Run all CI checks"
+    "ci": "Run all CI checks (lint, analyse, test)"
   },
   "config": {
     "sort-packages": true,
     "optimize-autoloader": true,
-    "preferred-install": "dist",
-    "platform": {
-      "php": "7.4.0"
-    },
-    "allow-plugins": {
-      "symfony/polyfill": true
-    }
+    "preferred-install": "dist"
+  },
+  "suggest": {
+    "ext-intl": "Required for internationalized domain name (IDN) support"
   },
   "minimum-stability": "stable",
   "prefer-stable": true,

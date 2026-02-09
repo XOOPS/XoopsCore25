@@ -11,6 +11,8 @@ XOOPS 2.5.x Changelog (Language changes: see: /docs/lang_diff.txt)
 - refactor RegDom 2.0.2 Beta 2  (mamba) in #1578
 - add RTL support to (mamba, عبدالعزيز الجهني)
 - add Font Awesome 7.1.0 (mamba)
+- update XMF by @mambax7 
+- update RegDom by @mambax7
 
 ===================================
 2.5.12 Beta8             2025-09-11

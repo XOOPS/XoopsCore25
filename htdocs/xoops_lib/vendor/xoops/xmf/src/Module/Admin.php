@@ -291,7 +291,7 @@ class Admin
         $line = "";
         $line .= "<span style='color : red; font-weight : bold;'>";
         $line .= "<img src='" . $path . "0.png' >";
-        $line .= $value;
+        $line .= htmlspecialchars($value, ENT_QUOTES, defined('_CHARSET') ? \constant('_CHARSET') : 'UTF-8');
         $line .= "</span>";
         $value = $line;
         $type = 'default';
@@ -312,7 +312,7 @@ class Admin
         $line = "";
         $line .= "<span style='color : green;'>";
         $line .= "<img src='" . $path . "1.png' >";
-        $line .= $value;
+        $line .= htmlspecialchars($value, ENT_QUOTES, defined('_CHARSET') ? \constant('_CHARSET') : 'UTF-8');
         $line .= "</span>";
         $value = $line;
         $type = 'default';
@@ -333,7 +333,7 @@ class Admin
         $line = "";
         $line .= "<span style='color : orange; font-weight : bold;'>";
         $line .= "<img src='" . $path . "warning.png' >";
-        $line .= $value;
+        $line .= htmlspecialchars($value, ENT_QUOTES, defined('_CHARSET') ? \constant('_CHARSET') : 'UTF-8');
         $line .= "</span>";
         $value = $line;
         $type = 'default';

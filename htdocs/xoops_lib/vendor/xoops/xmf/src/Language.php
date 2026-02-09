@@ -56,7 +56,11 @@ class Language
                 $language = 'english';
             }
         }
-        $path = XOOPS_ROOT_PATH . '/' . ((empty($domain) || 'global' === $domain) ? ''
+        if (!defined('XOOPS_ROOT_PATH')) {
+            trigger_error('XOOPS_ROOT_PATH is not defined', E_USER_WARNING);
+            return false;
+        }
+        $path = \XOOPS_ROOT_PATH . '/' . ((empty($domain) || 'global' === $domain) ? ''
             : "modules/{$domain}/") . 'language';
         if (!$ret = static::loadFile("{$path}/{$language}/{$name}.php")) {
             $ret = static::loadFile("{$path}/english/{$name}.php");
@@ -79,10 +83,18 @@ class Language
         if (preg_match('/[[:cntrl:]]/i', $filename)) {
             throw new \InvalidArgumentException('Security check: Illegal character in filename');
         }
-        if (file_exists($filename)) {
-            include_once $filename;
-            return true;
+        $realPath = realpath($filename);
+        if ($realPath === false) {
+            return false;
         }
-        return false;
+        $allowedDir = defined('XOOPS_ROOT_PATH') ? realpath(\XOOPS_ROOT_PATH) : false;
+        if ($allowedDir !== false) {
+            $allowedDirWithSep = rtrim($allowedDir, '/\\') . DIRECTORY_SEPARATOR;
+            if (strpos($realPath, $allowedDirWithSep) !== 0 && $realPath !== $allowedDir) {
+                return false;
+            }
+        }
+        include_once $realPath;
+        return true;
     }
 }

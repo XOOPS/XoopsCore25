@@ -1,31 +1,13 @@
 #!/usr/bin/env php
 <?php
 
+declare(strict_types=1);
+
 /*
  * This file is part of https://github.com/xoops/RegDom
  *
- * Clear all Public Suffix Data and load a fresh copy from publicsuffix.org
+ * Force-reload the Public Suffix List from publicsuffix.org.
+ * This is a convenience wrapper around bin/update-psl.php.
  */
 
-function includeIfExists($file)
-{
-    if (file_exists($file)) {
-        return include $file;
-    }
-}
-
-if ((!$loader = includeIfExists(__DIR__.'/../autoload.php'))
-    && (!$loader = includeIfExists(__DIR__.'/../../../autoload.php')))
-{
-    die("You must set up the project dependencies, run composer install\n");
-}
-
-use Xoops\RegDom\PublicSuffixList;
-
-// force fetch of the PSL
-$psl = new \Xoops\RegDom\PublicSuffixList();
-$psl->clearDataDirectory();
-$psl->getTree();
-// once more to build local copy cache
-$psl = new \Xoops\RegDom\PublicSuffixList();
-$psl->getTree();
+require __DIR__ . '/update-psl.php';

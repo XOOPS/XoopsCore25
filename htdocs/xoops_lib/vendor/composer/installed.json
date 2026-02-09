@@ -55,21 +55,21 @@
         },
         {
             "name": "ezyang/htmlpurifier",
-            "version": "v4.18.0",
-            "version_normalized": "4.18.0.0",
+            "version": "v4.19.0",
+            "version_normalized": "4.19.0.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/ezyang/htmlpurifier.git",
-                "reference": "cb56001e54359df7ae76dc522d08845dc741621b"
+                "reference": "b287d2a16aceffbf6e0295559b39662612b77fcf"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/ezyang/htmlpurifier/zipball/cb56001e54359df7ae76dc522d08845dc741621b",
-                "reference": "cb56001e54359df7ae76dc522d08845dc741621b",
+                "url": "https://api.github.com/repos/ezyang/htmlpurifier/zipball/b287d2a16aceffbf6e0295559b39662612b77fcf",
+                "reference": "b287d2a16aceffbf6e0295559b39662612b77fcf",
                 "shasum": ""
             },
             "require": {
-                "php": "~5.6.0 || ~7.0.0 || ~7.1.0 || ~7.2.0 || ~7.3.0 || ~7.4.0 || ~8.0.0 || ~8.1.0 || ~8.2.0 || ~8.3.0 || ~8.4.0"
+                "php": "~5.6.0 || ~7.0.0 || ~7.1.0 || ~7.2.0 || ~7.3.0 || ~7.4.0 || ~8.0.0 || ~8.1.0 || ~8.2.0 || ~8.3.0 || ~8.4.0 || ~8.5.0"
             },
             "require-dev": {
                 "cerdic/css-tidy": "^1.7 || ^2.0",
@@ -81,7 +81,7 @@
                 "ext-iconv": "Converts text to and from non-UTF-8 encodings",
                 "ext-tidy": "Used for pretty-printing HTML"
             },
-            "time": "2024-11-01T03:51:45+00:00",
+            "time": "2025-10-17T16:34:55+00:00",
             "type": "library",
             "installation-source": "dist",
             "autoload": {
@@ -113,7 +113,7 @@
             ],
             "support": {
                 "issues": "https://github.com/ezyang/htmlpurifier/issues",
-                "source": "https://github.com/ezyang/htmlpurifier/tree/v4.18.0"
+                "source": "https://github.com/ezyang/htmlpurifier/tree/v4.19.0"
             },
             "install-path": "../ezyang/htmlpurifier"
         },
@@ -185,17 +185,17 @@
         },
         {
             "name": "kint-php/kint",
-            "version": "6.0.1",
-            "version_normalized": "6.0.1.0",
+            "version": "6.1.0",
+            "version_normalized": "6.1.0.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/kint-php/kint.git",
-                "reference": "2bd133be30a0d4f5523e3d7d8e94b788d95978e6"
+                "reference": "dd0f723029e3ebd0fa4edd895fa408bb2ce7003e"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/kint-php/kint/zipball/2bd133be30a0d4f5523e3d7d8e94b788d95978e6",
-                "reference": "2bd133be30a0d4f5523e3d7d8e94b788d95978e6",
+                "url": "https://api.github.com/repos/kint-php/kint/zipball/dd0f723029e3ebd0fa4edd895fa408bb2ce7003e",
+                "reference": "dd0f723029e3ebd0fa4edd895fa408bb2ce7003e",
                 "shasum": ""
             },
             "require": {
@@ -206,13 +206,13 @@
                 "phpunit/phpunit": "^9",
                 "seld/phar-utils": "^1",
                 "symfony/finder": ">=7",
-                "vimeo/psalm": "^5"
+                "vimeo/psalm": "^6"
             },
             "suggest": {
                 "kint-php/kint-helpers": "Provides extra helper functions",
                 "kint-php/kint-twig": "Provides d() and s() functions in twig templates"
             },
-            "time": "2025-01-01T23:10:26+00:00",
+            "time": "2025-11-08T12:59:43+00:00",
             "type": "library",
             "installation-source": "dist",
             "autoload": {
@@ -245,76 +245,23 @@
             ],
             "support": {
                 "issues": "https://github.com/kint-php/kint/issues",
-                "source": "https://github.com/kint-php/kint/tree/6.0.1"
+                "source": "https://github.com/kint-php/kint/tree/6.1.0"
             },
             "install-path": "../kint-php/kint"
         },
         {
-            "name": "paragonie/random_compat",
-            "version": "v9.99.100",
-            "version_normalized": "9.99.100.0",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/paragonie/random_compat.git",
-                "reference": "996434e5492cb4c3edcb9168db6fbb1359ef965a"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/paragonie/random_compat/zipball/996434e5492cb4c3edcb9168db6fbb1359ef965a",
-                "reference": "996434e5492cb4c3edcb9168db6fbb1359ef965a",
-                "shasum": ""
-            },
-            "require": {
-                "php": ">= 7"
-            },
-            "require-dev": {
-                "phpunit/phpunit": "4.*|5.*",
-                "vimeo/psalm": "^1"
-            },
-            "suggest": {
-                "ext-libsodium": "Provides a modern crypto API that can be used to generate random bytes."
-            },
-            "time": "2020-10-15T08:29:30+00:00",
-            "type": "library",
-            "installation-source": "dist",
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Paragon Initiative Enterprises",
-                    "email": "security@paragonie.com",
-                    "homepage": "https://paragonie.com"
-                }
-            ],
-            "description": "PHP 5.x polyfill for random_bytes() and random_int() from PHP 7",
-            "keywords": [
-                "csprng",
-                "polyfill",
-                "pseudorandom",
-                "random"
-            ],
-            "support": {
-                "email": "info@paragonie.com",
-                "issues": "https://github.com/paragonie/random_compat/issues",
-                "source": "https://github.com/paragonie/random_compat"
-            },
-            "install-path": "../paragonie/random_compat"
-        },
-        {
             "name": "phpmailer/phpmailer",
-            "version": "v6.10.0",
-            "version_normalized": "6.10.0.0",
+            "version": "v6.12.0",
+            "version_normalized": "6.12.0.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/PHPMailer/PHPMailer.git",
-                "reference": "bf74d75a1fde6beaa34a0ddae2ec5fce0f72a144"
+                "reference": "d1ac35d784bf9f5e61b424901d5a014967f15b12"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/PHPMailer/PHPMailer/zipball/bf74d75a1fde6beaa34a0ddae2ec5fce0f72a144",
-                "reference": "bf74d75a1fde6beaa34a0ddae2ec5fce0f72a144",
+                "url": "https://api.github.com/repos/PHPMailer/PHPMailer/zipball/d1ac35d784bf9f5e61b424901d5a014967f15b12",
+                "reference": "d1ac35d784bf9f5e61b424901d5a014967f15b12",
                 "shasum": ""
             },
             "require": {
@@ -344,7 +291,7 @@
                 "symfony/polyfill-mbstring": "To support UTF-8 if the Mbstring PHP extension is not enabled (^1.2)",
                 "thenetworg/oauth2-azure": "Needed for Microsoft XOAUTH2 authentication"
             },
-            "time": "2025-04-24T15:19:31+00:00",
+            "time": "2025-10-15T16:49:08+00:00",
             "type": "library",
             "installation-source": "dist",
             "autoload": {
@@ -376,7 +323,7 @@
             "description": "PHPMailer is a full-featured email creation and transfer class for PHP",
             "support": {
                 "issues": "https://github.com/PHPMailer/PHPMailer/issues",
-                "source": "https://github.com/PHPMailer/PHPMailer/tree/v6.10.0"
+                "source": "https://github.com/PHPMailer/PHPMailer/tree/v6.12.0"
             },
             "funding": [
                 {
@@ -835,6 +782,93 @@
             "install-path": "../symfony/polyfill-mbstring"
         },
         {
+            "name": "symfony/polyfill-php80",
+            "version": "v1.33.0",
+            "version_normalized": "1.33.0.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/symfony/polyfill-php80.git",
+                "reference": "0cc9dd0f17f61d8131e7df6b84bd344899fe2608"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/symfony/polyfill-php80/zipball/0cc9dd0f17f61d8131e7df6b84bd344899fe2608",
+                "reference": "0cc9dd0f17f61d8131e7df6b84bd344899fe2608",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=7.2"
+            },
+            "time": "2025-01-02T08:10:11+00:00",
+            "type": "library",
+            "extra": {
+                "thanks": {
+                    "url": "https://github.com/symfony/polyfill",
+                    "name": "symfony/polyfill"
+                }
+            },
+            "installation-source": "dist",
+            "autoload": {
+                "files": [
+                    "bootstrap.php"
+                ],
+                "psr-4": {
+                    "Symfony\\Polyfill\\Php80\\": ""
+                },
+                "classmap": [
+                    "Resources/stubs"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Ion Bazan",
+                    "email": "ion.bazan@gmail.com"
+                },
+                {
+                    "name": "Nicolas Grekas",
+                    "email": "p@tchwork.com"
+                },
+                {
+                    "name": "Symfony Community",
+                    "homepage": "https://symfony.com/contributors"
+                }
+            ],
+            "description": "Symfony polyfill backporting some PHP 8.0+ features to lower PHP versions",
+            "homepage": "https://symfony.com",
+            "keywords": [
+                "compatibility",
+                "polyfill",
+                "portable",
+                "shim"
+            ],
+            "support": {
+                "source": "https://github.com/symfony/polyfill-php80/tree/v1.33.0"
+            },
+            "funding": [
+                {
+                    "url": "https://symfony.com/sponsor",
+                    "type": "custom"
+                },
+                {
+                    "url": "https://github.com/fabpot",
+                    "type": "github"
+                },
+                {
+                    "url": "https://github.com/nicolas-grekas",
+                    "type": "github"
+                },
+                {
+                    "url": "https://tidelift.com/funding/github/packagist/symfony/symfony",
+                    "type": "tidelift"
+                }
+            ],
+            "install-path": "../symfony/polyfill-php80"
+        },
+        {
             "name": "symfony/yaml",
             "version": "v5.4.45",
             "version_normalized": "5.4.45.0",
@@ -914,24 +948,24 @@
         },
         {
             "name": "tecnickcom/tcpdf",
-            "version": "6.10.0",
-            "version_normalized": "6.10.0.0",
+            "version": "6.10.1",
+            "version_normalized": "6.10.1.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/tecnickcom/TCPDF.git",
-                "reference": "ca5b6de294512145db96bcbc94e61696599c391d"
+                "reference": "7a2701251e5d52fc3d508fd71704683eb54f5939"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/tecnickcom/TCPDF/zipball/ca5b6de294512145db96bcbc94e61696599c391d",
-                "reference": "ca5b6de294512145db96bcbc94e61696599c391d",
+                "url": "https://api.github.com/repos/tecnickcom/TCPDF/zipball/7a2701251e5d52fc3d508fd71704683eb54f5939",
+                "reference": "7a2701251e5d52fc3d508fd71704683eb54f5939",
                 "shasum": ""
             },
             "require": {
                 "ext-curl": "*",
                 "php": ">=7.1.0"
             },
-            "time": "2025-05-27T18:02:28+00:00",
+            "time": "2025-11-21T10:58:21+00:00",
             "type": "library",
             "installation-source": "dist",
             "autoload": {
@@ -976,7 +1010,7 @@
             ],
             "support": {
                 "issues": "https://github.com/tecnickcom/TCPDF/issues",
-                "source": "https://github.com/tecnickcom/TCPDF/tree/6.10.0"
+                "source": "https://github.com/tecnickcom/TCPDF/tree/6.10.1"
             },
             "funding": [
                 {
@@ -988,31 +1022,31 @@
         },
         {
             "name": "webmozart/assert",
-            "version": "1.11.0",
-            "version_normalized": "1.11.0.0",
+            "version": "1.12.1",
+            "version_normalized": "1.12.1.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/webmozarts/assert.git",
-                "reference": "11cb2199493b2f8a3b53e7f19068fc6aac760991"
+                "reference": "9be6926d8b485f55b9229203f962b51ed377ba68"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/webmozarts/assert/zipball/11cb2199493b2f8a3b53e7f19068fc6aac760991",
-                "reference": "11cb2199493b2f8a3b53e7f19068fc6aac760991",
+                "url": "https://api.github.com/repos/webmozarts/assert/zipball/9be6926d8b485f55b9229203f962b51ed377ba68",
+                "reference": "9be6926d8b485f55b9229203f962b51ed377ba68",
                 "shasum": ""
             },
             "require": {
                 "ext-ctype": "*",
+                "ext-date": "*",
+                "ext-filter": "*",
                 "php": "^7.2 || ^8.0"
             },
-            "conflict": {
-                "phpstan/phpstan": "<0.12.20",
-                "vimeo/psalm": "<4.6.1 || 4.6.2"
+            "suggest": {
+                "ext-intl": "",
+                "ext-simplexml": "",
+                "ext-spl": ""
             },
-            "require-dev": {
-                "phpunit/phpunit": "^8.5.13"
-            },
-            "time": "2022-06-03T18:03:27+00:00",
+            "time": "2025-10-29T15:56:20+00:00",
             "type": "library",
             "extra": {
                 "branch-alias": {
@@ -1043,80 +1077,118 @@
             ],
             "support": {
                 "issues": "https://github.com/webmozarts/assert/issues",
-                "source": "https://github.com/webmozarts/assert/tree/1.11.0"
+                "source": "https://github.com/webmozarts/assert/tree/1.12.1"
             },
             "install-path": "../webmozart/assert"
         },
         {
             "name": "xoops/base-requires25",
-            "version": "v1.1.10-beta1",
-            "version_normalized": "1.1.10.0-beta1",
+            "version": "1.1.10-beta2",
+            "version_normalized": "1.1.10.0-beta2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/XOOPS/base-requires25.git",
-                "reference": "a3b9f6ff25dd59114442bae7af1b377ebb8b3042"
+                "reference": "57a18df477662388b11c99750ef115334a8d9cac"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/XOOPS/base-requires25/zipball/a3b9f6ff25dd59114442bae7af1b377ebb8b3042",
-                "reference": "a3b9f6ff25dd59114442bae7af1b377ebb8b3042",
+                "url": "https://api.github.com/repos/XOOPS/base-requires25/zipball/57a18df477662388b11c99750ef115334a8d9cac",
+                "reference": "57a18df477662388b11c99750ef115334a8d9cac",
                 "shasum": ""
             },
             "require": {
-                "boenrobot/money_format_polyfill": "^1.0.2",
+                "boenrobot/money_format_polyfill": "^1.0",
                 "ezyang/htmlpurifier": "^4.18",
-                "php": "^7.4.0 || ^8.4.0",
+                "php": "^7.4 || ^8.0",
                 "phpmailer/phpmailer": "^6.10",
                 "smarty/smarty": "^4.5.6",
-                "smottt/wideimage": "^1.1.4",
-                "symfony/polyfill-iconv": "^1.33.0",
-                "symfony/polyfill-mbstring": "^1.33.0",
+                "smottt/wideimage": "^1.1",
+                "symfony/polyfill-iconv": "^1.33",
+                "symfony/polyfill-mbstring": "^1.33",
                 "tecnickcom/tcpdf": "^6.10",
-                "xoops/regdom": "^2.0.2-beta1",
-                "xoops/xmf": "^1.2.33-beta1"
+                "xoops/regdom": "^2.0.2-beta3@beta",
+                "xoops/xmf": "^1.2.33-beta2@beta"
             },
-            "time": "2025-09-11T01:24:40+00:00",
-            "type": "project",
-            "installation-source": "dist",
+            "conflict": {
+                "smarty/smarty": ">=5.0"
+            },
+            "suggest": {
+                "ext-imagick": "For advanced image processing beyond GD",
+                "ext-intl": "For locale-aware number/date formatting (replaces money_format polyfill)"
+            },
+            "time": "2026-02-08T18:37:35+00:00",
+            "type": "metapackage",
             "notification-url": "https://packagist.org/downloads/",
             "license": [
                 "GPL-2.0-or-later"
             ],
-            "description": "Primary dependencies for XOOPS/XoopsCore25",
+            "authors": [
+                {
+                    "name": "XOOPS Project",
+                    "email": "contact@xoops.org",
+                    "homepage": "https://xoops.org",
+                    "role": "Maintainer"
+                }
+            ],
+            "description": "Primary dependencies for XOOPS/XoopsCore25, (meta-package, no code)",
+            "keywords": [
+                "cms",
+                "dependencies",
+                "metapackage",
+                "xoops"
+            ],
             "support": {
-                "issues": "https://github.com/XOOPS/base-requires25/issues",
-                "source": "https://github.com/XOOPS/base-requires25/tree/v1.1.10-beta1"
+                "issues": "https://github.com/XOOPS/XoopsCore25/issues",
+                "source": "https://github.com/XOOPS/XoopsCore25"
             },
-            "install-path": "../xoops/base-requires25"
+            "funding": [
+                {
+                    "url": "https://xoops.org/modules/donations/",
+                    "type": "custom"
+                },
+                {
+                    "url": "https://github.com/sponsors/XOOPS",
+                    "type": "github"
+                },
+                {
+                    "url": "https://opencollective.com/xoops",
+                    "type": "opencollective"
+                }
+            ],
+            "install-path": null
         },
         {
             "name": "xoops/regdom",
-            "version": "v2.0.2-beta1",
-            "version_normalized": "2.0.2.0-beta1",
+            "version": "v2.0.2-beta3",
+            "version_normalized": "2.0.2.0-beta3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/XOOPS/RegDom.git",
-                "reference": "81b237968d69b8b7ed850e47c0afa9e940016559"
+                "reference": "9d45bd710348ed25a86722e6eeeec8964d00d415"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/XOOPS/RegDom/zipball/81b237968d69b8b7ed850e47c0afa9e940016559",
-                "reference": "81b237968d69b8b7ed850e47c0afa9e940016559",
+                "url": "https://api.github.com/repos/XOOPS/RegDom/zipball/9d45bd710348ed25a86722e6eeeec8964d00d415",
+                "reference": "9d45bd710348ed25a86722e6eeeec8964d00d415",
                 "shasum": ""
             },
             "require": {
-                "php": ">=7.4.0",
-                "symfony/polyfill-mbstring": "^1.33.0"
+                "php": "^7.4 || ^8.0",
+                "symfony/polyfill-mbstring": "^1.33",
+                "symfony/polyfill-php80": "^1.33"
             },
             "require-dev": {
-                "phpstan/phpstan": "^2.1",
-                "phpunit/phpunit": "^9.6|^11.5",
+                "phpstan/phpstan": "^1.10 || ^2.0",
+                "phpunit/phpunit": "^9.6 || ^10.0 || ^11.0",
                 "roave/security-advisories": "dev-latest",
-                "squizlabs/php_codesniffer": "^3.13"
+                "squizlabs/php_codesniffer": "^3.11"
             },
-            "time": "2025-09-11T00:41:10+00:00",
+            "suggest": {
+                "ext-intl": "Required for internationalized domain name (IDN) support"
+            },
+            "time": "2026-02-08T18:26:22+00:00",
             "bin": [
-                "bin/reloadpsl"
+                "bin/update-psl.php"
             ],
             "type": "library",
             "installation-source": "dist",
@@ -1127,76 +1199,133 @@
             },
             "notification-url": "https://packagist.org/downloads/",
             "license": [
-                "Apache-2.0"
+                "(Apache-2.0 OR MPL-2.0)"
             ],
             "authors": [
                 {
                     "name": "Richard Griffith",
-                    "email": "richard@geekwright.com"
+                    "email": "richard@geekwright.com",
+                    "role": "Original Author"
+                },
+                {
+                    "name": "XOOPS Development Team",
+                    "email": "info@xoops.org",
+                    "homepage": "https://xoops.org",
+                    "role": "Maintainer"
                 }
             ],
-            "description": "OO adaptation of Florian Sager's regdom library for querying Mozilla Public Suffix List",
+            "description": "A robust domain parser for PHP, using the Mozilla Public Suffix List to determine the registrable domain and validate cookie domains per RFC 6265.",
             "homepage": "https://github.com/XOOPS/RegDom",
             "keywords": [
+                "PSL",
+                "RFC6265",
+                "cookie",
+                "domain",
+                "parser",
                 "public",
                 "regdom",
                 "suffix",
                 "tld"
             ],
             "support": {
-                "source": "https://github.com/XOOPS/RegDom/tree/v2.0.2-beta1"
+                "docs": "https://github.com/XOOPS/RegDom#readme",
+                "issues": "https://github.com/XOOPS/RegDom/issues",
+                "source": "https://github.com/XOOPS/RegDom"
             },
+            "funding": [
+                {
+                    "url": "https://xoops.org/modules/donations/",
+                    "type": "custom"
+                },
+                {
+                    "url": "https://github.com/sponsors/XOOPS",
+                    "type": "github"
+                },
+                {
+                    "url": "https://opencollective.com/xoops",
+                    "type": "opencollective"
+                }
+            ],
             "install-path": "../xoops/regdom"
         },
         {
             "name": "xoops/xmf",
-            "version": "v1.2.33-beta1",
-            "version_normalized": "1.2.33.0-beta1",
+            "version": "v1.2.33-beta3",
+            "version_normalized": "1.2.33.0-beta3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/XOOPS/xmf.git",
-                "reference": "52c2d1b959da7ed8bd19cc363dbccd55556ed54a"
+                "reference": "18ce55251aa98a2e0957da002fde87e89a79b944"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/XOOPS/xmf/zipball/52c2d1b959da7ed8bd19cc363dbccd55556ed54a",
-                "reference": "52c2d1b959da7ed8bd19cc363dbccd55556ed54a",
+                "url": "https://api.github.com/repos/XOOPS/xmf/zipball/18ce55251aa98a2e0957da002fde87e89a79b944",
+                "reference": "18ce55251aa98a2e0957da002fde87e89a79b944",
                 "shasum": ""
             },
             "require": {
-                "firebase/php-jwt": "^6.10.0|^6.11.1",
+                "firebase/php-jwt": "^6.10",
                 "kint-php/kint": "^6.0",
-                "paragonie/random_compat": "^9.99.100",
-                "php": ">=7.4.0",
-                "symfony/yaml": "^5.4.45|7.3.2",
-                "webmozart/assert": "^1.11.0"
+                "php": "^7.4 || ^8.0",
+                "symfony/yaml": "^5.4 || ^6.0 || ^7.0",
+                "webmozart/assert": "^1.11"
             },
             "require-dev": {
-                "phpstan/phpstan": "^2.1",
-                "phpunit/phpunit": "^9.6|^11.5",
+                "phpstan/phpstan": "^1.10 || ^2.0",
+                "phpunit/phpunit": "^9.6 || ^10.0 || ^11.0",
                 "roave/security-advisories": "dev-latest",
-                "squizlabs/php_codesniffer": "^3.13"
+                "squizlabs/php_codesniffer": "^3.11"
             },
-            "time": "2025-09-10T23:11:38+00:00",
-            "type": "project",
+            "time": "2026-02-08T18:23:42+00:00",
+            "type": "library",
             "installation-source": "dist",
             "autoload": {
                 "psr-4": {
-                    "Xmf\\": "src"
+                    "Xmf\\": "src/"
                 }
             },
             "notification-url": "https://packagist.org/downloads/",
             "license": [
                 "GPL-2.0-or-later"
             ],
+            "authors": [
+                {
+                    "name": "XOOPS Project",
+                    "email": "contact@xoops.org",
+                    "homepage": "https://xoops.org",
+                    "role": "Maintainer"
+                }
+            ],
             "description": "XMF - XOOPS Module Framework",
+            "homepage": "https://github.com/XOOPS/xmf",
+            "keywords": [
+                "framework",
+                "module",
+                "xmf",
+                "xoops"
+            ],
             "support": {
+                "docs": "https://github.com/XOOPS/xmf#readme",
                 "issues": "https://github.com/XOOPS/xmf/issues",
-                "source": "https://github.com/XOOPS/xmf/tree/v1.2.33-beta1"
+                "source": "https://github.com/XOOPS/xmf"
             },
+            "funding": [
+                {
+                    "url": "https://xoops.org/modules/donations/",
+                    "type": "custom"
+                },
+                {
+                    "url": "https://github.com/sponsors/XOOPS",
+                    "type": "github"
+                },
+                {
+                    "url": "https://opencollective.com/xoops",
+                    "type": "opencollective"
+                }
+            ],
             "install-path": "../xoops/xmf"
         }
     ],
-    "dev": false,
+    "dev": true,
     "dev-package-names": []
 }
