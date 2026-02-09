@@ -8,7 +8,7 @@ XoopsCore25 is the XOOPS 2.5.x CMS framework. It provides the core content manag
 
 ## Project Layout
 
-```
+```text
 htdocs/                       # Web root (public files)
 htdocs/kernel/                # Core kernel classes (ORM, handlers)
 htdocs/class/                 # Core class library
@@ -37,7 +37,7 @@ The CI workflow dynamically creates `composer.json` in `htdocs/class/libraries/`
 
 ## PHP Compatibility
 
-Code must run on PHP 7.4 through 8.5. Do not use features exclusive to PHP 8.0+ (named arguments, match expressions, union type hints in signatures, enums, fibers, readonly properties, intersection types, `never` return type, first-class callable syntax, constructor promotion). CI tests PHP 7.4-8.5.
+Code must run on PHP 7.4 through 8.5. Do not use features exclusive to PHP 8.0+ (named arguments, match expressions, union type hints in signatures, enums, fibers, readonly properties, intersection types, `never` return type, first-class callable syntax, constructor promotion, attributes `#[...]`, nullsafe operator `?->`, explicit `mixed` type). CI tests PHP 7.4-8.5.
 
 ## Coding Conventions
 
