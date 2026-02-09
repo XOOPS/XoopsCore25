@@ -1,17 +1,26 @@
+# Contributing to [XOOPS CMS](https://xoops.org)
+
 ![alt XOOPS CMS](https://xoops.org/images/logoXoops4GithubRepository.png)
-# Contributing to XOOPS CMS Project
 
-We welcome your contributions to [XOOPS CMS Project](https://xoops.org) on [GitHub](https://github.com/XOOPS)!
+[![XOOPS CMS](https://img.shields.io/badge/XOOPS%20CMS-Core-blue.svg)](https://xoops.org)
+[![Software License](https://img.shields.io/badge/license-GPL-brightgreen.svg?style=flat)](https://www.gnu.org/licenses/gpl-2.0.html)
 
-We use a [fork and pull](https://www.atlassian.com/git/tutorials/comparing-workflows/forking-workflow) workflow on GitHub that allows anyone to contribute changes. You don't need any special permissions, just a GitHub account. This is a lot easier to manage if you follow these basic steps:
+Contributions are **welcome** and will be fully **credited**.
 
-1. [Fork the XoopsCore repository](https://help.github.com/articles/fork-a-repo/) and work from that
-2. Create a [topic branch](http://git-scm.com/book/en/v2/Git-Branching-Branching-Workflows#Topic-Branches) for your changes, and keep all changes on that branch focused on a specific topic.
-3. Please consider updating the [unit tests](https://phpunit.de/getting-started.html) to include and verify your changes
-4. All PHP code is expected to conform to [PSR-12](http://www.php-fig.org/psr/psr-12) standards
-5. Once your changes are complete, commit your topic branch to your fork and create a [pull request (PR)](https://help.github.com/articles/using-pull-requests/)
-6. Be prepared to discuss your changes. We will review and test each PR, and may need clarification or changes. Once we have completed the review, you changes will be incorporated into XOOPS.
+We accept contributions via Pull Requests on [GitHub](https://github.com/XOOPS/XoopsCore25).
 
-# Licensing
+## Pull Requests
+
+- **[PSR-12 Coding Standard](https://www.php-fig.org/psr/psr-12/)** - The easiest way to apply the conventions is to install [PHP_CodeSniffer](https://github.com/PHPCSStandards/PHP_CodeSniffer) via Composer: `composer require --dev squizlabs/php_codesniffer`.
+- **Add tests!** - We encourage providing tests for your contributions.
+- **Document any change in behavior** - Make sure the `/docs/changelog.txt` and any other relevant documentation are up-to-date.
+- **Consider our release cycle** - We try to follow [Semantic Versioning v2.0.0](http://semver.org/). Randomly breaking public APIs is not an option.
+- **Create feature branches** - Don't ask us to pull from your master branch.
+- **One pull request per feature** - If you want to do more than one thing, send multiple pull requests.
+- **Send coherent history** - Make sure each individual commit in your pull request is meaningful. If you had to make multiple intermediate commits while developing, please squash them before submitting.
+
+## Licensing
 
 By contributing code you agree to license your contribution under the [GNU General Public License, Version 2 or any later version.](https://www.gnu.org/licenses/gpl-2.0.html)
+
+Happy coding, and **_May the Source be with You_**!
