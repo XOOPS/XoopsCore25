@@ -12,14 +12,14 @@ spl_autoload_register(
         $baseDir =  dirname(__DIR__) . '/class/';
 
         // does the class use the namespace prefix?
-        $len = mb_strlen($prefix);
+        $len = strlen($prefix);
 
         if (0 !== strncmp($prefix, $class, $len)) {
             return;
         }
 
         // get the relative class name
-        $relativeClass = mb_substr($class, $len);
+        $relativeClass = substr($class, $len);
 
         // replace the namespace prefix with the base directory, replace namespace
         // separators with directory separators in the relative class name, append

@@ -9,7 +9,7 @@ declare(strict_types=1);
  * @package             debugbar
  */
 
-$moduleDirName      = \basename(\dirname(__DIR__, 2));
+$moduleDirName      = \basename(\dirname(__DIR__, 3));
 $moduleDirNameUpper = \mb_strtoupper($moduleDirName);
 
 // Module Stats

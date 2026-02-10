@@ -24,8 +24,9 @@
  */
 function smarty_modifier_ray($value, $label = null)
 {
-    if (function_exists('ray')
-        && (!class_exists('XoopsModules\Debugbar\RayLogger', false) || \XoopsModules\Debugbar\RayLogger::getInstance()->isEnable())) {
+    if (class_exists('XoopsModules\Debugbar\RayLogger', false)
+        && \XoopsModules\Debugbar\RayLogger::getInstance()->isEnable()
+        && function_exists('ray')) {
         $r = ray($value);
         if ($label !== null) {
             $r->label($label);

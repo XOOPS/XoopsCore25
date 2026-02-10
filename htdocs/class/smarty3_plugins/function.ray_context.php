@@ -26,8 +26,9 @@
  */
 function smarty_function_ray_context($params, &$smarty)
 {
-    if (!function_exists('ray')
-        || (class_exists('XoopsModules\Debugbar\RayLogger', false) && !\XoopsModules\Debugbar\RayLogger::getInstance()->isEnable())) {
+    if (!class_exists('XoopsModules\Debugbar\RayLogger', false)
+        || !\XoopsModules\Debugbar\RayLogger::getInstance()->isEnable()
+        || !function_exists('ray')) {
         return '';
     }
 

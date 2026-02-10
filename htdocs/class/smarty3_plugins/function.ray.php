@@ -25,8 +25,18 @@
  */
 function smarty_function_ray($params, &$smarty)
 {
-    if (!function_exists('ray')
-        || (class_exists('XoopsModules\Debugbar\RayLogger', false) && !\XoopsModules\Debugbar\RayLogger::getInstance()->isEnable())) {
+    // Only operate when the Debugbar RayLogger is available and enabled,
+    // and the global ray() helper function exists.
+    if (!class_exists('XoopsModules\Debugbar\RayLogger', false)) {
+        return '';
+    }
+
+    $rayLogger = \XoopsModules\Debugbar\RayLogger::getInstance();
+    if (!$rayLogger->isEnable()) {
+        return '';
+    }
+
+    if (!function_exists('ray')) {
         return '';
     }
 

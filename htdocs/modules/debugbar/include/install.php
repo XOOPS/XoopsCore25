@@ -66,7 +66,7 @@ function _debugbar_copy_assets()
     $destDir = XOOPS_ROOT_PATH . '/modules/debugbar/assets';
     if (!is_dir($destDir)) {
         if (!mkdir($destDir, 0755, true) && !is_dir($destDir)) {
-            throw new \RuntimeException(sprintf('Directory "%s" was not created', $destDir));
+            throw new \RuntimeException(sprintf('Directory "%s" was not created', basename($destDir)));
         }
     }
 
@@ -88,7 +88,7 @@ function _debugbar_recursive_copy($src, $dest)
     }
     if (!is_dir($dest)) {
         if (!mkdir($dest, 0755, true) && !is_dir($dest)) {
-            throw new \RuntimeException(sprintf('Directory "%s" was not created', $dest));
+            throw new \RuntimeException(sprintf('Directory "%s" was not created', basename($dest)));
         }
     }
 
@@ -97,6 +97,7 @@ function _debugbar_recursive_copy($src, $dest)
         return false;
     }
 
+    $success = true;
     while (false !== ($file = readdir($dir))) {
         if ($file === '.' || $file === '..') {
             continue;
@@ -104,12 +105,16 @@ function _debugbar_recursive_copy($src, $dest)
         $srcPath  = $src . '/' . $file;
         $destPath = $dest . '/' . $file;
         if (is_dir($srcPath)) {
-            _debugbar_recursive_copy($srcPath, $destPath);
+            if (!_debugbar_recursive_copy($srcPath, $destPath)) {
+                $success = false;
+            }
         } else {
-            @copy($srcPath, $destPath);
+            if (!copy($srcPath, $destPath)) {
+                $success = false;
+            }
         }
     }
     closedir($dir);
 
-    return true;
+    return $success;
 }

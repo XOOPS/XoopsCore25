@@ -24,7 +24,7 @@ define('_MI_DEBUGBAR_ADMENU1', 'Home');
 define('_MI_DEBUGBAR_MENU_ABOUT', 'About');
 
 //Help
-\define('_MI_DEBUGBAR_DIRNAME', basename(dirname(__DIR__, 2)));
+\define('_MI_DEBUGBAR_DIRNAME', basename(dirname(__DIR__, 3)));
 \define('_MI_DEBUGBAR_HELP_HEADER', __DIR__ . '/help/helpheader.tpl');
 \define('_MI_DEBUGBAR_BACK_2_ADMIN', 'Back to Administration of ');
 \define('_MI_DEBUGBAR_OVERVIEW', 'Overview');

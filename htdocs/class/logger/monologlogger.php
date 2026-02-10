@@ -17,7 +17,6 @@ if (!defined('XOOPS_ROOT_PATH')) {
 }
 
 use Monolog\Logger;
-use Monolog\Handler\StreamHandler;
 use Monolog\Handler\RotatingFileHandler;
 use Psr\Log\LogLevel;
 
@@ -63,7 +62,10 @@ class XoopsMonologLogger
                 // Default: rotating file handler in XOOPS_VAR_PATH/logs/
                 $logDir = defined('XOOPS_VAR_PATH') ? XOOPS_VAR_PATH . '/logs' : XOOPS_ROOT_PATH . '/log';
                 if (!is_dir($logDir)) {
-                    @mkdir($logDir, 0755, true);
+                    if (!mkdir($logDir, 0755, true) && !is_dir($logDir)) {
+                        $this->activated = false;
+                        return;
+                    }
                 }
                 $logFile = $logDir . '/xoops.log';
                 $handler = new RotatingFileHandler($logFile, 30, Logger::DEBUG);

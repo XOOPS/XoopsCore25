@@ -39,12 +39,12 @@ use Psr\Log\LogLevel;
 class DebugbarLogger
 {
     /**
-     * @var StandardDebugBar|false
+     * @var StandardDebugBar|bool
      */
     private $debugbar = false;
 
     /**
-     * @var \DebugBar\JavascriptRenderer|false
+     * @var \DebugBar\JavascriptRenderer|bool
      */
     private $renderer = false;
 
@@ -119,7 +119,7 @@ class DebugbarLogger
     /**
      * Get the underlying DebugBar instance.
      *
-     * @return StandardDebugBar|false
+     * @return StandardDebugBar|bool
      */
     public function getDebugbar()
     {
@@ -129,7 +129,7 @@ class DebugbarLogger
     /**
      * Get the JavaScript renderer.
      *
-     * @return \DebugBar\JavascriptRenderer|false
+     * @return \DebugBar\JavascriptRenderer|bool
      */
     public function getRenderer()
     {
@@ -153,7 +153,6 @@ class DebugbarLogger
      */
     public function enable()
     {
-        error_reporting(-1);
         $this->renderingEnabled = true;
 
         if (!$this->debugbar) {

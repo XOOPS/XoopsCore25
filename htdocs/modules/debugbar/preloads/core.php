@@ -242,7 +242,9 @@ class DebugbarCorePreload extends XoopsPreloadItem
         }
 
         try {
+            /** @var \XoopsConfigHandler $config_handler */
             $config_handler = xoops_getHandler('config');
+            /** @var \XoopsModuleHandler $module_handler */
             $module_handler = xoops_getHandler('module');
             if ($config_handler && $module_handler) {
                 $debugbarModule = $module_handler->getByDirname('debugbar');
@@ -251,7 +253,7 @@ class DebugbarCorePreload extends XoopsPreloadItem
                     return $config;
                 }
             }
-        } catch (\Exception $e) {
+        } catch (\Throwable $e) {
             // Module may not be fully installed yet
         }
 
