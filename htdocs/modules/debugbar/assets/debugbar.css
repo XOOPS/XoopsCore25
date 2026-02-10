@@ -177,7 +177,7 @@ a.phpdebugbar-indicator
 a.phpdebugbar-tab.phpdebugbar-active {
   background: #ccc;
   color: #444;
-  background-image: linear-gradient(bottom, rgb(173,173,173) 41%, rgb(209,209,209) 71%);
+  background-image: linear-gradient(to top, rgb(173,173,173) 41%, rgb(209,209,209) 71%);
   background-image: -o-linear-gradient(bottom, rgb(173,173,173) 41%, rgb(209,209,209) 71%);
   background-image: -moz-linear-gradient(bottom, rgb(173,173,173) 41%, rgb(209,209,209) 71%);
   background-image: -webkit-linear-gradient(bottom, rgb(173,173,173) 41%, rgb(209,209,209) 71%);
