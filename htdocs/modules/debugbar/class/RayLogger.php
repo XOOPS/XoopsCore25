@@ -55,6 +55,11 @@ class RayLogger
     private $slowQueryThreshold = 0.05;
 
     /**
+     * @var array Map of timer name => key used for Ray measure (to keep start/stop consistent)
+     */
+    private $timerKeys = [];
+
+    /**
      * Constructor — registers this logger with XoopsLogger composite.
      */
     public function __construct()
@@ -133,8 +138,10 @@ class RayLogger
             return;
         }
         try {
-            ray()->measure($label ?: $name);
-        } catch (\Exception $e) {
+            $key = $label ?: $name;
+            $this->timerKeys[$name] = $key;
+            ray()->measure($key);
+        } catch (\Throwable $e) {
             // ignore
         }
     }
@@ -151,8 +158,10 @@ class RayLogger
             return;
         }
         try {
-            ray()->measure($name);
-        } catch (\Exception $e) {
+            $key = isset($this->timerKeys[$name]) ? $this->timerKeys[$name] : $name;
+            ray()->measure($key);
+            unset($this->timerKeys[$name]);
+        } catch (\Throwable $e) {
             // ignore
         }
     }
@@ -170,7 +179,7 @@ class RayLogger
         }
         try {
             ray()->exception($e)->color('red')->label('Exception');
-        } catch (\Exception $ex) {
+        } catch (\Throwable $ex) {
             // ignore
         }
     }
@@ -223,7 +232,7 @@ class RayLogger
                     ray($message)->color($color)->label($this->levelToLabel($level));
                     break;
             }
-        } catch (\Exception $e) {
+        } catch (\Throwable $e) {
             // Silently ignore Ray errors
         }
     }

@@ -183,7 +183,7 @@ class DebugbarLogger
                     $this->renderer->setBasePath($assetsDir);
                     $this->renderer->setBaseUrl(XOOPS_URL . '/modules/debugbar/assets');
                 }
-            } catch (\Exception $e) {
+            } catch (\Throwable $e) {
                 $this->debugbar = false;
                 return;
             }
@@ -499,8 +499,7 @@ class DebugbarLogger
         }
 
         if (false === $this->quietmode) {
-            $isAjax = isset($_SERVER['HTTP_X_REQUESTED_WITH'])
-                && $_SERVER['HTTP_X_REQUESTED_WITH'] === 'XMLHttpRequest';
+            $isAjax = \Xmf\Request::getHeader('X-Requested-With') === 'XMLHttpRequest';
 
             if ($isAjax) {
                 // AJAX: add dataset without new toolbar initialization

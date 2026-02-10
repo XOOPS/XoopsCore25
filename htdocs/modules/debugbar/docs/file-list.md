@@ -3,18 +3,18 @@
 All files required to add the DebugBar + Ray debugging functionality
 to a standard XOOPS 2.5.12 installation.
 
-## Composer Dependency (already in 2.5.12)
+## Composer Dependency (added by this PR)
 
-The following entry is required in `xoops_lib/composer.json` under `"require"`:
+The following entry is added to `xoops_lib/composer.dist.json` under `"require"`:
 
 ```json
 "maximebf/debugbar": "^1.22"
 ```
 
-This is already present in XOOPS 2.5.12. Running `composer install` in the
-`xoops_lib/` directory provides the `maximebf/debugbar` library plus its
-dependencies (`psr/log`, `symfony/var-dumper`). No additional Composer packages
-are needed for the core DebugBar functionality.
+This PR adds the `maximebf/debugbar` library and its dependencies (`psr/log`,
+`monolog/monolog`) to the XOOPS vendor directory. Running `composer install` in
+the `xoops_lib/` directory ensures these packages are available. No additional
+Composer packages are needed for the core DebugBar functionality.
 
 Ray is entirely optional and installed separately by the user (see Part 3).
 
@@ -152,7 +152,7 @@ composer require --dev spatie/ray
 |----------|-------|--------------|
 | Module: `modules/debugbar/` | 30 | NEW directory |
 | Smarty plugins: `class/smarty3_plugins/` | 5 | Added to existing dir |
-| Composer: `xoops_lib/composer.json` | 0 | Already has `maximebf/debugbar` |
+| Composer: `xoops_lib/composer.dist.json` | 1 | Updated (added `maximebf/debugbar`) |
 | **Total new files** | **35** | |
 
 ### By function
