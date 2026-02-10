@@ -170,7 +170,7 @@ if (typeof(PhpDebugBar) == 'undefined') {
     // ------------------------------------------------------------------
 
     /**
-     * Displays object property/value paris in a <dl> list
+     * Displays object property/value pairs in a <dl> list
      *
      * Options:
      *  - data

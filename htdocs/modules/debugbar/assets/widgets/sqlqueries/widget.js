@@ -133,9 +133,9 @@
                 }
                 if (typeof(stmt.xdebug_link) !== 'undefined' && stmt.xdebug_link) {
                     var header = $('<span title="Filename" />').addClass(csscls('filename')).text(stmt.xdebug_link.filename + ( stmt.xdebug_link.line ? "#" + stmt.xdebug_link.line : ''));
-                    $('<a href="' + stmt.xdebug_link.url + '"></a>').on('click', function () {
+                    $('<a href="' + stmt.xdebug_link.url + '"></a>').on('click', function (event) {
                         event.stopPropagation();
-                        if (stmt.xdebug_link.ajax) {                            
+                        if (stmt.xdebug_link.ajax) {
                             fetch(stmt.xdebug_link.url);
                             event.preventDefault();
                         }

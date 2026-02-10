@@ -79,7 +79,7 @@ class XoopsMonologLogger
             foreach ($processors as $processor) {
                 $this->monolog->pushProcessor($processor);
             }
-        } catch (\Exception $e) {
+        } catch (\Throwable $e) {
             $this->activated = false;
         }
     }
@@ -104,7 +104,7 @@ class XoopsMonologLogger
 
         try {
             $this->monolog->log($this->normalizeLevel($level), (string) $message, $logContext);
-        } catch (\Exception $e) {
+        } catch (\Throwable $e) {
             // Silently ignore to prevent cascading failures
         }
     }

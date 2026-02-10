@@ -286,7 +286,7 @@ class DebugbarLogger
         if ($this->activated && is_object($this->debugbar)) {
             try {
                 $this->debugbar['time']->startMeasure($name, $label);
-            } catch (\Exception $e) {
+            } catch (\Throwable $e) {
                 // ignore
             }
         }
@@ -303,7 +303,7 @@ class DebugbarLogger
         if ($this->activated && is_object($this->debugbar)) {
             try {
                 $this->debugbar['time']->stopMeasure($name);
-            } catch (\Exception $e) {
+            } catch (\Throwable $e) {
                 // ignore
             }
         }
@@ -325,7 +325,7 @@ class DebugbarLogger
                 } else {
                     $this->debugbar['exceptions']->addException($e);
                 }
-            } catch (\Exception $ex) {
+            } catch (\Throwable $ex) {
                 // ignore
             }
         }
@@ -471,7 +471,7 @@ class DebugbarLogger
                     'name'    => $xoopsDB->conn->getAttribute(\PDO::ATTR_DRIVER_NAME) . ' version',
                 ]);
             }
-        } catch (\Exception $e) {
+        } catch (\Throwable $e) {
             // ignore
         }
 
@@ -665,7 +665,7 @@ class DebugbarLogger
                     $this->debugbar[$channel]->debug($msg);
                     break;
             }
-        } catch (\Exception $e) {
+        } catch (\Throwable $e) {
             // Silently ignore collector errors
         }
     }
