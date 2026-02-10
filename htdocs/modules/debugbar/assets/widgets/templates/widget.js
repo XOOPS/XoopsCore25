@@ -53,8 +53,12 @@
                     var table = $('<table><tr><th colspan="2">Params</th></tr></table>').addClass(csscls('params')).appendTo(li);
                     for (var key in tpl.params) {
                         if (typeof tpl.params[key] !== 'function') {
-                            table.append('<tr><td class="' + csscls('name') + '">' + key + '</td><td class="' + csscls('value') +
-                            '"><pre><code>' + tpl.params[key] + '</code></pre></td></tr>');
+                            var $tr = $('<tr />');
+                            $('<td />').addClass(csscls('name')).text(key).appendTo($tr);
+                            $('<td />').addClass(csscls('value')).append(
+                                $('<pre />').append($('<code />').text(tpl.params[key]))
+                            ).appendTo($tr);
+                            table.append($tr);
                         }
                     }
                     li.css('cursor', 'pointer').click(function() {

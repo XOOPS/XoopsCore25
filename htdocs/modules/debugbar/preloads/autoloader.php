@@ -19,8 +19,8 @@ spl_autoload_register(
             return;
         }
 
-        // get the relative class name
-        $relativeClass = substr($class, $len);
+        // get the relative class name (strip leading namespace separator)
+        $relativeClass = ltrim(substr($class, $len), '\\');
 
         // replace the namespace prefix with the base directory, replace namespace
         // separators with directory separators in the relative class name, append

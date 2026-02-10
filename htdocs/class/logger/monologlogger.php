@@ -60,7 +60,13 @@ class XoopsMonologLogger
 
             if (empty($handlers)) {
                 // Default: rotating file handler in XOOPS_VAR_PATH/logs/
-                $logDir = defined('XOOPS_VAR_PATH') ? XOOPS_VAR_PATH . '/logs' : XOOPS_ROOT_PATH . '/log';
+                // Require XOOPS_VAR_PATH (outside webroot); never fall back
+                // to XOOPS_ROOT_PATH which would expose logs publicly.
+                if (!defined('XOOPS_VAR_PATH')) {
+                    $this->activated = false;
+                    return;
+                }
+                $logDir = XOOPS_VAR_PATH . '/logs';
                 if (!is_dir($logDir)) {
                     if (!mkdir($logDir, 0755, true) && !is_dir($logDir)) {
                         $this->activated = false;

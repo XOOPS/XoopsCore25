@@ -127,12 +127,25 @@ class DebugbarCorePreload extends XoopsPreloadItem
     /**
      * core.include.common.end — bootstrap complete.
      *
+     * Safety guard: if eventCoreIncludeCommonAuthSuccess never fired
+     * (anonymous visitors), disable DebugBar and Ray to prevent
+     * exposing debug info to non-admin users.
+     *
      * @param array $args event arguments
      * @return void
      */
     public static function eventCoreIncludeCommonEnd($args)
     {
         $logger = DebugbarLogger::getInstance();
+
+        // If no admin user is authenticated, disable debug output.
+        // eventCoreIncludeCommonAuthSuccess handles the admin case;
+        // this catches anonymous requests where that event never fires.
+        if (empty($GLOBALS['xoopsUserIsAdmin'])) {
+            $logger->disable();
+            self::disableRay();
+        }
+
         $logger->stopTime('XOOPS Boot');
         $logger->startTime('Module init');
     }
