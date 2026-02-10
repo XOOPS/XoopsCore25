@@ -45,7 +45,7 @@ pre.phpdebugbar-widgets-code-block {
   }
 
   a.phpdebugbar-widgets-editor-link:before {
-    font-family: PhpDebugbarFontAwesome;
+    font-family: PhpDebugbarFontAwesome, sans-serif;
     margin-right: 4px;
     font-size: 12px;
     font-style: normal;
@@ -84,7 +84,7 @@ div.phpdebugbar-widgets-messages {
     padding-bottom: 45px;
   }
   div.phpdebugbar-widgets-messages li.phpdebugbar-widgets-list-item span.phpdebugbar-widgets-value:before {
-    font-family: PhpDebugbarFontAwesome;
+    font-family: PhpDebugbarFontAwesome, sans-serif;
     margin-right: 8px;
     font-size: 11px;
   }
@@ -144,7 +144,7 @@ div.phpdebugbar-widgets-messages {
   }
   div.phpdebugbar-widgets-messages li .phpdebugbar-widgets-label-called-from:before {
     content: "\f08d";
-    font-family: PhpDebugbarFontAwesome;
+    font-family: PhpDebugbarFontAwesome, sans-serif;
     margin-right: 4px;
     font-size: 12px;
   }

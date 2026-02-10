@@ -36,7 +36,7 @@ div.phpdebugbar-widgets-sqlqueries span.phpdebugbar-widgets-row-count:before,
 div.phpdebugbar-widgets-sqlqueries span.phpdebugbar-widgets-copy-clipboard:before,
 div.phpdebugbar-widgets-sqlqueries span.phpdebugbar-widgets-stmt-id:before,
 div.phpdebugbar-widgets-sqlqueries a.phpdebugbar-widgets-editor-link:before {
-  font-family: PhpDebugbarFontAwesome;
+  font-family: PhpDebugbarFontAwesome, sans-serif;
   margin-right: 4px;
   font-size: 12px;
 }

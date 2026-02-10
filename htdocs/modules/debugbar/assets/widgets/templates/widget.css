@@ -31,7 +31,7 @@ div.phpdebugbar-widgets-templates span.phpdebugbar-widgets-type:before,
 div.phpdebugbar-widgets-templates a.phpdebugbar-widgets-editor-link:before,
 div.phpdebugbar-widgets-templates a.phpdebugbar-widgets-editor-link:before
 {
-  font-family: PhpDebugbarFontAwesome;
+  font-family: PhpDebugbarFontAwesome, sans-serif;
   margin-right: 4px;
   font-size: 12px;
 }
