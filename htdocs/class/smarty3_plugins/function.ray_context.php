@@ -44,41 +44,11 @@ function smarty_function_ray_context($params, &$smarty)
 
     // Apply exclusion filters
     if ($exclude !== '') {
-        $excludeList = array_map('trim', explode(',', $exclude));
-        foreach ($excludeList as $pattern) {
-            // Wildcard prefix match: "xoops_*" excludes all starting with "xoops_"
-            if (substr($pattern, -1) === '*') {
-                $prefix = substr($pattern, 0, -1);
-                foreach (array_keys($allVars) as $key) {
-                    if (strpos($key, $prefix) === 0) {
-                        unset($allVars[$key]);
-                    }
-                }
-            } else {
-                // Exact match
-                unset($allVars[$pattern]);
-            }
-        }
+        $allVars = _ray_context_apply_exclusions($allVars, $exclude);
     }
 
     // Normalize values for display in Ray
-    $display = [];
-    foreach ($allVars as $key => $value) {
-        if (is_object($value)) {
-            $display[$key] = '{' . get_class($value) . '}';
-        } elseif (is_array($value)) {
-            $count = count($value);
-            $display[$key] = "Array[{$count}]";
-        } elseif (is_bool($value)) {
-            $display[$key] = $value ? 'true' : 'false';
-        } elseif (is_null($value)) {
-            $display[$key] = 'NULL';
-        } elseif (is_string($value) && strlen($value) > 200) {
-            $display[$key] = substr($value, 0, 200) . '...';
-        } else {
-            $display[$key] = $value;
-        }
-    }
+    $display = _ray_context_normalize_values($allVars);
 
     ksort($display, SORT_NATURAL | SORT_FLAG_CASE);
 
@@ -86,4 +56,84 @@ function smarty_function_ray_context($params, &$smarty)
     ray()->table($display, $label . ' (' . count($display) . ' vars)')->color('blue');
 
     return '';
+}
+
+/**
+ * Apply comma-separated exclusion patterns to a variable array.
+ *
+ * Supports exact matches and wildcard prefix matches (e.g., "xoops_*").
+ *
+ * @param array  $vars    Template variables
+ * @param string $exclude Comma-separated exclusion patterns
+ * @return array Filtered variables
+ */
+function _ray_context_apply_exclusions(array $vars, $exclude)
+{
+    $patterns = array_map('trim', explode(',', $exclude));
+    foreach ($patterns as $pattern) {
+        if (substr($pattern, -1) === '*') {
+            $vars = _ray_context_exclude_by_prefix($vars, substr($pattern, 0, -1));
+        } else {
+            unset($vars[$pattern]);
+        }
+    }
+    return $vars;
+}
+
+/**
+ * Remove all keys starting with the given prefix.
+ *
+ * @param array  $vars   Template variables
+ * @param string $prefix Key prefix to exclude
+ * @return array Filtered variables
+ */
+function _ray_context_exclude_by_prefix(array $vars, $prefix)
+{
+    foreach (array_keys($vars) as $key) {
+        if (strpos($key, $prefix) === 0) {
+            unset($vars[$key]);
+        }
+    }
+    return $vars;
+}
+
+/**
+ * Normalize template variable values for display in Ray.
+ *
+ * @param array $vars Template variables
+ * @return array Display-ready values
+ */
+function _ray_context_normalize_values(array $vars)
+{
+    $display = [];
+    foreach ($vars as $key => $value) {
+        $display[$key] = _ray_context_format_value($value);
+    }
+    return $display;
+}
+
+/**
+ * Format a single template variable value for display.
+ *
+ * @param mixed $value
+ * @return mixed Formatted value
+ */
+function _ray_context_format_value($value)
+{
+    if (is_object($value)) {
+        return '{' . get_class($value) . '}';
+    }
+    if (is_array($value)) {
+        return 'Array[' . count($value) . ']';
+    }
+    if (is_bool($value)) {
+        return $value ? 'true' : 'false';
+    }
+    if (null === $value) {
+        return 'NULL';
+    }
+    if (is_string($value) && strlen($value) > 200) {
+        return substr($value, 0, 200) . '...';
+    }
+    return $value;
 }
