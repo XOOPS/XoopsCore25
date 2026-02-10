@@ -19,7 +19,7 @@ use XoopsModules\Debugbar\{
 /** @var Admin $adminObject */
 /** @var Helper $helper */
 
-include dirname(__DIR__) . '/preloads/autoloader.php';
+include_once dirname(__DIR__) . '/preloads/autoloader.php';
 
 $moduleDirName = \basename(\dirname(__DIR__));
 $moduleDirNameUpper = mb_strtoupper($moduleDirName);
