@@ -1,0 +1,6 @@
+Credits
+===============
+
+Originally developed by Richard Griffiths for XOOPS 2.6.0
+
+Modified for XOOPS 2.5.12 by Michael Beck (Mamba)

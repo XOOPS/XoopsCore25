@@ -1,0 +1,4 @@
+<h5>1.0.0 Beta 1  </h5>  Dev: XOOPS 2.5.12, PHP 7.4.4, PHP 8.5.2
+<hr>
+
+- Initial development (mamba), based on work by Richard Griffiths for XOOPS 2.6.0
