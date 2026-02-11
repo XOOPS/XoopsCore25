@@ -32,7 +32,7 @@ function smarty_function_ray($params, &$smarty)
     }
 
     $rayLogger = \XoopsModules\Debugbar\RayLogger::getInstance();
-    if (!$rayLogger->isEnable()) {
+    if (!$rayLogger->isEnabled()) {
         return '';
     }
 

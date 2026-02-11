@@ -197,7 +197,7 @@ class DebugbarLogger
      *
      * @return bool
      */
-    public function isEnable()
+    public function isEnabled()
     {
         return $this->activated;
     }
@@ -519,19 +519,15 @@ class DebugbarLogger
                 // Render debugbar initialization and data
                 echo $this->renderer->render();
 
-                // Output the settings widget JS as a separate inline script block.
-                // Must be inline (not external <script src>) because external scripts
-                // placed after </html> may load out of order in some browsers.
-                $settingsJsFile = XOOPS_ROOT_PATH . '/modules/debugbar/assets/xoops-debugbar-settings.js';
-                if (file_exists($settingsJsFile)) {
-                    echo '<script type="text/javascript">' . "\n";
-                    echo file_get_contents($settingsJsFile);
-                    // Call _initSettings on the debugbar instance created by render() above
-                    echo "\n" . 'if (typeof phpdebugbar !== "undefined" && typeof phpdebugbar._initSettings === "function") {' . "\n";
-                    echo '  try { phpdebugbar._initSettings(); } catch(e) {}' . "\n";
-                    echo '}' . "\n";
-                    echo '</script>' . "\n";
-                }
+                // Load the settings widget JS as an external script (cacheable by browser)
+                // followed by a small inline init call.
+                echo '<script type="text/javascript" src="'
+                    . $xoopsAssetsUrl . '/xoops-debugbar-settings.js"></script>' . "\n";
+                echo '<script type="text/javascript">' . "\n";
+                echo 'if (typeof phpdebugbar !== "undefined" && typeof phpdebugbar._initSettings === "function") {' . "\n";
+                echo '  try { phpdebugbar._initSettings(); } catch(e) {}' . "\n";
+                echo '}' . "\n";
+                echo '</script>' . "\n";
             }
         } else {
             $this->debugbar->sendDataInHeaders();

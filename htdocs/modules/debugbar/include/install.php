@@ -44,9 +44,10 @@ function xoops_module_update_debugbar($module, $previousVersion)
 function _debugbar_copy_assets()
 {
     // Source: vendor debugbar resources
+    $vendorBase  = XOOPS_ROOT_PATH . '/class/libraries/vendor';
     $vendorPaths = [
-        XOOPS_PATH . '/vendor/maximebf/debugbar/src/DebugBar/Resources',
-        XOOPS_PATH . '/vendor/php-debugbar/php-debugbar/src/DebugBar/Resources',
+        $vendorBase . '/maximebf/debugbar/src/DebugBar/Resources',
+        $vendorBase . '/php-debugbar/php-debugbar/src/DebugBar/Resources',
     ];
 
     $srcDir = false;

@@ -7,7 +7,7 @@
  *   <{ray_dump value=$user label="User Dump"}>
  *
  * Shows the full variable structure (objects, arrays, nested data) in Ray
- * using Ray's raw() method for complete property visibility.
+ * using the ray() helper with an optional label for inspection.
  *
  * Requires: spatie/ray via composer OR spatie/global-ray via php.ini auto_prepend_file
  * If Ray is not installed or disabled in module settings, this plugin silently does nothing.
@@ -21,7 +21,7 @@
 function smarty_function_ray_dump($params, &$smarty)
 {
     if (!class_exists('XoopsModules\Debugbar\RayLogger', false)
-        || !\XoopsModules\Debugbar\RayLogger::getInstance()->isEnable()
+        || !\XoopsModules\Debugbar\RayLogger::getInstance()->isEnabled()
         || !function_exists('ray')) {
         return '';
     }

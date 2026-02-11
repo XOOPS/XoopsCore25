@@ -14,7 +14,7 @@
   "require": {
     "php": "^7.4.0 || ^8.0.0",
     "xoops/base-requires25": "^1.1.10-beta2",
-    "psr/log": "^1.1",
+    "psr/log": "^1.1 || ^2.0 || ^3.0",
     "monolog/monolog": "^2.5",
     "maximebf/debugbar": "^1.22"
   },

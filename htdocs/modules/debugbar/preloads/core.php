@@ -109,7 +109,7 @@ class DebugbarCorePreload extends XoopsPreloadItem
         }
 
         // Check Ray-specific config (disable Ray independently of DebugBar)
-        if (RayLogger::getInstance()->isEnable()) {
+        if (RayLogger::getInstance()->isEnabled()) {
             if (is_array($moduleConfig) && isset($moduleConfig['ray_enable']) && !$moduleConfig['ray_enable']) {
                 self::disableRay();
             }
@@ -117,7 +117,7 @@ class DebugbarCorePreload extends XoopsPreloadItem
 
         // If debugbar is active, suppress the legacy XoopsLogger HTML output
         // so we don't get double debug output
-        if ($logger->isEnable()) {
+        if ($logger->isEnabled()) {
             $xoopsLogger = \XoopsLogger::getInstance();
             $xoopsLogger->renderingEnabled = false;
             // Keep activated=true so data still flows to our composite loggers

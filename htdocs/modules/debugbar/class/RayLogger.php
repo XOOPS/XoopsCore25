@@ -109,7 +109,7 @@ class RayLogger
      *
      * @return bool
      */
-    public function isEnable()
+    public function isEnabled()
     {
         return $this->activated;
     }

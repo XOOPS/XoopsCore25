@@ -191,6 +191,6 @@ preloads/core.php
 
 class/smarty3_plugins/function.ray*.php
 class/smarty3_plugins/modifier.ray.php
-    |-- checks --> RayLogger::getInstance()->isEnable()
+    |-- checks --> RayLogger::getInstance()->isEnabled()
     |-- calls --> ray() function (user-installed, optional)
 ```

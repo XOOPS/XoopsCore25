@@ -21,7 +21,7 @@
 function smarty_function_ray_table($params, &$smarty)
 {
     if (!class_exists('XoopsModules\Debugbar\RayLogger', false)
-        || !\XoopsModules\Debugbar\RayLogger::getInstance()->isEnable()
+        || !\XoopsModules\Debugbar\RayLogger::getInstance()->isEnabled()
         || !function_exists('ray')) {
         return '';
     }
