@@ -470,7 +470,7 @@ class XoopsCache
         }
 
         $_this->engine[$engine]->init($settings);
-        $success = $_this->engine[$engine]->delete($key);
+        $success = (bool) $_this->engine[$engine]->delete($key);
 
         return $success;
     }
