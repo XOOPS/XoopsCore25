@@ -32,13 +32,13 @@ function smarty_function_ray_context($params, &$smarty)
         return '';
     }
 
-    $label   = isset($params['label']) ? $params['label'] : 'Template Context';
+    $label   = isset($params['label']) ? $params['label'] : _MD_DEBUGBAR_RAY_TEMPLATE_CONTEXT;
     $exclude = isset($params['exclude']) ? $params['exclude'] : '';
 
     // Get all template variables
     $allVars = $smarty->getTemplateVars();
     if (!is_array($allVars) || empty($allVars)) {
-        ray('(no template variables)')->label($label)->color('gray');
+        ray(_MD_DEBUGBAR_RAY_NO_VARS)->label($label)->color('gray');
         return '';
     }
 
@@ -53,7 +53,7 @@ function smarty_function_ray_context($params, &$smarty)
     ksort($display, SORT_NATURAL | SORT_FLAG_CASE);
 
     // Send summary as table
-    ray()->table($display, $label . ' (' . count($display) . ' vars)')->color('blue');
+    ray()->table($display, sprintf(_MD_DEBUGBAR_RAY_VARS_COUNT, $label, count($display)))->color('blue');
 
     return '';
 }

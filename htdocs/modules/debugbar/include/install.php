@@ -67,7 +67,7 @@ function _debugbar_copy_assets()
     $destDir = XOOPS_ROOT_PATH . '/modules/debugbar/assets';
     if (!is_dir($destDir)) {
         if (!mkdir($destDir, 0755, true) && !is_dir($destDir)) {
-            throw new \RuntimeException(sprintf('Directory "modules/debugbar/%s" was not created', basename($destDir)));
+            throw new \RuntimeException(sprintf(_MD_DEBUGBAR_ERR_DIR_CREATE, basename($destDir)));
         }
     }
 
@@ -89,7 +89,7 @@ function _debugbar_recursive_copy($src, $dest)
     }
     if (!is_dir($dest)) {
         if (!mkdir($dest, 0755, true) && !is_dir($dest)) {
-            throw new \RuntimeException(sprintf('Failed to create directory "%s" during asset copy', basename($dest)));
+            throw new \RuntimeException(sprintf(_MD_DEBUGBAR_ERR_DIR_COPY, basename($dest)));
         }
     }
 

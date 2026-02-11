@@ -178,7 +178,7 @@ class RayLogger
             return;
         }
         try {
-            ray()->exception($e)->color('red')->label('Exception');
+            ray()->exception($e)->color('red')->label(_MD_DEBUGBAR_RAY_EXCEPTION);
         } catch (\Throwable $ex) {
             // ignore
         }
@@ -220,11 +220,11 @@ class RayLogger
                     $this->logBlock($message, $context);
                     break;
                 case 'deprecated':
-                    ray($message)->color('orange')->label('Deprecated');
+                    ray($message)->color('orange')->label(_MD_DEBUGBAR_DEPRECATED);
                     break;
                 case 'extra':
                     $name = isset($context['name']) ? $context['name'] : '';
-                    ray($message)->color('gray')->label($name ?: 'Extra');
+                    ray($message)->color('gray')->label($name ?: _MD_DEBUGBAR_EXTRA);
                     break;
                 default:
                     // General messages — map PSR-3 level to Ray color
@@ -260,10 +260,10 @@ class RayLogger
 
         // Build display
         $timeStr = $queryTime > 0 ? sprintf('%.2fms', $queryTime * 1000) : '';
-        $label = 'Query #' . $this->queryCount;
+        $label = sprintf(_MD_DEBUGBAR_RAY_QUERY, $this->queryCount);
 
         if ($isDuplicate) {
-            $label .= ' [DUP x' . $this->queryMap[$sqlKey] . ']';
+            $label .= sprintf(_MD_DEBUGBAR_RAY_DUP, $this->queryMap[$sqlKey]);
         }
         if ($timeStr) {
             $label .= ' (' . $timeStr . ')';
@@ -274,7 +274,7 @@ class RayLogger
             $color = 'red';
         } elseif ($queryTime > 0 && $queryTime >= $this->slowQueryThreshold) {
             $color = 'red';
-            $label .= ' SLOW';
+            $label .= _MD_DEBUGBAR_RAY_SLOW;
         } elseif ($isDuplicate) {
             $color = 'orange';
         } else {
@@ -286,7 +286,7 @@ class RayLogger
         if ($level === LogLevel::ERROR) {
             $errno = isset($context['errno']) && is_scalar($context['errno']) ? $context['errno'] : '?';
             $error = isset($context['error']) && is_scalar($context['error']) ? $context['error'] : '?';
-            $msg .= "\n-- Error #{$errno}: {$error}";
+            $msg .= sprintf(_MD_DEBUGBAR_QUERY_ERROR_RAY, $errno, $error);
         }
 
         ray($msg)->color($color)->label($label);
@@ -305,8 +305,8 @@ class RayLogger
         $cacheTime = (int) ($context['cachetime'] ?? 0);
 
         $label = $cached
-            ? 'Block (cached ' . $cacheTime . 's)'
-            : 'Block (not cached)';
+            ? sprintf(_MD_DEBUGBAR_RAY_BLOCK_CACHED, $cacheTime)
+            : _MD_DEBUGBAR_RAY_BLOCK_NOT_CACHED;
         $color = $cached ? 'green' : 'blue';
 
         ray($message)->color($color)->label($label);

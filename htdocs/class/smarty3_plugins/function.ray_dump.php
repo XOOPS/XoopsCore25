@@ -27,7 +27,7 @@ function smarty_function_ray_dump($params, &$smarty)
     }
 
     $value = isset($params['value']) ? $params['value'] : null;
-    $label = isset($params['label']) ? $params['label'] : 'Dump';
+    $label = isset($params['label']) ? $params['label'] : _MD_DEBUGBAR_RAY_DUMP;
 
     if ($value === null) {
         return '';

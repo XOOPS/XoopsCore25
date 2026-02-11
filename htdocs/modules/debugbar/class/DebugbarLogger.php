@@ -353,13 +353,13 @@ class DebugbarLogger
         // Normalize values for display
         foreach ($data as $k => $v) {
             if ($v === '') {
-                $data[$k] = '(empty string)';
+                $data[$k] = _MD_DEBUGBAR_EMPTY_STRING;
             } elseif ($v === null) {
-                $data[$k] = 'NULL';
+                $data[$k] = _MD_DEBUGBAR_NULL;
             } elseif ($v === true) {
-                $data[$k] = 'bool TRUE';
+                $data[$k] = _MD_DEBUGBAR_BOOL_TRUE;
             } elseif ($v === false) {
-                $data[$k] = 'bool FALSE';
+                $data[$k] = _MD_DEBUGBAR_BOOL_FALSE;
             } elseif (is_array($v) || is_object($v)) {
                 $data[$k] = print_r($v, true);
             }
@@ -455,12 +455,8 @@ class DebugbarLogger
         }
 
         // Add final extra info
-        if (defined('_MD_DEBUGBAR_PHP_VERSION')) {
-            $this->log(LogLevel::INFO, PHP_VERSION, ['channel' => 'Extra', 'name' => _MD_DEBUGBAR_PHP_VERSION]);
-        }
-        if (defined('_MD_DEBUGBAR_INCLUDED_FILES')) {
-            $this->log(LogLevel::INFO, (string) count(get_included_files()), ['channel' => 'Extra', 'name' => _MD_DEBUGBAR_INCLUDED_FILES]);
-        }
+        $this->log(LogLevel::INFO, PHP_VERSION, ['channel' => 'Extra', 'name' => _MD_DEBUGBAR_PHP_VERSION]);
+        $this->log(LogLevel::INFO, (string) count(get_included_files()), ['channel' => 'Extra', 'name' => _MD_DEBUGBAR_INCLUDED_FILES]);
 
         // Add database info if available
         try {
@@ -468,7 +464,7 @@ class DebugbarLogger
             if (is_object($xoopsDB) && method_exists($xoopsDB, 'conn') && $xoopsDB->conn instanceof \PDO) {
                 $this->log(LogLevel::INFO, $xoopsDB->conn->getAttribute(\PDO::ATTR_SERVER_VERSION), [
                     'channel' => 'Extra',
-                    'name'    => $xoopsDB->conn->getAttribute(\PDO::ATTR_DRIVER_NAME) . ' version',
+                    'name'    => sprintf(_MD_DEBUGBAR_DB_VERSION, $xoopsDB->conn->getAttribute(\PDO::ATTR_DRIVER_NAME)),
                 ]);
             }
         } catch (\Throwable $e) {
@@ -477,20 +473,20 @@ class DebugbarLogger
 
         // Add query summary to Extra
         if ($this->queryCount > 0) {
-            $querySummary = $this->queryCount . ' queries';
+            $querySummary = sprintf(_MD_DEBUGBAR_QUERY_SUMMARY, $this->queryCount);
             if ($this->duplicateCount > 0) {
-                $querySummary .= ' (' . $this->duplicateCount . ' duplicates)';
+                $querySummary .= sprintf(_MD_DEBUGBAR_QUERY_DUPLICATES, $this->duplicateCount);
             }
             $this->log(LogLevel::INFO, $querySummary, [
                 'channel' => 'Extra',
-                'name'    => 'Database Queries',
+                'name'    => _MD_DEBUGBAR_DATABASE_QUERIES,
             ]);
         }
 
         // Add memory usage
-        $this->log(LogLevel::INFO, memory_get_usage() . ' bytes', [
+        $this->log(LogLevel::INFO, sprintf(_MD_DEBUGBAR_BYTES, memory_get_usage()), [
             'channel' => 'Extra',
-            'name'    => 'Memory Usage',
+            'name'    => _MD_DEBUGBAR_MEMORY_USAGE,
         ]);
 
         // Add included files tab (configurable)
@@ -562,11 +558,9 @@ class DebugbarLogger
                     $channel = 'Blocks';
                     $msg = $message . ': ';
                     if (!empty($context['cached'])) {
-                        $msg .= defined('_MD_DEBUGBAR_CACHED')
-                            ? sprintf(_MD_DEBUGBAR_CACHED, (int) ($context['cachetime'] ?? 0))
-                            : 'Cached (regenerates every ' . (int) ($context['cachetime'] ?? 0) . 's)';
+                        $msg .= sprintf(_MD_DEBUGBAR_CACHED, (int) ($context['cachetime'] ?? 0));
                     } else {
-                        $msg .= defined('_MD_DEBUGBAR_NOT_CACHED') ? _MD_DEBUGBAR_NOT_CACHED : 'Not cached';
+                        $msg .= _MD_DEBUGBAR_NOT_CACHED;
                     }
                     break;
                 case 'deprecated':
@@ -597,10 +591,9 @@ class DebugbarLogger
 
                     // Build formatted message
                     if ($level === LogLevel::ERROR) {
-                        $msg .= ' -- Error number: '
-                            . (isset($context['errno']) && is_scalar($context['errno']) ? $context['errno'] : '?')
-                            . ' Error message: '
-                            . (isset($context['error']) && is_scalar($context['error']) ? $context['error'] : '?');
+                        $errno = isset($context['errno']) && is_scalar($context['errno']) ? $context['errno'] : '?';
+                        $error = isset($context['error']) && is_scalar($context['error']) ? $context['error'] : '?';
+                        $msg .= sprintf(_MD_DEBUGBAR_QUERY_ERROR, $errno, $error);
                     }
 
                     // Prefix with timing
