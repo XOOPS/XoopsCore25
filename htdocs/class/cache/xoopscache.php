@@ -405,7 +405,7 @@ class XoopsCache
             return false;
         }
         $_this->engine[$engine]->init($settings);
-        $success = $_this->engine[$engine]->write($key, $value, $duration);
+        $success = (bool) $_this->engine[$engine]->write($key, $value, $duration);
 
         return $success;
     }
@@ -415,11 +415,11 @@ class XoopsCache
      *
      * @param  string $key    Identifier for the data
      * @param  string|array|null $config name of the configuration to use
-     * @return mixed The cached data, or false if:
-     *               - Configuration is invalid
-     *               - Data doesn't exist
-     *               - Data has expired
-     *               - Error occurred during retrieval
+     * @return mixed The cached data, or false/null if:
+     *               - Configuration is invalid (false)
+     *               - Data doesn't exist (false or null, engine-dependent)
+     *               - Data has expired (false)
+     *               - Error occurred during retrieval (false)
      * @access public
      */
     public static function read($key, $config = null)
@@ -444,8 +444,7 @@ class XoopsCache
         $_this->engine[$engine]->init($settings);
         $result = $_this->engine[$engine]->read($key);
 
-        // Normalize null to false for consistent miss behavior across engines
-        return $result !== null ? $result : false;
+        return $result;
     }
 
     /**
@@ -507,7 +506,7 @@ class XoopsCache
             return false;
         }
 
-        $success = $_this->engine[$engine]->clear($check);
+        $success = (bool) $_this->engine[$engine]->clear($check);
         $_this->engine[$engine]->init($settings);
 
         return $success;
