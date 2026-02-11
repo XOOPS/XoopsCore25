@@ -248,7 +248,8 @@ class DebugbarLogger
             if (strpos($filePath, $normBase) === 0) {
                 return $baseUrl . substr($filePath, strlen($normBase));
             }
-            return $filePath;
+            // Asset not under expected base path — return empty to avoid leaking filesystem paths
+            return '';
         };
 
         // Exclude jQuery (already loaded by XOOPS)
@@ -260,10 +261,16 @@ class DebugbarLogger
         $jsAssets  = array_filter($jsAssets, $filterFn);
 
         foreach ($cssAssets as $css) {
-            $GLOBALS['xoTheme']->addStylesheet($toUrl($css));
+            $url = $toUrl($css);
+            if ($url !== '') {
+                $GLOBALS['xoTheme']->addStylesheet($url);
+            }
         }
         foreach ($jsAssets as $js) {
-            $GLOBALS['xoTheme']->addScript($toUrl($js));
+            $url = $toUrl($js);
+            if ($url !== '') {
+                $GLOBALS['xoTheme']->addScript($url);
+            }
         }
 
         // Add XOOPS custom settings widget (provides settings gear icon, themes, position)

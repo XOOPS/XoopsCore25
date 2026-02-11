@@ -3,7 +3,7 @@
 
     <h4 class="odd">SUPPORT</h4><br>
     <span style="font-family: Arial, sans-serif; font-size: larger;  text-decoration: underline;">For support visit our Support Forums at:</span><br><br>
-    <p><span style="font-family: Arial, sans-serif; font-size: 172%; "><a href="https://xoops.org/modules/newbb/viewforum.php?forum=28/" target="_blank">https://xoops.org/modules/newbb/</a><br></span>
+    <p><span style="font-family: Arial, sans-serif; font-size: 172%; "><a href="https://xoops.org/modules/newbb/viewforum.php?forum=28/" target="_blank" rel="noopener noreferrer">https://xoops.org/modules/newbb/</a><br></span>
     </p>
 
 </div>

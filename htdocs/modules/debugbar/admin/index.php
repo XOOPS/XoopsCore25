@@ -42,11 +42,16 @@ $statusRows = [
 ];
 
 // Render as a single HTML table inside one info box line
-$html = '<table style="border-collapse: collapse; width: auto;">';
+$html          = '<table style="border-collapse: collapse; width: auto;">';
+$allowedColors = ['green', 'red', 'orange', 'gray'];
 foreach ($statusRows as $row) {
+    $label = \htmlspecialchars((string) $row[0], ENT_QUOTES, 'UTF-8');
+    $value = \htmlspecialchars((string) $row[1], ENT_QUOTES, 'UTF-8');
+    $color = \in_array($row[2], $allowedColors, true) ? $row[2] : 'black';
+
     $html .= '<tr>'
-        . '<td style="padding: 2px 20px 2px 0; white-space: nowrap;">' . $row[0] . '</td>'
-        . '<td style="padding: 2px 0; font-weight: bold; color: ' . $row[2] . ';">' . $row[1] . '</td>'
+        . '<td style="padding: 2px 20px 2px 0; white-space: nowrap;">' . $label . '</td>'
+        . '<td style="padding: 2px 0; font-weight: bold; color: ' . $color . ';">' . $value . '</td>'
         . '</tr>';
 }
 $html .= '</table>';

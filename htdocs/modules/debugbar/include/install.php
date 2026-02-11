@@ -43,12 +43,19 @@ function xoops_module_update_debugbar($module, $previousVersion)
  */
 function _debugbar_copy_assets()
 {
-    // Source: vendor debugbar resources
-    $vendorBase  = XOOPS_ROOT_PATH . '/class/libraries/vendor';
-    $vendorPaths = [
-        $vendorBase . '/maximebf/debugbar/src/DebugBar/Resources',
-        $vendorBase . '/php-debugbar/php-debugbar/src/DebugBar/Resources',
-    ];
+    // Source: vendor debugbar resources — check both possible vendor locations
+    $vendorBases = [];
+    if (defined('XOOPS_LIB_PATH')) {
+        $vendorBases[] = XOOPS_LIB_PATH . '/vendor';
+    }
+    $vendorBases[] = XOOPS_ROOT_PATH . '/class/libraries/vendor';
+    $vendorBases   = array_unique($vendorBases);
+
+    $vendorPaths = [];
+    foreach ($vendorBases as $vendorBase) {
+        $vendorPaths[] = $vendorBase . '/maximebf/debugbar/src/DebugBar/Resources';
+        $vendorPaths[] = $vendorBase . '/php-debugbar/php-debugbar/src/DebugBar/Resources';
+    }
 
     $srcDir = false;
     foreach ($vendorPaths as $path) {
@@ -59,8 +66,17 @@ function _debugbar_copy_assets()
     }
 
     if (!$srcDir) {
-        // Assets not found in vendor — they may be loaded differently
-        return true;
+        $checkedDirs = [];
+        foreach ($vendorPaths as $path) {
+            $checkedDirs[] = basename(dirname(dirname(dirname(dirname($path))))) . '/…/' . basename($path);
+        }
+        trigger_error(
+            'DebugBar installation: assets not found in vendor directories ('
+            . implode(', ', $checkedDirs) . '); module JavaScript/CSS assets were not installed.',
+            E_USER_WARNING
+        );
+
+        return false;
     }
 
     // Destination: modules/debugbar/assets/
