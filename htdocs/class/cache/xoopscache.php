@@ -325,14 +325,7 @@ class XoopsCache
             return false;
         }
 
-        $gcResult = $_this->engine[$engine]->gc();
-
-        if ($gcResult === null) {
-            // Treat null/void gc() implementations as a successful no-op
-            return true;
-        }
-
-        return (bool) $gcResult;
+        return (bool) $_this->engine[$engine]->gc();
     }
 
     /**
@@ -585,7 +578,6 @@ class XoopsCache
  * @license    GNU GPL 2 (https://www.gnu.org/licenses/gpl-2.0.html)
  * @link       https://xoops.org
  * @since      2.5.12
- * @deprecated 4.0.0 This interface will be removed in a future version.
  */
 interface XoopsCacheEngineInterface
 {
@@ -600,7 +592,7 @@ interface XoopsCacheEngineInterface
     /**
      * Garbage collection - permanently remove all expired and deleted data
      *
-     * @return bool|null True on success, false on failure, null for no-op
+     * @return bool True on success (including no-op when there is nothing to clean), false on failure
      */
     public function gc();
 
@@ -691,9 +683,13 @@ abstract class XoopsCacheEngine implements XoopsCacheEngineInterface
      *
      * Permanently remove all expired and deleted data
      *
+     * @return bool True on success (including no-op), false on failure
      * @access public
      */
-    public function gc() {}
+    public function gc()
+    {
+        return true;
+    }
 
     /**
      * Write value for a key into cache
