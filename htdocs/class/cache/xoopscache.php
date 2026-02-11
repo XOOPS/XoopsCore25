@@ -17,7 +17,9 @@
  * @author              Taiwen Jiang <phppp@users.sourceforge.net>
  */
 
-defined('XOOPS_ROOT_PATH') || exit('Restricted access');
+if (!defined('XOOPS_ROOT_PATH')) {
+    throw new \RuntimeException('Restricted access');
+}
 
 /**
  * Caching for CakePHP.
@@ -129,11 +131,15 @@ class XoopsCache
     private function loadEngine($name)
     {
         if (!class_exists('XoopsCache' . ucfirst($name))) {
-            if (file_exists($file = __DIR__ . '/' . strtolower($name) . '.php')) {
+            $baseDir   = realpath(__DIR__);
+            $candidate = __DIR__ . '/' . strtolower($name) . '.php';
+            $file      = $baseDir !== false ? realpath($candidate) : false;
+
+            if ($file !== false && strpos($file, $baseDir . DIRECTORY_SEPARATOR) === 0) {
                 include $file;
             } else {
                 trigger_error(
-                    'File: ' . basename($file) . ' not found in file: ' . basename(__FILE__) . ' at line: ' . __LINE__,
+                    'File: ' . basename($candidate) . ' not found in file: ' . basename(__FILE__) . ' at line: ' . __LINE__,
                     E_USER_WARNING
                 );
                 return false;
@@ -164,12 +170,16 @@ class XoopsCache
 
             if (isset($config['name']) && is_string($config['name'])) {
                 $name = $config['name'];
+                unset($config['name']);
             } else {
                 $name = 'default';
             }
 
             if (isset($config['settings']) && is_array($config['settings'])) {
                 $settings = $config['settings'];
+            } else {
+                // Back-compat: treat array input as settings when no nested "settings" exists
+                $settings = $config;
             }
         }
 
@@ -200,7 +210,9 @@ class XoopsCache
             }
         }
 
-        $engine = !empty($settings['engine']) ? $settings['engine'] : 'file';
+        $engine = (!empty($settings['engine']) && is_string($settings['engine']))
+            ? $settings['engine']
+            : 'file';
 
         if ($name !== $_this->name) {
             if ($_this->engine($engine, $settings) === false) {
@@ -300,9 +312,9 @@ class XoopsCache
             return false;
         }
 
-        $_this->engine[$engine]->gc();
+        $gcResult = $_this->engine[$engine]->gc();
 
-        return true;
+        return (bool) $gcResult;
     }
 
     /**
@@ -543,19 +555,72 @@ class XoopsCache
  * Defines the contract that all cache engines must implement.
  * Third-party cache engines should implement this interface.
  *
+ * @category   XOOPS
  * @package    core
  * @subpackage cache
+ * @author     XOOPS Project
+ * @copyright  (c) 2000-2025 XOOPS Project (https://xoops.org)
+ * @license    GNU GPL 2 (https://www.gnu.org/licenses/gpl-2.0.html)
+ * @link       https://xoops.org
  * @since      2.5.12
- * @deprecated 4.0.0 Use Xoops\Core\Cache\EngineInterface instead
+ * @deprecated 4.0.0 This interface will be removed in a future version.
  */
 interface XoopsCacheEngineInterface
 {
+    /**
+     * Initialize the cache engine
+     *
+     * @param  array $settings Associative array of parameters for the engine
+     * @return bool True if the engine has been successfully initialized, false if not
+     */
     public function init($settings = []);
+
+    /**
+     * Garbage collection - permanently remove all expired and deleted data
+     *
+     * @return void
+     */
     public function gc();
+
+    /**
+     * Write value for a key into cache
+     *
+     * @param  string   $key      Identifier for the data
+     * @param  mixed    $value    Data to be cached
+     * @param  int|null $duration How long to cache the data, in seconds
+     * @return bool True if the data was successfully cached, false on failure
+     */
     public function write($key, $value, $duration = null);
+
+    /**
+     * Read a key from the cache
+     *
+     * @param  string $key Identifier for the data
+     * @return mixed The cached data, or false if the data doesn't exist or has expired
+     */
     public function read($key);
+
+    /**
+     * Delete a key from the cache
+     *
+     * @param  string $key Identifier for the data
+     * @return bool True if the value was successfully deleted, false otherwise
+     */
     public function delete($key);
+
+    /**
+     * Delete all keys from the cache
+     *
+     * @param  bool $check If true will check expiration, otherwise delete all
+     * @return bool True if the cache was successfully cleared, false otherwise
+     */
     public function clear($check);
+
+    /**
+     * Return the settings for this cache engine
+     *
+     * @return array Associative array of current engine settings
+     */
     public function settings();
 }
 
