@@ -78,7 +78,7 @@ class XoopsCacheApc extends XoopsCacheEngine
      * @param  string  $key      Identifier for the data
      * @param  mixed   $value    Data to be cached
      * @param  integer $duration How long to cache the data, in seconds
-     * @return bool|array Returns TRUE on success or FALSE on failure | array with error keys.
+     * @return bool Returns TRUE on success or FALSE on failure.
      * @access public
      */
     public function write($key, $value, $duration = null)
@@ -102,7 +102,7 @@ class XoopsCacheApc extends XoopsCacheEngine
      * Delete a key from the cache
      *
      * @param  string $key Identifier for the data
-     * @return bool|string[] Returns TRUE on success or FALSE on failure. For array of keys returns list of failed keys.
+     * @return bool Returns TRUE on success or FALSE on failure.
      * @access public
      */
     public function delete($key)

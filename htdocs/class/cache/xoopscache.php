@@ -137,6 +137,13 @@ class XoopsCache
 
             if ($file !== false && strpos($file, $baseDir . DIRECTORY_SEPARATOR) === 0) {
                 include $file;
+                if (!class_exists('XoopsCache' . ucfirst($name), false)) {
+                    trigger_error(
+                        'Class XoopsCache' . ucfirst($name) . ' not found after including ' . basename($file),
+                        E_USER_WARNING
+                    );
+                    return false;
+                }
             } else {
                 trigger_error(
                     'File: ' . basename($candidate) . ' not found in file: ' . basename(__FILE__) . ' at line: ' . __LINE__,
@@ -371,6 +378,10 @@ class XoopsCache
         $engine   = $config['engine'];
         $settings = $config['settings'];
 
+        if (!isset($settings['duration'])) {
+            $settings['duration'] = 0;
+        }
+
         if (!$_this->isInitialized($engine)) {
             trigger_error('Cache write not initialized: ' . $engine, E_USER_WARNING);
 
@@ -431,9 +442,10 @@ class XoopsCache
             return false;
         }
         $_this->engine[$engine]->init($settings);
-        $success = $_this->engine[$engine]->read($key);
+        $result = $_this->engine[$engine]->read($key);
 
-        return $success;
+        // Normalize null to false for consistent miss behavior across engines
+        return $result !== null ? $result : false;
     }
 
     /**
