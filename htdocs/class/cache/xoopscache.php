@@ -177,6 +177,10 @@ class XoopsCache
 
             if (isset($config['settings']) && is_array($config['settings'])) {
                 $settings = $config['settings'];
+                // Carry forward top-level engine key into settings if not already set
+                if (isset($config['engine']) && !isset($settings['engine'])) {
+                    $settings['engine'] = $config['engine'];
+                }
             } else {
                 // Back-compat: treat array input as settings when no nested "settings" exists
                 $settings = $config;
@@ -192,8 +196,7 @@ class XoopsCache
         } elseif (!empty($settings)) {
             $_this->configs[$name] = $settings;
         } elseif (
-            $_this->configs !== null
-            && is_string($_this->name)
+            is_string($_this->name)
             && $_this->name !== ''
             && isset($_this->configs[$_this->name])
         ) {
@@ -213,6 +216,9 @@ class XoopsCache
         $engine = (!empty($settings['engine']) && is_string($settings['engine']))
             ? $settings['engine']
             : 'file';
+
+        // Normalize: ensure the resolved engine name is stored in settings
+        $settings['engine'] = $engine;
 
         if ($name !== $_this->name) {
             if ($_this->engine($engine, $settings) === false) {
@@ -313,6 +319,11 @@ class XoopsCache
         }
 
         $gcResult = $_this->engine[$engine]->gc();
+
+        if ($gcResult === null) {
+            // Treat null/void gc() implementations as a successful no-op
+            return true;
+        }
 
         return (bool) $gcResult;
     }
@@ -578,7 +589,7 @@ interface XoopsCacheEngineInterface
     /**
      * Garbage collection - permanently remove all expired and deleted data
      *
-     * @return void
+     * @return bool|null True on success, false on failure, null for no-op
      */
     public function gc();
 
@@ -706,7 +717,10 @@ abstract class XoopsCacheEngine implements XoopsCacheEngineInterface
      * @return boolean True if the value was successfully deleted, false if it didn't exist or couldn't be removed
      * @access public
      */
-    public function delete($key) {}
+    public function delete($key)
+    {
+        return false;
+    }
 
     /**
      * Delete all keys from the cache
@@ -715,7 +729,10 @@ abstract class XoopsCacheEngine implements XoopsCacheEngineInterface
      * @return boolean True if the cache was successfully cleared, false otherwise
      * @access public
      */
-    public function clear($check) {}
+    public function clear($check)
+    {
+        return false;
+    }
 
     /**
      * Cache Engine settings

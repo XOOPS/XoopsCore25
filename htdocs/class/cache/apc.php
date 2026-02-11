@@ -83,7 +83,7 @@ class XoopsCacheApc extends XoopsCacheEngine
      */
     public function write($key, $value, $duration = null)
     {
-        return apc_store($key, $value, $duration);
+        return (bool) apc_store($key, $value, $duration);
     }
 
     /**
@@ -107,7 +107,7 @@ class XoopsCacheApc extends XoopsCacheEngine
      */
     public function delete($key)
     {
-        return apc_delete($key);
+        return (bool) apc_delete($key);
     }
 
     /**
