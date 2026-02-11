@@ -30,7 +30,7 @@ class XoopsCache
     /**
      * Cache engine instances
      *
-     * @var array<string, XoopsCacheEngine|null>
+     * @var array<string, XoopsCacheEngineInterface|null>
      * @access protected
      */
     protected $engine = [];
@@ -132,7 +132,10 @@ class XoopsCache
             if (file_exists($file = __DIR__ . '/' . strtolower($name) . '.php')) {
                 include $file;
             } else {
-                trigger_error('File :' . $file . ' not found in file : ' . __FILE__ . ' at line: ' . __LINE__, E_USER_WARNING);
+                trigger_error(
+                    'File: ' . basename($file) . ' not found in file: ' . basename(__FILE__) . ' at line: ' . __LINE__,
+                    E_USER_WARNING
+                );
                 return false;
             }
         }
@@ -143,7 +146,7 @@ class XoopsCache
     /**
      * Set the cache configuration to use
      *
-     * @param  string|array $name     Name of the configuration
+     * @param  string|array|null $name     Name of the configuration
      * @param  array  $settings Optional associative array of settings passed to the engine
      * @return array|false  (engine, settings) on success, false on failure
      * @access public
@@ -254,8 +257,12 @@ class XoopsCache
         }
 
         if ($_this->engine[$name]->init($settings)) {
-            // Safely check probability before using it
-            $probability = $_this->engine[$name]->settings['probability'] ?? 0;
+            // Safely check probability before using it via the engine's settings() method
+            $engineSettings = $_this->engine[$name]->settings();
+            $probability    = 0;
+            if (is_array($engineSettings) && isset($engineSettings['probability'])) {
+                $probability = (int)$engineSettings['probability'];
+            }
             if ($probability > 0 && time() % $probability === 0) {
                 $_this->engine[$name]->gc();
             }
@@ -287,7 +294,7 @@ class XoopsCache
 
         $engine = $config['engine'];
 
-// Engine configuration is valid, but runtime initialization may have failed
+        // Engine configuration is valid, but runtime initialization may have failed
         if (!$_this->isInitialized($engine)) {
             trigger_error("Cache engine {$engine} not initialized for garbage collection", E_USER_WARNING);
             return false;
@@ -342,7 +349,7 @@ class XoopsCache
         $settings = $config['settings'];
 
         if (!$_this->isInitialized($engine)) {
-            trigger_error('Cache write not initialized: ' . $engine);
+            trigger_error('Cache write not initialized: ' . $engine, E_USER_WARNING);
 
             return false;
         }
