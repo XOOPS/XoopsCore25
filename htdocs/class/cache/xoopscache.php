@@ -235,6 +235,13 @@ class XoopsCache
             }
             $_this->name           = $name;
             $_this->configs[$name] = $_this->settings($engine);
+        } elseif (!empty($settings)) {
+            // Same config name but caller supplied overrides – re-init the engine
+            // so the returned {engine, settings} pair stays consistent.
+            if ($_this->isInitialized($engine)) {
+                $_this->engine[$engine]->init($settings);
+            }
+            $_this->configs[$name] = $_this->settings($engine);
         }
 
         $settings = $_this->configs[$name];
@@ -610,7 +617,9 @@ interface XoopsCacheEngineInterface
      * Read a key from the cache
      *
      * @param  string $key Identifier for the data
-     * @return mixed The cached data, or false if the data doesn't exist or has expired
+     * @return mixed The cached data, or a falsy value (such as false or null) if the data
+     *               doesn't exist or has expired. Implementations MUST NOT throw on cache
+     *               miss; callers SHOULD treat any falsy return value as a cache miss.
      */
     public function read($key);
 
