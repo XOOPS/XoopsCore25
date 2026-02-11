@@ -26,10 +26,10 @@ $adminObject->displayNavigation(\basename(__FILE__));
 // --- InfoBox: Module Status ---
 $adminObject->addInfoBox(\constant('CO_' . $moduleDirNameUpper . '_' . 'STATS_SUMMARY'));
 
-// Helper to format a two-column info line using XOOPS admin CSS tags
+// Helper to format a two-column info line
 $infoLine = static function ($label, $value, $color = 'green') {
-    return '<infolabel>' . $label . '</infolabel>'
-        . '<infotext><span style="font-weight: bold; color: ' . $color . ';">' . $value . '</span></infotext>';
+    return '<span style="display: inline-block; width: 200px;">' . $label . '</span>'
+        . '<span style="font-weight: bold; color: ' . $color . ';">' . $value . '</span>';
 };
 
 // PHP DebugBar library
