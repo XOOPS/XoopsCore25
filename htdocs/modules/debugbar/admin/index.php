@@ -26,46 +26,32 @@ $adminObject->displayNavigation(\basename(__FILE__));
 // --- InfoBox: Module Status ---
 $adminObject->addInfoBox(\constant('CO_' . $moduleDirNameUpper . '_' . 'STATS_SUMMARY'));
 
-// Helper to format a two-column info line
-$infoLine = static function ($label, $value, $color = 'green') {
-    return '<span style="display: inline-block; width: 200px;">' . $label . '</span>'
-        . '<span style="font-weight: bold; color: ' . $color . ';">' . $value . '</span>';
-};
-
-// PHP DebugBar library
+// Build status rows
 $hasDebugbar = \class_exists('DebugBar\StandardDebugBar');
-$adminObject->addInfoBoxLine(
-    $infoLine(_AM_DEBUGBAR_PHP_DEBUGBAR, $hasDebugbar ? _AM_DEBUGBAR_INSTALLED : _AM_DEBUGBAR_NOT_FOUND, $hasDebugbar ? 'green' : 'red'),
-    'information'
-);
-
-// Monolog library
-$hasMonolog = \class_exists('Monolog\Logger');
-$adminObject->addInfoBoxLine(
-    $infoLine(_AM_DEBUGBAR_MONOLOG, $hasMonolog ? _AM_DEBUGBAR_INSTALLED : _AM_DEBUGBAR_NOT_FOUND, $hasMonolog ? 'green' : 'red'),
-    'information'
-);
-
-// PHP Version
-$adminObject->addInfoBoxLine(
-    $infoLine(_AM_DEBUGBAR_PHP_VERSION, PHP_VERSION, 'green'),
-    'information'
-);
-
-// DebugBar Assets
+$hasMonolog  = \class_exists('Monolog\Logger');
 $assetsDir   = XOOPS_ROOT_PATH . '/modules/debugbar/assets';
 $assetsExist = \is_dir($assetsDir) && \count(\glob($assetsDir . '/*')) > 0;
-$adminObject->addInfoBoxLine(
-    $infoLine(_AM_DEBUGBAR_ASSETS, $assetsExist ? _AM_DEBUGBAR_COPIED : _AM_DEBUGBAR_NOT_COPIED, $assetsExist ? 'green' : 'orange'),
-    'information'
-);
+$hasRay      = \function_exists('ray');
 
-// Ray Integration
-$hasRay = \function_exists('ray');
-$adminObject->addInfoBoxLine(
-    $infoLine(_AM_DEBUGBAR_RAY, $hasRay ? _AM_DEBUGBAR_AVAILABLE : _AM_DEBUGBAR_NOT_INSTALLED, $hasRay ? 'green' : 'gray'),
-    'information'
-);
+$statusRows = [
+    [_AM_DEBUGBAR_PHP_DEBUGBAR, $hasDebugbar ? _AM_DEBUGBAR_INSTALLED : _AM_DEBUGBAR_NOT_FOUND, $hasDebugbar ? 'green' : 'red'],
+    [_AM_DEBUGBAR_MONOLOG,      $hasMonolog  ? _AM_DEBUGBAR_INSTALLED : _AM_DEBUGBAR_NOT_FOUND, $hasMonolog  ? 'green' : 'red'],
+    [_AM_DEBUGBAR_PHP_VERSION,  PHP_VERSION, 'green'],
+    [_AM_DEBUGBAR_ASSETS,       $assetsExist ? _AM_DEBUGBAR_COPIED : _AM_DEBUGBAR_NOT_COPIED,   $assetsExist ? 'green' : 'orange'],
+    [_AM_DEBUGBAR_RAY,          $hasRay      ? _AM_DEBUGBAR_AVAILABLE : _AM_DEBUGBAR_NOT_INSTALLED, $hasRay ? 'green' : 'gray'],
+];
+
+// Render as a single HTML table inside one info box line
+$html = '<table style="border-collapse: collapse; width: auto;">';
+foreach ($statusRows as $row) {
+    $html .= '<tr>'
+        . '<td style="padding: 2px 20px 2px 0; white-space: nowrap;">' . $row[0] . '</td>'
+        . '<td style="padding: 2px 0; font-weight: bold; color: ' . $row[2] . ';">' . $row[1] . '</td>'
+        . '</tr>';
+}
+$html .= '</table>';
+
+$adminObject->addInfoBoxLine($html, 'information');
 
 $adminObject->displayIndex();
 
