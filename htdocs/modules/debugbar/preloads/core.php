@@ -255,14 +255,14 @@ class DebugbarCorePreload extends XoopsPreloadItem
         }
 
         try {
-            /** @var \XoopsConfigHandler $config_handler */
-            $config_handler = xoops_getHandler('config');
-            /** @var \XoopsModuleHandler $module_handler */
-            $module_handler = xoops_getHandler('module');
-            if ($config_handler && $module_handler) {
-                $debugbarModule = $module_handler->getByDirname('debugbar');
+            /** @var \XoopsConfigHandler $configHandler */
+            $configHandler = xoops_getHandler('config');
+            /** @var \XoopsModuleHandler $moduleHandler */
+            $moduleHandler = xoops_getHandler('module');
+            if ($configHandler && $moduleHandler) {
+                $debugbarModule = $moduleHandler->getByDirname('debugbar');
                 if (is_object($debugbarModule)) {
-                    $config = $config_handler->getConfigsByCat(0, $debugbarModule->getVar('mid'));
+                    $config = $configHandler->getConfigsByCat(0, $debugbarModule->getVar('mid'));
                     return $config;
                 }
             }
