@@ -35,31 +35,36 @@ $infoLine = static function ($label, $value, $color = 'green') {
 // PHP DebugBar library
 $hasDebugbar = \class_exists('DebugBar\StandardDebugBar');
 $adminObject->addInfoBoxLine(
-    $infoLine(_AM_DEBUGBAR_PHP_DEBUGBAR, $hasDebugbar ? _AM_DEBUGBAR_INSTALLED : _AM_DEBUGBAR_NOT_FOUND, $hasDebugbar ? 'green' : 'red')
+    $infoLine(_AM_DEBUGBAR_PHP_DEBUGBAR, $hasDebugbar ? _AM_DEBUGBAR_INSTALLED : _AM_DEBUGBAR_NOT_FOUND, $hasDebugbar ? 'green' : 'red'),
+    'information'
 );
 
 // Monolog library
 $hasMonolog = \class_exists('Monolog\Logger');
 $adminObject->addInfoBoxLine(
-    $infoLine(_AM_DEBUGBAR_MONOLOG, $hasMonolog ? _AM_DEBUGBAR_INSTALLED : _AM_DEBUGBAR_NOT_FOUND, $hasMonolog ? 'green' : 'red')
+    $infoLine(_AM_DEBUGBAR_MONOLOG, $hasMonolog ? _AM_DEBUGBAR_INSTALLED : _AM_DEBUGBAR_NOT_FOUND, $hasMonolog ? 'green' : 'red'),
+    'information'
 );
 
 // PHP Version
 $adminObject->addInfoBoxLine(
-    $infoLine(_AM_DEBUGBAR_PHP_VERSION, PHP_VERSION, 'green')
+    $infoLine(_AM_DEBUGBAR_PHP_VERSION, PHP_VERSION, 'green'),
+    'information'
 );
 
 // DebugBar Assets
 $assetsDir   = XOOPS_ROOT_PATH . '/modules/debugbar/assets';
 $assetsExist = \is_dir($assetsDir) && \count(\glob($assetsDir . '/*')) > 0;
 $adminObject->addInfoBoxLine(
-    $infoLine(_AM_DEBUGBAR_ASSETS, $assetsExist ? _AM_DEBUGBAR_COPIED : _AM_DEBUGBAR_NOT_COPIED, $assetsExist ? 'green' : 'orange')
+    $infoLine(_AM_DEBUGBAR_ASSETS, $assetsExist ? _AM_DEBUGBAR_COPIED : _AM_DEBUGBAR_NOT_COPIED, $assetsExist ? 'green' : 'orange'),
+    'information'
 );
 
 // Ray Integration
 $hasRay = \function_exists('ray');
 $adminObject->addInfoBoxLine(
-    $infoLine(_AM_DEBUGBAR_RAY, $hasRay ? _AM_DEBUGBAR_AVAILABLE : _AM_DEBUGBAR_NOT_INSTALLED, $hasRay ? 'green' : 'gray')
+    $infoLine(_AM_DEBUGBAR_RAY, $hasRay ? _AM_DEBUGBAR_AVAILABLE : _AM_DEBUGBAR_NOT_INSTALLED, $hasRay ? 'green' : 'gray'),
+    'information'
 );
 
 $adminObject->displayIndex();
