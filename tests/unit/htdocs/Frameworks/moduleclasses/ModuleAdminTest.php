@@ -38,7 +38,7 @@ class ModuleAdminTest extends TestCase
 
     protected function tearDown(): void
     {
-        unset($GLOBALS['xoTheme']);
+        unset($GLOBALS['xoTheme'], $GLOBALS['xoopsModule'], $GLOBALS['xoopsConfig']);
     }
 
     // ---------------------------------------------------------------

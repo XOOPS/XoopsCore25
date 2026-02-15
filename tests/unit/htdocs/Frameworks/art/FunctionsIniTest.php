@@ -266,7 +266,7 @@ class FunctionsIniTest extends TestCase
     public function loadFunctionsUsesArtAsDefaultDirname(): void
     {
         // Loading 'cache' should work (file exists)
-        $result = load_functions('cache', 'art');
+        load_functions('cache', 'art');
         $this->assertTrue(defined('FRAMEWORKS_ART_FUNCTIONS_CACHE'));
     }
 

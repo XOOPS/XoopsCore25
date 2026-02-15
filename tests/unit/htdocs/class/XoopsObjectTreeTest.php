@@ -572,7 +572,6 @@ class XoopsObjectTreeTest extends TestCase
     {
         // Build a tree with 10 root children, each with 2 sub-children
         $specs = [];
-        $id = 1;
         for ($i = 1; $i <= 10; $i++) {
             $specs[] = [$i, 0, "Root Child {$i}"];
         }

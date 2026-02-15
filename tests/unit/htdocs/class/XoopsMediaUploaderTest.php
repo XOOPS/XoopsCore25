@@ -325,24 +325,9 @@ class XoopsMediaUploaderTest extends TestCase
 
     public function testCheckMaxFileSizeReturnsTrueWhenNotSet(): void
     {
-        $uploader = $this->createUploader();
-        // Unset maxFileSize entirely
-        $ref = new ReflectionClass($uploader);
-        $prop = $ref->getProperty('maxFileSize');
-        $prop->setAccessible(true);
-
-        // Use unset trick via reflection on a fresh object that never had it set
-        $fresh = $ref->newInstanceWithoutConstructor();
-        // maxFileSize is declared as public $maxFileSize = 0 in the class,
-        // so it will always be "set". The check is `!isset($this->maxFileSize)`.
-        // With value 0, isset() returns true (0 is set). But the method checks !isset.
-        // A default-initialized property with value 0 IS set in PHP.
-        // So we need to genuinely unset it. We can do this via cast.
-        $arr = (array) $fresh;
-        // Actually, the simplest way: the method returns true when maxFileSize is not set.
-        // Since the property is declared with = 0, it's always set. Skip this edge case.
-        // Instead, test the normal paths:
-        $this->assertTrue(true); // placeholder - we test the real paths below
+        $this->markTestIncomplete(
+            'Cannot test unset maxFileSize edge case — property is declared with default value 0, so it is always set in PHP.'
+        );
     }
 
     public function testCheckMaxFileSizeReturnsTrueWhenSizeIsWithinLimit(): void

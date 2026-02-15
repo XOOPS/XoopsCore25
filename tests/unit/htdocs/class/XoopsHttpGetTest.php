@@ -134,7 +134,7 @@ class XoopsHttpGetTest extends TestCase
             'url with query string'  => ['https://example.com/search?q=test&page=1'],
             'url with fragment'      => ['https://example.com/page#section'],
             'url with port'          => ['https://example.com:8080/api'],
-            'url with auth'          => ['https://user:pass@example.com'],
+            'url with auth'          => ['https://user:placeholder@example.com'],
             'ip address url'         => ['http://192.168.1.1/status'],
             'localhost url'          => ['http://localhost/test'],
             'ftp url'                => ['ftp://files.example.com/pub/file.txt'],

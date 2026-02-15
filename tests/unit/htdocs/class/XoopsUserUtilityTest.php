@@ -62,7 +62,9 @@ class XoopsUserUtilityTest extends TestCase
         // Ensure ProxyCheck does not interfere: clear xoopsConfig proxy_env
         // so ProxyCheck::getProxyEnvConfig() returns false and fromRequest()
         // uses REMOTE_ADDR directly.
-        unset($GLOBALS['xoopsConfig']['proxy_env']);
+        if (isset($GLOBALS['xoopsConfig'])) {
+            unset($GLOBALS['xoopsConfig']['proxy_env']);
+        }
     }
 
     protected function tearDown(): void
