@@ -65,7 +65,7 @@ define('_US_SORRYNOTFOUND', 'Sorry, no corresponding user info was found.');
 define('_US_NEWPWDREQ', 'New Password Request at %s');
 define('_US_YOURACCOUNT', 'Your account at %s');
 define('_US_MAILPWDNG', 'mail_password: could not update user entry. Contact the Administrator');
-define('_US_PWDMAILED', 'If an account matching the provided email address exists, you will receive an email with instructions to reset your password. If you do not receive an email within a few minutes, please check your spam/junk folder or contact the site administrator.');
+define('_US_PWDMAILED', 'If an account exists for this email, you will receive password reset instructions. Check your spam folder if needed.');
 define('_US_CONFMAIL', 'Confirmation email for %s mailed.');
 define('_US_ACTVMAILNG', 'Failed sending notification email to %s');
 define('_US_ACTVMAILOK', 'Notification email to %s sent.');
