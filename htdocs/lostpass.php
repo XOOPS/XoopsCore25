@@ -72,7 +72,7 @@ if (empty($getuser)) {
             include $GLOBALS['xoops']->path('footer.php');
             exit();
         }
-        redirect_header('user.php', 3, sprintf(_US_PWDMAILED, $getuser[0]->getVar('uname')), false);
+        redirect_header('user.php', 3, _US_PWDMAILED, false);
         // If no Code, send it
     } else {
         $xoopsMailer = xoops_getMailer();
