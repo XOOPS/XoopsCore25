@@ -80,7 +80,7 @@ Key design principles:
 
 ## File Structure
 
-```
+```text
 modern/
 ├── modern.php                    # Theme class (XoopsGuiModern extends XoopsSystemGui)
 ├── theme.tpl                     # Root HTML document template
@@ -282,13 +282,13 @@ These variables are assigned by `modern.php` and available in all templates:
 ### Adding a Template Partial
 
 1. Create `xotpl/xo_mypartial.tpl`
-2. Include it in `theme.tpl`:
+1. Include it in `theme.tpl`:
 
 ```smarty
 <{include file="$theme_tpl/xo_mypartial.tpl"}>
 ```
 
-3. Assign any needed variables in `modern.php`:
+1. Assign any needed variables in `modern.php`:
 
 ```php
 $tpl->assign('my_data', $data);
@@ -504,7 +504,7 @@ When the sidebar collapses (`body.sidebar-open` on desktop), `--sidebar-width` e
 
 ## JavaScript Architecture
 
-All JavaScript is vanilla ES5 + jQuery (no ES6 modules, no build step). Each file is a self-contained IIFE or plain script.
+All JavaScript is ES2015+ (uses `const`, `let`, arrow functions) with jQuery. No build step or transpilation — scripts are loaded directly by the browser. Each file is a self-contained IIFE or plain script.
 
 ### Load Order
 
@@ -540,7 +540,7 @@ flowchart LR
 
 ### theme.js — Core Behaviors
 
-```
+```text
 initDarkMode()       → Reads/writes xoops_dark_mode cookie, toggles body.dark-mode
 initSidebarToggle()  → Toggles body.sidebar-open on hamburger click
 initHelpToggle()     → Shows/hides .tips and .xo-help-content, persists in cookie
@@ -552,7 +552,7 @@ getCookie(name)            → Standard cookie reader
 
 ### charts.js — Chart.js Integration
 
-```
+```text
 initCharts()                → Entry point, waits for Chart.js to load (500ms retry)
 initUserRegistrationChart() → Line chart from window.XOOPS_DASHBOARD_DATA.userChart
 initUserGroupChart()        → Doughnut chart from .groupStats
@@ -567,7 +567,7 @@ updateChartsForTheme()      → Updates all chart colors for dark/light mode
 
 ### customizer.js — Settings Panel
 
-```
+```text
 applyColorScheme(theme)  → Sets --primary, --primary-dark, --primary-light on :root
 setCookie(name, val, days) → Own cookie helper (SameSite=Lax + Secure)
 ```
@@ -1077,14 +1077,14 @@ The header template is `xo_head.tpl`. Common modifications:
 ### Adding a New Template Partial
 
 1. Create `xotpl/xo_mypartial.tpl` with your Smarty markup
-2. Include it in `theme.tpl` at the desired position:
+1. Include it in `theme.tpl` at the desired position:
 
 ```smarty
 <{include file="$theme_tpl/xo_mypartial.tpl"}>
 ```
 
-3. Assign any required variables in `modern.php`
-4. Clear Smarty cache after adding
+1. Assign any required variables in `modern.php`
+1. Clear Smarty cache after adding
 
 ---
 
@@ -1276,7 +1276,7 @@ Requires Chart.js 4.x. The theme auto-detects local file at `xoops_lib/Framework
 - Safari (latest 2 versions)
 - Mobile Chrome/Safari
 
-CSS custom properties require IE11+ (IE11 has no support — the theme does not support IE11).
+CSS custom properties require modern browsers. IE11 is **not supported** (it lacks CSS custom property support entirely).
 
 ---
 

@@ -266,7 +266,7 @@ The theme ships with pre-built widgets for 11 modules. To activate a widget:
 
 For example, to enable the Publisher widget:
 
-```
+```text
 Copy from: modules/system/themes/modern/widgets/publisher/class/ModernThemeWidget.php
 Copy to:   modules/publisher/class/ModernThemeWidget.php
 ```
@@ -330,7 +330,7 @@ Some XOOPS admin pages have built-in help content (blue "tips" boxes). In the Mo
 
 - Help sections are **hidden by default** to keep the interface clean
 - Click the **Help** link (if visible) to show help content
-- Click **Hide Help** to collapse it again
+- Click **Hide Help** to collapse it
 - Your preference is saved — if you show help on one page, it stays visible across pages until you hide it again
 
 ---
@@ -389,7 +389,7 @@ The page reloads automatically after reset.
 
 If the Customizer is inaccessible, clear these cookies manually in your browser's developer tools:
 
-```
+```text
 xoops_color_scheme
 xoops_dark_mode
 xoops_show_kpis
