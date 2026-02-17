@@ -438,6 +438,10 @@ Clear both the browser cache and the XOOPS Smarty cache (System Admin > Maintena
 
 The theme was designed for 2.5.12 but may work on 2.5.11. The widget system requires modules to have the `ModernThemeWidget.php` file, which is independent of XOOPS version.
 
+### What browsers are supported?
+
+The theme requires a modern browser: Chrome, Edge, Firefox, or Safari (latest 2 versions each). Mobile Chrome and Safari are also supported. **IE11 is not supported** — the theme relies on CSS custom properties which IE11 cannot process.
+
 ---
 
 **Enjoy your modern XOOPS admin experience!**
