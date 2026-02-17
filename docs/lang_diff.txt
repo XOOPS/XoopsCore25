@@ -16,6 +16,16 @@ Below are language differences from a version to next version.
 - updated define('_PM_EMAIL_DESC', 'Dear %s, this is a message transfered from your account at ' . $GLOBALS['xoopsConfig']['sitename']);
 - updated define('_PM_EMAIL_DESC', 'Dear %s, this is a message transferred from your account at ' . $GLOBALS['xoopsConfig']['sitename']);
 
+/htdocs/language/english/user.php
+- updated define('_US_SORRYNOTFOUND', 'Sorry, no corresponding user info was found.');
+- updated define('_US_SORRYNOTFOUND', 'If an account exists for this email, you will receive password reset instructions. Check your spam folder if needed or contact the site administrator.');
+
+- updated define('_US_PWDMAILED', 'Password for %s mailed.');
+- updated define('_US_PWDMAILED', 'If an account exists for this email, you will receive password reset instructions. Check your spam folder if needed or contact the site administrator.');
+
+- updated define('_US_CONFMAIL', 'Confirmation email for %s mailed.');
+- updated define('_US_CONFMAIL', 'If an account exists for this email, you will receive password reset instructions. Check your spam folder if needed or contact the site administrator.');
+
 /htdocs/class/xoopseditor/tinymce5/language/english.php
 - renamed _XOOPS_EDITOR_TINYMCE_LANGUAGE5 to _XOOPS_EDITOR_TINYMCE5_LANGUAGE
 
