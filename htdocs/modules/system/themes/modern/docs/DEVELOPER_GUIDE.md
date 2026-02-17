@@ -179,6 +179,37 @@ flowchart TD
     G --> G4["customizer.js<br/>Restores cookie preferences"]
 ```
 
+### Component Interaction
+
+The same lifecycle viewed as inter-component communication:
+
+```mermaid
+sequenceDiagram
+    participant Admin as Admin User
+    participant Browser as Browser
+    participant Theme as XoopsGuiModern
+    participant WidgetLoader as ModernThemeWidgetLoader
+    participant Module as Module ModernThemeWidget
+    participant DB as Database
+    participant Chart as Chart.js
+
+    Admin->>Browser: Open admin dashboard
+    Browser->>Theme: Request header()/render
+    Theme->>DB: collect system/user/module/content stats
+    Theme->>WidgetLoader: loadWidgets()
+    WidgetLoader->>DB: enumerate active modules
+    WidgetLoader->>Module: include & instantiate ModernThemeWidget
+    Module->>DB: getWidgetData() queries
+    Module-->>WidgetLoader: widget array or false
+    WidgetLoader->>WidgetLoader: validate, augment (priority, module), sort
+    WidgetLoader-->>Theme: aggregated widgets
+    Theme-->>Browser: render dashboard + window.XOOPS_DASHBOARD_DATA
+    Browser->>Chart: charts.js initializes with data
+    Browser->>Browser: customizer interactions persist cookies
+    Browser->>Chart: call XOOPS_CHARTS.rebuildContentChart(selected)
+    Chart-->>Browser: update chart visuals
+```
+
 ---
 
 ## Template System
