@@ -112,7 +112,7 @@ class TdmdownloadsModernThemeWidget implements ModernThemeWidgetInterface
                     $statusClass = 'warning';
                 }
                 $recent[] = [
-                    'title'        => $row['title'],
+                    'title'        => htmlspecialchars($row['title'], ENT_QUOTES, 'UTF-8'),
                     'date'         => $row['date'],
                     'status'       => $statusLabel,
                     'status_class' => $statusClass,

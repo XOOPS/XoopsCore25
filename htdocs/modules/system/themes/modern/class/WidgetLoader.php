@@ -53,19 +53,23 @@ class ModernThemeWidgetLoader
      */
     public function loadWidgets()
     {
+        /** @var XoopsModuleHandler $module_handler */
         $module_handler = xoops_getHandler('module');
 
         $criteria = new CriteriaCompo();
         $criteria->add(new Criteria('isactive', 1));
 
         $modules = $module_handler->getObjects($criteria);
+        $modulesBase = realpath(XOOPS_ROOT_PATH . '/modules/');
 
         foreach ($modules as $module) {
             $dirname = $module->getVar('dirname');
             $widgetFile = XOOPS_ROOT_PATH . '/modules/' . $dirname . '/class/ModernThemeWidget.php';
 
-            if (file_exists($widgetFile)) {
-                require_once $widgetFile;
+            // Validate resolved path is within the modules directory
+            $realPath = realpath($widgetFile);
+            if ($realPath && strpos($realPath, $modulesBase . DIRECTORY_SEPARATOR) === 0) {
+                require_once $realPath;
 
                 $className = ucfirst($dirname) . 'ModernThemeWidget';
 

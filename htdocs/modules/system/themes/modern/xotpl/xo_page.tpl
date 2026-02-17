@@ -5,7 +5,7 @@
             <{* Module name header with inline icon toolbar *}>
             <div id="xo-modname">
                 <{if $modname}>
-                    <span><{$modname}></span>
+                    <span><{$modname|escape:'html'}></span>
                 <{/if}>
 
                 <{* Horizontal Icon Toolbar - inline with module name *}>
@@ -40,11 +40,11 @@
             <{foreach item=module from=$modules}>
                 <div class="module-card">
                     <{if $module.icon}>
-                        <img src="<{$module.icon}>" alt="<{$module.title}>" class="module-icon">
+                        <img src="<{$module.icon|escape:'html'}>" alt="<{$module.title|escape:'html'}>" class="module-icon">
                     <{/if}>
-                    <h3 class="module-title"><{$module.title}></h3>
+                    <h3 class="module-title"><{$module.title|escape:'html'}></h3>
                     <{if $module.description}>
-                        <p class="module-description"><{$module.description}></p>
+                        <p class="module-description"><{$module.description|escape:'html'}></p>
                     <{/if}>
                     <a href="<{$module.link}>" class="module-link"><{$smarty.const._MODERN_OPEN}></a>
                 </div>

@@ -101,9 +101,9 @@ class NewbbModernThemeWidget implements ModernThemeWidgetInterface
         if ($result) {
             while ($row = $xoopsDB->fetchArray($result)) {
                 $recent[] = [
-                    'title'  => $row['subject'],
+                    'title'  => htmlspecialchars($row['subject'], ENT_QUOTES, 'UTF-8'),
                     'date'   => $row['post_time'],
-                    'author' => $row['poster_name'],
+                    'author' => htmlspecialchars($row['poster_name'], ENT_QUOTES, 'UTF-8'),
                 ];
             }
         }

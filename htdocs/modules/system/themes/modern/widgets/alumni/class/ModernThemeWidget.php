@@ -103,9 +103,9 @@ class AlumniModernThemeWidget implements ModernThemeWidgetInterface
                 $name = trim($row['first_name'] . ' ' . $row['last_name']);
                 $isActive = ($row['status'] === 'active');
                 $recent[] = [
-                    'title'        => $name ?: '(unnamed)',
+                    'title'        => htmlspecialchars($name ?: '(unnamed)', ENT_QUOTES, 'UTF-8'),
                     'date'         => $row['created'],
-                    'author'       => $row['graduation_year'] ? 'Class of ' . $row['graduation_year'] : '',
+                    'author'       => $row['graduation_year'] ? 'Class of ' . htmlspecialchars($row['graduation_year'], ENT_QUOTES, 'UTF-8') : '',
                     'status'       => $row['status'],
                     'status_class' => $isActive ? 'success' : 'warning',
                 ];

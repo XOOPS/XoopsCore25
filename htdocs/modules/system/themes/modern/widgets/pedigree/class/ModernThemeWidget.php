@@ -106,8 +106,8 @@ class PedigreeModernThemeWidget implements ModernThemeWidgetInterface
             while ($row = $xoopsDB->fetchArray($result)) {
                 $breed = trim($row['breed'] . ($row['species'] ? ' (' . $row['species'] . ')' : ''));
                 $recent[] = [
-                    'title'        => $row['name'] ?: '(unnamed)',
-                    'author'       => $breed ?: '',
+                    'title'        => htmlspecialchars($row['name'] ?: '(unnamed)', ENT_QUOTES, 'UTF-8'),
+                    'author'       => htmlspecialchars($breed ?: '', ENT_QUOTES, 'UTF-8'),
                     'date'         => strtotime($row['created_at']),
                     'status'       => $row['is_published'] ? 'published' : 'draft',
                     'status_class' => $row['is_published'] ? 'success' : 'warning',

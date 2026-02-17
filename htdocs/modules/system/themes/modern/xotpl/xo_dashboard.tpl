@@ -90,52 +90,52 @@
                     <tbody>
                         <tr>
                             <td><strong>PHP</strong></td>
-                            <td><{$lang_php_version}></td>
+                            <td><{$lang_php_version|escape:'html'}></td>
                             <td><span class="badge success"><{$smarty.const._MODERN_STATUS_ACTIVE}></span></td>
                         </tr>
                         <tr>
                             <td><strong>MySQL</strong></td>
-                            <td><{$lang_mysql_version}></td>
+                            <td><{$lang_mysql_version|escape:'html'}></td>
                             <td><span class="badge success"><{$smarty.const._MODERN_STATUS_ACTIVE}></span></td>
                         </tr>
                         <tr>
                             <td><strong>Smarty</strong></td>
-                            <td><{$lang_smarty_version}></td>
+                            <td><{$lang_smarty_version|escape:'html'}></td>
                             <td><span class="badge success"><{$smarty.const._MODERN_STATUS_ACTIVE}></span></td>
                         </tr>
                         <tr>
                             <td><strong><{$smarty.const._MODERN_SERVER_API}></strong></td>
-                            <td><{$lang_server_api}></td>
+                            <td><{$lang_server_api|escape:'html'}></td>
                             <td><span class="badge info"><{$smarty.const._MODERN_STATUS_RUNNING}></span></td>
                         </tr>
                         <tr>
                             <td><strong><{$smarty.const._MODERN_OPERATING_SYSTEM}></strong></td>
-                            <td><{$lang_os_name}></td>
+                            <td><{$lang_os_name|escape:'html'}></td>
                             <td><span class="badge info"><{$smarty.const._MODERN_STATUS_ACTIVE}></span></td>
                         </tr>
                         <tr>
                             <td><strong><{$smarty.const._MODERN_MEMORY_LIMIT}></strong></td>
-                            <td><{$memory_limit}></td>
+                            <td><{$memory_limit|escape:'html'}></td>
                             <td><span class="badge success"><{$smarty.const._MODERN_STATUS_GOOD}></span></td>
                         </tr>
                         <tr>
                             <td><strong><{$smarty.const._MODERN_UPLOAD_MAX_SIZE}></strong></td>
-                            <td><{$upload_max_filesize}></td>
+                            <td><{$upload_max_filesize|escape:'html'}></td>
                             <td><span class="badge success"><{$smarty.const._MODERN_STATUS_CONFIGURED}></span></td>
                         </tr>
                         <tr>
                             <td><strong><{$smarty.const._MODERN_MAX_EXECUTION_TIME}></strong></td>
-                            <td><{$max_execution_time}>s</td>
+                            <td><{$max_execution_time|escape:'html'}>s</td>
                             <td><span class="badge success"><{$smarty.const._MODERN_STATUS_ADEQUATE}></span></td>
                         </tr>
                         <tr>
                             <td><strong><{$smarty.const._MODERN_POST_MAX_SIZE}></strong></td>
-                            <td><{$post_max_size}></td>
+                            <td><{$post_max_size|escape:'html'}></td>
                             <td><span class="badge success"><{$smarty.const._MODERN_STATUS_CONFIGURED}></span></td>
                         </tr>
                         <tr>
                             <td><strong><{$smarty.const._MODERN_FILE_UPLOADS}></strong></td>
-                            <td><{$file_uploads}></td>
+                            <td><{$file_uploads|escape:'html'}></td>
                             <td><span class="badge success"><{$smarty.const._MODERN_STATUS_ENABLED}></span></td>
                         </tr>
                     </tbody>
@@ -160,8 +160,8 @@
                     <tbody>
                         <{foreach from=$composerPackages item=package}>
                         <tr>
-                            <td><{$package.name}></td>
-                            <td><{$package.version}></td>
+                            <td><{$package.name|escape:'html'}></td>
+                            <td><{$package.version|escape:'html'}></td>
                         </tr>
                         <{/foreach}>
                     </tbody>

@@ -106,9 +106,9 @@ class RealestateModernThemeWidget implements ModernThemeWidgetInterface
                 $isActive = ($row['status'] === 'for_sale' || $row['status'] === 'for_rent');
                 $location = $row['city'] ?: '';
                 $recent[] = [
-                    'title'        => $row['title'] ?: $row['property_type'],
+                    'title'        => htmlspecialchars($row['title'] ?: $row['property_type'], ENT_QUOTES, 'UTF-8'),
                     'date'         => $row['created_at'],
-                    'author'       => $location,
+                    'author'       => htmlspecialchars($location, ENT_QUOTES, 'UTF-8'),
                     'status'       => str_replace('_', ' ', $row['status']),
                     'status_class' => $isActive ? 'success' : 'warning',
                 ];

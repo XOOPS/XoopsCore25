@@ -44,7 +44,7 @@ class ModernThemeCompatibilityTest
      * and dependencies. Prints a summary with pass/fail counts and
      * exits with code 0 on success or 1 on failure.
      *
-     * @return void
+     * @return int Exit code: 0 on success, 1 on failure
      */
     public function runAll()
     {
@@ -227,6 +227,7 @@ class ModernThemeCompatibilityTest
             // Check for common mistakes
             if (strpos($content, '{$') !== false && strpos($content, '<{$') === false) {
                 $this->warnings[] = "Possible incorrect Smarty syntax in: " . basename($template);
+                $syntaxOk = false;
             }
         }
 
@@ -357,8 +358,6 @@ class ModernThemeCompatibilityTest
     {
         echo "→ Testing external dependencies... ";
 
-        $depsOk = true;
-
         // Chart.js should be loaded via CDN (check in template)
         $themeFile = __DIR__ . '/../modern.php';
         $content = file_get_contents($themeFile);
@@ -425,19 +424,20 @@ class ModernThemeCompatibilityTest
             echo "║              ✓ ALL TESTS PASSED!                         ║\n";
             echo "║     Theme is compatible with current XOOPS version       ║\n";
             echo "╚══════════════════════════════════════════════════════════╝\n";
-            exit(0);
         } else {
             echo "╔══════════════════════════════════════════════════════════╗\n";
             echo "║              ✗ SOME TESTS FAILED                         ║\n";
             echo "║          Please fix errors before deployment            ║\n";
             echo "╚══════════════════════════════════════════════════════════╝\n";
-            exit(1);
         }
+
+        return $this->failed === 0 ? 0 : 1;
     }
 }
 
 // Run tests if executed directly
 if (php_sapi_name() === 'cli') {
     $tester = new ModernThemeCompatibilityTest();
-    $tester->runAll();
+    $exitCode = $tester->runAll();
+    exit($exitCode);
 }

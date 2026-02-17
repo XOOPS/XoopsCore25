@@ -112,7 +112,7 @@ class XblogModernThemeWidget implements ModernThemeWidgetInterface
             while ($row = $xoopsDB->fetchArray($result)) {
                 $isPublished = ($row['status'] === 'published');
                 $recent[] = [
-                    'title'        => $row['title'] ?: '(untitled)',
+                    'title'        => htmlspecialchars($row['title'] ?: '(untitled)', ENT_QUOTES, 'UTF-8'),
                     'date'         => strtotime($row['created_at']),
                     'status'       => $row['status'],
                     'status_class' => $isPublished ? 'success' : 'warning',

@@ -97,7 +97,7 @@ class NewsModernThemeWidget implements ModernThemeWidgetInterface
         if ($result) {
             while ($row = $xoopsDB->fetchArray($result)) {
                 $recent[] = [
-                    'title'        => $row['title'],
+                    'title'        => htmlspecialchars($row['title'], ENT_QUOTES, 'UTF-8'),
                     'date'         => $row['created'],
                     'status'       => $row['published'] > 0 ? 'published' : 'pending',
                     'status_class' => $row['published'] > 0 ? 'success' : 'warning',

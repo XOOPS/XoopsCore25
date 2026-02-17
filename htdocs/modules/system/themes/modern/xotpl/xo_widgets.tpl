@@ -6,7 +6,7 @@
         <{if is_array($widget)}>
         <div class="widget-card">
             <div class="widget-header">
-                <h3 class="widget-title"><{if $widget.icon}><{$widget.icon}> <{/if}><{$widget.title|escape:'html'}></h3>
+                <h3 class="widget-title"><{if $widget.icon}><{$widget.icon|escape:'html'}> <{/if}><{$widget.title|escape:'html'}></h3>
                 <{if !empty($widget.admin_url)}>
                     <a href="<{$widget.admin_url|escape:'html'}>" class="widget-link"><{$smarty.const._MODERN_VIEW_ALL}> &rarr;</a>
                 <{/if}>
@@ -16,7 +16,7 @@
                 <div class="widget-stats">
                     <{foreach key=stat_key item=stat_val from=$widget.stats}>
                     <div class="widget-stat">
-                        <div class="widget-stat-value"><{$stat_val}></div>
+                        <div class="widget-stat-value"><{$stat_val|escape:'html'}></div>
                         <div class="widget-stat-label"><{$stat_key|replace:'_':' '|capitalize}></div>
                     </div>
                     <{/foreach}>

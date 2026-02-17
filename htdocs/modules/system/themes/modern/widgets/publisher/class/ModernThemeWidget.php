@@ -119,7 +119,7 @@ class PublisherModernThemeWidget implements ModernThemeWidgetInterface
                         break;
                 }
                 $recent[] = [
-                    'title'        => $row['title'],
+                    'title'        => htmlspecialchars($row['title'], ENT_QUOTES, 'UTF-8'),
                     'date'         => $row['datesub'],
                     'status'       => $statusLabel,
                     'status_class' => $statusClass,

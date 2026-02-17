@@ -127,8 +127,8 @@ class ProtectorModernThemeWidget implements ModernThemeWidgetInterface
         if ($result) {
             while ($row = $xoopsDB->fetchArray($result)) {
                 $recent[] = [
-                    'title'        => $row['type'],
-                    'author'       => $row['ip'],
+                    'title'        => htmlspecialchars($row['type'], ENT_QUOTES, 'UTF-8'),
+                    'author'       => htmlspecialchars($row['ip'], ENT_QUOTES, 'UTF-8'),
                     'date'         => strtotime($row['timestamp']),
                     'status'       => 'blocked',
                     'status_class' => 'warning',

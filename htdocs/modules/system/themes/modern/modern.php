@@ -188,8 +188,8 @@ class XoopsGuiModern extends XoopsSystemGui
         // Get user registrations by month for the last 6 months
         $userChartData = [];
         for ($i = 5; $i >= 0; $i--) {
-            $month_start = mktime(0, 0, 0, date('n') - $i, 1, date('Y'));
-            $month_end = mktime(23, 59, 59, date('n') - $i + 1, 0, date('Y'));
+            $month_start = mktime(0, 0, 0, (int)date('n') - $i, 1, (int)date('Y'));
+            $month_end = mktime(23, 59, 59, (int)date('n') - $i + 1, 0, (int)date('Y'));
 
             $result = $xoopsDB->query("SELECT COUNT(*) FROM " . $xoopsDB->prefix('users') .
                                      " WHERE user_regdate >= $month_start AND user_regdate < $month_end");
@@ -229,6 +229,7 @@ class XoopsGuiModern extends XoopsSystemGui
      */
     private function getModuleStats(&$tpl)
     {
+        /** @var XoopsModuleHandler $module_handler */
         $module_handler = xoops_getHandler('module');
         $criteria = new CriteriaCompo();
         $criteria->add(new Criteria('hasmain', 1));
@@ -342,6 +343,7 @@ class XoopsGuiModern extends XoopsSystemGui
         include __DIR__ . '/menu.php';
 
         // Build system services list (always available for header toolbar)
+        /** @var array $adminmenu Populated by menu.php include above */
         $system_services = isset($adminmenu) ? $adminmenu : [];
         foreach (array_keys($system_services) as $item) {
             $system_services[$item]['link'] = empty($system_services[$item]['absolute']) ? XOOPS_URL . '/modules/system/' . $system_services[$item]['link'] : $system_services[$item]['link'];

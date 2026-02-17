@@ -102,9 +102,9 @@ class JobsModernThemeWidget implements ModernThemeWidgetInterface
             while ($row = $xoopsDB->fetchArray($result)) {
                 $isActive = ($row['status'] === 'active' || $row['status'] === '1');
                 $recent[] = [
-                    'title'        => $row['title'],
+                    'title'        => htmlspecialchars($row['title'], ENT_QUOTES, 'UTF-8'),
                     'date'         => $row['created'],
-                    'author'       => $row['location'] ?: '',
+                    'author'       => htmlspecialchars($row['location'] ?: '', ENT_QUOTES, 'UTF-8'),
                     'status'       => $isActive ? 'active' : 'closed',
                     'status_class' => $isActive ? 'success' : 'warning',
                 ];

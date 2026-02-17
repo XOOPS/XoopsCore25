@@ -102,7 +102,7 @@ class Vision2026ModernThemeWidget implements ModernThemeWidgetInterface
             while ($row = $xoopsDB->fetchArray($result)) {
                 $isPublished = ($row['status'] === 'published');
                 $recent[] = [
-                    'title'        => $row['title'],
+                    'title'        => htmlspecialchars($row['title'], ENT_QUOTES, 'UTF-8'),
                     'date'         => strtotime($row['created_at']),
                     'status'       => $row['status'],
                     'status_class' => $isPublished ? 'success' : 'warning',
