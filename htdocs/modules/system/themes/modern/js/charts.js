@@ -206,9 +206,13 @@
             card.style.display = data.length > 0 ? '' : 'none';
         }
 
+        // Nothing to show — bail after hiding the card
+        if (data.length === 0) {
+            return;
+        }
+
         // If chart was never created (e.g. all modules were deselected on load), create it now
         if (!charts.contentChart) {
-            if (data.length === 0) return;
             buildContentChart(canvas, data);
             updateChartsForTheme();
             return;

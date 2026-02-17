@@ -38,11 +38,14 @@ require_once $GLOBALS['xoops']->path('/class/xoopslists.php');
 include_once $GLOBALS['xoops']->path('/modules/system/constants.php');
 
 $admin_dir = $GLOBALS['xoops']->path('/modules/system/admin');
+$realAdminDir = realpath($admin_dir);
 $dirlist   = XoopsLists::getDirListAsArray($admin_dir);
 $index     = 0;
 foreach ($dirlist as $file) {
-    if (file_exists($admin_dir . '/' . $file . '/xoops_version.php')) {
-        include $admin_dir . '/' . $file . '/xoops_version.php';
+    $versionFile = $admin_dir . '/' . $file . '/xoops_version.php';
+    $realVersionPath = realpath($versionFile);
+    if ($realVersionPath && $realAdminDir && strpos($realVersionPath, $realAdminDir . DIRECTORY_SEPARATOR) === 0) {
+        include $realVersionPath;
         if ($modversion['hasAdmin']) {
             if (xoops_getModuleOption('active_' . $file, 'system')) {
                 $category = isset($modversion['category']) ? (int)$modversion['category'] : 0;
