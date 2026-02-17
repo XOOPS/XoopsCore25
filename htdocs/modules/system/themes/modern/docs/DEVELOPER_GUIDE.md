@@ -524,19 +524,18 @@ flowchart LR
         CU["customizer.js\nSettings panel,\ncookie management"]
     end
 
-    JQ --> TH --> DA --> CH --> CU
-    CJ --> CH
+    CJ --> JQ --> TH --> DA --> CH --> CU
 
     style JQ fill:#f59e0b,color:#fff
     style CJ fill:#f59e0b,color:#fff
 ```
 
+1. `Chart.js` (local via `browse.php` or CDN fallback)
 1. `jQuery` (from XOOPS core Frameworks)
-2. `Chart.js` (local or CDN fallback)
-3. `theme.js` — Core UI behaviors
-4. `dashboard.js` — Table interactions
-5. `charts.js` — Chart initialization
-6. `customizer.js` — Settings panel
+1. `theme.js` — Core UI behaviors
+1. `dashboard.js` — Table interactions
+1. `charts.js` — Chart initialization
+1. `customizer.js` — Settings panel
 
 ### theme.js — Core Behaviors
 
@@ -1248,7 +1247,7 @@ Checks file existence, PHP syntax, CSS/JS structure, and image assets.
 
 ### PHP Version
 
-The theme requires PHP 7.4+ and is tested through PHP 8.4. Avoid:
+The theme requires PHP 7.4+ and is tested through PHP 8.5. Avoid:
 - `match` expressions (PHP 8.0+)
 - Named arguments (PHP 8.0+)
 - `enum` (PHP 8.1+)
@@ -1267,7 +1266,7 @@ Designed for XOOPS 2.5.12. The theme relies on:
 
 ### Chart.js
 
-Requires Chart.js 4.x. The theme auto-detects local file at `xoops_lib/Frameworks/chartjs/chart.min.js` and falls back to jsDelivr CDN. Charts degrade gracefully — if Chart.js fails to load, the canvas elements simply remain blank with no JavaScript errors (the init function retries once then gives up).
+Requires Chart.js 4.x. The theme auto-detects a local file at `XOOPS_PATH/Frameworks/chartjs/chart.min.js` (served via `browse.php?Frameworks/chartjs/chart.min.js`) and falls back to the jsDelivr CDN if not found. Charts degrade gracefully — if Chart.js fails to load, the canvas elements simply remain blank with no JavaScript errors (the init function retries once then gives up).
 
 ### Browser Support
 

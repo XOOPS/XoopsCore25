@@ -414,7 +414,7 @@ Make sure the folder is named exactly `modern` and is located at `modules/system
 
 ### Charts aren't showing
 
-Chart.js loads automatically — either from a local file (`xoops_lib/Frameworks/chartjs/chart.min.js`) or from the jsDelivr CDN. If you're behind a firewall with no internet access, install Chart.js locally. Check the browser console (F12) for JavaScript errors.
+Chart.js loads automatically — either from a local file (`XOOPS_PATH/Frameworks/chartjs/chart.min.js`, served via `browse.php`) or from the jsDelivr CDN. If you're behind a firewall with no internet access, place `chart.min.js` in that location. Check the browser console (F12) for JavaScript errors.
 
 ### Dark mode doesn't persist
 
