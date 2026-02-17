@@ -6,9 +6,9 @@
         <{if is_array($widget)}>
         <div class="widget-card">
             <div class="widget-header">
-                <h3 class="widget-title"><{if $widget.icon}><{$widget.icon}> <{/if}><{$widget.title}></h3>
+                <h3 class="widget-title"><{if $widget.icon}><{$widget.icon}> <{/if}><{$widget.title|escape:'html'}></h3>
                 <{if !empty($widget.admin_url)}>
-                    <a href="<{$widget.admin_url}>" class="widget-link"><{$smarty.const._MODERN_VIEW_ALL}> &rarr;</a>
+                    <a href="<{$widget.admin_url|escape:'html'}>" class="widget-link"><{$smarty.const._MODERN_VIEW_ALL}> &rarr;</a>
                 <{/if}>
             </div>
             <div class="widget-body">
@@ -27,12 +27,12 @@
                 <div class="widget-recent">
                     <{foreach item=item from=$widget.recent}>
                     <div class="widget-recent-item">
-                        <span class="widget-recent-title"><{$item.title|truncate:50}></span>
+                        <span class="widget-recent-title"><{$item.title|escape:'html'|truncate:50}></span>
                         <{if !empty($item.author)}>
-                            <span class="widget-recent-meta">by <{$item.author}></span>
+                            <span class="widget-recent-meta">by <{$item.author|escape:'html'}></span>
                         <{/if}>
                         <{if !empty($item.status)}>
-                            <span class="widget-status widget-status-<{$item.status_class}>"><{$item.status}></span>
+                            <span class="widget-status widget-status-<{$item.status_class|escape:'html'}>"><{$item.status|escape:'html'}></span>
                         <{/if}>
                     </div>
                     <{/foreach}>

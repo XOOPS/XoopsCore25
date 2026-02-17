@@ -1,14 +1,28 @@
 <?php
+/*
+ * You may not change or alter any portion of this comment or credits
+ * of supporting developers from this source code or any supporting source code
+ * which is considered copyrighted (c) material of the original comment or credit authors.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ */
+
 /**
  * Module Widget Interface
  *
  * Implement this interface in your module to provide custom dashboard widgets
  * for the Modern Admin Theme
  *
+ * @category   Theme
  * @package    Modern Theme
  * @subpackage Widgets
  * @since      1.0
  * @author     Mamba <mambax7@gmail.com>
+ * @copyright  XOOPS Project (https://xoops.org)
+ * @license    GPL 2.0 or later (https://www.gnu.org/licenses/gpl-2.0.html)
+ * @link       https://xoops.org
  */
 
 interface ModernThemeWidgetInterface

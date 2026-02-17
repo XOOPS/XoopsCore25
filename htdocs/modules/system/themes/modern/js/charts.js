@@ -134,6 +134,41 @@
         });
     }
 
+    // Create a content bar chart on the given canvas
+    function buildContentChart(canvas, data) {
+        var labels = data.map(function(item) { return item.label; });
+        var values = data.map(function(item) { return parseInt(item.count, 10); });
+        var bgColors = data.map(function(item, i) { return contentColors[i % contentColors.length]; });
+
+        var ctx = canvas.getContext('2d');
+        charts.contentChart = new Chart(ctx, {
+            type: 'bar',
+            data: {
+                labels: labels,
+                datasets: [{
+                    label: (window.MODERN_LANG && window.MODERN_LANG.items) || 'Items',
+                    data: values,
+                    backgroundColor: bgColors,
+                    borderRadius: 6,
+                    borderSkipped: false
+                }]
+            },
+            options: {
+                ...defaultChartConfig,
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        ticks: { precision: 0 }
+                    }
+                },
+                plugins: {
+                    ...defaultChartConfig.plugins,
+                    legend: { display: false }
+                }
+            }
+        });
+    }
+
     // Initialize Content Distribution Chart
     function initContentChart() {
         const canvas = document.getElementById('contentChart');
@@ -152,47 +187,12 @@
             return;
         }
 
-        var labels = data.map(function(item) { return item.label; });
-        var values = data.map(function(item) { return parseInt(item.count); });
-        var bgColors = data.map(function(item, i) { return contentColors[i % contentColors.length]; });
-
-        const ctx = canvas.getContext('2d');
-        charts.contentChart = new Chart(ctx, {
-            type: 'bar',
-            data: {
-                labels: labels,
-                datasets: [{
-                    label: (window.MODERN_LANG && window.MODERN_LANG.items) || 'Items',
-                    data: values,
-                    backgroundColor: bgColors,
-                    borderRadius: 6,
-                    borderSkipped: false
-                }]
-            },
-            options: {
-                ...defaultChartConfig,
-                scales: {
-                    y: {
-                        beginAtZero: true,
-                        ticks: {
-                            precision: 0
-                        }
-                    }
-                },
-                plugins: {
-                    ...defaultChartConfig.plugins,
-                    legend: {
-                        display: false
-                    }
-                }
-            }
-        });
+        buildContentChart(canvas, data);
     }
 
     // Rebuild the content chart with new module selection
     function rebuildContentChart(selected) {
         if (!window.XOOPS_DASHBOARD_DATA || !window.XOOPS_DASHBOARD_DATA.contentStats) return;
-        if (!charts.contentChart) return;
 
         var canvas = document.getElementById('contentChart');
         if (!canvas) return;
@@ -206,8 +206,16 @@
             card.style.display = data.length > 0 ? '' : 'none';
         }
 
+        // If chart was never created (e.g. all modules were deselected on load), create it now
+        if (!charts.contentChart) {
+            if (data.length === 0) return;
+            buildContentChart(canvas, data);
+            updateChartsForTheme();
+            return;
+        }
+
         charts.contentChart.data.labels = data.map(function(item) { return item.label; });
-        charts.contentChart.data.datasets[0].data = data.map(function(item) { return parseInt(item.count); });
+        charts.contentChart.data.datasets[0].data = data.map(function(item) { return parseInt(item.count, 10); });
         charts.contentChart.data.datasets[0].backgroundColor = data.map(function(item, i) { return contentColors[i % contentColors.length]; });
         charts.contentChart.update();
     }

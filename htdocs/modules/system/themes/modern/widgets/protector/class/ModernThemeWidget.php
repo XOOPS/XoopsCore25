@@ -1,18 +1,54 @@
 <?php
+/*
+ * You may not change or alter any portion of this comment or credits
+ * of supporting developers from this source code or any supporting source code
+ * which is considered copyrighted (c) material of the original comment or credit authors.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ */
+
 /**
  * Modern Theme Widget for Protector
  *
  * Provides security dashboard statistics mirroring the data from
  * admin/stats.php: attack events grouped by time period, banned IPs,
  * and recent log entries.
+ *
+ * @category    Theme
+ * @package     Modern Theme
+ * @subpackage  Widgets
+ * @copyright   XOOPS Project (https://xoops.org)
+ * @license     GPL 2.0 or later (https://www.gnu.org/licenses/gpl-2.0.html)
+ * @link        https://xoops.org
  */
 
 require_once XOOPS_ROOT_PATH . '/modules/system/themes/modern/class/ModuleWidgetInterface.php';
 
+/**
+ * Protector module dashboard widget
+ *
+ * Displays security event counts by time period, banned IPs,
+ * and recent log entries on the admin dashboard.
+ *
+ * @category    Theme
+ * @package     Modern Theme
+ * @subpackage  Widgets
+ * @copyright   XOOPS Project (https://xoops.org)
+ * @license     GPL 2.0 or later (https://www.gnu.org/licenses/gpl-2.0.html)
+ * @link        https://xoops.org
+ */
 class ProtectorModernThemeWidget implements ModernThemeWidgetInterface
 {
+    /** @var \XoopsModule */
     private $module;
 
+    /**
+     * Constructor
+     *
+     * @param \XoopsModule $module The Protector module object
+     */
     public function __construct($module)
     {
         $this->module = $module;
@@ -24,7 +60,7 @@ class ProtectorModernThemeWidget implements ModernThemeWidgetInterface
      * Shows the same time-bucketed stats that admin/stats.php displays:
      * events in the last hour, day, week, and month plus banned IPs.
      *
-     * @return array|false Widget data or false on failure
+     * @return array|false Widget data array or false on failure
      */
     public function getWidgetData()
     {
@@ -116,7 +152,9 @@ class ProtectorModernThemeWidget implements ModernThemeWidgetInterface
     }
 
     /**
-     * @return int Priority (lower = shown first)
+     * Get widget display priority
+     *
+     * @return int Priority value (lower = shown first)
      */
     public function getWidgetPriority()
     {
@@ -124,7 +162,9 @@ class ProtectorModernThemeWidget implements ModernThemeWidgetInterface
     }
 
     /**
-     * @return bool
+     * Check if the widget is enabled
+     *
+     * @return bool True if widget should be displayed
      */
     public function isWidgetEnabled()
     {

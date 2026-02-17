@@ -91,7 +91,7 @@ for tpl in "$THEME_DIR"/xotpl/*.tpl; do
     CLOSE=$(grep -o '}>' "$tpl" | wc -l)
 
     if [ "$OPEN" -ne "$CLOSE" ]; then
-        echo "  ⚠ WARNING - Unbalanced tags in $(basename $tpl)"
+        echo "  ⚠ WARNING - Unbalanced tags in $(basename "$tpl")"
         ((WARNINGS++))
         TEMPLATE_OK=false
     fi
@@ -114,7 +114,7 @@ for js in "$THEME_DIR"/js/*.js; do
     CLOSE=$(grep -o '}' "$js" | wc -l)
 
     if [ "$OPEN" -ne "$CLOSE" ]; then
-        echo "  ✗ FAIL - Unbalanced braces in $(basename $js)"
+        echo "  ✗ FAIL - Unbalanced braces in $(basename "$js")"
         JS_OK=false
     fi
 done
@@ -136,13 +136,13 @@ for css in "$THEME_DIR"/css/*.css; do
     CLOSE=$(grep -o '}' "$css" | wc -l)
 
     if [ "$OPEN" -ne "$CLOSE" ]; then
-        echo "  ✗ FAIL - Unbalanced braces in $(basename $css)"
+        echo "  ✗ FAIL - Unbalanced braces in $(basename "$css")"
         CSS_OK=false
     fi
 
     # Check for CSS variables
     if grep -q '\-\-' "$css" && ! grep -q ':root' "$css"; then
-        echo "  ⚠ WARNING - CSS variables without :root in $(basename $css)"
+        echo "  ⚠ WARNING - CSS variables without :root in $(basename "$css")"
         ((WARNINGS++))
     fi
 done
@@ -160,7 +160,7 @@ echo "→ Testing file permissions..."
 PERM_OK=true
 for file in "$THEME_DIR"/*.php "$THEME_DIR"/css/*.css "$THEME_DIR"/js/*.js; do
     if [ ! -r "$file" ]; then
-        echo "  ✗ FAIL - Not readable: $(basename $file)"
+        echo "  ✗ FAIL - Not readable: $(basename "$file")"
         PERM_OK=false
     fi
 done

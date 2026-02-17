@@ -10,10 +10,10 @@
  */
 
 /**
- * Modern Theme Widget for RealEstate
+ * Modern Theme Widget for Pedigree
  *
- * Dashboard statistics: active listings by type (for sale, for rent),
- * sold/rented, and 5 most recent property listings.
+ * Dashboard statistics: published animals, species/breeds,
+ * owners, and 5 most recently added animals.
  *
  * @category    Theme
  * @package     Modern Theme
@@ -26,10 +26,10 @@
 require_once XOOPS_ROOT_PATH . '/modules/system/themes/modern/class/ModuleWidgetInterface.php';
 
 /**
- * RealEstate module dashboard widget
+ * Pedigree module dashboard widget
  *
- * Displays for-sale/for-rent/closed listing counts
- * and recent property listings on the admin dashboard.
+ * Displays published/total animal counts, owner totals,
+ * and recently added animals on the admin dashboard.
  *
  * @category    Theme
  * @package     Modern Theme
@@ -38,7 +38,7 @@ require_once XOOPS_ROOT_PATH . '/modules/system/themes/modern/class/ModuleWidget
  * @license     GPL 2.0 or later (https://www.gnu.org/licenses/gpl-2.0.html)
  * @link        https://xoops.org
  */
-class RealestateModernThemeWidget implements ModernThemeWidgetInterface
+class PedigreeModernThemeWidget implements ModernThemeWidgetInterface
 {
     /** @var \XoopsModule */
     private $module;
@@ -46,7 +46,7 @@ class RealestateModernThemeWidget implements ModernThemeWidgetInterface
     /**
      * Constructor
      *
-     * @param \XoopsModule $module The RealEstate module object
+     * @param \XoopsModule $module The Pedigree module object
      */
     public function __construct($module)
     {
@@ -62,69 +62,69 @@ class RealestateModernThemeWidget implements ModernThemeWidgetInterface
     {
         global $xoopsDB;
 
-        $table = $xoopsDB->prefix('realestate_properties');
+        $table = $xoopsDB->prefix('pedigree_animals');
 
-        // Status: for_sale, for_rent, sold, rented
-        $forSale = 0;
-        $forRent = 0;
-        $closed = 0;
+        $published = 0;
+        $total = 0;
+        $owners = 0;
 
+        // Total published animals (not soft-deleted)
         $result = $xoopsDB->query(
             "SELECT COUNT(*) FROM `$table`"
-            . " WHERE `status` = 'for_sale' AND `is_active` = 1"
+            . " WHERE `is_published` = 1 AND (`is_deleted` = 0 OR `is_deleted` IS NULL)"
         );
         if ($result) {
-            list($forSale) = $xoopsDB->fetchRow($result);
+            list($published) = $xoopsDB->fetchRow($result);
         }
 
+        // Total animals (including unpublished, excluding deleted)
         $result = $xoopsDB->query(
             "SELECT COUNT(*) FROM `$table`"
-            . " WHERE `status` = 'for_rent' AND `is_active` = 1"
+            . " WHERE `is_deleted` = 0 OR `is_deleted` IS NULL"
         );
         if ($result) {
-            list($forRent) = $xoopsDB->fetchRow($result);
+            list($total) = $xoopsDB->fetchRow($result);
         }
 
+        // Distinct owners
         $result = $xoopsDB->query(
-            "SELECT COUNT(*) FROM `$table`"
-            . " WHERE `status` IN ('sold', 'rented')"
+            "SELECT COUNT(*) FROM " . $xoopsDB->prefix('pedigree_owners')
         );
         if ($result) {
-            list($closed) = $xoopsDB->fetchRow($result);
+            list($owners) = $xoopsDB->fetchRow($result);
         }
 
-        // Recent listings
+        // Recent animals
         $recent = [];
         $result = $xoopsDB->query(
-            "SELECT `property_id`, `title`, `status`, `property_type`,"
-            . " `city`, `price`, `currency`, `created_at`"
+            "SELECT `id`, `name`, `breed`, `species`, `is_published`, `created_at`"
             . " FROM `$table`"
+            . " WHERE `is_deleted` = 0 OR `is_deleted` IS NULL"
             . " ORDER BY `created_at` DESC LIMIT 5"
         );
         if ($result) {
             while ($row = $xoopsDB->fetchArray($result)) {
-                $isActive = ($row['status'] === 'for_sale' || $row['status'] === 'for_rent');
-                $location = $row['city'] ?: '';
+                $breed = trim($row['breed'] . ($row['species'] ? ' (' . $row['species'] . ')' : ''));
                 $recent[] = [
-                    'title'        => $row['title'] ?: $row['property_type'],
-                    'date'         => $row['created_at'],
-                    'author'       => $location,
-                    'status'       => str_replace('_', ' ', $row['status']),
-                    'status_class' => $isActive ? 'success' : 'warning',
+                    'title'        => $row['name'] ?: '(unnamed)',
+                    'author'       => $breed ?: '',
+                    'date'         => strtotime($row['created_at']),
+                    'status'       => $row['is_published'] ? 'published' : 'draft',
+                    'status_class' => $row['is_published'] ? 'success' : 'warning',
                 ];
             }
         }
 
         return [
-            'title'     => 'Real Estate',
-            'icon'      => '🏠',
+            'title'     => 'Pedigree',
+            'icon'      => '🐾',
             'stats'     => [
-                'for_sale' => (int) $forSale,
-                'for_rent' => (int) $forRent,
-                'closed'   => (int) $closed,
+                'published' => (int) $published,
+                'total'     => (int) $total,
+                'owners'    => (int) $owners,
             ],
             'recent'    => $recent,
-            'admin_url' => XOOPS_URL . '/modules/realestate/admin/',
+            'admin_url' => XOOPS_URL . '/modules/pedigree/admin/',
         ];
     }
 
@@ -135,7 +135,7 @@ class RealestateModernThemeWidget implements ModernThemeWidgetInterface
      */
     public function getWidgetPriority()
     {
-        return 50;
+        return 55;
     }
 
     /**

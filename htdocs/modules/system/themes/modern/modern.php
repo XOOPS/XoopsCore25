@@ -86,7 +86,7 @@ class XoopsGuiModern extends XoopsSystemGui
         }
 
         // Get user preference for dark mode
-        $darkMode = isset($_COOKIE['xoops_dark_mode']) ? $_COOKIE['xoops_dark_mode'] : '0';
+        $darkMode = filter_input(INPUT_COOKIE, 'xoops_dark_mode', FILTER_SANITIZE_STRING) ?: '0';
         $tpl->assign('dark_mode', $darkMode);
 
         // System information

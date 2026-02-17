@@ -10,10 +10,10 @@
  */
 
 /**
- * Modern Theme Widget for Publisher
+ * Modern Theme Widget for Vision2026
  *
- * Provides dashboard statistics for the Publisher module:
- * published articles, pending submissions, and recent articles.
+ * Dashboard statistics: published articles, drafts, categories,
+ * and 5 most recent articles.
  *
  * @category    Theme
  * @package     Modern Theme
@@ -26,9 +26,9 @@
 require_once XOOPS_ROOT_PATH . '/modules/system/themes/modern/class/ModuleWidgetInterface.php';
 
 /**
- * Publisher module dashboard widget
+ * Vision2026 module dashboard widget
  *
- * Displays published/submitted article counts, category totals,
+ * Displays published/draft article counts, category totals,
  * and recent articles on the admin dashboard.
  *
  * @category    Theme
@@ -38,7 +38,7 @@ require_once XOOPS_ROOT_PATH . '/modules/system/themes/modern/class/ModuleWidget
  * @license     GPL 2.0 or later (https://www.gnu.org/licenses/gpl-2.0.html)
  * @link        https://xoops.org
  */
-class PublisherModernThemeWidget implements ModernThemeWidgetInterface
+class Vision2026ModernThemeWidget implements ModernThemeWidgetInterface
 {
     /** @var \XoopsModule */
     private $module;
@@ -46,7 +46,7 @@ class PublisherModernThemeWidget implements ModernThemeWidgetInterface
     /**
      * Constructor
      *
-     * @param \XoopsModule $module The Publisher module object
+     * @param \XoopsModule $module The Vision2026 module object
      */
     public function __construct($module)
     {
@@ -62,81 +62,64 @@ class PublisherModernThemeWidget implements ModernThemeWidgetInterface
     {
         global $xoopsDB;
 
-        $table = $xoopsDB->prefix('publisher_items');
+        $table = $xoopsDB->prefix('vision2026_articles');
 
-        // Status constants from Publisher\Constants:
-        // 1 = Submitted, 2 = Published, 3 = Offline, 4 = Rejected
+        // Status is ENUM('draft', 'published', 'archived')
         $published = 0;
-        $submitted = 0;
+        $drafts = 0;
 
-        // Total published articles
-        $result = $xoopsDB->query("SELECT COUNT(*) FROM $table WHERE status = 2");
+        $result = $xoopsDB->query(
+            "SELECT COUNT(*) FROM `$table` WHERE `status` = 'published'"
+        );
         if ($result) {
             list($published) = $xoopsDB->fetchRow($result);
         }
 
-        // Pending / submitted articles
-        $result = $xoopsDB->query("SELECT COUNT(*) FROM $table WHERE status = 1");
+        $result = $xoopsDB->query(
+            "SELECT COUNT(*) FROM `$table` WHERE `status` = 'draft'"
+        );
         if ($result) {
-            list($submitted) = $xoopsDB->fetchRow($result);
+            list($drafts) = $xoopsDB->fetchRow($result);
         }
 
-        // Categories count
+        // Categories
         $categories = 0;
         $result = $xoopsDB->query(
-            "SELECT COUNT(*) FROM " . $xoopsDB->prefix('publisher_categories')
+            "SELECT COUNT(*) FROM " . $xoopsDB->prefix('vision2026_categories')
         );
         if ($result) {
             list($categories) = $xoopsDB->fetchRow($result);
         }
 
-        // Recent articles (5 most recent, any status)
+        // Recent articles
         $recent = [];
         $result = $xoopsDB->query(
-            "SELECT itemid, title, datesub, status FROM $table"
-            . " ORDER BY datesub DESC LIMIT 5"
+            "SELECT `id`, `title`, `status`, `views`, `created_at`"
+            . " FROM `$table`"
+            . " ORDER BY `created_at` DESC LIMIT 5"
         );
         if ($result) {
             while ($row = $xoopsDB->fetchArray($result)) {
-                $statusLabel = 'draft';
-                $statusClass = 'warning';
-                switch ((int) $row['status']) {
-                    case 2:
-                        $statusLabel = 'published';
-                        $statusClass = 'success';
-                        break;
-                    case 1:
-                        $statusLabel = 'submitted';
-                        $statusClass = 'warning';
-                        break;
-                    case 3:
-                        $statusLabel = 'offline';
-                        $statusClass = 'warning';
-                        break;
-                    case 4:
-                        $statusLabel = 'rejected';
-                        $statusClass = 'warning';
-                        break;
-                }
+                $isPublished = ($row['status'] === 'published');
                 $recent[] = [
                     'title'        => $row['title'],
-                    'date'         => $row['datesub'],
-                    'status'       => $statusLabel,
-                    'status_class' => $statusClass,
+                    'date'         => strtotime($row['created_at']),
+                    'status'       => $row['status'],
+                    'status_class' => $isPublished ? 'success' : 'warning',
                 ];
             }
         }
 
         return [
-            'title'     => 'Publisher',
-            'icon'      => '📝',
+            'title'     => 'Vision 2026',
+            'icon'      => '🔮',
             'stats'     => [
                 'published'  => (int) $published,
-                'submitted'  => (int) $submitted,
+                'drafts'     => (int) $drafts,
                 'categories' => (int) $categories,
             ],
             'recent'    => $recent,
-            'admin_url' => XOOPS_URL . '/modules/publisher/admin/',
+            'admin_url' => XOOPS_URL . '/modules/vision2026/admin/',
         ];
     }
 
@@ -147,7 +130,7 @@ class PublisherModernThemeWidget implements ModernThemeWidgetInterface
      */
     public function getWidgetPriority()
     {
-        return 30;
+        return 40;
     }
 
     /**

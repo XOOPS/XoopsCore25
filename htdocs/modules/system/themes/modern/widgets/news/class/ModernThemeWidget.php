@@ -1,22 +1,63 @@
 <?php
+/*
+ * You may not change or alter any portion of this comment or credits
+ * of supporting developers from this source code or any supporting source code
+ * which is considered copyrighted (c) material of the original comment or credit authors.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ */
+
 /**
  * Modern Theme Widget for News
  *
  * Dashboard statistics: published stories, pending stories,
  * today's posts, and 5 most recent news stories.
+ *
+ * @category    Theme
+ * @package     Modern Theme
+ * @subpackage  Widgets
+ * @copyright   XOOPS Project (https://xoops.org)
+ * @license     GPL 2.0 or later (https://www.gnu.org/licenses/gpl-2.0.html)
+ * @link        https://xoops.org
  */
 
 require_once XOOPS_ROOT_PATH . '/modules/system/themes/modern/class/ModuleWidgetInterface.php';
 
+/**
+ * News module dashboard widget
+ *
+ * Displays published/pending story counts, today's activity,
+ * and recent news stories on the admin dashboard.
+ *
+ * @category    Theme
+ * @package     Modern Theme
+ * @subpackage  Widgets
+ * @copyright   XOOPS Project (https://xoops.org)
+ * @license     GPL 2.0 or later (https://www.gnu.org/licenses/gpl-2.0.html)
+ * @link        https://xoops.org
+ */
 class NewsModernThemeWidget implements ModernThemeWidgetInterface
 {
+    /** @var \XoopsModule */
     private $module;
 
+    /**
+     * Constructor
+     *
+     * @param \XoopsModule $module The News module object
+     */
     public function __construct($module)
     {
         $this->module = $module;
     }
 
+    /**
+     * Get widget data for the dashboard
+     *
+     * @return array|false Widget data array or false on failure
+     */
     public function getWidgetData()
     {
         global $xoopsDB;
@@ -77,11 +118,21 @@ class NewsModernThemeWidget implements ModernThemeWidgetInterface
         ];
     }
 
+    /**
+     * Get widget display priority
+     *
+     * @return int Priority value (lower = shown first)
+     */
     public function getWidgetPriority()
     {
         return 35;
     }
 
+    /**
+     * Check if the widget is enabled
+     *
+     * @return bool True if widget should be displayed
+     */
     public function isWidgetEnabled()
     {
         return true;

@@ -1,18 +1,34 @@
 <?php
+/*
+ * You may not change or alter any portion of this comment or credits
+ * of supporting developers from this source code or any supporting source code
+ * which is considered copyrighted (c) material of the original comment or credit authors.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ */
+
 /**
  * Modern Theme Compatibility Test Suite
  *
- * Run these tests after XOOPS updates to ensure theme compatibility
+ * Run these tests after XOOPS updates to ensure theme compatibility.
+ * Validates file structure, XOOPS function availability, database query
+ * syntax, Smarty template syntax, JavaScript/CSS integrity, file
+ * permissions, and external dependencies.
  *
  * Usage:
  *   php ThemeCompatibilityTest.php
  *
+ * @category   Theme
  * @package    Modern Theme
  * @subpackage Tests
  * @since      1.0
  * @author     Mamba <mambax7@gmail.com>
+ * @copyright  XOOPS Project (https://xoops.org)
+ * @license    GPL 2.0 or later (https://www.gnu.org/licenses/gpl-2.0.html)
+ * @link       https://xoops.org
  */
-
 class ModernThemeCompatibilityTest
 {
     private $errors = [];
@@ -21,7 +37,14 @@ class ModernThemeCompatibilityTest
     private $failed = 0;
 
     /**
-     * Run all tests
+     * Run all compatibility tests and print results
+     *
+     * Executes the full test suite: file structure, XOOPS functions,
+     * database queries, template syntax, JavaScript, CSS, permissions,
+     * and dependencies. Prints a summary with pass/fail counts and
+     * exits with code 0 on success or 1 on failure.
+     *
+     * @return void
      */
     public function runAll()
     {

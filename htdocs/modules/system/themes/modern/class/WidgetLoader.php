@@ -1,17 +1,32 @@
 <?php
-/**
- * Widget Loader
+/*
+ * You may not change or alter any portion of this comment or credits
+ * of supporting developers from this source code or any supporting source code
+ * which is considered copyrighted (c) material of the original comment or credit authors.
  *
- * Dynamically loads widgets from installed modules
- *
- * @package    Modern Theme
- * @subpackage Widgets
- * @since      1.0
- * @author     Mamba <mambax7@gmail.com>
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  */
 
 require_once __DIR__ . '/ModuleWidgetInterface.php';
 
+/**
+ * Widget Loader
+ *
+ * Dynamically loads widgets from installed modules that implement
+ * the ModernThemeWidgetInterface. Discovers, instantiates, and
+ * sorts module widgets by priority for dashboard rendering.
+ *
+ * @category   Theme
+ * @package    Modern Theme
+ * @subpackage Widgets
+ * @since      1.0
+ * @author     Mamba <mambax7@gmail.com>
+ * @copyright  XOOPS Project (https://xoops.org)
+ * @license    GPL 2.0 or later (https://www.gnu.org/licenses/gpl-2.0.html)
+ * @link       https://xoops.org
+ */
 class ModernThemeWidgetLoader
 {
     private $widgets = [];
@@ -29,7 +44,12 @@ class ModernThemeWidgetLoader
     /**
      * Load all available widgets from installed modules
      *
-     * @return array Array of widget data
+     * Scans all active modules for a ModernThemeWidget class file,
+     * instantiates each one, checks if it implements ModernThemeWidgetInterface
+     * and is enabled, then collects and sorts widget data by priority.
+     *
+     * @return array Associative array of widget data keyed by module dirname,
+     *               sorted by priority (lower number = higher priority)
      */
     public function loadWidgets()
     {
