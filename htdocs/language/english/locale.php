@@ -63,14 +63,14 @@ class XoopsLocal extends XoopsLocalAbstract
     /**
      * Money Format
      *
-     * @param  string $format
-     * @param  string $number
-     * @return money  format
+     * @param  string    $format  sprintf-style format (ignored, kept for BC)
+     * @param  int|float $number
+     * @return string
      */
     public function money_format($format, $number)
     {
-        setlocale(LC_MONETARY, 'en_US');
+        $fmt = new \NumberFormatter('en_US', \NumberFormatter::CURRENCY);
 
-        return money_format($format, $number);
+        return $fmt->formatCurrency((float)$number, 'USD');
     }
 }
