@@ -340,7 +340,7 @@ class XoopsGuiModern extends XoopsSystemGui
 
         // Add the system menu items
         xoops_loadLanguage('menu', 'system');
-        include __DIR__ . '/menu.php';
+        include_once __DIR__ . '/menu.php';
 
         // Build system services list (always available for header toolbar)
         /** @var array $adminmenu Populated by menu.php include above */
