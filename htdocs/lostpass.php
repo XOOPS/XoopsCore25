@@ -91,9 +91,7 @@ if (empty($getuser)) {
         if (!$xoopsMailer->send()) {
             echo $xoopsMailer->getErrors();
         }
-        echo '<h4>';
-        printf(_US_CONFMAIL, $getuser[0]->getVar('uname'));
-        echo '</h4>';
+        echo '<h4>' . _US_CONFMAIL . '</h4>';
         include $GLOBALS['xoops']->path('footer.php');
     }
 }
