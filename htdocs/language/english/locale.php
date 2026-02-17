@@ -63,14 +63,25 @@ class XoopsLocal extends XoopsLocalAbstract
     /**
      * Money Format
      *
-     * @param  string    $format  sprintf-style format (ignored, kept for BC)
+     * @param  string    $format  legacy money_format()-style format string (ignored, kept for BC)
      * @param  int|float $number
      * @return string
+     *
+     * @SuppressWarnings(PHPMD.UnusedFormalParameter)
      */
     public function money_format($format, $number)
     {
-        $fmt = new \NumberFormatter('en_US', \NumberFormatter::CURRENCY);
+        if (!extension_loaded('intl')) {
+            return '$' . number_format((float)$number, 2, '.', ',');
+        }
 
-        return $fmt->formatCurrency((float)$number, 'USD');
+        static $fmt = null;
+        if (null === $fmt) {
+            $fmt = new \NumberFormatter('en_US', \NumberFormatter::CURRENCY);
+        }
+
+        $result = $fmt->formatCurrency((float)$number, 'USD');
+
+        return $result !== false ? $result : '$' . number_format((float)$number, 2, '.', ',');
     }
 }
