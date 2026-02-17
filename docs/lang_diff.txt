@@ -18,7 +18,7 @@ Below are language differences from a version to next version.
 
 /htdocs/language/english/user.php
 - updated define('_US_SORRYNOTFOUND', 'Sorry, no corresponding user info was found.');
-- updated define('_US_SORRYNOTFOUND', 'If an account exists for this email, you will receive password reset instructions. Check your spam folder if needed or contact the site administrator.');
+- updated define('_US_SORRYNOTFOUND', 'If an account matches the information provided, we will process your request. If you do not receive an email shortly, please check your spam folder or contact the site administrator.');
 
 - updated define('_US_PWDMAILED', 'Password for %s mailed.');
 - updated define('_US_PWDMAILED', 'If an account exists for this email, you will receive password reset instructions. Check your spam folder if needed or contact the site administrator.');
