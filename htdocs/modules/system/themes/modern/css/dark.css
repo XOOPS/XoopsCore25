@@ -1,0 +1,90 @@
+/**
+ * XOOPS Modern Admin Theme - Dark Mode
+ * Dark color scheme for reduced eye strain
+ */
+
+body.dark-mode {
+    /* Dark Mode Color Palette */
+    --primary: #3b82f6;
+    --primary-dark: #2563eb;
+    --primary-light: #60a5fa;
+    --secondary: #94a3b8;
+    --success: #34d399;
+    --warning: #fbbf24;
+    --danger: #f87171;
+    --info: #22d3ee;
+
+    /* Dark Backgrounds */
+    --bg-primary: #0f172a;
+    --bg-secondary: #1e293b;
+    --bg-tertiary: #334155;
+
+    /* Dark Text */
+    --text-primary: #f1f5f9;
+    --text-secondary: #cbd5e1;
+    --text-tertiary: #94a3b8;
+
+    /* Dark Borders */
+    --border: #334155;
+    --border-light: #475569;
+
+    /* Dark Shadows */
+    --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.3);
+    --shadow: 0 1px 3px 0 rgb(0 0 0 / 0.4);
+    --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.4);
+    --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.5);
+}
+
+/* Dark Mode Specific Adjustments */
+body.dark-mode .logo {
+    background: linear-gradient(135deg, var(--primary-light), var(--primary));
+}
+
+body.dark-mode .btn-icon:hover {
+    background: var(--bg-tertiary);
+}
+
+body.dark-mode .nav-item:hover {
+    background: var(--bg-tertiary);
+    color: var(--text-primary);
+}
+
+body.dark-mode .kpi-card {
+    background: var(--bg-secondary);
+    box-shadow: var(--shadow);
+}
+
+body.dark-mode .kpi-card:hover {
+    box-shadow: var(--shadow-lg);
+}
+
+body.dark-mode .chart-card,
+body.dark-mode .info-card {
+    background: var(--bg-secondary);
+    box-shadow: var(--shadow);
+}
+
+body.dark-mode .badge.success {
+    background: #064e3b;
+    color: #6ee7b7;
+}
+
+body.dark-mode .badge.warning {
+    background: #78350f;
+    color: #fcd34d;
+}
+
+body.dark-mode .badge.danger {
+    background: #7f1d1d;
+    color: #fca5a5;
+}
+
+body.dark-mode .badge.info {
+    background: #164e63;
+    color: #67e8f9;
+}
+
+/* Chart.js Dark Mode Compatibility */
+body.dark-mode canvas {
+    filter: brightness(0.9);
+}

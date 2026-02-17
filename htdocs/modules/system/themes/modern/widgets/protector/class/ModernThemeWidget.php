@@ -1,0 +1,133 @@
+<?php
+/**
+ * Modern Theme Widget for Protector
+ *
+ * Provides security dashboard statistics mirroring the data from
+ * admin/stats.php: attack events grouped by time period, banned IPs,
+ * and recent log entries.
+ */
+
+require_once XOOPS_ROOT_PATH . '/modules/system/themes/modern/class/ModuleWidgetInterface.php';
+
+class ProtectorModernThemeWidget implements ModernThemeWidgetInterface
+{
+    private $module;
+
+    public function __construct($module)
+    {
+        $this->module = $module;
+    }
+
+    /**
+     * Get widget data for the dashboard
+     *
+     * Shows the same time-bucketed stats that admin/stats.php displays:
+     * events in the last hour, day, week, and month plus banned IPs.
+     *
+     * @return array|false Widget data or false on failure
+     */
+    public function getWidgetData()
+    {
+        global $xoopsDB;
+
+        $dirname  = $this->module->getVar('dirname');
+        $logTable = $xoopsDB->prefix($dirname . '_log');
+
+        // Count events by time period (same buckets as admin/stats.php)
+        $lastHour  = 0;
+        $lastDay   = 0;
+        $lastWeek  = 0;
+        $lastMonth = 0;
+
+        $result = $xoopsDB->query(
+            "SELECT COUNT(*) FROM `$logTable`"
+            . " WHERE `timestamp` > NOW() - INTERVAL 3600 SECOND"
+        );
+        if ($result) {
+            list($lastHour) = $xoopsDB->fetchRow($result);
+        }
+
+        $result = $xoopsDB->query(
+            "SELECT COUNT(*) FROM `$logTable`"
+            . " WHERE `timestamp` > NOW() - INTERVAL 86400 SECOND"
+        );
+        if ($result) {
+            list($lastDay) = $xoopsDB->fetchRow($result);
+        }
+
+        $result = $xoopsDB->query(
+            "SELECT COUNT(*) FROM `$logTable`"
+            . " WHERE `timestamp` > NOW() - INTERVAL 604800 SECOND"
+        );
+        if ($result) {
+            list($lastWeek) = $xoopsDB->fetchRow($result);
+        }
+
+        $result = $xoopsDB->query(
+            "SELECT COUNT(*) FROM `$logTable`"
+            . " WHERE `timestamp` > NOW() - INTERVAL 2592000 SECOND"
+        );
+        if ($result) {
+            list($lastMonth) = $xoopsDB->fetchRow($result);
+        }
+
+        // Banned IPs (access table entries with future expiry)
+        $bannedIPs = 0;
+        $accessTable = $xoopsDB->prefix($dirname . '_access');
+        $result = $xoopsDB->query(
+            "SELECT COUNT(DISTINCT ip) FROM `$accessTable`"
+            . " WHERE `expire` > UNIX_TIMESTAMP()"
+        );
+        if ($result) {
+            list($bannedIPs) = $xoopsDB->fetchRow($result);
+        }
+
+        // Recent log entries (5 most recent)
+        $recent = [];
+        $result = $xoopsDB->query(
+            "SELECT `lid`, `type`, `ip`, `timestamp` FROM `$logTable`"
+            . " ORDER BY `timestamp` DESC LIMIT 5"
+        );
+        if ($result) {
+            while ($row = $xoopsDB->fetchArray($result)) {
+                $recent[] = [
+                    'title'        => $row['type'],
+                    'author'       => $row['ip'],
+                    'date'         => strtotime($row['timestamp']),
+                    'status'       => 'blocked',
+                    'status_class' => 'warning',
+                ];
+            }
+        }
+
+        return [
+            'title'     => 'Security',
+            'icon'      => '🛡️',
+            'stats'     => [
+                'last_hour'  => (int) $lastHour,
+                'last_day'   => (int) $lastDay,
+                'last_week'  => (int) $lastWeek,
+                'last_month' => (int) $lastMonth,
+                'banned_ips' => (int) $bannedIPs,
+            ],
+            'recent'    => $recent,
+            'admin_url' => XOOPS_URL . '/modules/' . $dirname . '/admin/center.php',
+        ];
+    }
+
+    /**
+     * @return int Priority (lower = shown first)
+     */
+    public function getWidgetPriority()
+    {
+        return 20;
+    }
+
+    /**
+     * @return bool
+     */
+    public function isWidgetEnabled()
+    {
+        return true;
+    }
+}
