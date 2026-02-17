@@ -134,7 +134,7 @@ class SaxParser
     public function parse()
     {
         if (!is_resource($this->input)) {
-            if (!xml_parse($this->parser, $this->input)) {
+            if (!xml_parse($this->parser, $this->input, true)) {
                 $this->setErrors($this->getXmlError());
 
                 return false;
