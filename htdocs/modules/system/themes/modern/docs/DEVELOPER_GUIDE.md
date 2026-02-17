@@ -231,11 +231,31 @@ XOOPS uses custom Smarty delimiters. **Never** use standard `{` `}` delimiters:
 
 `theme.tpl` is the root document. It includes all partials via the `$theme_tpl` variable:
 
-```smarty
-<{include file="$theme_tpl/xo_metas.tpl"}>
+```mermaid
+graph TD
+    ROOT["theme.tpl\nRoot HTML document"] --> META["xo_metas.tpl\nmeta tags, CSS, JS links"]
+    ROOT --> HEAD["xo_head.tpl\nFixed header bar"]
+    ROOT --> SIDE["xo_sidebar.tpl\nLeft navigation"]
+    ROOT --> DASH["xo_dashboard.tpl\nKPIs, charts, widgets, sysinfo"]
+    ROOT --> PAGE["xo_page.tpl\nModule content + admin links"]
+    ROOT --> FOOT["xo_footer.tpl\nFooter bar"]
+    ROOT --> CUST["xo_customizer.tpl\nSettings panel + FAB"]
+
+    DASH --> WID["xo_widgets.tpl\nWidget card renderer"]
+    DASH --> SCRIPT["Inline script block\nwindow.XOOPS_DASHBOARD_DATA"]
+
+    HEAD --> SERV["System service icons\nfrom mod_options"]
+    SIDE --> CTRL["Control panel nav\nHome, Dashboard, Logout"]
+    SIDE --> MODS["Module nav\nActive modules list"]
+    SIDE --> SYS["System nav\nSystem services"]
+
+    style ROOT fill:#2563eb,color:#fff
+    style DASH fill:#10b981,color:#fff
+    style HEAD fill:#8b5cf6,color:#fff
+    style SIDE fill:#f59e0b,color:#fff
 ```
 
-The `$theme_tpl` variable resolves to the `xotpl/` directory path. All partials are included by name, making it easy to override individual templates.
+All partials are included via `<{include file="$theme_tpl/xo_*.tpl"}>`. The `$theme_tpl` variable resolves to the `xotpl/` directory path, making it easy to override individual templates.
 
 ### Key Smarty Variables
 
@@ -327,6 +347,24 @@ All visual properties flow from CSS custom properties defined in `:root`. This m
 
 ### Three-File Strategy
 
+```mermaid
+flowchart LR
+    subgraph Layer1["Layer 1: Design System"]
+        M["modern.css\n~1200 lines\nTokens + all components"]
+    end
+    subgraph Layer2["Layer 2: Dark Mode"]
+        D["dark.css\n~200 lines\nVariable overrides on\nbody.dark-mode"]
+    end
+    subgraph Layer3["Layer 3: Core Fixes"]
+        F["fixes.css\n~300 lines\n!important overrides for\nXOOPS core inline styles"]
+    end
+
+    M --> D --> F
+
+    M -. ":root vars" .-> D
+    D -. "same vars,\ndark values" .-> F
+```
+
 | File | Purpose | Uses `!important`? |
 |------|---------|-------------------|
 | `modern.css` | Design tokens, layout, all components | No |
@@ -336,6 +374,27 @@ All visual properties flow from CSS custom properties defined in `:root`. This m
 **Why `fixes.css` exists:** XOOPS core and some modules inject inline styles and CSS rules that can't be overridden through normal cascade. `fixes.css` uses `!important` surgically on specific selectors to fix these conflicts. It's organized into numbered sections with comments explaining each override.
 
 ### Dark Mode
+
+```mermaid
+sequenceDiagram
+    actor User
+    participant TJS as theme.js
+    participant Cookie as Browser Cookie
+    participant Body as document.body
+    participant CSS as dark.css
+    participant Charts as charts.js
+
+    User->>TJS: Click moon/sun icon
+    TJS->>Cookie: setCookie('xoops_dark_mode', '1')
+    TJS->>Body: classList.toggle('dark-mode')
+    Body->>CSS: body.dark-mode selector activates
+    CSS->>CSS: All CSS variables reassigned to dark values
+    Note over CSS: --bg-primary: #0f172a<br/>--text-primary: #f1f5f9<br/>etc.
+    CSS->>Body: Every var() reference updates instantly
+    Body->>Charts: MutationObserver detects class change
+    Charts->>Charts: updateChartsForTheme()
+    Note over Charts: Grid lines, labels, legends<br/>switch to light-on-dark colors
+```
 
 Dark mode is implemented by reassigning all CSS custom properties on the `body.dark-mode` selector in `dark.css`:
 
@@ -363,6 +422,73 @@ Because all components use `var()` tokens, dark mode works automatically without
 | `≤ 1024px` | Sidebar hidden by default, slides in as overlay via `body.sidebar-open`. Footer and main content span full width. |
 | `≤ 768px` | KPIs and charts collapse to single column. Header text shrinks. Customizer panel goes full-width. |
 
+### Sidebar State Machine
+
+```mermaid
+stateDiagram-v2
+    state "Desktop (> 1024px)" as Desktop {
+        [*] --> Expanded
+        Expanded --> Collapsed: Click hamburger icon
+        Collapsed --> Expanded: Click hamburger icon
+        state Expanded {
+            note right of Expanded: 260px wide\nIcons + labels\nmargin-left: 260px
+        }
+        state Collapsed {
+            note right of Collapsed: 80px wide\nIcons only (tooltips)\nmargin-left: 80px
+        }
+    }
+
+    state "Tablet/Mobile (≤ 1024px)" as Mobile {
+        [*] --> Hidden
+        Hidden --> Overlay: Click hamburger icon
+        Overlay --> Hidden: Click outside / hamburger
+        state Hidden {
+            note right of Hidden: Sidebar off-screen\nmargin-left: 0
+        }
+        state Overlay {
+            note right of Overlay: Sidebar slides in\nDim backdrop behind\nbody.sidebar-open
+        }
+    }
+```
+
+### Page Layout Structure
+
+```mermaid
+block-beta
+    columns 5
+
+    block:header:5
+        columns 5
+        hamburger["Hamburger"]
+        brand["Site Name"]
+        icons["Service Icons"]
+        space3:1
+        actions["Dark Mode Toggle"]
+    end
+
+    block:sidebar:1
+        columns 1
+        ctrl["Control Panel\nHome | Dashboard | Logout"]
+        mods["Modules\nPublisher | News | ..."]
+        sys["System\nUsers | Groups | Blocks | ..."]
+    end
+
+    block:main:4
+        columns 1
+        content["Main Content Area\nDashboard or Module Admin"]
+    end
+
+    block:footer:5
+        columns 1
+        foot["Footer: Powered by XOOPS | Execution time"]
+    end
+
+    style header fill:#2563eb,color:#fff
+    style sidebar fill:#1e293b,color:#fff
+    style main fill:#f8fafc,color:#0f172a
+    style footer fill:#f1f5f9,color:#475569
+```
+
 ### Key Layout Selectors
 
 ```css
@@ -383,6 +509,27 @@ All JavaScript is vanilla ES5 + jQuery (no ES6 modules, no build step). Each fil
 ### Load Order
 
 Scripts are injected by `modern.php` via `$xoTheme->addScript()`:
+
+```mermaid
+flowchart LR
+    subgraph Dependencies["External Dependencies"]
+        JQ["jQuery\nXOOPS core Frameworks"]
+        CJ["Chart.js\nLocal file or CDN fallback"]
+    end
+
+    subgraph Theme["Theme Scripts"]
+        TH["theme.js\nDark mode, sidebar,\nhelp, messages"]
+        DA["dashboard.js\nTable hover,\nrefresh button"]
+        CH["charts.js\nChart.js init,\ndark mode sync"]
+        CU["customizer.js\nSettings panel,\ncookie management"]
+    end
+
+    JQ --> TH --> DA --> CH --> CU
+    CJ --> CH
+
+    style JQ fill:#f59e0b,color:#fff
+    style CJ fill:#f59e0b,color:#fff
+```
 
 1. `jQuery` (from XOOPS core Frameworks)
 2. `Chart.js` (local or CDN fallback)
@@ -549,10 +696,20 @@ graph TD
 
 The `widgets/` directory contains ready-to-deploy widget files. These are **staging copies** — to activate them, copy each file to the corresponding module's `class/` directory:
 
-```
-themes/modern/widgets/{module}/class/ModernThemeWidget.php
-                         ↓ copy to ↓
-modules/{module}/class/ModernThemeWidget.php
+```mermaid
+flowchart LR
+    SRC["themes/modern/widgets/\npublisher/class/\nModernThemeWidget.php\n(staging copy)"]
+    DST["modules/publisher/class/\nModernThemeWidget.php\n(active location)"]
+    CACHE["Clear Smarty cache\nSystem Admin > Maintenance"]
+    DASH["Widget appears on\nnext dashboard load"]
+
+    SRC -- "Copy file" --> DST
+    DST --> CACHE
+    CACHE --> DASH
+
+    style SRC fill:#64748b,color:#fff
+    style DST fill:#2563eb,color:#fff
+    style DASH fill:#10b981,color:#fff
 ```
 
 | Widget | Priority | Stats | Recent Items |
@@ -662,6 +819,25 @@ define('_MODERN_COLOR_INDIGO', 'Indigo');
 ```
 
 The customizer JS already handles any `data-theme` value that matches a key in `colorSchemes`.
+
+```mermaid
+flowchart LR
+    subgraph Step1["Step 1: Define colors"]
+        JS["customizer.js\nAdd to colorSchemes object"]
+    end
+    subgraph Step2["Step 2: Add UI button"]
+        TPL["xo_customizer.tpl\nAdd color-preset button\nwith data-theme attribute"]
+    end
+    subgraph Step3["Step 3: Add label"]
+        LANG["language/english/main.php\ndefine _MODERN_COLOR_*"]
+    end
+
+    Step1 --> Step2 --> Step3
+
+    Step3 --> DONE["Customizer auto-detects\nnew data-theme value"]
+
+    style DONE fill:#10b981,color:#fff
+```
 
 ### Adding a Dashboard Section
 
@@ -840,6 +1016,26 @@ function initMyChart() {
 
 Add `initMyChart()` to the `initCharts()` function. The chart will automatically get dark mode support through `updateChartsForTheme()` since it iterates all entries in the `charts` object.
 
+```mermaid
+flowchart TD
+    subgraph PHP["Step 1-2: Server Side"]
+        A["modern.php\nQuery data + json_encode"] --> B["$tpl->assign('my_chart_data')"]
+    end
+    subgraph TPL["Step 3: Template Bridge"]
+        C["xo_dashboard.tpl\nAdd canvas element"] --> D["Add to\nwindow.XOOPS_DASHBOARD_DATA"]
+    end
+    subgraph JS["Step 4: Client Side"]
+        E["charts.js\nWrite initMyChart()"] --> F["Register in initCharts()"]
+        F --> G["Auto dark mode via\nupdateChartsForTheme()"]
+    end
+
+    PHP --> TPL --> JS
+
+    style PHP fill:#8b5cf6,color:#fff
+    style TPL fill:#2563eb,color:#fff
+    style JS fill:#f59e0b,color:#fff
+```
+
 ### Modifying the Header
 
 The header template is `xo_head.tpl`. Common modifications:
@@ -911,6 +1107,25 @@ Quick summary:
 
 All user-visible strings use language constants with the `_MODERN_` prefix, defined in `language/english/main.php`.
 
+```mermaid
+sequenceDiagram
+    participant PHP as modern.php
+    participant Lang as language/english/main.php
+    participant TPL as Smarty Template
+    participant HTML as Rendered HTML
+
+    PHP->>Lang: xoops_loadLanguage('main', 'modern')
+    Lang->>Lang: define('_MODERN_TOTAL_USERS', 'Total Users')
+    Lang->>Lang: define('_MODERN_DARK_MODE', 'Dark Mode')
+    Note over Lang: ~63 constants loaded into PHP scope
+
+    TPL->>Lang: $smarty.const._MODERN_TOTAL_USERS
+    Lang-->>TPL: 'Total Users'
+    TPL->>HTML: Rendered in template output
+
+    Note over PHP,HTML: To add a translation:<br/>1. Copy language/english/ to language/fr/<br/>2. Change define() values to French<br/>3. XOOPS auto-loads based on site config
+```
+
 ### Adding a Translation
 
 1. Copy `language/english/` to `language/{yourlanguage}/`
@@ -943,6 +1158,27 @@ define('_MODERN_POWERED_BY', 'Powered by XOOPS');        // Footer
 ### Database Queries
 
 The dashboard executes these queries on every page load:
+
+```mermaid
+flowchart TD
+    REQ["Dashboard page request"] --> E["getEnhancedStats()\n3 queries"]
+    REQ --> U["getUserStats()\n7 queries"]
+    REQ --> M["getModuleStats()\n2 queries"]
+    REQ --> C["getContentStats()\nUp to 24 queries"]
+    REQ --> W["loadModuleWidgets()\n1 + N x 3-5 queries"]
+
+    E --> DB[(Database)]
+    U --> DB
+    M --> DB
+    C --> DB
+    W --> DB
+
+    DB --> TOTAL["Total: ~36+ queries\nWith 11 widgets: ~70+ queries"]
+
+    style REQ fill:#2563eb,color:#fff
+    style TOTAL fill:#ef4444,color:#fff
+    style W fill:#f59e0b,color:#fff
+```
 
 | Source | Queries | Notes |
 |--------|---------|-------|
