@@ -1,0 +1,345 @@
+/**
+ * XOOPS Modern Theme - Override Fixes
+ * ====================================
+ * This file contains ONLY rules that need !important to override
+ * XOOPS core CSS or inline styles. Base styles live in modern.css.
+ *
+ * Design tokens used here (defined in modern.css :root):
+ *   --radius-sm: 4px   (badges, small elements)
+ *   --radius:    8px   (inputs, buttons, standard cards)
+ *   --radius-lg: 12px  (large containers, panels)
+ */
+
+/* ========================================
+   1. COMPACT TAB BAR
+   Overrides XOOPS core tab styling.
+   Tabs are natural/compact width with a
+   bottom accent bar using theme primary color.
+   ======================================== */
+
+#buttonbar_mod {
+    background: var(--bg-secondary) !important;
+    border-bottom: 2px solid var(--border) !important;
+    margin: 0 !important;
+    padding: 0 !important;
+}
+
+#buttonbar_mod ul {
+    list-style: none !important;
+    margin: 0 !important;
+    padding: 0 4px !important;
+    display: flex !important;
+    flex-wrap: wrap !important;
+}
+
+#buttonbar_mod li {
+    display: inline-block !important;
+    flex: none !important;
+    box-shadow: none !important;
+    border-right: 1px solid var(--border) !important;
+    position: relative !important;
+    margin: 0 !important;
+    padding: 0 !important;
+}
+
+#buttonbar_mod li:last-child {
+    border-right: none !important;
+}
+
+#buttonbar_mod li a {
+    -webkit-user-select: none !important;
+    -moz-user-select: none !important;
+    -ms-user-select: none !important;
+    user-select: none !important;
+    display: block !important;
+    float: none !important;
+    width: auto !important;
+    color: var(--text-secondary) !important;
+    cursor: pointer !important;
+    background: none !important;
+    transition: color 0.2s, background-color 0.2s !important;
+    text-decoration: none !important;
+    padding: 10px 20px !important;
+    font-size: 13px !important;
+    font-weight: 500 !important;
+    white-space: nowrap !important;
+    position: relative !important;
+}
+
+/* Suppress core tab GIF backgrounds on span */
+#buttonbar_mod li a span {
+    background: none !important;
+    float: none !important;
+    display: inline !important;
+    padding: 0 !important;
+    color: inherit !important;
+    font-family: inherit !important;
+    font-weight: inherit !important;
+    font-size: inherit !important;
+}
+
+/* Bottom accent bar (hidden by default, appears on hover) */
+#buttonbar_mod li a::after {
+    content: "" !important;
+    position: absolute !important;
+    width: 100% !important;
+    left: 0 !important;
+    bottom: -2px !important;
+    background-color: var(--primary) !important;
+    height: 0 !important;
+    transition: height 0.2s !important;
+}
+
+#buttonbar_mod li a:hover {
+    color: var(--primary) !important;
+    background: rgba(37, 99, 235, 0.05) !important;
+}
+
+#buttonbar_mod li a:hover::after {
+    height: 3px !important;
+}
+
+/* Current/selected tab */
+#buttonbar_mod li#current {
+    pointer-events: none !important;
+    cursor: default !important;
+}
+
+#buttonbar_mod li#current a {
+    background: transparent !important;
+    color: var(--primary) !important;
+    font-weight: 600 !important;
+}
+
+#buttonbar_mod li#current a::after {
+    height: 3px !important;
+}
+
+/* Support .current class variation (some modules use class instead of id) */
+#buttonbar_mod li.current a {
+    background: transparent !important;
+    color: var(--primary) !important;
+    font-weight: 600 !important;
+}
+
+#buttonbar_mod li.current a::after {
+    height: 3px !important;
+}
+
+/* Suppress any pseudo-element content injected by core CSS */
+#buttonbar_mod li a span::after,
+#buttonbar_mod li a::before {
+    display: none !important;
+    content: none !important;
+}
+
+/* ========================================
+   2. DARK MODE TAB OVERRIDES
+   ======================================== */
+
+body.dark-mode #buttonbar_mod {
+    background: var(--bg-secondary) !important;
+    border-bottom-color: var(--border) !important;
+}
+
+body.dark-mode #buttonbar_mod li a {
+    color: var(--text-secondary) !important;
+    background: none !important;
+}
+
+body.dark-mode #buttonbar_mod li a:hover {
+    color: var(--primary-light) !important;
+    background: rgba(59, 130, 246, 0.1) !important;
+}
+
+body.dark-mode #buttonbar_mod li#current a,
+body.dark-mode #buttonbar_mod li.current a {
+    color: var(--primary-light) !important;
+    background: transparent !important;
+}
+
+body.dark-mode #buttonbar_mod li a::after {
+    background-color: var(--primary-light) !important;
+}
+
+/* ========================================
+   3. TOOLBAR ICON COLOR PRESERVATION
+   Prevents core CSS from applying filters
+   that wash out colored icons.
+   ======================================== */
+
+#xo-toolbar a img {
+    filter: none !important;
+}
+
+/* ========================================
+   4. LOGO ELEMENT SUPPRESSION
+   Hides the default "X" logo so the
+   hamburger toggle shows cleanly.
+   ======================================== */
+
+.logo {
+    display: none !important;
+}
+
+/* ========================================
+   5. HELP SECTIONS - CLOSED BY DEFAULT
+   Overrides inline display styles from
+   XOOPS core to keep help collapsed.
+   ======================================== */
+
+.tips,
+#xo-system-help,
+.xo-help-content {
+    display: none !important;
+}
+
+.tips.help-visible,
+#xo-system-help.help-visible,
+.xo-help-content.help-visible {
+    display: block !important;
+}
+
+.help_hide {
+    display: none !important;
+}
+
+body.help-active .help_hide {
+    display: inline-block !important;
+}
+
+body.help-active .help_view {
+    display: none !important;
+}
+
+body:not(.help-active) .help_view {
+    display: inline-block !important;
+}
+
+/* ========================================
+   6. DARK MODE BUTTON OVERRIDES
+   Some modules inject inline button styles
+   that need overriding in dark mode.
+   ======================================== */
+
+/* Scope dark mode button overrides to module admin content only.
+   Primary action buttons (e.g. in customizer) keep their theme color. */
+body.dark-mode #xo-content input[type="submit"],
+body.dark-mode #xo-content input[type="button"],
+body.dark-mode table.outer input[type="submit"],
+body.dark-mode table.outer input[type="button"],
+body.dark-mode fieldset input[type="submit"],
+body.dark-mode fieldset input[type="button"] {
+    background: #374151 !important;
+    border-color: #4b5563 !important;
+    color: #e5e7eb !important;
+}
+
+body.dark-mode #xo-content input[type="submit"]:hover,
+body.dark-mode #xo-content input[type="button"]:hover,
+body.dark-mode table.outer input[type="submit"]:hover,
+body.dark-mode table.outer input[type="button"]:hover,
+body.dark-mode fieldset input[type="submit"]:hover,
+body.dark-mode fieldset input[type="button"]:hover {
+    background: #4b5563 !important;
+    border-color: #6b7280 !important;
+}
+
+/* ========================================
+   7. XOOPS CORE ELEMENT ROUNDING
+   Applies consistent border-radius to
+   elements that use inline styles or
+   core CSS without radius support.
+   ======================================== */
+
+/* Tables need !important because core sets border-radius: 0 */
+table.outer {
+    border-radius: var(--radius) !important;
+    overflow: hidden !important;
+    border-collapse: separate !important;
+    border-spacing: 0 !important;
+}
+
+/* Prevent inner cells from clipping rounded parent */
+table.outer th:first-child { border-top-left-radius: var(--radius) !important; }
+table.outer th:last-child  { border-top-right-radius: var(--radius) !important; }
+
+/* Legacy XOOPS layout classes */
+div.bg4 {
+    border-radius: var(--radius) !important;
+}
+
+/* ========================================
+   8. PAGE CONTENT CONTAINER
+   ======================================== */
+
+#xo-page-content {
+    padding: 20px;
+    background: var(--bg-secondary);
+    border-radius: var(--radius);
+    margin-top: 0;
+}
+
+body.dark-mode #xo-page-content {
+    background: #1f2937;
+}
+
+/* ========================================
+   9. MODULE ADMIN LINKS BAR
+   Styles the Preferences|Update|Blocks|
+   Templates|Comments|Uninstall|Go to module
+   links generated by SystemMenuHandler.
+   Overrides inline table styles.
+   ======================================== */
+
+#buttontop_mod {
+    padding: 0 !important;
+    margin: 0 !important;
+}
+
+#buttontop_mod table {
+    width: 100% !important;
+    border: none !important;
+    background: none !important;
+    border-collapse: collapse !important;
+}
+
+#buttontop_mod td {
+    font-size: 12px !important;
+    color: var(--text-secondary) !important;
+    padding: 8px 12px !important;
+    line-height: 1.5 !important;
+    border: none !important;
+}
+
+#buttontop_mod td a {
+    color: var(--primary) !important;
+    text-decoration: none !important;
+    font-size: 12px !important;
+    padding: 2px 6px !important;
+    border-radius: var(--radius-sm) !important;
+    transition: background-color 0.2s !important;
+}
+
+#buttontop_mod td a:hover {
+    background-color: rgba(37, 99, 235, 0.08) !important;
+}
+
+/* Hide the right cell (Module Name : Current Tab) - already shown in #xo-modname */
+#buttontop_mod tr td:last-child {
+    display: none !important;
+}
+
+/* Dark mode */
+body.dark-mode #buttontop_mod td {
+    color: var(--text-secondary) !important;
+}
+
+body.dark-mode #buttontop_mod td a {
+    color: var(--primary-light) !important;
+}
+
+body.dark-mode #buttontop_mod td a:hover {
+    background-color: rgba(59, 130, 246, 0.15) !important;
+}
+
