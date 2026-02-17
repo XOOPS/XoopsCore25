@@ -32,34 +32,41 @@ An in-depth technical reference for designers and developers who want to underst
 
 The Modern theme is a XOOPS admin GUI theme that extends `XoopsSystemGui`. It consists of:
 
-```
-┌─────────────────────────────────────────────────┐
-│  PHP Layer (modern.php)                         │
-│  - Extends XoopsSystemGui                       │
-│  - Queries DB for stats, charts, widgets        │
-│  - Assigns all Smarty template variables        │
-├─────────────────────────────────────────────────┤
-│  Template Layer (theme.tpl + xotpl/*.tpl)       │
-│  - Smarty 3 with <{ }> delimiters              │
-│  - Modular partials (head, sidebar, dashboard)  │
-│  - Data bridge: PHP → JSON → JavaScript         │
-├─────────────────────────────────────────────────┤
-│  CSS Layer (css/*.css)                          │
-│  - Design tokens via CSS custom properties      │
-│  - Light mode defaults, dark mode overrides     │
-│  - fixes.css for XOOPS core !important rules    │
-├─────────────────────────────────────────────────┤
-│  JavaScript Layer (js/*.js)                     │
-│  - jQuery-based, no build step                  │
-│  - theme.js: sidebar, dark mode, messages       │
-│  - charts.js: Chart.js integration              │
-│  - customizer.js: settings panel + cookies      │
-├─────────────────────────────────────────────────┤
-│  Widget Layer (class/ + widgets/)               │
-│  - ModernThemeWidgetInterface contract          │
-│  - WidgetLoader: auto-discovery + sort          │
-│  - 11 pre-built module widgets                  │
-└─────────────────────────────────────────────────┘
+```mermaid
+block-beta
+    columns 1
+    block:php["PHP Layer — modern.php"]
+        columns 3
+        p1["Extends XoopsSystemGui"]
+        p2["Queries DB for stats, charts, widgets"]
+        p3["Assigns all Smarty template variables"]
+    end
+    block:tpl["Template Layer — theme.tpl + xotpl/*.tpl"]
+        columns 3
+        t1["Smarty 3 with <{ }> delimiters"]
+        t2["Modular partials (head, sidebar, dashboard)"]
+        t3["Data bridge: PHP → JSON → JavaScript"]
+    end
+    block:css["CSS Layer — css/*.css"]
+        columns 3
+        c1["Design tokens via CSS custom properties"]
+        c2["Light mode defaults, dark mode overrides"]
+        c3["fixes.css for XOOPS core !important rules"]
+    end
+    block:js["JavaScript Layer — js/*.js"]
+        columns 3
+        j1["jQuery-based, no build step"]
+        j2["theme.js / charts.js"]
+        j3["customizer.js + cookies"]
+    end
+    block:wid["Widget Layer — class/ + widgets/"]
+        columns 3
+        w1["ModernThemeWidgetInterface contract"]
+        w2["WidgetLoader: auto-discovery + sort"]
+        w3["11 pre-built module widgets"]
+    end
+
+    php --> tpl --> css --> js --> wid
 ```
 
 Key design principles:
@@ -135,43 +142,41 @@ modern/
 
 When an admin page loads, execution flows through:
 
-```
-1. XOOPS bootstrap (include/common.php)
-   ↓
-2. admin.php dispatches to the active admin GUI
-   ↓
-3. XoopsSystemGui loads modern.php
-   ↓
-4. xoops_loadLanguage('main', 'system/themes/modern')
-   → Defines all _MODERN_* constants
-   ↓
-5. XoopsGuiModern::header()
-   ├── parent::header()           → XoopsSystemGui base initialization
-   ├── Asset injection            → Chart.js, jQuery, theme CSS/JS via $xoTheme
-   ├── getSystemInfo($tpl)        → PHP/MySQL/server info → Smarty vars
-   ├── getEnhancedStats($tpl)     → User count queries → 'enhanced_stats'
-   ├── getUserStats($tpl)         → 6-month registration loop → JSON strings
-   ├── getModuleStats($tpl)       → Module count via CriteriaCompo
-   ├── getContentStats($tpl)      → SHOW TABLES + COUNT per module → JSON
-   ├── loadModuleWidgets($tpl)    → WidgetLoader discovery → 'module_widgets'
-   ├── ComposerInfo::getComposerInfo($tpl)
-   └── buildMenu($tpl)            → Navigation arrays → Smarty vars
-   ↓
-6. Smarty renders theme.tpl
-   ├── xo_metas.tpl              → <head> with $xoops_module_header (CSS/JS)
-   ├── xo_head.tpl               → Fixed header bar
-   ├── xo_sidebar.tpl            → Left navigation
-   ├── xo_dashboard.tpl          → Dashboard (only on admin.php homepage)
-   │   └── Emits window.XOOPS_DASHBOARD_DATA (JSON bridge)
-   ├── xo_page.tpl               → Module content
-   ├── xo_footer.tpl             → Footer
-   └── xo_customizer.tpl         → Settings panel
-   ↓
-7. JavaScript executes (in order):
-   ├── theme.js       → Dark mode, sidebar, help, messages
-   ├── dashboard.js   → Table hover interactions
-   ├── charts.js      → Reads XOOPS_DASHBOARD_DATA, builds Chart.js instances
-   └── customizer.js  → Restores cookie preferences, binds UI controls
+```mermaid
+flowchart TD
+    A["1. XOOPS Bootstrap<br/><code>include/common.php</code>"] --> B["2. <code>admin.php</code> dispatches<br/>to active admin GUI"]
+    B --> C["3. XoopsSystemGui loads<br/><code>modern.php</code>"]
+    C --> D["4. <code>xoops_loadLanguage()</code><br/>Defines all _MODERN_* constants"]
+    D --> E["5. <code>XoopsGuiModern::header()</code>"]
+
+    E --> E1["parent::header()"]
+    E --> E2["Asset injection<br/>Chart.js, jQuery, CSS/JS"]
+    E --> E3["getSystemInfo()"]
+    E --> E4["getEnhancedStats()"]
+    E --> E5["getUserStats()"]
+    E --> E6["getModuleStats()"]
+    E --> E7["getContentStats()"]
+    E --> E8["loadModuleWidgets()"]
+    E --> E9["ComposerInfo::getComposerInfo()"]
+    E --> E10["buildMenu()"]
+
+    E10 --> F["6. Smarty renders <code>theme.tpl</code>"]
+
+    F --> F1["xo_metas.tpl<br/>‹head› + CSS/JS"]
+    F --> F2["xo_head.tpl<br/>Header bar"]
+    F --> F3["xo_sidebar.tpl<br/>Navigation"]
+    F --> F4["xo_dashboard.tpl<br/>KPIs, charts, widgets"]
+    F4 -.-> F4a["Emits<br/><code>window.XOOPS_DASHBOARD_DATA</code>"]
+    F --> F5["xo_page.tpl<br/>Module content"]
+    F --> F6["xo_footer.tpl"]
+    F --> F7["xo_customizer.tpl<br/>Settings panel"]
+
+    F7 --> G["7. JavaScript executes"]
+
+    G --> G1["theme.js<br/>Dark mode, sidebar, messages"]
+    G --> G2["dashboard.js<br/>Table interactions"]
+    G --> G3["charts.js<br/>Builds Chart.js instances"]
+    G --> G4["customizer.js<br/>Restores cookie preferences"]
 ```
 
 ---
@@ -448,21 +453,26 @@ interface ModernThemeWidgetInterface
 
 `ModernThemeWidgetLoader::loadWidgets()` performs these steps:
 
-```
-1. Query all active modules (WHERE isactive = 1)
-2. For each module with dirname $dirname:
-   a. Check: modules/{$dirname}/class/ModernThemeWidget.php exists?
-   b. Validate: realpath stays within modules/ directory (path traversal prevention)
-   c. require_once the file
-   d. Resolve class: ucfirst($dirname) . 'ModernThemeWidget'
-   e. Instantiate: new $className($moduleObject)
-   f. Type-check: instanceof ModernThemeWidgetInterface
-   g. Runtime gate: isWidgetEnabled() === true
-   h. Get data: getWidgetData() returns non-empty array
-   i. Inject 'priority' and 'module' keys
-   j. Store in $widgets[$dirname]
-3. Sort by priority (uasort, ascending)
-4. Return sorted array
+```mermaid
+flowchart TD
+    A["Query active modules\nWHERE isactive = 1"] --> B{"For each module\ndirname"}
+    B --> C{"File exists?\nmodules/dir/class/\nModernThemeWidget.php"}
+    C -- No --> B
+    C -- Yes --> D{"realpath within\nmodules/ dir?"}
+    D -- No --> B
+    D -- Yes --> E["require_once file"]
+    E --> F["Resolve class name\nucfirst dir ModernThemeWidget"]
+    F --> G{"instanceof\nModernThemeWidgetInterface?"}
+    G -- No --> B
+    G -- Yes --> H{"isWidgetEnabled\n=== true?"}
+    H -- No --> B
+    H -- Yes --> I["getWidgetData"]
+    I --> J{"Non-empty\narray?"}
+    J -- No --> B
+    J -- Yes --> K["Inject priority + module keys\nStore in widgets"]
+    K --> B
+    B -- All done --> L["Sort by priority\nuasort ascending"]
+    L --> M["Return sorted widgets"]
 ```
 
 ### Widget Data Structure
@@ -494,14 +504,14 @@ interface ModernThemeWidgetInterface
 
 `xo_widgets.tpl` iterates `$module_widgets` and renders each widget card:
 
-```
-.widget-card
-├── .widget-header
-│   ├── .widget-title (icon + title)
-│   └── .widget-link ("View All →" if admin_url set)
-└── .widget-body
-    ├── .widget-stats (grid of stat counters)
-    └── .widget-recent (list of recent items with status badges)
+```mermaid
+graph TD
+    A[".widget-card"] --> B[".widget-header"]
+    A --> C[".widget-body"]
+    B --> B1[".widget-title\nicon + title"]
+    B --> B2[".widget-link\nView All if admin_url set"]
+    C --> C1[".widget-stats\ngrid of stat counters"]
+    C --> C2[".widget-recent\nlist of recent items\nwith status badges"]
 ```
 
 ### Pre-Built Widgets
@@ -536,59 +546,54 @@ For the complete widget development guide, see [MODULE_INTEGRATION_GUIDE.md](MOD
 
 ### PHP → Smarty → JavaScript
 
-```
-modern.php                          xo_dashboard.tpl                  charts.js
-─────────                          ──────────────────                 ─────────
-$userChartData (PHP array)
-    ↓ json_encode()
-$tpl->assign('user_chart_data')
-                                   window.XOOPS_DASHBOARD_DATA = {
-                                       userChart: <{$user_chart_data}>,
-                                       groupStats: <{$group_stats}>,
-                                       contentStats: <{$content_stats}>
-                                   };
-                                                                      initUserRegistrationChart()
-                                                                      reads .userChart
-                                                                      → Chart.js line chart
+```mermaid
+sequenceDiagram
+    participant PHP as modern.php
+    participant TPL as xo_dashboard.tpl
+    participant JS as charts.js
 
-                                                                      initUserGroupChart()
-                                                                      reads .groupStats
-                                                                      → Chart.js doughnut
+    PHP->>PHP: $userChartData = query DB
+    PHP->>PHP: json_encode all stats
+    PHP->>TPL: $tpl->assign user_chart_data
+    PHP->>TPL: $tpl->assign group_stats
+    PHP->>TPL: $tpl->assign content_stats
 
-                                                                      initContentChart()
-                                                                      reads .contentStats
-                                                                      → Chart.js bar chart
+    TPL->>JS: window.XOOPS_DASHBOARD_DATA
+
+    JS->>JS: initUserRegistrationChart reads userChart
+    JS->>JS: initUserGroupChart reads groupStats
+    JS->>JS: initContentChart reads contentStats
 ```
 
 ### Customizer → Charts (live rebuild)
 
-```
-customizer.js                                     charts.js
-─────────────                                     ─────────
-User checks/unchecks content module checkbox
-    ↓
-getSelectedModules() → ['publisher', 'news']
-    ↓
-window.XOOPS_CHARTS.rebuildContentChart(selected)
-                                                  → filterContentStats(allData, selected)
-                                                  → chart.update() or buildContentChart()
+```mermaid
+sequenceDiagram
+    actor User
+    participant CJS as customizer.js
+    participant ChJS as charts.js
+
+    User->>CJS: Check/uncheck content module checkbox
+    CJS->>CJS: getSelectedModules
+    CJS->>ChJS: XOOPS_CHARTS.rebuildContentChart(selected)
+    ChJS->>ChJS: filterContentStats(allData, selected)
+    ChJS->>ChJS: chart.update or buildContentChart
 ```
 
 ### Customizer → CSS (instant theme change)
 
-```
-customizer.js                          Browser
-─────────────                          ───────
-User clicks color preset
-    ↓
-applyColorScheme('green')
-    ↓
-document.documentElement.style
-  .setProperty('--primary', '#10b981')
-  .setProperty('--primary-dark', '#059669')
-  .setProperty('--primary-light', '#34d399')
-                                       → All var(--primary) references
-                                         update instantly (no reload)
+```mermaid
+sequenceDiagram
+    actor User
+    participant CJS as customizer.js
+    participant DOM as Browser DOM
+
+    User->>CJS: Click color preset
+    CJS->>CJS: applyColorScheme('green')
+    CJS->>DOM: setProperty('--primary', '#10b981')
+    CJS->>DOM: setProperty('--primary-dark', '#059669')
+    CJS->>DOM: setProperty('--primary-light', '#34d399')
+    DOM->>DOM: All var(--primary) references update instantly
 ```
 
 ---
