@@ -60,7 +60,7 @@ define('_US_NICKNAMENOSPACES', 'There cannot be any spaces in the Username.');
 define('_US_NICKNAMETAKEN', 'ERROR: Username taken.');
 define('_US_EMAILTAKEN', 'ERROR: Email address already registered.');
 define('_US_ENTERPWD', 'ERROR: You must provide a password.');
-define('_US_SORRYNOTFOUND', 'If an account exists for this email, you will receive password reset instructions. Check your spam folder if needed or contact the site administrator.');
+define('_US_SORRYNOTFOUND', 'If an account matches the information provided, we will process your request. If you do not receive an email shortly, please check your spam folder or contact the site administrator.');
 // %s is your site name
 define('_US_NEWPWDREQ', 'New Password Request at %s');
 define('_US_YOURACCOUNT', 'Your account at %s');
