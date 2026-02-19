@@ -72,8 +72,10 @@ class XoopsTpl extends Smarty
             [
                 'xoops_url'        => XOOPS_URL,
                 'xoops_rootpath'   => XOOPS_ROOT_PATH,
-                'xoops_langcode'   => _LANGCODE,
-                'xoops_charset'    => _CHARSET,
+                'xoops_langcode'       => _LANGCODE,
+                'xoops_charset'        => _CHARSET,
+                'xoops_text_direction' => _TEXT_DIRECTION,
+                'xoops_rtl'            => _RTL,
                 'xoops_version'    => XOOPS_VERSION,
                 'xoops_upload_url' => XOOPS_UPLOAD_URL,
             ],

@@ -266,12 +266,12 @@ define('_OFF', 'Off');
 define('_DB_QUERY_ERROR', 'Query Failed! SQL: %s - Error: ');
 
 //XOOPS 2.5.12
-// Canonical string (what templates and helpers should use)
+// Guards allow RTL language packs (e.g. Arabic, Hebrew) to define these
+// constants in their own global.php before this English fallback loads.
 if (!defined('_TEXT_DIRECTION')) {
     define('_TEXT_DIRECTION', 'ltr'); // or 'rtl'
 }
 
-// Convenience / legacy compat
 if (!defined('_RTL')) {
-    define('_RTL', _TEXT_DIRECTION === 'rtl');
+    define('_RTL', _TEXT_DIRECTION === 'rtl' ? '1' : '0');
 }
