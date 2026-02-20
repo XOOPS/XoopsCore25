@@ -252,7 +252,7 @@ CREATE TABLE groups_users_link (
 
 CREATE TABLE image (
   image_id mediumint(8) unsigned NOT NULL auto_increment,
-  image_name varchar(30) NOT NULL default '',
+  image_name varchar(191) NOT NULL default '',
   image_nicename varchar(255) NOT NULL default '',
   image_mimetype varchar(30) NOT NULL default '',
   image_created int(10) unsigned NOT NULL default '0',
