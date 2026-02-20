@@ -58,20 +58,19 @@ class XoopsLocalAbstract
      */
     public static function utf8_encode($text)
     {
-        if (defined('XOOPS_USE_MULTIBYTES') && 1 === (int)XOOPS_USE_MULTIBYTES) {
-            if (function_exists('mb_convert_encoding')) {
-                $converted_text = mb_convert_encoding($text, 'UTF-8', 'auto');
-                if ($converted_text !== false && !is_array($converted_text)) {
-                    return $converted_text;
-                } else {
-                    // Handle the failure case, maybe log an error or return the original text
-                    return $text;
-                }
-
+        if (function_exists('mb_convert_encoding')) {
+            $convertedText = mb_convert_encoding($text, 'UTF-8', 'ISO-8859-1');
+            if ($convertedText !== false && !is_array($convertedText)) {
+                return $convertedText;
+            }
+        } elseif (function_exists('iconv')) {
+            $convertedText = iconv('ISO-8859-1', 'UTF-8//TRANSLIT', (string)$text);
+            if ($convertedText !== false) {
+                return $convertedText;
             }
         }
 
-        return utf8_encode($text);
+        return (string) $text;
     }
 
     // Each local language should define its own equivalent utf8_decode
@@ -83,19 +82,19 @@ class XoopsLocalAbstract
      */
     public static function utf8_decode($text)
     {
-        if (defined('XOOPS_USE_MULTIBYTES') && 1 === (int)XOOPS_USE_MULTIBYTES) {
-            if (function_exists('mb_convert_encoding')) {
-                $converted_text = mb_convert_encoding($text, 'ISO-8859-1', 'auto');
-                if ($converted_text !== false && !is_array($converted_text)) {
-                    return $converted_text;
-                } else {
-                    // Handle the failure case, maybe log an error or return the original text
-                    return $text;
-                }
+        if (function_exists('mb_convert_encoding')) {
+            $convertedText = mb_convert_encoding($text, 'ISO-8859-1', 'UTF-8');
+            if ($convertedText !== false && !is_array($convertedText)) {
+                return $convertedText;
+            }
+        } elseif (function_exists('iconv')) {
+            $convertedText = iconv('UTF-8', 'ISO-8859-1//TRANSLIT', (string)$text);
+            if ($convertedText !== false) {
+                return $convertedText;
             }
         }
 
-        return utf8_decode($text);
+        return (string) $text;
     }
 
     /**
@@ -137,14 +136,6 @@ class XoopsLocalAbstract
         // Try to use iconv if available
         if (function_exists('iconv')) {
             $convertedText = iconv($from, $to . '//TRANSLIT', $text);
-            if (false !== $convertedText) {
-                return $convertedText;
-            }
-        }
-
-        // Try to use utf8_encode if target encoding is 'utf-8'
-        if ('utf-8' === $to) {
-            $convertedText = utf8_encode($text);
             if (false !== $convertedText) {
                 return $convertedText;
             }
