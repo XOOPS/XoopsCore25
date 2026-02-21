@@ -21,9 +21,7 @@ namespace XoopsModules\Debugbar;
  * @since               1.0
  */
 
-if (!defined('XOOPS_ROOT_PATH')) {
-    throw new \RuntimeException('Restricted access');
-}
+defined('XOOPS_ROOT_PATH') || exit('Restricted access');
 
 use DebugBar\StandardDebugBar;
 use DebugBar\DataCollector\MessagesCollector;

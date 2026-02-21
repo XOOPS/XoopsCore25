@@ -17,9 +17,7 @@
  * @author              Kazumi Ono <onokazu@xoops.org>
  */
 
-if (!defined('XOOPS_ROOT_PATH')) {
-    throw new \RuntimeException('Restricted access');
-}
+defined('XOOPS_ROOT_PATH') || exit('Restricted access');
 
 /**
  * make sure this is only included once!

@@ -12,9 +12,7 @@
  * @since               2.5.12
  */
 
-if (!defined('XOOPS_ROOT_PATH')) {
-    throw new \RuntimeException('Restricted access');
-}
+defined('XOOPS_ROOT_PATH') || exit('Restricted access');
 
 use Monolog\Logger;
 use Monolog\Handler\RotatingFileHandler;

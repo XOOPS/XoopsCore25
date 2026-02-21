@@ -15,9 +15,7 @@
  * @since               2.0.0
  */
 
-if (!defined('XOOPS_ROOT_PATH')) {
-    throw new \RuntimeException('Restricted access');
-}
+defined('XOOPS_ROOT_PATH') || exit('Restricted access');
 
 /**
  * Define required Defines (I guess lol )

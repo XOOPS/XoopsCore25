@@ -19,9 +19,7 @@
 /** @var XoopsConfigItem $xoopsConfig */
 /** @var XoopsModule $xoopsModule */
 
-if (!defined('XOOPS_ROOT_PATH')) {
-    throw new \RuntimeException('Restricted access');
-}
+defined('XOOPS_ROOT_PATH') || exit('Restricted access');
 
 include_once $GLOBALS['xoops']->path('class/xoopslists.php');
 include $GLOBALS['xoops']->path('class/xoopsformloader.php');

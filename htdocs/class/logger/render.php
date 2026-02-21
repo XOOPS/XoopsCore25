@@ -19,9 +19,7 @@
  *
  * @todo                Not well written, just keep as it is. Refactored in 3.0
  */
-if (!defined('XOOPS_ROOT_PATH')) {
-    throw new \RuntimeException('Restricted access');
-}
+defined('XOOPS_ROOT_PATH') || exit('Restricted access');
 
 $ret = '';
 if ($mode === 'popup') {

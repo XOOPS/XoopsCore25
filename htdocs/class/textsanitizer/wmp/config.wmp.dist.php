@@ -17,9 +17,7 @@
  * @author              Taiwen Jiang <phppp@users.sourceforge.net>
  * @deprecated          since 2.5.9
  */
-if (!defined('XOOPS_ROOT_PATH')) {
-    throw new \RuntimeException('Restricted access');
-}
+defined('XOOPS_ROOT_PATH') || exit('Restricted access');
 
 return $config = [
     'enable_wmp_entry' => true,  // false to disable entry button in editor, existing content will still play

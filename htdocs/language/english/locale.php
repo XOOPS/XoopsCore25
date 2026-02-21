@@ -19,9 +19,7 @@
  * @author              Taiwen Jiang <phppp@users.sourceforge.net>
  * @todo                To be handled by i18n/l10n
  */
-if (!defined('XOOPS_ROOT_PATH')) {
-    throw new \RuntimeException('Restricted access');
-}
+defined('XOOPS_ROOT_PATH') || exit('Restricted access');
 
 setlocale(LC_ALL, 'en_US');
 

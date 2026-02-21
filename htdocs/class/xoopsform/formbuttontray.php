@@ -10,9 +10,7 @@
  * @author              John Neill <catzwolf@xoops.org>
  *
  */
-if (!defined('XOOPS_ROOT_PATH')) {
-    throw new \RuntimeException('Restricted access');
-}
+defined('XOOPS_ROOT_PATH') || exit('Restricted access');
 
 /**
  * XoopsFormButtonTray

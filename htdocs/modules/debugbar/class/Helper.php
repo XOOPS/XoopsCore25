@@ -20,9 +20,7 @@ namespace XoopsModules\Debugbar;
  * @since        1.0
  * @author       XOOPS Development Team
  */
-if (!defined('XOOPS_ROOT_PATH')) {
-    throw new \RuntimeException('Restricted access');
-}
+defined('XOOPS_ROOT_PATH') || exit('Restricted access');
 
 /**
  * Class Helper

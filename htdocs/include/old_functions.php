@@ -16,9 +16,7 @@
  * @author              Kazumi Ono (AKA onokazu) http://www.myweb.ne.jp/, http://jp.xoops.org/
  * @author              Taiwen Jiang <phppp@users.sourceforge.net>
  */
-if (!defined('XOOPS_ROOT_PATH')) {
-    throw new \RuntimeException('Restricted access');
-}
+defined('XOOPS_ROOT_PATH') || exit('Restricted access');
 
 trigger_error('Functions in ' . __FILE__ . ' are deprecated, should not be used any more', E_USER_WARNING);
 

@@ -16,9 +16,7 @@
  * @deprecated
  */
 
-if (!defined('XOOPS_ROOT_PATH')) {
-    throw new \RuntimeException('Restricted access');
-}
+defined('XOOPS_ROOT_PATH') || exit('Restricted access');
 
 /**
  * Path Change: This file is here for backward compatibility only.

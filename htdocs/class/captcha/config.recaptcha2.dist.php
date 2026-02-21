@@ -19,9 +19,7 @@
  * @license     GNU GPL 2.0 or later (https://www.gnu.org/licenses/gpl-2.0.html)
  * @link        https://xoops.org
  */
-if (!defined('XOOPS_ROOT_PATH')) {
-    throw new \RuntimeException('Restricted access');
-}
+defined('XOOPS_ROOT_PATH') || exit('Restricted access');
 
 return $config = [
     'website_key' => 'YourWebsiteKey', //https://www.google.com/recaptcha/intro/index.html YourWebsiteKey
