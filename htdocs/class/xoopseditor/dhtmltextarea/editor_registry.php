@@ -15,9 +15,7 @@
  * @since               2.3.0
  * @package             xoopseditor
  */
-if (!defined('XOOPS_ROOT_PATH')) {
-    throw new \RuntimeException('Restricted access');
-}
+defined('XOOPS_ROOT_PATH') || exit('Restricted access');
 
 return $config = [
     'class'  => 'FormDhtmlTextArea',

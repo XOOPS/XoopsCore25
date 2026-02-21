@@ -17,9 +17,7 @@
  * @author              Wishcraft <simon@xoops.org>
  * @deprecated
  */
-if (!defined('XOOPS_ROOT_PATH')) {
-    throw new \RuntimeException('Restricted access');
-}
+defined('XOOPS_ROOT_PATH') || exit('Restricted access');
 
 /**
  * Class MytsUl

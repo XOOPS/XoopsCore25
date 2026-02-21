@@ -9,9 +9,7 @@
  * @package             debugbar
  */
 
-if (!defined('XOOPS_ROOT_PATH')) {
-    throw new \RuntimeException('Restricted access');
-}
+defined('XOOPS_ROOT_PATH') || exit('Restricted access');
 
 /**
  * Copy DebugBar vendor assets to modules/debugbar/assets/ for web access.

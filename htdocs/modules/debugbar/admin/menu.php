@@ -9,9 +9,7 @@ declare(strict_types=1);
  * @package             debugbar
  */
 
-if (!defined('XOOPS_ROOT_PATH')) {
-    throw new \RuntimeException('Restricted access');
-}
+defined('XOOPS_ROOT_PATH') || exit('Restricted access');
 use Xmf\Module\Admin;
 use XoopsModules\Debugbar\{
     Helper

@@ -22,9 +22,7 @@
  * XOOPS preload implemented in XOOPS is different from methods defined in this class, thus module developers are advised to be careful if you use current preload methods
  */
 
-if (!defined('XOOPS_ROOT_PATH')) {
-    throw new \RuntimeException('Restricted access');
-}
+defined('XOOPS_ROOT_PATH') || exit('Restricted access');
 
 XoopsLoad::load('XoopsLists');
 XoopsLoad::load('XoopsCache');

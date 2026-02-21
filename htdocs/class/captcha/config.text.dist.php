@@ -17,9 +17,7 @@
  * @author              trabis <lusopoemas@gmail.com>
  */
 
-if (!defined('XOOPS_ROOT_PATH')) {
-    throw new \RuntimeException('Restricted access');
-}
+defined('XOOPS_ROOT_PATH') || exit('Restricted access');
 
 return $config = [
     'num_chars' => 6,  // Maximum characters

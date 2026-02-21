@@ -15,9 +15,7 @@
  * @since               2.0.0
  */
 
-if (!defined('XOOPS_ROOT_PATH')) {
-    throw new \RuntimeException('Restricted access');
-}
+defined('XOOPS_ROOT_PATH') || exit('Restricted access');
 
 $xoopsPreload = XoopsPreload::getInstance();
 $xoopsPreload->triggerEvent('core.footer.start');
