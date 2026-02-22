@@ -38,10 +38,10 @@
         <link rel="stylesheet" type="text/css" media="screen" href="<{xoImgUrl}>css/forums.css">
     <{/if}>
 
-    <link rel="stylesheet" type="text/css" href="<{xoAppUrl 'media/font-awesome6/css/fontawesome.min.css'}>">
-    <link rel="stylesheet" type="text/css" href="<{xoAppUrl 'media/font-awesome6/css/solid.min.css'}>">
-    <link rel="stylesheet" type="text/css" href="<{xoAppUrl 'media/font-awesome6/css/brands.min.css'}>">
-    <link rel="stylesheet" type="text/css" href="<{xoAppUrl 'media/font-awesome6/css/v4-shims.min.css'}>">
+    <link rel="stylesheet" type="text/css" href="<{xoAppUrl 'media/font-awesome7/css/fontawesome.min.css'}>">
+    <link rel="stylesheet" type="text/css" href="<{xoAppUrl 'media/font-awesome7/css/solid.min.css'}>">
+    <link rel="stylesheet" type="text/css" href="<{xoAppUrl 'media/font-awesome7/css/brands.min.css'}>">
+    <link rel="stylesheet" type="text/css" href="<{xoAppUrl 'media/font-awesome7/css/v4-shims.min.css'}>">
 
 
     <link rel="alternate" type="application/rss+xml" title="" href="<{xoAppUrl 'backend.php'}>">
@@ -67,7 +67,6 @@
 <{*<main class="container maincontainer">*}>
 
     <button id="theme-toggle" class="btn btn-sm btn-outline-light position-fixed top-0 end-0 m-2 z-3">🌙</button>
-
     <div class="row">
         <aside class="col-md-3 xoops-side-blocks">
             <{foreach item=block from=$xoops_lblocks}>
@@ -78,10 +77,11 @@
             <{/foreach}>
         </aside>
 
-        <section class="col-md-6">
+        <section class="<{if $xoops_rblocks}>col-md-6<{else}>col-md-9<{/if}>">
             <{$xoops_contents}>
         </section>
 
+        <{if $xoops_rblocks}>
         <aside class="col-md-3 xoops-side-blocks">
             <{foreach item=block from=$xoops_rblocks}>
                 <div class="mb-4">
@@ -90,9 +90,40 @@
                 </div>
             <{/foreach}>
         </aside>
+        <{/if}>
     </div>
 </main>
 
+<{if $xoBlocks.page_bottomcenter || $xoBlocks.page_bottomright || $xoBlocks.page_bottomleft}>
+    <div class="bottom-blocks">
+        <div class="container">
+            <div class="row">
+                <{include file="$theme_name/tpl/leftBottom.tpl"}>
+
+                <{include file="$theme_name/tpl/centerBottom.tpl"}>
+
+                <{include file="$theme_name/tpl/rightBottom.tpl"}>
+            </div>
+        </div>
+    </div>
+    <!-- .bottom-blocks -->
+<{/if}>
+
+
+<{if $xoBlocks.footer_center || $xoBlocks.footer_right || $xoBlocks.footer_left}>
+    <div class="footer-blocks">
+        <div class="container">
+            <div class="row">
+                <{include file="$theme_name/tpl/leftFooter.tpl"}>
+
+                <{include file="$theme_name/tpl/centerFooter.tpl"}>
+
+                <{include file="$theme_name/tpl/rightFooter.tpl"}>
+            </div>
+        </div>
+    </div>
+    <!-- .footer-blocks -->
+<{/if}>
 
 
 <{*=============================  JS   ==================================*}>
