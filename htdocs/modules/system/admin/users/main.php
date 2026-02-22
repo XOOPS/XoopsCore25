@@ -360,6 +360,7 @@ case 'users_save':
         redirect_header('admin.php?fct=users', 1, _AM_SYSTEM_DBUPDATED);
         break;
 
+    case 'list':
     default:
         // Search and Display
         // Define scripts
