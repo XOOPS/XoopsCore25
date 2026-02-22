@@ -276,6 +276,7 @@ switch ($op) {
         $xoopsTpl->assign('form', $form->render());
         break;
 
+    case 'list':
     default:
         $xoBreadCrumb->addHelp(system_adminVersion('banners', 'help'));
         $xoBreadCrumb->addTips(_AM_SYSTEM_BANNERS_NAV_TIPS);
