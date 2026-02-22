@@ -64,6 +64,11 @@ if (!$xoopsUser->isAdmin($xoopsModule->mid()) && ($op === 'delfile' || $op === '
     redirect_header('admin.php?fct=images', 1);
 }
 
+// Define main template
+$GLOBALS['xoopsOption']['template_main'] = 'system_images.tpl';
+// Call Header
+xoops_cp_header();
+
 // Define Breadcrumb and tips
 $xoBreadCrumb->addLink(_AM_SYSTEM_CONFIG, XOOPS_URL . '/modules/system/admin.php');
 if ('list' === $op) {
@@ -74,10 +79,6 @@ if ('list' === $op) {
 
 switch ($op) {
     case 'list':
-        // Define main template
-        $GLOBALS['xoopsOption']['template_main'] = 'system_images.tpl';
-        // Call Header
-        xoops_cp_header();
         // Define Stylesheet
         $xoTheme->addStylesheet(XOOPS_URL . '/modules/system/css/admin.css');
         $xoTheme->addStylesheet(XOOPS_URL . '/modules/system/css/ui/' . xoops_getModuleOption('jquery_theme', 'system') . '/ui.all.css');
@@ -195,10 +196,6 @@ switch ($op) {
         }
         // Get image handler
         $image_handler = xoops_getHandler('image');
-        // Define main template
-        $GLOBALS['xoopsOption']['template_main'] = 'system_images.tpl';
-        // Call header
-        xoops_cp_header();
         // Define Stylesheet
         $xoTheme->addStylesheet(XOOPS_URL . '/modules/system/css/admin.css');
         $xoTheme->addStylesheet(XOOPS_URL . '/modules/system/css/ui/' . xoops_getModuleOption('jquery_theme', 'system') . '/ui.all.css');
@@ -282,10 +279,6 @@ switch ($op) {
         break;
 
     case 'editimg':
-        // Define main template
-        $GLOBALS['xoopsOption']['template_main'] = 'system_images.tpl';
-        // Call Header
-        xoops_cp_header();
         // Define Stylesheet
         $xoTheme->addStylesheet(XOOPS_URL . '/modules/system/css/admin.css');
         $xoTheme->addStylesheet(XOOPS_URL . '/modules/system/css/ui/' . xoops_getModuleOption('jquery_theme', 'system') . '/ui.all.css');
@@ -717,10 +710,6 @@ switch ($op) {
         }
         // Get image handler
         //$image_handler = xoops_getHandler('image');
-        // Define main template
-        $GLOBALS['xoopsOption']['template_main'] = 'system_images.tpl';
-        // Call header
-        xoops_cp_header();
         // Define Stylesheet
         $xoTheme->addStylesheet(XOOPS_URL . '/media/fine-uploader/fine-uploader-new.css');
         $xoTheme->addStylesheet(XOOPS_URL . '/media/fine-uploader/ManuallyTriggerUploads.css');

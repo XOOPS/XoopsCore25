@@ -48,6 +48,11 @@ if ($type === 'preview') {
 
 $bid = Request::getInt('bid', 0);
 
+// Define main template
+$GLOBALS['xoopsOption']['template_main'] = 'system_blocks.tpl';
+// Call Header
+xoops_cp_header();
+
 // Define Breadcrumb and tips
 $xoBreadCrumb->addLink(_AM_SYSTEM_CONFIG, XOOPS_URL . '/modules/system/admin.php');
 if ('list' === $op) {
@@ -59,10 +64,6 @@ if ('list' === $op) {
 switch ($op) {
 
     case 'list':
-        // Define main template
-        $GLOBALS['xoopsOption']['template_main'] = 'system_blocks.tpl';
-        // Call Header
-        xoops_cp_header();
         // Define Stylesheet
         $xoTheme->addStylesheet(XOOPS_URL . '/modules/system/css/admin.css');
         // Define scripts
@@ -178,10 +179,6 @@ switch ($op) {
         break;
 
     case 'add':
-        // Define main template
-        $GLOBALS['xoopsOption']['template_main'] = 'system_blocks.tpl';
-        // Call Header
-        xoops_cp_header();
         // Define Stylesheet
         $xoTheme->addStylesheet(XOOPS_URL . '/modules/system/css/admin.css');
         $xoTheme->addStylesheet(XOOPS_URL . '/modules/system/css/ui/' . xoops_getModuleOption('jquery_theme', 'system') . '/ui.all.css');
@@ -384,10 +381,6 @@ switch ($op) {
         // Get block id
         $block_id = Request::getInt('bid', 0);
         if ($block_id > 0) {
-            // Define main template
-            $GLOBALS['xoopsOption']['template_main'] = 'system_blocks.tpl';
-            // Call Header
-            xoops_cp_header();
             // Define Stylesheet
             $xoTheme->addStylesheet(XOOPS_URL . '/modules/system/css/admin.css');
             $xoTheme->addStylesheet(XOOPS_URL . '/modules/system/css/ui/' . xoops_getModuleOption('jquery_theme', 'system') . '/ui.all.css');
@@ -495,10 +488,6 @@ switch ($op) {
         // Get block id
         $block_id = Request::getInt('bid', 0);
         if ($block_id > 0) {
-            // Define main template
-            $GLOBALS['xoopsOption']['template_main'] = 'system_blocks.tpl';
-            // Call Header
-            xoops_cp_header();
             // Define Stylesheet
             $xoTheme->addStylesheet(XOOPS_URL . '/modules/system/css/admin.css');
             // Define Breadcrumb and tips

@@ -32,10 +32,12 @@ if (isset($_REQUEST)) {
 $op = Request::getString('op', 'list');
 // Setting type
 $confcat_id = Request::getInt('confcat_id', 0);
+
 // Define main template
 $GLOBALS['xoopsOption']['template_main'] = 'system_preferences.tpl';
 // Call Header
 xoops_cp_header();
+
 // Define Stylesheet
 $xoTheme->addStylesheet(XOOPS_URL . '/modules/system/css/admin.css');
 // Define scripts

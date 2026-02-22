@@ -42,6 +42,11 @@ $op = Request::getString('op', 'list');
 /** @var SystemUserrankHandler $userrank_Handler */
 $userrank_Handler = xoops_getModuleHandler('userrank', 'system');
 
+// Define main template
+$GLOBALS['xoopsOption']['template_main'] = 'system_userrank.tpl';
+// Call Header
+xoops_cp_header();
+
 // Define Breadcrumb and tips
 $xoBreadCrumb->addLink(_AM_SYSTEM_CONFIG, XOOPS_URL . '/modules/system/admin.php');
 if ('list' === $op) {
@@ -54,10 +59,6 @@ switch ($op) {
 
     case 'list':
     default:
-        // Define main template
-        $GLOBALS['xoopsOption']['template_main'] = 'system_userrank.tpl';
-        // Call Header
-        xoops_cp_header();
         // Define Stylesheet
         $xoTheme->addStylesheet(XOOPS_URL . '/modules/system/css/admin.css');
         $xoTheme->addScript('browse.php?Frameworks/jquery/jquery.js');
@@ -105,10 +106,6 @@ switch ($op) {
 
         // New userrank
     case 'userrank_new':
-        // Define main template
-        $GLOBALS['xoopsOption']['template_main'] = 'system_userrank.tpl';
-        // Call Header
-        xoops_cp_header();
         // Define Stylesheet
         $xoTheme->addStylesheet(XOOPS_URL . '/modules/system/css/admin.css');
         // Define Breadcrumb and tips
@@ -128,10 +125,6 @@ switch ($op) {
 
         // Edit userrank
     case 'userrank_edit':
-        // Define main template
-        $GLOBALS['xoopsOption']['template_main'] = 'system_userrank.tpl';
-        // Call Header
-        xoops_cp_header();
         // Define Stylesheet
         $xoTheme->addStylesheet(XOOPS_URL . '/modules/system/css/admin.css');
         // Define Breadcrumb and tips
@@ -225,10 +218,6 @@ switch ($op) {
                 xoops_error($obj->getHtmlErrors());
             }
         } else {
-            // Define main template
-            $GLOBALS['xoopsOption']['template_main'] = 'system_userrank.tpl';
-            // Call Header
-            xoops_cp_header();
             // Define Stylesheet
             $xoTheme->addStylesheet(XOOPS_URL . '/modules/system/css/admin.css');
             // Define Breadcrumb and tips

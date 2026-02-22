@@ -36,6 +36,7 @@ $op = Request::getString('op', 'list');
 // Get smilies handler
 /** @var  SystemsmiliesHandler $smilies_Handler */
 $smilies_Handler = xoops_getModuleHandler('smilies', 'system');
+
 // Define main template
 $GLOBALS['xoopsOption']['template_main'] = 'system_smilies.tpl';
 // Call Header

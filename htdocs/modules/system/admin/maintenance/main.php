@@ -29,10 +29,12 @@ if (!xoops_getModuleOption('active_maintenance', 'system')) {
 
 // Get Action type
 $op = Request::getString('op', 'list');
+
 // Define main template
 $GLOBALS['xoopsOption']['template_main'] = 'system_maintenance.tpl';
 // Call Header
 xoops_cp_header();
+
 // Define Stylesheet
 $xoTheme->addStylesheet(XOOPS_URL . '/modules/system/css/admin.css');
 // Define scripts

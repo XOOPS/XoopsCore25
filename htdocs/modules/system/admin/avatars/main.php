@@ -30,6 +30,11 @@ if (!xoops_getModuleOption('active_avatars', 'system')) {
 // Get Action type
 $op = Request::getString('op', 'list');
 
+// Define main template
+$GLOBALS['xoopsOption']['template_main'] = 'system_avatars.tpl';
+// Call Header
+xoops_cp_header();
+
 // Define Breadcrumb and tips
 $xoBreadCrumb->addLink(_AM_SYSTEM_CONFIG, XOOPS_URL . '/modules/system/admin.php');
 if ('list' === $op) {
@@ -41,10 +46,6 @@ if ('list' === $op) {
 switch ($op) {
     default:
     case 'list':
-        // Define main template
-        $GLOBALS['xoopsOption']['template_main'] = 'system_avatars.tpl';
-        // Call Header
-        xoops_cp_header();
         // Define Stylesheet
         $xoTheme->addStylesheet(XOOPS_URL . '/modules/system/css/admin.css');
         $xoTheme->addScript('browse.php?Frameworks/jquery/jquery.js');
@@ -82,10 +83,7 @@ switch ($op) {
         // Get Avatar type
         $type = Request::getString('type', 'c');
         $start = Request::getInt('start', 0);
-        // Define main template
-        $GLOBALS['xoopsOption']['template_main'] = 'system_avatars.tpl';
-        // Call Header
-        xoops_cp_header();
+
         // Define Stylesheet
         $xoTheme->addStylesheet(XOOPS_URL . '/modules/system/css/admin.css');
         // Define scripts
@@ -144,10 +142,6 @@ switch ($op) {
         break;
 
     case 'edit':
-        // Define main template
-        $GLOBALS['xoopsOption']['template_main'] = 'system_avatars.tpl';
-        // Call Header
-        xoops_cp_header();
         // Define Stylesheet
         $xoTheme->addStylesheet(XOOPS_URL . '/modules/system/css/admin.css');
         // Define Breadcrumb and tips
@@ -272,10 +266,6 @@ switch ($op) {
         break;
 
     case 'delfile':
-        // Define main template
-        $GLOBALS['xoopsOption']['template_main'] = 'system_avatars.tpl';
-        // Call Header
-        xoops_cp_header();
         // Define Stylesheet
         $xoTheme->addStylesheet(XOOPS_URL . '/modules/system/css/admin.css');
         // Define Breadcrumb and tips
@@ -349,10 +339,6 @@ switch ($op) {
         break;
 
     case 'multiupload':
-        // Define main template
-        $GLOBALS['xoopsOption']['template_main'] = 'system_avatars.tpl';
-        // Call Header
-        xoops_cp_header();
         // Define Stylesheet
         $xoTheme->addStylesheet(XOOPS_URL . '/media/fine-uploader/fine-uploader-new.css');
         $xoTheme->addStylesheet(XOOPS_URL . '/media/fine-uploader/ManuallyTriggerUploads.css');

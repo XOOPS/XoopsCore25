@@ -34,6 +34,7 @@ $op = Request::getString('op', 'list');
 // Define main template
 $GLOBALS['xoopsOption']['template_main'] = 'system_comments.tpl';
 xoops_cp_header();
+
 // Define Stylesheet
 $xoTheme->addStylesheet(XOOPS_URL . '/modules/system/css/admin.css');
 $xoTheme->addStylesheet(XOOPS_URL . '/modules/system/css/ui/' . xoops_getModuleOption('jquery_theme', 'system') . '/ui.all.css');

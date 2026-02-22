@@ -31,6 +31,7 @@ $op = Request::getString('op', 'list');
 $GLOBALS['xoopsOption']['template_main'] = 'system_templates.tpl';
 // Call Header
 xoops_cp_header();
+
 // Define scripts
 $xoTheme->addScript('browse.php?Frameworks/jquery/jquery.js');
 $xoTheme->addScript('browse.php?Frameworks/jquery/plugins/jquery.ui.js');

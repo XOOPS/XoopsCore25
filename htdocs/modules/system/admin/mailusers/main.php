@@ -31,10 +31,12 @@ if (!xoops_getModuleOption('active_mailusers', 'system')) {
 $limit = 100;
 // Get Action type
 $op = Request::getString('op', 'list');
+
 // Define main template
 $GLOBALS['xoopsOption']['template_main'] = 'system_mailusers.tpl';
 // Call Header
 xoops_cp_header();
+
 // Define Stylesheet
 $xoTheme->addStylesheet(XOOPS_URL . '/modules/system/css/admin.css');
 $xoTheme->addScript('browse.php?Frameworks/jquery/jquery.js');

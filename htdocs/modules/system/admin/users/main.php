@@ -36,6 +36,7 @@ include_once XOOPS_ROOT_PATH . '/modules/system/admin/users/users.php';
 $op = Request::getString('op', 'list');
 /** @var XoopsMemberHandler $member_handler */
 $member_handler = xoops_getHandler('member');
+
 // Define main template
 $GLOBALS['xoopsOption']['template_main'] = 'system_users.tpl';
 // Call Header

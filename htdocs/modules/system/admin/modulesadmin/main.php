@@ -43,6 +43,11 @@ if (in_array($op, ['confirm', 'submit', 'install_ok', 'update_ok', 'uninstall_ok
 }
 $myts = \MyTextSanitizer::getInstance();
 
+// Define main template
+$GLOBALS['xoopsOption']['template_main'] = 'system_modules.tpl';
+// Call Header
+xoops_cp_header();
+
 // Define Breadcrumb and tips
 $xoBreadCrumb->addLink(_AM_SYSTEM_CONFIG, XOOPS_URL . '/modules/system/admin.php');
 if ('list' === $op) {
@@ -53,10 +58,6 @@ if ('list' === $op) {
 
 switch ($op) {
     case 'list':
-        // Define main template
-        $GLOBALS['xoopsOption']['template_main'] = 'system_modules.tpl';
-        // Call Header
-        xoops_cp_header();
         // Define Stylesheet
         $xoTheme->addStylesheet(XOOPS_URL . '/modules/system/css/admin.css');
         $xoTheme->addStylesheet(XOOPS_URL . '/modules/system/css/ui/' . xoops_getModuleOption('jquery_theme', 'system') . '/ui.all.css');
@@ -131,10 +132,6 @@ switch ($op) {
         break;
 
     case 'installlist':
-        // Define main template
-        $GLOBALS['xoopsOption']['template_main'] = 'system_modules.tpl';
-        // Call Header
-        xoops_cp_header();
         // Define Stylesheet
         $xoTheme->addStylesheet(XOOPS_URL . '/modules/system/css/admin.css');
         $xoTheme->addStylesheet(XOOPS_URL . '/modules/system/css/ui/' . xoops_getModuleOption('jquery_theme', 'system') . '/ui.all.css');
