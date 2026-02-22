@@ -48,6 +48,14 @@ if ($type === 'preview') {
 
 $bid = Request::getInt('bid', 0);
 
+// Define Breadcrumb and tips
+$xoBreadCrumb->addLink(_AM_SYSTEM_CONFIG, XOOPS_URL . '/modules/system/admin.php');
+if ('list' === $op) {
+    $xoBreadCrumb->addLink(_AM_SYSTEM_BLOCKS_ADMIN);
+} else {
+    $xoBreadCrumb->addLink(_AM_SYSTEM_BLOCKS_ADMIN, system_adminVersion('blocks', 'adminpath'));
+}
+
 switch ($op) {
 
     case 'list':
@@ -63,7 +71,6 @@ switch ($op) {
         $xoTheme->addScript('modules/system/js/admin.js');
         $xoTheme->addScript('modules/system/js/blocks.js');
         // Define Breadcrumb and tips
-        $xoBreadCrumb->addLink(_AM_SYSTEM_BLOCKS_ADMIN, system_adminVersion('blocksadmin', 'adminpath'));
         $xoBreadCrumb->addHelp(system_adminVersion('blocksadmin', 'help'));
         $xoBreadCrumb->addTips(sprintf(_AM_SYSTEM_BLOCKS_TIPS, system_AdminIcons('block.png'), system_AdminIcons('success.png'), system_AdminIcons('cancel.png')));
         $xoBreadCrumb->render();
@@ -185,7 +192,6 @@ switch ($op) {
         $xoTheme->addScript('modules/system/js/admin.js');
         $xoTheme->addScript('modules/system/js/blocks.js');
         // Define Breadcrumb and tips
-        $xoBreadCrumb->addLink(_AM_SYSTEM_BLOCKS_ADMIN, system_adminVersion('blocksadmin', 'adminpath'));
         $xoBreadCrumb->addLink(_AM_SYSTEM_BLOCKS_ADDBLOCK);
         $xoBreadCrumb->render();
         // Initialize blocks handler
@@ -391,7 +397,6 @@ switch ($op) {
             $xoTheme->addScript('browse.php?Frameworks/jquery/plugins/jquery.form.js');
             $xoTheme->addScript('modules/system/js/admin.js');
             // Define Breadcrumb and tips
-            $xoBreadCrumb->addLink(_AM_SYSTEM_BLOCKS_ADMIN, system_adminVersion('blocksadmin', 'adminpath'));
             $xoBreadCrumb->addLink(_AM_SYSTEM_BLOCKS_EDITBLOCK);
             $xoBreadCrumb->render();
 
@@ -497,7 +502,6 @@ switch ($op) {
             // Define Stylesheet
             $xoTheme->addStylesheet(XOOPS_URL . '/modules/system/css/admin.css');
             // Define Breadcrumb and tips
-            $xoBreadCrumb->addLink(_AM_SYSTEM_BLOCKS_ADMIN, system_adminVersion('blocksadmin', 'adminpath'));
             $xoBreadCrumb->addLink(_AM_SYSTEM_BLOCKS_CLONEBLOCK);
             $xoBreadCrumb->render();
             /** @var XoopsBlock $block */

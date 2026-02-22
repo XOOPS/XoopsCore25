@@ -40,12 +40,20 @@ $xoTheme->addStylesheet(XOOPS_URL . '/modules/system/css/admin.css');
 $xoTheme->addScript('browse.php?Frameworks/jquery/jquery.js');
 $xoTheme->addScript('modules/system/js/admin.js');
 
+// Define Breadcrumb and tips
+$xoBreadCrumb->addLink(_AM_SYSTEM_CONFIG, XOOPS_URL . '/modules/system/admin.php');
+if ('list' === $op) {
+    $xoBreadCrumb->addLink(_AM_SYSTEM_MAILUSERS_MANAGER);
+} else {
+    $xoBreadCrumb->addLink(_AM_SYSTEM_MAILUSERS_MANAGER, system_adminVersion('mailusers', 'adminpath'));
+}
+
 switch ($op) {
 
     case 'list':
     default:
         // Define Breadcrumb and tips
-        $xoBreadCrumb->addLink(_AM_SYSTEM_MAILUSERS_MANAGER, system_adminVersion('mailusers', 'adminpath'));
+
         $xoBreadCrumb->addHelp(system_adminVersion('mailusers', 'help'));
         $xoBreadCrumb->render();
 
@@ -145,8 +153,6 @@ switch ($op) {
     // Send
     case 'send':
         // Define Breadcrumb and tips
-
-        $xoBreadCrumb->addLink(_AM_SYSTEM_MAILUSERS_MANAGER, system_adminVersion('mailusers', 'adminpath'));
         $xoBreadCrumb->addLink(_AM_SYSTEM_MAILUSERS_LIST);
         $xoBreadCrumb->render();
 

@@ -38,12 +38,20 @@ $xoTheme->addStylesheet(XOOPS_URL . '/modules/system/css/admin.css');
 // Define scripts
 $xoTheme->addScript('browse.php?Frameworks/jquery/jquery.js');
 $xoTheme->addScript('modules/system/js/admin.js');
+
+// Define Breadcrumb and tips
+$xoBreadCrumb->addLink(_AM_SYSTEM_CONFIG, XOOPS_URL . '/modules/system/admin.php');
+if ('list' === $op) {
+    $xoBreadCrumb->addLink(_AM_SYSTEM_MAINTENANCE_NAV_MANAGER);
+} else {
+    $xoBreadCrumb->addLink(_AM_SYSTEM_MAINTENANCE_NAV_MANAGER, system_adminVersion('maintenance', 'adminpath'));
+}
+
 switch ($op) {
 
     case 'list':
     default:
         // Define Breadcrumb and tips
-        $xoBreadCrumb->addLink(_AM_SYSTEM_MAINTENANCE_NAV_MANAGER, system_adminVersion('maintenance', 'adminpath'));
         $xoBreadCrumb->addHelp(system_adminVersion('maintenance', 'help'));
         $xoBreadCrumb->addTips(_AM_SYSTEM_MAINTENANCE_TIPS);
         $xoBreadCrumb->render();
@@ -124,8 +132,6 @@ switch ($op) {
             redirect_header('admin.php?fct=maintenance', 3, implode('<br>', $GLOBALS['xoopsSecurity']->getErrors()));
         }
         //Define Breadcrumb and tips
-        $xoBreadCrumb->addLink(_AM_SYSTEM_MAINTENANCE_NAV_MANAGER, system_adminVersion('maintenance', 'adminpath'));
-        //$xoBreadCrumb->addLink(_AM_SYSTEM_MAINTENANCE_NAV_MAINTENANCE);
         $xoBreadCrumb->render();
 
         $session            = Request::getInt('session', 1);
@@ -196,7 +202,6 @@ switch ($op) {
             redirect_header('admin.php?fct=maintenance', 3, implode('<br>', $GLOBALS['xoopsSecurity']->getErrors()));
         }
         //Define Breadcrumb and tips
-        $xoBreadCrumb->addLink(_AM_SYSTEM_MAINTENANCE_NAV_MANAGER, system_adminVersion('maintenance', 'adminpath'));
         $xoBreadCrumb->addLink(_AM_SYSTEM_MAINTENANCE_NAV_DUMP);
         $xoBreadCrumb->render();
 

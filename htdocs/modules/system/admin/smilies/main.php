@@ -41,7 +41,14 @@ $GLOBALS['xoopsOption']['template_main'] = 'system_smilies.tpl';
 // Call Header
 xoops_cp_header();
 
-$xoBreadCrumb->addLink(_AM_SYSTEM_SMILIES_NAV_MANAGER, system_adminVersion('smilies', 'adminpath'));
+// Define Breadcrumb and tips
+$xoBreadCrumb->addLink(_AM_SYSTEM_CONFIG, XOOPS_URL . '/modules/system/admin.php');
+if ('list' === $op) {
+    $xoBreadCrumb->addLink(_AM_SYSTEM_SMILIES_NAV_MANAGER);
+} else {
+    $xoBreadCrumb->addLink(_AM_SYSTEM_SMILIES_NAV_MANAGER, system_adminVersion('smilies', 'adminpath'));
+}
+
 
 switch ($op) {
 

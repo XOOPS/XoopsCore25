@@ -37,7 +37,14 @@ $member_handler = xoops_getHandler('member');
 $GLOBALS['xoopsOption']['template_main'] = 'system_groups.tpl';
 // Call Header
 xoops_cp_header();
-$xoBreadCrumb->addLink(_AM_SYSTEM_GROUPS_NAV_MANAGER, system_adminVersion('groups', 'adminpath'));
+
+// Define Breadcrumb and tips
+$xoBreadCrumb->addLink(_AM_SYSTEM_CONFIG, XOOPS_URL . '/modules/system/admin.php');
+if ('list' === $op) {
+    $xoBreadCrumb->addLink(_AM_SYSTEM_GROUPS_NAV_MANAGER);
+} else {
+    $xoBreadCrumb->addLink(_AM_SYSTEM_GROUPS_NAV_MANAGER, system_adminVersion('groups', 'adminpath'));
+}
 
 switch ($op) {
 

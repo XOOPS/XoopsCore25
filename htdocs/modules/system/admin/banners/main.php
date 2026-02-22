@@ -37,7 +37,7 @@ $banner_finish_Handler = xoops_getModuleHandler('bannerfinish', 'system');
 /** @var  SystemBannerclientHandler $banner_client_Handler */
 $banner_client_Handler = xoops_getModuleHandler('bannerclient', 'system');
 // Get Action type
-$op = Request::getString('op', 'default');
+$op = Request::getString('op', 'list');
 // Define template
 $GLOBALS['xoopsOption']['template_main'] = 'system_banners.tpl';
 // Call header
@@ -51,7 +51,13 @@ $xoTheme->addScript('browse.php?Frameworks/jquery/plugins/jquery.ui.js');
 $xoTheme->addScript('browse.php?Frameworks/jquery/plugins/jquery.tablesorter.js');
 $xoTheme->addScript('modules/system/js/admin.js');
 // Define Breadcrumb and tips
-$xoBreadCrumb->addLink(_AM_SYSTEM_BANNERS_NAV_MANAGER, system_adminVersion('banners', 'adminpath'));
+$xoBreadCrumb->addLink(_AM_SYSTEM_CONFIG, XOOPS_URL . '/modules/system/admin.php');
+if ('list' === $op) {
+    $xoBreadCrumb->addLink(_AM_SYSTEM_BANNERS_NAV_MANAGER);
+} else {
+    $xoBreadCrumb->addLink(_AM_SYSTEM_BANNERS_NAV_MANAGER, system_adminVersion('banners', 'adminpath'));
+}
+
 switch ($op) {
     // Banners
     case 'banner_save': // Save banner

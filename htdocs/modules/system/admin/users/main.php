@@ -33,7 +33,7 @@ if (!defined('USER_MAX_GROUPS_DISPLAY')) {
 
 include_once XOOPS_ROOT_PATH . '/modules/system/admin/users/users.php';
 // Get Action type
-$op = Request::getString('op', 'default');
+$op = Request::getString('op', 'list');
 /** @var XoopsMemberHandler $member_handler */
 $member_handler = xoops_getHandler('member');
 // Define main template
@@ -47,8 +47,15 @@ $xoTheme->addStylesheet(XOOPS_URL . '/modules/system/css/admin.css');
 $xoTheme->addStylesheet(XOOPS_URL . '/modules/system/css/ui/' . xoops_getModuleOption('jquery_theme', 'system') . '/ui.all.css');
 // Define scripts
 $xoTheme->addScript('modules/system/js/admin.js');
+
 // Define Breadcrumb and tips
-$xoBreadCrumb->addLink(_AM_SYSTEM_USERS_NAV_MAIN, system_adminVersion('users', 'adminpath'));
+$xoBreadCrumb->addLink(_AM_SYSTEM_CONFIG, XOOPS_URL . '/modules/system/admin.php');
+if ('list' === $op) {
+    $xoBreadCrumb->addLink(_AM_SYSTEM_USERS_NAV_MAIN);
+} else {
+    $xoBreadCrumb->addLink(_AM_SYSTEM_USERS_NAV_MAIN, system_adminVersion('users', 'adminpath'));
+}
+
 
 $uid = Request::getInt('uid', 0);
 switch ($op) {
@@ -979,7 +986,7 @@ case 'users_save':
  
             if ($users_count > $user_limit) {
                 include_once XOOPS_ROOT_PATH . '/class/pagenav.php';
-                $nav = new XoopsPageNav($users_count, $user_limit, $start, 'start', 'fct=users&amp;op=default' . $requete_pagenav);
+                $nav = new XoopsPageNav($users_count, $user_limit, $start, 'start', 'fct=users&amp;op=list' . $requete_pagenav);
                 $xoopsTpl->assign('nav', $nav->renderNav());
             }
         }
