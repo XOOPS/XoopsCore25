@@ -25,7 +25,7 @@ if (!is_object($xoopsUser) || !is_object($xoopsModule) || !$xoopsUser->isAdmin($
 }
 
 //  Check is active
-if (!xoops_getModuleOption('active_comments', 'system')) {
+if (!$xoopsModuleConfig['active_comments']) {
     redirect_header('admin.php', 2, _AM_SYSTEM_NOTACTIVE);
 }
 
@@ -36,7 +36,7 @@ $GLOBALS['xoopsOption']['template_main'] = 'system_comments.tpl';
 xoops_cp_header();
 // Define Stylesheet
 $xoTheme->addStylesheet(XOOPS_URL . '/modules/system/css/admin.css');
-$xoTheme->addStylesheet(XOOPS_URL . '/modules/system/css/ui/' . xoops_getModuleOption('jquery_theme', 'system') . '/ui.all.css');
+$xoTheme->addStylesheet(XOOPS_URL . '/modules/system/css/ui/' . $xoopsModuleConfig['jquery_theme'] . '/ui.all.css');
 // Define scripts
 $xoTheme->addScript('browse.php?Frameworks/jquery/jquery.js');
 $xoTheme->addScript('browse.php?Frameworks/jquery/plugins/jquery.ui.js');
@@ -234,7 +234,7 @@ switch ($op) {
             $comments_start = Request::getInt('comments_start', 0);
             $comments_limit = Request::getInt('comments_limit', 0);
             if (!in_array($comments_limit, $limit_array)) {
-                $comments_limit = xoops_getModuleOption('comments_pager', 'system');
+                $comments_limit = (int)$xoopsModuleConfig['comments_pager'];
             }
             $criteria->setLimit($comments_limit);
             $criteria->setStart($comments_start);

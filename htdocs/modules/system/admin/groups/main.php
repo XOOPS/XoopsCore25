@@ -25,7 +25,7 @@ if (!is_object($xoopsUser) || !is_object($xoopsModule) || !$xoopsUser->isAdmin($
     exit(_NOPERM);
 }
 // Parameters
-$nb_group = xoops_getModuleOption('groups_pager', 'system');
+$nb_group = (int) $xoopsModuleConfig['groups_pager'];
 // Get Action type
 $op = Request::getString('op', 'list');
 // Get groups handler

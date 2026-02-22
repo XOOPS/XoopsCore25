@@ -24,7 +24,7 @@ if (!is_object($xoopsUser) || !is_object($xoopsModule) || !$xoopsUser->isAdmin($
     exit(_NOPERM);
 }
 //  Check is active
-if (!xoops_getModuleOption('active_avatars', 'system')) {
+if (!$xoopsModuleConfig['active_avatars']) {
     redirect_header('admin.php', 2, _AM_SYSTEM_NOTACTIVE);
 }
 // Get Action type
@@ -106,12 +106,14 @@ switch ($op) {
         $xoopsTpl->assign('type', $type);
         $xoopsTpl->assign('count_system', $savatar_count);
         $xoopsTpl->assign('count_custom', $cavatar_count);
+        
+        $avatarPager = $xoopsModuleConfig['avatars_pager'];
         // Filter avatars
         $criteria = new Criteria('avatar_type', $type);
         $avtcount = $avt_handler->getCount($criteria);
         // Get avatar list
         $criteria->setStart($start);
-        $criteria->setLimit(xoops_getModuleOption('avatars_pager', 'system'));
+        $criteria->setLimit($avatarPager);
         $avatars = $avt_handler->getObjects($criteria, true);
         // Construct avatars array
         $avatar_list = [];
@@ -129,10 +131,10 @@ switch ($op) {
         }
         $xoopsTpl->assign('avatars_list', $avatar_list);
         // Display Page Navigation
-        if ($avtcount > xoops_getModuleOption('avatars_pager')) {
+        if ($avtcount > $avatarPager) {
             $nav = new XoopsPageNav(
                 $avtcount,
-                xoops_getModuleOption('avatars_pager', 'system'),
+                $avatarPager,
                 $start,
                 'start',
                 'fct=avatars&amp;type=' . $type . '&amp;op=listavt',
