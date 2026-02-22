@@ -24,11 +24,11 @@ if (!is_object($xoopsUser) || !is_object($xoopsModule) || !$xoopsUser->isAdmin($
     exit(_NOPERM);
 }
 //  Check is active
-if (!$xoopsModuleConfig['active_banners']) {
+if (!xoops_getModuleOption('active_banners', 'system')) {
     redirect_header('admin.php', 2, _AM_SYSTEM_NOTACTIVE);
 }
 // Parameters
-$nb_aff = (int) $xoopsModuleConfig['banners_pager'];
+$nb_aff = xoops_getModuleOption('banners_pager', 'system');
 // Classes
 /** @var  SystemBannerHandler $banner_Handler */
 $banner_Handler        = xoops_getModuleHandler('banner', 'system');
@@ -44,7 +44,7 @@ $GLOBALS['xoopsOption']['template_main'] = 'system_banners.tpl';
 xoops_cp_header();
 // Define Stylesheet
 $xoTheme->addStylesheet(XOOPS_URL . '/modules/system/css/admin.css');
-$xoTheme->addStylesheet(XOOPS_URL . '/modules/system/css/ui/' . $xoopsModuleConfig['jquery_theme'] . '/ui.all.css');
+$xoTheme->addStylesheet(XOOPS_URL . '/modules/system/css/ui/' . xoops_getModuleOption('jquery_theme', 'system') . '/ui.all.css');
 // Define scripts
 $xoTheme->addScript('browse.php?Frameworks/jquery/jquery.js');
 $xoTheme->addScript('browse.php?Frameworks/jquery/plugins/jquery.ui.js');

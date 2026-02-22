@@ -23,7 +23,7 @@ if (!is_object($xoopsUser) || !is_object($xoopsModule) || !$xoopsUser->isAdmin($
     exit(_NOPERM);
 }
 //  Check is active
-if (!$xoopsModuleConfig['active_mailusers']) {
+if (!xoops_getModuleOption('active_mailusers', 'system')) {
     redirect_header('admin.php', 2, _AM_SYSTEM_NOTACTIVE);
 }
 

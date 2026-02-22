@@ -23,12 +23,12 @@ if (!is_object($xoopsUser) || !is_object($xoopsModule) || !$xoopsUser->isAdmin($
     exit(_NOPERM);
 }
 //  Check is active
-if (!$xoopsModuleConfig['active_smilies']) {
+if (!xoops_getModuleOption('active_smilies', 'system')) {
     redirect_header('admin.php', 2, _AM_SYSTEM_NOTACTIVE);
 }
 
 // Parameters
-$nb_smilies  = (int) $xoopsModuleConfig['smilies_pager'];
+$nb_smilies  = xoops_getModuleOption('smilies_pager', 'system');
 $mimetypes   = ['image/gif', 'image/jpeg', 'image/pjpeg', 'image/x-png', 'image/png'];
 $upload_size = 500000;
 // Get Action type

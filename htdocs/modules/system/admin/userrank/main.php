@@ -28,12 +28,12 @@ if (!is_object($xoopsUser) || !is_object($xoopsModule) || !$xoopsUser->isAdmin($
     exit(_NOPERM);
 }
 //  Check is active
-if (!$xoopsModuleConfig['active_userrank']) {
+if (!xoops_getModuleOption('active_userrank', 'system')) {
     redirect_header('admin.php', 2, _AM_SYSTEM_NOTACTIVE);
 }
 
 // Parameters
-$nb_rank     = (int) $xoopsModuleConfig['userranks_pager'];
+$nb_rank     = xoops_getModuleOption('userranks_pager', 'system');
 $mimetypes   = ['image/gif', 'image/jpeg', 'image/pjpeg', 'image/x-png', 'image/png'];
 $upload_size = 500000;
 // Get Action type
@@ -239,7 +239,7 @@ switch ($op) {
             xoops_confirm(
                 [
                     'ok' => 1,
-                    'rank_id' => $rank_id,
+                    'rank_id' => $_REQUEST['rank_id'],
                     'op' => 'userrank_delete',
                 ],
                 $_SERVER['REQUEST_URI'],

@@ -27,7 +27,7 @@ if (!is_object($xoopsUser) || !is_object($xoopsModule) || !$xoopsUser->isAdmin($
 }
 
 //  Check is active
-if (!$xoopsModuleConfig['active_images']) {
+if (!xoops_getModuleOption('active_images', 'system')) {
     redirect_header('admin.php', 2, _AM_SYSTEM_NOTACTIVE);
 }
 
@@ -80,7 +80,7 @@ switch ($op) {
         xoops_cp_header();
         // Define Stylesheet
         $xoTheme->addStylesheet(XOOPS_URL . '/modules/system/css/admin.css');
-        $xoTheme->addStylesheet(XOOPS_URL . '/modules/system/css/ui/' . $xoopsModuleConfig['jquery_theme'] . '/ui.all.css');
+        $xoTheme->addStylesheet(XOOPS_URL . '/modules/system/css/ui/' . xoops_getModuleOption('jquery_theme', 'system') . '/ui.all.css');
         $xoTheme->addStylesheet(XOOPS_URL . '/modules/system/css/lightbox.css');
         // Define scripts
         $xoTheme->addScript('browse.php?Frameworks/jquery/jquery.js');
@@ -201,7 +201,7 @@ switch ($op) {
         xoops_cp_header();
         // Define Stylesheet
         $xoTheme->addStylesheet(XOOPS_URL . '/modules/system/css/admin.css');
-        $xoTheme->addStylesheet(XOOPS_URL . '/modules/system/css/ui/' . $xoopsModuleConfig['jquery_theme'] . '/ui.all.css');
+        $xoTheme->addStylesheet(XOOPS_URL . '/modules/system/css/ui/' . xoops_getModuleOption('jquery_theme', 'system') . '/ui.all.css');
         $xoTheme->addStylesheet(XOOPS_URL . '/modules/system/css/lightbox.css');
         // Define scripts
         $xoTheme->addScript('browse.php?Frameworks/jquery/jquery.js');
@@ -215,14 +215,13 @@ switch ($op) {
         $xoBreadCrumb->addTips(_AM_SYSTEM_IMAGES_TIPS);
         $xoBreadCrumb->render();
 
-        $imagesPager = (int)$xoopsModuleConfig['images_pager'];
         $criteria = new CriteriaCompo(new Criteria('imgcat_id', $imgcat_id));
         $criteria->setSort('image_weight ASC, image_id');
         $criteria->setOrder('DESC');
         $imgcount = $image_handler->getCount($criteria);
         $start    = Request::getInt('start', 0, 'GET');
         $criteria->setStart($start);
-        $criteria->setLimit($imagesPager);
+        $criteria->setLimit(xoops_getModuleOption('images_pager', 'system'));
         $images = $image_handler->getObjects($criteria, true, false);
 
         if ($imagecategory->getVar('imgcat_storetype') === 'db') {
@@ -232,10 +231,12 @@ switch ($op) {
         foreach ($images as $listImage) {
             $xoopsTpl->append('images', $listImage->toArray());
         }
-        if ($imgcount > 0 && $imgcount > $imagesPager) {
-            //include_once XOOPS_ROOT_PATH.'/class/pagenav.php';
-            $nav = new XoopsPageNav($imgcount, $imagesPager, $start, 'start', 'fct=images&amp;op=listimg&amp;imgcat_id=' . $imgcat_id);
-            $xoopsTpl->assign('nav_menu', $nav->renderNav(4));
+        if ($imgcount > 0) {
+            if ($imgcount > xoops_getModuleOption('images_pager', 'system')) {
+                //include_once XOOPS_ROOT_PATH.'/class/pagenav.php';
+                $nav = new XoopsPageNav($imgcount, xoops_getModuleOption('images_pager', 'system'), $start, 'start', 'fct=images&amp;op=listimg&amp;imgcat_id=' . $imgcat_id);
+                $xoopsTpl->assign('nav_menu', $nav->renderNav(4));
+            }
         }
 
         if (file_exists(XOOPS_ROOT_PATH . '/modules/system/language/' . $GLOBALS['xoopsConfig']['language'] . '/images/lightbox-btn-close.gif')) {
@@ -287,7 +288,7 @@ switch ($op) {
         xoops_cp_header();
         // Define Stylesheet
         $xoTheme->addStylesheet(XOOPS_URL . '/modules/system/css/admin.css');
-        $xoTheme->addStylesheet(XOOPS_URL . '/modules/system/css/ui/' . $xoopsModuleConfig['jquery_theme'] . '/ui.all.css');
+        $xoTheme->addStylesheet(XOOPS_URL . '/modules/system/css/ui/' . xoops_getModuleOption('jquery_theme', 'system') . '/ui.all.css');
         $xoTheme->addStylesheet(XOOPS_URL . '/modules/system/css/lightbox.css');
         // Define scripts
         $xoTheme->addScript('browse.php?Frameworks/jquery/jquery.js');
@@ -341,7 +342,7 @@ switch ($op) {
         xoops_cp_header();
         // Define Stylesheet
         $xoTheme->addStylesheet(XOOPS_URL . '/modules/system/css/admin.css');
-        $xoTheme->addStylesheet(XOOPS_URL . '/modules/system/css/ui/' . $xoopsModuleConfig['jquery_theme'] . '/ui.all.css');
+        $xoTheme->addStylesheet(XOOPS_URL . '/modules/system/css/ui/' . xoops_getModuleOption('jquery_theme', 'system') . '/ui.all.css');
         $xoTheme->addStylesheet(XOOPS_URL . '/modules/system/css/lightbox.css');
         // Define scripts
         $xoTheme->addScript('browse.php?Frameworks/jquery/jquery.js');
@@ -573,7 +574,7 @@ switch ($op) {
         xoops_cp_header();
         // Define Stylesheet
         $xoTheme->addStylesheet(XOOPS_URL . '/modules/system/css/admin.css');
-        $xoTheme->addStylesheet(XOOPS_URL . '/modules/system/css/ui/' . $xoopsModuleConfig['jquery_theme'] . '/ui.all.css');
+        $xoTheme->addStylesheet(XOOPS_URL . '/modules/system/css/ui/' . xoops_getModuleOption('jquery_theme', 'system') . '/ui.all.css');
         $xoTheme->addStylesheet(XOOPS_URL . '/modules/system/css/lightbox.css');
         // Define scripts
         $xoTheme->addScript('browse.php?Frameworks/jquery/jquery.js');

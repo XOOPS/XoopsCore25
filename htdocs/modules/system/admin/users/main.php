@@ -44,7 +44,7 @@ xoops_cp_header();
 $myts = \MyTextSanitizer::getInstance();
 // Define Stylesheet
 $xoTheme->addStylesheet(XOOPS_URL . '/modules/system/css/admin.css');
-$xoTheme->addStylesheet(XOOPS_URL . '/modules/system/css/ui/' . $xoopsModuleConfig['jquery_theme'] . '/ui.all.css');
+$xoTheme->addStylesheet(XOOPS_URL . '/modules/system/css/ui/' . xoops_getModuleOption('jquery_theme', 'system') . '/ui.all.css');
 // Define scripts
 $xoTheme->addScript('modules/system/js/admin.js');
 
@@ -797,13 +797,13 @@ case 'users_save':
                 $requete_search .= 'sort: ' . $order . '<br>';
             }
 
-            $user_limit = (int) $xoopsModuleConfig['users_pager'];
+            $user_limit = (int) xoops_getModuleOption('users_pager', 'system');
             if (Request::hasVar('user_limit')) {
                 $user_limit = Request::getInt('user_limit');
                 $requete_pagenav .= '&amp;user_limit=' . htmlspecialchars(Request::getString('user_limit'), ENT_QUOTES | ENT_HTML5);
                 $requete_search .= 'limit: ' . $user_limit . '<br>';
             } else {
-                $requete_pagenav .= '&amp;user_limit=' . $user_limit;
+                $requete_pagenav .= '&amp;user_limit=' . xoops_getModuleOption('users_pager', 'system');
                 $requete_search .= 'limit: ' . $user_limit . '<br>';
             }
 

@@ -23,7 +23,7 @@ if (!is_object($xoopsUser) || !is_object($xoopsModule) || !$xoopsUser->isAdmin($
     exit(_NOPERM);
 }
 //  Check is active
-if (!$xoopsModuleConfig['active_maintenance']) {
+if (!xoops_getModuleOption('active_maintenance', 'system')) {
     redirect_header('admin.php', 2, _AM_SYSTEM_NOTACTIVE);
 }
 

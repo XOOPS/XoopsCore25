@@ -24,7 +24,7 @@ if (!is_object($xoopsUser) || !is_object($xoopsModule) || !$xoopsUser->isAdmin($
     exit(_NOPERM);
 }
 //  Check is active
-if (!$xoopsModuleConfig['active_avatars']) {
+if (!xoops_getModuleOption('active_avatars', 'system')) {
     redirect_header('admin.php', 2, _AM_SYSTEM_NOTACTIVE);
 }
 // Get Action type
@@ -106,14 +106,12 @@ switch ($op) {
         $xoopsTpl->assign('type', $type);
         $xoopsTpl->assign('count_system', $savatar_count);
         $xoopsTpl->assign('count_custom', $cavatar_count);
-        
-        $avatarPager = $xoopsModuleConfig['avatars_pager'];
         // Filter avatars
         $criteria = new Criteria('avatar_type', $type);
         $avtcount = $avt_handler->getCount($criteria);
         // Get avatar list
         $criteria->setStart($start);
-        $criteria->setLimit($avatarPager);
+        $criteria->setLimit(xoops_getModuleOption('avatars_pager', 'system'));
         $avatars = $avt_handler->getObjects($criteria, true);
         // Construct avatars array
         $avatar_list = [];
@@ -131,10 +129,10 @@ switch ($op) {
         }
         $xoopsTpl->assign('avatars_list', $avatar_list);
         // Display Page Navigation
-        if ($avtcount > $avatarPager) {
+        if ($avtcount > xoops_getModuleOption('avatars_pager')) {
             $nav = new XoopsPageNav(
                 $avtcount,
-                $avatarPager,
+                xoops_getModuleOption('avatars_pager', 'system'),
                 $start,
                 'start',
                 'fct=avatars&amp;type=' . $type . '&amp;op=listavt',
@@ -244,6 +242,7 @@ switch ($op) {
             // Define Stylesheet
             $xoTheme->addStylesheet(XOOPS_URL . '/modules/system/css/admin.css');
             // Define Breadcrumb and tips
+            $xoBreadCrumb->addLink(_AM_SYSTEM_AVATAR_MANAGER, system_adminVersion('avatars', 'adminpath'));
             $xoBreadCrumb->addLink(_AM_SYSTEM_AVATAR_ERROR);
             $xoBreadCrumb->render();
             // Display errors
