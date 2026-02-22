@@ -239,7 +239,7 @@ switch ($op) {
             xoops_confirm(
                 [
                     'ok' => 1,
-                    'rank_id' => $_REQUEST['rank_id'],
+                    'rank_id' => $rank_id,
                     'op' => 'userrank_delete',
                 ],
                 $_SERVER['REQUEST_URI'],

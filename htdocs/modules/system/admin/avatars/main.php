@@ -242,7 +242,6 @@ switch ($op) {
             // Define Stylesheet
             $xoTheme->addStylesheet(XOOPS_URL . '/modules/system/css/admin.css');
             // Define Breadcrumb and tips
-            $xoBreadCrumb->addLink(_AM_SYSTEM_AVATAR_MANAGER, system_adminVersion('avatars', 'adminpath'));
             $xoBreadCrumb->addLink(_AM_SYSTEM_AVATAR_ERROR);
             $xoBreadCrumb->render();
             // Display errors

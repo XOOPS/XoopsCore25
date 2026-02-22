@@ -53,7 +53,7 @@ $xoBreadCrumb->addLink(_AM_SYSTEM_CONFIG, XOOPS_URL . '/modules/system/admin.php
 if ('list' === $op) {
     $xoBreadCrumb->addLink(_AM_SYSTEM_BLOCKS_ADMIN);
 } else {
-    $xoBreadCrumb->addLink(_AM_SYSTEM_BLOCKS_ADMIN, system_adminVersion('blocks', 'adminpath'));
+    $xoBreadCrumb->addLink(_AM_SYSTEM_BLOCKS_ADMIN, system_adminVersion('blocksadmin', 'adminpath'));
 }
 
 switch ($op) {
@@ -433,6 +433,8 @@ switch ($op) {
             $GLOBALS['xoopsOption']['template_main'] = 'system_header.tpl';
             // Call Header
             xoops_cp_header();
+            // Define Breadcrumb and tips
+            $xoBreadCrumb->render();
             // Display Question
             xoops_confirm(
                 [
