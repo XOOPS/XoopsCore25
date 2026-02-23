@@ -570,6 +570,7 @@ class XoopsCache
  * @license    GNU GPL 2 (https://www.gnu.org/licenses/gpl-2.0.html)
  * @link       https://xoops.org
  * @since      2.5.12
+ * @deprecated 4.0.0 Use Xoops\Core\Cache\EngineInterface instead
  */
 interface XoopsCacheEngineInterface
 {
