@@ -29,13 +29,12 @@
     }
   ],
   "require": {
-    "php": "^7.4 || ^8.0",
-    "symfony/polyfill-mbstring": "^1.33",
-    "symfony/polyfill-php80": "^1.33"
+    "php": "^8.2",
+    "ext-mbstring": "*"
   },
   "require-dev": {
     "phpstan/phpstan": "^1.10 || ^2.0",
-    "phpunit/phpunit": "^9.6 || ^10.0 || ^11.0",
+    "phpunit/phpunit": "^11.0",
     "roave/security-advisories": "dev-latest",
     "squizlabs/php_codesniffer": "^3.11"
   },

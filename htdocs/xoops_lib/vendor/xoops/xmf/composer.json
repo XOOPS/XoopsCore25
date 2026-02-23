@@ -19,15 +19,15 @@
     }
   ],
   "require": {
-    "php": "^7.4 || ^8.0",
-    "firebase/php-jwt": "^6.10",
+    "php": "^8.2",
+    "firebase/php-jwt": "^7.0",
     "kint-php/kint": "^6.0",
-    "symfony/yaml": "^5.4 || ^6.0 || ^7.0",
+    "symfony/yaml": "^6.0 || ^7.0",
     "webmozart/assert": "^1.11"
   },
   "require-dev": {
-    "phpstan/phpstan": "^1.10 || ^2.0",
-    "phpunit/phpunit": "^9.6 || ^10.0 || ^11.0",
+    "phpstan/phpstan": "^2.0",
+    "phpunit/phpunit": "^11.0",
     "roave/security-advisories": "dev-latest",
     "squizlabs/php_codesniffer": "^3.11"
   },

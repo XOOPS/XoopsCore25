@@ -1,0 +1,64 @@
+{
+    "name": "punic/punic",
+    "description": "PHP-Unicode CLDR",
+    "keywords": [
+        "localization",
+        "l10n",
+        "internationalization",
+        "i18n",
+        "translations",
+        "translate",
+        "php",
+        "unicode",
+        "cldr",
+        "calendar",
+        "date-time",
+        "date",
+        "time"
+    ],
+    "homepage": "https://github.com/punic/punic",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Michele Locati",
+            "email": "mlocati@gmail.com",
+            "role": "Developer"
+        },
+        {
+            "name": "Remo Laubacher",
+            "email": "remo.laubacher@gmail.com",
+            "role": "Collaborator, motivator and perfectionist supporter"
+        },
+        {
+            "name": "Christian Schmidt",
+            "email": "github@chsc.dk",
+            "role": "Developer"
+        }
+    ],
+    "autoload": {
+        "psr-4": {
+            "Punic\\": "src/"
+        }
+    },
+    "require": {
+        "php": ">=5.3"
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Punic\\Test\\": "tests/"
+        }
+    },
+    "require-dev": {
+        "phpunit/phpunit": "^4.8 || ^5.7 || ^6.5 || ^7.4 || ^8.5 || ^9.5"
+    },
+    "replace": {
+        "punic/common": "*",
+        "punic/calendar": "*"
+    },
+    "bin": [
+        "bin/punic-data"
+    ],
+    "scripts": {
+        "test": "phpunit"
+    }
+}
