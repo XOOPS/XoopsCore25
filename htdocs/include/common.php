@@ -283,9 +283,7 @@ if (!empty($_SESSION['xoopsUserId'])) {
         $xoopsUserIsAdmin = $xoopsUser->isAdmin();
     }
 }
-if (PHP_VERSION_ID < 70300) {
-    $sess_handler->update_cookie(); // make sure we supply the cookie, not PHP's session code
-}
+// Cookie is handled by session_set_cookie_params() in the session handler (PHP 8.2+)
 // user characteristics are established
 $xoopsPreload->triggerEvent('core.include.common.auth.success');
 

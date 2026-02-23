@@ -869,11 +869,7 @@ class MyTextSanitizer
             $quote_style = ENT_QUOTES;
         }
         $text = (string) $text;
-        if (version_compare(phpversion(), '5.2.3', '>=')) {
-            $text = htmlspecialchars($text, $quote_style, $charset ?: (defined('_CHARSET') ? _CHARSET : 'UTF-8'), $double_encode);
-        } else {
-            $text = htmlspecialchars($text, $quote_style);
-        }
+        $text = htmlspecialchars($text, $quote_style, $charset ?: (defined('_CHARSET') ? _CHARSET : 'UTF-8'), $double_encode);
 
         return preg_replace(['/&amp;/i', '/&nbsp;/i'], ['&', '&amp;nbsp;'], $text);
     }

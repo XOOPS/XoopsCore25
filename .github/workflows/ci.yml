@@ -16,12 +16,11 @@ jobs:
       matrix:
         include:
           # Lowest supported dependencies test
-          - php: "7.4"
+          - php: "8.2"
             deps: "lowest"
           # Standard tests across supported versions
-          # Note: xoops/base-requires25 supports ^7.4.0 || ^8.4.0
-          # PHP 8.0-8.3 are NOT supported by the dependency
-          - php: "7.4"
+          - php: "8.2"
+          - php: "8.3"
           - php: "8.4"
           - php: "8.5"
           # Coverage run
@@ -46,7 +45,7 @@ jobs:
 
       - name: Get Composer cache dir
         id: composer-cache
-        run: echo "dir=$(composer config cache-dir)" >> $GITHUB_OUTPUT
+        run: echo "dir=$(composer config --global cache-dir)" >> $GITHUB_OUTPUT
 
       - name: Cache Composer
         uses: actions/cache@0057852bfaa89a56745cba8c7296529d2fc39830 # v4
@@ -80,7 +79,7 @@ jobs:
               "xoops/base-requires25": "^1.1.10@beta"
             },
             "require-dev": {
-              "phpunit/phpunit": "^9.6 || ^10.5 || ^11.2"
+              "phpunit/phpunit": "^11.2"
             },
             "minimum-stability": "beta",
             "prefer-stable": true
@@ -112,7 +111,6 @@ jobs:
                    xsi:noNamespaceSchemaLocation="vendor/phpunit/phpunit/phpunit.xsd"
                    bootstrap="vendor/autoload.php"
                    colors="true"
-                   verbose="true"
                    failOnRisky="true"
                    failOnWarning="true"
                    testdox="true">
@@ -121,15 +119,11 @@ jobs:
                       <directory>tests</directory>
                   </testsuite>
               </testsuites>
-              <coverage>
+              <source>
                   <include>
-                      <directory>.</directory>
+                      <directory>src</directory>
                   </include>
-                  <exclude>
-                      <directory>vendor</directory>
-                      <directory>tests</directory>
-                  </exclude>
-              </coverage>
+              </source>
               <php>
                   <ini name="error_reporting" value="-1"/>
                   <ini name="display_errors" value="On"/>
@@ -141,7 +135,19 @@ jobs:
       - name: Create Test Directory and Sample Test
         working-directory: htdocs/class/libraries
         run: |
-          mkdir -p tests
+          mkdir -p tests src
+          cat > src/Placeholder.php << EOL
+          <?php
+          namespace XoopsCore25;
+
+          class Placeholder
+          {
+              public function isReady(): bool
+              {
+                  return true;
+              }
+          }
+          EOL
           cat > tests/SampleTest.php << EOL
           <?php
           use PHPUnit\Framework\TestCase;
