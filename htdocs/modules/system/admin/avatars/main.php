@@ -30,19 +30,27 @@ if (!xoops_getModuleOption('active_avatars', 'system')) {
 // Get Action type
 $op = Request::getString('op', 'list');
 
+// Define main template
+$GLOBALS['xoopsOption']['template_main'] = 'system_avatars.tpl';
+// Call Header
+xoops_cp_header();
+
+// Define Breadcrumb and tips
+$xoBreadCrumb->addLink(_AM_SYSTEM_CONFIG, XOOPS_URL . '/modules/system/admin.php');
+if ('list' === $op) {
+    $xoBreadCrumb->addLink(_AM_SYSTEM_AVATAR_MANAGER);
+} else {
+    $xoBreadCrumb->addLink(_AM_SYSTEM_AVATAR_MANAGER, system_adminVersion('avatars', 'adminpath'));
+}
+
 switch ($op) {
     default:
     case 'list':
-        // Define main template
-        $GLOBALS['xoopsOption']['template_main'] = 'system_avatars.tpl';
-        // Call Header
-        xoops_cp_header();
         // Define Stylesheet
         $xoTheme->addStylesheet(XOOPS_URL . '/modules/system/css/admin.css');
         $xoTheme->addScript('browse.php?Frameworks/jquery/jquery.js');
         $xoTheme->addScript('modules/system/js/admin.js');
         // Define Breadcrumb and tips
-        $xoBreadCrumb->addLink(_AM_SYSTEM_AVATAR_MANAGER, system_adminVersion('avatars', 'adminpath'));
         $xoBreadCrumb->addHelp(system_adminVersion('avatars', 'help'));
         $xoBreadCrumb->addTips(_AM_SYSTEM_AVATAR_TIPS);
         $xoBreadCrumb->render();
@@ -75,17 +83,13 @@ switch ($op) {
         // Get Avatar type
         $type = Request::getString('type', 'c');
         $start = Request::getInt('start', 0);
-        // Define main template
-        $GLOBALS['xoopsOption']['template_main'] = 'system_avatars.tpl';
-        // Call Header
-        xoops_cp_header();
+
         // Define Stylesheet
         $xoTheme->addStylesheet(XOOPS_URL . '/modules/system/css/admin.css');
         // Define scripts
         $xoTheme->addScript('browse.php?Frameworks/jquery/jquery.js');
         $xoTheme->addScript('modules/system/js/admin.js');
         // Define Breadcrumb and tips
-        $xoBreadCrumb->addLink(_AM_SYSTEM_AVATAR_MANAGER, system_adminVersion('avatars', 'adminpath'));
         $xoBreadCrumb->addLink(($type === 's' ? _AM_SYSTEM_AVATAR_SYSTEM : _AM_SYSTEM_AVATAR_CUSTOM));
         $xoBreadCrumb->addHelp(system_adminVersion('avatars', 'help') . '#' . $type);
         $xoBreadCrumb->addTips(_AM_SYSTEM_AVATAR_TIPS);
@@ -138,14 +142,9 @@ switch ($op) {
         break;
 
     case 'edit':
-        // Define main template
-        $GLOBALS['xoopsOption']['template_main'] = 'system_avatars.tpl';
-        // Call Header
-        xoops_cp_header();
         // Define Stylesheet
         $xoTheme->addStylesheet(XOOPS_URL . '/modules/system/css/admin.css');
         // Define Breadcrumb and tips
-        $xoBreadCrumb->addLink(_AM_SYSTEM_AVATAR_MANAGER, system_adminVersion('avatars', 'adminpath'));
         $xoBreadCrumb->addLink(_AM_SYSTEM_AVATAR_EDIT);
         $xoBreadCrumb->addHelp(system_adminVersion('avatars', 'help') . '#edit');
         $xoBreadCrumb->addTips(_AM_SYSTEM_AVATAR_TIPS);
@@ -267,14 +266,9 @@ switch ($op) {
         break;
 
     case 'delfile':
-        // Define main template
-        $GLOBALS['xoopsOption']['template_main'] = 'system_avatars.tpl';
-        // Call Header
-        xoops_cp_header();
         // Define Stylesheet
         $xoTheme->addStylesheet(XOOPS_URL . '/modules/system/css/admin.css');
         // Define Breadcrumb and tips
-        $xoBreadCrumb->addLink(_AM_SYSTEM_AVATAR_MANAGER, system_adminVersion('avatars', 'adminpath'));
         $xoBreadCrumb->addLink(_AM_SYSTEM_AVATAR_DELETE);
         $xoBreadCrumb->addHelp(system_adminVersion('avatars', 'help') . '#delete');
         $xoBreadCrumb->render();
@@ -345,10 +339,6 @@ switch ($op) {
         break;
 
     case 'multiupload':
-        // Define main template
-        $GLOBALS['xoopsOption']['template_main'] = 'system_avatars.tpl';
-        // Call Header
-        xoops_cp_header();
         // Define Stylesheet
         $xoTheme->addStylesheet(XOOPS_URL . '/media/fine-uploader/fine-uploader-new.css');
         $xoTheme->addStylesheet(XOOPS_URL . '/media/fine-uploader/ManuallyTriggerUploads.css');
@@ -362,7 +352,6 @@ switch ($op) {
         $xoTheme->addScript('modules/system/js/admin.js');
         $xoTheme->addScript('media/fine-uploader/fine-uploader.js');
         // Define Breadcrumb and tips
-        $xoBreadCrumb->addLink(_AM_SYSTEM_AVATAR_MANAGER, system_adminVersion('avatars', 'adminpath'));
         $xoBreadCrumb->addLink(_AM_SYSTEM_AVATAR_MULTIUPLOAD);
         $xoBreadCrumb->render();
         /** @var XoopsConfigHandler $config_handler */

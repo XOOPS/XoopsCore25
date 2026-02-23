@@ -43,12 +43,21 @@ if (in_array($op, ['confirm', 'submit', 'install_ok', 'update_ok', 'uninstall_ok
 }
 $myts = \MyTextSanitizer::getInstance();
 
+// Define main template
+$GLOBALS['xoopsOption']['template_main'] = 'system_modules.tpl';
+// Call Header
+xoops_cp_header();
+
+// Define Breadcrumb and tips
+$xoBreadCrumb->addLink(_AM_SYSTEM_CONFIG, XOOPS_URL . '/modules/system/admin.php');
+if ('list' === $op) {
+    $xoBreadCrumb->addLink(_AM_SYSTEM_MODULES_ADMIN);
+} else {
+    $xoBreadCrumb->addLink(_AM_SYSTEM_MODULES_ADMIN, system_adminVersion('modulesadmin', 'adminpath'));
+}
+
 switch ($op) {
     case 'list':
-        // Define main template
-        $GLOBALS['xoopsOption']['template_main'] = 'system_modules.tpl';
-        // Call Header
-        xoops_cp_header();
         // Define Stylesheet
         $xoTheme->addStylesheet(XOOPS_URL . '/modules/system/css/admin.css');
         $xoTheme->addStylesheet(XOOPS_URL . '/modules/system/css/ui/' . xoops_getModuleOption('jquery_theme', 'system') . '/ui.all.css');
@@ -58,7 +67,6 @@ switch ($op) {
         $xoTheme->addScript('modules/system/js/admin.js');
         $xoTheme->addScript('modules/system/js/module.js');
         // Define Breadcrumb and tips
-        $xoBreadCrumb->addLink(_AM_SYSTEM_MODULES_ADMIN, system_adminVersion('modulesadmin', 'adminpath'));
         $xoBreadCrumb->addHelp(system_adminVersion('modulesadmin', 'help'));
         $xoBreadCrumb->addTips(_AM_SYSTEM_MODULES_TIPS);
         $xoBreadCrumb->render();
@@ -124,10 +132,6 @@ switch ($op) {
         break;
 
     case 'installlist':
-        // Define main template
-        $GLOBALS['xoopsOption']['template_main'] = 'system_modules.tpl';
-        // Call Header
-        xoops_cp_header();
         // Define Stylesheet
         $xoTheme->addStylesheet(XOOPS_URL . '/modules/system/css/admin.css');
         $xoTheme->addStylesheet(XOOPS_URL . '/modules/system/css/ui/' . xoops_getModuleOption('jquery_theme', 'system') . '/ui.all.css');
@@ -136,7 +140,6 @@ switch ($op) {
         $xoTheme->addScript('browse.php?Frameworks/jquery/plugins/jquery.ui.js');
         $xoTheme->addScript('modules/system/js/admin.js');
         // Define Breadcrumb and tips
-        $xoBreadCrumb->addLink(_AM_SYSTEM_MODULES_ADMIN, system_adminVersion('modulesadmin', 'adminpath'));
         $xoBreadCrumb->addLink(_AM_SYSTEM_MODULES_TOINSTALL);
         $xoBreadCrumb->addHelp(system_adminVersion('modulesadmin', 'help') . '#install');
         $xoBreadCrumb->addTips(_AM_SYSTEM_MODULES_TIPS);
@@ -213,7 +216,6 @@ switch ($op) {
         // Define Stylesheet
         $xoTheme->addStylesheet(XOOPS_URL . '/modules/system/css/admin.css');
         // Define Breadcrumb and tips
-        $xoBreadCrumb->addLink(_AM_SYSTEM_MODULES_ADMIN, system_adminVersion('modulesadmin', 'adminpath'));
         $xoBreadCrumb->addLink(_AM_SYSTEM_MODULES_VALIDATE);
         $xoBreadCrumb->addHelp(system_adminVersion('modulesadmin', 'help') . '#confirm');
         $xoBreadCrumb->addTips(_AM_SYSTEM_MODULES_CONFIRM_TIPS);
@@ -323,7 +325,6 @@ switch ($op) {
         // Define Stylesheet
         $xoTheme->addStylesheet(XOOPS_URL . '/modules/system/css/admin.css');
         // Define Breadcrumb and tips
-        $xoBreadCrumb->addLink(_AM_SYSTEM_MODULES_ADMIN, system_adminVersion('modulesadmin', 'adminpath'));
         $xoBreadCrumb->addLink(_AM_SYSTEM_MODULES_SUBMITRES);
         $xoBreadCrumb->addHelp(system_adminVersion('modulesadmin', 'help') . '#submit');
         $xoBreadCrumb->render();
@@ -352,7 +353,6 @@ switch ($op) {
         // Define Stylesheet
         $xoTheme->addStylesheet(XOOPS_URL . '/modules/system/css/admin.css');
         // Define Breadcrumb and tips
-        $xoBreadCrumb->addLink(_AM_SYSTEM_MODULES_ADMIN, system_adminVersion('modulesadmin', 'adminpath'));
         $xoBreadCrumb->addLink(_AM_SYSTEM_MODULES_INSTALL);
         $xoBreadCrumb->addHelp(system_adminVersion('modulesadmin', 'help') . '#install');
         $xoBreadCrumb->render();
@@ -377,7 +377,6 @@ switch ($op) {
         // Define Stylesheet
         $xoTheme->addStylesheet(XOOPS_URL . '/modules/system/css/admin.css');
         // Define Breadcrumb and tips
-        $xoBreadCrumb->addLink(_AM_SYSTEM_MODULES_ADMIN, system_adminVersion('modulesadmin', 'adminpath'));
         $xoBreadCrumb->addLink(_AM_SYSTEM_MODULES_INSTALL);
         $xoBreadCrumb->addHelp(system_adminVersion('modulesadmin', 'help') . '#install');
         $xoBreadCrumb->render();
@@ -411,7 +410,6 @@ switch ($op) {
         // Define Stylesheet
         $xoTheme->addStylesheet(XOOPS_URL . '/modules/system/css/admin.css');
         // Define Breadcrumb and tips
-        $xoBreadCrumb->addLink(_AM_SYSTEM_MODULES_ADMIN, system_adminVersion('modulesadmin', 'adminpath'));
         $xoBreadCrumb->addLink(_AM_SYSTEM_MODULES_UNINSTALL);
         $xoBreadCrumb->addHelp(system_adminVersion('modulesadmin', 'help') . '#delete');
         $xoBreadCrumb->render();
@@ -437,7 +435,6 @@ switch ($op) {
         // Define Stylesheet
         $xoTheme->addStylesheet(XOOPS_URL . '/modules/system/css/admin.css');
         // Define Breadcrumb and tips
-        $xoBreadCrumb->addLink(_AM_SYSTEM_MODULES_ADMIN, system_adminVersion('modulesadmin', 'adminpath'));
         $xoBreadCrumb->addLink(_AM_SYSTEM_MODULES_UNINSTALL);
         $xoBreadCrumb->addHelp(system_adminVersion('modulesadmin', 'help') . '#delete');
         $xoBreadCrumb->render();
@@ -470,7 +467,6 @@ switch ($op) {
         // Define Stylesheet
         $xoTheme->addStylesheet(XOOPS_URL . '/modules/system/css/admin.css');
         // Define Breadcrumb and tips
-        $xoBreadCrumb->addLink(_AM_SYSTEM_MODULES_ADMIN, system_adminVersion('modulesadmin', 'adminpath'));
         $xoBreadCrumb->addLink(_AM_SYSTEM_MODULES_UPDATE);
         $xoBreadCrumb->addHelp(system_adminVersion('modulesadmin', 'help') . '#update');
         $xoBreadCrumb->render();
@@ -496,7 +492,6 @@ switch ($op) {
         // Define Stylesheet
         $xoTheme->addStylesheet(XOOPS_URL . '/modules/system/css/admin.css');
         // Define Breadcrumb and tips
-        $xoBreadCrumb->addLink(_AM_SYSTEM_MODULES_ADMIN, system_adminVersion('modulesadmin', 'adminpath'));
         $xoBreadCrumb->addLink(_AM_SYSTEM_MODULES_UPDATE);
         $xoBreadCrumb->addHelp(system_adminVersion('modulesadmin', 'help') . '#update');
         $xoBreadCrumb->render();
