@@ -296,9 +296,9 @@ class XoopsCache
      * @return bool True on success, false on failure
      * @access public
      */
-    public function engine(string $name = 'file', array $settings = []): bool
+    public function engine(?string $name = 'file', array $settings = []): bool
     {
-        if ($name === '') {
+        if ($name === null || $name === '') {
             return false;
         }
 
