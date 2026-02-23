@@ -135,8 +135,8 @@ define('_AM_SYSTEM_MODULES_GROUP_PERMS_DELETE_ERROR', 'ERROR: Could not delete g
 define('_AM_SYSTEM_MODULES_GROUP_PERMS_DELETED', 'Group permissions deleted ');
 define('_AM_SYSTEM_MODULES_ACCESS_ADMIN_ADD', 'Added admin access right for Group ID %s');
 define('_AM_SYSTEM_MODULES_ACCESS_ADMIN_ADD_ERROR', 'ERROR: Could not add admin access right for Group ID %s');
-define('_AM_SYSTEM_MODULES_ACCESS_USER_ADD_ERROR', 'Added user access right for Group ID: %s');
-define('_AM_SYSTEM_MODULES_ACCESS_USER_ADD_ERROR_ERROR', 'ERROR: Could not add user access right for Group ID: %s');
+define('_AM_SYSTEM_MODULES_ACCESS_USER_ADD', 'Added user access right for Group ID: %s');
+define('_AM_SYSTEM_MODULES_ACCESS_USER_ADD_ERROR', 'ERROR: Could not add user access right for Group ID: %s');
 // execute module specific install script if any
 define('_AM_SYSTEM_MODULES_FAILED_EXECUTE', 'Failed to execute %s');
 define('_AM_SYSTEM_MODULES_FAILED_SUCESS', '%s executed successfully.');
