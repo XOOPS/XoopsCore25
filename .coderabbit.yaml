@@ -19,10 +19,12 @@ reviews:
   path_instructions:
     - path: "htdocs/**/*.php"
       instructions: >-
-        Review for PHP 8.2 compatibility. Union types, named arguments,
-        match expressions, constructor promotion, nullsafe operator, and
-        first-class callable syntax are allowed. Enums, readonly properties,
-        intersection types, and fibers require PHP 8.1+ (allowed).
+        Review for PHP 8.2-8.5 compatibility. PHP 8.0 features (union types,
+        named arguments, match expressions, constructor promotion, nullsafe
+        operator) are allowed. PHP 8.1 features (enums, readonly properties,
+        intersection types, fibers, first-class callable syntax) are allowed.
+        PHP 8.2 features (readonly classes, DNF types, standalone true/false/null
+        types, constants in traits) are allowed. Avoid PHP 8.3+ features.
         Check for proper PSR-12 code style. Flag any direct superglobal access
         ($_GET, $_POST, $_REQUEST) that should use Xmf\Request instead.
         Check for SQL injection risks — all queries must use parameterized

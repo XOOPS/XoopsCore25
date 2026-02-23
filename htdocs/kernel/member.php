@@ -687,9 +687,9 @@ class XoopsMemberHandler
      * @param string $actual Actual string
      * @return bool TRUE if strings are equal
      */
-    private function hashEquals($expected, $actual)
+    private function hashEquals(string $expected, string $actual): bool
     {
-        return hash_equals((string)$expected, (string)$actual);
+        return hash_equals($expected, $actual);
     }
 
     /**
