@@ -117,7 +117,8 @@ class XoopsCache
             return false;
         }
 
-        if (!$this->engine[$engine]->init($settings)) {
+        $engineInstance = $this->engine[$engine];
+        if ($engineInstance === null || !$engineInstance->init($settings)) {
             return false;
         }
 
@@ -197,13 +198,9 @@ class XoopsCache
      * @return array|false  (engine, settings) on success, false on failure
      * @access public
      */
-    public function config($name = 'default', $settings = [])
+    public function config($name = 'default', array $settings = [])
     {
         $_this = XoopsCache::getInstance();
-
-        if (!is_array($settings)) {
-            $settings = [];
-        }
 
         if (is_array($name)) {
             $config = $name;
@@ -271,8 +268,9 @@ class XoopsCache
         } elseif (!empty($settings)) {
             // Same config name but caller supplied overrides – re-init the engine
             // so the returned {engine, settings} pair stays consistent.
-            if ($_this->isInitialized($engine)) {
-                if (!$_this->engine[$engine]->init($settings)) {
+            $engineInstance = $_this->isInitialized($engine) ? $_this->engine[$engine] : null;
+            if ($engineInstance !== null) {
+                if (!$engineInstance->init($settings)) {
                     trigger_error("Cache Engine {$engine} re-initialization failed", E_USER_WARNING);
                     return false;
                 }
@@ -298,13 +296,10 @@ class XoopsCache
      * @return bool True on success, false on failure
      * @access public
      */
-    public function engine($name = 'file', $settings = []): bool
+    public function engine(string $name = 'file', array $settings = []): bool
     {
-        if (!is_string($name) || $name === '') {
+        if ($name === '') {
             return false;
-        }
-        if (!is_array($settings)) {
-            $settings = [];
         }
 
         $cacheClass = 'XoopsCache' . ucfirst($name);
@@ -577,7 +572,6 @@ class XoopsCache
  * @license    GNU GPL 2 (https://www.gnu.org/licenses/gpl-2.0.html)
  * @link       https://xoops.org
  * @since      2.5.12
- * @deprecated 4.0.0 Use Xoops\Core\Cache\EngineInterface instead
  */
 interface XoopsCacheEngineInterface
 {
