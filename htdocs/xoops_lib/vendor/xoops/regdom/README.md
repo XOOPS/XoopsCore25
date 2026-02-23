@@ -10,7 +10,8 @@ For more information on public suffixes, see [publicsuffix.org](https://publicsu
 
 ## Requirements
 
-- PHP 7.4 or later
+- PHP 8.2 or later
+- `ext-mbstring` required
 - `ext-intl` recommended (for internationalized domain name support)
 
 ## Installation

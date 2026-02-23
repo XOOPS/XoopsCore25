@@ -13,7 +13,7 @@ declare(strict_types=1);
  * @source  https://publicsuffix.org/
  */
 
-// Load Composer autoloader (provides polyfills for PHP 7.4)
+// Load Composer autoloader
 foreach ([__DIR__ . '/../vendor/autoload.php', __DIR__ . '/../../../autoload.php'] as $autoload) {
     if (file_exists($autoload)) {
         require_once $autoload;
