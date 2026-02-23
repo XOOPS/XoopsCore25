@@ -37,7 +37,6 @@ class XoopsCache
      */
     protected $engine = [];
 
-
     /**
      * Cache configuration stack
      *
@@ -511,7 +510,6 @@ class XoopsCache
 
         return $success;
     }
-
 
     /**
      * Check if Cache has initialized a working storage engine
