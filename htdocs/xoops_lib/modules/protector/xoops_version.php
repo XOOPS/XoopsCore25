@@ -42,7 +42,7 @@ $modversion['icons32']        = 'Frameworks/moduleclasses/icons/32';
 $modversion['release_date']        = '2019/02/18';
 $modversion['module_website_url']  = 'https://xoops.org/';
 $modversion['module_website_name'] = 'XOOPS';
-$modversion['min_php']             = '7.4.0';
+$modversion['min_php']             = '8.2.0';
 $modversion['min_xoops']           = '2.5.12';
 
 // Any tables can't be touched by modulesadmin.

@@ -1247,13 +1247,7 @@ Checks file existence, PHP syntax, CSS/JS structure, and image assets.
 
 ### PHP Version
 
-The theme requires PHP 7.4+ and is tested through PHP 8.5. Avoid:
-- `match` expressions (PHP 8.0+)
-- Named arguments (PHP 8.0+)
-- `enum` (PHP 8.1+)
-- `readonly` properties (PHP 8.1+)
-- `str_contains()`, `str_starts_with()` (PHP 8.0+) — use `strpos()` instead
-- `array_is_list()` (PHP 8.1+)
+The theme requires PHP 8.2+ and is tested through PHP 8.5. Features introduced in PHP 8.0, 8.1, and 8.2 are allowed; avoid features introduced in PHP 8.3+ to preserve the 8.2 minimum.
 
 ### XOOPS Version
 

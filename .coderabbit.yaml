@@ -2,10 +2,9 @@
 language: "en-US"
 early_access: false
 tone_instructions: >-
-  Expert PHP code reviewer. Focus on type safety, PSR-12 compliance,
-  PHP 7.4 compatibility, and security. This is a full CMS application
-  supporting PHP 7.4 through 8.5 — no PHP 8.0+ language features allowed
-  in core code.
+  Expert PHP code reviewer. Focus on type safety, PSR-12, PHP 8.2-8.5
+  compatibility, and security. PHP 8.0+ features (named arguments, match,
+  constructor promotion, nullsafe operator) are allowed.
 
 reviews:
   profile: "assertive"
@@ -20,9 +19,12 @@ reviews:
   path_instructions:
     - path: "htdocs/**/*.php"
       instructions: >-
-        Review for PHP 7.4 compatibility (no union types, named arguments,
-        match expressions, enums, readonly, constructor promotion, fibers,
-        intersection types, never return type, or first-class callable syntax).
+        Review for PHP 8.2-8.5 compatibility. PHP 8.0 features (union types,
+        named arguments, match expressions, constructor promotion, nullsafe
+        operator) are allowed. PHP 8.1 features (enums, readonly properties,
+        intersection types, fibers, first-class callable syntax) are allowed.
+        PHP 8.2 features (readonly classes, DNF types, standalone true/false/null
+        types, constants in traits) are allowed. Avoid PHP 8.3+ features.
         Check for proper PSR-12 code style. Flag any direct superglobal access
         ($_GET, $_POST, $_REQUEST) that should use Xmf\Request instead.
         Check for SQL injection risks — all queries must use parameterized

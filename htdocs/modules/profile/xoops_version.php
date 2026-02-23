@@ -44,7 +44,7 @@ $modversion['icon']           = 'fa-solid fa-user';
 $modversion['release_date']        = '2022/09/09';
 $modversion['module_website_url']  = 'https://xoops.org/';
 $modversion['module_website_name'] = 'XOOPS';
-$modversion['min_php']             = '5.6.0';
+$modversion['min_php']             = '8.2.0';
 $modversion['min_xoops']           = '2.5.11';
 $modversion['min_admin']           = '1.2';
 $modversion['min_db']              = ['mysql' => '5.0.7'];

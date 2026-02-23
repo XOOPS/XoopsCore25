@@ -14,7 +14,7 @@
  * @package         kernel
  * @since           2.0.0
  * @author          Kazumi Ono (AKA onokazu) http://www.myweb.ne.jp/, http://jp.xoops.org/
- * @version         2.0.0 - Enhanced with security hardening and PHP 7.4-8.4 compatibility
+ * @version         2.0.0 - Enhanced with security hardening and PHP 8.2-8.5 compatibility
  */
 defined('XOOPS_ROOT_PATH') || exit('Restricted access');
 
@@ -337,7 +337,7 @@ class XoopsMemberHandler
         $user = $users[0];
         $hash = $user->pass();
 
-        // Check if password uses modern hashing (PHP 7.4 compatible check)
+        // Check if password uses modern hashing
         $isModernHash = (isset($hash[0]) && $hash[0] === '$');
 
         if ($isModernHash) {
@@ -682,30 +682,14 @@ class XoopsMemberHandler
     }
 
     /**
-     * Timing-safe string comparison (PHP 7.4 compatible)
+     * Timing-safe string comparison
      * @param string $expected Expected string
      * @param string $actual Actual string
      * @return bool TRUE if strings are equal
      */
-    private function hashEquals($expected, $actual)
+    private function hashEquals(string $expected, string $actual): bool
     {
-        // Use hash_equals if available (PHP 5.6+)
-        if (function_exists('hash_equals')) {
-            return hash_equals($expected, $actual);
-        }
-
-        // Fallback implementation
-        $expected = (string)$expected;
-        $actual = (string)$actual;
-        $expectedLength = strlen($expected);
-        $actualLength = strlen($actual);
-        $diff = $expectedLength ^ $actualLength;
-
-        for ($i = 0; $i < $actualLength; $i++) {
-            $diff |= ord($expected[$i % $expectedLength]) ^ ord($actual[$i]);
-        }
-
-        return $diff === 0;
+        return hash_equals($expected, $actual);
     }
 
     /**

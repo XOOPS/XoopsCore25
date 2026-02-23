@@ -148,7 +148,7 @@ class XoopsSessionHandler implements
         );
 
         $ok = $this->db->exec($sql);
-        // update_cookie() only affects PHP versions with PHP_VERSION_ID < 70300 (see session74.php); on PHP 8+ it is effectively a no-op
+        // update_cookie() is a no-op; retained for API compatibility
         $this->update_cookie();
         return (bool)$ok;
     }
@@ -338,6 +338,6 @@ class XoopsSessionHandler implements
 
     public function update_cookie($sess_id = null, $expire = null): void
     {
-        // no-op for 8.0+; retained for parity with 7.4 implementation
+        // no-op; retained for API compatibility
     }
 }

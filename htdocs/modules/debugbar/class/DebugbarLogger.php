@@ -536,7 +536,7 @@ class DebugbarLogger
     }
 
     /**
-     * PSR-3 v1 compatible log method (untyped for PHP 7.4 compat).
+     * PSR-3 v1 compatible log method (untyped for broad compat).
      *
      * Routes messages to the appropriate DebugBar collector based on
      * the 'channel' key in the context array.

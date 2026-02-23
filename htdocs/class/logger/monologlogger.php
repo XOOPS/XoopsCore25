@@ -89,7 +89,7 @@ class XoopsMonologLogger
     }
 
     /**
-     * PSR-3 compatible log method (v1 untyped signature for PHP 7.4 compat).
+     * PSR-3 compatible log method (v1 untyped signature for broad compat).
      *
      * @param mixed  $level    PSR-3 log level string or Monolog integer level
      * @param string $message  log message
