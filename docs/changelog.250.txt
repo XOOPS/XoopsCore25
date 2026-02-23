@@ -11,8 +11,14 @@ XOOPS 2.5.x Changelog (Language changes: see: /docs/lang_diff.txt)
 - refactor RegDom 2.0.2 Beta 2  (mamba) in #1578
 - add RTL support to (mamba, عبدالعزيز الجهني)
 - add Font Awesome 7.1.0 (mamba)
-- update XMF by @mambax7 
+- update XMF by @mambax7
 - update RegDom by @mambax7
+- raise minimum PHP version to 8.2 by @mambax7
+  - update CI matrix to PHP 8.2/8.3/8.4/8.5, PHPUnit 11
+  - update SonarCloud and Qodana analysis configs to PHP 8.2
+  - update installer PHP version check to 8.2.0
+  - consolidate session handlers into single session.php (remove session74.php)
+  - remove dead PHP < 7.3 and < 8.0 code branches
 
 ===================================
 2.5.12 Beta8             2025-09-11
