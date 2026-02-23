@@ -220,7 +220,7 @@ class XoopsUserUtility
             $stop .= _US_PASSNOTSAME . '<br>';
         } elseif (($pass != '') && (strlen($pass) < $xoopsConfigUser['minpass'])) {
             $stop .= sprintf(_US_PWDTOOSHORT, $xoopsConfigUser['minpass']) . '<br>';
-        } elseif ($pass !== '' && $pass !== null && $uname !== null && strtolower($pass) === strtolower($uname)) {
+        } elseif ($pass !== '' && $pass !== null && $uname !== null && mb_strtolower($pass, 'UTF-8') === mb_strtolower($uname, 'UTF-8')) {
             $stop .= _US_PWDEQUALSUNAME . '<br>';
         }
 
