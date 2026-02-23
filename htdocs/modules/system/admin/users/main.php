@@ -187,6 +187,13 @@ case 'users_save':
             xoops_error(_AM_SYSTEM_USERS_STNPDNM);
             break;
         }
+
+        if ('' !== Request::getString('pass2') &&
+            '' !== Request::getString('password') &&
+            mb_strtolower(Request::getString('password'), 'UTF-8') === mb_strtolower(Request::getString('uname'), 'UTF-8')) {
+            xoops_error(_AM_SYSTEM_USERS_PWDEQUALSUNAME);
+            break;
+        }
         // --- End Validation ---
 
         // Apply changes
@@ -272,6 +279,13 @@ case 'users_save':
         if ('' !== Request::getString('pass2') &&
             Request::getString('password') != Request::getString('pass2')) {
             xoops_error(_AM_SYSTEM_USERS_STNPDNM);
+            break;
+        }
+
+        if ('' !== Request::getString('pass2') &&
+            '' !== Request::getString('password') &&
+            mb_strtolower(Request::getString('password'), 'UTF-8') === mb_strtolower(Request::getString('uname'), 'UTF-8')) {
+            xoops_error(_AM_SYSTEM_USERS_PWDEQUALSUNAME);
             break;
         }
 

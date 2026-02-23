@@ -106,6 +106,7 @@ define('_US_SAVECHANGES', 'Save Changes');
 define('_US_NOEDITRIGHT', "Sorry, you don't have the right to edit this user's info.");
 define('_US_PASSNOTSAME', 'Both passwords are different. They must be identical.');
 define('_US_PWDTOOSHORT', 'Sorry, your password must be at least <strong>%s</strong> characters long.');
+define('_US_PWDEQUALSUNAME', 'Your password cannot be the same as your username.');
 define('_US_PROFUPDATED', 'Your Profile Updated!');
 // removed in 2.5.9 define('_US_USECOOKIE', 'Store my user name in a cookie for 1 year');
 define('_US_NO', 'No');

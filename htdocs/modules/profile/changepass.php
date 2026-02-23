@@ -55,6 +55,8 @@ if (!isset($_POST['submit'])) {
     }
     if ($password != $vpass) {
         $errors[] = _US_PASSNOTSAME;
+    } elseif ($password !== '' && mb_strtolower($password, 'UTF-8') === mb_strtolower((string) $GLOBALS['xoopsUser']->getVar('uname', 'n'), 'UTF-8')) {
+        $errors[] = _US_PWDEQUALSUNAME;
     }
 
     if ($errors) {
