@@ -96,6 +96,33 @@ class XoopsCache
     }
 
     /**
+     * Resolve config, verify initialization, and apply settings for an engine
+     *
+     * Common setup shared by read(), write(), delete(), and clear().
+     *
+     * @param string|array|null $config Configuration name or array
+     * @return array{engine: string, settings: array<string, mixed>}|false
+     */
+    private function prepareEngine($config)
+    {
+        $config = $this->resolveEngineConfig($config);
+        if ($config === false) {
+            return false;
+        }
+
+        $engine   = $config['engine'];
+        $settings = $config['settings'];
+
+        if (!$this->isInitialized($engine)) {
+            return false;
+        }
+
+        $this->engine[$engine]->init($settings);
+
+        return $config;
+    }
+
+    /**
      * Resolve engine name from parameter or current configuration
      *
      * @param string|null $engine Engine name or null to use current
@@ -325,21 +352,13 @@ class XoopsCache
     public function gc(): bool
     {
         $_this  = XoopsCache::getInstance();
-        $config = $_this->resolveEngineConfig(null);
+        $config = $_this->prepareEngine(null);
 
         if ($config === false) {
             return false;
         }
 
-        $engine = $config['engine'];
-
-        // Engine configuration is valid, but runtime initialization may have failed
-        if (!$_this->isInitialized($engine)) {
-            trigger_error("Cache engine {$engine} not initialized for garbage collection", E_USER_WARNING);
-            return false;
-        }
-
-        return (bool) $_this->engine[$engine]->gc();
+        return (bool) $_this->engine[$config['engine']]->gc();
     }
 
     /**
@@ -377,23 +396,13 @@ class XoopsCache
             $duration = null;
         }
 
-        $config = $_this->resolveEngineConfig($config);
+        $config = $_this->prepareEngine($config);
         if ($config === false) {
             return false;
         }
 
         $engine   = $config['engine'];
         $settings = $config['settings'];
-
-        if (!isset($settings['duration'])) {
-            $settings['duration'] = 0;
-        }
-
-        if (!$_this->isInitialized($engine)) {
-            trigger_error('Cache write not initialized: ' . $engine, E_USER_WARNING);
-
-            return false;
-        }
 
         if (!$key = $_this->key($key)) {
             return false;
@@ -404,17 +413,15 @@ class XoopsCache
         }
 
         if (!$duration) {
-            $duration = $settings['duration'];
+            $duration = isset($settings['duration']) ? $settings['duration'] : 0;
         }
         $duration = is_numeric($duration) ? (int) $duration : strtotime($duration) - time();
 
         if ($duration < 1) {
             return false;
         }
-        $_this->engine[$engine]->init($settings);
-        $success = (bool) $_this->engine[$engine]->write($key, $value, $duration);
 
-        return $success;
+        return (bool) $_this->engine[$engine]->write($key, $value, $duration);
     }
 
     /**
@@ -431,27 +438,19 @@ class XoopsCache
      */
     public static function read($key, $config = null)
     {
-        $key    = substr(md5(XOOPS_URL), 0, 8) . '_' . $key;
-        $_this  = XoopsCache::getInstance();
+        $key   = substr(md5(XOOPS_URL), 0, 8) . '_' . $key;
+        $_this = XoopsCache::getInstance();
 
-        $config = $_this->resolveEngineConfig($config);
+        $config = $_this->prepareEngine($config);
         if ($config === false) {
             return false;
         }
 
-        $engine   = $config['engine'];
-        $settings = $config['settings'];
-
-        if (!$_this->isInitialized($engine)) {
-            return false;
-        }
         if (!$key = $_this->key($key)) {
             return false;
         }
-        $_this->engine[$engine]->init($settings);
-        $result = $_this->engine[$engine]->read($key);
 
-        return $result;
+        return $_this->engine[$config['engine']]->read($key);
     }
 
     /**
@@ -467,15 +466,8 @@ class XoopsCache
         $key   = substr(md5(XOOPS_URL), 0, 8) . '_' . $key;
         $_this = XoopsCache::getInstance();
 
-        $config = $_this->resolveEngineConfig($config);
+        $config = $_this->prepareEngine($config);
         if ($config === false) {
-            return false;
-        }
-
-        $engine   = $config['engine'];
-        $settings = $config['settings'];
-
-        if (!$_this->isInitialized($engine)) {
             return false;
         }
 
@@ -483,10 +475,7 @@ class XoopsCache
             return false;
         }
 
-        $_this->engine[$engine]->init($settings);
-        $success = (bool) $_this->engine[$engine]->delete($key);
-
-        return $success;
+        return (bool) $_this->engine[$config['engine']]->delete($key);
     }
 
     /**
@@ -501,22 +490,12 @@ class XoopsCache
     {
         $_this = XoopsCache::getInstance();
 
-        $config = $_this->resolveEngineConfig($config);
+        $config = $_this->prepareEngine($config);
         if ($config === false) {
             return false;
         }
 
-        $engine   = $config['engine'];
-        $settings = $config['settings'];
-
-        if (!$_this->isInitialized($engine)) {
-            return false;
-        }
-
-        $_this->engine[$engine]->init($settings);
-        $success = (bool) $_this->engine[$engine]->clear($check);
-
-        return $success;
+        return (bool) $_this->engine[$config['engine']]->clear($check);
     }
 
     /**
