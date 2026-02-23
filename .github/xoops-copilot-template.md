@@ -37,7 +37,7 @@ composer fix              # Auto-fix code style issues
 
 ## PHP Compatibility
 
-Code must run on PHP 7.4 through 8.5. Do not use features exclusive to PHP 8.0+ (named arguments, match expressions, union type hints in signatures, enums, fibers, readonly properties, intersection types, `never` return type, first-class callable syntax, constructor promotion, attributes `#[...]`, nullsafe operator `?->`, explicit `mixed` type).
+Code must run on PHP 8.2 through 8.5. PHP 8.0+ and 8.1+ features (named arguments, match expressions, union type hints, enums, fibers, readonly properties, intersection types, `never` return type, first-class callable syntax, constructor promotion, attributes `#[...]`, nullsafe operator `?->`, explicit `mixed` type) are allowed.
 
 ## XOOPS Coding Conventions
 
@@ -96,7 +96,7 @@ XOOPS has two major generations with different APIs. Code must support both:
 
 1. Code follows PSR-12 and passes linting.
 2. Static analysis passes with no new errors.
-3. Tests pass on all supported PHP versions (7.4-8.5).
+3. Tests pass on all supported PHP versions (8.2-8.5).
 4. New public methods have PHPDoc with `@param`, `@return`, and `@throws` tags.
 5. New functionality has corresponding unit tests.
 6. Changes are documented in the changelog.

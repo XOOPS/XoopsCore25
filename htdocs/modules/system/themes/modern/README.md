@@ -47,7 +47,7 @@ A modern, responsive admin theme for XOOPS 2.5.12 with an enhanced dashboard, da
 ## Requirements
 
 - XOOPS 2.5.12+
-- PHP 7.4 or higher (tested through PHP 8.4)
+- PHP 8.2 or higher (tested through PHP 8.5)
 - Chart.js 4.x — local or CDN (see [Installation](#2-chartjs-dependency))
 
 ## Installation
@@ -238,7 +238,7 @@ Key design tokens: `--primary`, `--bg-primary`, `--bg-secondary`, `--text-primar
 **Version**: 1.0
 **License**: GNU GPL 2.0 or later
 **XOOPS**: 2.5.12+
-**PHP**: 7.4 - 8.4
+**PHP**: 8.2 - 8.5
 
 ## Changelog
 
