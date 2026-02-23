@@ -82,7 +82,7 @@ class Session extends AbstractHelper
     {
         $prefixedName = $this->prefix($name);
         if (isset($_SESSION[$prefixedName])) {
-            return unserialize($_SESSION[$prefixedName]);
+            return unserialize($_SESSION[$prefixedName], ['allowed_classes' => false]);
         } else {
             return $default;
         }

@@ -13,9 +13,7 @@
  * @license             GNU GPL 2 (https://www.gnu.org/licenses/gpl-2.0.html)
  * @package             kernel
  */
-if (!defined('XOOPS_ROOT_PATH')) {
-    throw new \RuntimeException('Restricted access');
-}
+defined('XOOPS_ROOT_PATH') || exit('Restricted access');
 
 /**
  * YOU SHOULD NEVER TOUCH RELEVANT VARIABLES/FILES, THEY WILL BE REMOVED
@@ -34,4 +32,4 @@ if (file_exists($licenseFile)) {
 /**
  *  Define XOOPS version
  */
-define('XOOPS_VERSION', 'XOOPS 2.5.12-Beta9');
+define('XOOPS_VERSION', 'XOOPS 2.5.12-RC1');

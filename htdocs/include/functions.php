@@ -15,9 +15,7 @@
  * @since               2.0.0
  */
 
-if (!defined('XOOPS_ROOT_PATH')) {
-    throw new \RuntimeException('Restricted access');
-}
+defined('XOOPS_ROOT_PATH') || exit('Restricted access');
 
 /** @var \XoopsNotificationHandler $notification_handler */
 
@@ -674,15 +672,16 @@ function checkEmail($email, $antispam = false)
 /**
  * formatURL()
  *
- * @param mixed $url
- * @return mixed|string
+ * @param string $url    URL to format
+ * @param bool   $secure When true, use https:// instead of http:// as the default scheme
+ * @return string
  */
-function formatURL($url)
+function formatURL($url, $secure = false)
 {
     $url = trim($url);
     if ($url != '') {
         if ((!preg_match('/^http[s]*:\/\//i', $url)) && (!preg_match('/^ftp*:\/\//i', $url)) && (!preg_match('/^ed2k*:\/\//i', $url))) {
-            $url = 'http://' . $url;
+            $url = ($secure ? 'https://' : 'http://') . $url;
         }
     }
 

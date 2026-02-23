@@ -18,25 +18,6 @@ defined('XOOPS_MAINFILE_INCLUDED') || die('Restricted access');
 global $xoops, $xoopsPreload, $xoopsLogger, $xoopsErrorHandler, $xoopsSecurity, $sess_handler;
 
 /**
- * BC Polyfill for PHP 8
- *
- * Please remove these functions from your code
- */
-if (!function_exists('get_magic_quotes_gpc')) {
-    function get_magic_quotes_gpc()
-    {
-        return false;
-    }
-}
-if (!function_exists('get_magic_quotes_runtime')) {
-    function get_magic_quotes_runtime()
-    {
-        return false;
-    }
-}
-/* end BC polyfill */
-
-/**
  * YOU SHOULD NEVER USE THE FOLLOWING TO CONSTANTS, THEY WILL BE REMOVED
  */
 defined('DS') or define('DS', DIRECTORY_SEPARATOR);
@@ -302,9 +283,7 @@ if (!empty($_SESSION['xoopsUserId'])) {
         $xoopsUserIsAdmin = $xoopsUser->isAdmin();
     }
 }
-if (PHP_VERSION_ID < 70300) {
-    $sess_handler->update_cookie(); // make sure we supply the cookie, not PHP's session code
-}
+// Cookie is handled by session_set_cookie_params() in the session handler (PHP 8.2+)
 // user characteristics are established
 $xoopsPreload->triggerEvent('core.include.common.auth.success');
 

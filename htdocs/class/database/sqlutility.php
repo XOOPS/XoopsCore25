@@ -16,9 +16,7 @@
  * @author              Kazumi Ono <onokazu@xoops.org>
  */
 
-if (!defined('XOOPS_ROOT_PATH')) {
-    throw new \RuntimeException('Restricted access');
-}
+defined('XOOPS_ROOT_PATH') || exit('Restricted access');
 
 /**
  * provide some utility methods for databases
@@ -153,10 +151,15 @@ class SqlUtility
     public static function prefixQuery($query, $prefix)
     {
         $pattern  = "/^(INSERT[\s]+INTO|CREATE[\s]+TABLE|ALTER[\s]+TABLE|UPDATE)(\s)+([`]?)([^`\s]+)\\3(\s)+/siU";
-        $pattern2 = "/^(DROP TABLE)(\s)+([`]?)([^`\s]+)\\3(\s)?$/siU";
-        if (preg_match($pattern, $query, $matches) || preg_match($pattern2, $query, $matches)) {
-            $replace    = "\\1 " . $prefix . "_\\4\\5";
+        $pattern2 = "/^(DROP[\s]+TABLE(?:\s+IF\s+EXISTS)?)(\s)+([`]?)([^`\s]+)\\3(\s)*$/siU";
+        $replace  = "\\1 " . $prefix . "_\\4\\5";
+        if (preg_match($pattern, $query, $matches)) {
             $matches[0] = preg_replace($pattern, $replace, $query);
+
+            return $matches;
+        }
+        if (preg_match($pattern2, $query, $matches)) {
+            $matches[0] = preg_replace($pattern2, $replace, $query);
 
             return $matches;
         }

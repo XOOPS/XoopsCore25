@@ -14,9 +14,7 @@
  * @package             kernel
  * @subpackage          database
  */
-if (!defined('XOOPS_ROOT_PATH')) {
-    throw new \RuntimeException('Restricted access');
-}
+defined('XOOPS_ROOT_PATH') || exit('Restricted access');
 
 /**
  * XoopsDatabaseFactory

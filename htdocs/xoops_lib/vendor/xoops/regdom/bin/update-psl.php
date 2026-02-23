@@ -1,5 +1,8 @@
 #!/usr/bin/env php
 <?php
+
+declare(strict_types=1);
+
 /**
  * XOOPS RegDom Public Suffix List Updater
  *
@@ -9,6 +12,14 @@
  * @license The PSL is licensed under MPL-2.0 by Mozilla Foundation
  * @source  https://publicsuffix.org/
  */
+
+// Load Composer autoloader
+foreach ([__DIR__ . '/../vendor/autoload.php', __DIR__ . '/../../../autoload.php'] as $autoload) {
+    if (file_exists($autoload)) {
+        require_once $autoload;
+        break;
+    }
+}
 
 echo "Updating XOOPS RegDom Public Suffix List...\n";
 
@@ -38,15 +49,23 @@ if (defined('XOOPS_VAR_PATH')) {
 // --- HTTP Conditional Download ---
 $headers = ['User-Agent: XOOPS-RegDom/1.1 (https://xoops.org)'];
 $meta = file_exists($metaPath) ? json_decode(file_get_contents($metaPath), true) : [];
-if (!empty($meta['etag'])) $headers[] = "If-None-Match: {$meta['etag']}";
-if (!empty($meta['last_modified'])) $headers[] = "If-Modified-Since: {$meta['last_modified']}";
+if (!empty($meta['etag'])) {
+    $headers[] = "If-None-Match: {$meta['etag']}";
+}
+if (!empty($meta['last_modified'])) {
+    $headers[] = "If-Modified-Since: {$meta['last_modified']}";
+}
 
 echo "Downloading from publicsuffix.org...\n";
 $context = stream_context_create(['http' => ['method' => 'GET', 'timeout' => 20, 'header' => implode("\r\n", $headers), 'ignore_errors' => true]]);
 $latestList = @file_get_contents($sourceUrl, false, $context);
 $responseHeaders = $http_response_header ?? [];
 $statusCode = 0;
-foreach ($responseHeaders as $header) if (preg_match('/^HTTP\/\d\.\d\s+(\d+)/', $header, $m)) $statusCode = (int)$m[1];
+foreach ($responseHeaders as $header) {
+    if (preg_match('/^HTTP\/\d\.\d\s+(\d+)/', $header, $m)) {
+        $statusCode = (int)$m[1];
+    }
+}
 
 if ($statusCode === 304) {
     echo "SUCCESS: Public Suffix List is already up-to-date (304 Not Modified).\n";
@@ -60,14 +79,44 @@ if ($latestList === false || $statusCode !== 200) {
 
 // --- Parse and Generate Cache ---
 echo "Parsing rules...\n";
+
+// Normalize rule keys to ASCII/punycode so they match the form used by
+// PublicSuffixList::normalizeDomain() at runtime (which calls idn_to_ascii).
+$hasIntl = function_exists('idn_to_ascii');
+if (!$hasIntl) {
+    echo "WARNING: ext-intl not available — IDN rules will be stored as Unicode.\n";
+    echo "         Install ext-intl for correct internationalized domain handling.\n";
+}
+
+/**
+ * @param string $rule Raw rule text from the PSL (may be Unicode)
+ * @return string Normalised key (punycode when ext-intl is available)
+ */
+$normalizeRule = static function (string $rule) use ($hasIntl): string {
+    $rule = strtolower($rule);
+    if ($hasIntl) {
+        $ascii = idn_to_ascii($rule, IDNA_DEFAULT, INTL_IDNA_VARIANT_UTS46);
+        if ($ascii !== false) {
+            return $ascii;
+        }
+    }
+    return $rule;
+};
+
 $lines = explode("\n", $latestList);
 $rules = ['NORMAL' => [], 'WILDCARD' => [], 'EXCEPTION' => []];
 foreach ($lines as $line) {
     $line = trim($line);
-    if (empty($line) || strpos($line, '//') === 0) continue;
-    if (strpos($line, '!') === 0) $rules['EXCEPTION'][substr($line, 1)] = true;
-    elseif (strpos($line, '*.') === 0) $rules['WILDCARD'][substr($line, 2)] = true;
-    else $rules['NORMAL'][$line] = true;
+    if (empty($line) || str_starts_with($line, '//')) {
+        continue;
+    }
+    if (str_starts_with($line, '!')) {
+        $rules['EXCEPTION'][$normalizeRule(substr($line, 1))] = true;
+    } elseif (str_starts_with($line, '*.')) {
+        $rules['WILDCARD'][$normalizeRule(substr($line, 2))] = true;
+    } else {
+        $rules['NORMAL'][$normalizeRule($line)] = true;
+    }
 }
 
 $totalRules = count($rules['NORMAL']) + count($rules['WILDCARD']) + count($rules['EXCEPTION']);
@@ -81,20 +130,21 @@ $cacheContent = $cacheHeader . "\nreturn " . var_export($rules, true) . ";\n";
 
 // --- Atomic Write to Caches ---
 $writePaths = ['bundled' => $bundledCachePath];
-if ($runtimeCachePath) $writePaths['runtime'] = $runtimeCachePath;
+if ($runtimeCachePath) {
+    $writePaths['runtime'] = $runtimeCachePath;
+}
 
 foreach ($writePaths as $type => $cachePath) {
     $tmpPath = $cachePath . '.tmp.' . getmypid();
     if (file_put_contents($tmpPath, $cacheContent, LOCK_EX) && rename($tmpPath, $cachePath)) {
+        if (function_exists('opcache_invalidate')) {
+            opcache_invalidate($cachePath, true);
+        }
         echo "SUCCESS: {$type} cache updated with {$totalRules} rules.\n";
     } else {
         echo "WARNING: Could not write {$type} cache to {$cachePath}.\n";
-        // Attempt to delete the temporary file.
-        if (file_exists($tmpPath) && !unlink($tmpPath)) {
-            // If unlink() fails, throw an exception to halt execution and signal an error.
-            throw new \RuntimeException(
-                    "CRITICAL: Failed to delete temporary file at: {$tmpPath}. Please check file permissions."
-            );
+        if (file_exists($tmpPath)) {
+            unlink($tmpPath);
         }
     }
 }
@@ -102,8 +152,12 @@ foreach ($writePaths as $type => $cachePath) {
 // --- Save Metadata ---
 $newMeta = ['updated' => date('c'), 'etag' => null, 'last_modified' => null];
 foreach ($responseHeaders as $header) {
-    if (stripos($header, 'ETag:') === 0) $newMeta['etag'] = trim(substr($header, 5));
-    if (stripos($header, 'Last-Modified:') === 0) $newMeta['last_modified'] = trim(substr($header, 14));
+    if (stripos($header, 'ETag:') === 0) {
+        $newMeta['etag'] = trim(substr($header, 5));
+    }
+    if (stripos($header, 'Last-Modified:') === 0) {
+        $newMeta['last_modified'] = trim(substr($header, 14));
+    }
 }
 file_put_contents($metaPath, json_encode($newMeta, JSON_PRETTY_PRINT));
 

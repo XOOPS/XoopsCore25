@@ -264,3 +264,14 @@ define('_PRINT', 'Print');
 define('_PDF', 'PDF');
 define('_OFF', 'Off');
 define('_DB_QUERY_ERROR', 'Query Failed! SQL: %s - Error: ');
+
+//XOOPS 2.5.12
+// Guards allow RTL language packs (e.g. Arabic, Hebrew) to define these
+// constants in their own global.php before this English fallback loads.
+if (!defined('_TEXT_DIRECTION')) {
+    define('_TEXT_DIRECTION', 'ltr'); // or 'rtl'
+}
+
+if (!defined('_RTL')) {
+    define('_RTL', _TEXT_DIRECTION === 'rtl' ? '1' : '0');
+}

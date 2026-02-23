@@ -21,9 +21,7 @@
  * @since               2.4.0
  * @author              Simon
  */
-if (!defined('XOOPS_ROOT_PATH')) {
-    throw new \RuntimeException('Restricted access');
-}
+defined('XOOPS_ROOT_PATH') || exit('Restricted access');
 
 /**
  * xoops_hex2bin()

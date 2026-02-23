@@ -25,12 +25,13 @@ if (!is_object($GLOBALS['xoopsUser']) || !is_object($GLOBALS['xoopsModule']) || 
 }
 
 // Get Action type
-$op = Request::getString('op', 'default');
+$op = Request::getString('op', 'list');
 
 // Define main template
 $GLOBALS['xoopsOption']['template_main'] = 'system_templates.tpl';
 // Call Header
 xoops_cp_header();
+
 // Define scripts
 $xoTheme->addScript('browse.php?Frameworks/jquery/jquery.js');
 $xoTheme->addScript('browse.php?Frameworks/jquery/plugins/jquery.ui.js');
@@ -42,8 +43,14 @@ $xoTheme->addScript('modules/system/js/code_mirror/codemirror.js');
 // Define Stylesheet
 $xoTheme->addStylesheet(XOOPS_URL . '/modules/system/css/admin.css');
 $xoTheme->addStylesheet(XOOPS_URL . '/modules/system/css/code_mirror/docs.css');
+
 // Define Breadcrumb and tips
-$xoBreadCrumb->addLink(_AM_SYSTEM_TEMPLATES_NAV_MAIN, system_adminVersion('tplsets', 'adminpath'));
+$xoBreadCrumb->addLink(_AM_SYSTEM_CONFIG, XOOPS_URL . '/modules/system/admin.php');
+if ('list' === $op) {
+    $xoBreadCrumb->addLink(_AM_SYSTEM_TEMPLATES_NAV_MAIN);
+} else {
+    $xoBreadCrumb->addLink(_AM_SYSTEM_TEMPLATES_NAV_MAIN, system_adminVersion('tplsets', 'adminpath'));
+}
 
 switch ($op) {
     //index

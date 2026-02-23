@@ -14,9 +14,7 @@
  * @package             core
  * @since               2.0.0
  */
-if (!defined('XOOPS_ROOT_PATH')) {
-    throw new \RuntimeException('Restricted access');
-}
+defined('XOOPS_ROOT_PATH') || exit('Restricted access');
 
 xoops_loadLanguage('user');
 

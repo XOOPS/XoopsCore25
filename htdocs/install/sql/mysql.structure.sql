@@ -157,7 +157,7 @@ CREATE TABLE xoopsnotifications (
 #
 
 CREATE TABLE config (
-  conf_id smallint(5) unsigned NOT NULL auto_increment,
+  conf_id int(10) unsigned NOT NULL auto_increment,
   conf_modid smallint(5) unsigned NOT NULL default '0',
   conf_catid smallint(5) unsigned NOT NULL default '0',
   conf_name varchar(25) NOT NULL default '',
@@ -193,7 +193,7 @@ CREATE TABLE configoption (
   confop_id mediumint(8) unsigned NOT NULL auto_increment,
   confop_name varchar(255) NOT NULL default '',
   confop_value varchar(255) NOT NULL default '',
-  conf_id smallint(5) unsigned NOT NULL default '0',
+  conf_id int(10) unsigned NOT NULL default '0',
   PRIMARY KEY  (confop_id),
   KEY conf_id (conf_id)
 ) ENGINE=MyISAM;
@@ -252,7 +252,7 @@ CREATE TABLE groups_users_link (
 
 CREATE TABLE image (
   image_id mediumint(8) unsigned NOT NULL auto_increment,
-  image_name varchar(30) NOT NULL default '',
+  image_name varchar(191) NOT NULL default '',
   image_nicename varchar(255) NOT NULL default '',
   image_mimetype varchar(30) NOT NULL default '',
   image_created int(10) unsigned NOT NULL default '0',

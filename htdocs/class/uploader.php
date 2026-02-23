@@ -17,9 +17,7 @@
  * @author              Taiwen Jiang <phppp@users.sourceforge.net>
  */
 
-if (!defined('XOOPS_ROOT_PATH')) {
-    throw new \RuntimeException('Restricted access');
-}
+defined('XOOPS_ROOT_PATH') || exit('Restricted access');
 
 use Xmf\Request;
 
@@ -476,7 +474,7 @@ class XoopsMediaUploader
         if (isset($this->targetFileName)) {
             $this->savedFileName = $this->targetFileName;
         } elseif (isset($this->prefix)) {
-            $this->savedFileName = uniqid($this->prefix, false) . '.' . strtolower($matched[1]); //TODO: for true, need to increase size of image_name field in image table
+            $this->savedFileName = uniqid($this->prefix, true) . '.' . strtolower($matched[1]);
         } else {
             $this->savedFileName = strtolower($this->mediaName);
         }

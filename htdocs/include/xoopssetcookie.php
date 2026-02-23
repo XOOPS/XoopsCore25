@@ -80,23 +80,17 @@ function xoops_setcookie(
             || (!empty($_SERVER['HTTP_X_FORWARDED_PROTO']) && $_SERVER['HTTP_X_FORWARDED_PROTO'] === 'https');
     }
 
-    // Use modern array syntax for PHP 7.3+
-    if (PHP_VERSION_ID >= 70300) {
-        $options = [
-            'expires'  => $expire,
-            'path'     => $path,
-            'secure'   => $secure,
-            'httponly' => $httponly,
-            'samesite' => $samesite,
-        ];
-        if ($domain !== '') {
-            $options['domain'] = $domain;
-        }
-        return setcookie($name, $value, $options);
+    $options = [
+        'expires'  => $expire,
+        'path'     => $path,
+        'secure'   => $secure,
+        'httponly' => $httponly,
+        'samesite' => $samesite,
+    ];
+    if ($domain !== '') {
+        $options['domain'] = $domain;
     }
-
-    // Fallback for older PHP versions
-    return setcookie($name, $value, $expire, $path, $domain, $secure, $httponly);
+    return setcookie($name, $value, $options);
 }
 
 /**

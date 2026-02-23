@@ -1,0 +1,1107 @@
+#!/usr/bin/env php
+<?php
+
+class UserMessageException extends Exception
+{
+}
+
+/**
+ * Command options.
+ */
+class Options
+{
+    /**
+     * The supported data format versions: to be increased when the data structure changes (not needed if data is only added).
+     * Separate multiple versions with spaces.
+     *
+     * @var string
+     */
+    const FORMAT_VERSIONS = '1 2';
+
+    /**
+     * The default location where the Punic data is stored.
+     *
+     * @var string
+     */
+    const DEFAULT_SOURCE_LOCATION = 'https://punic.github.io/data';
+
+    /**
+     * Comma-separated list of the default locales.
+     *
+     * @var string
+     */
+    const DEFAULT_LOCALES = 'ar,ca,cs,da,de,el,en,en_AU,en_CA,en_GB,en_HK,en_IN,es,fi,fr,he,hi,hr,hu,it,ja,ko,nb,nl,nn,pl,pt,pt_PT,ro,root,ru,sk,sl,sr,sv,th,tr,uk,vi,zh,zh_Hant';
+
+    /**
+     * Placeholder for all locales.
+     *
+     * @var string
+     */
+    const ALL_LOCALES_PLACEHOLDER = '[ALL]';
+
+    /**
+     * The location where the Punic data is stored.
+     *
+     * @var string
+     */
+    protected $sourceLocation;
+
+    /**
+     * Get the location where the Punic data is stored.
+     *
+     * @return string
+     */
+    public function getSourceLocation()
+    {
+        return $this->sourceLocation;
+    }
+
+    
+    /**
+     * The CLDR version (null: latest).
+     *
+     * @var string|null
+     */
+    protected $cldrVersion;
+
+    /**
+     * The Punic data format version.
+     *
+     * @var string|null
+     */
+    protected $formatVersion;
+
+    /**
+     * Get the CLDR version (null: latest).
+     *
+     * @return string|null
+     */
+    public function getCLDRVersion()
+    {
+        return $this->cldrVersion;
+    }
+
+    /**
+     * The Punic data should be reset?
+     *
+     * @var bool
+     */
+    protected $resetPunicData;
+
+    /**
+     * The Punic data should be reset?
+     *
+     * @return bool
+     */
+    public function getResetPunicData()
+    {
+        return $this->resetPunicData;
+    }
+
+    /**
+     * The list of the output locales (or true for all).
+     *
+     * @var string[]|true
+     */
+    protected $locales;
+
+    /**
+     * The list of the locales to exclude.
+     *
+     * @var string[]|true
+     */
+    protected $excludeLocales;
+
+    /**
+     * The output directory.
+     *
+     * @var string
+     */
+    protected $outputDirectory;
+
+    /**
+     * Get the output directory.
+     *
+     * @return string
+     */
+    public function getOutputDirectory()
+    {
+        return $this->outputDirectory;
+    }
+
+    /**
+     * @return string
+     */
+    protected static function getDefaultOutputDirectory()
+    {
+        return rtrim(str_replace(DIRECTORY_SEPARATOR, '/', dirname(dirname(__FILE__))), '/').'/src/data';
+    }
+
+
+    /**
+     * @var bool
+     */
+    protected $shouldUpdateTestFiles;
+
+    /**
+     * Should the test files be updated?
+     *
+     * @return bool
+     */
+    public function shouldUpdateTestFiles()
+    {
+        return $this->shouldUpdateTestFiles;
+    }
+
+    /**
+     * @return string
+     */
+    public static function getPunicTestsDirectory()
+    {
+        return dirname(dirname(self::getDefaultOutputDirectory())) . '/tests';
+    }
+
+    /**
+     * Initializes the instance.
+     */
+    protected function __construct()
+    {
+        $this->sourceLocation = static::DEFAULT_SOURCE_LOCATION;
+        $this->cldrVersion = null;
+        $this->formatVersion = null;
+        $this->resetPunicData = false;
+        $this->locales = explode(',', static::DEFAULT_LOCALES);
+        $this->excludeLocales = array();
+        $this->outputDirectory = static::getDefaultOutputDirectory();
+        $this->shouldUpdateTestFiles = false;
+    }
+
+    /**
+     * @param array $options
+     *
+     * @return static
+     */
+    public static function fromArray(array $options)
+    {
+        $result = new static();
+        $localeOptions = array();
+        $n = count($options);
+        $matches = null;
+        for ($i = 0; $i < $n; ++$i) {
+            if (preg_match('/^(--[^=]+)=(.*)$/', $options[$i], $matches)) {
+                $currentOption = $matches[1];
+                $nextOption = $matches[2];
+                $advanceNext = false;
+            } else {
+                $currentOption = $options[$i];
+                $nextOption = $i + 1 < $n ? $options[$i + 1] : '';
+                $advanceNext = true;
+            }
+
+            $optionWithValue = false;
+            switch (strtolower($currentOption)) {
+                case '-h':
+                case '--help':
+                    static::showHelp();
+                    exit(0);
+                case '--source-location':
+                case '-s':
+                    $optionWithValue = true;
+                    if ($nextOption === '') {
+                        throw new UserMessageException('Please specify the location of the source data');
+                    }
+                    $result->sourceLocation = $nextOption;
+                    break;
+                case '--version':
+                case '-v':
+                    $optionWithValue = true;
+                    if ($nextOption === '') {
+                        throw new UserMessageException('Please specify the CLDR version to be processed');
+                    }
+                    if (!preg_match('/^[1-9]\d*(\.\d+)*(\.[dM]\d+|\.beta\.\d+)?$/', $nextOption)) {
+                        throw new UserMessageException("Invalid version specified ({$nextOption})");
+                    }
+                    $result->cldrVersion = $nextOption;
+                    break;
+                case '--locale':
+                case '-l':
+                    $optionWithValue = true;
+                    if ($nextOption === '') {
+                        throw new UserMessageException('Please specify one or more locale identifiers');
+                    }
+                    $localeOptions = array_merge($localeOptions, explode(',', $nextOption));
+                    break;
+                case '--reset':
+                case '-r':
+                    $result->resetPunicData = true;
+                    break;
+                case '--output':
+                case '-o':
+                    $optionWithValue = true;
+                    if ($nextOption === '') {
+                        throw new UserMessageException('Please specify the output directory');
+                    }
+                    $s = static::normalizeDirectoryPath($nextOption);
+                    if ($s === null) {
+                        throw new UserMessageException("{$currentOption} is not a valid output directory path");
+                    }
+                    $result->outputDirectory = $s;
+                    break;
+                case '--update-test-files':
+                case '-t':
+                    $result->shouldUpdateTestFiles = true;
+                    break;
+                default:
+                    throw new UserMessageException("Unknown option: {$currentOption}\nUse -h (or --help) to get the list of available options");
+            }
+            if ($optionWithValue && $advanceNext) {
+                ++$i;
+            }
+        }
+        if (!empty($localeOptions)) {
+            $result->parseLocaleOptions($localeOptions);
+        }
+
+        return $result;
+    }
+
+    /**
+     * @param string|mixed $path
+     *
+     * @return string|null
+     */
+    protected static function normalizeDirectoryPath($path)
+    {
+        $result = null;
+        if (is_string($path)) {
+            $path = str_replace(DIRECTORY_SEPARATOR, '/', $path);
+            if (stripos(PHP_OS, 'WIN') === 0) {
+                $invalidChars = implode('', array_map('chr', range(0, 31))).'*?"<>|';
+            } else {
+                $invalidChars = '';
+            }
+            $path = rtrim($path, '/');
+            if ($path !== '' && $invalidChars === '' || strpbrk($path, $invalidChars) === false) {
+                $result = $path;
+            }
+        }
+
+        return $result;
+    }
+
+    /**
+     * @param array $localeOptions
+     *
+     * @throws Exception
+     */
+    protected function parseLocaleOptions(array $localeOptions)
+    {
+        $allLocales = false;
+        $locales = array();
+        foreach ($localeOptions as $localeOption) {
+            if ($localeOption === '') {
+                throw new Exception('Empty locale detected');
+            }
+            if ($localeOption === 'root') {
+                $localeOption = 'en_US';
+            } elseif ($localeOption === static::ALL_LOCALES_PLACEHOLDER) {
+                $allLocales = true;
+            } else {
+                $localeOperation = '=';
+                $localeCode = $localeOption;
+                if ($localeOption !== '') {
+                    switch ($localeOption[0]) {
+                        case '+':
+                        case '-':
+                            $localeOperation = $localeOption[0];
+                            $localeCode = substr($localeOption, 1);
+                            break;
+                    }
+                }
+                $locale = LocaleIdentifier::fromString($localeCode);
+                if ($locale === null) {
+                    throw new Exception("Invalid locale identifier specified: {$localeOption}");
+                }
+                $localeCode = (string) $locale;
+                if (isset($locales[$localeCode])) {
+                    throw new Exception("Locale identifier specified more than once: {$localeCode}");
+                }
+                $locales[$localeCode] = $localeOperation;
+            }
+        }
+        if ($allLocales) {
+            $this->locales = true;
+            if (in_array('=', $locales, true)) {
+                throw new Exception("You specified to use all the locales, and to use specific locales.\nIf you want to specify 'all locales except some', please prepend them with a minus sign.");
+            }
+            $this->excludeLocales = array_keys(array_filter(
+                $locales,
+                function ($operation) {
+                    return $operation === '-';
+                }
+            ));
+        } else {
+            if (in_array('=', $locales, true)) {
+                $this->locales = array_keys(array_filter(
+                    $locales,
+                    function ($operation) {
+                        return $operation !== '-';
+                    }
+                    ));
+            } else {
+                $this->locales = array_values(array_unique(array_merge(
+                    $this->locales,
+                    array_keys(array_filter(
+                        $locales,
+                        function ($operation) {
+                            return $operation === '+';
+                        }
+                    ))
+                )));
+            }
+            $this->excludeLocales = array_keys(array_filter(
+                $locales,
+                function ($operation) {
+                    return $operation === '-';
+                }
+            ));
+        }
+        if ($this->locales !== true && !empty($this->excludeLocales)) {
+            $common = array_intersect($this->locales, $this->excludeLocales);
+            if (!empty($common)) {
+                $this->locales = array_values(array_diff($this->locales, $common));
+            }
+            $this->excludeLocales = array();
+        }
+    }
+
+    /**
+     * @return string
+     */
+    public function describeLocales()
+    {
+        if ($this->locales === true) {
+            if (empty($this->excludeLocales)) {
+                $result = 'all locales';
+            } else {
+                $result = 'all locales except '.implode(', ', $this->excludeLocales);
+            }
+        } else {
+            $result = implode(', ', $this->locales);
+        }
+
+        return $result;
+    }
+
+    protected static function showHelp()
+    {
+        $defaultSourceLocation = static::DEFAULT_SOURCE_LOCATION;
+        $allLocalesPlaceholders = static::ALL_LOCALES_PLACEHOLDER;
+        $defaultLocales = static::DEFAULT_LOCALES;
+        $defaultOutputDirectory = str_replace('/', DIRECTORY_SEPARATOR, static::getDefaultOutputDirectory());
+        echo <<<EOT
+Available options:
+
+  --help|-h
+    Show this help message
+
+  --version=<version>|-v <version>
+    Set the CLDR version to work on (default: latest available)
+    Examples: 31.d02  30.0.3  30  29.beta.1  25.M1  23.1.d01
+
+  --source-location=<location>|-s <location>
+    The location of the Punic data (default: {$defaultSourceLocation})
+
+  --reset|-r
+    Reset the destination Punic data before the execution
+
+  --output|-o
+    Set the output directory (default: {$defaultOutputDirectory})
+
+  --update-test-files|-t
+    Update the Punic test files (useful only for Punic developers)
+
+  --locale=<locales>|-l <locales>
+    Set the locales to work on.
+    It's a comman-separated list of locale codes (you can also specify this option multiple times).
+    You can use {$allLocalesPlaceholders} (case-sensitive) to include all available locales.
+    You can prepend a minus sign to substract specific locales: so for instance
+    --locale=-it,-de
+    means 'the default locales except Italian and German'.
+    Likewise:
+    --locale={$allLocalesPlaceholders},-it,-de
+    means 'all locales except Italian and German'.
+    You can prepend a plus to add specific locales: so for instance
+    --locale=+it,+de
+    means 'default locales plus Italian and German'.
+    The locales included by default are:
+    {$defaultLocales}
+
+EOT;
+    }
+
+    /**
+     * @param string[] $availableLocales
+     *
+     * @throws Exception
+     *
+     * @return string[]
+     */
+    public function finalizeLocalesList(array $availableLocales)
+    {
+        if ($this->locales === true) {
+            $locales = $availableLocales;
+        } else {
+            foreach ($this->locales as $locale) {
+                if (in_array($locale, $availableLocales, true) !== true) {
+                    throw new UserMessageException("The locale {$locale} is not supported.\nHere's the list of available locales:\n- " . implode("\n- ", $availableLocales));
+                }
+            }
+            $locales = $this->locales;
+        }
+        if (!empty($this->excludeLocales)) {
+            $locales = array_diff($locales, $this->excludeLocales);
+        }
+        natcasesort($locales);
+
+        return array_values($locales);
+    }
+}
+
+class FileUtils
+{
+    /**
+     * @param string $path
+     * @param bool $emptyOnlyDir
+     *
+     * @throws Exception
+     */
+    public function deleteFromFilesystem($path, $emptyOnlyDir = false)
+    {
+        $maxRetries = 5;
+        if (is_file($path) || is_link($path)) {
+            for ($i = 1; ; $i++) {
+                if (@unlink($path) === false) {
+                    if ($i === $maxRetries) {
+                        throw new Exception("Failed to delete the file {$path}");
+                    }
+                } else {
+                    break;
+                }
+            }
+        } elseif (is_dir($path)) {
+            $contents = @scandir($path);
+            if ($contents === false) {
+                throw new Exception("Failed to retrieve the contents of the directory {$path}");
+            }
+            foreach (array_diff($contents, array('.', '..')) as $item) {
+                $this->deleteFromFilesystem($path.'/'.$item);
+            }
+            if (!$emptyOnlyDir) {
+                for ($i = 1; ; $i++) {
+                    if (@rmdir($path) === false) {
+                        if ($i === $maxRetries) {
+                            throw new Exception("Failed to delete the directory {$path}");
+                        }
+                    } else {
+                        break;
+                    }
+                }
+            }
+        }
+    }
+
+    /**
+     * @param string $path
+     *
+     * @throws Exception
+     */
+    public function createDirectory($path)
+    {
+        if (!is_dir($path)) {
+            if (@mkdir($path, 0777, true) !== true) {
+                throw new Exception("Failed to create the directory {$path}");
+            }
+        }
+    }
+}
+
+class SourceData
+{
+    /**
+     * @var FileUtils
+     */
+    protected $fileUtils;
+
+    /**
+     * @var Courier
+     */
+    protected $courier;
+
+    /**
+     * @var array|null
+     */
+    protected $state;
+
+    /**
+     * @var null|string
+     */
+    protected $cldrVersion;
+
+    /**
+     * @var string|null
+     */
+    protected $formatVersion;
+
+    /**
+     * @var string[]|null
+     */
+    protected $availableLocales;
+
+    /**
+     * @var string[]|null
+     */
+    protected $localeFiles;
+
+    /**
+     * @var string[]|null
+     */
+    protected $supplementalFiles;
+
+    /**
+     * @var string[]|null
+     */
+    protected $testFiles;
+
+    /**
+     * @param Options $options
+     */
+    public function __construct(FileUtils $fileUtils, Courier $courier)
+    {
+        $this->fileUtils = $fileUtils;
+        $this->courier = $courier;
+        $this->state = null;
+        $this->cldrVersion = null;
+        $this->availableLocales = null;
+        $this->localeFiles = null;
+        $this->supplementalFiles = null;
+        $this->testFiles = null;
+    }
+
+    /**
+     * @throws Exception
+     */
+    public function readState()
+    {
+        if ($this->state === null) {
+            $state = $this->courier->getJson('state.json');
+            if (!isset($state['formats'])) {
+                throw new Exception('Invalid state.json file (missing formats).');
+            }
+            $finalState = array();
+            foreach (preg_split('/\s+/', Options::FORMAT_VERSIONS, -1, PREG_SPLIT_NO_EMPTY) as $supportedFormatVersion) {
+                if (!isset($state['formats'][$supportedFormatVersion])) {
+                    continue;
+                }
+                $finalState[$supportedFormatVersion] = $state['formats'][$supportedFormatVersion];
+            }
+            if ($finalState === array()) {
+                throw new Exception('Invalid state.json file (no supported format found)');
+            }
+            $this->state = $finalState;
+        }
+    }
+
+    /**
+     * @throws Exception
+     *
+     * @return string
+     */
+    public function getLatestCLDRVersion()
+    {
+        $this->readState();
+        $latest = null;
+        $all = array();
+        foreach ($this->state as $state) {
+            if (isset($state['cldr'])) {
+                $all = array_merge($all, array_keys($state['cldr']));
+            }
+        }
+        foreach ($all as $v) {
+            $v = (string) $v;
+            if ($latest === null || version_compare($latest, $v) < 0) {
+                $latest = $v;
+            }
+        }
+        if ($latest === null) {
+            throw new Exception('No CLDR version found!');
+        }
+
+        return $latest;
+    }
+
+    /**
+     * @param string $version
+     *
+     * @throws UserMessageException
+     */
+    public function setCLDRVersion($version)
+    {
+        $this->readState();
+        $foundCldrVersion = null;
+        $foundFormatVersion = null;
+        if (is_string($version)) {
+            foreach ($this->state as $formatVersion => $state) {
+                if (isset($state['cldr']) && is_array($state['cldr']) && isset($state['cldr'][$version])) {
+                    $foundCldrVersion = $version;
+                    $foundFormatVersion = $formatVersion;
+                }
+            }
+        }
+        if ($foundCldrVersion === null) {
+            throw new UserMessageException("Invalid CLDR version: {$version}");
+        }
+        $this->cldrVersion = $foundCldrVersion;
+        $this->formatVersion = $foundFormatVersion;
+        $this->availableLocales = null;
+        $this->localeFiles = null;
+        $this->supplementalFiles = null;
+        $this->testFiles = null;
+    }
+
+    /**
+     * Get the list of available locale IDs.
+     *
+     * @throws Exception
+     *
+     * @return string[]
+     */
+    public function getAvailableLocales()
+    {
+        if ($this->availableLocales === null) {
+            $this->readState();
+            if ($this->cldrVersion === null) {
+                throw new Exception('CLDR version not set');
+            }
+            $data = $this->state[$this->formatVersion]['cldr'][$this->cldrVersion];
+            if (!isset($data['locales']) || !is_array($data['locales']) || count($data['locales']) === 0) {
+                throw new Exception('Missing locales in state file');
+            }
+            $availableLocales = $data['locales'];
+            natcasesort($availableLocales);
+            $this->availableLocales = $availableLocales;
+        }
+        return $this->availableLocales;
+    }
+
+    /**
+     * Get the list of locale-specific file names.
+     *
+     * @throws Exception
+     *
+     * @return string[]
+     */
+    public function getLocaleFiles()
+    {
+        if ($this->localeFiles === null) {
+            $this->readState();
+            if ($this->cldrVersion === null) {
+                throw new Exception('CLDR version not set');
+            }
+            $data = $this->state[$this->formatVersion]['cldr'][$this->cldrVersion];
+            if (!isset($data['localeFiles']) || !is_array($data['localeFiles']) || count($data['localeFiles']) === 0) {
+                throw new Exception('Missing localeFiles in state file');
+            }
+            $localeFiles = $data['localeFiles'];
+            natcasesort($localeFiles);
+            $this->localeFiles = $localeFiles;
+        }
+        return $this->localeFiles;
+    }
+    
+    
+    /**
+     * Get the list of supplemental file names.
+     *
+     * @throws Exception
+     *
+     * @return string[]
+     */
+    public function getSupplementalFiles()
+    {
+        if ($this->supplementalFiles === null) {
+            $this->readState();
+            if ($this->cldrVersion === null) {
+                throw new Exception('CLDR version not set');
+            }
+            $data = $this->state[$this->formatVersion]['cldr'][$this->cldrVersion];
+            if (!isset($data['supplementalFiles']) || !is_array($data['supplementalFiles']) || count($data['supplementalFiles']) === 0) {
+                throw new Exception('Missing supplementalFiles in state file');
+            }
+            $supplementalFiles = $data['supplementalFiles'];
+            natcasesort($supplementalFiles);
+            $this->supplementalFiles = $supplementalFiles;
+        }
+        return $this->supplementalFiles;
+    }
+
+    /**
+     * Get the list of test file names and their path relative to the test direcory.
+     *
+     * @throws Exception
+     *
+     * @return array
+     */
+    public function getTestFiles()
+    {
+        if ($this->testFiles === null) {
+            $this->readState();
+            if ($this->cldrVersion === null) {
+                throw new Exception('CLDR version not set');
+            }
+            $data = $this->state[$this->formatVersion]['cldr'][$this->cldrVersion];
+            $testFiles = array();
+            if (isset($data['testFiles']) && is_array($data['testFiles'])) {
+                foreach ($data['testFiles'] as $testFile) {
+                    switch ($testFile) {
+                        case '__test.plurals.php':
+                            $testFiles[] = array('source' => $testFile, 'destDir' => 'dataFiles', 'destFile' => 'plurals.php');
+                            break;
+                    }
+                }
+            }
+            $this->testFiles = $testFiles;
+        }
+        return $this->testFiles;
+    }
+    
+    /**
+     * @param string $localeID
+     * @param string $destDir
+     *
+     * @throws Exception
+     */
+    public function fetchLocale($localeID, $destDir)
+    {
+        $this->fileUtils->deleteFromFilesystem($destDir);
+        $this->fileUtils->createDirectory($destDir);
+        try {
+            foreach ($this->getLocaleFiles() as $localeFile) {
+                $data = $this->courier->getPhp($this->formatVersion . '/' . $this->cldrVersion . '/' . str_replace('_', '-', $localeID) . '/' . $localeFile);
+                if (@file_put_contents($destDir . '/' . $localeFile, $data) !== strlen($data)) {
+                    throw new Exception("Failed to save file {$localeFile}");
+                }
+            }
+        } catch (Exception $x) {
+            try {
+                $this->fileUtils->deleteFromFilesystem($destDir);
+            } catch (Exception $foo) {
+            }
+            throw $x;
+        }
+    }
+
+    /**
+     * @param string $localeID
+     * @param string $destDir
+     *
+     * @throws Exception
+     */
+    public function fetchSupplementalFile($supplementalFile, $destFile)
+    {
+        $this->fileUtils->deleteFromFilesystem($destFile);
+        try {
+            $data = $this->courier->getPhp($this->formatVersion . '/' . $this->cldrVersion . '/' . $supplementalFile);
+            if (@file_put_contents($destFile, $data) !== strlen($data)) {
+                throw new Exception("Failed to save file {$supplementalFile}");
+            }
+        } catch (Exception $x) {
+            try {
+                $this->fileUtils->deleteFromFilesystem($destFile);
+            } catch (Exception $foo) {
+            }
+            throw $x;
+        }
+    }
+}
+
+class LocaleIdentifier
+{
+    /**
+     * @var string
+     */
+    protected $language = '';
+
+    /**
+     * @var string
+     */
+    protected $script = '';
+
+    /**
+     * @var string
+     */
+    protected $region = '';
+
+    /**
+     * @var string
+     */
+    protected $variants = array();
+
+    protected function __construct()
+    {
+    }
+
+    /**
+     * @param string|mixed $localeIdentifier
+     *
+     * @return static|null
+     */
+    public static function fromString($localeIdentifier)
+    {
+        // http://unicode.org/reports/tr35/#Unicode_language_identifier
+        if (strcasecmp($localeIdentifier, 'root') === 0) {
+            $result = new static();
+            $result->language = 'root';
+        } else {
+            $rxLanguage = '(?:[a-z]{2,3})|(?:[a-z]{5,8}:)';
+            $rxScript = '[a-z]{4}';
+            $rxRegion = '(?:[a-z]{2})|(?:[0-9]{3})';
+            $rxVariant = '(?:[a-z0-9]{5,8})|(?:[0-9][a-z0-9]{3})';
+            $rxSep = '[-_]';
+            $matches = null;
+            if (is_string($localeIdentifier) && preg_match("/^($rxLanguage)(?:$rxSep($rxScript))?(?:$rxSep($rxRegion))?((?:$rxSep(?:$rxVariant))*)$/i", $localeIdentifier, $matches)) {
+                $result = new static();
+                $result->language = strtolower($matches[1]);
+                if (isset($matches[2])) {
+                    $result->script = ucfirst(strtolower($matches[2]));
+                }
+                if (isset($matches[3])) {
+                    $result->region = strtoupper($matches[3]);
+                }
+                if ($matches[4] !== '') {
+                    $result->variants = explode('_', strtoupper(str_replace('-', '_', substr($matches[4], 1))));
+                }
+            } else {
+                $result = null;
+            }
+        }
+
+        return $result;
+    }
+
+    protected static function merge($language, $script = '', $region = '', array $variants = array())
+    {
+        $parts = array();
+
+        $parts[] = $language;
+        if ($script !== '') {
+            $parts[] = $script;
+        }
+        if ($region !== '') {
+            $parts[] = $region;
+        }
+        $parts = array_merge($parts, $variants);
+
+        return implode('_', $parts);
+    }
+
+    /**
+     * @return string
+     */
+    public function __toString()
+    {
+        return static::merge($this->language, $this->script, $this->region, $this->variants);
+    }
+}
+
+class Courier
+{
+    /**
+     * @var Options
+     */
+    protected $options;
+
+    /**
+     * @param Options $options
+     */
+    public function __construct(Options $options)
+    {
+        $this->options = $options;
+    }
+
+    /**
+     * @param string $relativePath
+     *
+     * @throws Exception
+     *
+     * @return string
+     */
+    public function getFile($relativePath)
+    {
+        $fullPath = rtrim($this->options->getSourceLocation(), '/') . '/' . ltrim($relativePath, '/');
+        $contents = file_get_contents($fullPath);
+        /** @var array|null $http_response_header */
+        if (isset($http_response_header)) {
+            foreach($http_response_header as $header) {
+                $matches = null;
+                if (preg_match("/^HTTP\/.+?\s+([0-9]+)(\s+(\S.+)?)$/", $header, $matches)) {
+                    $code = (int) $matches[1];
+                    if ($code !== 200) {
+                        $message = isset($matches[2]) ? trim($matches[2]) : '';
+                        throw new Exception("Failed to fetch {$fullPath}. HTTP error code: {$code}" . ($message === '' ? '' : " ($message)"));
+                    }
+                }
+                break;
+            }
+        }
+        if ($contents === false) {
+            throw new Exception("Failed to read {$fullPath}");
+        }
+
+        return $contents;
+    }
+
+    /**
+     * @param string $relativePath
+     *
+     * @throws Exception
+     *
+     * @return array
+     */
+    public function getJson($relativePath)
+    {
+        $json = $this->getFile($relativePath);
+        $result = @json_decode($json, true);
+        if (!is_array($result)) {
+            throw new Exception("Failed to decode JSON from {$relativePath}");
+        }
+        return $result;
+    }
+
+    
+    /**
+     * @param string $relativePath
+     *
+     * @throws Exception
+     *
+     * @return string
+     */
+    public function getPhp($relativePath)
+    {
+        $php = $this->getFile($relativePath);
+        if (strpos($php, '<?php') !== 0) {
+            throw new Exception("Failed fetch PHP file from {$relativePath}");
+        }
+        return $php;
+    }
+}
+
+function handleError($errno, $errstr, $errfile, $errline)
+{
+    throw new Exception("{$errstr} in {$errfile} @ line {$errline}", $errno);
+}
+set_error_handler('handleError');
+
+try {
+    /** @var array|null $argv */
+    if (isset($argv) && is_array($argv) && count($argv) > 1) {
+        $optionArray = array_values($argv);
+        array_shift($optionArray);
+    } else {
+        $optionArray = array();
+    }
+    $options = Options::fromArray($optionArray);
+    echo 'Source location : ', $options->getSourceLocation(), "\n";
+    echo 'CLDR version    : ', $options->getCLDRVersion() === null ? 'latest available' : $options->getCLDRVersion(), "\n";
+    echo 'Format versions : ', Options::FORMAT_VERSIONS, "\n";
+    echo 'Locales         : ', $options->describeLocales(), "\n";
+    echo 'Output directory: ', str_replace('/', DIRECTORY_SEPARATOR, $options->getOutputDirectory()), "\n";
+    $fileUtils = new FileUtils();
+    $courier = new Courier($options);
+    $sourceData = new SourceData($fileUtils, $courier);
+    echo 'Fetching data state... ';
+    $sourceData->readState();
+    echo "done.\n";
+    $cldrVersion = $options->getCLDRVersion();
+    if ($cldrVersion === null) {
+        echo 'Determining the latest CLDR version... ';
+        $cldrVersion = $sourceData->getLatestCLDRVersion();
+        $sourceData->setCLDRVersion($cldrVersion);
+        echo $cldrVersion, "\n";
+    } else {
+        echo 'Checking CLDR version... ';
+        $sourceData->setCLDRVersion($cldrVersion);
+        echo "done.\n";
+    }
+    $locales = $options->finalizeLocalesList($sourceData->getAvailableLocales());
+    if (empty($locales)) {
+        throw new UserMessageException('No locale to be fetched.');
+    }
+    if (is_dir($options->getOutputDirectory()) && $options->getResetPunicData()) {
+        echo 'Clearing current Punic data... ';
+        $fileUtils->deleteFromFilesystem($options->getOutputDirectory(), true);
+        echo "done.\n";
+    }
+    echo "Fetching language files:\n";
+    foreach ($locales as $localeID) {
+        echo " - {$localeID}... ";
+        $destDir = $options->getOutputDirectory().'/'.str_replace('_', '-', $localeID);
+        if (is_dir($destDir)) {
+            echo "destination directory exists - SKIPPED.\n";
+        } else {
+            $sourceData->fetchLocale($localeID, $destDir);
+            echo "done.\n";
+        }
+    }
+    echo "Fetching supplemental files:\n";
+    foreach ($sourceData->getSupplementalFiles() as $supplementalFile) {
+        echo " - {$supplementalFile}...";
+        $destFile = $options->getOutputDirectory().'/'.$supplementalFile;
+        if (is_file($destFile)) {
+            echo "destination file exists - SKIPPED.\n";
+        } else {
+            $sourceData->fetchSupplementalFile($supplementalFile, $destFile);
+            echo "done.\n";
+        }
+    }
+    if ($options->shouldUpdateTestFiles()) {
+        echo "Updating Punic test files:\n";
+        $testDirectory = $options->getPunicTestsDirectory();
+        if (!is_dir($testDirectory)) {
+            echo "Punic test directory not found - SKIPPED.\n";
+        } else {
+            $testFiles = $sourceData->getTestFiles();
+            if (count($testFiles) === 0) {
+                echo "No test files available - SKIPPED.\n";
+            } else {
+                foreach ($sourceData->getTestFiles() as $testFile) {
+                    echo " - {$testFile['destFile']}...";
+                    $testFilePath = $testDirectory;
+                    if(isset($testFile['destDir']) && $testFile['destDir'] !== '') {
+                        $testFilePath .= '/' . $testFile['destDir'];
+                    }
+                    if (!is_dir($testFilePath)) {
+                        echo " - skipped (directory not found: {$testFilePath})\n";
+                    } else {
+                        $testFilePath .= '/' . $testFile['destFile'];
+                        if (is_file($testFilePath)) {
+                            unlink($testFilePath);
+                        }
+                        $sourceData->fetchSupplementalFile($testFile['source'], $testFilePath);
+                        echo "done.\n";
+                    }
+                }
+            }
+        }
+    }
+    exit(0);
+} catch (Exception $x) {
+    echo "\n", $x->getMessage(), "\n";
+    if (!$x instanceof UserMessageException) {
+        echo 'FILE: ', $x->getFile(), '@', $x->getLine(), "\n";
+        if (method_exists($x, 'getTraceAsString')) {
+            echo "TRACE:\n", $x->getTraceAsString(), "\n";
+        }
+    }
+    exit(1);
+}

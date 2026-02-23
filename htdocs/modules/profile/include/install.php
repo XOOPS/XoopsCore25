@@ -212,7 +212,7 @@ function profile_install_setPermissions($field_id, $module_id, $canedit, $visibl
  */
 function profile_install_addCategory($name, $weight)
 {
-    $GLOBALS['xoopsDB']->query('INSERT INTO ' . $GLOBALS['xoopsDB']->prefix('profile_category') . ' VALUES (0, ' . $GLOBALS['xoopsDB']->quote($name) . ", '', {$weight})");
+    $GLOBALS['xoopsDB']->exec('INSERT INTO ' . $GLOBALS['xoopsDB']->prefix('profile_category') . ' VALUES (0, ' . $GLOBALS['xoopsDB']->quote($name) . ", '', {$weight})");
 }
 
 /**
@@ -223,5 +223,5 @@ function profile_install_addCategory($name, $weight)
  */
 function profile_install_addStep($name, $desc, $order, $save)
 {
-    $GLOBALS['xoopsDB']->query('INSERT INTO ' . $GLOBALS['xoopsDB']->prefix('profile_regstep') . ' VALUES (0, ' . $GLOBALS['xoopsDB']->quote($name) . ', ' . $GLOBALS['xoopsDB']->quote($desc) . ", {$order}, {$save})");
+    $GLOBALS['xoopsDB']->exec('INSERT INTO ' . $GLOBALS['xoopsDB']->prefix('profile_regstep') . ' VALUES (0, ' . $GLOBALS['xoopsDB']->quote($name) . ', ' . $GLOBALS['xoopsDB']->quote($desc) . ", {$order}, {$save})");
 }

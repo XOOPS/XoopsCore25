@@ -42,21 +42,29 @@ $op = Request::getString('op', 'list');
 /** @var SystemUserrankHandler $userrank_Handler */
 $userrank_Handler = xoops_getModuleHandler('userrank', 'system');
 
+// Define main template
+$GLOBALS['xoopsOption']['template_main'] = 'system_userrank.tpl';
+// Call Header
+xoops_cp_header();
+
+// Define Breadcrumb and tips
+$xoBreadCrumb->addLink(_AM_SYSTEM_CONFIG, XOOPS_URL . '/modules/system/admin.php');
+if ('list' === $op) {
+    $xoBreadCrumb->addLink(_AM_SYSTEM_USERRANK_NAV_MANAGER);
+} else {
+    $xoBreadCrumb->addLink(_AM_SYSTEM_USERRANK_NAV_MANAGER, system_adminVersion('userrank', 'adminpath'));
+}
+
 switch ($op) {
 
     case 'list':
     default:
-        // Define main template
-        $GLOBALS['xoopsOption']['template_main'] = 'system_userrank.tpl';
-        // Call Header
-        xoops_cp_header();
         // Define Stylesheet
         $xoTheme->addStylesheet(XOOPS_URL . '/modules/system/css/admin.css');
         $xoTheme->addScript('browse.php?Frameworks/jquery/jquery.js');
         $xoTheme->addScript('browse.php?Frameworks/jquery/plugins/jquery.tablesorter.js');
         $xoTheme->addScript('modules/system/js/admin.js');
         // Define Breadcrumb and tips
-        $xoBreadCrumb->addLink(_AM_SYSTEM_USERRANK_NAV_MANAGER, system_adminVersion('userrank', 'adminpath'));
         $xoBreadCrumb->addHelp(system_adminVersion('userrank', 'help'));
         $xoBreadCrumb->addTips(_AM_SYSTEM_USERRANK_TIPS);
         $xoBreadCrumb->render();
@@ -98,14 +106,9 @@ switch ($op) {
 
         // New userrank
     case 'userrank_new':
-        // Define main template
-        $GLOBALS['xoopsOption']['template_main'] = 'system_userrank.tpl';
-        // Call Header
-        xoops_cp_header();
         // Define Stylesheet
         $xoTheme->addStylesheet(XOOPS_URL . '/modules/system/css/admin.css');
         // Define Breadcrumb and tips
-        $xoBreadCrumb->addLink(_AM_SYSTEM_USERRANK_NAV_MANAGER, system_adminVersion('userrank', 'adminpath'));
         $xoBreadCrumb->addLink(_AM_SYSTEM_USERRANK_NAV_ADD);
         $xoBreadCrumb->addHelp(system_adminVersion('userrank', 'help') . '#new');
         $xoBreadCrumb->addTips(sprintf(_AM_SYSTEM_USERRANK_TIPS_FORM1, implode(', ', $mimetypes)) . sprintf(_AM_SYSTEM_USERRANK_TIPS_FORM2, $upload_size / 1000));
@@ -122,14 +125,9 @@ switch ($op) {
 
         // Edit userrank
     case 'userrank_edit':
-        // Define main template
-        $GLOBALS['xoopsOption']['template_main'] = 'system_userrank.tpl';
-        // Call Header
-        xoops_cp_header();
         // Define Stylesheet
         $xoTheme->addStylesheet(XOOPS_URL . '/modules/system/css/admin.css');
         // Define Breadcrumb and tips
-        $xoBreadCrumb->addLink(_AM_SYSTEM_USERRANK_NAV_MANAGER, system_adminVersion('userrank', 'adminpath'));
         $xoBreadCrumb->addLink(_AM_SYSTEM_USERRANK_NAV_EDIT);
         $xoBreadCrumb->addHelp(system_adminVersion('userrank', 'help') . '#edit');
         $xoBreadCrumb->addTips(sprintf(_AM_SYSTEM_USERRANK_TIPS_FORM1, implode(', ', $mimetypes)) . sprintf(_AM_SYSTEM_USERRANK_TIPS_FORM2, $upload_size / 1000));
@@ -190,7 +188,6 @@ switch ($op) {
             // Define Stylesheet
             $xoTheme->addStylesheet(XOOPS_URL . '/modules/system/css/admin.css');
             // Define Breadcrumb and tips
-            $xoBreadCrumb->addLink(_AM_SYSTEM_USERRANK_NAV_MANAGER, system_adminVersion('userrank', 'adminpath'));
             $xoBreadCrumb->addLink(_AM_SYSTEM_USERRANK_ERROR);
             $xoBreadCrumb->render();
             // Display errors
@@ -221,14 +218,9 @@ switch ($op) {
                 xoops_error($obj->getHtmlErrors());
             }
         } else {
-            // Define main template
-            $GLOBALS['xoopsOption']['template_main'] = 'system_userrank.tpl';
-            // Call Header
-            xoops_cp_header();
             // Define Stylesheet
             $xoTheme->addStylesheet(XOOPS_URL . '/modules/system/css/admin.css');
             // Define Breadcrumb and tips
-            $xoBreadCrumb->addLink(_AM_SYSTEM_USERRANK_NAV_MANAGER, system_adminVersion('userrank', 'adminpath'));
             $xoBreadCrumb->addLink(_AM_SYSTEM_USERRANK_NAV_DELETE);
             $xoBreadCrumb->addHelp(system_adminVersion('userrank', 'help') . '#delete');
             $xoBreadCrumb->render();

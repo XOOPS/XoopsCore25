@@ -112,7 +112,7 @@ class Tables
                 array_push($tableDef['columns'], $columnDef);
             } else {
                 foreach ($tableDef['columns'] as $col) {
-                    if (strcasecmp($col['name'], $column) == 0) {
+                    if (strcasecmp($col['name'], $column) === 0) {
                         return true;
                     }
                 }
@@ -338,7 +338,7 @@ class Tables
             if (isset($tableDef['create']) && $tableDef['create']) {
                 // loop through and find the column
                 foreach ($tableDef['columns'] as &$col) {
-                    if (strcasecmp($col['name'], $column) == 0) {
+                    if (strcasecmp($col['name'], $column) === 0) {
                         $col['name'] = $newName;
                         $col['attributes'] = $attributes;
                         break;
@@ -351,7 +351,7 @@ class Tables
                     "CHANGE COLUMN `{$column}` `{$newName}` {$attributes} ";
                 // loop through and find the column
                 foreach ($tableDef['columns'] as &$col) {
-                    if (strcasecmp($col['name'], $column) == 0) {
+                    if (strcasecmp($col['name'], $column) === 0) {
                         $col['name'] = $newName;
                         $col['attributes'] = $attributes;
                         break;
@@ -595,6 +595,11 @@ class Tables
                     $ddl = $this->renderTableCreate($ddl['createtable']);
                 }
             }
+            if (!is_string($ddl)) {
+                $this->lastError = 'Failed to render DDL';
+                $this->lastErrNo = -1;
+                return false;
+            }
             $result = $this->execSql($ddl, $force);
             if (!$result) {
                 $this->lastError = $this->db->error();
@@ -612,7 +617,7 @@ class Tables
      * Create a DELETE statement and add it to the work queue
      *
      * @param string                 $table    table
-     * @param string|CriteriaElement $criteria string where clause or object criteria
+     * @param string|\CriteriaElement $criteria string where clause or object criteria
      *
      * @return bool true if no errors, false if errors encountered
      */
@@ -672,7 +677,7 @@ class Tables
      *
      * @param string                 $table      table
      * @param array                  $columns    array of 'column'=>'value' entries
-     * @param string|CriteriaElement $criteria   string where clause or object criteria
+     * @param string|\CriteriaElement $criteria   string where clause or object criteria
      * @param boolean                $quoteValue true to quote values, false if caller handles quoting
      *
      * @return boolean true if no errors, false if errors encountered
@@ -779,7 +784,7 @@ class Tables
     protected function execSql($sql, $force = false)
     {
         if ($force) {
-            $result = $this->db->exec($sql);
+            $result = $this->db->queryF($sql);
         } else {
             $result = $this->db->query($sql);
         }
@@ -795,12 +800,22 @@ class Tables
     /**
      * fetch the next row of a result set
      *
-     * @param resource $result as returned by query
+     * @param \mysqli_result|bool $result as returned by query
      *
-     * @return mixed false on error
+     * @return array|false|null array for a fetched row, null for no rows or
+     *                          non-result queries, false if the query failed
      */
     protected function fetch($result)
     {
+        // distinguish query failure (false) from other non-result values
+        if ($result === false) {
+            return false;
+        }
+
+        if (!$result instanceof \mysqli_result) {
+            // e.g. true from execSql() on statements without a result set
+            return null;
+        }
         return $this->db->fetchArray($result);
     }
 
@@ -868,6 +883,9 @@ class Tables
         $sql .= ' ORDER BY `ORDINAL_POSITION` ';
 
         $result = $this->execSql($sql);
+        if (!$result) {
+            return false;
+        }
 
         while ($column = $this->fetch($result)) {
             $attributes = ' ' . $column['COLUMN_TYPE'] . ' '
@@ -892,6 +910,9 @@ class Tables
         $sql .= ' ORDER BY `INDEX_NAME`, `SEQ_IN_INDEX` ';
 
         $result = $this->execSql($sql);
+        if (!$result) {
+            return false;
+        }
 
         $lastKey = '';
         $keyCols = '';

@@ -473,12 +473,12 @@ class Metagen
 
         $text = preg_replace($search, $replace, $document);
 
-        preg_replace_callback(
+        $text = preg_replace_callback(
             '/&#(\d+);/',
             function ($matches) {
-                return chr($matches[1]);
+                return html_entity_decode('&#' . $matches[1] . ';', ENT_NOQUOTES, self::ENCODING);
             },
-            $document
+            $text
         );
 
         return $text;

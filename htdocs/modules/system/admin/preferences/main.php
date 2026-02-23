@@ -29,24 +29,31 @@ if (isset($_REQUEST)) {
     }
 }
 // Get Action type
-$op = Request::getString('op', 'default');
+$op = Request::getString('op', 'list');
 // Setting type
 $confcat_id = Request::getInt('confcat_id', 0);
+
 // Define main template
 $GLOBALS['xoopsOption']['template_main'] = 'system_preferences.tpl';
 // Call Header
 xoops_cp_header();
+
 // Define Stylesheet
 $xoTheme->addStylesheet(XOOPS_URL . '/modules/system/css/admin.css');
 // Define scripts
 $xoTheme->addScript('browse.php?Frameworks/jquery/jquery.js');
 $xoTheme->addScript('modules/system/js/admin.js');
 
-$xoBreadCrumb->addLink(_AM_SYSTEM_PREFERENCES_NAV_MAIN, system_adminVersion('preferences', 'adminpath'));
+// Define Breadcrumb and tips
+$xoBreadCrumb->addLink(_AM_SYSTEM_CONFIG, XOOPS_URL . '/modules/system/admin.php');
+if ('list' === $op) {
+    $xoBreadCrumb->addLink(_AM_SYSTEM_PREFERENCES_NAV_MAIN);
+} else {
+    $xoBreadCrumb->addLink(_AM_SYSTEM_PREFERENCES_NAV_MAIN, system_adminVersion('preferences', 'adminpath'));
+}
 
 //Display part
 switch ($op) {
-
     case 'show':
         if (empty($confcat_id)) {
             $confcat_id = 1;

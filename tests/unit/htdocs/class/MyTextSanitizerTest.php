@@ -1,14 +1,13 @@
 <?php
 
+declare(strict_types=1);
+
 use PHPUnit\Framework\TestCase;
 
-require_once dirname(__DIR__, 2) . '/init_new.php';
-
-require_once(XOOPS_TU_ROOT_PATH . '/language/english/logger.php');
-require_once(XOOPS_TU_ROOT_PATH . '/class/logger/xoopslogger.php');
-require_once(XOOPS_TU_ROOT_PATH . '/class/module.textsanitizer.php');
-
-require_once(XOOPS_TU_ROOT_PATH . '/class/xoopsload.php');
+require_once XOOPS_ROOT_PATH . '/language/english/logger.php';
+require_once XOOPS_ROOT_PATH . '/class/logger/xoopslogger.php';
+require_once XOOPS_ROOT_PATH . '/class/module.textsanitizer.php';
+require_once XOOPS_ROOT_PATH . '/class/xoopsload.php';
 
 class MyTextSanitizerTest extends TestCase
 {

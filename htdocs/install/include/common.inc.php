@@ -62,17 +62,8 @@ $options = [
 // options for mainfile.php
 if (empty($xoopsOption['hascommon'])) {
     $xoopsOption['nocommon'] = true;
-    if (PHP_VERSION_ID >= 70300) {
-        session_set_cookie_params($options);
-    }
-
+    session_set_cookie_params($options);
     session_start();
-
-    if (PHP_VERSION_ID < 70300) {
-        require_once __DIR__ . '/../../include/xoopssetcookie.php';
-        xoops_setcookie(session_name(), session_id(), $options);
-    }
-
 }
 
 //@include __DIR__ . '/../../mainfile.php';

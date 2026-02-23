@@ -64,13 +64,21 @@ if (!$xoopsUser->isAdmin($xoopsModule->mid()) && ($op === 'delfile' || $op === '
     redirect_header('admin.php?fct=images', 1);
 }
 
-switch ($op) {
+// Define main template
+$GLOBALS['xoopsOption']['template_main'] = 'system_images.tpl';
+// Call Header
+xoops_cp_header();
 
+// Define Breadcrumb and tips
+$xoBreadCrumb->addLink(_AM_SYSTEM_CONFIG, XOOPS_URL . '/modules/system/admin.php');
+if ('list' === $op) {
+    $xoBreadCrumb->addLink(_AM_SYSTEM_IMAGES_MANAGER);
+} else {
+    $xoBreadCrumb->addLink(_AM_SYSTEM_IMAGES_MANAGER, system_adminVersion('images', 'adminpath'));
+}
+
+switch ($op) {
     case 'list':
-        // Define main template
-        $GLOBALS['xoopsOption']['template_main'] = 'system_images.tpl';
-        // Call Header
-        xoops_cp_header();
         // Define Stylesheet
         $xoTheme->addStylesheet(XOOPS_URL . '/modules/system/css/admin.css');
         $xoTheme->addStylesheet(XOOPS_URL . '/modules/system/css/ui/' . xoops_getModuleOption('jquery_theme', 'system') . '/ui.all.css');
@@ -81,7 +89,6 @@ switch ($op) {
         $xoTheme->addScript('browse.php?Frameworks/jquery/plugins/jquery.lightbox.js');
         $xoTheme->addScript('modules/system/js/admin.js');
         // Define Breadcrumb and tips
-        $xoBreadCrumb->addLink(_AM_SYSTEM_IMAGES_MANAGER, system_adminVersion('images', 'adminpath'));
         $xoBreadCrumb->addHelp(system_adminVersion('images', 'help'));
         $xoBreadCrumb->addTips(_AM_SYSTEM_IMAGES_TIPS);
         $xoBreadCrumb->render();
@@ -189,10 +196,6 @@ switch ($op) {
         }
         // Get image handler
         $image_handler = xoops_getHandler('image');
-        // Define main template
-        $GLOBALS['xoopsOption']['template_main'] = 'system_images.tpl';
-        // Call header
-        xoops_cp_header();
         // Define Stylesheet
         $xoTheme->addStylesheet(XOOPS_URL . '/modules/system/css/admin.css');
         $xoTheme->addStylesheet(XOOPS_URL . '/modules/system/css/ui/' . xoops_getModuleOption('jquery_theme', 'system') . '/ui.all.css');
@@ -204,7 +207,6 @@ switch ($op) {
         $xoTheme->addScript('modules/system/js/admin.js');
 
         // Define Breadcrumb and tips
-        $xoBreadCrumb->addLink(_AM_SYSTEM_IMAGES_MANAGER, system_adminVersion('images', 'adminpath'));
         $xoBreadCrumb->addLink($imagecategory->getVar('imgcat_name'));
         $xoBreadCrumb->addHelp(system_adminVersion('images', 'help') . '#cat');
         $xoBreadCrumb->addTips(_AM_SYSTEM_IMAGES_TIPS);
@@ -226,12 +228,9 @@ switch ($op) {
         foreach ($images as $listImage) {
             $xoopsTpl->append('images', $listImage->toArray());
         }
-        if ($imgcount > 0) {
-            if ($imgcount > xoops_getModuleOption('images_pager', 'system')) {
-                //include_once XOOPS_ROOT_PATH.'/class/pagenav.php';
-                $nav = new XoopsPageNav($imgcount, xoops_getModuleOption('images_pager', 'system'), $start, 'start', 'fct=images&amp;op=listimg&amp;imgcat_id=' . $imgcat_id);
-                $xoopsTpl->assign('nav_menu', $nav->renderNav(4));
-            }
+        if ($imgcount > 0  && $imgcount > xoops_getModuleOption('images_pager', 'system')) {
+            $nav = new XoopsPageNav($imgcount, xoops_getModuleOption('images_pager', 'system'), $start, 'start', 'fct=images&amp;op=listimg&amp;imgcat_id=' . $imgcat_id);
+            $xoopsTpl->assign('nav_menu', $nav->renderNav(4));
         }
 
         if (file_exists(XOOPS_ROOT_PATH . '/modules/system/language/' . $GLOBALS['xoopsConfig']['language'] . '/images/lightbox-btn-close.gif')) {
@@ -277,10 +276,6 @@ switch ($op) {
         break;
 
     case 'editimg':
-        // Define main template
-        $GLOBALS['xoopsOption']['template_main'] = 'system_images.tpl';
-        // Call Header
-        xoops_cp_header();
         // Define Stylesheet
         $xoTheme->addStylesheet(XOOPS_URL . '/modules/system/css/admin.css');
         $xoTheme->addStylesheet(XOOPS_URL . '/modules/system/css/ui/' . xoops_getModuleOption('jquery_theme', 'system') . '/ui.all.css');
@@ -300,7 +295,6 @@ switch ($op) {
             $image     = $image_handler->get($image_id);
             $image_cat = $imgcat_handler->get($image->getVar('imgcat_id'));
             // Define Breadcrumb and tips
-            $xoBreadCrumb->addLink(_AM_SYSTEM_IMAGES_MANAGER, system_adminVersion('images', 'adminpath'));
             $xoBreadCrumb->addLink($image_cat->getVar('imgcat_name'), system_adminVersion('images', 'adminpath') . '&amp;op=listimg&amp;imgcat_id=' . $image->getVar('imgcat_id'));
             $xoBreadCrumb->addLink(_AM_SYSTEM_IMAGES_EDITIMG);
             $xoBreadCrumb->render();
@@ -578,7 +572,6 @@ switch ($op) {
         $xoTheme->addScript('browse.php?Frameworks/jquery/plugins/jquery.lightbox.js');
         $xoTheme->addScript('modules/system/js/admin.js');
         // Define Breadcrumb and tips
-        $xoBreadCrumb->addLink(_AM_SYSTEM_IMAGES_MANAGER, system_adminVersion('images', 'adminpath'));
         $xoBreadCrumb->addLink($imagecategory->getVar('imgcat_name'), '');
         $xoBreadCrumb->render();
         echo '<br>';
@@ -714,10 +707,6 @@ switch ($op) {
         }
         // Get image handler
         //$image_handler = xoops_getHandler('image');
-        // Define main template
-        $GLOBALS['xoopsOption']['template_main'] = 'system_images.tpl';
-        // Call header
-        xoops_cp_header();
         // Define Stylesheet
         $xoTheme->addStylesheet(XOOPS_URL . '/media/fine-uploader/fine-uploader-new.css');
         $xoTheme->addStylesheet(XOOPS_URL . '/media/fine-uploader/ManuallyTriggerUploads.css');
@@ -732,7 +721,6 @@ switch ($op) {
         $xoTheme->addScript('modules/system/js/admin.js');
         $xoTheme->addScript('media/fine-uploader/fine-uploader.js');
         // Define Breadcrumb and tips
-        $xoBreadCrumb->addLink(_AM_SYSTEM_IMAGES_MANAGER, system_adminVersion('images', 'adminpath'));
         $xoBreadCrumb->addLink($imagecategory->getVar('imgcat_name'), system_adminVersion('images', 'adminpath') . '&amp;op=listimg&amp;imgcat_id=' . $imgcat_id);
         $xoBreadCrumb->addLink(_AM_SYSTEM_IMAGES_MULTIUPLOAD);
         $xoBreadCrumb->render();

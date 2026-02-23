@@ -1,4 +1,0 @@
-49c49
-<         $value = trim($value);
----
->         $value = trim((string)$value);

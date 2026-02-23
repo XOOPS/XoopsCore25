@@ -15,9 +15,7 @@
  * @since               2.0.0
  * @author              Kazumi Ono (AKA onokazu) http://www.myweb.ne.jp/, http://jp.xoops.org/
  */
-if (!defined('XOOPS_ROOT_PATH')) {
-    throw new \RuntimeException('Restricted access');
-}
+defined('XOOPS_ROOT_PATH') || exit('Restricted access');
 
 /**
  * An Image
@@ -46,7 +44,7 @@ class XoopsImage extends XoopsObject
     {
         parent::__construct();
         $this->initVar('image_id', XOBJ_DTYPE_INT, null, false);
-        $this->initVar('image_name', XOBJ_DTYPE_OTHER, null, false, 30);
+        $this->initVar('image_name', XOBJ_DTYPE_OTHER, null, false, 191);
         $this->initVar('image_nicename', XOBJ_DTYPE_TXTBOX, null, true, 100);
         $this->initVar('image_mimetype', XOBJ_DTYPE_OTHER, null, false);
         $this->initVar('image_created', XOBJ_DTYPE_INT, null, false);

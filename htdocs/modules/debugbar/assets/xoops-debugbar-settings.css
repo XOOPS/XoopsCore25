@@ -1,0 +1,310 @@
+/**
+ * XOOPS DebugBar Settings Widget — CSS
+ *
+ * Styles for the settings panel, dark/light themes, and toolbar positioning.
+ * For maximebf/debugbar v1.x, styled to match php-debugbar v3.3.
+ *
+ * Uses the same class names as v3.3 (.phpdebugbar-settings, .phpdebugbar-form-row,
+ * .phpdebugbar-form-label, .phpdebugbar-form-input) for consistency.
+ *
+ * @copyright  (c) 2000-2025 XOOPS Project (https://xoops.org)
+ * @license    GNU GPL 2 (https://www.gnu.org/licenses/gpl-2.0.html)
+ */
+
+/* ============================================================
+   Settings Tab Icon (gear) — visible in header-right
+   v1.x hides tab <i> icons by default (a.phpdebugbar-tab i { display: none; }).
+   We must force the gear icon visible and give the tab proper dimensions.
+   ============================================================ */
+a.phpdebugbar-tab.phpdebugbar-tab-settings {
+    float: right !important;
+    border-left: 1px solid #ddd;
+    border-right: 1px solid #ddd;
+    margin-left: 0;
+    cursor: pointer;
+    padding: 5px 8px !important;
+    display: flex !important;
+    align-items: center;
+    min-width: 16px;
+    height: 16px;
+}
+a.phpdebugbar-tab-settings .phpdebugbar-text {
+    display: none;
+}
+a.phpdebugbar-tab-settings .phpdebugbar-badge {
+    display: none;
+}
+/* Force the gear icon to be visible (overrides v1.x "a.phpdebugbar-tab i { display: none }") */
+a.phpdebugbar-tab.phpdebugbar-tab-settings i {
+    display: inline-block !important;
+    font-size: 14px;
+    vertical-align: middle;
+}
+a.phpdebugbar-tab.phpdebugbar-tab-settings:hover {
+    background: rgba(0, 0, 0, 0.06);
+}
+a.phpdebugbar-tab.phpdebugbar-tab-settings.phpdebugbar-active {
+    background: #ccc;
+    background-image: linear-gradient(to bottom, rgb(209,209,209) 29%, rgb(173,173,173) 59%);
+}
+
+/* ============================================================
+   Settings Panel — matches v3.3 form structure
+   <form class="phpdebugbar-settings">
+     <div class="phpdebugbar-form-row">
+       <div class="phpdebugbar-form-label">...</div>
+       <div class="phpdebugbar-form-input">...</div>
+     </div>
+   </form>
+   ============================================================ */
+.phpdebugbar-xoops-settings {
+    padding: 0;
+}
+.phpdebugbar-settings {
+    padding: 0;
+    margin: 0;
+}
+.phpdebugbar-settings .phpdebugbar-form-row {
+    display: block;
+    border-top: 1px solid #eee;
+    min-height: 17px;
+    padding: 5px 10px;
+}
+.phpdebugbar-settings .phpdebugbar-form-row:first-child {
+    border-top: none;
+}
+.phpdebugbar-settings .phpdebugbar-form-label {
+    width: 200px;
+    font-weight: bold;
+    display: inline-block;
+    clear: none;
+    font-size: 14px;
+    color: #555;
+    vertical-align: middle;
+    line-height: 20px;
+}
+.phpdebugbar-settings .phpdebugbar-form-input {
+    font-weight: bold;
+    display: inline-block;
+    clear: none;
+    vertical-align: middle;
+    font-size: 14px;
+    color: #555;
+}
+.phpdebugbar-settings .phpdebugbar-form-input label {
+    font-weight: normal;
+    cursor: pointer;
+    font-size: 14px;
+    color: #555;
+}
+.phpdebugbar-settings select {
+    margin: 0 5px;
+    min-width: 200px;
+    font-family: inherit;
+    background: #F7F7F7;
+    font-size: 14px;
+    color: #222;
+    padding: 0;
+    border: 1px solid #eee;
+    border-radius: 0.25rem;
+}
+.phpdebugbar-settings input[type="checkbox"] {
+    margin: 0 5px;
+    vertical-align: middle;
+    cursor: pointer;
+}
+.phpdebugbar-settings button {
+    color: #555;
+    background-color: #efefef;
+    border: 1px solid #ddd;
+    border-radius: 0.25rem;
+    margin: 0 5px;
+    padding: 0 12px;
+    height: 20px;
+    line-height: normal;
+    cursor: pointer;
+    font-size: 14px;
+}
+.phpdebugbar-settings button:hover {
+    background-color: #e0e0e0;
+}
+
+/* ============================================================
+   Dark Theme
+   ============================================================ */
+.phpdebugbar-theme-dark {
+    background: #2a2a2a !important;
+    color: #e0e0e0 !important;
+}
+.phpdebugbar-theme-dark div.phpdebugbar-header {
+    background: #1e1e1e !important;
+    border-bottom-color: #444 !important;
+}
+.phpdebugbar-theme-dark div.phpdebugbar-header > div > a,
+.phpdebugbar-theme-dark div.phpdebugbar-header > div > span {
+    color: #ccc !important;
+}
+.phpdebugbar-theme-dark a.phpdebugbar-tab {
+    color: #ccc !important;
+    border-color: #444 !important;
+}
+.phpdebugbar-theme-dark a.phpdebugbar-tab:hover {
+    background: #333 !important;
+}
+.phpdebugbar-theme-dark a.phpdebugbar-tab.phpdebugbar-active {
+    background: #2a2a2a !important;
+    color: #fff !important;
+}
+.phpdebugbar-theme-dark div.phpdebugbar-body {
+    background: #2a2a2a !important;
+    border-top-color: #444 !important;
+}
+.phpdebugbar-theme-dark div.phpdebugbar-panel {
+    color: #e0e0e0 !important;
+}
+.phpdebugbar-theme-dark div.phpdebugbar-panel li {
+    border-color: #3a3a3a !important;
+}
+.phpdebugbar-theme-dark div.phpdebugbar-resize-handle {
+    border-top-color: #444 !important;
+}
+.phpdebugbar-theme-dark span.phpdebugbar-indicator {
+    color: #ccc !important;
+    border-color: #444 !important;
+}
+.phpdebugbar-theme-dark .phpdebugbar-indicator .phpdebugbar-tooltip {
+    background: #333 !important;
+    color: #e0e0e0 !important;
+    border-color: #444 !important;
+}
+
+/* Dark theme — settings tab */
+.phpdebugbar-theme-dark a.phpdebugbar-tab-settings {
+    border-left-color: #444;
+    border-right-color: #444;
+}
+.phpdebugbar-theme-dark a.phpdebugbar-tab-settings:hover {
+    background: rgba(255, 255, 255, 0.08) !important;
+}
+.phpdebugbar-theme-dark a.phpdebugbar-tab.phpdebugbar-tab-settings.phpdebugbar-active {
+    background: #2a2a2a !important;
+}
+
+/* Dark theme — settings panel form */
+.phpdebugbar-theme-dark .phpdebugbar-settings .phpdebugbar-form-row {
+    border-top-color: #3a3a3a;
+}
+.phpdebugbar-theme-dark .phpdebugbar-settings .phpdebugbar-form-label {
+    color: #e0e0e0;
+}
+.phpdebugbar-theme-dark .phpdebugbar-settings .phpdebugbar-form-input {
+    color: #e0e0e0;
+}
+.phpdebugbar-theme-dark .phpdebugbar-settings .phpdebugbar-form-input label {
+    color: #aaa;
+}
+.phpdebugbar-theme-dark .phpdebugbar-settings select {
+    background: #2a2a2a;
+    color: #e0e0e0;
+    border-color: #3a3a3a;
+}
+.phpdebugbar-theme-dark .phpdebugbar-settings button {
+    background-color: #1e1e1e;
+    color: #ccc;
+    border-color: #444;
+}
+.phpdebugbar-theme-dark .phpdebugbar-settings button:hover {
+    background-color: #333;
+}
+
+/* Dark theme — widgets & tables */
+.phpdebugbar-theme-dark .phpdebugbar-widgets-list li {
+    background: transparent !important;
+}
+.phpdebugbar-theme-dark table.phpdebugbar-widgets-params td,
+.phpdebugbar-theme-dark table.phpdebugbar-widgets-params th {
+    border-color: #3a3a3a !important;
+    color: #e0e0e0 !important;
+}
+.phpdebugbar-theme-dark table.phpdebugbar-widgets-params tr:hover td {
+    background: #333 !important;
+}
+.phpdebugbar-theme-dark .phpdebugbar-widgets-messages li .phpdebugbar-widgets-value {
+    color: #e0e0e0 !important;
+}
+.phpdebugbar-theme-dark .phpdebugbar-widgets-toolbar {
+    background: #1e1e1e !important;
+    border-color: #3a3a3a !important;
+}
+.phpdebugbar-theme-dark .phpdebugbar-widgets-toolbar input {
+    background: #2a2a2a !important;
+    color: #e0e0e0 !important;
+    border-color: #3a3a3a !important;
+}
+.phpdebugbar-theme-dark pre.sf-dump {
+    color: #e0e0e0 !important;
+    background: transparent !important;
+}
+/* Dark theme — kvlist (Request, Smarty tabs) */
+.phpdebugbar-theme-dark dl.phpdebugbar-widgets-kvlist dt {
+    color: #e0e0e0 !important;
+    background: #333 !important;
+}
+.phpdebugbar-theme-dark dl.phpdebugbar-widgets-kvlist dd {
+    color: #ccc !important;
+}
+.phpdebugbar-theme-dark dl.phpdebugbar-widgets-kvlist dd pre {
+    color: #ccc !important;
+}
+
+/* ============================================================
+   Light Theme (explicit, for completeness)
+   ============================================================ */
+.phpdebugbar-theme-light {
+    /* Default v1.x styling is already light, no overrides needed */
+}
+
+/* ============================================================
+   Toolbar Positioning
+   ============================================================ */
+
+/* Default: bottom-left (standard v1.x layout) */
+.phpdebugbar-position-bl {
+    /* no changes — default v1.x position */
+}
+
+/* Bottom-right: align to right */
+.phpdebugbar-position-br {
+    left: auto !important;
+    right: 0 !important;
+}
+
+/* Top-left: move to top of viewport */
+.phpdebugbar-position-tl {
+    bottom: auto !important;
+    top: 0 !important;
+}
+.phpdebugbar-position-tl div.phpdebugbar-resize-handle {
+    top: auto !important;
+    bottom: -3px !important;
+    cursor: s-resize !important;
+}
+
+/* Top-right: top + right aligned */
+.phpdebugbar-position-tr {
+    bottom: auto !important;
+    top: 0 !important;
+    left: auto !important;
+    right: 0 !important;
+}
+.phpdebugbar-position-tr div.phpdebugbar-resize-handle {
+    top: auto !important;
+    bottom: -3px !important;
+    cursor: s-resize !important;
+}
+
+/* When positioned at top, adjust body margin instead of bottom */
+.phpdebugbar-position-tl + body,
+.phpdebugbar-position-tr + body {
+    margin-bottom: 0 !important;
+}

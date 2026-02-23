@@ -30,10 +30,11 @@ if (!xoops_getModuleOption('active_comments', 'system')) {
 }
 
 // Get Action type
-$op = Request::getString('op', 'default');
+$op = Request::getString('op', 'list');
 // Define main template
 $GLOBALS['xoopsOption']['template_main'] = 'system_comments.tpl';
 xoops_cp_header();
+
 // Define Stylesheet
 $xoTheme->addStylesheet(XOOPS_URL . '/modules/system/css/admin.css');
 $xoTheme->addStylesheet(XOOPS_URL . '/modules/system/css/ui/' . xoops_getModuleOption('jquery_theme', 'system') . '/ui.all.css');
@@ -42,8 +43,6 @@ $xoTheme->addScript('browse.php?Frameworks/jquery/jquery.js');
 $xoTheme->addScript('browse.php?Frameworks/jquery/plugins/jquery.ui.js');
 //$xoTheme->addScript('browse.php?Frameworks/jquery/plugins/jquery.tablesorter.js');
 $xoTheme->addScript('modules/system/js/admin.js');
-// Define Breadcrumb and tips
-$xoBreadCrumb->addLink(_AM_SYSTEM_COMMENTS_NAV_MANAGER, system_adminVersion('comments', 'adminpath'));
 
 include_once $GLOBALS['xoops']->path('/include/comment_constants.php');
 xoops_loadLanguage('comment');
@@ -68,6 +67,14 @@ $module_array    = $modules_Handler->getList(new Criteria('hascomments', 1));
 $module_array[0] = _AM_SYSTEM_COMMENTS_FORM_ALL_MODS;
 /** @var  XoopsCommentHandler $comment_handler */
 $comment_handler = xoops_getHandler('comment');
+
+// Define Breadcrumb and tips
+$xoBreadCrumb->addLink(_AM_SYSTEM_CONFIG, XOOPS_URL . '/modules/system/admin.php');
+if ('list' === $op) {
+    $xoBreadCrumb->addLink(_AM_SYSTEM_COMMENTS_NAV_MANAGER);
+} else {
+    $xoBreadCrumb->addLink(_AM_SYSTEM_COMMENTS_NAV_MANAGER, system_adminVersion('comments', 'adminpath'));
+}
 
 switch ($op) {
 

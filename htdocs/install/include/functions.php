@@ -231,7 +231,7 @@ function xoDiagIfWritable($path)
  */
 function xoPhpVersion()
 {
-    if (version_compare(phpversion(), '5.6.0', '>=')) {
+    if (version_compare(phpversion(), '8.2.0', '>=')) {
         return xoDiag(1, phpversion());
     } else {
         return xoDiag(-1, phpversion());

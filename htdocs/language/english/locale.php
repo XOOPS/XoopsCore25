@@ -19,9 +19,7 @@
  * @author              Taiwen Jiang <phppp@users.sourceforge.net>
  * @todo                To be handled by i18n/l10n
  */
-if (!defined('XOOPS_ROOT_PATH')) {
-    throw new \RuntimeException('Restricted access');
-}
+defined('XOOPS_ROOT_PATH') || exit('Restricted access');
 
 setlocale(LC_ALL, 'en_US');
 
@@ -63,14 +61,25 @@ class XoopsLocal extends XoopsLocalAbstract
     /**
      * Money Format
      *
-     * @param  string $format
-     * @param  string $number
-     * @return money  format
+     * @param  string    $format  legacy money_format()-style format string (ignored, kept for BC)
+     * @param  int|float $number
+     * @return string
+     *
+     * @SuppressWarnings(PHPMD.UnusedFormalParameter)
      */
     public function money_format($format, $number)
     {
-        setlocale(LC_MONETARY, 'en_US');
+        if (!extension_loaded('intl')) {
+            return '$' . number_format((float)$number, 2, '.', ',');
+        }
 
-        return money_format($format, $number);
+        static $fmt = null;
+        if (null === $fmt) {
+            $fmt = new \NumberFormatter('en_US', \NumberFormatter::CURRENCY);
+        }
+
+        $result = $fmt->formatCurrency((float)$number, 'USD');
+
+        return $result !== false ? $result : '$' . number_format((float)$number, 2, '.', ',');
     }
 }

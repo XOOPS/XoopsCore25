@@ -72,7 +72,7 @@ if (empty($getuser)) {
             include $GLOBALS['xoops']->path('footer.php');
             exit();
         }
-        redirect_header('user.php', 3, sprintf(_US_PWDMAILED, $getuser[0]->getVar('uname')), false);
+        redirect_header('user.php', 3, _US_PWDMAILED, false);
         // If no Code, send it
     } else {
         $xoopsMailer = xoops_getMailer();
@@ -91,9 +91,7 @@ if (empty($getuser)) {
         if (!$xoopsMailer->send()) {
             echo $xoopsMailer->getErrors();
         }
-        echo '<h4>';
-        printf(_US_CONFMAIL, $getuser[0]->getVar('uname'));
-        echo '</h4>';
+        echo '<h4>' . _US_CONFMAIL . '</h4>';
         include $GLOBALS['xoops']->path('footer.php');
     }
 }
