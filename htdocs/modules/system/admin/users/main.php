@@ -180,7 +180,8 @@ case 'users_save':
             break;
         }
 
-        if ('' !== Request::getString('password') &&
+        if ('' !== Request::getString('pass2') &&
+            '' !== Request::getString('password') &&
             strtolower(Request::getString('password')) === strtolower(Request::getString('uname'))) {
             xoops_error(_AM_SYSTEM_USERS_PWDEQUALSUNAME);
             break;
@@ -273,7 +274,8 @@ case 'users_save':
             break;
         }
 
-        if ('' !== Request::getString('password') &&
+        if ('' !== Request::getString('pass2') &&
+            '' !== Request::getString('password') &&
             strtolower(Request::getString('password')) === strtolower(Request::getString('uname'))) {
             xoops_error(_AM_SYSTEM_USERS_PWDEQUALSUNAME);
             break;
