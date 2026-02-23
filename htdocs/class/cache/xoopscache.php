@@ -86,6 +86,7 @@ class XoopsCache
             !is_array($config) ||
             !isset($config['engine'], $config['settings']) ||
             !is_string($config['engine']) ||
+            $config['engine'] === '' ||
             !is_array($config['settings'])
         ) {
             return false;
@@ -140,6 +141,13 @@ class XoopsCache
                     );
                     return false;
                 }
+            } elseif (file_exists($candidate)) {
+                // File exists but realpath() failed or path is outside the cache directory
+                trigger_error(
+                    'Cache engine file ' . basename($candidate) . ' failed path validation',
+                    E_USER_WARNING
+                );
+                return false;
             } else {
                 trigger_error(
                     'File: ' . basename($candidate) . ' not found in file: ' . basename(__FILE__) . ' at line: ' . __LINE__,
@@ -235,7 +243,10 @@ class XoopsCache
             // Same config name but caller supplied overrides – re-init the engine
             // so the returned {engine, settings} pair stays consistent.
             if ($_this->isInitialized($engine)) {
-                $_this->engine[$engine]->init($settings);
+                if (!$_this->engine[$engine]->init($settings)) {
+                    trigger_error("Cache Engine {$engine} re-initialization failed", E_USER_WARNING);
+                    return false;
+                }
             }
             $_this->configs[$name] = $_this->settings($engine);
         }
@@ -502,8 +513,8 @@ class XoopsCache
             return false;
         }
 
-        $success = (bool) $_this->engine[$engine]->clear($check);
         $_this->engine[$engine]->init($settings);
+        $success = (bool) $_this->engine[$engine]->clear($check);
 
         return $success;
     }
@@ -594,7 +605,11 @@ interface XoopsCacheEngineInterface
     /**
      * Garbage collection - permanently remove all expired and deleted data
      *
-     * @return bool True on success (including no-op when there is nothing to clean), false on failure
+     * Implementations SHOULD return true whenever the routine completes without
+     * error, even if there was nothing to clean (no-op) or the engine handles
+     * expiration automatically. Return false only on actual failure.
+     *
+     * @return bool True if completed without errors (including no-op), false on failure
      */
     public function gc();
 
@@ -663,7 +678,10 @@ abstract class XoopsCacheEngine implements XoopsCacheEngineInterface
      *
      * Called automatically by the cache frontend. This method may be called
      * multiple times to reconfigure the engine with different settings.
-     * Implementations should handle repeated initialization gracefully.
+     *
+     * The base implementation is stateless and only updates {@see $settings}.
+     * Concrete engines that maintain resources (file handles, connections, etc.)
+     * MUST clean up or reset those resources on repeated calls to avoid leaks.
      *
      * @param  array $settings Associative array of parameters for the engine
      * @return boolean True if the engine has been successfully initialized, false if not
