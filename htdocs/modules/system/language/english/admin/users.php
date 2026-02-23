@@ -113,6 +113,7 @@ define('_AM_SYSTEM_USERS_CHANGEONLY', '(for changes only)');
 define('_AM_SYSTEM_USERS_SYNCHRONIZE', 'Synchronize');
 define('_AM_SYSTEM_USERS_USERDONEXIT', "User doesn't exist!");
 define('_AM_SYSTEM_USERS_STNPDNM', 'Sorry, the new passwords do not match. Click back and try again');
+define('_AM_SYSTEM_USERS_PWDEQUALSUNAME', 'Password cannot be the same as the username.');
 define('_AM_SYSTEM_USERS_CNUUSER', 'Could not update user');
 define('_AM_SYSTEM_USERS_CNGUSERID', 'Could not get user ID');
 define('_AM_SYSTEM_USERS_NOUSERS', 'No users selected');

@@ -182,7 +182,7 @@ case 'users_save':
 
         if ('' !== Request::getString('password') &&
             strtolower(Request::getString('password')) === strtolower(Request::getString('uname'))) {
-            xoops_error(_US_PWDEQUALSUNAME);
+            xoops_error(_AM_SYSTEM_USERS_PWDEQUALSUNAME);
             break;
         }
         // --- End Validation ---
@@ -275,7 +275,7 @@ case 'users_save':
 
         if ('' !== Request::getString('password') &&
             strtolower(Request::getString('password')) === strtolower(Request::getString('uname'))) {
-            xoops_error(_US_PWDEQUALSUNAME);
+            xoops_error(_AM_SYSTEM_USERS_PWDEQUALSUNAME);
             break;
         }
 

@@ -55,7 +55,7 @@ if (!isset($_POST['submit'])) {
     }
     if ($password != $vpass) {
         $errors[] = _US_PASSNOTSAME;
-    } elseif (!empty($password) && strtolower($password) === strtolower((string) $GLOBALS['xoopsUser']->getVar('uname', 'n'))) {
+    } elseif ($password !== '' && strtolower($password) === strtolower((string) $GLOBALS['xoopsUser']->getVar('uname', 'n'))) {
         $errors[] = _US_PWDEQUALSUNAME;
     }
 
