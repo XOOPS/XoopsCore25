@@ -117,7 +117,9 @@ class XoopsCache
             return false;
         }
 
-        $this->engine[$engine]->init($settings);
+        if (!$this->engine[$engine]->init($settings)) {
+            return false;
+        }
 
         return $config;
     }
@@ -272,6 +274,11 @@ class XoopsCache
             if ($_this->isInitialized($engine)) {
                 if (!$_this->engine[$engine]->init($settings)) {
                     trigger_error("Cache Engine {$engine} re-initialization failed", E_USER_WARNING);
+                    return false;
+                }
+            } else {
+                if ($_this->engine($engine, $settings) === false) {
+                    trigger_error("Cache Engine {$engine} is not initialized", E_USER_WARNING);
                     return false;
                 }
             }
