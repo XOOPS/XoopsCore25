@@ -61,7 +61,7 @@ if ($op === 'saveuser') {
             $vpass = XoopsRequest::getString('vpass', '');
             if ($password != $vpass) {
                 $errors[] = _US_PASSNOTSAME;
-            } elseif (strtolower($password) === strtolower((string)$xoopsUser->getVar('uname', 'n'))) {
+            } elseif (strtolower($password) === strtolower((string) $xoopsUser->getVar('uname', 'n'))) {
                 $errors[] = _US_PWDEQUALSUNAME;
             }
         }
