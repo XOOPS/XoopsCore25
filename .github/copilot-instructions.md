@@ -37,7 +37,7 @@ The CI workflow dynamically creates `composer.json` in `htdocs/class/libraries/`
 
 ## PHP Compatibility
 
-Code must run on PHP 8.2 through 8.5. PHP 8.0+ and 8.1+ features (named arguments, match expressions, union type hints, enums, fibers, readonly properties, intersection types, `never` return type, first-class callable syntax, constructor promotion, attributes `#[...]`, nullsafe operator `?->`, explicit `mixed` type) are allowed. CI tests PHP 8.2-8.5.
+Code must run on PHP 8.2 through 8.5. Features introduced in PHP 8.0, 8.1, and 8.2 (named arguments, match expressions, union type hints, enums, fibers, readonly properties/classes, intersection types, DNF types, `never` return type, first-class callable syntax, constructor promotion, attributes `#[...]`, nullsafe operator `?->`, standalone `true`/`false`/`null` types, constants in traits) are allowed; avoid features introduced in PHP 8.3+ to preserve the 8.2 minimum. CI tests PHP 8.2-8.5.
 
 ## Coding Conventions
 

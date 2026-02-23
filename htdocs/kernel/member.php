@@ -689,23 +689,7 @@ class XoopsMemberHandler
      */
     private function hashEquals($expected, $actual)
     {
-        // Use hash_equals if available (PHP 5.6+)
-        if (function_exists('hash_equals')) {
-            return hash_equals($expected, $actual);
-        }
-
-        // Fallback implementation
-        $expected = (string)$expected;
-        $actual = (string)$actual;
-        $expectedLength = strlen($expected);
-        $actualLength = strlen($actual);
-        $diff = $expectedLength ^ $actualLength;
-
-        for ($i = 0; $i < $actualLength; $i++) {
-            $diff |= ord($expected[$i % $expectedLength]) ^ ord($actual[$i]);
-        }
-
-        return $diff === 0;
+        return hash_equals((string)$expected, (string)$actual);
     }
 
     /**

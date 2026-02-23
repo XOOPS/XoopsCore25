@@ -37,7 +37,7 @@ composer fix              # Auto-fix code style issues
 
 ## PHP Compatibility
 
-Code must run on PHP 8.2 through 8.5. PHP 8.0+ and 8.1+ features (named arguments, match expressions, union type hints, enums, fibers, readonly properties, intersection types, `never` return type, first-class callable syntax, constructor promotion, attributes `#[...]`, nullsafe operator `?->`, explicit `mixed` type) are allowed.
+Code must run on PHP 8.2 through 8.5. Features introduced in PHP 8.0, 8.1, and 8.2 (named arguments, match expressions, union type hints, enums, fibers, readonly properties/classes, intersection types, DNF types, `never` return type, first-class callable syntax, constructor promotion, attributes `#[...]`, nullsafe operator `?->`, standalone `true`/`false`/`null` types, constants in traits) are allowed; avoid features introduced in PHP 8.3+ to preserve the 8.2 minimum.
 
 ## XOOPS Coding Conventions
 
@@ -59,7 +59,7 @@ Code must run on PHP 8.2 through 8.5. PHP 8.0+ and 8.1+ features (named argument
 
 - Class docblocks include `@category`, `@package`, `@author`, `@copyright`, `@license`, and `@link` tags.
 - Use `self::` for class constants (not `static::`). PHPStan level max cannot resolve late static binding on constants and reports `mixed`.
-- Prefer `\Throwable` in catch blocks over `\Exception` to cover both exceptions and errors on PHP 7+.
+- Prefer `\Throwable` in catch blocks over `\Exception` to cover both exceptions and errors.
 - Use `trigger_error()` with `E_USER_WARNING` for non-fatal failures. Use `basename()` in error messages to avoid exposing server paths.
 - Suppress PHP-native warnings with `@` only when a subsequent `=== false` check and explicit `trigger_error()` provide a cleaner error path.
 

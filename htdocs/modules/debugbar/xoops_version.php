@@ -29,7 +29,7 @@ $modversion['image']        = 'assets/images/logoModule.png'; // optional, modul
 $modversion['dirname']      = 'debugbar';
 
 // --- Min Requirements ---
-$modversion['min_php']   = '8.2';
+$modversion['min_php']   = '8.2.0';
 $modversion['min_xoops'] = '2.5.12';
 
 // --- Admin ---

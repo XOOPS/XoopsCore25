@@ -2,10 +2,9 @@
 language: "en-US"
 early_access: false
 tone_instructions: >-
-  Expert PHP code reviewer. Focus on type safety, PSR-12 compliance,
-  PHP 8.2 compatibility, and security. This is a full CMS application
-  supporting PHP 8.2 through 8.5. PHP 8.0+ features like named arguments,
-  match expressions, constructor promotion, and nullsafe operator are allowed.
+  Expert PHP code reviewer. Focus on type safety, PSR-12, PHP 8.2-8.5
+  compatibility, and security. PHP 8.0+ features (named arguments, match,
+  constructor promotion, nullsafe operator) are allowed.
 
 reviews:
   profile: "assertive"

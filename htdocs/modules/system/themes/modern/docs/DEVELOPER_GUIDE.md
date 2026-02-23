@@ -1247,7 +1247,7 @@ Checks file existence, PHP syntax, CSS/JS structure, and image assets.
 
 ### PHP Version
 
-The theme requires PHP 8.2+ and is tested through PHP 8.5. All PHP 8.0+ and 8.1+ features are allowed.
+The theme requires PHP 8.2+ and is tested through PHP 8.5. Features introduced in PHP 8.0, 8.1, and 8.2 are allowed; avoid features introduced in PHP 8.3+ to preserve the 8.2 minimum.
 
 ### XOOPS Version
 
