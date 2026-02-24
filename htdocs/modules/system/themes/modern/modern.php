@@ -68,10 +68,21 @@ class XoopsGuiModern extends XoopsSystemGui
         $xoTheme->addScript(XOOPS_ADMINTHEME_URL . '/modern/js/charts.js');
         $xoTheme->addScript(XOOPS_ADMINTHEME_URL . '/modern/js/customizer.js');
 
-        // Add theme stylesheets
+        // Add theme stylesheets — load order matters:
+        //   1. modern.css  — theme layout and components (replace wholesale on updates)
+        //   2. xoops.css   — XOOPS element integration   (maintained by XOOPS team)
+        //   3. dark.css    — dark mode CSS variable overrides
+        //   4. fixes.css   — !important overrides against XOOPS core CSS
+        //   5. custom.css  — site-specific user customizations (never overwritten by updates)
         $xoTheme->addStylesheet(XOOPS_ADMINTHEME_URL . '/modern/css/modern.css');
+        $xoTheme->addStylesheet(XOOPS_ADMINTHEME_URL . '/modern/css/xoops.css');
         $xoTheme->addStylesheet(XOOPS_ADMINTHEME_URL . '/modern/css/dark.css', ['id' => 'dark-theme-style']);
         $xoTheme->addStylesheet(XOOPS_ADMINTHEME_URL . '/modern/css/fixes.css');
+        // custom.css is loaded last so it wins over everything; only load if it exists
+        // (absent on fresh installs until the admin creates it, never shipped in updates)
+        if (file_exists(XOOPS_PATH . '/modules/system/themes/modern/css/custom.css')) {
+            $xoTheme->addStylesheet(XOOPS_ADMINTHEME_URL . '/modern/css/custom.css');
+        }
 
         // Basic configuration
         $tpl->assign('lang_cp', _CPHOME);
@@ -86,7 +97,9 @@ class XoopsGuiModern extends XoopsSystemGui
         }
 
         // Get user preference for dark mode
-        $darkMode = filter_input(INPUT_COOKIE, 'xoops_dark_mode', FILTER_SANITIZE_STRING) ?: '0';
+//        $darkMode = filter_input(INPUT_COOKIE, 'xoops_dark_mode', FILTER_SANITIZE_STRING) ?: '0';
+        $darkMode = filter_input(INPUT_COOKIE, 'xoops_dark_mode') ?? '0';
+        $darkMode = htmlspecialchars($darkMode, ENT_QUOTES | ENT_SUBSTITUTE, 'UTF-8');
         $tpl->assign('dark_mode', $darkMode);
 
         // System information

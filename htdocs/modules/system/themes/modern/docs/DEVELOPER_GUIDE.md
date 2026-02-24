@@ -1,3 +1,4 @@
+![alt XOOPS CMS](https://xoops.org/images/logoXoops4GithubRepository.png)
 # Modern Admin Theme — Developer & Designer Guide
 
 An in-depth technical reference for designers and developers who want to understand, customize, or extend the Modern admin theme.
@@ -43,15 +44,17 @@ block-beta
     end
     block:tpl["Template Layer — theme.tpl + xotpl/*.tpl"]
         columns 3
-        t1["Smarty 3 with <{ }> delimiters"]
+        t1["Smarty 4 with <{ }> delimiters"]
         t2["Modular partials (head, sidebar, dashboard)"]
         t3["Data bridge: PHP → JSON → JavaScript"]
     end
     block:css["CSS Layer — css/*.css"]
-        columns 3
-        c1["Design tokens via CSS custom properties"]
-        c2["Light mode defaults, dark mode overrides"]
-        c3["fixes.css for XOOPS core !important rules"]
+        columns 5
+        c1["modern.css\nTheme components"]
+        c2["xoops.css\nXOOPS elements"]
+        c3["dark.css\nDark palette"]
+        c4["fixes.css\n!important fixes"]
+        c5["custom.css\nSite overrides"]
     end
     block:js["JavaScript Layer — js/*.js"]
         columns 3
@@ -91,9 +94,11 @@ modern/
 │   └── WidgetLoader.php          # Widget auto-discovery engine
 │
 ├── css/
-│   ├── modern.css                # Design tokens + full light-mode styles (~1200 lines)
-│   ├── dark.css                  # Dark mode variable overrides (~200 lines)
-│   └── fixes.css                 # !important overrides for XOOPS core CSS (~300 lines)
+│   ├── modern.css                # Theme layout & components — replace wholesale on updates
+│   ├── xoops.css                 # XOOPS element integration — maintained by XOOPS team
+│   ├── dark.css                  # Dark mode variable overrides (~100 lines)
+│   ├── fixes.css                 # !important overrides for XOOPS core CSS (~350 lines)
+│   └── custom.css                # Site-specific customizations — never overwritten by updates
 │
 ├── js/
 │   ├── theme.js                  # Core: sidebar toggle, dark mode, help, messages
@@ -298,6 +303,47 @@ $tpl->assign('my_data', $data);
 
 ## CSS Architecture
 
+### Five-File Strategy
+
+The CSS is split into five files loaded in a strict order. Each file has a single, clearly-scoped responsibility:
+
+```mermaid
+flowchart LR
+    subgraph L1["1 — Theme base"]
+        M["modern.css\nLayout, sidebar, header,\nKPI cards, charts, badges\nReplace wholesale on updates"]
+    end
+    subgraph L2["2 — XOOPS integration"]
+        X["xoops.css\ntable.outer, forms, tabs,\ntoolbar, breadcrumb, logger\nMaintained by XOOPS team"]
+    end
+    subgraph L3["3 — Dark palette"]
+        D["dark.css\nRe-maps every CSS variable\non body.dark-mode"]
+    end
+    subgraph L4["4 — Core fixes"]
+        F["fixes.css\n!important overrides\nfor XOOPS core inline styles"]
+    end
+    subgraph L5["5 — Custom"]
+        C["custom.css\nSite-specific rules\nNever overwritten by updates"]
+    end
+
+    L1 --> L2 --> L3 --> L4 --> L5
+```
+
+| File | Owns | `!important`? | Updated by |
+|------|------|:---:|---|
+| `modern.css` | Theme layout, sidebar, header, dashboard cards, modules grid, sidebar toggle | No | Theme author (replace wholesale) |
+| `xoops.css` | `table.outer`, forms, fieldsets, module admin tabs/toolbar, breadcrumb, messages, logger | Minimal | XOOPS team |
+| `dark.css` | CSS variable overrides scoped to `body.dark-mode` | No | Theme author |
+| `fixes.css` | Rules that **must** beat XOOPS core inline styles | Yes (intentional) | XOOPS team |
+| `custom.css` | Site-specific overrides — anything you want | Only if needed | You |
+
+**Decision rule for contributors:**
+- New style for a theme component (`.kpi-card`, `.nav-item`) → **`modern.css`**
+- New style for a XOOPS core HTML element (`table.outer`, `#buttonbar_mod`) → **`xoops.css`**
+- XOOPS core or a module's inline style is overriding you → **`fixes.css`** with `!important`
+- Style change specific to one installation → **`custom.css`**
+
+> For the theme-designer/site-owner perspective, see [CUSTOMIZATION_GUIDE.md](CUSTOMIZATION_GUIDE.md).
+
 ### Design Token System
 
 All visual properties flow from CSS custom properties defined in `:root`. This means changing one variable propagates everywhere:
@@ -345,33 +391,7 @@ All visual properties flow from CSS custom properties defined in `:root`. This m
 }
 ```
 
-### Three-File Strategy
-
-```mermaid
-flowchart LR
-    subgraph Layer1["Layer 1: Design System"]
-        M["modern.css\n~1200 lines\nTokens + all components"]
-    end
-    subgraph Layer2["Layer 2: Dark Mode"]
-        D["dark.css\n~200 lines\nVariable overrides on\nbody.dark-mode"]
-    end
-    subgraph Layer3["Layer 3: Core Fixes"]
-        F["fixes.css\n~300 lines\n!important overrides for\nXOOPS core inline styles"]
-    end
-
-    M --> D --> F
-
-    M -. ":root vars" .-> D
-    D -. "same vars,\ndark values" .-> F
-```
-
-| File | Purpose | Uses `!important`? |
-|------|---------|-------------------|
-| `modern.css` | Design tokens, layout, all components | No |
-| `dark.css` | Dark mode variable overrides on `body.dark-mode` | No |
-| `fixes.css` | Overrides for XOOPS core inline styles | Yes (required) |
-
-**Why `fixes.css` exists:** XOOPS core and some modules inject inline styles and CSS rules that can't be overridden through normal cascade. `fixes.css` uses `!important` surgically on specific selectors to fix these conflicts. It's organized into numbered sections with comments explaining each override.
+**Why `fixes.css` exists:** XOOPS core and some modules inject inline styles and CSS rules that can't be overridden through the normal cascade. `fixes.css` uses `!important` surgically on specific selectors to fix these conflicts. It is organized into numbered sections, each with a comment explaining what it is overriding and why. If a rule in `fixes.css` does **not** need `!important`, it belongs in `xoops.css` instead.
 
 ### Dark Mode
 
@@ -1275,14 +1295,27 @@ CSS custom properties require modern browsers. IE11 is **not supported** (it lac
 
 ## Quick Reference: Where to Change What
 
+### CSS — which file?
+
+| I want to change... | File |
+|---|---|
+| Theme layout, sidebar, header, KPI cards | `css/modern.css` |
+| `table.outer` styles (admin tables) | `css/xoops.css` |
+| Form elements, buttons, fieldsets | `css/xoops.css` |
+| Module admin tabs (`#buttonbar_mod`) | `css/xoops.css` |
+| Admin breadcrumb, tips, help | `css/xoops.css` |
+| Accent / primary color globally | `css/modern.css` → `:root` → `--primary`, or Customizer |
+| Dark mode palette | `css/dark.css` |
+| Override something XOOPS core keeps winning | `css/fixes.css` (with `!important`) |
+| Site-specific tweak that must survive updates | `css/custom.css` |
+| Sidebar width | `css/modern.css` → `--sidebar-width` |
+| Header height | `css/modern.css` → `--header-height` |
+| Border radius everywhere | `css/modern.css` → `--radius`, `--radius-sm`, `--radius-lg` |
+
+### Everything else
+
 | I want to... | File(s) to edit |
-|---------------|----------------|
-| Change the accent color | `css/modern.css` (`:root` block) or use Customizer |
-| Adjust dark mode colors | `css/dark.css` |
-| Fix XOOPS core style conflicts | `css/fixes.css` |
-| Change sidebar width | `css/modern.css` → `--sidebar-width` |
-| Change header height | `css/modern.css` → `--header-height` |
-| Change border radius | `css/modern.css` → `--radius`, `--radius-sm`, `--radius-lg` |
+|---|---|
 | Add header elements | `xotpl/xo_head.tpl` |
 | Modify sidebar navigation | `xotpl/xo_sidebar.tpl` |
 | Change dashboard layout | `xotpl/xo_dashboard.tpl` |

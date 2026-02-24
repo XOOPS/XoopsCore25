@@ -2,7 +2,13 @@
  * XOOPS Modern Theme - Override Fixes
  * ====================================
  * This file contains ONLY rules that need !important to override
- * XOOPS core CSS or inline styles. Base styles live in modern.css.
+ * XOOPS core CSS or inline styles.
+ *
+ * Base styles are split across:
+ *   modern.css — theme layout and components
+ *   xoops.css  — XOOPS element integration
+ *
+ * If a rule does NOT need !important, it belongs in xoops.css, not here.
  *
  * Design tokens used here (defined in modern.css :root):
  *   --radius-sm: 4px   (badges, small elements)

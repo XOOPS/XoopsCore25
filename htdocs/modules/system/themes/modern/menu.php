@@ -45,8 +45,8 @@ foreach ($dirlist as $file) {
     $versionFile = $admin_dir . '/' . $file . '/xoops_version.php';
     $realVersionPath = realpath($versionFile);
     if ($realVersionPath && $realAdminDir && strpos($realVersionPath, $realAdminDir . DIRECTORY_SEPARATOR) === 0) {
-        include_once $realVersionPath;
-        if ($modversion['hasAdmin']) {
+        include $realVersionPath;
+        if (isset($modversion['hasAdmin']) && $modversion['hasAdmin']) {
             if (xoops_getModuleOption('active_' . $file, 'system')) {
                 $category = isset($modversion['category']) ? (int)$modversion['category'] : 0;
                 if ($all_ok || in_array($category, $ok_syscats, true)) {
