@@ -17,7 +17,7 @@
  * Requires: spatie/ray via composer OR spatie/global-ray via php.ini auto_prepend_file
  * If Ray is not installed or disabled in module settings, this plugin silently does nothing.
  *
- * @copyright   (c) 2000-2025 XOOPS Project (https://xoops.org)
+ * @copyright   (c) 2000-2026 XOOPS Project (https://xoops.org)
  * @license     GNU GPL 2 or later (https://www.gnu.org/licenses/gpl-2.0.html)
  * @param  array  $params  Smarty parameters
  * @param  Smarty &$smarty Smarty object

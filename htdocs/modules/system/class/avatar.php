@@ -9,7 +9,7 @@
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  *
- * @copyright       (c) 2000-2025 XOOPS Project (https://xoops.org)
+ * @copyright       (c) 2000-2026 XOOPS Project (https://xoops.org)
  * @license             GNU GPL 2 (https://www.gnu.org/licenses/gpl-2.0.html)
  * @package             system
  */
@@ -23,7 +23,7 @@ include_once $GLOBALS['xoops']->path('/kernel/avatar.php');
 /**
  * System Avatar
  *
- * @copyright       (c) 2000-2025 XOOPS Project (https://xoops.org)
+ * @copyright       (c) 2000-2026 XOOPS Project (https://xoops.org)
  * @package             system
  */
 class SystemAvatar extends XoopsAvatar
@@ -98,7 +98,7 @@ class SystemAvatar extends XoopsAvatar
  * This class is responsible for providing data access mechanisms to the data source
  * of XOOPS block class objects.
  *
- * @copyright       (c) 2000-2025 XOOPS Project (https://xoops.org)
+ * @copyright       (c) 2000-2026 XOOPS Project (https://xoops.org)
  * @package             system
  * @subpackage          avatar
  */

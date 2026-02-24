@@ -11,7 +11,7 @@
  * Ported from php-debugbar v3.3's built-in Settings class.
  * Uses the same HTML structure and CSS classes as v3.3 for visual consistency.
  *
- * @copyright  (c) 2000-2025 XOOPS Project (https://xoops.org)
+ * @copyright  (c) 2000-2026 XOOPS Project (https://xoops.org)
  * @license    GNU GPL 2 (https://www.gnu.org/licenses/gpl-2.0.html)
  */
 (function($) {

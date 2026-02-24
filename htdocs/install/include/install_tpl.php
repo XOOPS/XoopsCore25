@@ -15,7 +15,7 @@
  * admin theme created by Start Bootstrap, made available under an MIT license.
  * See: https://github.com/BlackrockDigital/startbootstrap-sb-admin
  *
- * @copyright    (c) 2000-2025 XOOPS Project (https://xoops.org)
+ * @copyright    (c) 2000-2026 XOOPS Project (https://xoops.org)
  * @license          GNU GPL 2.0 or later (https://www.gnu.org/licenses/gpl-2.0.html)
  * @package          installer
  * @since            2.3.0

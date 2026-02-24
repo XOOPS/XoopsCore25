@@ -13,7 +13,7 @@
  * @category  XoopsEditor
  * @package   TinyMCE5
  * @author    ForMuss
- * @copyright 2000-2025 XOOPS Project (https://xoops.org)
+ * @copyright 2000-2026 XOOPS Project (https://xoops.org)
  * @license   GNU GPL 2 or later (http://www.gnu.org/licenses/gpl-2.0.html)
  * @link      http://xoops.org
  */

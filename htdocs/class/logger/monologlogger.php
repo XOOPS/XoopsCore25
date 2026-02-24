@@ -5,7 +5,7 @@
  * Wraps Monolog 2.x as a PSR-3 compatible logger that integrates with
  * XoopsLogger via the addLogger() composite pattern (ported from XOOPS 2.6).
  *
- * @copyright       (c) 2000-2025 XOOPS Project (https://xoops.org)
+ * @copyright       (c) 2000-2026 XOOPS Project (https://xoops.org)
  * @license             GNU GPL 2 (https://www.gnu.org/licenses/gpl-2.0.html)
  * @package             kernel
  * @subpackage          logger

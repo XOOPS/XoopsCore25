@@ -9,7 +9,7 @@
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  *
- * @copyright       (c) 2000-2025 XOOPS Project (https://xoops.org)
+ * @copyright       (c) 2000-2026 XOOPS Project (https://xoops.org)
  * @license             GNU GPL 2 (https://www.gnu.org/licenses/gpl-2.0.html)
  * @package             kernel
  * @since               2.0.0
@@ -20,7 +20,7 @@ defined('XOOPS_ROOT_PATH') || exit('Restricted access');
 /**
  * a group of users
  *
- * @copyright       (c) 2000-2025 XOOPS Project (https://xoops.org)
+ * @copyright       (c) 2000-2026 XOOPS Project (https://xoops.org)
  * @author              Kazumi Ono <onokazu@xoops.org>
  * @package             kernel
  */
@@ -101,7 +101,7 @@ class XoopsGroup extends XoopsObject
  * of XOOPS group class objects.
  *
  * @author              Kazumi Ono <onokazu@xoops.org>
- * @copyright       (c) 2000-2025 XOOPS Project (https://xoops.org)
+ * @copyright       (c) 2000-2026 XOOPS Project (https://xoops.org)
  * @package             kernel
  * @subpackage          member
  */
@@ -265,7 +265,7 @@ class XoopsGroupHandler extends XoopsObjectHandler
  * membership of a user in a group
  *
  * @author              Kazumi Ono <onokazu@xoops.org>
- * @copyright       (c) 2000-2025 XOOPS Project (https://xoops.org)
+ * @copyright       (c) 2000-2026 XOOPS Project (https://xoops.org)
  * @package             kernel
  */
 class XoopsMembership extends XoopsObject
@@ -294,7 +294,7 @@ class XoopsMembership extends XoopsObject
  * of XOOPS group membership class objects.
  *
  * @author              Kazumi Ono <onokazu@xoops.org>
- * @copyright       (c) 2000-2025 XOOPS Project (https://xoops.org)
+ * @copyright       (c) 2000-2026 XOOPS Project (https://xoops.org)
  * @package             kernel
  */
 class XoopsMembershipHandler extends XoopsObjectHandler
