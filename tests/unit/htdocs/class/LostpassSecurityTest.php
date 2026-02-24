@@ -26,6 +26,13 @@ use PHPUnit\Framework\Attributes\Test;
 
 /**
  * Unit tests for LostpassSecurity class.
+ *
+ * @category  Test
+ * @package   core
+ * @author    XOOPS Team
+ * @copyright (c) 2000-2026 XOOPS Project (https://xoops.org)
+ * @license   GNU GPL 2 (https://www.gnu.org/licenses/gpl-2.0.html)
+ * @link      https://xoops.org
  */
 #[CoversClass(LostpassSecurity::class)]
 class LostpassSecurityTest extends KernelTestCase
@@ -437,11 +444,12 @@ class LostpassSecurityTest extends KernelTestCase
         // setVar should NOT be called with actkey
         $user->expects($this->never())->method('setVar');
 
-        // Handler should NOT be called (falls through to cache, which won't work without XoopsCache)
+        // Non-lostpass actkey prevents overwrite; cacheWrite fails without XoopsCache in tests
         $handler = $this->createMock(\XoopsMemberHandler::class);
         $handler->expects($this->never())->method('insertUser');
 
-        $sec->storePayload($user, $handler, time(), $sec->hashToken('tok'));
+        $result = $sec->storePayload($user, $handler, time(), $sec->hashToken('tok'));
+        $this->assertFalse($result);
     }
 
     /* ========================================================
