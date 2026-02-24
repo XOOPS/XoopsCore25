@@ -33,7 +33,7 @@ $security = new LostpassSecurity($xoopsDB);
 /** @var XoopsMemberHandler $member_handler */
 $member_handler = xoops_getHandler('member');
 
-$ip    = $_SERVER['REMOTE_ADDR'] ?? '';
+$ip    = $_SERVER['REMOTE_ADDR'] ?? '0.0.0.0';
 $minPw = 12;
 
 // Generic message used on all exit paths to prevent enumeration
@@ -47,7 +47,7 @@ $msgInvalid = defined('_US_RESETLINKINVALID')
 $uid   = Request::getInt('uid', 0, 'GET');
 $token = Request::getString('token', '', 'GET');
 
-if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+if (($_SERVER['REQUEST_METHOD'] ?? '') === 'POST') {
     $uid   = Request::getInt('uid', $uid, 'POST');
     $token = Request::getString('token', $token, 'POST');
 }
@@ -92,7 +92,7 @@ if ($uid > 0 && $token !== '') {
     }
 
     // --- POST: set new password ---
-    if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    if (($_SERVER['REQUEST_METHOD'] ?? '') === 'POST') {
         // Rate limit reset attempts
         if ($security->isAbusing($ip, 'uid:' . (string)$uid)) {
             redirect_header('user.php', 3, $msgInvalid, false);

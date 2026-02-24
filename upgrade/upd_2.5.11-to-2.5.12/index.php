@@ -80,6 +80,22 @@ class Upgrade_2512 extends XoopsUpgrade
     }
 
     /**
+     * Get current actkey column varchar length, or null if undetectable.
+     *
+     * @param Tables $migrate
+     * @return int|null
+     */
+    private function getActkeyVarcharLength(Tables $migrate)
+    {
+        $migrate->useTable('users');
+        $attributes = $migrate->getColumnAttributes('users', 'actkey');
+        if (is_string($attributes) && preg_match('/varchar\((\d+)\)/i', trim($attributes), $m)) {
+            return (int)$m[1];
+        }
+        return null;
+    }
+
+    /**
      * Check if actkey column is already large enough for lostpass tokens.
      * Packed token is ~78 chars; column needs to be at least VARCHAR(100).
      *
@@ -87,14 +103,11 @@ class Upgrade_2512 extends XoopsUpgrade
      */
     public function check_expandactkey()
     {
-        $migrate = new Tables();
-        $migrate->useTable('users');
-        $attributes = $migrate->getColumnAttributes('users', 'actkey');
-        if (is_string($attributes) && preg_match('/varchar\((\d+)\)/i', trim($attributes), $m)) {
-            return (int)$m[1] >= 100;
+        $length = $this->getActkeyVarcharLength(new Tables());
+        if (null === $length) {
+            return true; // undetectable — assume applied to avoid blocking
         }
-        // Column not found or unexpected type — assume applied to avoid blocking
-        return true;
+        return $length >= 100;
     }
 
     /**
@@ -105,12 +118,10 @@ class Upgrade_2512 extends XoopsUpgrade
     public function apply_expandactkey()
     {
         $migrate = new Tables();
-        $migrate->useTable('users');
-        $attributes = $migrate->getColumnAttributes('users', 'actkey');
-        if (is_string($attributes) && preg_match('/varchar\((\d+)\)/i', trim($attributes), $m)) {
-            if ((int)$m[1] < 100) {
-                $migrate->alterColumn('users', 'actkey', "VARCHAR(100) NOT NULL DEFAULT ''");
-            }
+        $length = $this->getActkeyVarcharLength($migrate);
+
+        if (null !== $length && $length < 100) {
+            $migrate->alterColumn('users', 'actkey', "VARCHAR(100) NOT NULL DEFAULT ''");
         }
 
         $result = $migrate->executeQueue(true);
