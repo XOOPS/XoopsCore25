@@ -37,7 +37,16 @@ $member_handler = xoops_getHandler('member');
 $config_handler = xoops_getHandler('config');
 $xoopsConfigUser = $config_handler->getConfigsByCat(XOOPS_CONF_USER);
 
-$ip    = $_SERVER['REMOTE_ADDR'] ?? '0.0.0.0';
+// Resolve client IP (supports reverse proxy / CDN via X-Forwarded-For)
+$ip = $_SERVER['REMOTE_ADDR'] ?? '0.0.0.0';
+if (!empty($_SERVER['HTTP_X_FORWARDED_FOR'])) {
+    // Take the first (leftmost) IP — the original client
+    $forwarded = explode(',', $_SERVER['HTTP_X_FORWARDED_FOR']);
+    $candidate = trim($forwarded[0]);
+    if (filter_var($candidate, FILTER_VALIDATE_IP)) {
+        $ip = $candidate;
+    }
+}
 $minPw = max(8, (int)($xoopsConfigUser['minpass'] ?? 8));
 
 // Generic message used on all exit paths to prevent enumeration
@@ -71,7 +80,7 @@ if ($uid > 0 && $token !== '') {
     // --- POST: set new password ---
     if (($_SERVER['REQUEST_METHOD'] ?? '') === 'POST') {
         // Rate limit reset attempts
-        if ($rateLimiter->isAbusing($ip, 'uid:' . (string)$uid)) {
+        if ($rateLimiter->isRateLimited($ip, 'uid:' . (string)$uid)) {
             redirect_header('user.php', 3, $msgInvalid, false);
             exit();
         }
@@ -137,13 +146,23 @@ if ($uid > 0 && $token !== '') {
 }
 
 /* =========================================================
- * MODE B: Request password reset (email submitted)
+ * MODE B: Request password reset (email submitted, POST only)
  * Always responds with the same generic message.
  * ======================================================= */
-$email = Request::getEmail('email', '', 'POST');
-if ($email === '') {
-    $email = Request::getEmail('email', '', 'GET');
+if (($_SERVER['REQUEST_METHOD'] ?? '') !== 'POST') {
+    redirect_header('user.php', 3, $msgGeneric, false);
+    exit();
 }
+
+// CSRF check on email submission
+if (isset($GLOBALS['xoopsSecurity']) && is_object($GLOBALS['xoopsSecurity'])) {
+    if (!$GLOBALS['xoopsSecurity']->check()) {
+        redirect_header('user.php', 3, $msgGeneric, false);
+        exit();
+    }
+}
+
+$email = Request::getEmail('email', '', 'POST');
 
 if ($email === '') {
     redirect_header('user.php', 3, $msgGeneric, false);
@@ -151,7 +170,7 @@ if ($email === '') {
 }
 
 // Rate limit before any DB lookup
-if ($rateLimiter->isAbusing($ip, $email)) {
+if ($rateLimiter->isRateLimited($ip, $email)) {
     redirect_header('user.php', 3, $msgGeneric, false);
     exit();
 }

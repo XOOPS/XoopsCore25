@@ -51,26 +51,26 @@ class LostPassSecurityTest extends KernelTestCase
     }
 
     /* ========================================================
-     * Rate limiting (isAbusing)
+     * Rate limiting (isRateLimited)
      * ====================================================== */
 
     #[Test]
-    public function isAbusingReturnsFalseWhenCacheUnavailable(): void
+    public function isRateLimitedReturnsFalseWhenCacheUnavailable(): void
     {
         // With no XoopsCache available, rate limiting should fail-open
-        $this->assertFalse($this->security->isAbusing('127.0.0.1', 'test@example.com'));
+        $this->assertFalse($this->security->isRateLimited('127.0.0.1', 'test@example.com'));
     }
 
     #[Test]
-    public function isAbusingAcceptsEmptyIdentifier(): void
+    public function isRateLimitedAcceptsEmptyIdentifier(): void
     {
-        $this->assertFalse($this->security->isAbusing('127.0.0.1', ''));
+        $this->assertFalse($this->security->isRateLimited('127.0.0.1', ''));
     }
 
     #[Test]
-    public function isAbusingAcceptsUidIdentifier(): void
+    public function isRateLimitedAcceptsUidIdentifier(): void
     {
-        $this->assertFalse($this->security->isAbusing('192.168.1.1', 'uid:42'));
+        $this->assertFalse($this->security->isRateLimited('192.168.1.1', 'uid:42'));
     }
 
     /* ========================================================

@@ -101,14 +101,18 @@ final class LostPassSecurity
      * ====================================================== */
 
     /**
-     * Check if request should be blocked (IP + identifier bucket).
+     * Check if a request should be rate-limited.
+     *
+     * Uses a fixed-window counter strategy with two buckets:
+     * one for IP address (prevents volumetric attacks) and one for
+     * identifier (prevents targeted harassment of a single account).
      *
      * @param string $ip         Client IP address
      * @param string $identifier Email or "uid:N" for reset attempts
      *
      * @return bool true if request should be blocked
      */
-    public function isAbusing(string $ip, string $identifier): bool
+    public function isRateLimited(string $ip, string $identifier): bool
     {
         $ipHash = hash('sha256', $ip);
 
@@ -144,8 +148,8 @@ final class LostPassSecurity
             $state = ['n' => 0, 'exp' => $now + $this->window];
         }
 
-        // Already over limit — skip increment and cache write
-        if ((int)($state['n'] ?? 0) > $limit) {
+        // Already at or over limit — skip increment and cache write
+        if ((int)($state['n'] ?? 0) >= $limit) {
             return true;
         }
 
@@ -153,7 +157,7 @@ final class LostPassSecurity
         $ttl = max(1, (int)$state['exp'] - $now);
         $this->cacheWrite($key, $state, $ttl);
 
-        return $state['n'] > $limit;
+        return $state['n'] >= $limit;
     }
 
     /* ========================================================

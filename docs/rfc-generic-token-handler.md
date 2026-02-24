@@ -129,7 +129,7 @@ Any new feature that needs "give user a link, verify it later" just calls
 ### `LostPassSecurity` — simplify to rate limiter only
 
 Strip out everything token-related. Keep only:
-- `isAbusing()` — rate limiting via XoopsCache
+- `isRateLimited()` — rate limiting via XoopsCache
 - `rateHit()` — fixed-window counter
 - Protector integration
 - Cache helpers (used by rate limiter)
@@ -147,13 +147,13 @@ $tokenHandler = new XoopsTokenHandler($xoopsDB);
 $rateLimiter  = new LostPassSecurity($xoopsDB);
 
 // MODE B: Request reset
-if ($rateLimiter->isAbusing($ip, $email)) { /* block */ }
+if ($rateLimiter->isRateLimited($ip, $email)) { /* block */ }
 if ($tokenHandler->countRecent($uid, 'lostpass', 900) > 0) { /* cooldown */ }
 $rawToken = $tokenHandler->create($uid, 'lostpass', 3600);
 // ... send email ...
 
 // MODE A: Verify + set password
-if ($rateLimiter->isAbusing($ip, 'uid:' . $uid)) { /* block */ }
+if ($rateLimiter->isRateLimited($ip, 'uid:' . $uid)) { /* block */ }
 if ($tokenHandler->verify($uid, 'lostpass', $rawToken)) {
     $user->setVar('pass', password_hash($pass, PASSWORD_DEFAULT));
     $member_handler->insertUser($user, true);
