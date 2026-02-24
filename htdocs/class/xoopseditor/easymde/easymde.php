@@ -57,12 +57,15 @@ class FormEasyMDE extends XoopsEditor
      */
     public function render()
     {
-        $name   = $this->getName();
-        $value  = $this->getValue();
-        $cols   = (int) $this->getCols();
-        $rows   = (int) $this->getRows();
-        $width  = htmlspecialchars($this->configs['width'] ?? $this->width, ENT_QUOTES, 'UTF-8');
-        $height = htmlspecialchars($this->configs['height'] ?? $this->height, ENT_QUOTES, 'UTF-8');
+        static $assetsIncluded = false;
+
+        $name    = $this->getName();
+        $value   = $this->getValue();
+        $cols    = (int) $this->getCols();
+        $rows    = (int) $this->getRows();
+        $configs = (array) $this->configs;
+        $width   = htmlspecialchars($configs['width'] ?? $this->width, ENT_QUOTES, 'UTF-8');
+        $height  = htmlspecialchars($configs['height'] ?? $this->height, ENT_QUOTES, 'UTF-8');
 
         $htmlName     = htmlspecialchars($name, ENT_QUOTES, 'UTF-8');
         $escapedValue = htmlspecialchars($value, ENT_QUOTES, 'UTF-8');
@@ -72,8 +75,12 @@ class FormEasyMDE extends XoopsEditor
 
         $html = '';
 
-        // CSS
-        $html .= '<link rel="stylesheet" href="' . $editorPath . '/css/easymde.min.css">' . "\n";
+        // Include CSS/JS assets only once per page
+        if (!$assetsIncluded) {
+            $html .= '<link rel="stylesheet" href="' . $editorPath . '/css/easymde.min.css">' . "\n";
+            $html .= '<script src="' . $editorPath . '/js/easymde.min.js"></script>' . "\n";
+            $assetsIncluded = true;
+        }
 
         // Textarea (EasyMDE attaches to this)
         $html .= '<textarea id="' . $htmlName . '" name="' . $htmlName . '" '
@@ -82,9 +89,6 @@ class FormEasyMDE extends XoopsEditor
                . $escapedValue
                . '</textarea>' . "\n";
 
-        // JS
-        $html .= '<script src="' . $editorPath . '/js/easymde.min.js"></script>' . "\n";
-
         // Initialize EasyMDE
         $html .= '<script>' . "\n";
         $html .= 'document.addEventListener("DOMContentLoaded", function() {' . "\n";
@@ -92,8 +96,8 @@ class FormEasyMDE extends XoopsEditor
         $html .= '    new EasyMDE({' . "\n";
         $html .= '      element: document.getElementById(' . $jsId . '),' . "\n";
         $html .= '      spellChecker: false,' . "\n";
-        $html .= '      minHeight: ' . json_encode($this->configs['height'] ?? $this->height, JSON_THROW_ON_ERROR) . ',' . "\n";
-        $html .= '      autoDownloadFontAwesome: true,' . "\n";
+        $html .= '      minHeight: ' . json_encode($configs['height'] ?? $this->height, JSON_THROW_ON_ERROR) . ',' . "\n";
+        $html .= '      autoDownloadFontAwesome: false,' . "\n";
         $html .= '      forceSync: true,' . "\n";
         $html .= '      toolbar: [' . "\n";
         $html .= '        "bold", "italic", "heading", "|",' . "\n";
