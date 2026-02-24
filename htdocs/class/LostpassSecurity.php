@@ -289,16 +289,16 @@ final class LostpassSecurity
         }
 
         $table = $this->db->prefix('users');
-        $res = $this->db->query(
+        $result = $this->db->query(
             "SHOW COLUMNS FROM `{$table}` LIKE " . $this->db->quote('actkey')
         );
 
-        if (!$res) {
+        if (!$this->db->isResultSet($result)) {
             $this->actkeyMaxLen = -1;
             return null;
         }
 
-        $row = $this->db->fetchArray($res);
+        $row = $this->db->fetchArray($result);
         if ($row && preg_match('/\((\d+)\)/', (string)($row['Type'] ?? ''), $m)) {
             $this->actkeyMaxLen = (int)$m[1];
             return $this->actkeyMaxLen;
