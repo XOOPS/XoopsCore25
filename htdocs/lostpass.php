@@ -127,9 +127,9 @@ if ($uid > 0 && $token !== '') {
 
         if (!empty($errors)) {
             $GLOBALS['xoopsOption']['template_main'] = 'system_lostpass.tpl';
-            include $GLOBALS['xoops']->path('header.php');
+            include_once $GLOBALS['xoops']->path('header.php');
             lostpass_assign_form($GLOBALS['xoopsTpl'], $uid, $token, $minPw, $errors);
-            include $GLOBALS['xoops']->path('footer.php');
+            include_once $GLOBALS['xoops']->path('footer.php');
             exit();
         }
 
@@ -143,9 +143,9 @@ if ($uid > 0 && $token !== '') {
 
         if (!$member_handler->insertUser($user, true)) {
             $GLOBALS['xoopsOption']['template_main'] = 'system_lostpass.tpl';
-            include $GLOBALS['xoops']->path('header.php');
+            include_once $GLOBALS['xoops']->path('header.php');
             lostpass_assign_form($GLOBALS['xoopsTpl'], $uid, $token, $minPw, [], _US_MAILPWDNG);
-            include $GLOBALS['xoops']->path('footer.php');
+            include_once $GLOBALS['xoops']->path('footer.php');
             exit();
         }
 
@@ -160,9 +160,9 @@ if ($uid > 0 && $token !== '') {
 
     // --- GET: show reset form ---
     $GLOBALS['xoopsOption']['template_main'] = 'system_lostpass.tpl';
-    include $GLOBALS['xoops']->path('header.php');
+    include_once $GLOBALS['xoops']->path('header.php');
     lostpass_assign_form($GLOBALS['xoopsTpl'], $uid, $token, $minPw);
-    include $GLOBALS['xoops']->path('footer.php');
+    include_once $GLOBALS['xoops']->path('footer.php');
     exit();
 }
 
