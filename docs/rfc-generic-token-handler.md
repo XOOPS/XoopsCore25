@@ -90,18 +90,18 @@ if ($tokenHandler->verify($uid, 'lostpass', $rawToken)) {
 ```
 
 The entire readPayload/storePayload/clearPayloadInMemory/isExpired/hashToken/
-packActkey/unpackActkey/isLostpassActkey/canFitActkey/getActkeyMaxLen chain
+packActKey/unpackActKey/isLostPassActKey/canFitActKey/getActKeyMaxLen chain
 collapses into two method calls.
 
 ### Registration Activation (`register.php`)
 
 **Before (current):**
 ```php
-$actkey = substr(md5(uniqid(mt_rand(), 1)), 0, 8);
-$newuser->setVar('actkey', $actkey, true);
-// ... activation link: register.php?op=actv&id=$uid&actkey=$actkey ...
+$actKey = substr(md5(uniqid(mt_rand(), 1)), 0, 8);
+$newuser->setVar('actkey', $actKey, true);
+// ... activation link: register.php?op=actv&id=$uid&actkey=$actKey ...
 // ... later ...
-if ($thisuser->getVar('actkey') != $actkey) { /* reject */ }
+if ($thisuser->getVar('actkey') != $actKey) { /* reject */ }
 ```
 
 **After:**
@@ -115,7 +115,7 @@ if ($tokenHandler->verify($uid, 'activation', $rawToken)) {
 }
 ```
 
-Same pattern. md5/mt_rand replaced with random_bytes. Actkey column no longer needed.
+Same pattern. md5/mt_rand replaced with random_bytes. actkey column no longer needed.
 
 ### Future features
 
@@ -193,9 +193,9 @@ Also added to `mysql.structure.sql` for new installations.
 
 ## What we remove
 
-- `LostPassSecurity::packActkey()` / `unpackActkey()`
-- `LostPassSecurity::isLostpassActkey()`
-- `LostPassSecurity::canFitActkey()` / `getActkeyMaxLen()`
+- `LostPassSecurity::packActKey()` / `unpackActKey()`
+- `LostPassSecurity::isLostPassActKey()`
+- `LostPassSecurity::canFitActKey()` / `getActKeyMaxLen()`
 - `LostPassSecurity::readPayload()` / `storePayload()` / `clearPayloadInMemory()`
 - Cache fallback for token storage (`CACHE_TOKEN_PREFIX`)
 - `LostPassSecurity::isExpired()` (the DB handles expiry now)
@@ -206,7 +206,7 @@ Also added to `mysql.structure.sql` for new installations.
 
 | Metric | Before (PR #1624) | After |
 |--------|-------------------|-------|
-| Token storage methods | 8 (pack/unpack/read/store/clear/isLostpass/canFit/getMaxLen) | 5 (create/verify/revoke/countRecent/purge) |
+| Token storage methods | 8 (pack/unpack/read/store/clear/isLostPassActKey/canFit/getMaxLen) | 5 (create/verify/revoke/countRecent/purge) |
 | Storage locations | 2 (actkey column + XoopsCache) | 1 (tokens table) |
 | Column introspection | Yes (SHOW COLUMNS at runtime) | No |
 | Cache fallback | Yes | No |
