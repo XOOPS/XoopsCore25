@@ -126,13 +126,9 @@ if ($uid > 0 && $token !== '') {
         }
 
         if (!empty($errors)) {
+            $GLOBALS['xoopsOption']['template_main'] = 'system_lostpass.tpl';
             include $GLOBALS['xoops']->path('header.php');
-            echo '<div class="errorMsg"><ul>';
-            foreach ($errors as $err) {
-                echo '<li>' . htmlspecialchars($err, ENT_QUOTES, 'UTF-8') . '</li>';
-            }
-            echo '</ul></div><br>';
-            lostpass_render_form($uid, $token, $minPw);
+            lostpass_assign_form($GLOBALS['xoopsTpl'], $uid, $token, $minPw, $errors);
             include $GLOBALS['xoops']->path('footer.php');
             exit();
         }
@@ -146,8 +142,9 @@ if ($uid > 0 && $token !== '') {
         $user->setVar('pass', password_hash($pass, PASSWORD_DEFAULT));
 
         if (!$member_handler->insertUser($user, true)) {
+            $GLOBALS['xoopsOption']['template_main'] = 'system_lostpass.tpl';
             include $GLOBALS['xoops']->path('header.php');
-            echo htmlspecialchars(_US_MAILPWDNG, ENT_QUOTES, 'UTF-8');
+            lostpass_assign_form($GLOBALS['xoopsTpl'], $uid, $token, $minPw, [], _US_MAILPWDNG);
             include $GLOBALS['xoops']->path('footer.php');
             exit();
         }
@@ -162,8 +159,9 @@ if ($uid > 0 && $token !== '') {
     }
 
     // --- GET: show reset form ---
+    $GLOBALS['xoopsOption']['template_main'] = 'system_lostpass.tpl';
     include $GLOBALS['xoops']->path('header.php');
-    lostpass_render_form($uid, $token, $minPw);
+    lostpass_assign_form($GLOBALS['xoopsTpl'], $uid, $token, $minPw);
     include $GLOBALS['xoops']->path('footer.php');
     exit();
 }
@@ -227,43 +225,38 @@ redirect_header('user.php', 3, $msgGeneric, false);
 exit();
 
 /* =========================================================
- * Form renderer (inline HTML, matches register.php pattern)
+ * Template variable assignment helper
  * ======================================================= */
 
 /**
- * Render the password reset form.
+ * Assign template variables for the password reset form.
  *
- * @param int    $uid   User ID
- * @param string $token Reset token
- * @param int    $minPw Minimum password length
+ * @param \XoopsTpl $tpl     Smarty template instance
+ * @param int       $uid     User ID
+ * @param string    $token   Reset token
+ * @param int       $minPw   Minimum password length
+ * @param array     $errors  Validation error messages
+ * @param string    $message General message (e.g. save failure)
  *
  * @return void
  */
-function lostpass_render_form(int $uid, string $token, int $minPw): void
+function lostpass_assign_form(\XoopsTpl $tpl, int $uid, string $token, int $minPw, array $errors = [], string $message = ''): void
 {
-    echo '<fieldset class="pad10">';
-    echo '<legend class="bold">' . htmlspecialchars(_US_LOSTPASSWORD, ENT_QUOTES, 'UTF-8') . '</legend>';
-    echo '<form method="post" action="' . XOOPS_URL . '/lostpass.php">';
-    echo '<input type="hidden" name="uid" value="' . (int)$uid . '">';
-    echo '<input type="hidden" name="token" value="' . htmlspecialchars($token, ENT_QUOTES, 'UTF-8') . '">';
-
+    $tokenHtml = '';
     if (isset($GLOBALS['xoopsSecurity']) && is_object($GLOBALS['xoopsSecurity'])) {
-        echo $GLOBALS['xoopsSecurity']->getTokenHTML();
+        $tokenHtml = $GLOBALS['xoopsSecurity']->getTokenHTML();
     }
 
-    echo '<div>' . htmlspecialchars(_US_PASSWORD, ENT_QUOTES, 'UTF-8') . '<br>';
-    echo '<input type="password" name="pass" size="21" autocomplete="new-password" required>';
-    echo '</div><br>';
-
-    echo '<div>' . htmlspecialchars(_US_VERIFYPASS, ENT_QUOTES, 'UTF-8') . '<br>';
-    echo '<input type="password" name="vpass" size="21" autocomplete="new-password" required>';
-    echo '</div><br>';
-
-    echo '<div class="xoops-form-element-caption-required">';
-    echo htmlspecialchars(sprintf(_US_PWDTOOSHORT, (string)$minPw), ENT_QUOTES, 'UTF-8');
-    echo '</div><br>';
-
-    echo '<div><input type="submit" value="' . htmlspecialchars(_US_SUBMIT, ENT_QUOTES, 'UTF-8') . '"></div>';
-    echo '</form>';
-    echo '</fieldset>';
+    $tpl->assign('lp_heading', _US_LOSTPASSWORD);
+    $tpl->assign('lp_action', XOOPS_URL . '/lostpass.php');
+    $tpl->assign('lp_uid', $uid);
+    $tpl->assign('lp_token', $token);
+    $tpl->assign('lp_token_html', $tokenHtml);
+    $tpl->assign('lp_lang_password', _US_PASSWORD);
+    $tpl->assign('lp_lang_verifypass', _US_VERIFYPASS);
+    $tpl->assign('lp_lang_submit', _US_SUBMIT);
+    $tpl->assign('lp_min_pw_note', sprintf(_US_PWDTOOSHORT, (string)$minPw));
+    $tpl->assign('lp_errors', $errors);
+    $tpl->assign('lp_message', $message);
+    $tpl->assign('lp_show_form', $message === '');
 }

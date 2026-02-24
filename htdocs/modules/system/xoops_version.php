@@ -67,6 +67,7 @@ $modversion['templates'][] = ['file' => 'system_misc_avatars.tpl', 'description'
 $modversion['templates'][] = ['file' => 'system_misc_friend.tpl', 'description' => ''];
 $modversion['templates'][] = ['file' => 'system_misc_online.tpl', 'description' => ''];
 $modversion['templates'][] = ['file' => 'system_misc_smilies.tpl', 'description' => ''];
+$modversion['templates'][] = ['file' => 'system_lostpass.tpl', 'description' => ''];
 
 
 //in transition to .tpl, we keep the .html extension versions for previously existing templates
