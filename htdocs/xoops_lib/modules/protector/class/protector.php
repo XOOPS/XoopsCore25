@@ -427,7 +427,7 @@ class Protector
         if (is_array($filepath4badips) && isset($filepath4badips[0])) {
             [$bad_ips_serialized] = $filepath4badips;
         }
-        $bad_ips = empty($bad_ips_serialized) ? [] : @unserialize($bad_ips_serialized, ['allowed_classes' => false]);
+        $bad_ips = empty($bad_ips_serialized) ? [] : @unserialize(trim($bad_ips_serialized), ['allowed_classes' => false]);
         if (!is_array($bad_ips) || isset($bad_ips[0])) {
             $bad_ips = [];
         }
@@ -478,7 +478,7 @@ class Protector
                     [$group1_ips_serialized] = $filepath4group1ips;
                 }
 
-                $group1_ips = empty($group1_ips_serialized) ? [] : @unserialize($group1_ips_serialized, ['allowed_classes' => false]);
+                $group1_ips = empty($group1_ips_serialized) ? [] : @unserialize(trim($group1_ips_serialized), ['allowed_classes' => false]);
                 if (!is_array($group1_ips)) {
                     $group1_ips = [];
                 }
