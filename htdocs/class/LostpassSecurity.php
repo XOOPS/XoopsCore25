@@ -27,7 +27,7 @@ final class LostpassSecurity
     private const CACHE_TOKEN_PREFIX = 'lostpass_tok_';
     private const CACHE_RL_PREFIX    = 'lostpass_rl_';
 
-    private readonly \XoopsDatabase $db;
+    private readonly \XoopsMySQLDatabase $db;
     private readonly int $window;
     private readonly int $ipLimit;
     private readonly int $idLimit;
@@ -36,7 +36,7 @@ final class LostpassSecurity
     private int $actkeyMaxLen = 0;
 
     public function __construct(
-        \XoopsDatabase $db,
+        \XoopsMySQLDatabase $db,
         int $window  = 900,  // 15 min
         int $ipLimit = 20,   // per IP per window
         int $idLimit = 3     // per identifier per window
@@ -289,8 +289,8 @@ final class LostpassSecurity
         }
 
         $table = $this->db->prefix('users');
-        $res = $this->db->queryF(
-            "SHOW COLUMNS FROM `{$table}` LIKE " . $this->db->quoteString('actkey')
+        $res = $this->db->query(
+            "SHOW COLUMNS FROM `{$table}` LIKE " . $this->db->quote('actkey')
         );
 
         if (!$res) {

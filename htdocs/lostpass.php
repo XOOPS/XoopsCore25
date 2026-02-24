@@ -40,7 +40,7 @@ $minPw = 12;
 $msgGeneric = _US_PWDMAILED;
 // Invalid-link message: use custom constant if defined, else fall back to generic
 $msgInvalid = defined('_US_RESETLINKINVALID')
-    ? _US_RESETLINKINVALID
+    ? constant('_US_RESETLINKINVALID')
     : $msgGeneric;
 
 // Read uid/token: GET for link click, POST for form submission
