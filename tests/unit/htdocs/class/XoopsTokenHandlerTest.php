@@ -48,7 +48,7 @@ class XoopsTokenHandlerTest extends KernelTestCase
      * ====================================================== */
 
     #[Test]
-    public function createReturnsUrlSafeToken(): void
+    public function testCreateReturnsUrlSafeToken(): void
     {
         $db = $this->createMockDatabase();
         $db->method('query')->willReturn(true);
@@ -66,7 +66,7 @@ class XoopsTokenHandlerTest extends KernelTestCase
     }
 
     #[Test]
-    public function createReturnsFalseOnDbFailure(): void
+    public function testCreateReturnsFalseOnDbFailure(): void
     {
         $db = $this->createMockDatabase();
         $db->method('query')->willReturn(false);
@@ -78,7 +78,7 @@ class XoopsTokenHandlerTest extends KernelTestCase
     }
 
     #[Test]
-    public function createRevokesExistingTokensByDefault(): void
+    public function testCreateRevokesExistingTokensByDefault(): void
     {
         $queries = [];
         $db = $this->createMockDatabase();
@@ -98,7 +98,7 @@ class XoopsTokenHandlerTest extends KernelTestCase
     }
 
     #[Test]
-    public function createSkipsRevokeWhenFlagIsFalse(): void
+    public function testCreateSkipsRevokeWhenFlagIsFalse(): void
     {
         $queries = [];
         $db = $this->createMockDatabase();
@@ -116,7 +116,7 @@ class XoopsTokenHandlerTest extends KernelTestCase
     }
 
     #[Test]
-    public function createTokensAreUnique(): void
+    public function testCreateTokensAreUnique(): void
     {
         $db = $this->createMockDatabase();
         $db->method('query')->willReturn(true);
@@ -130,7 +130,7 @@ class XoopsTokenHandlerTest extends KernelTestCase
     }
 
     #[Test]
-    public function createEnforcesMinimumTtl(): void
+    public function testCreateEnforcesMinimumTtl(): void
     {
         $capturedSql = '';
         $db = $this->createMockDatabase();
@@ -143,17 +143,17 @@ class XoopsTokenHandlerTest extends KernelTestCase
         $handler->create(1, 'test', 10, false); // 10 seconds, below MIN_TTL of 60
 
         // The expires_at should be at least now + 60, not now + 10
-        $now = time();
         $this->assertMatchesRegularExpression('/\d+, \d+, 0\)$/', $capturedSql);
         // Extract the expires_at value from the SQL
-        preg_match('/VALUES \(\d+, .+?, .+?, (\d+), (\d+), 0\)/', $capturedSql, $m);
+        $matchResult = preg_match('/VALUES \(\d+, .+?, .+?, (\d+), (\d+), 0\)/', $capturedSql, $m);
+        $this->assertSame(1, $matchResult, 'Failed to extract issuedAt and expiresAt from SQL');
         $issuedAt  = (int)$m[1];
         $expiresAt = (int)$m[2];
         $this->assertGreaterThanOrEqual(60, $expiresAt - $issuedAt);
     }
 
     #[Test]
-    public function createInsertsCorrectScope(): void
+    public function testCreateInsertsCorrectScope(): void
     {
         $capturedSql = '';
         $db = $this->createMockDatabase();
@@ -169,12 +169,32 @@ class XoopsTokenHandlerTest extends KernelTestCase
         $this->assertStringContainsString('xoops_tokens', $capturedSql);
     }
 
+    #[Test]
+    public function testCreateReturnsFalseForInvalidUid(): void
+    {
+        $db = $this->createMockDatabase();
+        $handler = new XoopsTokenHandler($db);
+
+        $this->assertFalse(@$handler->create(0, 'lostpass', 3600));
+        $this->assertFalse(@$handler->create(-1, 'lostpass', 3600));
+    }
+
+    #[Test]
+    public function testCreateReturnsFalseForEmptyScope(): void
+    {
+        $db = $this->createMockDatabase();
+        $handler = new XoopsTokenHandler($db);
+
+        $this->assertFalse(@$handler->create(1, '', 3600));
+        $this->assertFalse(@$handler->create(1, '   ', 3600));
+    }
+
     /* ========================================================
      * verify() — atomic UPDATE approach
      * ====================================================== */
 
     #[Test]
-    public function verifyReturnsTrueWhenTokenIsValid(): void
+    public function testVerifyReturnsTrueWhenTokenIsValid(): void
     {
         $db = $this->createMockDatabase();
         $db->method('query')->willReturn(true);
@@ -187,7 +207,7 @@ class XoopsTokenHandlerTest extends KernelTestCase
     }
 
     #[Test]
-    public function verifyReturnsFalseWhenNoRowAffected(): void
+    public function testVerifyReturnsFalseWhenNoRowAffected(): void
     {
         $db = $this->createMockDatabase();
         $db->method('query')->willReturn(true);
@@ -200,7 +220,7 @@ class XoopsTokenHandlerTest extends KernelTestCase
     }
 
     #[Test]
-    public function verifyReturnsFalseOnQueryFailure(): void
+    public function testVerifyReturnsFalseOnQueryFailure(): void
     {
         $db = $this->createMockDatabase();
         $db->method('query')->willReturn(false);
@@ -212,7 +232,7 @@ class XoopsTokenHandlerTest extends KernelTestCase
     }
 
     #[Test]
-    public function verifyUsesAtomicUpdate(): void
+    public function testVerifyUsesAtomicUpdate(): void
     {
         $capturedSql = '';
         $db = $this->createMockDatabase();
@@ -233,7 +253,7 @@ class XoopsTokenHandlerTest extends KernelTestCase
     }
 
     #[Test]
-    public function verifyHashesTokenWithSha256(): void
+    public function testVerifyHashesTokenWithSha256(): void
     {
         $capturedSql = '';
         $rawToken = 'my-test-token-abc';
@@ -257,7 +277,7 @@ class XoopsTokenHandlerTest extends KernelTestCase
      * ====================================================== */
 
     #[Test]
-    public function revokeByScopeUpdatesUnusedTokens(): void
+    public function testRevokeByScopeUpdatesUnusedTokens(): void
     {
         $capturedSql = '';
         $db = $this->createMockDatabase();
@@ -279,7 +299,7 @@ class XoopsTokenHandlerTest extends KernelTestCase
      * ====================================================== */
 
     #[Test]
-    public function countRecentReturnsCountFromDb(): void
+    public function testCountRecentReturnsCountFromDb(): void
     {
         $mockResult = $this->createMock(\mysqli_result::class);
         $db = $this->createMockDatabase();
@@ -294,7 +314,7 @@ class XoopsTokenHandlerTest extends KernelTestCase
     }
 
     #[Test]
-    public function countRecentReturnsZeroOnFailure(): void
+    public function testCountRecentReturnsZeroOnFailure(): void
     {
         $db = $this->createMockDatabase();
         $db->method('query')->willReturn(false);
@@ -307,7 +327,22 @@ class XoopsTokenHandlerTest extends KernelTestCase
     }
 
     #[Test]
-    public function countRecentQueriesCorrectScope(): void
+    public function testCountRecentReturnsZeroWhenFetchReturnsFalse(): void
+    {
+        $mockResult = $this->createMock(\mysqli_result::class);
+        $db = $this->createMockDatabase();
+        $db->method('query')->willReturn($mockResult);
+        $db->method('isResultSet')->willReturn(true);
+        $db->method('fetchArray')->willReturn(false);
+
+        $handler = new XoopsTokenHandler($db);
+        $count   = $handler->countRecent(1, 'lostpass', 900);
+
+        $this->assertSame(0, $count);
+    }
+
+    #[Test]
+    public function testCountRecentQueriesCorrectScope(): void
     {
         $capturedSql = '';
         $mockResult = $this->createMock(\mysqli_result::class);
@@ -331,7 +366,7 @@ class XoopsTokenHandlerTest extends KernelTestCase
      * ====================================================== */
 
     #[Test]
-    public function purgeExpiredDeletesOldUsedAndExpiredTokens(): void
+    public function testPurgeExpiredDeletesOldUsedAndExpiredTokens(): void
     {
         $capturedSql = '';
         $db = $this->createMockDatabase();
@@ -351,7 +386,7 @@ class XoopsTokenHandlerTest extends KernelTestCase
     }
 
     #[Test]
-    public function purgeExpiredIncludesUsedTokensInDeletion(): void
+    public function testPurgeExpiredIncludesUsedTokensInDeletion(): void
     {
         $capturedSql = '';
         $db = $this->createMockDatabase();
@@ -372,7 +407,7 @@ class XoopsTokenHandlerTest extends KernelTestCase
      * ====================================================== */
 
     #[Test]
-    public function endToEndCreateAndVerifyShareSameHash(): void
+    public function testEndToEndCreateAndVerifyShareSameHash(): void
     {
         $insertedHash = '';
         $verifiedHash = '';

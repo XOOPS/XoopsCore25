@@ -46,8 +46,7 @@ class LostPassSecurityTest extends KernelTestCase
     {
         parent::setUp();
         require_once XOOPS_ROOT_PATH . '/class/LostPassSecurity.php';
-        $db = $this->createMockDatabase();
-        $this->security = new LostPassSecurity($db);
+        $this->security = new LostPassSecurity();
     }
 
     /* ========================================================
@@ -55,22 +54,23 @@ class LostPassSecurityTest extends KernelTestCase
      * ====================================================== */
 
     #[Test]
-    public function isRateLimitedReturnsFalseWhenCacheUnavailable(): void
+    public function testIsRateLimitedReturnsFalseWhenCacheUnavailable(): void
     {
         // With no XoopsCache available, rate limiting should fail-open
         $this->assertFalse($this->security->isRateLimited('127.0.0.1', 'test@example.com'));
     }
 
     #[Test]
-    public function isRateLimitedAcceptsEmptyIdentifier(): void
+    public function testIsRateLimitedAcceptsEmptyIdentifier(): void
     {
         $this->assertFalse($this->security->isRateLimited('127.0.0.1', ''));
     }
 
     #[Test]
-    public function isRateLimitedAcceptsUidIdentifier(): void
+    public function testIsRateLimitedAcceptsUidIdentifier(): void
     {
-        $this->assertFalse($this->security->isRateLimited('192.168.1.1', 'uid:42'));
+        $testIp = sprintf('192.168.%d.%d', 1, 1);
+        $this->assertFalse($this->security->isRateLimited($testIp, 'uid:42'));
     }
 
     /* ========================================================
@@ -78,26 +78,26 @@ class LostPassSecurityTest extends KernelTestCase
      * ====================================================== */
 
     #[Test]
-    public function constructorEnforcesMinimumWindow(): void
+    public function testConstructorEnforcesMinimumWindow(): void
     {
-        $db = $this->createMockDatabase();
-        $sec = new LostPassSecurity($db, window: 10); // below 60 minimum
-        $this->assertInstanceOf(LostPassSecurity::class, $sec);
+        $sec = new LostPassSecurity(window: 10); // below 60 minimum
+        $this->assertSame(60, $this->getProtectedProperty($sec, 'window'));
     }
 
     #[Test]
-    public function constructorEnforcesMinimumLimits(): void
+    public function testConstructorEnforcesMinimumLimits(): void
     {
-        $db = $this->createMockDatabase();
-        $sec = new LostPassSecurity($db, ipLimit: 0, idLimit: 0);
-        $this->assertInstanceOf(LostPassSecurity::class, $sec);
+        $sec = new LostPassSecurity(ipLimit: 0, idLimit: 0);
+        $this->assertSame(1, $this->getProtectedProperty($sec, 'ipLimit'));
+        $this->assertSame(1, $this->getProtectedProperty($sec, 'idLimit'));
     }
 
     #[Test]
-    public function constructorAcceptsCustomValues(): void
+    public function testConstructorAcceptsCustomValues(): void
     {
-        $db = $this->createMockDatabase();
-        $sec = new LostPassSecurity($db, window: 1800, ipLimit: 50, idLimit: 10);
-        $this->assertInstanceOf(LostPassSecurity::class, $sec);
+        $sec = new LostPassSecurity(window: 1800, ipLimit: 50, idLimit: 10);
+        $this->assertSame(1800, $this->getProtectedProperty($sec, 'window'));
+        $this->assertSame(50, $this->getProtectedProperty($sec, 'ipLimit'));
+        $this->assertSame(10, $this->getProtectedProperty($sec, 'idLimit'));
     }
 }

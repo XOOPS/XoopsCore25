@@ -144,7 +144,7 @@ require_once __DIR__ . '/class/XoopsTokenHandler.php';
 require_once __DIR__ . '/class/LostPassSecurity.php';  // rate limiting only
 
 $tokenHandler = new XoopsTokenHandler($xoopsDB);
-$rateLimiter  = new LostPassSecurity($xoopsDB);
+$rateLimiter  = new LostPassSecurity();
 
 // MODE B: Request reset
 if ($rateLimiter->isRateLimited($ip, $email)) { /* block */ }

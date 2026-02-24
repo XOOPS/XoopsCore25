@@ -39,24 +39,20 @@ final class LostPassSecurity
 {
     private const CACHE_RL_PREFIX = 'lostpass_rl_';
 
-    private readonly \XoopsMySQLDatabase $db;
     private readonly int $window;
     private readonly int $ipLimit;
     private readonly int $idLimit;
 
     /**
-     * @param \XoopsMySQLDatabase $db      Database connection
-     * @param int                 $window  Rate-limit window in seconds (min 60)
-     * @param int                 $ipLimit Max requests per IP per window
-     * @param int                 $idLimit Max requests per identifier per window
+     * @param int $window  Rate-limit window in seconds (min 60)
+     * @param int $ipLimit Max requests per IP per window (at limit = blocked)
+     * @param int $idLimit Max requests per identifier per window (at limit = blocked)
      */
     public function __construct(
-        \XoopsMySQLDatabase $db,
         int $window  = 900,  // 15 min
         int $ipLimit = 20,   // per IP per window
         int $idLimit = 3     // per identifier per window
     ) {
-        $this->db      = $db;
         $this->window  = max(60, $window);
         $this->ipLimit = max(1, $ipLimit);
         $this->idLimit = max(1, $idLimit);

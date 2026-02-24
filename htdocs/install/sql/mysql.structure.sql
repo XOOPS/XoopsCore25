@@ -588,7 +588,8 @@ CREATE TABLE tokens (
   expires_at int unsigned        NOT NULL DEFAULT 0,
   used_at    int unsigned        NOT NULL DEFAULT 0,
   PRIMARY KEY (token_id),
-  KEY idx_uid_scope_hash (uid, scope, hash)
+  KEY idx_uid_scope_hash (uid, scope, hash),
+  KEY idx_issued_at (issued_at)
 ) ENGINE=InnoDB;
 # --------------------------------------------------------
 

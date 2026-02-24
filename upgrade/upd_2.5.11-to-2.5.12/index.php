@@ -170,12 +170,15 @@ class Upgrade_2512 extends XoopsUpgrade
             `expires_at` int unsigned        NOT NULL DEFAULT 0,
             `used_at`    int unsigned        NOT NULL DEFAULT 0,
             PRIMARY KEY (`token_id`),
-            KEY `idx_uid_scope_hash` (`uid`, `scope`, `hash`)
+            KEY `idx_uid_scope_hash` (`uid`, `scope`, `hash`),
+            KEY `idx_issued_at` (`issued_at`)
         ) ENGINE=InnoDB;";
 
         $result = $GLOBALS['xoopsDB']->query($sql);
         if (!$result) {
-            $this->logs[] = 'Failed to create tokens table.';
+            $errno = $GLOBALS['xoopsDB']->errno();
+            $error = $GLOBALS['xoopsDB']->error();
+            $this->logs[] = sprintf('Failed to create tokens table. Error: %s - %s', $errno, $error);
             return false;
         }
         return true;

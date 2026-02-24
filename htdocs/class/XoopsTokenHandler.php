@@ -70,11 +70,28 @@ final class XoopsTokenHandler
         int    $ttl = 3600,
         bool   $revokePrevious = true
     ): string|false {
+        if ($uid <= 0 || trim($scope) === '') {
+            trigger_error(
+                basename(__FILE__) . ': create() requires uid > 0 and non-empty scope',
+                E_USER_WARNING
+            );
+            return false;
+        }
+
         if ($revokePrevious) {
             $this->revokeByScope($uid, $scope);
         }
 
-        $rawToken  = rtrim(strtr(base64_encode(random_bytes(32)), '+/', '-_'), '=');
+        try {
+            $bytes = random_bytes(32);
+        } catch (\Throwable $e) {
+            trigger_error(
+                sprintf('%s::create() failed to generate secure random token: %s', __CLASS__, $e->getMessage()),
+                E_USER_WARNING
+            );
+            return false;
+        }
+        $rawToken  = rtrim(strtr(base64_encode($bytes), '+/', '-_'), '=');
         $hash      = hash('sha256', $rawToken);
         $now       = time();
         $expiresAt = $now + max(self::MIN_TTL, $ttl);
@@ -181,7 +198,7 @@ final class XoopsTokenHandler
 
         $row = $this->db->fetchArray($result);
 
-        return isset($row['cnt']) ? (int)$row['cnt'] : 0;
+        return is_array($row) && isset($row['cnt']) ? (int)$row['cnt'] : 0;
     }
 
     /**

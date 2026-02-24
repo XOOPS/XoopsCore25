@@ -29,7 +29,7 @@ require_once __DIR__ . '/class/LostPassSecurity.php';
 
 /** @var XoopsMySQLDatabase $xoopsDB */
 $tokenHandler = new XoopsTokenHandler($xoopsDB);
-$rateLimiter  = new LostPassSecurity($xoopsDB);
+$rateLimiter  = new LostPassSecurity();
 /** @var XoopsMemberHandler $member_handler */
 $member_handler = xoops_getHandler('member');
 
@@ -37,16 +37,9 @@ $member_handler = xoops_getHandler('member');
 $config_handler = xoops_getHandler('config');
 $xoopsConfigUser = $config_handler->getConfigsByCat(XOOPS_CONF_USER);
 
-// Resolve client IP (supports reverse proxy / CDN via X-Forwarded-For)
+// Use REMOTE_ADDR only — X-Forwarded-For is client-spoofable and would
+// let attackers bypass rate limiting by rotating the header value.
 $ip = $_SERVER['REMOTE_ADDR'] ?? '0.0.0.0';
-if (!empty($_SERVER['HTTP_X_FORWARDED_FOR'])) {
-    // Take the first (leftmost) IP — the original client
-    $forwarded = explode(',', $_SERVER['HTTP_X_FORWARDED_FOR']);
-    $candidate = trim($forwarded[0]);
-    if (filter_var($candidate, FILTER_VALIDATE_IP)) {
-        $ip = $candidate;
-    }
-}
 $minPw = max(8, (int)($xoopsConfigUser['minpass'] ?? 8));
 
 // Generic message used on all exit paths to prevent enumeration
@@ -154,9 +147,10 @@ if (($_SERVER['REQUEST_METHOD'] ?? '') !== 'POST') {
     exit();
 }
 
-// CSRF check on email submission
+// CSRF check on email submission — form posts token as hidden field "t"
+$csrfToken = Request::getString('t', '', 'POST');
 if (isset($GLOBALS['xoopsSecurity']) && is_object($GLOBALS['xoopsSecurity'])) {
-    if (!$GLOBALS['xoopsSecurity']->check()) {
+    if (!$GLOBALS['xoopsSecurity']->check(true, $csrfToken)) {
         redirect_header('user.php', 3, $msgGeneric, false);
         exit();
     }
@@ -189,7 +183,12 @@ if (!empty($users) && is_object($users[0])) {
         if ($tokenHandler->countRecent($userUid, 'lostpass', 900) === 0) {
             $rawToken = $tokenHandler->create($userUid, 'lostpass', 3600);
 
-            if ($rawToken !== false) {
+            if ($rawToken === false) {
+                trigger_error(
+                    basename(__FILE__) . ': token creation failed for uid ' . $userUid,
+                    E_USER_WARNING
+                );
+            } else {
                 $resetLink = XOOPS_URL . '/lostpass.php?uid=' . $userUid
                            . '&token=' . urlencode($rawToken);
 
