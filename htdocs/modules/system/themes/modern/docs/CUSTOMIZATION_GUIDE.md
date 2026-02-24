@@ -1,4 +1,4 @@
-![alt XOOPS CMS](https://xoops.org/images/logoXoops4GithubRepository.png)
+![XOOPS CMS](https://xoops.org/images/logoXoops4GithubRepository.png)
 # Modern Theme — Customization Guide
 
 A practical guide for **site owners and theme designers** who want to customize the Modern admin theme's appearance without touching the theme's core files.
@@ -41,10 +41,10 @@ A practical guide for **site owners and theme designers** who want to customize 
 
 The theme loads five CSS files in this exact order:
 
-```
+```text
 1. modern.css   ← Theme layout (sidebar, header, cards) — replace wholesale on updates
 2. xoops.css    ← XOOPS admin elements (tables, forms, tabs) — maintained by XOOPS team
-3. dark.css     ← Dark mode colour palette
+3. dark.css     ← Dark mode color palette
 4. fixes.css    ← !important rules to beat XOOPS core inline styles
 5. custom.css   ← YOUR customizations ← loaded last, wins over everything
 ```
@@ -69,7 +69,7 @@ Because `custom.css` is last in the cascade, most of your rules will work **with
 
 ### File location
 
-```
+```text
 modules/system/themes/modern/css/custom.css
 ```
 
@@ -304,7 +304,7 @@ XOOPS sets the `<body id="">` to the module's `dirname`. Use it to scope rules t
 }
 ```
 
-This is the safest way to customise one module without affecting others.
+This is the safest way to customize one module without affecting others.
 
 ---
 

@@ -1,4 +1,4 @@
-![alt XOOPS CMS](https://xoops.org/images/logoXoops4GithubRepository.png)
+![XOOPS CMS](https://xoops.org/images/logoXoops4GithubRepository.png)
 # Modern Admin Theme — Developer & Designer Guide
 
 An in-depth technical reference for designers and developers who want to understand, customize, or extend the Modern admin theme.

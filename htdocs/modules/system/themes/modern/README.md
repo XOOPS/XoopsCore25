@@ -1,4 +1,4 @@
-![alt XOOPS CMS](https://xoops.org/images/logoXoops4GithubRepository.png)
+![XOOPS CMS](https://xoops.org/images/logoXoops4GithubRepository.png)
 # XOOPS Modern Admin Theme
 
 A modern, responsive admin theme for XOOPS 2.5.12 with an enhanced dashboard, dark mode, customizer panel, module widget system, and configurable content tracking.

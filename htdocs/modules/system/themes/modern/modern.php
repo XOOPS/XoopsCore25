@@ -80,7 +80,7 @@ class XoopsGuiModern extends XoopsSystemGui
         $xoTheme->addStylesheet(XOOPS_ADMINTHEME_URL . '/modern/css/fixes.css');
         // custom.css is loaded last so it wins over everything; only load if it exists
         // (absent on fresh installs until the admin creates it, never shipped in updates)
-        if (file_exists(XOOPS_PATH . '/modules/system/themes/modern/css/custom.css')) {
+        if (file_exists(__DIR__ . '/css/custom.css')) {
             $xoTheme->addStylesheet(XOOPS_ADMINTHEME_URL . '/modern/css/custom.css');
         }
 
@@ -98,7 +98,7 @@ class XoopsGuiModern extends XoopsSystemGui
 
         // Get user preference for dark mode
 //        $darkMode = filter_input(INPUT_COOKIE, 'xoops_dark_mode', FILTER_SANITIZE_STRING) ?: '0';
-        $darkMode = filter_input(INPUT_COOKIE, 'xoops_dark_mode') ?? '0';
+        $darkMode = filter_input(INPUT_COOKIE, 'xoops_dark_mode') ?: '0';
         $darkMode = htmlspecialchars($darkMode, ENT_QUOTES | ENT_SUBSTITUTE, 'UTF-8');
         $tpl->assign('dark_mode', $darkMode);
 

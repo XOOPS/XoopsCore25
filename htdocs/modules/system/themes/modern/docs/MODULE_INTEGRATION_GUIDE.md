@@ -1,4 +1,4 @@
-![alt XOOPS CMS](https://xoops.org/images/logoXoops4GithubRepository.png)
+![XOOPS CMS](https://xoops.org/images/logoXoops4GithubRepository.png)
 # Module Integration Guide for Modern Theme
 
 ## Overview

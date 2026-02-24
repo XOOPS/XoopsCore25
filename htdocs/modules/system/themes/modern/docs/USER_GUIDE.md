@@ -1,4 +1,4 @@
-![alt XOOPS CMS](https://xoops.org/images/logoXoops4GithubRepository.png)
+![XOOPS CMS](https://xoops.org/images/logoXoops4GithubRepository.png)
 # Modern Admin Theme — User Guide
 
 A practical guide for XOOPS site administrators who want to get the most out of the Modern admin theme.

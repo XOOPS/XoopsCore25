@@ -28,7 +28,7 @@
     <div class="header-actions">
         <button id="darkModeToggle" class="btn-icon" title="<{$smarty.const._MODERN_TOGGLE_DARK_MODE}>">
             <span class="icon-moon">&#x1F319;</span>
-            <span class="icon-sun">☀️</span>
+            <span class="icon-sun">&#x2600;&#xFE0F;</span>
         </button>
     </div>
 </header>
