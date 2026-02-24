@@ -389,7 +389,7 @@ final class LostpassSecurity
             "SHOW COLUMNS FROM `{$table}` LIKE " . $this->db->quote('actkey')
         );
 
-        if (!$this->db->isResultSet($result)) {
+        if (!$this->db->isResultSet($result) || !$result instanceof \mysqli_result) {
             $this->actkeyMaxLen = -1;
             return null;
         }
