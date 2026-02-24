@@ -547,7 +547,7 @@ CREATE TABLE users (
   user_from varchar(100) NOT NULL default '',
   user_sig tinytext,
   user_viewemail tinyint(1) unsigned NOT NULL default '0',
-  actkey varchar(8) NOT NULL default '',
+  actkey varchar(100) NOT NULL default '',
   user_aim varchar(18) NOT NULL default '',
   user_yim varchar(25) NOT NULL default '',
   user_msnm varchar(100) NOT NULL default '',
