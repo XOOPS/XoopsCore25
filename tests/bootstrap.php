@@ -523,6 +523,44 @@ if (!defined('_AUTH_LDAP_START_TLS_FAILED')) {
 if (!defined('_US_INCORRECTLOGIN')) {
     define('_US_INCORRECTLOGIN', 'Incorrect Login!');
 }
+
+// Lostpass language constants
+if (!defined('_US_PWDMAILED')) {
+    define('_US_PWDMAILED', 'If a matching account was found, an email with instructions has been sent.');
+}
+if (!defined('_US_ENTERPWD')) {
+    define('_US_ENTERPWD', 'Please enter a password.');
+}
+if (!defined('_US_PASSNOTSAME')) {
+    define('_US_PASSNOTSAME', 'The two passwords do not match.');
+}
+if (!defined('_US_PWDTOOSHORT')) {
+    define('_US_PWDTOOSHORT', 'Password must be at least %s characters.');
+}
+if (!defined('_US_MAILPWDNG')) {
+    define('_US_MAILPWDNG', 'Failed to update password. Please try again.');
+}
+if (!defined('_US_NEWPWDREQ')) {
+    define('_US_NEWPWDREQ', 'Password Reset Request at %s');
+}
+if (!defined('_US_PASSWORD')) {
+    define('_US_PASSWORD', 'Password');
+}
+if (!defined('_US_VERIFYPASS')) {
+    define('_US_VERIFYPASS', 'Verify Password');
+}
+if (!defined('_US_SUBMIT')) {
+    define('_US_SUBMIT', 'Submit');
+}
+if (!defined('_US_LOSTPASSWORD')) {
+    define('_US_LOSTPASSWORD', 'Lost Password');
+}
+if (!defined('_US_SORRYNOTFOUND')) {
+    define('_US_SORRYNOTFOUND', 'Sorry, no matching user was found.');
+}
+if (!defined('_US_CONFMAIL')) {
+    define('_US_CONFMAIL', 'A confirmation email has been sent.');
+}
 if (!defined('_XO_ER_CLASSNOTFOUND')) {
     define('_XO_ER_CLASSNOTFOUND', 'Class Not Found');
 }
