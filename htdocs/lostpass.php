@@ -239,6 +239,7 @@ exit();
  * @param string    $message General message (e.g. save failure)
  *
  * @return void
+ * @throws \SmartyException If template variable assignment fails
  */
 function lostpass_assign_form(\XoopsTpl $tpl, int $uid, string $token, int $minPw, array $errors = [], string $message = ''): void
 {

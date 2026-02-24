@@ -370,7 +370,8 @@ class LostpassSecurityTest extends KernelTestCase
     {
         // Mock DB to report actkey column as VARCHAR(100)
         $db = $this->createMockDatabase();
-        $db->method('query')->willReturn('col_result');
+        $mockResult = $this->createMock(\mysqli_result::class);
+        $db->method('query')->willReturn($mockResult);
         $db->method('isResultSet')->willReturn(true);
         $db->method('fetchArray')->willReturn(['Type' => 'varchar(100)']);
 
@@ -405,7 +406,8 @@ class LostpassSecurityTest extends KernelTestCase
     {
         // Mock DB to report actkey column as VARCHAR(100)
         $db = $this->createMockDatabase();
-        $db->method('query')->willReturn('col_result');
+        $mockResult = $this->createMock(\mysqli_result::class);
+        $db->method('query')->willReturn($mockResult);
         $db->method('isResultSet')->willReturn(true);
         $db->method('fetchArray')->willReturn(['Type' => 'varchar(100)']);
 
