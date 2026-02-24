@@ -1,7 +1,8 @@
 # RFC: Generic Token Handler for XOOPS
 
-**Status:** Draft for discussion
+**Status:** Revised after peer review (4 independent reviews incorporated)
 **Context:** Kevin's review of PR #1624 — tokens should be a shared mechanism, not packed into actkey
+**Requires:** PHP 8.1+ (readonly properties, union return types)
 
 ---
 
@@ -18,7 +19,7 @@ XOOPS needs tokens in at least two places today (activation, password reset) and
 
 ## Solution
 
-One table, one handler, four methods.
+One table, one handler, five methods.
 
 ### Table: `xoops_tokens`
 
@@ -27,186 +28,36 @@ CREATE TABLE `xoops_tokens` (
     `token_id`   int unsigned        NOT NULL AUTO_INCREMENT,
     `uid`        mediumint unsigned  NOT NULL DEFAULT 0,
     `scope`      varchar(32)         NOT NULL DEFAULT '',
-    `hash`       varchar(64)         NOT NULL DEFAULT '',
+    `hash`       char(64)            NOT NULL DEFAULT '',
     `issued_at`  int unsigned        NOT NULL DEFAULT 0,
     `expires_at` int unsigned        NOT NULL DEFAULT 0,
     `used_at`    int unsigned        NOT NULL DEFAULT 0,
     PRIMARY KEY (`token_id`),
-    KEY `idx_uid_scope` (`uid`, `scope`),
-    KEY `idx_hash` (`hash`)
+    KEY `idx_uid_scope_hash` (`uid`, `scope`, `hash`)
 ) ENGINE=InnoDB;
 ```
 
 **Design decisions:**
 
 - `scope` — string like `'lostpass'`, `'activation'`. Simple, readable, extensible.
-- `hash` — SHA-256 of the raw token. Raw token is never stored, only emailed.
+- `hash` — `CHAR(64)`: SHA-256 hex digest is always exactly 64 characters. `CHAR` is slightly more efficient than `VARCHAR` for fixed-length data in InnoDB.
 - `used_at` — 0 means unused. Nonzero = consumed. Single-use enforcement without deleting rows (auditable).
-- Multiple tokens per user allowed (different scopes, or even same scope for re-requests).
+- Single composite index `(uid, scope, hash)` covers the `verify()` query as a single index lookup. Also covers `revokeByScope()` and `countRecent()` queries on the `(uid, scope)` prefix.
 - No IP column — rate limiting is a separate concern handled by the caller (via XoopsCache, as it is today).
 
 ### Handler: `XoopsTokenHandler`
 
-```php
-<?php
-declare(strict_types=1);
+Five methods: `create`, `verify`, `revokeByScope`, `countRecent`, `purgeExpired`.
 
-defined('XOOPS_ROOT_PATH') || exit('Restricted access');
+**Key improvements over the original draft (from peer review):**
 
-/**
- * Generic scoped token handler for XOOPS.
- *
- * Provides create/verify/revoke for any token-based flow:
- * password reset, account activation, email verification, etc.
- *
- * @category  Xoops
- * @package   Core
- * @author    XOOPS Team
- * @copyright (c) 2000-2026 XOOPS Project (https://xoops.org)
- * @license   GNU GPL 2 (https://www.gnu.org/licenses/gpl-2.0.html)
- * @link      https://xoops.org
- */
-final class XoopsTokenHandler
-{
-    private readonly \XoopsMySQLDatabase $db;
+1. **Atomic `verify()`** — single UPDATE + `getAffectedRows()` eliminates the TOCTOU race condition in the original SELECT-then-UPDATE approach.
+2. **Auto-revoke on `create()`** — previous unused tokens for the same scope are revoked by default, ensuring only the latest link works (OWASP recommendation).
+3. **`countRecent()` method** — keeps cooldown-check SQL inside the handler, not leaked into callers.
+4. **Fixed `purgeExpired()` logic** — now correctly cleans up used-but-not-yet-expired tokens.
+5. **`MIN_TTL` constant** — documents the 60-second floor instead of silent enforcement.
 
-    public function __construct(\XoopsMySQLDatabase $db)
-    {
-        $this->db = $db;
-    }
-
-    /**
-     * Create a token for a user+scope. Returns the raw token (for email).
-     *
-     * @param int    $uid   User ID
-     * @param string $scope Token scope (e.g. 'lostpass', 'activation')
-     * @param int    $ttl   Time-to-live in seconds
-     *
-     * @return string|false Raw token string, or false on failure
-     */
-    public function create(int $uid, string $scope, int $ttl = 3600): string|false
-    {
-        $rawToken  = rtrim(strtr(base64_encode(random_bytes(32)), '+/', '-_'), '=');
-        $hash      = hash('sha256', $rawToken);
-        $now       = time();
-        $expiresAt = $now + max(60, $ttl);
-
-        $table = $this->db->prefix('tokens');
-        $sql   = sprintf(
-            "INSERT INTO `%s` (`uid`, `scope`, `hash`, `issued_at`, `expires_at`, `used_at`)"
-            . " VALUES (%d, %s, %s, %d, %d, 0)",
-            $table,
-            $uid,
-            $this->db->quote($scope),
-            $this->db->quote($hash),
-            $now,
-            $expiresAt
-        );
-
-        $result = $this->db->query($sql);
-        if (!$result) {
-            return false;
-        }
-
-        return $rawToken;
-    }
-
-    /**
-     * Verify a raw token for a user+scope. Marks it as used if valid.
-     *
-     * @param int    $uid      User ID
-     * @param string $scope    Token scope
-     * @param string $rawToken Raw token from the URL/form
-     *
-     * @return bool true if valid and now consumed
-     */
-    public function verify(int $uid, string $scope, string $rawToken): bool
-    {
-        $hash  = hash('sha256', $rawToken);
-        $table = $this->db->prefix('tokens');
-        $now   = time();
-
-        // Find a matching, unused, non-expired token
-        $sql = sprintf(
-            "SELECT `token_id` FROM `%s`"
-            . " WHERE `uid` = %d AND `scope` = %s AND `hash` = %s"
-            . " AND `used_at` = 0 AND `expires_at` > %d"
-            . " LIMIT 1",
-            $table,
-            $uid,
-            $this->db->quote($scope),
-            $this->db->quote($hash),
-            $now
-        );
-
-        $result = $this->db->query($sql);
-        if (!$this->db->isResultSet($result) || !$result instanceof \mysqli_result) {
-            return false;
-        }
-
-        $row = $this->db->fetchArray($result);
-        if (!$row) {
-            return false;
-        }
-
-        // Mark as used (single-use)
-        $tokenId = (int)$row['token_id'];
-        $this->db->query(sprintf(
-            "UPDATE `%s` SET `used_at` = %d WHERE `token_id` = %d",
-            $table,
-            $now,
-            $tokenId
-        ));
-
-        return true;
-    }
-
-    /**
-     * Revoke all unused tokens for a user+scope.
-     *
-     * @param int    $uid   User ID
-     * @param string $scope Token scope
-     *
-     * @return void
-     */
-    public function revokeByScope(int $uid, string $scope): void
-    {
-        $table = $this->db->prefix('tokens');
-        $now   = time();
-
-        $this->db->query(sprintf(
-            "UPDATE `%s` SET `used_at` = %d WHERE `uid` = %d AND `scope` = %s AND `used_at` = 0",
-            $table,
-            $now,
-            $uid,
-            $this->db->quote($scope)
-        ));
-    }
-
-    /**
-     * Delete expired and used tokens older than the given age.
-     *
-     * @param int $maxAge Seconds to keep used/expired tokens (default 7 days)
-     *
-     * @return void
-     */
-    public function purgeExpired(int $maxAge = 604800): void
-    {
-        $table  = $this->db->prefix('tokens');
-        $cutoff = time() - max(0, $maxAge);
-
-        // Delete tokens that are either expired or used, and older than cutoff
-        $this->db->query(sprintf(
-            "DELETE FROM `%s` WHERE `expires_at` < %d AND `issued_at` < %d",
-            $table,
-            time(),
-            $cutoff
-        ));
-    }
-}
-```
-
-**That's the entire handler. Four methods, no magic, no inheritance.**
+See `htdocs/class/XoopsTokenHandler.php` for the implementation.
 
 ---
 
@@ -214,9 +65,9 @@ final class XoopsTokenHandler
 
 ### Password Reset (`lostpass.php`)
 
-**Before (current):**
+**Before (PR #1624):**
 ```php
-$security = new LostpassSecurity($xoopsDB);
+$security = new LostPassSecurity($xoopsDB);
 $rawToken = $security->generateToken();
 $hash     = $security->hashToken($rawToken);
 $issuedAt = time();
@@ -275,7 +126,7 @@ Any new feature that needs "give user a link, verify it later" just calls
 
 ## What happens to existing code
 
-### `LostpassSecurity` — simplify to rate limiter only
+### `LostPassSecurity` — simplify to rate limiter only
 
 Strip out everything token-related. Keep only:
 - `isAbusing()` — rate limiting via XoopsCache
@@ -283,19 +134,21 @@ Strip out everything token-related. Keep only:
 - Protector integration
 - Cache helpers (used by rate limiter)
 
-Rename to `RateLimiter` or keep as `LostpassSecurity` (since it's lostpass-specific rate limiting).
+Keep as `LostPassSecurity` for now (lostpass-specific rate limiting).
+Can be generalized to `XoopsRateLimiter` in a future PR.
 
 ### `lostpass.php` — much simpler
 
 ```php
 require_once __DIR__ . '/class/XoopsTokenHandler.php';
-require_once __DIR__ . '/class/LostpassSecurity.php';  // rate limiting only
+require_once __DIR__ . '/class/LostPassSecurity.php';  // rate limiting only
 
 $tokenHandler = new XoopsTokenHandler($xoopsDB);
-$rateLimiter  = new LostpassSecurity($xoopsDB);
+$rateLimiter  = new LostPassSecurity($xoopsDB);
 
 // MODE B: Request reset
 if ($rateLimiter->isAbusing($ip, $email)) { /* block */ }
+if ($tokenHandler->countRecent($uid, 'lostpass', 900) > 0) { /* cooldown */ }
 $rawToken = $tokenHandler->create($uid, 'lostpass', 3600);
 // ... send email ...
 
@@ -322,63 +175,8 @@ The VARCHAR(100) expansion from PR #1624 is harmless and can stay until actkey i
 
 ## Migration (upgrade script)
 
-Add to `upgrade/upd_2.5.11-to-2.5.12/index.php`:
-
-```php
-public function check_createtokenstable()
-{
-    $table = $GLOBALS['xoopsDB']->prefix('tokens');
-    $result = $GLOBALS['xoopsDB']->query("SHOW TABLES LIKE " . $GLOBALS['xoopsDB']->quote($table));
-    if (!$GLOBALS['xoopsDB']->isResultSet($result) || !$result instanceof \mysqli_result) {
-        return false;
-    }
-    return (bool)$GLOBALS['xoopsDB']->fetchArray($result);
-}
-
-public function apply_createtokenstable()
-{
-    $table = $GLOBALS['xoopsDB']->prefix('tokens');
-    $sql = "CREATE TABLE IF NOT EXISTS `{$table}` (
-        `token_id`   int unsigned        NOT NULL AUTO_INCREMENT,
-        `uid`        mediumint unsigned  NOT NULL DEFAULT 0,
-        `scope`      varchar(32)         NOT NULL DEFAULT '',
-        `hash`       varchar(64)         NOT NULL DEFAULT '',
-        `issued_at`  int unsigned        NOT NULL DEFAULT 0,
-        `expires_at` int unsigned        NOT NULL DEFAULT 0,
-        `used_at`    int unsigned        NOT NULL DEFAULT 0,
-        PRIMARY KEY (`token_id`),
-        KEY `idx_uid_scope` (`uid`, `scope`),
-        KEY `idx_hash` (`hash`)
-    ) ENGINE=InnoDB;";
-
-    $result = $GLOBALS['xoopsDB']->query($sql);
-    if (!$result) {
-        $this->logs[] = 'Failed to create tokens table.';
-        return false;
-    }
-    return true;
-}
-```
-
-Also add to `mysql.structure.sql` for new installations.
-
----
-
-## Cooldown check (Kevin's suggestion)
-
-"You have already requested a reset token in the last 15 minutes" — this is just a query:
-
-```php
-// In lostpass.php, before creating a new token:
-$table = $xoopsDB->prefix('tokens');
-$sql = sprintf(
-    "SELECT COUNT(*) AS cnt FROM `%s` WHERE `uid` = %d AND `scope` = 'lostpass' AND `issued_at` > %d",
-    $table, $uid, time() - 900
-);
-// If cnt > 0, skip sending another email
-```
-
-This doesn't need to be in the handler. The caller knows its own business rules.
+Added to `upgrade/upd_2.5.11-to-2.5.12/index.php` as a `createtokenstable` task.
+Also added to `mysql.structure.sql` for new installations.
 
 ---
 
@@ -386,7 +184,7 @@ This doesn't need to be in the handler. The caller knows its own business rules.
 
 - Smarty template (`system_lostpass.tpl`)
 - `lostpass_assign_form()` helper
-- Rate limiting via XoopsCache (in simplified LostpassSecurity)
+- Rate limiting via XoopsCache (in simplified LostPassSecurity)
 - Protector integration
 - Anti-enumeration (generic responses)
 - CSRF on reset form
@@ -395,41 +193,40 @@ This doesn't need to be in the handler. The caller knows its own business rules.
 
 ## What we remove
 
-- `LostpassSecurity::packActkey()` / `unpackActkey()`
-- `LostpassSecurity::isLostpassActkey()`
-- `LostpassSecurity::canFitActkey()` / `getActkeyMaxLen()`
-- `LostpassSecurity::readPayload()` / `storePayload()` / `clearPayloadInMemory()`
+- `LostPassSecurity::packActkey()` / `unpackActkey()`
+- `LostPassSecurity::isLostpassActkey()`
+- `LostPassSecurity::canFitActkey()` / `getActkeyMaxLen()`
+- `LostPassSecurity::readPayload()` / `storePayload()` / `clearPayloadInMemory()`
 - Cache fallback for token storage (`CACHE_TOKEN_PREFIX`)
-- `LostpassSecurity::isExpired()` (the DB handles expiry now)
-- `LostpassSecurity::generateToken()` / `hashToken()` (moved to handler)
+- `LostPassSecurity::isExpired()` (the DB handles expiry now)
+- `LostPassSecurity::generateToken()` / `hashToken()` (moved to handler)
 - actkey column introspection (`SHOW COLUMNS`)
 
 ## Complexity comparison
 
-| Metric | Current (PR #1624) | Proposed |
-|--------|-------------------|----------|
-| Token storage methods | 8 (pack/unpack/read/store/clear/isLostpass/canFit/getMaxLen) | 2 (create/verify) |
+| Metric | Before (PR #1624) | After |
+|--------|-------------------|-------|
+| Token storage methods | 8 (pack/unpack/read/store/clear/isLostpass/canFit/getMaxLen) | 5 (create/verify/revoke/countRecent/purge) |
 | Storage locations | 2 (actkey column + XoopsCache) | 1 (tokens table) |
 | Column introspection | Yes (SHOW COLUMNS at runtime) | No |
 | Cache fallback | Yes | No |
 | Source tracking | Yes ('actkey' vs 'cache') | No |
 | Reusable for other features | No | Yes |
-| Lines in handler | ~300 (LostpassSecurity) | ~120 (XoopsTokenHandler) |
+| Lines in handler | ~300 (LostPassSecurity) | ~130 (XoopsTokenHandler) |
+| Race condition | Possible (non-atomic verify) | None (atomic UPDATE) |
 
 ---
 
-## Open questions for discussion
+## Resolved questions (from peer review consensus)
 
-1. **Should `purgeExpired()` run on a cron, or lazily on each request?**
-   Suggestion: cron via XOOPS preload event, with a lazy fallback.
+1. **`purgeExpired()` — cron or lazy?**
+   Cron via XOOPS preload event recommended. Lazy probabilistic fallback (1-in-N on `create()`) can be added later if needed.
 
-2. **Should the handler be a kernel handler (extends XoopsObjectHandler)?**
-   I kept it standalone for simplicity, but it could follow the XOOPS handler pattern if preferred.
+2. **Kernel handler or standalone?**
+   Standalone. The lightweight approach is easier to test and maintain. Can be registered via `xoops_getHandler('token')` in a follow-up if desired.
 
-3. **Should we rename `LostpassSecurity` to something more generic like `RateLimiter`?**
-   The rate limiting logic isn't lostpass-specific. Other features might want it too.
+3. **Rename `LostPassSecurity`?**
+   Keep as-is for now. Generalize to `XoopsRateLimiter` in a separate PR when other features need rate limiting.
 
-4. **Migration of existing lostpass tokens in actkey column?**
-   Users with a pending `lp|...` actkey after the upgrade would lose their reset link.
-   Options: (a) accept it — they can request a new one, (b) migrate during upgrade.
-   Suggestion: (a) — it's a one-time edge case.
+4. **Migration of existing lostpass tokens?**
+   Accept the loss — users can request a new reset link. Writing a migration for ephemeral 1-hour tokens is poor ROI.

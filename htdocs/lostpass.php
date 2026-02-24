@@ -24,10 +24,12 @@ $xoopsPreload->triggerEvent('core.lostpass.start');
 
 xoops_loadLanguage('user');
 
-require_once __DIR__ . '/class/LostpassSecurity.php';
+require_once __DIR__ . '/class/XoopsTokenHandler.php';
+require_once __DIR__ . '/class/LostPassSecurity.php';
 
 /** @var XoopsMySQLDatabase $xoopsDB */
-$security = new LostpassSecurity($xoopsDB);
+$tokenHandler = new XoopsTokenHandler($xoopsDB);
+$rateLimiter  = new LostPassSecurity($xoopsDB);
 /** @var XoopsMemberHandler $member_handler */
 $member_handler = xoops_getHandler('member');
 
@@ -66,37 +68,10 @@ if ($uid > 0 && $token !== '') {
         exit();
     }
 
-    $payload = $security->readPayload($user);
-    if ($payload === null) {
-        redirect_header('user.php', 3, $msgInvalid, false);
-        exit();
-    }
-
-    $issuedAt   = (int)$payload['issuedAt'];
-    $storedHash = (string)$payload['hash'];
-    $source     = (string)$payload['source'];
-
-    // Check token expiry
-    if ($security->isExpired($issuedAt)) {
-        // Clear expired token (safe: only clears our lostpass tokens)
-        $security->clearPayloadInMemory($user, $source);
-        if ($source === 'actkey') {
-            $member_handler->insertUser($user, true);
-        }
-        redirect_header('user.php', 3, $msgInvalid, false);
-        exit();
-    }
-
-    // Verify token hash (timing-safe)
-    if (!hash_equals($storedHash, $security->hashToken($token))) {
-        redirect_header('user.php', 3, $msgInvalid, false);
-        exit();
-    }
-
     // --- POST: set new password ---
     if (($_SERVER['REQUEST_METHOD'] ?? '') === 'POST') {
         // Rate limit reset attempts
-        if ($security->isAbusing($ip, 'uid:' . (string)$uid)) {
+        if ($rateLimiter->isAbusing($ip, 'uid:' . (string)$uid)) {
             redirect_header('user.php', 3, $msgInvalid, false);
             exit();
         }
@@ -133,12 +108,12 @@ if ($uid > 0 && $token !== '') {
             exit();
         }
 
-        // For actkey source: clear in memory (deferred), set password, single DB write.
-        // For cache source: set password first, save to DB, then delete cache.
-        // This ensures the token is never consumed if the DB write fails.
-        if ($source === 'actkey') {
-            $security->clearPayloadInMemory($user, $source);
+        // Atomically verify and consume the token
+        if (!$tokenHandler->verify($uid, 'lostpass', $token)) {
+            redirect_header('user.php', 3, $msgInvalid, false);
+            exit();
         }
+
         $user->setVar('pass', password_hash($pass, PASSWORD_DEFAULT));
 
         if (!$member_handler->insertUser($user, true)) {
@@ -147,11 +122,6 @@ if ($uid > 0 && $token !== '') {
             lostpass_assign_form($GLOBALS['xoopsTpl'], $uid, $token, $minPw, [], _US_MAILPWDNG);
             include_once $GLOBALS['xoops']->path('footer.php');
             exit();
-        }
-
-        // Cache source: delete token only after successful password save
-        if ($source === 'cache') {
-            $security->clearPayloadInMemory($user, $source);
         }
 
         redirect_header('user.php', 3, $msgGeneric, false);
@@ -181,7 +151,7 @@ if ($email === '') {
 }
 
 // Rate limit before any DB lookup
-if ($security->isAbusing($ip, $email)) {
+if ($rateLimiter->isAbusing($ip, $email)) {
     redirect_header('user.php', 3, $msgGeneric, false);
     exit();
 }
@@ -194,28 +164,30 @@ if (!empty($users) && is_object($users[0])) {
 
     // Only active accounts (level > 0); inactive/banned get no email but same response
     if ((int)$user->getVar('level') > 0) {
-        $rawToken = $security->generateToken();
-        $hash     = $security->hashToken($rawToken);
-        $issuedAt = time();
+        $userUid = (int)$user->getVar('uid');
 
-        // Store payload (actkey if safe + fits, else cache)
-        if ($security->storePayload($user, $member_handler, $issuedAt, $hash)) {
-            $resetLink = XOOPS_URL . '/lostpass.php?uid=' . (int)$user->getVar('uid')
-                       . '&token=' . urlencode($rawToken);
+        // Cooldown: skip if a token was already issued in the last 15 minutes
+        if ($tokenHandler->countRecent($userUid, 'lostpass', 900) === 0) {
+            $rawToken = $tokenHandler->create($userUid, 'lostpass', 3600);
 
-            $xoopsMailer = xoops_getMailer();
-            $xoopsMailer->useMail();
-            $xoopsMailer->setTemplate('lostpass1.tpl');
-            $xoopsMailer->assign('SITENAME', $xoopsConfig['sitename']);
-            $xoopsMailer->assign('ADMINMAIL', $xoopsConfig['adminmail']);
-            $xoopsMailer->assign('SITEURL', XOOPS_URL . '/');
-            $xoopsMailer->assign('IP', $ip);
-            $xoopsMailer->assign('NEWPWD_LINK', $resetLink);
-            $xoopsMailer->setToUsers($user);
-            $xoopsMailer->setFromEmail($xoopsConfig['adminmail']);
-            $xoopsMailer->setFromName($xoopsConfig['sitename']);
-            $xoopsMailer->setSubject(sprintf(_US_NEWPWDREQ, $xoopsConfig['sitename']));
-            $xoopsMailer->send();
+            if ($rawToken !== false) {
+                $resetLink = XOOPS_URL . '/lostpass.php?uid=' . $userUid
+                           . '&token=' . urlencode($rawToken);
+
+                $xoopsMailer = xoops_getMailer();
+                $xoopsMailer->useMail();
+                $xoopsMailer->setTemplate('lostpass1.tpl');
+                $xoopsMailer->assign('SITENAME', $xoopsConfig['sitename']);
+                $xoopsMailer->assign('ADMINMAIL', $xoopsConfig['adminmail']);
+                $xoopsMailer->assign('SITEURL', XOOPS_URL . '/');
+                $xoopsMailer->assign('IP', $ip);
+                $xoopsMailer->assign('NEWPWD_LINK', $resetLink);
+                $xoopsMailer->setToUsers($user);
+                $xoopsMailer->setFromEmail($xoopsConfig['adminmail']);
+                $xoopsMailer->setFromName($xoopsConfig['sitename']);
+                $xoopsMailer->setSubject(sprintf(_US_NEWPWDREQ, $xoopsConfig['sitename']));
+                $xoopsMailer->send();
+            }
         }
     }
 }
