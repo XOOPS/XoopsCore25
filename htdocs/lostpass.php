@@ -1,15 +1,13 @@
 <?php
 /**
- * XOOPS password recovery (hardened, PHP 8.2+)
+ * XOOPS password recovery
  *
- * Security improvements over original:
- * - Strong random tokens replace md5-truncated codes
- * - User chooses own password (no plaintext password in email)
- * - Rate limiting (IP + identifier) via XoopsCache
- * - No account enumeration (unified generic responses)
- * - CSRF protection on password change form
- * - Token TTL + single-use invalidation
- * - Hash-DoS prevention (password length cap)
+ * You may not change or alter any portion of this comment or credits
+ * of supporting developers from this source code or any supporting source code
+ * which is considered copyrighted (c) material of the original comment or credit authors.
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  *
  * @copyright (c) 2000-2026 XOOPS Project (https://xoops.org)
  * @license   GNU GPL 2 (https://www.gnu.org/licenses/gpl-2.0.html)
@@ -28,13 +26,17 @@ xoops_loadLanguage('user');
 
 require_once __DIR__ . '/class/LostpassSecurity.php';
 
-/** @var XoopsDatabase $xoopsDB */
+/** @var XoopsMySQLDatabase $xoopsDB */
 $security = new LostpassSecurity($xoopsDB);
 /** @var XoopsMemberHandler $member_handler */
 $member_handler = xoops_getHandler('member');
 
+/** @var XoopsConfigHandler $config_handler */
+$config_handler = xoops_getHandler('config');
+$xoopsConfigUser = $config_handler->getConfigsByCat(XOOPS_CONF_USER);
+
 $ip    = $_SERVER['REMOTE_ADDR'] ?? '0.0.0.0';
-$minPw = 12;
+$minPw = max(8, (int)($xoopsConfigUser['minpass'] ?? 8));
 
 // Generic message used on all exit paths to prevent enumeration
 $msgGeneric = _US_PWDMAILED;
@@ -118,14 +120,16 @@ if ($uid > 0 && $token !== '') {
         } elseif (strlen($pass) < $minPw) {
             $errors[] = sprintf(_US_PWDTOOSHORT, (string)$minPw);
         } elseif (strlen($pass) > 4096) {
-            $errors[] = 'Password is too long.';
+            $errors[] = defined('_US_PWDTOOLONG')
+                ? constant('_US_PWDTOOLONG')
+                : 'Password exceeds maximum length.';
         }
 
         if (!empty($errors)) {
             include $GLOBALS['xoops']->path('header.php');
             echo '<div class="errorMsg"><ul>';
             foreach ($errors as $err) {
-                echo '<li>' . htmlspecialchars($err, ENT_QUOTES) . '</li>';
+                echo '<li>' . htmlspecialchars($err, ENT_QUOTES, 'UTF-8') . '</li>';
             }
             echo '</ul></div><br>';
             lostpass_render_form($uid, $token, $minPw);
@@ -143,7 +147,7 @@ if ($uid > 0 && $token !== '') {
 
         if (!$member_handler->insertUser($user, true)) {
             include $GLOBALS['xoops']->path('header.php');
-            echo _US_MAILPWDNG;
+            echo htmlspecialchars(_US_MAILPWDNG, ENT_QUOTES, 'UTF-8');
             include $GLOBALS['xoops']->path('footer.php');
             exit();
         }
@@ -228,32 +232,38 @@ exit();
 
 /**
  * Render the password reset form.
+ *
+ * @param int    $uid   User ID
+ * @param string $token Reset token
+ * @param int    $minPw Minimum password length
+ *
+ * @return void
  */
 function lostpass_render_form(int $uid, string $token, int $minPw): void
 {
     echo '<fieldset class="pad10">';
-    echo '<legend class="bold">' . _US_LOSTPASSWORD . '</legend>';
+    echo '<legend class="bold">' . htmlspecialchars(_US_LOSTPASSWORD, ENT_QUOTES, 'UTF-8') . '</legend>';
     echo '<form method="post" action="' . XOOPS_URL . '/lostpass.php">';
     echo '<input type="hidden" name="uid" value="' . (int)$uid . '">';
-    echo '<input type="hidden" name="token" value="' . htmlspecialchars($token, ENT_QUOTES) . '">';
+    echo '<input type="hidden" name="token" value="' . htmlspecialchars($token, ENT_QUOTES, 'UTF-8') . '">';
 
     if (isset($GLOBALS['xoopsSecurity']) && is_object($GLOBALS['xoopsSecurity'])) {
         echo $GLOBALS['xoopsSecurity']->getTokenHTML();
     }
 
-    echo '<div>' . _US_PASSWORD . '<br>';
+    echo '<div>' . htmlspecialchars(_US_PASSWORD, ENT_QUOTES, 'UTF-8') . '<br>';
     echo '<input type="password" name="pass" size="21" autocomplete="new-password" required>';
     echo '</div><br>';
 
-    echo '<div>' . _US_VERIFYPASS . '<br>';
+    echo '<div>' . htmlspecialchars(_US_VERIFYPASS, ENT_QUOTES, 'UTF-8') . '<br>';
     echo '<input type="password" name="vpass" size="21" autocomplete="new-password" required>';
     echo '</div><br>';
 
     echo '<div class="xoops-form-element-caption-required">';
-    echo sprintf(_US_PWDTOOSHORT, (string)$minPw);
+    echo htmlspecialchars(sprintf(_US_PWDTOOSHORT, (string)$minPw), ENT_QUOTES, 'UTF-8');
     echo '</div><br>';
 
-    echo '<div><input type="submit" value="' . htmlspecialchars(_US_SUBMIT, ENT_QUOTES) . '"></div>';
+    echo '<div><input type="submit" value="' . htmlspecialchars(_US_SUBMIT, ENT_QUOTES, 'UTF-8') . '"></div>';
     echo '</form>';
     echo '</fieldset>';
 }
