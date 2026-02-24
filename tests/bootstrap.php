@@ -523,6 +523,26 @@ if (!defined('_AUTH_LDAP_START_TLS_FAILED')) {
 if (!defined('_US_INCORRECTLOGIN')) {
     define('_US_INCORRECTLOGIN', 'Incorrect Login!');
 }
+
+// Lostpass language constants
+foreach ([
+    '_US_PWDMAILED'     => 'If a matching account was found, an email with instructions has been sent.',
+    '_US_ENTERPWD'      => 'Please enter a password.',
+    '_US_PASSNOTSAME'   => 'The two passwords do not match.',
+    '_US_PWDTOOSHORT'   => 'Password must be at least %s characters.',
+    '_US_MAILPWDNG'     => 'Failed to update password. Please try again.',
+    '_US_NEWPWDREQ'     => 'Password Reset Request at %s',
+    '_US_PASSWORD'      => 'Password',
+    '_US_VERIFYPASS'    => 'Verify Password',
+    '_US_SUBMIT'        => 'Submit',
+    '_US_LOSTPASSWORD'  => 'Lost Password',
+    '_US_SORRYNOTFOUND' => 'Sorry, no matching user was found.',
+    '_US_CONFMAIL'      => 'A confirmation email has been sent.',
+] as $constName => $constValue) {
+    if (!defined($constName)) {
+        define($constName, $constValue);
+    }
+}
 if (!defined('_XO_ER_CLASSNOTFOUND')) {
     define('_XO_ER_CLASSNOTFOUND', 'Class Not Found');
 }

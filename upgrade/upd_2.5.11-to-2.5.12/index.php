@@ -24,7 +24,7 @@ class Upgrade_2512 extends XoopsUpgrade
         $this->tasks        = [
             'deletepurifier',
             'deletephpmailer',
-
+            'expandactkey',
         ];
         $this->usedFiles    = [];
         $this->pathsToCheck = [
@@ -77,6 +77,64 @@ class Upgrade_2512 extends XoopsUpgrade
         $folderToDelete = '../class/mail/phpmailer/';
 
         return self::deleteFolder($folderToDelete);
+    }
+
+    /**
+     * Get current actkey column varchar length, or null if undetectable.
+     *
+     * @param Tables $migrate
+     * @return int|null
+     */
+    private function getActkeyVarcharLength(Tables $migrate)
+    {
+        $migrate->useTable('users');
+        $attributes = $migrate->getColumnAttributes('users', 'actkey');
+        if (is_string($attributes) && preg_match('/varchar\((\d+)\)/i', trim($attributes), $m)) {
+            return (int)$m[1];
+        }
+        return null;
+    }
+
+    /**
+     * Check if actkey column is already large enough for lostpass tokens.
+     * Packed token is ~78 chars; column needs to be at least VARCHAR(100).
+     *
+     * @return bool true if patch IS applied, false if NOT applied
+     */
+    public function check_expandactkey()
+    {
+        $length = $this->getActkeyVarcharLength(new Tables());
+        if (null === $length) {
+            return true; // undetectable — assume applied to avoid blocking
+        }
+        return $length >= 100;
+    }
+
+    /**
+     * Expand actkey column to VARCHAR(100) for secure lostpass tokens.
+     *
+     * @return bool true if applied, false if failed
+     */
+    public function apply_expandactkey()
+    {
+        $migrate = new Tables();
+        $length = $this->getActkeyVarcharLength($migrate);
+
+        if (null !== $length && $length < 100) {
+            $migrate->alterColumn('users', 'actkey', "VARCHAR(100) NOT NULL DEFAULT ''");
+        }
+
+        $result = $migrate->executeQueue(true);
+        if (false === $result) {
+            $this->logs[] = sprintf(
+                'Migration of users.actkey column failed. Error: %s - %s',
+                $migrate->getLastErrNo(),
+                $migrate->getLastError(),
+            );
+            return false;
+        }
+
+        return true;
     }
 
     private function deleteFolder($folderPath)
