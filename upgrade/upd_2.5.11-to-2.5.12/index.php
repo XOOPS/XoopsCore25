@@ -97,8 +97,8 @@ class Upgrade_2512 extends XoopsUpgrade
     }
 
     /**
-     * Check if actkey column is already large enough for lostpass tokens.
-     * Packed token is ~78 chars; column needs to be at least VARCHAR(100).
+     * Check if actkey column is already large enough for registration activation.
+     * Column needs to be at least VARCHAR(100) for future activation token migration.
      *
      * @return bool true if patch IS applied, false if NOT applied
      */
@@ -112,7 +112,8 @@ class Upgrade_2512 extends XoopsUpgrade
     }
 
     /**
-     * Expand actkey column to VARCHAR(100) for secure lostpass tokens.
+     * Expand actkey column to VARCHAR(100) for registration activation.
+     * Lostpass now uses the tokens table; this prepares actkey for activation migration.
      *
      * @return bool true if applied, false if failed
      */
@@ -170,7 +171,8 @@ class Upgrade_2512 extends XoopsUpgrade
             `expires_at` int unsigned        NOT NULL DEFAULT 0,
             `used_at`    int unsigned        NOT NULL DEFAULT 0,
             PRIMARY KEY (`token_id`),
-            KEY `idx_uid_scope_hash` (`uid`, `scope`, `hash`),
+            UNIQUE KEY `uq_uid_scope_hash` (`uid`, `scope`, `hash`),
+            KEY `idx_uid_scope_issued` (`uid`, `scope`, `issued_at`),
             KEY `idx_issued_at` (`issued_at`)
         ) ENGINE=InnoDB;";
 

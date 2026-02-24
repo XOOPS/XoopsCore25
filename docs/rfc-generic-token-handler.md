@@ -2,7 +2,7 @@
 
 **Status:** Revised after peer review (4 independent reviews incorporated)
 **Context:** Kevin's review of PR #1624 — tokens should be a shared mechanism, not packed into actkey
-**Requires:** PHP 8.1+ (readonly properties, union return types)
+**Requires:** PHP 8.2+ (readonly properties, union return types)
 
 ---
 
@@ -33,7 +33,9 @@ CREATE TABLE `xoops_tokens` (
     `expires_at` int unsigned        NOT NULL DEFAULT 0,
     `used_at`    int unsigned        NOT NULL DEFAULT 0,
     PRIMARY KEY (`token_id`),
-    KEY `idx_uid_scope_hash` (`uid`, `scope`, `hash`)
+    UNIQUE KEY `uq_uid_scope_hash` (`uid`, `scope`, `hash`),
+    KEY `idx_uid_scope_issued` (`uid`, `scope`, `issued_at`),
+    KEY `idx_issued_at` (`issued_at`)
 ) ENGINE=InnoDB;
 ```
 
@@ -42,7 +44,9 @@ CREATE TABLE `xoops_tokens` (
 - `scope` — string like `'lostpass'`, `'activation'`. Simple, readable, extensible.
 - `hash` — `CHAR(64)`: SHA-256 hex digest is always exactly 64 characters. `CHAR` is slightly more efficient than `VARCHAR` for fixed-length data in InnoDB.
 - `used_at` — 0 means unused. Nonzero = consumed. Single-use enforcement without deleting rows (auditable).
-- Single composite index `(uid, scope, hash)` covers the `verify()` query as a single index lookup. Also covers `revokeByScope()` and `countRecent()` queries on the `(uid, scope)` prefix.
+- `UNIQUE KEY (uid, scope, hash)` — guarantees `verify()`'s "exactly 1 row affected" contract. Also covers `revokeByScope()` queries on the `(uid, scope)` prefix.
+- `KEY (uid, scope, issued_at)` — covers `countRecent()` cooldown queries efficiently.
+- `KEY (issued_at)` — supports `purgeExpired()` cleanup on high-traffic sites.
 - No IP column — rate limiting is a separate concern handled by the caller (via XoopsCache, as it is today).
 
 ### Handler: `XoopsTokenHandler`

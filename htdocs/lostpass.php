@@ -126,7 +126,11 @@ if ($uid > 0 && $token !== '') {
             exit();
         }
 
-        redirect_header('user.php', 3, $msgGeneric, false);
+        // User proved token possession — safe to show a clear success message
+        $msgSuccess = defined('_US_PWDRESETDONE')
+            ? constant('_US_PWDRESETDONE')
+            : 'Your password has been changed successfully.';
+        redirect_header('user.php', 3, $msgSuccess, false);
         exit();
     }
 

@@ -27,7 +27,7 @@ defined('XOOPS_ROOT_PATH') || exit('Restricted access');
  *
  * Recommended scopes: 'lostpass', 'activation', 'emailchange'.
  *
- * Requires PHP 8.1+ (readonly properties, union return types).
+ * Requires PHP 8.2+ (readonly properties, union return types).
  *
  * @category  Xoops
  * @package   Core
