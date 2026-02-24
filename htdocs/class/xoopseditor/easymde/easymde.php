@@ -3,25 +3,40 @@
  * EasyMDE Markdown Editor for XOOPS
  *
  * A simple, embeddable Markdown editor based on EasyMDE.
- * @see https://github.com/Ionaru/easy-markdown-editor
  *
- * @copyright       (c) 2000-2025 XOOPS Project (https://xoops.org)
- * @license         GNU GPL 2 (https://www.gnu.org/licenses/gpl-2.0.html)
- * @package         xoopseditor
+ * You may not change or alter any portion of this comment or credits
+ * of supporting developers from this source code or any supporting source code
+ * which is considered copyrighted (c) material of the original comment or credit authors.
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ *
+ * @copyright       (c) 2000-2026 XOOPS Project (https://xoops.org)
+ * @license             GNU GPL 2 (https://www.gnu.org/licenses/gpl-2.0.html)
+ * @package             class
+ * @subpackage          editor
+ * @since               2.5.12
+ * @author              XOOPS Development Team
+ * @see                 https://github.com/Ionaru/easy-markdown-editor
  */
 defined('XOOPS_ROOT_PATH') || exit('Restricted access');
 
 xoops_load('XoopsEditor');
 
+/**
+ * Class FormEasyMDE
+ */
 class FormEasyMDE extends XoopsEditor
 {
-    public $width  = '100%';
-    public $height = '400px';
+    public string $width  = '100%';
+    public string $height = '400px';
 
     /**
+     * FormEasyMDE::__construct()
+     *
      * @param array $configs
      */
-    public function __construct($configs = [])
+    public function __construct(array $configs = [])
     {
         $this->rootPath = '/class/xoopseditor/easymde';
         parent::__construct($configs);
@@ -36,19 +51,22 @@ class FormEasyMDE extends XoopsEditor
     }
 
     /**
+     * FormEasyMDE::render()
+     *
      * @return string
      */
     public function render()
     {
         $name   = $this->getName();
         $value  = $this->getValue();
-        $cols   = $this->getCols();
-        $rows   = $this->getRows();
-        $width  = $this->configs['width'] ?? $this->width;
-        $height = $this->configs['height'] ?? $this->height;
+        $cols   = (int) $this->getCols();
+        $rows   = (int) $this->getRows();
+        $width  = htmlspecialchars($this->configs['width'] ?? $this->width, ENT_QUOTES, 'UTF-8');
+        $height = htmlspecialchars($this->configs['height'] ?? $this->height, ENT_QUOTES, 'UTF-8');
 
-        // Escape value for safe embedding in textarea
+        $htmlName     = htmlspecialchars($name, ENT_QUOTES, 'UTF-8');
         $escapedValue = htmlspecialchars($value, ENT_QUOTES, 'UTF-8');
+        $jsId         = json_encode($name, JSON_THROW_ON_ERROR);
 
         $editorPath = XOOPS_URL . $this->rootPath;
 
@@ -58,7 +76,7 @@ class FormEasyMDE extends XoopsEditor
         $html .= '<link rel="stylesheet" href="' . $editorPath . '/css/easymde.min.css">' . "\n";
 
         // Textarea (EasyMDE attaches to this)
-        $html .= '<textarea id="' . $name . '" name="' . $name . '" '
+        $html .= '<textarea id="' . $htmlName . '" name="' . $htmlName . '" '
                . 'cols="' . $cols . '" rows="' . $rows . '" '
                . 'style="width:' . $width . ';">'
                . $escapedValue
@@ -71,10 +89,10 @@ class FormEasyMDE extends XoopsEditor
         $html .= '<script>' . "\n";
         $html .= 'document.addEventListener("DOMContentLoaded", function() {' . "\n";
         $html .= '  if (typeof EasyMDE !== "undefined") {' . "\n";
-        $html .= '    var easymde_' . $name . ' = new EasyMDE({' . "\n";
-        $html .= '      element: document.getElementById("' . $name . '"),' . "\n";
+        $html .= '    new EasyMDE({' . "\n";
+        $html .= '      element: document.getElementById(' . $jsId . '),' . "\n";
         $html .= '      spellChecker: false,' . "\n";
-        $html .= '      minHeight: "' . $height . '",' . "\n";
+        $html .= '      minHeight: ' . json_encode($this->configs['height'] ?? $this->height, JSON_THROW_ON_ERROR) . ',' . "\n";
         $html .= '      autoDownloadFontAwesome: true,' . "\n";
         $html .= '      forceSync: true,' . "\n";
         $html .= '      toolbar: [' . "\n";
@@ -94,11 +112,14 @@ class FormEasyMDE extends XoopsEditor
     }
 
     /**
+     * FormEasyMDE::renderValidationJS()
+     *
      * @return string
      */
     public function renderValidationJS()
     {
-        if ($this->isRequired() && $eltname = $this->getName()) {
+        $eltname = $this->getName();
+        if ($this->isRequired() && $eltname) {
             $eltcaption = $this->getCaption();
             $eltmsg     = empty($eltcaption)
                 ? sprintf(_FORM_ENTER, $eltname)
