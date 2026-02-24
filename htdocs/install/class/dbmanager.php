@@ -2,7 +2,7 @@
 
 //  ------------------------------------------------------------------------ //
 //                XOOPS - PHP Content Management System                      //
-//          Copyright (c) 2000-2025 XOOPS Project (https://xoops.org)            //
+//          Copyright (c) 2000-2026 XOOPS Project (https://xoops.org)            //
 //                         <https://xoops.org/>                               //
 //  ------------------------------------------------------------------------ //
 //  This program is free software; you can redistribute it and/or modify     //
@@ -34,7 +34,7 @@ include_once XOOPS_ROOT_PATH . '/class/database/sqlutility.php';
 /**
  * database manager for XOOPS installer
  *
- * @copyright (c) 2000-2025 XOOPS Project (https://xoops.org)
+ * @copyright (c) 2000-2026 XOOPS Project (https://xoops.org)
  * @license   GNU GPL 2.0 or later (https://www.gnu.org/licenses/gpl-2.0.html)
  * @author    Haruki Setoyama  <haruki@planewave.org>
  **/

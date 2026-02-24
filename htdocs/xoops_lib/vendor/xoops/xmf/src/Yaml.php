@@ -29,7 +29,7 @@ use Symfony\Component\Yaml\Yaml as VendorYaml;
  * @category  Xmf\Yaml
  * @package   Xmf
  * @author    Richard Griffith <richard@geekwright.com>
- * @copyright 2000-2025 XOOPS Project (https://xoops.org)
+ * @copyright 2000-2026 XOOPS Project (https://xoops.org)
  * @license   GNU GPL 2.0 or later (https://www.gnu.org/licenses/gpl-2.0.html)
  * @link      https://xoops.org
  * @see       http://www.yaml.org/

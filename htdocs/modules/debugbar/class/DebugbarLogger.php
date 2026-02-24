@@ -13,7 +13,7 @@ namespace XoopsModules\Debugbar;
  * Ported from XOOPS 2.6.0 modules/debugbar/class/debugbarlogger.php
  * Adapted for: maximebf/debugbar v1.x API, PSR-3 v1, no namespaces, XOOPS 2.5 preload system.
  *
- * @copyright       (c) 2000-2025 XOOPS Project (https://xoops.org)
+ * @copyright       (c) 2000-2026 XOOPS Project (https://xoops.org)
  * @license             GNU GPL 2 (https://www.gnu.org/licenses/gpl-2.0.html)
  * @author              Richard Griffith <richard@geekwright.com>
  * @author              trabis <lusopoemas@gmail.com>

@@ -9,7 +9,7 @@
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  *
- * @copyright           2000-2025 XOOPS Project (https://xoops.org)
+ * @copyright           2000-2026 XOOPS Project (https://xoops.org)
  * @license             GNU GPL 2 (https://www.gnu.org/licenses/gpl-2.0.html)
  * @package             kernel
  * @subpackage          auth
@@ -24,7 +24,7 @@ defined('XOOPS_ROOT_PATH') || exit('Restricted access');
  * @subpackage          auth
  * @description         Authentification class for standard LDAP Server V2 or V3
  * @author              Pierre-Eric MENUET <pemphp@free.fr>
- * @copyright       (c) 2000-2025 XOOPS Project (https://xoops.org)
+ * @copyright       (c) 2000-2026 XOOPS Project (https://xoops.org)
  */
 if (file_exists($file = $GLOBALS['xoops']->path('class/auth/auth_provisionning.php'))) {
     include_once $file;
@@ -41,7 +41,7 @@ if (!class_exists('XoopsAuthProvisionning')) {
  *
  * @package
  * @author              John
- * @copyright       (c) 2000-2025 XOOPS Project (https://xoops.org)
+ * @copyright       (c) 2000-2026 XOOPS Project (https://xoops.org)
  * @access              public
  */
 class XoopsAuthLdap extends XoopsAuth

@@ -10,7 +10,7 @@
  */
 
 /**
- * @copyright    2000-2025 XOOPS Project (https://xoops.org)
+ * @copyright    2000-2026 XOOPS Project (https://xoops.org)
  * @license      GNU GPL 2.0 or later (https://www.gnu.org/licenses/gpl-2.0.html)
  * @package
  * @since
@@ -30,7 +30,7 @@ require_once XOOPS_ROOT_PATH . '/class/xml/xmltaghandler.php';
  *
  * @link          https://xoops.org/ Latest release of this class
  * @package       class
- * @copyright (c) 2000-2025 XOOPS Project (https://xoops.org)
+ * @copyright (c) 2000-2026 XOOPS Project (https://xoops.org)
  * @author        Kazumi Ono <onokazu@xoops.org>
  * @access        public
  */
