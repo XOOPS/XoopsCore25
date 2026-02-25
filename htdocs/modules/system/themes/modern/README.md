@@ -1,5 +1,6 @@
-![XOOPS CMS](https://xoops.org/images/logoXoops4GithubRepository.png)
 # XOOPS Modern Admin Theme
+
+![XOOPS CMS](https://xoops.org/images/logoXoops4GithubRepository.png)
 
 A modern, responsive admin theme for XOOPS 2.5.12 with an enhanced dashboard, dark mode, customizer panel, module widget system, and configurable content tracking.
 
@@ -236,7 +237,7 @@ Key design tokens (all defined in `modern.css :root`): `--primary`, `--bg-primar
 ### Theme doesn't appear in Admin GUI dropdown
 
 - Verify folder is named exactly `modern` inside `modules/system/themes/`
-- Check that `modern.php` exists and contains `class ModernTheme extends XoopsSystemGui`
+- Check that `modern.php` exists and contains `class XoopsGuiModern extends XoopsSystemGui`
 
 ### Charts not displaying
 

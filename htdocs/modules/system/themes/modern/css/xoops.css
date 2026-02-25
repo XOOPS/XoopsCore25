@@ -255,7 +255,7 @@ input[type="button"],
 button.formButton,
 .formButton {
     padding: 6px 16px;
-    margin-left: 8px;
+    margin-left: 0;
     background: var(--primary);
     color: white;
     border: none;
@@ -264,6 +264,15 @@ button.formButton,
     font-weight: 500;
     cursor: pointer;
     transition: all 0.2s;
+}
+
+input[type="submit"] + input[type="submit"],
+input[type="submit"] + input[type="button"],
+input[type="button"] + input[type="submit"],
+input[type="button"] + input[type="button"],
+button.formButton + button.formButton,
+.formButton + .formButton {
+    margin-left: 8px;
 }
 
 input[type="submit"]:hover,
@@ -828,6 +837,7 @@ body.dark-mode fieldset legend {
 
 /* Logger responds to sidebar collapse on desktop */
 @media (min-width: 1025px) {
+    body.compact-sidebar #xo-logger-output,
     body.sidebar-open #xo-logger-output {
         margin-left: 80px;
     }

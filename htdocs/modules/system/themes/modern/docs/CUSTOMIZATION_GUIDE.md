@@ -1,5 +1,6 @@
-![XOOPS CMS](https://xoops.org/images/logoXoops4GithubRepository.png)
 # Modern Theme — Customization Guide
+
+![XOOPS CMS](https://xoops.org/images/logoXoops4GithubRepository.png)
 
 A practical guide for **site owners and theme designers** who want to customize the Modern admin theme's appearance without touching the theme's core files.
 
