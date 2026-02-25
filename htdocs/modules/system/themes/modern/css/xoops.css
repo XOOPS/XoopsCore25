@@ -22,6 +22,10 @@
  *   4. fixes.css   — !important overrides against XOOPS core CSS
  *   5. custom.css  — site-specific user customizations (never overwritten by updates)
  *
+ * Uses !important only where needed to override inline styles injected
+ * by XOOPS core PHP code (e.g. .tips, .CPbigTitle). For overrides against
+ * external XOOPS core stylesheets, see fixes.css instead.
+ *
  * Design tokens (--primary, --bg-secondary, --radius, etc.) are defined
  * in modern.css :root and are fully available here.
  */
