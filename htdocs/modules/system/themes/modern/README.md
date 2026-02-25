@@ -1,5 +1,7 @@
 # XOOPS Modern Admin Theme
 
+![XOOPS CMS](https://xoops.org/images/logoXoops4GithubRepository.png)
+
 A modern, responsive admin theme for XOOPS 2.5.12 with an enhanced dashboard, dark mode, customizer panel, module widget system, and configurable content tracking.
 
 ## Features
@@ -95,9 +97,11 @@ modern/
 │   ├── ModuleWidgetInterface.php  # Widget contract for modules
 │   └── WidgetLoader.php           # Auto-discovers module widgets
 ├── css/
-│   ├── modern.css             # Main stylesheet + light mode variables
+│   ├── modern.css             # Theme layout & components (replace wholesale on updates)
+│   ├── xoops.css              # XOOPS element integration (maintained by XOOPS team)
 │   ├── dark.css               # Dark mode variable overrides
-│   └── fixes.css              # !important overrides for XOOPS core CSS
+│   ├── fixes.css              # !important overrides for XOOPS core CSS
+│   └── custom.css             # Your site customizations (never overwritten by updates)
 ├── js/
 │   ├── theme.js               # Sidebar, dark mode, messages, help toggle
 │   ├── charts.js              # Chart.js initialization and content filtering
@@ -139,18 +143,34 @@ modern/
 
 ## Customization
 
-### Theme Colors
+> For a complete step-by-step guide, see [docs/CUSTOMIZATION_GUIDE.md](docs/CUSTOMIZATION_GUIDE.md).
 
-Edit `css/modern.css` `:root` block, or use the built-in Customizer panel (gear icon in sidebar footer):
+### Safe customizations that survive updates
+
+Add your rules to `css/custom.css`. It is loaded last (wins over everything) and is **never included in update packages**:
+
+```css
+/* css/custom.css */
+
+/* Change the accent color */
+:root { --primary: #e11d48; --primary-dark: #be123c; --primary-light: #fb7185; }
+
+/* Wider sidebar */
+:root { --sidebar-width: 300px; }
+
+/* Custom table header */
+table.outer thead th { background: #1e3a5f; color: #fff; }
+```
+
+### Theme Colors (built-in)
+
+Use the built-in Customizer panel (gear icon in sidebar footer) for instant preview, or edit the `:root` block in `css/modern.css`:
 
 ```css
 :root {
     --primary: #2563eb;
     --primary-dark: #1d4ed8;
     --primary-light: #3b82f6;
-    --success: #10b981;
-    --warning: #f59e0b;
-    --danger: #ef4444;
 }
 ```
 
@@ -177,13 +197,25 @@ To create a custom widget for your own module, see [docs/MODULE_INTEGRATION_GUID
 
 ## CSS Architecture
 
-| File | Purpose | Uses `!important`? |
-|------|---------|-------------------|
-| `modern.css` | Design tokens, layout, components, dark mode overrides | No |
-| `dark.css` | Dark mode CSS variable reassignment | No |
-| `fixes.css` | Overrides for XOOPS core inline styles and `menu.css` | Yes (required) |
+Five files, loaded in order, each with a single responsibility:
 
-Key design tokens: `--primary`, `--bg-primary`, `--bg-secondary`, `--text-primary`, `--border`, `--radius`, `--shadow`, `--sidebar-width`, `--header-height`.
+| File | Owns | `!important`? | Updated by |
+|------|------|:---:|---|
+| `modern.css` | Theme layout, sidebar, header, dashboard components | No | Theme author |
+| `xoops.css` | XOOPS admin tables, forms, module tabs, toolbar, logger | Minimal | XOOPS team |
+| `dark.css` | CSS variable overrides for `body.dark-mode` | No | Theme author |
+| `fixes.css` | Overrides that must beat XOOPS core inline styles | Yes (required) | XOOPS team |
+| `custom.css` | Your site-specific rules — loaded last, wins over everything | Optional | You |
+
+**Where to make changes:**
+- Styling a XOOPS core element (`table.outer`, admin forms, tabs)? → `xoops.css`
+- Styling a theme component (`.kpi-card`, `.nav-item`, `.modern-header`)? → `modern.css`
+- XOOPS core keeps winning no matter what? → `fixes.css` with `!important`
+- Personal/site customization that should survive updates? → `custom.css`
+
+Key design tokens (all defined in `modern.css :root`): `--primary`, `--bg-primary`, `--bg-secondary`, `--text-primary`, `--border`, `--radius`, `--shadow`, `--sidebar-width`, `--header-height`.
+
+> **Site owners and theme designers:** See [docs/CUSTOMIZATION_GUIDE.md](docs/CUSTOMIZATION_GUIDE.md) for a step-by-step customization tutorial.
 
 ## Browser Support
 
@@ -205,7 +237,7 @@ Key design tokens: `--primary`, `--bg-primary`, `--bg-secondary`, `--text-primar
 ### Theme doesn't appear in Admin GUI dropdown
 
 - Verify folder is named exactly `modern` inside `modules/system/themes/`
-- Check that `modern.php` exists and contains `class ModernTheme extends XoopsSystemGui`
+- Check that `modern.php` exists and contains `class XoopsGuiModern extends XoopsSystemGui`
 
 ### Charts not displaying
 

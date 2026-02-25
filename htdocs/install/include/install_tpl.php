@@ -211,7 +211,12 @@ preg_match('/(^[a-z\s]*)([0-9\.]*)/i', XOOPS_VERSION, $versionParts);
          * Check the url to see if we reached 'page_end.php' and if so, launch the cleanup via ajax.
          **/
         if ('page_end.php' == location.pathname.substring(location.pathname.lastIndexOf('/') + 1)) {
-            $.post( "cleanup.php", { instsuffix: <?php echo isset($install_rename_suffix) ? "'" . $install_rename_suffix . "'" : "''"; ?> } );
-        };
+            var cleanupUrl = <?php echo json_encode(isset($cleanupUrl) ? $cleanupUrl : 'cleanup.php'); ?>;
+            var instSuffix = <?php echo json_encode(isset($install_rename_suffix) ? $install_rename_suffix : ''); ?>;
+            $.post(cleanupUrl, { instsuffix: instSuffix })
+                .fail(function() {
+                    console.warn('Install cleanup request failed. You may need to manually rename or remove the install directory.');
+                });
+        }
     });
 </script>

@@ -5,7 +5,7 @@
             <{foreach item=item from=$control_menu}>
                 <a href="<{$item.link}>" class="nav-item" <{if $item.absolute}>target="_parent"<{/if}>>
                     <span class="nav-icon">
-                        <{if $item.icon == 'home' || $item.icon == 'dashboard'}>🏠<{elseif $item.icon == 'logout'}>🚪<{else}>📊<{/if}>
+                        <{if $item.icon == 'home' || $item.icon == 'dashboard'}>&#x1F3E0;<{elseif $item.icon == 'logout'}>&#x1F6AA;<{else}>&#x1F4CA;<{/if}>
                     </span>
                     <span class="nav-text"><{$item.title|strip_tags}></span>
                 </a>
@@ -24,7 +24,7 @@
                         <{if $module.icon}>
                             <img src="<{$module.icon}>" class="nav-icon-img" alt="">
                         <{else}>
-                            <span class="nav-icon">📦</span>
+                            <span class="nav-icon">&#x1F4E6;</span>
                         <{/if}>
                         <span class="nav-text"><{$module.name}></span>
                     </a>
