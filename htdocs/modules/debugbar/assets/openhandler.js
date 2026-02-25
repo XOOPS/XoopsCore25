@@ -251,8 +251,8 @@
             })
                 .then(data => data.json())
                 .then(callback)
-                .catch((err) => {
-                    callback(null, err);
+                .catch(() => {
+                    callback([]);
                 });
         }
 

@@ -81,7 +81,17 @@
                     for (const key in request.details) {
                         if (typeof request.details[key] !== 'function') {
                             const row = document.createElement('tr');
-                            row.innerHTML = `<td class="${csscls('name')}">${key}</td><td class="${csscls('value')}"><pre><code>${request.details[key]}</code></pre></td>`;
+                            const keyTd = document.createElement('td');
+                            keyTd.classList.add(csscls('name'));
+                            keyTd.textContent = key;
+                            const valTd = document.createElement('td');
+                            valTd.classList.add(csscls('value'));
+                            const pre = document.createElement('pre');
+                            const code = document.createElement('code');
+                            code.textContent = String(request.details[key] ?? '');
+                            pre.append(code);
+                            valTd.append(pre);
+                            row.append(keyTd, valTd);
                             tbody.append(row);
                         }
                     }

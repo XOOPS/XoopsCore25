@@ -20,11 +20,7 @@
             this.list = new PhpDebugBar.Widgets.ListWidget({ itemRenderer(li, tpl) {
                 const name = document.createElement('span');
                 name.classList.add(csscls('name'));
-                if (tpl.html) {
-                    name.innerHTML = tpl.html;
-                } else {
-                    name.textContent = tpl.name;
-                }
+                name.textContent = tpl.name;
                 li.append(name);
 
                 if (typeof tpl.xdebug_link !== 'undefined' && tpl.xdebug_link !== null) {
@@ -97,7 +93,17 @@
                     for (const key in tpl.params) {
                         if (typeof tpl.params[key] !== 'function') {
                             const row = document.createElement('tr');
-                            row.innerHTML = `<td class="${csscls('name')}">${key}</td><td class="${csscls('value')}"><pre><code>${tpl.params[key]}</code></pre></td>`;
+                            const keyTd = document.createElement('td');
+                            keyTd.classList.add(csscls('name'));
+                            keyTd.textContent = key;
+                            const valTd = document.createElement('td');
+                            valTd.classList.add(csscls('value'));
+                            const pre = document.createElement('pre');
+                            const code = document.createElement('code');
+                            code.textContent = String(tpl.params[key] ?? '');
+                            pre.append(code);
+                            valTd.append(pre);
+                            row.append(keyTd, valTd);
                             tbody.append(row);
                         }
                     }

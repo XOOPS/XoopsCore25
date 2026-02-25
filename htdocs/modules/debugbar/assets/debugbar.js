@@ -295,7 +295,8 @@ window.PhpDebugBar = window.PhpDebugBar || {};
             this.widgetRendered = false;
             this.bindAttr('data', function (data) {
                 if (this.has('widget')) {
-                    this.tab.setAttribute('data-empty', Object.keys(data).length === 0 || data.count === 0);
+                    const isEmpty = !data || Object.keys(data).length === 0 || data.count === 0;
+                    this.tab.setAttribute('data-empty', isEmpty);
                     if (!this.widgetRendered && this.active && data != null) {
                         this.renderWidgetData();
                     } else {
@@ -439,7 +440,11 @@ window.PhpDebugBar = window.PhpDebugBar || {};
             this.set(options);
 
             const debugbar = this.get('debugbar');
-            this.settings = JSON.parse(localStorage.getItem('phpdebugbar-settings')) || {};
+            try {
+                this.settings = JSON.parse(localStorage.getItem('phpdebugbar-settings')) || {};
+            } catch (e) {
+                this.settings = {};
+            }
 
             for (const key in debugbar.options) {
                 if (key in this.settings) {
@@ -1552,7 +1557,9 @@ window.PhpDebugBar = window.PhpDebugBar || {};
          */
         setOpenHandler(handler) {
             this.openHandler = handler;
-            this.openHandler.el.setAttribute('data-theme', this.el.getAttribute('data-theme'));
+            if (handler) {
+                this.openHandler.el.setAttribute('data-theme', this.el.getAttribute('data-theme'));
+            }
             this.openbtn.hidden = handler == null;
         }
 

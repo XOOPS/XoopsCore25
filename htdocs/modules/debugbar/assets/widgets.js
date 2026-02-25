@@ -14,7 +14,8 @@
      * @return {string}
      */
     const htmlize = PhpDebugBar.Widgets.htmlize = function (text) {
-        return text.replace(/\n/g, '<br>').replace(/\s/g, '&nbsp;');
+        const str = String(text ?? '');
+        return str.replace(/\n/g, '<br>').replace(/\s/g, '&nbsp;');
     };
 
     /**
@@ -604,7 +605,7 @@
 
                             const td2 = document.createElement('td');
                             td2.classList.add(csscls('value'));
-                            td2.innerHTML = value.context[key];
+                            td2.textContent = String(value.context[key] ?? '');
                             tr.append(td2);
 
                             contextTable.append(tr);
@@ -697,7 +698,8 @@
                 }
 
                 this.get('data').forEach((item) => {
-                    const message = caseless ? item.message.toLowerCase() : item.message;
+                    const rawMessage = item.message ?? item.message_html ?? '';
+                    const message = caseless ? String(rawMessage).toLowerCase() : String(rawMessage);
 
                     if (
                         !excludelabel.includes(item.label || undefined)
@@ -831,14 +833,24 @@
                             for (const key in measure.params) {
                                 if (typeof measure.params[key] !== 'function') {
                                     const tr = document.createElement('tr');
-                                    tr.innerHTML = `<td class="${csscls('name')}">${key}</td><td class="${csscls('value')}"><pre><code>${measure.params[key]}</code></pre></td>`;
+                                    const keyTd = document.createElement('td');
+                                    keyTd.classList.add(csscls('name'));
+                                    keyTd.textContent = key;
+                                    const valTd = document.createElement('td');
+                                    valTd.classList.add(csscls('value'));
+                                    const pre = document.createElement('pre');
+                                    const code = document.createElement('code');
+                                    code.textContent = String(measure.params[key] ?? '');
+                                    pre.append(code);
+                                    valTd.append(pre);
+                                    tr.append(keyTd, valTd);
                                     table.append(tr);
                                 }
                             }
                             li.append(table);
 
                             li.style.cursor = 'pointer';
-                            li.addEventListener('click', function () {
+                            li.addEventListener('click', function (event) {
                                 if (window.getSelection().type === 'Range' || event.target.closest('.sf-dump')) {
                                     return '';
                                 }
