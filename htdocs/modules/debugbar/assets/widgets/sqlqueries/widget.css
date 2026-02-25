@@ -1,10 +1,26 @@
+div.phpdebugbar-widgets-sqlqueries {
+  position: relative;
+  height: 100%;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+
 div.phpdebugbar-widgets-sqlqueries .phpdebugbar-widgets-status {
-  font-family: "SFMono-Regular", Consolas, "Liberation Mono", Menlo, Courier, monospace;
+  font-family: var(--debugbar-font-mono);
   padding: 6px 6px;
-  border-bottom: 1px solid #ddd;
+  border-bottom: 1px solid var(--debugbar-border);
   font-weight: bold;
-  color: #555;
-  background: #fafafa;
+  color: var(--debugbar-text);
+  background-color: var(--debugbar-background-alt);
+  flex-shrink: 0;
+  order: 1;
+}
+
+div.phpdebugbar-widgets-sqlqueries ul.phpdebugbar-widgets-list {
+  flex: 1;
+  overflow-y: auto;
+  order: 2;
 }
 
 div.phpdebugbar-widgets-sqlqueries li.phpdebugbar-widgets-list-item.phpdebugbar-widgets-error {
@@ -19,7 +35,7 @@ div.phpdebugbar-widgets-sqlqueries span.phpdebugbar-widgets-copy-clipboard,
 div.phpdebugbar-widgets-sqlqueries span.phpdebugbar-widgets-stmt-id {
   float: right;
   margin-left: 8px;
-  color: #888;
+  color: var(--debugbar-text-muted);
 }
 div.phpdebugbar-widgets-sqlqueries div.phpdebugbar-widgets-status span.phpdebugbar-widgets-database,
 div.phpdebugbar-widgets-sqlqueries div.phpdebugbar-widgets-status span.phpdebugbar-widgets-duration,
@@ -27,65 +43,68 @@ div.phpdebugbar-widgets-sqlqueries div.phpdebugbar-widgets-status span.phpdebugb
 div.phpdebugbar-widgets-sqlqueries div.phpdebugbar-widgets-status span.phpdebugbar-widgets-row-count,
 div.phpdebugbar-widgets-sqlqueries div.phpdebugbar-widgets-status span.phpdebugbar-widgets-copy-clipboard,
 div.phpdebugbar-widgets-sqlqueries div.phpdebugbar-widgets-status span.phpdebugbar-widgets-stmt-id {
-  color: #555;
+  color: var(--debugbar-text);
 }
 div.phpdebugbar-widgets-sqlqueries span.phpdebugbar-widgets-database:before,
 div.phpdebugbar-widgets-sqlqueries span.phpdebugbar-widgets-duration:before,
 div.phpdebugbar-widgets-sqlqueries span.phpdebugbar-widgets-memory:before,
 div.phpdebugbar-widgets-sqlqueries span.phpdebugbar-widgets-row-count:before,
 div.phpdebugbar-widgets-sqlqueries span.phpdebugbar-widgets-copy-clipboard:before,
+div.phpdebugbar-widgets-sqlqueries span.phpdebugbar-widgets-copy-clipboard-check:before,
 div.phpdebugbar-widgets-sqlqueries span.phpdebugbar-widgets-stmt-id:before,
 div.phpdebugbar-widgets-sqlqueries a.phpdebugbar-widgets-editor-link:before {
-  font-family: PhpDebugbarFontAwesome, sans-serif;
+  content: "";
+  display: inline-block;
+  width: 1em;
+  height: 1em;
   margin-right: 4px;
-  font-size: 12px;
+  vertical-align: middle;
+  -webkit-mask-size: contain;
+  -webkit-mask-repeat: no-repeat;
+  -webkit-mask-position: center;
+  mask-size: contain;
+  mask-repeat: no-repeat;
+  mask-position: center;
+  background-color: currentColor;
 }
 div.phpdebugbar-widgets-sqlqueries span.phpdebugbar-widgets-database:before {
-  content: "\f1c0";
+  -webkit-mask-image: var(--debugbar-icon-database);
+  mask-image: var(--debugbar-icon-database);
 }
 div.phpdebugbar-widgets-sqlqueries span.phpdebugbar-widgets-duration:before {
-  content: "\f017";
+  -webkit-mask-image: var(--debugbar-icon-clock);
+  mask-image: var(--debugbar-icon-clock);
 }
 div.phpdebugbar-widgets-sqlqueries span.phpdebugbar-widgets-memory:before {
-  content: "\f085";
+  -webkit-mask-image: var(--debugbar-icon-cpu);
+  mask-image: var(--debugbar-icon-cpu);
 }
 div.phpdebugbar-widgets-sqlqueries span.phpdebugbar-widgets-row-count:before {
-  content: "\f0ce";
+  -webkit-mask-image: var(--debugbar-icon-table);
+  mask-image: var(--debugbar-icon-table);
 }
 div.phpdebugbar-widgets-sqlqueries span.phpdebugbar-widgets-stmt-id:before {
-  content: "\f08d";
+  -webkit-mask-image: var(--debugbar-icon-link);
+  mask-image: var(--debugbar-icon-link);
 }
 div.phpdebugbar-widgets-sqlqueries span.phpdebugbar-widgets-copy-clipboard:before {
-  content: "\f0c5";
+  -webkit-mask-image: var(--debugbar-icon-copy);
+  mask-image: var(--debugbar-icon-copy);
 }
 div.phpdebugbar-widgets-sqlqueries span.phpdebugbar-widgets-copy-clipboard-check:before {
-  content: "\f46c";
+  -webkit-mask-image: var(--debugbar-icon-circle-check);
+  mask-image: var(--debugbar-icon-circle-check);
 }
 div.phpdebugbar-widgets-sqlqueries a.phpdebugbar-widgets-editor-link:before {
-  content: "\f08e";
+  -webkit-mask-image: var(--debugbar-icon-external-link);
+  mask-image: var(--debugbar-icon-external-link);
 }
 div.phpdebugbar-widgets-sqlqueries a.phpdebugbar-widgets-editor-link {
-  color: #888;
+  color: var(--debugbar-link);
 }
 div.phpdebugbar-widgets-sqlqueries a.phpdebugbar-widgets-editor-link:hover {
-  color: #aaaaaa;
+  color: var(--debugbar-hover);
 }
-div.phpdebugbar-widgets-sqlqueries table.phpdebugbar-widgets-params {
-  display: none;
-  width: 70%;
-  margin: 10px;
-  border: 1px solid #ddd;
-  font-family: "SFMono-Regular", Consolas, "Liberation Mono", Menlo, Courier, monospace;
-  border-collapse: collapse;
-}
-  div.phpdebugbar-widgets-sqlqueries table.phpdebugbar-widgets-params td {
-    border: 1px solid #ddd;
-    text-align: center;
-  }
-  div.phpdebugbar-widgets-sqlqueries table.phpdebugbar-widgets-params .phpdebugbar-widgets-name {
-    width: 20%;
-    font-weight: bold;
-  }
 
 div.phpdebugbar-widgets-sqlqueries li.phpdebugbar-widgets-list-item span.phpdebugbar-widgets-error {
   display: block;
@@ -98,21 +117,28 @@ code.phpdebugbar-widgets-sql {
   word-wrap: break-word;
 }
 
-div.phpdebugbar-widgets-sqlqueries li.phpdebugbar-widgets-list-item.phpdebugbar-widgets-sql-duplicate {
-  background-color: #edeff0;
+div.phpdebugbar-widgets-sqlqueries li.phpdebugbar-widgets-list-item.phpdebugbar-widgets-sql-slow {
+  background-color: #ffe4e4;
 }
 
-div.phpdebugbar-widgets-sqlqueries li.phpdebugbar-widgets-list-item.phpdebugbar-widgets-sql-duplicate:hover {
-  background-color: #ffc;
+div.phpdebugbar-widgets-sqlqueries li.phpdebugbar-widgets-list-item.phpdebugbar-widgets-sql-duplicate {
+  background-color: #fdfdcd;
+}
+
+div.phpdebugbar[data-theme='dark'] div.phpdebugbar-widgets-sqlqueries li.phpdebugbar-widgets-list-item.phpdebugbar-widgets-sql-slow {
+  background-color: #623100;
+}
+
+div.phpdebugbar[data-theme='dark'] div.phpdebugbar-widgets-sqlqueries li.phpdebugbar-widgets-list-item.phpdebugbar-widgets-sql-duplicate {
+    background-color: #565602;
 }
 
 div.phpdebugbar-widgets-sqlqueries div.phpdebugbar-widgets-toolbar {
-  display:none;
-  position: fixed;
-  bottom: 0;
-  width: calc(100% - 30px);
-  margin-bottom: 5px;
+  position: relative;
+  flex-shrink: 0;
+  width: 100%;
   z-index: 1;
+  order: 3;
 }
 
 div.phpdebugbar-widgets-sqlqueries div.phpdebugbar-widgets-toolbar a.phpdebugbar-widgets-filter {
@@ -126,8 +152,8 @@ div.phpdebugbar-widgets-sqlqueries div.phpdebugbar-widgets-toolbar a.phpdebugbar
   text-decoration: none;
 }
 div.phpdebugbar-widgets-sqlqueries div.phpdebugbar-widgets-toolbar a.phpdebugbar-widgets-filter.phpdebugbar-widgets-excluded {
-  background: #eee;
-  color: #888;
+  background: var(--debugbar-background);
+  color: var(--debugbar-text);
 }
 div.phpdebugbar-widgets-sqlqueries a.phpdebugbar-widgets-duplicates {
   font-weight: bold;
@@ -136,6 +162,7 @@ div.phpdebugbar-widgets-sqlqueries a.phpdebugbar-widgets-duplicates {
 div.phpdebugbar-widgets-sqlqueries li.phpdebugbar-widgets-list-item div.phpdebugbar-widgets-bg-measure {
   position: absolute;
   top: 0;
+  left: 0;
   width: 100%;
   height: 100%;
   overflow: hidden;
@@ -143,14 +170,16 @@ div.phpdebugbar-widgets-sqlqueries li.phpdebugbar-widgets-list-item div.phpdebug
 }
 div.phpdebugbar-widgets-sqlqueries div.phpdebugbar-widgets-bg-measure div.phpdebugbar-widgets-value {
   position: absolute;
-  height: 100%;
-  opacity: 0.2;
-  background: red;
+  bottom: 0;
+  height: 1px;
+  opacity: 1;
+  background: var(--debugbar-accent-border);
 }
+
 div.phpdebugbar-widgets-sqlqueries td.phpdebugbar-widgets-value li.phpdebugbar-widgets-table-list-item {
   text-align: left;
   padding-left: 6px;
 }
 div.phpdebugbar-widgets-sqlqueries .phpdebugbar-text-muted {
-  color: #888;
+  color: var(--debugbar-text-muted);
 }

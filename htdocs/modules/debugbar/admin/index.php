@@ -24,7 +24,7 @@ $adminObject = Admin::getInstance();
 $adminObject->displayNavigation(\basename(__FILE__));
 
 // --- InfoBox: Module Status ---
-$adminObject->addInfoBox(\constant('CO_' . $moduleDirNameUpper . '_' . 'STATS_SUMMARY'));
+$adminObject->addInfoBox(\constant('_CO_DEBUGBAR_STATS_SUMMARY'));
 
 // Build status rows
 $hasDebugbar = \class_exists('DebugBar\StandardDebugBar');

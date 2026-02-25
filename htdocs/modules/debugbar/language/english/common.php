@@ -13,4 +13,4 @@ $moduleDirName      = \basename(\dirname(__DIR__, 3));
 $moduleDirNameUpper = \mb_strtoupper($moduleDirName);
 
 // Module Stats
-\define('CO_' . $moduleDirNameUpper . '_' . 'STATS_SUMMARY', 'Module Status');
+\define('_CO_DEBUGBAR_STATS_SUMMARY', 'Module Status');
