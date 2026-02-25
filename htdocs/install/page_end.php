@@ -45,7 +45,7 @@ $installer_modified    = 'install_remove_' . $install_rename_suffix;
 // The suffix is embedded server-side so the script needs no client input.
 $cleanupScriptName = 'install_cleanup_' . substr(md5($install_rename_suffix), 0, 8) . '.php';
 $cleanupScriptPath = XOOPS_ROOT_PATH . '/' . $cleanupScriptName;
-$cleanupUrl        = '../' . $cleanupScriptName;
+$cleanupUrl        = (defined('XOOPS_URL') && XOOPS_URL !== '') ? XOOPS_URL . '/' . $cleanupScriptName : '../' . $cleanupScriptName;
 
 $cleanupCode = '<?php' . "\n"
     . 'clearstatcache(true);' . "\n"
@@ -56,7 +56,7 @@ $cleanupCode = '<?php' . "\n"
 $written = @file_put_contents($cleanupScriptPath, $cleanupCode, LOCK_EX);
 if ($written === false) {
     // Fallback to existing cleanup.php if we cannot create the external script
-    trigger_error('Could not create external cleanup script: ' . $cleanupScriptPath, E_USER_WARNING);
+    trigger_error('Could not create external cleanup script: ' . basename($cleanupScriptPath), E_USER_WARNING);
     $cleanupUrl = 'cleanup.php';
 }
 

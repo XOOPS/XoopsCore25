@@ -82,7 +82,7 @@ function install_finalize($installer_modified)
         register_shutdown_function(static function () use ($source, $dest) {
             clearstatcache(true);
             if (!@rename($source, $dest) && is_dir($source)) {
-                trigger_error('Failed to rename install directory: ' . $source . ' — manual removal may be required.', E_USER_WARNING);
+                trigger_error('Failed to rename install directory — manual removal may be required.', E_USER_WARNING);
             }
         });
     }
