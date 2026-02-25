@@ -64,8 +64,28 @@ function install_finalize($installer_modified)
     @chmod(XOOPS_ROOT_PATH . '/mainfile.php', 0444);
     // Set Secure file readonly
     @chmod(XOOPS_VAR_PATH . '/data/secure.php', 0444);
+
+    // Close session to release file locks before renaming.
+    // This is the final installation step so no further session data is needed.
+    if (session_status() === PHP_SESSION_ACTIVE) {
+        session_write_close();
+    }
+    clearstatcache(true);
+
+    $source = XOOPS_ROOT_PATH . '/install';
+    $dest   = XOOPS_ROOT_PATH . '/' . $installer_modified;
+
     // Rename installer folder
-    @rename(XOOPS_ROOT_PATH . '/install', XOOPS_ROOT_PATH . '/' . $installer_modified);
+    if (!@rename($source, $dest) && is_dir($source)) {
+        // On Windows, rename() may fail when called from within the directory.
+        // Retry at shutdown when more file handles may have been released.
+        register_shutdown_function(static function () use ($source, $dest) {
+            clearstatcache(true);
+            if (!@rename($source, $dest) && is_dir($source)) {
+                trigger_error('Failed to rename install directory: ' . $source . ' — manual removal may be required.', E_USER_WARNING);
+            }
+        });
+    }
 }
 
 /**
