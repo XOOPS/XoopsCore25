@@ -25,6 +25,7 @@ class Upgrade_2512 extends XoopsUpgrade
             'deletepurifier',
             'deletephpmailer',
             'expandactkey',
+            'createtokenstable',
         ];
         $this->usedFiles    = [];
         $this->pathsToCheck = [
@@ -96,8 +97,8 @@ class Upgrade_2512 extends XoopsUpgrade
     }
 
     /**
-     * Check if actkey column is already large enough for lostpass tokens.
-     * Packed token is ~78 chars; column needs to be at least VARCHAR(100).
+     * Check if actkey column is already large enough for registration activation.
+     * Column needs to be at least VARCHAR(100) for future activation token migration.
      *
      * @return bool true if patch IS applied, false if NOT applied
      */
@@ -111,7 +112,8 @@ class Upgrade_2512 extends XoopsUpgrade
     }
 
     /**
-     * Expand actkey column to VARCHAR(100) for secure lostpass tokens.
+     * Expand actkey column to VARCHAR(100) for registration activation.
+     * Lostpass now uses the tokens table; this prepares actkey for activation migration.
      *
      * @return bool true if applied, false if failed
      */
@@ -134,6 +136,53 @@ class Upgrade_2512 extends XoopsUpgrade
             return false;
         }
 
+        return true;
+    }
+
+    /**
+     * Check if the tokens table already exists.
+     *
+     * @return bool true if table exists (patch applied)
+     */
+    public function check_createtokenstable()
+    {
+        $table  = $GLOBALS['xoopsDB']->prefix('tokens');
+        $result = $GLOBALS['xoopsDB']->query("SHOW TABLES LIKE " . $GLOBALS['xoopsDB']->quote($table));
+        if (!$GLOBALS['xoopsDB']->isResultSet($result) || !$result instanceof \mysqli_result) {
+            return false;
+        }
+        return (bool)$GLOBALS['xoopsDB']->fetchArray($result);
+    }
+
+    /**
+     * Create the tokens table for generic scoped tokens.
+     *
+     * @return bool true on success
+     */
+    public function apply_createtokenstable()
+    {
+        $table = $GLOBALS['xoopsDB']->prefix('tokens');
+        $sql   = "CREATE TABLE IF NOT EXISTS `{$table}` (
+            `token_id`   int unsigned        NOT NULL AUTO_INCREMENT,
+            `uid`        mediumint unsigned  NOT NULL DEFAULT 0,
+            `scope`      varchar(32)         NOT NULL DEFAULT '',
+            `hash`       char(64)            NOT NULL DEFAULT '',
+            `issued_at`  int unsigned        NOT NULL DEFAULT 0,
+            `expires_at` int unsigned        NOT NULL DEFAULT 0,
+            `used_at`    int unsigned        NOT NULL DEFAULT 0,
+            PRIMARY KEY (`token_id`),
+            UNIQUE KEY `uq_uid_scope_hash` (`uid`, `scope`, `hash`),
+            KEY `idx_uid_scope_issued` (`uid`, `scope`, `issued_at`),
+            KEY `idx_issued_at` (`issued_at`)
+        ) ENGINE=InnoDB;";
+
+        $result = $GLOBALS['xoopsDB']->query($sql);
+        if (!$result) {
+            $errno = $GLOBALS['xoopsDB']->errno();
+            $error = $GLOBALS['xoopsDB']->error();
+            $this->logs[] = sprintf('Failed to create tokens table. Error: %s - %s', $errno, $error);
+            return false;
+        }
         return true;
     }
 

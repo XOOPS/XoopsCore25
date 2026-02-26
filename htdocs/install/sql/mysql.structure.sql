@@ -576,6 +576,25 @@ CREATE TABLE users (
 # --------------------------------------------------------
 
 #
+# Table structure for table `tokens`
+#
+
+CREATE TABLE tokens (
+  token_id   int unsigned        NOT NULL AUTO_INCREMENT,
+  uid        mediumint unsigned  NOT NULL DEFAULT 0,
+  scope      varchar(32)         NOT NULL DEFAULT '',
+  hash       char(64)            NOT NULL DEFAULT '',
+  issued_at  int unsigned        NOT NULL DEFAULT 0,
+  expires_at int unsigned        NOT NULL DEFAULT 0,
+  used_at    int unsigned        NOT NULL DEFAULT 0,
+  PRIMARY KEY (token_id),
+  UNIQUE KEY uq_uid_scope_hash (uid, scope, hash),
+  KEY idx_uid_scope_issued (uid, scope, issued_at),
+  KEY idx_issued_at (issued_at)
+) ENGINE=InnoDB;
+# --------------------------------------------------------
+
+#
 # Table structure for table `cache_model`
 #
 
