@@ -24,7 +24,7 @@
             </tbody>
             <tfoot>
             <tr class="txtcenter foot">
-                <td colspan="3">
+                <td>
                     <input class="formButton" type="submit" value="<{$smarty.const._AM_SYSTEM_MODULES_SUBMIT}>"/>&nbsp;
                     <input class="formButton" type="button" value="<{$smarty.const._AM_SYSTEM_MODULES_CANCEL}>"
                            onclick="location='admin.php?fct=modulesadmin'"/>
