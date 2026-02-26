@@ -79,7 +79,9 @@ trait SourceFileTestTrait
             $this->markTestSkipped($skipMessage);
         }
 
-        $this->sourceContent = file_get_contents($this->filePath);
+        $content = file_get_contents($this->filePath);
+        $this->assertNotFalse($content, 'Failed to read source file: ' . basename($this->filePath));
+        $this->sourceContent = $content;
         $this->assertNotEmpty($this->sourceContent, 'Source file should not be empty');
     }
 }
