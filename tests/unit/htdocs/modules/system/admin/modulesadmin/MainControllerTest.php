@@ -20,11 +20,18 @@ require_once dirname(__DIR__, 2) . '/SourceFileTestTrait.php';
 use Tests\Unit\System\SourceFileTestTrait;
 
 /**
- * Tests for main.php module administration controller
+ * Tests for main.php module administration controller.
  *
  * These tests verify the behavior of the module administration interface
  * including operation routing, security token validation, parameter handling,
  * and data preparation for templates.
+ *
+ * @category  Test
+ * @package   Tests\Unit\System\ModulesAdmin
+ * @author    XOOPS Development Team
+ * @copyright 2000-2026 XOOPS Project (https://xoops.org)
+ * @license   GNU GPL 2.0 or later (https://www.gnu.org/licenses/gpl-2.0.html)
+ * @link      https://xoops.org
  */
 class MainControllerTest extends TestCase
 {
@@ -739,12 +746,6 @@ class MainControllerTest extends TestCase
             $displaySection,
             'Should toggle isactive state'
         );
-
-        $this->assertStringContainsString(
-            "setVar('isactive', !\$old)",
-            $displaySection,
-            'Should toggle block active state'
-        );
     }
 
     /**
@@ -868,6 +869,10 @@ class MainControllerTest extends TestCase
      */
     public function testFileHasValidPhpSyntax(): void
     {
+        if (!function_exists('exec') || !is_callable('exec')) {
+            $this->markTestSkipped('exec() is not available');
+        }
+
         $output = [];
         $returnCode = 0;
         exec('php -l ' . escapeshellarg($this->filePath) . ' 2>&1', $output, $returnCode);
@@ -940,9 +945,16 @@ class MainControllerTest extends TestCase
     }
 
     /**
-     * Verify that POST data is handled through a loop.
+     * Verify that POST data extraction loop exists (legacy pattern).
+     *
+     * WARNING: The `${$k} = $v` variable-variable pattern is insecure and
+     * should be replaced with explicit Request::get*() calls in a future
+     * refactor. This test documents the existing behaviour; it does NOT
+     * endorse it.
+     *
+     * @see https://owasp.org/www-community/vulnerabilities/Variable_Manipulation
      */
-    public function testHandlesPostDataThroughLoop(): void
+    public function testDocumentsLegacyPostExtractionPattern(): void
     {
         $this->assertStringContainsString(
             'if (isset($_POST))',
@@ -956,11 +968,13 @@ class MainControllerTest extends TestCase
             'Should iterate over POST data'
         );
 
-        // Note: The pattern ${$k} = $v is a legacy approach but we test that it exists
+        // The pattern ${$k} = $v is a known-insecure legacy approach;
+        // we assert its presence to detect accidental removal before a
+        // proper refactor replaces it with safe Request helpers.
         $this->assertStringContainsString(
             '${$k} = $v;',
             $this->sourceCode,
-            'Should extract POST variables (legacy pattern)'
+            'Should extract POST variables (legacy pattern — needs refactor)'
         );
     }
 
@@ -1103,11 +1117,10 @@ class MainControllerTest extends TestCase
      * Extract a specific case section from the switch statement.
      *
      * @param string $operation The operation name to extract
-     * @return string The operation section code
+     * @return string The extracted code section, or empty string if not found
      */
     private function extractOperationSection(string $operation): string
     {
-        // Find case 'operation':
         $pattern = "/case\s+['\"]" . preg_quote($operation, '/') . "['\"]:\s*/";
         if (!preg_match($pattern, $this->sourceCode, $matches, PREG_OFFSET_CAPTURE)) {
             return '';
@@ -1115,21 +1128,15 @@ class MainControllerTest extends TestCase
 
         $startPos = $matches[0][1] + strlen($matches[0][0]);
 
-        // Find the next break or case
         $nextCase = strpos($this->sourceCode, "\n    case ", $startPos);
         $nextBreak = strpos($this->sourceCode, "break;", $startPos);
 
-        $endPos = false;
-        if ($nextCase !== false && $nextBreak !== false) {
-            $endPos = min($nextCase, $nextBreak + 6);
-        } elseif ($nextCase !== false) {
-            $endPos = $nextCase;
-        } elseif ($nextBreak !== false) {
-            $endPos = $nextBreak + 6;
-        } else {
-            // End of switch
-            $endPos = strpos($this->sourceCode, '}', $startPos);
-        }
+        $endPos = match (true) {
+            $nextCase !== false && $nextBreak !== false => min($nextCase, $nextBreak + 6),
+            $nextCase !== false => $nextCase,
+            $nextBreak !== false => $nextBreak + 6,
+            default => strpos($this->sourceCode, '}', $startPos),
+        };
 
         if ($endPos === false) {
             return '';

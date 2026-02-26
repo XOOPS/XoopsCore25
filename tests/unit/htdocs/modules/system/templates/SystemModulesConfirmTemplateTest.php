@@ -20,10 +20,17 @@ require_once dirname(__DIR__) . '/SourceFileTestTrait.php';
 use Tests\Unit\System\SourceFileTestTrait;
 
 /**
- * Tests for system_modules_confirm.tpl template
+ * Tests for system_modules_confirm.tpl template.
  *
  * These tests verify the template structure, Smarty syntax, variable usage,
  * and security token handling in the module confirmation template.
+ *
+ * @category  Test
+ * @package   Tests\Unit\System\Templates
+ * @author    XOOPS Development Team
+ * @copyright 2000-2026 XOOPS Project (https://xoops.org)
+ * @license   GNU GPL 2.0 or later (https://www.gnu.org/licenses/gpl-2.0.html)
+ * @link      https://xoops.org
  */
 class SystemModulesConfirmTemplateTest extends TestCase
 {
@@ -111,11 +118,13 @@ class SystemModulesConfirmTemplateTest extends TestCase
     /**
      * Verify that modifs_mods branch shows confirmation form.
      */
-    public function testModifsModsbranchShowsConfirmationForm(): void
+    public function testModifsModsBranchShowsConfirmationForm(): void
     {
         // Extract the modifs_mods branch
         $modifsStart = strpos($this->templateContent, '{if isset($modifs_mods)}');
+        $this->assertNotFalse($modifsStart, 'Template should contain modifs_mods check');
         $elsePos = strpos($this->templateContent, '{else}', $modifsStart);
+        $this->assertNotFalse($elsePos, 'Template should have else clause after modifs_mods');
         $modifsBranch = substr($this->templateContent, $modifsStart, $elsePos - $modifsStart);
 
         $this->assertStringContainsString(
@@ -630,20 +639,21 @@ class SystemModulesConfirmTemplateTest extends TestCase
         preg_match_all('/<th>/', $this->templateContent, $thMatches);
         $columnCount = count($thMatches[0]);
 
-        if ($columnCount > 1) {
-            $this->assertStringContainsString(
-                'colspan="' . $columnCount . '"',
-                $this->templateContent,
-                "Footer should use colspan=\"{$columnCount}\" to span all columns"
-            );
-        } else {
+        if ($columnCount <= 1) {
             // Single column — colspan is unnecessary
             $this->assertStringNotContainsString(
                 'colspan="3"',
                 $this->templateContent,
                 'Footer should not use stale colspan="3" for single-column table'
             );
+            return;
         }
+
+        $this->assertStringContainsString(
+            'colspan="' . $columnCount . '"',
+            $this->templateContent,
+            "Footer should use colspan=\"{$columnCount}\" to span all columns"
+        );
     }
 
     /**
@@ -728,7 +738,7 @@ class SystemModulesConfirmTemplateTest extends TestCase
     /**
      * Verify that hidden fields use proper value escaping.
      */
-    public function testHiddenFieldsUseProperValueEscaping(): void
+    public function testHiddenFieldsUseProperValueSyntax(): void
     {
         $this->assertStringContainsString(
             'value="<{$row.oldname}>"',

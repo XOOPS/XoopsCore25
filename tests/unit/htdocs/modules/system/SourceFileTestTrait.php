@@ -19,12 +19,12 @@ trait SourceFileTestTrait
     /**
      * @var string The source content of the file under test
      */
-    protected string $sourceContent;
+    protected string $sourceContent = '';
 
     /**
      * @var string Resolved path to the file under test
      */
-    protected string $filePath;
+    protected string $filePath = '';
 
     /**
      * Resolve a source file from multiple candidate paths and load its content.
@@ -42,22 +42,35 @@ trait SourceFileTestTrait
             $skipMessage = basename($relativePath) . ' not found in expected locations';
         }
 
-        // Build candidate paths at various dirname() levels to support
-        // different test directory depths and project layouts.
-        $candidates = [];
+        // Locate the repository root by looking for the .git directory,
+        // then build candidate paths only within that boundary.
+        $repoRoot = null;
         for ($level = 3; $level <= 8; ++$level) {
             $base = dirname(__DIR__, $level);
-            $candidates[] = $base . '/' . $relativePath;
-            // Also try without leading 'htdocs/' for webroot-is-htdocs layouts
-            if (str_starts_with($relativePath, 'htdocs/')) {
-                $candidates[] = $base . '/' . substr($relativePath, 6);
+            if (is_dir($base . '/.git')) {
+                $repoRoot = realpath($base);
+                break;
             }
+        }
+
+        if ($repoRoot === null || $repoRoot === false) {
+            $this->markTestSkipped('Could not locate repository root (.git)');
+        }
+
+        // Build candidate paths within the repo root.
+        $candidates = [
+            $repoRoot . '/' . $relativePath,
+        ];
+        // Also try without leading 'htdocs/' for webroot-is-htdocs layouts
+        if (str_starts_with($relativePath, 'htdocs/')) {
+            $candidates[] = $repoRoot . '/' . substr($relativePath, 6);
         }
 
         $this->filePath = '';
         foreach ($candidates as $path) {
-            if (file_exists($path)) {
-                $this->filePath = $path;
+            $real = realpath($path);
+            if ($real !== false && str_starts_with($real, $repoRoot)) {
+                $this->filePath = $real;
                 break;
             }
         }
