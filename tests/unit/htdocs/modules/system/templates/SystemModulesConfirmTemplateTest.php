@@ -16,6 +16,9 @@ namespace Tests\Unit\System\Templates;
 
 use PHPUnit\Framework\TestCase;
 
+require_once dirname(__DIR__) . '/SourceFileTestTrait.php';
+use Tests\Unit\System\SourceFileTestTrait;
+
 /**
  * Tests for system_modules_confirm.tpl template
  *
@@ -24,40 +27,17 @@ use PHPUnit\Framework\TestCase;
  */
 class SystemModulesConfirmTemplateTest extends TestCase
 {
+    use SourceFileTestTrait;
+
     /**
-     * @var string The template content
+     * @var string Alias for sourceContent (kept for readability)
      */
     private string $templateContent;
 
-    /**
-     * @var string Path to the template file under test
-     */
-    private string $filePath;
-
     protected function setUp(): void
     {
-        $possiblePaths = [
-            dirname(__DIR__, 6) . '/htdocs/modules/system/templates/admin/system_modules_confirm.tpl',
-            dirname(__DIR__, 5) . '/modules/system/templates/admin/system_modules_confirm.tpl',
-            dirname(__DIR__, 4) . '/htdocs/modules/system/templates/admin/system_modules_confirm.tpl',
-            dirname(__DIR__, 5) . '/htdocs/modules/system/templates/admin/system_modules_confirm.tpl',
-            dirname(__DIR__, 3) . '/modules/system/templates/admin/system_modules_confirm.tpl',
-        ];
-
-        $this->filePath = '';
-        foreach ($possiblePaths as $path) {
-            if (file_exists($path)) {
-                $this->filePath = $path;
-                break;
-            }
-        }
-
-        if ($this->filePath === '') {
-            $this->markTestSkipped('system_modules_confirm.tpl not found in expected locations');
-        }
-
-        $this->templateContent = file_get_contents($this->filePath);
-        $this->assertNotEmpty($this->templateContent, 'Template file should not be empty');
+        $this->loadSourceFile('htdocs/modules/system/templates/admin/system_modules_confirm.tpl');
+        $this->templateContent = $this->sourceContent;
     }
 
     // =========================================================================

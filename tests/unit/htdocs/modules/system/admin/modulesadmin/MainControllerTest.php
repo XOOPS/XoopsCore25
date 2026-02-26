@@ -16,6 +16,9 @@ namespace Tests\Unit\System\ModulesAdmin;
 
 use PHPUnit\Framework\TestCase;
 
+require_once dirname(__DIR__, 2) . '/SourceFileTestTrait.php';
+use Tests\Unit\System\SourceFileTestTrait;
+
 /**
  * Tests for main.php module administration controller
  *
@@ -25,40 +28,17 @@ use PHPUnit\Framework\TestCase;
  */
 class MainControllerTest extends TestCase
 {
+    use SourceFileTestTrait;
+
     /**
-     * @var string The source code of main.php
+     * @var string Alias for sourceContent (kept for readability)
      */
     private string $sourceCode;
 
-    /**
-     * @var string Path to the main.php file under test
-     */
-    private string $filePath;
-
     protected function setUp(): void
     {
-        $possiblePaths = [
-            dirname(__DIR__, 7) . '/htdocs/modules/system/admin/modulesadmin/main.php',
-            dirname(__DIR__, 6) . '/modules/system/admin/modulesadmin/main.php',
-            dirname(__DIR__, 5) . '/htdocs/modules/system/admin/modulesadmin/main.php',
-            dirname(__DIR__, 6) . '/htdocs/modules/system/admin/modulesadmin/main.php',
-            dirname(__DIR__, 4) . '/modules/system/admin/modulesadmin/main.php',
-        ];
-
-        $this->filePath = '';
-        foreach ($possiblePaths as $path) {
-            if (file_exists($path)) {
-                $this->filePath = $path;
-                break;
-            }
-        }
-
-        if ($this->filePath === '') {
-            $this->markTestSkipped('main.php not found in expected locations');
-        }
-
-        $this->sourceCode = file_get_contents($this->filePath);
-        $this->assertNotEmpty($this->sourceCode, 'Source file should not be empty');
+        $this->loadSourceFile('htdocs/modules/system/admin/modulesadmin/main.php');
+        $this->sourceCode = $this->sourceContent;
     }
 
     // =========================================================================
