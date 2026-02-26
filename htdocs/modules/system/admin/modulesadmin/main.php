@@ -240,7 +240,6 @@ switch ($op) {
             $modifs_mods[$i]['mid']       = $mid;
             $modifs_mods[$i]['oldname']   = $myts->htmlSpecialChars($oldname[$mid]);
             $modifs_mods[$i]['newname']   = $myts->htmlSpecialChars(trim($newname[$mid]));
-            $modifs_mods[$i]['newstatus'] = isset($newstatus[$mid]) ? $myts->htmlSpecialChars($newstatus[$mid]) : 0;
             ++$i;
         }
         $xoopsTpl->assign('modifs_mods', $modifs_mods);
@@ -295,15 +294,6 @@ switch ($op) {
         $write  = false;
         $module = empty($_POST['module']) ? [] : $_POST['module'];
         foreach ($module as $mid) {
-            if (isset($newstatus[$mid]) && $newstatus[$mid] == 1) {
-                if ($oldstatus[$mid] == 0) {
-                    $ret[] = xoops_module_activate($mid);
-                }
-            } else {
-                if ($oldstatus[$mid] == 1) {
-                    $ret[] = xoops_module_deactivate($mid);
-                }
-            }
             $newname[$mid] = trim((string) XoopsFilterInput::clean($newname[$mid], 'STRING'));
             if ($oldname[$mid] != $newname[$mid]) {
                 $ret[] = xoops_module_change($mid, $newname[$mid]);
