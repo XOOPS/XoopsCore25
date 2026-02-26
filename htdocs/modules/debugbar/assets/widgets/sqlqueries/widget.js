@@ -1,6 +1,6 @@
-(function($) {
-
-    var csscls = PhpDebugBar.utils.makecsscls('phpdebugbar-widgets-');
+/* global phpdebugbar_sqlformatter */
+(function () {
+    const csscls = PhpDebugBar.utils.makecsscls('phpdebugbar-widgets-');
 
     /**
      * Widget for the displaying sql queries
@@ -8,35 +8,41 @@
      * Options:
      *  - data
      */
-    var SQLQueriesWidget = PhpDebugBar.Widgets.SQLQueriesWidget = PhpDebugBar.Widget.extend({
+    class SQLQueriesWidget extends PhpDebugBar.Widget {
+        get className() {
+            return csscls('sqlqueries');
+        }
 
-        className: csscls('sqlqueries'),
+        onFilterClick(el) {
+            el.classList.toggle(csscls('excluded'));
+            const connection = el.getAttribute('rel');
+            const items = this.list.el.querySelectorAll(`li[connection="${connection}"]`);
+            for (const item of items) {
+                item.hidden = !item.hidden;
+            }
+        }
 
-        onFilterClick: function(el) {
-            $(el).toggleClass(csscls('excluded'));
-            this.$list.$el.find("li[connection=" + $(el).attr("rel") + "]").toggle();
-        },
-        onCopyToClipboard: function (el) {
-            var code = $(el).parent('li').find('code').get(0);
-            var copy = function () {
+        onCopyToClipboard(el) {
+            const code = el.parentElement.querySelector('code');
+            const copy = function () {
                 try {
                     if (document.execCommand('copy')) {
-                        $(el).addClass(csscls('copy-clipboard-check'));
-                        setTimeout(function(){
-                            $(el).removeClass(csscls('copy-clipboard-check'));
-                        }, 2000)
+                        el.classList.add(csscls('copy-clipboard-check'));
+                        setTimeout(() => {
+                            el.classList.remove(csscls('copy-clipboard-check'));
+                        }, 2000);
                     }
                 } catch (err) {
                     console.log('Oops, unable to copy');
                 }
             };
-            var select = function (node) {
+            const select = function (node) {
                 if (document.selection) {
-                    var range = document.body.createTextRange();
+                    const range = document.body.createTextRange();
                     range.moveToElementText(node);
                     range.select();
                 } else if (window.getSelection) {
-                    var range = document.createRange();
+                    const range = document.createRange();
                     range.selectNodeContents(node);
                     window.getSelection().removeAllRanges();
                     window.getSelection().addRange(range);
@@ -45,197 +51,367 @@
                 window.getSelection().removeAllRanges();
             };
             select(code);
-        },
-        renderList: function (caption, icon, data) {
-            var $ul = $('<ul />').addClass(csscls('table-list')), $parts;
-            var $li = $('<li />').addClass(csscls('table-list-item'));
-            var $span = $('<span />').addClass('phpdebugbar-text-muted');
-            for (var key in data) {
-                var value = typeof data[key] === 'function' ? data[key].name + ' {}' : data[key];
-                $li.clone().append(typeof value === 'object' && value !== null
-                    ? [$span.clone().text(value.index || key).append('.'), '&nbsp;']
-                        .concat(value.namespace ? [value.namespace + '::'] : [])
-                        .concat([value.name || value.file])
-                        .concat(value.line ? [$span.clone().text(':' + value.line)] : [])
-                    : [$span.clone().text(key + ':'), '&nbsp;', value]
-                ).appendTo($ul);
-            }
-            caption += icon ? ' <i class="phpdebugbar-fa phpdebugbar-fa-' + icon + ' phpdebugbar-text-muted"></i>' : '';
-            return $('<tr />').append(
-                $('<td />').addClass(csscls('name')).html(caption),
-                $('<td />').addClass(csscls('value')).append($ul)
-            );
-        },
-        render: function() {
-            this.$status = $('<div />').addClass(csscls('status')).appendTo(this.$el);
+        }
 
-            this.$toolbar = $('<div />').addClass(csscls('toolbar')).appendTo(this.$el);
+        renderList(table, caption, data) {
+            const thead = document.createElement('thead');
 
-            var filters = [], self = this;
+            const tr = document.createElement('tr');
+            const nameTh = document.createElement('th');
+            nameTh.colSpan = 2;
+            nameTh.classList.add(csscls('name'));
+            nameTh.innerHTML = caption;
+            tr.append(nameTh);
+            thead.append(tr);
 
-            this.$list = new PhpDebugBar.Widgets.ListWidget({ itemRenderer: function(li, stmt) {
-                if (stmt.type === 'transaction') {
-                    $('<strong />').addClass(csscls('sql')).addClass(csscls('name')).text(stmt.sql).appendTo(li);
+            table.append(thead);
+
+            const tbody = document.createElement('tbody');
+
+            for (const key in data) {
+                const value = typeof data[key] === 'function' ? `${data[key].name} {}` : data[key];
+                const tr = document.createElement('tr');
+
+                if (typeof value === 'object' && value !== null) {
+                    const keyTd = document.createElement('td');
+                    keyTd.classList.add('phpdebugbar-text-muted');
+                    keyTd.textContent = value.index || key;
+                    tr.append(keyTd);
+
+                    const valueTd = document.createElement('td');
+                    if (value.namespace) {
+                        valueTd.append(`${value.namespace}::`);
+                    }
+
+                    valueTd.append(value.name || value.file);
+
+                    if (value.line) {
+                        const lineSpan = document.createElement('span');
+                        lineSpan.classList.add('phpdebugbar-text-muted');
+                        lineSpan.textContent = `:${value.line}`;
+                        valueTd.append(lineSpan);
+                    }
                 } else {
-                    $('<code />').addClass(csscls('sql')).html(PhpDebugBar.Widgets.highlight(stmt.sql, 'sql')).appendTo(li);
+                    const keyTd = document.createElement('td');
+                    keyTd.classList.add('phpdebugbar-text-muted');
+                    keyTd.textContent = key;
+                    tr.append(keyTd);
+
+                    const valueTd = document.createElement('td');
+                    valueTd.classList.add('phpdebugbar-text-muted');
+                    valueTd.textContent = value;
+                    tr.append(valueTd);
                 }
-                if (stmt.width_percent) {
-                    $('<div />').addClass(csscls('bg-measure')).append(
-                        $('<div />').addClass(csscls('value')).css({
-                            left: stmt.start_percent + '%',
-                            width: Math.max(stmt.width_percent, 0.01) + '%',
-                        })
-                    ).appendTo(li);
-                }
-                if (stmt.duration_str) {
-                    $('<span title="Duration" />').addClass(csscls('duration')).text(stmt.duration_str).appendTo(li);
-                }
-                if (stmt.memory_str) {
-                    $('<span title="Memory usage" />').addClass(csscls('memory')).text(stmt.memory_str).appendTo(li);
-                }
-                if (typeof(stmt.row_count) != 'undefined') {
-                    $('<span title="Row count" />').addClass(csscls('row-count')).text(stmt.row_count).appendTo(li);
-                }
-                if (typeof(stmt.stmt_id) != 'undefined' && stmt.stmt_id) {
-                    $('<span title="Prepared statement ID" />').addClass(csscls('stmt-id')).text(stmt.stmt_id).appendTo(li);
-                }
-                if (stmt.connection) {
-                    $('<span title="Connection" />').addClass(csscls('database')).text(stmt.connection).appendTo(li);
-                    li.attr("connection",stmt.connection);
-                    if ( $.inArray(stmt.connection, filters) == -1 ) {
-                        filters.push(stmt.connection);
-                        $('<a />')
-                            .addClass(csscls('filter'))
-                            .text(stmt.connection)
-                            .attr('rel', stmt.connection)
-                            .on('click', function() { self.onFilterClick(this); })
-                            .appendTo(self.$toolbar);
-                        if (filters.length>1) {
-                            self.$toolbar.show();
-                            self.$list.$el.css("margin-bottom","20px");
-                        }
+
+                tbody.append(tr);
+            }
+
+            table.append(tbody);
+        }
+
+        itemRenderer(li, stmt) {
+            if (stmt.slow) {
+                li.classList.add(csscls('sql-slow'));
+            }
+            if (stmt.width_percent) {
+                const bgMeasure = document.createElement('div');
+                bgMeasure.classList.add(csscls('bg-measure'));
+
+                const valueDiv = document.createElement('div');
+                valueDiv.classList.add(csscls('value'));
+                valueDiv.style.left = `${stmt.start_percent}%`;
+                valueDiv.style.width = `${Math.max(stmt.width_percent, 0.01)}%`;
+                bgMeasure.append(valueDiv);
+                li.append(bgMeasure);
+            }
+            if (stmt.duration_str) {
+                const duration = document.createElement('span');
+                duration.setAttribute('title', 'Duration');
+                duration.classList.add(csscls('duration'));
+                duration.textContent = stmt.duration_str;
+                li.append(duration);
+            }
+            if (stmt.memory_str) {
+                const memory = document.createElement('span');
+                memory.setAttribute('title', 'Memory usage');
+                memory.classList.add(csscls('memory'));
+                memory.textContent = stmt.memory_str;
+                li.append(memory);
+            }
+            if (typeof (stmt.row_count) !== 'undefined') {
+                const rowCount = document.createElement('span');
+                rowCount.setAttribute('title', 'Row count');
+                rowCount.classList.add(csscls('row-count'));
+                rowCount.textContent = stmt.row_count;
+                li.append(rowCount);
+            }
+            if (typeof (stmt.stmt_id) !== 'undefined' && stmt.stmt_id) {
+                const stmtId = document.createElement('span');
+                stmtId.setAttribute('title', 'Prepared statement ID');
+                stmtId.classList.add(csscls('stmt-id'));
+                stmtId.textContent = stmt.stmt_id;
+                li.append(stmtId);
+            }
+            if (stmt.connection) {
+                const database = document.createElement('span');
+                database.setAttribute('title', 'Connection');
+                database.classList.add(csscls('database'));
+                database.textContent = stmt.connection;
+                li.append(database);
+                li.setAttribute('connection', stmt.connection);
+
+                if (!this.filters.includes(stmt.connection)) {
+                    this.filters.push(stmt.connection);
+
+                    const filterLink = document.createElement('a');
+                    filterLink.classList.add(csscls('filter'));
+                    filterLink.textContent = stmt.connection;
+                    filterLink.setAttribute('rel', stmt.connection);
+                    filterLink.addEventListener('click', () => {
+                        this.onFilterClick(filterLink);
+                    });
+                    this.toolbar.append(filterLink);
+
+                    if (this.filters.length > 1) {
+                        this.toolbar.hidden = false;
                     }
                 }
-                if (typeof(stmt.is_success) != 'undefined' && !stmt.is_success) {
-                    li.addClass(csscls('error'));
-                    li.append($('<span />').addClass(csscls('error')).text("[" + stmt.error_code + "] " + stmt.error_message));
-                }
-                if ((!stmt.type || stmt.type === 'query')) {
-                    $('<span title="Copy to clipboard" />')
-                        .addClass(csscls('copy-clipboard'))
-                        .css('cursor', 'pointer')
-                        .html("&#8203;")
-                        .on('click', function (event) {
-                            self.onCopyToClipboard(this);
-                            event.stopPropagation();
-                        })
-                        .appendTo(li);
-                }
-                if (typeof(stmt.xdebug_link) !== 'undefined' && stmt.xdebug_link) {
-                    var header = $('<span title="Filename" />').addClass(csscls('filename')).text(stmt.xdebug_link.filename + ( stmt.xdebug_link.line ? "#" + stmt.xdebug_link.line : ''));
-                    $('<a href="' + stmt.xdebug_link.url + '"></a>').on('click', function (event) {
-                        event.stopPropagation();
-                        if (stmt.xdebug_link.ajax) {
-                            fetch(stmt.xdebug_link.url);
-                            event.preventDefault();
-                        }
-                    }).addClass(csscls('editor-link')).appendTo(header);
-                    header.appendTo(li);
-                }
-                var table = $('<table></table>').addClass(csscls('params'));
-                if (stmt.params && !$.isEmptyObject(stmt.params)) {
-                    self.renderList('Params', 'thumb-tack', stmt.params).appendTo(table);
-                }
-                if (stmt.bindings && !$.isEmptyObject(stmt.bindings)) {
-                    self.renderList('Bindings', 'thumb-tack', stmt.bindings).appendTo(table);
-                }
-                if (stmt.hints && !$.isEmptyObject(stmt.hints)) {
-                    self.renderList('Hints', 'question-circle', stmt.hints).appendTo(table);
-                }
-                if (stmt.backtrace && !$.isEmptyObject(stmt.backtrace)) {
-                    self.renderList('Backtrace', 'list-ul', stmt.backtrace).appendTo(table);
-                }
-                if (table.find('tr').length) {
-                    table.appendTo(li);
-                    li.css('cursor', 'pointer').click(function() {
-                        if (window.getSelection().type == "Range") {
-                            return''
-                        }
-                        if (table.is(':visible')) {
-                            table.hide();
-                        } else {
-                            table.show();
-                        }
-                    });
-                }
-            }});
-            this.$list.$el.appendTo(this.$el);
+            }
+            if ((!stmt.type || stmt.type === 'query')) {
+                const copyBtn = document.createElement('span');
+                copyBtn.setAttribute('title', 'Copy to clipboard');
+                copyBtn.classList.add(csscls('copy-clipboard'));
+                copyBtn.style.cursor = 'pointer';
+                copyBtn.innerHTML = '&#8203;';
+                copyBtn.addEventListener('click', (event) => {
+                    this.onCopyToClipboard(copyBtn);
+                    event.stopPropagation();
+                });
+                li.append(copyBtn);
+            }
+            if (typeof (stmt.xdebug_link) !== 'undefined' && stmt.xdebug_link) {
+                const header = document.createElement('span');
+                header.setAttribute('title', 'Filename');
+                header.classList.add(csscls('filename'));
+                header.textContent = stmt.xdebug_link.filename + (stmt.xdebug_link.line ? `#${stmt.xdebug_link.line}` : '');
 
-            this.bindAttr('data', function(data) {
+                const link = document.createElement('a');
+                link.setAttribute('href', stmt.xdebug_link.url);
+                link.classList.add(csscls('editor-link'));
+                link.addEventListener('click', (event) => {
+                    event.stopPropagation();
+                    if (stmt.xdebug_link.ajax) {
+                        fetch(stmt.xdebug_link.url);
+                        event.preventDefault();
+                    }
+                });
+                header.append(link);
+                li.prepend(header);
+            } else if (typeof (stmt.filename) !== 'undefined' && stmt.filename) {
+                const header = document.createElement('span');
+                header.setAttribute('title', 'Filename');
+                header.classList.add(csscls('filename'));
+                header.textContent = stmt.filename;
+                li.prepend(header);
+            }
+            if (['transaction', 'info'].includes(stmt.type)) {
+                const strong = document.createElement('strong');
+                strong.classList.add(csscls('sql'), csscls('name'));
+                strong.textContent = stmt.sql;
+                li.append(strong);
+            } else {
+                const code = document.createElement('code');
+                code.classList.add(csscls('sql'));
+                code.innerHTML = PhpDebugBar.Widgets.highlight(stmt.sql, 'sql');
+                li.append(code);
+            }
+            if (typeof (stmt.is_success) !== 'undefined' && !stmt.is_success) {
+                li.classList.add(csscls('error'));
+                const errorSpan = document.createElement('span');
+                errorSpan.classList.add(csscls('error'));
+                errorSpan.textContent = `[${stmt.error_code}] ${stmt.error_message}`;
+                li.append(errorSpan);
+            }
+            
+            if (['info', 'transaction'].includes(stmt.type)) {
+                return;
+            }
+
+            const table = document.createElement('table');
+            table.classList.add(csscls('params'));
+            table.hidden = true;
+
+            if (stmt.params && Object.keys(stmt.params).length > 0) {
+                this.renderList(table, 'Params', stmt.params);
+            }
+            if (stmt.backtrace && Object.keys(stmt.backtrace).length > 0) {
+                const values = [];
+                for (const trace of stmt.backtrace.values()) {
+                    let text = trace.name || trace.file;
+                    if (trace.line) {
+                        text = `${text}:${trace.line}`;
+                    }
+                    values.push(text);
+                }
+                this.renderList(table, 'Backtrace', values);
+            }
+            if (!table.querySelectorAll('tr').length) {
+                table.style.display = 'none';
+            }
+            li.append(table);
+            li.style.cursor = 'pointer';
+            li.addEventListener('click', () => {
+                if (window.getSelection().type === 'Range') {
+                    return '';
+                }
+                table.hidden = !table.hidden;
+                const code = li.querySelector('code');
+                if (code && typeof phpdebugbar_sqlformatter !== 'undefined') {
+                    let sql = stmt.sql;
+                    if (!table.hidden) {
+                        sql = phpdebugbar_sqlformatter.format(stmt.sql);
+                    }
+                    code.innerHTML = PhpDebugBar.Widgets.highlight(sql, 'sql');
+                }
+            });
+        }
+
+        render() {
+            this.status = document.createElement('div');
+            this.status.classList.add(csscls('status'));
+            this.el.append(this.status);
+
+            this.toolbar = document.createElement('div');
+            this.toolbar.classList.add(csscls('toolbar'));
+            this.el.append(this.toolbar);
+
+            this.filters = [];
+            let sortState = 'none'; // 'none', 'asc', 'desc'
+            let originalData = null;
+
+            this.list = new PhpDebugBar.Widgets.ListWidget({
+                itemRenderer: (li, stmt) => this.itemRenderer(li, stmt)
+            });
+            this.el.append(this.list.el);
+
+            this.bindAttr('data', function (data) {
                 // the PDO collector maybe is empty
                 if (data.length <= 0 || !data.statements) {
                     return false;
                 }
-                filters = [];
-                this.$toolbar.hide().find(csscls('.filter')).remove();
-                this.$list.set('data', data.statements);
-                this.$status.empty();
+                this.filters = [];
+                this.toolbar.hidden = true;
+                const toolbarFilters = this.toolbar.querySelectorAll(`.${csscls('filter')}`);
+                for (const filter of toolbarFilters) {
+                    filter.remove();
+                }
+                this.list.set('data', data.statements);
+                this.status.innerHTML = '';
 
                 // Search for duplicate statements.
-                for (var sql = {}, duplicate = 0, i = 0; i < data.statements.length; i++) {
+                const sql = {};
+                let duplicate = 0;
+                for (let i = 0; i < data.statements.length; i++) {
                     if (data.statements[i].type && data.statements[i].type !== 'query') {
                         continue;
                     }
-                    var stmt = data.statements[i].sql;
-                    if (data.statements[i].params && !$.isEmptyObject(data.statements[i].params)) {
+                    let stmt = data.statements[i].sql;
+                    if (data.statements[i].params && Object.keys(data.statements[i].params).length > 0) {
                         stmt += JSON.stringify(data.statements[i].params);
                     }
-                    if (data.statements[i].bindings && !$.isEmptyObject(data.statements[i].bindings)) {
-                        stmt += JSON.stringify(data.statements[i].bindings);
-                    }
                     if (data.statements[i].connection) {
-                        stmt += '@' + data.statements[i].connection;
+                        stmt += `@${data.statements[i].connection}`;
                     }
                     sql[stmt] = sql[stmt] || { keys: [] };
                     sql[stmt].keys.push(i);
                 }
                 // Add classes to all duplicate SQL statements.
-                for (var stmt in sql) {
+                for (const stmt in sql) {
                     if (sql[stmt].keys.length > 1) {
                         duplicate += sql[stmt].keys.length;
-                        for (var i = 0; i < sql[stmt].keys.length; i++) {
-                            this.$list.$el.find('.' + csscls('list-item')).eq(sql[stmt].keys[i])
-                                .addClass(csscls('sql-duplicate'));
+                        for (let i = 0; i < sql[stmt].keys.length; i++) {
+                            const listItems = this.list.el.querySelectorAll(`.${csscls('list-item')}`);
+                            if (listItems[sql[stmt].keys[i]]) {
+                                listItems[sql[stmt].keys[i]].classList.add(csscls('sql-duplicate'));
+                            }
                         }
                     }
                 }
 
-                var t = $('<span />').text(data.nb_statements + " statements were executed").appendTo(this.$status);
+                const t = document.createElement('span');
+                t.textContent = `${data.nb_statements} statements were executed`;
+                this.status.append(t);
+
                 if (data.nb_failed_statements) {
-                    t.append(", " + data.nb_failed_statements + " of which failed");
+                    t.append(`, ${data.nb_failed_statements} of which failed`);
                 }
                 if (duplicate) {
-                    t.append(", " + duplicate + " of which were duplicates");
-                    t.append(", " + (data.nb_statements - duplicate) + " unique. ");
+                    t.append(`, ${duplicate} of which were duplicates`);
+                    t.append(`, ${data.nb_statements - duplicate} unique. `);
 
                     // add toggler for displaying only duplicated queries
-                    var duplicatedText = 'Show only duplicated';
-                    $('<a />').addClass(csscls('duplicates')).click(function () {
-                        $(this).toggleClass('shown-duplicated')
-                            .text($(this).hasClass('shown-duplicated') ? 'Show All' : duplicatedText);
-                        $('.' + self.className + ' .' + csscls('list-item'))
-                            .not('.' + csscls('sql-duplicate')).toggle();
-                    }).text(duplicatedText).appendTo(t);
+                    const duplicatedText = 'Show only duplicated';
+                    const toggleLink = document.createElement('a');
+                    toggleLink.classList.add(csscls('duplicates'));
+                    toggleLink.textContent = duplicatedText;
+                    toggleLink.addEventListener('click', () => {
+                        toggleLink.classList.toggle('shown-duplicated');
+                        toggleLink.textContent = toggleLink.classList.contains('shown-duplicated') ? 'Show All' : duplicatedText;
+
+                        const selector = `.${this.className} .${csscls('list-item')}:not(.${csscls('sql-duplicate')})`;
+                        const items = document.querySelectorAll(selector);
+                        for (const item of items) {
+                            item.hidden = !item.hidden;
+                        }
+                    });
+                    t.append(toggleLink);
                 }
                 if (data.accumulated_duration_str) {
-                    this.$status.append($('<span title="Accumulated duration" />').addClass(csscls('duration')).text(data.accumulated_duration_str));
+                    const duration = document.createElement('span');
+                    duration.setAttribute('title', 'Accumulated duration');
+                    duration.classList.add(csscls('duration'));
+                    duration.textContent = data.accumulated_duration_str;
+
+                    const sortIcon = document.createElement('span');
+                    sortIcon.classList.add(csscls('sort-icon'));
+                    sortIcon.style.cursor = 'pointer';
+                    sortIcon.style.marginLeft = '5px';
+                    sortIcon.textContent = 'Sort ⇅';
+                    sortIcon.setAttribute('title', 'Sort by duration');
+
+                    sortIcon.addEventListener('click', () => {
+                        if (sortState === 'none') {
+                            sortState = 'desc';
+                            sortIcon.textContent = '↓';
+                            originalData = [...data.statements];
+                            data.statements.sort((a, b) => (b.duration || 0) - (a.duration || 0));
+                        } else if (sortState === 'desc') {
+                            sortState = 'asc';
+                            sortIcon.textContent = '↑';
+                            data.statements.sort((a, b) => (a.duration || 0) - (b.duration || 0));
+                        } else {
+                            sortState = 'none';
+                            sortIcon.textContent = '⇅';
+                            if (originalData) {
+                                data.statements = originalData;
+                                originalData = null;
+                            }
+                        }
+                        this.list.set('data', data.statements);
+                    });
+
+                    duration.append(sortIcon);
+                    this.status.append(duration);
                 }
                 if (data.memory_usage_str) {
-                    this.$status.append($('<span title="Memory usage" />').addClass(csscls('memory')).text(data.memory_usage_str));
+                    const memory = document.createElement('span');
+                    memory.setAttribute('title', 'Memory usage');
+                    memory.classList.add(csscls('memory'));
+                    memory.textContent = data.memory_usage_str;
+                    this.status.append(memory);
                 }
             });
         }
-
-    });
-
-})(PhpDebugBar.$);
+    }
+    PhpDebugBar.Widgets.SQLQueriesWidget = SQLQueriesWidget;
+})();

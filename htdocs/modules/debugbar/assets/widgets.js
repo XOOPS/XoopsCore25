@@ -1,38 +1,33 @@
-if (typeof(PhpDebugBar) == 'undefined') {
-    // namespace
-    var PhpDebugBar = {};
-    PhpDebugBar.$ = jQuery;
-}
-
-(function($) {
-
+/* global phpdebugbar_hljs */
+(function () {
     /**
      * @namespace
      */
     PhpDebugBar.Widgets = {};
 
-    var csscls = PhpDebugBar.utils.makecsscls('phpdebugbar-widgets-');
+    const csscls = PhpDebugBar.utils.makecsscls('phpdebugbar-widgets-');
 
     /**
      * Replaces spaces with &nbsp; and line breaks with <br>
      *
-     * @param {String} text
-     * @return {String}
+     * @param {string} text
+     * @return {string}
      */
-    var htmlize = PhpDebugBar.Widgets.htmlize = function(text) {
-        return text.replace(/\n/g, '<br>').replace(/\s/g, "&nbsp;")
+    const htmlize = PhpDebugBar.Widgets.htmlize = function (text) {
+        const str = String(text ?? '');
+        return str.replace(/\n/g, '<br>').replace(/\s/g, '&nbsp;');
     };
 
     /**
      * Returns a string representation of value, using JSON.stringify
      * if it's an object.
      *
-     * @param {Object} value
-     * @param {Boolean} prettify Uses htmlize() if true
-     * @return {String}
+     * @param {object} value
+     * @param {boolean} prettify Uses htmlize() if true
+     * @return {string}
      */
-    var renderValue = PhpDebugBar.Widgets.renderValue = function(value, prettify) {
-        if (typeof(value) !== 'string') {
+    const renderValue = PhpDebugBar.Widgets.renderValue = function (value, prettify) {
+        if (typeof value !== 'string') {
             if (prettify) {
                 return htmlize(JSON.stringify(value, undefined, 2));
             }
@@ -44,60 +39,63 @@ if (typeof(PhpDebugBar) == 'undefined') {
     /**
      * Highlights a block of code
      *
-     * @param  {String} code
-     * @param  {String} lang
-     * @return {String}
+     * @param  {string} code
+     * @param  {string|null} lang
+     * @return {string}
      */
-    var highlight = PhpDebugBar.Widgets.highlight = function(code, lang) {
-        if (typeof(code) === 'string') {
-            if (typeof(hljs) === 'undefined') {
-                return htmlize(code);
-            }
-            if (lang && hljs.getLanguage(lang)) {
-                return hljs.highlight(code, {language: lang}).value;
-            }
-            return hljs.highlightAuto(code).value;
+    const highlight = PhpDebugBar.Widgets.highlight = function (code, lang) {
+        if (typeof phpdebugbar_hljs === 'undefined') {
+            return htmlize(code);
         }
 
-        if (typeof(hljs) === 'object') {
-            code.each(function(i, e) { hljs.highlightElement(e); });
+        const hljs = phpdebugbar_hljs;
+        if (lang && hljs.getLanguage(lang)) {
+            return hljs.highlight(code, { language: lang }).value;
         }
-        return code;
+
+        return hljs.highlightAuto(code).value;
     };
 
     /**
      * Creates a <pre> element with a block of code
      *
-     * @param  {String} code
-     * @param  {String} lang
-     * @param  {Number} [firstLineNumber] If provided, shows line numbers beginning with the given value.
-     * @param  {Number} [highlightedLine] If provided, the given line number will be highlighted.
-     * @return {String}
+     * @param  {string} code
+     * @param  {string} lang
+     * @param  {number} [firstLineNumber] If provided, shows line numbers beginning with the given value.
+     * @param  {number} [highlightedLine] If provided, the given line number will be highlighted.
+     * @return {string}
      */
-    var createCodeBlock = PhpDebugBar.Widgets.createCodeBlock = function(code, lang, firstLineNumber, highlightedLine) {
-        var pre = $('<pre />').addClass(csscls('code-block'));
+    const createCodeBlock = PhpDebugBar.Widgets.createCodeBlock = function (code, lang, firstLineNumber, highlightedLine) {
+        const pre = document.createElement('pre');
+        pre.classList.add(csscls('code-block'));
+
         // Add a newline to prevent <code> element from vertically collapsing too far if the last
         // code line was empty: that creates problems with the horizontal scrollbar being
         // incorrectly positioned - most noticeable when line numbers are shown.
-        var codeElement = $('<code />').text(code + '\n').appendTo(pre);
-
-        // Format the code
-        if (lang) {
-            codeElement.addClass("language-" + lang);
-        }
-        highlight(codeElement).removeClass('hljs');
+        const codeElement = document.createElement('code');
+        codeElement.innerHTML = highlight(`${code}\n`, lang);
+        pre.append(codeElement);
 
         // Show line numbers in a list
-        if (!isNaN(parseFloat(firstLineNumber))) {
-            var lineCount = code.split('\n').length;
-            var $lineNumbers = $('<ul />').prependTo(pre);
-            pre.children().addClass(csscls('numbered-code'));
-            for (var i = firstLineNumber; i < firstLineNumber + lineCount; i++) {
-                var li = $('<li />').text(i).appendTo($lineNumbers);
+        if (!Number.isNaN(Number.parseFloat(firstLineNumber))) {
+            const lineCount = code.split('\n').length;
+            const lineNumbers = document.createElement('ul');
+            pre.prepend(lineNumbers);
+            const children = Array.from(pre.children);
+            for (const child of children) {
+                child.classList.add(csscls('numbered-code'));
+            }
+            for (let i = firstLineNumber; i < firstLineNumber + lineCount; i++) {
+                const li = document.createElement('li');
+                li.textContent = i;
+                lineNumbers.append(li);
 
                 // Add a span with a special class if we are supposed to highlight a line.
                 if (highlightedLine === i) {
-                    li.addClass(csscls('highlighted-line')).append('<span>&nbsp;</span>');
+                    li.classList.add(csscls('highlighted-line'));
+                    const span = document.createElement('span');
+                    span.innerHTML = '&nbsp;';
+                    li.append(span);
                 }
             }
         }
@@ -105,16 +103,7 @@ if (typeof(PhpDebugBar) == 'undefined') {
         return pre;
     };
 
-    var getDictValue = PhpDebugBar.utils.getDictValue = function(dict, key, default_value) {
-        var d = dict, parts = key.split('.');
-        for (var i = 0; i < parts.length; i++) {
-            if (!d[parts[i]]) {
-                return default_value;
-            }
-            d = d[parts[i]];
-        }
-        return d;
-    }
+    const { getDictValue } = PhpDebugBar.utils;
 
     // ------------------------------------------------------------------
     // Generic widgets
@@ -127,91 +116,104 @@ if (typeof(PhpDebugBar) == 'undefined') {
      *  - data
      *  - itemRenderer: a function used to render list items (optional)
      */
-    var ListWidget = PhpDebugBar.Widgets.ListWidget = PhpDebugBar.Widget.extend({
+    class ListWidget extends PhpDebugBar.Widget {
+        get tagName() {
+            return 'ul';
+        }
 
-        tagName: 'ul',
+        get className() {
+            return csscls('list');
+        }
 
-        className: csscls('list'),
-
-        initialize: function(options) {
-            if (!options['itemRenderer']) {
-                options['itemRenderer'] = this.itemRenderer;
+        initialize(options) {
+            if (!options.itemRenderer) {
+                options.itemRenderer = this.itemRenderer;
             }
             this.set(options);
-        },
+        }
 
-        render: function() {
-            this.bindAttr(['itemRenderer', 'data'], function() {
-                this.$el.empty();
+        render() {
+            this.bindAttr(['itemRenderer', 'data'], function () {
+                this.el.innerHTML = '';
                 if (!this.has('data')) {
                     return;
                 }
 
-                var data = this.get('data');
-                for (var i = 0; i < data.length; i++) {
-                    var li = $('<li />').addClass(csscls('list-item')).appendTo(this.$el);
+                const data = this.get('data');
+                for (let i = 0; i < data.length; i++) {
+                    const li = document.createElement('li');
+                    li.classList.add(csscls('list-item'));
+                    this.el.append(li);
                     this.get('itemRenderer')(li, data[i]);
                 }
             });
-        },
+        }
 
         /**
          * Renders the content of a <li> element
          *
-         * @param {jQuery} li The <li> element as a jQuery Object
-         * @param {Object} value An item from the data array
+         * @param {HTMLElement} li The <li> element
+         * @param {object} value An item from the data array
          */
-        itemRenderer: function(li, value) {
-            li.html(renderValue(value));
+        itemRenderer(li, value) {
+            li.innerHTML = renderValue(value);
         }
-
-    });
+    }
+    PhpDebugBar.Widgets.ListWidget = ListWidget;
 
     // ------------------------------------------------------------------
 
     /**
-     * Displays object property/value pairs in a <dl> list
+     * Displays object property/value paris in a <dl> list
      *
      * Options:
      *  - data
      *  - itemRenderer: a function used to render list items (optional)
      */
-    var KVListWidget = PhpDebugBar.Widgets.KVListWidget = ListWidget.extend({
+    class KVListWidget extends ListWidget {
+        get tagName() {
+            return 'dl';
+        }
 
-        tagName: 'dl',
+        get className() {
+            return csscls('kvlist');
+        }
 
-        className: csscls('kvlist'),
-
-        render: function() {
-            this.bindAttr(['itemRenderer', 'data'], function() {
-                this.$el.empty();
+        render() {
+            this.bindAttr(['itemRenderer', 'data'], function () {
+                this.el.innerHTML = '';
                 if (!this.has('data')) {
                     return;
                 }
 
-                var self = this;
-                $.each(this.get('data'), function(key, value) {
-                    var dt = $('<dt />').addClass(csscls('key')).appendTo(self.$el);
-                    var dd = $('<dd />').addClass(csscls('value')).appendTo(self.$el);
-                    self.get('itemRenderer')(dt, dd, key, value);
-                });
+                for (const [key, value] of Object.entries(this.get('data'))) {
+                    const dt = document.createElement('dt');
+                    dt.classList.add(csscls('key'));
+                    this.el.append(dt);
+
+                    const dd = document.createElement('dd');
+                    dd.classList.add(csscls('value'));
+                    this.el.append(dd);
+
+                    this.get('itemRenderer')(dt, dd, key, value);
+                }
             });
-        },
+        }
 
         /**
          * Renders the content of the <dt> and <dd> elements
          *
-         * @param {jQuery} dt The <dt> element as a jQuery Object
-         * @param {jQuery} dd The <dd> element as a jQuery Object
-         * @param {String} key Property name
-         * @param {Object} value Property value
+         * @param {HTMLElement} dt The <dt> element
+         * @param {HTMLElement} dd The <dd> element
+         * @param {string} key Property name
+         * @param {object} value Property value
          */
-        itemRenderer: function(dt, dd, key, value) {
-            dt.text(key);
-            dd.html(htmlize(value));
+        itemRenderer(dt, dd, key, value) {
+            dt.textContent = key;
+            dd.innerHTML = htmlize(value);
         }
-
-    });
+    }
+    PhpDebugBar.Widgets.KVListWidget = KVListWidget;
 
     // ------------------------------------------------------------------
 
@@ -222,29 +224,40 @@ if (typeof(PhpDebugBar) == 'undefined') {
      * Options:
      *  - data
      */
-    var VariableListWidget = PhpDebugBar.Widgets.VariableListWidget = KVListWidget.extend({
+    class VariableListWidget extends KVListWidget {
+        get className() {
+            return csscls('kvlist varlist');
+        }
 
-        className: csscls('kvlist varlist'),
+        itemRenderer(dt, dd, key, value) {
+            const span = document.createElement('span');
+            span.setAttribute('title', key);
+            span.textContent = key;
+            dt.append(span);
 
-        itemRenderer: function(dt, dd, key, value) {
-            $('<span />').attr('title', key).text(key).appendTo(dt);
-
-            var v = value && value.value || value;
+            let v = value && value.value || value;
             if (v && v.length > 100) {
-                v = v.substr(0, 100) + "...";
+                v = `${v.substr(0, 100)}...`;
             }
-            var prettyVal = null;
-            dd.text(v).click(function() {
-                if (dd.hasClass(csscls('pretty'))) {
-                    dd.text(v).removeClass(csscls('pretty'));
+            let prettyVal = null;
+            dd.textContent = v;
+            dd.addEventListener('click', () => {
+                if (window.getSelection().type === 'Range') {
+                    return '';
+                }
+                if (dd.classList.contains(csscls('pretty'))) {
+                    dd.textContent = v;
+                    dd.classList.remove(csscls('pretty'));
                 } else {
                     prettyVal = prettyVal || createCodeBlock(value);
-                    dd.addClass(csscls('pretty')).empty().append(prettyVal);
+                    dd.classList.add(csscls('pretty'));
+                    dd.innerHTML = '';
+                    dd.append(prettyVal);
                 }
             });
         }
-
-    });
+    }
+    PhpDebugBar.Widgets.VariableListWidget = VariableListWidget;
 
     // ------------------------------------------------------------------
 
@@ -256,30 +269,195 @@ if (typeof(PhpDebugBar) == 'undefined') {
      * Options:
      *  - data
      */
-    var HtmlVariableListWidget = PhpDebugBar.Widgets.HtmlVariableListWidget = KVListWidget.extend({
-
-        className: csscls('kvlist htmlvarlist'),
-
-        itemRenderer: function(dt, dd, key, value) {
-            $('<span />').attr('title', $('<i />').html(key || '').text()).html(key || '').appendTo(dt);
-            dd.html(value && value.value || value);
-
-            if (value && value.xdebug_link) {
-                var header = $('<span />').addClass(csscls('filename')).text(value.xdebug_link.filename + ( value.xdebug_link.line ? "#" + value.xdebug_link.line : ''));
-                if (value.xdebug_link) {
-                    if (value.xdebug_link.ajax) {
-                        $('<a title="' + value.xdebug_link.url + '"></a>').on('click', function () {
-                            $.ajax(value.xdebug_link.url);
-                        }).addClass(csscls('editor-link')).appendTo(header);
-                    } else {
-                        $('<a href="' + value.xdebug_link.url + '"></a>').addClass(csscls('editor-link')).appendTo(header);
-                    }
-                }
-                header.appendTo(dd);
-            }
+    class HtmlVariableListWidget extends KVListWidget {
+        get className() {
+            return csscls('kvlist htmlvarlist');
         }
 
-    });
+        itemRenderer(dt, dd, key, value) {
+            const tempElement = document.createElement('i');
+            tempElement.innerHTML = key ?? '';
+            const span = document.createElement('span');
+            span.setAttribute('title', tempElement.textContent);
+            span.innerHTML = key ?? '';
+            dt.append(span);
+
+            dd.innerHTML = value && value.value || value;
+
+            if (value && value.xdebug_link) {
+                const header = document.createElement('span');
+                header.classList.add(csscls('filename'));
+                header.textContent = value.xdebug_link.filename + (value.xdebug_link.line ? `#${value.xdebug_link.line}` : '');
+
+                if (value.xdebug_link) {
+                    const link = document.createElement('a');
+                    link.classList.add(csscls('editor-link'));
+
+                    if (value.xdebug_link.ajax) {
+                        link.setAttribute('title', value.xdebug_link.url);
+                        link.addEventListener('click', () => {
+                            fetch(value.xdebug_link.url);
+                        });
+                    } else {
+                        link.setAttribute('href', value.xdebug_link.url);
+                    }
+                    header.append(link);
+                }
+                dd.append(header);
+            }
+        }
+    }
+    PhpDebugBar.Widgets.HtmlVariableListWidget = HtmlVariableListWidget;
+
+    // ------------------------------------------------------------------
+
+    /**
+     * Displays array element in a <table> list, columns keys map
+     * useful for showing a multiple values table
+     *
+     * Options:
+     *  - data
+     *  - key_map: list of keys to be displayed with an optional label
+     *             example: {key1: label1, key2: label2} or [key1, key2]
+     */
+    class TableVariableListWidget extends PhpDebugBar.Widget {
+        get tagName() {
+            return 'div';
+        }
+
+        get className() {
+            return csscls('tablevarlist');
+        }
+
+        render() {
+            this.bindAttr('data', function (data) {
+                this.el.innerHTML = '';
+
+                if (!this.has('data')) {
+                    return;
+                }
+
+                this.table = document.createElement('table');
+                this.table.classList.add(csscls('tablevar'));
+                this.el.append(this.table);
+
+                const header = document.createElement('tr');
+                header.classList.add(csscls('header'));
+                const headerFirstCell = document.createElement('td');
+                header.append(headerFirstCell);
+                this.table.append(header);
+
+                let key_map = data.key_map || { value: 'Value' };
+
+                if (Array.isArray(key_map)) {
+                    key_map = Object.fromEntries(key_map.map(k => [k, null]));
+                }
+
+                for (const [key, label] of Object.entries(key_map)) {
+                    const colTitle = document.createElement('td');
+                    colTitle.textContent = label ?? key;
+                    header.append(colTitle);
+
+                    if (data.badges && data.badges[key]) {
+                        const badge = document.createElement('span');
+                        badge.textContent = data.badges[key];
+                        badge.classList.add(csscls('badge'));
+                        colTitle.append(badge);
+                    }
+                }
+
+                const self = this;
+                if (!data.data) {
+                    return;
+                }
+                let hasXdebuglinks = false;
+                for (const [key, values] of Object.entries(data.data)) {
+                    const tr = document.createElement('tr');
+                    tr.classList.add(csscls('item'));
+                    self.table.append(tr);
+
+                    const keyCell = document.createElement('td');
+                    keyCell.classList.add(csscls('key'));
+                    keyCell.textContent = key;
+                    tr.append(keyCell);
+
+                    if (typeof values !== 'object' || values === null) {
+                        const valueCell = document.createElement('td');
+                        valueCell.classList.add(csscls('value'));
+                        valueCell.textContent = values ?? '';
+                        tr.append(valueCell);
+                        continue;
+                    }
+
+                    for (const key of Object.keys(key_map)) {
+                        const valueCell = document.createElement('td');
+                        valueCell.classList.add(csscls('value'));
+                        valueCell.textContent = values[key] ?? '';
+                        tr.append(valueCell);
+                    }
+
+                    if (values.xdebug_link) {
+                        const editorCell = document.createElement('td');
+                        editorCell.classList.add(csscls('editor'));
+                        tr.append(editorCell);
+
+                        const filename = document.createElement('span');
+                        filename.classList.add(csscls('filename'));
+                        filename.textContent = values.xdebug_link.filename + (values.xdebug_link.line ? `#${values.xdebug_link.line}` : '');
+                        editorCell.append(filename);
+
+                        const link = document.createElement('a');
+                        link.classList.add(csscls('editor-link'));
+                        if (values.xdebug_link.ajax) {
+                            link.setAttribute('title', values.xdebug_link.url);
+                            link.addEventListener('click', () => {
+                                fetch(values.xdebug_link.url);
+                            });
+                        } else {
+                            link.setAttribute('href', values.xdebug_link.url);
+                        }
+                        filename.append(link);
+
+                        if (!hasXdebuglinks) {
+                            hasXdebuglinks = true;
+                            header.append(document.createElement('td'));
+                        }
+                    }
+                }
+
+                if (!data.summary) {
+                    return;
+                }
+
+                const summaryTr = document.createElement('tr');
+                summaryTr.classList.add(csscls('summary'));
+                self.table.append(summaryTr);
+
+                const summaryKeyCell = document.createElement('td');
+                summaryKeyCell.classList.add(csscls('key'));
+                summaryTr.append(summaryKeyCell);
+
+                if (typeof data.summary !== 'object' || data.summary === null) {
+                    const summaryValueCell = document.createElement('td');
+                    summaryValueCell.classList.add(csscls('value'));
+                    summaryValueCell.textContent = data.summary ?? '';
+                    summaryTr.append(summaryValueCell);
+                } else {
+                    for (const key of Object.keys(key_map)) {
+                        const summaryValueCell = document.createElement('td');
+                        summaryValueCell.classList.add(csscls('value'));
+                        summaryValueCell.textContent = data.summary[key] ?? '';
+                        summaryTr.append(summaryValueCell);
+                    }
+                }
+
+                if (hasXdebuglinks) {
+                    summaryTr.append(document.createElement('td'));
+                }
+            });
+        }
+    }
+    PhpDebugBar.Widgets.TableVariableListWidget = TableVariableListWidget;
 
     // ------------------------------------------------------------------
 
@@ -289,24 +467,27 @@ if (typeof(PhpDebugBar) == 'undefined') {
      * Options:
      *  - data
      */
-    var IFrameWidget = PhpDebugBar.Widgets.IFrameWidget = PhpDebugBar.Widget.extend({
-
-        tagName: 'iframe',
-
-        className: csscls('iframe'),
-
-        render: function() {
-            this.$el.attr({
-                seamless: "seamless",
-                border: "0",
-                width: "100%",
-                height: "100%"
-            });
-            this.bindAttr('data', function(url) { this.$el.attr('src', url); });
+    class IFrameWidget extends PhpDebugBar.Widget {
+        get tagName() {
+            return 'iframe';
         }
 
-    });
+        get className() {
+            return csscls('iframe');
+        }
 
+        render() {
+            this.el.setAttribute('seamless', 'seamless');
+            this.el.setAttribute('border', '0');
+            this.el.setAttribute('width', '100%');
+            this.el.setAttribute('height', '100%');
+
+            this.bindAttr('data', function (url) {
+                this.el.setAttribute('src', url);
+            });
+        }
+    }
+    PhpDebugBar.Widgets.IFrameWidget = IFrameWidget;
 
     // ------------------------------------------------------------------
     // Collector specific widgets
@@ -320,84 +501,167 @@ if (typeof(PhpDebugBar) == 'undefined') {
      * Options:
      *  - data
      */
-    var MessagesWidget = PhpDebugBar.Widgets.MessagesWidget = PhpDebugBar.Widget.extend({
+    class MessagesWidget extends PhpDebugBar.Widget {
+        get className() {
+            return csscls('messages');
+        }
 
-        className: csscls('messages'),
+        render() {
+            const self = this;
 
-        render: function() {
-            var self = this;
-
-            this.$list = new ListWidget({ itemRenderer: function(li, value) {
+            this.list = new ListWidget({ itemRenderer(li, value) {
+                let val;
                 if (value.message_html) {
-                    var val = $('<span />').addClass(csscls('value')).html(value.message_html).appendTo(li);
+                    val = document.createElement('span');
+                    val.classList.add(csscls('value'));
+                    val.innerHTML = value.message_html;
+                    li.append(val);
                 } else {
-                    var m = value.message;
-                    if (m.length > 100) {
-                        m = m.substr(0, 100) + "...";
-                    }
+                    const m = value.message;
 
-                    var val = $('<span />').addClass(csscls('value')).text(m).appendTo(li);
-                    if (!value.is_string || value.message.length > 100) {
-                        var prettyVal = value.message;
+                    val = document.createElement('span');
+                    val.classList.add(csscls('value'));
+                    val.textContent = m;
+                    val.classList.add(csscls('truncated'));
+                    li.append(val);
+
+                    if (!value.is_string || val.scrollWidth > val.clientWidth) {
+                        let prettyVal = value.message;
                         if (!value.is_string) {
                             prettyVal = null;
                         }
-                        li.css('cursor', 'pointer').click(function () {
-                            if (window.getSelection().type == "Range") {
-                                return''
+                        li.style.cursor = 'pointer';
+                        li.addEventListener('click', () => {
+                            if (window.getSelection().type === 'Range') {
+                                return '';
                             }
-                            if (val.hasClass(csscls('pretty'))) {
-                                val.text(m).removeClass(csscls('pretty'));
+                            if (val.classList.contains(csscls('pretty'))) {
+                                val.textContent = m;
+                                val.classList.remove(csscls('pretty'));
+                                val.classList.add(csscls('truncated'));
                             } else {
-                                prettyVal = prettyVal || createCodeBlock(value.message, 'php');
-                                val.addClass(csscls('pretty')).empty().append(prettyVal);
+                                prettyVal = prettyVal || createCodeBlock(value.message);
+                                val.classList.add(csscls('pretty'));
+                                val.classList.remove(csscls('truncated'));
+                                val.innerHTML = '';
+                                val.append(prettyVal);
                             }
                         });
                     }
                 }
                 if (value.xdebug_link) {
-                    var header = $('<span />').addClass(csscls('filename')).text(value.xdebug_link.filename + ( value.xdebug_link.line ? "#" + value.xdebug_link.line : ''));
+                    const header = document.createElement('span');
+                    header.classList.add(csscls('filename'));
+                    header.textContent = value.xdebug_link.filename + (value.xdebug_link.line ? `#${value.xdebug_link.line}` : '');
+
                     if (value.xdebug_link) {
+                        const link = document.createElement('a');
+                        link.classList.add(csscls('editor-link'));
+
                         if (value.xdebug_link.ajax) {
-                            $('<a title="' + value.xdebug_link.url + '"></a>').on('click', function () {
-                                $.ajax(value.xdebug_link.url);
-                            }).addClass(csscls('editor-link')).appendTo(header);
+                            link.setAttribute('title', value.xdebug_link.url);
+                            link.addEventListener('click', () => {
+                                fetch(value.xdebug_link.url);
+                            });
                         } else {
-                            $('<a href="' + value.xdebug_link.url + '"></a>').addClass(csscls('editor-link')).appendTo(header);
+                            link.setAttribute('href', value.xdebug_link.url);
                         }
+                        header.append(link);
                     }
-                    header.appendTo(li);
+                    li.prepend(header);
                 }
                 if (value.collector) {
-                    $('<span />').addClass(csscls('collector')).text(value.collector).prependTo(li);
+                    const collector = document.createElement('span');
+                    collector.classList.add(csscls('collector'));
+                    collector.textContent = value.collector;
+                    li.prepend(collector);
                 }
                 if (value.label) {
-                    val.addClass(csscls(value.label));
-                    $('<span />').addClass(csscls('label')).text(value.label).prependTo(li);
+                    val.classList.add(csscls(value.label));
+                    const label = document.createElement('span');
+                    label.classList.add(csscls('label'));
+                    label.textContent = value.label;
+                    li.prepend(label);
                 }
-            }});
+                if (value.context && Object.keys(value.context).length > 0) {
+                    const contextCount = document.createElement('span');
+                    contextCount.setAttribute('title', 'Context');
+                    contextCount.classList.add(csscls('context-count'));
+                    contextCount.textContent = Object.keys(value.context).length;
+                    li.prepend(contextCount);
 
-            this.$list.$el.appendTo(this.$el);
-            this.$toolbar = $('<div><i class="phpdebugbar-fa phpdebugbar-fa-search"></i></div>').addClass(csscls('toolbar')).appendTo(this.$el);
+                    const contextTable = document.createElement('table');
+                    contextTable.classList.add(csscls('params'));
+                    contextTable.hidden = true;
+                    contextTable.innerHTML = '<tr><th colspan="2">Context</th></tr>';
 
-            $('<input type="text" name="search" aria-label="Search" placeholder="Search" />')
-                .on('change', function() { self.set('search', this.value); })
-                .appendTo(this.$toolbar);
+                    for (const key in value.context) {
+                        if (typeof value.context[key] !== 'function') {
+                            const tr = document.createElement('tr');
+                            const td1 = document.createElement('td');
+                            td1.classList.add(csscls('name'));
+                            td1.textContent = key;
+                            tr.append(td1);
 
-            this.bindAttr('data', function(data) {
-                this.set({excludelabel: [], excludecollector: [], search: ''});
-                this.$toolbar.find(csscls('.filter')).remove();
+                            const td2 = document.createElement('td');
+                            td2.classList.add(csscls('value'));
+                            td2.textContent = String(value.context[key] ?? '');
+                            tr.append(td2);
 
-                var labels = [], collectors = [], self = this,
-                    createFilterItem = function (type, value) {
-                        $('<a />')
-                            .addClass(csscls('filter')).addClass(csscls(type))
-                            .text(value).attr('rel', value)
-                            .on('click', function() { self.onFilterClick(this, type); })
-                            .appendTo(self.$toolbar)
-                    };
+                            contextTable.append(tr);
+                        }
+                    }
+                    li.append(contextTable);
 
-                data.forEach(function (item) {
+                    li.style.cursor = 'pointer';
+                    li.addEventListener('click', (event) => {
+                        if (window.getSelection().type === 'Range' || event.target.closest('.sf-dump')) {
+                            return;
+                        }
+                        contextTable.hidden = !contextTable.hidden;
+                    });
+                }
+            } });
+
+            this.el.append(this.list.el);
+
+            this.toolbar = document.createElement('div');
+            this.toolbar.classList.add(csscls('toolbar'));
+            this.toolbar.innerHTML = '<i class="phpdebugbar-icon phpdebugbar-icon-search"></i>';
+            this.el.append(this.toolbar);
+
+            const searchInput = document.createElement('input');
+            searchInput.type = 'text';
+            searchInput.name = 'search';
+            searchInput.setAttribute('aria-label', 'Search');
+            searchInput.placeholder = 'Search';
+            searchInput.addEventListener('change', function () {
+                self.set('search', this.value);
+            });
+            this.toolbar.append(searchInput);
+
+            this.bindAttr('data', function (data) {
+                this.set({ excludelabel: [], excludecollector: [], search: '' });
+
+                const filters = this.toolbar.querySelectorAll(`.${csscls('filter')}`);
+                for (const filter of filters) {
+                    filter.remove();
+                }
+
+                const labels = []; const collectors = []; const self = this;
+                const createFilterItem = function (type, value) {
+                    const link = document.createElement('a');
+                    link.classList.add(csscls('filter'));
+                    link.classList.add(csscls(type));
+                    link.textContent = value;
+                    link.setAttribute('rel', value);
+                    link.addEventListener('click', function () {
+                        self.onFilterClick(this, type);
+                    });
+                    self.toolbar.append(link);
+                };
+
+                data.forEach((item) => {
                     if (!labels.includes(item.label || 'none')) {
                         labels.push(item.label || 'none');
                     }
@@ -415,49 +679,55 @@ if (typeof(PhpDebugBar) == 'undefined') {
                     return;
                 }
 
-                $('<a />').addClass(csscls('filter')).css('visibility', 'hidden').appendTo(self.$toolbar);
+                const spacer = document.createElement('a');
+                spacer.classList.add(csscls('filter'));
+                spacer.style.visibility = 'hidden';
+                self.toolbar.append(spacer);
                 collectors.forEach(collector => createFilterItem('collector', collector));
             });
 
-            this.bindAttr(['excludelabel', 'excludecollector', 'search'], function() {
-                var excludelabel = this.get('excludelabel') || [],
-                    excludecollector = this.get('excludecollector') || [],
-                    search = this.get('search'),
-                    caseless = false,
-                    fdata = [];
+            this.bindAttr(['excludelabel', 'excludecollector', 'search'], function () {
+                const excludelabel = this.get('excludelabel') || [];
+                const excludecollector = this.get('excludecollector') || [];
+                const search = this.get('search');
+                let caseless = false;
+                const fdata = [];
 
                 if (search && search === search.toLowerCase()) {
                     caseless = true;
                 }
 
-                this.get('data').forEach(function (item) {
-                    var message = caseless ? item.message.toLowerCase() : item.message;
+                this.get('data').forEach((item) => {
+                    const rawMessage = item.message ?? item.message_html ?? '';
+                    const message = caseless ? String(rawMessage).toLowerCase() : String(rawMessage);
 
                     if (
-                        !excludelabel.includes(item.label || undefined) &&
-                        !excludecollector.includes(item.collector || undefined) &&
-                        (!search || message.indexOf(search) > -1)
+                        !excludelabel.includes(item.label || undefined)
+                        && !excludecollector.includes(item.collector || undefined)
+                        && (!search || message.includes(search))
                     ) {
                         fdata.push(item);
                     }
                 });
 
-                this.$list.set('data', fdata);
+                this.list.set('data', fdata);
             });
-        },
-
-        onFilterClick: function(el, type) {
-            $(el).toggleClass(csscls('excluded'));
-
-            var excluded = [];
-            this.$toolbar.find(csscls('.filter') + csscls('.excluded') + csscls('.' + type)).each(function() {
-                excluded.push(this.rel === 'none' || !this.rel ? undefined : this.rel);
-            });
-
-            this.set('exclude' + type, excluded);
         }
 
-    });
+        onFilterClick(el, type) {
+            el.classList.toggle(csscls('excluded'));
+
+            const excluded = [];
+            const selector = `.${csscls('filter')}.${csscls('excluded')}.${csscls(type)}`;
+            const excludedFilters = this.toolbar.querySelectorAll(selector);
+            for (const filter of excludedFilters) {
+                excluded.push(filter.rel === 'none' || !filter.rel ? undefined : filter.rel);
+            }
+
+            this.set(`exclude${type}`, excluded);
+        }
+    }
+    PhpDebugBar.Widgets.MessagesWidget = MessagesWidget;
 
     // ------------------------------------------------------------------
 
@@ -467,124 +737,175 @@ if (typeof(PhpDebugBar) == 'undefined') {
      * Options:
      *  - data
      */
-    var TimelineWidget = PhpDebugBar.Widgets.TimelineWidget = PhpDebugBar.Widget.extend({
+    class TimelineWidget extends PhpDebugBar.Widget {
+        get tagName() {
+            return 'ul';
+        }
 
-        tagName: 'ul',
+        get className() {
+            return csscls('timeline');
+        }
 
-        className: csscls('timeline'),
-
-        render: function() {
-            this.bindAttr('data', function(data) {
-
+        render() {
+            this.bindAttr('data', function (data) {
                 // ported from php DataFormatter
-                var formatDuration = function(seconds) {
-                    if (seconds < 0.001)
-                        return (seconds * 1000000).toFixed() + 'μs';
-                    else if (seconds < 0.1)
-                        return (seconds * 1000).toFixed(2) + 'ms';
-                    else if (seconds < 1)
-                        return (seconds * 1000).toFixed() + 'ms';
-                    return (seconds).toFixed(2) +  's';
+                const formatDuration = function (seconds) {
+                    if (seconds < 0.001) {
+                        return `${(seconds * 1000000).toFixed()}μs`;
+                    } else if (seconds < 0.1) {
+                        return `${(seconds * 1000).toFixed(2)}ms`;
+                    } else if (seconds < 1) {
+                        return `${(seconds * 1000).toFixed()}ms`;
+                    }
+                    return `${(seconds).toFixed(2)}s`;
                 };
 
                 // ported from php DataFormatter
-                var formatBytes = function formatBytes(size) {
+                const formatBytes = function formatBytes(size) {
                     if (size === 0 || size === null) {
                         return '0B';
                     }
 
-                    var sign = size < 0 ? '-' : '',
-                        size = Math.abs(size),
-                        base = Math.log(size) / Math.log(1024),
-                        suffixes = ['B', 'KB', 'MB', 'GB', 'TB'];
-                    return sign + (Math.round(Math.pow(1024, base - Math.floor(base)) * 100) / 100) + suffixes[Math.floor(base)];
-                }
+                    const sign = size < 0 ? '-' : '';
+                    const absSize2 = Math.abs(size);
+                    const base = Math.log(absSize2) / Math.log(1024);
+                    const suffixes = ['B', 'KB', 'MB', 'GB', 'TB'];
+                    return sign + (Math.round(1024 ** (base - Math.floor(base)) * 100) / 100) + suffixes[Math.floor(base)];
+                };
 
-                this.$el.empty();
+                this.el.innerHTML = '';
                 if (data.measures) {
-                    var aggregate = {};
+                    let aggregate = {};
 
-                    for (var i = 0; i < data.measures.length; i++) {
-                        var measure = data.measures[i];
+                    for (let i = 0; i < data.measures.length; i++) {
+                        const measure = data.measures[i];
+                        const group = measure.group || measure.label;
+                        const values = measure.values || [{
+                            relative_start: measure.relative_start,
+                            duration: measure.duration,
+                        }];
 
-                        if(!aggregate[measure.label])
-                            aggregate[measure.label] = { count: 0, duration: 0, memory : 0 };
-
-                        aggregate[measure.label]['count'] += 1;
-                        aggregate[measure.label]['duration'] += measure.duration;
-                        aggregate[measure.label]['memory'] += (measure.memory || 0);
-
-                        var m = $('<div />').addClass(csscls('measure')),
-                            li = $('<li />'),
-                            left = (measure.relative_start * 100 / data.duration).toFixed(2),
-                            width = Math.min((measure.duration * 100 / data.duration).toFixed(2), 100 - left);
-
-                        m.append($('<span />').addClass(csscls('value')).css({
-                            left: left + "%",
-                            width: width + "%"
-                        }));
-                        m.append($('<span />').addClass(csscls('label'))
-                            .text(measure.label + " (" + measure.duration_str +(measure.memory ? '/' + measure.memory_str: '') + ")"));
-
-                        if (measure.collector) {
-                            $('<span />').addClass(csscls('collector')).text(measure.collector).appendTo(m);
+                        if (!aggregate[group]) {
+                            aggregate[group] = { count: 0, duration: 0, memory: 0 };
                         }
 
-                        m.appendTo(li);
-                        this.$el.append(li);
+                        aggregate[group].count += values.length;
+                        aggregate[group].duration += measure.duration;
+                        aggregate[group].memory += (measure.memory || 0);
 
-                        if (measure.params && !$.isEmptyObject(measure.params)) {
-                            var table = $('<table><tr><th colspan="2">Params</th></tr></table>').hide().addClass(csscls('params')).appendTo(li);
-                            for (var key in measure.params) {
+                        const m = document.createElement('div');
+                        m.classList.add(csscls('measure'));
+
+                        const li = document.createElement('li');
+                        for (let j = 0; j < values.length; j++) {
+                            const left = (values[j].relative_start * 100 / data.duration).toFixed(2);
+                            const width = Math.min((values[j].duration * 100 / data.duration).toFixed(2), 100 - left);
+
+                            const valueSpan = document.createElement('span');
+                            valueSpan.classList.add(csscls('value'));
+                            valueSpan.style.left = `${left}%`;
+                            valueSpan.style.width = `${width}%`;
+                            m.append(valueSpan);
+                        }
+
+                        const labelSpan = document.createElement('span');
+                        labelSpan.classList.add(csscls('label'));
+                        labelSpan.textContent = (values.length > 1 ? values.length + 'x ' : '') + measure.label.replace(/\s+/g, ' ')
+                            + (measure.duration ? ` (${measure.duration_str}${measure.memory ? `/${measure.memory_str}` : ''})` : '');
+                        m.append(labelSpan);
+
+                        if (measure.collector) {
+                            const collectorSpan = document.createElement('span');
+                            collectorSpan.classList.add(csscls('collector'));
+                            collectorSpan.textContent = measure.collector;
+                            m.append(collectorSpan);
+                        }
+
+                        li.append(m);
+                        this.el.append(li);
+
+                        if (measure.params && Object.keys(measure.params).length > 0) {
+                            const table = document.createElement('table');
+                            table.classList.add(csscls('params'));
+                            table.hidden = true;
+                            table.innerHTML = '<tr><th colspan="2">Params</th></tr>';
+
+                            for (const key in measure.params) {
                                 if (typeof measure.params[key] !== 'function') {
-                                    table.append('<tr><td class="' + csscls('name') + '">' + key + '</td><td class="' + csscls('value') +
-                                    '"><pre><code>' + measure.params[key] + '</code></pre></td></tr>');
+                                    const tr = document.createElement('tr');
+                                    const keyTd = document.createElement('td');
+                                    keyTd.classList.add(csscls('name'));
+                                    keyTd.textContent = key;
+                                    const valTd = document.createElement('td');
+                                    valTd.classList.add(csscls('value'));
+                                    const pre = document.createElement('pre');
+                                    const code = document.createElement('code');
+                                    code.textContent = String(measure.params[key] ?? '');
+                                    pre.append(code);
+                                    valTd.append(pre);
+                                    tr.append(keyTd, valTd);
+                                    table.append(tr);
                                 }
                             }
-                            li.css('cursor', 'pointer').click(function() {
-                                if (window.getSelection().type == "Range") {
-                                    return''
+                            li.append(table);
+
+                            li.style.cursor = 'pointer';
+                            li.addEventListener('click', function (event) {
+                                if (window.getSelection().type === 'Range' || event.target.closest('.sf-dump')) {
+                                    return '';
                                 }
-                                var table = $(this).find('table');
-                                if (table.is(':visible')) {
-                                    table.hide();
-                                } else {
-                                    table.show();
+                                const table = this.querySelector('table');
+                                table.hidden = !table.hidden;
+                            });
+
+                            li.addEventListener('click', (event) => {
+                                if (event.target.closest('.sf-dump')) {
+                                    event.stopPropagation();
                                 }
                             });
                         }
                     }
 
                     // convert to array and sort by duration
-                    aggregate = $.map(aggregate, function(data, label) {
-                       return {
-                           label: label,
-                           data: data
-                       }
-                    }).sort(function(a, b) {
-                        return b.data.duration - a.data.duration
+                    aggregate = Object.entries(aggregate).map(([label, data]) => ({
+                        label,
+                        data
+                    })).sort((a, b) => {
+                        return b.data.duration - a.data.duration;
                     });
 
                     // build table and add
-                    var aggregateTable = $('<table></table>').addClass(csscls('params'));
-                    $.each(aggregate, function(i, aggregate) {
-                        width = Math.min((aggregate.data.duration * 100 / data.duration).toFixed(2), 100);
+                    const aggregateTable = document.createElement('table');
+                    aggregateTable.classList.add(csscls('params'));
 
-                        aggregateTable.append('<tr><td class="' + csscls('name') + '">' +
-                            aggregate.data.count + ' x ' + $('<i />').text(aggregate.label).html() + ' (' + width + '%)</td><td class="' + csscls('value') + '">' +
-                            '<div class="' + csscls('measure') +'">' +
-                                '<span class="' + csscls('value') + '"></span>' +
-                                '<span class="' + csscls('label') + '">' + formatDuration(aggregate.data.duration) + (aggregate.data.memory ? '/' + formatBytes(aggregate.data.memory) : '') + '</span>' +
-                            '</div></td></tr>');
-                        aggregateTable.find('span.' + csscls('value') + ':last').css({width: width + "%" });
-                    });
+                    for (const agg of aggregate) {
+                        const width = Math.min((agg.data.duration * 100 / data.duration).toFixed(2), 100);
 
-                    this.$el.append('<li/>').find('li:last').append(aggregateTable);
+                        const tempElement = document.createElement('i');
+                        tempElement.textContent = agg.label.replace(/\s+/g, ' ');
+                        const escapedLabel = tempElement.innerHTML;
+
+                        const tr = document.createElement('tr');
+                        tr.innerHTML = `<td class="${csscls('name')}">${
+                            agg.data.count} x ${escapedLabel} (${width}%)</td><td class="${csscls('value')}">`
+                            + `<div class="${csscls('measure')}">`
+                            + `<span class="${csscls('value')}"></span>`
+                            + `<span class="${csscls('label')}">${formatDuration(agg.data.duration)}${agg.data.memory ? `/${formatBytes(agg.data.memory)}` : ''}</span>`
+                            + '</div></td>';
+                        aggregateTable.append(tr);
+
+                        const lastValueSpan = tr.querySelector(`span.${csscls('value')}`);
+                        lastValueSpan.style.width = `${width}%`;
+                    }
+
+                    const lastLi = document.createElement('li');
+                    lastLi.append(aggregateTable);
+                    this.el.append(lastLi);
                 }
             });
         }
-
-    });
+    }
+    PhpDebugBar.Widgets.TimelineWidget = TimelineWidget;
 
     // ------------------------------------------------------------------
 
@@ -594,260 +915,543 @@ if (typeof(PhpDebugBar) == 'undefined') {
      * Options:
      *  - data
      */
-    var ExceptionsWidget = PhpDebugBar.Widgets.ExceptionsWidget = PhpDebugBar.Widget.extend({
+    class ExceptionsWidget extends PhpDebugBar.Widget {
+        get className() {
+            return csscls('exceptions');
+        }
 
-        className: csscls('exceptions'),
+        render() {
+            this.list = new ListWidget({ itemRenderer(li, e) {
+                const messageSpan = document.createElement('span');
+                messageSpan.classList.add(csscls('message'));
+                messageSpan.textContent = e.message;
 
-        render: function() {
-            this.$list = new ListWidget({ itemRenderer: function(li, e) {
-                $('<span />').addClass(csscls('message')).text(e.message).appendTo(li);
+                if (e.count > 1) {
+                    const badge = document.createElement('span');
+                    badge.classList.add(csscls('badge'));
+                    badge.textContent = `${e.count}x`;
+                    messageSpan.prepend(badge);
+                }
+                li.append(messageSpan);
+
                 if (e.file) {
-                    var header = $('<span />').addClass(csscls('filename')).text(e.file + "#" + e.line);
+                    const header = document.createElement('span');
+                    header.classList.add(csscls('filename'));
+                    header.textContent = `${e.file}#${e.line}`;
+
                     if (e.xdebug_link) {
+                        const link = document.createElement('a');
+                        link.classList.add(csscls('editor-link'));
+
                         if (e.xdebug_link.ajax) {
-                            $('<a title="' + e.xdebug_link.url + '"></a>').on('click', function () {
+                            link.setAttribute('title', e.xdebug_link.url);
+                            link.addEventListener('click', () => {
                                 fetch(e.xdebug_link.url);
-                            }).addClass(csscls('editor-link')).appendTo(header);
+                            });
                         } else {
-                            $('<a href="' + e.xdebug_link.url + '"></a>').addClass(csscls('editor-link')).appendTo(header);
+                            link.setAttribute('href', e.xdebug_link.url);
                         }
+                        header.append(link);
                     }
-                    header.appendTo(li);
+                    li.append(header);
                 }
+
                 if (e.type) {
-                    $('<span />').addClass(csscls('type')).text(e.type).appendTo(li);
+                    const typeSpan = document.createElement('span');
+                    typeSpan.classList.add(csscls('type'));
+                    typeSpan.textContent = e.type;
+                    li.append(typeSpan);
                 }
+
                 if (e.surrounding_lines) {
-                    var startLine = (e.line - 3) <= 0 ? 1 : e.line - 3;
-                    var pre = createCodeBlock(e.surrounding_lines.join(""), 'php', startLine, e.line).addClass(csscls('file')).appendTo(li);
-                    if (!e.stack_trace_html) {
-                        // This click event makes the var-dumper hard to use.
-                        li.click(function () {
-                            if (pre.is(':visible')) {
-                                pre.hide();
-                            } else {
-                                pre.show();
-                            }
-                        });
-                    }
-                }
-                if (e.stack_trace_html) {
-                    var $trace = $('<span />').addClass(csscls('filename')).html(e.stack_trace_html);
-                    $trace.appendTo(li);
-                } else if (e.stack_trace) {
-                    e.stack_trace.split("\n").forEach(function (trace) {
-                        var $traceLine = $('<div />');
-                        $('<span />').addClass(csscls('filename')).text(trace).appendTo($traceLine);
-                        $traceLine.appendTo(li);
+                    const startLine = (e.line - 3) <= 0 ? 1 : e.line - 3;
+                    const pre = createCodeBlock(e.surrounding_lines.join(''), 'php', startLine, e.line);
+                    pre.classList.add(csscls('file'));
+                    pre.hidden = true;
+                    li.append(pre);
+
+                    // This click event makes the var-dumper hard to use.
+                    li.addEventListener('click', (event) => {
+                        if (window.getSelection().type === 'Range' || event.target.closest('.sf-dump')) {
+                            return;
+                        }
+                        pre.hidden = !pre.hidden;
                     });
                 }
-            }});
-            this.$list.$el.appendTo(this.$el);
 
-            this.bindAttr('data', function(data) {
-                this.$list.set('data', data);
-                if (data.length == 1) {
-                    this.$list.$el.children().first().find(csscls('.file')).show();
+                if (e.stack_trace_html) {
+                    const trace = document.createElement('span');
+                    trace.classList.add(csscls('filename'));
+                    trace.innerHTML = e.stack_trace_html;
+
+                    const samps = trace.querySelectorAll('samp[data-depth="1"]');
+                    for (const samp of samps) {
+                        samp.classList.remove('sf-dump-expanded');
+                        samp.classList.add('sf-dump-compact');
+
+                        const note = samp.parentElement.querySelector(':scope > .sf-dump-note');
+                        if (note) {
+                            note.innerHTML = `${note.innerHTML.replace(/^array:/, '<span class="sf-dump-key">Stack Trace:</span> ')} files`;
+                        }
+                    }
+                    li.append(trace);
+                } else if (e.stack_trace) {
+                    e.stack_trace.split('\n').forEach((trace) => {
+                        const traceLine = document.createElement('div');
+                        const filename = document.createElement('span');
+                        filename.classList.add(csscls('filename'));
+                        filename.textContent = trace;
+                        traceLine.append(filename);
+                        li.append(traceLine);
+                    });
+                }
+            } });
+            this.el.append(this.list.el);
+
+            this.bindAttr('data', function (data) {
+                this.list.set('data', data);
+                if (data.length === 1) {
+                    const firstChild = this.list.el.children[0];
+                    if (firstChild) {
+                        const file = firstChild.querySelector(`.${csscls('file')}`);
+                        if (file) {
+                            file.hidden = false;
+                        }
+                    }
                 }
             });
-
         }
+    }
+    PhpDebugBar.Widgets.ExceptionsWidget = ExceptionsWidget;
 
-    });
+    // ------------------------------------------------------------------
 
     /**
-     * Displays datasets in a table
+     * Dataset Switcher Widget
      *
+     * Displays a compact badge showing the current request with a dropdown
+     * to switch between different datasets
      */
-    var DatasetWidget = PhpDebugBar.Widgets.DatasetWidget = PhpDebugBar.Widget.extend({
+    class DatasetWidget extends PhpDebugBar.Widget {
+        get className() {
+            return csscls('datasets-switcher-widget');
+        }
 
-        initialize: function(options) {
-            if (!options['itemRenderer']) {
-                options['itemRenderer'] = this.itemRenderer;
-            }
+        initialize(options) {
             this.set(options);
-            this.set('autoshow', null);
-            this.set('id', null);
-            this.set('sort', localStorage.getItem('debugbar-history-sort') || 'asc');
-            this.$el.addClass(csscls('dataset-history'))
 
-            this.renderHead();
-        },
+            const self = this;
+            const debugbar = this.get('debugbar');
 
-        renderHead: function() {
-            this.$el.empty();
-            this.$actions = $('<div />').addClass(csscls('dataset-actions')).appendTo(this.$el);
+            // Create badge
+            this.badge = document.createElement('div');
+            this.badge.classList.add(csscls('datasets-badge'));
+            this.badge.hidden = true;
 
-            var self = this;
+            this.badgeCount = document.createElement('span');
+            this.badgeCount.classList.add(csscls('datasets-badge-count'));
+            this.badge.append(this.badgeCount);
 
-            this.$autoshow = $('<input type=checkbox>')
-                .on('click', function() {
-                    if (self.get('debugbar').ajaxHandler) {
-                        self.get('debugbar').ajaxHandler.setAutoShow($(this).is(':checked'));
-                    }
-                });
+            this.badgeUrl = document.createElement('span');
+            this.badgeUrl.classList.add(csscls('datasets-badge-url'));
+            this.badge.append(this.badgeUrl);
 
-            $('<label>Autoshow</label>')
-                .append(this.$autoshow)
-                .appendTo(this.$actions)
+            // Create dropdown panel
+            this.panel = document.createElement('div');
+            this.panel.classList.add(csscls('datasets-panel'));
+            this.panel.hidden = true;
+            // Copy theme from debugbar to panel for CSS variable inheritance
+            if (debugbar.el) {
+                this.panel.setAttribute('data-theme', debugbar.el.getAttribute('data-theme'));
+            }
 
+            // Panel toolbar with filters
+            const toolbar = document.createElement('div');
+            toolbar.classList.add(csscls('datasets-panel-toolbar'));
 
-            this.$clearbtn = $('<a>Clear</a>')
-                .appendTo(this.$actions)
-                .on('click', function() {
-                    self.$table.empty();
-                });
-
-            this.$showBtn = $('<a>Show all</a>')
-                .appendTo(this.$actions)
-                .on('click', function() {
-                    self.searchInput.val(null);
-                    self.methodInput.val(null);
-                    self.set('search', null);
-                    self.set('method', null);
-                });
-
-            this.methodInput = $('<select name="method" style="width:100px"><option>(method)</option><option>GET</option><option>POST</option><option>PUT</option><option>DELETE</option></select>')
-                .on('change', function() { self.set('method', this.value)})
-                .appendTo(this.$actions)
-
-            this.searchInput = $('<input type="text" name="search" aria-label="Search" placeholder="Search" />')
-                .on('input', function() { self.set('search', this.value); })
-                .appendTo(this.$actions);
-
-
-            this.$table = $('<tbody />');
-
-            $('<table/>')
-                .append($('<thead/>')
-                    .append($('<tr/>')
-                        .append($('<th></th>').css('width', '30px'))
-                        .append($('<th>Date ↕</th>').css('width', '175px').click(function() {
-                            self.set('sort', self.get('sort') === 'asc' ? 'desc' : 'asc')
-                            localStorage.setItem('debugbar-history-sort', self.get('sort'))
-                        }))
-                        .append($('<th>Method</th>').css('width', '80px'))
-                        .append($('<th>URL</th>'))
-                        .append($('<th width="40%">Data</th>')))
-                )
-                .append(this.$table)
-                .appendTo(this.$el);
-
-
-        },
-
-        renderDatasets: function() {
-            this.$table.empty();
-            var self = this;
-            $.each(this.get('data'), function(key, data) {
-                if (!data.__meta) {
-                    return;
+            // Autoshow checkbox
+            const autoshowLabel = document.createElement('label');
+            autoshowLabel.classList.add(csscls('datasets-autoshow'));
+            this.autoshowCheckbox = document.createElement('input');
+            this.autoshowCheckbox.type = 'checkbox';
+            // Get initial value from localStorage or ajaxHandler or default to true
+            const storedAutoShow = localStorage.getItem('phpdebugbar-ajaxhandler-autoshow');
+            this.autoshowCheckbox.checked = storedAutoShow !== null
+                ? storedAutoShow === '1'
+                : (debugbar.ajaxHandler ? debugbar.ajaxHandler.autoShow : true);
+            this.autoshowCheckbox.addEventListener('change', function () {
+                if (debugbar.ajaxHandler) {
+                    debugbar.ajaxHandler.setAutoShow(this.checked);
                 }
-
-                self.get('itemRenderer')(self, data);
+                // Update settings widget if it exists
+                if (debugbar.controls.__settings) {
+                    debugbar.controls.__settings.get('widget').set('autoshow', this.checked);
+                }
+                // Update dataset tab widget if it exists
+                if (debugbar.controls.__datasets) {
+                    debugbar.controls.__datasets.get('widget').set('autoshow', this.checked);
+                }
             });
-        },
+            autoshowLabel.append(this.autoshowCheckbox);
+            autoshowLabel.append(document.createTextNode(' Autoshow'));
+            toolbar.append(autoshowLabel);
 
-        render: function() {
-            this.bindAttr('data', function() {
-                if (this.get('autoshow') === null && this.get('debugbar').ajaxHandler) {
-                    this.set('autoshow', this.get('debugbar').ajaxHandler.autoShow);
+            // Refresh button
+            this.refreshBtn = document.createElement('a');
+            this.refreshBtn.tabIndex = 0;
+            this.refreshBtn.classList.add(csscls('datasets-refresh-btn'));
+            this.refreshBtn.innerHTML = '<i class="phpdebugbar-icon phpdebugbar-icon-refresh"></i>';
+            this.refreshBtn.title = 'Auto-scan for new datasets';
+            this.isScanning = false;
+            this.refreshBtn.addEventListener('click', (e) => {
+                e.stopPropagation(); // Prevent panel from closing
+                if (this.isScanning) {
+                    // Stop scanning
+                    this.isScanning = false;
+                    this.refreshBtn.classList.remove(csscls('active'));
+                    this.refreshBtn.title = 'Auto-scan for new datasets';
+                } else {
+                    // Start scanning
+                    this.isScanning = true;
+                    this.refreshBtn.classList.add(csscls('active'));
+                    this.refreshBtn.title = 'Stop auto-scanning';
+                    // Start first scan immediately
+                    this.scanForNewDatasets();
+                }
+            });
+            toolbar.append(this.refreshBtn);
+
+            // Clear button
+            const clearBtn = document.createElement('a');
+            clearBtn.tabIndex = 0;
+            clearBtn.classList.add(csscls('datasets-clear-btn'));
+            clearBtn.textContent = 'Clear';
+            clearBtn.addEventListener('click', () => {
+                const currentId = debugbar.activeDatasetId;
+                const currentDataset = debugbar.datasets[currentId];
+                debugbar.datasets = {};
+                if (currentDataset) {
+                    debugbar.addDataSet(currentDataset, currentId, currentDataset.__meta.suffix, true);
+                }
+                this.panel.hidden = true;
+            });
+            toolbar.append(clearBtn);
+
+            // Search input
+            this.searchInput = document.createElement('input');
+            this.searchInput.type = 'search';
+            this.searchInput.placeholder = 'Search';
+            this.searchInput.classList.add(csscls('datasets-search'));
+            this.searchInput.addEventListener('input', () => {
+                self.applySearchFilter();
+            });
+            toolbar.append(this.searchInput);
+
+            this.panel.append(toolbar);
+
+            this.list = document.createElement('div');
+            this.list.classList.add(csscls('datasets-list'));
+            this.panel.append(this.list);
+
+            this.el.append(this.badge);
+            document.body.append(this.panel);
+
+            // Position panel relative to badge
+            const positionPanel = () => {
+                const badgeRect = this.badge.getBoundingClientRect();
+
+                // Calculate available space above and below the badge
+                const spaceAbove = badgeRect.top;
+                const spaceBelow = window.innerHeight - badgeRect.bottom;
+                const showBelow = spaceBelow > spaceAbove;
+
+                this.panel.style.position = 'fixed';
+                this.panel.style.right = `${window.innerWidth - badgeRect.right}px`;
+                this.panel.style.left = 'auto';
+
+                if (showBelow) {
+                    // Show panel below badge
+                    this.panel.style.top = `${badgeRect.bottom}px`;
+                    this.panel.style.bottom = 'auto';
+                    this.panel.style.maxHeight = `${spaceBelow}px`;
+                } else {
+                    // Show panel above badge (no gap)
+                    this.panel.style.bottom = `${window.innerHeight - badgeRect.top}px`;
+                    this.panel.style.top = 'auto';
+                    this.panel.style.maxHeight = `${spaceAbove}px`;
                 }
 
-                if (!this.has('data')) {
-                    return;
+                this.refreshBtn.hidden = !debugbar.openHandler;
+            };
+
+            // Toggle panel on click
+            this.badge.addEventListener('click', (e) => {
+                if (e.target !== this.panel && !this.panel.contains(e.target)) {
+                    if (this.panel.hidden) {
+                        positionPanel();
+                    }
+                    this.panel.hidden = !this.panel.hidden;
+                }
+            });
+
+            // Close panel when clicking outside
+            document.addEventListener('click', (e) => {
+                if (!this.badge.contains(e.target) && !this.panel.contains(e.target)) {
+                    this.panel.hidden = true;
+                }
+            });
+        }
+
+        render() {
+            // Bind to data changes
+            this.bindAttr('data', function () {
+                this.updateBadge();
+            });
+
+            this.bindAttr('activeId', function () {
+                this.updateBadge();
+            });
+
+            // Bind to autoshow changes from settings
+            this.bindAttr('autoshow', function () {
+                if (this.autoshowCheckbox) {
+                    this.autoshowCheckbox.checked = this.get('autoshow');
+                }
+            });
+        }
+
+        updateBadge() {
+            const debugbar = this.get('debugbar');
+            const datasets = this.get('data') || debugbar.datasets;
+            const activeId = this.get('activeId') || debugbar.activeDatasetId;
+
+            if (!datasets) {
+                this.badge.hidden = true;
+                return;
+            }
+
+            const datasetCount = Object.keys(datasets).length;
+
+            if (datasetCount >= 1) {
+                this.badge.hidden = false;
+
+                // Update the current URL display
+                const currentDataset = datasets[activeId];
+                if (currentDataset && currentDataset.__meta) {
+                    const uri = currentDataset.__meta.uri || '';
+                    const method = currentDataset.__meta.method || 'GET';
+                    this.badgeUrl.textContent = `${method} ${uri}`;
                 }
 
-                // Render the latest item
-                var datasets = this.get('data');
-                var data = datasets[Object.keys(datasets)[Object.keys(datasets).length - 1]]
-                if (!data.__meta) {
-                    return;
+                // Only show count badge if more than 1 request
+                if (datasetCount > 1) {
+                    this.badgeCount.textContent = datasetCount;
+                    this.badgeCount.hidden = false;
+                } else {
+                    this.badgeCount.hidden = true;
                 }
 
-                this.get('itemRenderer')(this, data);
-           });
-            this.bindAttr(['itemRenderer', 'search', 'method', 'sort'], function() {
-                this.renderDatasets();
-            })
-            this.bindAttr('autoshow', function() {
-                var autoshow = this.get('autoshow');
-                this.$autoshow.prop('checked', autoshow);
-            })
-            this.bindAttr('id', function() {
-                var id = this.get('id');
-                this.$table.find('.' + csscls('active')).removeClass(csscls('active'));
-                this.$table.find('tr[data-id=' + id+']').addClass(csscls('active'));
-            })
-        },
+                // Clear and rebuild the panel list
+                this.list.innerHTML = '';
 
-        /**
-         * Renders the content of a dataset item
-         *
-         * @param {Object} value An item from the data array
-         */
-        itemRenderer: function(widget, data) {
-            var meta = data.__meta;
+                // Get all datasets and sort by utime (latest on top)
+                const datasetIds = Object.keys(datasets).sort((a, b) => {
+                    const utimeA = datasets[a].__meta?.utime || 0;
+                    const utimeB = datasets[b].__meta?.utime || 0;
+                    return utimeB - utimeA; // Descending order (latest first)
+                });
 
-            var $badges = $('<td />');
-            var tr = $('<tr />');
-            if (widget.get('sort') === 'asc') {
-                tr.appendTo(widget.$table);
+                for (const datasetId of datasetIds) {
+                    const dataset = datasets[datasetId];
+                    const item = document.createElement('div');
+                    item.classList.add(csscls('datasets-list-item'));
+
+                    // Store data attributes for filtering
+                    const uri = dataset.__meta.uri || '';
+                    const method = dataset.__meta.method || 'GET';
+                    item.setAttribute('data-url', uri);
+                    item.setAttribute('data-method', method);
+
+                    if (datasetId === activeId) {
+                        item.classList.add(csscls('active'));
+                    }
+
+                    // Request number
+                    const nb = document.createElement('span');
+                    nb.classList.add(csscls('datasets-item-nb'));
+                    nb.textContent = `#${dataset.__meta.nb}`;
+                    item.append(nb);
+
+                    // Time
+                    const time = document.createElement('span');
+                    time.classList.add(csscls('datasets-item-time'));
+                    time.textContent = dataset.__meta.datetime ? dataset.__meta.datetime.split(' ')[1] : '';
+                    item.append(time);
+
+                    // Request info
+                    const request = document.createElement('div');
+                    request.classList.add(csscls('datasets-item-request'));
+
+                    const methodSpan = document.createElement('span');
+                    methodSpan.classList.add(csscls('datasets-item-method'));
+                    methodSpan.textContent = method;
+                    request.append(methodSpan);
+
+                    const url = document.createElement('span');
+                    url.classList.add(csscls('datasets-item-url'));
+                    url.textContent = uri;
+                    request.append(url);
+
+                    if (dataset.__meta.suffix) {
+                        const suffix = document.createElement('span');
+                        suffix.classList.add(csscls('datasets-item-suffix'));
+                        suffix.textContent = ` ${dataset.__meta.suffix}`;
+                        request.append(suffix);
+                    }
+
+                    item.append(request);
+
+                    // Data badges (icons with counts)
+                    const badges = document.createElement('div');
+                    badges.classList.add(csscls('datasets-item-badges'));
+
+                    for (const [key, def] of Object.entries(debugbar.dataMap)) {
+                        const d = getDictValue(dataset, def[0], def[1]);
+                        if (key.includes(':')) {
+                            const parts = key.split(':');
+                            const controlKey = parts[0];
+                            const subkey = parts[1];
+
+                            if (subkey === 'badge' && d > 0) {
+                                const control = debugbar.getControl(controlKey);
+                                if (control) {
+                                    const badge = document.createElement('span');
+                                    badge.classList.add(csscls('datasets-item-badge'));
+                                    badge.setAttribute('title', control.get('title'));
+                                    badge.dataset.tab = controlKey;
+
+                                    if (control.icon) {
+                                        const iconClone = control.icon.cloneNode(true);
+                                        iconClone.style.width = '12px';
+                                        iconClone.style.height = '12px';
+                                        badge.append(iconClone);
+                                    }
+
+                                    const count = document.createElement('span');
+                                    count.textContent = d;
+                                    badge.append(count);
+
+                                    badges.append(badge);
+
+                                    // Click badge to show that tab
+                                    badge.addEventListener('click', (e) => {
+                                        e.stopPropagation();
+                                        debugbar.showDataSet(datasetId);
+                                        debugbar.showTab(controlKey);
+                                        this.panel.hidden = true;
+                                    });
+                                }
+                            }
+                        }
+                    }
+                    item.append(badges);
+
+                    // Click handler
+                    item.addEventListener('click', () => {
+                        debugbar.showDataSet(datasetId);
+                        this.panel.hidden = true;
+                    });
+
+                    this.list.append(item);
+                }
+
+                // Reapply search filter if there's a search value
+                this.applySearchFilter();
             } else {
-                tr.prependTo(widget.$table);
-            }
-
-            var clickHandler = function() {
-                var debugbar = widget.get('debugbar');
-                debugbar.showDataSet(meta.id, debugbar.datesetTitleFormater.format('', data, meta.suffix, meta.nb));
-                widget.$table.find('.' + csscls('active')).removeClass(csscls('active'));
-                tr.addClass(csscls('active'));
-
-                if ($(this).data('tab')) {
-                    debugbar.showTab($(this).data('tab'));
-                }
-            }
-
-            tr.attr('data-id', meta['id'])
-                .append($('<td>#' + meta['nb'] + '</td>').click(clickHandler))
-                .append($('<td>' + meta['datetime'] + '</td>').click(clickHandler))
-                .append($('<td>' + meta['method'] + '</td>').click(clickHandler))
-                .append($('<td />').append(meta['uri'] + (meta['suffix'] ? ' ' + meta['suffix'] : '')).click(clickHandler))
-                .css('cursor', 'pointer')
-                .addClass(csscls('table-row'))
-
-            var debugbar = widget.get('debugbar');
-            $.each(debugbar.dataMap, function(key, def) {
-                var d = getDictValue(data, def[0], def[1]);
-                if (key.indexOf(':') != -1) {
-                    key = key.split(':');
-                    if (key[1] === 'badge' && d > 0) {
-                        var control = debugbar.getControl(key[0]);
-                        var $a = $('<a>').attr('title', control.get('title')).data('tab', key[0]);
-                        if (control.$icon) {
-                            $a.append(debugbar.getControl(key[0]).$icon.clone());
-                        }
-                        if (control.$badge) {
-                            $a.append(debugbar.getControl(key[0]).$badge.clone().css('display', 'inline-block').text(d));
-                        }
-                        $a.appendTo($badges).click(clickHandler);
-                    }
-                }
-            });
-            tr.append($badges);
-
-            if (debugbar.activeDatasetId === meta['id']) {
-                tr.addClass(csscls('active'));
-            }
-
-            var search = widget.get('search');
-            var method = widget.get('method');
-            if ((search && meta['uri'].indexOf(search) == -1) || (method && meta['method'] !== method)) {
-                tr.hide();
+                this.badge.hidden = true;
             }
         }
 
-    });
+        applySearchFilter() {
+            const searchValue = this.searchInput.value.toLowerCase().trim();
+            const items = this.list.querySelectorAll(`.${csscls('datasets-list-item')}`);
 
+            for (const item of items) {
+                if (searchValue === '') {
+                    item.hidden = false;
+                } else {
+                    const url = item.getAttribute('data-url').toLowerCase();
+                    const method = item.getAttribute('data-method').toLowerCase();
+                    const searchText = `${method} ${url}`;
 
-})(PhpDebugBar.$);
+                    // Split search terms by spaces and check if ALL terms match
+                    const searchTerms = searchValue.split(/\s+/).filter(term => term.length > 0);
+                    const matches = searchTerms.every(term => searchText.includes(term));
+
+                    item.hidden = !matches;
+                }
+            }
+        }
+
+        scanForNewDatasets() {
+            const debugbar = this.get('debugbar');
+            if (!this.isScanning || !debugbar.openHandler)
+                return;
+
+            const datasets = debugbar.datasets;
+
+            const latestUtime = Object.values(datasets)
+                .reduce((max, d) => Math.max(max, d.__meta?.utime || 0), 0);
+
+            const scheduleNextScan = () => {
+                if (this.isScanning) {
+                    setTimeout(() => this.scanForNewDatasets(), 1000);
+                }
+            };
+
+            debugbar.openHandler.find({ utime: latestUtime }, 0, (data, err) => {
+                // Abort on explicit error argument
+                if (err) {
+                    console.error('scanForNewDatasets: find() failed', err);
+                    this.isScanning = false;
+                    this.refreshBtn.classList.remove(csscls('active'));
+                    this.refreshBtn.title = 'Error scanning';
+                    return;
+                }
+
+                try {
+                    const newDatasets = data.filter(
+                        meta => meta.utime > latestUtime && !datasets[meta.id]
+                    );
+
+                    // Reverse to load oldest first (since find() returns newest first)
+                    newDatasets.reverse();
+
+                    const loadNext = (index = 0) => {
+                        if (index >= newDatasets.length) {
+                            scheduleNextScan();
+                            return;
+                        }
+
+                        const { id } = newDatasets[index];
+                        const isLast = index === newDatasets.length - 1;
+                        debugbar.loadDataSet(
+                            id,
+                            '(scan)',
+                            () => loadNext(index + 1),
+                            this.autoshowCheckbox.checked && isLast
+                        );
+                    };
+
+                    newDatasets.length ? loadNext() : scheduleNextScan();
+                } catch (error) {
+                    console.error('scanForNewDatasets: unexpected error', error);
+                    this.refreshBtn.classList.remove(csscls('active'));
+                    this.refreshBtn.title = 'Error scanning';
+                    this.isScanning = false;
+                }
+            });
+        }
+    }
+    PhpDebugBar.Widgets.DatasetWidget = DatasetWidget;
+})();

@@ -1,80 +1,68 @@
-if (typeof(PhpDebugBar) == 'undefined') {
-    // namespace
-    var PhpDebugBar = {};
-    PhpDebugBar.$ = jQuery;
-}
+window.PhpDebugBar = window.PhpDebugBar || {};
 
-(function($) {
-
-    if (typeof(localStorage) == 'undefined') {
-        // provide mock localStorage object for dumb browsers
-        localStorage = {
-            setItem: function(key, value) {},
-            getItem: function(key) { return null; }
-        };
-    }
-
-    if (typeof(PhpDebugBar.utils) == 'undefined') {
-        PhpDebugBar.utils = {};
-    }
+(function () {
+    const PhpDebugBar = window.PhpDebugBar;
+    PhpDebugBar.utils = PhpDebugBar.utils || {};
 
     /**
      * Returns the value from an object property.
-     * Using dots in the key, it is possible to retrieve nested property values
+     * Using dots in the key, it is possible to retrieve nested property values.
      *
-     * @param {Object} dict
-     * @param {String} key
-     * @param {Object} default_value
-     * @return {Object}
+     * Note: This returns `defaultValue` only when the path is missing (null/undefined),
+     * not when the value is falsy (0/false/"").
+     *
+     * @param {Record<string, any>} dict
+     * @param {string} key
+     * @param {any} [defaultValue]
+     * @returns {any}
      */
-    var getDictValue = PhpDebugBar.utils.getDictValue = function(dict, key, default_value) {
-        var d = dict, parts = key.split('.');
-        for (var i = 0; i < parts.length; i++) {
-            if (!d[parts[i]]) {
-                return default_value;
-            }
-            d = d[parts[i]];
+    const getDictValue = PhpDebugBar.utils.getDictValue = function (dict, key, defaultValue) {
+        if (dict === null || dict === undefined) {
+            return defaultValue;
         }
+
+        const parts = String(key).split('.');
+        let d = dict;
+
+        for (const part of parts) {
+            if (d === null || d === undefined) {
+                return defaultValue;
+            }
+            d = d[part];
+            if (d === undefined) {
+                return defaultValue;
+            }
+        }
+
         return d;
-    }
+    };
 
     /**
-     * Counts the number of properties in an object
+     * Returns a prefixed CSS class name (or selector).
      *
-     * @param {Object} obj
-     * @return {Integer}
+     * If `cls` contains spaces, each class is prefixed.
+     * If `cls` starts with ".", the dot is preserved (selector form).
+     *
+     * @param {string} cls
+     * @param {string} prefix
+     * @returns {string}
      */
-    var getObjectSize = PhpDebugBar.utils.getObjectSize = function(obj) {
-        if (Object.keys) {
-            return Object.keys(obj).length;
-        }
-        var count = 0;
-        for (var k in obj) {
-            if (obj.hasOwnProperty(k)) {
-                count++;
-            }
-        }
-        return count;
-    }
+    PhpDebugBar.utils.csscls = function (cls, prefix) {
+        const s = String(cls).trim();
 
-    /**
-     * Returns a prefixed css class name
-     *
-     * @param {String} cls
-     * @return {String}
-     */
-    PhpDebugBar.utils.csscls = function(cls, prefix) {
-        if (cls.indexOf(' ') > -1) {
-            var clss = cls.split(' '), out = [];
-            for (var i = 0, c = clss.length; i < c; i++) {
-                out.push(PhpDebugBar.utils.csscls(clss[i], prefix));
-            }
-            return out.join(' ');
+        if (s.includes(' ')) {
+            return s
+                .split(/\s+/)
+                .filter(Boolean)
+                .map(c => PhpDebugBar.utils.csscls(c, prefix))
+                .join(' ');
         }
-        if (cls.indexOf('.') === 0) {
-            return '.' + prefix + cls.substr(1);
+
+        if (s.startsWith('.')) {
+            return `.${prefix}${s.slice(1)}`;
         }
-        return prefix + cls;
+
+        return prefix + s;
     };
 
     /**
@@ -84,154 +72,165 @@ if (typeof(PhpDebugBar) == 'undefined') {
      * @param  {string} prefix
      * @return {Function}
      */
-    PhpDebugBar.utils.makecsscls = function(prefix) {
-        var f = function(cls) {
-            return PhpDebugBar.utils.csscls(cls, prefix);
-        };
-        return f;
-    }
+    PhpDebugBar.utils.makecsscls = function (prefix) {
+        return cls => PhpDebugBar.utils.csscls(cls, prefix);
+    };
 
-    var csscls = PhpDebugBar.utils.makecsscls('phpdebugbar-');
+    const csscls = PhpDebugBar.utils.makecsscls('phpdebugbar-');
 
+    PhpDebugBar.utils.sfDump = function (el) {
+        if (typeof window.Sfdump == 'function') {
+            el.querySelectorAll('pre.sf-dump[id]').forEach((pre) => {
+                window.Sfdump(pre.id, { maxDepth: 0 });
+            });
+        }
+    };
+
+    PhpDebugBar.utils.schedule = function (cb) {
+        if (window.requestIdleCallback) {
+            return window.requestIdleCallback(cb, { timeout: 1000 });
+        }
+
+        return setTimeout(cb, 0);
+    };
 
     // ------------------------------------------------------------------
 
     /**
      * Base class for all elements with a visual component
-     *
-     * @param {Object} options
-     * @constructor
      */
-    var Widget = PhpDebugBar.Widget = function(options) {
-        this._attributes = $.extend({}, this.defaults);
-        this._boundAttributes = {};
-        this.$el = $('<' + this.tagName + ' />');
-        if (this.className) {
-            this.$el.addClass(this.className);
+    class Widget {
+        get tagName() {
+            return 'div';
         }
-        this.initialize.apply(this, [options || {}]);
-        this.render.apply(this);
-    };
 
-    $.extend(Widget.prototype, {
-
-        tagName: 'div',
-
-        className: null,
-
-        defaults: {},
+        constructor(options = {}) {
+            this._attributes = { ...this.defaults };
+            this._boundAttributes = {};
+            this.el = document.createElement(this.tagName);
+            if (this.className) {
+                this.el.classList.add(...this.className.split(' '));
+            }
+            this.initialize(options);
+            this.render();
+        }
 
         /**
          * Called after the constructor
          *
-         * @param {Object} options
+         * @param {object} options
          */
-        initialize: function(options) {
+        initialize(options) {
             this.set(options);
-        },
+        }
 
         /**
          * Called after the constructor to render the element
          */
-        render: function() {},
+        render() {}
 
         /**
          * Sets the value of an attribute
          *
-         * @param {String} attr Can also be an object to set multiple attributes at once
-         * @param {Object} value
+         * @param {string | object} attr Attribute name or object with multiple attributes
+         * @param {*} [value] Attribute value (optional if attr is an object)
          */
-        set: function(attr, value) {
-            if (typeof(attr) != 'string') {
-                for (var k in attr) {
-                    this.set(k, attr[k]);
-                }
-                return;
-            }
+        set(attr, value) {
+            const attrs = typeof attr === 'string' ? { [attr]: value } : attr;
 
-            this._attributes[attr] = value;
-            if (typeof(this._boundAttributes[attr]) !== 'undefined') {
-                for (var i = 0, c = this._boundAttributes[attr].length; i < c; i++) {
-                    this._boundAttributes[attr][i].apply(this, [value]);
+            const callbacks = [];
+            for (const attr in attrs) {
+                value = attrs[attr];
+                this._attributes[attr] = value;
+                if (this._boundAttributes[attr]) {
+                    for (const callback of this._boundAttributes[attr]) {
+                        // Make sure to run the callback only once per attribute change
+                        if (!callbacks.includes(callback)) {
+                            callback.call(this, value);
+                            callbacks.push(callback);
+                        }
+                    }
                 }
             }
-        },
+        }
 
         /**
          * Checks if an attribute exists and is not null
          *
-         * @param {String} attr
-         * @return {[type]} [description]
+         * @param {string} attr
+         * @return {boolean}
          */
-        has: function(attr) {
-            return typeof(this._attributes[attr]) !== 'undefined' && this._attributes[attr] !== null;
-        },
+        has(attr) {
+            return this._attributes[attr] !== undefined && this._attributes[attr] !== null;
+        }
 
         /**
          * Returns the value of an attribute
          *
-         * @param {String} attr
-         * @return {Object}
+         * @param {string} attr
+         * @return {*}
          */
-        get: function(attr) {
+        get(attr) {
             return this._attributes[attr];
-        },
+        }
 
         /**
          * Registers a callback function that will be called whenever the value of the attribute changes
          *
-         * If cb is a jQuery element, text() will be used to fill the element
+         * If cb is a HTMLElement element, textContent will be used to fill the element
          *
-         * @param {String} attr
-         * @param {Function} cb
+         * @param {string | Array} attr
+         * @param {Function | HTMLElement} cb
          */
-        bindAttr: function(attr, cb) {
+        bindAttr(attr, cb) {
             if (Array.isArray(attr)) {
-                for (var i = 0, c = attr.length; i < c; i++) {
-                    this.bindAttr(attr[i], cb);
+                for (const a of attr) {
+                    this.bindAttr(a, cb);
                 }
                 return;
             }
 
-            if (typeof(this._boundAttributes[attr]) == 'undefined') {
+            if (!this._boundAttributes[attr]) {
                 this._boundAttributes[attr] = [];
             }
-            if (typeof(cb) == 'object') {
-                var el = cb;
-                cb = function(value) { el.text(value || ''); };
+            if (cb instanceof HTMLElement) {
+                const el = cb;
+                cb = value => el.textContent = value || '';
             }
             this._boundAttributes[attr].push(cb);
             if (this.has(attr)) {
-                cb.apply(this, [this._attributes[attr]]);
+                cb.call(this, this._attributes[attr]);
             }
         }
 
-    });
+        /**
+         * Creates a subclass
+         *
+         * Code from Backbone.js
+         *
+         * @param {object} props Prototype properties
+         * @return {Function}
+         */
+        static extend(props) {
+            const Parent = this;
+            class Child extends Parent {}
 
+            // Use defineProperties to handle getters/setters properly
+            for (const key in props) {
+                const descriptor = Object.getOwnPropertyDescriptor(props, key);
+                if (descriptor) {
+                    Object.defineProperty(Child.prototype, key, descriptor);
+                }
+            }
+            Object.assign(Child, Parent);
+            Child.__super__ = Parent.prototype;
 
-    /**
-     * Creates a subclass
-     *
-     * Code from Backbone.js
-     *
-     * @param {Array} props Prototype properties
-     * @return {Function}
-     */
-    Widget.extend = function(props) {
-        var parent = this;
+            return Child;
+        }
+    }
+    Widget.prototype.defaults = {};
 
-        var child = function() { return parent.apply(this, arguments); };
-        $.extend(child, parent);
-
-        var Surrogate = function() { this.constructor = child; };
-        Surrogate.prototype = parent.prototype;
-        child.prototype = new Surrogate;
-        $.extend(child.prototype, props);
-
-        child.__super__ = parent.prototype;
-
-        return child;
-    };
+    PhpDebugBar.Widget = Widget;
 
     // ------------------------------------------------------------------
 
@@ -242,7 +241,7 @@ if (typeof(PhpDebugBar) == 'undefined') {
      * a tab panel which is visible only when the tab is active.
      *
      * The panel must contain a widget. A widget is an object which has
-     * an element property containing something appendable to a jQuery object.
+     * an element property containing something appendable to a HTMLElement object.
      *
      * Options:
      *  - title
@@ -250,48 +249,99 @@ if (typeof(PhpDebugBar) == 'undefined') {
      *  - widget
      *  - data: forward data to widget data
      */
-    var Tab = Widget.extend({
-
-        className: csscls('panel'),
-
-        render: function() {
-            this.$tab = $('<a />').addClass(csscls('tab'));
-            this.$icon = $('<i />').appendTo(this.$tab);
-            this.bindAttr('icon', function(icon) {
-                if (icon) {
-                    this.$icon.attr('class', 'phpdebugbar-fa phpdebugbar-fa-' + icon);
-                } else {
-                    this.$icon.attr('class', '');
-                }
-            });
-
-            this.bindAttr('title', $('<span />').addClass(csscls('text')).appendTo(this.$tab));
-
-            this.$badge = $('<span />').addClass(csscls('badge')).appendTo(this.$tab);
-            this.bindAttr('badge', function(value) {
-                if (value !== null) {
-                    this.$badge.text(value);
-                    this.$badge.addClass(csscls('visible'));
-                } else {
-                    this.$badge.removeClass(csscls('visible'));
-                }
-            });
-
-            this.bindAttr('widget', function(widget) {
-                this.$el.empty().append(widget.$el);
-            });
-
-            this.bindAttr('data', function(data) {
-                if (this.has('widget')) {
-                    this.get('widget').set('data', data);
-                    if (!$.isEmptyObject(data)) {
-                        this.$tab.show();
-                    }
-                }
-            })
+    class Tab extends Widget {
+        get className() {
+            return csscls('panel');
         }
 
-    });
+        render() {
+            this.active = false;
+            this.tab = document.createElement('a');
+            this.tab.classList.add(csscls('tab'));
+
+            this.icon = document.createElement('i');
+            this.tab.append(this.icon);
+            this.bindAttr('icon', function (icon) {
+                if (icon) {
+                    this.icon.className = `phpdebugbar-icon phpdebugbar-icon-${icon}`;
+                } else {
+                    this.icon.className = '';
+                }
+            });
+
+            const title = document.createElement('span');
+            title.classList.add(csscls('text'));
+            this.tab.append(title);
+            this.bindAttr('title', title);
+
+            this.badge = document.createElement('span');
+            this.badge.classList.add(csscls('badge'));
+            this.tab.append(this.badge);
+
+            this.bindAttr('badge', function (value) {
+                if (value !== null) {
+                    this.badge.textContent = value;
+                    this.badge.classList.add(csscls('visible'));
+                } else {
+                    this.badge.classList.remove(csscls('visible'));
+                }
+            });
+
+            this.bindAttr('widget', function (widget) {
+                this.el.innerHTML = '';
+                this.el.append(widget.el);
+            });
+
+            this.widgetRendered = false;
+            this.bindAttr('data', function (data) {
+                if (this.has('widget')) {
+                    const isEmpty = !data || Object.keys(data).length === 0 || data.count === 0;
+                    this.tab.setAttribute('data-empty', isEmpty);
+                    if (!this.widgetRendered && this.active && data != null) {
+                        this.renderWidgetData();
+                    } else {
+                        this.widgetRendered = false;
+                    }
+                }
+            });
+        }
+
+        renderWidgetData() {
+            const data = this.get('data');
+            const widget = this.get('widget');
+            if (data == null || !widget) {
+                return;
+            }
+
+            widget.set('data', data);
+            PhpDebugBar.utils.schedule(() => {
+                PhpDebugBar.utils.sfDump(widget.el);
+            });
+
+            this.widgetRendered = true;
+        }
+
+        show() {
+            const activeClass = csscls('active');
+            this.tab.classList.add(activeClass);
+            this.tab.hidden = false;
+            this.el.classList.add(activeClass);
+            this.el.hidden = false;
+            this.active = true;
+
+            if (!this.widgetRendered) {
+                this.renderWidgetData();
+            }
+        }
+
+        hide() {
+            const activeClass = csscls('active');
+            this.tab.classList.remove(activeClass);
+            this.el.classList.remove(activeClass);
+            this.el.hidden = true;
+            this.active = false;
+        }
+    }
 
     // ------------------------------------------------------------------
 
@@ -307,35 +357,263 @@ if (typeof(PhpDebugBar) == 'undefined') {
      *  - tooltip
      *  - data: alias of title
      */
-    var Indicator = Widget.extend({
+    class Indicator extends Widget {
+        get tagName() {
+            return 'span';
+        }
 
-        tagName: 'span',
+        get className() {
+            return csscls('indicator');
+        }
 
-        className: csscls('indicator'),
-
-        render: function() {
-            this.$icon = $('<i />').appendTo(this.$el);
-            this.bindAttr('icon', function(icon) {
+        render() {
+            this.icon = document.createElement('i');
+            this.el.append(this.icon);
+            this.bindAttr('icon', function (icon) {
                 if (icon) {
-                    this.$icon.attr('class', 'phpdebugbar-fa phpdebugbar-fa-' + icon);
+                    this.icon.className = `phpdebugbar-icon phpdebugbar-icon-${icon}`;
                 } else {
-                    this.$icon.attr('class', '');
+                    this.icon.className = '';
                 }
             });
 
-            this.bindAttr(['title', 'data'], $('<span />').addClass(csscls('text')).appendTo(this.$el));
-
-            this.$tooltip = $('<span />').addClass(csscls('tooltip disabled')).appendTo(this.$el);
-            this.bindAttr('tooltip', function(tooltip) {
-                if (tooltip) {
-                    this.$tooltip.text(tooltip).removeClass(csscls('disabled'));
+            this.bindAttr('link', function (link) {
+                if (link) {
+                    this.el.addEventListener('click', () => {
+                        this.get('debugbar').showTab(link);
+                    });
+                    this.el.style.cursor = 'pointer';
                 } else {
-                    this.$tooltip.addClass(csscls('disabled'));
+                    this.el.style.cursor = '';
+                }
+            });
+
+            const textSpan = document.createElement('span');
+            textSpan.classList.add(csscls('text'));
+            this.el.append(textSpan);
+            this.bindAttr(['title', 'data'], textSpan);
+
+            this.tooltip = document.createElement('span');
+            this.tooltip.classList.add(csscls('tooltip'), csscls('disabled'));
+            this.el.append(this.tooltip);
+            this.bindAttr('tooltip', function (tooltip) {
+                if (tooltip) {
+                    if (Array.isArray(tooltip) || typeof tooltip === 'object') {
+                        const dl = document.createElement('dl');
+                        for (const [key, value] of Object.entries(tooltip)) {
+                            const dt = document.createElement('dt');
+                            dt.textContent = key;
+                            dl.append(dt);
+
+                            const dd = document.createElement('dd');
+                            dd.textContent = value;
+                            dl.append(dd);
+                        }
+                        this.tooltip.innerHTML = '';
+                        this.tooltip.append(dl);
+                        this.tooltip.classList.remove(csscls('disabled'));
+                    } else {
+                        this.tooltip.textContent = tooltip;
+                        this.tooltip.classList.remove(csscls('disabled'));
+                    }
+                } else {
+                    this.tooltip.classList.add(csscls('disabled'));
                 }
             });
         }
+    }
 
-    });
+    /**
+     * Displays datasets in a table
+     *
+     */
+    class Settings extends Widget {
+        get tagName() {
+            return 'form';
+        }
+
+        get className() {
+            return csscls('settings');
+        }
+
+        initialize(options) {
+            this.set(options);
+
+            const debugbar = this.get('debugbar');
+            try {
+                this.settings = JSON.parse(localStorage.getItem('phpdebugbar-settings')) || {};
+            } catch (e) {
+                this.settings = {};
+            }
+
+            for (const key in debugbar.options) {
+                if (key in this.settings) {
+                    debugbar.options[key] = this.settings[key];
+                }
+
+                // Theme requires dark/light mode detection
+                if (key === 'theme') {
+                    debugbar.setTheme(debugbar.options[key]);
+                } else {
+                    debugbar.el.setAttribute(`data-${key}`, debugbar.options[key]);
+                }
+            }
+        }
+
+        clearSettings() {
+            const debugbar = this.get('debugbar');
+
+            // Remove item from storage
+            localStorage.removeItem('phpdebugbar-settings');
+            localStorage.removeItem('phpdebugbar-ajaxhandler-autoshow');
+            this.settings = {};
+
+            // Reset options
+            debugbar.options = { ...debugbar.defaultOptions };
+
+            // Reset ajax handler
+            if (debugbar.ajaxHandler) {
+                const autoshow = debugbar.ajaxHandler.defaultAutoShow;
+                debugbar.ajaxHandler.setAutoShow(autoshow);
+                this.set('autoshow', autoshow);
+                if (debugbar.controls.__datasets) {
+                    debugbar.controls.__datasets.get('widget').set('autoshow', this.autoshow.checked);
+                }
+            }
+
+            this.initialize(debugbar.options);
+        }
+
+        storeSetting(key, value) {
+            this.settings[key] = value;
+
+            const debugbar = this.get('debugbar');
+            debugbar.options[key] = value;
+            if (key !== 'theme') {
+                debugbar.el.setAttribute(`data-${key}`, value);
+            }
+
+            localStorage.setItem('phpdebugbar-settings', JSON.stringify(this.settings));
+        }
+
+        render() {
+            this.el.innerHTML = '';
+
+            const debugbar = this.get('debugbar');
+            const self = this;
+
+            const fields = {};
+
+            // Set Theme
+            const themeSelect = document.createElement('select');
+            themeSelect.innerHTML = '<option value="auto">Auto (System preference)</option>'
+                + '<option value="light">Light</option>'
+                + '<option value="dark">Dark</option>';
+            themeSelect.value = debugbar.options.theme;
+            themeSelect.addEventListener('change', function () {
+                self.storeSetting('theme', this.value);
+                debugbar.setTheme(this.value);
+            });
+            fields.Theme = themeSelect;
+
+            // Open Button Position
+            const positionSelect = document.createElement('select');
+            positionSelect.innerHTML = '<option value="bottomLeft">Bottom Left</option>'
+                + '<option value="bottomRight">Bottom Right</option>'
+                + '<option value="topLeft">Top Left</option>'
+                + '<option value="topRight">Top Right</option>';
+            positionSelect.value = debugbar.options.openBtnPosition;
+            positionSelect.addEventListener('change', function () {
+                self.storeSetting('openBtnPosition', this.value);
+                if (this.value === 'topLeft' || this.value === 'topRight') {
+                    self.storeSetting('toolbarPosition', 'top');
+                } else {
+                    self.storeSetting('toolbarPosition', 'bottom');
+                }
+                self.get('debugbar').recomputeBottomOffset();
+            });
+            fields['Toolbar Position'] = positionSelect;
+
+            // Hide Empty Tabs
+            this.hideEmptyTabs = document.createElement('input');
+            this.hideEmptyTabs.type = 'checkbox';
+            this.hideEmptyTabs.checked = debugbar.options.hideEmptyTabs;
+            this.hideEmptyTabs.addEventListener('click', function () {
+                self.storeSetting('hideEmptyTabs', this.checked);
+                // Reset button size
+                self.get('debugbar').respCSSSize = 0;
+                self.get('debugbar').resize();
+            });
+
+            const hideEmptyTabsLabel = document.createElement('label');
+            hideEmptyTabsLabel.append(this.hideEmptyTabs, 'Hide empty tabs until they have data');
+            fields['Hide Empty Tabs'] = hideEmptyTabsLabel;
+
+            // Autoshow
+            this.autoshow = document.createElement('input');
+            this.autoshow.type = 'checkbox';
+            this.autoshow.checked = debugbar.ajaxHandler && debugbar.ajaxHandler.autoShow;
+            this.autoshow.addEventListener('click', function () {
+                if (debugbar.ajaxHandler) {
+                    debugbar.ajaxHandler.setAutoShow(this.checked);
+                }
+                if (debugbar.controls.__datasets) {
+                    debugbar.controls.__datasets.get('widget').set('autoshow', this.checked);
+                }
+                // Update dataset switcher widget
+                if (debugbar.datasetSwitcherWidget) {
+                    debugbar.datasetSwitcherWidget.set('autoshow', this.checked);
+                }
+            });
+
+            this.bindAttr('autoshow', function () {
+                this.autoshow.checked = this.get('autoshow');
+                const row = this.autoshow.closest(`.${csscls('form-row')}`);
+                if (row) {
+                    row.style.display = '';
+                }
+            });
+
+            const autoshowLabel = document.createElement('label');
+            autoshowLabel.append(this.autoshow, 'Automatically show new incoming Ajax requests');
+            fields.Autoshow = autoshowLabel;
+
+            // Reset button
+            const resetButton = document.createElement('button');
+            resetButton.textContent = 'Reset settings';
+            resetButton.addEventListener('click', (e) => {
+                e.preventDefault();
+                self.clearSettings();
+                self.render();
+            });
+            fields['Reset to defaults'] = resetButton;
+
+            for (const [key, value] of Object.entries(fields)) {
+                const formRow = document.createElement('div');
+                formRow.classList.add(csscls('form-row'));
+
+                const formLabel = document.createElement('div');
+                formLabel.classList.add(csscls('form-label'));
+                formLabel.textContent = key;
+                formRow.append(formLabel);
+
+                const formInput = document.createElement('div');
+                formInput.classList.add(csscls('form-input'));
+                if (value instanceof HTMLElement) {
+                    formInput.append(value);
+                } else {
+                    formInput.innerHTML = value;
+                }
+                formRow.append(formInput);
+
+                self.el.append(formRow);
+            }
+
+            if (!debugbar.ajaxHandler) {
+                this.autoshow.closest(`.${csscls('form-row')}`).style.display = 'none';
+            }
+        }
+    }
 
     // ------------------------------------------------------------------
 
@@ -344,60 +622,55 @@ if (typeof(PhpDebugBar) == 'undefined') {
      *
      * Formats the title of a dataset for the select box
      */
-    var DatasetTitleFormater = PhpDebugBar.DatasetTitleFormater = function(debugbar) {
-        this.debugbar = debugbar;
-    };
-
-    $.extend(DatasetTitleFormater.prototype, {
+    class DatasetTitleFormater {
+        constructor(debugbar) {
+            this.debugbar = debugbar;
+        }
 
         /**
          * Formats the title of a dataset
          *
-         * @this {DatasetTitleFormater}
-         * @param {String} id
-         * @param {Object} data
-         * @param {String} suffix
-         * @return {String}
+         * @param {string} id
+         * @param {object} data
+         * @param {string} suffix
+         * @param {number} nb
+         * @return {string}
          */
-        format: function(id, data, suffix, nb) {
-            if (suffix) {
-                suffix = ' ' + suffix;
-            } else {
-                suffix = '';
+        format(id, data, suffix, nb) {
+            suffix = suffix ? ` ${suffix}` : '';
+            nb = nb || Object.keys(this.debugbar.datasets).length;
+
+            if (data.__meta === undefined) {
+                return `#${nb}${suffix}`;
             }
 
-            var nb = nb || getObjectSize(this.debugbar.datasets) ;
-
-            if (typeof(data['__meta']) === 'undefined') {
-                return "#" + nb + suffix;
-            }
-
-            var uri = data['__meta']['uri'].split('/'), filename = uri.pop();
+            const uri = data.__meta.uri.split('/');
+            let filename = uri.pop();
 
             // URI ends in a trailing /, avoid returning an empty string
             if (!filename) {
-                filename = (uri.pop() || '') + '/'; // add the trailing '/' back
+                filename = `${uri.pop() || ''}/`; // add the trailing '/' back
             }
 
             // filename is a number, path could be like /action/{id}
-            if (uri.length && !isNaN(filename)) {
-                filename = uri.pop() + '/' + filename;
+            if (uri.length && !Number.isNaN(filename)) {
+                filename = `${uri.pop()}/${filename}`;
             }
 
             // truncate the filename in the label, if it's too long
-            var maxLength = 150;
+            const maxLength = 150;
             if (filename.length > maxLength) {
-                filename = filename.substr(0, maxLength) + '...';
+                filename = `${filename.substr(0, maxLength)}...`;
             }
 
-            var label = "#" + nb + " " + filename + suffix + ' (' + data['__meta']['datetime'].split(' ')[1] + ')';
+            const label = `#${nb} ${filename}${suffix} (${data.__meta.datetime.split(' ')[1]})`;
             return label;
         }
+    }
 
-    });
+    PhpDebugBar.DatasetTitleFormater = DatasetTitleFormater;
 
     // ------------------------------------------------------------------
-
 
     /**
      * DebugBar
@@ -409,155 +682,330 @@ if (typeof(PhpDebugBar) == 'undefined') {
      * A data map is used to fill those controls with data provided
      * from datasets.
      */
-    var DebugBar = PhpDebugBar.DebugBar = Widget.extend({
+    class DebugBar extends Widget {
+        get className() {
+            return `phpdebugbar`;
+        }
 
-        className: "phpdebugbar " + csscls('minimized'),
-
-        options: {
-            bodyMarginBottom: true,
-            bodyMarginBottomHeight: 0
-        },
-
-        initialize: function() {
+        initialize(options = {}) {
+            this.options = Object.assign({
+                bodyBottomInset: true,
+                theme: 'auto',
+                toolbarPosition: 'bottom',
+                openBtnPosition: 'bottomLeft',
+                hideEmptyTabs: false,
+                spaNavigationEvents: []
+            }, options);
+            this.defaultOptions = { ...this.options };
             this.controls = {};
             this.dataMap = {};
             this.datasets = {};
             this.firstTabName = null;
             this.activePanelName = null;
             this.activeDatasetId = null;
-            this.hideEmptyTabs = false;
+            this.pendingDataSetId = null;
             this.datesetTitleFormater = new DatasetTitleFormater(this);
-            this.options.bodyMarginBottomHeight = parseInt($('body').css('margin-bottom'));
+            const bodyStyles = window.getComputedStyle(document.body);
+            this.bodyPaddingBottomHeight = Number.parseInt(bodyStyles.paddingBottom);
+            this.bodyPaddingTopHeight = Number.parseInt(bodyStyles.paddingTop);
+
             try {
-                this.isIframe = window.self !== window.top && window.top.phpdebugbar;
-            } catch (error) {
+                this.isIframe = window.self !== window.top && window.top.PhpDebugBar && window.top.PhpDebugBar;
+            } catch (_error) {
                 this.isIframe = false;
             }
             this.registerResizeHandler();
-        },
+            this.registerMediaListener();
+            this.registerNavigationListener();
+
+            // Attach settings
+            this.settingsControl = new PhpDebugBar.DebugBar.Tab({ icon: 'adjustments-horizontal', title: 'Settings', widget: new Settings({
+                debugbar: this
+            }) });
+        }
 
         /**
          * Register resize event, for resize debugbar with reponsive css.
          *
          * @this {DebugBar}
          */
-        registerResizeHandler: function() {
-            if (typeof this.resize.bind == 'undefined' || this.isIframe) return;
+        registerResizeHandler() {
+            if (this.resize.bind === undefined || this.isIframe) {
+                return;
+            }
 
-            var f = this.resize.bind(this);
+            const f = this.resize.bind(this);
             this.respCSSSize = 0;
-            $(window).resize(f);
+            window.addEventListener('resize', f);
             setTimeout(f, 20);
-        },
+        }
+
+        registerMediaListener() {
+            const mediaQueryList = window.matchMedia('(prefers-color-scheme: dark)');
+            mediaQueryList.addEventListener('change', (event) => {
+                if (this.options.theme === 'auto') {
+                    this.setTheme('auto');
+                }
+            });
+        }
+
+        /**
+         * Register navigation event listeners for SPA frameworks.
+         *
+         * Listens for events configured via the `spaNavigationEvents` option
+         * and recalculates body padding after navigation completes.
+         */
+        registerNavigationListener() {
+            const events = this.options.spaNavigationEvents;
+            if (!events || !events.length) {
+                return;
+            }
+
+            for (const eventName of events) {
+                document.addEventListener(eventName, () => {
+                    this.recalculateBodyPadding();
+                });
+            }
+        }
+
+        /**
+         * Recalculates and caches the body's original padding values.
+         */
+        recalculateBodyPadding() {
+            if (!this.options.bodyBottomInset) {
+                return;
+            }
+
+            // Clear inline styles to read the page's actual CSS values
+            document.body.style.paddingTop = '';
+            document.body.style.paddingBottom = '';
+
+            // Read the new page's padding values
+            const bodyStyles = window.getComputedStyle(document.body);
+            this.bodyPaddingTopHeight = Number.parseFloat(bodyStyles.paddingTop);
+            this.bodyPaddingBottomHeight = Number.parseFloat(bodyStyles.paddingBottom);
+
+            // Reapply the debugbar offset with the new values
+            this.recomputeBottomOffset();
+        }
+
+        setTheme(theme) {
+            this.options.theme = theme;
+
+            if (theme === 'auto') {
+                const mediaQueryList = window.matchMedia('(prefers-color-scheme: dark)');
+                theme = mediaQueryList.matches ? 'dark' : 'light';
+            }
+
+            this.el.setAttribute('data-theme', theme);
+            if (this.openHandler) {
+                this.openHandler.el.setAttribute('data-theme', theme);
+            }
+            if (this.datasetSwitcherWidget && this.datasetSwitcherWidget.panel) {
+                this.datasetSwitcherWidget.panel.setAttribute('data-theme', theme);
+            }
+        }
 
         /**
          * Resizes the debugbar to fit the current browser window
          */
-        resize: function() {
-            var contentSize = this.respCSSSize;
-            if (this.respCSSSize == 0) {
-                this.$header.find("> *:visible").each(function () {
-                    contentSize += $(this).outerWidth(true);
-                });
+        resize() {
+            if (this.isIframe) {
+                return;
             }
 
-            var currentSize = this.$header.width();
-            var cssClass = csscls("mini-design");
-            var bool = this.$header.hasClass(cssClass);
+            let contentSize = this.respCSSSize;
+            if (this.respCSSSize === 0) {
+                const visibleChildren = Array.from(this.header.children).filter((el) => {
+                    return el.offsetParent !== null;
+                });
+                for (const child of visibleChildren) {
+                    const styles = window.getComputedStyle(child);
+                    contentSize += child.offsetWidth
+                        + Number.parseFloat(styles.marginLeft)
+                        + Number.parseFloat(styles.marginRight);
+                }
+            }
+
+            const currentSize = this.header.offsetWidth;
+            const cssClass = csscls('mini-design');
+            const bool = this.header.classList.contains(cssClass);
 
             if (currentSize <= contentSize && !bool) {
                 this.respCSSSize = contentSize;
-                this.$header.addClass(cssClass);
+                this.header.classList.add(cssClass);
             } else if (contentSize < currentSize && bool) {
                 this.respCSSSize = 0;
-                this.$header.removeClass(cssClass);
+                this.header.classList.remove(cssClass);
             }
 
             // Reset height to ensure bar is still visible
-            this.setHeight(this.$body.height());
-        },
+            const currentHeight = this.body.clientHeight || Number.parseInt(localStorage.getItem('phpdebugbar-height'), 10) || 300;
+            this.setHeight(currentHeight);
+        }
 
         /**
          * Initialiazes the UI
          *
          * @this {DebugBar}
          */
-        render: function() {
+        render() {
             if (this.isIframe) {
-                this.$el.hide();
+                this.el.hidden = true;
             }
 
-            var self = this;
-            this.$el.appendTo('body');
-            this.$dragCapture = $('<div />').addClass(csscls('drag-capture')).appendTo(this.$el);
-            this.$resizehdle = $('<div />').addClass(csscls('resize-handle')).appendTo(this.$el);
-            this.$header = $('<div />').addClass(csscls('header')).appendTo(this.$el);
-            this.$headerBtn = $('<a />').addClass(csscls('restore-btn')).appendTo(this.$header);
-            this.$headerBtn.click(function() {
+            const self = this;
+            document.body.append(this.el);
+
+            this.dragCapture = document.createElement('div');
+            this.dragCapture.classList.add(csscls('drag-capture'));
+            this.el.append(this.dragCapture);
+
+            this.resizeHandle = document.createElement('div');
+            this.resizeHandle.classList.add(csscls('resize-handle'));
+            this.resizeHandle.classList.add(csscls('resize-handle-top'));
+            this.el.append(this.resizeHandle);
+
+            this.header = document.createElement('div');
+            this.header.classList.add(csscls('header'));
+            this.el.append(this.header);
+
+            this.headerBtn = document.createElement('a');
+            this.headerBtn.classList.add(csscls('restore-btn'));
+            this.header.append(this.headerBtn);
+            this.headerBtn.addEventListener('click', () => {
                 self.close();
             });
-            this.$headerLeft = $('<div />').addClass(csscls('header-left')).appendTo(this.$header);
-            this.$headerRight = $('<div />').addClass(csscls('header-right')).appendTo(this.$header);
-            var $body = this.$body = $('<div />').addClass(csscls('body')).appendTo(this.$el);
+
+            this.headerLeft = document.createElement('div');
+            this.headerLeft.classList.add(csscls('header-left'));
+            this.header.append(this.headerLeft);
+
+            this.headerRight = document.createElement('div');
+            this.headerRight.classList.add(csscls('header-right'));
+            this.header.append(this.headerRight);
+
+            this.body = document.createElement('div');
+            this.body.classList.add(csscls('body'));
+            this.el.append(this.body);
             this.recomputeBottomOffset();
 
+            this.resizeHandleBottom = document.createElement('div');
+            this.resizeHandleBottom.classList.add(csscls('resize-handle'));
+            this.resizeHandleBottom.classList.add(csscls('resize-handle-bottom'));
+            this.el.append(this.resizeHandleBottom);
+
             // dragging of resize handle
-            var pos_y, orig_h;
-            this.$resizehdle.on('mousedown', function(e) {
-                orig_h = $body.height(), pos_y = e.pageY;
-                $body.parents().on('mousemove', mousemove).on('mouseup', mouseup);
-                self.$dragCapture.show();
-                e.preventDefault();
-            });
-            var mousemove = function(e) {
-                var h = orig_h + (pos_y - e.pageY);
+            let pos_y, orig_h;
+            const mousemove = (e) => {
+                const h = orig_h + (pos_y - e.pageY);
                 self.setHeight(h);
             };
-            var mouseup = function() {
-                $body.parents().off('mousemove', mousemove).off('mouseup', mouseup);
-                self.$dragCapture.hide();
+            const mousemoveBottom = (e) => {
+                const h = orig_h - (pos_y - e.pageY);
+                self.setHeight(h);
             };
+            const mouseup = () => {
+                document.removeEventListener('mousemove', mousemove);
+                document.removeEventListener('mousemove', mousemoveBottom);
+                document.removeEventListener('mouseup', mouseup);
+                self.dragCapture.style.display = 'none';
+            };
+            this.resizeHandle.addEventListener('mousedown', (e) => {
+                orig_h = self.body.offsetHeight;
+                pos_y = e.pageY;
+                document.addEventListener('mousemove', mousemove);
+                document.addEventListener('mouseup', mouseup);
+                self.dragCapture.style.display = '';
+                e.preventDefault();
+            });
+            this.resizeHandleBottom.addEventListener('mousedown', (e) => {
+                orig_h = self.body.offsetHeight;
+                pos_y = e.pageY;
+                document.addEventListener('mousemove', mousemoveBottom);
+                document.addEventListener('mouseup', mouseup);
+                self.dragCapture.style.display = '';
+                e.preventDefault();
+            });
 
             // close button
-            this.$closebtn = $('<a />').addClass(csscls('close-btn')).appendTo(this.$headerRight);
-            this.$closebtn.click(function() {
+            this.closebtn = document.createElement('a');
+            this.closebtn.classList.add(csscls('close-btn'));
+            this.headerRight.append(this.closebtn);
+            this.closebtn.addEventListener('click', () => {
                 self.close();
             });
 
             // minimize button
-            this.$minimizebtn = $('<a />').addClass(csscls('minimize-btn') ).appendTo(this.$headerRight);
-            this.$minimizebtn.click(function() {
+            this.minimizebtn = document.createElement('a');
+            this.minimizebtn.classList.add(csscls('minimize-btn'));
+            this.minimizebtn.hidden = !this.isMinimized();
+            this.headerRight.append(this.minimizebtn);
+            this.minimizebtn.addEventListener('click', () => {
                 self.minimize();
             });
 
             // maximize button
-            this.$maximizebtn = $('<a />').addClass(csscls('maximize-btn') ).appendTo(this.$headerRight);
-            this.$maximizebtn.click(function() {
+            this.maximizebtn = document.createElement('a');
+            this.maximizebtn.classList.add(csscls('maximize-btn'));
+            this.maximizebtn.hidden = this.isMinimized();
+            this.headerRight.append(this.maximizebtn);
+            this.maximizebtn.addEventListener('click', () => {
                 self.restore();
             });
 
             // restore button
-            this.$restorebtn = $('<a />').addClass(csscls('restore-btn')).hide().appendTo(this.$el);
-            this.$restorebtn.click(function() {
+            this.restorebtn = document.createElement('a');
+            this.restorebtn.classList.add(csscls('restore-btn'));
+            this.restorebtn.hidden = true;
+            this.el.append(this.restorebtn);
+            this.restorebtn.addEventListener('click', () => {
                 self.restore();
             });
 
             // open button
-            this.$openbtn = $('<a />').addClass(csscls('open-btn')).appendTo(this.$headerRight).hide();
-            this.$openbtn.click(function() {
-                self.openHandler.show(function(id, dataset) {
-                    self.addDataSet(dataset, id, "(opened)");
-                    self.showTab();
+            this.openbtn = document.createElement('a');
+            this.openbtn.classList.add(csscls('open-btn'));
+            this.openbtn.hidden = true;
+            this.headerRight.append(this.openbtn);
+            this.openbtn.addEventListener('click', () => {
+                self.openHandler.show((id, dataset) => {
+                    self.addDataSet(dataset, id, '(opened)');
                 });
             });
 
-            // select box for data sets
-            this.$datasets = $('<select />').addClass(csscls('datasets-switcher')).attr('name', 'datasets-switcher')
-                .appendTo(this.$headerRight);
-            this.$datasets.change(function() {
+            // select box for data sets (only if AJAX handler is not used)
+            this.datasetsSelectSpan = document.createElement('span');
+            this.datasetsSelectSpan.classList.add(csscls('datasets-switcher'));
+            this.datasetsSelectSpan.setAttribute('name', 'datasets-switcher');
+            this.datasetsSelect = document.createElement('select');
+            this.datasetsSelect.hidden = true;
+
+            this.datasetsSelectSpan.append(this.datasetsSelect);
+
+            this.headerRight.append(this.datasetsSelectSpan);
+            this.datasetsSelect.addEventListener('change', function () {
                 self.showDataSet(this.value);
             });
-        },
+
+            this.controls.__settings = this.settingsControl;
+            this.settingsControl.tab.classList.add(csscls('tab-settings'));
+            this.settingsControl.tab.setAttribute('data-collector', '__settings');
+            this.settingsControl.el.setAttribute('data-collector', '__settings');
+            this.settingsControl.el.hidden = true;
+
+            this.maximizebtn.after(this.settingsControl.tab);
+            this.settingsControl.tab.hidden = false;
+            this.settingsControl.tab.addEventListener('click', () => {
+                if (!this.isMinimized() && this.activePanelName === '__settings') {
+                    this.minimize();
+                } else {
+                    this.showTab('__settings');
+                    this.settingsControl.get('widget').render();
+                }
+            });
+            this.body.append(this.settingsControl.el);
+        }
 
         /**
          * Sets the height of the debugbar body section
@@ -567,15 +1015,15 @@ if (typeof(PhpDebugBar) == 'undefined') {
          *
          * @this {DebugBar}
          */
-        setHeight: function(height) {
-          var min_h = 40;
-          var max_h = $(window).innerHeight() - this.$header.height() - 10;
-          height = Math.min(height, max_h);
-          height = Math.max(height, min_h);
-          this.$body.css('height', height);
-          localStorage.setItem('phpdebugbar-height', height);
-          this.recomputeBottomOffset();
-        },
+        setHeight(height) {
+            const min_h = 40;
+            const max_h = window.innerHeight - this.header.offsetHeight - 10;
+            height = Math.min(height, max_h);
+            height = Math.max(height, min_h);
+            this.body.style.height = `${height}px`;
+            localStorage.setItem('phpdebugbar-height', height);
+            this.recomputeBottomOffset();
+        }
 
         /**
          * Restores the state of the DebugBar using localStorage
@@ -584,191 +1032,196 @@ if (typeof(PhpDebugBar) == 'undefined') {
          *
          * @this {DebugBar}
          */
-        restoreState: function() {
-            if (this.isIframe) return;
+        restoreState() {
+            if (this.isIframe) {
+                return;
+            }
             // bar height
-            var height = localStorage.getItem('phpdebugbar-height');
-            this.setHeight(height || this.$body.height());
+            const height = localStorage.getItem('phpdebugbar-height');
+            this.setHeight(Number.parseInt(height) || this.body.offsetHeight);
 
             // bar visibility
-            var open = localStorage.getItem('phpdebugbar-open');
-            if (open && open == '0') {
+            const open = localStorage.getItem('phpdebugbar-open');
+            if (open && open === '0') {
                 this.close();
             } else {
-                var visible = localStorage.getItem('phpdebugbar-visible');
-                if (visible && visible == '1') {
-                    var tab = localStorage.getItem('phpdebugbar-tab');
+                const visible = localStorage.getItem('phpdebugbar-visible');
+                if (visible && visible === '1') {
+                    const tab = localStorage.getItem('phpdebugbar-tab');
                     if (this.isTab(tab)) {
                         this.showTab(tab);
                     } else {
                         this.showTab();
                     }
+                } else {
+                    this.minimize();
                 }
             }
-        },
+        }
 
         /**
          * Creates and adds a new tab
          *
          * @this {DebugBar}
-         * @param {String} name Internal name
-         * @param {Object} widget A widget object with an element property
-         * @param {String} title The text in the tab, if not specified, name will be used
+         * @param {string} name Internal name
+         * @param {object} widget A widget object with an element property
+         * @param {string} title The text in the tab, if not specified, name will be used
          * @return {Tab}
          */
-        createTab: function(name, widget, title) {
-            var tab = new Tab({
-                title: title || (name.replace(/[_\-]/g, ' ').charAt(0).toUpperCase() + name.slice(1)),
-                widget: widget
+        createTab(name, widget, title) {
+            const tab = new Tab({
+                title: title || (name.replace(/[_-]/g, ' ').charAt(0).toUpperCase() + name.slice(1)),
+                widget
             });
             return this.addTab(name, tab);
-        },
+        }
 
         /**
          * Adds a new tab
          *
          * @this {DebugBar}
-         * @param {String} name Internal name
+         * @param {string} name Internal name
          * @param {Tab} tab Tab object
          * @return {Tab}
          */
-        addTab: function(name, tab) {
+        addTab(name, tab) {
             if (this.isControl(name)) {
-                throw new Error(name + ' already exists');
+                throw new Error(`${name} already exists`);
             }
 
-            var self = this;
-            tab.$tab.appendTo(this.$headerLeft).click(function() {
-                if (!self.isMinimized() && self.activePanelName == name) {
+            const self = this;
+            this.headerLeft.append(tab.tab);
+            tab.tab.addEventListener('click', () => {
+                if (!self.isMinimized() && self.activePanelName === name) {
                     self.minimize();
                 } else {
+                    self.restore();
                     self.showTab(name);
                 }
-            })
-            if (this.hideEmptyTabs) {
-                tab.$tab.hide();
-            }
-            tab.$tab.attr('data-collector', name);
-            tab.$el.attr('data-collector', name);
-            tab.$el.appendTo(this.$body);
+            });
+            tab.tab.setAttribute('data-empty', true);
+            tab.tab.setAttribute('data-collector', name);
+            tab.el.setAttribute('data-collector', name);
+            this.body.append(tab.el);
 
             this.controls[name] = tab;
-            if (this.firstTabName == null) {
+            if (this.firstTabName === null) {
                 this.firstTabName = name;
             }
             return tab;
-        },
+        }
 
         /**
          * Creates and adds an indicator
          *
          * @this {DebugBar}
-         * @param {String} name Internal name
-         * @param {String} icon
-         * @param {String} tooltip
-         * @param {String} position "right" or "left", default is "right"
+         * @param {string} name Internal name
+         * @param {string} icon
+         * @param {string | object} tooltip
+         * @param {string} position "right" or "left", default is "right"
          * @return {Indicator}
          */
-        createIndicator: function(name, icon, tooltip, position) {
-            var indicator = new Indicator({
-                icon: icon,
-                tooltip: tooltip
+        createIndicator(name, icon, tooltip, position) {
+            const indicator = new Indicator({
+                icon,
+                tooltip
             });
             return this.addIndicator(name, indicator, position);
-        },
+        }
 
         /**
          * Adds an indicator
          *
          * @this {DebugBar}
-         * @param {String} name Internal name
+         * @param {string} name Internal name
          * @param {Indicator} indicator Indicator object
          * @return {Indicator}
          */
-        addIndicator: function(name, indicator, position) {
+        addIndicator(name, indicator, position) {
             if (this.isControl(name)) {
-                throw new Error(name + ' already exists');
+                throw new Error(`${name} already exists`);
             }
 
-            if (position == 'left') {
-                indicator.$el.insertBefore(this.$headerLeft.children().first());
+            indicator.set('debugbar', this);
+
+            if (position === 'left') {
+                this.headerLeft.prepend(indicator.el);
             } else {
-                indicator.$el.appendTo(this.$headerRight);
+                this.headerRight.append(indicator.el);
             }
 
             this.controls[name] = indicator;
             return indicator;
-        },
+        }
 
         /**
          * Returns a control
          *
-         * @param {String} name
-         * @return {Object}
+         * @param {string} name
+         * @return {object}
          */
-        getControl: function(name) {
+        getControl(name) {
             if (this.isControl(name)) {
                 return this.controls[name];
             }
-        },
+        }
 
         /**
          * Checks if there's a control under the specified name
          *
          * @this {DebugBar}
-         * @param {String} name
-         * @return {Boolean}
+         * @param {string} name
+         * @return {boolean}
          */
-        isControl: function(name) {
-            return typeof(this.controls[name]) != 'undefined';
-        },
+        isControl(name) {
+            return this.controls[name] !== undefined;
+        }
 
         /**
          * Checks if a tab with the specified name exists
          *
          * @this {DebugBar}
-         * @param {String} name
-         * @return {Boolean}
+         * @param {string} name
+         * @return {boolean}
          */
-        isTab: function(name) {
+        isTab(name) {
             return this.isControl(name) && this.controls[name] instanceof Tab;
-        },
+        }
 
         /**
          * Checks if an indicator with the specified name exists
          *
          * @this {DebugBar}
-         * @param {String} name
-         * @return {Boolean}
+         * @param {string} name
+         * @return {boolean}
          */
-        isIndicator: function(name) {
+        isIndicator(name) {
             return this.isControl(name) && this.controls[name] instanceof Indicator;
-        },
+        }
 
         /**
          * Removes all tabs and indicators from the debug bar and hides it
          *
          * @this {DebugBar}
          */
-        reset: function() {
+        reset() {
             this.minimize();
-            var self = this;
-            $.each(this.controls, function(name, control) {
-                if (self.isTab(name)) {
-                    control.$tab.remove();
+            for (const [name, control] of Object.entries(this.controls)) {
+                if (this.isTab(name)) {
+                    control.tab.remove();
                 }
-                control.$el.remove();
-            });
+                control.el.remove();
+            }
             this.controls = {};
-        },
+        }
 
         /**
          * Open the debug bar and display the specified tab
          *
          * @this {DebugBar}
-         * @param {String} name If not specified, display the first tab
+         * @param {string} name If not specified, display the first tab
          */
-        showTab: function(name) {
+        showTab(name) {
             if (!name) {
                 if (this.activePanelName) {
                     name = this.activePanelName;
@@ -778,109 +1231,147 @@ if (typeof(PhpDebugBar) == 'undefined') {
             }
 
             if (!this.isTab(name)) {
-                throw new Error("Unknown tab '" + name + "'");
+                throw new Error(`Unknown tab '${name}'`);
             }
 
-            this.$resizehdle.show();
-            this.$body.show();
+            this.body.hidden = false;
+
             this.recomputeBottomOffset();
 
-            $(this.$header).find('> div > .' + csscls('active')).removeClass(csscls('active'));
-            $(this.$body).find('> .' + csscls('active')).removeClass(csscls('active'));
+            for (const [controleName, control] of Object.entries(this.controls)) {
+                if (control instanceof Tab) {
+                    if (controleName === name) {
+                        control.show();
+                    } else {
+                        control.hide();
+                    }
+                }
+            }
 
-            this.controls[name].$tab.addClass(csscls('active'));
-            this.controls[name].$el.addClass(csscls('active'));
             this.activePanelName = name;
 
-            this.$el.removeClass(csscls('minimized'));
+            this.el.classList.remove(csscls('minimized'));
             localStorage.setItem('phpdebugbar-visible', '1');
             localStorage.setItem('phpdebugbar-tab', name);
 
-            this.resize();
-        },
+            this.maximize();
+        }
 
         /**
          * Hide panels and minimize the debug bar
          *
          * @this {DebugBar}
          */
-        minimize: function() {
-            this.$header.find('> div > .' + csscls('active')).removeClass(csscls('active'));
-            this.$body.hide();
-            this.$resizehdle.hide();
+        minimize() {
+            const activeClass = csscls('active');
+            const headerActives = this.header.querySelectorAll(`:scope > div > .${activeClass}`);
+            for (const el of headerActives) {
+                el.classList.remove(activeClass);
+            }
+            this.body.hidden = true;
+            this.minimizebtn.hidden = true;
+            this.maximizebtn.hidden = false;
+
             this.recomputeBottomOffset();
             localStorage.setItem('phpdebugbar-visible', '0');
-            this.$el.addClass(csscls('minimized'));
+            this.el.classList.add(csscls('minimized'));
             this.resize();
-        },
+        }
+
+        /**
+         * Show panels and maxime the debug bar
+         *
+         * @this {DebugBar}
+         */
+        maximize() {
+            this.header.hidden = false;
+            this.restorebtn.hidden = true;
+            this.body.hidden = false;
+            this.minimizebtn.hidden = false;
+            this.maximizebtn.hidden = true;
+
+            this.recomputeBottomOffset();
+            localStorage.setItem('phpdebugbar-visible', '1');
+            localStorage.setItem('phpdebugbar-open', '1');
+            this.el.classList.remove(csscls('minimized'));
+            this.el.classList.remove(csscls('closed'));
+
+            this.resize();
+        }
 
         /**
          * Checks if the panel is minimized
          *
-         * @return {Boolean}
+         * @return {boolean}
          */
-        isMinimized: function() {
-            return this.$el.hasClass(csscls('minimized'));
-        },
+        isMinimized() {
+            return this.el.classList.contains(csscls('minimized'));
+        }
 
         /**
          * Close the debug bar
          *
          * @this {DebugBar}
          */
-        close: function() {
-            this.$resizehdle.hide();
-            this.$header.hide();
-            this.$body.hide();
-            this.$restorebtn.show();
+        close() {
+            this.header.hidden = true;
+            this.body.hidden = true;
+            this.restorebtn.hidden = false;
             localStorage.setItem('phpdebugbar-open', '0');
-            this.$el.addClass(csscls('closed'));
+            this.el.classList.add(csscls('closed'));
             this.recomputeBottomOffset();
-        },
+        }
 
         /**
          * Checks if the panel is closed
          *
-         * @return {Boolean}
+         * @return {boolean}
          */
-        isClosed: function() {
-            return this.$el.hasClass(csscls('closed'));
-        },
+        isClosed() {
+            return this.el.classList.contains(csscls('closed'));
+        }
 
         /**
          * Restore the debug bar
          *
          * @this {DebugBar}
          */
-        restore: function() {
-            this.$resizehdle.show();
-            this.$header.show();
-            this.$restorebtn.hide();
-            localStorage.setItem('phpdebugbar-open', '1');
-            var tab = localStorage.getItem('phpdebugbar-tab');
+        restore() {
+            const tab = localStorage.getItem('phpdebugbar-tab');
+            if (this.pendingDataSetId) {
+                this.dataChangeHandler(this.datasets[this.pendingDataSetId]);
+                this.pendingDataSetId = null;
+            }
             if (this.isTab(tab)) {
                 this.showTab(tab);
             } else {
                 this.showTab();
             }
-            this.$el.removeClass(csscls('closed'));
-            this.resize();
-        },
+        }
 
         /**
          * Recomputes the margin-bottom css property of the body so
          * that the debug bar never hides any content
          */
-        recomputeBottomOffset: function() {
-            if (this.options.bodyMarginBottom) {
+        recomputeBottomOffset() {
+            if (this.options.bodyBottomInset) {
                 if (this.isClosed()) {
-                    return $('body').css('margin-bottom', this.options.bodyMarginBottomHeight || '');
+                    document.body.style.paddingBottom = this.bodyPaddingBottomHeight ? `${this.bodyPaddingBottomHeight}px` : '';
+                    document.body.style.paddingTop = this.bodyPaddingTopHeight ? `${this.bodyPaddingTopHeight}px` : '';
+                    return;
                 }
 
-                var offset = parseInt(this.$el.height()) + (this.options.bodyMarginBottomHeight || 0);
-                $('body').css('margin-bottom', offset);
+                if (this.options.toolbarPosition === 'top') {
+                    const offset = this.el.offsetHeight + (this.bodyPaddingTopHeight || 0);
+                    document.body.style.paddingTop = `${offset}px`;
+                    document.body.style.paddingBottom = this.bodyPaddingBottomHeight ? `${this.bodyPaddingBottomHeight}px` : '';
+                } else {
+                    const offset = this.el.offsetHeight + (this.bodyPaddingBottomHeight || 0);
+                    document.body.style.paddingBottom = `${offset}px`;
+                    document.body.style.paddingTop = this.bodyPaddingTopHeight ? `${this.bodyPaddingTopHeight}px` : '';
+                }
             }
-        },
+        }
 
         /**
          * Sets the data map used by dataChangeHandler to populate
@@ -895,22 +1386,22 @@ if (typeof(PhpDebugBar) == 'undefined') {
          *     {"memory": ["memory.peak_usage_str", "0B"]}
          *
          * @this {DebugBar}
-         * @param {Object} map
+         * @param {object} map
          */
-        setDataMap: function(map) {
+        setDataMap(map) {
             this.dataMap = map;
-        },
+        }
 
         /**
          * Same as setDataMap() but appends to the existing map
          * rather than replacing it
          *
          * @this {DebugBar}
-         * @param {Object} map
+         * @param {object} map
          */
-        addDataMap: function(map) {
-            $.extend(this.dataMap, map);
-        },
+        addDataMap(map) {
+            Object.assign(this.dataMap, map);
+        }
 
         /**
          * Resets datasets and add one set of data
@@ -919,13 +1410,13 @@ if (typeof(PhpDebugBar) == 'undefined') {
          * a dataMap using setDataMap()
          *
          * @this {DebugBar}
-         * @param {Object} data
-         * @return {String} Dataset's id
+         * @param {object} data
+         * @return {string} Dataset's id
          */
-        setData: function(data) {
+        setData(data) {
             this.datasets = {};
             return this.addDataSet(data);
-        },
+        }
 
         /**
          * Adds a dataset
@@ -937,115 +1428,126 @@ if (typeof(PhpDebugBar) == 'undefined') {
          * a dataMap using setDataMap()
          *
          * @this {DebugBar}
-         * @param {Object} data
-         * @param {String} id The name of this set, optional
-         * @param {String} suffix
+         * @param {object} data
+         * @param {string} id The name of this set, optional
+         * @param {string} suffix
          * @param {Bool} show Whether to show the new dataset, optional (default: true)
-         * @return {String} Dataset's id
+         * @return {string} Dataset's id
          */
-        addDataSet: function(data, id, suffix, show) {
-            if (!data || !data.__meta) return;
-            if (this.isIframe) {
-                window.top.phpdebugbar.addDataSet(data, id, '(iframe)' + (suffix || ''), show);
+        addDataSet(data, id, suffix, show) {
+            if (!data || !data.__meta) {
+                return;
+            }
+            if (this.isIframe && window.top.PhpDebugBar && window.top.PhpDebugBar.instance) {
+                window.top.PhpDebugBar.instance.addDataSet(data, id, `(iframe)${suffix || ''}`, show);
                 return;
             }
 
-            var nb = getObjectSize(this.datasets) + 1;
+            const nb = Object.keys(this.datasets).length + 1;
             id = id || nb;
-            data.__meta['nb'] = nb;
-            data.__meta['suffix'] = suffix;
+            data.__meta.nb = nb;
+            data.__meta.suffix = suffix;
             this.datasets[id] = data;
 
-            var label = this.datesetTitleFormater.format(id, this.datasets[id], suffix, nb);
+            const label = this.datesetTitleFormater.format(id, this.datasets[id], suffix, nb);
 
-            if (this.datasetTab) {
-                this.datasetTab.set('data', this.datasets);
-                var datasetSize = getObjectSize(this.datasets);
-                this.datasetTab.set('badge', datasetSize > 1 ? datasetSize : null);
-                this.datasetTab.$tab.show();
+            // Update dataset switcher widget (if AJAX handler is enabled)
+            if (this.datasetSwitcherWidget) {
+                this.datasetSwitcherWidget.set('data', this.datasets);
+            } else {
+                // Use old dropdown (if AJAX handler is not enabled)
+                const option = document.createElement('option');
+                option.value = id;
+                option.textContent = label;
+                this.datasetsSelect.append(option);
+                this.datasetsSelect.hidden = false;
             }
 
-            this.$datasets.append($('<option value="' + id + '">' + label + '</option>'));
-            if (this.$datasets.children().length > 1) {
-                this.$datasets.show();
-            }
-
-            if (typeof(show) == 'undefined' || show) {
+            if (show === undefined || show) {
                 this.showDataSet(id);
             }
 
             this.resize();
 
             return id;
-        },
+        }
 
         /**
          * Loads a dataset using the open handler
          *
-         * @param {String} id
+         * @param {string} id
          * @param {Bool} show Whether to show the new dataset, optional (default: true)
          */
-        loadDataSet: function(id, suffix, callback, show) {
+        loadDataSet(id, suffix, callback, show) {
             if (!this.openHandler) {
                 throw new Error('loadDataSet() needs an open handler');
             }
-            var self = this;
-            this.openHandler.load(id, function(data) {
+            const self = this;
+            this.openHandler.load(id, (data) => {
                 self.addDataSet(data, id, suffix, show);
                 self.resize();
                 callback && callback(data);
             });
-        },
+        }
 
         /**
          * Returns the data from a dataset
          *
          * @this {DebugBar}
-         * @param {String} id
-         * @return {Object}
+         * @param {string} id
+         * @return {object}
          */
-        getDataSet: function(id) {
+        getDataSet(id) {
             return this.datasets[id];
-        },
+        }
 
         /**
          * Switch the currently displayed dataset
          *
          * @this {DebugBar}
-         * @param {String} id
+         * @param {string} id
          */
-        showDataSet: function(id) {
+        showDataSet(id) {
             this.activeDatasetId = id;
-            this.dataChangeHandler(this.datasets[id]);
-
-            if (this.$datasets.val() !== id) {
-                this.$datasets.val(id);
+            if (this.isClosed()) {
+                this.pendingDataSetId = id;
+            } else {
+                this.dataChangeHandler(this.datasets[id]);
+                this.pendingDataSetId = null;
             }
 
-            if (this.datasetTab) {
-                this.datasetTab.get('widget').set('id', id);
+            // Update dataset switcher widget to reflect current dataset
+            if (this.datasetSwitcherWidget) {
+                this.datasetSwitcherWidget.set('activeId', id);
+            } else {
+                // Update old dropdown
+                this.datasetsSelect.value = id;
             }
-        },
+        }
 
         /**
          * Called when the current dataset is modified.
          *
          * @this {DebugBar}
-         * @param {Object} data
+         * @param {object} data
          */
-        dataChangeHandler: function(data) {
-            var self = this;
-            $.each(this.dataMap, function(key, def) {
-                var d = getDictValue(data, def[0], def[1]);
-                if (key.indexOf(':') != -1) {
-                    key = key.split(':');
-                    self.getControl(key[0]).set(key[1], d);
+        dataChangeHandler(data) {
+            for (const [key, def] of Object.entries(this.dataMap)) {
+                const d = getDictValue(data, def[0], def[1]);
+                if (key.includes(':')) {
+                    const parts = key.split(':');
+                    this.getControl(parts[0]).set(parts[1], d);
                 } else {
-                    self.getControl(key).set('data', d);
+                    this.getControl(key).set('data', d);
                 }
-            });
-            self.resize();
-        },
+            }
+
+            if (!this.isMinimized()) {
+                this.showTab();
+            }
+
+            this.resize();
+        }
 
         /**
          * Sets the handler to open past dataset
@@ -1053,18 +1555,13 @@ if (typeof(PhpDebugBar) == 'undefined') {
          * @this {DebugBar}
          * @param {object} handler
          */
-        setOpenHandler: function(handler) {
+        setOpenHandler(handler) {
             this.openHandler = handler;
-            if (handler !== null) {
-                this.$openbtn.show();
-            } else {
-                this.$openbtn.hide();
+            if (handler) {
+                this.openHandler.el.setAttribute('data-theme', this.el.getAttribute('data-theme'));
             }
-        },
-
-        setHideEmptyTabs: function(hideEmpty) {
-            this.hideEmptyTabs = hideEmpty;
-        },
+            this.openbtn.hidden = handler == null;
+        }
 
         /**
          * Returns the handler to open past dataset
@@ -1072,31 +1569,25 @@ if (typeof(PhpDebugBar) == 'undefined') {
          * @this {DebugBar}
          * @return {object}
          */
-        getOpenHandler: function() {
+        getOpenHandler() {
             return this.openHandler;
-        },
+        }
 
-        enableAjaxHandlerTab: function() {
-            this.datasetTab = new PhpDebugBar.DebugBar.Tab({"icon":"history", "title":"Request history", "widget": new PhpDebugBar.Widgets.DatasetWidget({
-                    'debugbar': this
-                })});
-            this.datasetTab.$tab.addClass(csscls('tab-history'));
-            this.datasetTab.$tab.attr('data-collector', '__datasets');
-            this.datasetTab.$el.attr('data-collector', '__datasets');
-            this.datasetTab.$tab.insertAfter(this.$openbtn).hide();
-            this.datasetTab.$tab.click(() => {
-                if (!this.isMinimized() && self.activePanelName == '__datasets') {
-                    this.minimize();
-                } else {
-                    this.showTab('__datasets');
-                }
+        enableAjaxHandlerTab() {
+            // Hide the old dropdown
+            if (this.datasetsSelectSpan) {
+                this.datasetsSelectSpan.hidden = true;
+            }
+
+            // Create dataset switcher widget in header (after open button)
+            this.datasetSwitcherWidget = new PhpDebugBar.Widgets.DatasetWidget({
+                debugbar: this
             });
-            this.datasetTab.$el.appendTo(this.$body);
-            this.controls['__datasets'] = this.datasetTab;
-        },
+            this.openbtn.after(this.datasetSwitcherWidget.el);
+        }
+    }
 
-    });
-
+    PhpDebugBar.DebugBar = DebugBar;
     DebugBar.Tab = Tab;
     DebugBar.Indicator = Indicator;
 
@@ -1109,198 +1600,197 @@ if (typeof(PhpDebugBar) == 'undefined') {
      *
      * @param {Bool} autoShow Whether to immediately show new datasets, optional (default: true)
      */
-    var AjaxHandler = PhpDebugBar.AjaxHandler = function(debugbar, headerName, autoShow) {
-        this.debugbar = debugbar;
-        this.headerName = headerName || 'phpdebugbar';
-        this.autoShow = typeof(autoShow) == 'undefined' ? true : autoShow;
-        if (localStorage.getItem('phpdebugbar-ajaxhandler-autoshow') !== null) {
-            this.autoShow = localStorage.getItem('phpdebugbar-ajaxhandler-autoshow') == '1';
+    class AjaxHandler {
+        constructor(debugbar, headerName, autoShow) {
+            this.debugbar = debugbar;
+            this.headerName = headerName || 'phpdebugbar';
+            this.autoShow = autoShow === undefined ? true : autoShow;
+            this.defaultAutoShow = this.autoShow;
+            if (localStorage.getItem('phpdebugbar-ajaxhandler-autoshow') !== null) {
+                this.autoShow = localStorage.getItem('phpdebugbar-ajaxhandler-autoshow') === '1';
+            }
+            if (debugbar.controls.__settings) {
+                debugbar.controls.__settings.get('widget').set('autoshow', this.autoShow);
+            }
         }
-    };
-
-    $.extend(AjaxHandler.prototype, {
 
         /**
          * Handles a Fetch API Response or an XMLHttpRequest
          *
-         * @this {AjaxHandler}
          * @param {Response|XMLHttpRequest} response
-         * @return {Bool}
+         * @return {boolean}
          */
-        handle: function(response) {
-            // Check if the debugbar header is available
-            if (this.isFetch(response) && !response.headers.has(this.headerName + '-id')) {
+        handle(response) {
+            const stack = this.getHeader(response, `${this.headerName}-stack`);
+            if (stack) {
+                const stackIds = JSON.parse(stack);
+                stackIds.forEach((id) => {
+                    this.debugbar.loadDataSet(id, ' (stacked)', null, false);
+                });
+            }
+
+            if (this.loadFromId(response)) {
                 return true;
-            } else if (this.isXHR(response) && response.getAllResponseHeaders().indexOf(this.headerName) === -1) {
+            }
+
+            if (this.loadFromData(response)) {
                 return true;
             }
-            if (!this.loadFromId(response)) {
-                return this.loadFromData(response);
+
+            return false;
+        }
+
+        /**
+         * Retrieves a response header from either a Fetch Response or XMLHttpRequest
+         *
+         * @param {Response|XMLHttpRequest} response - The response object from either fetch() or XHR
+         * @param {string} header - The name of the header to retrieve
+         * @returns {string|null} The header value, or null if not found
+         */
+        getHeader(response, header) {
+            if (response instanceof Response) {
+                return response.headers.get(header);
+            } else if (response instanceof XMLHttpRequest) {
+                return response.getResponseHeader(header);
             }
-            return true;
-        },
+            return null;
+        }
 
-        getHeader: function(response, header) {
-            if (this.isFetch(response)) {
-                return response.headers.get(header)
-            }
-
-            return response.getResponseHeader(header)
-        },
-
-        isFetch: function(response) {
-            return Object.prototype.toString.call(response) == '[object Response]'
-        },
-
-        isXHR: function(response) {
-            return Object.prototype.toString.call(response) == '[object XMLHttpRequest]'
-        },
-
-        setAutoShow: function(autoshow) {
+        setAutoShow(autoshow) {
             this.autoShow = autoshow;
             localStorage.setItem('phpdebugbar-ajaxhandler-autoshow', autoshow ? '1' : '0');
-        },
+        }
 
         /**
          * Checks if the HEADER-id exists and loads the dataset using the open handler
          *
          * @param {Response|XMLHttpRequest} response
-         * @return {Bool}
+         * @return {boolean}
          */
-        loadFromId: function(response) {
-            var id = this.extractIdFromHeaders(response);
+        loadFromId(response) {
+            const id = this.extractIdFromHeaders(response);
             if (id && this.debugbar.openHandler) {
-                this.debugbar.loadDataSet(id, "(ajax)", undefined, this.autoShow);
+                this.debugbar.loadDataSet(id, '(ajax)', undefined, this.autoShow);
                 return true;
             }
             return false;
-        },
+        }
 
         /**
          * Extracts the id from the HEADER-id
          *
          * @param {Response|XMLHttpRequest} response
-         * @return {String}
+         * @return {string}
          */
-        extractIdFromHeaders: function(response) {
-            return this.getHeader(response, this.headerName + '-id');
-        },
+        extractIdFromHeaders(response) {
+            return this.getHeader(response, `${this.headerName}-id`);
+        }
 
         /**
          * Checks if the HEADER exists and loads the dataset
          *
          * @param {Response|XMLHttpRequest} response
-         * @return {Bool}
+         * @return {boolean}
          */
-        loadFromData: function(response) {
-            var raw = this.extractDataFromHeaders(response);
+        loadFromData(response) {
+            const raw = this.extractDataFromHeaders(response);
             if (!raw) {
                 return false;
             }
 
-            var data = this.parseHeaders(raw);
+            const data = this.parseHeaders(raw);
             if (data.error) {
-                throw new Error('Error loading debugbar data: ' + data.error);
-            } else if(data.data) {
-                this.debugbar.addDataSet(data.data, data.id, "(ajax)", this.autoShow);
+                throw new Error(`Error loading debugbar data: ${data.error}`);
+            } else if (data.data) {
+                this.debugbar.addDataSet(data.data, data.id, '(ajax)', this.autoShow);
             }
             return true;
-        },
+        }
 
         /**
          * Extract the data as a string from headers of an XMLHttpRequest
          *
-         * @this {AjaxHandler}
          * @param {Response|XMLHttpRequest} response
          * @return {string}
          */
-        extractDataFromHeaders: function(response) {
-            var data = this.getHeader(response, this.headerName);
+        extractDataFromHeaders(response) {
+            let data = this.getHeader(response, this.headerName);
             if (!data) {
                 return;
             }
-            for (var i = 1;; i++) {
-                var header = this.getHeader(response, this.headerName + '-' + i);
+            for (let i = 1; ; i++) {
+                const header = this.getHeader(response, `${this.headerName}-${i}`);
                 if (!header) {
                     break;
                 }
                 data += header;
             }
             return decodeURIComponent(data);
-        },
+        }
 
         /**
          * Parses the string data into an object
          *
-         * @this {AjaxHandler}
          * @param {string} data
-         * @return {string}
+         * @return {object}
          */
-        parseHeaders: function(data) {
+        parseHeaders(data) {
             return JSON.parse(data);
-        },
+        }
 
         /**
          * Attaches an event listener to fetch
-         *
-         * @this {AjaxHandler}
          */
-        bindToFetch: function() {
-            var self = this;
-            var proxied = window.fetch;
+        bindToFetch() {
+            const self = this;
 
-            if (proxied !== undefined && proxied.polyfill !== undefined) {
-                return;
+            const proxied = window.fetch.__debugbar_original || window.fetch;
+            const original = proxied.bind(window);
+
+            function wrappedFetch(...args) {
+                const p = original(...args);
+                p?.then?.(r => self.handle(r)).catch(() => {});
+                return p;
             }
 
-            window.fetch = function () {
-                var promise = proxied.apply(this, arguments);
+            wrappedFetch.__debugbar_wrapped = true;
+            wrappedFetch.__debugbar_original = proxied;
 
-                promise.then(function (response) {
-                    self.handle(response);
-                }).catch(function(reason) {
-                    // Fetch request failed or aborted via AbortController.abort().
-                    // Catch is required to not trigger React's error handler.
-                });
-
-                return promise;
-            };
-        },
-
-        /**
-         * @deprecated use bindToXHR instead
-         */
-        bindToJquery: function(jq) {
-            var self = this;
-            jq(document).ajaxComplete(function(e, xhr, settings) {
-                if (!settings.ignoreDebugBarAjaxHandler) {
-                    self.handle(xhr);
-                }
-            });
-        },
+            window.fetch = wrappedFetch;
+        }
 
         /**
          * Attaches an event listener to XMLHttpRequest
-         *
-         * @this {AjaxHandler}
          */
-        bindToXHR: function() {
-            var self = this;
-            var proxied = XMLHttpRequest.prototype.open;
-            XMLHttpRequest.prototype.open = function(method, url, async, user, pass) {
-                var xhr = this;
-                this.addEventListener("readystatechange", function() {
-                    var skipUrl = self.debugbar.openHandler ? self.debugbar.openHandler.get('url') : null;
-                    var href = (typeof url === 'string') ? url : url.href;
+        bindToXHR() {
+            const self = this;
+            const proto = XMLHttpRequest.prototype;
 
-                    if (xhr.readyState == 4 && href.indexOf(skipUrl) !== 0) {
-                        self.handle(xhr);
-                    }
-                }, false);
-                proxied.apply(this, Array.prototype.slice.call(arguments));
-            };
+            const proxied = (proto.open || {}).__debugbar_original || proto.open;
+            if (typeof proxied !== 'function') {
+                return;
+            }
+
+            function wrappedOpen(method, url, async = true, user = null, pass = null) {
+                if (!this.__debugbar_listener_attached) {
+                    this.__debugbar_listener_attached = true;
+
+                    this.addEventListener('readystatechange', () => {
+                        if (this.readyState === 4) {
+                            self.handle(this);
+                        }
+                    });
+                }
+
+                return proxied.call(this, method, url, async, user, pass);
+            }
+
+            wrappedOpen.__debugbar_wrapped = true;
+            wrappedOpen.__debugbar_original = proxied;
+
+            proto.open = wrappedOpen;
         }
+    }
 
-    });
-
-})(PhpDebugBar.$);
+    PhpDebugBar.AjaxHandler = AjaxHandler;
+})();
