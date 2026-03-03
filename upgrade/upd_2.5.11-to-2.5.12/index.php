@@ -85,8 +85,10 @@ class Upgrade_2512 extends XoopsUpgrade
     public function check_createtokenstable()
     {
         $table  = $GLOBALS['xoopsDB']->prefix('tokens');
-        $like   = str_replace(['\\', '_', '%'], ['\\\\', '\\_', '\\%'], $table);
-        $result = $GLOBALS['xoopsDB']->query("SHOW TABLES LIKE " . $GLOBALS['xoopsDB']->quote($like));
+        $sql    = "SELECT 1 FROM `information_schema`.`TABLES`"
+                . " WHERE `TABLE_SCHEMA` = DATABASE() AND `TABLE_NAME` = " . $GLOBALS['xoopsDB']->quote($table)
+                . " LIMIT 1";
+        $result = $GLOBALS['xoopsDB']->query($sql);
         if (!$GLOBALS['xoopsDB']->isResultSet($result) || !$result instanceof \mysqli_result) {
             return false;
         }
