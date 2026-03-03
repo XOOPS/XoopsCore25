@@ -1,7 +1,5 @@
 <?php
 
-use Xmf\Database\Tables;
-
 /**
  * Upgrade from 2.5.11 to 2.5.12
  *
@@ -24,7 +22,6 @@ class Upgrade_2512 extends XoopsUpgrade
         $this->tasks        = [
             'deletepurifier',
             'deletephpmailer',
-            'expandactkey',
             'createtokenstable',
         ];
         $this->usedFiles    = [];
@@ -78,65 +75,6 @@ class Upgrade_2512 extends XoopsUpgrade
         $folderToDelete = '../class/mail/phpmailer/';
 
         return self::deleteFolder($folderToDelete);
-    }
-
-    /**
-     * Get current actkey column varchar length, or null if undetectable.
-     *
-     * @param Tables $migrate
-     * @return int|null
-     */
-    private function getActkeyVarcharLength(Tables $migrate)
-    {
-        $migrate->useTable('users');
-        $attributes = $migrate->getColumnAttributes('users', 'actkey');
-        if (is_string($attributes) && preg_match('/varchar\((\d+)\)/i', trim($attributes), $m)) {
-            return (int)$m[1];
-        }
-        return null;
-    }
-
-    /**
-     * Check if actkey column is already large enough for registration activation.
-     * Column needs to be at least VARCHAR(100) for future activation token migration.
-     *
-     * @return bool true if patch IS applied, false if NOT applied
-     */
-    public function check_expandactkey()
-    {
-        $length = $this->getActkeyVarcharLength(new Tables());
-        if (null === $length) {
-            return true; // undetectable — assume applied to avoid blocking
-        }
-        return $length >= 100;
-    }
-
-    /**
-     * Expand actkey column to VARCHAR(100) for registration activation.
-     * Lostpass now uses the tokens table; this prepares actkey for activation migration.
-     *
-     * @return bool true if applied, false if failed
-     */
-    public function apply_expandactkey()
-    {
-        $migrate = new Tables();
-        $length = $this->getActkeyVarcharLength($migrate);
-
-        if (null !== $length && $length < 100) {
-            $migrate->alterColumn('users', 'actkey', "VARCHAR(100) NOT NULL DEFAULT ''");
-        }
-
-        $result = $migrate->executeQueue(true);
-        if (false === $result) {
-            $this->logs[] = sprintf(
-                'Migration of users.actkey column failed. Error: %s - %s',
-                $migrate->getLastErrNo(),
-                $migrate->getLastError(),
-            );
-            return false;
-        }
-
-        return true;
     }
 
     /**

@@ -173,7 +173,9 @@ or column introspection. The token handler does one thing: create and verify tok
 2. Next PR: registration stops using actkey, uses tokens table instead
 3. Eventually: deprecate and remove actkey column
 
-The VARCHAR(100) expansion from PR #1624 is harmless and can stay until actkey is removed.
+The VARCHAR(100) expansion from PR #1624 has been removed — actkey stays at
+VARCHAR(8), which is sufficient for the current 8-char activation keys.
+No point expanding a column we plan to deprecate.
 
 ---
 
