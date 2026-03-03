@@ -1,7 +1,5 @@
 <?php
 
-use Xmf\Database\Tables;
-
 /**
  * Upgrade from 2.5.11 to 2.5.12
  *
@@ -24,7 +22,7 @@ class Upgrade_2512 extends XoopsUpgrade
         $this->tasks        = [
             'deletepurifier',
             'deletephpmailer',
-            'expandactkey',
+            'createtokenstable',
         ];
         $this->usedFiles    = [];
         $this->pathsToCheck = [
@@ -80,60 +78,52 @@ class Upgrade_2512 extends XoopsUpgrade
     }
 
     /**
-     * Get current actkey column varchar length, or null if undetectable.
+     * Check if the tokens table already exists.
      *
-     * @param Tables $migrate
-     * @return int|null
+     * @return bool true if table exists (patch applied)
      */
-    private function getActkeyVarcharLength(Tables $migrate)
+    public function check_createtokenstable()
     {
-        $migrate->useTable('users');
-        $attributes = $migrate->getColumnAttributes('users', 'actkey');
-        if (is_string($attributes) && preg_match('/varchar\((\d+)\)/i', trim($attributes), $m)) {
-            return (int)$m[1];
-        }
-        return null;
-    }
-
-    /**
-     * Check if actkey column is already large enough for lostpass tokens.
-     * Packed token is ~78 chars; column needs to be at least VARCHAR(100).
-     *
-     * @return bool true if patch IS applied, false if NOT applied
-     */
-    public function check_expandactkey()
-    {
-        $length = $this->getActkeyVarcharLength(new Tables());
-        if (null === $length) {
-            return true; // undetectable — assume applied to avoid blocking
-        }
-        return $length >= 100;
-    }
-
-    /**
-     * Expand actkey column to VARCHAR(100) for secure lostpass tokens.
-     *
-     * @return bool true if applied, false if failed
-     */
-    public function apply_expandactkey()
-    {
-        $migrate = new Tables();
-        $length = $this->getActkeyVarcharLength($migrate);
-
-        if (null !== $length && $length < 100) {
-            $migrate->alterColumn('users', 'actkey', "VARCHAR(100) NOT NULL DEFAULT ''");
-        }
-
-        $result = $migrate->executeQueue(true);
-        if (false === $result) {
-            $this->logs[] = sprintf(
-                'Migration of users.actkey column failed. Error: %s - %s',
-                $migrate->getLastErrNo(),
-                $migrate->getLastError(),
-            );
+        $table  = $GLOBALS['xoopsDB']->prefix('tokens');
+        $sql    = "SELECT 1 FROM `information_schema`.`TABLES`"
+                . " WHERE `TABLE_SCHEMA` = DATABASE() AND `TABLE_NAME` = " . $GLOBALS['xoopsDB']->quote($table)
+                . " LIMIT 1";
+        $result = $GLOBALS['xoopsDB']->query($sql);
+        if (!$GLOBALS['xoopsDB']->isResultSet($result) || !$result instanceof \mysqli_result) {
             return false;
         }
+        return (bool)$GLOBALS['xoopsDB']->fetchArray($result);
+    }
 
+    /**
+     * Create the tokens table for generic scoped tokens.
+     *
+     * @return bool true on success
+     */
+    public function apply_createtokenstable()
+    {
+        $table = $GLOBALS['xoopsDB']->prefix('tokens');
+        $sql   = "CREATE TABLE IF NOT EXISTS `{$table}` (
+            `token_id`   int unsigned        NOT NULL AUTO_INCREMENT,
+            `uid`        mediumint unsigned  NOT NULL DEFAULT 0,
+            `scope`      varchar(32)         NOT NULL DEFAULT '',
+            `hash`       char(64)            NOT NULL DEFAULT '',
+            `issued_at`  int unsigned        NOT NULL DEFAULT 0,
+            `expires_at` int unsigned        NOT NULL DEFAULT 0,
+            `used_at`    int unsigned        NOT NULL DEFAULT 0,
+            PRIMARY KEY (`token_id`),
+            UNIQUE KEY `uq_uid_scope_hash` (`uid`, `scope`, `hash`),
+            KEY `idx_uid_scope_issued` (`uid`, `scope`, `issued_at`),
+            KEY `idx_issued_at` (`issued_at`)
+        ) ENGINE=InnoDB;";
+
+        $result = $GLOBALS['xoopsDB']->exec($sql);
+        if (!$result) {
+            $errno = $GLOBALS['xoopsDB']->errno();
+            $error = $GLOBALS['xoopsDB']->error();
+            $this->logs[] = sprintf('Failed to create tokens table. Error: %s - %s', $errno, $error);
+            return false;
+        }
         return true;
     }
 
