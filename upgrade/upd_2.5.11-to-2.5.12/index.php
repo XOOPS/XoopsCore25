@@ -81,8 +81,6 @@ class Upgrade_2512 extends XoopsUpgrade
      * Check if the tokens table already exists.
      *
      * @return bool true if table exists (patch applied)
-     *
-     * @throws \RuntimeException Not thrown; returns false on DB error
      */
     public function check_createtokenstable()
     {
@@ -99,8 +97,6 @@ class Upgrade_2512 extends XoopsUpgrade
      * Create the tokens table for generic scoped tokens.
      *
      * @return bool true on success
-     *
-     * @throws \RuntimeException Not thrown; returns false on DB error
      */
     public function apply_createtokenstable()
     {
@@ -119,7 +115,7 @@ class Upgrade_2512 extends XoopsUpgrade
             KEY `idx_issued_at` (`issued_at`)
         ) ENGINE=InnoDB;";
 
-        $result = $GLOBALS['xoopsDB']->query($sql);
+        $result = $GLOBALS['xoopsDB']->exec($sql);
         if (!$result) {
             $errno = $GLOBALS['xoopsDB']->errno();
             $error = $GLOBALS['xoopsDB']->error();

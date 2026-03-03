@@ -109,8 +109,6 @@ final class LostPassSecurity
      * @param string $identifier Email or "uid:N" for reset attempts
      *
      * @return bool true if request should be blocked
-     *
-     * @throws \RuntimeException Not thrown; fails open if cache unavailable
      */
     public function isRateLimited(string $ip, string $identifier): bool
     {

@@ -175,8 +175,19 @@ class XoopsTokenHandlerTest extends KernelTestCase
         $db = $this->createMockDatabase();
         $handler = new XoopsTokenHandler($db);
 
-        $this->assertFalse(@$handler->create(0, 'lostpass', 3600));
-        $this->assertFalse(@$handler->create(-1, 'lostpass', 3600));
+        $warnings = [];
+        set_error_handler(function (int $errno, string $errstr) use (&$warnings) {
+            $warnings[] = $errstr;
+            return true;
+        }, E_USER_WARNING);
+
+        $this->assertFalse($handler->create(0, 'lostpass', 3600));
+        $this->assertFalse($handler->create(-1, 'lostpass', 3600));
+
+        restore_error_handler();
+
+        $this->assertCount(2, $warnings);
+        $this->assertStringContainsString('uid > 0', $warnings[0]);
     }
 
     #[Test]
@@ -185,8 +196,19 @@ class XoopsTokenHandlerTest extends KernelTestCase
         $db = $this->createMockDatabase();
         $handler = new XoopsTokenHandler($db);
 
-        $this->assertFalse(@$handler->create(1, '', 3600));
-        $this->assertFalse(@$handler->create(1, '   ', 3600));
+        $warnings = [];
+        set_error_handler(function (int $errno, string $errstr) use (&$warnings) {
+            $warnings[] = $errstr;
+            return true;
+        }, E_USER_WARNING);
+
+        $this->assertFalse($handler->create(1, '', 3600));
+        $this->assertFalse($handler->create(1, '   ', 3600));
+
+        restore_error_handler();
+
+        $this->assertCount(2, $warnings);
+        $this->assertStringContainsString('non-empty scope', $warnings[0]);
     }
 
     /* ========================================================
