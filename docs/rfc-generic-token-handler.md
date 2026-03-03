@@ -70,6 +70,7 @@ See `htdocs/class/XoopsTokenHandler.php` for the implementation.
 ### Password Reset (`lostpass.php`)
 
 **Before (PR #1624):**
+
 ```php
 $security = new LostPassSecurity($xoopsDB);
 $rawToken = $security->generateToken();
@@ -84,6 +85,7 @@ $security->clearPayloadInMemory($user, $payload['source']);
 ```
 
 **After:**
+
 ```php
 $tokenHandler = new XoopsTokenHandler($xoopsDB);
 $rawToken = $tokenHandler->create($uid, 'lostpass', 3600);
@@ -100,6 +102,7 @@ collapses into two method calls.
 ### Registration Activation (`register.php`)
 
 **Before (current):**
+
 ```php
 $actKey = substr(md5(uniqid(mt_rand(), 1)), 0, 8);
 $newuser->setVar('actkey', $actKey, true);
@@ -109,6 +112,7 @@ if ($thisuser->getVar('actkey') != $actKey) { /* reject */ }
 ```
 
 **After:**
+
 ```php
 $tokenHandler = new XoopsTokenHandler($xoopsDB);
 $rawToken = $tokenHandler->create($uid, 'activation', 86400);

@@ -1,6 +1,4 @@
 <?php
-declare(strict_types=1);
-
 /**
  * XOOPS generic scoped token handler
  *
@@ -16,6 +14,8 @@ declare(strict_types=1);
  * @package   core
  * @since     2.5.12
  */
+
+declare(strict_types=1);
 
 defined('XOOPS_ROOT_PATH') || exit('Restricted access');
 
@@ -45,6 +45,8 @@ final class XoopsTokenHandler
 
     /**
      * @param \XoopsMySQLDatabase $db Database connection
+     *
+     * @return void
      */
     public function __construct(\XoopsMySQLDatabase $db)
     {
@@ -63,6 +65,8 @@ final class XoopsTokenHandler
      * @param bool   $revokePrevious Revoke unused tokens for same scope first
      *
      * @return string|false Raw token string, or false on DB failure
+     *
+     * @throws \RuntimeException Not thrown; errors return false
      */
     public function create(
         int    $uid,
@@ -122,6 +126,8 @@ final class XoopsTokenHandler
      * @param string $rawToken Raw token from the URL/form
      *
      * @return bool true if the token was valid and has now been consumed
+     *
+     * @throws \RuntimeException Not thrown; errors return false
      */
     public function verify(int $uid, string $scope, string $rawToken): bool
     {
@@ -151,6 +157,8 @@ final class XoopsTokenHandler
      * @param string $scope Token scope
      *
      * @return void
+     *
+     * @throws \RuntimeException Not thrown; DB errors are silently ignored
      */
     public function revokeByScope(int $uid, string $scope): void
     {
@@ -177,6 +185,8 @@ final class XoopsTokenHandler
      * @param int    $window Lookback window in seconds
      *
      * @return int Number of tokens issued in the window, or 0 on failure
+     *
+     * @throws \RuntimeException Not thrown; errors return 0
      */
     public function countRecent(int $uid, string $scope, int $window): int
     {
@@ -208,6 +218,8 @@ final class XoopsTokenHandler
      * @param int $maxAge Retention window in seconds (default 7 days)
      *
      * @return void
+     *
+     * @throws \RuntimeException Not thrown; DB errors are silently ignored
      */
     public function purgeExpired(int $maxAge = 604800): void
     {

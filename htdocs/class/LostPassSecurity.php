@@ -1,6 +1,4 @@
 <?php
-declare(strict_types=1);
-
 /**
  * XOOPS password recovery rate limiter
  *
@@ -16,6 +14,8 @@ declare(strict_types=1);
  * @package   core
  * @since     2.5.12
  */
+
+declare(strict_types=1);
 
 defined('XOOPS_ROOT_PATH') || exit('Restricted access');
 
@@ -47,6 +47,8 @@ final class LostPassSecurity
      * @param int $window  Rate-limit window in seconds (min 60)
      * @param int $ipLimit Max requests per IP per window (at limit = blocked)
      * @param int $idLimit Max requests per identifier per window (at limit = blocked)
+     *
+     * @return void
      */
     public function __construct(
         int $window  = 900,  // 15 min
@@ -107,6 +109,8 @@ final class LostPassSecurity
      * @param string $identifier Email or "uid:N" for reset attempts
      *
      * @return bool true if request should be blocked
+     *
+     * @throws \RuntimeException Not thrown; fails open if cache unavailable
      */
     public function isRateLimited(string $ip, string $identifier): bool
     {

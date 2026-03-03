@@ -81,11 +81,14 @@ class Upgrade_2512 extends XoopsUpgrade
      * Check if the tokens table already exists.
      *
      * @return bool true if table exists (patch applied)
+     *
+     * @throws \RuntimeException Not thrown; returns false on DB error
      */
     public function check_createtokenstable()
     {
         $table  = $GLOBALS['xoopsDB']->prefix('tokens');
-        $result = $GLOBALS['xoopsDB']->query("SHOW TABLES LIKE " . $GLOBALS['xoopsDB']->quote($table));
+        $like   = str_replace(['\\', '_', '%'], ['\\\\', '\\_', '\\%'], $table);
+        $result = $GLOBALS['xoopsDB']->query("SHOW TABLES LIKE " . $GLOBALS['xoopsDB']->quote($like));
         if (!$GLOBALS['xoopsDB']->isResultSet($result) || !$result instanceof \mysqli_result) {
             return false;
         }
@@ -96,6 +99,8 @@ class Upgrade_2512 extends XoopsUpgrade
      * Create the tokens table for generic scoped tokens.
      *
      * @return bool true on success
+     *
+     * @throws \RuntimeException Not thrown; returns false on DB error
      */
     public function apply_createtokenstable()
     {
