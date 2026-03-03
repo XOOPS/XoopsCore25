@@ -51,7 +51,7 @@ class XoopsTokenHandlerTest extends KernelTestCase
     public function testCreateReturnsUrlSafeToken(): void
     {
         $db = $this->createMockDatabase();
-        $db->method('query')->willReturn(true);
+        $db->method('exec')->willReturn(true);
         $db->method('getAffectedRows')->willReturn(0);
 
         $handler  = new XoopsTokenHandler($db);
@@ -69,7 +69,7 @@ class XoopsTokenHandlerTest extends KernelTestCase
     public function testCreateReturnsFalseOnDbFailure(): void
     {
         $db = $this->createMockDatabase();
-        $db->method('query')->willReturn(false);
+        $db->method('exec')->willReturn(false);
 
         $handler = new XoopsTokenHandler($db);
         $result  = $handler->create(1, 'lostpass', 3600, false);
@@ -82,7 +82,7 @@ class XoopsTokenHandlerTest extends KernelTestCase
     {
         $queries = [];
         $db = $this->createMockDatabase();
-        $db->method('query')->willReturnCallback(function ($sql) use (&$queries) {
+        $db->method('exec')->willReturnCallback(function ($sql) use (&$queries) {
             $queries[] = $sql;
             return true;
         });
@@ -102,7 +102,7 @@ class XoopsTokenHandlerTest extends KernelTestCase
     {
         $queries = [];
         $db = $this->createMockDatabase();
-        $db->method('query')->willReturnCallback(function ($sql) use (&$queries) {
+        $db->method('exec')->willReturnCallback(function ($sql) use (&$queries) {
             $queries[] = $sql;
             return true;
         });
@@ -119,7 +119,7 @@ class XoopsTokenHandlerTest extends KernelTestCase
     public function testCreateTokensAreUnique(): void
     {
         $db = $this->createMockDatabase();
-        $db->method('query')->willReturn(true);
+        $db->method('exec')->willReturn(true);
 
         $handler = new XoopsTokenHandler($db);
         $tokens  = [];
@@ -134,7 +134,7 @@ class XoopsTokenHandlerTest extends KernelTestCase
     {
         $capturedSql = '';
         $db = $this->createMockDatabase();
-        $db->method('query')->willReturnCallback(function ($sql) use (&$capturedSql) {
+        $db->method('exec')->willReturnCallback(function ($sql) use (&$capturedSql) {
             $capturedSql = $sql;
             return true;
         });
@@ -157,7 +157,7 @@ class XoopsTokenHandlerTest extends KernelTestCase
     {
         $capturedSql = '';
         $db = $this->createMockDatabase();
-        $db->method('query')->willReturnCallback(function ($sql) use (&$capturedSql) {
+        $db->method('exec')->willReturnCallback(function ($sql) use (&$capturedSql) {
             $capturedSql = $sql;
             return true;
         });
@@ -197,7 +197,7 @@ class XoopsTokenHandlerTest extends KernelTestCase
     public function testVerifyReturnsTrueWhenTokenIsValid(): void
     {
         $db = $this->createMockDatabase();
-        $db->method('query')->willReturn(true);
+        $db->method('exec')->willReturn(true);
         $db->method('getAffectedRows')->willReturn(1);
 
         $handler = new XoopsTokenHandler($db);
@@ -210,7 +210,7 @@ class XoopsTokenHandlerTest extends KernelTestCase
     public function testVerifyReturnsFalseWhenNoRowAffected(): void
     {
         $db = $this->createMockDatabase();
-        $db->method('query')->willReturn(true);
+        $db->method('exec')->willReturn(true);
         $db->method('getAffectedRows')->willReturn(0);
 
         $handler = new XoopsTokenHandler($db);
@@ -220,10 +220,10 @@ class XoopsTokenHandlerTest extends KernelTestCase
     }
 
     #[Test]
-    public function testVerifyReturnsFalseOnQueryFailure(): void
+    public function testVerifyReturnsFalseOnDbFailure(): void
     {
         $db = $this->createMockDatabase();
-        $db->method('query')->willReturn(false);
+        $db->method('exec')->willReturn(false);
 
         $handler = new XoopsTokenHandler($db);
         $result  = $handler->verify(1, 'lostpass', 'some-token');
@@ -236,7 +236,7 @@ class XoopsTokenHandlerTest extends KernelTestCase
     {
         $capturedSql = '';
         $db = $this->createMockDatabase();
-        $db->method('query')->willReturnCallback(function ($sql) use (&$capturedSql) {
+        $db->method('exec')->willReturnCallback(function ($sql) use (&$capturedSql) {
             $capturedSql = $sql;
             return true;
         });
@@ -260,7 +260,7 @@ class XoopsTokenHandlerTest extends KernelTestCase
         $expectedHash = hash('sha256', $rawToken);
 
         $db = $this->createMockDatabase();
-        $db->method('query')->willReturnCallback(function ($sql) use (&$capturedSql) {
+        $db->method('exec')->willReturnCallback(function ($sql) use (&$capturedSql) {
             $capturedSql = $sql;
             return true;
         });
@@ -281,7 +281,7 @@ class XoopsTokenHandlerTest extends KernelTestCase
     {
         $capturedSql = '';
         $db = $this->createMockDatabase();
-        $db->method('query')->willReturnCallback(function ($sql) use (&$capturedSql) {
+        $db->method('exec')->willReturnCallback(function ($sql) use (&$capturedSql) {
             $capturedSql = $sql;
             return true;
         });
@@ -370,7 +370,7 @@ class XoopsTokenHandlerTest extends KernelTestCase
     {
         $capturedSql = '';
         $db = $this->createMockDatabase();
-        $db->method('query')->willReturnCallback(function ($sql) use (&$capturedSql) {
+        $db->method('exec')->willReturnCallback(function ($sql) use (&$capturedSql) {
             $capturedSql = $sql;
             return true;
         });
@@ -390,7 +390,7 @@ class XoopsTokenHandlerTest extends KernelTestCase
     {
         $capturedSql = '';
         $db = $this->createMockDatabase();
-        $db->method('query')->willReturnCallback(function ($sql) use (&$capturedSql) {
+        $db->method('exec')->willReturnCallback(function ($sql) use (&$capturedSql) {
             $capturedSql = $sql;
             return true;
         });
@@ -414,7 +414,7 @@ class XoopsTokenHandlerTest extends KernelTestCase
         $queryCount   = 0;
 
         $db = $this->createMockDatabase();
-        $db->method('query')->willReturnCallback(
+        $db->method('exec')->willReturnCallback(
             function ($sql) use (&$insertedHash, &$verifiedHash, &$queryCount) {
                 $queryCount++;
                 // Capture hash from INSERT (create, after revoke)

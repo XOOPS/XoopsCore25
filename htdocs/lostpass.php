@@ -64,11 +64,6 @@ if (($_SERVER['REQUEST_METHOD'] ?? '') === 'POST') {
  * POST → validate & update password
  * ======================================================= */
 if ($uid > 0 && $token !== '') {
-    $user = $member_handler->getUser($uid);
-    if (!is_object($user)) {
-        redirect_header('user.php', 3, $msgInvalid, false);
-        exit();
-    }
 
     // --- POST: set new password ---
     if (($_SERVER['REQUEST_METHOD'] ?? '') === 'POST') {
@@ -116,6 +111,13 @@ if ($uid > 0 && $token !== '') {
             exit();
         }
 
+        // Token is valid — now load the user
+        $user = $member_handler->getUser($uid);
+        if (!is_object($user)) {
+            redirect_header('user.php', 3, $msgInvalid, false);
+            exit();
+        }
+
         $user->setVar('pass', password_hash($pass, PASSWORD_DEFAULT));
 
         if (!$member_handler->insertUser($user, true)) {
@@ -134,7 +136,7 @@ if ($uid > 0 && $token !== '') {
         exit();
     }
 
-    // --- GET: show reset form ---
+    // --- GET: show reset form (identical response regardless of uid validity) ---
     $GLOBALS['xoopsOption']['template_main'] = 'system_lostpass.tpl';
     include_once $GLOBALS['xoops']->path('header.php');
     lostpass_assign_form($GLOBALS['xoopsTpl'], $uid, $token, $minPw);

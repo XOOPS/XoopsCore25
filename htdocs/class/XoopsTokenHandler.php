@@ -108,7 +108,7 @@ final class XoopsTokenHandler
             $expiresAt
         );
 
-        return $this->db->query($sql) ? $rawToken : false;
+        return $this->db->exec($sql) ? $rawToken : false;
     }
 
     /**
@@ -129,7 +129,7 @@ final class XoopsTokenHandler
         $table = $this->db->prefix('tokens');
         $now   = time();
 
-        $result = $this->db->query(sprintf(
+        $result = $this->db->exec(sprintf(
             "UPDATE `%s` SET `used_at` = %d"
             . " WHERE `uid` = %d AND `scope` = %s AND `hash` = %s"
             . " AND `used_at` = 0 AND `expires_at` > %d",
@@ -157,7 +157,7 @@ final class XoopsTokenHandler
         $table = $this->db->prefix('tokens');
         $now   = time();
 
-        $this->db->query(sprintf(
+        $this->db->exec(sprintf(
             "UPDATE `%s` SET `used_at` = %d"
             . " WHERE `uid` = %d AND `scope` = %s AND `used_at` = 0",
             $table,
@@ -215,7 +215,7 @@ final class XoopsTokenHandler
         $now    = time();
         $cutoff = $now - max(0, $maxAge);
 
-        $this->db->query(sprintf(
+        $this->db->exec(sprintf(
             "DELETE FROM `%s`"
             . " WHERE `issued_at` < %d"
             . " AND (`expires_at` < %d OR `used_at` > 0)",
