@@ -33,12 +33,15 @@ class SuperglobalMigrationTest extends TestCase
     private array $backupPost;
     /** @var array Backup of $_GET */
     private array $backupGet;
+    /** @var array Backup of $_COOKIE */
+    private array $backupCookie;
 
     protected function setUp(): void
     {
         $this->backupRequest = $_REQUEST;
         $this->backupPost    = $_POST;
         $this->backupGet     = $_GET;
+        $this->backupCookie  = $_COOKIE;
     }
 
     protected function tearDown(): void
@@ -46,6 +49,7 @@ class SuperglobalMigrationTest extends TestCase
         $_REQUEST = $this->backupRequest;
         $_POST    = $this->backupPost;
         $_GET     = $this->backupGet;
+        $_COOKIE  = $this->backupCookie;
     }
 
     // ---------------------------------------------------------------
