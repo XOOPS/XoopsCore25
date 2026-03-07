@@ -183,8 +183,8 @@ switch ($op) {
 
         $criteria = new CriteriaCompo(new Criteria('level', 0, '>'));
 
-        $uname = Request::getString('uname', '', 'POST');
-        $uname_match = Request::getInt('uname_match', 0, 'POST');
+        $uname = Request::getString('uname', '', 'GET') ?: Request::getString('uname', '', 'POST');
+        $uname_match = Request::getInt('uname_match', 0, 'GET') ?: Request::getInt('uname_match', 0, 'POST');
         if ($uname !== '') {
             $uname = trim($uname);
             // Basic input validation - only allow alphanumeric characters and underscores
@@ -237,8 +237,8 @@ switch ($op) {
             // You might render a page or redirect the user based on these results
         }
 
-        $email = Request::getString('email', '', 'POST');
-        $email_match = Request::getInt('email_match', 0, 'POST');
+        $email = Request::getString('email', '', 'GET') ?: Request::getString('email', '', 'POST');
+        $email_match = Request::getInt('email_match', 0, 'GET') ?: Request::getInt('email_match', 0, 'POST');
         if ($email !== '') {
             $string = $xoopsDB->escape(trim($email));
             switch ($email_match) {
@@ -268,7 +268,7 @@ switch ($op) {
                 continue;
             }
             $fieldname = $fields[$i]->getVar('field_name');
-            $fieldValues = Request::getArray($fieldname, [], 'POST');
+            $fieldValues = Request::getArray($fieldname, [], 'GET') ?: Request::getArray($fieldname, [], 'POST');
             if (in_array($fields[$i]->getVar('field_type'), ['select', 'radio', 'timezone'])) {
                 if (empty($fieldValues)) {
                     continue;
@@ -299,8 +299,8 @@ switch ($op) {
                 switch ($fields[$i]->getVar('field_valuetype')) {
                     case XOBJ_DTYPE_OTHER:
                     case XOBJ_DTYPE_INT:
-                        $largerVal  = Request::getString($fieldname . '_larger', '', 'POST');
-                        $smallerVal = Request::getString($fieldname . '_smaller', '', 'POST');
+                        $largerVal  = Request::getString($fieldname . '_larger', '', 'GET') ?: Request::getString($fieldname . '_larger', '', 'POST');
+                        $smallerVal = Request::getString($fieldname . '_smaller', '', 'GET') ?: Request::getString($fieldname . '_smaller', '', 'POST');
                         switch ($fields[$i]->getVar('field_type')) {
                             case 'date':
                             case 'datetime':
@@ -326,8 +326,8 @@ switch ($op) {
                                 break;
 
                             default:
-                                $intLarger  = Request::getInt($fieldname . '_larger', 0, 'POST');
-                                $intSmaller = Request::getInt($fieldname . '_smaller', 0, 'POST');
+                                $intLarger  = Request::getInt($fieldname . '_larger', 0, 'GET') ?: Request::getInt($fieldname . '_larger', 0, 'POST');
+                                $intSmaller = Request::getInt($fieldname . '_smaller', 0, 'GET') ?: Request::getInt($fieldname . '_smaller', 0, 'POST');
                                 if ($intLarger !== 0) {
                                     $search_url[] = $fieldname . '_larger=' . $intLarger;
                                     $searchvars[] = $fieldname;
@@ -362,8 +362,8 @@ switch ($op) {
                     case XOBJ_DTYPE_URL:
                     case XOBJ_DTYPE_TXTBOX:
                     case XOBJ_DTYPE_TXTAREA:
-                        $textFieldVal = Request::getString($fieldname, '', 'POST');
-                        $textFieldMatch = Request::getInt($fieldname . '_match', 0, 'POST');
+                        $textFieldVal = Request::getString($fieldname, '', 'GET') ?: Request::getString($fieldname, '', 'POST');
+                        $textFieldMatch = Request::getInt($fieldname . '_match', 0, 'GET') ?: Request::getInt($fieldname . '_match', 0, 'POST');
                         if ($textFieldVal !== '') {
                             $value = $xoopsDB->escape(trim($textFieldVal));
                             switch ($textFieldMatch) {
@@ -422,7 +422,7 @@ switch ($op) {
         // add search groups , only for Webmasters
         $searchgroups = [];
         if ($GLOBALS['xoopsUser'] && $GLOBALS['xoopsUser']->isAdmin()) {
-            $selgroups = Request::getArray('selgroups', [], 'POST');
+            $selgroups = Request::getArray('selgroups', [], 'GET') ?: Request::getArray('selgroups', [], 'POST');
             $searchgroups = empty($selgroups) ? [] : array_map('intval', $selgroups);
             foreach ($searchgroups as $group) {
                 $search_url[] = 'selgroups[]=' . $group;

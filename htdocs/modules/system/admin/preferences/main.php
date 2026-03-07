@@ -25,7 +25,7 @@ if (!is_object($xoopsUser) || !is_object($xoopsModule) || !$xoopsUser->isAdmin($
 
 // Extract POST variables needed by the save handler
 // (dynamic config names are referenced as ${$config->getVar('conf_name')})
-$_postData = filter_input_array(INPUT_POST, FILTER_DEFAULT) ?? [];
+$_postData = filter_input_array(INPUT_POST, FILTER_UNSAFE_RAW) ?? [];
 foreach ($_postData as $k => $v) {
     ${$k} = $v;
 }

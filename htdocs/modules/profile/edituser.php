@@ -70,7 +70,7 @@ if ($op === 'save') {
         foreach (array_keys($fields) as $i) {
             $fieldname = $fields[$i]->getVar('field_name');
             if (in_array($fields[$i]->getVar('field_id'), $editable_fields) && Request::hasVar($fieldname, 'POST')) {
-                $value = $fields[$i]->getValueForSave(Request::getString($fieldname, '', 'POST'));
+                $value = $fields[$i]->getValueForSave(Request::getVar($fieldname, null, 'POST'));
                 if (in_array($fieldname, $profile_handler->getUserVars())) {
                     $edituser->setVar($fieldname, $value);
                 } else {

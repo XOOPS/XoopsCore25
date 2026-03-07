@@ -12,7 +12,7 @@ class Protector_postcommon_register_insert_js_check extends ProtectorFilterAbstr
     {
         ob_start([$this, 'ob_filter']);
 
-        if (\Xmf\Request::hasVar('antispam_md5', 'POST')) {
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             if (!$this->checkValidate()) {
                 die(_MD_PROTECTOR_TURNJAVASCRIPTON);
             }
