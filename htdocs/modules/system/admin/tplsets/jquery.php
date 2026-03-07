@@ -170,7 +170,7 @@ switch ($op) {
     case 'tpls_restore':
         $extensions = ['.html', '.htm', '.css', '.tpl'];
 
-        $restorePath = Request::getString('path_file', '', 'POST');
+        $restorePath = Request::getText('path_file', '', 'POST');
 
         //check if the file is inside themes directory
         $valid_dir = stristr(realpath($restorePath), (string) realpath(XOOPS_ROOT_PATH . '/themes'));

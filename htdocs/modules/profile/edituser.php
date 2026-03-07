@@ -163,7 +163,7 @@ if ($op === 'avatarupload') {
             'image/x-png',
             'image/png',
         ], $GLOBALS['xoopsConfigUser']['avatar_maxsize'], $GLOBALS['xoopsConfigUser']['avatar_width'], $GLOBALS['xoopsConfigUser']['avatar_height']);
-        if ($uploader->fetchMedia($xoops_upload_file[0])) {
+        if ($uploader->fetchMedia($xoops_upload_file[0] ?? '')) {
             $uploader->setPrefix('cavt');
             if ($uploader->upload()) {
                 /** @var XoopsAvatarHandler $avt_handler */

@@ -1,4 +1,14 @@
 <?php
+/**
+ * Regression tests for the superglobal-to-Xmf\Request migration.
+ *
+ * @copyright       (c) 2000-2026 XOOPS Project (https://xoops.org)
+ * @license             GNU GPL 2.0 or later (https://www.gnu.org/licenses/gpl-2.0.html)
+ * @category        test
+ * @package         tests
+ * @author          XOOPS Development Team
+ * @link            https://xoops.org
+ */
 
 declare(strict_types=1);
 
@@ -10,8 +20,6 @@ use PHPUnit\Framework\TestCase;
 use Xmf\Request;
 
 /**
- * Regression tests for the superglobal-to-Xmf\Request migration.
- *
  * Each test sets up a superglobal, calls Request::get*(), and asserts
  * the value matches what the OLD raw-superglobal code would have produced.
  * If these pass after migration, the behaviour is preserved.
@@ -224,18 +232,19 @@ class SuperglobalMigrationTest extends TestCase
     {
         $_POST['not_redirect'] = 'https://evil.com/phish';
         $value = Request::getUrl('not_redirect', '', 'POST');
-        // getUrl uses FILTER_SANITIZE_URL — it preserves valid URLs.
-        // The APPLICATION must still validate that the domain is trusted.
-        // But at least XSS payloads are stripped:
+        // getUrl preserves valid URLs — domain validation is the app's job.
+        // Verify it returns a string and the value is a valid URL format.
         $this->assertIsString($value);
+        $this->assertNotSame('', $value);
     }
 
     #[Test]
-    public function getStringStripsXssFromRedirectUrl(): void
+    public function getStringStripsHtmlTagsFromRedirectUrl(): void
     {
-        $_POST['not_redirect'] = 'javascript:alert(document.cookie)';
+        $_POST['not_redirect'] = '<script>alert(1)</script>https://example.com';
         $value = Request::getString('not_redirect', '', 'POST');
         $this->assertStringNotContainsString('<script>', $value);
+        $this->assertStringNotContainsString('</script>', $value);
     }
 
     // ---------------------------------------------------------------

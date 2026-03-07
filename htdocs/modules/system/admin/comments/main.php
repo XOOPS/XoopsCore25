@@ -58,10 +58,10 @@ $start           = 0;
 $status_array[0] = _AM_SYSTEM_COMMENTS_FORM_ALL_STATUS;
 
 $comments = [];
-$statusVal = Request::getInt('comments_status', 0);
+$statusVal = Request::getInt('comments_status', 0, 'GET') ?: Request::getInt('comments_status', 0, 'POST');
 $status = !array_key_exists($statusVal, $status_array) ? 0 : $statusVal;
 
-$module          = Request::getInt('comments_module', 0);
+$module          = Request::getInt('comments_module', 0, 'GET') ?: Request::getInt('comments_module', 0, 'POST');
 $modules_Handler = xoops_getHandler('module');
 $module_array    = $modules_Handler->getList(new Criteria('hascomments', 1));
 $module_array[0] = _AM_SYSTEM_COMMENTS_FORM_ALL_MODS;
@@ -167,10 +167,10 @@ switch ($op) {
         }
         $comments_groupe = Request::getArray('comments_groupe', [], 'POST');
         if (!empty($comments_groupe)) {
-            foreach ($comments_groupe as $del => $u_name) {
+            foreach ($comments_groupe as $groupId) {
                 /** @var XoopsMemberHandler $member_handler */
                 $member_handler = xoops_getHandler('member');
-                $members        = $member_handler->getUsersByGroup($u_name, true);
+                $members        = $member_handler->getUsersByGroup((int) $groupId, true);
                 $mcount         = count($members);
                 if ($mcount > 4000) {
                     redirect_header('admin.php?fct=comments', 2, _MP_DELETECOUNT);
@@ -186,7 +186,7 @@ switch ($op) {
             $commentslist_count = count($commentslist_id);
             if ($commentslist_count > 0) {
                 for ($i = 0; $i < $commentslist_count; ++$i) {
-                    $criteria->add(new Criteria('com_id', $commentslist_id[$i]), 'OR');
+                    $criteria->add(new Criteria('com_id', (int) $commentslist_id[$i]), 'OR');
                 }
             }
             $verif = true;

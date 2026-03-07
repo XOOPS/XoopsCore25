@@ -27,7 +27,8 @@ if ($GLOBALS['xoopsUser']) {
     exit();
 }
 
-if (Request::getString('op', '', 'GET') !== '' && in_array(Request::getString('op', '', 'GET'), ['actv', 'activate'])) {
+$regOp = Request::getString('op', '', 'GET');
+if ($regOp !== '' && in_array($regOp, ['actv', 'activate'])) {
     header('location: ./activate.php' . (empty($_SERVER['QUERY_STRING']) ? '' : '?' . $_SERVER['QUERY_STRING']));
     exit();
 }

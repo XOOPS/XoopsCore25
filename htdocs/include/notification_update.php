@@ -64,6 +64,9 @@ if (!$GLOBALS['xoopsSecurity']->check()) {
 // read by this script.  That way a module can really customize its
 // look as to where/how the notification options are made available.
 $update_list = Request::getArray('not_list', [], 'POST');
+$update_list = array_filter($update_list, static function ($item): bool {
+    return is_array($item) && isset($item['params']) && is_string($item['params']) && substr_count($item['params'], ',') === 2;
+});
 $module_id   = $xoopsModule->getVar('mid');
 $user_id     = is_object($xoopsUser) ? $xoopsUser->getVar('uid') : 0;
 
