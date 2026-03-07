@@ -41,7 +41,7 @@ $pm_handler = xoops_getModuleHandler('message');
 if (Request::hasVar('delete_messages', 'POST') && (Request::hasVar('msg_id', 'POST') || Request::hasVar('msg_ids', 'POST'))) {
     if (!$GLOBALS['xoopsSecurity']->check()) {
         $GLOBALS['xoopsTpl']->assign('errormsg', implode('<br>', $GLOBALS['xoopsSecurity']->getErrors()));
-    } elseif (Request::getInt('ok', 0) === 0) {
+    } elseif (Request::getInt('ok', 0, 'POST') === 0) {
         xoops_confirm(
             [
                 'ok'              => 1,
@@ -116,7 +116,7 @@ if (Request::hasVar('move_messages', 'POST') && Request::hasVar('msg_id', 'POST'
 if (Request::hasVar('empty_messages', 'POST')) {
     if (!$GLOBALS['xoopsSecurity']->check()) {
         $GLOBALS['xoopsTpl']->assign('errormsg', implode('<br>', $GLOBALS['xoopsSecurity']->getErrors()));
-    } elseif (Request::getInt('ok', 0) === 0) {
+    } elseif (Request::getInt('ok', 0, 'POST') === 0) {
         xoops_confirm(['ok' => 1, 'empty_messages' => 1, 'op' => $op], $_SERVER['REQUEST_URI'], _PM_RUSUREEMPTY);
         include $GLOBALS['xoops']->path('footer.php');
         exit();

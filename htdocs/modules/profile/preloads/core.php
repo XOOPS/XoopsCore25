@@ -42,7 +42,8 @@ class ProfileCorePreload extends XoopsPreloadItem
         } elseif (Request::hasVar('op', 'GET')) {
             $op = Request::getString('op', '', 'GET');
         }
-        if ($op !== 'login' && (Request::getString('from', '', 'GET') === '' || 'profile' !== Request::getString('from', '', 'GET'))) {
+        $from = Request::getString('from', '', 'GET');
+        if ($op !== 'login' && $from !== 'profile') {
             header('location: ./modules/profile/user.php' . (empty($_SERVER['QUERY_STRING']) ? '' : '?' . $_SERVER['QUERY_STRING']));
             exit();
         }
@@ -65,7 +66,7 @@ class ProfileCorePreload extends XoopsPreloadItem
         $email = Request::getEmail('email', '', 'GET');
         $email = Request::getEmail('email', $email, 'POST');
         $code = Request::getString('code', '', 'GET');
-        header("location: ./modules/profile/lostpass.php?email={$email}" . ($code === '' ? '' : '&code=' . $code));
+        header('location: ./modules/profile/lostpass.php?email=' . urlencode($email) . ($code === '' ? '' : '&code=' . urlencode($code)));
         exit();
     }
 

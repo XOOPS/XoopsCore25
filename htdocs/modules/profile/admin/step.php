@@ -72,7 +72,7 @@ switch ($op) {
         break;
 
     case 'delete':
-        $obj = $handler->get(Request::getInt('id', 0, 'POST'));
+        $obj = $handler->get(Request::getInt('id', 0));
         if (Request::getInt('ok', 0, 'POST') === 1) {
             if ($handler->delete($obj)) {
                 redirect_header('step.php', 3, sprintf(_PROFILE_AM_DELETEDSUCCESS, _PROFILE_AM_STEP));
@@ -83,7 +83,7 @@ switch ($op) {
             xoops_confirm(
                 [
                     'ok' => 1,
-                    'id' => Request::getInt('id', 0, 'POST'),
+                    'id' => Request::getInt('id', 0),
                     'op' => 'delete',
                 ],
                 $_SERVER['REQUEST_URI'],

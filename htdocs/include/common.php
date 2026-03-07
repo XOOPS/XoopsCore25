@@ -183,7 +183,7 @@ $member_handler   = xoops_getHandler('member');
 /** @var \XoopsSessionHandler $sess_handler */
 $sess_handler     = xoops_getHandler('session');
 $sslSessionId = \Xmf\Request::getString($xoopsConfig['sslpost_name'], '', 'POST');
-if ($xoopsConfig['use_ssl'] && $sslSessionId !== '') {
+if ($xoopsConfig['use_ssl'] && $sslSessionId !== '' && preg_match('/^[a-zA-Z0-9,-]{22,256}$/', $sslSessionId)) {
     session_id($sslSessionId);
 } elseif ($xoopsConfig['use_mysession'] && $xoopsConfig['session_name'] != '' && $xoopsConfig['session_expire'] > 0) {
     session_name($xoopsConfig['session_name']);

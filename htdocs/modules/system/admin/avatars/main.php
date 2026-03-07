@@ -221,7 +221,7 @@ switch ($op) {
                 $err[] = $uploader->getErrors();
             }
         } else {
-            $file = Request::getString('avatar_file', 'blank.gif');
+            $file = basename(Request::getString('avatar_file', 'blank.gif', 'POST'));
             $avatar->setVar('avatar_name', Request::getString('avatar_name', '', 'POST'));
             $avatar->setVar('avatar_display', Request::getBool('avatar_display', false, 'POST'));
             $avatar->setVar('avatar_weight', Request::getInt('avatar_weight', 0, 'POST'));

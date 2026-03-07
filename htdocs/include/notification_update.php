@@ -41,6 +41,9 @@ include_once $GLOBALS['xoops']->path('include/notification_functions.php');
 xoops_loadLanguage('notification');
 
 $not_redirect = Request::getUrl('not_redirect', XOOPS_URL . '/', 'POST');
+if (strpos($not_redirect, XOOPS_URL) !== 0) {
+    $not_redirect = XOOPS_URL . '/';
+}
 
 if (!Request::hasVar('not_submit', 'POST')) {
     redirect_header($not_redirect, 3, _NOPERM);

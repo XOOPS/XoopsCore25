@@ -136,7 +136,7 @@ $fieldnames[] = '_message_';
 $postfields = [];
 foreach ($fieldnames as $fieldname) {
     if (Request::hasVar($fieldname, 'POST')) {
-        $postfields[$fieldname] = Request::getString($fieldname, '', 'POST');
+        $postfields[$fieldname] = Request::getVar($fieldname, '', 'POST');
     }
 }
 
@@ -156,7 +156,7 @@ foreach (array_keys($fields) as $field) {
         continue;
     }
 
-    $value = $fields[$field]->getValueForSave(Request::getString($field, '', 'POST'));
+    $value = $fields[$field]->getValueForSave(Request::getVar($field, '', 'POST'));
     if (in_array($field, $userfields)) {
         $newuser->setVar($field, $value);
     } else {

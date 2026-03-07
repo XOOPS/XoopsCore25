@@ -61,7 +61,7 @@ switch ($op) {
             redirect_header('category.php', 3, implode(',', $GLOBALS['xoopsSecurity']->getErrors()));
         }
         if (Request::hasVar('id', 'POST')) {
-            $obj = $handler->get(Request::getInt('id', 0, 'POST'));
+            $obj = $handler->get(Request::getInt('id', 0));
         } else {
             $obj = $handler->create();
         }
@@ -79,7 +79,7 @@ switch ($op) {
         break;
 
     case 'delete':
-        $obj = $handler->get(Request::getInt('id', 0, 'POST'));
+        $obj = $handler->get(Request::getInt('id', 0));
         if (Request::getInt('ok', 0, 'POST') === 1) {
             if (!$GLOBALS['xoopsSecurity']->check()) {
                 redirect_header('category.php', 3, implode(',', $GLOBALS['xoopsSecurity']->getErrors()));
@@ -93,7 +93,7 @@ switch ($op) {
             xoops_confirm(
                 [
                     'ok' => 1,
-                    'id' => Request::getInt('id', 0, 'POST'),
+                    'id' => Request::getInt('id', 0),
                     'op' => 'delete',
                 ],
                 $_SERVER['REQUEST_URI'],

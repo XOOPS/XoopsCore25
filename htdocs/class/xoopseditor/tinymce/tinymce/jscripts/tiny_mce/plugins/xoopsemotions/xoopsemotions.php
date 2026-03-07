@@ -64,7 +64,7 @@ if ($admin && $op === 'SmilesAdd') {
     ], 100000, 120, 120);
     $uploader->setPrefix('smil');
     $uploadFiles = \Xmf\Request::getArray('xoops_upload_file', [], 'POST');
-    if ($uploader->fetchMedia($uploadFiles[0])) {
+    if (!empty($uploadFiles) && $uploader->fetchMedia($uploadFiles[0])) {
         if (!$uploader->upload()) {
             $err = $uploader->getErrors();
         } else {

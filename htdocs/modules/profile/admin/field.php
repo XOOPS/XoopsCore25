@@ -229,7 +229,7 @@ switch ($op) {
                 $obj->setVar('field_maxlength', Request::getInt('field_maxlength', 0, 'POST'));
             }
             if (Request::hasVar('field_default', 'POST')) {
-                $field_default = $obj->getValueForSave(Request::getString('field_default', '', 'POST'));
+                $field_default = $obj->getValueForSave(Request::getVar('field_default', null, 'POST'));
                 //Check for multiple selections
                 if (is_array($field_default)) {
                     $obj->setVar('field_default', serialize($field_default));

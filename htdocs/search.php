@@ -135,7 +135,7 @@ switch ($action) {
         $criteria->add(new Criteria('isactive', 1));
         $criteria->add(new Criteria('mid', '(' . implode(',', $available_modules) . ')', 'IN'));
         $modules = $module_handler->getObjects($criteria, true);
-        $mids    = Request::getArray('mids', [], 'POST');
+        $mids    = Request::getArray('mids', [], 'GET') ?: Request::getArray('mids', [], 'POST');
         if (empty($mids) || !is_array($mids)) {
             unset($mids);
             $mids = array_keys($modules);
