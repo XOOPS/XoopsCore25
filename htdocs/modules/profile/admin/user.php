@@ -142,7 +142,7 @@ switch ($op) {
         foreach (array_keys($fields) as $i) {
             $fieldname = $fields[$i]->getVar('field_name');
             if (in_array($fields[$i]->getVar('field_id'), $editable_fields) && Request::hasVar($fieldname, 'POST')) {
-                $fieldValue = Request::getString($fieldname, '', 'POST');
+                $fieldValue = Request::getVar($fieldname, null, 'POST');
                 if (in_array($fieldname, $userfields)) {
                     $value = $fields[$i]->getValueForSave($fieldValue, $user->getVar($fieldname, 'n'));
                     $user->setVar($fieldname, $value);

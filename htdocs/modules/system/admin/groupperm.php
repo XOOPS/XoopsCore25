@@ -45,6 +45,10 @@ if (!empty($perms)) {
     /** @var  XoopsGroupPermHandler $gperm_handler */
     $gperm_handler = xoops_getHandler('groupperm');
     foreach ($perms as $perm_name => $perm_data) {
+        if (!is_array($perm_data) || !is_array($perm_data['groups'] ?? null) || !is_array($perm_data['parents'] ?? null) || !is_array($perm_data['itemname'] ?? null)) {
+            $msg[] = sprintf(_MD_AM_PERMRESETNG, $module->getVar('name') . '(' . $perm_name . ')');
+            continue;
+        }
         if ($GLOBALS['xoopsSecurity']->check(true, false, $perm_name) && false !== $gperm_handler->deleteByModule($modid, $perm_name)) {
             foreach ($perm_data['groups'] as $group_id => $item_ids) {
                 foreach ($item_ids as $item_id => $selected) {

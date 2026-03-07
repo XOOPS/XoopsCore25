@@ -60,8 +60,12 @@ switch ($op) {
         if (!$GLOBALS['xoopsSecurity']->check()) {
             redirect_header('category.php', 3, implode(',', $GLOBALS['xoopsSecurity']->getErrors()));
         }
-        if (Request::hasVar('id', 'POST')) {
-            $obj = $handler->get(Request::getInt('id', 0, 'POST'));
+        $categoryId = Request::getInt('id', 0, 'POST');
+        if ($categoryId <= 0) {
+            $categoryId = Request::getInt('id', 0, 'GET');
+        }
+        if ($categoryId > 0) {
+            $obj = $handler->get($categoryId);
         } else {
             $obj = $handler->create();
         }

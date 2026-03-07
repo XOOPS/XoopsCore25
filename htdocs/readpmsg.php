@@ -31,7 +31,7 @@ if (!is_object($xoopsUser)) {
         if (!$GLOBALS['xoopsSecurity']->check()) {
             echo implode('<br>', $GLOBALS['xoopsSecurity']->getErrors());
             exit();
-        } elseif (Request::getInt('ok', 0) === 0) {
+        } elseif (Request::getInt('ok', 0, 'POST') === 0) {
             include $GLOBALS['xoops']->path('header.php');
             xoops_confirm(['ok' => 1, 'delete' => 1, 'msg_id' => Request::getInt('msg_id', 0, 'POST')], $_SERVER['REQUEST_URI'], _PM_SURE_TO_DELETE);
             include $GLOBALS['xoops']->path('footer.php');

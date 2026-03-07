@@ -54,6 +54,9 @@ switch ($op) {
         break;
 
     case 'save':
+        if (!$GLOBALS['xoopsSecurity']->check()) {
+            redirect_header('step.php', 3, implode(',', $GLOBALS['xoopsSecurity']->getErrors()));
+        }
         if (Request::hasVar('id', 'POST')) {
             $obj = $handler->get(Request::getInt('id', 0, 'POST'));
         } else {
@@ -74,6 +77,9 @@ switch ($op) {
     case 'delete':
         $obj = $handler->get(Request::getInt('id', 0));
         if (Request::getInt('ok', 0, 'POST') === 1) {
+            if (!$GLOBALS['xoopsSecurity']->check()) {
+                redirect_header('step.php', 3, implode(',', $GLOBALS['xoopsSecurity']->getErrors()));
+            }
             if ($handler->delete($obj)) {
                 redirect_header('step.php', 3, sprintf(_PROFILE_AM_DELETEDSUCCESS, _PROFILE_AM_STEP));
             } else {
@@ -115,7 +121,7 @@ function profile_stepsave_toggle($step_d, $step_save)
 {
     $step_save = ($step_save == 1) ? 0 : 1;
     $handler   = xoops_getModuleHandler('regstep');
-    $obj       = $handler->get(Request::getInt('step_id', 0, 'GET'));
+    $obj       = $handler->get((int) $step_d);
     $obj->setVar('step_save', $step_save);
     if ($handler->insert($obj, true)) {
         redirect_header('step.php', 1, _PROFILE_AM_SAVESTEP_TOGGLE_SUCCESS);

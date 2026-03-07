@@ -169,7 +169,7 @@ $stop = '';
 //Client side validation
 if (Request::hasVar('step', 'POST') && isset($_SESSION['profile_required'])) {
     foreach ($_SESSION['profile_required'] as $name => $title) {
-        if (!Request::hasVar($name, 'POST') || Request::getString($name, '', 'POST') === '') {
+        if (!Request::hasVar($name, 'POST') || empty(Request::getString($name, '', 'POST'))) {
             $stop .= sprintf(_FORM_ENTER, $title) . '<br>';
         }
     }

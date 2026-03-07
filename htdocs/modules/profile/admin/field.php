@@ -114,6 +114,9 @@ switch ($op) {
 
     case 'edit':
         $obj = $profilefield_handler->get(Request::getInt('id', 0));
+        if (!is_object($obj)) {
+            redirect_header('field.php', 2, _PROFILE_AM_FIELDNOTCONFIGURABLE);
+        }
         if (!$obj->getVar('field_config') && !$obj->getVar('field_show') && !$obj->getVar('field_edit')) { //If no configs exist
             redirect_header('field.php', 2, _PROFILE_AM_FIELDNOTCONFIGURABLE);
         }
@@ -124,6 +127,9 @@ switch ($op) {
 
     case 'edit-option-strings':
         $obj = $profilefield_handler->get(Request::getInt('id', 0));
+        if (!is_object($obj)) {
+            redirect_header('field.php', 2, _PROFILE_AM_FIELDNOTCONFIGURABLE);
+        }
         $fieldOptions = $obj->getVar('field_options');
         if (empty($fieldOptions)) { //If no option strings exist
             redirect_header('field.php', 2, _PROFILE_AM_FIELDNOTCONFIGURABLE);
@@ -181,6 +187,9 @@ switch ($op) {
         $fieldId = Request::getInt('id', 0, 'POST');
         if ($fieldId > 0) {
             $obj = $profilefield_handler->get($fieldId);
+            if (!is_object($obj)) {
+                redirect_header('field.php', 2, _PROFILE_AM_FIELDNOTCONFIGURABLE);
+            }
             if (!$obj->getVar('field_config') && !$obj->getVar('field_show') && !$obj->getVar('field_edit')) { //If no configs exist
                 redirect_header('admin.php', 2, _PROFILE_AM_FIELDNOTCONFIGURABLE);
             }
@@ -327,6 +336,9 @@ switch ($op) {
 
     case 'delete':
         $obj = $profilefield_handler->get(Request::getInt('id', 0));
+        if (!is_object($obj)) {
+            redirect_header('field.php', 2, _PROFILE_AM_FIELDNOTCONFIGURABLE);
+        }
         if (!$obj->getVar('field_config')) {
             redirect_header('index.php', 2, _PROFILE_AM_FIELDNOTCONFIGURABLE);
         }

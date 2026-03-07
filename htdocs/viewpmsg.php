@@ -32,7 +32,7 @@ if (!is_object($xoopsUser)) {
         if (!$GLOBALS['xoopsSecurity']->check()) {
             echo implode('<br>', $GLOBALS['xoopsSecurity']->getErrors());
             exit();
-        } elseif (Request::getInt('ok', 0) === 0) {
+        } elseif (Request::getInt('ok', 0, 'POST') === 0) {
             include $GLOBALS['xoops']->path('header.php');
             xoops_confirm(
                 [

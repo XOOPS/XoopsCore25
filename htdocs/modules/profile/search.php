@@ -255,7 +255,7 @@ switch ($op) {
                     break;
             }
             $searchvars[] = 'email';
-            $search_url[] = 'email=' . $email;
+            $search_url[] = 'email=' . rawurlencode($email);
             $search_url[] = 'email_match=' . $email_match;
             $criteria->add(new Criteria('email', $string, 'LIKE'));
             $criteria->add(new Criteria('user_viewemail', 1));
@@ -292,7 +292,7 @@ switch ($op) {
                         break;
                 }
                 foreach ($fieldValues as $value) {
-                    $search_url[] = $fieldname . '[]=' . $value;
+                    $search_url[] = $fieldname . '[]=' . rawurlencode($value);
                 }
             } else {
                 //Other fields (not radio, not select)
@@ -379,7 +379,7 @@ switch ($op) {
                                     $value = '%' . $value . '%';
                                     break;
                             }
-                            $search_url[] = $fieldname . '=' . $textFieldVal;
+                            $search_url[] = $fieldname . '=' . rawurlencode($textFieldVal);
                             $search_url[] = $fieldname . '_match=' . $textFieldMatch;
                             $operator     = 'LIKE';
                             $criteria->add(new Criteria($fieldname, $value, $operator));
@@ -477,7 +477,7 @@ switch ($op) {
             $search_url[] = 'order=' . $order;
             //TODO remove it for final release
             //            $search_url[] = "sortby=" . htmlspecialchars($_REQUEST['sortby']);
-            $search_url[] = 'sortby=' . htmlspecialchars($sortby, ENT_QUOTES | ENT_HTML5); // change by zyspec
+            $search_url[] = 'sortby=' . rawurlencode($sortby);
             $search_url[] = 'limit=' . $limit;
             if (isset($search_url)) {
                 $args = implode('&amp;', $search_url);

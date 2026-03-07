@@ -16,12 +16,12 @@
  * @since               2.0.0
  * @author              Kazumi Ono (AKA onokazu) http://www.myweb.ne.jp/, http://jp.xoops.org/
  */
+use Xmf\Request;
+
 if (!defined('XOOPS_ROOT_PATH') || !is_object($xoopsModule)) {
     throw new \RuntimeException('Restricted access');
 }
 // RMV-NOTIFY
-
-use Xmf\Request;
 
 // This module expects the following arguments:
 //
@@ -41,9 +41,13 @@ include_once $GLOBALS['xoops']->path('include/notification_functions.php');
 xoops_loadLanguage('notification');
 
 $not_redirect = Request::getUrl('not_redirect', XOOPS_URL . '/', 'POST');
-$allowedHost = parse_url(XOOPS_URL, PHP_URL_HOST);
 $redirectHost = parse_url($not_redirect, PHP_URL_HOST);
-if ($redirectHost !== $allowedHost) {
+if ($redirectHost !== null) {
+    $allowedHost = parse_url(XOOPS_URL, PHP_URL_HOST);
+    if (strcasecmp((string) $redirectHost, (string) $allowedHost) !== 0) {
+        $not_redirect = XOOPS_URL . '/';
+    }
+} elseif (!str_starts_with($not_redirect, '/')) {
     $not_redirect = XOOPS_URL . '/';
 }
 

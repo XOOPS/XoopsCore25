@@ -24,7 +24,7 @@ defined('XOOPS_ROOT_PATH') || exit('Restricted access');
 $sample_form = new XoopsThemeForm('', 'sample_form', 'action.php');
 $sample_form->setExtra('enctype="multipart/form-data"');
 // Not required but for user-friendly concern
-$editor = \Xmf\Request::getString('editor', '', 'POST');
+$editor = \Xmf\Request::getString('editor', '', 'GET') ?: \Xmf\Request::getString('editor', '', 'POST');
 if (!empty($editor)) {
     setcookie('editor', $editor); // save to cookie
 } else {
