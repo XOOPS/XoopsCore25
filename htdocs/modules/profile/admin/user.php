@@ -59,6 +59,9 @@ switch ($op) {
     case 'edit':
         xoops_loadLanguage('main', $GLOBALS['xoopsModule']->getVar('dirname', 'n'));
         $obj = $handler->getUser(Request::getInt('id', 0));
+        if (!is_object($obj)) {
+            redirect_header('user.php', 3, _US_NOEDITRIGHT);
+        }
         if (in_array(XOOPS_GROUP_ADMIN, $obj->getGroups()) && !in_array(XOOPS_GROUP_ADMIN, $GLOBALS['xoopsUser']->getGroups())) {
             // If not webmaster trying to edit a webmaster - disallow
             redirect_header('user.php', 3, _US_NOEDITRIGHT);
@@ -201,6 +204,9 @@ switch ($op) {
             redirect_header('user.php', 2, _PROFILE_AM_CANNOTDELETESELF);
         }
         $obj    = $handler->getUser($deleteId);
+        if (!is_object($obj)) {
+            redirect_header('user.php', 3, _US_NOEDITRIGHT);
+        }
         $groups = $obj->getGroups();
         if (in_array(XOOPS_GROUP_ADMIN, $groups)) {
             redirect_header('user.php', 3, _PROFILE_AM_CANNOTDELETEADMIN, false);

@@ -380,7 +380,7 @@ $clean_pass = '';
 $clean_url = '';
 if (Request::hasVar('op', 'POST')) {
     // from $_POST we use keys: op, login, pass, url, pass, bid, cid
-    $op = Request::getString('op', '', 'POST');
+    $op = Request::getWord('op', '', 'POST');
 
     if (Request::hasVar('login', 'POST')) {
         $clean_login = Request::getString('login', '', 'POST');
@@ -403,7 +403,7 @@ if (Request::hasVar('op', 'POST')) {
     }
 } elseif (Request::hasVar('op', 'GET')) {
     // from $_GET we use keys: op, bid, cid
-    $op = Request::getString('op', '', 'GET');
+    $op = Request::getWord('op', '', 'GET');
 
     if (Request::hasVar('bid', 'GET')) {
         $clean_bid = Request::getInt('bid', 0, 'GET');

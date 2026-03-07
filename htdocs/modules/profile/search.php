@@ -22,7 +22,7 @@ use Xmf\Request;
 include __DIR__ . '/header.php';
 
 $limit_default    = 20;
-$op               = Request::getCmd('op', 'search', 'POST');
+$op               = Request::getCmd('op', '', 'GET') ?: Request::getCmd('op', 'search', 'POST');
 $groups           = $GLOBALS['xoopsUser'] ? $GLOBALS['xoopsUser']->getGroups() : [XOOPS_GROUP_ANONYMOUS];
 $searchable_types = [
     'textbox',
@@ -402,7 +402,7 @@ switch ($op) {
 
         // change by zyspec:
         $sortby = 'uname';
-        $sortbyInput = Request::getCmd('sortby', '', 'POST');
+        $sortbyInput = Request::getCmd('sortby', '', 'GET') ?: Request::getCmd('sortby', '', 'POST');
         if ($sortbyInput !== '') {
             switch ($sortbyInput) {
                 case 'name':
@@ -429,13 +429,17 @@ switch ($op) {
             }
         }
 
-        $order = Request::getInt('order', 0, 'POST') === 0 ? 'ASC' : 'DESC';
+        $orderInt = Request::getInt('order', -1, 'GET');
+        if ($orderInt < 0) {
+            $orderInt = Request::getInt('order', 0, 'POST');
+        }
+        $order = $orderInt === 0 ? 'ASC' : 'DESC';
         $criteria->setOrder($order);
 
-        $limit = Request::getInt('limit', $limit_default, 'POST');
+        $limit = Request::getInt('limit', 0, 'GET') ?: Request::getInt('limit', $limit_default, 'POST');
         $criteria->setLimit($limit);
 
-        $start = Request::getInt('start', 0, 'POST');
+        $start = Request::getInt('start', 0, 'GET') ?: Request::getInt('start', 0, 'POST');
         $criteria->setStart($start);
 
         [$users, $profiles, $total_users] = $profile_handler->search($criteria, $searchvars, $searchgroups);

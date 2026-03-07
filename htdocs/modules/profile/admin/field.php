@@ -330,7 +330,7 @@ switch ($op) {
         if (!$obj->getVar('field_config')) {
             redirect_header('index.php', 2, _PROFILE_AM_FIELDNOTCONFIGURABLE);
         }
-        if (Request::getInt('ok', 0) === 1) {
+        if (Request::getInt('ok', 0, 'POST') === 1) {
             if (!$GLOBALS['xoopsSecurity']->check()) {
                 redirect_header('field.php', 3, implode(',', $GLOBALS['xoopsSecurity']->getErrors()));
             }
@@ -353,9 +353,9 @@ switch ($op) {
         break;
 
     case 'toggle':
-        $field_id = Request::getInt('field_id', 0);
+        $field_id = Request::getInt('field_id', 0, 'GET');
         if ($field_id > 0) {
-            $field_required = Request::getInt('field_required', 0);
+            $field_required = Request::getInt('field_required', 0, 'GET');
             profile_visible_toggle($field_id, $field_required);
         }
         break;
