@@ -37,7 +37,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $confIds = \Xmf\Request::getArray('conf_ids', [], 'POST');
         foreach ($confIds as $key => $conf_id) {
             $config    = $config_handler->getConfig((int) $conf_id);
-            $new_value = \Xmf\Request::getString($config->getVar('conf_name'), '', 'POST');
+            $new_value = \Xmf\Request::getVar($config->getVar('conf_name'), '', 'POST');
             $config->setConfValueForInput($new_value);
             $config_handler->insertConfig($config);
         }
