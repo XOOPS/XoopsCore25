@@ -133,7 +133,9 @@ switch ($op) {
             }
             $xoopsTpl->assign('xsize', 800);
             $xoopsTpl->assign('ysize', 600);
+            $xoopsTpl->assign('errorcat', false);
         } else {
+            $xoopsTpl->assign('errorcat', true);
             $xoopsTpl->assign('xsize', 400);
             $xoopsTpl->assign('ysize', 180);
         }

@@ -35,6 +35,7 @@
 </head>
 
 <body onload="window.resizeTo(<{$xsize}>, <{$ysize}>);">
+<{if isset($errorcat) && $errorcat == false}>
 <form action="imagemanager.php" method="get">
     <table cellspacing="0" id="imagenav">
         <tr>
@@ -79,6 +80,7 @@
 <{/if}>
 
 <div id="pagenav"><{$pagenav|default:''}></div>
+<{/if}>
 
 <div id="footer">
     <input value="<{$lang_close}>" type="button" onclick="window.close();"/>
