@@ -37,7 +37,7 @@ $sendmod   = XoopsRequest::getBool('sendmod', 0, 'POST'); // send from other mod
 $to_userid = XoopsRequest::getInt('to_userid', 0, 'GET');
 $msg_id    = XoopsRequest::getInt('msg_id', 0, 'GET');
 
-if (empty($_GET['refresh']) && $op !== 'submit') {
+if (XoopsRequest::getString('refresh', '', 'GET') === '' && $op !== 'submit') {
     $jump = 'pmlite.php?refresh=' . time();
     if ($send == 1) {
         $jump .= "&send={$send}";

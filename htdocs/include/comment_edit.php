@@ -42,7 +42,7 @@ if ($com_mode == '') {
     }
 }
 
-if (!isset($_GET['com_order'])) {
+if (!Request::hasVar('com_order', 'GET')) {
     if (is_object($xoopsUser)) {
         $com_order = $xoopsUser->getVar('uorder');
     } else {

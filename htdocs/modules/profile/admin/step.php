@@ -27,7 +27,7 @@ $indexAdmin->addItemButton(_ADD . ' ' . _PROFILE_AM_STEP, 'step.php?op=new', 'ad
 echo $indexAdmin->addNavigation(basename(__FILE__));
 echo $indexAdmin->renderButton('right', '');
 
-$op = $_REQUEST['op'] ?? (isset($_REQUEST['id']) ? 'edit' : 'list');
+$op = Request::getCmd('op', Request::hasVar('id', 'REQUEST') ? 'edit' : 'list');
 
 $handler = xoops_getModuleHandler('regstep');
 switch ($op) {
@@ -47,22 +47,22 @@ switch ($op) {
         break;
 
     case 'edit':
-        $obj = $handler->get($_REQUEST['id']);
+        $obj = $handler->get(Request::getInt('id', 0, 'GET'));
         include_once dirname(__DIR__) . '/include/forms.php';
         $form = profile_getStepForm($obj);
         $form->display();
         break;
 
     case 'save':
-        if (isset($_REQUEST['id'])) {
-            $obj = $handler->get($_REQUEST['id']);
+        if (Request::hasVar('id', 'POST')) {
+            $obj = $handler->get(Request::getInt('id', 0, 'POST'));
         } else {
             $obj = $handler->create();
         }
-        $obj->setVar('step_name', $_REQUEST['step_name']);
-        $obj->setVar('step_order', $_REQUEST['step_order']);
-        $obj->setVar('step_desc', $_REQUEST['step_desc']);
-        $obj->setVar('step_save', $_REQUEST['step_save']);
+        $obj->setVar('step_name', Request::getString('step_name', '', 'POST'));
+        $obj->setVar('step_order', Request::getInt('step_order', 0, 'POST'));
+        $obj->setVar('step_desc', Request::getString('step_desc', '', 'POST'));
+        $obj->setVar('step_save', Request::getInt('step_save', 0, 'POST'));
         if ($handler->insert($obj)) {
             redirect_header('step.php', 3, sprintf(_PROFILE_AM_SAVEDSUCCESS, _PROFILE_AM_STEP));
         }
@@ -72,8 +72,8 @@ switch ($op) {
         break;
 
     case 'delete':
-        $obj = $handler->get($_REQUEST['id']);
-        if (isset($_REQUEST['ok']) && $_REQUEST['ok'] == 1) {
+        $obj = $handler->get(Request::getInt('id', 0, 'POST'));
+        if (Request::getInt('ok', 0, 'POST') === 1) {
             if ($handler->delete($obj)) {
                 redirect_header('step.php', 3, sprintf(_PROFILE_AM_DELETEDSUCCESS, _PROFILE_AM_STEP));
             } else {
@@ -83,7 +83,7 @@ switch ($op) {
             xoops_confirm(
                 [
                     'ok' => 1,
-                    'id' => $_REQUEST['id'],
+                    'id' => Request::getInt('id', 0, 'POST'),
                     'op' => 'delete',
                 ],
                 $_SERVER['REQUEST_URI'],
@@ -93,9 +93,9 @@ switch ($op) {
         break;
 
     case 'toggle':
-        if (isset($_GET['step_id'])) {
-            $field_id = Request::getInt('step_id', 0, 'GET');
-            if (isset($_GET['step_save'])) {
+        if (Request::hasVar('step_id', 'GET')) {
+            $step_id = Request::getInt('step_id', 0, 'GET');
+            if (Request::hasVar('step_save', 'GET')) {
                 $step_save = Request::getInt('step_save', 0, 'GET');
                 profile_stepsave_toggle($step_id, $step_save);
             }
@@ -115,7 +115,7 @@ function profile_stepsave_toggle($step_d, $step_save)
 {
     $step_save = ($step_save == 1) ? 0 : 1;
     $handler   = xoops_getModuleHandler('regstep');
-    $obj       = $handler->get($_REQUEST['step_id']);
+    $obj       = $handler->get(Request::getInt('step_id', 0, 'GET'));
     $obj->setVar('step_save', $step_save);
     if ($handler->insert($obj, true)) {
         redirect_header('step.php', 1, _PROFILE_AM_SAVESTEP_TOGGLE_SUCCESS);

@@ -16,6 +16,9 @@
  * @author              Jan Pedersen
  * @author              Taiwen Jiang <phppp@users.sourceforge.net>
  */
+
+use Xmf\Request;
+
 include_once __DIR__ . '/admin_header.php';
 
 //there is no way to override current tabs when using system menu
@@ -24,24 +27,24 @@ $_SERVER['REQUEST_URI'] = 'admin/permissions.php';
 
 xoops_cp_header();
 
-$op = $_REQUEST['op'] ?? 'visibility';
+$op = Request::getCmd('op', 'visibility');
 
 $visibility_handler = xoops_getModuleHandler('visibility');
 $field_handler      = xoops_getModuleHandler('field');
 $fields             = $field_handler->getList();
 
-if (isset($_REQUEST['submit'])) {
+if (Request::hasVar('submit', 'POST')) {
     $visibility = $visibility_handler->create();
-    $visibility->setVar('field_id', $_REQUEST['field_id']);
-    $visibility->setVar('user_group', $_REQUEST['ug']);
-    $visibility->setVar('profile_group', $_REQUEST['pg']);
+    $visibility->setVar('field_id', Request::getInt('field_id', 0, 'POST'));
+    $visibility->setVar('user_group', Request::getInt('ug', 0, 'POST'));
+    $visibility->setVar('profile_group', Request::getInt('pg', 0, 'POST'));
     $visibility_handler->insert($visibility, true);
     redirect_header('visibility.php', 2, sprintf(_PROFILE_AM_SAVEDSUCCESS, _PROFILE_AM_PROF_VISIBLE));
 }
 if ($op === 'del') {
-    $criteria = new CriteriaCompo(new Criteria('field_id', (int)$_REQUEST['field_id']));
-    $criteria->add(new Criteria('user_group', (int)$_REQUEST['ug']));
-    $criteria->add(new Criteria('profile_group', (int)$_REQUEST['pg']));
+    $criteria = new CriteriaCompo(new Criteria('field_id', Request::getInt('field_id', 0, 'GET')));
+    $criteria->add(new Criteria('user_group', Request::getInt('ug', 0, 'GET')));
+    $criteria->add(new Criteria('profile_group', Request::getInt('pg', 0, 'GET')));
     $visibility_handler->deleteAll($criteria, true);
     redirect_header('visibility.php', 2, sprintf(_PROFILE_AM_DELETEDSUCCESS, _PROFILE_AM_PROF_VISIBLE));
 }

@@ -484,7 +484,6 @@ if (!Request::hasVar('user_submit', 'POST')) {
     $limit = Request::getInt('limit', 50, 'POST');
     $start = Request::getInt('start', 0, 'POST');
     if (Request::hasVar('query', 'POST')) {
-        unset($_POST['query']);
         $query = '';
     }
 
@@ -523,23 +522,23 @@ if (!Request::hasVar('user_submit', 'POST')) {
         $criteria->add(new Criteria('user_occ', '%' . $xoopsDB->escape(Request::getString('user_occ', '', 'POST')) . '%', 'LIKE'));
     }
     foreach (['last_login', 'user_regdate'] as $var) {
-        if (Request::hasVar("{$var}_more", 'POST') && is_numeric($_POST["{$var}_more"])) {
+        if (Request::hasVar("{$var}_more", 'POST') && is_numeric(Request::getString("{$var}_more", '', 'POST'))) {
             $time = time() - (60 * 60 * 24 *  Request::getInt("{$var}_more", 0, 'POST'));
             if ($time > 0) {
                 $criteria->add(new Criteria($var, $time, '<='));
             }
         }
-        if (Request::hasVar("{$var}_less", 'POST') && is_numeric($_POST["{$var}_less"])) {
+        if (Request::hasVar("{$var}_less", 'POST') && is_numeric(Request::getString("{$var}_less", '', 'POST'))) {
             $time = time() - (60 * 60 * 24 *  Request::getInt("{$var}_less", 0, 'POST'));
             if ($time > 0) {
                 $criteria->add(new Criteria($var, $time, '>='));
             }
         }
     }
-    if (Request::hasVar('posts_more', 'POST') && is_numeric($_POST['posts_more'])) {
+    if (Request::hasVar('posts_more', 'POST') && is_numeric(Request::getString('posts_more', '', 'POST'))) {
         $criteria->add(new Criteria('posts', Request::getInt('posts_more', 0, 'POST'), '<='));
     }
-    if (Request::hasVar('posts_less', 'POST') && is_numeric($_POST['posts_less'])) {
+    if (Request::hasVar('posts_less', 'POST') && is_numeric(Request::getString('posts_less', '', 'POST'))) {
         $criteria->add(new Criteria('posts', Request::getInt('posts_less', 0, 'POST'), '>='));
     }
     if (Request::hasVar('user_mailok', 'POST')) {

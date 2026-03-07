@@ -32,7 +32,7 @@ if (!$GLOBALS['xoopsUser'] || $GLOBALS['xoopsConfigUser']['allow_chgmail'] != 1)
 $GLOBALS['xoopsOption']['template_main'] = 'profile_email.tpl';
 include $GLOBALS['xoops']->path('header.php');
 
-if (!isset($_POST['submit']) || !isset($_POST['passwd'])) {
+if (!Request::hasVar('submit', 'POST') || !Request::hasVar('passwd', 'POST')) {
     //show change password form
     include_once $GLOBALS['xoops']->path('class/xoopsformloader.php');
     $form = new XoopsThemeForm(_PROFILE_MA_CHANGEMAIL, 'emailform', $_SERVER['REQUEST_URI'], 'post', true);
@@ -57,7 +57,7 @@ if (!isset($_POST['submit']) || !isset($_POST['passwd'])) {
         $msg = implode('<br>', $errors);
     } else {
         //update password
-        $GLOBALS['xoopsUser']->setVar('email', trim($_POST['newmail']));
+        $GLOBALS['xoopsUser']->setVar('email', $email);
         /** @var XoopsMemberHandler $member_handler */
         $member_handler = xoops_getHandler('member');
         if ($member_handler->insertUser($GLOBALS['xoopsUser'])) {

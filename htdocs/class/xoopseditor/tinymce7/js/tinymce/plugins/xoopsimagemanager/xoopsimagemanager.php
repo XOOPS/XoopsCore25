@@ -114,9 +114,10 @@ if ($isadmin || ($catreadcount > 0) || ($catwritecount > 0)) {
         ], $imgcat->getVar('imgcat_maxsize'), $imgcat->getVar('imgcat_maxwidth'), $imgcat->getVar('imgcat_maxheight'));
         $uploader->setPrefix('img');
         $err    = [];
-        $ucount = count($_POST['xoops_upload_file']);
+        $uploadFiles = \Xmf\Request::getArray('xoops_upload_file', [], 'POST');
+        $ucount = count($uploadFiles);
         for ($i = 0; $i < $ucount; ++$i) {
-            if ($uploader->fetchMedia($_POST['xoops_upload_file'][$i])) {
+            if ($uploader->fetchMedia($uploadFiles[$i])) {
                 if (!$uploader->upload()) {
                     $err[] = $uploader->getErrors();
                 } else {
@@ -153,7 +154,7 @@ if ($isadmin || ($catreadcount > 0) || ($catwritecount > 0)) {
     }
 
     // Add new category - start
-    if (!empty($_POST['op']) && $op === 'addcat') {
+    if (\Xmf\Request::hasVar('op', 'POST') && $op === 'addcat') {
         if (!$GLOBALS['xoopsSecurity']->check()) {
             redirect_header($current_file . '?target=' . $target, 3, implode('<br>', $GLOBALS['xoopsSecurity']->getErrors()));
         }
@@ -208,7 +209,7 @@ if ($isadmin || ($catreadcount > 0) || ($catwritecount > 0)) {
     // Add new category - end
 
     // Update category - start
-    if (!empty($_POST['op']) && $op === 'updatecat') {
+    if (\Xmf\Request::hasVar('op', 'POST') && $op === 'updatecat') {
         if (!$GLOBALS['xoopsSecurity']->check() || $imgcat_id <= 0) {
             redirect_header($current_file . '?target=' . $target, 3, implode('<br>', $GLOBALS['xoopsSecurity']->getErrors()));
         }
@@ -269,7 +270,7 @@ if ($isadmin || ($catreadcount > 0) || ($catwritecount > 0)) {
     // Update category - end
 
     // Confirm delete category - start
-    if (!empty($_GET['op']) && $op === 'delcat') {
+    if (\Xmf\Request::hasVar('op', 'GET') && $op === 'delcat') {
         xoops_header();
         echo "<link href='css/xoopsimagebrowser.css' rel='stylesheet' type='text/css' />";
         xoops_confirm(['op' => 'delcatok', 'imgcat_id' => $imgcat_id, 'target' => $target], $current_file, _MD_RUDELIMGCAT);
@@ -279,7 +280,7 @@ if ($isadmin || ($catreadcount > 0) || ($catwritecount > 0)) {
     // Confirm delete category - end
 
     // Delete category - start
-    if (!empty($_POST['op']) && $op === 'delcatok') {
+    if (\Xmf\Request::hasVar('op', 'POST') && $op === 'delcatok') {
         if (!$GLOBALS['xoopsSecurity']->check()) {
             redirect_header($current_file . '?target=' . $target, 3, implode('<br>', $GLOBALS['xoopsSecurity']->getErrors()));
         }
@@ -319,7 +320,7 @@ if ($isadmin || ($catreadcount > 0) || ($catwritecount > 0)) {
 
     // ************************* NOT USED ************************************
     // Confirm delete file - start
-    if (!empty($_GET['op']) && $op === 'delfile') {
+    if (\Xmf\Request::hasVar('op', 'GET') && $op === 'delfile') {
         xoops_header();
         echo "<link href='css/xoopsimagebrowser.css' rel='stylesheet' type='text/css' />";
         xoops_confirm(['op' => 'delfileok', 'image_id' => $image_id, 'target' => $target], $current_file, _MD_RUDELIMG);
@@ -440,7 +441,7 @@ if ($op === 'listimg') {
 
     $criteria = new Criteria('imgcat_id', $imgcat_id);
     $imgcount = $image_handler->getCount($criteria);
-    $start    = isset($_GET['start']) ? (int) $_GET['start'] : 0;
+    $start    = \Xmf\Request::getInt('start', 0, 'GET');
     $criteria->setStart($start);
     $criteria->setSort('image_id');
     $criteria->setOrder('DESC');

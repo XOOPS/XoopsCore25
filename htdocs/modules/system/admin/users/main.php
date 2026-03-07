@@ -239,7 +239,6 @@ case 'users_save':
                 && in_array(XOOPS_GROUP_ADMIN, $oldgroups)
                 && !in_array(XOOPS_GROUP_ADMIN, $groups)) {
                 $groups[] = XOOPS_GROUP_ADMIN;
-                $_REQUEST['groups'] = $groups;
             }
             /** @var XoopsMemberHandler $member_handler */
             $member_handler = xoops_getHandler('member');

@@ -27,7 +27,7 @@ if (!$GLOBALS['xoopsUser']) {
 $GLOBALS['xoopsOption']['template_main'] = 'profile_changepass.tpl';
 include $GLOBALS['xoops']->path('header.php');
 
-if (!isset($_POST['submit'])) {
+if (!Request::hasVar('submit', 'POST')) {
     //show change password form
     include_once $GLOBALS['xoops']->path('class/xoopsformloader.php');
     $form = new XoopsThemeForm(_PROFILE_MA_CHANGEPASSWORD, 'form', $_SERVER['REQUEST_URI'], 'post', true);

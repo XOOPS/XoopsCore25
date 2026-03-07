@@ -38,37 +38,37 @@ if ($xoopsConfigSearch['enable_search'] != 1) {
     exit();
 }
 $action = 'search';
-if (!empty($_GET['action'])) {
+if (Request::hasVar('action', 'GET')) {
     $action = trim(strip_tags(Request::getString('action', '', 'GET')));
-} elseif (!empty($_POST['action'])) {
+} elseif (Request::hasVar('action', 'POST')) {
     $action = trim(strip_tags(Request::getString('action', '', 'POST')));
 }
 $query = '';
-if (!empty($_GET['query'])) {
+if (Request::hasVar('query', 'GET')) {
     $query = trim(strip_tags(Request::getString('query', '', 'GET')));
-} elseif (!empty($_POST['query'])) {
+} elseif (Request::hasVar('query', 'POST')) {
     $query = trim(strip_tags(Request::getString('query', '', 'POST')));
 }
 $andor = 'AND';
-if (!empty($_GET['andor'])) {
+if (Request::hasVar('andor', 'GET')) {
     $andor = trim(strip_tags(Request::getString('andor', '', 'GET')));
-} elseif (!empty($_POST['andor'])) {
+} elseif (Request::hasVar('andor', 'POST')) {
     $andor = trim(strip_tags(Request::getString('andor', '', 'POST')));
 }
 $mid = $uid = $start = 0;
-if (!empty($_GET['mid'])) {
+if (Request::hasVar('mid', 'GET')) {
     $mid = Request::getInt('mid', 0, 'GET');
-} elseif (!empty($_POST['mid'])) {
+} elseif (Request::hasVar('mid', 'POST')) {
     $mid = Request::getInt('mid', 0, 'POST');
 }
-if (!empty($_GET['uid'])) {
+if (Request::hasVar('uid', 'GET')) {
     $uid = Request::getInt('uid', 0, 'GET');
-} elseif (!empty($_POST['uid'])) {
+} elseif (Request::hasVar('uid', 'POST')) {
     $uid = Request::getInt('uid', 0, 'POST');
 }
-if (!empty($_GET['start'])) {
+if (Request::hasVar('start', 'GET')) {
     $start = Request::getInt('start', 0, 'GET');
-} elseif (!empty($_POST['start'])) {
+} elseif (Request::hasVar('start', 'POST')) {
     $start = Request::getInt('start', 0, 'POST');
 }
 
@@ -135,7 +135,7 @@ switch ($action) {
         $criteria->add(new Criteria('isactive', 1));
         $criteria->add(new Criteria('mid', '(' . implode(',', $available_modules) . ')', 'IN'));
         $modules = $module_handler->getObjects($criteria, true);
-        $mids    = $_REQUEST['mids'] ?? [];
+        $mids    = Request::getArray('mids', [], 'POST');
         if (empty($mids) || !is_array($mids)) {
             unset($mids);
             $mids = array_keys($modules);

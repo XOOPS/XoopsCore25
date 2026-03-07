@@ -27,11 +27,11 @@ if (!is_object($xoopsUser)) {
     redirect_header('user.php', 0);
 } else {
     $pm_handler = xoops_getHandler('privmessage');
-    if (!empty($_POST['delete'])) {
+    if (Request::getInt('delete', 0, 'POST') !== 0) {
         if (!$GLOBALS['xoopsSecurity']->check()) {
             echo implode('<br>', $GLOBALS['xoopsSecurity']->getErrors());
             exit();
-        } elseif (empty($_REQUEST['ok'])) {
+        } elseif (Request::getInt('ok', 0) === 0) {
             include $GLOBALS['xoops']->path('header.php');
             xoops_confirm(['ok' => 1, 'delete' => 1, 'msg_id' => Request::getInt('msg_id', 0, 'POST')], $_SERVER['REQUEST_URI'], _PM_SURE_TO_DELETE);
             include $GLOBALS['xoops']->path('footer.php');
@@ -44,8 +44,8 @@ if (!is_object($xoopsUser)) {
             redirect_header('viewpmsg.php', 1, _PM_DELETED);
         }
     }
-    $start          = !empty($_GET['start']) ? Request::getInt('start', 0, 'GET') : 0;
-    $total_messages = !empty($_GET['total_messages']) ? Request::getInt('total_messages', 0, 'GET') : 0;
+    $start          = Request::getInt('start', 0, 'GET');
+    $total_messages = Request::getInt('total_messages', 0, 'GET');
     include $GLOBALS['xoops']->path('header.php');
     $criteria = new Criteria('to_userid', $xoopsUser->getVar('uid'));
     $criteria->setLimit(1);

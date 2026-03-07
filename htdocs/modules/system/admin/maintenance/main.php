@@ -208,8 +208,8 @@ switch ($op) {
         $xoBreadCrumb->render();
 
         $dump         = new SystemMaintenance();
-        $dump_modules = $_REQUEST['dump_modules'] ?? false;
-        $dump_tables  = $_REQUEST['dump_tables'] ?? false;
+        $dump_modules = Request::getArray('dump_modules', [], 'POST') ?: false;
+        $dump_tables  = Request::getArray('dump_tables', [], 'POST') ?: false;
         $drop         = Request::getInt('drop', 1);
 
         if (($dump_tables === true && $dump_modules === true) || ($dump_tables === false && $dump_modules === false)) {

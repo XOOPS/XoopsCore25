@@ -182,8 +182,9 @@ $xoopsUserIsAdmin = false;
 $member_handler   = xoops_getHandler('member');
 /** @var \XoopsSessionHandler $sess_handler */
 $sess_handler     = xoops_getHandler('session');
-if ($xoopsConfig['use_ssl'] && isset($_POST[$xoopsConfig['sslpost_name']]) && $_POST[$xoopsConfig['sslpost_name']] != '') {
-    session_id($_POST[$xoopsConfig['sslpost_name']]);
+$sslSessionId = \Xmf\Request::getString($xoopsConfig['sslpost_name'], '', 'POST');
+if ($xoopsConfig['use_ssl'] && $sslSessionId !== '') {
+    session_id($sslSessionId);
 } elseif ($xoopsConfig['use_mysession'] && $xoopsConfig['session_name'] != '' && $xoopsConfig['session_expire'] > 0) {
     session_name($xoopsConfig['session_name']);
     session_cache_expire($xoopsConfig['session_expire']);
@@ -206,7 +207,7 @@ $xoopsPreload->triggerEvent('core.behavior.session.start');
  */
 if ($xoopsConfig['use_mysession']
     && $xoopsConfig['session_name'] != ''
-    && !isset($_COOKIE[$xoopsConfig['session_name']])
+    && !\Xmf\Request::hasVar($xoopsConfig['session_name'], 'COOKIE')
     && !empty($_SESSION['xoopsUserId'])
 ) {
     unset($_SESSION['xoopsUserId']);

@@ -533,7 +533,7 @@ class ProfileFieldHandler extends XoopsPersistableObjectHandler
             $obj->setVar('field_valuetype', XOBJ_DTYPE_TXTBOX);
         }
 
-        if ((!in_array($obj->getVar('field_name'), $this->getUserVars())) && isset($_REQUEST['field_required'])) {
+        if ((!in_array($obj->getVar('field_name'), $this->getUserVars())) && \Xmf\Request::hasVar('field_required', 'POST')) {
             if ($obj->isNew()) {
                 //add column to table
                 $changetype = 'ADD';

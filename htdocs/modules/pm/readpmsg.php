@@ -25,8 +25,11 @@ if (!is_object($GLOBALS['xoopsUser'])) {
     redirect_header(XOOPS_URL, 3, _NOPERM);
 }
 $valid_op_requests = ['out', 'save', 'in'];
-$_REQUEST['op']    = !empty($_REQUEST['op']) && in_array($_REQUEST['op'], $valid_op_requests) ? $_REQUEST['op'] : 'in';
-$msg_id            = empty($_REQUEST['msg_id']) ? 0 : (int)$_REQUEST['msg_id'];
+$op                = Request::getCmd('op', 'in');
+if (!in_array($op, $valid_op_requests)) {
+    $op = 'in';
+}
+$msg_id            = Request::getInt('msg_id', 0);
 $pm_handler        = xoops_getModuleHandler('message');
 $pm                = null;
 if ($msg_id > 0) {
@@ -37,42 +40,42 @@ if (is_object($pm) && ($pm->getVar('from_userid') != $GLOBALS['xoopsUser']->getV
     redirect_header(XOOPS_URL . '/modules/' . $GLOBALS['xoopsModule']->getVar('dirname', 'n') . '/index.php', 2, _NOPERM);
 }
 
-if (is_object($pm) && !empty($_POST['action'])) {
+if (is_object($pm) && Request::hasVar('action', 'POST')) {
     if (!$GLOBALS['xoopsSecurity']->check()) {
         echo implode('<br>', $GLOBALS['xoopsSecurity']->getErrors());
         exit();
     }
     $res = false;
-    if (!empty($_REQUEST['email_message'])) {
+    if (Request::hasVar('email_message', 'POST')) {
         $res = $pm_handler->sendEmail($pm, $GLOBALS['xoopsUser']);
-    } elseif (!empty($_REQUEST['move_message']) && $_REQUEST['op'] !== 'save' && !$GLOBALS['xoopsUser']->isAdmin() && $pm_handler->getSavecount() >= $GLOBALS['xoopsModuleConfig']['max_save']) {
+    } elseif (Request::hasVar('move_message', 'POST') && $op !== 'save' && !$GLOBALS['xoopsUser']->isAdmin() && $pm_handler->getSavecount() >= $GLOBALS['xoopsModuleConfig']['max_save']) {
         $res_message = sprintf(_PM_SAVED_PART, $GLOBALS['xoopsModuleConfig']['max_save'], 0);
     } else {
-        switch ($_REQUEST['op']) {
+        switch ($op) {
             case 'out':
                 if ($pm->getVar('from_userid') != $GLOBALS['xoopsUser']->getVar('uid')) {
                     break;
                 }
-                if (!empty($_REQUEST['delete_message'])) {
+                if (Request::hasVar('delete_message', 'POST')) {
                     $res = $pm_handler->setFromdelete($pm);
-                } elseif (!empty($_REQUEST['move_message'])) {
+                } elseif (Request::hasVar('move_message', 'POST')) {
                     $res = $pm_handler->setFromsave($pm);
                 }
                 break;
             case 'save':
                 if ($pm->getVar('to_userid') == $GLOBALS['xoopsUser']->getVar('uid')) {
-                    if (!empty($_REQUEST['delete_message'])) {
+                    if (Request::hasVar('delete_message', 'POST')) {
                         $res1 = $pm_handler->setTodelete($pm);
                         $res1 = $res1 ? $pm_handler->setTosave($pm, 0) : false;
-                    } elseif (!empty($_REQUEST['move_message'])) {
+                    } elseif (Request::hasVar('move_message', 'POST')) {
                         $res1 = $pm_handler->setTosave($pm, 0);
                     }
                 }
                 if ($pm->getVar('from_userid') == $GLOBALS['xoopsUser']->getVar('uid')) {
-                    if (!empty($_REQUEST['delete_message'])) {
+                    if (Request::hasVar('delete_message', 'POST')) {
                         $res2 = $pm_handler->setFromdelete($pm);
                         $res2 = $res2 ? $pm_handler->setFromsave($pm, 0) : false;
-                    } elseif (!empty($_REQUEST['move_message'])) {
+                    } elseif (Request::hasVar('move_message', 'POST')) {
                         $res2 = $pm_handler->setFromsave($pm, 0);
                     }
                 }
@@ -84,16 +87,16 @@ if (is_object($pm) && !empty($_POST['action'])) {
                 if ($pm->getVar('to_userid') != $GLOBALS['xoopsUser']->getVar('uid')) {
                     break;
                 }
-                if (!empty($_REQUEST['delete_message'])) {
+                if (Request::hasVar('delete_message', 'POST')) {
                     $res = $pm_handler->setTodelete($pm);
-                } elseif (!empty($_REQUEST['move_message'])) {
+                } elseif (Request::hasVar('move_message', 'POST')) {
                     $res = $pm_handler->setTosave($pm);
                 }
                 break;
         }
     }
     $res_message ??= $res ? _PM_ACTION_DONE : _PM_ACTION_ERROR;
-    redirect_header('viewpmsg.php?op=' . htmlspecialchars($_REQUEST['op'], ENT_QUOTES | ENT_HTML5), 2, $res_message);
+    redirect_header('viewpmsg.php?op=' . htmlspecialchars($op, ENT_QUOTES | ENT_HTML5), 2, $res_message);
 }
 $start                        = Request::getInt('start', 0, 'GET');
 $total_messages               = Request::getInt('total_messages', 0, 'GET');
@@ -101,11 +104,11 @@ $GLOBALS['xoopsOption']['template_main'] = 'pm_readpmsg.tpl';
 include $GLOBALS['xoops']->path('header.php');
 
 if (!is_object($pm)) {
-    if ($_REQUEST['op'] === 'out') {
+    if ($op === 'out') {
         $criteria = new CriteriaCompo(new Criteria('from_delete', 0));
         $criteria->add(new Criteria('from_userid', $GLOBALS['xoopsUser']->getVar('uid')));
         $criteria->add(new Criteria('from_save', 0));
-    } elseif ($_REQUEST['op'] === 'save') {
+    } elseif ($op === 'save') {
         $crit_to = new CriteriaCompo(new Criteria('to_delete', 0));
         $crit_to->add(new Criteria('to_save', 1));
         $crit_to->add(new Criteria('to_userid', $GLOBALS['xoopsUser']->getVar('uid')));
@@ -137,10 +140,10 @@ if (is_object($pm) && !empty($pm)) {
         $pmform->addElement($reply_button);
     }
     $pmform->addElement(new XoopsFormButton('', 'delete_message', _PM_DELETE, 'submit'));
-    $pmform->addElement(new XoopsFormButton('', 'move_message', ($_REQUEST['op'] === 'save') ? _PM_UNSAVE : _PM_TOSAVE, 'submit'));
+    $pmform->addElement(new XoopsFormButton('', 'move_message', ($op === 'save') ? _PM_UNSAVE : _PM_TOSAVE, 'submit'));
     $pmform->addElement(new XoopsFormButton('', 'email_message', _PM_EMAIL, 'submit'));
     $pmform->addElement(new XoopsFormHidden('msg_id', $pm->getVar('msg_id')));
-    $pmform->addElement(new XoopsFormHidden('op', $_REQUEST['op']));
+    $pmform->addElement(new XoopsFormHidden('op', $op));
     $pmform->addElement(new XoopsFormHidden('action', 1));
     $pmform->assign($GLOBALS['xoopsTpl']);
 
@@ -165,7 +168,7 @@ if (is_object($pm) && !empty($pm)) {
     $message['msg_image'] = htmlspecialchars((string)$message['msg_image'], ENT_QUOTES | ENT_HTML5);
 }
 $GLOBALS['xoopsTpl']->assign('message', $message);
-$GLOBALS['xoopsTpl']->assign('op', $_REQUEST['op']);
+$GLOBALS['xoopsTpl']->assign('op', $op);
 $GLOBALS['xoopsTpl']->assign('previous', $start - 1);
 $GLOBALS['xoopsTpl']->assign('next', $start + 1);
 $GLOBALS['xoopsTpl']->assign('total_messages', $total_messages);

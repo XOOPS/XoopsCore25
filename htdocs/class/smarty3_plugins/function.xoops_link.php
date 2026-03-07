@@ -58,10 +58,10 @@ function smarty_function_xoops_link($params, &$smarty)
             if ($pos != false) {             // If a value is specified, use it
                 $vars[] = ['name' => substr($szvar, 0, $pos), 'value' => substr($szvar, $pos + 1)];
             } else {                         // Otherwise, use current one (if any)
-                if (isset($_POST[$szvar])) {
-                    $vars[] = ['name' => $szvar, 'value' => $_POST[$szvar]];
-                } elseif (isset($_GET[$szvar])) {
-                    $vars[] = ['name' => $szvar, 'value' => $_GET[$szvar]];
+                if (\Xmf\Request::hasVar($szvar, 'POST')) {
+                    $vars[] = ['name' => $szvar, 'value' => \Xmf\Request::getString($szvar, '', 'POST')];
+                } elseif (\Xmf\Request::hasVar($szvar, 'GET')) {
+                    $vars[] = ['name' => $szvar, 'value' => \Xmf\Request::getString($szvar, '', 'GET')];
                 }
             }
         }

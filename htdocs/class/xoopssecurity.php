@@ -1,6 +1,7 @@
 <?php
 
 use Xmf\IPAddress;
+use Xmf\Request;
 
 /**
  * XOOPS security handler
@@ -91,7 +92,10 @@ class XoopsSecurity
         }
 
         global $xoopsLogger;
-        $token = ($token !== false) ? $token : ($_REQUEST[$name . '_REQUEST'] ?? '');
+        $token = ($token !== false) ? $token : Request::getString($name . '_REQUEST', '', 'POST');
+        if ($token === '') {
+            $token = Request::getString($name . '_REQUEST', '', 'GET');
+        }
         if (empty($token) || empty($_SESSION[$name . '_SESSION'])) {
             $xoopsLogger->addExtra('Token Validation', 'No valid token found in request/session');
 

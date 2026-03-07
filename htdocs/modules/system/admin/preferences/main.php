@@ -23,11 +23,13 @@ if (!is_object($xoopsUser) || !is_object($xoopsModule) || !$xoopsUser->isAdmin($
     exit(_NOPERM);
 }
 
-if (isset($_REQUEST)) {
-    foreach ($_REQUEST as $k => $v) {
-        ${$k} = $v;
-    }
+// Extract POST variables needed by the save handler
+// (dynamic config names are referenced as ${$config->getVar('conf_name')})
+$_postData = filter_input_array(INPUT_POST, FILTER_DEFAULT) ?? [];
+foreach ($_postData as $k => $v) {
+    ${$k} = $v;
 }
+unset($_postData);
 // Get Action type
 $op = Request::getString('op', 'list');
 // Setting type
@@ -270,7 +272,7 @@ switch ($op) {
 
         /** @var XoopsConfigHandler $config_handler */
         $config_handler = xoops_getHandler('config');
-        $mod            = isset($_REQUEST['mod']) ? (int) $_REQUEST['mod'] : 0;
+        $mod            = Request::getInt('mod', 0);
         if ($mod <= 0) {
             header('Location: admin.php?fct=preferences');
             exit();
@@ -298,9 +300,10 @@ switch ($op) {
         }
 
         $modname = $module->getVar('name');
-        if (!empty($_REQUEST['redirect'])) {
+        $redirect_url = Request::getString('redirect', '');
+        if (!empty($redirect_url)) {
             $myts = \MyTextSanitizer::getInstance();
-            $form->addElement(new XoopsFormHidden('redirect', $myts->htmlSpecialChars($_REQUEST['redirect'])));
+            $form->addElement(new XoopsFormHidden('redirect', $myts->htmlSpecialChars($redirect_url)));
         } elseif ($module->getInfo('adminindex')) {
             $form->addElement(new XoopsFormHidden('redirect', XOOPS_URL . '/modules/' . $module->getVar('dirname') . '/' . $module->getInfo('adminindex')));
         }

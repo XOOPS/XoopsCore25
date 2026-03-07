@@ -143,7 +143,7 @@ switch ($op) {
         $xoBreadCrumb->addTips(sprintf(_AM_SYSTEM_SMILIES_NAV_TIPS_FORM1, implode(', ', $mimetypes)) . sprintf(_AM_SYSTEM_SMILIES_NAV_TIPS_FORM2, $upload_size / 1000));
         $xoBreadCrumb->render();
 
-        if (isset($_POST['smilies_id'])) {
+        if (Request::hasVar('smilies_id', 'POST')) {
             $obj = $smilies_Handler->get(Request::getInt('smilies_id', 0));
         } else {
             $obj = $smilies_Handler->create();
@@ -176,7 +176,7 @@ switch ($op) {
                 $err[] = $uploader_smilies_img->getErrors();
             }
         } else {
-            $obj->setVar('smile_url', 'smilies/' . $_POST['smile_url']);
+            $obj->setVar('smile_url', 'smilies/' . Request::getString('smile_url', '', 'POST'));
             if (!$smilies_Handler->insert($obj)) {
                 $err[] = sprintf(_FAILSAVEIMG, $obj->getVar('code'));
             }
@@ -197,7 +197,7 @@ switch ($op) {
     case 'smilies_delete':
         $smilies_id = Request::getInt('smilies_id', 0);
         $obj        = $smilies_Handler->get($smilies_id);
-        if (isset($_POST['ok']) && $_POST['ok'] == 1) {
+        if (Request::getInt('ok', 0, 'POST') == 1) {
             if (!$GLOBALS['xoopsSecurity']->check()) {
                 redirect_header('admin.php?fct=smilies', 3, implode(',', $GLOBALS['xoopsSecurity']->getErrors()));
             }
@@ -222,7 +222,7 @@ switch ($op) {
             xoops_confirm(
                 [
                     'ok' => 1,
-                    'smilies_id' => $_REQUEST['smilies_id'],
+                    'smilies_id' => $smilies_id,
                     'op' => 'smilies_delete',
                 ],
                 $_SERVER['REQUEST_URI'],

@@ -222,7 +222,9 @@ switch ($op) {
             }
         } else {
             $file = Request::getString('avatar_file', 'blank.gif');
-            $avatar->setVars($_REQUEST);
+            $avatar->setVar('avatar_name', Request::getString('avatar_name', '', 'POST'));
+            $avatar->setVar('avatar_display', Request::getBool('avatar_display', false, 'POST'));
+            $avatar->setVar('avatar_weight', Request::getInt('avatar_weight', 0, 'POST'));
             $avatar->setVar('avatar_file', 'avatars/' . $file);
             if (!$avt_handler->insert($avatar)) {
                 $err[] = sprintf(_FAILSAVEIMG, $avatar->getVar('avatar_name'));
@@ -373,7 +375,7 @@ switch ($op) {
         $xoopsTpl->assign('jwt', $jwt);
         $fineup_debug = 'false';
         if (($xoopsUser instanceof \XoopsUser ? $xoopsUser->isAdmin() : false)
-            && isset($_REQUEST['FINEUPLOADER_DEBUG'])
+            && Request::hasVar('FINEUPLOADER_DEBUG', 'GET')
         ) {
             $fineup_debug = 'true';
         }

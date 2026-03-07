@@ -27,7 +27,7 @@ if ($GLOBALS['xoopsUser']) {
     exit();
 }
 
-if (!empty($_GET['op']) && in_array($_GET['op'], ['actv', 'activate'])) {
+if (Request::getString('op', '', 'GET') !== '' && in_array(Request::getString('op', '', 'GET'), ['actv', 'activate'])) {
     header('location: ./activate.php' . (empty($_SERVER['QUERY_STRING']) ? '' : '?' . $_SERVER['QUERY_STRING']));
     exit();
 }
@@ -49,7 +49,7 @@ $opkey = 'profile_opname';
 if (isset($_SESSION[$opkey])) {
     $current_opname = $_SESSION[$opkey];
     unset($_SESSION[$opkey]);
-    if (!isset($_POST[$current_opname])) {
+    if (!Request::hasVar($current_opname, 'POST')) {
         $_POST = [];
     }
 } else {
@@ -57,7 +57,7 @@ if (isset($_SESSION[$opkey])) {
     $current_opname = 'op'; // does not matter, it isn't there
 }
 
-$op           = !isset($_POST[$current_opname]) ? 'register' : Request::getString($current_opname, '', 'POST');
+$op           = !Request::hasVar($current_opname, 'POST') ? 'register' : Request::getString($current_opname, '', 'POST');
 $current_step = Request::getInt('step', 0, 'POST');
 
 // The newly introduced variable $_SESSION['profile_post'] is contaminated by $_POST, thus we use an old vaiable to hold uid parameter
@@ -135,7 +135,7 @@ $fieldnames[] = '_message_';
 // Get $_POST that matches above criteria, we do not need to store step, tokens, etc
 $postfields = [];
 foreach ($fieldnames as $fieldname) {
-    if (isset($_POST[$fieldname])) {
+    if (Request::hasVar($fieldname, 'POST')) {
         $postfields[$fieldname] = Request::getString($fieldname, '', 'POST');
     }
 }
@@ -152,11 +152,11 @@ if ($current_step == 0) {
 
 // Set vars from $_POST/$_SESSION['profile_post']
 foreach (array_keys($fields) as $field) {
-    if (!isset($_POST[$field])) {
+    if (!Request::hasVar($field, 'POST')) {
         continue;
     }
 
-    $value = $fields[$field]->getValueForSave($_POST[$field]);
+    $value = $fields[$field]->getValueForSave(Request::getString($field, '', 'POST'));
     if (in_array($field, $userfields)) {
         $newuser->setVar($field, $value);
     } else {
@@ -167,9 +167,9 @@ foreach (array_keys($fields) as $field) {
 $stop = '';
 
 //Client side validation
-if (isset($_POST['step']) && isset($_SESSION['profile_required'])) {
+if (Request::hasVar('step', 'POST') && isset($_SESSION['profile_required'])) {
     foreach ($_SESSION['profile_required'] as $name => $title) {
-        if (!isset($_POST[$name]) || empty($_POST[$name])) {
+        if (!Request::hasVar($name, 'POST') || Request::getString($name, '', 'POST') === '') {
             $stop .= sprintf(_FORM_ENTER, $title) . '<br>';
         }
     }
@@ -182,7 +182,7 @@ if ($current_step == 1) {
     $url        = Request::getUrl('url', '', 'POST');
     $pass       = Request::getString('pass', '', 'POST');
     $vpass      = Request::getString('vpass', '', 'POST');
-    $agree_disc = (isset($_POST['agree_disc']) && (int) $_POST['agree_disc']) ? 1 : 0;
+    $agree_disc = Request::getInt('agree_disc', 0, 'POST') ? 1 : 0;
 
 
     if ($GLOBALS['xoopsConfigUser']['reg_dispdsclmr'] != 0 && $GLOBALS['xoopsConfigUser']['reg_disclaimer'] !== '') {

@@ -26,9 +26,9 @@ $indexAdmin->addItemButton(_PROFILE_AM_ADDUSER, 'user.php?op=new', 'add', '');
 echo $indexAdmin->addNavigation(basename(__FILE__));
 echo $indexAdmin->renderButton('right', '');
 
-$op = $_REQUEST['op'] ?? 'list';
+$op = Request::getCmd('op', 'list');
 if ($op === 'editordelete') {
-    $op = isset($_REQUEST['delete']) ? 'delete' : 'edit';
+    $op = Request::hasVar('delete', 'POST') ? 'delete' : 'edit';
 }
 /** @var XoopsMemberHandler $handler */
 $handler = xoops_getHandler('member');
@@ -58,7 +58,7 @@ switch ($op) {
 
     case 'edit':
         xoops_loadLanguage('main', $GLOBALS['xoopsModule']->getVar('dirname', 'n'));
-        $obj = $handler->getUser($_REQUEST['id']);
+        $obj = $handler->getUser(Request::getInt('id', 0, 'POST'));
         if (in_array(XOOPS_GROUP_ADMIN, $obj->getGroups()) && !in_array(XOOPS_GROUP_ADMIN, $GLOBALS['xoopsUser']->getGroups())) {
             // If not webmaster trying to edit a webmaster - disallow
             redirect_header('user.php', 3, _US_NOEDITRIGHT);
@@ -86,7 +86,7 @@ switch ($op) {
         $gperm_handler   = xoops_getHandler('groupperm');
         $editable_fields = $gperm_handler->getItemIds('profile_edit', $GLOBALS['xoopsUser']->getGroups(), $GLOBALS['xoopsModule']->getVar('mid'));
 
-        $uid = empty($_POST['uid']) ? 0 : (int) $_POST['uid'];
+        $uid = Request::getInt('uid', 0, 'POST');
         if (!empty($uid)) {
             $user    = $handler->getUser($uid);
             $profile = $profile_handler->get($uid);
@@ -114,13 +114,14 @@ switch ($op) {
             $user->setVar('user_avatar', 'avatars/blank.gif');
         }
         $myts = \MyTextSanitizer::getInstance();
-        $user->setVar('uname', $_POST['uname']);
-        $user->setVar('email', trim($_POST['email']));
-        if (isset($_POST['level']) && $user->getVar('level') != (int) $_POST['level']) {
-            $user->setVar('level', (int) $_POST['level']);
+        $user->setVar('uname', Request::getString('uname', '', 'POST'));
+        $user->setVar('email', Request::getString('email', '', 'POST'));
+        $newLevel = Request::getInt('level', -1, 'POST');
+        if ($newLevel !== -1 && $user->getVar('level') != $newLevel) {
+            $user->setVar('level', $newLevel);
         }
         $password = $vpass = null;
-        if (!empty($_POST['password'])) {
+        if (Request::getString('password', '', 'POST') !== '') {
             $password = trim(Request::getString('password', '', 'POST'));
             $vpass    = trim(Request::getString('vpass', '', 'POST'));
             $user->setVar('pass', password_hash($password, PASSWORD_DEFAULT));
@@ -137,18 +138,19 @@ switch ($op) {
 
         foreach (array_keys($fields) as $i) {
             $fieldname = $fields[$i]->getVar('field_name');
-            if (in_array($fields[$i]->getVar('field_id'), $editable_fields) && isset($_REQUEST[$fieldname])) {
+            if (in_array($fields[$i]->getVar('field_id'), $editable_fields) && Request::hasVar($fieldname, 'POST')) {
+                $fieldValue = Request::getString($fieldname, '', 'POST');
                 if (in_array($fieldname, $userfields)) {
-                    $value = $fields[$i]->getValueForSave($_REQUEST[$fieldname], $user->getVar($fieldname, 'n'));
+                    $value = $fields[$i]->getValueForSave($fieldValue, $user->getVar($fieldname, 'n'));
                     $user->setVar($fieldname, $value);
                 } else {
-                    $value = $fields[$i]->getValueForSave(($_REQUEST[$fieldname] ?? ''), $profile->getVar($fieldname, 'n'));
+                    $value = $fields[$i]->getValueForSave($fieldValue, $profile->getVar($fieldname, 'n'));
                     $profile->setVar($fieldname, $value);
                 }
             }
         }
 
-        $new_groups = $_POST['groups'] ?? [];
+        $new_groups = Request::getArray('groups', [], 'POST');
 
         if (count($errors) == 0) {
             if ($handler->insertUser($user)) {
@@ -194,16 +196,17 @@ switch ($op) {
         break;
 
     case 'delete':
-        if ($_REQUEST['id'] == $GLOBALS['xoopsUser']->getVar('uid')) {
+        $deleteId = Request::getInt('id', 0, 'POST');
+        if ($deleteId == $GLOBALS['xoopsUser']->getVar('uid')) {
             redirect_header('user.php', 2, _PROFILE_AM_CANNOTDELETESELF);
         }
-        $obj    = $handler->getUser($_REQUEST['id']);
+        $obj    = $handler->getUser($deleteId);
         $groups = $obj->getGroups();
         if (in_array(XOOPS_GROUP_ADMIN, $groups)) {
             redirect_header('user.php', 3, _PROFILE_AM_CANNOTDELETEADMIN, false);
         }
 
-        if (isset($_REQUEST['ok']) && $_REQUEST['ok'] == 1) {
+        if (Request::getInt('ok', 0, 'POST') === 1) {
             if (!$GLOBALS['xoopsSecurity']->check()) {
                 redirect_header('user.php', 3, implode(',', $GLOBALS['xoopsSecurity']->getErrors()), false);
             }
@@ -222,7 +225,7 @@ switch ($op) {
             xoops_confirm(
                 [
                     'ok' => 1,
-                    'id' => $_REQUEST['id'],
+                    'id' => $deleteId,
                     'op' => 'delete',
                 ],
                 $_SERVER['REQUEST_URI'],

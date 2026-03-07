@@ -25,8 +25,6 @@
  * @author           DuGris (aka L. JEN) <dugris@frxoops.org>
  **/
 
-use Xmf\Request;
-
 require_once __DIR__ . '/include/common.inc.php';
 defined('XOOPS_INSTALL') || die('XOOPS Installation wizard die');
 
@@ -114,10 +112,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET' && isset($_GET['var']) && isset($_GET['
 
 
 // Handle GET request for path checking
-if ($_SERVER['REQUEST_METHOD'] === 'GET' && isset($_GET['var']) && isset($_GET['action']) && $_GET['action'] === 'checkpath') {
+if ($_SERVER['REQUEST_METHOD'] === 'GET' && \Xmf\Request::hasVar('var', 'GET') && \Xmf\Request::hasVar('action', 'GET') && \Xmf\Request::getCmd('action', '', 'GET') === 'checkpath') {
     // Sanitize input
-    $pathKey = htmlspecialchars(trim($_GET['var']), ENT_QUOTES | ENT_HTML5);
-    $newPath = htmlspecialchars(trim($_GET['path']), ENT_QUOTES | ENT_HTML5);
+    $pathKey = htmlspecialchars(trim(\Xmf\Request::getString('var', '', 'GET')), ENT_QUOTES | ENT_HTML5);
+    $newPath = htmlspecialchars(trim(\Xmf\Request::getString('path', '', 'GET')), ENT_QUOTES | ENT_HTML5);
 
     // Validate directory
     if (!is_dir($newPath)) {
@@ -182,8 +180,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
 // Handle POST request for updating paths
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    if (isset($_POST['lib']) && $_POST['lib'] !== $pathController->xoopsPath['lib']) {
-        $newTrustPath = $pathController->sanitizePath(trim($_POST['lib']));
+    if (\Xmf\Request::hasVar('lib', 'POST') && \Xmf\Request::getString('lib', '', 'POST') !== $pathController->xoopsPath['lib']) {
+        $newTrustPath = $pathController->sanitizePath(trim(\Xmf\Request::getString('lib', '', 'POST')));
 
         if ($newTrustPath && is_dir($newTrustPath)) {
             $xoopsTrustPath = $newTrustPath;

@@ -29,7 +29,7 @@ if (is_object($xoopsUser)) {
             break;
         }
     }
-} elseif (!empty($_POST['xoops_login'])) {
+} elseif (\Xmf\Request::hasVar('xoops_login', 'POST')) {
     include_once $GLOBALS['xoops']->path('include/checklogin.php');
     exit();
 }

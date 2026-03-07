@@ -21,6 +21,8 @@ if (!defined('XOOPS_ROOT_PATH') || !is_object($xoopsModule)) {
 }
 // RMV-NOTIFY
 
+use Xmf\Request;
+
 // This module expects the following arguments:
 //
 // not_submit
@@ -38,19 +40,21 @@ include_once $GLOBALS['xoops']->path('include/notification_constants.php');
 include_once $GLOBALS['xoops']->path('include/notification_functions.php');
 xoops_loadLanguage('notification');
 
-if (!isset($_POST['not_submit'])) {
-    redirect_header($_POST['not_redirect'], 3, _NOPERM);
+$not_redirect = Request::getUrl('not_redirect', XOOPS_URL . '/', 'POST');
+
+if (!Request::hasVar('not_submit', 'POST')) {
+    redirect_header($not_redirect, 3, _NOPERM);
 }
 
 if (!$GLOBALS['xoopsSecurity']->check()) {
-    redirect_header($_POST['not_redirect'], 3, implode('<br>', $GLOBALS['xoopsSecurity']->getErrors()));
+    redirect_header($not_redirect, 3, implode('<br>', $GLOBALS['xoopsSecurity']->getErrors()));
 }
 
 // NOTE: in addition to the templates provided in the block and view
 // modes, we can have buttons, etc. which load the arguments to be
 // read by this script.  That way a module can really customize its
 // look as to where/how the notification options are made available.
-$update_list = $_POST['not_list'];
+$update_list = Request::getArray('not_list', [], 'POST');
 $module_id   = $xoopsModule->getVar('mid');
 $user_id     = is_object($xoopsUser) ? $xoopsUser->getVar('uid') : 0;
 
@@ -100,5 +104,5 @@ foreach (array_keys($redirect_args) as $arg) {
     }
 }
 
-redirect_header($_POST['not_redirect'] . $argstring, 3, _NOT_UPDATEOK);
+redirect_header($not_redirect . $argstring, 3, _NOT_UPDATEOK);
 exit();

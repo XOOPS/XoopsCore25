@@ -35,10 +35,11 @@ if (file_exists($adminPrefLangFile)) {
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     /** @var XoopsConfigHandler $config_handler */
     $config_handler = xoops_getHandler('config');
-    if (array_key_exists('conf_ids', $_REQUEST)) {
-        foreach ($_REQUEST['conf_ids'] as $key => $conf_id) {
+    if (\Xmf\Request::hasVar('conf_ids', 'POST')) {
+        $confIds = \Xmf\Request::getArray('conf_ids', [], 'POST');
+        foreach ($confIds as $key => $conf_id) {
             $config    = $config_handler->getConfig($conf_id);
-            $new_value = $_REQUEST[$config->getVar('conf_name')];
+            $new_value = \Xmf\Request::getString($config->getVar('conf_name'), '', 'POST');
             $config->setConfValueForInput($new_value);
             $config_handler->insertConfig($config);
         }

@@ -62,7 +62,11 @@ class xos_opal_ThemeFactory
     {
         // Grab the theme folder from request vars if present
         if (empty($options['folderName'])) {
-            if (isset($_REQUEST['xoops_theme_select']) && ($req = $_REQUEST['xoops_theme_select']) && $this->isThemeAllowed($req)) {
+            $req = Request::getString('xoops_theme_select', '', 'POST');
+            if ($req === '') {
+                $req = Request::getString('xoops_theme_select', '', 'GET');
+            }
+            if ($req !== '' && $this->isThemeAllowed($req)) {
                 $options['folderName'] = $req;
                 if (isset($_SESSION) && $this->allowUserSelection) {
                     $_SESSION[$this->xoBundleIdentifier]['defaultTheme'] = $req;

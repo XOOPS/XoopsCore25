@@ -40,7 +40,7 @@ class XoopsGuiDark extends XoopsSystemGui
     public function __construct()
     {
         // Check cookie
-        $used = isset($_COOKIE['transition_theme']) ? $_COOKIE['transition_theme'] : 0;
+        $used = \Xmf\Request::getInt('transition_theme', 0, 'COOKIE');
 
         if(0 == $used){
 
@@ -325,7 +325,7 @@ class XoopsGuiDark extends XoopsSystemGui
             }
         }
 
-        if (is_object($xoopsModule) || !empty($_GET['xoopsorgnews'])) {
+        if (is_object($xoopsModule) || \Xmf\Request::hasVar('xoopsorgnews', 'GET')) {
             if (is_object($xoopsModule) && (!empty($xoopsModule->getInfo('adminmenu')) && file_exists($file = XOOPS_ROOT_PATH . '/modules/' . $xoopsModule->getVar('dirname') . '/' . $xoopsModule->getInfo('adminmenu')))) {
                 include $file;
             }

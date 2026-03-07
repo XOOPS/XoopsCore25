@@ -17,6 +17,8 @@
  * @author              Taiwen Jiang <phppp@users.sourceforge.net>
  */
 
+use Xmf\Request;
+
 $xoopsOption['pagetype'] = 'user';
 include __DIR__ . '/header.php';
 include_once $GLOBALS['xoops']->path('class/xoopsformloader.php');
@@ -27,7 +29,7 @@ if (!is_object($GLOBALS['xoopsUser'])) {
 }
 
 $myts                       = \MyTextSanitizer::getInstance();
-$op                         = $_REQUEST['op'] ?? 'editprofile';
+$op                         = Request::getCmd('op', 'editprofile');
 /** @var XoopsConfigHandler $config_handler */
 $config_handler             = xoops_getHandler('config');
 $GLOBALS['xoopsConfigUser'] = $config_handler->getConfigsByCat(XOOPS_CONF_USER);
@@ -41,8 +43,8 @@ if ($op === 'save') {
     $errors   = [];
     $edituser = & $GLOBALS['xoopsUser'];
     if ($GLOBALS['xoopsUser']->isAdmin()) {
-        $edituser->setVar('uname', trim($_POST['uname']));
-        $edituser->setVar('email', trim($_POST['email']));
+        $edituser->setVar('uname', Request::getString('uname', '', 'POST'));
+        $edituser->setVar('email', Request::getString('email', '', 'POST'));
     }
     xoops_load('XoopsUserUtility');
     $stop = XoopsUserUtility::validate($edituser);
@@ -67,8 +69,8 @@ if ($op === 'save') {
 
         foreach (array_keys($fields) as $i) {
             $fieldname = $fields[$i]->getVar('field_name');
-            if (in_array($fields[$i]->getVar('field_id'), $editable_fields) && isset($_REQUEST[$fieldname])) {
-                $value = $fields[$i]->getValueForSave($_REQUEST[$fieldname]);
+            if (in_array($fields[$i]->getVar('field_id'), $editable_fields) && Request::hasVar($fieldname, 'POST')) {
+                $value = $fields[$i]->getValueForSave(Request::getString($fieldname, '', 'POST'));
                 if (in_array($fieldname, $profile_handler->getUserVars())) {
                     $edituser->setVar($fieldname, $value);
                 } else {
@@ -147,14 +149,8 @@ if ($op === 'avatarupload') {
         redirect_header('index.php', 3, _US_NOEDITRIGHT . '<br>' . implode('<br>', $GLOBALS['xoopsSecurity']->getErrors()));
         exit;
     }
-    $xoops_upload_file = [];
-    $uid               = 0;
-    if (!empty($_POST['xoops_upload_file']) && \is_array($_POST['xoops_upload_file'])) {
-        $xoops_upload_file = $_POST['xoops_upload_file'];
-    }
-    if (!empty($_POST['uid'])) {
-        $uid = (int) $_POST['uid'];
-    }
+    $xoops_upload_file = Request::getArray('xoops_upload_file', [], 'POST');
+    $uid               = Request::getInt('uid', 0, 'POST');
     if (empty($uid) || $GLOBALS['xoopsUser']->getVar('uid') != $uid) {
         redirect_header('index.php', 3, _US_NOEDITRIGHT);
     }
@@ -167,7 +163,7 @@ if ($op === 'avatarupload') {
             'image/x-png',
             'image/png',
         ], $GLOBALS['xoopsConfigUser']['avatar_maxsize'], $GLOBALS['xoopsConfigUser']['avatar_width'], $GLOBALS['xoopsConfigUser']['avatar_height']);
-        if ($uploader->fetchMedia($_POST['xoops_upload_file'][0])) {
+        if ($uploader->fetchMedia($xoops_upload_file[0])) {
             $uploader->setPrefix('cavt');
             if ($uploader->upload()) {
                 /** @var XoopsAvatarHandler $avt_handler */
@@ -208,17 +204,15 @@ if ($op === 'avatarchoose') {
         redirect_header('index.php', 3, _US_NOEDITRIGHT . '<br>' . implode('<br>', $GLOBALS['xoopsSecurity']->getErrors()));
         exit;
     }
-    $uid = 0;
-    if (!empty($_POST['uid'])) {
-        $uid = (int) $_POST['uid'];
-    }
+    $uid = Request::getInt('uid', 0, 'POST');
     if (empty($uid) || $GLOBALS['xoopsUser']->getVar('uid') != $uid) {
         redirect_header('index.php', 3, _US_NOEDITRIGHT);
     }
     $user_avatar = '';
     $avt_handler = xoops_getHandler('avatar');
-    if (!empty($_POST['user_avatar'])) {
-        $user_avatar     = $xoopsDB->escape(trim($_POST['user_avatar']));
+    $postedAvatar = Request::getString('user_avatar', '', 'POST');
+    if (!empty($postedAvatar)) {
+        $user_avatar     = $xoopsDB->escape($postedAvatar);
         $criteria_avatar = new CriteriaCompo(new Criteria('avatar_file', $user_avatar));
         $criteria_avatar->add(new Criteria('avatar_type', 'S'));
         $avatars = $avt_handler->getObjects($criteria_avatar);

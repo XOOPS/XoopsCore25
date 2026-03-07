@@ -1,13 +1,17 @@
 <?php
 
+use Xmf\Request;
+
 include XOOPS_ROOT_PATH . '/include/cp_header.php';
 include __DIR__ . '/admin_header.php';
 require_once dirname(__DIR__) . '/class/gtickets.php';
 $db = XoopsDatabaseFactory::getDatabaseConnection();
 
 // COPY TABLES
-if (!empty($_POST['copy']) && !empty($_POST['old_prefix'])) {
-    if (preg_match('/[^0-9A-Za-z_-]/', $_POST['new_prefix'])) {
+if (Request::hasVar('copy', 'POST') && Request::hasVar('old_prefix', 'POST')) {
+    $new_prefix = Request::getCmd('new_prefix', '', 'POST');
+    $old_prefix = Request::getCmd('old_prefix', '', 'POST');
+    if (preg_match('/[^0-9A-Za-z_-]/', $new_prefix)) {
         die('wrong prefix');
     }
 
@@ -16,8 +20,7 @@ if (!empty($_POST['copy']) && !empty($_POST['old_prefix'])) {
         redirect_header(XOOPS_URL . '/', 3, $xoopsGTicket->getErrors());
     }
 
-    $new_prefix = empty($_POST['new_prefix']) ? 'x' . substr(md5(time()), -5) : $_POST['new_prefix'];
-    $old_prefix = $_POST['old_prefix'];
+    $new_prefix = empty($new_prefix) ? 'x' . substr(md5(time()), -5) : $new_prefix;
 
     $sql = 'SHOW TABLE STATUS FROM `' . XOOPS_DB_NAME . '`';
     $srs = $db->queryF($sql);
@@ -77,8 +80,9 @@ if (!empty($_POST['copy']) && !empty($_POST['old_prefix'])) {
     exit;
 
     // DUMP INTO A LOCAL FILE
-} elseif (!empty($_POST['backup']) && !empty($_POST['prefix'])) {
-    if (preg_match('/[^0-9A-Za-z_-]/', $_POST['prefix'])) {
+} elseif (Request::hasVar('backup', 'POST') && Request::hasVar('prefix', 'POST')) {
+    $prefix = Request::getCmd('prefix', '', 'POST');
+    if (preg_match('/[^0-9A-Za-z_-]/', $prefix)) {
         die('wrong prefix');
     }
 
@@ -86,8 +90,6 @@ if (!empty($_POST['copy']) && !empty($_POST['old_prefix'])) {
     if (!$xoopsGTicket->check(true, 'protector_admin')) {
         redirect_header(XOOPS_URL . '/', 3, $xoopsGTicket->getErrors());
     }
-
-    $prefix = $_POST['prefix'];
 
     // get table list
     $sql = 'SHOW TABLE STATUS FROM `' . XOOPS_DB_NAME . '`';
@@ -200,8 +202,9 @@ if (!empty($_POST['copy']) && !empty($_POST['old_prefix'])) {
     exit;
 
     // DROP TABLES
-} elseif (!empty($_POST['delete']) && !empty($_POST['prefix'])) {
-    if (preg_match('/[^0-9A-Za-z_-]/', $_POST['prefix'])) {
+} elseif (Request::hasVar('delete', 'POST') && Request::hasVar('prefix', 'POST')) {
+    $prefix = Request::getCmd('prefix', '', 'POST');
+    if (preg_match('/[^0-9A-Za-z_-]/', $prefix)) {
         die('wrong prefix');
     }
 
@@ -209,8 +212,6 @@ if (!empty($_POST['copy']) && !empty($_POST['old_prefix'])) {
     if (!$xoopsGTicket->check(true, 'protector_admin')) {
         redirect_header(XOOPS_URL . '/', 3, $xoopsGTicket->getErrors());
     }
-
-    $prefix = $_POST['prefix'];
 
     // check if prefix is working
     if ($prefix == XOOPS_DB_PREFIX) {

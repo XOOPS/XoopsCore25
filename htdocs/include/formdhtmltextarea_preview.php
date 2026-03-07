@@ -27,7 +27,7 @@ $content = rawurldecode(XoopsRequest::getText('text', '', 'POST'));
 if (!$GLOBALS['xoopsSecurity']->validateToken(XoopsRequest::getString('token', '', 'POST'), false)) {
     $content = 'Direct access is not allowed!!!';
 }
-$html    = empty($_POST['html']) ? 0 : 1;
+$html    = \Xmf\Request::getInt('html', 0, 'POST') ? 1 : 0;
 $content = $myts->displayTarea($content, $html, 1, 1, 1, 1);
 if (preg_match_all('/%u([[:alnum:]]{4})/', $content, $matches)) {
     foreach ($matches[1] as $uniord) {

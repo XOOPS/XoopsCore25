@@ -155,8 +155,8 @@ switch ($op) {
         /** @var XoopsMemberHandler $member_handler */
         $member_handler = xoops_getHandler('member');
         $group          = $member_handler->createGroup();
-        $group->setVar('name', $_POST['name']);
-        $group->setVar('description', $_POST['desc']);
+        $group->setVar('name', Request::getString('name', '', 'POST'));
+        $group->setVar('description', Request::getString('desc', '', 'POST'));
         if (count($system_catids) > 0) {
             $group->setVar('group_type', 'Admin');
         }
@@ -222,8 +222,8 @@ switch ($op) {
         $gid            = Request::getInt('g_id', 0);
         if ($gid > 0) {
             $group = $member_handler->getGroup($gid);
-            $group->setVar('name', $_POST['name']);
-            $group->setVar('description', $_POST['desc']);
+            $group->setVar('name', Request::getString('name', '', 'POST'));
+            $group->setVar('description', Request::getString('desc', '', 'POST'));
             // if this group is not one of the default groups
             if (!in_array($group->getVar('groupid'), [XOOPS_GROUP_ADMIN, XOOPS_GROUP_USERS, XOOPS_GROUP_ANONYMOUS])) {
                 if (count($system_catids) > 0) {
@@ -296,7 +296,7 @@ switch ($op) {
         $groups_id = Request::getInt('groups_id', 0);
         if ($groups_id > 0) {
             $obj = $groups_Handler->get($groups_id);
-            if (isset($_POST['ok']) && $_POST['ok'] == 1) {
+            if (Request::getInt('ok', 0, 'POST') === 1) {
                 if (!$GLOBALS['xoopsSecurity']->check()) {
                     redirect_header('admin.php?fct=groups', 3, implode(',', $GLOBALS['xoopsSecurity']->getErrors()));
                 }
@@ -323,7 +323,7 @@ switch ($op) {
                 xoops_confirm(
                     [
                         'ok' => 1,
-                        'groups_id' => $_REQUEST['groups_id'],
+                        'groups_id' => $groups_id,
                         'op' => 'groups_delete',
                     ],
                     'admin.php?fct=groups',
@@ -338,14 +338,17 @@ switch ($op) {
         //Add users group
     case 'action_group':
         $error = true;
-        if (isset($_REQUEST['edit_group'])) {
-            if (isset($_REQUEST['edit_group']) && $_REQUEST['edit_group'] === 'add_group' && isset($_REQUEST['selgroups'])) {
-                foreach ($_REQUEST['memberslist_id'] as $uid) {
-                    $member_handler->addUserToGroup($_REQUEST['selgroups'], $uid);
+        $edit_group    = Request::getCmd('edit_group', '', 'POST');
+        $selgroups     = Request::getInt('selgroups', 0, 'POST');
+        $memberslist_id = Request::getArray('memberslist_id', [], 'POST');
+        if ($edit_group !== '') {
+            if ($edit_group === 'add_group' && $selgroups > 0) {
+                foreach ($memberslist_id as $uid) {
+                    $member_handler->addUserToGroup($selgroups, $uid);
                     $error = false;
                 }
-            } elseif (isset($_REQUEST['edit_group']) && $_REQUEST['edit_group'] === 'delete_group' && isset($_REQUEST['selgroups'])) {
-                $member_handler->removeUsersFromGroup($_REQUEST['selgroups'], $_REQUEST['memberslist_id']);
+            } elseif ($edit_group === 'delete_group' && $selgroups > 0) {
+                $member_handler->removeUsersFromGroup($selgroups, $memberslist_id);
                 $error = false;
             }
             //if ($error === true)
