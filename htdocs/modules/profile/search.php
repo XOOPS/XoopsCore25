@@ -184,7 +184,7 @@ switch ($op) {
         $criteria = new CriteriaCompo(new Criteria('level', 0, '>'));
 
         $uname = Request::getString('uname', '', 'GET') ?: Request::getString('uname', '', 'POST');
-        $uname_match = Request::getInt('uname_match', 0, 'GET') ?: Request::getInt('uname_match', 0, 'POST');
+        $uname_match = Request::hasVar('uname_match', 'GET') ? Request::getInt('uname_match', 0, 'GET') : Request::getInt('uname_match', 0, 'POST');
         if ($uname !== '') {
             $uname = trim($uname);
             // Basic input validation - only allow alphanumeric characters and underscores
@@ -238,7 +238,7 @@ switch ($op) {
         }
 
         $email = Request::getString('email', '', 'GET') ?: Request::getString('email', '', 'POST');
-        $email_match = Request::getInt('email_match', 0, 'GET') ?: Request::getInt('email_match', 0, 'POST');
+        $email_match = Request::hasVar('email_match', 'GET') ? Request::getInt('email_match', 0, 'GET') : Request::getInt('email_match', 0, 'POST');
         if ($email !== '') {
             $string = $xoopsDB->escape(trim($email));
             switch ($email_match) {
