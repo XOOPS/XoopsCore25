@@ -365,9 +365,12 @@ switch ($op) {
         break;
 
     case 'toggle':
-        $field_id = Request::getInt('field_id', 0, 'GET');
+        if (!$GLOBALS['xoopsSecurity']->check()) {
+            redirect_header('field.php', 3, implode(',', $GLOBALS['xoopsSecurity']->getErrors()));
+        }
+        $field_id = Request::getInt('field_id', 0, 'POST');
         if ($field_id > 0) {
-            $field_required = Request::getInt('field_required', 0, 'GET');
+            $field_required = Request::getInt('field_required', 0, 'POST');
             profile_visible_toggle($field_id, $field_required);
         }
         break;

@@ -45,9 +45,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         }
     }
 
-    /** @var XoopsMemberHandler $member_handler */
-    $member_handler = xoops_getHandler('member');
-    $member_handler->updateUsersByField('theme', $new_value);
+    if (isset($new_value) && $new_value !== '') {
+        /** @var XoopsMemberHandler $member_handler */
+        $member_handler = xoops_getHandler('member');
+        $member_handler->updateUsersByField('theme', $new_value);
+    }
 
     $wizard->redirectToPage('+1');
 }
