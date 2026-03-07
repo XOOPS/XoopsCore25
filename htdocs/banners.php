@@ -387,7 +387,7 @@ if (Request::hasVar('op', 'POST')) {
     }
 
     if (Request::hasVar('pass', 'POST')) {
-        $clean_pass = Request::getString('pass', '', 'POST');
+        $clean_pass = Request::getText('pass', '', 'POST');
     }
 
     if (Request::hasVar('url', 'POST')) {

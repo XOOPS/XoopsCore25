@@ -41,7 +41,7 @@ $member_handler = xoops_getHandler('member');
 $group_list     = $member_handler->getGroupList();
 
 $perms = Request::getArray('perms', [], 'POST');
-if (is_array($perms) && !empty($perms)) {
+if (!empty($perms)) {
     /** @var  XoopsGroupPermHandler $gperm_handler */
     $gperm_handler = xoops_getHandler('groupperm');
     foreach ($perms as $perm_name => $perm_data) {

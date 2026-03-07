@@ -77,7 +77,7 @@ if (Request::hasVar('move_messages', 'POST') && Request::hasVar('msg_id', 'POST'
     if (!$GLOBALS['xoopsSecurity']->check()) {
         $GLOBALS['xoopsTpl']->assign('errormsg', implode('<br>', $GLOBALS['xoopsSecurity']->getErrors()));
     } else {
-        $msg  = Request::getArray('msg_id', [], 'POST');
+        $msg  = array_map('intval', Request::getArray('msg_id', [], 'POST'));
         $size = count($msg);
         if ($op === 'save') {
             for ($i = 0; $i < $size; ++$i) {

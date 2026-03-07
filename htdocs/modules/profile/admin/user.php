@@ -116,14 +116,14 @@ switch ($op) {
         $myts = \MyTextSanitizer::getInstance();
         $user->setVar('uname', Request::getString('uname', '', 'POST'));
         $user->setVar('email', Request::getString('email', '', 'POST'));
-        $newLevel = Request::getInt('level', -1, 'POST');
-        if ($newLevel !== -1 && $user->getVar('level') != $newLevel) {
+        if (Request::hasVar('level', 'POST') && $user->getVar('level') != Request::getInt('level', 0, 'POST')) {
+            $newLevel = Request::getInt('level', 0, 'POST');
             $user->setVar('level', $newLevel);
         }
         $password = $vpass = null;
-        if (Request::getString('password', '', 'POST') !== '') {
-            $password = trim(Request::getString('password', '', 'POST'));
-            $vpass    = trim(Request::getString('vpass', '', 'POST'));
+        if (Request::getText('password', '', 'POST') !== '') {
+            $password = trim(Request::getText('password', '', 'POST'));
+            $vpass    = trim(Request::getText('vpass', '', 'POST'));
             $user->setVar('pass', password_hash($password, PASSWORD_DEFAULT));
         } elseif ($user->isNew()) {
             $password = $vpass = '';
