@@ -10,16 +10,10 @@
     <link rel="stylesheet" type="text/css" media="screen" as="font" crossorigin="anonymous"  href="<{xoAppUrl 'media/font-awesome6/css/fontawesome.min.css'}>">
     <link rel="stylesheet" type="text/css" media="screen" as="font" crossorigin="anonymous"  href="<{xoAppUrl 'media/font-awesome6/css/solid.min.css'}>">
     <link rel="stylesheet" type="text/css" media="screen" as="font" crossorigin="anonymous"  href="<{xoAppUrl 'media/font-awesome6/css/brands.min.css'}>">
-    <link rel="stylesheet" type="text/css" media="screen" as="font" crossorigin="anonymous"  href="<{xoAppUrl 'media/font-awesome6/css/v4-shims.min.css'}>">    
-
-    <{php}>
-        $language = $GLOBALS['xoopsConfig']['language'];
-        if(file_exists(XOOPS_ROOT_PATH.'/language/'.$language.'/style.css')){
-        echo "
-        <link rel=\"stylesheet\" type=\"text/css\" media=\"all\" href=\"language/$language/style.css\"/>
-        ";
-        }
-    <{/php}>
+    <link rel="stylesheet" type="text/css" media="screen" as="font" crossorigin="anonymous"  href="<{xoAppUrl 'media/font-awesome6/css/v4-shims.min.css'}>">
+    <{if $language_stylesheet_url}>
+    <link rel="stylesheet" type="text/css" media="all" href="<{$language_stylesheet_url}>"/>
+    <{/if}>
     <!-- fine-upload -->
     <!-- Fine Uploader New/Modern CSS file
     ====================================================================== -->
