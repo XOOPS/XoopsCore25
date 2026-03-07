@@ -39,7 +39,7 @@ if (!empty($editor)) {
     // required configs
     $options['editor'] = $editor;
     $options['name']   = 'required_element';
-    $options['value']  = \Xmf\Request::getText('message', '', 'POST');
+    $options['value']  = \Xmf\Request::getText('message', '', 'POST') ?: \Xmf\Request::getText('message', '', 'GET');
     // optional configs
     $options['rows']   = 25; // default value = 5
     $options['cols']   = 60; // default value = 50

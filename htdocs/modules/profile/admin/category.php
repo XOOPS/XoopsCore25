@@ -51,7 +51,7 @@ switch ($op) {
 
     case 'edit':
         include_once dirname(__DIR__) . '/include/forms.php';
-        $obj  = $handler->get(Request::getInt('id', 0, 'GET'));
+        $obj  = $handler->get(Request::getInt('id', 0));
         $form = $obj->getForm();
         $form->display();
         break;

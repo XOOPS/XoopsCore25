@@ -228,12 +228,13 @@ class SuperglobalMigrationTest extends TestCase
     // ---------------------------------------------------------------
 
     #[Test]
-    public function getUrlFiltersInvalidRedirectUrl(): void
+    public function getUrlReturnsValidUrlFormat(): void
     {
         $_POST['not_redirect'] = 'https://evil.com/phish';
         $value = Request::getUrl('not_redirect', '', 'POST');
-        // getUrl preserves valid URLs — domain validation is the app's job.
-        // Verify it returns a string and the value is a valid URL format.
+        // getUrl preserves valid URLs — domain validation is the app's responsibility
+        // (see notification_update.php parse_url() check). This test verifies getUrl
+        // returns a non-empty string for well-formed URLs.
         $this->assertIsString($value);
         $this->assertNotSame('', $value);
     }

@@ -144,7 +144,7 @@ switch ($op) {
                 $installed_mods = $tpltpl_handler->getModuleTplCount($tplset);
 
                 //all templates or only one template
-                if (Request::getInt('active_templates', 0, 'POST') === 0) {
+                if ((Request::getInt('active_templates', 0, 'GET') ?: Request::getInt('active_templates', 0, 'POST')) === 0) {
                     foreach (array_keys($tplsets_arr) as $i) {
                         $tplsetname = $tplsets_arr[$i]->getVar('tplset_name');
                         $tplstats   = $tpltpl_handler->getModuleTplCount($tplsetname);

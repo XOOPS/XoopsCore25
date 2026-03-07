@@ -137,7 +137,7 @@ switch ($op) {
         $verif    = false;
         if (Request::hasVar('comments_after', 'POST') && Request::hasVar('comments_before', 'POST')) {
             if (Request::getString('comments_after', '', 'POST') != Request::getString('comments_before', '', 'POST')) {
-				$com_after = strtotime(Request::getString('comments_after', '', 'POST'));
+                $com_after = strtotime(Request::getString('comments_after', '', 'POST'));
                 $com_before = strtotime(Request::getString('comments_before', '', 'POST'));
                 if ($com_after) {
                     $criteria->add(new Criteria('com_created', $com_after, '>'));

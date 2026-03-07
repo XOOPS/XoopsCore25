@@ -70,7 +70,7 @@ $com_user      = '';
 $com_email     = '';
 $com_url       = '';
 
-if (!empty($_POST)) {
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     if (Request::hasVar('com_dopost', 'POST')) {
         $op = 'post';
     } elseif (Request::hasVar('com_dopreview', 'POST')) {

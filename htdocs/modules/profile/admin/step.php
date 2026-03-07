@@ -47,7 +47,7 @@ switch ($op) {
         break;
 
     case 'edit':
-        $obj = $handler->get(Request::getInt('id', 0, 'GET'));
+        $obj = $handler->get(Request::getInt('id', 0));
         include_once dirname(__DIR__) . '/include/forms.php';
         $form = profile_getStepForm($obj);
         $form->display();
