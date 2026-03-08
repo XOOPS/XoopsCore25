@@ -31,7 +31,7 @@ if (file_exists(XOOPS_ROOT_PATH . '/language/' . $language . '/style.css')) {
 }
 
 // Get Action type
-$op = Request::getCmd('op', 'list');
+$op = Request::getCmd('op', 'list', 'GET');
 
 switch ($op) {
     case 'list':
