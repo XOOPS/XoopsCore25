@@ -58,10 +58,10 @@ $start           = 0;
 $status_array[0] = _AM_SYSTEM_COMMENTS_FORM_ALL_STATUS;
 
 $comments = [];
-//$status   = (!isset($_REQUEST['status']) || !in_array((int)($_REQUEST['status']), array_keys($status_array))) ? 0 : (int)($_REQUEST['status']);
-$status = (!isset($_REQUEST['status']) || !array_key_exists((int)$_REQUEST['status'], $status_array)) ? 0 : (int)$_REQUEST['status'];
+$statusVal = Request::hasVar('comments_status', 'GET') ? Request::getInt('comments_status', 0, 'GET') : Request::getInt('comments_status', 0, 'POST');
+$status = !array_key_exists($statusVal, $status_array) ? 0 : $statusVal;
 
-$module          = !isset($_REQUEST['module']) ? 0 : (int)$_REQUEST['module'];
+$module          = Request::hasVar('comments_module', 'GET') ? Request::getInt('comments_module', 0, 'GET') : Request::getInt('comments_module', 0, 'POST');
 $modules_Handler = xoops_getHandler('module');
 $module_array    = $modules_Handler->getList(new Criteria('hascomments', 1));
 $module_array[0] = _AM_SYSTEM_COMMENTS_FORM_ALL_MODS;
@@ -109,7 +109,7 @@ switch ($op) {
         $form_purge->addElement(new XoopsFormTextDateSelect(_AM_SYSTEM_COMMENTS_FORM_PURGE_DATE_BEFORE, 'comments_before', '15'));
 
         //user
-        $form_purge->addElement(new XoopsFormSelectUser(_AM_SYSTEM_COMMENTS_FORM_PURGE_USER, 'comments_userid', false, ($_REQUEST['comments_userid'] ?? ''), 5, true));
+        $form_purge->addElement(new XoopsFormSelectUser(_AM_SYSTEM_COMMENTS_FORM_PURGE_USER, 'comments_userid', false, Request::getArray('comments_userid', [], 'POST'), 5, true));
 
         //groups
         $groupe_select = new XoopsFormSelectGroup(_AM_SYSTEM_COMMENTS_FORM_PURGE_GROUPS, 'comments_groupe', false, '', 5, true);
@@ -128,17 +128,21 @@ switch ($op) {
         $modules->addOptionArray($options);
         $form_purge->addElement($modules, true);
         $form_purge->addElement(new XoopsFormHidden('op', 'comments_purge'));
+        $form_purge->addElement(new XoopsFormHiddenToken());
         $form_purge->addElement(new XoopsFormButton('', 'submit', _SUBMIT, 'submit'));
         $xoopsTpl->assign('form', $form_purge->render());
         break;
 
     case 'comments_purge':
+        if (!$GLOBALS['xoopsSecurity']->check()) {
+            redirect_header('admin.php?fct=comments', 3, implode('<br>', $GLOBALS['xoopsSecurity']->getErrors()));
+        }
         $criteria = new CriteriaCompo();
         $verif    = false;
-        if (isset($_POST['comments_after']) && isset($_POST['comments_before'])) {
-            if ($_POST['comments_after'] != $_POST['comments_before']) {
-				$com_after = strtotime(Request::getString('comments_after', time()));
-                $com_before = strtotime(Request::getString('comments_before', time()));
+        if (Request::hasVar('comments_after', 'POST') && Request::hasVar('comments_before', 'POST')) {
+            if (Request::getString('comments_after', '', 'POST') != Request::getString('comments_before', '', 'POST')) {
+                $com_after = strtotime(Request::getString('comments_after', '', 'POST'));
+                $com_before = strtotime(Request::getString('comments_before', '', 'POST'));
                 if ($com_after) {
                     $criteria->add(new Criteria('com_created', $com_after, '>'));
                 }
@@ -148,29 +152,29 @@ switch ($op) {
                 $verif = true;
             }
         }
-        $com_modid = Request::getInt('comments_modules', 0);
+        $com_modid = Request::getInt('comments_modules', 0, 'POST');
         if ($com_modid > 0) {
             $criteria->add(new Criteria('com_modid', $com_modid));
             $verif = true;
         }
-        $comments_status = Request::getInt('comments_status', 0);
+        $comments_status = Request::getInt('comments_status', 0, 'POST');
         if ($comments_status > 0) {
-            $criteria->add(new Criteria('com_status', $_POST['comments_status']));
+            $criteria->add(new Criteria('com_status', $comments_status));
             $verif = true;
         }
-        $comments_userid = Request::getString('comments_userid', '');
-        if ($comments_userid != '') {
-            foreach ($_REQUEST['comments_userid'] as $del) {
-                $criteria->add(new Criteria('com_uid', $del), 'OR');
+        $comments_userid = Request::getArray('comments_userid', [], 'POST');
+        if (!empty($comments_userid)) {
+            foreach ($comments_userid as $userId) {
+                $criteria->add(new Criteria('com_uid', (int) $userId), 'OR');
             }
             $verif = true;
         }
-        $comments_groupe = Request::getString('comments_groupe', '');
-        if ($comments_groupe != '') {
-            foreach ($_POST['comments_groupe'] as $del => $u_name) {
+        $comments_groupe = Request::getArray('comments_groupe', [], 'POST');
+        if (!empty($comments_groupe)) {
+            foreach ($comments_groupe as $groupId) {
                 /** @var XoopsMemberHandler $member_handler */
                 $member_handler = xoops_getHandler('member');
-                $members        = $member_handler->getUsersByGroup($u_name, true);
+                $members        = $member_handler->getUsersByGroup((int) $groupId, true);
                 $mcount         = count($members);
                 if ($mcount > 4000) {
                     redirect_header('admin.php?fct=comments', 2, _MP_DELETECOUNT);
@@ -181,11 +185,12 @@ switch ($op) {
             }
             $verif = true;
         }
-        if (isset($_POST['commentslist_id'])) {
-            $commentslist_count = (!empty($_POST['commentslist_id']) && \is_array($_POST['commentslist_id'])) ? count($_POST['commentslist_id']) : 0;
+        $commentslist_id = Request::getArray('commentslist_id', [], 'POST');
+        if (!empty($commentslist_id)) {
+            $commentslist_count = count($commentslist_id);
             if ($commentslist_count > 0) {
                 for ($i = 0; $i < $commentslist_count; ++$i) {
-                    $criteria->add(new Criteria('com_id', $_REQUEST['commentslist_id'][$i]), 'OR');
+                    $criteria->add(new Criteria('com_id', (int) $commentslist_id[$i]), 'OR');
                 }
             }
             $verif = true;
@@ -213,15 +218,13 @@ switch ($op) {
         $comments_status  = '';
 
         $criteria        = new CriteriaCompo();
-        $comments_module = Request::getInt('comments_module', 0);
+        $comments_module = Request::hasVar('comments_module', 'GET') ? Request::getInt('comments_module', 0, 'GET') : Request::getInt('comments_module', 0, 'POST');
         if ($comments_module > 0) {
             $criteria->add(new Criteria('com_modid', $comments_module));
-            $comments_module = $_REQUEST['comments_module'];
         }
-        $comments_status = Request::getInt('comments_status', 0);
+        $comments_status = Request::hasVar('comments_status', 'GET') ? Request::getInt('comments_status', 0, 'GET') : Request::getInt('comments_status', 0, 'POST');
         if ($comments_status > 0) {
             $criteria->add(new Criteria('com_status', $comments_status));
-            $comments_status = $_REQUEST['comments_status'];
         }
 
         $criteria->setSort('com_created');

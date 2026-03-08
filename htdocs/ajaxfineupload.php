@@ -57,7 +57,7 @@ use Xmf\Jwt\TokenReader;
  * SOFTWARE.
  */
 
-if (isset($_POST['Authorization'])) {
+if (\Xmf\Request::hasVar('Authorization', 'POST')) {
     define('PROTECTOR_SKIP_DOS_CHECK', 1);
 }
 include __DIR__ . '/mainfile.php';
@@ -118,7 +118,7 @@ if ($method === 'POST') {
 
     // Assumes you have a chunking.success.endpoint set to point here with a query parameter of "done".
     // For example: /myserver/handlers/endpoint.php?done
-    if (isset($_GET['done'])) {
+    if (\Xmf\Request::hasVar('done', 'GET')) {
         $result = $uploader->combineChunks(XOOPS_ROOT_PATH . '/uploads');
     } else { // Handle upload requests
         // Call handleUpload() with the name of the folder, relative to PHP's getcwd()
@@ -151,8 +151,9 @@ if ($method === 'POST') {
  */
 function get_request_method()
 {
-    if (isset($_POST['_method']) && $_POST['_method'] != null) {
-        return $_POST['_method'];
+    $method = \Xmf\Request::getCmd('_method', '', 'POST');
+    if ($method !== '') {
+        return $method;
     }
     return $_SERVER['REQUEST_METHOD'];
 }

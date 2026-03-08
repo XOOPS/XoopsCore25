@@ -64,8 +64,8 @@ function userCheck($uname, $email, $pass, $vpass)
     $uname = Request::getString('uname', '', 'POST');
     $email = Request::getEmail('email', '', 'POST');
     $url = Request::getUrl('url', '', 'POST');
-    $pass = Request::getString('pass', '', 'POST');
-    $vpass = Request::getString('vpass', '', 'POST');
+    $pass = Request::getVar('pass', '', 'POST', 'string', Request::MASK_ALLOW_RAW | Request::MASK_NO_TRIM);
+    $vpass = Request::getVar('vpass', '', 'POST', 'string', Request::MASK_ALLOW_RAW | Request::MASK_NO_TRIM);
     $timezone_offset = Request::getFloat('cid', $xoopsConfig['default_TZ'], 'POST');
     $user_viewemail = Request::getBool('user_viewemail', false, 'POST');
     $user_mailok = Request::getBool('user_mailok', false, 'POST');
@@ -74,12 +74,12 @@ function userCheck($uname, $email, $pass, $vpass)
 // from $_GET we may use keys: op, id, actkey
 $clean_id     = '';
 $clean_actkey = '';
-if (!isset($_POST['op']) && isset($_GET['op'])) {
+if (!Request::hasVar('op', 'POST') && Request::hasVar('op', 'GET')) {
     $op = Request::getCmd('op', 'register', 'GET');
-    if (isset($_GET['id'])) {
-        $clean_id =  Request::getInt('id', '', 'GET');
+    if (Request::hasVar('id', 'GET')) {
+        $clean_id =  Request::getInt('id', 0, 'GET');
     }
-    if (isset($_GET['actkey'])) {
+    if (Request::hasVar('actkey', 'GET')) {
         $clean_actkey =  Request::getCmd('actkey', '', 'GET');
     }
     $op = in_array($op, [

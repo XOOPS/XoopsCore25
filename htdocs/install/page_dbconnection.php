@@ -36,9 +36,9 @@ $vars = & $_SESSION['settings'];
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $params = ['DB_TYPE', 'DB_HOST', 'DB_USER', 'DB_PASS'];
     foreach ($params as $name) {
-        $vars[$name] = $_POST[$name];
+        $vars[$name] = \Xmf\Request::getString($name, '', 'POST');
     }
-    $vars['DB_PCONNECT'] = isset($_POST['DB_PCONNECT']) ? 1 : 0;
+    $vars['DB_PCONNECT'] = \Xmf\Request::hasVar('DB_PCONNECT', 'POST') ? 1 : 0;
 }
 
 $error = '';

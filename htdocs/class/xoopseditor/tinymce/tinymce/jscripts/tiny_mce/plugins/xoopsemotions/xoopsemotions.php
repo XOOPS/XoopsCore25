@@ -63,14 +63,15 @@ if ($admin && $op === 'SmilesAdd') {
         'image/png',
     ], 100000, 120, 120);
     $uploader->setPrefix('smil');
-    if ($uploader->fetchMedia($_POST['xoops_upload_file'][0])) {
+    $uploadFiles = Request::getArray('xoops_upload_file', [], 'POST');
+    if (!empty($uploadFiles) && $uploader->fetchMedia($uploadFiles[0])) {
         if (!$uploader->upload()) {
             $err = $uploader->getErrors();
         } else {
             $smile_url     = $uploader->getSavedFileName();
             $smile_code = Request::getString('smile_code', '', 'POST');
             $smile_desc = Request::getString('smile_desc', '', 'POST');
-            $smile_display = (int) $_POST['smile_display'] > 0 ? 1 : 0;
+            $smile_display = Request::getInt('smile_display', 0, 'POST') > 0 ? 1 : 0;
             $newid         = $db->genId($db->prefix('smilies') . '_id_seq');
             $sql           = sprintf('INSERT INTO %s (id, code, smile_url, emotion, display) VALUES (%d, %s, %s, %s, %d)', $db->prefix('smiles'), $newid, $db->quote($smile_code), $db->quote($smile_url), $db->quote($smile_desc), $smile_display);
             if (!$db->exec($sql)) {
@@ -85,7 +86,7 @@ if ($admin && $op === 'SmilesAdd') {
         unset($_SESSION['XoopsEmotions_expire']);
         redirect_header($current_file, 2, _AM_DBUPDATED);
     } else {
-        redirect_header($current_file, 3, xoops_error($err));
+        redirect_header($current_file, 3, $err);
     }
 }
 

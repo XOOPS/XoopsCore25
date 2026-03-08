@@ -16,6 +16,8 @@
  * @since               2.0.0
  * @author              Kazumi Ono (AKA onokazu) http://www.myweb.ne.jp/, http://jp.xoops.org/
  */
+use Xmf\Request;
+
 if (!defined('XOOPS_ROOT_PATH') || !is_object($xoopsModule)) {
     throw new \RuntimeException('Restricted access');
 }
@@ -38,19 +40,45 @@ include_once $GLOBALS['xoops']->path('include/notification_constants.php');
 include_once $GLOBALS['xoops']->path('include/notification_functions.php');
 xoops_loadLanguage('notification');
 
-if (!isset($_POST['not_submit'])) {
-    redirect_header($_POST['not_redirect'], 3, _NOPERM);
+$not_redirect  = Request::getUrl('not_redirect', XOOPS_URL . '/', 'POST');
+$redirectParts = parse_url($not_redirect);
+$allowedParts  = parse_url(XOOPS_URL);
+if (false === $redirectParts || false === $allowedParts) {
+    $not_redirect = XOOPS_URL . '/';
+} elseif (isset($redirectParts['host'])) {
+    $redirectScheme = strtolower((string) ($redirectParts['scheme'] ?? ''));
+    $allowedScheme  = strtolower((string) ($allowedParts['scheme'] ?? ''));
+    $redirectHost   = strtolower((string) $redirectParts['host']);
+    $allowedHost    = strtolower((string) ($allowedParts['host'] ?? ''));
+    $redirectPort   = (int) ($redirectParts['port'] ?? ('https' === $redirectScheme ? 443 : 80));
+    $allowedPort    = (int) ($allowedParts['port'] ?? ('https' === $allowedScheme ? 443 : 80));
+    if ($redirectScheme !== $allowedScheme || $redirectHost !== $allowedHost || $redirectPort !== $allowedPort) {
+        $not_redirect = XOOPS_URL . '/';
+    }
+} elseif (!str_starts_with($not_redirect, '/')) {
+    $not_redirect = XOOPS_URL . '/';
+}
+
+if (!Request::hasVar('not_submit', 'POST')) {
+    redirect_header($not_redirect, 3, _NOPERM);
 }
 
 if (!$GLOBALS['xoopsSecurity']->check()) {
-    redirect_header($_POST['not_redirect'], 3, implode('<br>', $GLOBALS['xoopsSecurity']->getErrors()));
+    redirect_header($not_redirect, 3, implode('<br>', $GLOBALS['xoopsSecurity']->getErrors()));
 }
 
 // NOTE: in addition to the templates provided in the block and view
 // modes, we can have buttons, etc. which load the arguments to be
 // read by this script.  That way a module can really customize its
 // look as to where/how the notification options are made available.
-$update_list = $_POST['not_list'];
+$update_list = Request::getArray('not_list', [], 'POST');
+$update_list = array_filter($update_list, static function ($item): bool {
+    if (!is_array($item) || !isset($item['params']) || !is_string($item['params']) || substr_count($item['params'], ',') !== 2) {
+        return false;
+    }
+    $parts = explode(',', $item['params']);
+    return $parts[0] !== '' && $parts[1] !== '' && $parts[2] !== '';
+});
 $module_id   = $xoopsModule->getVar('mid');
 $user_id     = is_object($xoopsUser) ? $xoopsUser->getVar('uid') : 0;
 
@@ -62,7 +90,7 @@ $user_id     = is_object($xoopsUser) ? $xoopsUser->getVar('uid') : 0;
 /** @var  XoopsNotificationHandler $notification_handler */
 $notification_handler = xoops_getHandler('notification');
 foreach ($update_list as $update_item) {
-    [$category, $item_id, $event] = preg_split('/,/', $update_item['params']);
+    [$category, $item_id, $event] = explode(',', $update_item['params']);
     $status = !empty($update_item['status']) ? 1 : 0;
     if (!$status) {
         $notification_handler->unsubscribe($category, $item_id, $event, $module_id, $user_id);
@@ -80,25 +108,18 @@ foreach ($update_list as $update_item) {
 // comment submit occurs and where comment approval occurs)...
 $redirect_args = [];
 foreach ($update_list as $update_item) {
-    [$category, $item_id, $event] = preg_split('/,/', $update_item['params']);
+    [$category, $item_id, $event] = explode(',', $update_item['params']);
     $category_info =& notificationCategoryInfo($category);
     if (!empty($category_info['item_name'])) {
         $redirect_args[$category_info['item_name']] = $item_id;
     }
 }
 
-// TODO: write a central function to put together args with '?' and '&'
-// symbols...
-$argstring = '';
-$first_arg = 1;
-foreach (array_keys($redirect_args) as $arg) {
-    if ($first_arg) {
-        $argstring .= '?' . $arg . '=' . $redirect_args[$arg];
-        $first_arg = 0;
-    } else {
-        $argstring .= '&' . $arg . '=' . $redirect_args[$arg];
-    }
+if (!empty($redirect_args)) {
+    $query = http_build_query($redirect_args);
+    $separator = (strpos($not_redirect, '?') !== false) ? '&' : '?';
+    $not_redirect .= $separator . $query;
 }
 
-redirect_header($_POST['not_redirect'] . $argstring, 3, _NOT_UPDATEOK);
+redirect_header($not_redirect, 3, _NOT_UPDATEOK);
 exit();

@@ -16,13 +16,15 @@
  * @author              Jan Pedersen
  * @author              Taiwen Jiang <phppp@users.sourceforge.net>
  */
+use Xmf\Request;
+
 include_once __DIR__ . '/admin_header.php';
 xoops_cp_header();
 
 $indexAdmin = new ModuleAdmin();
 echo $indexAdmin->addNavigation(basename(__FILE__));
 
-$op         = $_REQUEST['op'] ?? 'form';
+$op         = Request::hasVar('op', 'POST') ? Request::getCmd('op', 'form', 'POST') : Request::getCmd('op', 'form', 'GET');
 /** @var \PmMessageHandler $pm_handler */
 $pm_handler = xoops_getModuleHandler('message');
 
@@ -35,21 +37,30 @@ switch ($op) {
 
     case 'prune':
         $criteria = new CriteriaCompo();
-        if ($_REQUEST['after']['date'] && $_REQUEST['after']['date'] !== 'YYYY/MM/DD') {
-            $criteria->add(new Criteria('msg_time', strtotime($_REQUEST['after']['date']) + (int)$_REQUEST['after']['time'], '>'));
+        $after  = Request::getArray('after', [], 'POST');
+        $before = Request::getArray('before', [], 'POST');
+        if (!empty($after['date']) && $after['date'] !== 'YYYY/MM/DD') {
+            $afterTime = strtotime($after['date']);
+            if (false !== $afterTime) {
+                $criteria->add(new Criteria('msg_time', $afterTime + (int)($after['time'] ?? 0), '>'));
+            }
         }
-        if ($_REQUEST['before']['date'] && $_REQUEST['before']['date'] !== 'YYYY/MM/DD') {
-            $criteria->add(new Criteria('msg_time', strtotime($_REQUEST['before']['date']) + (int)$_REQUEST['before']['time'], '<'));
+        if (!empty($before['date']) && $before['date'] !== 'YYYY/MM/DD') {
+            $beforeTime = strtotime($before['date']);
+            if (false !== $beforeTime) {
+                $criteria->add(new Criteria('msg_time', $beforeTime + (int)($before['time'] ?? 0), '<'));
+            }
         }
-        if (isset($_REQUEST['onlyread']) && $_REQUEST['onlyread'] == 1) {
+        if (Request::getInt('onlyread', 0, 'POST') === 1) {
             $criteria->add(new Criteria('read_msg', 1));
         }
-        if (!isset($_REQUEST['includesave']) || $_REQUEST['includesave'] == 0) {
+        if (Request::getInt('includesave', 0, 'POST') === 0) {
             $savecriteria = new CriteriaCompo(new Criteria('to_save', 0));
             $savecriteria->add(new Criteria('from_save', 0));
             $criteria->add($savecriteria);
         }
-        if (isset($_REQUEST['notifyusers']) && $_REQUEST['notifyusers'] == 1) {
+        $notifyusers = Request::getInt('notifyusers', 0, 'POST') === 1;
+        if ($notifyusers) {
             $notifycriteria = $criteria;
             $notifycriteria->add(new Criteria('to_delete', 0));
             $notifycriteria->setGroupBy('to_userid');
@@ -60,7 +71,7 @@ switch ($op) {
         if ($deletedrows === false) {
             redirect_header('prune.php', 2, _PM_AM_ERRORWHILEPRUNING);
         }
-        if (isset($_REQUEST['notifyusers']) && $_REQUEST['notifyusers'] == 1) {
+        if ($notifyusers) {
             $errors = false;
             foreach ($uids as $uid => $messagecount) {
                 $pm = $pm_handler->create();

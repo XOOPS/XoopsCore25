@@ -16,6 +16,9 @@ namespace Tests\Unit\System\ModulesAdmin;
 
 use PHPUnit\Framework\TestCase;
 
+require_once __DIR__ . '/SourceFileTestTrait.php';
+use Tests\Unit\System\SourceFileTestTrait;
+
 /**
  * Tests for modulesadmin.php foreign key handling and bug fixes
  *
@@ -25,44 +28,17 @@ use PHPUnit\Framework\TestCase;
  */
 class ModulesAdminTest extends TestCase
 {
+    use SourceFileTestTrait;
+
     /**
-     * @var string The source code of modulesadmin.php
+     * @var string Alias for sourceContent (kept for readability)
      */
     private string $sourceCode;
 
-    /**
-     * @var string Path to the modulesadmin.php file under test
-     */
-    private string $filePath;
-
     protected function setUp(): void
     {
-        // Use the file from the project root relative to where tests run
-        // Adjust path based on your project structure
-        $possiblePaths = [
-            // Webroot IS htdocs: __DIR__ = tests/unit/htdocs/modules/system
-            dirname(__DIR__, 5) . '/modules/system/admin/modulesadmin/modulesadmin.php',
-            // XoopsCore25 repo layout: htdocs is a subdirectory
-            dirname(__DIR__, 4) . '/htdocs/modules/system/admin/modulesadmin/modulesadmin.php',
-            dirname(__DIR__, 5) . '/htdocs/modules/system/admin/modulesadmin/modulesadmin.php',
-            dirname(__DIR__, 3) . '/modules/system/admin/modulesadmin/modulesadmin.php',
-            dirname(__DIR__, 7) . '/modules/system/admin/modulesadmin/modulesadmin.php',
-        ];
-
-        $this->filePath = '';
-        foreach ($possiblePaths as $path) {
-            if (file_exists($path)) {
-                $this->filePath = $path;
-                break;
-            }
-        }
-
-        if ($this->filePath === '') {
-            $this->markTestSkipped('modulesadmin.php not found in expected locations');
-        }
-
-        $this->sourceCode = file_get_contents($this->filePath);
-        $this->assertNotEmpty($this->sourceCode, 'Source file should not be empty');
+        $this->loadSourceFile('htdocs/modules/system/admin/modulesadmin/modulesadmin.php');
+        $this->sourceCode = $this->sourceContent;
     }
 
     // =========================================================================

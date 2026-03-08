@@ -16,6 +16,8 @@
  * @author              Jan Pedersen
  * @author              Taiwen Jiang <phppp@users.sourceforge.net>
  */
+use Xmf\Request;
+
 include_once __DIR__ . '/admin_header.php';
 xoops_cp_header();
 $indexAdmin = new ModuleAdmin();
@@ -25,7 +27,7 @@ $indexAdmin->addItemButton(_ADD . ' ' . _PROFILE_AM_FIELD, 'field.php?op=new', '
 echo $indexAdmin->addNavigation(basename(__FILE__));
 echo $indexAdmin->renderButton('right', '');
 
-$op = $_REQUEST['op'] ?? (isset($_REQUEST['id']) ? 'edit' : 'list');
+$op = Request::hasVar('op', 'POST') ? Request::getCmd('op', 'list', 'POST') : Request::getCmd('op', (Request::hasVar('id', 'GET') || Request::hasVar('id', 'POST')) ? 'edit' : 'list', 'GET');
 /** @var XoopsModuleHandler $profilefield_handler */
 $profilefield_handler = xoops_getModuleHandler('field');
 
@@ -111,7 +113,10 @@ switch ($op) {
         break;
 
     case 'edit':
-        $obj = $profilefield_handler->get($_REQUEST['id']);
+        $obj = $profilefield_handler->get(Request::getInt('id', 0, 'GET'));
+        if (!is_object($obj)) {
+            redirect_header('field.php', 2, _PROFILE_AM_FIELDNOTCONFIGURABLE);
+        }
         if (!$obj->getVar('field_config') && !$obj->getVar('field_show') && !$obj->getVar('field_edit')) { //If no configs exist
             redirect_header('field.php', 2, _PROFILE_AM_FIELDNOTCONFIGURABLE);
         }
@@ -121,7 +126,10 @@ switch ($op) {
         break;
 
     case 'edit-option-strings':
-        $obj = $profilefield_handler->get($_REQUEST['id']);
+        $obj = $profilefield_handler->get(Request::getInt('id', 0, 'GET'));
+        if (!is_object($obj)) {
+            redirect_header('field.php', 2, _PROFILE_AM_FIELDNOTCONFIGURABLE);
+        }
         $fieldOptions = $obj->getVar('field_options');
         if (empty($fieldOptions)) { //If no option strings exist
             redirect_header('field.php', 2, _PROFILE_AM_FIELDNOTCONFIGURABLE);
@@ -135,13 +143,14 @@ switch ($op) {
         if (!$GLOBALS['xoopsSecurity']->check()) {
             redirect_header('field.php', 3, implode(',', $GLOBALS['xoopsSecurity']->getErrors()));
         }
-        if (isset($_POST['field_ids']) && count($_POST['field_ids']) > 0) {
-            $oldweight = $_POST['oldweight'];
-            $oldcat    = $_POST['oldcat'];
-            $category  = $_POST['category'];
-            $weight    = $_POST['weight'];
+        $field_ids = Request::getArray('field_ids', [], 'POST');
+        if (count($field_ids) > 0) {
+            $oldweight = Request::getArray('oldweight', [], 'POST');
+            $oldcat    = Request::getArray('oldcat', [], 'POST');
+            $category  = Request::getArray('category', [], 'POST');
+            $weight    = Request::getArray('weight', [], 'POST');
             $ids       = [];
-            foreach ($_POST['field_ids'] as $field_id) {
+            foreach ($field_ids as $field_id) {
                 if ($oldweight[$field_id] != $weight[$field_id] || $oldcat[$field_id] != $category[$field_id]) {
                     //if field has changed
                     $ids[] = (int) $field_id;
@@ -175,38 +184,44 @@ switch ($op) {
             redirect_header('field.php', 3, implode(',', $GLOBALS['xoopsSecurity']->getErrors()));
         }
         $redirect_to_edit = false;
-        if (isset($_REQUEST['id'])) {
-            $obj = $profilefield_handler->get($_REQUEST['id']);
+        $fieldId = Request::getInt('id', 0, 'POST');
+        if ($fieldId > 0) {
+            $obj = $profilefield_handler->get($fieldId);
+            if (!is_object($obj)) {
+                redirect_header('field.php', 2, _PROFILE_AM_FIELDNOTCONFIGURABLE);
+            }
             if (!$obj->getVar('field_config') && !$obj->getVar('field_show') && !$obj->getVar('field_edit')) { //If no configs exist
                 redirect_header('admin.php', 2, _PROFILE_AM_FIELDNOTCONFIGURABLE);
             }
         } else {
             $obj = $profilefield_handler->create();
-            $obj->setVar('field_name', $_REQUEST['field_name']);
+            $obj->setVar('field_name', Request::getCmd('field_name', '', 'POST'));
             $obj->setVar('field_moduleid', $GLOBALS['xoopsModule']->getVar('mid'));
             $obj->setVar('field_show', 1);
             $obj->setVar('field_edit', 1);
             $obj->setVar('field_config', 1);
             $redirect_to_edit = true;
         }
-        $obj->setVar('field_title', $_REQUEST['field_title']);
-        $obj->setVar('field_description', $_REQUEST['field_description']);
+        $obj->setVar('field_title', Request::getString('field_title', '', 'POST'));
+        $obj->setVar('field_description', Request::getString('field_description', '', 'POST'));
         if ($obj->getVar('field_config')) {
-            $obj->setVar('field_type', $_REQUEST['field_type']);
-            if (isset($_REQUEST['field_valuetype'])) {
-                $obj->setVar('field_valuetype', $_REQUEST['field_valuetype']);
+            $obj->setVar('field_type', Request::getCmd('field_type', '', 'POST'));
+            if (Request::hasVar('field_valuetype', 'POST')) {
+                $obj->setVar('field_valuetype', Request::getInt('field_valuetype', 0, 'POST'));
             }
             $options = $obj->getVar('field_options');
 
-            if (isset($_REQUEST['removeOptions']) && \is_array($_REQUEST['removeOptions'])) {
-                foreach ($_REQUEST['removeOptions'] as $index) {
+            $removeOptions = Request::getArray('removeOptions', [], 'POST');
+            if (!empty($removeOptions)) {
+                foreach ($removeOptions as $index) {
                     unset($options[$index]);
                 }
                 $redirect_to_edit = true;
             }
 
-            if (!empty($_REQUEST['addOption'])) {
-                foreach ($_REQUEST['addOption'] as $option) {
+            $addOption = Request::getArray('addOption', [], 'POST');
+            if (!empty($addOption)) {
+                foreach ($addOption as $option) {
                     if (empty($option['value'])) {
                         continue;
                     }
@@ -217,13 +232,13 @@ switch ($op) {
             $obj->setVar('field_options', $options);
         }
         if ($obj->getVar('field_edit')) {
-            $required = $_REQUEST['field_required'] ?? 0;
+            $required = Request::getInt('field_required', 0, 'POST');
             $obj->setVar('field_required', $required); //0 = no, 1 = yes
-            if (isset($_REQUEST['field_maxlength'])) {
-                $obj->setVar('field_maxlength', $_REQUEST['field_maxlength']);
+            if (Request::hasVar('field_maxlength', 'POST')) {
+                $obj->setVar('field_maxlength', Request::getInt('field_maxlength', 0, 'POST'));
             }
-            if (isset($_REQUEST['field_default'])) {
-                $field_default = $obj->getValueForSave($_REQUEST['field_default']);
+            if (Request::hasVar('field_default', 'POST')) {
+                $field_default = $obj->getValueForSave(Request::getVar('field_default', null, 'POST'));
                 //Check for multiple selections
                 if (is_array($field_default)) {
                     $obj->setVar('field_default', serialize($field_default));
@@ -234,13 +249,11 @@ switch ($op) {
         }
 
         if ($obj->getVar('field_show')) {
-            $obj->setVar('field_weight', $_REQUEST['field_weight']);
-            $obj->setVar('cat_id', $_REQUEST['field_category']);
+            $obj->setVar('field_weight', Request::getInt('field_weight', 0, 'POST'));
+            $obj->setVar('cat_id', Request::getInt('field_category', 0, 'POST'));
         }
-        if (/*$obj->getVar('field_edit') && */
-            isset($_REQUEST['step_id'])
-        ) {
-            $obj->setVar('step_id', $_REQUEST['step_id']);
+        if (Request::hasVar('step_id', 'POST')) {
+            $obj->setVar('step_id', Request::getInt('step_id', 0, 'POST'));
         }
         if ($profilefield_handler->insert($obj)) {
             /** @var XoopsGroupPermHandler $groupperm_handler */
@@ -262,7 +275,8 @@ switch ($op) {
                     $criteria = new CriteriaCompo(new Criteria('gperm_name', $perm));
                     $criteria->add(new Criteria('gperm_itemid', (int) $obj->getVar('field_id')));
                     $criteria->add(new Criteria('gperm_modid', (int) $GLOBALS['xoopsModule']->getVar('mid')));
-                    if (isset($_REQUEST[$perm]) && \is_array($_REQUEST[$perm])) {
+                    $permGroups = Request::getArray($perm, [], 'POST');
+                    if (!empty($permGroups)) {
                         $perms = $groupperm_handler->getObjects($criteria);
                         if (count($perms) > 0) {
                             foreach (array_keys($perms) as $i) {
@@ -271,7 +285,7 @@ switch ($op) {
                         } else {
                             $groups = [];
                         }
-                        foreach ($_REQUEST[$perm] as $groupid) {
+                        foreach ($permGroups as $groupid) {
                             $groupid = (int) $groupid;
                             if (!isset($groups[$groupid])) {
                                 $perm_obj = $groupperm_handler->create();
@@ -283,7 +297,7 @@ switch ($op) {
                                 unset($perm_obj);
                             }
                         }
-                        $removed_groups = array_diff(array_keys($groups), $_REQUEST[$perm]);
+                        $removed_groups = array_diff(array_keys($groups), $permGroups);
                         if (count($removed_groups) > 0) {
                             $criteria->add(new Criteria('gperm_groupid', '(' . implode(',', $removed_groups) . ')', 'IN'));
                             $groupperm_handler->deleteAll($criteria);
@@ -308,8 +322,11 @@ switch ($op) {
         if (!$GLOBALS['xoopsSecurity']->check()) {
             redirect_header('field.php', 3, implode(',', $GLOBALS['xoopsSecurity']->getErrors()));
         }
-        $obj = $profilefield_handler->get($_REQUEST['id']);
-        $fieldOptions = \Xmf\Request::getArray('field_options');
+        $obj = $profilefield_handler->get(Request::getInt('id', 0, 'POST'));
+        if (!is_object($obj)) {
+            redirect_header('field.php', 2, _PROFILE_AM_FIELDNOTCONFIGURABLE);
+        }
+        $fieldOptions = Request::getArray('field_options', [], 'POST');
         if (empty($fieldOptions)) { //If no option strings exist
             redirect_header('field.php', 2, _PROFILE_AM_FIELDNOTCONFIGURABLE);
         }
@@ -321,11 +338,14 @@ switch ($op) {
         break;
 
     case 'delete':
-        $obj = $profilefield_handler->get($_REQUEST['id']);
+        $obj = $profilefield_handler->get(Request::hasVar('id', 'POST') ? Request::getInt('id', 0, 'POST') : Request::getInt('id', 0, 'GET'));
+        if (!is_object($obj)) {
+            redirect_header('field.php', 2, _PROFILE_AM_FIELDNOTCONFIGURABLE);
+        }
         if (!$obj->getVar('field_config')) {
             redirect_header('index.php', 2, _PROFILE_AM_FIELDNOTCONFIGURABLE);
         }
-        if (isset($_REQUEST['ok']) && $_REQUEST['ok'] == 1) {
+        if (Request::getInt('ok', 0, 'POST') === 1) {
             if (!$GLOBALS['xoopsSecurity']->check()) {
                 redirect_header('field.php', 3, implode(',', $GLOBALS['xoopsSecurity']->getErrors()));
             }
@@ -338,7 +358,7 @@ switch ($op) {
             xoops_confirm(
                 [
                     'ok' => 1,
-                    'id' => $_REQUEST['id'],
+                    'id' => $obj->getVar('field_id'),
                     'op' => 'delete',
                 ],
                 $_SERVER['REQUEST_URI'],
@@ -348,12 +368,13 @@ switch ($op) {
         break;
 
     case 'toggle':
-        if (isset($_REQUEST['field_id'])) {
-            $field_id = (int) $_REQUEST['field_id'];
-            if (isset($_REQUEST['field_required'])) {
-                $field_required = (int) $_REQUEST['field_required'];
-                profile_visible_toggle($field_id, $field_required);
-            }
+        if (!$GLOBALS['xoopsSecurity']->check()) {
+            redirect_header('field.php', 3, implode(',', $GLOBALS['xoopsSecurity']->getErrors()));
+        }
+        $field_id = Request::getInt('field_id', 0, 'POST');
+        if ($field_id > 0) {
+            $field_required = Request::getInt('field_required', 0, 'POST');
+            profile_visible_toggle($field_id, $field_required);
         }
         break;
 }
@@ -371,6 +392,9 @@ function profile_visible_toggle($field_id, $field_required)
     $field_required = ($field_required == 1) ? 0 : 1;
     $this_handler   = xoops_getModuleHandler('field', 'profile');
     $obj            = $this_handler->get($field_id);
+    if (!is_object($obj)) {
+        redirect_header('field.php', 2, _PROFILE_AM_FIELDNOTCONFIGURABLE);
+    }
     $obj->setVar('field_required', $field_required);
     if ($this_handler->insert($obj, true)) {
         redirect_header('field.php', 1, _PROFILE_AM_REQUIRED_TOGGLE_SUCCESS);

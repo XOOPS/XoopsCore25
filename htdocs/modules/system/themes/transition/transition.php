@@ -38,7 +38,7 @@ class XoopsGuiTransition extends XoopsSystemGui
     public function __construct()
     {
         // Check cookie
-        $used = isset($_COOKIE['transition_theme']) ? $_COOKIE['transition_theme'] : 0;
+        $used = \Xmf\Request::getInt('transition_theme', 0, 'COOKIE');
 
         if(0 == $used){
 
@@ -70,7 +70,7 @@ class XoopsGuiTransition extends XoopsSystemGui
         $currentScript = str_replace(XOOPS_ROOT_PATH . '/', '', (string) $_SERVER['SCRIPT_FILENAME']);
 
         if('admin.php' == $currentScript){
-            $show = $_GET['show'] ?? '';
+            $show = \Xmf\Request::getCmd('show', '', 'GET');
             if('info' == $show){
                 $tpl->assign('showTransitionInfo', true);
             }
@@ -323,7 +323,7 @@ class XoopsGuiTransition extends XoopsSystemGui
             }
         }
 
-        if (is_object($xoopsModule) || !empty($_GET['xoopsorgnews'])) {
+        if (is_object($xoopsModule) || \Xmf\Request::hasVar('xoopsorgnews', 'GET')) {
             if (is_object($xoopsModule) && (!empty($xoopsModule->getInfo('adminmenu')) && file_exists($file = XOOPS_ROOT_PATH . '/modules/' . $xoopsModule->getVar('dirname') . '/' . $xoopsModule->getInfo('adminmenu')))) {
                 include $file;
             }

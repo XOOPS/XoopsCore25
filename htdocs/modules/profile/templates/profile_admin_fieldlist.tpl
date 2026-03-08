@@ -27,9 +27,15 @@
                     </td>
                     <td align="center">
                         <{if !empty($field.canEdit)}>
-                            <a href="field.php?op=toggle&amp;field_required=<{$field.field_required}>&amp;field_id=<{$field.field_id}>"><img
+                            <form action="field.php" method="post" style="display:inline">
+                                <input type="hidden" name="op" value="toggle"/>
+                                <input type="hidden" name="field_id" value="<{$field.field_id}>"/>
+                                <input type="hidden" name="field_required" value="<{$field.field_required}>"/>
+                                <{$token}>
+                                <button type="submit" style="border:none;background:none;cursor:pointer;padding:0"><img
                                         src="<{xoModuleIcons16}><{$field.field_required}>.png" title="<{$smarty.const._PROFILE_AM_REQUIRED_TOGGLE}>"
-                                        alt="<{$smarty.const._PROFILE_AM_REQUIRED_TOGGLE}>"/></a>
+                                        alt="<{$smarty.const._PROFILE_AM_REQUIRED_TOGGLE}>"/></button>
+                            </form>
                         <{/if}>
                     </td>
                     <td align="center">

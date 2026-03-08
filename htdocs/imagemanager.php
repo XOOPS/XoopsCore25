@@ -20,14 +20,26 @@ use Xmf\Request;
 
 include __DIR__ . '/mainfile.php';
 
+// Compute language-specific stylesheet URL once (used in both cases)
+$language = basename((string) $xoopsConfig['language']);
+if (!preg_match('/^[A-Za-z0-9_-]+$/', $language)) {
+    $language = 'english';
+}
+$language_stylesheet_url = '';
+if (file_exists(XOOPS_ROOT_PATH . '/language/' . $language . '/style.css')) {
+    $language_stylesheet_url = XOOPS_URL . '/language/' . $language . '/style.css';
+}
+
 // Get Action type
-$op = Request::getCmd('op', 'list');
+$op = Request::getCmd('op', 'list', 'GET');
 
 switch ($op) {
     case 'list':
     default:
-        if (isset($_REQUEST['target'])) {
-            $target = Request::getWord('target', '', 'REQUEST');
+        if (Request::hasVar('target', 'GET') || Request::hasVar('target', 'POST')) {
+            $target = Request::hasVar('target', 'GET')
+                ? Request::getWord('target', '', 'GET')
+                : Request::getWord('target', '', 'POST');
         } else {
             exit('Target not set');
         }
@@ -133,16 +145,21 @@ switch ($op) {
             }
             $xoopsTpl->assign('xsize', 800);
             $xoopsTpl->assign('ysize', 600);
+            $xoopsTpl->assign('errorcat', false);
         } else {
+            $xoopsTpl->assign('errorcat', true);
             $xoopsTpl->assign('xsize', 400);
             $xoopsTpl->assign('ysize', 180);
         }
+        $xoopsTpl->assign('language_stylesheet_url', $language_stylesheet_url);
         $xoopsTpl->display('db:system_imagemanager.tpl');
         exit();
 
     case 'upload':
-        if (isset($_REQUEST['target'])) {
-            $target = $target = Request::getWord('target', '', 'REQUEST');
+        if (Request::hasVar('target', 'GET') || Request::hasVar('target', 'POST')) {
+            $target = Request::hasVar('target', 'GET')
+                ? Request::getWord('target', '', 'GET')
+                : Request::getWord('target', '', 'POST');
         } else {
             exit('Target not set');
         }
@@ -194,11 +211,11 @@ switch ($op) {
         $xoopsTpl->assign('jwt', $jwt);
         $fineup_debug = 'false';
         if (($xoopsUser instanceof \XoopsUser ? $xoopsUser->isAdmin() : false)
-            && isset($_REQUEST['FINEUPLOADER_DEBUG'])) {
+            && (Request::hasVar('FINEUPLOADER_DEBUG', 'GET') || Request::hasVar('FINEUPLOADER_DEBUG', 'POST'))) {
             $fineup_debug = 'true';
         }
         $xoopsTpl->assign('fineup_debug', $fineup_debug);
-
+        $xoopsTpl->assign('language_stylesheet_url', $language_stylesheet_url);
         $xoopsTpl->display('db:system_imagemanager2.tpl');
         exit();
 }

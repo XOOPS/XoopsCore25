@@ -24,7 +24,7 @@ defined('XOOPS_ROOT_PATH') || exit('Restricted access');
 $sample_form = new XoopsThemeForm('', 'sample_form', 'action.php');
 $sample_form->setExtra('enctype="multipart/form-data"');
 // Not required but for user-friendly concern
-$editor = !empty($_REQUEST['editor']) ? $_REQUEST['editor'] : '';
+$editor = \Xmf\Request::getString('editor', '', 'GET') ?: \Xmf\Request::getString('editor', '', 'POST');
 if (!empty($editor)) {
     setcookie('editor', $editor); // save to cookie
 } else {
@@ -39,7 +39,7 @@ if (!empty($editor)) {
     // required configs
     $options['editor'] = $editor;
     $options['name']   = 'required_element';
-    $options['value']  = empty($_REQUEST['message']) ? '' : $_REQUEST['message'];
+    $options['value']  = \Xmf\Request::getText('message', '', 'POST') ?: \Xmf\Request::getText('message', '', 'GET');
     // optional configs
     $options['rows']   = 25; // default value = 5
     $options['cols']   = 60; // default value = 50

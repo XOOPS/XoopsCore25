@@ -17,10 +17,12 @@
  * @author              Taiwen Jiang <phppp@users.sourceforge.net>
  */
 
+use Xmf\Request;
+
 include __DIR__ . '/header.php';
 
 $limit_default    = 20;
-$op               = $_REQUEST['op'] ?? 'search';
+$op               = Request::getCmd('op', '', 'GET') ?: Request::getCmd('op', 'search', 'POST');
 $groups           = $GLOBALS['xoopsUser'] ? $GLOBALS['xoopsUser']->getGroups() : [XOOPS_GROUP_ANONYMOUS];
 $searchable_types = [
     'textbox',
@@ -181,15 +183,17 @@ switch ($op) {
 
         $criteria = new CriteriaCompo(new Criteria('level', 0, '>'));
 
-        if (isset($_REQUEST['uname']) && $_REQUEST['uname'] !== '') {
-            $uname = trim($_REQUEST['uname']);
+        $uname = Request::getString('uname', '', 'GET') ?: Request::getString('uname', '', 'POST');
+        $uname_match = Request::hasVar('uname_match', 'GET') ? Request::getInt('uname_match', 0, 'GET') : Request::getInt('uname_match', 0, 'POST');
+        if ($uname !== '') {
+            $uname = trim($uname);
             // Basic input validation - only allow alphanumeric characters and underscores
             if (!preg_match('/^[a-zA-Z0-9_]+$/', $uname)) {
                 redirect_header(XOOPS_URL . '/', 3, 'Invalid username provided.');
             }
 
             // Adjust the search pattern based on the match type
-            switch ($_REQUEST['uname_match']) {
+            switch ($uname_match) {
                 case XOOPS_MATCH_START:
                     $uname .= '%';
                     break;
@@ -224,7 +228,7 @@ switch ($op) {
                 foreach ($results as $row) {
                     // Populate search URL and search variables based on the results
                     $search_url[] = 'uname=' . urlencode($row['uname']);
-                    $search_url[] = 'uname_match=' . urlencode($_REQUEST['uname_match']);
+                    $search_url[] = 'uname_match=' . urlencode((string) $uname_match);
                     $searchvars[] = 'uname';
                 }
             }
@@ -233,9 +237,11 @@ switch ($op) {
             // You might render a page or redirect the user based on these results
         }
 
-        if (isset($_REQUEST['email']) && $_REQUEST['email'] !== '') {
-            $string = $xoopsDB->escape(trim($_REQUEST['email']));
-            switch ($_REQUEST['email_match']) {
+        $email = Request::getString('email', '', 'GET') ?: Request::getString('email', '', 'POST');
+        $email_match = Request::hasVar('email_match', 'GET') ? Request::getInt('email_match', 0, 'GET') : Request::getInt('email_match', 0, 'POST');
+        if ($email !== '') {
+            $string = $xoopsDB->escape(trim($email));
+            switch ($email_match) {
                 case XOOPS_MATCH_START:
                     $string .= '%';
                     break;
@@ -249,8 +255,8 @@ switch ($op) {
                     break;
             }
             $searchvars[] = 'email';
-            $search_url[] = 'email=' . $_REQUEST['email'];
-            $search_url[] = 'email_match=' . $_REQUEST['email_match'];
+            $search_url[] = 'email=' . rawurlencode($email);
+            $search_url[] = 'email_match=' . $email_match;
             $criteria->add(new Criteria('email', $string, 'LIKE'));
             $criteria->add(new Criteria('user_viewemail', 1));
         }
@@ -262,8 +268,9 @@ switch ($op) {
                 continue;
             }
             $fieldname = $fields[$i]->getVar('field_name');
+            $fieldValues = Request::getArray($fieldname, [], 'GET') ?: Request::getArray($fieldname, [], 'POST');
             if (in_array($fields[$i]->getVar('field_type'), ['select', 'radio', 'timezone'])) {
-                if (empty($_REQUEST[$fieldname])) {
+                if (empty($fieldValues)) {
                     continue;
                 }
 
@@ -271,7 +278,7 @@ switch ($op) {
                 switch ($fields[$i]->getVar('field_valuetype')) {
                     case XOBJ_DTYPE_OTHER:
                     case XOBJ_DTYPE_INT:
-                        $value        = array_map('intval', $_REQUEST[$fieldname]);
+                        $value        = array_map('intval', $fieldValues);
                         $searchvars[] = $fieldname;
                         $criteria->add(new Criteria($fieldname, '(' . implode(',', $value) . ')', 'IN'));
                         break;
@@ -279,25 +286,27 @@ switch ($op) {
                     case XOBJ_DTYPE_URL:
                     case XOBJ_DTYPE_TXTBOX:
                     case XOBJ_DTYPE_TXTAREA:
-                        $value        = array_map([$GLOBALS['xoopsDB'], 'quoteString'], $_REQUEST[$fieldname]);
+                        $value        = array_map([$GLOBALS['xoopsDB'], 'quoteString'], $fieldValues);
                         $searchvars[] = $fieldname;
                         $criteria->add(new Criteria($fieldname, '(' . implode(',', $value) . ')', 'IN'));
                         break;
                 }
-                foreach ($_REQUEST[$fieldname] as $value) {
-                    $search_url[] = $fieldname . '[]=' . $value;
+                foreach ($fieldValues as $value) {
+                    $search_url[] = $fieldname . '[]=' . rawurlencode($value);
                 }
             } else {
                 //Other fields (not radio, not select)
                 switch ($fields[$i]->getVar('field_valuetype')) {
                     case XOBJ_DTYPE_OTHER:
                     case XOBJ_DTYPE_INT:
+                        $largerVal  = Request::getString($fieldname . '_larger', '', 'GET') ?: Request::getString($fieldname . '_larger', '', 'POST');
+                        $smallerVal = Request::getString($fieldname . '_smaller', '', 'GET') ?: Request::getString($fieldname . '_smaller', '', 'POST');
                         switch ($fields[$i]->getVar('field_type')) {
                             case 'date':
                             case 'datetime':
-                                $value = $_REQUEST[$fieldname . '_larger'];
-                                if (!($value = strtotime($_REQUEST[$fieldname . '_larger']))) {
-                                    $value = (int) $_REQUEST[$fieldname . '_larger'];
+                                $value = strtotime($largerVal);
+                                if (!$value) {
+                                    $value = (int) $largerVal;
                                 }
                                 if ($value > 0) {
                                     $search_url[] = $fieldname . '_larger=' . $value;
@@ -305,9 +314,9 @@ switch ($op) {
                                     $criteria->add(new Criteria($fieldname, $value, '>='));
                                 }
 
-                                $value = $_REQUEST[$fieldname . '_smaller'];
-                                if (!($value = strtotime($_REQUEST[$fieldname . '_smaller']))) {
-                                    $value = (int) $_REQUEST[$fieldname . '_smaller'];
+                                $value = strtotime($smallerVal);
+                                if (!$value) {
+                                    $value = (int) $smallerVal;
                                 }
                                 if ($value > 0) {
                                     $search_url[] = $fieldname . '_smaller=' . $value;
@@ -317,29 +326,29 @@ switch ($op) {
                                 break;
 
                             default:
-                                if (isset($_REQUEST[$fieldname . '_larger']) && (int) $_REQUEST[$fieldname . '_larger'] !== 0) {
-                                    $value        = (int) $_REQUEST[$fieldname . '_larger'];
-                                    $search_url[] = $fieldname . '_larger=' . $value;
+                                $intLarger  = Request::hasVar($fieldname . '_larger', 'GET') ? Request::getInt($fieldname . '_larger', 0, 'GET') : Request::getInt($fieldname . '_larger', 0, 'POST');
+                                $intSmaller = Request::hasVar($fieldname . '_smaller', 'GET') ? Request::getInt($fieldname . '_smaller', 0, 'GET') : Request::getInt($fieldname . '_smaller', 0, 'POST');
+                                if ($intLarger !== 0) {
+                                    $search_url[] = $fieldname . '_larger=' . $intLarger;
                                     $searchvars[] = $fieldname;
-                                    $criteria->add(new Criteria($fieldname, $value, '>='));
+                                    $criteria->add(new Criteria($fieldname, $intLarger, '>='));
                                 }
 
-                                if (isset($_REQUEST[$fieldname . '_smaller']) && (int) $_REQUEST[$fieldname . '_smaller'] !== 0) {
-                                    $value        = (int) $_REQUEST[$fieldname . '_smaller'];
-                                    $search_url[] = $fieldname . '_smaller=' . $value;
+                                if ($intSmaller !== 0) {
+                                    $search_url[] = $fieldname . '_smaller=' . $intSmaller;
                                     $searchvars[] = $fieldname;
-                                    $criteria->add(new Criteria($fieldname, $value, '<='));
+                                    $criteria->add(new Criteria($fieldname, $intSmaller, '<='));
                                 }
                                 break;
                         }
 
-                        if (isset($_REQUEST[$fieldname]) && !isset($_REQUEST[$fieldname . '_smaller']) && !isset($_REQUEST[$fieldname . '_larger'])) {
-                            if (!is_array($_REQUEST[$fieldname])) {
-                                $value        = (int) $_REQUEST[$fieldname];
+                        if (!empty($fieldValues) && $largerVal === '' && $smallerVal === '') {
+                            if (!is_array($fieldValues)) {
+                                $value        = (int) $fieldValues;
                                 $search_url[] = $fieldname . '=' . $value;
                                 $criteria->add(new Criteria($fieldname, $value, '='));
                             } else {
-                                $value = array_map('intval', $_REQUEST[$fieldname]);
+                                $value = array_map('intval', $fieldValues);
                                 foreach ($value as $thisvalue) {
                                     $search_url[] = $fieldname . '[]=' . $thisvalue;
                                 }
@@ -353,9 +362,11 @@ switch ($op) {
                     case XOBJ_DTYPE_URL:
                     case XOBJ_DTYPE_TXTBOX:
                     case XOBJ_DTYPE_TXTAREA:
-                        if (isset($_REQUEST[$fieldname]) && $_REQUEST[$fieldname] !== '') {
-                            $value = $xoopsDB->escape(trim($_REQUEST[$fieldname]));
-                            switch ($_REQUEST[$fieldname . '_match']) {
+                        $textFieldVal = Request::getString($fieldname, '', 'GET') ?: Request::getString($fieldname, '', 'POST');
+                        $textFieldMatch = Request::hasVar($fieldname . '_match', 'GET') ? Request::getInt($fieldname . '_match', 0, 'GET') : Request::getInt($fieldname . '_match', 0, 'POST');
+                        if ($textFieldVal !== '') {
+                            $value = $xoopsDB->escape(trim($textFieldVal));
+                            switch ($textFieldMatch) {
                                 case XOOPS_MATCH_START:
                                     $value .= '%';
                                     break;
@@ -368,8 +379,8 @@ switch ($op) {
                                     $value = '%' . $value . '%';
                                     break;
                             }
-                            $search_url[] = $fieldname . '=' . $_REQUEST[$fieldname];
-                            $search_url[] = $fieldname . '_match=' . $_REQUEST[$fieldname . '_match'];
+                            $search_url[] = $fieldname . '=' . rawurlencode($textFieldVal);
+                            $search_url[] = $fieldname . '_match=' . $textFieldMatch;
                             $operator     = 'LIKE';
                             $criteria->add(new Criteria($fieldname, $value, $operator));
                             $searchvars[] = $fieldname;
@@ -391,16 +402,17 @@ switch ($op) {
 
         // change by zyspec:
         $sortby = 'uname';
-        if (!empty($_REQUEST['sortby'])) {
-            switch ($_REQUEST['sortby']) {
+        $sortbyInput = Request::getCmd('sortby', '', 'GET') ?: Request::getCmd('sortby', '', 'POST');
+        if ($sortbyInput !== '') {
+            switch ($sortbyInput) {
                 case 'name':
                 case 'email':
                 case 'uname':
-                    $sortby = $_REQUEST['sortby'];
+                    $sortby = $sortbyInput;
                     break;
                 default:
-                    if (isset($fields[$_REQUEST['sortby']])) {
-                        $sortby = $fields[$_REQUEST['sortby']]->getVar('field_name');
+                    if (isset($fields[$sortbyInput])) {
+                        $sortby = $fields[$sortbyInput]->getVar('field_name');
                     }
                     break;
             }
@@ -410,19 +422,24 @@ switch ($op) {
         // add search groups , only for Webmasters
         $searchgroups = [];
         if ($GLOBALS['xoopsUser'] && $GLOBALS['xoopsUser']->isAdmin()) {
-            $searchgroups = empty($_REQUEST['selgroups']) ? [] : array_map('intval', $_REQUEST['selgroups']);
+            $selgroups = Request::getArray('selgroups', [], 'GET') ?: Request::getArray('selgroups', [], 'POST');
+            $searchgroups = empty($selgroups) ? [] : array_map('intval', $selgroups);
             foreach ($searchgroups as $group) {
                 $search_url[] = 'selgroups[]=' . $group;
             }
         }
 
-        $order = $_REQUEST['order'] == 0 ? 'ASC' : 'DESC';
+        $orderInt = Request::getInt('order', -1, 'GET');
+        if ($orderInt < 0) {
+            $orderInt = Request::getInt('order', 0, 'POST');
+        }
+        $order = $orderInt === 0 ? 'ASC' : 'DESC';
         $criteria->setOrder($order);
 
-        $limit = empty($_REQUEST['limit']) ? $limit_default : (int) $_REQUEST['limit'];
+        $limit = Request::getInt('limit', 0, 'GET') ?: Request::getInt('limit', $limit_default, 'POST');
         $criteria->setLimit($limit);
 
-        $start = isset($_REQUEST['start']) ? (int) $_REQUEST['start'] : 0;
+        $start = Request::hasVar('start', 'GET') ? Request::getInt('start', 0, 'GET') : Request::getInt('start', 0, 'POST');
         $criteria->setStart($start);
 
         [$users, $profiles, $total_users] = $profile_handler->search($criteria, $searchvars, $searchgroups);
@@ -460,7 +477,7 @@ switch ($op) {
             $search_url[] = 'order=' . $order;
             //TODO remove it for final release
             //            $search_url[] = "sortby=" . htmlspecialchars($_REQUEST['sortby']);
-            $search_url[] = 'sortby=' . htmlspecialchars($sortby, ENT_QUOTES | ENT_HTML5); // change by zyspec
+            $search_url[] = 'sortby=' . rawurlencode($sortby);
             $search_url[] = 'limit=' . $limit;
             if (isset($search_url)) {
                 $args = implode('&amp;', $search_url);

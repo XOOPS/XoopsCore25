@@ -23,7 +23,7 @@ $xoopsOption['pagetype'] = 'user';
 include __DIR__ . '/header.php';
 
 include $GLOBALS['xoops']->path('header.php');
-if (!empty($_GET['id']) && !empty($_GET['actkey'])) {
+if (Request::getInt('id', 0, 'GET') !== 0 && Request::getString('actkey', '', 'GET') !== '') {
     $id     = Request::getInt('id', 0, 'GET');
     $actkey = Request::getString('actkey', '', 'GET');
     if (empty($id)) {
@@ -75,11 +75,11 @@ if (!empty($_GET['id']) && !empty($_GET['actkey'])) {
         }
     }
     // Not implemented yet: re-send activiation code
-} elseif (!empty($_REQUEST['email']) && $xoopsConfigUser['activation_type'] != 0) {
+} elseif (Request::getString('email', '', 'POST') !== '' && $xoopsConfigUser['activation_type'] != 0) {
     $myts           = \MyTextSanitizer::getInstance();
     /** @var XoopsMemberHandler $member_handler */
     $member_handler = xoops_getHandler('member');
-    $getuser        = $member_handler->getUsers(new Criteria('email', $xoopsDB->escape(trim($_REQUEST['email']))));
+    $getuser        = $member_handler->getUsers(new Criteria('email', $xoopsDB->escape(Request::getString('email', '', 'POST'))));
     if (count($getuser) == 0) {
         redirect_header(XOOPS_URL, 2, _US_SORRYNOTFOUND);
     }

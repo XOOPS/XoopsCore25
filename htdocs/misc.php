@@ -270,7 +270,7 @@ EOAVJS;
             xoops_misc_popup_body('db:system_misc_online.tpl', $variables, true, true);
             break;
         case 'ssllogin':
-            if ($xoopsConfig['use_ssl'] && isset($_POST[$xoopsConfig['sslpost_name']]) && is_object($xoopsUser)) {
+            if ($xoopsConfig['use_ssl'] && Request::hasVar($xoopsConfig['sslpost_name'], 'POST') && is_object($xoopsUser)) {
                 include_once $GLOBALS['xoops']->path('language/' . $xoopsConfig['language'] . '/user.php');
                 echo sprintf(_US_LOGGINGU, $xoopsUser->getVar('uname'));
                 echo '<div style="text-align:center;"><input class="formButton" value="' . _CLOSE . '" type="button" onclick="window.opener.location.reload();window.close();" /></div>';

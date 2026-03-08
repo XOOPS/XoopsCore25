@@ -188,9 +188,10 @@ class xos_kernel_Xoops2
      */
     public function themeSelect()
     {
-        if (!empty($_POST['xoops_theme_select']) && in_array($_POST['xoops_theme_select'], xoops_getConfigOption('theme_set_allowed'))) {
-            xoops_setConfigOption('theme_set', $_POST['xoops_theme_select']);
-            $_SESSION['xoopsUserTheme'] = $_POST['xoops_theme_select'];
+        $themeSelect = \Xmf\Request::getString('xoops_theme_select', '', 'POST');
+        if ($themeSelect !== '' && in_array($themeSelect, xoops_getConfigOption('theme_set_allowed'))) {
+            xoops_setConfigOption('theme_set', $themeSelect);
+            $_SESSION['xoopsUserTheme'] = $themeSelect;
         } elseif (!empty($_SESSION['xoopsUserTheme']) && in_array($_SESSION['xoopsUserTheme'], xoops_getConfigOption('theme_set_allowed'))) {
             xoops_setConfigOption('theme_set', $_SESSION['xoopsUserTheme']);
         }

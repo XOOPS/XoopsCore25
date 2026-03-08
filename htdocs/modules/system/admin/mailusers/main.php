@@ -61,13 +61,14 @@ switch ($op) {
 
         $display_criteria = 1;
         $form             = new XoopsThemeForm(_AM_SYSTEM_MAILUSERS_LIST, 'mailusers', 'admin.php?fct=mailusers', 'post', true);
-        if (!empty($_POST['memberslist_id'])) {
-            $user_count    = count($_POST['memberslist_id']);
+        $memberslist_id = Request::getArray('memberslist_id', [], 'POST');
+        if (!empty($memberslist_id)) {
+            $user_count    = count($memberslist_id);
             $display_names = '';
             for ($i = 0; $i < $user_count; ++$i) {
-                $uid_hidden = new XoopsFormHidden('mail_to_user[]', $_POST['memberslist_id'][$i]);
+                $uid_hidden = new XoopsFormHidden('mail_to_user[]', $memberslist_id[$i]);
                 $form->addElement($uid_hidden);
-                $display_names .= "<a href='" . XOOPS_URL . '/userinfo.php?uid=' . $_POST['memberslist_id'][$i] . "' rel='external'>" . XoopsUser::getUnameFromId($_POST['memberslist_id'][$i]) . '</a>, ';
+                $display_names .= "<a href='" . XOOPS_URL . '/userinfo.php?uid=' . $memberslist_id[$i] . "' rel='external'>" . XoopsUser::getUnameFromId($memberslist_id[$i]) . '</a>, ';
                 unset($uid_hidden);
             }
             $users_label = new XoopsFormLabel(_AM_SYSTEM_MAILUSERS_SENDTOUSERS2, substr($display_names, 0, -2));
@@ -158,39 +159,44 @@ switch ($op) {
         $xoBreadCrumb->addLink(_AM_SYSTEM_MAILUSERS_LIST);
         $xoBreadCrumb->render();
 
-        if (!empty($_POST['mail_send_to'])) {
+        $mail_send_to = Request::getArray('mail_send_to', [], 'POST');
+        if (!empty($mail_send_to)) {
             $added          = [];
             $added_id       = [];
             $criteria       = [];
             $count_criteria = 0; // user count via criteria;
-            if (!empty($_POST['mail_inactive'])) {
+            if (Request::getInt('mail_inactive', 0, 'POST') != 0) {
                 $criteria[] = 'level = 0';
             } else {
-                if (!empty($_POST['mail_mailok'])) {
+                if (Request::getInt('mail_mailok', 0, 'POST') != 0) {
                     $criteria[] = 'user_mailok = 1';
                 }
-                if (!empty($_POST['mail_lastlog_min'])) {
-                    $time = strtotime(trim((string) $_POST['mail_lastlog_min']));
+                $mail_lastlog_min = Request::getString('mail_lastlog_min', '', 'POST');
+                if (!empty($mail_lastlog_min)) {
+                    $time = strtotime(trim($mail_lastlog_min));
                     if ($time > 0) {
                         $criteria[] = "last_login > $time";
                     }
                 }
-                if (!empty($_POST['mail_lastlog_max'])) {
-                    $time = strtotime(trim((string) $_POST['mail_lastlog_max']));
+                $mail_lastlog_max = Request::getString('mail_lastlog_max', '', 'POST');
+                if (!empty($mail_lastlog_max)) {
+                    $time = strtotime(trim($mail_lastlog_max));
                     if ($time > 0) {
                         $criteria[] = "last_login < $time";
                     }
                 }
-                if (!empty($_POST['mail_idle_more']) && is_numeric($_POST['mail_idle_more'])) {
-                    $f_mail_idle_more = (int)trim($_POST['mail_idle_more']);
+                $mail_idle_more = Request::getInt('mail_idle_more', 0, 'POST');
+                if (!empty($mail_idle_more)) {
+                    $f_mail_idle_more = $mail_idle_more;
                     $time             = 60 * 60 * 24 * $f_mail_idle_more;
                     $time             = time() - $time;
                     if ($time > 0) {
                         $criteria[] = "last_login < $time";
                     }
                 }
-                if (!empty($_POST['mail_idle_less']) && is_numeric($_POST['mail_idle_less'])) {
-                    $f_mail_idle_less = (int)trim($_POST['mail_idle_less']);
+                $mail_idle_less = Request::getInt('mail_idle_less', 0, 'POST');
+                if (!empty($mail_idle_less)) {
+                    $f_mail_idle_less = $mail_idle_less;
                     $time             = 60 * 60 * 24 * $f_mail_idle_less;
                     $time             = time() - $time;
                     if ($time > 0) {
@@ -198,21 +204,24 @@ switch ($op) {
                     }
                 }
             }
-            if (!empty($_POST['mail_regd_min'])) {
-                $time = strtotime(trim((string) $_POST['mail_regd_min']));
+            $mail_regd_min = Request::getString('mail_regd_min', '', 'POST');
+            if (!empty($mail_regd_min)) {
+                $time = strtotime(trim($mail_regd_min));
                 if ($time > 0) {
                     $criteria[] = "user_regdate > $time";
                 }
             }
-            if (!empty($_POST['mail_regd_max'])) {
-                $time = strtotime(trim((string) $_POST['mail_regd_max']));
+            $mail_regd_max = Request::getString('mail_regd_max', '', 'POST');
+            if (!empty($mail_regd_max)) {
+                $time = strtotime(trim($mail_regd_max));
                 if ($time > 0) {
                     $criteria[] = "user_regdate < $time";
                 }
             }
-            if (!empty($criteria) || !empty($_POST['mail_to_group'])) {
+            $mail_to_group = Request::getArray('mail_to_group', [], 'POST');
+            if (!empty($criteria) || !empty($mail_to_group)) {
                 $criteria_object = new CriteriaCompo();
-                $criteria_object->setStart($_POST['mail_start'] ?? 0);
+                $criteria_object->setStart(Request::getInt('mail_start', 0, 'POST'));
                 $criteria_object->setLimit($limit);
                 foreach ($criteria as $c) {
                     [$field, $op, $value] = explode(' ', $c);
@@ -222,7 +231,7 @@ switch ($op) {
                 }
                 /** @var XoopsMemberHandler $member_handler */
                 $member_handler = xoops_getHandler('member');
-                $groups         = empty($_POST['mail_to_group']) ? [] : array_map('intval', $_POST['mail_to_group']);
+                $groups         = empty($mail_to_group) ? [] : array_map('intval', $mail_to_group);
                 $getusers       = $member_handler->getUsersByGroupLink($groups, $criteria_object, true);
                 $count_criteria = $member_handler->getUserCountByGroupLink($groups, $criteria_object);
                 foreach ($getusers as $getuser) {
@@ -232,8 +241,9 @@ switch ($op) {
                     }
                 }
             }
-            if (!empty($_POST['mail_to_user'])) {
-                foreach ($_POST['mail_to_user'] as $to_user) {
+            $mail_to_user = Request::getArray('mail_to_user', [], 'POST');
+            if (!empty($mail_to_user)) {
+                foreach ($mail_to_user as $to_user) {
                     if (!in_array($to_user, $added_id)) {
                         $added[]    = new XoopsUser($to_user);
                         $added_id[] = $to_user;
@@ -253,10 +263,10 @@ switch ($op) {
                 $xoopsMailer->setFromEmail(Request::getString('mail_fromemail', '', 'POST'));
                 $xoopsMailer->setSubject(Request::getString('mail_subject', '', 'POST'));
                 $xoopsMailer->setBody(Request::getString('mail_body', '', 'POST'));
-                if (in_array('mail', $_POST['mail_send_to'])) {
+                if (in_array('mail', $mail_send_to)) {
                     $xoopsMailer->useMail();
                 }
-                if (in_array('pm', $_POST['mail_send_to']) && empty($_POST['mail_inactive'])) {
+                if (in_array('pm', $mail_send_to) && Request::getInt('mail_inactive', 0, 'POST') == 0) {
                     $xoopsMailer->usePM();
                 }
                 $xoopsMailer->send(true);
@@ -267,8 +277,8 @@ switch ($op) {
 
                 if ($count_criteria > $limit) {
                     $form = new XoopsThemeForm(_AM_SYSTEM_MAILUSERS_LIST, 'mailusers', 'admin.php?fct=mailusers', 'post', true);
-                    if (!empty($_POST['mail_to_group'])) {
-                        foreach ($_POST['mail_to_group'] as $mailgroup) {
+                    if (!empty($mail_to_group)) {
+                        foreach ($mail_to_group as $mailgroup) {
                             $group_hidden = new XoopsFormHidden('mail_to_group[]', $mailgroup);
                             $form->addElement($group_hidden);
                         }
@@ -306,8 +316,8 @@ switch ($op) {
                     $form->addElement($op_hidden);
                     $form->addElement($start_hidden);
                     $form->addElement($mail_mailok_hidden);
-                    if (isset($_POST['mail_send_to']) && \is_array($_POST['mail_send_to'])) {
-                        foreach ($_POST['mail_send_to'] as $v) {
+                    if (\is_array($mail_send_to) && !empty($mail_send_to)) {
+                        foreach ($mail_send_to as $v) {
                             $form->addElement(new XoopsFormHidden('mail_send_to[]', $v));
                         }
                     } else {

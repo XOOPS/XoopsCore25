@@ -160,7 +160,7 @@ class XoopsCacheModel extends XoopsCacheEngine
             return null;
         }
 
-        return unserialize($data[0]);
+        return unserialize($data[0], ['allowed_classes' => false]);
     }
 
     /**

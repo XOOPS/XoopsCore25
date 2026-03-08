@@ -27,11 +27,8 @@ include_once XOOPS_ROOT_PATH . '/class/xoopsblock.php';
 include_once XOOPS_ROOT_PATH . '/modules/system/admin/modulesadmin/modulesadmin.php';
 XoopsLoad::load('XoopsFilterInput');
 
-if (isset($_POST)) {
-    foreach ($_POST as $k => $v) {
-        ${$k} = $v;
-    }
-}
+$oldname = Request::getArray('oldname', [], 'POST');
+$newname = Request::getArray('newname', [], 'POST');
 
 // Get Action type
 $op = Request::getString('op', 'list');
@@ -189,9 +186,9 @@ switch ($op) {
         // Get Module Handler
         /** @var XoopsModuleHandler $module_handler */
         $module_handler = xoops_getHandler('module');
-        if (isset($_POST['mod'])) {
+        if (Request::hasVar('mod', 'POST')) {
             $i = 1;
-            foreach ($_POST['mod'] as $order) {
+            foreach (Request::getArray('mod', [], 'POST') as $order) {
                 if ($order > 0) {
                     $module = $module_handler->get($order);
                     //Change order only for visible modules
@@ -233,14 +230,13 @@ switch ($op) {
         }
         $i           = 0;
         $modifs_mods = [];
-        $module      = empty($_POST['module']) ? [] : $_POST['module'];
+        $module      = Request::getArray('module', [], 'POST');
         foreach ($module as $mid) {
             $mid                          = (int) $mid;
             $newname[$mid]                = trim((string) XoopsFilterInput::clean($newname[$mid], 'STRING'));
             $modifs_mods[$i]['mid']       = $mid;
             $modifs_mods[$i]['oldname']   = $myts->htmlSpecialChars($oldname[$mid]);
             $modifs_mods[$i]['newname']   = $myts->htmlSpecialChars(trim($newname[$mid]));
-            $modifs_mods[$i]['newstatus'] = isset($newstatus[$mid]) ? $myts->htmlSpecialChars($newstatus[$mid]) : 0;
             ++$i;
         }
         $xoopsTpl->assign('modifs_mods', $modifs_mods);
@@ -293,17 +289,8 @@ switch ($op) {
     case 'submit':
         $ret    = [];
         $write  = false;
-        $module = empty($_POST['module']) ? [] : $_POST['module'];
+        $module = Request::getArray('module', [], 'POST');
         foreach ($module as $mid) {
-            if (isset($newstatus[$mid]) && $newstatus[$mid] == 1) {
-                if ($oldstatus[$mid] == 0) {
-                    $ret[] = xoops_module_activate($mid);
-                }
-            } else {
-                if ($oldstatus[$mid] == 1) {
-                    $ret[] = xoops_module_deactivate($mid);
-                }
-            }
             $newname[$mid] = trim((string) XoopsFilterInput::clean($newname[$mid], 'STRING'));
             if ($oldname[$mid] != $newname[$mid]) {
                 $ret[] = xoops_module_change($mid, $newname[$mid]);

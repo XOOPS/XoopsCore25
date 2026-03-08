@@ -27,20 +27,20 @@ if (!is_object($xoopsUser)) {
 $uid = $xoopsUser->getVar('uid');
 
 $op = 'list';
-if (isset($_POST['op'])) {
+if (Request::hasVar('op', 'POST')) {
     $op = Request::getString('op', '', 'POST');
-} elseif (isset($_GET['op'])) {
+} elseif (Request::hasVar('op', 'GET')) {
     $op = Request::getString('op', '', 'GET');
 }
-if (isset($_POST['delete'])) {
+if (Request::hasVar('delete', 'POST')) {
     $op = 'delete';
-} elseif (isset($_GET['delete'])) {
+} elseif (Request::hasVar('delete', 'GET')) {
     $op = 'delete';
 }
-if (isset($_POST['delete_ok'])) {
+if (Request::hasVar('delete_ok', 'POST')) {
     $op = 'delete_ok';
 }
-if (isset($_POST['delete_cancel'])) {
+if (Request::hasVar('delete_cancel', 'POST')) {
     $op = 'cancel';
 }
 
@@ -178,14 +178,15 @@ switch ($op) {
         break;
 
     case 'delete_ok':
-        if (empty($_POST['del_not'])) {
+        $del_not = Request::getArray('del_not', [], 'POST');
+        if (empty($del_not)) {
             redirect_header('notifications.php', 2, _NOT_NOTHINGTODELETE);
         }
         include $GLOBALS['xoops']->path('header.php');
         $hidden_vars = [
             'uid'       => $uid,
             'delete_ok' => 1,
-            'del_not'   => $_POST['del_not'],
+            'del_not'   => $del_not,
         ];
         echo '<h4>' . _NOT_DELETINGNOTIFICATIONS . '</h4>';
         xoops_confirm($hidden_vars, xoops_getenv('PHP_SELF'), _NOT_RUSUREDEL);
@@ -199,11 +200,12 @@ switch ($op) {
         if (!$GLOBALS['xoopsSecurity']->check()) {
             redirect_header('notifications.php', 2, implode('<br>', $GLOBALS['xoopsSecurity']->getErrors()));
         }
-        if (empty($_POST['del_not'])) {
+        $del_not = Request::getArray('del_not', [], 'POST');
+        if (empty($del_not)) {
             redirect_header('notifications.php', 2, _NOT_NOTHINGTODELETE);
         }
         $notification_handler = xoops_getHandler('notification');
-        foreach ($_POST['del_not'] as $n_array) {
+        foreach ($del_not as $n_array) {
             foreach ($n_array as $n) {
                 $notification = $notification_handler->get($n);
                 if ($notification->getVar('not_uid') == $uid) {

@@ -44,11 +44,9 @@ $groups        = is_object($GLOBALS['xoopsUser']) ? $GLOBALS['xoopsUser']->getGr
 $gperm_handler = xoops_getHandler('groupperm');
 $admin         = $gperm_handler->checkRight('system_admin', XOOPS_SYSTEM_SMILE, $groups);
 
-$op = '';
-if (!empty($_GET['op'])) {
-    $op = trim($_GET['op']);
-} elseif (!empty($_POST['op'])) {
-    $op = trim($_POST['op']);
+$op = \Xmf\Request::getCmd('op', '', 'GET');
+if ($op === '') {
+    $op = \Xmf\Request::getCmd('op', '', 'POST');
 }
 
 $myts = \MyTextSanitizer::getInstance();

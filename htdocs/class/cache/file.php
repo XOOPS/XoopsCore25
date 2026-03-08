@@ -65,7 +65,7 @@ class XoopsCacheFile extends XoopsCacheEngine
      *                path = absolute path to cache directory, default => CACHE
      *                prefix = string prefix for filename, default => xoops_
      *                lock = enable file locking on write, default => false
-     *                serialize = serialize the data, default => false
+     *                serialize = serialize the data, default => true
      *
      * @var array
      * @see    CacheEngine::__defaults
@@ -107,7 +107,7 @@ class XoopsCacheFile extends XoopsCacheEngine
             'extension' => '.php',
             'prefix'    => 'xoops_',
             'lock'      => false,
-            'serialize' => false,
+            'serialize' => true,
             'duration'  => 31556926,
         ];
         $this->settings = array_merge($defaults, $this->settings);
@@ -219,7 +219,9 @@ class XoopsCacheFile extends XoopsCacheEngine
                 $data = XoopsUtility::recursive('stripslashes', $data);
             }
         } elseif ($data && empty($this->settings['serialize'])) {
-            $data = eval($data);
+            // Legacy non-serialized cache used eval() — removed for security.
+            // Treat as cache miss; entry will be regenerated with serialization on next write.
+            $data = null;
         }
         $this->file->close();
 

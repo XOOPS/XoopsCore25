@@ -37,10 +37,10 @@ $vars =& $_SESSION['siteconfig'];
 $error =& $_SESSION['error'];
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $vars['adminname']  = trim($_POST['adminname']);
-    $vars['adminmail']  = trim($_POST['adminmail']);
-    $vars['adminpass']  = trim($_POST['adminpass']);
-    $vars['adminpass2'] = trim($_POST['adminpass2']);
+    $vars['adminname']  = trim(\Xmf\Request::getString('adminname', '', 'POST'));
+    $vars['adminmail']  = trim(\Xmf\Request::getString('adminmail', '', 'POST'));
+    $vars['adminpass']  = \Xmf\Request::getVar('adminpass', '', 'POST', 'string', \Xmf\Request::MASK_ALLOW_RAW | \Xmf\Request::MASK_NO_TRIM);
+    $vars['adminpass2'] = \Xmf\Request::getVar('adminpass2', '', 'POST', 'string', \Xmf\Request::MASK_ALLOW_RAW | \Xmf\Request::MASK_NO_TRIM);
     $error              = [];
 
     if (empty($vars['adminname'])) {

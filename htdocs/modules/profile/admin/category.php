@@ -17,6 +17,8 @@
  * @author         XOOPS Development Team
  */
 
+use Xmf\Request;
+
 include_once __DIR__ . '/admin_header.php';
 xoops_cp_header();
 $indexAdmin = new ModuleAdmin();
@@ -26,7 +28,7 @@ $indexAdmin->addItemButton(_ADD . ' ' . _PROFILE_AM_CATEGORY, 'category.php?op=n
 echo $indexAdmin->addNavigation(basename(__FILE__));
 echo $indexAdmin->renderButton('right', '');
 
-$op = $_REQUEST['op'] ?? (isset($_REQUEST['id']) ? 'edit' : 'list');
+$op = Request::hasVar('op', 'POST') ? Request::getCmd('op', 'list', 'POST') : Request::getCmd('op', (Request::hasVar('id', 'GET') || Request::hasVar('id', 'POST')) ? 'edit' : 'list', 'GET');
 
 /** @var ProfileCategoryHandler $handler */
 $handler = xoops_getModuleHandler('category');
@@ -49,7 +51,10 @@ switch ($op) {
 
     case 'edit':
         include_once dirname(__DIR__) . '/include/forms.php';
-        $obj  = $handler->get($_REQUEST['id']);
+        $obj = $handler->get(Request::getInt('id', 0, 'GET'));
+        if (!$obj) {
+            redirect_header('category.php', 3, _TAKINGBACK);
+        }
         $form = $obj->getForm();
         $form->display();
         break;
@@ -58,14 +63,21 @@ switch ($op) {
         if (!$GLOBALS['xoopsSecurity']->check()) {
             redirect_header('category.php', 3, implode(',', $GLOBALS['xoopsSecurity']->getErrors()));
         }
-        if (isset($_REQUEST['id'])) {
-            $obj = $handler->get($_REQUEST['id']);
+        $categoryId = Request::getInt('id', 0, 'POST');
+        if ($categoryId <= 0) {
+            $categoryId = Request::getInt('id', 0, 'GET');
+        }
+        if ($categoryId > 0) {
+            $obj = $handler->get($categoryId);
+            if (!$obj) {
+                redirect_header('category.php', 3, _TAKINGBACK);
+            }
         } else {
             $obj = $handler->create();
         }
-        $obj->setVar('cat_title', $_REQUEST['cat_title']);
-        $obj->setVar('cat_description', $_REQUEST['cat_description']);
-        $obj->setVar('cat_weight', $_REQUEST['cat_weight']);
+        $obj->setVar('cat_title', Request::getString('cat_title', '', 'POST'));
+        $obj->setVar('cat_description', Request::getString('cat_description', '', 'POST'));
+        $obj->setVar('cat_weight', Request::getInt('cat_weight', 0, 'POST'));
         if ($handler->insert($obj)) {
             redirect_header('category.php', 3, sprintf(_PROFILE_AM_SAVEDSUCCESS, _PROFILE_AM_CATEGORY));
         }
@@ -77,8 +89,12 @@ switch ($op) {
         break;
 
     case 'delete':
-        $obj = $handler->get($_REQUEST['id']);
-        if (isset($_REQUEST['ok']) && $_REQUEST['ok'] == 1) {
+        $categoryId = Request::getInt('id', 0, 'POST') ?: Request::getInt('id', 0, 'GET');
+        $obj = $handler->get($categoryId);
+        if (!$obj) {
+            redirect_header('category.php', 3, _TAKINGBACK);
+        }
+        if (Request::getInt('ok', 0, 'POST') === 1) {
             if (!$GLOBALS['xoopsSecurity']->check()) {
                 redirect_header('category.php', 3, implode(',', $GLOBALS['xoopsSecurity']->getErrors()));
             }
@@ -91,7 +107,7 @@ switch ($op) {
             xoops_confirm(
                 [
                     'ok' => 1,
-                    'id' => $_REQUEST['id'],
+                    'id' => $categoryId,
                     'op' => 'delete',
                 ],
                 $_SERVER['REQUEST_URI'],

@@ -83,7 +83,11 @@ switch ($op) {
     case 'users_delete':
         $xoBreadCrumb->render();
         $user = $member_handler->getUser($uid);
-        if ((int) Request::getInt('ok', 0) === 1) {
+        if (!is_object($user)) {
+            redirect_header('admin.php?fct=users', 2, _AM_SYSTEM_USERS_NO_SUCH_USER);
+            break;
+        }
+        if ((int) Request::getInt('ok', 0, 'POST') === 1) {
             if (!$GLOBALS['xoopsSecurity']->check()) {
                 redirect_header('admin.php?fct=users', 3, implode('<br>', $GLOBALS['xoopsSecurity']->getErrors()));
             }
@@ -130,6 +134,9 @@ switch ($op) {
             foreach (Request::getArray('memberslist_id', []) as $del) {
                 $del    = (int) $del;
                 $user   = $member_handler->getUser($del);
+                if (!is_object($user)) {
+                    continue;
+                }
                 $groups = $user->getGroups();
                 if (in_array(XOOPS_GROUP_ADMIN, $groups)) {
                     $error .= sprintf(_AM_SYSTEM_USERS_NO_ADMINSUPP, $user->getVar('uname'));
@@ -182,15 +189,15 @@ case 'users_save':
             break;
         }
 
-        if ('' !== Request::getString('pass2') &&
-            Request::getString('password') != Request::getString('pass2')) {
+        if ('' !== Request::getVar('pass2', '', 'POST', 'string', Request::MASK_ALLOW_RAW | Request::MASK_NO_TRIM) &&
+            Request::getVar('password', '', 'POST', 'string', Request::MASK_ALLOW_RAW | Request::MASK_NO_TRIM) != Request::getVar('pass2', '', 'POST', 'string', Request::MASK_ALLOW_RAW | Request::MASK_NO_TRIM)) {
             xoops_error(_AM_SYSTEM_USERS_STNPDNM);
             break;
         }
 
-        if ('' !== Request::getString('pass2') &&
-            '' !== Request::getString('password') &&
-            mb_strtolower(Request::getString('password'), 'UTF-8') === mb_strtolower(Request::getString('uname'), 'UTF-8')) {
+        if ('' !== Request::getVar('pass2', '', 'POST', 'string', Request::MASK_ALLOW_RAW | Request::MASK_NO_TRIM) &&
+            '' !== Request::getVar('password', '', 'POST', 'string', Request::MASK_ALLOW_RAW | Request::MASK_NO_TRIM) &&
+            mb_strtolower(Request::getVar('password', '', 'POST', 'string', Request::MASK_ALLOW_RAW | Request::MASK_NO_TRIM), 'UTF-8') === mb_strtolower(Request::getString('uname'), 'UTF-8')) {
             xoops_error(_AM_SYSTEM_USERS_PWDEQUALSUNAME);
             break;
         }
@@ -203,7 +210,7 @@ case 'users_save':
         $edituser->setVar('url', formatURL(Request::getUrl('url')));
         $edituser->setVar('user_icq', Request::getString('user_icq'));
         $edituser->setVar('user_from', Request::getString('user_from'));
-        $edituser->setVar('user_sig', Request::getString('user_sig'));
+        $edituser->setVar('user_sig', Request::getText('user_sig', '', 'POST'));
         $edituser->setVar('user_viewemail', (int)(Request::getInt('user_viewemail', 0) == 1));
         $edituser->setVar('user_aim', Request::getString('user_aim'));
         $edituser->setVar('user_yim', Request::getString('user_yim'));
@@ -215,14 +222,14 @@ case 'users_save':
         // RMV-NOTIFY
         $edituser->setVar('notify_method', Request::getString('notify_method'));
         $edituser->setVar('notify_mode', Request::getString('notify_mode'));
-        $edituser->setVar('bio', Request::getString('bio'));
+        $edituser->setVar('bio', Request::getText('bio', '', 'POST'));
         $edituser->setVar('rank', Request::getString('rank'));
         $edituser->setVar('user_occ', Request::getString('user_occ'));
         $edituser->setVar('user_intrest', Request::getString('user_intrest'));
         $edituser->setVar('user_mailok', Request::getInt('user_mailok', 0));
 
-        if ('' !== Request::getString('pass2')) {
-            $edituser->setVar('pass', password_hash(Request::getString('password'), PASSWORD_DEFAULT));
+        if ('' !== Request::getVar('pass2', '', 'POST', 'string', Request::MASK_ALLOW_RAW | Request::MASK_NO_TRIM)) {
+            $edituser->setVar('pass', password_hash(Request::getVar('password', '', 'POST', 'string', Request::MASK_ALLOW_RAW | Request::MASK_NO_TRIM), PASSWORD_DEFAULT));
         }
 
         if (!$member_handler->insertUser($edituser)) {
@@ -239,7 +246,6 @@ case 'users_save':
                 && in_array(XOOPS_GROUP_ADMIN, $oldgroups)
                 && !in_array(XOOPS_GROUP_ADMIN, $groups)) {
                 $groups[] = XOOPS_GROUP_ADMIN;
-                $_REQUEST['groups'] = $groups;
             }
             /** @var XoopsMemberHandler $member_handler */
             $member_handler = xoops_getHandler('member');
@@ -261,7 +267,7 @@ case 'users_save':
             break;
         }
 
-        if (!Request::getString('uname') || !Request::getString('email') || !Request::getString('password')) {
+        if (!Request::getString('uname') || !Request::getString('email') || !Request::getVar('password', '', 'POST', 'string', Request::MASK_ALLOW_RAW | Request::MASK_NO_TRIM)) {
             xoops_error(_AM_SYSTEM_USERS_YMCACF);
             break;
         }
@@ -276,15 +282,15 @@ case 'users_save':
         }
 
         // Password match (if confirm provided)
-        if ('' !== Request::getString('pass2') &&
-            Request::getString('password') != Request::getString('pass2')) {
+        if ('' !== Request::getVar('pass2', '', 'POST', 'string', Request::MASK_ALLOW_RAW | Request::MASK_NO_TRIM) &&
+            Request::getVar('password', '', 'POST', 'string', Request::MASK_ALLOW_RAW | Request::MASK_NO_TRIM) != Request::getVar('pass2', '', 'POST', 'string', Request::MASK_ALLOW_RAW | Request::MASK_NO_TRIM)) {
             xoops_error(_AM_SYSTEM_USERS_STNPDNM);
             break;
         }
 
-        if ('' !== Request::getString('pass2') &&
-            '' !== Request::getString('password') &&
-            mb_strtolower(Request::getString('password'), 'UTF-8') === mb_strtolower(Request::getString('uname'), 'UTF-8')) {
+        if ('' !== Request::getVar('pass2', '', 'POST', 'string', Request::MASK_ALLOW_RAW | Request::MASK_NO_TRIM) &&
+            '' !== Request::getVar('password', '', 'POST', 'string', Request::MASK_ALLOW_RAW | Request::MASK_NO_TRIM) &&
+            mb_strtolower(Request::getVar('password', '', 'POST', 'string', Request::MASK_ALLOW_RAW | Request::MASK_NO_TRIM), 'UTF-8') === mb_strtolower(Request::getString('uname'), 'UTF-8')) {
             xoops_error(_AM_SYSTEM_USERS_PWDEQUALSUNAME);
             break;
         }
@@ -300,12 +306,12 @@ case 'users_save':
         $newuser->setVar('user_regdate', time());
         $newuser->setVar('user_icq', Request::getString('user_icq'));
         $newuser->setVar('user_from', Request::getString('user_from'));
-        $newuser->setVar('user_sig', Request::getString('user_sig'));
+        $newuser->setVar('user_sig', Request::getText('user_sig', '', 'POST'));
         $newuser->setVar('user_aim', Request::getString('user_aim'));
         $newuser->setVar('user_yim', Request::getString('user_yim'));
         $newuser->setVar('user_msnm', Request::getString('user_msnm'));
-        if ('' !== Request::getString('pass2')) {
-            $newuser->setVar('pass', password_hash(Request::getString('password'), PASSWORD_DEFAULT));
+        if ('' !== Request::getVar('pass2', '', 'POST', 'string', Request::MASK_ALLOW_RAW | Request::MASK_NO_TRIM)) {
+            $newuser->setVar('pass', password_hash(Request::getVar('password', '', 'POST', 'string', Request::MASK_ALLOW_RAW | Request::MASK_NO_TRIM), PASSWORD_DEFAULT));
         }
         $newuser->setVar('timezone_offset', Request::getString('timezone_offset'));
         $newuser->setVar('uorder', Request::getString('uorder'));
@@ -313,7 +319,7 @@ case 'users_save':
         // RMV-NOTIFY
         $newuser->setVar('notify_method', Request::getString('notify_method'));
         $newuser->setVar('notify_mode', Request::getString('notify_mode'));
-        $newuser->setVar('bio', Request::getString('bio'));
+        $newuser->setVar('bio', Request::getText('bio', '', 'POST'));
         $newuser->setVar('rank', Request::getString('rank'));
         $newuser->setVar('level', 1);
         $newuser->setVar('user_occ', Request::getString('user_occ'));
@@ -354,8 +360,10 @@ case 'users_save':
     case 'users_active':
         if (Request::hasVar('uid')) {
             $obj = $member_handler->getUser($uid);
-            //echo $_REQUEST["uid"];
-            //print_r($obj);
+        }
+        if (!isset($obj) || !is_object($obj)) {
+            redirect_header('admin.php?fct=users', 2, _AM_SYSTEM_USERS_NO_SUCH_USER);
+            break;
         }
         $obj->setVar('level', 1);
         if ($member_handler->insertUser($obj, true)) {

@@ -58,8 +58,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $xoopsConfig    = $config_handler->getConfigsByCat(XOOPS_CONF);
 
     $msgs = [];
-    if (isset($_REQUEST['modules']) && \is_array($_REQUEST['modules'])) {
-        foreach ($_REQUEST['modules'] as $dirname => $installmod) {
+    $modules = \Xmf\Request::getArray('modules', [], 'POST');
+    if (!empty($modules)) {
+        foreach ($modules as $dirname => $installmod) {
             if ($installmod) {
                 $msgs[] = xoops_module_install($dirname);
             }
@@ -88,7 +89,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     xoops_setActiveModules();
 } else {
     if (!isset($GLOBALS['xoopsConfig']['language'])) {
-        $GLOBALS['xoopsConfig']['language'] = $_COOKIE['xo_install_lang'];
+        $GLOBALS['xoopsConfig']['language'] = \Xmf\Request::getString('xo_install_lang', '', 'COOKIE');
     }
 
     // Get installed modules

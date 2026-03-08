@@ -66,6 +66,7 @@ define('_US_NEWPWDREQ', 'New Password Request at %s');
 define('_US_YOURACCOUNT', 'Your account at %s');
 define('_US_MAILPWDNG', 'mail_password: could not update user entry. Contact the Administrator');
 define('_US_PWDMAILED', 'If an account exists for this email, you will receive password reset instructions. Check your spam folder if needed or contact the site administrator.');
+define('_US_PWDRESETDONE', 'Your password has been changed successfully. You can now log in with your new password.');
 define('_US_CONFMAIL', 'If an account exists for this email, you will receive password reset instructions. Check your spam folder if needed or contact the site administrator.');
 define('_US_ACTVMAILNG', 'Failed sending notification email to %s');
 define('_US_ACTVMAILOK', 'Notification email to %s sent.');

@@ -484,7 +484,6 @@ if (!Request::hasVar('user_submit', 'POST')) {
     $limit = Request::getInt('limit', 50, 'POST');
     $start = Request::getInt('start', 0, 'POST');
     if (Request::hasVar('query', 'POST')) {
-        unset($_POST['query']);
         $query = '';
     }
 
@@ -523,23 +522,23 @@ if (!Request::hasVar('user_submit', 'POST')) {
         $criteria->add(new Criteria('user_occ', '%' . $xoopsDB->escape(Request::getString('user_occ', '', 'POST')) . '%', 'LIKE'));
     }
     foreach (['last_login', 'user_regdate'] as $var) {
-        if (Request::hasVar("{$var}_more", 'POST') && is_numeric($_POST["{$var}_more"])) {
+        if (Request::hasVar("{$var}_more", 'POST') && is_numeric(Request::getString("{$var}_more", '', 'POST'))) {
             $time = time() - (60 * 60 * 24 *  Request::getInt("{$var}_more", 0, 'POST'));
             if ($time > 0) {
                 $criteria->add(new Criteria($var, $time, '<='));
             }
         }
-        if (Request::hasVar("{$var}_less", 'POST') && is_numeric($_POST["{$var}_less"])) {
+        if (Request::hasVar("{$var}_less", 'POST') && is_numeric(Request::getString("{$var}_less", '', 'POST'))) {
             $time = time() - (60 * 60 * 24 *  Request::getInt("{$var}_less", 0, 'POST'));
             if ($time > 0) {
                 $criteria->add(new Criteria($var, $time, '>='));
             }
         }
     }
-    if (Request::hasVar('posts_more', 'POST') && is_numeric($_POST['posts_more'])) {
+    if (Request::hasVar('posts_more', 'POST') && is_numeric(Request::getString('posts_more', '', 'POST'))) {
         $criteria->add(new Criteria('posts', Request::getInt('posts_more', 0, 'POST'), '<='));
     }
-    if (Request::hasVar('posts_less', 'POST') && is_numeric($_POST['posts_less'])) {
+    if (Request::hasVar('posts_less', 'POST') && is_numeric(Request::getString('posts_less', '', 'POST'))) {
         $criteria->add(new Criteria('posts', Request::getInt('posts_less', 0, 'POST'), '>='));
     }
     if (Request::hasVar('user_mailok', 'POST')) {
@@ -567,16 +566,19 @@ if (!Request::hasVar('user_submit', 'POST')) {
             $criteria->add(new Criteria('level', $level));
         }
     }
-    if (Request::hasVar('rank', 'POST')) {
-        $rank_obj = $rank_handler->get(Request::getInt('rank', 0, 'POST'));
-        if ($rank_obj->getVar('rank_special')) {
-            $criteria->add(new Criteria('rank', Request::getInt('rank', 0, 'POST')));
-        } else {
-            if ($rank_obj->getVar('rank_min')) {
-                $criteria->add(new Criteria('posts', $rank_obj->getVar('rank_min'), '>='));
-            }
-            if ($rank_obj->getVar('rank_max')) {
-                $criteria->add(new Criteria('posts', $rank_obj->getVar('rank_max'), '<='));
+    $rankId = Request::getInt('rank', 0, 'POST');
+    if ($rankId > 0) {
+        $rank_obj = $rank_handler->get($rankId);
+        if (is_object($rank_obj) && (int) $rank_obj->getVar('rank_id') > 0) {
+            if ($rank_obj->getVar('rank_special')) {
+                $criteria->add(new Criteria('rank', $rankId));
+            } else {
+                if ($rank_obj->getVar('rank_min')) {
+                    $criteria->add(new Criteria('posts', $rank_obj->getVar('rank_min'), '>='));
+                }
+                if ($rank_obj->getVar('rank_max')) {
+                    $criteria->add(new Criteria('posts', $rank_obj->getVar('rank_max'), '<='));
+                }
             }
         }
     }
