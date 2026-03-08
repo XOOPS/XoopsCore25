@@ -139,6 +139,10 @@ if ($isadmin || ($catreadcount > 0) || ($catwritecount > 0)) {
                         }
                         $fbinary = fread($fp, filesize($uploader->getSavedDestination()));
                         fclose($fp);
+                        if (false === $fbinary) {
+                            $err[] = sprintf(_FAILSAVEIMG, $image->getVar('image_nicename'));
+                            continue;
+                        }
                         $image->setVar('image_body', $fbinary, true);
                     }
                     if (!$image_handler->insert($image)) {

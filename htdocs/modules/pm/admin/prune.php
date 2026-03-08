@@ -24,7 +24,7 @@ xoops_cp_header();
 $indexAdmin = new ModuleAdmin();
 echo $indexAdmin->addNavigation(basename(__FILE__));
 
-$op         = Request::getCmd('op', 'form');
+$op         = Request::hasVar('op', 'POST') ? Request::getCmd('op', 'form', 'POST') : Request::getCmd('op', 'form', 'GET');
 /** @var \PmMessageHandler $pm_handler */
 $pm_handler = xoops_getModuleHandler('message');
 

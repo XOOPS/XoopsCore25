@@ -221,10 +221,11 @@ if (Request::hasVar('copy', 'POST') && Request::hasVar('old_prefix', 'POST')) {
     }
 
     // check if prefix_xoopscomments exists
-    $check_rs = $db->queryF("SELECT * FROM `{$prefix}_xoopscomments` LIMIT 1");
+    $check_rs = $db->queryF("SELECT 1 FROM `{$prefix}_xoopscomments` LIMIT 1");
     if (!$check_rs) {
         die('This is not a prefix for XOOPS');
     }
+    $db->freeRecordSet($check_rs);
 
     // get table list
     $sql = 'SHOW TABLE STATUS FROM `' . XOOPS_DB_NAME . '`';
