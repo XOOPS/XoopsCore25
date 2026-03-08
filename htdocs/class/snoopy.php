@@ -224,11 +224,15 @@ class Snoopy
                 }
                 if ($this->_isproxy) {
                     // using proxy, send entire URI
-                    $this->_httpsrequest($URI, $URI, $this->_httpmethod);
+                    if (!$this->_httpsrequest($URI, $URI, $this->_httpmethod)) {
+                        return false;
+                    }
                 } else {
                     $path = $URI_PARTS["path"] . ($URI_PARTS["query"] ? "?" . $URI_PARTS["query"] : "");
                     // no proxy, send only the path
-                    $this->_httpsrequest($path, $URI, $this->_httpmethod);
+                    if (!$this->_httpsrequest($path, $URI, $this->_httpmethod)) {
+                        return false;
+                    }
                 }
 
                 if ($this->_redirectaddr) {
@@ -373,11 +377,15 @@ class Snoopy
                 }
                 if ($this->_isproxy) {
                     // using proxy, send entire URI
-                    $this->_httpsrequest($URI, $URI, $this->_submit_method, $this->_submit_type, $postdata);
+                    if (!$this->_httpsrequest($URI, $URI, $this->_submit_method, $this->_submit_type, $postdata)) {
+                        return false;
+                    }
                 } else {
                     $path = $URI_PARTS["path"] . ($URI_PARTS["query"] ? "?" . $URI_PARTS["query"] : "");
                     // no proxy, send only the path
-                    $this->_httpsrequest($path, $URI, $this->_submit_method, $this->_submit_type, $postdata);
+                    if (!$this->_httpsrequest($path, $URI, $this->_submit_method, $this->_submit_type, $postdata)) {
+                        return false;
+                    }
                 }
 
                 if ($this->_redirectaddr) {
