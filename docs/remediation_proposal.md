@@ -85,3 +85,4 @@ Two independent audits identified **26 distinct issues** across security, compat
 
 - **Cache**: The file cache engine default changed from `serialize => false` to `serialize => true`. Existing non-serialized cache files will be treated as cache misses and regenerated automatically. For immediate effect, clear the cache directory (`xoops_data/caches/xoops_cache/`) after upgrade.
 - **PHP Blocks**: Custom PHP blocks (`c_type = 'P'`) are now disabled by default. To re-enable, define `XOOPS_ALLOW_PHP_BLOCKS` as `true` in `mainfile.php`.
+- **Password Reset**: Pending password reset emails sent before upgrade will not work with the new secure flow. Users who received a reset link prior to upgrade must request a new password reset.
