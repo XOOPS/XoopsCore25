@@ -110,10 +110,7 @@ switch ($op) {
     case 'toggle':
         if (Request::hasVar('step_id', 'GET')) {
             $step_id = Request::getInt('step_id', 0, 'GET');
-            if (Request::hasVar('step_save', 'GET')) {
-                $step_save = Request::getInt('step_save', 0, 'GET');
-                profile_stepsave_toggle($step_id, $step_save);
-            }
+            profile_stepsave_toggle($step_id);
         }
         break;
 }
@@ -124,17 +121,15 @@ if (!empty($template_main)) {
 
 /**
  * @param int $stepId
- * @param int $stepSave
  */
-function profile_stepsave_toggle(int $stepId, int $stepSave): void
+function profile_stepsave_toggle(int $stepId): void
 {
-    $stepSave = ($stepSave === 1) ? 0 : 1;
     $handler  = xoops_getModuleHandler('regstep');
     $obj      = $handler->get($stepId);
     if (!is_object($obj)) {
         redirect_header('step.php', 1, _PROFILE_AM_SAVESTEP_TOGGLE_FAILED);
     }
-    $obj->setVar('step_save', $stepSave);
+    $obj->setVar('step_save', ($obj->getVar('step_save') == 1) ? 0 : 1);
     if ($handler->insert($obj, true)) {
         redirect_header('step.php', 1, _PROFILE_AM_SAVESTEP_TOGGLE_SUCCESS);
     } else {
