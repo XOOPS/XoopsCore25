@@ -11,7 +11,9 @@ $mydirpath = $registry->getEntry('mydirpath');
 $language  = $registry->getEntry('language');
 // end hack by Trabis
 
-eval(' function xoops_module_update_' . $mydirname . '( $module ) { return protector_onupdate_base( $module , "' . $mydirname . '" ) ; } ');
+if (!function_exists('xoops_module_update_' . $mydirname)) {
+    function xoops_module_update_protector($module) { return protector_onupdate_base($module, 'protector'); }
+}
 
 if (!function_exists('protector_onupdate_base')) {
 

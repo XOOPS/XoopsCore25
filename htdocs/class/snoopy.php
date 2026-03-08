@@ -1037,7 +1037,13 @@ class Snoopy
 
         $headerfile = tempnam($temp_dir, "sno");
 
+        // Shell execution disabled for security — use PHP cURL extension instead
+        $this->error = 'Snoopy shell execution has been disabled for security. Use PHP cURL extension APIs instead.';
+        return false;
+        // @codeCoverageIgnoreStart
+        /** @noinspection PhpUnreachableStatementInspection */
         exec($this->curl_path . " -k -D \"$headerfile\"" . $cmdline_params . " " . escapeshellarg($URI), $results, $return);
+        // @codeCoverageIgnoreEnd
 
         if ($return) {
             $this->error = "Error: cURL could not retrieve the document, error $return.";

@@ -110,7 +110,7 @@ function mod_loadRenderer($class, $dirname = '')
     if (!class_exists($renderer)) {
         require_once XOOPS_ROOT_PATH . "/modules/{$dirname}/class/{$class}.renderer.php";
     }
-    $instance = eval("{$renderer}::instance()");
+    $instance = $renderer::instance();
 
     return $instance;
 }

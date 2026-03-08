@@ -10,7 +10,9 @@ $mydirpath = $registry->getEntry('mydirpath');
 $language  = $registry->getEntry('language');
 // end hack by Trabis
 
-eval(' function xoops_module_uninstall_' . $mydirname . '( $module ) { return protector_onuninstall_base( $module , "' . $mydirname . '" ) ; } ');
+if (!function_exists('xoops_module_uninstall_' . $mydirname)) {
+    function xoops_module_uninstall_protector($module) { return protector_onuninstall_base($module, 'protector'); }
+}
 
 if (!function_exists('protector_onuninstall_base')) {
 

@@ -11,7 +11,9 @@ $mydirpath = $registry->getEntry('mydirpath');
 $language  = $registry->getEntry('language');
 // end hack by Trabis
 
-eval(' function xoops_module_install_' . $mydirname . '( $module ) { return protector_oninstall_base( $module , "' . $mydirname . '" ) ; } ');
+if (!function_exists('xoops_module_install_' . $mydirname)) {
+    function xoops_module_install_protector($module) { return protector_oninstall_base($module, 'protector'); }
+}
 
 if (!function_exists('protector_oninstall_base')) {
 
