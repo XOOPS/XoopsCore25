@@ -65,7 +65,7 @@ class XoopsCacheFile extends XoopsCacheEngine
      *                path = absolute path to cache directory, default => CACHE
      *                prefix = string prefix for filename, default => xoops_
      *                lock = enable file locking on write, default => false
-     *                serialize = serialize the data, default => false
+     *                serialize = serialize the data, default => true
      *
      * @var array
      * @see    CacheEngine::__defaults

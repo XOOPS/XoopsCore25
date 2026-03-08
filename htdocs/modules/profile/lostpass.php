@@ -19,5 +19,5 @@
 
 // Deprecated: this endpoint used a weak md5-based reset token.
 // All password resets now go through the secure core flow.
-include __DIR__ . '/header.php';
+require_once __DIR__ . '/../../mainfile.php';
 redirect_header(XOOPS_URL . '/lostpass.php', 0, '', false);
