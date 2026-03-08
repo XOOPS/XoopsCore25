@@ -128,6 +128,9 @@ switch ($op) {
         $xoBreadCrumb->render();
         // Create form
         $obj  = $smilies_Handler->get(Request::getInt('smilies_id', 0, 'GET'));
+        if (!is_object($obj)) {
+            redirect_header('admin.php?fct=smilies', 2, _AM_SYSTEM_DBERROR);
+        }
         $form = $obj->getForm();
         // Assign form
         $xoopsTpl->assign('form', $form->render());
@@ -145,6 +148,9 @@ switch ($op) {
 
         if (Request::hasVar('smilies_id', 'POST')) {
             $obj = $smilies_Handler->get(Request::getInt('smilies_id', 0, 'POST'));
+            if (!is_object($obj)) {
+                redirect_header('admin.php?fct=smilies', 2, _AM_SYSTEM_DBERROR);
+            }
         } else {
             $obj = $smilies_Handler->create();
         }
@@ -197,6 +203,9 @@ switch ($op) {
     case 'smilies_delete':
         $smilies_id = Request::hasVar('smilies_id', 'POST') ? Request::getInt('smilies_id', 0, 'POST') : Request::getInt('smilies_id', 0, 'GET');
         $obj        = $smilies_Handler->get($smilies_id);
+        if (!is_object($obj)) {
+            redirect_header('admin.php?fct=smilies', 2, _AM_SYSTEM_DBERROR);
+        }
         if (Request::getInt('ok', 0, 'POST') == 1) {
             if (!$GLOBALS['xoopsSecurity']->check()) {
                 redirect_header('admin.php?fct=smilies', 3, implode(',', $GLOBALS['xoopsSecurity']->getErrors()));

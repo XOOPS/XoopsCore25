@@ -26,7 +26,7 @@ $indexAdmin->addItemButton(_PROFILE_AM_ADDUSER, 'user.php?op=new', 'add', '');
 echo $indexAdmin->addNavigation(basename(__FILE__));
 echo $indexAdmin->renderButton('right', '');
 
-$op = Request::getCmd('op', 'list');
+$op = Request::hasVar('op', 'POST') ? Request::getCmd('op', 'list', 'POST') : Request::getCmd('op', 'list', 'GET');
 if ($op === 'editordelete') {
     $op = Request::hasVar('delete', 'POST') ? 'delete' : 'edit';
 }

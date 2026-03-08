@@ -25,11 +25,11 @@ if (!is_object($GLOBALS['xoopsUser'])) {
     redirect_header(XOOPS_URL, 3, _NOPERM);
 }
 $valid_op_requests = ['out', 'save', 'in'];
-$op                = Request::getCmd('op', 'in');
+$op                = Request::hasVar('op', 'POST') ? Request::getCmd('op', 'in', 'POST') : Request::getCmd('op', 'in', 'GET');
 if (!in_array($op, $valid_op_requests)) {
     $op = 'in';
 }
-$msg_id            = Request::getInt('msg_id', 0);
+$msg_id            = Request::hasVar('msg_id', 'POST') ? Request::getInt('msg_id', 0, 'POST') : Request::getInt('msg_id', 0, 'GET');
 $pm_handler        = xoops_getModuleHandler('message');
 $pm                = null;
 if ($msg_id > 0) {

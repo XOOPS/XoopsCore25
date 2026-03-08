@@ -28,7 +28,7 @@ $indexAdmin->addItemButton(_ADD . ' ' . _PROFILE_AM_CATEGORY, 'category.php?op=n
 echo $indexAdmin->addNavigation(basename(__FILE__));
 echo $indexAdmin->renderButton('right', '');
 
-$op = Request::getCmd('op', (Request::hasVar('id', 'GET') || Request::hasVar('id', 'POST')) ? 'edit' : 'list');
+$op = Request::hasVar('op', 'POST') ? Request::getCmd('op', 'list', 'POST') : Request::getCmd('op', (Request::hasVar('id', 'GET') || Request::hasVar('id', 'POST')) ? 'edit' : 'list', 'GET');
 
 /** @var ProfileCategoryHandler $handler */
 $handler = xoops_getModuleHandler('category');

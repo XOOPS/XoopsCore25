@@ -27,7 +27,7 @@ $indexAdmin->addItemButton(_ADD . ' ' . _PROFILE_AM_FIELD, 'field.php?op=new', '
 echo $indexAdmin->addNavigation(basename(__FILE__));
 echo $indexAdmin->renderButton('right', '');
 
-$op = Request::getCmd('op', (Request::hasVar('id', 'GET') || Request::hasVar('id', 'POST')) ? 'edit' : 'list');
+$op = Request::hasVar('op', 'POST') ? Request::getCmd('op', 'list', 'POST') : Request::getCmd('op', (Request::hasVar('id', 'GET') || Request::hasVar('id', 'POST')) ? 'edit' : 'list', 'GET');
 /** @var XoopsModuleHandler $profilefield_handler */
 $profilefield_handler = xoops_getModuleHandler('field');
 

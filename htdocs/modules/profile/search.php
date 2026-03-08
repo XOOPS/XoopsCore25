@@ -363,7 +363,7 @@ switch ($op) {
                     case XOBJ_DTYPE_TXTBOX:
                     case XOBJ_DTYPE_TXTAREA:
                         $textFieldVal = Request::getString($fieldname, '', 'GET') ?: Request::getString($fieldname, '', 'POST');
-                        $textFieldMatch = Request::getInt($fieldname . '_match', 0, 'GET') ?: Request::getInt($fieldname . '_match', 0, 'POST');
+                        $textFieldMatch = Request::hasVar($fieldname . '_match', 'GET') ? Request::getInt($fieldname . '_match', 0, 'GET') : Request::getInt($fieldname . '_match', 0, 'POST');
                         if ($textFieldVal !== '') {
                             $value = $xoopsDB->escape(trim($textFieldVal));
                             switch ($textFieldMatch) {
@@ -439,7 +439,7 @@ switch ($op) {
         $limit = Request::getInt('limit', 0, 'GET') ?: Request::getInt('limit', $limit_default, 'POST');
         $criteria->setLimit($limit);
 
-        $start = Request::getInt('start', 0, 'GET') ?: Request::getInt('start', 0, 'POST');
+        $start = Request::hasVar('start', 'GET') ? Request::getInt('start', 0, 'GET') : Request::getInt('start', 0, 'POST');
         $criteria->setStart($start);
 
         [$users, $profiles, $total_users] = $profile_handler->search($criteria, $searchvars, $searchgroups);

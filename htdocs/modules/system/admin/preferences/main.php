@@ -519,7 +519,7 @@ switch ($op) {
         $new_use_mysession  = Request::getInt('use_mysession', 0, 'POST');
         $new_session_name   = Request::getString('session_name', '', 'POST');
         $new_session_expire = Request::getInt('session_expire', 0, 'POST');
-        if (!empty($new_use_mysession) && $xoopsConfig['use_mysession'] == 0 && $new_session_name !== '') {
+        if (!empty($new_use_mysession) && $xoopsConfig['use_mysession'] == 0 && $new_session_name !== '' && $new_session_expire > 0) {
             xoops_setcookie($new_session_name, session_id(), time() + (60 * $new_session_expire), '/', XOOPS_COOKIE_DOMAIN, 0);
         }
 

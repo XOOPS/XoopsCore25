@@ -218,11 +218,11 @@ switch ($op) {
         $comments_status  = '';
 
         $criteria        = new CriteriaCompo();
-        $comments_module = Request::getInt('comments_module', 0);
+        $comments_module = Request::hasVar('comments_module', 'POST') ? Request::getInt('comments_module', 0, 'POST') : Request::getInt('comments_module', 0, 'GET');
         if ($comments_module > 0) {
             $criteria->add(new Criteria('com_modid', $comments_module));
         }
-        $comments_status = Request::getInt('comments_status', 0);
+        $comments_status = Request::hasVar('comments_status', 'POST') ? Request::getInt('comments_status', 0, 'POST') : Request::getInt('comments_status', 0, 'GET');
         if ($comments_status > 0) {
             $criteria->add(new Criteria('com_status', $comments_status));
         }
