@@ -31,8 +31,8 @@ if (!defined('XOOPS_ROOT_PATH')) {
 }
 
 // Explicitly retrieve expected fields
-$op              = Request::getString('op', 'list', 'REQUEST');
-$target          = Request::getString('target', '', 'REQUEST');
+$op              = Request::hasVar('op', 'POST') ? Request::getString('op', 'list', 'POST') : Request::getString('op', 'list', 'GET');
+$target          = Request::hasVar('target', 'POST') ? Request::getString('target', '', 'POST') : Request::getString('target', '', 'GET');
 $image_nicename  = Request::getString('image_nicename', '', 'POST');
 $image_weight    = Request::getInt('image_weight', 0, 'POST');
 $image_display   = Request::getInt('image_display', 0, 'POST');
@@ -132,15 +132,18 @@ if ($isadmin || ($catreadcount > 0) || ($catwritecount > 0)) {
                     $image->setVar('imgcat_id', $imgcat_id);
                     if ($imgcat->getVar('imgcat_storetype') === 'db') {
                         $fp = fopen($uploader->getSavedDestination(), 'rb');
-                        if (false !== $fp) {
-                            $fbinary = fread($fp, filesize($uploader->getSavedDestination()));
-                            fclose($fp);
-                            $image->setVar('image_body', $fbinary, true);
+                        if (false === $fp) {
+                            $err[] = sprintf(_FAILSAVEIMG, $image->getVar('image_nicename'));
+                            continue;
                         }
-                        unlink($uploader->getSavedDestination());
+                        $fbinary = fread($fp, filesize($uploader->getSavedDestination()));
+                        fclose($fp);
+                        $image->setVar('image_body', $fbinary, true);
                     }
                     if (!$image_handler->insert($image)) {
                         $err[] = sprintf(_FAILSAVEIMG, $image->getVar('image_nicename'));
+                    } elseif ($imgcat->getVar('imgcat_storetype') === 'db') {
+                        unlink($uploader->getSavedDestination());
                     }
                 }
             } else {
@@ -149,7 +152,8 @@ if ($isadmin || ($catreadcount > 0) || ($catwritecount > 0)) {
             }
         }
         if (count($err) > 0) {
-            redirect_header($current_file . '?target=' . $target, 3, implode('<br>', $err));
+            $safeErr = array_map(static fn($msg) => htmlspecialchars((string) $msg, ENT_QUOTES), $err);
+            redirect_header($current_file . '?target=' . $target, 3, implode('<br>', $safeErr));
         }
         redirect_header($current_file . '?target=' . $target, 3, _AM_SYSTEM_DBUPDATED);
     }

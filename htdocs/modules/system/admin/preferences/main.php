@@ -515,6 +515,14 @@ switch ($op) {
             }
         }
 
+        // Set session cookie when use_mysession is just enabled
+        $new_use_mysession  = Request::getInt('use_mysession', 0, 'POST');
+        $new_session_name   = Request::getString('session_name', '', 'POST');
+        $new_session_expire = Request::getInt('session_expire', 0, 'POST');
+        if (!empty($new_use_mysession) && $xoopsConfig['use_mysession'] == 0 && $new_session_name !== '') {
+            xoops_setcookie($new_session_name, session_id(), time() + (60 * $new_session_expire), '/', XOOPS_COOKIE_DOMAIN, 0);
+        }
+
         // Clean cached files, may take long time
         // User register_shutdown_function to keep running after connection closes so that cleaning cached files can be finished
         // Cache management should be performed on a separate page
