@@ -181,8 +181,8 @@ if ($current_step == 1) {
     $uname      = Request::getString('uname', '', 'POST');
     $email      = Request::getEmail('email', '', 'POST');
     $url        = Request::getUrl('url', '', 'POST');
-    $pass       = Request::getString('pass', '', 'POST');
-    $vpass      = Request::getString('vpass', '', 'POST');
+    $pass       = Request::getText('pass', '', 'POST');
+    $vpass      = Request::getText('vpass', '', 'POST');
     $agree_disc = Request::getInt('agree_disc', 0, 'POST') ? 1 : 0;
 
 
@@ -222,7 +222,7 @@ if ($current_step > 0 && empty($stop) && (!empty($steps[$current_step - 1]['step
             $uname = Request::getString('uname', '', 'POST');
             $email = Request::getEmail('email', '', 'POST');
             $url   = Request::getUrl('url', '', 'POST');
-            $pass  = Request::getString('pass', '', 'POST');
+            $pass  = Request::getText('pass', '', 'POST');
             $newuser->setVar('uname', $uname);
             $newuser->setVar('email', $email);
             $newuser->setVar('pass', $pass ? password_hash($pass, PASSWORD_DEFAULT) : '');
@@ -278,7 +278,7 @@ if ($current_step > 0 && empty($stop) && (!empty($steps[$current_step - 1]['step
                             $xoopsMailer->assign('SITENAME', $GLOBALS['xoopsConfig']['sitename']);
                             $xoopsMailer->assign('ADMINMAIL', $GLOBALS['xoopsConfig']['adminmail']);
                             $xoopsMailer->assign('SITEURL', XOOPS_URL . '/');
-                            $xoopsMailer->assign('X_UPASS', Request::getString('vpass', '', 'POST')); //i$_POST['vpass']);
+                            $xoopsMailer->assign('X_UPASS', Request::getText('vpass', '', 'POST')); //i$_POST['vpass']);
                             $xoopsMailer->setToUsers($newuser);
                             $xoopsMailer->setFromEmail($GLOBALS['xoopsConfig']['adminmail']);
                             $xoopsMailer->setFromName($GLOBALS['xoopsConfig']['sitename']);

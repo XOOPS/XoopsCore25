@@ -36,6 +36,9 @@ class SuperglobalMigrationTest extends TestCase
     /** @var array Backup of $_COOKIE */
     private array $backupCookie;
 
+    /**
+     * Back up superglobals before each test.
+     */
     protected function setUp(): void
     {
         $this->backupRequest = $_REQUEST;
@@ -44,6 +47,9 @@ class SuperglobalMigrationTest extends TestCase
         $this->backupCookie  = $_COOKIE;
     }
 
+    /**
+     * Restore superglobals after each test.
+     */
     protected function tearDown(): void
     {
         $_REQUEST = $this->backupRequest;
@@ -56,6 +62,9 @@ class SuperglobalMigrationTest extends TestCase
     // 1. tplsets/jquery.php — path traversal via $_REQUEST['dir']
     // ---------------------------------------------------------------
 
+    /**
+     * Verify getString strips script tags from dir parameter.
+     */
     #[Test]
     public function getStringStripsScriptTagsFromDir(): void
     {
@@ -64,6 +73,9 @@ class SuperglobalMigrationTest extends TestCase
         $this->assertStringNotContainsString('<script>', $value);
     }
 
+    /**
+     * Verify getCmd sanitises path traversal sequences in dir.
+     */
     #[Test]
     public function getCmdSanitisesPathTraversalInDir(): void
     {
@@ -75,6 +87,9 @@ class SuperglobalMigrationTest extends TestCase
         $this->assertStringNotContainsString('\\', $value);
     }
 
+    /**
+     * Verify getString preserves a valid theme path.
+     */
     #[Test]
     public function getStringPreservesValidThemePath(): void
     {
@@ -87,6 +102,9 @@ class SuperglobalMigrationTest extends TestCase
     // 2. tplsets/jquery.php — $_REQUEST['path_file'] (tpls_restore)
     // ---------------------------------------------------------------
 
+    /**
+     * Verify getString strips HTML from path_file parameter.
+     */
     #[Test]
     public function getStringStripsHtmlFromPathFile(): void
     {
@@ -99,6 +117,9 @@ class SuperglobalMigrationTest extends TestCase
     // 3. profile/search.php — $_REQUEST['op']
     // ---------------------------------------------------------------
 
+    /**
+     * Verify getCmd returns a clean op value.
+     */
     #[Test]
     public function getCmdReturnsCleanOp(): void
     {
@@ -106,6 +127,9 @@ class SuperglobalMigrationTest extends TestCase
         $this->assertSame('results', Request::getCmd('op', 'search'));
     }
 
+    /**
+     * Verify getCmd defaults to 'search' when op is missing.
+     */
     #[Test]
     public function getCmdDefaultsToSearchForMissingOp(): void
     {
@@ -113,6 +137,9 @@ class SuperglobalMigrationTest extends TestCase
         $this->assertSame('search', Request::getCmd('op', 'search'));
     }
 
+    /**
+     * Verify getCmd strips SQL injection from op parameter.
+     */
     #[Test]
     public function getCmdStripsInjectionFromOp(): void
     {
@@ -128,6 +155,9 @@ class SuperglobalMigrationTest extends TestCase
     // 4. profile/search.php — $_REQUEST['uname']
     // ---------------------------------------------------------------
 
+    /**
+     * Verify getString preserves a valid username.
+     */
     #[Test]
     public function getStringPreservesValidUname(): void
     {
@@ -135,6 +165,9 @@ class SuperglobalMigrationTest extends TestCase
         $this->assertSame('john_doe', Request::getString('uname', ''));
     }
 
+    /**
+     * Verify getString strips XSS from username.
+     */
     #[Test]
     public function getStringStripsXssFromUname(): void
     {
@@ -147,6 +180,9 @@ class SuperglobalMigrationTest extends TestCase
     // 5. profile/search.php — $_REQUEST['limit'] and $_REQUEST['start']
     // ---------------------------------------------------------------
 
+    /**
+     * Verify getInt returns integer for limit parameter.
+     */
     #[Test]
     public function getIntReturnsIntegerForLimit(): void
     {
@@ -154,6 +190,9 @@ class SuperglobalMigrationTest extends TestCase
         $this->assertSame(25, Request::getInt('limit', 20));
     }
 
+    /**
+     * Verify getInt strips non-numeric characters from limit.
+     */
     #[Test]
     public function getIntStripsNonNumericFromLimit(): void
     {
@@ -161,6 +200,9 @@ class SuperglobalMigrationTest extends TestCase
         $this->assertSame(25, Request::getInt('limit', 20));
     }
 
+    /**
+     * Verify getInt returns default for missing start parameter.
+     */
     #[Test]
     public function getIntDefaultsForMissingStart(): void
     {
@@ -172,6 +214,9 @@ class SuperglobalMigrationTest extends TestCase
     // 6. profile/search.php — $_REQUEST['order']
     // ---------------------------------------------------------------
 
+    /**
+     * Verify getInt converts order string to integer.
+     */
     #[Test]
     public function getIntConvertsOrderToInteger(): void
     {
@@ -179,6 +224,9 @@ class SuperglobalMigrationTest extends TestCase
         $this->assertSame(1, Request::getInt('order', 0));
     }
 
+    /**
+     * Verify getInt returns default for non-numeric order.
+     */
     #[Test]
     public function getIntClampsNonNumericOrder(): void
     {
@@ -190,6 +238,9 @@ class SuperglobalMigrationTest extends TestCase
     // 7. profile/search.php — $_REQUEST['sortby']
     // ---------------------------------------------------------------
 
+    /**
+     * Verify getCmd preserves a valid sortby value.
+     */
     #[Test]
     public function getCmdPreservesValidSortby(): void
     {
@@ -197,6 +248,9 @@ class SuperglobalMigrationTest extends TestCase
         $this->assertSame('uname', Request::getCmd('sortby', ''));
     }
 
+    /**
+     * Verify getCmd strips SQL injection from sortby.
+     */
     #[Test]
     public function getCmdStripsInjectionFromSortby(): void
     {
@@ -210,6 +264,9 @@ class SuperglobalMigrationTest extends TestCase
     // 8. profile/search.php — $_REQUEST['selgroups'] (array)
     // ---------------------------------------------------------------
 
+    /**
+     * Verify getArray returns array for selgroups parameter.
+     */
     #[Test]
     public function getArrayReturnsArrayForSelgroups(): void
     {
@@ -219,6 +276,9 @@ class SuperglobalMigrationTest extends TestCase
         $this->assertCount(3, $value);
     }
 
+    /**
+     * Verify getArray returns empty default for missing selgroups.
+     */
     #[Test]
     public function getArrayReturnsEmptyDefaultForMissing(): void
     {
@@ -231,6 +291,9 @@ class SuperglobalMigrationTest extends TestCase
     // 9. notification_update.php — open redirect via $_POST['not_redirect']
     // ---------------------------------------------------------------
 
+    /**
+     * Verify getUrl returns a valid URL format from POST.
+     */
     #[Test]
     public function getUrlReturnsValidUrlFormat(): void
     {
@@ -243,6 +306,9 @@ class SuperglobalMigrationTest extends TestCase
         $this->assertNotSame('', $value);
     }
 
+    /**
+     * Verify getString strips HTML tags from redirect URL.
+     */
     #[Test]
     public function getStringStripsHtmlTagsFromRedirectUrl(): void
     {
@@ -256,6 +322,9 @@ class SuperglobalMigrationTest extends TestCase
     // 10. common.php — session fixation via $_POST[sslpost_name]
     // ---------------------------------------------------------------
 
+    /**
+     * Verify getString filters session ID from POST.
+     */
     #[Test]
     public function getStringFiltersSessionId(): void
     {
@@ -266,6 +335,9 @@ class SuperglobalMigrationTest extends TestCase
         $this->assertIsString($value);
     }
 
+    /**
+     * Verify getString strips HTML from session ID.
+     */
     #[Test]
     public function getStringStripsHtmlFromSessionId(): void
     {
@@ -278,6 +350,9 @@ class SuperglobalMigrationTest extends TestCase
     // 11. Hash-pinning: POST values should NOT bleed from GET
     // ---------------------------------------------------------------
 
+    /**
+     * Verify POST hash does not read GET values.
+     */
     #[Test]
     public function postHashDoesNotReadGetValues(): void
     {
@@ -289,6 +364,9 @@ class SuperglobalMigrationTest extends TestCase
         $this->assertSame('', Request::getString('secret', '', 'POST'));
     }
 
+    /**
+     * Verify GET hash does not read POST values.
+     */
     #[Test]
     public function getHashDoesNotReadPostValues(): void
     {
@@ -304,6 +382,9 @@ class SuperglobalMigrationTest extends TestCase
     // 12. Protector prefix_manager.php — $_POST['prefix'] validation
     // ---------------------------------------------------------------
 
+    /**
+     * Verify getCmd allows a valid database prefix.
+     */
     #[Test]
     public function getCmdAllowsValidDbPrefix(): void
     {
@@ -313,6 +394,9 @@ class SuperglobalMigrationTest extends TestCase
         $this->assertSame('xoops_2024', $value);
     }
 
+    /**
+     * Verify getCmd strips SQL injection from prefix.
+     */
     #[Test]
     public function getCmdStripsSqlInjectionFromPrefix(): void
     {
@@ -327,6 +411,9 @@ class SuperglobalMigrationTest extends TestCase
     // 13. profile/search.php — dynamic field search values
     // ---------------------------------------------------------------
 
+    /**
+     * Verify getInt handles dynamic field larger-than value.
+     */
     #[Test]
     public function getIntHandlesDynamicFieldLarger(): void
     {
@@ -334,6 +421,9 @@ class SuperglobalMigrationTest extends TestCase
         $this->assertSame(18, Request::getInt('age_larger', 0));
     }
 
+    /**
+     * Verify getInt rejects non-numeric dynamic field value.
+     */
     #[Test]
     public function getIntRejectsNonNumericFieldValue(): void
     {
@@ -345,6 +435,9 @@ class SuperglobalMigrationTest extends TestCase
     // 14. profile/search.php — email search
     // ---------------------------------------------------------------
 
+    /**
+     * Verify getString preserves a valid email address.
+     */
     #[Test]
     public function getStringPreservesValidEmail(): void
     {
@@ -353,6 +446,9 @@ class SuperglobalMigrationTest extends TestCase
         $this->assertSame('user@example.com', $value);
     }
 
+    /**
+     * Verify getString strips XSS from email field.
+     */
     #[Test]
     public function getStringStripsXssFromEmail(): void
     {
@@ -365,6 +461,9 @@ class SuperglobalMigrationTest extends TestCase
     // 15. match type parameters (used in profile/search.php)
     // ---------------------------------------------------------------
 
+    /**
+     * Verify getInt converts match type string to integer.
+     */
     #[Test]
     public function getIntConvertsMatchType(): void
     {
@@ -373,6 +472,9 @@ class SuperglobalMigrationTest extends TestCase
         $this->assertSame(2, Request::getInt('uname_match', 0));
     }
 
+    /**
+     * Verify getInt rejects invalid match type with SQL injection.
+     */
     #[Test]
     public function getIntRejectsInvalidMatchType(): void
     {

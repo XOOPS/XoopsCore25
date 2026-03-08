@@ -53,12 +53,12 @@ if ($op === 'saveuser') {
             $errors[] = _US_INVALIDMAIL;
         }
     }
-    $password = Request::getString('password', '', 'POST');
+    $password = Request::getText('password', '', 'POST');
     if (!empty($password)) {
         if (strlen($password) < $xoopsConfigUser['minpass']) {
             $errors[] = sprintf(_US_PWDTOOSHORT, $xoopsConfigUser['minpass']);
         } else {
-            $vpass = Request::getString('vpass', '', 'POST');
+            $vpass = Request::getText('vpass', '', 'POST');
             if ($password != $vpass) {
                 $errors[] = _US_PASSNOTSAME;
             } elseif (mb_strtolower($password, 'UTF-8') === mb_strtolower((string) $xoopsUser->getVar('uname', 'n'), 'UTF-8')) {

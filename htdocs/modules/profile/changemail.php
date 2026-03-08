@@ -42,7 +42,7 @@ if (!Request::hasVar('submit', 'POST') || !Request::hasVar('passwd', 'POST')) {
     $form->assign($GLOBALS['xoopsTpl']);
 } else {
     $myts  = \MyTextSanitizer::getInstance();
-    $pass  = trim(Request::getString('passwd', '', 'POST'));
+    $pass  = trim(Request::getText('passwd', '', 'POST'));
     $email = trim(Request::getString('newmail', '', 'POST'));
 
     $errors = [];
