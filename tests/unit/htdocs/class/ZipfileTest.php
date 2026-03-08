@@ -428,8 +428,6 @@ class ZipfileTest extends TestCase
     {
         // 2025-01-01 00:00:00
         $timestamp = mktime(0, 0, 0, 1, 1, 2025);
-        $dosTime   = $this->zip->unix2DosTime($timestamp);
-        $dtime     = dechex($dosTime);
 
         $this->zip->addFile('x', 'x.txt', $timestamp);
         $header   = $this->zip->datasec[0];
@@ -441,6 +439,20 @@ class ZipfileTest extends TestCase
             $this->assertGreaterThanOrEqual(0, $byte);
             $this->assertLessThanOrEqual(255, $byte);
         }
+    }
+
+    #[Test]
+    public function hexdtimeHandlesEarlyDosEpochTimestamp(): void
+    {
+        // 1980-01-01 00:00:00 produces a DOS time with leading zero nibbles
+        // dechex would return < 8 chars without proper str_pad
+        $timestamp = mktime(0, 0, 0, 1, 1, 1980);
+        $this->zip->addFile('data', 'early.txt', $timestamp);
+
+        $header   = $this->zip->datasec[0];
+        $hexdtime = substr($header, 10, 4);
+
+        $this->assertSame(4, strlen($hexdtime), 'Hexdtime must be 4 bytes even for early dates');
     }
 
     #[Test]

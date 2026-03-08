@@ -26,11 +26,8 @@ class SnoopyTest extends TestCase
         if (!isset($GLOBALS['xoopsLogger'])) {
             $GLOBALS['xoopsLogger'] = \XoopsLogger::getInstance();
         }
-        // Create single instance — constructor triggers XoopsLogger handler setup.
-        // Doing it once avoids repeated handler push/pop that PHPUnit flags as risky.
+        // Create single instance to avoid repeated XoopsLogger deprecation logging
         self::$snoopy = new \Snoopy();
-        restore_error_handler();
-        restore_exception_handler();
     }
 
     private function snoopy(): \Snoopy

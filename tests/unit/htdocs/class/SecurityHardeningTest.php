@@ -194,13 +194,7 @@ class SecurityHardeningTest extends TestCase
     #[Test]
     public function unserializeSafelyReturnsFalseForInvalidData(): void
     {
-        $warningTriggered = false;
-        set_error_handler(function (int $errno) use (&$warningTriggered): bool {
-            if ($errno === E_WARNING || $errno === E_NOTICE) {
-                $warningTriggered = true;
-            }
-            return true;
-        });
+        set_error_handler(static fn(): bool => true);
 
         $result = unserialize('not_valid_serialized_data', ['allowed_classes' => false]);
 
@@ -216,13 +210,7 @@ class SecurityHardeningTest extends TestCase
         // The serialized form of an object with class "EvilClass" and property x=1
         $data = 'O:9:"EvilClass":1:{s:1:"x";i:1;}';
 
-        $warningTriggered = false;
-        set_error_handler(function (int $errno) use (&$warningTriggered): bool {
-            if ($errno === E_WARNING || $errno === E_NOTICE) {
-                $warningTriggered = true;
-            }
-            return true;
-        });
+        set_error_handler(static fn(): bool => true);
 
         $result = unserialize($data, ['allowed_classes' => false]);
 
