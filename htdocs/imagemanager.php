@@ -20,8 +20,18 @@ use Xmf\Request;
 
 include __DIR__ . '/mainfile.php';
 
+// Compute language-specific stylesheet URL once (used in both cases)
+$language = basename((string) $xoopsConfig['language']);
+if (!preg_match('/^[A-Za-z0-9_-]+$/', $language)) {
+    $language = 'english';
+}
+$language_stylesheet_url = '';
+if (file_exists(XOOPS_ROOT_PATH . '/language/' . $language . '/style.css')) {
+    $language_stylesheet_url = XOOPS_URL . '/language/' . $language . '/style.css';
+}
+
 // Get Action type
-$op = Request::getCmd('op', 'list');
+$op = Request::getCmd('op', 'list', 'GET');
 
 switch ($op) {
     case 'list':
@@ -141,12 +151,6 @@ switch ($op) {
             $xoopsTpl->assign('xsize', 400);
             $xoopsTpl->assign('ysize', 180);
         }
-        // Assign language-specific stylesheet URL if it exists
-        $language = $xoopsConfig['language'];
-        $language_stylesheet_url = '';
-        if (file_exists(XOOPS_ROOT_PATH . '/language/' . $language . '/style.css')) {
-            $language_stylesheet_url = XOOPS_URL . '/language/' . $language . '/style.css';
-        }
         $xoopsTpl->assign('language_stylesheet_url', $language_stylesheet_url);
         $xoopsTpl->display('db:system_imagemanager.tpl');
         exit();
@@ -211,12 +215,6 @@ switch ($op) {
             $fineup_debug = 'true';
         }
         $xoopsTpl->assign('fineup_debug', $fineup_debug);
-        // Assign language-specific stylesheet URL if it exists
-        $language = $xoopsConfig['language'];
-        $language_stylesheet_url = '';
-        if (file_exists(XOOPS_ROOT_PATH . '/language/' . $language . '/style.css')) {
-            $language_stylesheet_url = XOOPS_URL . '/language/' . $language . '/style.css';
-        }
         $xoopsTpl->assign('language_stylesheet_url', $language_stylesheet_url);
         $xoopsTpl->display('db:system_imagemanager2.tpl');
         exit();
