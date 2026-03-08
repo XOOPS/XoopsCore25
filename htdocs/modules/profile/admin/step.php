@@ -126,18 +126,18 @@ if (!empty($template_main)) {
 }
 
 /**
- * @param $step_d
- * @param $step_save
+ * @param int $stepId
+ * @param int $stepSave
  */
-function profile_stepsave_toggle($step_d, $step_save)
+function profile_stepsave_toggle(int $stepId, int $stepSave): void
 {
-    $step_save = ($step_save == 1) ? 0 : 1;
-    $handler   = xoops_getModuleHandler('regstep');
-    $obj       = $handler->get((int) $step_d);
+    $stepSave = ($stepSave === 1) ? 0 : 1;
+    $handler  = xoops_getModuleHandler('regstep');
+    $obj      = $handler->get($stepId);
     if (!is_object($obj)) {
         redirect_header('step.php', 1, _PROFILE_AM_SAVESTEP_TOGGLE_FAILED);
     }
-    $obj->setVar('step_save', $step_save);
+    $obj->setVar('step_save', $stepSave);
     if ($handler->insert($obj, true)) {
         redirect_header('step.php', 1, _PROFILE_AM_SAVESTEP_TOGGLE_SUCCESS);
     } else {
