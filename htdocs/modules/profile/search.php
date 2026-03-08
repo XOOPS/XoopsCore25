@@ -326,8 +326,8 @@ switch ($op) {
                                 break;
 
                             default:
-                                $intLarger  = Request::getInt($fieldname . '_larger', 0, 'GET') ?: Request::getInt($fieldname . '_larger', 0, 'POST');
-                                $intSmaller = Request::getInt($fieldname . '_smaller', 0, 'GET') ?: Request::getInt($fieldname . '_smaller', 0, 'POST');
+                                $intLarger  = Request::hasVar($fieldname . '_larger', 'GET') ? Request::getInt($fieldname . '_larger', 0, 'GET') : Request::getInt($fieldname . '_larger', 0, 'POST');
+                                $intSmaller = Request::hasVar($fieldname . '_smaller', 'GET') ? Request::getInt($fieldname . '_smaller', 0, 'GET') : Request::getInt($fieldname . '_smaller', 0, 'POST');
                                 if ($intLarger !== 0) {
                                     $search_url[] = $fieldname . '_larger=' . $intLarger;
                                     $searchvars[] = $fieldname;

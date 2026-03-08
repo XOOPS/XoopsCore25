@@ -127,7 +127,7 @@ switch ($op) {
         $xoBreadCrumb->addTips(sprintf(_AM_SYSTEM_SMILIES_NAV_TIPS_FORM1, implode(', ', $mimetypes)) . sprintf(_AM_SYSTEM_SMILIES_NAV_TIPS_FORM2, $upload_size / 1000));
         $xoBreadCrumb->render();
         // Create form
-        $obj  = $smilies_Handler->get(Request::getInt('smilies_id', 0));
+        $obj  = $smilies_Handler->get(Request::getInt('smilies_id', 0, 'GET'));
         $form = $obj->getForm();
         // Assign form
         $xoopsTpl->assign('form', $form->render());
@@ -144,7 +144,7 @@ switch ($op) {
         $xoBreadCrumb->render();
 
         if (Request::hasVar('smilies_id', 'POST')) {
-            $obj = $smilies_Handler->get(Request::getInt('smilies_id', 0));
+            $obj = $smilies_Handler->get(Request::getInt('smilies_id', 0, 'POST'));
         } else {
             $obj = $smilies_Handler->create();
         }
@@ -195,7 +195,7 @@ switch ($op) {
 
         //Del a smilie
     case 'smilies_delete':
-        $smilies_id = Request::getInt('smilies_id', 0);
+        $smilies_id = Request::hasVar('smilies_id', 'POST') ? Request::getInt('smilies_id', 0, 'POST') : Request::getInt('smilies_id', 0, 'GET');
         $obj        = $smilies_Handler->get($smilies_id);
         if (Request::getInt('ok', 0, 'POST') == 1) {
             if (!$GLOBALS['xoopsSecurity']->check()) {

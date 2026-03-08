@@ -266,7 +266,7 @@ switch ($op) {
 
         /** @var XoopsConfigHandler $config_handler */
         $config_handler = xoops_getHandler('config');
-        $mod            = Request::getInt('mod', 0);
+        $mod            = Request::hasVar('mod', 'POST') ? Request::getInt('mod', 0, 'POST') : Request::getInt('mod', 0, 'GET');
         if ($mod <= 0) {
             header('Location: admin.php?fct=preferences');
             exit();
@@ -294,7 +294,7 @@ switch ($op) {
         }
 
         $modname = $module->getVar('name');
-        $redirect_url = Request::getString('redirect', '');
+        $redirect_url = Request::hasVar('redirect', 'POST') ? Request::getString('redirect', '', 'POST') : Request::getString('redirect', '', 'GET');
         if (!empty($redirect_url)) {
             $myts = \MyTextSanitizer::getInstance();
             $form->addElement(new XoopsFormHidden('redirect', $myts->htmlSpecialChars($redirect_url)));
