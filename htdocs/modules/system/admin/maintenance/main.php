@@ -208,17 +208,17 @@ switch ($op) {
         $xoBreadCrumb->render();
 
         $dump         = new SystemMaintenance();
-        $dump_modules = $_REQUEST['dump_modules'] ?? false;
-        $dump_tables  = $_REQUEST['dump_tables'] ?? false;
-        $drop         = Request::getInt('drop', 1);
+        $dump_modules = Request::getArray('dump_modules', [], 'POST');
+        $dump_tables  = Request::getArray('dump_tables', [], 'POST');
+        $drop         = Request::getInt('drop', 1, 'POST');
 
-        if (($dump_tables === true && $dump_modules === true) || ($dump_tables === false && $dump_modules === false)) {
+        if ((!empty($dump_tables) && !empty($dump_modules)) || (empty($dump_tables) && empty($dump_modules))) {
             redirect_header('admin.php?fct=maintenance', 2, _AM_SYSTEM_MAINTENANCE_DUMP_ERROR_TABLES_OR_MODULES);
         }
 
-        if ($dump_tables !== false) {
+        if (!empty($dump_tables)) {
             $result = $dump->dump_tables($dump_tables, $drop);
-        } elseif ($dump_modules !== false) {
+        } elseif (!empty($dump_modules)) {
             $result = $dump->dump_modules($dump_modules, $drop);
         }
         $xoopsTpl->assign('result_dump', $result[1]);

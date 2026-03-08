@@ -434,9 +434,10 @@ switch ($op) {
         ], $imagecategory->getVar('imgcat_maxsize'), $imagecategory->getVar('imgcat_maxwidth'), $imagecategory->getVar('imgcat_maxheight'));
         $uploader->setPrefix('img');
         $err    = [];
-        $ucount = count($_POST['xoops_upload_file']);
+        $xoops_upload_file = Request::getArray('xoops_upload_file', [], 'POST');
+        $ucount = count($xoops_upload_file);
         for ($i = 0; $i < $ucount; ++$i) {
-            if ($uploader->fetchMedia($_POST['xoops_upload_file'][$i])) {
+            if ($uploader->fetchMedia($xoops_upload_file[$i])) {
                 if (!$uploader->upload()) {
                     $err[] = & $uploader->getErrors();
                 } else {
@@ -741,7 +742,7 @@ switch ($op) {
         $xoopsTpl->assign('jwt', $jwt);
         $fineup_debug = 'false';
         if (($xoopsUser instanceof \XoopsUser ? $xoopsUser->isAdmin() : false)
-            && isset($_REQUEST['FINEUPLOADER_DEBUG'])) {
+            && Request::hasVar('FINEUPLOADER_DEBUG', 'GET')) {
             $fineup_debug = 'true';
         }
         $xoopsTpl->assign('fineup_debug', $fineup_debug);

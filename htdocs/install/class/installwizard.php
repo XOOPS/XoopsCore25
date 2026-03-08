@@ -42,7 +42,8 @@ class XoopsInstallWizard
         }
 
         // Load the main language file
-        $this->initLanguage(!empty($_COOKIE['xo_install_lang']) ? $_COOKIE['xo_install_lang'] : 'english');
+        $installLang = \Xmf\Request::getString('xo_install_lang', '', 'COOKIE');
+        $this->initLanguage(!empty($installLang) ? $installLang : 'english');
         // Setup pages
         $pages = include __DIR__ . '/../include/page.php';
         $this->pages = $pages;
@@ -124,8 +125,9 @@ class XoopsInstallWizard
             return true;
         }
 
-        if (empty($GLOBALS['xoopsUser']) && !empty($_COOKIE['xo_install_user'])) {
-            return install_acceptUser($_COOKIE['xo_install_user']);
+        $installUser = \Xmf\Request::getString('xo_install_user', '', 'COOKIE');
+        if (empty($GLOBALS['xoopsUser']) && !empty($installUser)) {
+            return install_acceptUser($installUser);
         }
         if (empty($GLOBALS['xoopsUser'])) {
             redirect_header('../user.php');
@@ -180,7 +182,7 @@ class XoopsInstallWizard
             return false;
         }
 
-        if ($this->pageIndex > 0 && !isset($_COOKIE['xo_install_lang'])) {
+        if ($this->pageIndex > 0 && !\Xmf\Request::hasVar('xo_install_lang', 'COOKIE')) {
             header('Location: index.php');
         }
 

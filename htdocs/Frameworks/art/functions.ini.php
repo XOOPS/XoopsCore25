@@ -247,11 +247,11 @@ function mod_getDirname($current_path = null)
  */
 function mod_isModuleAction($dirname = 'system')
 {
-    $ret = @(// action module "system"
+    $ret = (// action module "system"
         !empty($GLOBALS['xoopsModule']) && 'system' === $GLOBALS['xoopsModule']->getVar('dirname', 'n') && // current dirname
-        ($dirname == $_POST['dirname'] || $dirname == $_POST['module']) && // current op
-        ('update_ok' === $_POST['op'] || 'install_ok' === $_POST['op'] || 'uninstall_ok' === $_POST['op']) && // current action
-        'modulesadmin' === $_POST['fct']
+        ($dirname == \Xmf\Request::getString('dirname', '', 'POST') || $dirname == \Xmf\Request::getString('module', '', 'POST')) && // current op
+        in_array(\Xmf\Request::getCmd('op', '', 'POST'), ['update_ok', 'install_ok', 'uninstall_ok'], true) && // current action
+        'modulesadmin' === \Xmf\Request::getCmd('fct', '', 'POST')
     );
 
     return $ret;

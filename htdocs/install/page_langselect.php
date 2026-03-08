@@ -30,8 +30,8 @@ require_once __DIR__ . '/include/common.inc.php';
 defined('XOOPS_INSTALL') || die('XOOPS Installation wizard die');
 
 xoops_setcookie('xo_install_lang', 'english', 0, '', '');
-if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_REQUEST['lang'])) {
-    $lang = $_REQUEST['lang'];
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && \Xmf\Request::hasVar('lang', 'POST')) {
+    $lang = \Xmf\Request::getString('lang', '', 'POST');
     xoops_setcookie('xo_install_lang', $lang, 0, '', '');
 
     $wizard->redirectToPage('+1');

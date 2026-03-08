@@ -26,8 +26,10 @@ $op = Request::getCmd('op', 'list');
 switch ($op) {
     case 'list':
     default:
-        if (isset($_REQUEST['target'])) {
-            $target = Request::getWord('target', '', 'REQUEST');
+        if (Request::hasVar('target', 'GET') || Request::hasVar('target', 'POST')) {
+            $target = Request::hasVar('target', 'GET')
+                ? Request::getWord('target', '', 'GET')
+                : Request::getWord('target', '', 'POST');
         } else {
             exit('Target not set');
         }
@@ -141,8 +143,10 @@ switch ($op) {
         exit();
 
     case 'upload':
-        if (isset($_REQUEST['target'])) {
-            $target = $target = Request::getWord('target', '', 'REQUEST');
+        if (Request::hasVar('target', 'GET') || Request::hasVar('target', 'POST')) {
+            $target = Request::hasVar('target', 'GET')
+                ? Request::getWord('target', '', 'GET')
+                : Request::getWord('target', '', 'POST');
         } else {
             exit('Target not set');
         }
@@ -194,7 +198,7 @@ switch ($op) {
         $xoopsTpl->assign('jwt', $jwt);
         $fineup_debug = 'false';
         if (($xoopsUser instanceof \XoopsUser ? $xoopsUser->isAdmin() : false)
-            && isset($_REQUEST['FINEUPLOADER_DEBUG'])) {
+            && (Request::hasVar('FINEUPLOADER_DEBUG', 'GET') || Request::hasVar('FINEUPLOADER_DEBUG', 'POST'))) {
             $fineup_debug = 'true';
         }
         $xoopsTpl->assign('fineup_debug', $fineup_debug);

@@ -144,7 +144,7 @@ switch ($op) {
                 $installed_mods = $tpltpl_handler->getModuleTplCount($tplset);
 
                 //all templates or only one template
-                if ($_REQUEST['active_templates'] == 0) {
+                if ((Request::getInt('active_templates', 0, 'GET') ?: Request::getInt('active_templates', 0, 'POST')) === 0) {
                     foreach (array_keys($tplsets_arr) as $i) {
                         $tplsetname = $tplsets_arr[$i]->getVar('tplset_name');
                         $tplstats   = $tpltpl_handler->getModuleTplCount($tplsetname);
@@ -261,8 +261,8 @@ switch ($op) {
 
                                 $class = 'odd';
                                 $text .= '<table cellspacing="1" class="outer"><tr><th colspan="3" align="center">' . _AM_SYSTEM_TEMPLATES_MODULES . ucfirst((string) $module->getVar('dirname')) . '</th></tr><tr><th align="center">' . _AM_SYSTEM_TEMPLATES_TYPES . '</th><th  align="center">' . _AM_SYSTEM_TEMPLATES_FILES . '</th><th>' . _AM_SYSTEM_TEMPLATES_STATUS . '</th></tr>';
-                                $select_templates_modules = $_REQUEST['select_templates_modules'];
-                                $tempCount                = count($_REQUEST['select_templates_modules']);
+                                $select_templates_modules = Request::getArray('select_templates_modules', [], 'POST');
+                                $tempCount                = count($select_templates_modules);
                                 for ($l = 0; $l < $tempCount; ++$l) {
                                     // create template
                                     $templates      = $tpltpl_handler->find($tplsetname, 'module', null, $moddir);
@@ -369,8 +369,7 @@ switch ($op) {
         if (!$GLOBALS['xoopsSecurity']->check()) {
             redirect_header('admin.php?fct=tplsets', 2, implode('<br>', $GLOBALS['xoopsSecurity']->getErrors()));
         }
-        XoopsLoad::load('XoopsRequest');
-        $clean_path_file = XoopsRequest::getString('path_file', '');
+        $clean_path_file = Request::getString('path_file', '', 'POST');
         if (!empty($clean_path_file)) {
             $path_file = realpath(XOOPS_ROOT_PATH.'/themes'.trim($clean_path_file));
             $path_file = str_replace('\\','/',$path_file);
@@ -383,10 +382,14 @@ switch ($op) {
             $copy_file = $path_file . '.back';
             copy($path_file, $copy_file);
             // Save modif
-            if (isset($_REQUEST['templates'])) {
-                $open = fopen('' . $path_file . '', 'w+');
-                $temp = stripslashes((string) $_REQUEST['templates']);
+            if (Request::hasVar('templates', 'POST')) {
+                $open = fopen($path_file, 'w+');
+                if ($open === false) {
+                    redirect_header('admin.php?fct=tplsets', 2, _AM_SYSTEM_TEMPLATES_ERROR);
+                }
+                $temp = Request::getText('templates', '', 'POST');
                 if (!fwrite($open, xoops_utf8_encode($temp))) {
+                    fclose($open);
                     redirect_header('admin.php?fct=tplsets', 2, _AM_SYSTEM_TEMPLATES_ERROR);
                 }
                 fclose($open);

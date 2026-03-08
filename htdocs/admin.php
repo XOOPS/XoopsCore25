@@ -12,6 +12,9 @@
  * @copyright       (c) 2000-2026 XOOPS Project (https://xoops.org)
  * @license             GNU GPL 2 (https://www.gnu.org/licenses/gpl-2.0.html)
  */
+
+use Xmf\Request;
+
 $xoopsOption['pagetype'] = 'admin';
 
 include __DIR__ . '/mainfile.php';
@@ -81,13 +84,14 @@ if (!isset($xoopsConfig['admin_warnings_enable']) || $xoopsConfig['admin_warning
     }
 }
 
-if (!empty($_GET['xoopsorgnews']) && !function_exists('xml_parser_create')) {
+$xoopsorgnews = Request::getInt('xoopsorgnews', 0, 'GET');
+if ($xoopsorgnews !== 0 && !function_exists('xml_parser_create')) {
     xoops_warning(_AD_WARNING_NO_XML);
     echo '<br>';
-    unset($_GET['xoopsorgnews']);
+    $xoopsorgnews = 0;
 }
 
-if (!empty($_GET['xoopsorgnews'])) {
+if ($xoopsorgnews !== 0) {
     // Multiple feeds
     $myts     = \MyTextSanitizer::getInstance();
     $rssurl   = [];

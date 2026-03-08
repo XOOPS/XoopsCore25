@@ -15,7 +15,7 @@ class FileLockException extends RuntimeException {}
 class FileWriteException extends RuntimeException {}
 
 //dirty trick to get navigation working with system menus
-if (isset($_GET['num'])) {
+if (Request::hasVar('num', 'GET')) {
     $_SERVER['REQUEST_URI'] = 'admin/center.php?page=center';
 }
 
@@ -39,17 +39,19 @@ $conf      = $protector->getConf();
 // transaction stage
 //
 
-if (!empty($_POST['action'])) {
+$action = Request::getCmd('action', '', 'POST');
+if ($action !== '') {
 
     // Ticket check
     if (!$xoopsGTicket->check(true, 'protector_admin')) {
         redirect_header(XOOPS_URL . '/', 3, $xoopsGTicket->getErrors());
     }
 
-    if ($_POST['action'] === 'update_ips') {
+    if ($action === 'update_ips') {
         $error_msg = '';
 
-        $lines   = empty($_POST['bad_ips']) ? [] : explode("\n", trim($_POST['bad_ips']));
+        $badIpsText = Request::getText('bad_ips', '', 'POST');
+        $lines   = empty($badIpsText) ? [] : explode("\n", trim($badIpsText));
         $bad_ips = [];
         foreach ($lines as $line) {
             [$bad_ip, $jailed_time] = explode('|', $line, 2) + [1 => '']; // Ensure 2 elements
@@ -60,7 +62,8 @@ if (!empty($_POST['action'])) {
             error_log("[File Write Error] Failed to write bad IPs to file.");
         }
 
-        $group1_ips = empty($_POST['group1_ips']) ? [] : explode("\n", trim($_POST['group1_ips']));
+        $g1IpsText = Request::getText('group1_ips', '', 'POST');
+        $group1_ips = empty($g1IpsText) ? [] : explode("\n", trim($g1IpsText));
         $group1_ips = array_map('trim', $group1_ips); // Use array_map for trimming
 
         $filePath = $protector->get_filepath4group1ips();
@@ -103,17 +106,19 @@ if (!empty($_POST['action'])) {
         $redirect_msg = $error_msg ?: _AM_MSG_IPFILESUPDATED;
         redirect_header('center.php?page=center', 2, $redirect_msg);
         exit;
-    } elseif ($_POST['action'] === 'delete' && isset($_POST['ids']) && \is_array($_POST['ids'])) {
+    } elseif ($action === 'delete' && Request::hasVar('ids', 'POST')) {
+        $ids = Request::getArray('ids', [], 'POST');
         // remove selected records
-        foreach ($_POST['ids'] as $lid) {
+        foreach ($ids as $lid) {
             $lid = (int) $lid;
             $db->query("DELETE FROM $log_table WHERE lid='$lid'");
         }
         redirect_header('center.php?page=center', 2, _AM_MSG_REMOVED);
         exit;
-    } elseif ($_POST['action'] === 'banbyip' && isset($_POST['ids']) && \is_array($_POST['ids'])) {
+    } elseif ($action === 'banbyip' && Request::hasVar('ids', 'POST')) {
+        $ids = Request::getArray('ids', [], 'POST');
         // remove selected records
-        foreach ($_POST['ids'] as $lid) {
+        foreach ($ids as $lid) {
             $lid = (int) $lid;
             $sql = "SELECT `ip` FROM $log_table WHERE lid='$lid'";
             $result = $db->query($sql);
@@ -131,12 +136,12 @@ if (!empty($_POST['action'])) {
         }
         redirect_header('center.php?page=center', 2, _AM_MSG_BANNEDIP);
         exit;
-    } elseif ($_POST['action'] === 'deleteall') {
+    } elseif ($action === 'deleteall') {
         // remove all records
         $db->query("DELETE FROM $log_table");
         redirect_header('center.php?page=center', 2, _AM_MSG_REMOVED);
         exit;
-    } elseif ($_POST['action'] === 'compactlog') {
+    } elseif ($action === 'compactlog') {
         // compact records (remove duplicated records (ip,type)
         $sql = "SELECT `lid`,`ip`,`type` FROM $log_table ORDER BY lid DESC";
         $result = $db->query($sql);

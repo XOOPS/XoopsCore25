@@ -145,9 +145,9 @@ if ('system' !== $xoopsModule->getVar('dirname')) {
         foreach ($comment_config['extraParams'] as $extra_param) {
             // This routine is included from forms accessed via both GET and POST
             $hidden_value = '';
-            if (isset($_POST[$extra_param])) {
+            if (Request::hasVar($extra_param, 'POST')) {
                 $hidden_value = Request::getString($extra_param, '', 'POST');
-            } elseif (isset($_GET[$extra_param])) {
+            } elseif (Request::hasVar($extra_param, 'GET')) {
                 $hidden_value = Request::getString($extra_param, '', 'GET');
             }
             $cform->addElement(new XoopsFormHidden($extra_param, $hidden_value));

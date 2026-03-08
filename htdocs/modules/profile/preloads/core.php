@@ -37,12 +37,13 @@ class ProfileCorePreload extends XoopsPreloadItem
     public static function eventCoreUserStart($args)
     {
         $op = 'main';
-        if (isset($_POST['op'])) {
+        if (Request::hasVar('op', 'POST')) {
             $op = Request::getString('op', '', 'POST');
-        } elseif (isset($_GET['op'])) {
+        } elseif (Request::hasVar('op', 'GET')) {
             $op = Request::getString('op', '', 'GET');
         }
-        if ($op !== 'login' && (empty($_GET['from']) || 'profile' !== $_GET['from'])) {
+        $from = Request::getString('from', '', 'GET');
+        if ($op !== 'login' && $from !== 'profile') {
             header('location: ./modules/profile/user.php' . (empty($_SERVER['QUERY_STRING']) ? '' : '?' . $_SERVER['QUERY_STRING']));
             exit();
         }
@@ -64,7 +65,8 @@ class ProfileCorePreload extends XoopsPreloadItem
     {
         $email = Request::getEmail('email', '', 'GET');
         $email = Request::getEmail('email', $email, 'POST');
-        header("location: ./modules/profile/lostpass.php?email={$email}" . (empty($_GET['code']) ? '' : '&code=' . Request::getString('code', '', 'GET')));
+        $code = Request::getString('code', '', 'GET');
+        header('location: ./modules/profile/lostpass.php?email=' . urlencode($email) . ($code === '' ? '' : '&code=' . urlencode($code)));
         exit();
     }
 

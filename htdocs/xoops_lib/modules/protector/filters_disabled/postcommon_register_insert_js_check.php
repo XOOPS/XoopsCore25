@@ -12,7 +12,7 @@ class Protector_postcommon_register_insert_js_check extends ProtectorFilterAbstr
     {
         ob_start([$this, 'ob_filter']);
 
-        if (!empty($_POST)) {
+        if ($_SERVER['REQUEST_METHOD'] === 'POST' && \Xmf\Request::hasVar('antispam_md5', 'POST')) {
             if (!$this->checkValidate()) {
                 die(_MD_PROTECTOR_TURNJAVASCRIPTON);
             }
@@ -92,7 +92,7 @@ class Protector_postcommon_register_insert_js_check extends ProtectorFilterAbstr
      */
     public function checkValidate()
     {
-        $user_md5 = isset($_POST['antispam_md5']) ? trim($_POST['antispam_md5']) : '';
+        $user_md5 = trim(\Xmf\Request::getString('antispam_md5', '', 'POST'));
 
         // 2-3 hour margin
         if ($user_md5 != $this->getMd5() && $user_md5 != $this->getMd5(time() - 3600) && $user_md5 != $this->getMd5(time() - 7200)) {

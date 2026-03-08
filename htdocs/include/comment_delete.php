@@ -69,13 +69,11 @@ if ('system' === $xoopsModule->getVar('dirname')) {
 
                 // for the confirmation page
                 $comment_confirm_extra[$extra_param] = ${$extra_param};
-            } elseif (isset($_GET[$extra_param])) {
-                //                $redirect_page .= $extra_param . '=' . $_GET[$extra_param] . '&amp;';
-                $redirect_page .= $extra_param . '=' . filter_input(INPUT_GET, $extra_param, FILTER_SANITIZE_STRING) . '&amp;';
+            } elseif (\Xmf\Request::hasVar($extra_param, 'GET')) {
+                $redirect_page .= $extra_param . '=' . \Xmf\Request::getString($extra_param, '', 'GET') . '&amp;';
 
                 // for the confirmation page
-                //                $comment_confirm_extra[$extra_param] = $_GET[$extra_param];
-                $comment_confirm_extra[$extra_param] = filter_input(INPUT_GET, $extra_param, FILTER_SANITIZE_STRING);
+                $comment_confirm_extra[$extra_param] = \Xmf\Request::getString($extra_param, '', 'GET');
             }
         }
     }

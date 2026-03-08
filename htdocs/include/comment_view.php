@@ -51,7 +51,7 @@ if (XOOPS_COMMENT_APPROVENONE != $xoopsModuleConfig['com_rule']) {
             $com_mode = empty($com_mode) ? $xoopsConfig['com_mode'] : $com_mode;
         }
         $xoopsTpl->assign('comment_mode', $com_mode);
-        if (!isset($_GET['com_order'])) {
+        if (!Request::hasVar('com_order', 'GET')) {
             if (is_object($xoopsUser)) {
                 $com_order = $xoopsUser->getVar('uorder');
             } else {
@@ -102,9 +102,9 @@ if (XOOPS_COMMENT_APPROVENONE != $xoopsModuleConfig['com_rule']) {
                     // This page is included in the module hosting page -- param could be from anywhere
                     if (isset(${$extra_param})) {
                         $extra_params .= $extra_param . '=' . ${$extra_param} . '&amp;';
-                    } elseif (isset($_POST[$extra_param])) {
+                    } elseif (Request::hasVar($extra_param, 'POST')) {
                         $extra_params .= $extra_param . '=' . Request::getString($extra_param, '', 'POST') . '&amp;';
-                    } elseif (isset($_GET[$extra_param])) {
+                    } elseif (Request::hasVar($extra_param, 'GET')) {
                         $extra_params .= $extra_param . '=' . Request::getString($extra_param, '', 'GET') . '&amp;';
                     } else {
                         $extra_params .= $extra_param . '=&amp;';
@@ -193,9 +193,9 @@ if (XOOPS_COMMENT_APPROVENONE != $xoopsModuleConfig['com_rule']) {
                     $link_extra .= '&amp;' . $extra_param . '=' . ${$extra_param};
                     $hidden_value    = htmlspecialchars(${$extra_param}, ENT_QUOTES | ENT_HTML5);
                     $extra_param_val = ${$extra_param};
-                } elseif (isset($_POST[$extra_param])) {
+                } elseif (Request::hasVar($extra_param, 'POST')) {
                     $extra_param_val = Request::getString($extra_param, '', 'POST');
-                } elseif (isset($_GET[$extra_param])) {
+                } elseif (Request::hasVar($extra_param, 'GET')) {
                     $extra_param_val = Request::getString($extra_param, '', 'GET');
                 }
                 if (isset($extra_param_val)) {
@@ -279,9 +279,9 @@ if (XOOPS_COMMENT_APPROVENONE != $xoopsModuleConfig['com_rule']) {
                     foreach ($comment_config['extraParams'] as $extra_param) {
                         // This routine is included from forms accessed via both GET and POST
                         $hidden_value = '';
-                        if (isset($_POST[$extra_param])) {
+                        if (Request::hasVar($extra_param, 'POST')) {
                             $hidden_value = Request::getString($extra_param, '', 'POST');
-                        } elseif (isset($_GET[$extra_param])) {
+                        } elseif (Request::hasVar($extra_param, 'GET')) {
                             $hidden_value = Request::getString($extra_param, '', 'GET');
                         }
                         $cform->addElement(new XoopsFormHidden($extra_param, $hidden_value));

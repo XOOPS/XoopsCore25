@@ -252,7 +252,7 @@ function prepStats($stat)
  */
 function checkFileWriteablity($files)
 {
-    if (isset($_POST['op']) && $_POST['op'] === 'proceed') {
+    if (\Xmf\Request::hasVar('op', 'POST') && \Xmf\Request::getCmd('op', '', 'POST') === 'proceed') {
         return true; // user said skip this
     }
     $tmpStats = getTmpStats();

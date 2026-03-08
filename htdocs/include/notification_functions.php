@@ -384,7 +384,7 @@ function &notificationSubscribableCategoryInfo(?int $module_id = null)
                 $sub_categories[]      = $category;
             } else {
                 $item_name = $category['item_name'];
-                $id        = ($item_name != '' && isset($_GET[$item_name])) ? Request::getInt($item_name, 0, 'GET') : 0;
+                $id        = ($item_name != '' && Request::hasVar($item_name, 'GET')) ? Request::getInt($item_name, 0, 'GET') : 0;
                 if ($id > 0) {
                     $category['item_id'] = $id;
                     $sub_categories[]    = $category;

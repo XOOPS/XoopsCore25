@@ -353,7 +353,7 @@ if (!empty($imageId)) {
 xoops_load('XoopsCache');
 $edited_image_filename = 'editedimage_' . md5($_SERVER['REQUEST_URI']) . '_' . $imageFilename;
 $cached_image = XoopsCache::read($edited_image_filename);
-if (!isset($_GET['nocache']) && !isset($_GET['noservercache']) && !empty($cached_image)
+if (!Request::hasVar('nocache', 'GET') && !Request::hasVar('noservercache', 'GET') && !empty($cached_image)
     && ($cached_image['cached_time'] >= $imageCreatedTime)) {
     header("Content-type: {$imageMimetype}");
     header('Content-Length: ' . strlen($cached_image['image_data']));
@@ -383,7 +383,8 @@ if (!$max_width && $max_height) {
 }
 
 // color
-$color = isset($_GET['color']) ? preg_replace('/[^0-9a-fA-F]/', '', (string) $_GET['color']) : false;
+$colorInput = Request::getString('color', '', 'GET');
+$color = $colorInput !== '' ? preg_replace('/[^0-9a-fA-F]/', '', $colorInput) : false;
 
 // filter, radius, angle
 $filter = Request::getArray('filter', [], 'GET'); //isset($_GET['filter']) ? $_GET['filter'] : false;
@@ -410,7 +411,7 @@ if (empty($width)
 // cropratio
 $offset_x = 0;
 $offset_y = 0;
-if (isset($_GET['cropratio'])) {
+if (Request::hasVar('cropratio', 'GET')) {
     $crop_ratio = explode(':', Request::getString('cropratio', '', 'GET'));
     if (count($crop_ratio) == 2) {
         $ratio_computed = $imageWidth / $imageHeight;
@@ -655,7 +656,7 @@ doConditionalGet($etag, $last_modified_string);
 
 header('HTTP/1.1 200 OK');
 // if image is cacheable
-if (!isset($_GET['nocache']) && !isset($_GET['nobrowsercache'])) {
+if (!Request::hasVar('nocache', 'GET') && !Request::hasVar('nobrowsercache', 'GET')) {
     header('Last-Modified: ' . gmdate('D, d M Y H:i:s', $imageCreatedTime) . 'GMT');
     header('Cache-control: max-age=31536000');
     header('Expires: ' . gmdate('D, d M Y H:i:s', time() + 31536000) . 'GMT');

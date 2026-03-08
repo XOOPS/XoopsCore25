@@ -113,7 +113,7 @@ switch ($op) {
         $bid = Request::getInt('bid', 0);
         if ($bid > 0) {
             $obj = $banner_Handler->get($bid);
-            if (isset($_POST['ok']) && $_POST['ok'] == 1) {
+            if (Request::getInt('ok', 0, 'POST') === 1) {
                 if (!$GLOBALS['xoopsSecurity']->check()) {
                     redirect_header('admin.php?fct=banners', 3, implode(',', $GLOBALS['xoopsSecurity']->getErrors()));
                 }
@@ -146,7 +146,7 @@ switch ($op) {
         $bid = Request::getInt('bid', 0);
         if ($bid > 0) {
             $obj = $banner_finish_Handler->get($bid);
-            if (isset($_POST['ok']) && $_POST['ok'] == 1) {
+            if (Request::getInt('ok', 0, 'POST') === 1) {
                 if (!$GLOBALS['xoopsSecurity']->check()) {
                     redirect_header('admin.php?fct=banners', 3, implode(',', $GLOBALS['xoopsSecurity']->getErrors()));
                 }
@@ -225,7 +225,7 @@ switch ($op) {
         $cid = Request::getInt('cid', 0);
         if ($cid > 0) {
             $obj = $banner_client_Handler->get($cid);
-            if (isset($_POST['ok']) && $_POST['ok'] == 1) {
+            if (Request::getInt('ok', 0, 'POST') === 1) {
                 if (!$GLOBALS['xoopsSecurity']->check()) {
                     redirect_header('admin.php?fct=banners', 3, implode(',', $GLOBALS['xoopsSecurity']->getErrors()));
                 }

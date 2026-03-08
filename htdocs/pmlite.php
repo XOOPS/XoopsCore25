@@ -15,23 +15,24 @@
  * @since               2.0.0
  */
 
+use Xmf\Request;
+
 include __DIR__ . '/mainfile.php';
 $xoopsPreload = XoopsPreload::getInstance();
 $xoopsPreload->triggerEvent('core.pmlite.start');
 
 xoops_loadLanguage('pmsg');
-XoopsLoad::load('XoopsRequest');
 
 $subject_icons = XoopsLists::getSubjectsList();
 
-$op = XoopsRequest::getCmd('op', '', 'POST');
+$op = Request::getCmd('op', '', 'POST');
 
-$reply     = XoopsRequest::getBool('reply', 0, 'GET');
-$send      = XoopsRequest::getBool('send', 0, 'GET');
-$send2     = XoopsRequest::getBool('send2', 0, 'GET');
-$to_userid = XoopsRequest::getInt('to_userid', 0, 'GET');
-$msg_id    = XoopsRequest::getInt('msg_id', 0, 'GET');
-if (empty($_GET['refresh']) && 'submit' !== $op) {
+$reply     = Request::getBool('reply', 0, 'GET');
+$send      = Request::getBool('send', 0, 'GET');
+$send2     = Request::getBool('send2', 0, 'GET');
+$to_userid = Request::getInt('to_userid', 0, 'GET');
+$msg_id    = Request::getInt('msg_id', 0, 'GET');
+if (Request::getInt('refresh', 0, 'GET') === 0 && 'submit' !== $op) {
     $jump = 'pmlite.php?refresh=' . time() . '';
     if (1 == $send) {
         $jump .= '&amp;send=' . $send . '';
@@ -47,7 +48,7 @@ if (empty($_GET['refresh']) && 'submit' !== $op) {
 
 xoops_header();
 
-$method      = XoopsRequest::getMethod();
+$method      = Request::getMethod();
 $safeMethods = ['GET', 'HEAD'];
 if (!in_array($method, $safeMethods)) {
     if (!$GLOBALS['xoopsSecurity']->check()) {
@@ -61,7 +62,7 @@ if (!in_array($method, $safeMethods)) {
 if (is_object($xoopsUser)) {
     $myts = \MyTextSanitizer::getInstance();
     if ('submit' === $op) {
-        $sql = 'SELECT COUNT(*) FROM ' . $xoopsDB->prefix('users') . ' WHERE uid=' . XoopsRequest::getInt('to_userid', 0, 'POST') . '';
+        $sql = 'SELECT COUNT(*) FROM ' . $xoopsDB->prefix('users') . ' WHERE uid=' . Request::getInt('to_userid', 0, 'POST') . '';
         $result = $xoopsDB->query($sql);
         if (!$xoopsDB->isResultSet($result)) {
             throw new \RuntimeException(
@@ -77,13 +78,13 @@ if (is_object($xoopsUser)) {
         } else {
             $pm_handler = xoops_getHandler('privmessage');
             $pm         = $pm_handler->create();
-            $msg_image  = XoopsRequest::getString('msg_image', null, 'POST');
+            $msg_image  = Request::getString('msg_image', null, 'POST');
             if (in_array($msg_image, $subject_icons)) {
                 $pm->setVar('msg_image', $msg_image);
             }
-            $pm->setVar('subject', XoopsRequest::getString('subject', null, 'POST'));
-            $pm->setVar('msg_text', XoopsRequest::getString('message', null, 'POST'));
-            $pm->setVar('to_userid', XoopsRequest::getInt('to_userid', 0, 'POST'));
+            $pm->setVar('subject', Request::getString('subject', null, 'POST'));
+            $pm->setVar('msg_text', Request::getString('message', null, 'POST'));
+            $pm->setVar('to_userid', Request::getInt('to_userid', 0, 'POST'));
             $pm->setVar('from_userid', $xoopsUser->getVar('uid'));
             if (!$pm_handler->insert($pm)) {
                 echo $pm->getHtmlErrors();

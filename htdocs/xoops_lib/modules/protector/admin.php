@@ -61,7 +61,7 @@ if (file_exists("$mydirpath/language/$language/main.php")) {
     include_once "$mytrustdirpath/language/english/main.php";
 }
 
-if (!empty($_GET['lib'])) {
+if (Request::hasVar('lib', 'GET')) {
     // common libs (eg. altsys)
     $lib  = preg_replace('/[^a-zA-Z0-9_-]/', '', Request::getString('lib', '', 'GET'));
     $page = preg_replace('/[^a-zA-Z0-9_-]/', '', Request::getString('page', '', 'GET'));

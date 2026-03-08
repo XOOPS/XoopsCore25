@@ -146,8 +146,8 @@ switch ($op) {
         if (!$GLOBALS['xoopsSecurity']->check()) {
             redirect_header('admin.php?fct=userrank', 3, implode(',', $GLOBALS['xoopsSecurity']->getErrors()));
         }
-        if (isset($_POST['rank_id'])) {
-            $obj = $userrank_Handler->get($_POST['rank_id']);
+        if (Request::hasVar('rank_id', 'POST')) {
+            $obj = $userrank_Handler->get(Request::getInt('rank_id', 0, 'POST'));
         } else {
             $obj = $userrank_Handler->create();
         }
@@ -174,7 +174,7 @@ switch ($op) {
                 $err[] = $uploader_rank_img->getErrors();
             }
         } else {
-            $obj->setVar('rank_image', 'ranks/' . $_POST['rank_image']);
+            $obj->setVar('rank_image', 'ranks/' . Request::getString('rank_image', '', 'POST'));
             if (!$userrank_Handler->insert($obj)) {
                 $err[] = sprintf(_FAILSAVEIMG, $obj->getVar('rank_title'));
             }
@@ -201,9 +201,9 @@ switch ($op) {
 
         // Delete userrank
     case 'userrank_delete':
-        $rank_id = Request::getInt('rank_id', 0);
+        $rank_id = Request::hasVar('rank_id', 'POST') ? Request::getInt('rank_id', 0, 'POST') : Request::getInt('rank_id', 0, 'GET');
         $obj     = $userrank_Handler->get($rank_id);
-        if (isset($_POST['ok']) && $_POST['ok'] == 1) {
+        if (Request::getInt('ok', 0, 'POST') == 1) {
             if (!$GLOBALS['xoopsSecurity']->check()) {
                 redirect_header('admin.php?fct=userrank', 3, implode(',', $GLOBALS['xoopsSecurity']->getErrors()));
             }
@@ -228,7 +228,7 @@ switch ($op) {
             xoops_confirm(
                 [
                     'ok' => 1,
-                    'rank_id' => $_REQUEST['rank_id'],
+                    'rank_id' => $rank_id,
                     'op' => 'userrank_delete',
                 ],
                 $_SERVER['REQUEST_URI'],

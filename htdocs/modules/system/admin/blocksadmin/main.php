@@ -235,9 +235,9 @@ switch ($op) {
     case 'order':
         // Initialize blocks handler
         $block_handler = xoops_getModuleHandler('block');
-        if (isset($_POST['blk'])) {
+        if (Request::hasVar('blk', 'POST')) {
             $i = 0;
-            foreach ($_POST['blk'] as $order) {
+            foreach (Request::getArray('blk', [], 'POST') as $order) {
                 if ($order > 0) {
                     $block = $block_handler->get($order);
                     $block->setVar('weight', $i);
@@ -259,8 +259,17 @@ switch ($op) {
         /** @var XoopsBlockHandler $block_handler */
         $block_handler = xoops_getModuleHandler('block');
         $block         = $block_handler->create();
-        $block->setVars($_POST);
-        $content = $_POST['content_block'] ?? '';
+        $blockVars = [
+            'title'      => Request::getString('title', '', 'POST'),
+            'side'       => Request::getInt('side', 0, 'POST'),
+            'weight'     => Request::getInt('weight', 0, 'POST'),
+            'visible'    => Request::getInt('visible', 0, 'POST'),
+            'c_type'     => Request::getCmd('c_type', '', 'POST'),
+            'block_type' => Request::getString('block_type', '', 'POST'),
+            'bcachetime' => Request::getInt('bcachetime', 0, 'POST'),
+        ];
+        $block->setVars($blockVars);
+        $content = Request::getText('content_block', '', 'POST');
         $block->setVar('content', $content);
         $myts = \MyTextSanitizer::getInstance();
         echo '<div id="xo-preview-dialog" title="' . $block->getVar('title', 's') . '">' . $block->getContent('s', $block->getVar('c_type')) . '</div>';
@@ -282,8 +291,16 @@ switch ($op) {
         $block_type = Request::getString('block_type', '');
         $block->setVar('block_type', $block_type);
 
+        $blockVars = [
+            'title'      => Request::getString('title', '', 'POST'),
+            'side'       => Request::getInt('side', 0, 'POST'),
+            'weight'     => Request::getInt('weight', 0, 'POST'),
+            'visible'    => Request::getInt('visible', 0, 'POST'),
+            'c_type'     => Request::getCmd('c_type', '', 'POST'),
+            'bcachetime' => Request::getInt('bcachetime', 0, 'POST'),
+        ];
         if (!$block->isCustom()) {
-            $block->setVars($_POST);
+            $block->setVars($blockVars);
             $type = $block->getVar('block_type');
             $name = $block->getVar('name');
             // Save block options
@@ -302,7 +319,7 @@ switch ($op) {
                 }
             }
         } else {
-            $block->setVars($_POST);
+            $block->setVars($blockVars);
             switch ($block->getVar('c_type')) {
                 case 'H':
                     $name = _AM_SYSTEM_BLOCKS_CUSTOMHTML;
@@ -321,7 +338,7 @@ switch ($op) {
         $block->setVar('name', $name);
         $block->setVar('isactive', 1);
 
-        $content = $_POST['content_block'] ?? '';
+        $content = Request::getText('content_block', '', 'POST');
         $block->setVar('content', $content);
 
         if (!$newid = $block_handler->insert($block)) {
@@ -336,7 +353,7 @@ switch ($op) {
             $criteria = new CriteriaCompo(new Criteria('block_id', $newid));
             $blocklinkmodule_handler->deleteAll($criteria);
             // Assign link
-            $modules = $_POST['modules'];
+            $modules = Request::getArray('modules', [], 'POST');
             foreach ($modules as $mid) {
                 $blocklinkmodule = $blocklinkmodule_handler->create();
                 $blocklinkmodule->setVar('block_id', $newid);
@@ -351,7 +368,7 @@ switch ($op) {
         }
         /** @var XoopsGroupPermHandler $groupperm_handler */
         $groupperm_handler  = xoops_getHandler('groupperm');
-        $groups             = $_POST['groups'];
+        $groups             = Request::getArray('groups', [], 'POST');
         $groups_with_access = $groupperm_handler->getGroupIds('block_read', $newid);
         $removed_groups     = array_diff($groups_with_access, $groups);
         if (count($removed_groups) > 0) {

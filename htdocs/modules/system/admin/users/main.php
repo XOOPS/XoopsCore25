@@ -182,15 +182,15 @@ case 'users_save':
             break;
         }
 
-        if ('' !== Request::getString('pass2') &&
-            Request::getString('password') != Request::getString('pass2')) {
+        if ('' !== Request::getVar('pass2', '', 'POST', 'string', Request::MASK_ALLOW_RAW | Request::MASK_NO_TRIM) &&
+            Request::getVar('password', '', 'POST', 'string', Request::MASK_ALLOW_RAW | Request::MASK_NO_TRIM) != Request::getVar('pass2', '', 'POST', 'string', Request::MASK_ALLOW_RAW | Request::MASK_NO_TRIM)) {
             xoops_error(_AM_SYSTEM_USERS_STNPDNM);
             break;
         }
 
-        if ('' !== Request::getString('pass2') &&
-            '' !== Request::getString('password') &&
-            mb_strtolower(Request::getString('password'), 'UTF-8') === mb_strtolower(Request::getString('uname'), 'UTF-8')) {
+        if ('' !== Request::getVar('pass2', '', 'POST', 'string', Request::MASK_ALLOW_RAW | Request::MASK_NO_TRIM) &&
+            '' !== Request::getVar('password', '', 'POST', 'string', Request::MASK_ALLOW_RAW | Request::MASK_NO_TRIM) &&
+            mb_strtolower(Request::getVar('password', '', 'POST', 'string', Request::MASK_ALLOW_RAW | Request::MASK_NO_TRIM), 'UTF-8') === mb_strtolower(Request::getString('uname'), 'UTF-8')) {
             xoops_error(_AM_SYSTEM_USERS_PWDEQUALSUNAME);
             break;
         }
@@ -221,8 +221,8 @@ case 'users_save':
         $edituser->setVar('user_intrest', Request::getString('user_intrest'));
         $edituser->setVar('user_mailok', Request::getInt('user_mailok', 0));
 
-        if ('' !== Request::getString('pass2')) {
-            $edituser->setVar('pass', password_hash(Request::getString('password'), PASSWORD_DEFAULT));
+        if ('' !== Request::getVar('pass2', '', 'POST', 'string', Request::MASK_ALLOW_RAW | Request::MASK_NO_TRIM)) {
+            $edituser->setVar('pass', password_hash(Request::getVar('password', '', 'POST', 'string', Request::MASK_ALLOW_RAW | Request::MASK_NO_TRIM), PASSWORD_DEFAULT));
         }
 
         if (!$member_handler->insertUser($edituser)) {
@@ -239,7 +239,6 @@ case 'users_save':
                 && in_array(XOOPS_GROUP_ADMIN, $oldgroups)
                 && !in_array(XOOPS_GROUP_ADMIN, $groups)) {
                 $groups[] = XOOPS_GROUP_ADMIN;
-                $_REQUEST['groups'] = $groups;
             }
             /** @var XoopsMemberHandler $member_handler */
             $member_handler = xoops_getHandler('member');
@@ -261,7 +260,7 @@ case 'users_save':
             break;
         }
 
-        if (!Request::getString('uname') || !Request::getString('email') || !Request::getString('password')) {
+        if (!Request::getString('uname') || !Request::getString('email') || !Request::getVar('password', '', 'POST', 'string', Request::MASK_ALLOW_RAW | Request::MASK_NO_TRIM)) {
             xoops_error(_AM_SYSTEM_USERS_YMCACF);
             break;
         }
@@ -276,15 +275,15 @@ case 'users_save':
         }
 
         // Password match (if confirm provided)
-        if ('' !== Request::getString('pass2') &&
-            Request::getString('password') != Request::getString('pass2')) {
+        if ('' !== Request::getVar('pass2', '', 'POST', 'string', Request::MASK_ALLOW_RAW | Request::MASK_NO_TRIM) &&
+            Request::getVar('password', '', 'POST', 'string', Request::MASK_ALLOW_RAW | Request::MASK_NO_TRIM) != Request::getVar('pass2', '', 'POST', 'string', Request::MASK_ALLOW_RAW | Request::MASK_NO_TRIM)) {
             xoops_error(_AM_SYSTEM_USERS_STNPDNM);
             break;
         }
 
-        if ('' !== Request::getString('pass2') &&
-            '' !== Request::getString('password') &&
-            mb_strtolower(Request::getString('password'), 'UTF-8') === mb_strtolower(Request::getString('uname'), 'UTF-8')) {
+        if ('' !== Request::getVar('pass2', '', 'POST', 'string', Request::MASK_ALLOW_RAW | Request::MASK_NO_TRIM) &&
+            '' !== Request::getVar('password', '', 'POST', 'string', Request::MASK_ALLOW_RAW | Request::MASK_NO_TRIM) &&
+            mb_strtolower(Request::getVar('password', '', 'POST', 'string', Request::MASK_ALLOW_RAW | Request::MASK_NO_TRIM), 'UTF-8') === mb_strtolower(Request::getString('uname'), 'UTF-8')) {
             xoops_error(_AM_SYSTEM_USERS_PWDEQUALSUNAME);
             break;
         }
@@ -304,8 +303,8 @@ case 'users_save':
         $newuser->setVar('user_aim', Request::getString('user_aim'));
         $newuser->setVar('user_yim', Request::getString('user_yim'));
         $newuser->setVar('user_msnm', Request::getString('user_msnm'));
-        if ('' !== Request::getString('pass2')) {
-            $newuser->setVar('pass', password_hash(Request::getString('password'), PASSWORD_DEFAULT));
+        if ('' !== Request::getVar('pass2', '', 'POST', 'string', Request::MASK_ALLOW_RAW | Request::MASK_NO_TRIM)) {
+            $newuser->setVar('pass', password_hash(Request::getVar('password', '', 'POST', 'string', Request::MASK_ALLOW_RAW | Request::MASK_NO_TRIM), PASSWORD_DEFAULT));
         }
         $newuser->setVar('timezone_offset', Request::getString('timezone_offset'));
         $newuser->setVar('uorder', Request::getString('uorder'));

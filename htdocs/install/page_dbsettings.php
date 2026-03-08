@@ -25,8 +25,6 @@
  * @author           DuGris (aka L. JEN) <dugris@frxoops.org>
  **/
 
-use Xmf\Request;
-
 require_once __DIR__ . '/include/common.inc.php';
 defined('XOOPS_INSTALL') || die('XOOPS Installation wizard die');
 
@@ -44,15 +42,15 @@ if (0 !== $link->connect_errno) {
     exit();
 }
 
-if ($_SERVER['REQUEST_METHOD'] === 'GET' && isset($_GET['charset']) && Request::getString('action', '', 'GET') === 'updateCollation') {
-    echo xoFormFieldCollation('DB_COLLATION', $vars['DB_COLLATION'], DB_COLLATION_LABEL, DB_COLLATION_HELP, $link, Request::getString('charset', '', 'GET'));
+if ($_SERVER['REQUEST_METHOD'] === 'GET' && \Xmf\Request::hasVar('charset', 'GET') && \Xmf\Request::getString('action', '', 'GET') === 'updateCollation') {
+    echo xoFormFieldCollation('DB_COLLATION', $vars['DB_COLLATION'], DB_COLLATION_LABEL, DB_COLLATION_HELP, $link, \Xmf\Request::getString('charset', '', 'GET'));
     exit();
 }
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $params = ['DB_NAME', 'DB_CHARSET', 'DB_COLLATION', 'DB_PREFIX'];
     foreach ($params as $name) {
-        $vars[$name] =  Request::getString($name, '', 'POST') ;
+        $vars[$name] =  \Xmf\Request::getString($name, '', 'POST') ;
     }
 }
 

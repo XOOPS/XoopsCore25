@@ -27,7 +27,7 @@ if (!$GLOBALS['xoopsUser']) {
 $GLOBALS['xoopsOption']['template_main'] = 'profile_changepass.tpl';
 include $GLOBALS['xoops']->path('header.php');
 
-if (!isset($_POST['submit'])) {
+if (!Request::hasVar('submit', 'POST')) {
     //show change password form
     include_once $GLOBALS['xoops']->path('class/xoopsformloader.php');
     $form = new XoopsThemeForm(_PROFILE_MA_CHANGEPASSWORD, 'form', $_SERVER['REQUEST_URI'], 'post', true);
@@ -43,9 +43,9 @@ if (!isset($_POST['submit'])) {
     $config_handler             = xoops_getHandler('config');
     $GLOBALS['xoopsConfigUser'] = $config_handler->getConfigsByCat(XOOPS_CONF_USER);
     $myts                       = \MyTextSanitizer::getInstance();
-    $oldpass                    = trim(Request::getString('oldpass', '', 'POST'));
-    $password                   = trim(Request::getString('newpass', '', 'POST'));
-    $vpass                      = trim(Request::getString('vpass', '', 'POST'));
+    $oldpass                    = Request::getVar('oldpass', '', 'POST', 'string', Request::MASK_ALLOW_RAW | Request::MASK_NO_TRIM);
+    $password                   = Request::getVar('newpass', '', 'POST', 'string', Request::MASK_ALLOW_RAW | Request::MASK_NO_TRIM);
+    $vpass                      = Request::getVar('vpass', '', 'POST', 'string', Request::MASK_ALLOW_RAW | Request::MASK_NO_TRIM);
     $errors                     = [];
     if (!password_verify($oldpass, $GLOBALS['xoopsUser']->getVar('pass', 'n'))) {
         $errors[] = _PROFILE_MA_WRONGPASSWORD;

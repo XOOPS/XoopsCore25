@@ -24,10 +24,7 @@ header('Last-Modified: ' . date('r', (int)(time() / $icon_cache_limit) * $icon_c
 header('Content-type: image/png');
 
 // file name
-$file_base = 'module_icon';
-if (!empty($_GET['file'])) {
-    $file_base = preg_replace('/[^0-9a-z_]/', '', Request::getString('file', '', 'GET'));
-}
+$file_base = preg_replace('/[^0-9a-z_]/', '', Request::getString('file', 'module_icon', 'GET'));
 
 $draw_dirname = true;
 

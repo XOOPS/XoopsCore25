@@ -23,11 +23,7 @@ if (!is_object($xoopsUser) || !is_object($xoopsModule) || !$xoopsUser->isAdmin($
     exit(_NOPERM);
 }
 
-if (isset($_REQUEST)) {
-    foreach ($_REQUEST as $k => $v) {
-        ${$k} = $v;
-    }
-}
+// POST config values are fetched on-demand in the 'save' handler using Request::getVar()
 // Get Action type
 $op = Request::getString('op', 'list');
 // Setting type
@@ -270,7 +266,7 @@ switch ($op) {
 
         /** @var XoopsConfigHandler $config_handler */
         $config_handler = xoops_getHandler('config');
-        $mod            = isset($_REQUEST['mod']) ? (int) $_REQUEST['mod'] : 0;
+        $mod            = Request::hasVar('mod', 'POST') ? Request::getInt('mod', 0, 'POST') : Request::getInt('mod', 0, 'GET');
         if ($mod <= 0) {
             header('Location: admin.php?fct=preferences');
             exit();
@@ -298,9 +294,10 @@ switch ($op) {
         }
 
         $modname = $module->getVar('name');
-        if (!empty($_REQUEST['redirect'])) {
+        $redirect_url = Request::hasVar('redirect', 'POST') ? Request::getString('redirect', '', 'POST') : Request::getString('redirect', '', 'GET');
+        if (!empty($redirect_url)) {
             $myts = \MyTextSanitizer::getInstance();
-            $form->addElement(new XoopsFormHidden('redirect', $myts->htmlSpecialChars($_REQUEST['redirect'])));
+            $form->addElement(new XoopsFormHidden('redirect', $myts->htmlSpecialChars($redirect_url)));
         } elseif ($module->getInfo('adminindex')) {
             $form->addElement(new XoopsFormHidden('redirect', XOOPS_URL . '/modules/' . $module->getVar('dirname') . '/' . $module->getInfo('adminindex')));
         }
@@ -422,6 +419,8 @@ switch ($op) {
         if (!$GLOBALS['xoopsSecurity']->check()) {
             redirect_header('admin.php?fct=preferences', 3, implode('<br>', $GLOBALS['xoopsSecurity']->getErrors()));
         }
+        $conf_ids = Request::getArray('conf_ids', [], 'POST');
+        $redirect = Request::getString('redirect', '', 'POST');
         require_once XOOPS_ROOT_PATH . '/class/template.php';
         $xoopsTpl         = new XoopsTpl();
         $count            = count($conf_ids);
@@ -432,11 +431,12 @@ switch ($op) {
         if ($count > 0) {
             for ($i = 0; $i < $count; ++$i) {
                 $config    = $config_handler->getConfig($conf_ids[$i]);
-                $new_value = & ${$config->getVar('conf_name')};
+                $confName  = $config->getVar('conf_name');
+                $new_value = Request::getVar($confName, $config->getVar('conf_value'), 'POST');
                 if (is_array($new_value) || $new_value != $config->getVar('conf_value')) {
                     // if language has been changed
                     if (!$lang_updated && $config->getVar('conf_catid') == XOOPS_CONF && $config->getVar('conf_name') === 'language') {
-                        $xoopsConfig['language'] = ${$config->getVar('conf_name')};
+                        $xoopsConfig['language'] = $new_value;
                         $lang_updated            = true;
                     }
 
@@ -444,15 +444,15 @@ switch ($op) {
                     if (!$theme_updated && $config->getVar('conf_catid') == XOOPS_CONF && $config->getVar('conf_name') === 'theme_set') {
                         /** @var XoopsMemberHandler $member_handler */
                         $member_handler = xoops_getHandler('member');
-                        $member_handler->updateUsersByField('theme', ${$config->getVar('conf_name')});
+                        $member_handler->updateUsersByField('theme', $new_value);
                         $theme_updated = true;
                     }
                     //todo: remove this code since it is not used anymore.
                     // if default template set has been changed
                     if (!$tpl_updated && $config->getVar('conf_catid') == XOOPS_CONF && $config->getVar('conf_name') === 'template_set') {
                         // clear cached/compiled files and regenerate them if default theme has been changed
-                        if ($xoopsConfig['template_set'] != ${$config->getVar('conf_name')}) {
-                            $newtplset = ${$config->getVar('conf_name')};
+                        if ($xoopsConfig['template_set'] != $new_value) {
+                            $newtplset = $new_value;
 
                             // clear all compiled and cached files
                             $xoopsTpl->clearCompiledTemplate();
@@ -515,8 +515,12 @@ switch ($op) {
             }
         }
 
-        if (!empty($use_mysession) && $xoopsConfig['use_mysession'] == 0 && $session_name != '') {
-            xoops_setcookie($session_name, session_id(), time() + (60 * (int) $session_expire), '/', XOOPS_COOKIE_DOMAIN, 0);
+        // Set session cookie when use_mysession is just enabled
+        $new_use_mysession  = Request::getInt('use_mysession', 0, 'POST');
+        $new_session_name   = Request::getString('session_name', '', 'POST');
+        $new_session_expire = Request::getInt('session_expire', 0, 'POST');
+        if (!empty($new_use_mysession) && $xoopsConfig['use_mysession'] == 0 && $new_session_name !== '' && $new_session_expire > 0) {
+            xoops_setcookie($new_session_name, session_id(), time() + (60 * $new_session_expire), '/', XOOPS_COOKIE_DOMAIN, 0);
         }
 
         // Clean cached files, may take long time

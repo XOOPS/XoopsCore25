@@ -378,38 +378,38 @@ $clean_cid = 0;
 $clean_login = '';
 $clean_pass = '';
 $clean_url = '';
-if (!empty($_POST['op'])) {
+if (Request::hasVar('op', 'POST')) {
     // from $_POST we use keys: op, login, pass, url, pass, bid, cid
-    $op = Request::getCmd('op', '', 'POST');
+    $op = Request::getWord('op', '', 'POST');
 
-    if (isset($_POST['login'])) {
+    if (Request::hasVar('login', 'POST')) {
         $clean_login = Request::getString('login', '', 'POST');
     }
 
-    if (isset($_POST['pass'])) {
-        $clean_pass = Request::getString('pass', '', 'POST');
+    if (Request::hasVar('pass', 'POST')) {
+        $clean_pass = Request::getText('pass', '', 'POST');
     }
 
-    if (isset($_POST['url'])) {
+    if (Request::hasVar('url', 'POST')) {
         $clean_url = Request::getUrl('url', '', 'POST');
     }
 
-    if (isset($_POST['bid'])) {
+    if (Request::hasVar('bid', 'POST')) {
         $clean_bid = Request::getInt('bid', 0, 'POST');
     }
 
-    if (isset($_POST['cid'])) {
+    if (Request::hasVar('cid', 'POST')) {
         $clean_cid = Request::getInt('cid', 0, 'POST');
     }
-} elseif (!empty($_GET['op'])) {
+} elseif (Request::hasVar('op', 'GET')) {
     // from $_GET we use keys: op, bid, cid
-    $op = Request::getCmd('op', '', 'GET');
+    $op = Request::getWord('op', '', 'GET');
 
-    if (isset($_GET['bid'])) {
+    if (Request::hasVar('bid', 'GET')) {
         $clean_bid = Request::getInt('bid', 0, 'GET');
     }
 
-    if (isset($_GET['cid'])) {
+    if (Request::hasVar('cid', 'GET')) {
         $clean_cid = Request::getInt('cid', 0, 'GET');
     }
 }

@@ -51,7 +51,7 @@ if ('system' === $xoopsModule->getVar('dirname')) {
     if (isset($comment_config['extraParams']) && \is_array($comment_config['extraParams'])) {
         $extra_params = '';
         foreach ($comment_config['extraParams'] as $extra_param) {
-            $extraVar = Request::getString($extra_param, 'POST', '');
+            $extraVar = Request::getString($extra_param, '', 'POST');
             $extra_params .=
                 ($extraVar !== '')
                     ? $extra_param . '=' . htmlspecialchars($extraVar, ENT_QUOTES | ENT_HTML5) . '&amp;'
@@ -70,13 +70,13 @@ $com_user      = '';
 $com_email     = '';
 $com_url       = '';
 
-if (!empty($_POST)) {
-    if (isset($_POST['com_dopost'])) {
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    if (Request::hasVar('com_dopost', 'POST')) {
         $op = 'post';
-    } elseif (isset($_POST['com_dopreview'])) {
+    } elseif (Request::hasVar('com_dopreview', 'POST')) {
         $op = 'preview';
     }
-    if (isset($_POST['com_dodelete'])) {
+    if (Request::hasVar('com_dodelete', 'POST')) {
         $op = 'delete';
     }
     if ($op === 'preview' || $op === 'post') {
@@ -133,7 +133,7 @@ if (!empty($_POST)) {
             '^',
             '&',
         ];
-        $com_user = Request::getString('com_user', 'POST', '');
+        $com_user = Request::getString('com_user', '', 'POST');
         $com_user = str_replace($search_arr, '', $com_user);
         //$com_user = strtolower($com_user);
         $com_user    = htmlentities($com_user, ENT_COMPAT, 'utf-8');
@@ -481,7 +481,7 @@ switch ($op) {
                     if (isset($com_config['extraParams']) && \is_array($com_config['extraParams'])) {
                         $extra_params = '';
                         foreach ($com_config['extraParams'] as $extra_param) {
-                            $extra_params .= isset($_POST[$extra_param]) ? $extra_param . '=' . htmlspecialchars($_POST[$extra_param], ENT_QUOTES | ENT_HTML5) . '&amp;' : $extra_param . '=&amp;';
+                            $extra_params .= Request::hasVar($extra_param, 'POST') ? $extra_param . '=' . htmlspecialchars(Request::getString($extra_param, '', 'POST'), ENT_QUOTES | ENT_HTML5) . '&amp;' : $extra_param . '=&amp;';
                         }
                         $comment_url .= $extra_params;
                     }

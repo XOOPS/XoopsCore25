@@ -27,11 +27,8 @@ include_once XOOPS_ROOT_PATH . '/class/xoopsblock.php';
 include_once XOOPS_ROOT_PATH . '/modules/system/admin/modulesadmin/modulesadmin.php';
 XoopsLoad::load('XoopsFilterInput');
 
-if (isset($_POST)) {
-    foreach ($_POST as $k => $v) {
-        ${$k} = $v;
-    }
-}
+$oldname = Request::getArray('oldname', [], 'POST');
+$newname = Request::getArray('newname', [], 'POST');
 
 // Get Action type
 $op = Request::getString('op', 'list');
@@ -189,9 +186,9 @@ switch ($op) {
         // Get Module Handler
         /** @var XoopsModuleHandler $module_handler */
         $module_handler = xoops_getHandler('module');
-        if (isset($_POST['mod'])) {
+        if (Request::hasVar('mod', 'POST')) {
             $i = 1;
-            foreach ($_POST['mod'] as $order) {
+            foreach (Request::getArray('mod', [], 'POST') as $order) {
                 if ($order > 0) {
                     $module = $module_handler->get($order);
                     //Change order only for visible modules
@@ -233,7 +230,7 @@ switch ($op) {
         }
         $i           = 0;
         $modifs_mods = [];
-        $module      = empty($_POST['module']) ? [] : $_POST['module'];
+        $module      = Request::getArray('module', [], 'POST');
         foreach ($module as $mid) {
             $mid                          = (int) $mid;
             $newname[$mid]                = trim((string) XoopsFilterInput::clean($newname[$mid], 'STRING'));
@@ -292,7 +289,7 @@ switch ($op) {
     case 'submit':
         $ret    = [];
         $write  = false;
-        $module = empty($_POST['module']) ? [] : $_POST['module'];
+        $module = Request::getArray('module', [], 'POST');
         foreach ($module as $mid) {
             $newname[$mid] = trim((string) XoopsFilterInput::clean($newname[$mid], 'STRING'));
             if ($oldname[$mid] != $newname[$mid]) {

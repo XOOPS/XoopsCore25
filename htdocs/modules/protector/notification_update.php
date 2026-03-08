@@ -8,6 +8,6 @@ $mydirurl  = XOOPS_URL . '/modules/' . $mydirname;
 
 require $mydirpath . '/mytrustdirname.php'; // set $mytrustdirname
 
-$_GET['page'] = basename(__FILE__, '.php');
+\Xmf\Request::setVar('page', basename(__FILE__, '.php'), 'GET');
 
 require XOOPS_TRUST_PATH . '/modules/' . $mytrustdirname . '/main.php';
