@@ -60,7 +60,7 @@ switch ($op) {
         $xoBreadCrumb->addTips(_AM_SYSTEM_GROUPS_NAV_TIPS_1);
         $xoBreadCrumb->render();
         // Get start pager
-        $start = Request::getInt('start', 0);
+        $start = Request::getInt('start', 0, 'GET');
         // Criteria
         $criteria = new CriteriaCompo();
         $criteria->setSort('groupid');
@@ -132,7 +132,7 @@ switch ($op) {
         $xoBreadCrumb->addTips(_AM_SYSTEM_GROUPS_NAV_TIPS_2);
         $xoBreadCrumb->render();
         // Create form
-        $groups_id = Request::getInt('groups_id', 0);
+        $groups_id = Request::hasVar('groups_id', 'POST') ? Request::getInt('groups_id', 0, 'POST') : Request::getInt('groups_id', 0, 'GET');
         if ($groups_id > 0) {
             $obj  = $groups_Handler->get($groups_id);
             $form = $obj->getForm();
@@ -219,7 +219,7 @@ switch ($op) {
         $read_bids     = Request::getArray('read_bids', []);
         /** @var XoopsMemberHandler $member_handler */
         $member_handler = xoops_getHandler('member');
-        $gid            = Request::getInt('g_id', 0);
+        $gid            = Request::getInt('g_id', 0, 'POST');
         if ($gid > 0) {
             $group = $member_handler->getGroup($gid);
             $group->setVar('name', Request::getString('name', '', 'POST'));
@@ -293,7 +293,7 @@ switch ($op) {
 
         //Del a group
     case 'groups_delete':
-        $groups_id = Request::getInt('groups_id', 0);
+        $groups_id = Request::hasVar('groups_id', 'POST') ? Request::getInt('groups_id', 0, 'POST') : Request::getInt('groups_id', 0, 'GET');
         if ($groups_id > 0) {
             $obj = $groups_Handler->get($groups_id);
             if (Request::getInt('ok', 0, 'POST') === 1) {

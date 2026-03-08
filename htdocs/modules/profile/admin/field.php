@@ -113,7 +113,7 @@ switch ($op) {
         break;
 
     case 'edit':
-        $obj = $profilefield_handler->get(Request::getInt('id', 0));
+        $obj = $profilefield_handler->get(Request::getInt('id', 0, 'GET'));
         if (!is_object($obj)) {
             redirect_header('field.php', 2, _PROFILE_AM_FIELDNOTCONFIGURABLE);
         }
@@ -126,7 +126,7 @@ switch ($op) {
         break;
 
     case 'edit-option-strings':
-        $obj = $profilefield_handler->get(Request::getInt('id', 0));
+        $obj = $profilefield_handler->get(Request::getInt('id', 0, 'GET'));
         if (!is_object($obj)) {
             redirect_header('field.php', 2, _PROFILE_AM_FIELDNOTCONFIGURABLE);
         }
@@ -335,7 +335,7 @@ switch ($op) {
         break;
 
     case 'delete':
-        $obj = $profilefield_handler->get(Request::getInt('id', 0));
+        $obj = $profilefield_handler->get(Request::hasVar('id', 'POST') ? Request::getInt('id', 0, 'POST') : Request::getInt('id', 0, 'GET'));
         if (!is_object($obj)) {
             redirect_header('field.php', 2, _PROFILE_AM_FIELDNOTCONFIGURABLE);
         }

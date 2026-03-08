@@ -210,7 +210,7 @@ switch ($op) {
         $dump         = new SystemMaintenance();
         $dump_modules = Request::getArray('dump_modules', [], 'POST');
         $dump_tables  = Request::getArray('dump_tables', [], 'POST');
-        $drop         = Request::getInt('drop', 1);
+        $drop         = Request::getInt('drop', 1, 'POST');
 
         if ((!empty($dump_tables) && !empty($dump_modules)) || (empty($dump_tables) && empty($dump_modules))) {
             redirect_header('admin.php?fct=maintenance', 2, _AM_SYSTEM_MAINTENANCE_DUMP_ERROR_TABLES_OR_MODULES);

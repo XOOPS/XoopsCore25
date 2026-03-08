@@ -75,7 +75,7 @@ switch ($op) {
         break;
 
     case 'delete':
-        $obj = $handler->get(Request::getInt('id', 0));
+        $obj = $handler->get(Request::hasVar('id', 'POST') ? Request::getInt('id', 0, 'POST') : Request::getInt('id', 0, 'GET'));
         if (Request::getInt('ok', 0, 'POST') === 1) {
             if (!$GLOBALS['xoopsSecurity']->check()) {
                 redirect_header('step.php', 3, implode(',', $GLOBALS['xoopsSecurity']->getErrors()));

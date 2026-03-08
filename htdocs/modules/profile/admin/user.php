@@ -58,7 +58,7 @@ switch ($op) {
 
     case 'edit':
         xoops_loadLanguage('main', $GLOBALS['xoopsModule']->getVar('dirname', 'n'));
-        $obj = $handler->getUser(Request::getInt('id', 0));
+        $obj = $handler->getUser(Request::getInt('id', 0, 'GET'));
         if (!is_object($obj)) {
             redirect_header('user.php', 3, _US_NOEDITRIGHT);
         }
@@ -199,7 +199,7 @@ switch ($op) {
         break;
 
     case 'delete':
-        $deleteId = Request::getInt('id', 0);
+        $deleteId = Request::hasVar('id', 'POST') ? Request::getInt('id', 0, 'POST') : Request::getInt('id', 0, 'GET');
         if ($deleteId == $GLOBALS['xoopsUser']->getVar('uid')) {
             redirect_header('user.php', 2, _PROFILE_AM_CANNOTDELETESELF);
         }

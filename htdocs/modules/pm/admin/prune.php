@@ -40,10 +40,16 @@ switch ($op) {
         $after  = Request::getArray('after', [], 'POST');
         $before = Request::getArray('before', [], 'POST');
         if (!empty($after['date']) && $after['date'] !== 'YYYY/MM/DD') {
-            $criteria->add(new Criteria('msg_time', strtotime($after['date']) + (int)($after['time'] ?? 0), '>'));
+            $afterTime = strtotime($after['date']);
+            if (false !== $afterTime) {
+                $criteria->add(new Criteria('msg_time', $afterTime + (int)($after['time'] ?? 0), '>'));
+            }
         }
         if (!empty($before['date']) && $before['date'] !== 'YYYY/MM/DD') {
-            $criteria->add(new Criteria('msg_time', strtotime($before['date']) + (int)($before['time'] ?? 0), '<'));
+            $beforeTime = strtotime($before['date']);
+            if (false !== $beforeTime) {
+                $criteria->add(new Criteria('msg_time', $beforeTime + (int)($before['time'] ?? 0), '<'));
+            }
         }
         if (Request::getInt('onlyread', 0, 'POST') === 1) {
             $criteria->add(new Criteria('read_msg', 1));
