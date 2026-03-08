@@ -1,4 +1,7 @@
 <?php
+
+use Xmf\Request;
+
 /**
  * Check register attempt for "spaminess" on stopforumspam.com
  * Please see http://www.stopforumspam.com/usage before enabling for restrictions and conditions
@@ -26,16 +29,16 @@ class Protector_postcommon_register_stopforumspam extends ProtectorFilterAbstrac
     {
         // we only check the registration main post which should not match these conditions
         if ($_SERVER['REQUEST_METHOD'] !== 'POST'
-            || !isset($_POST['email'])
-            || !isset($_POST['uname'])
+            || !Request::hasVar('email', 'POST')
+            || !Request::hasVar('uname', 'POST')
         ) {
             return true;
         }
 
         $report = [];
-        $report['email'] = $_POST['email'] ?? null;
+        $report['email'] = Request::getString('email', '', 'POST');
         $report['ip'] = $_SERVER['REMOTE_ADDR'];
-        $report['uname'] = $_POST['uname'] ?? null;
+        $report['uname'] = Request::getString('uname', '', 'POST');
         $result = $this->protector->stopForumSpamLookup($report['email'], $report['ip'], $report['uname']);
         if (false === $result || isset($result['http_code'])) {
             // the lookup failed at the http level, log it for now?

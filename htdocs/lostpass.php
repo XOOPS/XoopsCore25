@@ -81,8 +81,8 @@ if ($uid > 0 && $token !== '') {
             }
         }
 
-        $pass  = Request::getString('pass', '', 'POST');
-        $vpass = Request::getString('vpass', '', 'POST');
+        $pass  = Request::getVar('pass', '', 'POST', 'string', Request::MASK_ALLOW_RAW | Request::MASK_NO_TRIM);
+        $vpass = Request::getVar('vpass', '', 'POST', 'string', Request::MASK_ALLOW_RAW | Request::MASK_NO_TRIM);
 
         $errors = [];
         if ($pass === '' || $vpass === '') {

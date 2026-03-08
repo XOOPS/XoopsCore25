@@ -70,7 +70,7 @@ function xoops_module_update_profile(XoopsModule $module, $oldversion = null)
                 $object->setVar('step_id', 2);
             }
             if (!empty($myrow['field_options'])) {
-                $object->setVar('field_options', unserialize($myrow['field_options']));
+                $object->setVar('field_options', unserialize($myrow['field_options'], ['allowed_classes' => false]));
             }
             $field_handler->insert($object, true);
 

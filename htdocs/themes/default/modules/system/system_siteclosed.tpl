@@ -49,7 +49,7 @@
                         <form method="post" action="<{xoAppUrl '/user.php?op=login'}>">
                             <input name="uname" type="text" title=""/>
                             <input name="pass" type="password" title=""/>
-                            <input type="hidden" name="xoops_redirect" value="<{$smarty.server.REQUEST_URI}>"/>
+                            <input type="hidden" name="xoops_redirect" value="<{$smarty.server.REQUEST_URI|escape}>"/>
                             <{if isset($lang_siteclosemsg)}>
                                 <input type="hidden" name="xoops_login" value="1"/>
                             <{/if}>

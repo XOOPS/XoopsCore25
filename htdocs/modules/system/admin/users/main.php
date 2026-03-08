@@ -83,7 +83,11 @@ switch ($op) {
     case 'users_delete':
         $xoBreadCrumb->render();
         $user = $member_handler->getUser($uid);
-        if ((int) Request::getInt('ok', 0) === 1) {
+        if (!is_object($user)) {
+            redirect_header('admin.php?fct=users', 2, _AM_SYSTEM_DBUPDATED);
+            break;
+        }
+        if ((int) Request::getInt('ok', 0, 'POST') === 1) {
             if (!$GLOBALS['xoopsSecurity']->check()) {
                 redirect_header('admin.php?fct=users', 3, implode('<br>', $GLOBALS['xoopsSecurity']->getErrors()));
             }
@@ -130,6 +134,9 @@ switch ($op) {
             foreach (Request::getArray('memberslist_id', []) as $del) {
                 $del    = (int) $del;
                 $user   = $member_handler->getUser($del);
+                if (!is_object($user)) {
+                    continue;
+                }
                 $groups = $user->getGroups();
                 if (in_array(XOOPS_GROUP_ADMIN, $groups)) {
                     $error .= sprintf(_AM_SYSTEM_USERS_NO_ADMINSUPP, $user->getVar('uname'));
@@ -203,7 +210,7 @@ case 'users_save':
         $edituser->setVar('url', formatURL(Request::getUrl('url')));
         $edituser->setVar('user_icq', Request::getString('user_icq'));
         $edituser->setVar('user_from', Request::getString('user_from'));
-        $edituser->setVar('user_sig', Request::getString('user_sig'));
+        $edituser->setVar('user_sig', Request::getText('user_sig'));
         $edituser->setVar('user_viewemail', (int)(Request::getInt('user_viewemail', 0) == 1));
         $edituser->setVar('user_aim', Request::getString('user_aim'));
         $edituser->setVar('user_yim', Request::getString('user_yim'));
@@ -215,7 +222,7 @@ case 'users_save':
         // RMV-NOTIFY
         $edituser->setVar('notify_method', Request::getString('notify_method'));
         $edituser->setVar('notify_mode', Request::getString('notify_mode'));
-        $edituser->setVar('bio', Request::getString('bio'));
+        $edituser->setVar('bio', Request::getText('bio'));
         $edituser->setVar('rank', Request::getString('rank'));
         $edituser->setVar('user_occ', Request::getString('user_occ'));
         $edituser->setVar('user_intrest', Request::getString('user_intrest'));
@@ -299,7 +306,7 @@ case 'users_save':
         $newuser->setVar('user_regdate', time());
         $newuser->setVar('user_icq', Request::getString('user_icq'));
         $newuser->setVar('user_from', Request::getString('user_from'));
-        $newuser->setVar('user_sig', Request::getString('user_sig'));
+        $newuser->setVar('user_sig', Request::getText('user_sig'));
         $newuser->setVar('user_aim', Request::getString('user_aim'));
         $newuser->setVar('user_yim', Request::getString('user_yim'));
         $newuser->setVar('user_msnm', Request::getString('user_msnm'));
@@ -312,7 +319,7 @@ case 'users_save':
         // RMV-NOTIFY
         $newuser->setVar('notify_method', Request::getString('notify_method'));
         $newuser->setVar('notify_mode', Request::getString('notify_mode'));
-        $newuser->setVar('bio', Request::getString('bio'));
+        $newuser->setVar('bio', Request::getText('bio'));
         $newuser->setVar('rank', Request::getString('rank'));
         $newuser->setVar('level', 1);
         $newuser->setVar('user_occ', Request::getString('user_occ'));
@@ -353,8 +360,10 @@ case 'users_save':
     case 'users_active':
         if (Request::hasVar('uid')) {
             $obj = $member_handler->getUser($uid);
-            //echo $_REQUEST["uid"];
-            //print_r($obj);
+        }
+        if (!isset($obj) || !is_object($obj)) {
+            redirect_header('admin.php?fct=users', 2, _AM_SYSTEM_DBUPDATED);
+            break;
         }
         $obj->setVar('level', 1);
         if ($member_handler->insertUser($obj, true)) {

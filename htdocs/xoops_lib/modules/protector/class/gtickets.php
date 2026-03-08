@@ -3,6 +3,8 @@
 // GIJOE's Ticket Class (based on Marijuana's Oreteki XOOPS)
 // nobunobu's suggestions are applied
 
+use Xmf\Request;
+
 if (!class_exists('XoopsGTicket')) {
 
     /**
@@ -182,13 +184,9 @@ if (!class_exists('XoopsGTicket')) {
             // get key&val of the ticket from a user's query
             $ticket = '';
             if ($post) {
-                if (isset($_POST['XOOPS_G_TICKET'])) {
-                    $ticket = $_POST['XOOPS_G_TICKET'];
-                }
+                $ticket = Request::getString('XOOPS_G_TICKET', '', 'POST');
             } else {
-                if (isset($_GET['XOOPS_G_TICKET'])) {
-                    $ticket = $_GET['XOOPS_G_TICKET'];
-                }
+                $ticket = Request::getString('XOOPS_G_TICKET', '', 'GET');
             }
 
             // CHECK: no tickets found

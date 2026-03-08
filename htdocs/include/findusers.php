@@ -568,14 +568,16 @@ if (!Request::hasVar('user_submit', 'POST')) {
     }
     if (Request::hasVar('rank', 'POST')) {
         $rank_obj = $rank_handler->get(Request::getInt('rank', 0, 'POST'));
-        if ($rank_obj->getVar('rank_special')) {
-            $criteria->add(new Criteria('rank', Request::getInt('rank', 0, 'POST')));
-        } else {
-            if ($rank_obj->getVar('rank_min')) {
-                $criteria->add(new Criteria('posts', $rank_obj->getVar('rank_min'), '>='));
-            }
-            if ($rank_obj->getVar('rank_max')) {
-                $criteria->add(new Criteria('posts', $rank_obj->getVar('rank_max'), '<='));
+        if (is_object($rank_obj)) {
+            if ($rank_obj->getVar('rank_special')) {
+                $criteria->add(new Criteria('rank', Request::getInt('rank', 0, 'POST')));
+            } else {
+                if ($rank_obj->getVar('rank_min')) {
+                    $criteria->add(new Criteria('posts', $rank_obj->getVar('rank_min'), '>='));
+                }
+                if ($rank_obj->getVar('rank_max')) {
+                    $criteria->add(new Criteria('posts', $rank_obj->getVar('rank_max'), '<='));
+                }
             }
         }
     }
