@@ -358,7 +358,7 @@ switch ($op) {
             xoops_confirm(
                 [
                     'ok' => 1,
-                    'id' => Request::getInt('id', 0),
+                    'id' => Request::getInt('id', 0, 'GET'),
                     'op' => 'delete',
                 ],
                 $_SERVER['REQUEST_URI'],

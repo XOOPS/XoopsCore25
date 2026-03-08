@@ -222,6 +222,9 @@ switch ($op) {
         $gid            = Request::getInt('g_id', 0, 'POST');
         if ($gid > 0) {
             $group = $member_handler->getGroup($gid);
+            if ($group === null) {
+                redirect_header('admin.php?fct=groups', 1, _AM_SYSTEM_DBERROR);
+            }
             $group->setVar('name', Request::getString('name', '', 'POST'));
             $group->setVar('description', Request::getString('desc', '', 'POST'));
             // if this group is not one of the default groups
