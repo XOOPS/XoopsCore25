@@ -33,7 +33,7 @@ if (!is_object($xoopsUser)) {
 }
 
 // initialize $op variable
-$op = Request::getCmd('op', 'editprofile');
+$op = Request::hasVar('op', 'POST') ? Request::getCmd('op', 'editprofile', 'POST') : Request::getCmd('op', 'editprofile', 'GET');
 /** @var XoopsConfigHandler $config_handler */
 $config_handler  = xoops_getHandler('config');
 $xoopsConfigUser = $config_handler->getConfigsByCat(XOOPS_CONF_USER);
@@ -42,23 +42,23 @@ if ($op === 'saveuser') {
     if (!$GLOBALS['xoopsSecurity']->check()) {
         redirect_header('index.php', 3, _US_NOEDITRIGHT . '<br>' . implode('<br>', $GLOBALS['xoopsSecurity']->getErrors()));
     }
-    $uid = Request::getInt('uid', 0);
+    $uid = Request::getInt('uid', 0, 'POST');
     if (empty($uid) || $xoopsUser->getVar('uid') != $uid) {
         redirect_header('index.php', 3, _US_NOEDITRIGHT);
     }
     $errors = [];
     if ($xoopsConfigUser['allow_chgmail'] == 1) {
-        $email = Request::getEmail('email', '');
+        $email = Request::getEmail('email', '', 'POST');
         if (empty($email)) {
             $errors[] = _US_INVALIDMAIL;
         }
     }
-    $password = Request::getString('password', '');
+    $password = Request::getString('password', '', 'POST');
     if (!empty($password)) {
         if (strlen($password) < $xoopsConfigUser['minpass']) {
             $errors[] = sprintf(_US_PWDTOOSHORT, $xoopsConfigUser['minpass']);
         } else {
-            $vpass = Request::getString('vpass', '');
+            $vpass = Request::getString('vpass', '', 'POST');
             if ($password != $vpass) {
                 $errors[] = _US_PASSNOTSAME;
             } elseif (mb_strtolower($password, 'UTF-8') === mb_strtolower((string) $xoopsUser->getVar('uname', 'n'), 'UTF-8')) {
@@ -78,7 +78,7 @@ if ($op === 'saveuser') {
         /** @var XoopsMemberHandler $member_handler */
         $member_handler = xoops_getHandler('member');
         $edituser       = $member_handler->getUser($uid);
-        $edituser->setVar('name', Request::getString('name', ''));
+        $edituser->setVar('name', Request::getString('name', '', 'POST'));
         if ($xoopsConfigUser['allow_chgmail'] == 1) {
             $edituser->setVar('email', $email, true);
         }
@@ -86,24 +86,24 @@ if ($op === 'saveuser') {
             $edituser->setVar('pass', password_hash($password, PASSWORD_DEFAULT));
             //$edituser->setVar('last_pass_change', time());
         }
-        $edituser->setVar('url', Request::getUrl('url', ''));
-        $edituser->setVar('user_icq', Request::getString('user_icq', ''));
-        $edituser->setVar('user_from', Request::getString('user_from', ''));
-        $edituser->setVar('user_sig', xoops_substr(Request::getString('user_sig', ''), 0, 255));
-        $edituser->setVar('user_viewemail', Request::getBool('user_viewemail', 0));
-        $edituser->setVar('user_aim', Request::getString('user_aim', ''));
-        $edituser->setVar('user_yim', Request::getString('user_yim', ''));
-        $edituser->setVar('user_msnm', Request::getString('user_msnm', ''));
-        $edituser->setVar('attachsig', Request::getBool('attachsig', 0));
-        $edituser->setVar('timezone_offset', Request::getFloat('timezone_offset', 0.0));
-        $edituser->setVar('uorder', Request::getInt('uorder', 0));
-        $edituser->setVar('umode', Request::getString('umode', 'flat'));
-        $edituser->setVar('notify_method', Request::getInt('notify_method', 1));
-        $edituser->setVar('notify_mode', Request::getInt('notify_mode', 1));
-        $edituser->setVar('bio', substr(Request::getString('bio', ''), 0, 255));
-        $edituser->setVar('user_occ', Request::getString('user_occ', ''));
-        $edituser->setVar('user_intrest', Request::getString('user_intrest', ''));
-        $edituser->setVar('user_mailok', Request::getBool('user_mailok', 0));
+        $edituser->setVar('url', Request::getUrl('url', '', 'POST'));
+        $edituser->setVar('user_icq', Request::getString('user_icq', '', 'POST'));
+        $edituser->setVar('user_from', Request::getString('user_from', '', 'POST'));
+        $edituser->setVar('user_sig', xoops_substr(Request::getString('user_sig', '', 'POST'), 0, 255));
+        $edituser->setVar('user_viewemail', Request::getBool('user_viewemail', 0, 'POST'));
+        $edituser->setVar('user_aim', Request::getString('user_aim', '', 'POST'));
+        $edituser->setVar('user_yim', Request::getString('user_yim', '', 'POST'));
+        $edituser->setVar('user_msnm', Request::getString('user_msnm', '', 'POST'));
+        $edituser->setVar('attachsig', Request::getBool('attachsig', 0, 'POST'));
+        $edituser->setVar('timezone_offset', Request::getFloat('timezone_offset', 0.0, 'POST'));
+        $edituser->setVar('uorder', Request::getInt('uorder', 0, 'POST'));
+        $edituser->setVar('umode', Request::getString('umode', 'flat', 'POST'));
+        $edituser->setVar('notify_method', Request::getInt('notify_method', 1, 'POST'));
+        $edituser->setVar('notify_mode', Request::getInt('notify_mode', 1, 'POST'));
+        $edituser->setVar('bio', substr(Request::getString('bio', '', 'POST'), 0, 255));
+        $edituser->setVar('user_occ', Request::getString('user_occ', '', 'POST'));
+        $edituser->setVar('user_intrest', Request::getString('user_intrest', '', 'POST'));
+        $edituser->setVar('user_mailok', Request::getBool('user_mailok', 0, 'POST'));
         if (!$member_handler->insertUser($edituser)) {
             include $GLOBALS['xoops']->path('header.php');
             echo $edituser->getHtmlErrors();

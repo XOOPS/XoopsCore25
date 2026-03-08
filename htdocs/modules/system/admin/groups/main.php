@@ -225,7 +225,7 @@ switch ($op) {
         $gid            = Request::getInt('g_id', 0, 'POST');
         if ($gid > 0) {
             $group = $member_handler->getGroup($gid);
-            if ($group === null) {
+            if (!is_object($group)) {
                 redirect_header('admin.php?fct=groups', 1, _AM_SYSTEM_DBERROR);
             }
             $group->setVar('name', Request::getString('name', '', 'POST'));
@@ -302,6 +302,9 @@ switch ($op) {
         $groups_id = Request::hasVar('groups_id', 'POST') ? Request::getInt('groups_id', 0, 'POST') : Request::getInt('groups_id', 0, 'GET');
         if ($groups_id > 0) {
             $obj = $groups_Handler->get($groups_id);
+            if (!is_object($obj)) {
+                redirect_header('admin.php?fct=groups', 1, _AM_SYSTEM_DBERROR);
+            }
             if (Request::getInt('ok', 0, 'POST') === 1) {
                 if (!$GLOBALS['xoopsSecurity']->check()) {
                     redirect_header('admin.php?fct=groups', 3, implode(',', $GLOBALS['xoopsSecurity']->getErrors()));
