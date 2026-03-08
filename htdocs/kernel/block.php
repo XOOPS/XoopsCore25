@@ -338,17 +338,7 @@ class XoopsBlock extends XoopsObject
                 if ($c_type === 'H') {
                     return str_replace('{X_SITEURL}', XOOPS_URL . '/', $this->getVar('content', 'n'));
                 } elseif ($c_type === 'P') {
-                    if (!(defined('XOOPS_ALLOW_PHP_BLOCKS') && constant('XOOPS_ALLOW_PHP_BLOCKS') === true)) {
-                        $logger = XoopsLogger::getInstance();
-                        $logger->addWarning('PHP block execution is disabled. Set XOOPS_ALLOW_PHP_BLOCKS to true in mainfile.php to enable.');
-                        return '';
-                    }
-                    ob_start();
-                    echo eval($this->getVar('content', 'n'));
-                    $content = ob_get_contents();
-                    ob_end_clean();
-
-                    return str_replace('{X_SITEURL}', XOOPS_URL . '/', $content);
+                    return $this->executePhpBlock();
                 } elseif ($c_type === 'S') {
                     $myts    = \MyTextSanitizer::getInstance();
                     $content = str_replace('{X_SITEURL}', XOOPS_URL . '/', $this->getVar('content', 'n'));
@@ -366,6 +356,65 @@ class XoopsBlock extends XoopsObject
             default:
                 return $this->getVar('content', 'n');
         }
+    }
+
+    /**
+     * Execute a file-based PHP block safely (no eval).
+     *
+     * The content field must contain: filename.php|function_name
+     * The file must exist in XOOPS_ROOT_PATH/custom_blocks/
+     * The function must exist after including the file and return an HTML string.
+     *
+     * For backward compatibility, if XOOPS_ALLOW_PHP_BLOCKS is true and the
+     * content does not match the file|function format, legacy eval() is used.
+     *
+     * @return string rendered block content
+     */
+    protected function executePhpBlock()
+    {
+        $raw = $this->getVar('content', 'n');
+
+        // New file-based format: "filename.php|function_name"
+        if (preg_match('/^([a-zA-Z0-9_\-]+\.php)\|([a-zA-Z0-9_]+)$/', trim($raw), $matches)) {
+            $funcFile = $matches[1];
+            $showFunc = $matches[2];
+            $filePath = XOOPS_ROOT_PATH . '/custom_blocks/' . $funcFile;
+
+            if (!file_exists($filePath)) {
+                $logger = XoopsLogger::getInstance();
+                $logger->addWarning("PHP block file not found: custom_blocks/{$funcFile}");
+                return '';
+            }
+
+            include_once $filePath;
+
+            if (!function_exists($showFunc)) {
+                $logger = XoopsLogger::getInstance();
+                $logger->addWarning("PHP block function not found: {$showFunc} in custom_blocks/{$funcFile}");
+                return '';
+            }
+
+            $content = $showFunc();
+            return str_replace('{X_SITEURL}', XOOPS_URL . '/', (string) $content);
+        }
+
+        // Legacy eval()-based PHP blocks (backward compatibility)
+        if (!(defined('XOOPS_ALLOW_PHP_BLOCKS') && constant('XOOPS_ALLOW_PHP_BLOCKS') === true)) {
+            $logger = XoopsLogger::getInstance();
+            $logger->addWarning(
+                'Legacy PHP block detected. Migrate to file-based format '
+                . '(filename.php|function_name in custom_blocks/) or set '
+                . 'XOOPS_ALLOW_PHP_BLOCKS to true in mainfile.php.'
+            );
+            return '';
+        }
+
+        ob_start();
+        echo eval($raw);
+        $content = ob_get_contents();
+        ob_end_clean();
+
+        return str_replace('{X_SITEURL}', XOOPS_URL . '/', $content);
     }
 
     /**

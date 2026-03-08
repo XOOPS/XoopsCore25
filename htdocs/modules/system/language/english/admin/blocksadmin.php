@@ -62,7 +62,7 @@ define('_AM_SYSTEM_BLOCKS_USEFULTAGS', 'Useful Tags:');
 define('_AM_SYSTEM_BLOCKS_BLOCKTAG', '%s will print %s');
 define('_AM_SYSTEM_BLOCKS_CTYPE', 'Content Type');
 define('_AM_SYSTEM_BLOCKS_HTML', 'HTML');
-define('_AM_SYSTEM_BLOCKS_PHP', 'PHP Script');
+define('_AM_SYSTEM_BLOCKS_PHP', 'PHP Script (file-based)');
 define('_AM_SYSTEM_BLOCKS_AFWSMILE', 'Auto Format (smilies enabled)');
 define('_AM_SYSTEM_BLOCKS_AFNOSMILE', 'Auto Format (smilies disabled)');
 define('_AM_SYSTEM_BLOCKS_BCACHETIME', 'Cache lifetime');
