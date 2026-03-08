@@ -92,6 +92,9 @@ switch ($op) {
         $uid = Request::getInt('uid', 0, 'POST');
         if (!empty($uid)) {
             $user    = $handler->getUser($uid);
+            if (!is_object($user)) {
+                redirect_header('user.php', 3, _US_NOEDITRIGHT);
+            }
             $profile = $profile_handler->get($uid);
             if (!is_object($profile)) {
                 $profile = $profile_handler->create();

@@ -323,6 +323,9 @@ switch ($op) {
             redirect_header('field.php', 3, implode(',', $GLOBALS['xoopsSecurity']->getErrors()));
         }
         $obj = $profilefield_handler->get(Request::getInt('id', 0, 'POST'));
+        if (!is_object($obj)) {
+            redirect_header('field.php', 2, _PROFILE_AM_FIELDNOTCONFIGURABLE);
+        }
         $fieldOptions = Request::getArray('field_options', [], 'POST');
         if (empty($fieldOptions)) { //If no option strings exist
             redirect_header('field.php', 2, _PROFILE_AM_FIELDNOTCONFIGURABLE);

@@ -59,7 +59,8 @@ switch ($op) {
             $savecriteria->add(new Criteria('from_save', 0));
             $criteria->add($savecriteria);
         }
-        if (Request::getInt('notifyusers', 0, 'POST') === 1) {
+        $notifyusers = Request::getInt('notifyusers', 0, 'POST') === 1;
+        if ($notifyusers) {
             $notifycriteria = $criteria;
             $notifycriteria->add(new Criteria('to_delete', 0));
             $notifycriteria->setGroupBy('to_userid');
@@ -70,7 +71,7 @@ switch ($op) {
         if ($deletedrows === false) {
             redirect_header('prune.php', 2, _PM_AM_ERRORWHILEPRUNING);
         }
-        if (Request::getInt('notifyusers', 0, 'POST') === 1) {
+        if ($notifyusers) {
             $errors = false;
             foreach ($uids as $uid => $messagecount) {
                 $pm = $pm_handler->create();
