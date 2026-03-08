@@ -84,7 +84,7 @@ $catwritecount = count($catwritelist);      // count writable categories
 
 $get_image_id = \Xmf\Request::getInt('image_id', 0, 'GET');
 $imgcat_id    = \Xmf\Request::hasVar('imgcat_id', 'POST') ? \Xmf\Request::getInt('imgcat_id', 0, 'POST') : \Xmf\Request::getInt('imgcat_id', 0, 'GET');
-$target = htmlspecialchars($target, ENT_QUOTES | ENT_HTML5);
+$target = htmlspecialchars($target, ENT_QUOTES | ENT_HTML5, 'UTF-8');
 
 if ($isadmin || ($catreadcount > 0) || ($catwritecount > 0)) {
 
@@ -113,7 +113,8 @@ if ($isadmin || ($catreadcount > 0) || ($catwritecount > 0)) {
                 }
             }
             if (count($error) > 0) {
-                redirect_header($current_file . '?target=' . $target, 3, implode('<br>', $errors));
+                $safeErr = array_map(static fn($msg) => htmlspecialchars((string) $msg, ENT_QUOTES, 'UTF-8'), $error);
+                redirect_header($current_file . '?target=' . $target, 3, implode('<br>', $safeErr));
             }
         }
         redirect_header($current_file . '?target=' . $target, 3, _AM_SYSTEM_DBUPDATED);
@@ -349,7 +350,8 @@ if ($isadmin || ($catreadcount > 0) || ($catwritecount > 0)) {
             $errors[] = sprintf(_AM_SYSTEM_IMAGES_FAILDEL, $imagecategory->getVar('imgcat_name'));
         }
         if (count($errors) > 0) {
-            redirect_header($current_file . '?target=' . $target, 3, implode('<br>', $errors));
+            $safeErrors = array_map(static fn($msg) => htmlspecialchars((string) $msg, ENT_QUOTES, 'UTF-8'), $errors);
+            redirect_header($current_file . '?target=' . $target, 3, implode('<br>', $safeErrors));
         }
         redirect_header($current_file . '?target=' . $target, 3, _AM_SYSTEM_DBUPDATED);
     }

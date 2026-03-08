@@ -324,7 +324,8 @@ if ($isadmin || ($catreadcount > 0) || ($catwritecount > 0)) {
             $errors[] = sprintf(_MD_FAILDELCAT, $imagecategory->getVar('imgcat_name'));
         }
         if (count($errors) > 0) {
-            redirect_header($current_file . '?target=' . $target, 3, implode('<br>', $errors));
+            $safeErrors = array_map(static fn($msg) => htmlspecialchars((string) $msg, ENT_QUOTES, 'UTF-8'), $errors);
+            redirect_header($current_file . '?target=' . $target, 3, implode('<br>', $safeErrors));
         }
         redirect_header($current_file . '?target=' . $target, 3, _AM_SYSTEM_DBUPDATED);
     }
