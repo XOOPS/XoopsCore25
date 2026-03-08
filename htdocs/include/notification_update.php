@@ -40,11 +40,19 @@ include_once $GLOBALS['xoops']->path('include/notification_constants.php');
 include_once $GLOBALS['xoops']->path('include/notification_functions.php');
 xoops_loadLanguage('notification');
 
-$not_redirect = Request::getUrl('not_redirect', XOOPS_URL . '/', 'POST');
-$redirectHost = parse_url($not_redirect, PHP_URL_HOST);
-if ($redirectHost !== null) {
-    $allowedHost = parse_url(XOOPS_URL, PHP_URL_HOST);
-    if (strcasecmp((string) $redirectHost, (string) $allowedHost) !== 0) {
+$not_redirect  = Request::getUrl('not_redirect', XOOPS_URL . '/', 'POST');
+$redirectParts = parse_url($not_redirect);
+$allowedParts  = parse_url(XOOPS_URL);
+if (false === $redirectParts || false === $allowedParts) {
+    $not_redirect = XOOPS_URL . '/';
+} elseif (isset($redirectParts['host'])) {
+    $redirectScheme = strtolower((string) ($redirectParts['scheme'] ?? ''));
+    $allowedScheme  = strtolower((string) ($allowedParts['scheme'] ?? ''));
+    $redirectHost   = strtolower((string) $redirectParts['host']);
+    $allowedHost    = strtolower((string) ($allowedParts['host'] ?? ''));
+    $redirectPort   = (int) ($redirectParts['port'] ?? ('https' === $redirectScheme ? 443 : 80));
+    $allowedPort    = (int) ($allowedParts['port'] ?? ('https' === $allowedScheme ? 443 : 80));
+    if ($redirectScheme !== $allowedScheme || $redirectHost !== $allowedHost || $redirectPort !== $allowedPort) {
         $not_redirect = XOOPS_URL . '/';
     }
 } elseif (!str_starts_with($not_redirect, '/')) {

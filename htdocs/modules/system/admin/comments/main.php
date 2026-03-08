@@ -128,11 +128,15 @@ switch ($op) {
         $modules->addOptionArray($options);
         $form_purge->addElement($modules, true);
         $form_purge->addElement(new XoopsFormHidden('op', 'comments_purge'));
+        $form_purge->addElement(new XoopsFormHiddenToken());
         $form_purge->addElement(new XoopsFormButton('', 'submit', _SUBMIT, 'submit'));
         $xoopsTpl->assign('form', $form_purge->render());
         break;
 
     case 'comments_purge':
+        if (!$GLOBALS['xoopsSecurity']->check()) {
+            redirect_header('admin.php?fct=comments', 3, implode('<br>', $GLOBALS['xoopsSecurity']->getErrors()));
+        }
         $criteria = new CriteriaCompo();
         $verif    = false;
         if (Request::hasVar('comments_after', 'POST') && Request::hasVar('comments_before', 'POST')) {
@@ -148,20 +152,20 @@ switch ($op) {
                 $verif = true;
             }
         }
-        $com_modid = Request::getInt('comments_modules', 0);
+        $com_modid = Request::getInt('comments_modules', 0, 'POST');
         if ($com_modid > 0) {
             $criteria->add(new Criteria('com_modid', $com_modid));
             $verif = true;
         }
-        $comments_status = Request::getInt('comments_status', 0);
+        $comments_status = Request::getInt('comments_status', 0, 'POST');
         if ($comments_status > 0) {
             $criteria->add(new Criteria('com_status', $comments_status));
             $verif = true;
         }
         $comments_userid = Request::getArray('comments_userid', [], 'POST');
         if (!empty($comments_userid)) {
-            foreach ($comments_userid as $del) {
-                $criteria->add(new Criteria('com_uid', $del), 'OR');
+            foreach ($comments_userid as $userId) {
+                $criteria->add(new Criteria('com_uid', (int) $userId), 'OR');
             }
             $verif = true;
         }

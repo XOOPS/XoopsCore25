@@ -384,9 +384,13 @@ switch ($op) {
             copy($path_file, $copy_file);
             // Save modif
             if (Request::hasVar('templates', 'POST')) {
-                $open = fopen('' . $path_file . '', 'w+');
-                $temp = stripslashes((string) Request::getText('templates', '', 'POST'));
+                $open = fopen($path_file, 'w+');
+                if ($open === false) {
+                    redirect_header('admin.php?fct=tplsets', 2, _AM_SYSTEM_TEMPLATES_ERROR);
+                }
+                $temp = Request::getText('templates', '', 'POST');
                 if (!fwrite($open, xoops_utf8_encode($temp))) {
+                    fclose($open);
                     redirect_header('admin.php?fct=tplsets', 2, _AM_SYSTEM_TEMPLATES_ERROR);
                 }
                 fclose($open);

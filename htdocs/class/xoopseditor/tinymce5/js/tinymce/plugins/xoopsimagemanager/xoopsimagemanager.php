@@ -311,7 +311,7 @@ if ($isadmin || ($catreadcount > 0) || ($catwritecount > 0)) {
             $errors[] = sprintf(_MD_FAILDELCAT, $imagecategory->getVar('imgcat_name'));
         }
         if (count($errors) > 0) {
-            redirect_header($current_file . '?target=' . $target, 3, xoops_error(implode('<br>', $error)));
+            redirect_header($current_file . '?target=' . $target, 3, xoops_error(implode('<br>', $errors)));
         }
         redirect_header($current_file . '?target=' . $target, 3, _AM_SYSTEM_DBUPDATED);
     }
@@ -459,7 +459,7 @@ if ($op === 'listimg') {
         // check if image stored in db/as file - start
         if ($imagecategory->getVar('imgcat_storetype') === 'db') {
             $image_src = '' . XOOPS_URL . '/image.php?id=' . $i . '';
-            if (ini_get('allow_url_fopen') == true) {
+            if (ini_get('allow_url_fopen')) {
                 $image_info = true;
                 $image_size = getimagesize($image_src);
             } else {

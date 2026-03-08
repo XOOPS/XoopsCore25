@@ -317,7 +317,7 @@ if ($isadmin || ($catreadcount > 0) || ($catwritecount > 0)) {
             $errors[] = sprintf(_MD_FAILDELCAT, $imagecategory->getVar('imgcat_name'));
         }
         if (count($errors) > 0) {
-            redirect_header($current_file . '?target=' . $target, 3, xoops_error(implode('<br>', $error)));
+            redirect_header($current_file . '?target=' . $target, 3, xoops_error(implode('<br>', $errors)));
         }
         redirect_header($current_file . '?target=' . $target, 3, _AM_SYSTEM_DBUPDATED);
     }

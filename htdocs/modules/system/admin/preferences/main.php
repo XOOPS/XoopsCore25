@@ -23,13 +23,7 @@ if (!is_object($xoopsUser) || !is_object($xoopsModule) || !$xoopsUser->isAdmin($
     exit(_NOPERM);
 }
 
-// Extract POST variables needed by the save handler
-// (dynamic config names are referenced as ${$config->getVar('conf_name')})
-$_postData = filter_input_array(INPUT_POST, FILTER_UNSAFE_RAW) ?? [];
-foreach ($_postData as $k => $v) {
-    ${$k} = $v;
-}
-unset($_postData);
+// POST config values are fetched on-demand in the 'save' handler using Request::getVar()
 // Get Action type
 $op = Request::getString('op', 'list');
 // Setting type
@@ -425,6 +419,8 @@ switch ($op) {
         if (!$GLOBALS['xoopsSecurity']->check()) {
             redirect_header('admin.php?fct=preferences', 3, implode('<br>', $GLOBALS['xoopsSecurity']->getErrors()));
         }
+        $conf_ids = Request::getArray('conf_ids', [], 'POST');
+        $redirect = Request::getString('redirect', '', 'POST');
         require_once XOOPS_ROOT_PATH . '/class/template.php';
         $xoopsTpl         = new XoopsTpl();
         $count            = count($conf_ids);
@@ -435,11 +431,12 @@ switch ($op) {
         if ($count > 0) {
             for ($i = 0; $i < $count; ++$i) {
                 $config    = $config_handler->getConfig($conf_ids[$i]);
-                $new_value = & ${$config->getVar('conf_name')};
+                $confName  = $config->getVar('conf_name');
+                $new_value = Request::getVar($confName, $config->getVar('conf_value'), 'POST');
                 if (is_array($new_value) || $new_value != $config->getVar('conf_value')) {
                     // if language has been changed
                     if (!$lang_updated && $config->getVar('conf_catid') == XOOPS_CONF && $config->getVar('conf_name') === 'language') {
-                        $xoopsConfig['language'] = ${$config->getVar('conf_name')};
+                        $xoopsConfig['language'] = $new_value;
                         $lang_updated            = true;
                     }
 
@@ -447,15 +444,15 @@ switch ($op) {
                     if (!$theme_updated && $config->getVar('conf_catid') == XOOPS_CONF && $config->getVar('conf_name') === 'theme_set') {
                         /** @var XoopsMemberHandler $member_handler */
                         $member_handler = xoops_getHandler('member');
-                        $member_handler->updateUsersByField('theme', ${$config->getVar('conf_name')});
+                        $member_handler->updateUsersByField('theme', $new_value);
                         $theme_updated = true;
                     }
                     //todo: remove this code since it is not used anymore.
                     // if default template set has been changed
                     if (!$tpl_updated && $config->getVar('conf_catid') == XOOPS_CONF && $config->getVar('conf_name') === 'template_set') {
                         // clear cached/compiled files and regenerate them if default theme has been changed
-                        if ($xoopsConfig['template_set'] != ${$config->getVar('conf_name')}) {
-                            $newtplset = ${$config->getVar('conf_name')};
+                        if ($xoopsConfig['template_set'] != $new_value) {
+                            $newtplset = $new_value;
 
                             // clear all compiled and cached files
                             $xoopsTpl->clearCompiledTemplate();

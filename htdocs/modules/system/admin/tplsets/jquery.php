@@ -168,15 +168,21 @@ switch ($op) {
 
     // Restore backup file
     case 'tpls_restore':
+        if (!$GLOBALS['xoopsSecurity']->check()) {
+            xoops_error(implode('<br>', $GLOBALS['xoopsSecurity']->getErrors()));
+            break;
+        }
         $extensions = ['.html', '.htm', '.css', '.tpl'];
 
         $restorePath = Request::getText('path_file', '', 'POST');
+        $themesRoot  = realpath(XOOPS_ROOT_PATH . '/themes');
+        $resolved    = realpath($restorePath);
 
-        //check if the file is inside themes directory
-        $valid_dir = stristr(realpath($restorePath), (string) realpath(XOOPS_ROOT_PATH . '/themes'));
+        // Strict prefix check to prevent directory traversal
+        $valid_dir = ($resolved !== false && $themesRoot !== false && strpos($resolved, $themesRoot) === 0);
 
-        $old_file = $restorePath . '.back';
-        $new_file = $restorePath;
+        $old_file = $resolved . '.back';
+        $new_file = $resolved;
 
         $extension_verif = strrchr((string) $new_file, '.');
         if ($valid_dir && in_array($extension_verif, $extensions) && file_exists($old_file) && file_exists($new_file)) {

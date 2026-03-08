@@ -259,7 +259,16 @@ switch ($op) {
         /** @var XoopsBlockHandler $block_handler */
         $block_handler = xoops_getModuleHandler('block');
         $block         = $block_handler->create();
-        $block->setVars(filter_input_array(INPUT_POST, FILTER_UNSAFE_RAW) ?? []);
+        $blockVars = [
+            'title'      => Request::getString('title', '', 'POST'),
+            'side'       => Request::getInt('side', 0, 'POST'),
+            'weight'     => Request::getInt('weight', 0, 'POST'),
+            'visible'    => Request::getInt('visible', 0, 'POST'),
+            'c_type'     => Request::getCmd('c_type', '', 'POST'),
+            'block_type' => Request::getString('block_type', '', 'POST'),
+            'bcachetime' => Request::getInt('bcachetime', 0, 'POST'),
+        ];
+        $block->setVars($blockVars);
         $content = Request::getText('content_block', '', 'POST');
         $block->setVar('content', $content);
         $myts = \MyTextSanitizer::getInstance();
@@ -282,8 +291,16 @@ switch ($op) {
         $block_type = Request::getString('block_type', '');
         $block->setVar('block_type', $block_type);
 
+        $blockVars = [
+            'title'      => Request::getString('title', '', 'POST'),
+            'side'       => Request::getInt('side', 0, 'POST'),
+            'weight'     => Request::getInt('weight', 0, 'POST'),
+            'visible'    => Request::getInt('visible', 0, 'POST'),
+            'c_type'     => Request::getCmd('c_type', '', 'POST'),
+            'bcachetime' => Request::getInt('bcachetime', 0, 'POST'),
+        ];
         if (!$block->isCustom()) {
-            $block->setVars(filter_input_array(INPUT_POST, FILTER_UNSAFE_RAW) ?? []);
+            $block->setVars($blockVars);
             $type = $block->getVar('block_type');
             $name = $block->getVar('name');
             // Save block options
@@ -302,7 +319,7 @@ switch ($op) {
                 }
             }
         } else {
-            $block->setVars(filter_input_array(INPUT_POST, FILTER_UNSAFE_RAW) ?? []);
+            $block->setVars($blockVars);
             switch ($block->getVar('c_type')) {
                 case 'H':
                     $name = _AM_SYSTEM_BLOCKS_CUSTOMHTML;

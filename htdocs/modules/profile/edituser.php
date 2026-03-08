@@ -212,7 +212,7 @@ if ($op === 'avatarchoose') {
     $avt_handler = xoops_getHandler('avatar');
     $postedAvatar = Request::getString('user_avatar', '', 'POST');
     if (!empty($postedAvatar)) {
-        $user_avatar     = $xoopsDB->escape($postedAvatar);
+        $user_avatar     = $postedAvatar;
         $criteria_avatar = new CriteriaCompo(new Criteria('avatar_file', $user_avatar));
         $criteria_avatar->add(new Criteria('avatar_type', 'S'));
         $avatars = $avt_handler->getObjects($criteria_avatar);

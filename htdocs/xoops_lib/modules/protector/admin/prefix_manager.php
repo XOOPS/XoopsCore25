@@ -2,6 +2,8 @@
 
 use Xmf\Request;
 
+const PREFIX_INVALID_CHAR_PATTERN = '/[^0-9A-Za-z_-]/';
+
 include XOOPS_ROOT_PATH . '/include/cp_header.php';
 include __DIR__ . '/admin_header.php';
 require_once dirname(__DIR__) . '/class/gtickets.php';
@@ -11,7 +13,7 @@ $db = XoopsDatabaseFactory::getDatabaseConnection();
 if (Request::hasVar('copy', 'POST') && Request::hasVar('old_prefix', 'POST')) {
     $new_prefix = Request::getCmd('new_prefix', '', 'POST');
     $old_prefix = Request::getCmd('old_prefix', '', 'POST');
-    if (preg_match('/[^0-9A-Za-z_-]/', $new_prefix)) {
+    if (preg_match(PREFIX_INVALID_CHAR_PATTERN, $new_prefix)) {
         die('wrong prefix');
     }
 
@@ -82,7 +84,7 @@ if (Request::hasVar('copy', 'POST') && Request::hasVar('old_prefix', 'POST')) {
     // DUMP INTO A LOCAL FILE
 } elseif (Request::hasVar('backup', 'POST') && Request::hasVar('prefix', 'POST')) {
     $prefix = Request::getString('prefix', '', 'POST');
-    if (preg_match('/[^0-9A-Za-z_-]/', $prefix)) {
+    if (preg_match(PREFIX_INVALID_CHAR_PATTERN, $prefix)) {
         die('wrong prefix');
     }
 
@@ -204,7 +206,7 @@ if (Request::hasVar('copy', 'POST') && Request::hasVar('old_prefix', 'POST')) {
     // DROP TABLES
 } elseif (Request::hasVar('delete', 'POST') && Request::hasVar('prefix', 'POST')) {
     $prefix = Request::getString('prefix', '', 'POST');
-    if (preg_match('/[^0-9A-Za-z_-]/', $prefix)) {
+    if (preg_match(PREFIX_INVALID_CHAR_PATTERN, $prefix)) {
         die('wrong prefix');
     }
 

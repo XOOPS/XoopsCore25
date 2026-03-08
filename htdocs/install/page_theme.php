@@ -38,8 +38,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     if (\Xmf\Request::hasVar('conf_ids', 'POST')) {
         $confIds = \Xmf\Request::getArray('conf_ids', [], 'POST');
         foreach ($confIds as $key => $conf_id) {
-            $config    = $config_handler->getConfig((int) $conf_id);
-            $new_value = \Xmf\Request::getVar($config->getVar('conf_name'), '', 'POST');
+            $config   = $config_handler->getConfig((int) $conf_id);
+            $confName = $config->getVar('conf_name');
+            if (!\Xmf\Request::hasVar($confName, 'POST')) {
+                continue;
+            }
+            $new_value = \Xmf\Request::getVar($confName, '', 'POST');
             $config->setConfValueForInput($new_value);
             $config_handler->insertConfig($config);
         }

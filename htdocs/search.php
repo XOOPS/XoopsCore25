@@ -38,10 +38,17 @@ if ($xoopsConfigSearch['enable_search'] != 1) {
     exit();
 }
 $action = 'search';
+$allowedActions = ['search', 'results', 'showall', 'showallbyuser'];
 if (Request::hasVar('action', 'GET')) {
-    $action = trim(strip_tags(Request::getString('action', '', 'GET')));
+    $candidate = trim(strip_tags(Request::getString('action', '', 'GET')));
+    if (in_array($candidate, $allowedActions, true)) {
+        $action = $candidate;
+    }
 } elseif (Request::hasVar('action', 'POST')) {
-    $action = trim(strip_tags(Request::getString('action', '', 'POST')));
+    $candidate = trim(strip_tags(Request::getString('action', '', 'POST')));
+    if (in_array($candidate, $allowedActions, true)) {
+        $action = $candidate;
+    }
 }
 $query = '';
 if (Request::hasVar('query', 'GET')) {

@@ -113,7 +113,7 @@ if ($isadmin || ($catreadcount > 0) || ($catwritecount > 0)) {
                 }
             }
             if (count($error) > 0) {
-                redirect_header($current_file . '?target=' . $target, 3, xoops_error(implode('<br>', $error)));
+                redirect_header($current_file . '?target=' . $target, 3, xoops_error(implode('<br>', $errors)));
             }
         }
         redirect_header($current_file . '?target=' . $target, 3, _AM_SYSTEM_DBUPDATED);
@@ -343,7 +343,7 @@ if ($isadmin || ($catreadcount > 0) || ($catwritecount > 0)) {
             $errors[] = sprintf(_AM_SYSTEM_IMAGES_FAILDEL, $imagecategory->getVar('imgcat_name'));
         }
         if (count($errors) > 0) {
-            redirect_header($current_file . '?target=' . $target, 3, xoops_error(implode('<br>', $error)));
+            redirect_header($current_file . '?target=' . $target, 3, xoops_error(implode('<br>', $errors)));
         }
         redirect_header($current_file . '?target=' . $target, 3, _AM_SYSTEM_DBUPDATED);
     }
@@ -354,7 +354,7 @@ if ($isadmin || ($catreadcount > 0) || ($catwritecount > 0)) {
     if ($op === 'delfile' && \Xmf\Request::hasVar('op', 'GET')) {
         xoops_header();
         echo "<link href='css/xoopsimagebrowser.css' rel='stylesheet' type='text/css' />";
-        xoops_confirm(['op' => 'delfileok', 'image_id' => $image_id, 'target' => $target], 'xoopsimagebrowser.php', _AM_SYSTEM_IMAGES_RUDELIMG);
+        xoops_confirm(['op' => 'delfileok', 'image_id' => $get_image_id, 'target' => $target], 'xoopsimagebrowser.php', _AM_SYSTEM_IMAGES_RUDELIMG);
         xoops_footer();
         exit();
     }
@@ -365,12 +365,12 @@ if ($isadmin || ($catreadcount > 0) || ($catwritecount > 0)) {
         if (!$GLOBALS['xoopsSecurity']->check()) {
             redirect_header($current_file . '?target=' . $target, 3, implode('<br>', $GLOBALS['xoopsSecurity']->getErrors()));
         }
-        $image_id = (int) $image_id;
-        if ($image_id <= 0) {
+        $del_image_id = \Xmf\Request::getInt('image_id', 0, 'POST');
+        if ($del_image_id <= 0) {
             redirect_header($current_file . '?target=' . $target, 3);
         }
         $image_handler = xoops_getHandler('image');
-        $image         = $image_handler->get($image_id);
+        $image         = $image_handler->get($del_image_id);
         if (!is_object($image)) {
             redirect_header($current_file . '?target=' . $target, 3);
         }

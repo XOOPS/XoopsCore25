@@ -83,7 +83,8 @@ switch ($op) {
         break;
 
     case 'delete':
-        $obj = $handler->get(Request::getInt('id', 0, 'REQUEST'));
+        $categoryId = Request::getInt('id', 0, 'POST') ?: Request::getInt('id', 0, 'GET');
+        $obj = $handler->get($categoryId);
         if (Request::getInt('ok', 0, 'POST') === 1) {
             if (!$GLOBALS['xoopsSecurity']->check()) {
                 redirect_header('category.php', 3, implode(',', $GLOBALS['xoopsSecurity']->getErrors()));
@@ -97,7 +98,7 @@ switch ($op) {
             xoops_confirm(
                 [
                     'ok' => 1,
-                    'id' => Request::getInt('id', 0, 'REQUEST'),
+                    'id' => $categoryId,
                     'op' => 'delete',
                 ],
                 $_SERVER['REQUEST_URI'],
