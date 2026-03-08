@@ -35,7 +35,7 @@ if (Request::getInt('id', 0, 'GET') !== 0 && Request::getString('actkey', '', 'G
     if (!is_object($thisuser)) {
         redirect_header(XOOPS_URL, 1, '');
     }
-    if ($thisuser->getVar('actkey') != $actkey) {
+    if ($actkey === '' || !hash_equals($thisuser->getVar('actkey'), $actkey)) {
         redirect_header(XOOPS_URL . '/', 5, _US_ACTKEYNOT);
     } else {
         if ($thisuser->getVar('level') > 0) {
