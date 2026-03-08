@@ -313,6 +313,9 @@ switch ($op) {
                     /** @var XoopsMemberHandler $member_handler */
                     $member_handler = xoops_getHandler('member');
                     $group          = $member_handler->getGroup($groups_id);
+                    if (!is_object($group)) {
+                        redirect_header('admin.php?fct=groups', 1, _AM_SYSTEM_DBERROR);
+                    }
                     $member_handler->deleteGroup($group);
                     /** @var XoopsGroupPermHandler $gperm_handler */
                     $gperm_handler = xoops_getHandler('groupperm');

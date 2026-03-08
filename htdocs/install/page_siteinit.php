@@ -39,8 +39,8 @@ $error =& $_SESSION['error'];
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $vars['adminname']  = trim(\Xmf\Request::getString('adminname', '', 'POST'));
     $vars['adminmail']  = trim(\Xmf\Request::getString('adminmail', '', 'POST'));
-    $vars['adminpass']  = trim(\Xmf\Request::getText('adminpass', '', 'POST'));
-    $vars['adminpass2'] = trim(\Xmf\Request::getText('adminpass2', '', 'POST'));
+    $vars['adminpass']  = \Xmf\Request::getVar('adminpass', '', 'POST', 'string', \Xmf\Request::MASK_ALLOW_RAW | \Xmf\Request::MASK_NO_TRIM);
+    $vars['adminpass2'] = \Xmf\Request::getVar('adminpass2', '', 'POST', 'string', \Xmf\Request::MASK_ALLOW_RAW | \Xmf\Request::MASK_NO_TRIM);
     $error              = [];
 
     if (empty($vars['adminname'])) {

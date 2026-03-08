@@ -43,9 +43,9 @@ if (!Request::hasVar('submit', 'POST')) {
     $config_handler             = xoops_getHandler('config');
     $GLOBALS['xoopsConfigUser'] = $config_handler->getConfigsByCat(XOOPS_CONF_USER);
     $myts                       = \MyTextSanitizer::getInstance();
-    $oldpass                    = trim(Request::getText('oldpass', '', 'POST'));
-    $password                   = trim(Request::getText('newpass', '', 'POST'));
-    $vpass                      = trim(Request::getText('vpass', '', 'POST'));
+    $oldpass                    = Request::getVar('oldpass', '', 'POST', 'string', Request::MASK_ALLOW_RAW | Request::MASK_NO_TRIM);
+    $password                   = Request::getVar('newpass', '', 'POST', 'string', Request::MASK_ALLOW_RAW | Request::MASK_NO_TRIM);
+    $vpass                      = Request::getVar('vpass', '', 'POST', 'string', Request::MASK_ALLOW_RAW | Request::MASK_NO_TRIM);
     $errors                     = [];
     if (!password_verify($oldpass, $GLOBALS['xoopsUser']->getVar('pass', 'n'))) {
         $errors[] = _PROFILE_MA_WRONGPASSWORD;

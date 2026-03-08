@@ -108,13 +108,10 @@ switch ($op) {
         break;
 
     case 'toggle':
-        if (!$GLOBALS['xoopsSecurity']->check()) {
-            redirect_header('step.php', 3, implode(',', $GLOBALS['xoopsSecurity']->getErrors()));
-        }
-        if (Request::hasVar('step_id', 'POST')) {
-            $step_id = Request::getInt('step_id', 0, 'POST');
-            if (Request::hasVar('step_save', 'POST')) {
-                $step_save = Request::getInt('step_save', 0, 'POST');
+        if (Request::hasVar('step_id', 'GET')) {
+            $step_id = Request::getInt('step_id', 0, 'GET');
+            if (Request::hasVar('step_save', 'GET')) {
+                $step_save = Request::getInt('step_save', 0, 'GET');
                 profile_stepsave_toggle($step_id, $step_save);
             }
         }

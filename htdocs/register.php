@@ -64,8 +64,8 @@ function userCheck($uname, $email, $pass, $vpass)
     $uname = Request::getString('uname', '', 'POST');
     $email = Request::getEmail('email', '', 'POST');
     $url = Request::getUrl('url', '', 'POST');
-    $pass = Request::getText('pass', '', 'POST');
-    $vpass = Request::getText('vpass', '', 'POST');
+    $pass = Request::getVar('pass', '', 'POST', 'string', Request::MASK_ALLOW_RAW | Request::MASK_NO_TRIM);
+    $vpass = Request::getVar('vpass', '', 'POST', 'string', Request::MASK_ALLOW_RAW | Request::MASK_NO_TRIM);
     $timezone_offset = Request::getFloat('cid', $xoopsConfig['default_TZ'], 'POST');
     $user_viewemail = Request::getBool('user_viewemail', false, 'POST');
     $user_mailok = Request::getBool('user_mailok', false, 'POST');

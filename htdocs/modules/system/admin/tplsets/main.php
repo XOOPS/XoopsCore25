@@ -369,8 +369,7 @@ switch ($op) {
         if (!$GLOBALS['xoopsSecurity']->check()) {
             redirect_header('admin.php?fct=tplsets', 2, implode('<br>', $GLOBALS['xoopsSecurity']->getErrors()));
         }
-        XoopsLoad::load('XoopsRequest');
-        $clean_path_file = XoopsRequest::getString('path_file', '');
+        $clean_path_file = Request::getString('path_file', '', 'POST');
         if (!empty($clean_path_file)) {
             $path_file = realpath(XOOPS_ROOT_PATH.'/themes'.trim($clean_path_file));
             $path_file = str_replace('\\','/',$path_file);
