@@ -135,10 +135,19 @@ switch ($op) {
             }
             $xoopsTpl->assign('xsize', 800);
             $xoopsTpl->assign('ysize', 600);
+            $xoopsTpl->assign('errorcat', false);
         } else {
+            $xoopsTpl->assign('errorcat', true);
             $xoopsTpl->assign('xsize', 400);
             $xoopsTpl->assign('ysize', 180);
         }
+        // Assign language-specific stylesheet URL if it exists
+        $language = $xoopsConfig['language'];
+        $language_stylesheet_url = '';
+        if (file_exists(XOOPS_ROOT_PATH . '/language/' . $language . '/style.css')) {
+            $language_stylesheet_url = XOOPS_URL . '/language/' . $language . '/style.css';
+        }
+        $xoopsTpl->assign('language_stylesheet_url', $language_stylesheet_url);
         $xoopsTpl->display('db:system_imagemanager.tpl');
         exit();
 
@@ -202,7 +211,13 @@ switch ($op) {
             $fineup_debug = 'true';
         }
         $xoopsTpl->assign('fineup_debug', $fineup_debug);
-
+        // Assign language-specific stylesheet URL if it exists
+        $language = $xoopsConfig['language'];
+        $language_stylesheet_url = '';
+        if (file_exists(XOOPS_ROOT_PATH . '/language/' . $language . '/style.css')) {
+            $language_stylesheet_url = XOOPS_URL . '/language/' . $language . '/style.css';
+        }
+        $xoopsTpl->assign('language_stylesheet_url', $language_stylesheet_url);
         $xoopsTpl->display('db:system_imagemanager2.tpl');
         exit();
 }
