@@ -83,7 +83,7 @@ if (Request::hasVar('copy', 'POST') && Request::hasVar('old_prefix', 'POST')) {
 
     // DUMP INTO A LOCAL FILE
 } elseif (Request::hasVar('backup', 'POST') && Request::hasVar('prefix', 'POST')) {
-    $prefix = Request::getString('prefix', '', 'POST');
+    $prefix = Request::getCmd('prefix', '', 'POST');
     if (preg_match(PREFIX_INVALID_CHAR_PATTERN, $prefix)) {
         die('wrong prefix');
     }
@@ -205,7 +205,7 @@ if (Request::hasVar('copy', 'POST') && Request::hasVar('old_prefix', 'POST')) {
 
     // DROP TABLES
 } elseif (Request::hasVar('delete', 'POST') && Request::hasVar('prefix', 'POST')) {
-    $prefix = Request::getString('prefix', '', 'POST');
+    $prefix = Request::getCmd('prefix', '', 'POST');
     if (preg_match(PREFIX_INVALID_CHAR_PATTERN, $prefix)) {
         die('wrong prefix');
     }

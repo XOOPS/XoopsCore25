@@ -83,7 +83,7 @@ $catreadcount  = count($catreadlist);        // count readable categories
 $catwritecount = count($catwritelist);      // count writable categories
 
 $get_image_id = \Xmf\Request::getInt('image_id', 0, 'GET');
-$imgcat_id    = \Xmf\Request::getInt('imgcat_id', 0, 'REQUEST');
+$imgcat_id    = \Xmf\Request::hasVar('imgcat_id', 'POST') ? \Xmf\Request::getInt('imgcat_id', 0, 'POST') : \Xmf\Request::getInt('imgcat_id', 0, 'GET');
 $target = htmlspecialchars($target, ENT_QUOTES | ENT_HTML5);
 
 if ($isadmin || ($catreadcount > 0) || ($catwritecount > 0)) {
@@ -180,7 +180,7 @@ if ($isadmin || ($catreadcount > 0) || ($catwritecount > 0)) {
             }
         }
         if (count($err) > 0) {
-            $safeErr = array_map(static fn($msg) => htmlspecialchars((string) $msg, ENT_QUOTES), $err);
+            $safeErr = array_map(static fn($msg) => htmlspecialchars((string) $msg, ENT_QUOTES, 'UTF-8'), $err);
             redirect_header($current_file . '?target=' . $target, 3, implode('<br>', $safeErr));
         }
         redirect_header($current_file . '?target=' . $target, 3, _AM_SYSTEM_DBUPDATED);
@@ -383,7 +383,10 @@ if ($isadmin || ($catreadcount > 0) || ($catwritecount > 0)) {
         if (!$image_handler->delete($image)) {
             redirect_header($current_file . '?target=' . $target, 3, sprintf(_MD_FAILDEL, $image->getVar('image_id')));
         }
-        @unlink(XOOPS_UPLOAD_PATH . '/' . $image->getVar('image_name'));
+        $imagePath = XOOPS_UPLOAD_PATH . '/' . $image->getVar('image_name');
+        if (file_exists($imagePath)) {
+            unlink($imagePath);
+        }
         redirect_header($current_file . '?target=' . $target, 3, _AM_SYSTEM_DBUPDATED);
     }
     // Delete file - end

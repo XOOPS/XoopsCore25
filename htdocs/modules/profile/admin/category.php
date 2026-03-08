@@ -51,7 +51,7 @@ switch ($op) {
 
     case 'edit':
         include_once dirname(__DIR__) . '/include/forms.php';
-        $obj = $handler->get(Request::getInt('id', 0));
+        $obj = $handler->get(Request::getInt('id', 0, 'GET'));
         if (!$obj) {
             redirect_header('category.php', 3, _TAKINGBACK);
         }

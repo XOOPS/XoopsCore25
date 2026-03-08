@@ -49,9 +49,10 @@ $writegroup      = Request::getArray('writegroup', [], 'POST');
 if (empty($target)) {
     exit();
 }
+$target = htmlspecialchars($target, ENT_QUOTES | ENT_HTML5, 'UTF-8');
 
-$image_id  = Request::getInt('image_id', 0, 'GET');
-$imgcat_id = Request::getInt('imgcat_id', 0, 'REQUEST');
+$image_id  = Request::hasVar('image_id', 'POST') ? Request::getInt('image_id', 0, 'POST') : Request::getInt('image_id', 0, 'GET');
+$imgcat_id = Request::hasVar('imgcat_id', 'POST') ? Request::getInt('imgcat_id', 0, 'POST') : Request::getInt('imgcat_id', 0, 'GET');
 $start     = Request::getInt('start', 0, 'GET');
 
 // get current filename
@@ -152,7 +153,7 @@ if ($isadmin || ($catreadcount > 0) || ($catwritecount > 0)) {
             }
         }
         if (count($err) > 0) {
-            $safeErr = array_map(static fn($msg) => htmlspecialchars((string) $msg, ENT_QUOTES), $err);
+            $safeErr = array_map(static fn($msg) => htmlspecialchars((string) $msg, ENT_QUOTES, 'UTF-8'), $err);
             redirect_header($current_file . '?target=' . $target, 3, implode('<br>', $safeErr));
         }
         redirect_header($current_file . '?target=' . $target, 3, _AM_SYSTEM_DBUPDATED);
@@ -351,7 +352,10 @@ if ($isadmin || ($catreadcount > 0) || ($catwritecount > 0)) {
         if (!$image_handler->delete($image)) {
             redirect_header($current_file . '?target=' . $target, 3, sprintf(_MD_FAILDEL, $image->getVar('image_id')));
         }
-        @unlink(XOOPS_UPLOAD_PATH . '/' . $image->getVar('image_name'));
+        $imagePath = XOOPS_UPLOAD_PATH . '/' . $image->getVar('image_name');
+        if (file_exists($imagePath)) {
+            unlink($imagePath);
+        }
         redirect_header($current_file . '?target=' . $target, 3, _AM_SYSTEM_DBUPDATED);
     }
 }
