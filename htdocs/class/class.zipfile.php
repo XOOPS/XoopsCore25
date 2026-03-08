@@ -94,8 +94,11 @@ class Zipfile
     {
         $name = str_replace('\\', '/', $name);
 
-        $dtime    = dechex($this->unix2DosTime($time));
-        $hexdtime = chr(hexdec($dtime[6] . $dtime[7])) . chr(hexdec($dtime[4] . $dtime[5])) . chr(hexdec($dtime[2] . $dtime[3])) . chr(hexdec($dtime[0] . $dtime[1]));
+        $dtime    = str_pad(dechex($this->unix2DosTime($time)), 8, '0', STR_PAD_LEFT);
+        $hexdtime = chr((int) hexdec($dtime[6] . $dtime[7]))
+                  . chr((int) hexdec($dtime[4] . $dtime[5]))
+                  . chr((int) hexdec($dtime[2] . $dtime[3]))
+                  . chr((int) hexdec($dtime[0] . $dtime[1]));
 
         $fr = "\x50\x4b\x03\x04";
         $fr .= "\x14\x00"; // ver needed to extract

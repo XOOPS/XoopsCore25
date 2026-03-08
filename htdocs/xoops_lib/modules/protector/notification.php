@@ -10,6 +10,10 @@ $mydirpath = $registry->getEntry('mydirpath');
 $language  = $registry->getEntry('language');
 // end hack by Trabis
 
+// Function name is hardcoded to 'protector' because:
+// - ProtectorRegistry always returns 'protector' via basename(__DIR__)
+// - PHP cannot define functions with runtime-computed names without eval()
+// - The XOOPS module system calls these functions by name string
 if (!function_exists($mydirname . '_notify_iteminfo')) {
     function protector_notify_iteminfo($category, $item_id) {
         return protector_notify_base('protector', $category, $item_id);

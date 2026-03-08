@@ -16,6 +16,7 @@ class FunctionsIniTest extends TestCase
     {
         if (!self::$loaded) {
             require_once XOOPS_ROOT_PATH . '/Frameworks/art/functions.ini.php';
+            require_once __DIR__ . '/TestRenderers.php';
             self::$loaded = true;
         }
     }
@@ -297,17 +298,12 @@ class FunctionsIniTest extends TestCase
     #[Test]
     public function modLoadRendererReturnsInstanceFromStaticCall(): void
     {
-        // Define a test renderer class with a static instance() method
-        if (!class_exists('TestmodWidgetRenderer', false)) {
-            eval('class TestmodWidgetRenderer { private static $inst; public static function instance() { if (!self::$inst) { self::$inst = new self(); } return self::$inst; } }');
-        }
-
+        // Renderer stubs are pre-loaded from TestRenderers.php in setUpBeforeClass()
         $mockModule = $this->createMockModule('testmod');
         $old = $GLOBALS['xoopsModule'] ?? null;
         $GLOBALS['xoopsModule'] = $mockModule;
 
-        // mod_loadRenderer will try to require a file, so we need the class pre-loaded
-        // The function checks class_exists() first, so it won't try to require
+        // mod_loadRenderer checks class_exists() first, so it won't try to require
         $result = mod_loadRenderer('widget', 'testmod');
 
         if ($old !== null) {
@@ -316,7 +312,7 @@ class FunctionsIniTest extends TestCase
             unset($GLOBALS['xoopsModule']);
         }
 
-        $this->assertInstanceOf('TestmodWidgetRenderer', $result);
+        $this->assertInstanceOf(\TestmodWidgetRenderer::class, $result);
     }
 
     #[Test]
@@ -324,10 +320,6 @@ class FunctionsIniTest extends TestCase
     {
         // Verify that for a pre-loaded class, the function returns the same
         // singleton instance on repeated calls (confirming static ::instance())
-        if (!class_exists('DemomodFormRenderer', false)) {
-            eval('class DemomodFormRenderer { private static $inst; public static function instance() { if (!self::$inst) { self::$inst = new self(); } return self::$inst; } }');
-        }
-
         $mockModule = $this->createMockModule('demomod');
         $old = $GLOBALS['xoopsModule'] ?? null;
         $GLOBALS['xoopsModule'] = $mockModule;

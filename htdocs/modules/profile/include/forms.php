@@ -169,7 +169,9 @@ function profile_getFieldForm(ProfileField $field, $action = false)
 
             case 'checkbox':
             case 'select_multi':
-                $def_value = $field->getVar('field_default', 'e') != null ? unserialize($field->getVar('field_default', 'n'), ['allowed_classes' => false]) : null;
+                $def_value = $field->getVar('field_default', 'e') != null
+                    ? (unserialize($field->getVar('field_default', 'n'), ['allowed_classes' => false]) ?: [])
+                    : null;
                 $element   = new XoopsFormSelect(_PROFILE_AM_DEFAULT, 'field_default', $def_value, 8, true);
                 $options   = $field->getVar('field_options');
                 asort($options);
@@ -226,7 +228,8 @@ function profile_getFieldForm(ProfileField $field, $action = false)
                 break;
 
             case 'group_multi':
-                $form->addElement(new XoopsFormSelectGroup(_PROFILE_AM_DEFAULT, 'field_default', true, unserialize($field->getVar('field_default', 'n'), ['allowed_classes' => false]), 5, true));
+                $groupDefault = unserialize($field->getVar('field_default', 'n'), ['allowed_classes' => false]) ?: [];
+                $form->addElement(new XoopsFormSelectGroup(_PROFILE_AM_DEFAULT, 'field_default', true, $groupDefault, 5, true));
                 break;
 
             case 'theme':
