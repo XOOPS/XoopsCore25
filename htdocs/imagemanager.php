@@ -22,6 +22,9 @@ include __DIR__ . '/mainfile.php';
 
 // Compute language-specific stylesheet URL once (used in both cases)
 $language = basename((string) $xoopsConfig['language']);
+if (!preg_match('/^[A-Za-z0-9_-]+$/', $language)) {
+    $language = 'english';
+}
 $language_stylesheet_url = '';
 if (file_exists(XOOPS_ROOT_PATH . '/language/' . $language . '/style.css')) {
     $language_stylesheet_url = XOOPS_URL . '/language/' . $language . '/style.css';

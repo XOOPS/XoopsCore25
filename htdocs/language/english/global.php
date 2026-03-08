@@ -124,6 +124,7 @@ define('_IMGDISPLAY', 'Display this image?');
 define('_IMAGEMIME', 'MIME type:');
 define('_FAILFETCHIMG', 'Could not get uploaded file %s');
 define('_FAILSAVEIMG', 'Failed storing image %s into the database');
+define('_NOIMAGESAVAILABLE', 'No image categories available.');
 define('_NOCACHE', 'No Cache');
 define('_CLONE', 'Clone');
 /**

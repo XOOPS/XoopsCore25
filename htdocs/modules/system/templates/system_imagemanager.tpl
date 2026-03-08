@@ -81,7 +81,7 @@
 
 <div id="pagenav"><{$pagenav|default:''}></div>
 <{else}>
-<div id="errorcat-notice"><{$smarty.const._NOIMAGESAVAILABLE|default:'No image categories available.'}></div>
+<div id="errorcat-notice"><{$smarty.const._NOIMAGESAVAILABLE}></div>
 <{/if}>
 
 <div id="footer">
