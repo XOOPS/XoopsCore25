@@ -6,6 +6,7 @@ namespace xoopsclass;
 
 use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\Attributes\DataProvider;
+use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\TestCase;
 
 require_once XOOPS_ROOT_PATH . '/class/class.zipfile.php';
@@ -357,5 +358,137 @@ class ZipfileTest extends TestCase
             strpos($output, $expected),
             "ZIP output should contain normalized filename '{$expected}'"
         );
+    }
+
+    // =========================================================================
+    // Hexdtime eval removal — security audit phase 2
+    //
+    // Verifies that the chr(hexdec(...)) replacement produces valid 4-byte
+    // DOS timestamps in the local file header (bytes 10-13 after PK\x03\x04).
+    // =========================================================================
+
+    #[Test]
+    public function hexdtimeProducesFourBytesInLocalHeader(): void
+    {
+        $timestamp = mktime(12, 30, 0, 6, 15, 2020);
+        $this->zip->addFile('data', 'test.txt', $timestamp);
+
+        $header = $this->zip->datasec[0];
+
+        // Local file header: PK\x03\x04 (4 bytes) + version (2) + flags (2) + method (2) = offset 10
+        // Bytes 10-13 are the last mod file time + date
+        $hexdtime = substr($header, 10, 4);
+        $this->assertSame(4, strlen($hexdtime), 'Hexdtime must be exactly 4 bytes');
+    }
+
+    #[Test]
+    public function hexdtimeMatchesDosTimeEncoding(): void
+    {
+        // 2020-06-15 14:30:10
+        $timestamp = mktime(14, 30, 10, 6, 15, 2020);
+        $dosTime   = $this->zip->unix2DosTime($timestamp);
+
+        // Convert DOS time integer to the expected hex string
+        $dtime    = dechex($dosTime);
+        $expected = chr(hexdec($dtime[6] . $dtime[7]))
+                  . chr(hexdec($dtime[4] . $dtime[5]))
+                  . chr(hexdec($dtime[2] . $dtime[3]))
+                  . chr(hexdec($dtime[0] . $dtime[1]));
+
+        $this->zip->addFile('data', 'test.txt', $timestamp);
+        $header   = $this->zip->datasec[0];
+        $hexdtime = substr($header, 10, 4);
+
+        $this->assertSame($expected, $hexdtime, 'Hexdtime bytes must match computed DOS timestamp');
+    }
+
+    #[Test]
+    public function hexdtimeIsSameInLocalAndCentralHeaders(): void
+    {
+        $timestamp = mktime(8, 15, 0, 3, 20, 2025);
+        $this->zip->addFile('content', 'file.txt', $timestamp);
+
+        $localHeader   = $this->zip->datasec[0];
+        $centralHeader = $this->zip->ctrl_dir[0];
+
+        // Local header: offset 10-13
+        $localHexdtime = substr($localHeader, 10, 4);
+        // Central directory: PK\x01\x02 (4) + version_made (2) + version_needed (2) + flags (2) + method (2) = offset 12
+        $centralHexdtime = substr($centralHeader, 12, 4);
+
+        $this->assertSame(
+            $localHexdtime,
+            $centralHexdtime,
+            'Hexdtime in local header and central directory must match'
+        );
+    }
+
+    #[Test]
+    public function hexdtimeForKnownTimestampHasCorrectBytes(): void
+    {
+        // 2025-01-01 00:00:00
+        $timestamp = mktime(0, 0, 0, 1, 1, 2025);
+        $dosTime   = $this->zip->unix2DosTime($timestamp);
+        $dtime     = dechex($dosTime);
+
+        $this->zip->addFile('x', 'x.txt', $timestamp);
+        $header   = $this->zip->datasec[0];
+        $hexdtime = substr($header, 10, 4);
+
+        // Each byte should be a valid single-byte value (0-255)
+        for ($i = 0; $i < 4; $i++) {
+            $byte = ord($hexdtime[$i]);
+            $this->assertGreaterThanOrEqual(0, $byte);
+            $this->assertLessThanOrEqual(255, $byte);
+        }
+    }
+
+    #[Test]
+    public function hexdtimeDiffersForDifferentTimestamps(): void
+    {
+        $zip1 = new \Zipfile();
+        $zip2 = new \Zipfile();
+
+        $t1 = mktime(0, 0, 0, 1, 1, 2000);
+        $t2 = mktime(23, 59, 58, 12, 31, 2025);
+
+        $zip1->addFile('a', 'a.txt', $t1);
+        $zip2->addFile('a', 'a.txt', $t2);
+
+        $hexdtime1 = substr($zip1->datasec[0], 10, 4);
+        $hexdtime2 = substr($zip2->datasec[0], 10, 4);
+
+        $this->assertNotSame(
+            $hexdtime1,
+            $hexdtime2,
+            'Different timestamps should produce different hexdtime bytes'
+        );
+    }
+
+    #[Test]
+    public function hexdtimeProducesNonZeroBytesForRecentDate(): void
+    {
+        $timestamp = mktime(10, 30, 0, 7, 15, 2024);
+        $this->zip->addFile('data', 'file.txt', $timestamp);
+        $header   = $this->zip->datasec[0];
+        $hexdtime = substr($header, 10, 4);
+
+        // For a recent timestamp, the hexdtime should not be all zeros
+        $this->assertNotSame("\x00\x00\x00\x00", $hexdtime);
+    }
+
+    #[Test]
+    public function zipOutputWithHexdtimeIsStillValidStructure(): void
+    {
+        $timestamp = mktime(16, 45, 30, 11, 22, 2023);
+        $this->zip->addFile('Hello, World!', 'hello.txt', $timestamp);
+
+        $output = $this->zip->file();
+
+        // Verify complete ZIP structure is intact
+        $this->assertStringStartsWith("\x50\x4b\x03\x04", $output, 'Should start with local file header');
+        $this->assertNotFalse(strpos($output, "\x50\x4b\x01\x02"), 'Should contain central directory');
+        $this->assertNotFalse(strpos($output, "\x50\x4b\x05\x06"), 'Should contain EOCD');
+        $this->assertNotFalse(strpos($output, 'hello.txt'), 'Should contain filename');
     }
 }

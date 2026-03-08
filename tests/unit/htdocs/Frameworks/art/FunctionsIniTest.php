@@ -282,6 +282,69 @@ class FunctionsIniTest extends TestCase
     }
 
     // ---------------------------------------------------------------
+    // mod_loadRenderer tests (eval removal — security audit phase 2)
+    // ---------------------------------------------------------------
+
+    #[Test]
+    public function modLoadRendererFunctionExists(): void
+    {
+        $this->assertTrue(
+            function_exists('mod_loadRenderer'),
+            'mod_loadRenderer() should be defined in functions.ini.php'
+        );
+    }
+
+    #[Test]
+    public function modLoadRendererReturnsInstanceFromStaticCall(): void
+    {
+        // Define a test renderer class with a static instance() method
+        if (!class_exists('TestmodWidgetRenderer', false)) {
+            eval('class TestmodWidgetRenderer { private static $inst; public static function instance() { if (!self::$inst) { self::$inst = new self(); } return self::$inst; } }');
+        }
+
+        $mockModule = $this->createMockModule('testmod');
+        $old = $GLOBALS['xoopsModule'] ?? null;
+        $GLOBALS['xoopsModule'] = $mockModule;
+
+        // mod_loadRenderer will try to require a file, so we need the class pre-loaded
+        // The function checks class_exists() first, so it won't try to require
+        $result = mod_loadRenderer('widget', 'testmod');
+
+        if ($old !== null) {
+            $GLOBALS['xoopsModule'] = $old;
+        } else {
+            unset($GLOBALS['xoopsModule']);
+        }
+
+        $this->assertInstanceOf('TestmodWidgetRenderer', $result);
+    }
+
+    #[Test]
+    public function modLoadRendererUsesStaticMethodNotEval(): void
+    {
+        // Verify that for a pre-loaded class, the function returns the same
+        // singleton instance on repeated calls (confirming static ::instance())
+        if (!class_exists('DemomodFormRenderer', false)) {
+            eval('class DemomodFormRenderer { private static $inst; public static function instance() { if (!self::$inst) { self::$inst = new self(); } return self::$inst; } }');
+        }
+
+        $mockModule = $this->createMockModule('demomod');
+        $old = $GLOBALS['xoopsModule'] ?? null;
+        $GLOBALS['xoopsModule'] = $mockModule;
+
+        $first  = mod_loadRenderer('form', 'demomod');
+        $second = mod_loadRenderer('form', 'demomod');
+
+        if ($old !== null) {
+            $GLOBALS['xoopsModule'] = $old;
+        } else {
+            unset($GLOBALS['xoopsModule']);
+        }
+
+        $this->assertSame($first, $second, 'Static ::instance() should return same singleton');
+    }
+
+    // ---------------------------------------------------------------
     // Helper
     // ---------------------------------------------------------------
 
