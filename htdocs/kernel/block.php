@@ -382,7 +382,7 @@ class XoopsBlock extends XoopsObject
 
             if (!file_exists($filePath)) {
                 $logger = XoopsLogger::getInstance();
-                $logger->addWarning("PHP block file not found: custom_blocks/{$funcFile}");
+                $logger->addDeprecated("PHP block file not found: custom_blocks/{$funcFile}");
                 return '';
             }
 
@@ -390,7 +390,7 @@ class XoopsBlock extends XoopsObject
 
             if (!function_exists($showFunc)) {
                 $logger = XoopsLogger::getInstance();
-                $logger->addWarning("PHP block function not found: {$showFunc} in custom_blocks/{$funcFile}");
+                $logger->addDeprecated("PHP block function not found: {$showFunc} in custom_blocks/{$funcFile}");
                 return '';
             }
 
@@ -401,7 +401,7 @@ class XoopsBlock extends XoopsObject
         // Legacy eval()-based PHP blocks (backward compatibility)
         if (!(defined('XOOPS_ALLOW_PHP_BLOCKS') && constant('XOOPS_ALLOW_PHP_BLOCKS') === true)) {
             $logger = XoopsLogger::getInstance();
-            $logger->addWarning(
+            $logger->addDeprecated(
                 'Legacy PHP block detected. Migrate to file-based format '
                 . '(filename.php|function_name in custom_blocks/) or set '
                 . 'XOOPS_ALLOW_PHP_BLOCKS to true in mainfile.php.'

@@ -30,7 +30,7 @@ function b_custom_welcome_show()
         $uname = htmlspecialchars($xoopsUser->getVar('uname'), ENT_QUOTES | ENT_HTML5);
         $html .= '<p>Welcome back, <strong>' . $uname . '</strong>!</p>';
         $html .= '<p>You have been a member since '
-              . date('F j, Y', $xoopsUser->getVar('user_regdate')) . '.</p>';
+              . date('F j, Y', (int) $xoopsUser->getVar('user_regdate')) . '.</p>';
     } else {
         $sitename = htmlspecialchars($xoopsConfig['sitename'], ENT_QUOTES | ENT_HTML5);
         $html .= '<p>Welcome to <strong>' . $sitename . '</strong>!</p>';
