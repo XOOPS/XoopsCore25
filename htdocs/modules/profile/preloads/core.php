@@ -63,11 +63,10 @@ class ProfileCorePreload extends XoopsPreloadItem
      */
     public static function eventCoreLostpassStart($args)
     {
-        $email = Request::getEmail('email', '', 'GET');
-        $email = Request::getEmail('email', $email, 'POST');
-        $code = Request::getString('code', '', 'GET');
-        header('location: ./modules/profile/lostpass.php?email=' . urlencode($email) . ($code === '' ? '' : '&code=' . urlencode($code)));
-        exit();
+        // Disabled: profile module's lostpass used a weak md5-based token.
+        // All password resets now go through the secure core flow (htdocs/lostpass.php)
+        // which uses random, one-time, expiring tokens via XoopsTokenHandler.
+        return;
     }
 
     /**

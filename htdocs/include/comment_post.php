@@ -185,7 +185,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $com_icon   = Request::getString('com_icon', '', 'POST');
 
     $com_title  = Request::getString('com_title', _NOTITLE, 'POST');
-    $com_text   = Request::getString('com_text', '', 'POST');
+    $com_text   = Request::getText('com_text', '', 'POST');
 } else {
     exit();
 }

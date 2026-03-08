@@ -505,7 +505,7 @@ class XoopsObject
                     default:
                         if (!is_array($ret)) {
                             if ($ret != '') {
-                                $ret = unserialize($ret);
+                                $ret = unserialize($ret, ['allowed_classes' => false]);
                             }
                             $ret = is_array($ret) ? $ret : [];
                             if (is_array($ret)) {
@@ -525,7 +525,7 @@ class XoopsObject
                     default:
                         if (!is_array($ret)) {
                             if ($ret != '') {
-                                $ret = unserialize($ret);
+                                $ret = unserialize($ret, ['allowed_classes' => false]);
                             }
                             $ret = is_array($ret) ? $ret : [];
                         }

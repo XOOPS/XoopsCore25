@@ -89,7 +89,7 @@ if ($op === 'saveuser') {
         $edituser->setVar('url', Request::getUrl('url', '', 'POST'));
         $edituser->setVar('user_icq', Request::getString('user_icq', '', 'POST'));
         $edituser->setVar('user_from', Request::getString('user_from', '', 'POST'));
-        $edituser->setVar('user_sig', xoops_substr(Request::getString('user_sig', '', 'POST'), 0, 255));
+        $edituser->setVar('user_sig', xoops_substr(Request::getText('user_sig', '', 'POST'), 0, 255));
         $edituser->setVar('user_viewemail', Request::getBool('user_viewemail', 0, 'POST'));
         $edituser->setVar('user_aim', Request::getString('user_aim', '', 'POST'));
         $edituser->setVar('user_yim', Request::getString('user_yim', '', 'POST'));
@@ -100,7 +100,7 @@ if ($op === 'saveuser') {
         $edituser->setVar('umode', Request::getString('umode', 'flat', 'POST'));
         $edituser->setVar('notify_method', Request::getInt('notify_method', 1, 'POST'));
         $edituser->setVar('notify_mode', Request::getInt('notify_mode', 1, 'POST'));
-        $edituser->setVar('bio', substr(Request::getString('bio', '', 'POST'), 0, 255));
+        $edituser->setVar('bio', xoops_substr(Request::getText('bio', '', 'POST'), 0, 255));
         $edituser->setVar('user_occ', Request::getString('user_occ', '', 'POST'));
         $edituser->setVar('user_intrest', Request::getString('user_intrest', '', 'POST'));
         $edituser->setVar('user_mailok', Request::getBool('user_mailok', 0, 'POST'));
