@@ -1,6 +1,6 @@
 # XOOPS Core 2.5 — Security Audit Remediation Record
 
-**Date:** 2026-03-08
+**Date:** 2026-03-08 (final)
 **Based on:** `security-critical-audit-2026-03-08.md` + `migration_audit_findings.md`
 **Status:** All 22 actionable items fixed. 4 items deferred as acceptable.
 
