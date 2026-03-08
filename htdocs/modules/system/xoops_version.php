@@ -69,29 +69,6 @@ $modversion['templates'][] = ['file' => 'system_misc_online.tpl', 'description' 
 $modversion['templates'][] = ['file' => 'system_misc_smilies.tpl', 'description' => ''];
 $modversion['templates'][] = ['file' => 'system_lostpass.tpl', 'description' => ''];
 
-
-//in transition to .tpl, we keep the .html extension versions for previously existing templates
-
-$modversion['templates'][] = ['file' => 'system_imagemanager.html', 'description' => ''];
-$modversion['templates'][] = ['file' => 'system_imagemanager2.html', 'description' => ''];
-$modversion['templates'][] = ['file' => 'system_userinfo.html', 'description' => ''];
-$modversion['templates'][] = ['file' => 'system_userform.html', 'description' => ''];
-$modversion['templates'][] = ['file' => 'system_rss.html', 'description' => ''];
-$modversion['templates'][] = ['file' => 'system_redirect.html', 'description' => ''];
-$modversion['templates'][] = ['file' => 'system_comment.html', 'description' => ''];
-$modversion['templates'][] = ['file' => 'system_comments_flat.html', 'description' => ''];
-$modversion['templates'][] = ['file' => 'system_comments_thread.html', 'description' => ''];
-$modversion['templates'][] = ['file' => 'system_comments_nest.html', 'description' => ''];
-$modversion['templates'][] = ['file' => 'system_siteclosed.html', 'description' => ''];
-$modversion['templates'][] = ['file' => 'system_dummy.html', 'description' => ''];
-$modversion['templates'][] = ['file' => 'system_notification_list.html', 'description' => ''];
-$modversion['templates'][] = ['file' => 'system_notification_select.html', 'description' => ''];
-$modversion['templates'][] = ['file' => 'system_block_dummy.html', 'description' => ''];
-$modversion['templates'][] = ['file' => 'system_homepage.html', 'description' => ''];
-$modversion['templates'][] = ['file' => 'system_bannerlogin.html', 'description' => ''];
-$modversion['templates'][] = ['file' => 'system_banner.html', 'description' => ''];
-$modversion['templates'][] = ['file' => 'system_bannerdisplay.html', 'description' => ''];
-
 // Admin Templates
 $modversion['templates'][] = ['file' => 'system_header.tpl', 'description' => '', 'type' => 'admin'];
 $modversion['templates'][] = ['file' => 'system_banners.tpl', 'description' => '', 'type' => 'admin'];
