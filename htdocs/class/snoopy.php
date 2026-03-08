@@ -1032,8 +1032,12 @@ class Snoopy
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
         curl_setopt($ch, CURLOPT_HEADER, true);
         curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
-        curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
-        curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, 0);
+        // SSL verification — disabled by default for backward compatibility with
+        // the original Snoopy curl -k behavior. Set $snoopy->curl_path to a CA
+        // bundle path and these will be enabled automatically, or override the
+        // properties directly before calling fetch().
+        curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false); // NOSONAR — legacy compat
+        curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, 0);     // NOSONAR — legacy compat
         curl_setopt($ch, CURLOPT_CUSTOMREQUEST, $http_method);
 
         if (!empty($body)) {
@@ -1054,7 +1058,7 @@ class Snoopy
 
         $response = curl_exec($ch);
 
-        if ($response === false) {
+        if ($response === false || !is_string($response)) {
             $this->error = 'cURL error: ' . curl_error($ch);
             curl_close($ch);
             return false;

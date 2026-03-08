@@ -10,8 +10,8 @@ use PHPUnit\Framework\TestCase;
 /**
  * Unit tests for Protector module lifecycle files — security audit phase 2.
  *
- * Verifies that after the eval-to-hardcoded-function refactor, each lifecycle
- * file defines the expected callback function when included.
+ * Verifies that eval()-based dynamic function definitions work for both the
+ * default 'protector' dirname and cloned/renamed module dirnames.
  */
 class ProtectorLifecycleTest extends TestCase
 {
@@ -180,5 +180,37 @@ class ProtectorLifecycleTest extends TestCase
         require_once XOOPS_PATH . '/modules/protector/notification.php';
 
         $this->assertIsCallable('protector_notify_iteminfo');
+    }
+
+    // ---------------------------------------------------------------
+    // Verify eval()-based dynamic naming uses var_export() safely
+    // ---------------------------------------------------------------
+
+    #[Test]
+    public function oninstallSourceUsesVarExport(): void
+    {
+        $source = file_get_contents(XOOPS_PATH . '/modules/protector/oninstall.php');
+        $this->assertStringContainsString('var_export($mydirname, true)', $source);
+    }
+
+    #[Test]
+    public function onuninstallSourceUsesVarExport(): void
+    {
+        $source = file_get_contents(XOOPS_PATH . '/modules/protector/onuninstall.php');
+        $this->assertStringContainsString('var_export($mydirname, true)', $source);
+    }
+
+    #[Test]
+    public function onupdateSourceUsesVarExport(): void
+    {
+        $source = file_get_contents(XOOPS_PATH . '/modules/protector/onupdate.php');
+        $this->assertStringContainsString('var_export($mydirname, true)', $source);
+    }
+
+    #[Test]
+    public function notificationSourceUsesVarExport(): void
+    {
+        $source = file_get_contents(XOOPS_PATH . '/modules/protector/notification.php');
+        $this->assertStringContainsString('var_export($mydirname, true)', $source);
     }
 }

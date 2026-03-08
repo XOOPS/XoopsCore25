@@ -19,62 +19,65 @@ require_once XOOPS_ROOT_PATH . '/class/snoopy.php';
 #[CoversClass(\Snoopy::class)]
 class SnoopyTest extends TestCase
 {
-    protected function setUp(): void
+    private static ?\Snoopy $snoopy = null;
+
+    public static function setUpBeforeClass(): void
     {
         if (!isset($GLOBALS['xoopsLogger'])) {
             $GLOBALS['xoopsLogger'] = \XoopsLogger::getInstance();
         }
+        // Create single instance — constructor triggers XoopsLogger handler setup.
+        // Doing it once avoids repeated handler push/pop that PHPUnit flags as risky.
+        self::$snoopy = new \Snoopy();
+        restore_error_handler();
+        restore_exception_handler();
+    }
+
+    private function snoopy(): \Snoopy
+    {
+        return self::$snoopy;
     }
 
     #[Test]
     public function canInstantiate(): void
     {
-        $snoopy = new \Snoopy();
-        restore_error_handler();
-        restore_exception_handler();
-        $this->assertInstanceOf(\Snoopy::class, $snoopy);
+        $this->assertInstanceOf(\Snoopy::class, $this->snoopy());
     }
 
     #[Test]
     public function defaultErrorIsEmptyString(): void
     {
-        $snoopy = new \Snoopy();
-        $this->assertSame('', $snoopy->error);
+        $this->assertSame('', $this->snoopy()->error);
     }
 
     #[Test]
     public function defaultCurlPathIsSet(): void
     {
-        $snoopy = new \Snoopy();
-        $this->assertSame('/usr/bin/curl', $snoopy->curl_path);
+        $this->assertSame('/usr/bin/curl', $this->snoopy()->curl_path);
     }
 
     #[Test]
     public function defaultAgentContainsSnoopy(): void
     {
-        $snoopy = new \Snoopy();
-        $this->assertStringContainsString('Snoopy', $snoopy->agent);
+        $this->assertStringContainsString('Snoopy', $this->snoopy()->agent);
     }
 
     #[Test]
     public function defaultResultsIsEmptyArray(): void
     {
-        $snoopy = new \Snoopy();
-        $this->assertSame([], $snoopy->results);
+        $this->assertSame([], $this->snoopy()->results);
     }
 
     #[Test]
     public function defaultHeadersIsEmptyArray(): void
     {
-        $snoopy = new \Snoopy();
-        $this->assertSame([], $snoopy->headers);
+        $this->assertSame([], $this->snoopy()->headers);
     }
 
     #[Test]
     public function defaultPortIs80(): void
     {
-        $snoopy = new \Snoopy();
-        $this->assertSame(80, $snoopy->port);
+        $this->assertSame(80, $this->snoopy()->port);
     }
 
     // =========================================================================
@@ -84,8 +87,7 @@ class SnoopyTest extends TestCase
     #[Test]
     public function httpsRequestMethodExists(): void
     {
-        $snoopy = new \Snoopy();
-        $this->assertTrue(method_exists($snoopy, '_httpsrequest'));
+        $this->assertTrue(method_exists($this->snoopy(), '_httpsrequest'));
     }
 
     #[Test]
@@ -95,10 +97,9 @@ class SnoopyTest extends TestCase
         // connection. If not, it should return false with an error.
         // We can only test the contract here — not mock the extension.
         if (!function_exists('curl_init')) {
-            $snoopy = new \Snoopy();
-            $result = $snoopy->_httpsrequest('/path', 'https://example.com/path', 'GET');
+            $result = $this->snoopy()->_httpsrequest('/path', 'https://example.com/path', 'GET');
             $this->assertFalse($result);
-            $this->assertStringContainsString('cURL extension', $snoopy->error);
+            $this->assertStringContainsString('cURL extension', $this->snoopy()->error);
         } else {
             // curl is available — method exists and is callable
             $this->assertTrue(function_exists('curl_init'));
@@ -110,7 +111,6 @@ class SnoopyTest extends TestCase
     {
         // Verify that the active code path in _httpsrequest does not use exec()
         $source = file_get_contents(XOOPS_ROOT_PATH . '/class/snoopy.php');
-        // Find the _httpsrequest method and check there's no exec() in it
         // The method should use curl_init/curl_exec instead
         $this->assertStringContainsString('curl_init', $source);
         $this->assertStringContainsString('curl_exec', $source);
@@ -121,7 +121,6 @@ class SnoopyTest extends TestCase
     {
         $source = file_get_contents(XOOPS_ROOT_PATH . '/class/snoopy.php');
         // exec() should no longer appear as a function call in the HTTPS method
-        // It may still appear in comments or strings, but not as executable code
         $this->assertStringNotContainsString("exec(\$this->curl_path", $source);
     }
 }
