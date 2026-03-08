@@ -127,9 +127,9 @@ switch ($op) {
             $user->setVar('level', $newLevel);
         }
         $password = $vpass = null;
-        if (Request::getText('password', '', 'POST') !== '') {
-            $password = trim(Request::getText('password', '', 'POST'));
-            $vpass    = trim(Request::getText('vpass', '', 'POST'));
+        if (Request::getVar('password', '', 'POST', 'string', Request::MASK_ALLOW_RAW | Request::MASK_NO_TRIM) !== '') {
+            $password = Request::getVar('password', '', 'POST', 'string', Request::MASK_ALLOW_RAW | Request::MASK_NO_TRIM);
+            $vpass    = Request::getVar('vpass', '', 'POST', 'string', Request::MASK_ALLOW_RAW | Request::MASK_NO_TRIM);
             $user->setVar('pass', password_hash($password, PASSWORD_DEFAULT));
         } elseif ($user->isNew()) {
             $password = $vpass = '';
