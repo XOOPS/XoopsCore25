@@ -14,45 +14,45 @@ Two independent audits identified **26 distinct issues** across security, compat
 
 ## Fixed Items
 
-### Phase 1: Critical
+### Phase 1: Critical (3 items, 10 instances)
 
 | Item | What was fixed | How |
 |------|----------------|-----|
-| 1A | Password fields using `getString()` (all 6 files) | Changed to `Request::getVar()` with `MASK_ALLOW_RAW \| MASK_NO_TRIM` |
-| 1B | Insecure profile lostpass (md5 5-char token) | Disabled preload redirect in `core.php`; `profile/lostpass.php` now redirects to secure core flow |
-| 1C | Missing null guards after `getUser()` in system admin (3 instances) | Added `!is_object()` guards with `_AM_SYSTEM_USERS_NO_SUCH_USER` redirect |
+| 1A (6 files: `lostpass.php`, `edituser.php`, `register.php`, `profile/changepass.php`, `profile/register.php`, `system/admin/users/main.php`) | Password fields using `getString()` | Changed to `Request::getVar()` with `MASK_ALLOW_RAW \| MASK_NO_TRIM` |
+| 1B (2 files: `profile/preloads/core.php`, `profile/lostpass.php`) | Insecure profile lostpass (md5 5-char token) | Disabled preload redirect; `profile/lostpass.php` now redirects to secure core flow |
+| 1C (1 file, 3 instances: `system/admin/users/main.php` lines ~85, ~132, ~355) | Missing null guards after `getUser()` in system admin | Added `!is_object()` guards with `_AM_SYSTEM_USERS_NO_SUCH_USER` redirect |
 
-### Phase 2: High
-
-| Item | What was fixed | How |
-|------|----------------|-----|
-| 2A | Reflected XSS via `$_SERVER['PHP_SELF']` in `xoopscomments.php` | Replaced with `htmlspecialchars($_SERVER['SCRIPT_NAME'], ENT_QUOTES \| ENT_HTML5, 'UTF-8')` |
-| 2B | Raw `REQUEST_URI` in `system_siteclosed.tpl` | Added `\|escape` Smarty modifier |
-| 2C | Content fields (`com_text`, `user_sig`, `bio`) using `getString()` | Changed to `getText()` pinned to `'POST'` |
-| 2D | CSRF: `ok` parameter not pinned to POST | Changed to `Request::getInt('ok', 0, 'POST')` |
-| 2E | Missing null guards in `findusers.php` and profile admin files | Added `is_object()` + `rank_id > 0` check; profile admin files already fixed |
-
-### Phase 3: Security Hardening
+### Phase 2: High (5 items, 11 instances)
 
 | Item | What was fixed | How |
 |------|----------------|-----|
-| 3A | `eval()` in file cache engine | Removed `eval()` path; changed default `serialize` to `true`; legacy non-serialized entries treated as cache miss |
-| 3B | `eval()` for custom PHP blocks | Gated behind `XOOPS_ALLOW_PHP_BLOCKS` constant (default `false`) using `defined()/constant()` pattern |
-| 3C | Unsafe `unserialize()` (5 instances) | Added `['allowed_classes' => false]` to all calls; `configitem.php` uses `set_error_handler()` for corrupted data |
+| 2A (1 file, 2 instances: `class/xoopscomments.php` lines 268, 444) | Reflected XSS via `$_SERVER['PHP_SELF']` | Replaced with `htmlspecialchars($_SERVER['SCRIPT_NAME'], ENT_QUOTES \| ENT_HTML5, 'UTF-8')` |
+| 2B (1 file: `themes/default/modules/system/system_siteclosed.tpl`) | Raw `REQUEST_URI` in site-closed template | Added `\|escape` Smarty modifier |
+| 2C (3 files, 6 instances: `include/comment_post.php`, `edituser.php`, `system/admin/users/main.php`) | Content fields (`com_text`, `user_sig`, `bio`) using `getString()` | Changed to `getText()` pinned to `'POST'` |
+| 2D (1 file: `system/admin/users/main.php`) | CSRF: `ok` parameter not pinned to POST | Changed to `Request::getInt('ok', 0, 'POST')` |
+| 2E (4 files: `include/findusers.php`, `profile/admin/step.php`, `profile/admin/category.php`, `profile/admin/field.php`) | Missing null guards after `get()` | Added `is_object()` + `rank_id > 0` check in findusers; profile admin files fixed in prior commits |
 
-### Phase 4: Compatibility
-
-| Item | What was fixed | How |
-|------|----------------|-----|
-| 4A | Smarty `{php}` tags in imagemanager templates | Removed `{php}` blocks (fixed in prior commits) |
-| 4B | PHP 8.2 fatal in vendor demo (`__autoload()`) | Deleted `wideimage/demo/` directory |
-| 4C | Type safety for `$groups_failed` in SQL | Already cast to `(int)` in loop (confirmed correct) |
-
-### Phase 5: Consistency
+### Phase 3: Security Hardening (3 items, 8 instances)
 
 | Item | What was fixed | How |
 |------|----------------|-----|
-| 5A | Raw superglobals in `gtickets.php` and `stopforumspam.php` | Migrated to `Xmf\Request::getString()` / `hasVar()` |
+| 3A (1 file: `class/cache/file.php`) | `eval()` in file cache engine | Removed `eval()` path; changed default `serialize` to `true`; legacy entries treated as cache miss |
+| 3B (2 files: `kernel/block.php`, `modules/system/class/block.php`) | `eval()` for custom PHP blocks | Gated behind `XOOPS_ALLOW_PHP_BLOCKS === true` constant check |
+| 3C (5 instances: `kernel/object.php` x2, `kernel/configitem.php`, `class/cache/model.php`, `modules/profile/include/update.php`) | Unsafe `unserialize()` without `allowed_classes` | Added `['allowed_classes' => false]`; `configitem.php` uses `set_error_handler()` for corrupted data |
+
+### Phase 4: Compatibility (3 items)
+
+| Item | What was fixed | How |
+|------|----------------|-----|
+| 4A (2 files: `system/templates/system_imagemanager.tpl`, `system_imagemanager2.tpl`) | Smarty `{php}` tags | Removed `{php}` blocks (fixed in prior commits) |
+| 4B (1 directory: `xoops_lib/vendor/smottt/wideimage/demo/`) | PHP 8.2 fatal (`__autoload()`) | Deleted demo directory |
+| 4C (1 file: `system/admin/users/main.php`) | Type safety for `$groups_failed` in SQL | Already cast to `(int)` in loop (confirmed correct) |
+
+### Phase 5: Consistency (1 item, 2 files)
+
+| Item | What was fixed | How |
+|------|----------------|-----|
+| 5A (2 files: `xoops_lib/modules/protector/class/gtickets.php`, `xoops_lib/modules/protector/filters_disabled/postcommon_register_stopforumspam.php`) | Raw superglobals | Migrated to `Xmf\Request::getString()` / `hasVar()` |
 
 ---
 
@@ -72,17 +72,17 @@ Two independent audits identified **26 distinct issues** across security, compat
 | Category | Files |
 |----------|-------|
 | Password reset | `modules/profile/preloads/core.php`, `modules/profile/lostpass.php`, `lostpass.php` |
-| XSS fixes | `class/xoopscomments.php`, `themes/default/.../system_siteclosed.tpl` |
+| XSS fixes | `class/xoopscomments.php`, `themes/default/modules/system/system_siteclosed.tpl` |
 | eval/unserialize | `class/cache/file.php`, `kernel/block.php`, `modules/system/class/block.php`, `kernel/object.php`, `kernel/configitem.php`, `class/cache/model.php`, `modules/profile/include/update.php` |
 | Null guards and CSRF | `modules/system/admin/users/main.php`, `include/findusers.php` |
 | Content fields | `edituser.php`, `include/comment_post.php`, `modules/system/admin/users/main.php` |
-| Superglobals | `xoops_lib/modules/protector/class/gtickets.php`, `xoops_lib/.../postcommon_register_stopforumspam.php` |
+| Superglobals | `xoops_lib/modules/protector/class/gtickets.php`, `xoops_lib/modules/protector/filters_disabled/postcommon_register_stopforumspam.php` |
 | PHP 8.2 compat | `xoops_lib/vendor/smottt/wideimage/demo/` (deleted) |
 
 ---
 
 ## Upgrade Notes
 
-- **Cache**: The file cache engine default changed from `serialize => false` to `serialize => true`. Existing non-serialized cache files will be treated as cache misses and regenerated automatically. For immediate effect, clear the cache directory (`xoops_data/caches/xoops_cache/`) after upgrade.
+- **Cache**: The file cache engine default changed from `serialize => false` to `serialize => true`. Existing non-serialized cache files will be treated as cache misses and regenerated automatically. For immediate effect, clear the configured cache directory (typically `XOOPS_VAR_PATH/caches/xoops_cache/`) after upgrade.
 - **PHP Blocks**: Custom PHP blocks (`c_type = 'P'`) are now disabled by default. To re-enable, define `XOOPS_ALLOW_PHP_BLOCKS` as `true` in `mainfile.php`.
 - **Password Reset**: Pending password reset emails sent before upgrade will not work with the new secure flow. Users who received a reset link prior to upgrade must request a new password reset.
