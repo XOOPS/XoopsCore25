@@ -58,10 +58,10 @@ $start           = 0;
 $status_array[0] = _AM_SYSTEM_COMMENTS_FORM_ALL_STATUS;
 
 $comments = [];
-$statusVal = Request::getInt('comments_status', 0, 'GET') ?: Request::getInt('comments_status', 0, 'POST');
+$statusVal = Request::hasVar('comments_status', 'GET') ? Request::getInt('comments_status', 0, 'GET') : Request::getInt('comments_status', 0, 'POST');
 $status = !array_key_exists($statusVal, $status_array) ? 0 : $statusVal;
 
-$module          = Request::getInt('comments_module', 0, 'GET') ?: Request::getInt('comments_module', 0, 'POST');
+$module          = Request::hasVar('comments_module', 'GET') ? Request::getInt('comments_module', 0, 'GET') : Request::getInt('comments_module', 0, 'POST');
 $modules_Handler = xoops_getHandler('module');
 $module_array    = $modules_Handler->getList(new Criteria('hascomments', 1));
 $module_array[0] = _AM_SYSTEM_COMMENTS_FORM_ALL_MODS;
