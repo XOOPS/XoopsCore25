@@ -135,6 +135,9 @@ switch ($op) {
         $groups_id = Request::hasVar('groups_id', 'POST') ? Request::getInt('groups_id', 0, 'POST') : Request::getInt('groups_id', 0, 'GET');
         if ($groups_id > 0) {
             $obj  = $groups_Handler->get($groups_id);
+            if (!is_object($obj)) {
+                redirect_header('admin.php?fct=groups', 1, _AM_SYSTEM_DBERROR);
+            }
             $form = $obj->getForm();
             // Assign form
             $xoopsTpl->assign('form', $form->render());
