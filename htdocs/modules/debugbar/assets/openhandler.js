@@ -107,7 +107,7 @@
                 const search = {};
                 const formData = new FormData(this.parentElement);
                 for (const [name, value] of formData.entries()) {
-                    if (value) {
+                    if (value && !(name === 'method' && value.startsWith('('))) {
                         search[name] = value;
                     }
                 }
@@ -139,16 +139,6 @@
         handleFind(data) {
             const self = this;
             for (const meta of data) {
-                const loadLink = document.createElement('a');
-                loadLink.textContent = 'Load dataset';
-                loadLink.addEventListener('click', (e) => {
-                    self.hide();
-                    self.load(meta.id, (data) => {
-                        self.callback(meta.id, data);
-                    });
-                    e.preventDefault();
-                });
-
                 const methodLink = document.createElement('a');
                 methodLink.textContent = meta.method;
                 methodLink.addEventListener('click', (e) => {
@@ -189,7 +179,7 @@
                 tr.append(datetimeTd);
 
                 const methodTd = document.createElement('td');
-                methodTd.textContent = meta.method;
+                methodTd.append(methodLink);
                 tr.append(methodTd);
 
                 const uriTd = document.createElement('td');

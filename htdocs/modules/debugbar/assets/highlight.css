@@ -128,7 +128,7 @@ code.phpdebugbar-hljs {
 */
 [data-theme='dark'] .phpdebugbar-hljs-doctag,
 [data-theme='dark'] .phpdebugbar-hljs-keyword,
-[data-theme='dark'] .phpdebugbar-hljs-meta [data-theme='dark'] .phpdebugbar-hljs-keyword,
+[data-theme='dark'] .phpdebugbar-hljs-meta .phpdebugbar-hljs-keyword,
 [data-theme='dark'] .phpdebugbar-hljs-template-tag,
 [data-theme='dark'] .phpdebugbar-hljs-template-variable,
 [data-theme='dark'] .phpdebugbar-hljs-type,
@@ -158,7 +158,7 @@ code.phpdebugbar-hljs {
 }
 [data-theme='dark'] .phpdebugbar-hljs-regexp,
 [data-theme='dark'] .phpdebugbar-hljs-string,
-[data-theme='dark'] .phpdebugbar-hljs-meta [data-theme='dark'] .phpdebugbar-hljs-string {
+[data-theme='dark'] .phpdebugbar-hljs-meta .phpdebugbar-hljs-string {
   /* prettylights-syntax-string */
   color: #a5d6ff
 }

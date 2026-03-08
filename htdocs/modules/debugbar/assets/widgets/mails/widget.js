@@ -33,7 +33,8 @@
                     link.setAttribute('title', 'Mail Preview');
                     link.textContent = 'View Mail';
                     link.classList.add(csscls('editor-link'));
-                    link.addEventListener('click', () => {
+                    link.addEventListener('click', (event) => {
+                        event.stopPropagation();
                         const popup = window.open('about:blank', 'Mail Preview', 'width=650,height=440,scrollbars=yes');
                         const documentToWriteTo = popup.document;
 

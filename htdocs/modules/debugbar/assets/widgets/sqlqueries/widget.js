@@ -60,7 +60,7 @@
             const nameTh = document.createElement('th');
             nameTh.colSpan = 2;
             nameTh.classList.add(csscls('name'));
-            nameTh.innerHTML = caption;
+            nameTh.textContent = caption;
             tr.append(nameTh);
             thead.append(tr);
 
@@ -91,6 +91,7 @@
                         lineSpan.textContent = `:${value.line}`;
                         valueTd.append(lineSpan);
                     }
+                    tr.append(valueTd);
                 } else {
                     const keyTd = document.createElement('td');
                     keyTd.classList.add('phpdebugbar-text-muted');
