@@ -389,6 +389,9 @@ function profile_visible_toggle($field_id, $field_required)
     $field_required = ($field_required == 1) ? 0 : 1;
     $this_handler   = xoops_getModuleHandler('field', 'profile');
     $obj            = $this_handler->get($field_id);
+    if (!is_object($obj)) {
+        redirect_header('field.php', 2, _PROFILE_AM_FIELDNOTCONFIGURABLE);
+    }
     $obj->setVar('field_required', $field_required);
     if ($this_handler->insert($obj, true)) {
         redirect_header('field.php', 1, _PROFILE_AM_REQUIRED_TOGGLE_SUCCESS);

@@ -43,8 +43,8 @@ if ($op === 'save') {
     $errors   = [];
     $edituser = & $GLOBALS['xoopsUser'];
     if ($GLOBALS['xoopsUser']->isAdmin()) {
-        $edituser->setVar('uname', Request::getString('uname', '', 'POST'));
-        $edituser->setVar('email', Request::getString('email', '', 'POST'));
+        $edituser->setVar('uname', trim(Request::getString('uname', '', 'POST')));
+        $edituser->setVar('email', trim(Request::getString('email', '', 'POST')));
     }
     xoops_load('XoopsUserUtility');
     $stop = XoopsUserUtility::validate($edituser);

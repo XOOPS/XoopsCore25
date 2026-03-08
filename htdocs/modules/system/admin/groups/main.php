@@ -344,7 +344,7 @@ switch ($op) {
         if ($edit_group !== '') {
             if ($edit_group === 'add_group' && $selgroups > 0) {
                 foreach ($memberslist_id as $uid) {
-                    $member_handler->addUserToGroup($selgroups, $uid);
+                    $member_handler->addUserToGroup($selgroups, (int) $uid);
                     $error = false;
                 }
             } elseif ($edit_group === 'delete_group' && $selgroups > 0) {

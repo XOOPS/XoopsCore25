@@ -47,7 +47,7 @@ switch ($op) {
         break;
 
     case 'edit':
-        $obj = $handler->get(Request::getInt('id', 0));
+        $obj = $handler->get(Request::getInt('id', 0, 'GET'));
         include_once dirname(__DIR__) . '/include/forms.php';
         $form = profile_getStepForm($obj);
         $form->display();
@@ -89,7 +89,7 @@ switch ($op) {
             xoops_confirm(
                 [
                     'ok' => 1,
-                    'id' => Request::getInt('id', 0),
+                    'id' => Request::getInt('id', 0, 'GET'),
                     'op' => 'delete',
                 ],
                 $_SERVER['REQUEST_URI'],
