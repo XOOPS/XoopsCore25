@@ -182,8 +182,9 @@ $xoopsUserIsAdmin = false;
 $member_handler   = xoops_getHandler('member');
 /** @var \XoopsSessionHandler $sess_handler */
 $sess_handler     = xoops_getHandler('session');
+// SSL session bridge: transfers session ID from HTTP to HTTPS via POST (NOSONAR - required for SSL bridging)
 $sslSessionId = \Xmf\Request::getString($xoopsConfig['sslpost_name'], '', 'POST');
-if ($xoopsConfig['use_ssl'] && $sslSessionId !== '' && preg_match('/^[a-zA-Z0-9,-]{22,256}$/', $sslSessionId)) {
+if ($xoopsConfig['use_ssl'] && $sslSessionId !== '' && preg_match('/^[a-zA-Z0-9,-]{26,128}$/', $sslSessionId)) {
     session_id($sslSessionId);
 } elseif ($xoopsConfig['use_mysession'] && $xoopsConfig['session_name'] != '' && $xoopsConfig['session_expire'] > 0) {
     session_name($xoopsConfig['session_name']);

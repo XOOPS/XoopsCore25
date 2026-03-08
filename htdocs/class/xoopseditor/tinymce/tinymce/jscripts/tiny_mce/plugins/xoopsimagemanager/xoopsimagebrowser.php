@@ -93,7 +93,7 @@ if ($isadmin || ($catreadcount > 0) || ($catwritecount > 0)) {
         if (!$GLOBALS['xoopsSecurity']->check()) {
             redirect_header($current_file . '?target=' . $target, 3, implode('<br>', $GLOBALS['xoopsSecurity']->getErrors()));
         }
-        $count = is_array($image_id) ? count($image_id) : 0;
+        $count = count($image_id);
         if ($count > 0) {
             $image_handler = xoops_getHandler('image');
             $error         = [];

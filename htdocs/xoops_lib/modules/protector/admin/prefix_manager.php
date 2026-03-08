@@ -20,7 +20,7 @@ if (Request::hasVar('copy', 'POST') && Request::hasVar('old_prefix', 'POST')) {
         redirect_header(XOOPS_URL . '/', 3, $xoopsGTicket->getErrors());
     }
 
-    $new_prefix = empty($new_prefix) ? 'x' . substr(md5(time()), -5) : $new_prefix;
+    $new_prefix = empty($new_prefix) ? 'x' . substr(bin2hex(random_bytes(4)), -5) : $new_prefix;
 
     $sql = 'SHOW TABLE STATUS FROM `' . XOOPS_DB_NAME . '`';
     $srs = $db->queryF($sql);
