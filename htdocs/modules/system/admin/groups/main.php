@@ -148,10 +148,10 @@ switch ($op) {
         if (!$GLOBALS['xoopsSecurity']->check()) {
             redirect_header('admin.php?fct=groups', 3, implode('<br>', $GLOBALS['xoopsSecurity']->getErrors()));
         }
-        $system_catids = Request::getArray('system_catids', []);
-        $admin_mids    = Request::getArray('admin_mids', []);
-        $read_mids     = Request::getArray('read_mids', []);
-        $read_bids     = Request::getArray('read_bids', []);
+        $system_catids = Request::getArray('system_catids', [], 'POST');
+        $admin_mids    = Request::getArray('admin_mids', [], 'POST');
+        $read_mids     = Request::getArray('read_mids', [], 'POST');
+        $read_bids     = Request::getArray('read_bids', [], 'POST');
         /** @var XoopsMemberHandler $member_handler */
         $member_handler = xoops_getHandler('member');
         $group          = $member_handler->createGroup();
@@ -213,10 +213,10 @@ switch ($op) {
         if (!$GLOBALS['xoopsSecurity']->check()) {
             redirect_header('admin.php?fct=groups', 3, implode('<br>', $GLOBALS['xoopsSecurity']->getErrors()));
         }
-        $system_catids = Request::getArray('system_catids', []);
-        $admin_mids    = Request::getArray('admin_mids', []);
-        $read_mids     = Request::getArray('read_mids', []);
-        $read_bids     = Request::getArray('read_bids', []);
+        $system_catids = Request::getArray('system_catids', [], 'POST');
+        $admin_mids    = Request::getArray('admin_mids', [], 'POST');
+        $read_mids     = Request::getArray('read_mids', [], 'POST');
+        $read_bids     = Request::getArray('read_bids', [], 'POST');
         /** @var XoopsMemberHandler $member_handler */
         $member_handler = xoops_getHandler('member');
         $gid            = Request::getInt('g_id', 0, 'POST');
