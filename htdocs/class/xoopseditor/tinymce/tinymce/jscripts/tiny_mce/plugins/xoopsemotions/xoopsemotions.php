@@ -86,7 +86,7 @@ if ($admin && $op === 'SmilesAdd') {
         unset($_SESSION['XoopsEmotions_expire']);
         redirect_header($current_file, 2, _AM_DBUPDATED);
     } else {
-        redirect_header($current_file, 3, xoops_error($err));
+        redirect_header($current_file, 3, $err);
     }
 }
 

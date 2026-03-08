@@ -191,7 +191,7 @@ if (Request::hasVar('copy', 'POST') && Request::hasVar('old_prefix', 'POST')) {
         }
 
         $exportString .= $insertValues;
-        if ($this->db->isResultSet($result)) {
+        if ($db->isResultSet($result)) {
             $db->freeRecordSet($result);
         }
     }
@@ -221,7 +221,7 @@ if (Request::hasVar('copy', 'POST') && Request::hasVar('old_prefix', 'POST')) {
     }
 
     // check if prefix_xoopscomments exists
-    $check_rs = $db->queryF("SELECT * FROM {$prefix}_xoopscomments LIMIT 1");
+    $check_rs = $db->queryF("SELECT * FROM `{$prefix}_xoopscomments` LIMIT 1");
     if (!$check_rs) {
         die('This is not a prefix for XOOPS');
     }

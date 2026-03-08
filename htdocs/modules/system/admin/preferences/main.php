@@ -515,10 +515,6 @@ switch ($op) {
             }
         }
 
-        if (!empty($use_mysession) && $xoopsConfig['use_mysession'] == 0 && $session_name != '') {
-            xoops_setcookie($session_name, session_id(), time() + (60 * (int) $session_expire), '/', XOOPS_COOKIE_DOMAIN, 0);
-        }
-
         // Clean cached files, may take long time
         // User register_shutdown_function to keep running after connection closes so that cleaning cached files can be finished
         // Cache management should be performed on a separate page

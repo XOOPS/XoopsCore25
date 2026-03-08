@@ -51,7 +51,10 @@ switch ($op) {
 
     case 'edit':
         include_once dirname(__DIR__) . '/include/forms.php';
-        $obj  = $handler->get(Request::getInt('id', 0));
+        $obj = $handler->get(Request::getInt('id', 0));
+        if (!$obj) {
+            redirect_header('category.php', 3, _PROFILE_AM_CATEGORY . ' not found');
+        }
         $form = $obj->getForm();
         $form->display();
         break;
@@ -85,6 +88,9 @@ switch ($op) {
     case 'delete':
         $categoryId = Request::getInt('id', 0, 'POST') ?: Request::getInt('id', 0, 'GET');
         $obj = $handler->get($categoryId);
+        if (!$obj) {
+            redirect_header('category.php', 3, _PROFILE_AM_CATEGORY . ' not found');
+        }
         if (Request::getInt('ok', 0, 'POST') === 1) {
             if (!$GLOBALS['xoopsSecurity']->check()) {
                 redirect_header('category.php', 3, implode(',', $GLOBALS['xoopsSecurity']->getErrors()));

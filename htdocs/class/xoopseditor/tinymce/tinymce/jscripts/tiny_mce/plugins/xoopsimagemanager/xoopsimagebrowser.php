@@ -113,7 +113,7 @@ if ($isadmin || ($catreadcount > 0) || ($catwritecount > 0)) {
                 }
             }
             if (count($error) > 0) {
-                redirect_header($current_file . '?target=' . $target, 3, xoops_error(implode('<br>', $errors)));
+                redirect_header($current_file . '?target=' . $target, 3, implode('<br>', $errors));
             }
         }
         redirect_header($current_file . '?target=' . $target, 3, _AM_SYSTEM_DBUPDATED);
@@ -159,11 +159,13 @@ if ($isadmin || ($catreadcount > 0) || ($catwritecount > 0)) {
                     $image->setVar('image_weight', $image_weight);
                     $image->setVar('imgcat_id', $imgcat_id);
                     if ($imgcat->getVar('imgcat_storetype') === 'db') {
-                        $fp      = @fopen($uploader->getSavedDestination(), 'rb');
-                        $fbinary = @fread($fp, filesize($uploader->getSavedDestination()));
-                        @fclose($fp);
-                        $image->setVar('image_body', $fbinary, true);
-                        @unlink($uploader->getSavedDestination());
+                        $fp = fopen($uploader->getSavedDestination(), 'rb');
+                        if (false !== $fp) {
+                            $fbinary = fread($fp, filesize($uploader->getSavedDestination()));
+                            fclose($fp);
+                            $image->setVar('image_body', $fbinary, true);
+                        }
+                        unlink($uploader->getSavedDestination());
                     }
                     if (!$image_handler->insert($image)) {
                         $err[] = sprintf(_FAILSAVEIMG, $image->getVar('image_nicename'));
@@ -175,7 +177,7 @@ if ($isadmin || ($catreadcount > 0) || ($catwritecount > 0)) {
             }
         }
         if (count($err) > 0) {
-            redirect_header($current_file . '?target=' . $target, 3, xoops_error(implode('<br>', $err)));
+            redirect_header($current_file . '?target=' . $target, 3, implode('<br>', $err));
         }
         redirect_header($current_file . '?target=' . $target, 3, _AM_SYSTEM_DBUPDATED);
     }
@@ -343,7 +345,7 @@ if ($isadmin || ($catreadcount > 0) || ($catwritecount > 0)) {
             $errors[] = sprintf(_AM_SYSTEM_IMAGES_FAILDEL, $imagecategory->getVar('imgcat_name'));
         }
         if (count($errors) > 0) {
-            redirect_header($current_file . '?target=' . $target, 3, xoops_error(implode('<br>', $errors)));
+            redirect_header($current_file . '?target=' . $target, 3, implode('<br>', $errors));
         }
         redirect_header($current_file . '?target=' . $target, 3, _AM_SYSTEM_DBUPDATED);
     }
@@ -375,7 +377,7 @@ if ($isadmin || ($catreadcount > 0) || ($catwritecount > 0)) {
             redirect_header($current_file . '?target=' . $target, 3);
         }
         if (!$image_handler->delete($image)) {
-            redirect_header($current_file . '?target=' . $target, 3, xoops_error(sprintf(_MD_FAILDEL, $image->getVar('image_id'))));
+            redirect_header($current_file . '?target=' . $target, 3, sprintf(_MD_FAILDEL, $image->getVar('image_id')));
         }
         @unlink(XOOPS_UPLOAD_PATH . '/' . $image->getVar('image_name'));
         redirect_header($current_file . '?target=' . $target, 3, _AM_SYSTEM_DBUPDATED);
@@ -485,7 +487,7 @@ if ($op === 'listimg') {
         // check if image stored in db/as file - start
         if ($imagecategory->getVar('imgcat_storetype') === 'db') {
             $image_src = '' . XOOPS_URL . '/image.php?id=' . $i . '';
-            if (ini_get('allow_url_fopen') == true) {
+            if (ini_get('allow_url_fopen')) {
                 $image_info = true;
                 $image_size = getimagesize($image_src);
             } else {

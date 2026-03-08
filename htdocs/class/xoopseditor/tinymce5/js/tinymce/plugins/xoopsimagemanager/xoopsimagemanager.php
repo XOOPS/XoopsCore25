@@ -131,11 +131,13 @@ if ($isadmin || ($catreadcount > 0) || ($catwritecount > 0)) {
                     $image->setVar('image_weight', $image_weight);
                     $image->setVar('imgcat_id', $imgcat_id);
                     if ($imgcat->getVar('imgcat_storetype') === 'db') {
-                        $fp      = @fopen($uploader->getSavedDestination(), 'rb');
-                        $fbinary = @fread($fp, filesize($uploader->getSavedDestination()));
-                        @fclose($fp);
-                        $image->setVar('image_body', $fbinary, true);
-                        @unlink($uploader->getSavedDestination());
+                        $fp = fopen($uploader->getSavedDestination(), 'rb');
+                        if (false !== $fp) {
+                            $fbinary = fread($fp, filesize($uploader->getSavedDestination()));
+                            fclose($fp);
+                            $image->setVar('image_body', $fbinary, true);
+                        }
+                        unlink($uploader->getSavedDestination());
                     }
                     if (!$image_handler->insert($image)) {
                         $err[] = sprintf(_FAILSAVEIMG, $image->getVar('image_nicename'));
@@ -147,7 +149,7 @@ if ($isadmin || ($catreadcount > 0) || ($catwritecount > 0)) {
             }
         }
         if (count($err) > 0) {
-            redirect_header($current_file . '?target=' . $target, 3, xoops_error(implode('<br>', $err)));
+            redirect_header($current_file . '?target=' . $target, 3, implode('<br>', $err));
         }
         redirect_header($current_file . '?target=' . $target, 3, _AM_SYSTEM_DBUPDATED);
     }
@@ -311,7 +313,7 @@ if ($isadmin || ($catreadcount > 0) || ($catwritecount > 0)) {
             $errors[] = sprintf(_MD_FAILDELCAT, $imagecategory->getVar('imgcat_name'));
         }
         if (count($errors) > 0) {
-            redirect_header($current_file . '?target=' . $target, 3, xoops_error(implode('<br>', $errors)));
+            redirect_header($current_file . '?target=' . $target, 3, implode('<br>', $errors));
         }
         redirect_header($current_file . '?target=' . $target, 3, _AM_SYSTEM_DBUPDATED);
     }
@@ -343,7 +345,7 @@ if ($isadmin || ($catreadcount > 0) || ($catwritecount > 0)) {
             redirect_header($current_file . '?target=' . $target, 3);
         }
         if (!$image_handler->delete($image)) {
-            redirect_header($current_file . '?target=' . $target, 3, xoops_error(sprintf(_MD_FAILDEL, $image->getVar('image_id'))));
+            redirect_header($current_file . '?target=' . $target, 3, sprintf(_MD_FAILDEL, $image->getVar('image_id')));
         }
         @unlink(XOOPS_UPLOAD_PATH . '/' . $image->getVar('image_name'));
         redirect_header($current_file . '?target=' . $target, 3, _AM_SYSTEM_DBUPDATED);
