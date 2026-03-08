@@ -186,7 +186,7 @@ class XoopsConfigItem extends XoopsObject
     /**
      * Get a config value in a format ready for output
      *
-     * @return string
+     * @return mixed
      */
     public function getConfValueForOutput()
     {
@@ -196,12 +196,14 @@ class XoopsConfigItem extends XoopsObject
                 break;
             case 'array':
                 $confValue = $this->getVar('conf_value', 'N');
-                if ($confValue === '' || $confValue === null) {
+                if (!is_string($confValue) || $confValue === '') {
                     return [];
                 }
+                set_error_handler(static function () { return true; }, E_WARNING | E_NOTICE);
                 $value = unserialize($confValue, ['allowed_classes' => false]);
+                restore_error_handler();
 
-                return $value ?: [];
+                return is_array($value) ? $value : [];
             case 'float':
                 $value = $this->getVar('conf_value', 'N');
 
