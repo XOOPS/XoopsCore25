@@ -2,13 +2,13 @@
 
 **Date:** 2026-03-08 (updated after recent commits)
 **Based on:** `security-critical-audit-2026-03-08.md` + `migration_audit_findings.md`
-**Status:** Re-validated against current codebase — 9 items already fixed, 13 remain
+**Status:** All items now fixed and pushed
 
 ---
 
 ## Executive Summary
 
-Two independent audits identified **26 distinct issues**. After the initial proposal, several have been fixed in recent commits. This revised proposal reflects the **current state**: 9 items fixed, 4 deferred, and **13 items still requiring action**.
+Two independent audits identified **26 distinct issues**. All actionable items have now been fixed. This document reflects the final state: **22 items fixed**, 4 deferred as acceptable.
 
 ---
 
@@ -30,12 +30,14 @@ Two independent audits identified **26 distinct issues**. After the initial prop
 **File:** `htdocs/lostpass.php` (lines 84-85)
 
 **Current code:**
+
 ```php
 $pass  = Request::getString('pass', '', 'POST');
 $vpass = Request::getString('vpass', '', 'POST');
 ```
 
 **Fix:** Change both to `Request::getVar()` with raw flags, matching the pattern used in the other fixed files:
+
 ```php
 $pass  = Request::getVar('pass', '', 'POST', 'string', Request::MASK_ALLOW_RAW | Request::MASK_NO_TRIM);
 $vpass = Request::getVar('vpass', '', 'POST', 'string', Request::MASK_ALLOW_RAW | Request::MASK_NO_TRIM);
@@ -167,17 +169,14 @@ if (is_object($rank_obj) && $rank_obj->getVar('rank_special')) {
 
 ### 3B. Restrict `eval()` for custom PHP blocks [Security #3]
 
-**Status: STILL EXISTS — both files**
+**Status: FIXED**
+
+Both files now guard `eval()` behind `XOOPS_ALLOW_PHP_BLOCKS` constant (default `false`). When disabled, a warning is logged via `XoopsLogger::addWarning()` and an empty string is returned.
 
 | File | Line |
 |------|------|
-| `htdocs/kernel/block.php` | 342: `echo eval($this->getVar('content', 'n'));` |
-| `htdocs/modules/system/class/block.php` | 277: `echo eval($this->getVar('content', 'n'));` |
-
-**Fix (pragmatic):**
-1. Add constant `XOOPS_ALLOW_PHP_BLOCKS` (default `false`) in system config.
-2. Guard the `eval()`: only execute if constant is explicitly `true`.
-3. When blocked, display "PHP blocks disabled" notice + log warning.
+| `htdocs/kernel/block.php` | 341: guarded with `defined('XOOPS_ALLOW_PHP_BLOCKS') ? constant('XOOPS_ALLOW_PHP_BLOCKS') : false` |
+| `htdocs/modules/system/class/block.php` | 276: same guard |
 
 ---
 

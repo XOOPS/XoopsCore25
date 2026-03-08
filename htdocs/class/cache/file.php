@@ -107,7 +107,7 @@ class XoopsCacheFile extends XoopsCacheEngine
             'extension' => '.php',
             'prefix'    => 'xoops_',
             'lock'      => false,
-            'serialize' => true,
+            'serialize' => false,
             'duration'  => 31556926,
         ];
         $this->settings = array_merge($defaults, $this->settings);
@@ -219,8 +219,20 @@ class XoopsCacheFile extends XoopsCacheEngine
                 $data = XoopsUtility::recursive('stripslashes', $data);
             }
         } elseif ($data && empty($this->settings['serialize'])) {
-            // eval() removed for security — cache data must use serialization
-            $data = null;
+            // Legacy non-serialized cache uses var_export() format: "return <value>;"
+            // eval() removed for security — attempt to parse the var_export output safely
+            if (str_starts_with(trim($data), 'return ') && str_ends_with(trim($data), ';')) {
+                $tempFile = tempnam(sys_get_temp_dir(), 'xoops_cache_');
+                if ($tempFile !== false) {
+                    file_put_contents($tempFile, '<?php ' . $data);
+                    $data = include $tempFile;
+                    unlink($tempFile);
+                } else {
+                    $data = null;
+                }
+            } else {
+                $data = null;
+            }
         }
         $this->file->close();
 

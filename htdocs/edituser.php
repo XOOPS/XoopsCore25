@@ -100,7 +100,7 @@ if ($op === 'saveuser') {
         $edituser->setVar('umode', Request::getString('umode', 'flat', 'POST'));
         $edituser->setVar('notify_method', Request::getInt('notify_method', 1, 'POST'));
         $edituser->setVar('notify_mode', Request::getInt('notify_mode', 1, 'POST'));
-        $edituser->setVar('bio', substr(Request::getText('bio', '', 'POST'), 0, 255));
+        $edituser->setVar('bio', xoops_substr(Request::getText('bio', '', 'POST'), 0, 255));
         $edituser->setVar('user_occ', Request::getString('user_occ', '', 'POST'));
         $edituser->setVar('user_intrest', Request::getString('user_intrest', '', 'POST'));
         $edituser->setVar('user_mailok', Request::getBool('user_mailok', 0, 'POST'));

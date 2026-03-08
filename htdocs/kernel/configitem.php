@@ -195,7 +195,11 @@ class XoopsConfigItem extends XoopsObject
                 return (int)$this->getVar('conf_value', 'N');
                 break;
             case 'array':
-                $value = unserialize($this->getVar('conf_value', 'N'), ['allowed_classes' => false]);
+                $confValue = $this->getVar('conf_value', 'N');
+                if ($confValue === '' || $confValue === null) {
+                    return [];
+                }
+                $value = unserialize($confValue, ['allowed_classes' => false]);
 
                 return $value ?: [];
             case 'float':

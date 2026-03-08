@@ -265,7 +265,7 @@ class XoopsComments extends XoopsObject
     public function printNavBar($item_id, $mode = 'flat', $order = 1)
     {
         global $xoopsConfig, $xoopsUser;
-        echo "<form method='get' action='" . htmlspecialchars($_SERVER['SCRIPT_NAME'], ENT_QUOTES | ENT_HTML5) . "'><table width='100%' border='0' cellspacing='1' cellpadding='2'><tr><td class='bg1' align='center'><select name='mode'><option value='nocomments'";
+        echo "<form method='get' action='" . htmlspecialchars($_SERVER['SCRIPT_NAME'], ENT_QUOTES | ENT_HTML5, 'UTF-8') . "'><table width='100%' border='0' cellspacing='1' cellpadding='2'><tr><td class='bg1' align='center'><select name='mode'><option value='nocomments'";
         if ($mode === 'nocomments') {
             echo " selected";
         }
@@ -441,7 +441,7 @@ class XoopsComments extends XoopsObject
         if ($this->getVar('icon') != '') {
             $icon = 'subject/' . $this->getVar('icon', 'E');
         }
-        echo "<tr class='$bg' align='left'><td>" . $prefix . "<img src='" . XOOPS_URL . '/images/' . $icon . "'>&nbsp;<a href='" . htmlspecialchars($_SERVER['SCRIPT_NAME'], ENT_QUOTES | ENT_HTML5) . '?item_id=' . $this->getVar('item_id') . '&amp;comment_id=' . $this->getVar('comment_id') . '&amp;mode=' . $mode . '&amp;order=' . $order . '#' . $this->getVar('comment_id') . "'>" . $this->getVar('subject') . "</a></td><td><a href='" . XOOPS_URL . '/userinfo.php?uid=' . $this->getVar('user_id') . "'>" . XoopsUser::getUnameFromId($this->getVar('user_id')) . '</a></td><td>' . $date . '</td></tr>';
+        echo "<tr class='$bg' align='left'><td>" . $prefix . "<img src='" . XOOPS_URL . '/images/' . $icon . "'>&nbsp;<a href='" . htmlspecialchars($_SERVER['SCRIPT_NAME'], ENT_QUOTES | ENT_HTML5, 'UTF-8') . '?item_id=' . $this->getVar('item_id') . '&amp;comment_id=' . $this->getVar('comment_id') . '&amp;mode=' . $mode . '&amp;order=' . $order . '#' . $this->getVar('comment_id') . "'>" . $this->getVar('subject') . "</a></td><td><a href='" . XOOPS_URL . '/userinfo.php?uid=' . $this->getVar('user_id') . "'>" . XoopsUser::getUnameFromId($this->getVar('user_id')) . '</a></td><td>' . $date . '</td></tr>';
     }
 
     /**

@@ -566,11 +566,12 @@ if (!Request::hasVar('user_submit', 'POST')) {
             $criteria->add(new Criteria('level', $level));
         }
     }
-    if (Request::hasVar('rank', 'POST')) {
-        $rank_obj = $rank_handler->get(Request::getInt('rank', 0, 'POST'));
-        if (is_object($rank_obj)) {
+    $rankId = Request::getInt('rank', 0, 'POST');
+    if ($rankId > 0) {
+        $rank_obj = $rank_handler->get($rankId);
+        if (is_object($rank_obj) && (int) $rank_obj->getVar('rank_id') > 0) {
             if ($rank_obj->getVar('rank_special')) {
-                $criteria->add(new Criteria('rank', Request::getInt('rank', 0, 'POST')));
+                $criteria->add(new Criteria('rank', $rankId));
             } else {
                 if ($rank_obj->getVar('rank_min')) {
                     $criteria->add(new Criteria('posts', $rank_obj->getVar('rank_min'), '>='));
