@@ -554,13 +554,14 @@ class XoopsBlock extends XoopsObject
     }
 
     /**
-     * Log a block warning via XoopsLogger.
+     * Log a block warning via XoopsLogger and PHP error log.
      *
      * @param string $message warning message
      */
     private function logBlockWarning(string $message): void
     {
         XoopsLogger::getInstance()->addExtra(self::BLOCK_WARNING, $message);
+        trigger_error($message, E_USER_WARNING);
     }
 
     /**

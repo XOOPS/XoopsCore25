@@ -41,8 +41,8 @@ function b_custom_recent_members_show()
     $html = '<ul class="custom-recent-members" style="list-style:none; padding:0;">';
     foreach ($users as $user) {
         $uid    = (int) $user->getVar('uid');
-        $uname  = htmlspecialchars($user->getVar('uname'), ENT_QUOTES | ENT_HTML5, 'UTF-8');
-        $avatar = $user->getVar('user_avatar');
+        $uname  = htmlspecialchars($user->getVar('uname', 'n'), ENT_QUOTES | ENT_HTML5, 'UTF-8');
+        $avatar = $user->getVar('user_avatar', 'n');
         $date   = date('M j', (int) $user->getVar('user_regdate'));
 
         $avatarUrl = XOOPS_UPLOAD_URL . '/avatars/blank.gif';

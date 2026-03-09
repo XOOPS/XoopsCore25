@@ -27,7 +27,7 @@ function b_custom_welcome_show()
 
     $html = '<div class="custom-welcome-block">';
     if (is_object($xoopsUser)) {
-        $uname = htmlspecialchars($xoopsUser->getVar('uname'), ENT_QUOTES | ENT_HTML5, 'UTF-8');
+        $uname = htmlspecialchars($xoopsUser->getVar('uname', 'n'), ENT_QUOTES | ENT_HTML5, 'UTF-8');
         $html .= '<p>Welcome back, <strong>' . $uname . '</strong>!</p>';
         $html .= '<p>You have been a member since '
               . date('F j, Y', (int) $xoopsUser->getVar('user_regdate')) . '.</p>';

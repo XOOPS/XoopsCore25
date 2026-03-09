@@ -114,7 +114,7 @@ function b_custom_welcome_show()
     global $xoopsUser, $xoopsConfig;
 
     if (is_object($xoopsUser)) {
-        $uname = htmlspecialchars($xoopsUser->getVar('uname'), ENT_QUOTES | ENT_HTML5, 'UTF-8');
+        $uname = htmlspecialchars($xoopsUser->getVar('uname', 'n'), ENT_QUOTES | ENT_HTML5, 'UTF-8');
         return '<p>Welcome back, <strong>' . $uname . '</strong>!</p>';
     }
 

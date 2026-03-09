@@ -38,7 +38,7 @@ function b_custom_site_stats_show()
     $newestCriteria->setLimit(1);
     $newest = $member_handler->getUsers($newestCriteria);
     $newestName = !empty($newest)
-        ? htmlspecialchars($newest[0]->getVar('uname'), ENT_QUOTES | ENT_HTML5, 'UTF-8')
+        ? htmlspecialchars($newest[0]->getVar('uname', 'n'), ENT_QUOTES | ENT_HTML5, 'UTF-8')
         : 'N/A';
     $newestUid = !empty($newest) ? (int) $newest[0]->getVar('uid') : 0;
 
