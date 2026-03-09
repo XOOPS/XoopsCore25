@@ -372,6 +372,8 @@ class XoopsBlock extends XoopsObject
      * content does not match the file|function format, legacy eval() is used.
      *
      * @return string rendered block content
+     *
+     * Note: no return type declaration to preserve BC for subclasses that override this method.
      */
     protected function executePhpBlock()
     {

@@ -8,6 +8,7 @@ use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\Attributes\Test;
 use XoopsBlock;
+use XoopsUser;
 
 require_once XOOPS_ROOT_PATH . '/kernel/block.php';
 
@@ -558,7 +559,7 @@ class XoopsBlockPhpBlockTest extends KernelTestCase
 
         try {
             require_once XOOPS_ROOT_PATH . '/kernel/user.php';
-            $user = new \XoopsUser();
+            $user = new XoopsUser();
             $user->setVar('uname', 'TestUser');
             $user->setVar('uid', 1);
             $GLOBALS['xoopsUser']   = $user;
