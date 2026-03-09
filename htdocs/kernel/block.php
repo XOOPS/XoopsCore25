@@ -375,7 +375,7 @@ class XoopsBlock extends XoopsObject
         $raw = $this->getVar('content', 'n');
 
         // New file-based format: "filename.php|function_name"
-        if (preg_match('/^([a-zA-Z0-9_\-]+\.php)\|([a-zA-Z0-9_]+)$/', trim($raw), $matches)) {
+        if (preg_match('/^([\w\-]+\.php)\|([a-zA-Z_]\w*)$/', trim($raw), $matches)) {
             $funcFile = $matches[1];
             $showFunc = $matches[2];
             $filePath = XOOPS_ROOT_PATH . '/custom_blocks/' . $funcFile;
@@ -418,7 +418,7 @@ class XoopsBlock extends XoopsObject
                     }
                 } catch (\ReflectionException $e) {
                     $logger = XoopsLogger::getInstance();
-                    $logger->addExtra('Block Warning',"PHP block function {$showFunc} cannot be reflected: " . $e->getMessage());
+                    $logger->addExtra('Block Warning', "PHP block function {$showFunc} cannot be reflected");
                     return '';
                 }
 
@@ -429,7 +429,7 @@ class XoopsBlock extends XoopsObject
                 return str_replace('{X_SITEURL}', XOOPS_URL . '/', $combined);
             } catch (\Throwable $e) {
                 $logger = XoopsLogger::getInstance();
-                $logger->addExtra('Block Warning',"PHP block error in custom_blocks/{$funcFile}: " . $e->getMessage());
+                $logger->addExtra('Block Warning', "PHP block error in custom_blocks/{$funcFile}");
                 return '';
             } finally {
                 // Clean up only the output buffers we opened
@@ -440,17 +440,16 @@ class XoopsBlock extends XoopsObject
         }
 
         // Legacy eval()-based PHP blocks (backward compatibility)
-        // Guard: content containing '|' looks like a malformed file-based reference — don't eval it
-        if (strpos($raw, '|') !== false) {
-            $logger = XoopsLogger::getInstance();
-            $logger->addExtra('Block Warning',
-                'PHP block content contains "|" but did not match file-based format. '
-                . 'Check the content field syntax: filename.php|function_name'
-            );
-            return '';
-        }
-
         if (!(defined('XOOPS_ALLOW_PHP_BLOCKS') && constant('XOOPS_ALLOW_PHP_BLOCKS') === true)) {
+            // When legacy mode is disabled, also warn about malformed file-based references
+            if (strpos($raw, '|') !== false) {
+                $logger = XoopsLogger::getInstance();
+                $logger->addExtra('Block Warning',
+                    'PHP block content contains "|" but did not match file-based format. '
+                    . 'Check the content field syntax: filename.php|function_name'
+                );
+                return '';
+            }
             static $legacyWarningLogged = false;
             if (!$legacyWarningLogged) {
                 $logger = XoopsLogger::getInstance();
@@ -473,7 +472,7 @@ class XoopsBlock extends XoopsObject
             return str_replace('{X_SITEURL}', XOOPS_URL . '/', $content);
         } catch (\Throwable $e) {
             $logger = XoopsLogger::getInstance();
-            $logger->addExtra('Block Warning','Legacy PHP block error: ' . $e->getMessage());
+            $logger->addExtra('Block Warning', 'Legacy PHP block execution error');
             return '';
         } finally {
             // Clean up only the output buffers we opened

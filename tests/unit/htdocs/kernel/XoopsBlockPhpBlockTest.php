@@ -612,15 +612,40 @@ class XoopsBlockPhpBlockTest extends KernelTestCase
     }
 
     /**
-     * Verify that content containing a pipe but not matching file-based format is blocked.
+     * Verify that content containing a pipe but not matching file-based format
+     * is blocked when XOOPS_ALLOW_PHP_BLOCKS is not defined.
      */
     #[Test]
-    public function malformedPipeContentIsNotEvald(): void
+    public function malformedPipeContentIsBlockedWhenLegacyDisabled(): void
     {
         // Content has a pipe but doesn't match the file-based regex (hyphen in function name)
         $block = $this->createPhpBlock('file.php|func-name');
         $result = $block->getContent('S', 'P');
 
         $this->assertSame('', $result);
+    }
+
+    /**
+     * Verify that the pipe guard only applies when legacy mode is disabled.
+     *
+     * When XOOPS_ALLOW_PHP_BLOCKS is not defined, content with "|" that
+     * doesn't match file-based format should be blocked with a specific
+     * warning (not the generic legacy deprecation).
+     */
+    #[Test]
+    public function pipeGuardIsInsideLegacyDisabledBranch(): void
+    {
+        // Malformed file-based syntax (hyphen in function name fails regex)
+        // should return '' with pipe-specific warning when legacy is disabled
+        $block = $this->createPhpBlock('file.php|func-name');
+        $result = $block->getContent('S', 'P');
+
+        $this->assertSame('', $result);
+
+        // Plain legacy code without pipe also returns '' when legacy is disabled
+        $block2 = $this->createPhpBlock('echo "hello";');
+        $result2 = $block2->getContent('S', 'P');
+
+        $this->assertSame('', $result2);
     }
 }

@@ -41,17 +41,19 @@ function b_custom_recent_members_show()
     $html = '<ul class="custom-recent-members" style="list-style:none; padding:0;">';
     foreach ($users as $user) {
         $uid    = (int) $user->getVar('uid');
-        $uname  = htmlspecialchars($user->getVar('uname'), ENT_QUOTES | ENT_HTML5);
+        $uname  = htmlspecialchars($user->getVar('uname'), ENT_QUOTES | ENT_HTML5, 'UTF-8');
         $avatar = $user->getVar('user_avatar');
         $date   = date('M j', (int) $user->getVar('user_regdate'));
 
-        $avatarUrl = XOOPS_UPLOAD_URL . '/' . ltrim((string) $avatar, '/');
-        if (empty($avatar) || basename($avatar) === 'blank.gif') {
-            $avatarUrl = XOOPS_UPLOAD_URL . '/avatars/blank.gif';
+        $avatarUrl = XOOPS_UPLOAD_URL . '/avatars/blank.gif';
+        if (!empty($avatar) && basename($avatar) !== 'blank.gif'
+            && !str_contains($avatar, '..') && !str_contains($avatar, '\\')
+        ) {
+            $avatarUrl = XOOPS_UPLOAD_URL . '/' . ltrim((string) $avatar, '/');
         }
 
         $html .= '<li style="margin-bottom:8px; display:flex; align-items:center; gap:8px;">';
-        $html .= '<img src="' . htmlspecialchars($avatarUrl, ENT_QUOTES | ENT_HTML5) . '" alt="' . $uname . '" '
+        $html .= '<img src="' . htmlspecialchars($avatarUrl, ENT_QUOTES | ENT_HTML5, 'UTF-8') . '" alt="' . $uname . '" '
               . 'style="width:32px; height:32px; border-radius:50%;" />';
         $html .= '<a href="' . XOOPS_URL . '/userinfo.php?uid=' . $uid . '">' . $uname . '</a>';
         $html .= ' <small style="color:#888;">(' . $date . ')</small>';
