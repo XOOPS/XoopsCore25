@@ -214,7 +214,11 @@
         },
 
         find(filters, offset, callback) {
-            const data = Object.assign({ op: 'find' }, filters, { max: this.get('items_per_page'), offset: offset || 0 });
+            const pageOffset = offset || 0;
+            if (pageOffset === 0) {
+                this.loadmorebtn.style.display = '';
+            }
+            const data = Object.assign({ op: 'find' }, filters, { max: this.get('items_per_page'), offset: pageOffset });
             this.last_find_request = data;
             this.ajax(data, callback);
         },
