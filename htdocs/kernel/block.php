@@ -414,36 +414,37 @@ class XoopsBlock extends XoopsObject
     {
         // Cache verified (file, function) pairs to avoid repeated realpath/reflection on re-render
         static $verifiedCallbacks = [];
-        static $blocksRootCache;
+        static $blocksRootCache = [];
         static $warnedFiles = [];
 
-        $cacheKey = $funcFile . '|' . $showFunc;
+        $blocksDir = static::getCustomBlocksDir();
+        $cacheKey = $blocksDir . '/' . $funcFile . '|' . $showFunc;
 
         // Fast path: already verified in this request
         if (isset($verifiedCallbacks[$cacheKey])) {
             return $this->executeVerifiedBlock($verifiedCallbacks[$cacheKey], $showFunc);
         }
 
-        $blocksDir = static::getCustomBlocksDir();
         $filePath = $blocksDir . '/' . $funcFile;
 
-        if (!file_exists($filePath)) {
-            if (!isset($warnedFiles[$funcFile])) {
-                $this->logBlockWarning("PHP block file not found: custom_blocks/{$funcFile}");
-                $warnedFiles[$funcFile] = true;
+        if (!is_file($filePath) || !is_readable($filePath)) {
+            if (!isset($warnedFiles[$cacheKey])) {
+                $this->logBlockWarning("PHP block file not found or not readable: custom_blocks/{$funcFile}");
+                $warnedFiles[$cacheKey] = true;
             }
             return '';
         }
 
-        // Cache the resolved custom_blocks root across calls
-        if (!isset($blocksRootCache)) {
-            $blocksRootCache = realpath($blocksDir);
+        // Cache the resolved custom_blocks root across calls (scoped by directory)
+        if (!isset($blocksRootCache[$blocksDir])) {
+            $blocksRootCache[$blocksDir] = realpath($blocksDir);
         }
+        $resolvedRoot = $blocksRootCache[$blocksDir];
 
         // Verify the resolved path stays within custom_blocks/ (symlink traversal prevention)
         $realPath = realpath($filePath);
-        if ($blocksRootCache === false || $realPath === false
-            || !str_starts_with($realPath, $blocksRootCache . DIRECTORY_SEPARATOR)
+        if ($resolvedRoot === false || $realPath === false
+            || !str_starts_with($realPath, $resolvedRoot . DIRECTORY_SEPARATOR)
         ) {
             $this->logBlockWarning("PHP block file path resolves outside custom_blocks/: {$funcFile}");
             return '';
@@ -535,10 +536,11 @@ class XoopsBlock extends XoopsObject
     private function executeLegacyBlock(string $raw): string
     {
         if (!(defined('XOOPS_ALLOW_PHP_BLOCKS') && constant('XOOPS_ALLOW_PHP_BLOCKS') === true)) {
-            // When legacy mode is disabled, warn about malformed file-based references
-            if (strpos($raw, '|') !== false) {
+            // Warn about content that looks like a malformed file-based reference
+            // (e.g. "file.php|bad-func") but don't flag legitimate PHP operators like || or |
+            if (preg_match('/\.php\s*\|/', $raw)) {
                 $this->logBlockWarning(
-                    'PHP block content contains "|" but did not match file-based format. '
+                    'PHP block content contains ".php|" but did not match file-based format. '
                     . 'Check the content field syntax: filename.php|function_name'
                 );
                 return '';

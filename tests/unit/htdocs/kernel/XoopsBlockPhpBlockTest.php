@@ -687,7 +687,7 @@ class XoopsBlockPhpBlockTest extends KernelTestCase
         $messages = array_column($newExtras, 'msg');
         $hasPipeWarning = false;
         foreach ($messages as $msg) {
-            if (str_contains($msg, 'contains "|"')) {
+            if (str_contains($msg, 'contains ".php|"')) {
                 $hasPipeWarning = true;
                 break;
             }
@@ -714,7 +714,7 @@ class XoopsBlockPhpBlockTest extends KernelTestCase
 
         $newExtras = array_slice($logger->extra, $extraBefore);
         $pipeMessages = array_column($newExtras, 'msg');
-        $this->assertNotEmpty(array_filter($pipeMessages, fn($m) => str_contains($m, 'contains "|"')),
+        $this->assertNotEmpty(array_filter($pipeMessages, fn($m) => str_contains($m, 'contains ".php|"')),
             'Pipe content should produce pipe-specific warning');
 
         // Content WITHOUT pipe — should NOT produce a pipe-specific warning
@@ -725,7 +725,7 @@ class XoopsBlockPhpBlockTest extends KernelTestCase
         $this->assertSame('', $result2);
 
         $newExtras2 = array_slice($logger->extra, $extraBefore2);
-        $legacyPipeWarnings = array_filter(array_column($newExtras2, 'msg'), fn($m) => str_contains($m, 'contains "|"'));
+        $legacyPipeWarnings = array_filter(array_column($newExtras2, 'msg'), fn($m) => str_contains($m, 'contains ".php|"'));
         $this->assertEmpty($legacyPipeWarnings, 'Non-pipe content should not trigger pipe warning');
     }
 }

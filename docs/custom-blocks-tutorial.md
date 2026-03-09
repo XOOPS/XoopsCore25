@@ -275,9 +275,10 @@ quoting, table prefixes, and result mapping automatically. Direct SQL via
 ### Security Reminders
 
 - Always escape output with `htmlspecialchars($val, ENT_QUOTES | ENT_HTML5, 'UTF-8')`
-- If you must use direct SQL, use `$db->quote()` or prepared statements for values
+- Use handlers and `Criteria` for data access — they handle quoting automatically
 - Use `\Xmf\Request` instead of raw `$_GET`/`$_POST`
 - Never include user input in file paths
+- If you must use direct SQL, always use `$db->quote()` or prepared statements
 
 ---
 
@@ -301,10 +302,10 @@ quoting, table prefixes, and result mapping automatically. Direct SQL via
 - Either migrate it (see above) or set `XOOPS_ALLOW_PHP_BLOCKS = true` in
   `mainfile.php` for temporary backward compatibility
 
-**Block shows "content contains | but did not match file-based format":**
-- The content looks like it could be a file-based reference (contains `|`) but
+**Block shows "content contains .php| but did not match file-based format":**
+- The content looks like a malformed file-based reference (contains `.php|`) but
   doesn't match the required `filename.php|function_name` format
 - Check for typos in the content field — the function name must be a valid PHP
   identifier (letters, digits, underscores; cannot start with a digit)
-- If this is legacy PHP code that legitimately uses `|` (string literals,
-  bitwise OR), set `XOOPS_ALLOW_PHP_BLOCKS = true` to enable legacy execution
+- If this is legacy PHP code, set `XOOPS_ALLOW_PHP_BLOCKS = true` to enable
+  legacy execution
