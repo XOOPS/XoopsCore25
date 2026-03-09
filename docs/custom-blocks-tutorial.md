@@ -50,7 +50,7 @@ function b_custom_my_block_show()
 1. Go to **System Admin → Blocks → Add New Block**
 2. Set **Content Type** to **PHP Script (file-based)**
 3. In the **Content** field, enter:
-   ```
+   ```text
    my_block.php|b_custom_my_block_show
    ```
 4. Set title, position, visibility, and groups as needed
@@ -64,7 +64,7 @@ That's it! Your block is now live.
 
 The content field for PHP blocks uses this format:
 
-```
+```text
 filename.php|function_name
 ```
 
@@ -97,7 +97,7 @@ A simple block that greets logged-in users by name and shows a registration
 link for guests.
 
 **Content field value:**
-```
+```text
 example_welcome.php|b_custom_welcome_show
 ```
 
@@ -130,7 +130,7 @@ function b_custom_welcome_show()
 Displays the 5 most recently registered members with their avatars.
 
 **Content field value:**
-```
+```text
 example_recent_members.php|b_custom_recent_members_show
 ```
 
@@ -164,7 +164,7 @@ function b_custom_recent_members_show()
 Shows total members, total posts, and the newest member name.
 
 **Content field value:**
-```
+```text
 example_site_stats.php|b_custom_site_stats_show
 ```
 
@@ -233,7 +233,7 @@ function b_custom_my_old_block_show()
 ### Step 3: Update the Block
 
 Edit the block in admin, and replace the PHP code in the Content field with:
-```
+```text
 my_old_block.php|b_custom_my_old_block_show
 ```
 
