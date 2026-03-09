@@ -386,21 +386,43 @@ class XoopsBlock extends XoopsObject
                 return '';
             }
 
-            ob_start();
-            include_once $filePath;
-
-            if (!function_exists($showFunc)) {
-                ob_end_clean();
+            // Verify the resolved path stays within custom_blocks/ (symlink traversal prevention)
+            $blocksRoot = realpath(XOOPS_ROOT_PATH . '/custom_blocks');
+            $realPath   = realpath($filePath);
+            if ($blocksRoot === false || $realPath === false
+                || strpos($realPath, $blocksRoot . DIRECTORY_SEPARATOR) !== 0
+            ) {
                 $logger = XoopsLogger::getInstance();
-                $logger->addDeprecated("PHP block function not found: {$showFunc} in custom_blocks/{$funcFile}");
+                $logger->addDeprecated("PHP block file path resolves outside custom_blocks/: {$funcFile}");
                 return '';
             }
 
-            $content  = $showFunc();
-            $buffered = ob_get_clean();
-            $combined = $buffered . (string) $content;
+            $obLevel = ob_get_level();
+            ob_start();
+            try {
+                include_once $realPath;
 
-            return str_replace('{X_SITEURL}', XOOPS_URL . '/', $combined);
+                if (!function_exists($showFunc)) {
+                    $logger = XoopsLogger::getInstance();
+                    $logger->addDeprecated("PHP block function not found: {$showFunc} in custom_blocks/{$funcFile}");
+                    return '';
+                }
+
+                $content  = $showFunc();
+                $buffered = ob_get_clean();
+                $combined = $buffered . (string) $content;
+
+                return str_replace('{X_SITEURL}', XOOPS_URL . '/', $combined);
+            } catch (\Throwable $e) {
+                $logger = XoopsLogger::getInstance();
+                $logger->addDeprecated("PHP block error in custom_blocks/{$funcFile}: " . $e->getMessage());
+                return '';
+            } finally {
+                // Clean up only the output buffers we opened
+                while (ob_get_level() > $obLevel) {
+                    ob_end_clean();
+                }
+            }
         }
 
         // Legacy eval()-based PHP blocks (backward compatibility)
@@ -414,11 +436,23 @@ class XoopsBlock extends XoopsObject
             return '';
         }
 
+        $obLevel = ob_get_level();
         ob_start();
-        echo eval($raw);
-        $content = ob_get_clean();
+        try {
+            echo eval($raw); // NOSONAR — legacy fallback, gated by XOOPS_ALLOW_PHP_BLOCKS
+            $content = ob_get_clean();
 
-        return str_replace('{X_SITEURL}', XOOPS_URL . '/', $content);
+            return str_replace('{X_SITEURL}', XOOPS_URL . '/', $content);
+        } catch (\Throwable $e) {
+            $logger = XoopsLogger::getInstance();
+            $logger->addDeprecated('Legacy PHP block error: ' . $e->getMessage());
+            return '';
+        } finally {
+            // Clean up only the output buffers we opened
+            while (ob_get_level() > $obLevel) {
+                ob_end_clean();
+            }
+        }
     }
 
     /**

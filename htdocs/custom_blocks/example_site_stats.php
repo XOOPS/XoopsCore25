@@ -43,14 +43,9 @@ function b_custom_site_stats_show()
     $newestUid = !empty($newest) ? (int) $newest[0]->getVar('uid') : 0;
 
     // Count total posts (comments)
-    /** @var XoopsMySQLDatabase $db */
-    $db = XoopsDatabaseFactory::getDatabaseConnection();
-    $sql = 'SELECT COUNT(*) FROM ' . $db->prefix('xoopscomments');
-    $result = $db->query($sql);
-    $totalPosts = 0;
-    if ($db->isResultSet($result)) {
-        [$totalPosts] = $db->fetchRow($result);
-    }
+    /** @var XoopsCommentHandler $comment_handler */
+    $comment_handler = xoops_getHandler('comment');
+    $totalPosts = $comment_handler->getCount();
 
     $html  = '<table class="custom-stats-block" style="width:100%;">';
     $html .= '<tr><td>Total Members:</td><td style="text-align:right;"><strong>'

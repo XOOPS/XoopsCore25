@@ -169,10 +169,9 @@ example_site_stats.php|b_custom_site_stats_show
 ```
 
 **What it demonstrates:**
-- Combining handler-based queries with raw SQL when needed
-- Using `XoopsDatabaseFactory::getDatabaseConnection()` for direct queries
-- Using `$db->prefix()` for table names
-- Proper `isResultSet()` checking per XOOPS conventions
+- Using multiple XOOPS handlers (`member`, `comment`)
+- Building queries with `Criteria`
+- Handler-based `getCount()` instead of raw SQL
 - Number formatting for display
 
 **Key code:**
@@ -182,13 +181,8 @@ function b_custom_site_stats_show()
     $member_handler = xoops_getHandler('member');
     $totalUsers = $member_handler->getUserCount(new Criteria('level', 0, '>'));
 
-    $db = XoopsDatabaseFactory::getDatabaseConnection();
-    $sql = 'SELECT COUNT(*) FROM ' . $db->prefix('xoopscomments');
-    $result = $db->query($sql);
-    $totalPosts = 0;
-    if ($db->isResultSet($result)) {
-        [$totalPosts] = $db->fetchRow($result);
-    }
+    $comment_handler = xoops_getHandler('comment');
+    $totalPosts = $comment_handler->getCount();
     // ... format as HTML table ...
 }
 ```
