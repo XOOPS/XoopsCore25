@@ -382,7 +382,7 @@ class XoopsBlock extends XoopsObject
 
             if (!file_exists($filePath)) {
                 $logger = XoopsLogger::getInstance();
-                $logger->addExtra('Block Warning',"PHP block file not found: custom_blocks/{$funcFile}");
+                $logger->addExtra('Block Warning', "PHP block file not found: custom_blocks/{$funcFile}");
                 return '';
             }
 
@@ -393,7 +393,7 @@ class XoopsBlock extends XoopsObject
                 || !str_starts_with($realPath, $blocksRoot . DIRECTORY_SEPARATOR)
             ) {
                 $logger = XoopsLogger::getInstance();
-                $logger->addExtra('Block Warning',"PHP block file path resolves outside custom_blocks/: {$funcFile}");
+                $logger->addExtra('Block Warning', "PHP block file path resolves outside custom_blocks/: {$funcFile}");
                 return '';
             }
 
@@ -404,7 +404,7 @@ class XoopsBlock extends XoopsObject
 
                 if (!function_exists($showFunc)) {
                     $logger = XoopsLogger::getInstance();
-                    $logger->addExtra('Block Warning',"PHP block function not found: {$showFunc} in custom_blocks/{$funcFile}");
+                    $logger->addExtra('Block Warning', "PHP block function not found: {$showFunc} in custom_blocks/{$funcFile}");
                     return '';
                 }
 
@@ -413,7 +413,7 @@ class XoopsBlock extends XoopsObject
                     $ref = new \ReflectionFunction($showFunc);
                     if ($ref->getFileName() !== $realPath) {
                         $logger = XoopsLogger::getInstance();
-                        $logger->addExtra('Block Warning',"PHP block function {$showFunc} not defined in custom_blocks/{$funcFile}");
+                        $logger->addExtra('Block Warning', "PHP block function {$showFunc} not defined in custom_blocks/{$funcFile}");
                         return '';
                     }
                 } catch (\ReflectionException $e) {

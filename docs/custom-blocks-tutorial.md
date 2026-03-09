@@ -114,11 +114,11 @@ function b_custom_welcome_show()
     global $xoopsUser, $xoopsConfig;
 
     if (is_object($xoopsUser)) {
-        $uname = htmlspecialchars($xoopsUser->getVar('uname'), ENT_QUOTES | ENT_HTML5);
+        $uname = htmlspecialchars($xoopsUser->getVar('uname'), ENT_QUOTES | ENT_HTML5, 'UTF-8');
         return '<p>Welcome back, <strong>' . $uname . '</strong>!</p>';
     }
 
-    $sitename = htmlspecialchars($xoopsConfig['sitename'], ENT_QUOTES | ENT_HTML5);
+    $sitename = htmlspecialchars($xoopsConfig['sitename'], ENT_QUOTES | ENT_HTML5, 'UTF-8');
     return '<p>Welcome to <strong>' . $sitename . '</strong>!</p>';
 }
 ```
@@ -266,7 +266,7 @@ Your block functions run in the normal XOOPS context with full access to:
 
 ### Security Reminders
 
-- Always escape output with `htmlspecialchars($val, ENT_QUOTES | ENT_HTML5)`
+- Always escape output with `htmlspecialchars($val, ENT_QUOTES | ENT_HTML5, 'UTF-8')`
 - Use `$db->quote()` or prepared statements for SQL values
 - Use `\Xmf\Request` instead of raw `$_GET`/`$_POST`
 - Never include user input in file paths
@@ -292,3 +292,11 @@ Your block functions run in the normal XOOPS context with full access to:
 - This block still contains raw PHP code in the database
 - Either migrate it (see above) or set `XOOPS_ALLOW_PHP_BLOCKS = true` in
   `mainfile.php` for temporary backward compatibility
+
+**Block shows "content contains | but did not match file-based format":**
+- The content looks like it could be a file-based reference (contains `|`) but
+  doesn't match the required `filename.php|function_name` format
+- Check for typos in the content field — the function name must be a valid PHP
+  identifier (letters, digits, underscores; cannot start with a digit)
+- If this is legacy PHP code that legitimately uses `|` (string literals,
+  bitwise OR), set `XOOPS_ALLOW_PHP_BLOCKS = true` to enable legacy execution

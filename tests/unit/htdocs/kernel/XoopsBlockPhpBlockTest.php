@@ -246,7 +246,8 @@ class XoopsBlockPhpBlockTest extends KernelTestCase
     // =========================================================================
 
     /**
-     * Verify that valid file-based content formats are recognized by the regex.
+     * Verify that valid file-based content formats are recognized by the regex
+     * and routed to the file-based branch (not the legacy eval branch).
      *
      * @param string $content the content field value to test
      */
@@ -254,14 +255,26 @@ class XoopsBlockPhpBlockTest extends KernelTestCase
     #[DataProvider('validContentFormatProvider')]
     public function contentFormatIsRecognizedAsFileBased(string $content): void
     {
-        // These formats should match the file-based regex, even if the file
-        // doesn't exist — they should return '' (file not found) not trigger
-        // the legacy eval path.
+        $logger = \XoopsLogger::getInstance();
+        $extraBefore = count($logger->extra);
+
         $block = $this->createPhpBlock($content);
         $result = $block->getContent('S', 'P');
 
-        // Should return empty string (file not found) — NOT trigger eval
         $this->assertSame('', $result);
+
+        // Verify we hit the file-based branch: logger should have a "file not found" warning
+        $newExtras = array_slice($logger->extra, $extraBefore);
+        $messages = array_column($newExtras, 'msg');
+        $this->assertNotEmpty($newExtras, 'Should have logged a file-based branch warning');
+        $hasFileWarning = false;
+        foreach ($messages as $msg) {
+            if (str_contains($msg, 'block file not found') || str_contains($msg, 'resolves outside')) {
+                $hasFileWarning = true;
+                break;
+            }
+        }
+        $this->assertTrue($hasFileWarning, 'Should hit file-based branch, not legacy eval');
     }
 
     /**
@@ -281,7 +294,8 @@ class XoopsBlockPhpBlockTest extends KernelTestCase
     }
 
     /**
-     * Verify that invalid content formats fall through to the legacy path (blocked).
+     * Verify that invalid content formats fall through to the legacy path (blocked)
+     * and produce legacy-branch log messages, not file-based-branch messages.
      *
      * @param string $content the content field value to test
      */
@@ -289,14 +303,24 @@ class XoopsBlockPhpBlockTest extends KernelTestCase
     #[DataProvider('invalidContentFormatProvider')]
     public function contentFormatIsNotRecognizedAsFileBased(string $content): void
     {
-        // These formats should NOT match the file-based regex, so they fall
-        // through to the legacy eval path. Since XOOPS_ALLOW_PHP_BLOCKS is
-        // not defined (or false), they should return empty string with warning.
+        $logger = \XoopsLogger::getInstance();
+        $extraBefore = count($logger->extra);
+
         $block = $this->createPhpBlock($content);
         $result = $block->getContent('S', 'P');
 
-        // Should return empty (legacy eval blocked)
         $this->assertSame('', $result);
+
+        // Verify we did NOT hit the file-based branch
+        $newExtras = array_slice($logger->extra, $extraBefore);
+        $messages = array_column($newExtras, 'msg');
+        foreach ($messages as $msg) {
+            $this->assertStringNotContainsString(
+                'block file not found',
+                $msg,
+                'Invalid format should not reach the file-based branch'
+            );
+        }
     }
 
     /**
@@ -364,6 +388,37 @@ class XoopsBlockPhpBlockTest extends KernelTestCase
         $result = $block->getContent('S', 'P');
 
         $this->assertSame('', $result);
+    }
+
+    /**
+     * Verify that a pre-existing global function cannot be invoked via file-based
+     * block format if it wasn't defined in the referenced file.
+     *
+     * This tests the ReflectionFunction origin check that prevents calling
+     * arbitrary global functions like phpinfo().
+     */
+    #[Test]
+    public function functionDefinedOutsideBlockFileIsRejected(): void
+    {
+        // Create a block file that defines a DIFFERENT function than the one we'll reference
+        $filename = 'test_origin_' . uniqid() . '.php';
+        $realFunc = 'b_custom_origin_' . str_replace('.', '', uniqid()) . '_show';
+        $this->createTempBlockFile($filename, $realFunc, '<p>Real function</p>');
+
+        // Pre-define a global function that we'll try to call via the block
+        $spoofFunc = 'b_custom_spoof_' . str_replace('.', '', uniqid()) . '_show';
+        eval("function {$spoofFunc}() { return '<p>SPOOFED</p>'; }");
+
+        try {
+            // Reference the block file but with the spoofed function name
+            $block = $this->createPhpBlock($filename . '|' . $spoofFunc);
+            $result = $block->getContent('S', 'P');
+
+            // Should be rejected — function exists but wasn't defined in the file
+            $this->assertSame('', $result);
+        } finally {
+            $this->removeTempBlockFile($filename);
+        }
     }
 
     // =========================================================================
@@ -613,39 +668,63 @@ class XoopsBlockPhpBlockTest extends KernelTestCase
 
     /**
      * Verify that content containing a pipe but not matching file-based format
-     * is blocked when XOOPS_ALLOW_PHP_BLOCKS is not defined.
+     * is blocked with a pipe-specific warning when legacy mode is disabled.
      */
     #[Test]
-    public function malformedPipeContentIsBlockedWhenLegacyDisabled(): void
+    public function malformedPipeContentIsBlockedWithSpecificWarning(): void
     {
-        // Content has a pipe but doesn't match the file-based regex (hyphen in function name)
+        $logger = \XoopsLogger::getInstance();
+        $extraBefore = count($logger->extra);
+
         $block = $this->createPhpBlock('file.php|func-name');
         $result = $block->getContent('S', 'P');
 
         $this->assertSame('', $result);
+
+        // Should have the pipe-specific warning (not generic legacy deprecation)
+        $newExtras = array_slice($logger->extra, $extraBefore);
+        $messages = array_column($newExtras, 'msg');
+        $hasPipeWarning = false;
+        foreach ($messages as $msg) {
+            if (str_contains($msg, 'contains "|"')) {
+                $hasPipeWarning = true;
+                break;
+            }
+        }
+        $this->assertTrue($hasPipeWarning, 'Should warn about malformed pipe content');
     }
 
     /**
      * Verify that the pipe guard only applies when legacy mode is disabled.
      *
-     * When XOOPS_ALLOW_PHP_BLOCKS is not defined, content with "|" that
-     * doesn't match file-based format should be blocked with a specific
-     * warning (not the generic legacy deprecation).
+     * Content with "|" gets a pipe-specific extra warning.
+     * Content without "|" does NOT get a pipe warning (different branch).
+     * This proves the two code paths are distinct.
      */
     #[Test]
-    public function pipeGuardIsInsideLegacyDisabledBranch(): void
+    public function pipeGuardAndLegacyPathAreSeparateBranches(): void
     {
-        // Malformed file-based syntax (hyphen in function name fails regex)
-        // should return '' with pipe-specific warning when legacy is disabled
+        $logger = \XoopsLogger::getInstance();
+
+        // Content WITH pipe — should get pipe-specific extra warning
+        $extraBefore = count($logger->extra);
         $block = $this->createPhpBlock('file.php|func-name');
-        $result = $block->getContent('S', 'P');
+        $block->getContent('S', 'P');
 
-        $this->assertSame('', $result);
+        $newExtras = array_slice($logger->extra, $extraBefore);
+        $pipeMessages = array_column($newExtras, 'msg');
+        $this->assertNotEmpty(array_filter($pipeMessages, fn($m) => str_contains($m, 'contains "|"')),
+            'Pipe content should produce pipe-specific warning');
 
-        // Plain legacy code without pipe also returns '' when legacy is disabled
+        // Content WITHOUT pipe — should NOT produce a pipe-specific warning
+        $extraBefore2 = count($logger->extra);
         $block2 = $this->createPhpBlock('echo "hello";');
         $result2 = $block2->getContent('S', 'P');
 
         $this->assertSame('', $result2);
+
+        $newExtras2 = array_slice($logger->extra, $extraBefore2);
+        $legacyPipeWarnings = array_filter(array_column($newExtras2, 'msg'), fn($m) => str_contains($m, 'contains "|"'));
+        $this->assertEmpty($legacyPipeWarnings, 'Non-pipe content should not trigger pipe warning');
     }
 }
