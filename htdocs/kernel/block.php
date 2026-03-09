@@ -386,16 +386,21 @@ class XoopsBlock extends XoopsObject
                 return '';
             }
 
+            ob_start();
             include_once $filePath;
 
             if (!function_exists($showFunc)) {
+                ob_end_clean();
                 $logger = XoopsLogger::getInstance();
                 $logger->addDeprecated("PHP block function not found: {$showFunc} in custom_blocks/{$funcFile}");
                 return '';
             }
 
-            $content = $showFunc();
-            return str_replace('{X_SITEURL}', XOOPS_URL . '/', (string) $content);
+            $content  = $showFunc();
+            $buffered = ob_get_clean();
+            $combined = $buffered . (string) $content;
+
+            return str_replace('{X_SITEURL}', XOOPS_URL . '/', $combined);
         }
 
         // Legacy eval()-based PHP blocks (backward compatibility)
@@ -411,8 +416,7 @@ class XoopsBlock extends XoopsObject
 
         ob_start();
         echo eval($raw);
-        $content = ob_get_contents();
-        ob_end_clean();
+        $content = ob_get_clean();
 
         return str_replace('{X_SITEURL}', XOOPS_URL . '/', $content);
     }

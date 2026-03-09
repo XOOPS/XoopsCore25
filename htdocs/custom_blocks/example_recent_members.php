@@ -40,10 +40,10 @@ function b_custom_recent_members_show()
 
     $html = '<ul class="custom-recent-members" style="list-style:none; padding:0;">';
     foreach ($users as $user) {
-        $uid    = $user->getVar('uid');
+        $uid    = (int) $user->getVar('uid');
         $uname  = htmlspecialchars($user->getVar('uname'), ENT_QUOTES | ENT_HTML5);
         $avatar = $user->getVar('user_avatar');
-        $date   = date('M j', $user->getVar('user_regdate'));
+        $date   = date('M j', (int) $user->getVar('user_regdate'));
 
         $avatarUrl = XOOPS_URL . '/uploads/' . $avatar;
         if (empty($avatar) || $avatar === 'avatars/blank.gif') {
@@ -51,7 +51,7 @@ function b_custom_recent_members_show()
         }
 
         $html .= '<li style="margin-bottom:8px; display:flex; align-items:center; gap:8px;">';
-        $html .= '<img src="' . $avatarUrl . '" alt="' . $uname . '" '
+        $html .= '<img src="' . htmlspecialchars($avatarUrl, ENT_QUOTES | ENT_HTML5) . '" alt="' . $uname . '" '
               . 'style="width:32px; height:32px; border-radius:50%;" />';
         $html .= '<a href="' . XOOPS_URL . '/userinfo.php?uid=' . $uid . '">' . $uname . '</a>';
         $html .= ' <small style="color:#888;">(' . $date . ')</small>';

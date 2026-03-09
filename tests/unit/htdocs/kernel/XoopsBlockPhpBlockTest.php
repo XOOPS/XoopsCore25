@@ -22,6 +22,16 @@ class XoopsBlockPhpBlockTest extends KernelTestCase
 {
     private string $customBlocksDir;
 
+    public static function setUpBeforeClass(): void
+    {
+        parent::setUpBeforeClass();
+        // Pre-initialize XoopsLogger so its handler installation doesn't
+        // happen mid-test and trigger PHPUnit's risky test detection.
+        if (!isset($GLOBALS['xoopsLogger'])) {
+            $GLOBALS['xoopsLogger'] = \XoopsLogger::getInstance();
+        }
+    }
+
     protected function setUp(): void
     {
         parent::setUp();
@@ -165,13 +175,8 @@ class XoopsBlockPhpBlockTest extends KernelTestCase
     #[Test]
     public function fileBasedBlockReturnsEmptyWhenFileNotFound(): void
     {
-        // Save and restore error/exception handlers to avoid PHPUnit "risky" warning
-        // (XoopsLogger::getInstance() installs its own handlers internally)
         $block = $this->createPhpBlock('nonexistent_block.php|b_custom_nonexistent_show');
         $result = $block->getContent('S', 'P');
-
-        restore_error_handler();
-        restore_exception_handler();
 
         $this->assertSame('', $result);
     }
@@ -386,37 +391,49 @@ class XoopsBlockPhpBlockTest extends KernelTestCase
     #[Test]
     public function exampleWelcomeBlockReturnsHtmlForGuest(): void
     {
-        // Ensure no user is logged in
-        $GLOBALS['xoopsUser'] = null;
-        $GLOBALS['xoopsConfig'] = ['sitename' => 'Test Site'];
+        $originalUser   = $GLOBALS['xoopsUser'] ?? null;
+        $originalConfig = $GLOBALS['xoopsConfig'] ?? null;
 
-        include_once $this->customBlocksDir . '/example_welcome.php';
-        $result = b_custom_welcome_show();
+        try {
+            $GLOBALS['xoopsUser']   = null;
+            $GLOBALS['xoopsConfig'] = ['sitename' => 'Test Site'];
 
-        $this->assertIsString($result);
-        $this->assertStringContainsString('Test Site', $result);
-        $this->assertNotEmpty($result);
+            include_once $this->customBlocksDir . '/example_welcome.php';
+            $result = b_custom_welcome_show();
+
+            $this->assertIsString($result);
+            $this->assertStringContainsString('Test Site', $result);
+            $this->assertNotEmpty($result);
+        } finally {
+            $GLOBALS['xoopsUser']   = $originalUser;
+            $GLOBALS['xoopsConfig'] = $originalConfig;
+        }
     }
 
     #[Test]
     public function exampleWelcomeBlockReturnsHtmlForLoggedInUser(): void
     {
-        // Create a mock user object
-        require_once XOOPS_ROOT_PATH . '/kernel/user.php';
-        $user = new \XoopsUser();
-        $user->setVar('uname', 'TestUser');
-        $user->setVar('uid', 1);
-        $GLOBALS['xoopsUser'] = $user;
+        $originalUser   = $GLOBALS['xoopsUser'] ?? null;
+        $originalConfig = $GLOBALS['xoopsConfig'] ?? null;
 
-        include_once $this->customBlocksDir . '/example_welcome.php';
-        $result = b_custom_welcome_show();
+        try {
+            require_once XOOPS_ROOT_PATH . '/kernel/user.php';
+            $user = new \XoopsUser();
+            $user->setVar('uname', 'TestUser');
+            $user->setVar('uid', 1);
+            $GLOBALS['xoopsUser']   = $user;
+            $GLOBALS['xoopsConfig'] = $originalConfig ?? [];
 
-        $this->assertIsString($result);
-        $this->assertStringContainsString('TestUser', $result);
-        $this->assertNotEmpty($result);
+            include_once $this->customBlocksDir . '/example_welcome.php';
+            $result = b_custom_welcome_show();
 
-        // Clean up
-        $GLOBALS['xoopsUser'] = null;
+            $this->assertIsString($result);
+            $this->assertStringContainsString('TestUser', $result);
+            $this->assertNotEmpty($result);
+        } finally {
+            $GLOBALS['xoopsUser']   = $originalUser;
+            $GLOBALS['xoopsConfig'] = $originalConfig;
+        }
     }
 
     // =========================================================================
@@ -440,6 +457,35 @@ class XoopsBlockPhpBlockTest extends KernelTestCase
 
             $this->assertEquals('<p>Include once test</p>', $result1);
             $this->assertEquals('<p>Include once test</p>', $result2);
+        } finally {
+            $this->removeTempBlockFile($filename);
+        }
+    }
+
+    #[Test]
+    public function fileBasedBlockCapturesEchoedOutput(): void
+    {
+        $filename = 'test_echo_' . uniqid() . '.php';
+        $funcName = 'b_custom_echo_' . str_replace('.', '', uniqid()) . '_show';
+        // Create a block file that echoes instead of returning
+        $filePath = $this->customBlocksDir . '/' . $filename;
+        $code = "<?php\n"
+            . "defined('XOOPS_ROOT_PATH') || exit('Restricted access');\n"
+            . "if (!function_exists('{$funcName}')) {\n"
+            . "    function {$funcName}() {\n"
+            . "        echo '<p>Echoed output</p>';\n"
+            . "        return '<p>Returned output</p>';\n"
+            . "    }\n"
+            . "}\n";
+        file_put_contents($filePath, $code);
+
+        try {
+            $block = $this->createPhpBlock($filename . '|' . $funcName);
+            $result = $block->getContent('S', 'P');
+
+            // Should contain both echoed and returned content
+            $this->assertStringContainsString('<p>Echoed output</p>', $result);
+            $this->assertStringContainsString('<p>Returned output</p>', $result);
         } finally {
             $this->removeTempBlockFile($filename);
         }

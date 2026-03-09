@@ -40,7 +40,7 @@ function b_custom_site_stats_show()
     $newestName = !empty($newest)
         ? htmlspecialchars($newest[0]->getVar('uname'), ENT_QUOTES | ENT_HTML5)
         : 'N/A';
-    $newestUid = !empty($newest) ? $newest[0]->getVar('uid') : 0;
+    $newestUid = !empty($newest) ? (int) $newest[0]->getVar('uid') : 0;
 
     // Count total posts (comments)
     /** @var XoopsMySQLDatabase $db */
@@ -48,7 +48,7 @@ function b_custom_site_stats_show()
     $sql = 'SELECT COUNT(*) FROM ' . $db->prefix('xoopscomments');
     $result = $db->query($sql);
     $totalPosts = 0;
-    if ($db->isResultSet($result) && $result instanceof \mysqli_result) {
+    if ($db->isResultSet($result)) {
         [$totalPosts] = $db->fetchRow($result);
     }
 

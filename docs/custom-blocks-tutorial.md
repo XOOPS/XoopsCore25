@@ -17,8 +17,8 @@ disk, and the block references the file + function. No `eval()` is involved.
 
 Legacy PHP blocks (raw code stored in `content`) still work **if** you set
 `XOOPS_ALLOW_PHP_BLOCKS` to `true` in `mainfile.php`. Without that constant,
-legacy blocks display a warning and produce no output. New file-based blocks
-work without any special constant.
+legacy blocks add a deprecation entry to the XOOPS debug log and produce no output.
+New file-based blocks work without any special constant.
 
 ---
 
@@ -186,7 +186,7 @@ function b_custom_site_stats_show()
     $sql = 'SELECT COUNT(*) FROM ' . $db->prefix('xoopscomments');
     $result = $db->query($sql);
     $totalPosts = 0;
-    if ($db->isResultSet($result) && $result instanceof \mysqli_result) {
+    if ($db->isResultSet($result)) {
         [$totalPosts] = $db->fetchRow($result);
     }
     // ... format as HTML table ...
@@ -231,7 +231,7 @@ function b_custom_my_old_block_show()
 | Legacy (eval) | New (file-based) |
 |--------------|-----------------|
 | Code runs in `eval()` context | Code runs as a normal PHP function |
-| Output via `echo` / `print` | **Return** the HTML string |
+| Output via `echo` / `print` | **Return** the HTML string (echoed output is also captured) |
 | Code stored in database | Code stored in a file on disk |
 | No function wrapper | Must be inside a named function |
 | Requires `XOOPS_ALLOW_PHP_BLOCKS` | Works without any special constant |
