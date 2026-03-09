@@ -224,11 +224,15 @@ class Snoopy
                 }
                 if ($this->_isproxy) {
                     // using proxy, send entire URI
-                    $this->_httpsrequest($URI, $URI, $this->_httpmethod);
+                    if (!$this->_httpsrequest($URI, $URI, $this->_httpmethod)) {
+                        return false;
+                    }
                 } else {
                     $path = $URI_PARTS["path"] . ($URI_PARTS["query"] ? "?" . $URI_PARTS["query"] : "");
                     // no proxy, send only the path
-                    $this->_httpsrequest($path, $URI, $this->_httpmethod);
+                    if (!$this->_httpsrequest($path, $URI, $this->_httpmethod)) {
+                        return false;
+                    }
                 }
 
                 if ($this->_redirectaddr) {
@@ -373,11 +377,15 @@ class Snoopy
                 }
                 if ($this->_isproxy) {
                     // using proxy, send entire URI
-                    $this->_httpsrequest($URI, $URI, $this->_submit_method, $this->_submit_type, $postdata);
+                    if (!$this->_httpsrequest($URI, $URI, $this->_submit_method, $this->_submit_type, $postdata)) {
+                        return false;
+                    }
                 } else {
                     $path = $URI_PARTS["path"] . ($URI_PARTS["query"] ? "?" . $URI_PARTS["query"] : "");
                     // no proxy, send only the path
-                    $this->_httpsrequest($path, $URI, $this->_submit_method, $this->_submit_type, $postdata);
+                    if (!$this->_httpsrequest($path, $URI, $this->_submit_method, $this->_submit_type, $postdata)) {
+                        return false;
+                    }
                 }
 
                 if ($this->_redirectaddr) {
@@ -1022,47 +1030,65 @@ class Snoopy
             $headers[] = "Authorization: BASIC " . base64_encode($this->user . ":" . $this->pass);
         }
 
-        for ($curr_header = 0; $curr_header < count($headers); $curr_header++) {
-            $safer_header = strtr($headers[$curr_header], "\"", " ");
-            $cmdline_params .= " -H \"" . $safer_header . "\"";
-        }
-
-        if (!empty($body)) {
-            $cmdline_params .= " -d \"$body\"";
-        }
-
-        if ($this->read_timeout > 0) {
-            $cmdline_params .= " -m " . $this->read_timeout;
-        }
-
-        $headerfile = tempnam($temp_dir, "sno");
-
-        exec($this->curl_path . " -k -D \"$headerfile\"" . $cmdline_params . " " . escapeshellarg($URI), $results, $return);
-
-        if ($return) {
-            $this->error = "Error: cURL could not retrieve the document, error $return.";
+        if (!function_exists('curl_init')) {
+            $this->error = 'PHP cURL extension is required for HTTPS requests.';
             return false;
         }
 
+        $ch = curl_init();
+        curl_setopt($ch, CURLOPT_URL, $URI);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+        curl_setopt($ch, CURLOPT_HEADER, true);
+        curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
+        curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, true);
+        curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, 2);
+        curl_setopt($ch, CURLOPT_CUSTOMREQUEST, $http_method);
 
-        $results = implode("\r\n", $results);
+        if (!empty($body)) {
+            curl_setopt($ch, CURLOPT_POSTFIELDS, $body);
+        }
 
-        $result_headers = file((string)$headerfile);
+        if ($this->read_timeout > 0) {
+            curl_setopt($ch, CURLOPT_TIMEOUT, $this->read_timeout);
+        }
+
+        if (!empty($this->proxy_host)) {
+            $proxy = $this->proxy_host . ':' . $this->proxy_port;
+            curl_setopt($ch, CURLOPT_PROXY, $proxy);
+            if (!empty($this->proxy_user)) {
+                curl_setopt($ch, CURLOPT_PROXYUSERPWD, $this->proxy_user . ':' . $this->proxy_pass);
+            }
+        }
+
+        $response = curl_exec($ch);
+
+        if ($response === false || !is_string($response)) {
+            $this->error = 'cURL error: ' . curl_error($ch);
+            curl_close($ch);
+            return false;
+        }
+
+        $header_size = curl_getinfo($ch, CURLINFO_HEADER_SIZE);
+        curl_close($ch);
+
+        $header_text = substr($response, 0, $header_size);
+        $results     = substr($response, $header_size);
+
+        $result_headers = explode("\r\n", $header_text);
 
         $this->_redirectaddr = false;
         unset($this->headers);
 
-        for ($currentHeader = 0; $currentHeader < count($result_headers); $currentHeader++) {
+        foreach ($result_headers as $currentHeader) {
+            if (empty(trim($currentHeader))) {
+                continue;
+            }
 
             // if a header begins with Location: or URI:, set the redirect
-            if (preg_match("/^(Location: |URI: )/i", $result_headers[$currentHeader])) {
-                // get URL portion of the redirect
-                preg_match("/^(Location: |URI:)\s+(.*)/", chop($result_headers[$currentHeader]), $matches);
-                // look for :// in the Location header to see if hostname is included
+            if (preg_match("/^(Location: |URI: )/i", $currentHeader)) {
+                preg_match("/^(Location: |URI:)\s+(.*)/", chop($currentHeader), $matches);
                 if (!preg_match("|\:\/\/|", $matches[2])) {
-                    // no host in the path, so prepend
                     $this->_redirectaddr = $URI_PARTS["scheme"] . "://" . $this->host . ":" . $this->port;
-                    // eliminate double slash
                     if (!preg_match("|^/|", $matches[2])) {
                         $this->_redirectaddr .= "/" . $matches[2];
                     } else {
@@ -1073,18 +1099,17 @@ class Snoopy
                 }
             }
 
-            if (preg_match("|^HTTP/|", $result_headers[$currentHeader])) {
-                $this->response_code = $result_headers[$currentHeader];
+            if (preg_match("|^HTTP/|", $currentHeader)) {
+                $this->response_code = $currentHeader;
                 if (preg_match("|^HTTP/[^\s]*\s(.*?)\s|", $this->response_code, $match)) {
                     $this->status = $match[1];
                 }
             }
 
-            $this->headers[] = $result_headers[$currentHeader];
+            $this->headers[] = $currentHeader;
         }
 
-        // check if there is a a redirect meta tag
-
+        // check if there is a redirect meta tag
         if (preg_match("'<meta[\s]*http-equiv[^>]*?content[\s]*=[\s]*[\"\']?\d+;[\s]*URL[\s]*=[\s]*([^\"\']*?)[\"\']?>'i", $results, $match)) {
             $this->_redirectaddr = $this->_expandlinks($match[1], $URI);
         }
@@ -1095,16 +1120,11 @@ class Snoopy
             for ($x = 0; $x < count($match[1]); $x++) {
                 $this->_frameurls[] = $this->_expandlinks($match[1][$x], $URI_PARTS["scheme"] . "://" . $this->host);
             }
-        } // have we already fetched framed content?
-        elseif (is_array($this->results)) {
+        } elseif (is_array($this->results)) {
             $this->results[] = $results;
-        }
-        // no framed content
-        else {
+        } else {
             $this->results = $results;
         }
-
-        unlink((string)$headerfile);
 
         return true;
     }

@@ -16,6 +16,7 @@ class FunctionsIniTest extends TestCase
     {
         if (!self::$loaded) {
             require_once XOOPS_ROOT_PATH . '/Frameworks/art/functions.ini.php';
+            require_once __DIR__ . '/TestRenderers.php';
             self::$loaded = true;
         }
     }
@@ -279,6 +280,60 @@ class FunctionsIniTest extends TestCase
     {
         $this->assertTrue(defined('FRAMEWORKS_ROOT_PATH'));
         $this->assertSame(XOOPS_ROOT_PATH . '/Frameworks', FRAMEWORKS_ROOT_PATH);
+    }
+
+    // ---------------------------------------------------------------
+    // mod_loadRenderer tests (eval removal — security audit phase 2)
+    // ---------------------------------------------------------------
+
+    #[Test]
+    public function modLoadRendererFunctionExists(): void
+    {
+        $this->assertTrue(
+            function_exists('mod_loadRenderer'),
+            'mod_loadRenderer() should be defined in functions.ini.php'
+        );
+    }
+
+    #[Test]
+    public function modLoadRendererReturnsInstanceFromStaticCall(): void
+    {
+        // Renderer stubs are pre-loaded from TestRenderers.php in setUpBeforeClass()
+        $mockModule = $this->createMockModule('testmod');
+        $old = $GLOBALS['xoopsModule'] ?? null;
+        $GLOBALS['xoopsModule'] = $mockModule;
+
+        // mod_loadRenderer checks class_exists() first, so it won't try to require
+        $result = mod_loadRenderer('widget', 'testmod');
+
+        if ($old !== null) {
+            $GLOBALS['xoopsModule'] = $old;
+        } else {
+            unset($GLOBALS['xoopsModule']);
+        }
+
+        $this->assertInstanceOf(\TestmodWidgetRenderer::class, $result);
+    }
+
+    #[Test]
+    public function modLoadRendererUsesStaticMethodNotEval(): void
+    {
+        // Verify that for a pre-loaded class, the function returns the same
+        // singleton instance on repeated calls (confirming static ::instance())
+        $mockModule = $this->createMockModule('demomod');
+        $old = $GLOBALS['xoopsModule'] ?? null;
+        $GLOBALS['xoopsModule'] = $mockModule;
+
+        $first  = mod_loadRenderer('form', 'demomod');
+        $second = mod_loadRenderer('form', 'demomod');
+
+        if ($old !== null) {
+            $GLOBALS['xoopsModule'] = $old;
+        } else {
+            unset($GLOBALS['xoopsModule']);
+        }
+
+        $this->assertSame($first, $second, 'Static ::instance() should return same singleton');
     }
 
     // ---------------------------------------------------------------
