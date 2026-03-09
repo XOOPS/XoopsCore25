@@ -388,6 +388,18 @@ class XoopsBlock extends XoopsObject
     }
 
     /**
+     * Get the directory path for custom block files.
+     *
+     * Subclasses or tests may override this to point to a different directory.
+     *
+     * @return string absolute path to the custom_blocks directory (no trailing slash)
+     */
+    protected static function getCustomBlocksDir(): string
+    {
+        return XOOPS_ROOT_PATH . '/custom_blocks';
+    }
+
+    /**
      * Execute a file-based PHP block (no eval).
      *
      * Validates the file path, includes it, verifies function origin via
@@ -412,7 +424,8 @@ class XoopsBlock extends XoopsObject
             return $this->executeVerifiedBlock($verifiedCallbacks[$cacheKey], $showFunc);
         }
 
-        $filePath = XOOPS_ROOT_PATH . '/custom_blocks/' . $funcFile;
+        $blocksDir = static::getCustomBlocksDir();
+        $filePath = $blocksDir . '/' . $funcFile;
 
         if (!file_exists($filePath)) {
             if (!isset($warnedFiles[$funcFile])) {
@@ -424,7 +437,7 @@ class XoopsBlock extends XoopsObject
 
         // Cache the resolved custom_blocks root across calls
         if (!isset($blocksRootCache)) {
-            $blocksRootCache = realpath(XOOPS_ROOT_PATH . '/custom_blocks');
+            $blocksRootCache = realpath($blocksDir);
         }
 
         // Verify the resolved path stays within custom_blocks/ (symlink traversal prevention)
@@ -509,6 +522,11 @@ class XoopsBlock extends XoopsObject
      *
      * Requires XOOPS_ALLOW_PHP_BLOCKS to be defined as true. Without it,
      * logs a deprecation warning and returns empty output.
+     *
+     * Deprecation roadmap:
+     *   2.5.12  — eval() disabled by default; opt-in via XOOPS_ALLOW_PHP_BLOCKS.
+     *   next minor — hard-disable in production unless explicit override.
+     *   next major — remove eval() fallback entirely.
      *
      * @param string $raw raw PHP code from the block content field
      *

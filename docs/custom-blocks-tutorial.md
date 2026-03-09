@@ -260,18 +260,22 @@ Your block functions run in the normal XOOPS context with full access to:
 
 | API | How to access | Use for |
 |-----|---------------|---------|
+| Handlers | `xoops_getHandler('name')` | Data access (preferred) |
+| Module handlers | `xoops_getModuleHandler('name', 'dirname')` | Module-specific data |
 | Current user | `global $xoopsUser` | User info, permissions |
 | Site config | `global $xoopsConfig` | Site name, language, etc. |
-| Database | `XoopsDatabaseFactory::getDatabaseConnection()` | Direct SQL queries |
-| Handlers | `xoops_getHandler('name')` | ORM-style data access |
-| Module handlers | `xoops_getModuleHandler('name', 'dirname')` | Module-specific data |
 | Text sanitizer | `\MyTextSanitizer::getInstance()` | Safe HTML formatting |
 | Request data | `\Xmf\Request::getString('key', '', 'GET')` | GET/POST parameters |
+| Database | `XoopsDatabaseFactory::getDatabaseConnection()` | Direct SQL (low-level fallback) |
+
+**Prefer handlers and `Criteria` objects** for all data access. They handle
+quoting, table prefixes, and result mapping automatically. Direct SQL via
+`$db->query()` should only be used when no handler exists for the data you need.
 
 ### Security Reminders
 
 - Always escape output with `htmlspecialchars($val, ENT_QUOTES | ENT_HTML5, 'UTF-8')`
-- Use `$db->quote()` or prepared statements for SQL values
+- If you must use direct SQL, use `$db->quote()` or prepared statements for values
 - Use `\Xmf\Request` instead of raw `$_GET`/`$_POST`
 - Never include user input in file paths
 
