@@ -20,8 +20,12 @@ require_once XOOPS_ROOT_PATH . '/kernel/block.php';
 #[CoversClass(XoopsBlock::class)]
 class XoopsBlockPhpBlockTest extends KernelTestCase
 {
+    /** @var string Path to the custom_blocks directory */
     private string $customBlocksDir;
 
+    /**
+     * Pre-initialize XoopsLogger to prevent risky test detection.
+     */
     public static function setUpBeforeClass(): void
     {
         parent::setUpBeforeClass();
@@ -32,6 +36,9 @@ class XoopsBlockPhpBlockTest extends KernelTestCase
         }
     }
 
+    /**
+     * Set up the custom blocks directory path.
+     */
     protected function setUp(): void
     {
         parent::setUp();
@@ -45,6 +52,10 @@ class XoopsBlockPhpBlockTest extends KernelTestCase
 
     /**
      * Helper to create a custom block with c_type = 'P' (PHP) and block_type = 'C' (custom).
+     *
+     * @param string $content the block content field value
+     *
+     * @return XoopsBlock configured PHP custom block
      */
     private function createPhpBlock(string $content): XoopsBlock
     {
@@ -58,7 +69,11 @@ class XoopsBlockPhpBlockTest extends KernelTestCase
     /**
      * Helper to create a temporary block file with a function.
      *
-     * @return string The filename (without path)
+     * @param string $filename    the PHP filename to create
+     * @param string $functionName the function name to define
+     * @param string $returnValue  the value the function should return
+     *
+     * @return string the filename (without path)
      */
     private function createTempBlockFile(string $filename, string $functionName, string $returnValue): string
     {
@@ -77,6 +92,8 @@ class XoopsBlockPhpBlockTest extends KernelTestCase
 
     /**
      * Helper to remove a temporary block file.
+     *
+     * @param string $filename the filename to remove from custom_blocks/
      */
     private function removeTempBlockFile(string $filename): void
     {
@@ -90,6 +107,9 @@ class XoopsBlockPhpBlockTest extends KernelTestCase
     // File-based PHP block — valid format parsing
     // =========================================================================
 
+    /**
+     * Verify that a file-based block executes the referenced function and returns its content.
+     */
     #[Test]
     public function fileBasedBlockExecutesFunctionAndReturnsContent(): void
     {
@@ -107,6 +127,9 @@ class XoopsBlockPhpBlockTest extends KernelTestCase
         }
     }
 
+    /**
+     * Verify that {X_SITEURL} placeholder is replaced in file-based block output.
+     */
     #[Test]
     public function fileBasedBlockReplacesXSiteurlPlaceholder(): void
     {
@@ -125,6 +148,9 @@ class XoopsBlockPhpBlockTest extends KernelTestCase
         }
     }
 
+    /**
+     * Verify that leading/trailing whitespace in content is trimmed before regex matching.
+     */
     #[Test]
     public function fileBasedBlockTrimsWhitespace(): void
     {
@@ -143,6 +169,9 @@ class XoopsBlockPhpBlockTest extends KernelTestCase
         }
     }
 
+    /**
+     * Verify that a function returning null produces an empty string.
+     */
     #[Test]
     public function fileBasedBlockHandlesNullReturn(): void
     {
@@ -172,6 +201,9 @@ class XoopsBlockPhpBlockTest extends KernelTestCase
     // File-based PHP block — file not found
     // =========================================================================
 
+    /**
+     * Verify that a missing block file returns empty string without error.
+     */
     #[Test]
     public function fileBasedBlockReturnsEmptyWhenFileNotFound(): void
     {
@@ -185,6 +217,9 @@ class XoopsBlockPhpBlockTest extends KernelTestCase
     // File-based PHP block — function not found
     // =========================================================================
 
+    /**
+     * Verify that a file without the expected function returns empty string.
+     */
     #[Test]
     public function fileBasedBlockReturnsEmptyWhenFunctionNotFound(): void
     {
@@ -210,6 +245,11 @@ class XoopsBlockPhpBlockTest extends KernelTestCase
     // Content format validation — regex matching
     // =========================================================================
 
+    /**
+     * Verify that valid file-based content formats are recognized by the regex.
+     *
+     * @param string $content the content field value to test
+     */
     #[Test]
     #[DataProvider('validContentFormatProvider')]
     public function contentFormatIsRecognizedAsFileBased(string $content): void
@@ -225,6 +265,8 @@ class XoopsBlockPhpBlockTest extends KernelTestCase
     }
 
     /**
+     * Provides valid file-based content format strings.
+     *
      * @return array<string, array{string}>
      */
     public static function validContentFormatProvider(): array
@@ -238,6 +280,11 @@ class XoopsBlockPhpBlockTest extends KernelTestCase
         ];
     }
 
+    /**
+     * Verify that invalid content formats fall through to the legacy path (blocked).
+     *
+     * @param string $content the content field value to test
+     */
     #[Test]
     #[DataProvider('invalidContentFormatProvider')]
     public function contentFormatIsNotRecognizedAsFileBased(string $content): void
@@ -253,6 +300,8 @@ class XoopsBlockPhpBlockTest extends KernelTestCase
     }
 
     /**
+     * Provides invalid content format strings that should not match the file-based regex.
+     *
      * @return array<string, array{string}>
      */
     public static function invalidContentFormatProvider(): array
@@ -280,6 +329,9 @@ class XoopsBlockPhpBlockTest extends KernelTestCase
     // Security: path traversal prevention
     // =========================================================================
 
+    /**
+     * Verify that path traversal sequences in filenames are rejected by the regex.
+     */
     #[Test]
     public function pathTraversalInFilenameIsRejected(): void
     {
@@ -290,6 +342,9 @@ class XoopsBlockPhpBlockTest extends KernelTestCase
         $this->assertSame('', $result);
     }
 
+    /**
+     * Verify that absolute paths in filenames are rejected.
+     */
     #[Test]
     public function absolutePathInFilenameIsRejected(): void
     {
@@ -299,6 +354,9 @@ class XoopsBlockPhpBlockTest extends KernelTestCase
         $this->assertSame('', $result);
     }
 
+    /**
+     * Verify that Windows-style absolute paths in filenames are rejected.
+     */
     #[Test]
     public function windowsPathInFilenameIsRejected(): void
     {
@@ -312,6 +370,9 @@ class XoopsBlockPhpBlockTest extends KernelTestCase
     // Legacy eval path — backward compatibility
     // =========================================================================
 
+    /**
+     * Verify that legacy eval blocks return empty when XOOPS_ALLOW_PHP_BLOCKS is not defined.
+     */
     #[Test]
     public function legacyBlockReturnsEmptyWhenConstantNotDefined(): void
     {
@@ -327,6 +388,9 @@ class XoopsBlockPhpBlockTest extends KernelTestCase
     // getContent routing — c_type dispatch
     // =========================================================================
 
+    /**
+     * Verify that HTML c_type returns content without modification.
+     */
     #[Test]
     public function getContentWithHtmlCTypeReturnsHtmlContent(): void
     {
@@ -340,6 +404,9 @@ class XoopsBlockPhpBlockTest extends KernelTestCase
         $this->assertEquals('<p>HTML content</p>', $result);
     }
 
+    /**
+     * Verify that {X_SITEURL} is replaced in HTML content type blocks.
+     */
     #[Test]
     public function getContentWithHtmlReplacesXSiteurl(): void
     {
@@ -357,24 +424,36 @@ class XoopsBlockPhpBlockTest extends KernelTestCase
     // Example block files — integration tests
     // =========================================================================
 
+    /**
+     * Verify that the example welcome block file exists.
+     */
     #[Test]
     public function exampleWelcomeBlockFileExists(): void
     {
         $this->assertFileExists($this->customBlocksDir . '/example_welcome.php');
     }
 
+    /**
+     * Verify that the example recent members block file exists.
+     */
     #[Test]
     public function exampleRecentMembersBlockFileExists(): void
     {
         $this->assertFileExists($this->customBlocksDir . '/example_recent_members.php');
     }
 
+    /**
+     * Verify that the example site stats block file exists.
+     */
     #[Test]
     public function exampleSiteStatsBlockFileExists(): void
     {
         $this->assertFileExists($this->customBlocksDir . '/example_site_stats.php');
     }
 
+    /**
+     * Verify that all example block files define their expected functions.
+     */
     #[Test]
     public function exampleBlockFilesDefineExpectedFunctions(): void
     {
@@ -388,6 +467,9 @@ class XoopsBlockPhpBlockTest extends KernelTestCase
         $this->assertTrue(function_exists('b_custom_site_stats_show'));
     }
 
+    /**
+     * Verify that the welcome block returns HTML with site name for guest users.
+     */
     #[Test]
     public function exampleWelcomeBlockReturnsHtmlForGuest(): void
     {
@@ -410,6 +492,9 @@ class XoopsBlockPhpBlockTest extends KernelTestCase
         }
     }
 
+    /**
+     * Verify that the welcome block returns HTML with username for logged-in users.
+     */
     #[Test]
     public function exampleWelcomeBlockReturnsHtmlForLoggedInUser(): void
     {
@@ -440,6 +525,9 @@ class XoopsBlockPhpBlockTest extends KernelTestCase
     // executePhpBlock — edge cases
     // =========================================================================
 
+    /**
+     * Verify that multiple calls to the same block file use include_once without errors.
+     */
     #[Test]
     public function multipleCallsToSameBlockFileUseIncludeOnce(): void
     {
@@ -462,6 +550,9 @@ class XoopsBlockPhpBlockTest extends KernelTestCase
         }
     }
 
+    /**
+     * Verify that echoed output from block functions is captured along with returned content.
+     */
     #[Test]
     public function fileBasedBlockCapturesEchoedOutput(): void
     {
@@ -491,6 +582,9 @@ class XoopsBlockPhpBlockTest extends KernelTestCase
         }
     }
 
+    /**
+     * Verify that a function returning an empty string produces empty block output.
+     */
     #[Test]
     public function blockWithEmptyStringReturnedFromFunction(): void
     {
@@ -508,9 +602,25 @@ class XoopsBlockPhpBlockTest extends KernelTestCase
         }
     }
 
+    /**
+     * Verify that the index.php guard file exists in the custom_blocks directory.
+     */
     #[Test]
     public function indexPhpGuardFileExistsInCustomBlocksDir(): void
     {
         $this->assertFileExists($this->customBlocksDir . '/index.php');
+    }
+
+    /**
+     * Verify that content containing a pipe but not matching file-based format is blocked.
+     */
+    #[Test]
+    public function malformedPipeContentIsNotEvald(): void
+    {
+        // Content has a pipe but doesn't match the file-based regex (hyphen in function name)
+        $block = $this->createPhpBlock('file.php|func-name');
+        $result = $block->getContent('S', 'P');
+
+        $this->assertSame('', $result);
     }
 }

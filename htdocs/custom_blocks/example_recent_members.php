@@ -45,9 +45,9 @@ function b_custom_recent_members_show()
         $avatar = $user->getVar('user_avatar');
         $date   = date('M j', (int) $user->getVar('user_regdate'));
 
-        $avatarUrl = XOOPS_URL . '/uploads/' . $avatar;
-        if (empty($avatar) || $avatar === 'avatars/blank.gif') {
-            $avatarUrl = XOOPS_URL . '/uploads/avatars/blank.gif';
+        $avatarUrl = XOOPS_UPLOAD_URL . '/' . ltrim((string) $avatar, '/');
+        if (empty($avatar) || basename($avatar) === 'blank.gif') {
+            $avatarUrl = XOOPS_UPLOAD_URL . '/avatars/blank.gif';
         }
 
         $html .= '<li style="margin-bottom:8px; display:flex; align-items:center; gap:8px;">';
