@@ -13,6 +13,36 @@ use XoopsUser;
 require_once XOOPS_ROOT_PATH . '/kernel/block.php';
 
 /**
+ * XoopsBlock subclass that redirects custom_blocks to a temp directory.
+ *
+ * Allows tests to write temporary block files without polluting the
+ * real custom_blocks/ tree.
+ */
+class TestableXoopsBlock extends XoopsBlock
+{
+    /** @var string|null override directory for custom blocks */
+    private static ?string $testBlocksDir = null;
+
+    /**
+     * Set the custom blocks directory for testing.
+     *
+     * @param string|null $dir absolute path or null to reset
+     */
+    public static function setTestBlocksDir(?string $dir): void
+    {
+        self::$testBlocksDir = $dir;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    protected static function getCustomBlocksDir(): string
+    {
+        return self::$testBlocksDir ?? parent::getCustomBlocksDir();
+    }
+}
+
+/**
  * Tests for file-based PHP custom blocks (executePhpBlock).
  *
  * Tests the new file-based PHP block system where content field stores
@@ -21,8 +51,11 @@ require_once XOOPS_ROOT_PATH . '/kernel/block.php';
 #[CoversClass(XoopsBlock::class)]
 class XoopsBlockPhpBlockTest extends KernelTestCase
 {
-    /** @var string Path to the custom_blocks directory */
+    /** @var string Path to the real custom_blocks directory (for example file tests) */
     private string $customBlocksDir;
+
+    /** @var string Path to a per-test temp directory for temp block files */
+    private string $tempBlocksDir;
 
     /**
      * Pre-initialize XoopsLogger to prevent risky test detection.
@@ -38,21 +71,42 @@ class XoopsBlockPhpBlockTest extends KernelTestCase
     }
 
     /**
-     * Set up the custom blocks directory path.
+     * Set up isolated temp directory for block file tests.
      */
     protected function setUp(): void
     {
         parent::setUp();
         $this->customBlocksDir = XOOPS_ROOT_PATH . '/custom_blocks';
-
-        // Ensure the custom_blocks directory exists for testing
-        if (!is_dir($this->customBlocksDir)) {
-            mkdir($this->customBlocksDir, 0755, true);
-        }
+        $this->tempBlocksDir = sys_get_temp_dir() . '/xoops_test_blocks_' . uniqid();
+        mkdir($this->tempBlocksDir, 0755, true);
+        TestableXoopsBlock::setTestBlocksDir($this->tempBlocksDir);
     }
 
     /**
-     * Helper to create a custom block with c_type = 'P' (PHP) and block_type = 'C' (custom).
+     * Clean up temp directory and reset override.
+     */
+    protected function tearDown(): void
+    {
+        TestableXoopsBlock::setTestBlocksDir(null);
+        // Remove all files in temp dir
+        if (is_dir($this->tempBlocksDir)) {
+            $files = glob($this->tempBlocksDir . '/*');
+            if ($files !== false) {
+                foreach ($files as $file) {
+                    if (is_file($file)) {
+                        unlink($file);
+                    }
+                }
+            }
+            rmdir($this->tempBlocksDir);
+        }
+        parent::tearDown();
+    }
+
+    /**
+     * Helper to create a custom block using the testable subclass.
+     *
+     * Uses TestableXoopsBlock so file-based blocks resolve against the temp directory.
      *
      * @param string $content the block content field value
      *
@@ -60,7 +114,7 @@ class XoopsBlockPhpBlockTest extends KernelTestCase
      */
     private function createPhpBlock(string $content): XoopsBlock
     {
-        $block = new XoopsBlock();
+        $block = new TestableXoopsBlock();
         $block->setVar('block_type', 'C');
         $block->setVar('c_type', 'P');
         $block->setVar('content', $content);
@@ -78,7 +132,7 @@ class XoopsBlockPhpBlockTest extends KernelTestCase
      */
     private function createTempBlockFile(string $filename, string $functionName, string $returnValue): string
     {
-        $filePath = $this->customBlocksDir . '/' . $filename;
+        $filePath = $this->tempBlocksDir . '/' . $filename;
         $code = "<?php\n"
             . "defined('XOOPS_ROOT_PATH') || exit('Restricted access');\n"
             . "if (!function_exists('{$functionName}')) {\n"
@@ -98,7 +152,7 @@ class XoopsBlockPhpBlockTest extends KernelTestCase
      */
     private function removeTempBlockFile(string $filename): void
     {
-        $filePath = $this->customBlocksDir . '/' . $filename;
+        $filePath = $this->tempBlocksDir . '/' . $filename;
         if (file_exists($filePath)) {
             unlink($filePath);
         }
@@ -179,7 +233,7 @@ class XoopsBlockPhpBlockTest extends KernelTestCase
         $filename = 'test_null_' . uniqid() . '.php';
         $funcName = 'b_custom_null_' . str_replace('.', '', uniqid()) . '_show';
         // Create a block file that returns null
-        $filePath = $this->customBlocksDir . '/' . $filename;
+        $filePath = $this->tempBlocksDir . '/' . $filename;
         $code = "<?php\n"
             . "defined('XOOPS_ROOT_PATH') || exit('Restricted access');\n"
             . "if (!function_exists('{$funcName}')) {\n"
@@ -226,7 +280,7 @@ class XoopsBlockPhpBlockTest extends KernelTestCase
     {
         $filename = 'test_nofunc_' . uniqid() . '.php';
         // Create a file that does NOT define the expected function
-        $filePath = $this->customBlocksDir . '/' . $filename;
+        $filePath = $this->tempBlocksDir . '/' . $filename;
         $code = "<?php\n"
             . "defined('XOOPS_ROOT_PATH') || exit('Restricted access');\n"
             . "// This file intentionally has no function\n";
@@ -615,7 +669,7 @@ class XoopsBlockPhpBlockTest extends KernelTestCase
         $filename = 'test_echo_' . uniqid() . '.php';
         $funcName = 'b_custom_echo_' . str_replace('.', '', uniqid()) . '_show';
         // Create a block file that echoes instead of returning
-        $filePath = $this->customBlocksDir . '/' . $filename;
+        $filePath = $this->tempBlocksDir . '/' . $filename;
         $code = "<?php\n"
             . "defined('XOOPS_ROOT_PATH') || exit('Restricted access');\n"
             . "if (!function_exists('{$funcName}')) {\n"

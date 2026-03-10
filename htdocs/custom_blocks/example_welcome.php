@@ -32,7 +32,7 @@ function b_custom_welcome_show()
         $html .= '<p>You have been a member since '
               . date('F j, Y', (int) $xoopsUser->getVar('user_regdate')) . '.</p>';
     } else {
-        $sitename = htmlspecialchars($xoopsConfig['sitename'], ENT_QUOTES | ENT_HTML5, 'UTF-8');
+        $sitename = htmlspecialchars($xoopsConfig['sitename'] ?? 'XOOPS', ENT_QUOTES | ENT_HTML5, 'UTF-8');
         $html .= '<p>Welcome to <strong>' . $sitename . '</strong>!</p>';
         $html .= '<p><a href="' . XOOPS_URL . '/register.php">Register</a> or '
               . '<a href="' . XOOPS_URL . '/user.php">Login</a> to get started.</p>';

@@ -10,3 +10,4 @@
  * @see                 docs/custom-blocks-tutorial.md
  */
 header('HTTP/1.0 404 Not Found');
+exit;
