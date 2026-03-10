@@ -158,7 +158,7 @@ class XoopsBlockPhpBlockTest extends KernelTestCase
     private function removeTempBlockFile(string $filename): void
     {
         $filePath = $this->tempBlocksDir . '/' . $filename;
-        if (file_exists($filePath)) {
+        if (is_file($filePath) && is_writable($filePath)) {
             unlink($filePath);
         }
     }
@@ -469,7 +469,8 @@ class XoopsBlockPhpBlockTest extends KernelTestCase
         $spoofFunc = 'b_custom_spoof_' . str_replace('.', '', uniqid()) . '_show';
         $spoofFile = 'test_spoof_' . uniqid() . '.php';
         $spoofPath = $this->tempBlocksDir . '/' . $spoofFile;
-        file_put_contents($spoofPath, "<?php\nfunction {$spoofFunc}() { return '<p>SPOOFED</p>'; }\n");
+        $written = file_put_contents($spoofPath, "<?php\nfunction {$spoofFunc}() { return '<p>SPOOFED</p>'; }\n");
+        $this->assertNotFalse($written, "Failed to write spoof file: {$spoofPath}");
         include_once $spoofPath;
 
         try {
