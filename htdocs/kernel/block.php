@@ -481,7 +481,11 @@ class XoopsBlock extends XoopsObject
 
             return str_replace('{X_SITEURL}', XOOPS_URL . '/', $combined);
         } catch (\Throwable $e) {
-            $this->logBlockWarning("PHP block error in custom_blocks/{$funcFile}");
+            $msg = "PHP block error in custom_blocks/{$funcFile}";
+            if (defined('XOOPS_DEBUGMODE') && XOOPS_DEBUGMODE > 0) {
+                $msg .= ': [' . get_class($e) . '] ' . $e->getMessage();
+            }
+            $this->logBlockWarning($msg);
             return '';
         } finally {
             while (ob_get_level() > $obLevel) {
@@ -509,7 +513,11 @@ class XoopsBlock extends XoopsObject
 
             return str_replace('{X_SITEURL}', XOOPS_URL . '/', $combined);
         } catch (\Throwable $e) {
-            $this->logBlockWarning("PHP block error in " . basename($realPath));
+            $msg = 'PHP block error in ' . basename($realPath);
+            if (defined('XOOPS_DEBUGMODE') && XOOPS_DEBUGMODE > 0) {
+                $msg .= ': [' . get_class($e) . '] ' . $e->getMessage();
+            }
+            $this->logBlockWarning($msg);
             return '';
         } finally {
             while (ob_get_level() > $obLevel) {
@@ -566,7 +574,11 @@ class XoopsBlock extends XoopsObject
 
             return str_replace('{X_SITEURL}', XOOPS_URL . '/', $content);
         } catch (\Throwable $e) {
-            $this->logBlockWarning('Legacy PHP block execution error');
+            $msg = 'Legacy PHP block execution error';
+            if (defined('XOOPS_DEBUGMODE') && XOOPS_DEBUGMODE > 0) {
+                $msg .= ': [' . get_class($e) . '] ' . $e->getMessage();
+            }
+            $this->logBlockWarning($msg);
             return '';
         } finally {
             while (ob_get_level() > $obLevel) {

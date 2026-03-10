@@ -78,7 +78,9 @@ class XoopsBlockPhpBlockTest extends KernelTestCase
         parent::setUp();
         $this->customBlocksDir = XOOPS_ROOT_PATH . '/custom_blocks';
         $this->tempBlocksDir = sys_get_temp_dir() . '/xoops_test_blocks_' . uniqid();
-        mkdir($this->tempBlocksDir, 0755, true);
+        if (!is_dir($this->tempBlocksDir) && !mkdir($this->tempBlocksDir, 0755, true)) {
+            $this->markTestSkipped('Cannot create temp directory: ' . $this->tempBlocksDir);
+        }
         TestableXoopsBlock::setTestBlocksDir($this->tempBlocksDir);
     }
 
@@ -93,12 +95,14 @@ class XoopsBlockPhpBlockTest extends KernelTestCase
             $files = glob($this->tempBlocksDir . '/*');
             if ($files !== false) {
                 foreach ($files as $file) {
-                    if (is_file($file)) {
+                    if (is_file($file) && is_writable($file)) {
                         unlink($file);
                     }
                 }
             }
-            rmdir($this->tempBlocksDir);
+            if (is_writable($this->tempBlocksDir)) {
+                rmdir($this->tempBlocksDir);
+            }
         }
         parent::tearDown();
     }
@@ -140,7 +144,8 @@ class XoopsBlockPhpBlockTest extends KernelTestCase
             . "        return " . var_export($returnValue, true) . ";\n"
             . "    }\n"
             . "}\n";
-        file_put_contents($filePath, $code);
+        $written = file_put_contents($filePath, $code);
+        $this->assertNotFalse($written, "Failed to write temp block file: {$filePath}");
 
         return $filename;
     }
@@ -460,16 +465,19 @@ class XoopsBlockPhpBlockTest extends KernelTestCase
         $realFunc = 'b_custom_origin_' . str_replace('.', '', uniqid()) . '_show';
         $this->createTempBlockFile($filename, $realFunc, '<p>Real function</p>');
 
-        // Pre-define a global function that we'll try to call via the block
+        // Define a spoof function in a separate temp file (not the block file)
         $spoofFunc = 'b_custom_spoof_' . str_replace('.', '', uniqid()) . '_show';
-        eval("function {$spoofFunc}() { return '<p>SPOOFED</p>'; }");
+        $spoofFile = 'test_spoof_' . uniqid() . '.php';
+        $spoofPath = $this->tempBlocksDir . '/' . $spoofFile;
+        file_put_contents($spoofPath, "<?php\nfunction {$spoofFunc}() { return '<p>SPOOFED</p>'; }\n");
+        include_once $spoofPath;
 
         try {
             // Reference the block file but with the spoofed function name
             $block = $this->createPhpBlock($filename . '|' . $spoofFunc);
             $result = $block->getContent('S', 'P');
 
-            // Should be rejected — function exists but wasn't defined in the file
+            // Should be rejected — function exists but wasn't defined in the block file
             $this->assertSame('', $result);
         } finally {
             $this->removeTempBlockFile($filename);
