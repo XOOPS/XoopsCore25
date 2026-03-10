@@ -244,7 +244,7 @@ class XoopsBlockPhpBlockTest extends KernelTestCase
             . "if (!function_exists('{$funcName}')) {\n"
             . "    function {$funcName}() { return null; }\n"
             . "}\n";
-        file_put_contents($filePath, $code);
+        $this->assertNotFalse(file_put_contents($filePath, $code), "Failed to write: {$filePath}");
 
         try {
             $block = $this->createPhpBlock($filename . '|' . $funcName);
@@ -289,7 +289,7 @@ class XoopsBlockPhpBlockTest extends KernelTestCase
         $code = "<?php\n"
             . "defined('XOOPS_ROOT_PATH') || exit('Restricted access');\n"
             . "// This file intentionally has no function\n";
-        file_put_contents($filePath, $code);
+        $this->assertNotFalse(file_put_contents($filePath, $code), "Failed to write: {$filePath}");
 
         try {
             $block = $this->createPhpBlock($filename . '|b_custom_missing_function_show');
@@ -687,7 +687,7 @@ class XoopsBlockPhpBlockTest extends KernelTestCase
             . "        return '<p>Returned output</p>';\n"
             . "    }\n"
             . "}\n";
-        file_put_contents($filePath, $code);
+        $this->assertNotFalse(file_put_contents($filePath, $code), "Failed to write: {$filePath}");
 
         try {
             $block = $this->createPhpBlock($filename . '|' . $funcName);
