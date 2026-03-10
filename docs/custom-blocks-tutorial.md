@@ -278,7 +278,7 @@ quoting, table prefixes, and result mapping automatically. Direct SQL via
 - Use handlers and `Criteria` for data access — they handle quoting automatically
 - Use `\Xmf\Request` instead of raw `$_GET`/`$_POST`
 - Never include user input in file paths
-- If you must use direct SQL, always use `$db->quote()` or prepared statements
+- Avoid direct SQL; if unavoidable, use `$db->quote()` or prepared statements
 
 ---
 

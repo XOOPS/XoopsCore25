@@ -576,7 +576,7 @@ class XoopsBlock extends XoopsObject
     }
 
     /**
-     * Log a block warning via XoopsLogger and PHP error log.
+     * Log a block warning via XoopsLogger extra entries.
      *
      * @param string $message warning message
      */
