@@ -142,7 +142,7 @@ class Smarty4ScannerOutput extends ScannerOutput
         $this->outputAppend('<table class="table"><tr><th>' . 'Scan Summary' . '</th><th></th></tr>');
         $this->outputAppend('<tr><td>' . 'Files Checked' . '</td><td>' . (string) $this->getCount('checked') . '</td></tr>');
         $this->outputAppend('<tr class="warning"><td>' . 'Need file permission to fix' . '</td><td>' . (string) $this->getCount('notwritable') . '</td></tr>');
-        $this->outputAppend('<tr class="danger"><td>' . 'Need manual review to fix' . '</td><td>' . (string) $this->getCount('varname') . '</td></tr>');
+        $this->outputAppend('<tr class="warning"><td>' . 'Foreach item/from name conflicts (auto-fixable)' . '</td><td>' . (string) $this->getCount('varname') . '</td></tr>');
         $this->outputAppend('<tr><td>' . 'Using includeq/foreachq' . '</td><td>' . (string) ($this->getCount('includeq') + $this->getCount('foreachq')) . '</td></tr>');
         $this->outputAppend('<tr><td>' . 'Missing Quotes' . '</td><td>' . (string) ($this->getCount('noquotes')) . '</td></tr>');
         $this->outputAppend('<tr><td></td><td></td></tr>');
@@ -167,8 +167,8 @@ class Smarty4ScannerOutput extends ScannerOutput
             $this->outputAppend("<tr class='warning'>"
                 . "<td>$rule</td><td>$match</td><td>$file<br>$message</td></tr>");
         } elseif ($rule == 'varname') {
-            $message = _XOOPS_SMARTY4_SCANNER_MANUAL_REVIEW            ;
-            $this->outputAppend("<tr class='danger'>"
+            $message = _XOOPS_SMARTY4_SCANNER_AUTOFIX;
+            $this->outputAppend("<tr class='warning'>"
                 . "<td>$rule</td><td>$match</td><td>$file<br>$message</td></tr>");
         } else {
             $this->outputAppend("<tr><td>$rule</td><td>$match</td><td>$file</td></tr>");
