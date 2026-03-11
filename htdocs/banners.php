@@ -118,7 +118,7 @@ function bannerstats()
         redirect_header('banners.php', 2, _BANNERS_NO_LOGIN_DATA);
     }
     [$cid, $name, $passwd] = $row;
-    if ($banner_pass == $passwd) {
+    if (hash_equals((string) $passwd, $banner_pass)) {
         include $GLOBALS['xoops']->path('header.php');
         $cid = (int) $cid;
         $GLOBALS['xoTheme']->addStylesheet(null, null, '
@@ -288,7 +288,7 @@ function emailStats($cid, $bid)
                 redirect_header('banners.php', 2);
             }
             [$name, $email, $passwd] = $row;
-            if ($banner_pass == $passwd) {
+            if (hash_equals((string) $passwd, $banner_pass)) {
                 if ($email == '') {
                     redirect_header('banners.php', 3, sprintf(_BANNERS_MAIL_ERROR, $name));
                 } else {
@@ -351,7 +351,7 @@ function change_banner_url_by_client($cid, $bid, $url)
                 redirect_header('banners.php', 2);
             }
             [$passwd] = $row;
-            if ($banner_pass == $passwd) {
+            if (hash_equals((string) $passwd, $banner_pass)) {
                 $sql = sprintf('UPDATE %s SET clickurl=%s WHERE bid=%u AND cid=%u', $xoopsDB->prefix('banner'), $xoopsDB->quote($url), $bid, $cid);
                 if ($xoopsDB->exec($sql)) {
                     redirect_header('banners.php?op=Ok', 3, _BANNERS_DBUPDATED);
