@@ -165,7 +165,9 @@ function xoops_module_install($dirname)
                     if ($error === true) {
                         $db->exec('SET FOREIGN_KEY_CHECKS = 0');
                         foreach ($created_tables as $ct) {
-                            $db->exec('DROP TABLE IF EXISTS ' . $db->prefix($ct));
+                            if (!$db->exec('DROP TABLE IF EXISTS ' . $db->prefix($ct))) {
+                                $errs[] = 'Failed to drop table ' . $db->prefix($ct) . ' during cleanup';
+                            }
                         }
                         if (!$db->exec('SET FOREIGN_KEY_CHECKS = 1')) {
                             $errs[] = 'Failed to restore FOREIGN_KEY_CHECKS after cleanup';
@@ -180,7 +182,9 @@ function xoops_module_install($dirname)
                 $errs[] = '<p>' . sprintf(_AM_SYSTEM_MODULES_INSERT_DATA_FAILD, '<strong>' . $module->getVar('name') . '</strong>');
                 $db->exec('SET FOREIGN_KEY_CHECKS = 0');
                 foreach ($created_tables as $ct) {
-                    $db->exec('DROP TABLE IF EXISTS ' . $db->prefix($ct));
+                    if (!$db->exec('DROP TABLE IF EXISTS ' . $db->prefix($ct))) {
+                        $errs[] = 'Failed to drop table ' . $db->prefix($ct) . ' during cleanup';
+                    }
                 }
                 if (!$db->exec('SET FOREIGN_KEY_CHECKS = 1')) {
                     $errs[] = 'Failed to restore FOREIGN_KEY_CHECKS after failed module insert';

@@ -114,7 +114,11 @@ function bannerstats()
             E_USER_ERROR,
         );
     }
-    [$cid, $name, $passwd] = $xoopsDB->fetchRow($result);
+    $row = $xoopsDB->fetchRow($result);
+    if (false === $row) {
+        redirect_header('banners.php', 2, _BANNERS_NO_LOGIN_DATA);
+    }
+    [$cid, $name, $passwd] = $row;
     if ($banner_pass == $passwd) {
         include $GLOBALS['xoops']->path('header.php');
         $cid = (int) $cid;
@@ -197,14 +201,14 @@ function bannerstats()
                     echo "<p>" ._BANNERS_NO_FLASH  ."</p>";
                 } elseif (in_array($extension, ['.mp4', '.webm', '.ogg'])) {
                     // Handle actual video files
-                    $imageurl = htmlspecialchars($imageurl, ENT_QUOTES | ENT_HTML5, ‘UTF-8’);
+                    $imageurl = htmlspecialchars($imageurl, ENT_QUOTES | ENT_HTML5, 'UTF-8');
                     echo "<video width=’468’ height=’60’ controls>
                 <source src=’{$imageurl}’ type=’video/" . substr($extension, 1) . "’>
                 Your browser does not support the video tag.
               </video>";
                 } else {
                     // Assume it’s an image otherwise
-                    $imageurl = htmlspecialchars($imageurl, ENT_QUOTES | ENT_HTML5, ‘UTF-8’);
+                    $imageurl = htmlspecialchars($imageurl, ENT_QUOTES | ENT_HTML5, 'UTF-8');
                     echo "<img src='{$imageurl}' alt='' />";
                 }
             }
