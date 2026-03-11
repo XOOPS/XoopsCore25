@@ -108,10 +108,14 @@ if ($action !== '') {
         exit;
     } elseif ($action === 'delete' && Request::hasVar('ids', 'POST')) {
         $ids = Request::getArray('ids', [], 'POST');
-        // remove selected records
-        foreach ($ids as $lid) {
-            $lid = (int) $lid;
-            $db->query("DELETE FROM $log_table WHERE lid='$lid'");
+        if (!empty($ids)) {
+            // remove selected records
+            foreach ($ids as $lid) {
+                $lid = (int) $lid;
+                if (!$db->exec("DELETE FROM $log_table WHERE lid='$lid'")) {
+                    trigger_error('Failed to delete log entry: ' . $db->error(), E_USER_WARNING);
+                }
+            }
         }
         redirect_header('center.php?page=center', 2, _AM_MSG_REMOVED);
         exit;
@@ -138,7 +142,7 @@ if ($action !== '') {
         exit;
     } elseif ($action === 'deleteall') {
         // remove all records
-        $db->query("DELETE FROM $log_table");
+        $db->exec("DELETE FROM $log_table");
         redirect_header('center.php?page=center', 2, _AM_MSG_REMOVED);
         exit;
     } elseif ($action === 'compactlog') {
@@ -161,7 +165,9 @@ if ($action !== '') {
                 $buf[$ip . $type] = true;
             }
         }
-        $db->query("DELETE FROM $log_table WHERE lid IN (" . implode(',', $ids) . ')');
+        if (!empty($ids)) {
+            $db->exec("DELETE FROM $log_table WHERE lid IN (" . implode(',', $ids) . ')');
+        }
         redirect_header('center.php?page=center', 2, _AM_MSG_REMOVED);
         exit;
     }

@@ -178,7 +178,7 @@ class Upgrade_240 extends XoopsUpgrade
 
         foreach ($tables as $table => $keys) {
             $sql = 'SHOW KEYS FROM `' . $GLOBALS['xoopsDB']->prefix($table) . '`';
-            $result = $GLOBALS['xoopsDB']->queryF($sql);
+            $result = $GLOBALS['xoopsDB']->query($sql);
             if (!$GLOBALS['xoopsDB']->isResultSet($result)) {
                 continue;
             }
@@ -210,7 +210,7 @@ class Upgrade_240 extends XoopsUpgrade
 
         foreach ($tables as $table => $keys) {
             $sql = 'SHOW KEYS FROM `' . $GLOBALS['xoopsDB']->prefix($table) . '`';
-            $result = $GLOBALS['xoopsDB']->queryF($sql);
+            $result = $GLOBALS['xoopsDB']->query($sql);
             if (!$GLOBALS['xoopsDB']->isResultSet($result)) {
                 continue;
             }

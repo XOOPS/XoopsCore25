@@ -25,7 +25,7 @@ if (Request::hasVar('copy', 'POST') && Request::hasVar('old_prefix', 'POST')) {
     $new_prefix = empty($new_prefix) ? 'x' . substr(bin2hex(random_bytes(4)), -5) : $new_prefix;
 
     $sql = 'SHOW TABLE STATUS FROM `' . XOOPS_DB_NAME . '`';
-    $srs = $db->queryF($sql);
+    $srs = $db->query($sql);
     if (!$db->isResultSet($srs)) {
         throw new \RuntimeException(
             \sprintf(_DB_QUERY_ERROR, $sql) . $db->error(),
@@ -48,7 +48,7 @@ if (Request::hasVar('copy', 'POST') && Request::hasVar('old_prefix', 'POST')) {
         $new_table = $new_prefix . substr($old_table, strlen($old_prefix));
 
         $sql = 'SHOW CREATE TABLE ' . $old_table;
-        $crs = $db->queryF($sql);
+        $crs = $db->query($sql);
         if (!$db->isResultSet($crs)) {
             throw new \RuntimeException(
                 \sprintf(_DB_QUERY_ERROR, $sql) . $db->error(),
@@ -95,7 +95,7 @@ if (Request::hasVar('copy', 'POST') && Request::hasVar('old_prefix', 'POST')) {
 
     // get table list
     $sql = 'SHOW TABLE STATUS FROM `' . XOOPS_DB_NAME . '`';
-    $srs = $db->queryF($sql);
+    $srs = $db->query($sql);
     if (!$db->isResultSet($srs)) {
         throw new \RuntimeException(
             \sprintf(_DB_QUERY_ERROR, $sql) . $db->error(),
@@ -115,7 +115,7 @@ if (Request::hasVar('copy', 'POST') && Request::hasVar('old_prefix', 'POST')) {
             continue;
         }
         $sql = "SHOW CREATE TABLE `$table`";
-        $drawCreate = $db->queryF($sql);
+        $drawCreate = $db->query($sql);
         if (!$db->isResultSet($drawCreate)) {
             throw new \RuntimeException(
                 \sprintf(_DB_QUERY_ERROR, $sql) . $db->error(),
@@ -221,7 +221,7 @@ if (Request::hasVar('copy', 'POST') && Request::hasVar('old_prefix', 'POST')) {
     }
 
     // check if prefix_xoopscomments exists
-    $check_rs = $db->queryF("SELECT 1 FROM `{$prefix}_xoopscomments` LIMIT 1");
+    $check_rs = $db->query("SELECT 1 FROM `{$prefix}_xoopscomments` LIMIT 1");
     if (!$check_rs) {
         die('This is not a prefix for XOOPS');
     }
@@ -229,7 +229,7 @@ if (Request::hasVar('copy', 'POST') && Request::hasVar('old_prefix', 'POST')) {
 
     // get table list
     $sql = 'SHOW TABLE STATUS FROM `' . XOOPS_DB_NAME . '`';
-    $srs = $db->queryF($sql);
+    $srs = $db->query($sql);
     if (!$db->isResultSet($srs)) {
         throw new \RuntimeException(
             \sprintf(_DB_QUERY_ERROR, $sql) . $db->error(),
@@ -260,7 +260,7 @@ include __DIR__ . '/mymenu.php';
 
 // query
 $sql = 'SHOW TABLE STATUS FROM `' . XOOPS_DB_NAME . '`';
-$srs = $db->queryF($sql);
+$srs = $db->query($sql);
 if (!$db->isResultSet($srs)) {
     throw new \RuntimeException(
         \sprintf(_DB_QUERY_ERROR, $sql) . $db->error(),

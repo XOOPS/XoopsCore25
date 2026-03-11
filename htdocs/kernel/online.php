@@ -80,7 +80,7 @@ class XoopsOnlineHandler
             $sql = 'SELECT COUNT(*) FROM ' . $this->db->prefix('online')
                    . " WHERE online_uid={$uid} AND online_ip={$ip}";
         }
-        $result = $this->db->queryF($sql);
+        $result = $this->db->query($sql);
         if (!$this->db->isResultSet($result)) {
             throw new \RuntimeException(
                 \sprintf(_DB_QUERY_ERROR, $sql) . $this->db->error(),

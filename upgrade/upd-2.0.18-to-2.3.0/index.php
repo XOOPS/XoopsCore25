@@ -48,7 +48,7 @@ class Upgrade_230 extends XoopsUpgrade
     public function check_config()
     {
         $sql = 'SELECT COUNT(*) FROM `' . $GLOBALS['xoopsDB']->prefix('config') . "` WHERE `conf_name` IN ('welcome_type', 'cpanel')";
-        $result = $GLOBALS['xoopsDB']->queryF($sql);
+        $result = $GLOBALS['xoopsDB']->query($sql);
         if (!$GLOBALS['xoopsDB']->isResultSet($result)) {
             return false;
         }
@@ -64,7 +64,7 @@ class Upgrade_230 extends XoopsUpgrade
     public function check_cache()
     {
         $sql    = "SHOW TABLES LIKE '" . $GLOBALS['xoopsDB']->prefix('cache_model') . "'";
-        $result = $GLOBALS['xoopsDB']->queryF($sql);
+        $result = $GLOBALS['xoopsDB']->query($sql);
         if (!$GLOBALS['xoopsDB']->isResultSet($result)) {
             return false;
         }
@@ -91,7 +91,7 @@ class Upgrade_230 extends XoopsUpgrade
         // MySQL 5.0+
         //$sql = "SHOW KEYS FROM `" . $GLOBALS['xoopsDB']->prefix('block_module_link') . "` WHERE `KEY_NAME` LIKE 'PRIMARY'";
         $sql = 'SHOW KEYS FROM `' . $GLOBALS['xoopsDB']->prefix('block_module_link') . '`';
-        $result = $GLOBALS['xoopsDB']->queryF($sql);
+        $result = $GLOBALS['xoopsDB']->query($sql);
         if (!$GLOBALS['xoopsDB']->isResultSet($result)) {
             return false;
         }
@@ -163,7 +163,7 @@ class Upgrade_230 extends XoopsUpgrade
 
         $welcometype_installed = false;
         $sql                   = 'SELECT COUNT(*) FROM `' . $GLOBALS['xoopsDB']->prefix('config') . "` WHERE `conf_name` = 'welcome_type'";
-        $result = $GLOBALS['xoopsDB']->queryF($sql);
+        $result = $GLOBALS['xoopsDB']->query($sql);
         if ($GLOBALS['xoopsDB']->isResultSet($result)) {
             [$count] = $GLOBALS['xoopsDB']->fetchRow($result);
             if ($count == 1) {
@@ -281,13 +281,12 @@ class Upgrade_230 extends XoopsUpgrade
     public function convert_db($charset, $collation)
     {
         $sql = 'ALTER DATABASE `' . XOOPS_DB_NAME . '` DEFAULT CHARACTER SET ' . $GLOBALS['xoopsDB']->quote($charset) . ' COLLATE ' . $GLOBALS['xoopsDB']->quote($collation);
-        $result = $GLOBALS['xoopsDB']->exec($sql);
-        if (!$GLOBALS['xoopsDB']->isResultSet($result)) {
+        if (!$GLOBALS['xoopsDB']->exec($sql)) {
             return false;
         }
 
         $sql = "SHOW TABLES LIKE '" . XOOPS_DB_PREFIX . "\_%'";
-        $result = $GLOBALS['xoopsDB']->queryF($sql);
+        $result = $GLOBALS['xoopsDB']->query($sql);
         if (!$GLOBALS['xoopsDB']->isResultSet($result)) {
             return false;
         }
@@ -325,7 +324,7 @@ class Upgrade_230 extends XoopsUpgrade
             foreach ((array) $tables as $table) {
                 // Analyze tables for string types columns and generate his binary and string correctness sql sentences.
                 $sql = "DESCRIBE $table";
-                $result = $GLOBALS['xoopsDB']->exec($sql);
+                $result = $GLOBALS['xoopsDB']->query($sql);
                 if (!$GLOBALS['xoopsDB']->isResultSet($result)) {
                     throw new \RuntimeException(
                         \sprintf(_DB_QUERY_ERROR, $sql) . $GLOBALS['xoopsDB']->error(),
@@ -351,7 +350,7 @@ class Upgrade_230 extends XoopsUpgrade
                 // Analyze table indexes for any FULLTEXT-Type of index in the table.
                 $fulltext_indexes = [];
                 $sql         = "SHOW INDEX FROM `$table`";
-                $result = $GLOBALS['xoopsDB']->queryF($sql);
+                $result = $GLOBALS['xoopsDB']->query($sql);
                 if (!$GLOBALS['xoopsDB']->isResultSet($result)) {
                     throw new \RuntimeException(
                         \sprintf(_DB_QUERY_ERROR, $sql) . $GLOBALS['xoopsDB']->error(),

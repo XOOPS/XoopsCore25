@@ -56,7 +56,7 @@ class Upgrade_231 extends XoopsUpgrade
         ];
         foreach ($fields as $field => $table) {
             $sql = 'SHOW COLUMNS FROM `' . $GLOBALS['xoopsDB']->prefix($table) . "` LIKE '{$field}'";
-            $result = $GLOBALS['xoopsDB']->queryF($sql);
+            $result = $GLOBALS['xoopsDB']->query($sql);
             if (!$GLOBALS['xoopsDB']->isResultSet($result)) {
                 return false;
             }

@@ -26,9 +26,10 @@ class Upgrade_255 extends XoopsUpgrade
 
         foreach ($tables as $table => $keys) {
             $sql = 'SHOW KEYS FROM `' . $GLOBALS['xoopsDB']->prefix($table) . '`';
-            $result = $GLOBALS['xoopsDB']->queryF($sql);
+            $result = $GLOBALS['xoopsDB']->query($sql);
             if (!$GLOBALS['xoopsDB']->isResultSet($result)) {
-                continue;
+                $this->logs[] = sprintf('check_keys: SHOW KEYS failed for table %s: %s', $table, $GLOBALS['xoopsDB']->error());
+                return false;
             }
             $existing_keys = [];
             while (false !== ($row = $GLOBALS['xoopsDB']->fetchArray($result))) {
@@ -55,9 +56,10 @@ class Upgrade_255 extends XoopsUpgrade
 
         foreach ($tables as $table => $keys) {
             $sql = 'SHOW KEYS FROM `' . $GLOBALS['xoopsDB']->prefix($table) . '`';
-            $result = $GLOBALS['xoopsDB']->queryF($sql);
+            $result = $GLOBALS['xoopsDB']->query($sql);
             if (!$GLOBALS['xoopsDB']->isResultSet($result)) {
-                continue;
+                $this->logs[] = sprintf('apply_keys: SHOW KEYS failed for table %s: %s', $table, $GLOBALS['xoopsDB']->error());
+                return false;
             }
             $existing_keys = [];
             while (false !== ($row = $GLOBALS['xoopsDB']->fetchArray($result))) {
@@ -84,7 +86,7 @@ class Upgrade_255 extends XoopsUpgrade
     public function check_imptotal()
     {
         $sql = 'SELECT `imptotal` FROM `' . $GLOBALS['xoopsDB']->prefix('banner') . '` WHERE `bid` = 1';
-        if ($result = $GLOBALS['xoopsDB']->queryF($sql)) {
+        if ($result = $GLOBALS['xoopsDB']->query($sql)) {
             $fieldInfo = mysqli_fetch_field_direct($result, 0);
             $length = $fieldInfo->length;
 
@@ -101,7 +103,7 @@ class Upgrade_255 extends XoopsUpgrade
     public function apply_imptotal()
     {
         $sql = 'ALTER TABLE `' . $GLOBALS['xoopsDB']->prefix('banner') . "` CHANGE `imptotal` `imptotal` INT( 10 ) UNSIGNED NOT NULL DEFAULT '0'";
-        if (!$result = $GLOBALS['xoopsDB']->queryF($sql)) {
+        if (!$GLOBALS['xoopsDB']->exec($sql)) {
             return false;
         }
 

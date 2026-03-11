@@ -39,7 +39,7 @@ function getDbCharsets()
     $charsets['utf8'] = [];
     $ut8_available    = false;
     $sql              = 'SHOW CHARSET';
-    $result = $GLOBALS['xoopsDB']->queryF($sql);
+    $result = $GLOBALS['xoopsDB']->query($sql);
     if ($GLOBALS['xoopsDB']->isResultSet($result)) {
         while (false !== ($row = $GLOBALS['xoopsDB']->fetchArray($result))) {
             $charsets[$row['Charset']]['desc'] = $row['Description'];
@@ -65,7 +65,7 @@ function getDbCollations()
     $charsets   = getDbCharsets();
 
     $sql    = 'SHOW COLLATION';
-    $result = $GLOBALS['xoopsDB']->queryF($sql);
+    $result = $GLOBALS['xoopsDB']->query($sql);
     if ($GLOBALS['xoopsDB']->isResultSet($result)) {
         while (false !== ($row = $GLOBALS['xoopsDB']->fetchArray($result))) {
             $charsets[$row['Charset']]['collation'][] = $row['Collation'];
@@ -90,13 +90,13 @@ function xoFormFieldCollation($name, $value, $label, $help = '')
     $myts  = \MyTextSanitizer::getInstance();
     $label = $myts->htmlSpecialChars($label, ENT_QUOTES, _UPGRADE_CHARSET, false);
     $name  = $myts->htmlSpecialChars($name, ENT_QUOTES, _UPGRADE_CHARSET, false);
-    $value = $myts->htmlSpecialChars($value, ENT_QUOTES);
+    $value = $myts->htmlSpecialChars($value, ENT_QUOTES, _UPGRADE_CHARSET, false);
 
     $field = "<label for='$name'>$label</label>\n";
     if ($help) {
-        $field .= '<div class="xoform-help">' . $help . "</div>\n";
+        $field .= '<div class="xoform-help">' . htmlspecialchars($help, ENT_QUOTES, _UPGRADE_CHARSET) . "</div>\n";
     }
-    $field .= "<select name='$name' id='$name'\">";
+    $field .= "<select name='$name' id='$name'>";
     $field .= "<option value=''>" . DB_COLLATION_NOCHANGE . '</option>';
 
     $collation_default = '';
@@ -113,10 +113,10 @@ function xoFormFieldCollation($name, $value, $label, $help = '')
     return $field;
 }
 
-if ($_SERVER['REQUEST_METHOD'] === 'POST' && @$_POST['task'] === 'db') {
+if (Xmf\Request::getMethod() === 'POST' && Xmf\Request::getString('task', '', 'POST') === 'db') {
     $params = ['DB_COLLATION'];
     foreach ($params as $name) {
-        $vars[$name] = $_POST[$name] ?? '';
+        $vars[$name] = Xmf\Request::getString($name, '', 'POST');
     }
 
     return $vars;
@@ -131,7 +131,7 @@ if (!isset($vars['DB_COLLATION'])) {
     echo '<div class="x2-note error">' . $error . "</div>\n";
 } ?>
 
-<form action="<?php echo $_SERVER['PHP_SELF']; ?>" method='post'>
+<form action="<?php echo htmlspecialchars($_SERVER['SCRIPT_NAME'], ENT_QUOTES, _UPGRADE_CHARSET); ?>" method='post'>
     <fieldset>
         <legend><?php echo LEGEND_DATABASE; ?></legend>
         <?php echo xoFormFieldCollation('DB_COLLATION', $vars['DB_COLLATION'], DB_COLLATION_LABEL, DB_COLLATION_HELP); ?>

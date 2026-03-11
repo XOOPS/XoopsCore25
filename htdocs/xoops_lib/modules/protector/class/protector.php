@@ -266,7 +266,12 @@ class Protector
             /** @var XoopsMemberHandler */
             $userHandler = xoops_getHandler('user');
             $xoopsUser->setVar('level', 0);
-            $actkey = bin2hex(random_bytes(4));
+            try {
+                $actkey = bin2hex(random_bytes(4));
+            } catch (\Throwable $e) {
+                trigger_error('CSPRNG unavailable for activation key generation', E_USER_WARNING);
+                $actkey = ''; // empty key blocks activation (activate.php rejects empty actkey)
+            }
             $xoopsUser->setVar('actkey', $actkey);
             $userHandler->insert($xoopsUser);
         }
@@ -1232,7 +1237,7 @@ class Protector
         if ($f5_count > $this->_conf['dos_f5count']) {
 
             // delayed insert
-            $xoopsDB->queryF($sql4insertlog);
+            $xoopsDB->exec($sql4insertlog);
 
             // extends the expires of the IP with 5 minutes at least (pending)
             // $result = $xoopsDB->queryF( "UPDATE ".$xoopsDB->prefix($this->mydirname.'_access')." SET expire=UNIX_TIMESTAMP()+300 WHERE ip='$ip4sql' AND expire<UNIX_TIMESTAMP()+300" ) ;

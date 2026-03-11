@@ -81,7 +81,7 @@ class Db_manager
     {
         $this->db->connect(false);
 
-        $result = $this->db->query('CREATE DATABASE ' . XOOPS_DB_NAME);
+        $result = $this->db->exec('CREATE DATABASE ' . XOOPS_DB_NAME);
 
         return ($result != false);// ? true : false;
     }
@@ -283,15 +283,15 @@ class Db_manager
      */
     public function deleteTables($tables)
     {
-        $deleted = [];
+        $failedTables = [];
         $this->db->connect();
-        foreach ($tables as $key => $val) {
+        foreach (array_keys($tables) as $key) {
             if (!$this->db->exec('DROP TABLE ' . $this->db->prefix($key))) {
-                $deleted[] = $ct;
+                $failedTables[] = $this->db->prefix($key);
             }
         }
 
-        return $deleted;
+        return $failedTables;
     }
 
     /**

@@ -30,17 +30,13 @@ class Upgrade_256 extends XoopsUpgrade
     public function check_com_user()
     {
         $sql = 'SHOW COLUMNS FROM ' . $GLOBALS['xoopsDB']->prefix('xoopscomments') . " LIKE 'com_user'";
-        $result = $GLOBALS['xoopsDB']->queryF($sql);
+        $result = $GLOBALS['xoopsDB']->query($sql);
         if (!$GLOBALS['xoopsDB']->isResultSet($result)) {
-            throw new \RuntimeException(
-                \sprintf(_DB_QUERY_ERROR, $sql) . $GLOBALS['xoopsDB']->error(),
-                E_USER_ERROR,
-            );
+            $this->logs[] = 'check_com_user: ' . $GLOBALS['xoopsDB']->error();
+            return false;
         }
 
         return ($GLOBALS['xoopsDB']->getRowsNum($result) > 0);
-
-        return true;
     }
 
     /**
@@ -49,17 +45,13 @@ class Upgrade_256 extends XoopsUpgrade
     public function check_com_email()
     {
         $sql = 'SHOW COLUMNS FROM ' . $GLOBALS['xoopsDB']->prefix('xoopscomments') . " LIKE 'com_email'";
-        $result = $GLOBALS['xoopsDB']->queryF($sql);
+        $result = $GLOBALS['xoopsDB']->query($sql);
         if (!$GLOBALS['xoopsDB']->isResultSet($result)) {
-            throw new \RuntimeException(
-                \sprintf(_DB_QUERY_ERROR, $sql) . $GLOBALS['xoopsDB']->error(),
-                E_USER_ERROR,
-            );
+            $this->logs[] = 'check_com_email: ' . $GLOBALS['xoopsDB']->error();
+            return false;
         }
 
         return ($GLOBALS['xoopsDB']->getRowsNum($result) > 0);
-
-        return true;
     }
 
     /**
@@ -68,17 +60,13 @@ class Upgrade_256 extends XoopsUpgrade
     public function check_com_url()
     {
         $sql = 'SHOW COLUMNS FROM ' . $GLOBALS['xoopsDB']->prefix('xoopscomments') . " LIKE 'com_url'";
-        $result = $GLOBALS['xoopsDB']->queryF($sql);
+        $result = $GLOBALS['xoopsDB']->query($sql);
         if (!$GLOBALS['xoopsDB']->isResultSet($result)) {
-            throw new \RuntimeException(
-                \sprintf(_DB_QUERY_ERROR, $sql) . $GLOBALS['xoopsDB']->error(),
-                E_USER_ERROR,
-            );
+            $this->logs[] = 'check_com_url: ' . $GLOBALS['xoopsDB']->error();
+            return false;
         }
 
         return ($GLOBALS['xoopsDB']->getRowsNum($result) > 0);
-
-        return true;
     }
 
     /**

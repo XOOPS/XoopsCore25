@@ -80,7 +80,7 @@ abstract class XoopsMySQLDatabase extends XoopsDatabase
             // $this->queryF("SET NAMES '" . XOOPS_DB_CHARSET . "'");
             $this->conn->set_charset(XOOPS_DB_CHARSET);
         }
-        $this->queryF('SET SQL_BIG_SELECTS = 1');
+        $this->exec('SET SQL_BIG_SELECTS = 1');
 
         return true;
     }
@@ -611,10 +611,11 @@ class XoopsMySQLDatabaseSafe extends XoopsMySQLDatabase
 }
 
 /**
- * Read-Only connection to a MySQL database.
+ * Proxy connection to a MySQL database with GET-request write protection.
  *
- * This class allows only SELECT queries to be performed through its
- * {@link query()} method for security reasons.
+ * During GET requests (when allowWebChanges is false), this class restricts
+ * {@link query()} to read-only statements (SELECT, SHOW, DESCRIBE, EXPLAIN).
+ * Write operations should use {@link exec()} which is not subject to this guard.
  *
  * @author              Kazumi Ono <onokazu@xoops.org>
  * @copyright       (c) 2000-2026 XOOPS Project (https://xoops.org)
@@ -626,7 +627,9 @@ class XoopsMySQLDatabaseProxy extends XoopsMySQLDatabase
     /**
      * perform a query on the database
      *
-     * this method allows only SELECT queries for safety.
+     * When allowWebChanges is false (GET requests), this method restricts
+     * to read-only statements (SELECT, SHOW, DESCRIBE, EXPLAIN).
+     * On POST/other requests, all statements are permitted.
      *
      * @param string $sql   a valid MySQL query
      * @param int    $limit number of records to return
@@ -638,17 +641,12 @@ class XoopsMySQLDatabaseProxy extends XoopsMySQLDatabase
     public function query(string $sql, ?int $limit = null, ?int $start = null)
     {
         $sql = ltrim($sql);
-        if (!$this->allowWebChanges && stripos($sql, 'select') !== 0) {
+        if (!$this->allowWebChanges && !preg_match('/^\s*(SELECT|SHOW|DESCRIBE|EXPLAIN)\b/i', $sql)) {
             trigger_error('Database updates are not allowed during processing of a GET request', E_USER_WARNING);
 
             return false;
         }
-        // Execute via queryF() to preserve legacy path (and LIMIT semantics)
-        if ($limit !== null) {
-            $start = max(0, $start ?? 0);
-            return $this->queryF($sql, (int)$limit, (int)$start);
-    }
-        return $this->queryF($sql);
+        return parent::query($sql, $limit ?: null, $start ?: null);
     }
 
 }

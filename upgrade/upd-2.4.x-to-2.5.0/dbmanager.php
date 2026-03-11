@@ -63,7 +63,7 @@ class Db_manager
     {
         $this->db->connect(false);
 
-        $result = $this->db->query('CREATE DATABASE ' . XOOPS_DB_NAME);
+        $result = $this->db->exec('CREATE DATABASE ' . XOOPS_DB_NAME);
 
         return ($result != false);
     }
@@ -91,7 +91,7 @@ class Db_manager
             if ($prefixed_query != false) {
                 $table = $this->db->prefix($prefixed_query[4]);
                 if ($prefixed_query[1] === 'CREATE TABLE') {
-                    if ($this->db->query($prefixed_query[0]) != false) {
+                    if ($this->db->exec($prefixed_query[0]) != false) {
                         if (!isset($this->s_tables['create'][$table])) {
                             $this->s_tables['create'][$table] = 1;
                         }
@@ -265,15 +265,15 @@ class Db_manager
      */
     public function deleteTables($tables)
     {
-        $deleted = [];
+        $failedTables = [];
         $this->db->connect();
-        foreach ($tables as $key => $val) {
-            if (!$this->db->query('DROP TABLE ' . $this->db->prefix($key))) {
-                $deleted[] = $ct;
+        foreach (array_keys($tables) as $key) {
+            if (!$this->db->exec('DROP TABLE ' . $this->db->prefix($key))) {
+                $failedTables[] = $this->db->prefix($key);
             }
         }
 
-        return $deleted;
+        return $failedTables;
     }
 
     /**

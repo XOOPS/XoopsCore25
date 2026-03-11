@@ -101,7 +101,7 @@ class XoopsSessionHandler implements
             $this->db->quote($sessionId)
         );
 
-        $result = $this->db->queryF($sql);
+        $result = $this->db->query($sql);
         if (!$this->db->isResultSet($result)) {
             return false; // storage failure
         }
@@ -270,7 +270,7 @@ class XoopsSessionHandler implements
             $this->db->prefix('session'),
             $this->db->quote($id)
         );
-        $res = $this->db->queryF($sql, 1, 0);
+        $res = $this->db->query($sql, 1, 0);
         if (!$this->db->isResultSet($res)) {
             return false;
         }
