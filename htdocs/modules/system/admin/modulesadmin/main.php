@@ -350,7 +350,12 @@ switch ($op) {
         break;
 
     case 'install_ok':
-        $module = Request::getString('module', '');
+        $module = trim(Request::getString('module', '', 'POST'));
+        $installable = XoopsLists::getModulesList();
+        if (!in_array($module, $installable, true)) {
+            trigger_error('Invalid module install request: ' . basename($module), E_USER_WARNING);
+            break;
+        }
         $ret   = [];
         $ret[] = xoops_module_install($module);
         // Flush cache files for cpanel GUIs
@@ -408,7 +413,12 @@ switch ($op) {
         break;
 
     case 'uninstall_ok':
-        $module = Request::getString('module', '');
+        $module = trim(Request::getString('module', '', 'POST'));
+        $installable = XoopsLists::getModulesList();
+        if (!in_array($module, $installable, true)) {
+            trigger_error('Invalid module uninstall request: ' . basename($module), E_USER_WARNING);
+            break;
+        }
         $ret   = [];
         $ret[] = xoops_module_uninstall($module);
         // Flush cache files for cpanel GUIs
@@ -465,7 +475,12 @@ switch ($op) {
         break;
 
     case 'update_ok':
-        $module = Request::getString('module', '');
+        $module = trim(Request::getString('module', '', 'POST'));
+        $installable = XoopsLists::getModulesList();
+        if (!in_array($module, $installable, true)) {
+            trigger_error('Invalid module update request: ' . basename($module), E_USER_WARNING);
+            break;
+        }
         $ret   = [];
         $ret[] = xoops_module_update($module);
         // Flush cache files for cpanel GUIs
