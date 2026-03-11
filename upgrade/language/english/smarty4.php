@@ -14,7 +14,7 @@ define('_XOOPS_SMARTY4_SCANNER_MATCH', 'Match');
 define('_XOOPS_SMARTY4_SCANNER_FILE', 'File');
 define('_XOOPS_SMARTY4_SCANNER_FIXED', 'Fix Count');
 define('_XOOPS_SMARTY4_SCANNER_MANUAL_REVIEW', 'Manual review required');
-define('_XOOPS_SMARTY4_SCANNER_AUTOFIX', 'Can be auto-fixed: foreach item variable will be renamed with _item suffix');
+define('_XOOPS_SMARTY4_SCANNER_AUTOFIX', 'Can be auto-fixed: foreach item variable will be renamed by appending "_item" (e.g. "foo" becomes "foo_item").');
 define('_XOOPS_SMARTY4_SCANNER_NOT_WRITABLE', 'Not Writeable');
 
 define('_XOOPS_SMARTY4_RESCAN_OPTIONS', 'Rescan Options');

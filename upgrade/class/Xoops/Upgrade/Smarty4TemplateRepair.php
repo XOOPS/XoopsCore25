@@ -92,15 +92,34 @@ class Smarty4TemplateRepair extends ScannerProcess
      */
     protected function fixForeachVarnames(string $content, int &$count): string
     {
-        // Match foreach where item name is identical to the from variable name
-        $pattern = '/<\{\s*foreach\s+item=([a-zA-Z0-9_]+)\s+from=\$\1\s*\}>/';
+        // Match any foreach opening tag — order-independent, allows extra attrs and modifiers
+        $pattern = '/<\{\s*foreach\b([^}]*)\}>/';
         $searchOffset = 0;
 
         while (preg_match($pattern, $content, $match, PREG_OFFSET_CAPTURE, $searchOffset)) {
-            $varName = $match[1][0];
-            $newItem = $varName . '_item';
+            $fullTag = $match[0][0];
+            $tagAttrs = $match[1][0];
             $foreachTagStart = $match[0][1];
-            $foreachTagEnd = $foreachTagStart + strlen($match[0][0]);
+            $foreachTagEnd = $foreachTagStart + strlen($fullTag);
+
+            // Extract item= and from= values from attributes (order-independent)
+            if (!preg_match('/\bitem=([a-zA-Z0-9_]+)/', $tagAttrs, $itemMatch)
+                || !preg_match('/\bfrom=\$([a-zA-Z0-9_]+)(?:\|[^\s}>]+)?/', $tagAttrs, $fromMatch)
+            ) {
+                $searchOffset = $foreachTagEnd;
+                continue;
+            }
+
+            $varName = $itemMatch[1];
+            $fromVar = $fromMatch[1];
+
+            // Only fix when item name equals the from variable base name
+            if ($varName !== $fromVar) {
+                $searchOffset = $foreachTagEnd;
+                continue;
+            }
+
+            $newItem = $varName . '_item';
 
             // Find the matching <{/foreach}> handling nesting
             $depth = 1;
@@ -142,14 +161,18 @@ class Smarty4TemplateRepair extends ScannerProcess
             // redefine the same item name (they have their own scope)
             $fixedBlock = $this->replaceVarInBlock($varName, $newItem, $blockContent);
 
-            // Build new opening tag
-            $newTag = '<{foreach item=' . $newItem . ' from=$' . $varName . '}>';
+            // Build new opening tag: replace only item=X, preserve all other attributes
+            $newTagAttrs = preg_replace('/\bitem=' . preg_quote($varName, '/') . '\b/', 'item=' . $newItem, $tagAttrs);
+            $newTag = '<{foreach' . $newTagAttrs . '}>';
 
             // Rebuild content: before + new tag + fixed block + from closing tag onward
             $content = substr($content, 0, $foreachTagStart)
                      . $newTag
                      . $fixedBlock
                      . substr($content, $closingTagStart);
+
+            // Advance past the newly written tag to keep scan linear
+            $searchOffset = $foreachTagStart + strlen($newTag);
 
             $count++;
         }
@@ -254,7 +277,7 @@ class Smarty4TemplateRepair extends ScannerProcess
             $count,
         );
         if ($updatedLines === null) {
-            trigger_error(sprintf('NULL return processing: %s', $filename), E_WARNING);
+            trigger_error(sprintf('NULL return processing: %s', $filename), E_USER_WARNING);
             $updatedLines = $lines;
         }
 
@@ -269,7 +292,7 @@ class Smarty4TemplateRepair extends ScannerProcess
             $file->ftruncate(0);
             $result = $file->fwrite($updatedLines);
             if ($result == false) {
-                trigger_error(sprintf('Error writing file: %s', $filename), E_WARNING);
+                trigger_error(sprintf('Error writing file: %s', $filename), E_USER_WARNING);
             }
             $output->outputIssue($output->makeOutputIssue($filename, $count));
         }
