@@ -107,7 +107,7 @@ function bannerstats()
     }
     $sql    = sprintf('SELECT cid, name, passwd FROM %s WHERE login=%s', $xoopsDB->prefix('bannerclient'), $xoopsDB->quote($banner_login));
     $result = $xoopsDB->query($sql);
-    if (!$xoopsDB->isResultSet($result) || !$result instanceof \mysqli_result) {
+    if (!$xoopsDB->isResultSet($result) || !($result instanceof \mysqli_result)) {
         throw new \RuntimeException(
             \sprintf(_DB_QUERY_ERROR, $sql) . $xoopsDB->error(),
             E_USER_ERROR,
@@ -143,7 +143,7 @@ function bannerstats()
 
         $sql = 'SELECT bid, imptotal, impmade, clicks, date FROM ' . $xoopsDB->prefix('banner') . " WHERE cid={$cid}";
         $result = $xoopsDB->query($sql);
-        if (!$xoopsDB->isResultSet($result) || !$result instanceof \mysqli_result) {
+        if (!$xoopsDB->isResultSet($result) || !($result instanceof \mysqli_result)) {
             throw new \RuntimeException(
                 \sprintf(_DB_QUERY_ERROR, $sql) . $xoopsDB->error(),
                 E_USER_ERROR,
@@ -179,7 +179,7 @@ function bannerstats()
 
         $sql = 'SELECT bid, imageurl, clickurl, htmlbanner, htmlcode FROM ' . $xoopsDB->prefix('banner') . " WHERE cid={$cid}";
         $result = $xoopsDB->query($sql);
-        if (!$xoopsDB->isResultSet($result) || !$result instanceof \mysqli_result) {
+        if (!$xoopsDB->isResultSet($result) || !($result instanceof \mysqli_result)) {
             throw new \RuntimeException(
                 \sprintf(_DB_QUERY_ERROR, $sql) . $xoopsDB->error(),
                 E_USER_ERROR,
@@ -378,7 +378,7 @@ function clickbanner($bid)
     if ($bid > 0) {
         $sql = 'SELECT clickurl FROM ' . $xoopsDB->prefix('banner') . " WHERE bid={$bid}";
         $result = $xoopsDB->query($sql);
-        if (!$xoopsDB->isResultSet($result) || !$result instanceof \mysqli_result) {
+        if (!$xoopsDB->isResultSet($result) || !($result instanceof \mysqli_result)) {
             throw new \RuntimeException(
                 \sprintf(_DB_QUERY_ERROR, $sql) . $xoopsDB->error(),
                 E_USER_ERROR,
