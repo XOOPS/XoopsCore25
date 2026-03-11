@@ -156,14 +156,18 @@ function xoops_module_install($dirname)
                             break;
                         }
                     }
-                    $db->exec('SET FOREIGN_KEY_CHECKS = 1');
+                    if (!$db->exec('SET FOREIGN_KEY_CHECKS = 1')) {
+                        $errs[] = 'Failed to restore FOREIGN_KEY_CHECKS after table creation';
+                    }
                     // if there was an error, delete the tables created so far, so the next installation will not fail
                     if ($error === true) {
                         $db->exec('SET FOREIGN_KEY_CHECKS = 0');
                         foreach ($created_tables as $ct) {
                             $db->exec('DROP TABLE IF EXISTS ' . $db->prefix($ct));
                         }
-                        $db->exec('SET FOREIGN_KEY_CHECKS = 1');
+                        if (!$db->exec('SET FOREIGN_KEY_CHECKS = 1')) {
+                            $errs[] = 'Failed to restore FOREIGN_KEY_CHECKS after cleanup';
+                        }
                     }
                 }
             }
@@ -176,7 +180,9 @@ function xoops_module_install($dirname)
                 foreach ($created_tables as $ct) {
                     $db->exec('DROP TABLE IF EXISTS ' . $db->prefix($ct));
                 }
-                $db->exec('SET FOREIGN_KEY_CHECKS = 1');
+                if (!$db->exec('SET FOREIGN_KEY_CHECKS = 1')) {
+                    $errs[] = 'Failed to restore FOREIGN_KEY_CHECKS after failed module insert';
+                }
                 $ret = '<p>' . sprintf(_AM_SYSTEM_MODULES_FAILINS, '<strong>' . $module->name() . '</strong>') . '&nbsp;' . _AM_SYSTEM_MODULES_ERRORSC . '<br>';
                 foreach ($errs as $err) {
                     $ret .= ' - ' . $err . '<br>';
@@ -731,7 +737,9 @@ function xoops_module_uninstall($dirname)
                         $msgs[] = '&nbsp;&nbsp;<span style="color:#ff0000;">' . sprintf(_AM_SYSTEM_MODULES_TABLE_DROPPED_FAILDED, '<strong>' . $db->prefix($table) . '</strong>') . '</span>';
                     }
                 }
-                $db->exec('SET FOREIGN_KEY_CHECKS = 1');
+                if (!$db->exec('SET FOREIGN_KEY_CHECKS = 1')) {
+                    $msgs[] = '&nbsp;&nbsp;<span style="color:#ff0000;">Failed to restore FOREIGN_KEY_CHECKS after table deletion</span>';
+                }
             }
 
             // delete comments if any

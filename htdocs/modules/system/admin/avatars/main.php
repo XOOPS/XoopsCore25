@@ -329,8 +329,8 @@ switch ($op) {
         $file = $avatar->getVar('avatar_file');
         // Delete file
         $avatarPath = XOOPS_UPLOAD_PATH . '/' . $file;
-        if (is_file($avatarPath) && is_writable($avatarPath)) {
-            unlink($avatarPath);
+        if (is_file($avatarPath) && !unlink($avatarPath)) {
+            trigger_error('Failed to delete avatar file: ' . $avatarPath, E_USER_WARNING);
         }
         // Update member profile — reset avatar to blank for affected users
         $user_id = Request::getInt('user_id', 0, 'POST');

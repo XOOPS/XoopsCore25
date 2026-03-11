@@ -94,7 +94,7 @@ function xoFormFieldCollation($name, $value, $label, $help = '')
 
     $field = "<label for='$name'>$label</label>\n";
     if ($help) {
-        $field .= '<div class="xoform-help">' . htmlspecialchars($help, ENT_QUOTES | ENT_HTML5) . "</div>\n";
+        $field .= '<div class="xoform-help">' . htmlspecialchars($help, ENT_QUOTES, _UPGRADE_CHARSET) . "</div>\n";
     }
     $field .= "<select name='$name' id='$name'>";
     $field .= "<option value=''>" . DB_COLLATION_NOCHANGE . '</option>';
@@ -113,10 +113,10 @@ function xoFormFieldCollation($name, $value, $label, $help = '')
     return $field;
 }
 
-if ($_SERVER['REQUEST_METHOD'] === 'POST' && ($_POST['task'] ?? '') === 'db') {
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && Xmf\Request::getString('task', '', 'POST') === 'db') {
     $params = ['DB_COLLATION'];
     foreach ($params as $name) {
-        $vars[$name] = $_POST[$name] ?? '';
+        $vars[$name] = Xmf\Request::getString($name, '', 'POST');
     }
 
     return $vars;

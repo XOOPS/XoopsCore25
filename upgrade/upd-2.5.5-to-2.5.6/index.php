@@ -32,7 +32,8 @@ class Upgrade_256 extends XoopsUpgrade
         $sql = 'SHOW COLUMNS FROM ' . $GLOBALS['xoopsDB']->prefix('xoopscomments') . " LIKE 'com_user'";
         $result = $GLOBALS['xoopsDB']->query($sql);
         if (!$GLOBALS['xoopsDB']->isResultSet($result)) {
-            return false; // query failed, surface the issue
+            $this->logs[] = 'check_com_user: ' . $GLOBALS['xoopsDB']->error();
+            return false;
         }
 
         return ($GLOBALS['xoopsDB']->getRowsNum($result) > 0);
@@ -46,7 +47,8 @@ class Upgrade_256 extends XoopsUpgrade
         $sql = 'SHOW COLUMNS FROM ' . $GLOBALS['xoopsDB']->prefix('xoopscomments') . " LIKE 'com_email'";
         $result = $GLOBALS['xoopsDB']->query($sql);
         if (!$GLOBALS['xoopsDB']->isResultSet($result)) {
-            return false; // query failed, surface the issue
+            $this->logs[] = 'check_com_email: ' . $GLOBALS['xoopsDB']->error();
+            return false;
         }
 
         return ($GLOBALS['xoopsDB']->getRowsNum($result) > 0);
@@ -60,7 +62,8 @@ class Upgrade_256 extends XoopsUpgrade
         $sql = 'SHOW COLUMNS FROM ' . $GLOBALS['xoopsDB']->prefix('xoopscomments') . " LIKE 'com_url'";
         $result = $GLOBALS['xoopsDB']->query($sql);
         if (!$GLOBALS['xoopsDB']->isResultSet($result)) {
-            return false; // query failed, surface the issue
+            $this->logs[] = 'check_com_url: ' . $GLOBALS['xoopsDB']->error();
+            return false;
         }
 
         return ($GLOBALS['xoopsDB']->getRowsNum($result) > 0);
