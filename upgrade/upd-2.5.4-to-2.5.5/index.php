@@ -28,7 +28,7 @@ class Upgrade_255 extends XoopsUpgrade
             $sql = 'SHOW KEYS FROM `' . $GLOBALS['xoopsDB']->prefix($table) . '`';
             $result = $GLOBALS['xoopsDB']->query($sql);
             if (!$GLOBALS['xoopsDB']->isResultSet($result)) {
-                $this->logs[] = sprintf('check_keys: SHOW KEYS failed for table %s', $table);
+                $this->logs[] = sprintf('check_keys: SHOW KEYS failed for table %s: %s', $table, $GLOBALS['xoopsDB']->error());
                 return false;
             }
             $existing_keys = [];
@@ -58,7 +58,7 @@ class Upgrade_255 extends XoopsUpgrade
             $sql = 'SHOW KEYS FROM `' . $GLOBALS['xoopsDB']->prefix($table) . '`';
             $result = $GLOBALS['xoopsDB']->query($sql);
             if (!$GLOBALS['xoopsDB']->isResultSet($result)) {
-                $this->logs[] = sprintf('apply_keys: SHOW KEYS failed for table %s', $table);
+                $this->logs[] = sprintf('apply_keys: SHOW KEYS failed for table %s: %s', $table, $GLOBALS['xoopsDB']->error());
                 return false;
             }
             $existing_keys = [];

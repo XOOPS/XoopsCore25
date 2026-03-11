@@ -283,7 +283,11 @@ function emailStats($cid, $bid)
         $sql     = sprintf('SELECT name, email, passwd FROM %s WHERE cid=%u AND login=%s', $xoopsDB->prefix('bannerclient'), $cid, $xoopsDB->quote($banner_login));
         $result2 = $xoopsDB->query($sql);
         if (($xoopsDB->isResultSet($result2) && $result2 instanceof \mysqli_result)) {
-            [$name, $email, $passwd] = $xoopsDB->fetchRow($result2);
+            $row = $xoopsDB->fetchRow($result2);
+            if (false === $row) {
+                redirect_header('banners.php', 2);
+            }
+            [$name, $email, $passwd] = $row;
             if ($banner_pass == $passwd) {
                 if ($email == '') {
                     redirect_header('banners.php', 3, sprintf(_BANNERS_MAIL_ERROR, $name));
@@ -342,7 +346,11 @@ function change_banner_url_by_client($cid, $bid, $url)
         $sql    = sprintf('SELECT passwd FROM %s WHERE cid=%u AND login=%s', $xoopsDB->prefix('bannerclient'), $cid, $xoopsDB->quote($banner_login));
         $result = $xoopsDB->query($sql);
         if (($xoopsDB->isResultSet($result) && $result instanceof \mysqli_result)) {
-            [$passwd] = $xoopsDB->fetchRow($result);
+            $row = $xoopsDB->fetchRow($result);
+            if (false === $row) {
+                redirect_header('banners.php', 2);
+            }
+            [$passwd] = $row;
             if ($banner_pass == $passwd) {
                 $sql = sprintf('UPDATE %s SET clickurl=%s WHERE bid=%u AND cid=%u', $xoopsDB->prefix('banner'), $xoopsDB->quote($url), $bid, $cid);
                 if ($xoopsDB->exec($sql)) {

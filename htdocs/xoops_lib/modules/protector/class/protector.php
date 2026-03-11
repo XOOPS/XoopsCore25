@@ -270,7 +270,7 @@ class Protector
                 $actkey = bin2hex(random_bytes(4));
             } catch (\Throwable $e) {
                 trigger_error('CSPRNG unavailable for activation key generation', E_USER_WARNING);
-                $actkey = '00000000'; // fail closed — account stays deactivated
+                $actkey = ''; // empty key blocks activation (activate.php rejects empty actkey)
             }
             $xoopsUser->setVar('actkey', $actkey);
             $userHandler->insert($xoopsUser);
