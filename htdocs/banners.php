@@ -19,7 +19,6 @@
  */
 
 use Xmf\Request;
-use XoopsRequest;
 
 $xoopsOption['pagetype'] = 'banners';
 include __DIR__ . '/mainfile.php';
@@ -101,8 +100,8 @@ function bannerstats()
 {
     /** @var \XoopsMySQLDatabase $xoopsDB */
     global $xoopsDB, $xoopsConfig, $xoopsLogger, $myts;
-    $banner_login = XoopsRequest::getString('banner_login', '', 'SESSION');
-    $banner_pass  = XoopsRequest::getString('banner_pass', '', 'SESSION');
+    $banner_login = isset($_SESSION['banner_login']) ? (string) $_SESSION['banner_login'] : '';
+    $banner_pass  = isset($_SESSION['banner_pass']) ? (string) $_SESSION['banner_pass'] : '';
     if ($banner_login == '' || $banner_pass == '') {
         redirect_header('banners.php', 2, _BANNERS_NO_LOGIN_DATA);
     }
@@ -202,12 +201,12 @@ function bannerstats()
                 } elseif (in_array($extension, ['.mp4', '.webm', '.ogg'])) {
                     // Handle actual video files
                     $imageurl = htmlspecialchars($imageurl, ENT_QUOTES | ENT_HTML5, 'UTF-8');
-                    echo "<video width=’468’ height=’60’ controls>
-                <source src=’{$imageurl}’ type=’video/" . substr($extension, 1) . "’>
+                    echo "<video width='468' height='60' controls>
+                <source src='{$imageurl}' type='video/" . substr($extension, 1) . "'>
                 Your browser does not support the video tag.
               </video>";
                 } else {
-                    // Assume it’s an image otherwise
+                    // Assume it's an image otherwise
                     $imageurl = htmlspecialchars($imageurl, ENT_QUOTES | ENT_HTML5, 'UTF-8');
                     echo "<img src='{$imageurl}' alt='' />";
                 }
@@ -276,8 +275,8 @@ function emailStats($cid, $bid)
 {
     /** @var \XoopsMySQLDatabase $xoopsDB */
     global $xoopsDB, $xoopsConfig;
-    $banner_login = XoopsRequest::getString('banner_login', '', 'SESSION');
-    $banner_pass  = XoopsRequest::getString('banner_pass', '', 'SESSION');
+    $banner_login = isset($_SESSION['banner_login']) ? (string) $_SESSION['banner_login'] : '';
+    $banner_pass  = isset($_SESSION['banner_pass']) ? (string) $_SESSION['banner_pass'] : '';
     if ($banner_login != '' && $banner_pass != '') {
         $cid     = (int) $cid;
         $bid     = (int) $bid;
@@ -335,8 +334,8 @@ function change_banner_url_by_client($cid, $bid, $url)
 {
     /** @var \XoopsMySQLDatabase $xoopsDB */
     global $xoopsDB;
-    $banner_login = XoopsRequest::getString('banner_login', '', 'SESSION');
-    $banner_pass  = XoopsRequest::getString('banner_pass', '', 'SESSION');
+    $banner_login = isset($_SESSION['banner_login']) ? (string) $_SESSION['banner_login'] : '';
+    $banner_pass  = isset($_SESSION['banner_pass']) ? (string) $_SESSION['banner_pass'] : '';
     if ($banner_login != '' && $banner_pass != '' && $url != '') {
         $cid    = (int) $cid;
         $bid    = (int) $bid;

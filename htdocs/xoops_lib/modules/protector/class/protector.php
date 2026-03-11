@@ -270,7 +270,7 @@ class Protector
                 $actkey = bin2hex(random_bytes(4));
             } catch (\Throwable $e) {
                 trigger_error('random_bytes() unavailable: ' . $e->getMessage(), E_USER_WARNING);
-                $actkey = substr(uniqid('', true), -8);
+                $actkey = substr(hash('sha256', uniqid((string) mt_rand(), true) . microtime()), 0, 8);
             }
             $xoopsUser->setVar('actkey', $actkey);
             $userHandler->insert($xoopsUser);
