@@ -643,7 +643,7 @@ class XoopsMySQLDatabaseProxy extends XoopsMySQLDatabase
 
             return false;
         }
-        return parent::query($sql, $limit, $start);
+        return parent::query($sql, $limit ?: null, $start ?: null);
     }
 
 }
