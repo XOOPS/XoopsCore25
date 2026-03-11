@@ -30,7 +30,7 @@ class Smarty4TemplateChecks extends ScannerProcess
     protected $patterns = [
         // Order-independent: match foreach with item= and from= in any order,
         // allowing extra attributes (key=, name=) and modifiers on from (e.g. |default:null)
-        'varname' => '/<\{foreach\b(?=[^}]*\bitem=([a-zA-Z0-9_]+))(?=[^}]*\bfrom=\$([a-zA-Z0-9_]+)(?:\|[^\s}>]+)?)[^}]*\}>/',
+        'varname' => '/<\{foreach\b(?=[^}]*\bitem=([a-zA-Z_][a-zA-Z0-9_]*))(?=[^}]*\bfrom=\$([a-zA-Z_][a-zA-Z0-9_]*)(?:\|[^\s}>]+)?)[^}]*\}>/',
         'noquotes' => '/(<{xo[a-zA-Z\d]*\b)(?=[^}>]*[^\'"\$}>=]+[}>])([^}>]*?)(\s+)([^\$\'\"=]+)(\s*}>)/',
         'includeq' => '/(<{includeq[[:space:]]+[ -=\.\/_\'\"\$a-zA-Z0-9]+}>)/',
         'foreachq' => '/(<{foreachq[[:space:]]+[ -=\.\/_\'\"\$a-zA-Z0-9]+}>)/',

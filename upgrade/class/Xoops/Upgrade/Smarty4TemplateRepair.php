@@ -82,8 +82,8 @@ class Smarty4TemplateRepair extends ScannerProcess
      *
      * In Smarty 4, <{foreach item=X from=$X}> is not allowed because the item
      * name must differ from the array name. This method renames item=X to
-     * item=X_item and updates all $X.property references within the foreach
-     * block to $X_item.property.
+     * item=X_item and updates all $X references within the foreach block
+     * (including $X.property, $X|modifier, $X[key], and bare $X).
      *
      * @param string $content file contents
      * @param int    &$count  incremented for each foreach block fixed
@@ -103,8 +103,8 @@ class Smarty4TemplateRepair extends ScannerProcess
             $foreachTagEnd = $foreachTagStart + strlen($fullTag);
 
             // Extract item= and from= values from attributes (order-independent)
-            if (!preg_match('/\bitem=([a-zA-Z0-9_]+)/', $tagAttrs, $itemMatch)
-                || !preg_match('/\bfrom=\$([a-zA-Z0-9_]+)(?:\|[^\s}>]+)?/', $tagAttrs, $fromMatch)
+            if (!preg_match('/\bitem=([a-zA-Z_][a-zA-Z0-9_]*)/', $tagAttrs, $itemMatch)
+                || !preg_match('/\bfrom=\$([a-zA-Z_][a-zA-Z0-9_]*)(?:\|[^\s}>]+)?/', $tagAttrs, $fromMatch)
             ) {
                 $searchOffset = $foreachTagEnd;
                 continue;
