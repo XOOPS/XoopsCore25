@@ -155,7 +155,7 @@ switch ($op) {
                 $newuser->setVar('url', formatURL($url), true);
             }
             $newuser->setVar('user_avatar', 'avatars/blank.gif', true);
-            $actkey = substr(md5(uniqid(mt_rand(), 1)), 0, 8);
+            $actkey = bin2hex(random_bytes(4));
             $newuser->setVar('actkey', $actkey, true);
             $newuser->setVar('pass', password_hash($pass, PASSWORD_DEFAULT), true);
             $newuser->setVar('timezone_offset', $timezone_offset, true);
@@ -260,7 +260,7 @@ switch ($op) {
         if (!is_object($thisuser)) {
             exit();
         }
-        if ($thisuser->getVar('actkey') != $actkey) {
+        if ($actkey === '' || !hash_equals($thisuser->getVar('actkey'), $actkey)) {
             redirect_header('index.php', 5, _US_ACTKEYNOT);
         } else {
             if ($thisuser->getVar('level') > 0) {

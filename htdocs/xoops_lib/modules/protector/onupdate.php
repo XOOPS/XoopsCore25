@@ -11,7 +11,12 @@ $mydirpath = $registry->getEntry('mydirpath');
 $language  = $registry->getEntry('language');
 // end hack by Trabis
 
-eval(' function xoops_module_update_' . $mydirname . '( $module ) { return protector_onupdate_base( $module , "' . $mydirname . '" ) ; } ');
+// Dynamic function name via eval() is required for XOOPS module lifecycle callbacks
+// because PHP cannot define functions with runtime-computed names otherwise.
+// $mydirname comes from basename(__DIR__) via ProtectorRegistry, not user input.
+if (!function_exists('xoops_module_update_' . $mydirname)) {
+    eval('function xoops_module_update_' . $mydirname . '($module) { return protector_onupdate_base($module, ' . var_export($mydirname, true) . '); }');
+}
 
 if (!function_exists('protector_onupdate_base')) {
 

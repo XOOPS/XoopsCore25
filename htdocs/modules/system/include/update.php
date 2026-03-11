@@ -30,6 +30,10 @@ function xoops_module_update_system(XoopsModule $module, $prev_version = null)
     if ($prev_version < '2.1.1') {
         $ret = update_system_v211($module);
     }
+    // Clean up legacy .html template rows replaced by .tpl equivalents
+    if ($prev_version < '2.1.8') {
+        update_system_remove_legacy_html_templates($module);
+    }
     $errors = $module->getErrors();
     if (!empty($errors)) {
         print_r($errors);
@@ -99,3 +103,33 @@ function update_system_v211($module)
     return true;
 }
 // irmtfan bug fix: solve templates duplicate issue
+
+/**
+ * Remove legacy .html template DB rows that have been superseded by .tpl equivalents.
+ *
+ * Previous versions registered both .html and .tpl template files. The .html
+ * registrations have been removed from xoops_version.php, but upgraded sites
+ * may still have stale .html rows in the tplfile table. This cleans them up
+ * only where a matching .tpl row already exists.
+ *
+ * @param XoopsModule $module
+ */
+function update_system_remove_legacy_html_templates(XoopsModule $module)
+{
+    global $xoopsDB;
+    $dirname = $xoopsDB->escape($module->getVar('dirname', 'n'));
+
+    // Only remove .html rows where a .tpl equivalent exists in the same tplset
+    $sql = 'DELETE t1 FROM ' . $xoopsDB->prefix('tplfile') . ' t1'
+         . ' INNER JOIN ' . $xoopsDB->prefix('tplfile') . ' t2'
+         . ' ON t2.tpl_refid = t1.tpl_refid'
+         . ' AND t2.tpl_module = t1.tpl_module'
+         . ' AND t2.tpl_tplset = t1.tpl_tplset'
+         . ' AND t2.tpl_type = t1.tpl_type'
+         . " AND t2.tpl_file = REPLACE(t1.tpl_file, '.html', '.tpl')"
+         . " WHERE t1.tpl_module = '" . $dirname . "'"
+         . " AND t1.tpl_file LIKE '%.html'"
+         . " AND t2.tpl_file LIKE '%.tpl'";
+
+    $xoopsDB->exec($sql);
+}
