@@ -196,8 +196,8 @@ class Smarty4TemplateRepair extends ScannerProcess
     {
         $replacePattern = '/\$' . preg_quote($varName, '/') . '(?![a-zA-Z0-9_])/';
 
-        // Find nested foreach blocks that redefine item=$varName
-        $nestedPattern = '/<\{\s*foreach\s+item=' . preg_quote($varName, '/') . '\b/';
+        // Find nested foreach blocks that redefine item=$varName (order-independent)
+        $nestedPattern = '/<\{\s*foreach\b(?=[^}]*\bitem=' . preg_quote($varName, '/') . '\b)[^}]*\}>/';
         if (!preg_match($nestedPattern, $block)) {
             // No nested scope conflict — safe to replace the entire block
             return preg_replace($replacePattern, '$' . $newItem, $block);
