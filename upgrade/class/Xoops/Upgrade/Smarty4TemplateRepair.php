@@ -206,8 +206,8 @@ class Smarty4TemplateRepair extends ScannerProcess
         // Process segments between nested foreach blocks that shadow $varName
         $result = '';
         $pos = 0;
-        while (preg_match($nestedPattern, $block, $m, PREG_OFFSET_CAPTURE, $pos)) {
-            $nestedStart = $m[0][1];
+        while (preg_match($nestedPattern, $block, $nestedMatch, PREG_OFFSET_CAPTURE, $pos)) {
+            $nestedStart = $nestedMatch[0][1];
             // Replace in the segment before the nested foreach
             $segment = substr($block, $pos, $nestedStart - $pos);
             $result .= preg_replace($replacePattern, '$' . $newItem, $segment);
@@ -291,7 +291,7 @@ class Smarty4TemplateRepair extends ScannerProcess
             $file->fseek(0);
             $file->ftruncate(0);
             $result = $file->fwrite($updatedLines);
-            if ($result == false) {
+            if ($result === false) {
                 trigger_error(sprintf('Error writing file: %s', $filename), E_USER_WARNING);
             }
             $output->outputIssue($output->makeOutputIssue($filename, $count));
