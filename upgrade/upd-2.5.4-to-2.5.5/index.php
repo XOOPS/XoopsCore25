@@ -28,7 +28,7 @@ class Upgrade_255 extends XoopsUpgrade
             $sql = 'SHOW KEYS FROM `' . $GLOBALS['xoopsDB']->prefix($table) . '`';
             $result = $GLOBALS['xoopsDB']->query($sql);
             if (!$GLOBALS['xoopsDB']->isResultSet($result)) {
-                continue;
+                return false; // query failed, surface the issue
             }
             $existing_keys = [];
             while (false !== ($row = $GLOBALS['xoopsDB']->fetchArray($result))) {
@@ -101,7 +101,7 @@ class Upgrade_255 extends XoopsUpgrade
     public function apply_imptotal()
     {
         $sql = 'ALTER TABLE `' . $GLOBALS['xoopsDB']->prefix('banner') . "` CHANGE `imptotal` `imptotal` INT( 10 ) UNSIGNED NOT NULL DEFAULT '0'";
-        if (!$result = $GLOBALS['xoopsDB']->exec($sql)) {
+        if (!$GLOBALS['xoopsDB']->exec($sql)) {
             return false;
         }
 

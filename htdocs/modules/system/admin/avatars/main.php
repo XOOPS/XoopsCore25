@@ -328,14 +328,18 @@ switch ($op) {
         }
         $file = $avatar->getVar('avatar_file');
         // Delete file
-        @unlink(XOOPS_UPLOAD_PATH . '/' . $file);
-        // Update member profile
-        if (isset($user_id) && $avatar->getVar('avatar_type') === 'C') {
+        $avatarPath = XOOPS_UPLOAD_PATH . '/' . $file;
+        if (is_file($avatarPath) && is_writable($avatarPath)) {
+            unlink($avatarPath);
+        }
+        // Update member profile — reset avatar to blank for affected users
+        $user_id = Request::getInt('user_id', 0, 'POST');
+        if ($user_id > 0 && $avatar->getVar('avatar_type') === 'C') {
             $xoopsDB->exec('UPDATE ' . $xoopsDB->prefix('users')
-                . " SET user_avatar='blank.gif' WHERE uid=" . (int) $user_id);
+                . " SET user_avatar='blank.gif' WHERE uid=" . $user_id);
         } else {
             $xoopsDB->exec('UPDATE ' . $xoopsDB->prefix('users')
-                . " SET user_avatar='blank.gif' WHERE user_avatar='" . $file . "'");
+                . " SET user_avatar='blank.gif' WHERE user_avatar=" . $xoopsDB->quote($file));
         }
         redirect_header('admin.php?fct=avatars', 2, _AM_SYSTEM_DBUPDATED);
         break;

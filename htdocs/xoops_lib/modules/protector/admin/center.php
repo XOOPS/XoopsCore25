@@ -161,7 +161,9 @@ if ($action !== '') {
                 $buf[$ip . $type] = true;
             }
         }
-        $db->exec("DELETE FROM $log_table WHERE lid IN (" . implode(',', $ids) . ')');
+        if (!empty($ids)) {
+            $db->exec("DELETE FROM $log_table WHERE lid IN (" . implode(',', $ids) . ')');
+        }
         redirect_header('center.php?page=center', 2, _AM_MSG_REMOVED);
         exit;
     }

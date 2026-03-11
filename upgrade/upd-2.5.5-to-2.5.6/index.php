@@ -32,7 +32,7 @@ class Upgrade_256 extends XoopsUpgrade
         $sql = 'SHOW COLUMNS FROM ' . $GLOBALS['xoopsDB']->prefix('xoopscomments') . " LIKE 'com_user'";
         $result = $GLOBALS['xoopsDB']->query($sql);
         if (!$GLOBALS['xoopsDB']->isResultSet($result)) {
-            return true; // table not found, skip this upgrade step
+            return false; // query failed, surface the issue
         }
 
         return ($GLOBALS['xoopsDB']->getRowsNum($result) > 0);
@@ -46,7 +46,7 @@ class Upgrade_256 extends XoopsUpgrade
         $sql = 'SHOW COLUMNS FROM ' . $GLOBALS['xoopsDB']->prefix('xoopscomments') . " LIKE 'com_email'";
         $result = $GLOBALS['xoopsDB']->query($sql);
         if (!$GLOBALS['xoopsDB']->isResultSet($result)) {
-            return true; // table not found, skip this upgrade step
+            return false; // query failed, surface the issue
         }
 
         return ($GLOBALS['xoopsDB']->getRowsNum($result) > 0);
@@ -60,7 +60,7 @@ class Upgrade_256 extends XoopsUpgrade
         $sql = 'SHOW COLUMNS FROM ' . $GLOBALS['xoopsDB']->prefix('xoopscomments') . " LIKE 'com_url'";
         $result = $GLOBALS['xoopsDB']->query($sql);
         if (!$GLOBALS['xoopsDB']->isResultSet($result)) {
-            return true; // table not found, skip this upgrade step
+            return false; // query failed, surface the issue
         }
 
         return ($GLOBALS['xoopsDB']->getRowsNum($result) > 0);

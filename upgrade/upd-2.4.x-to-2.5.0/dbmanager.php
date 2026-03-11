@@ -269,7 +269,7 @@ class Db_manager
         $this->db->connect();
         foreach ($tables as $key => $val) {
             if (!$this->db->exec('DROP TABLE ' . $this->db->prefix($key))) {
-                $deleted[] = $ct;
+                $deleted[] = $this->db->prefix($key);
             }
         }
 

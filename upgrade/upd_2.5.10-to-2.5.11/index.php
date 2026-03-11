@@ -789,10 +789,13 @@ class Upgrade_2511 extends XoopsUpgrade
     public function check_notificationmethod()
     {
         $sql = 'SELECT COUNT(*) FROM `' . $GLOBALS['xoopsDB']->prefix('config') . "` WHERE `conf_name` IN ('default_notification')";
-        if (!$result = $GLOBALS['xoopsDB']->query($sql)) {
+        $result = $GLOBALS['xoopsDB']->query($sql);
+        if (!$GLOBALS['xoopsDB']->isResultSet($result)) {
             return false;
         }
-        return true;
+        [$count] = $GLOBALS['xoopsDB']->fetchRow($result);
+
+        return ($count > 0);
     }
 
     /**

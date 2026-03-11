@@ -281,8 +281,7 @@ class Upgrade_230 extends XoopsUpgrade
     public function convert_db($charset, $collation)
     {
         $sql = 'ALTER DATABASE `' . XOOPS_DB_NAME . '` DEFAULT CHARACTER SET ' . $GLOBALS['xoopsDB']->quote($charset) . ' COLLATE ' . $GLOBALS['xoopsDB']->quote($collation);
-        $result = $GLOBALS['xoopsDB']->exec($sql);
-        if (!$GLOBALS['xoopsDB']->isResultSet($result)) {
+        if (!$GLOBALS['xoopsDB']->exec($sql)) {
             return false;
         }
 
@@ -325,7 +324,7 @@ class Upgrade_230 extends XoopsUpgrade
             foreach ((array) $tables as $table) {
                 // Analyze tables for string types columns and generate his binary and string correctness sql sentences.
                 $sql = "DESCRIBE $table";
-                $result = $GLOBALS['xoopsDB']->exec($sql);
+                $result = $GLOBALS['xoopsDB']->query($sql);
                 if (!$GLOBALS['xoopsDB']->isResultSet($result)) {
                     throw new \RuntimeException(
                         \sprintf(_DB_QUERY_ERROR, $sql) . $GLOBALS['xoopsDB']->error(),

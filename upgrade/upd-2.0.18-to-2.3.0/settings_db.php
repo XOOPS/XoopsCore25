@@ -94,9 +94,9 @@ function xoFormFieldCollation($name, $value, $label, $help = '')
 
     $field = "<label for='$name'>$label</label>\n";
     if ($help) {
-        $field .= '<div class="xoform-help">' . $help . "</div>\n";
+        $field .= '<div class="xoform-help">' . htmlspecialchars($help, ENT_QUOTES | ENT_HTML5) . "</div>\n";
     }
-    $field .= "<select name='$name' id='$name'\">";
+    $field .= "<select name='$name' id='$name'>";
     $field .= "<option value=''>" . DB_COLLATION_NOCHANGE . '</option>';
 
     $collation_default = '';
@@ -113,7 +113,7 @@ function xoFormFieldCollation($name, $value, $label, $help = '')
     return $field;
 }
 
-if ($_SERVER['REQUEST_METHOD'] === 'POST' && @$_POST['task'] === 'db') {
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && ($_POST['task'] ?? '') === 'db') {
     $params = ['DB_COLLATION'];
     foreach ($params as $name) {
         $vars[$name] = $_POST[$name] ?? '';
@@ -131,7 +131,7 @@ if (!isset($vars['DB_COLLATION'])) {
     echo '<div class="x2-note error">' . $error . "</div>\n";
 } ?>
 
-<form action="<?php echo $_SERVER['PHP_SELF']; ?>" method='post'>
+<form action="<?php echo htmlspecialchars($_SERVER['SCRIPT_NAME'], ENT_QUOTES | ENT_HTML5); ?>" method='post'>
     <fieldset>
         <legend><?php echo LEGEND_DATABASE; ?></legend>
         <?php echo xoFormFieldCollation('DB_COLLATION', $vars['DB_COLLATION'], DB_COLLATION_LABEL, DB_COLLATION_HELP); ?>
