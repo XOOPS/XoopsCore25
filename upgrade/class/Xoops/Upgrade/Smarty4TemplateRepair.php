@@ -136,8 +136,13 @@ class Smarty4TemplateRepair extends ScannerProcess
             // Extract the block between opening and closing foreach tags
             $blockContent = substr($content, $foreachTagEnd, $closingTagStart - $foreachTagEnd);
 
-            // Replace $varName. with $newItem. inside the block
-            $fixedBlock = str_replace('$' . $varName . '.', '$' . $newItem . '.', $blockContent);
+            // Replace all Smarty references to $varName inside the block:
+            // $varName.property, $varName|modifier, $varName[key], $varName}, bare $varName
+            $fixedBlock = preg_replace(
+                '/\$' . preg_quote($varName, '/') . '(?=[.\|\[\}\)\s]|$)/',
+                '$' . $newItem,
+                $blockContent
+            );
 
             // Build new opening tag
             $newTag = '<{foreach item=' . $newItem . ' from=$' . $varName . '}>';

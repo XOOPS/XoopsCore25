@@ -28,7 +28,7 @@ use SplFileInfo;
 class Smarty4TemplateChecks extends ScannerProcess
 {
     protected $patterns = [
-        'varname' => '/<{foreach[[:space:]]+item=([a-zA-Z0-9\-_.]+)[[:space:]]from=\$([a-zA-Z0-9\-_.]+) *}>/',
+        'varname' => '/<{foreach[[:space:]]+item=([a-zA-Z0-9_]+)[[:space:]]from=\$([a-zA-Z0-9_]+) *}>/',
         'noquotes' => '/(<{xo[a-zA-Z\d]*\b)(?=[^}>]*[^\'"\$}>=]+[}>])([^}>]*?)(\s+)([^\$\'\"=]+)(\s*}>)/',
         'includeq' => '/(<{includeq[[:space:]]+[ -=\.\/_\'\"\$a-zA-Z0-9]+}>)/',
         'foreachq' => '/(<{foreachq[[:space:]]+[ -=\.\/_\'\"\$a-zA-Z0-9]+}>)/',
