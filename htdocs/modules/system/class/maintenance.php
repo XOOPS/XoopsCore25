@@ -53,7 +53,7 @@ class SystemMaintenance
     {
         $tables = [];
         $sql = 'SHOW TABLES';
-        $result = $this->db->queryF($sql);
+        $result = $this->db->query($sql);
         if (!$this->db->isResultSet($result)) {
             throw new \RuntimeException(
                 \sprintf(_DB_QUERY_ERROR, $sql) . $this->db->error(),
@@ -96,7 +96,7 @@ class SystemMaintenance
     public function CleanAvatar()
     {
         $sql = 'SELECT avatar_id, avatar_file FROM ' . $this->db->prefix('avatar') . " WHERE avatar_type='C' AND avatar_id IN (" . 'SELECT t1.avatar_id FROM ' . $this->db->prefix('avatar_user_link') . ' AS t1 ' . 'LEFT JOIN ' . $this->db->prefix('users') . ' AS t2 ON t2.uid=t1.user_id ' . 'WHERE t2.uid IS NULL)';
-        $result = $this->db->queryF($sql);
+        $result = $this->db->query($sql);
         if (!$this->db->isResultSet($result)) {
             throw new \RuntimeException(
                 \sprintf(_DB_QUERY_ERROR, $sql) . $this->db->error(),
@@ -324,7 +324,7 @@ class SystemMaintenance
     {
         $verif  = false;
         $sql = 'SHOW create table `' . $table . '`;';
-        $result = $this->db->queryF($sql);
+        $result = $this->db->query($sql);
         if ($this->db->isResultSet($result)) {
             if ($row = $this->db->fetchArray($result)) {
                 $ret[0] .= '# Table structure for table `' . $table . "` \n\n";
@@ -357,7 +357,7 @@ class SystemMaintenance
     {
         $count  = 0;
         $sql = 'SELECT * FROM ' . $table . ';';
-        $result = $this->db->queryF($sql);
+        $result = $this->db->query($sql);
         if ($this->db->isResultSet($result)) {
             $num_rows   = $this->db->getRowsNum($result);
             $num_fields = $this->db->getFieldsNum($result);

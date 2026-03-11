@@ -658,7 +658,7 @@ class Upgrade_2511 extends XoopsUpgrade
     public function check_templates()
     {
         $sql = 'SELECT COUNT(*) FROM `' . $GLOBALS['xoopsDB']->prefix('tplfile') . "` WHERE `tpl_file` IN ('system_confirm.tpl') AND `tpl_type` = 'module'";
-        $result = $GLOBALS['xoopsDB']->queryF($sql);
+        $result = $GLOBALS['xoopsDB']->query($sql);
         if (!$GLOBALS['xoopsDB']->isResultSet($result)) {
             return false;
         }
@@ -700,7 +700,7 @@ class Upgrade_2511 extends XoopsUpgrade
     public function check_templatesadmin()
     {
         $sql = 'SELECT COUNT(*) FROM `' . $GLOBALS['xoopsDB']->prefix('tplfile') . "` WHERE `tpl_file` IN ('system_modules.tpl') AND `tpl_type` = 'admin'";
-        $result = $GLOBALS['xoopsDB']->queryF($sql);
+        $result = $GLOBALS['xoopsDB']->query($sql);
         if (!$GLOBALS['xoopsDB']->isResultSet($result)) {
             return false;
         }
@@ -789,7 +789,7 @@ class Upgrade_2511 extends XoopsUpgrade
     public function check_notificationmethod()
     {
         $sql = 'SELECT COUNT(*) FROM `' . $GLOBALS['xoopsDB']->prefix('config') . "` WHERE `conf_name` IN ('default_notification')";
-        if (!$result = $GLOBALS['xoopsDB']->queryF($sql)) {
+        if (!$result = $GLOBALS['xoopsDB']->query($sql)) {
             return false;
         }
         return true;
@@ -803,7 +803,7 @@ class Upgrade_2511 extends XoopsUpgrade
         $returnResult = true;
         $notification_method = false;
         $sql                   = 'SELECT COUNT(*) FROM `' . $GLOBALS['xoopsDB']->prefix('config') . "` WHERE `conf_name` = 'default_notification'";
-        if ($result = $GLOBALS['xoopsDB']->queryF($sql)) {
+        if ($result = $GLOBALS['xoopsDB']->query($sql)) {
             [$count] = $GLOBALS['xoopsDB']->fetchRow($result);
             if (1 == $count) {
                 $notification_method = true;

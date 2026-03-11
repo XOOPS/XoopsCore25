@@ -120,7 +120,7 @@ function xoops_module_install($dirname)
                     $sql_query = trim($sql_query);
                     SqlUtility::splitMySqlFile($pieces, $sql_query);
                     $created_tables = [];
-                    $db->query('SET FOREIGN_KEY_CHECKS = 0');
+                    $db->exec('SET FOREIGN_KEY_CHECKS = 0');
                     foreach ($pieces as $piece) {
                         // Skip SET statements
                         if (preg_match('/^SET\s+/i', $piece)) {
@@ -156,14 +156,14 @@ function xoops_module_install($dirname)
                             break;
                         }
                     }
-                    $db->query('SET FOREIGN_KEY_CHECKS = 1');
+                    $db->exec('SET FOREIGN_KEY_CHECKS = 1');
                     // if there was an error, delete the tables created so far, so the next installation will not fail
                     if ($error === true) {
-                        $db->query('SET FOREIGN_KEY_CHECKS = 0');
+                        $db->exec('SET FOREIGN_KEY_CHECKS = 0');
                         foreach ($created_tables as $ct) {
                             $db->exec('DROP TABLE IF EXISTS ' . $db->prefix($ct));
                         }
-                        $db->query('SET FOREIGN_KEY_CHECKS = 1');
+                        $db->exec('SET FOREIGN_KEY_CHECKS = 1');
                     }
                 }
             }
@@ -172,11 +172,11 @@ function xoops_module_install($dirname)
         if ($error === false) {
             if (!$module_handler->insert($module)) {
                 $errs[] = '<p>' . sprintf(_AM_SYSTEM_MODULES_INSERT_DATA_FAILD, '<strong>' . $module->getVar('name') . '</strong>');
-                $db->query('SET FOREIGN_KEY_CHECKS = 0');
+                $db->exec('SET FOREIGN_KEY_CHECKS = 0');
                 foreach ($created_tables as $ct) {
                     $db->exec('DROP TABLE IF EXISTS ' . $db->prefix($ct));
                 }
-                $db->query('SET FOREIGN_KEY_CHECKS = 1');
+                $db->exec('SET FOREIGN_KEY_CHECKS = 1');
                 $ret = '<p>' . sprintf(_AM_SYSTEM_MODULES_FAILINS, '<strong>' . $module->name() . '</strong>') . '&nbsp;' . _AM_SYSTEM_MODULES_ERRORSC . '<br>';
                 foreach ($errs as $err) {
                     $ret .= ' - ' . $err . '<br>';
@@ -717,7 +717,7 @@ function xoops_module_uninstall($dirname)
             $modtables = $module->getInfo('tables');
             if ($modtables !== false && \is_array($modtables)) {
                 $msgs[] = _AM_SYSTEM_MODULES_DELETE_MOD_TABLES;
-                $db->query('SET FOREIGN_KEY_CHECKS = 0');
+                $db->exec('SET FOREIGN_KEY_CHECKS = 0');
                 foreach ($modtables as $table) {
                     // prevent deletion of reserved core tables!
                     if (!in_array($table, $reservedTables)) {
@@ -731,7 +731,7 @@ function xoops_module_uninstall($dirname)
                         $msgs[] = '&nbsp;&nbsp;<span style="color:#ff0000;">' . sprintf(_AM_SYSTEM_MODULES_TABLE_DROPPED_FAILDED, '<strong>' . $db->prefix($table) . '</strong>') . '</span>';
                     }
                 }
-                $db->query('SET FOREIGN_KEY_CHECKS = 1');
+                $db->exec('SET FOREIGN_KEY_CHECKS = 1');
             }
 
             // delete comments if any

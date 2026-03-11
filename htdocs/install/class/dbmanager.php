@@ -81,7 +81,7 @@ class Db_manager
     {
         $this->db->connect(false);
 
-        $result = $this->db->query('CREATE DATABASE ' . XOOPS_DB_NAME);
+        $result = $this->db->exec('CREATE DATABASE ' . XOOPS_DB_NAME);
 
         return ($result != false);// ? true : false;
     }

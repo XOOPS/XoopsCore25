@@ -80,7 +80,7 @@ abstract class XoopsMySQLDatabase extends XoopsDatabase
             // $this->queryF("SET NAMES '" . XOOPS_DB_CHARSET . "'");
             $this->conn->set_charset(XOOPS_DB_CHARSET);
         }
-        $this->queryF('SET SQL_BIG_SELECTS = 1');
+        $this->exec('SET SQL_BIG_SELECTS = 1');
 
         return true;
     }
@@ -643,12 +643,7 @@ class XoopsMySQLDatabaseProxy extends XoopsMySQLDatabase
 
             return false;
         }
-        // Execute via queryF() to preserve legacy path (and LIMIT semantics)
-        if ($limit !== null) {
-            $start = max(0, $start ?? 0);
-            return $this->queryF($sql, (int)$limit, (int)$start);
-    }
-        return $this->queryF($sql);
+        return parent::query($sql, $limit, $start);
     }
 
 }

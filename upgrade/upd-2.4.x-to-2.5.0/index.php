@@ -30,7 +30,7 @@ class Upgrade_250 extends XoopsUpgrade
     public function check_config()
     {
         $sql = 'SELECT COUNT(*) FROM `' . $GLOBALS['xoopsDB']->prefix('config') . "` WHERE `conf_name` IN ('break1', 'usetips')";
-        $result = $GLOBALS['xoopsDB']->queryF($sql);
+        $result = $GLOBALS['xoopsDB']->query($sql);
         if (!$GLOBALS['xoopsDB']->isResultSet($result)) {
             return false;
         }
@@ -45,7 +45,7 @@ class Upgrade_250 extends XoopsUpgrade
     public function check_templates()
     {
         $sql = 'SELECT COUNT(*) FROM `' . $GLOBALS['xoopsDB']->prefix('tplfile') . "` WHERE `tpl_file` IN ('system_header.html', 'system_header.tpl') AND `tpl_type` = 'admin'";
-        $result = $GLOBALS['xoopsDB']->queryF($sql);
+        $result = $GLOBALS['xoopsDB']->query($sql);
         if (!$GLOBALS['xoopsDB']->isResultSet($result)) {
             return false;
         }
@@ -62,7 +62,7 @@ class Upgrade_250 extends XoopsUpgrade
         $dbm = new Db_manager();
 
         $sql = 'SELECT conf_id FROM `' . $GLOBALS['xoopsDB']->prefix('config') . "` WHERE `conf_name` IN ('cpanel')";
-        $result = $GLOBALS['xoopsDB']->queryF($sql);
+        $result = $GLOBALS['xoopsDB']->query($sql);
         if (!$GLOBALS['xoopsDB']->isResultSet($result)) {
             return false;
         }

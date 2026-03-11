@@ -31,7 +31,7 @@ class Upgrade_220 extends XoopsUpgrade
     public function check_config()
     {
         $sql    = 'SHOW COLUMNS FROM `' . $GLOBALS['xoopsDB']->prefix('configcategory') . "` LIKE 'confcat_modid'";
-        $result = $GLOBALS['xoopsDB']->queryF($sql);
+        $result = $GLOBALS['xoopsDB']->query($sql);
         if (!$GLOBALS['xoopsDB']->isResultSet($result)) {
             return true;
         }
@@ -51,7 +51,7 @@ class Upgrade_220 extends XoopsUpgrade
             return true;
         }
         $sql    = 'SHOW COLUMNS FROM ' . $GLOBALS['xoopsDB']->prefix('users') . " LIKE 'posts'";
-        $result = $GLOBALS['xoopsDB']->queryF($sql);
+        $result = $GLOBALS['xoopsDB']->query($sql);
         if (!$GLOBALS['xoopsDB']->isResultSet($result)) {
             return false;
         }
@@ -66,7 +66,7 @@ class Upgrade_220 extends XoopsUpgrade
     public function check_block()
     {
         $sql    = "SHOW TABLES LIKE '" . $GLOBALS['xoopsDB']->prefix('block_instance') . "'";
-        $result = $GLOBALS['xoopsDB']->queryF($sql);
+        $result = $GLOBALS['xoopsDB']->query($sql);
         if (!$GLOBALS['xoopsDB']->isResultSet($result)) {
             return true;
         }

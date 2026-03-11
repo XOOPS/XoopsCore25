@@ -22,7 +22,7 @@ class Upgrade_2016 extends XoopsUpgrade
     protected function query($sql)
     {
         $db = $GLOBALS['xoopsDB'];
-        if (!($ret = $db->queryF($sql))) {
+        if (!$db->exec($sql)) {
             echo $db->error();
         }
     }

@@ -111,7 +111,7 @@ if ($action !== '') {
         // remove selected records
         foreach ($ids as $lid) {
             $lid = (int) $lid;
-            $db->query("DELETE FROM $log_table WHERE lid='$lid'");
+            $db->exec("DELETE FROM $log_table WHERE lid='$lid'");
         }
         redirect_header('center.php?page=center', 2, _AM_MSG_REMOVED);
         exit;
@@ -138,7 +138,7 @@ if ($action !== '') {
         exit;
     } elseif ($action === 'deleteall') {
         // remove all records
-        $db->query("DELETE FROM $log_table");
+        $db->exec("DELETE FROM $log_table");
         redirect_header('center.php?page=center', 2, _AM_MSG_REMOVED);
         exit;
     } elseif ($action === 'compactlog') {
@@ -161,7 +161,7 @@ if ($action !== '') {
                 $buf[$ip . $type] = true;
             }
         }
-        $db->query("DELETE FROM $log_table WHERE lid IN (" . implode(',', $ids) . ')');
+        $db->exec("DELETE FROM $log_table WHERE lid IN (" . implode(',', $ids) . ')');
         redirect_header('center.php?page=center', 2, _AM_MSG_REMOVED);
         exit;
     }

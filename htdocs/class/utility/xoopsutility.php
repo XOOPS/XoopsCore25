@@ -44,16 +44,9 @@ class XoopsUtility
     public static function recursive($handler, $data)
     {
         if (is_array($data)) {
-            $return = array_map(
-                [
-                    'XoopsUtility',
-                    'recursive',
-                ],
-                $handler,
-                $data,
-            );
-
-            return $return;
+            return array_map(static function ($item) use ($handler) {
+                return self::recursive($handler, $item);
+            }, $data);
         }
         // single function
         if (is_string($handler)) {
