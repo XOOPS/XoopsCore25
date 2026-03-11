@@ -317,25 +317,8 @@ switch ($op) {
         if (!is_object($avatar)) {
             redirect_header('admin.php?fct=avatars', 1, _AM_SYSTEM_DBERROR);
         }
-        if (!$avt_handler->delete($avatar)) {
-            // Call Header
-            xoops_cp_header();
-            // Display errors
-            xoops_error(sprintf(_AM_SYSTEM_AVATAR_FAILDEL, $avatar->getVar('avatar_id')));
-            // Call Footer
-            xoops_cp_footer();
-            exit();
-        }
         $file = $avatar->getVar('avatar_file');
-        // Delete file — validate path stays within upload directory
-        $avatarPath = realpath(XOOPS_UPLOAD_PATH . '/' . $file);
-        $uploadRoot = realpath(XOOPS_UPLOAD_PATH);
-        if ($uploadRoot !== false && $avatarPath !== false && strpos($avatarPath, $uploadRoot . DIRECTORY_SEPARATOR) === 0) {
-            if (is_file($avatarPath) && !unlink($avatarPath)) {
-                trigger_error('Failed to delete avatar file: ' . basename($avatarPath), E_USER_WARNING);
-            }
-        }
-        // Update member profile — reset avatar to blank for affected users
+        // Reset user profiles first — before deleting the avatar record or file
         $user_id = Request::getInt('user_id', 0, 'POST');
         if ($user_id > 0 && $avatar->getVar('avatar_type') === 'C') {
             if (!$xoopsDB->exec('UPDATE ' . $xoopsDB->prefix('users')
@@ -347,6 +330,19 @@ switch ($op) {
                 . " SET user_avatar='blank.gif' WHERE user_avatar=" . $xoopsDB->quote($file))) {
                 trigger_error('Failed to reset user avatars: ' . $xoopsDB->error(), E_USER_WARNING);
             }
+        }
+        // Delete the avatar record
+        if (!$avt_handler->delete($avatar)) {
+            xoops_cp_header();
+            xoops_error(sprintf(_AM_SYSTEM_AVATAR_FAILDEL, $avatar->getVar('avatar_id')));
+            xoops_cp_footer();
+            exit();
+        }
+        // Delete file — validate path stays within upload directory
+        $avatarPath = realpath(XOOPS_UPLOAD_PATH . '/' . $file);
+        $uploadRoot = realpath(XOOPS_UPLOAD_PATH);
+        if ($uploadRoot !== false && $avatarPath !== false && str_starts_with($avatarPath, $uploadRoot . DIRECTORY_SEPARATOR) && is_file($avatarPath) && !unlink($avatarPath)) {
+            trigger_error('Failed to delete avatar file: ' . basename($avatarPath), E_USER_WARNING);
         }
         redirect_header('admin.php?fct=avatars', 2, _AM_SYSTEM_DBUPDATED);
         break;

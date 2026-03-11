@@ -613,8 +613,8 @@ class XoopsMySQLDatabaseSafe extends XoopsMySQLDatabase
 /**
  * Read-Only connection to a MySQL database.
  *
- * This class allows only SELECT queries to be performed through its
- * {@link query()} method for security reasons.
+ * This class allows only read-only statements (SELECT, SHOW, DESCRIBE, EXPLAIN)
+ * to be performed through its {@link query()} method for security reasons.
  *
  * @author              Kazumi Ono <onokazu@xoops.org>
  * @copyright       (c) 2000-2026 XOOPS Project (https://xoops.org)
@@ -626,7 +626,7 @@ class XoopsMySQLDatabaseProxy extends XoopsMySQLDatabase
     /**
      * perform a query on the database
      *
-     * this method allows only SELECT queries for safety.
+     * This method allows only read-only statements (SELECT, SHOW, DESCRIBE, EXPLAIN) for safety.
      *
      * @param string $sql   a valid MySQL query
      * @param int    $limit number of records to return

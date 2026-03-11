@@ -175,7 +175,7 @@ function bannerstats()
         }
         echo "</table>
               <br><br>
-              <h4 class='content_title'>" . _BANNERS_FOW_IN . htmlspecialchars($xoopsConfig['sitename'], ENT_QUOTES | ENT_HTML5) . '</h4><hr />';
+              <h4 class='content_title'>" . _BANNERS_FOW_IN . htmlspecialchars($xoopsConfig['sitename'], ENT_QUOTES | ENT_HTML5, 'UTF-8') . '</h4><hr />';
 
         $sql = 'SELECT bid, imageurl, clickurl, htmlbanner, htmlcode FROM ' . $xoopsDB->prefix('banner') . " WHERE cid={$cid}";
         $result = $xoopsDB->query($sql);
@@ -213,7 +213,7 @@ function bannerstats()
             }
             echo '<br><strong>' . _BANNERS_ID . $bid . '</strong><br>' . sprintf(_BANNERS_SEND_STATS, 'banners.php?op=EmailStats&amp;cid=' . $cid . '&amp;bid=' . $bid) . '<br>';
             if (!$htmlbanner) {
-                $clickurl = htmlspecialchars($clickurl, ENT_QUOTES | ENT_HTML5);
+                $clickurl = htmlspecialchars($clickurl, ENT_QUOTES | ENT_HTML5, 'UTF-8');
                 echo sprintf(_BANNERS_POINTS, $clickurl) . "<br>
                 <form action='banners.php' method='post'>" . _BANNERS_URL . "
                 <input type='text' name='url' size='50' maxlength='200' value='{$clickurl}' />
