@@ -295,7 +295,11 @@ function emailStats($cid, $bid)
                     $sql    = 'SELECT bid, imptotal, impmade, clicks, imageurl, clickurl, date FROM ' . $xoopsDB->prefix('banner') . " WHERE bid={$bid} AND cid={$cid}";
                     $result = $xoopsDB->query($sql);
                     if (($xoopsDB->isResultSet($result) && $result instanceof \mysqli_result)) {
-                        [$bid, $imptotal, $impmade, $clicks, $imageurl, $clickurl, $date] = $xoopsDB->fetchRow($result);
+                        $row = $xoopsDB->fetchRow($result);
+                        if (false === $row) {
+                            redirect_header('banners.php', 2);
+                        }
+                        [$bid, $imptotal, $impmade, $clicks, $imageurl, $clickurl, $date] = $row;
                         if ($impmade == 0) {
                             $percent = 0;
                         } else {
@@ -380,7 +384,8 @@ function clickbanner($bid)
                 E_USER_ERROR,
             );
         }
-        [$clickurl] = $xoopsDB->fetchRow($result);
+        $row = $xoopsDB->fetchRow($result);
+        $clickurl = $row[0] ?? null;
         if ($clickurl) {
             if ($GLOBALS['xoopsSecurity']->checkReferer()) {
                 $xoopsDB->exec('UPDATE ' . $xoopsDB->prefix('banner') . " SET clicks=clicks+1 WHERE bid=$bid");
