@@ -627,7 +627,9 @@ class XoopsMySQLDatabaseProxy extends XoopsMySQLDatabase
     /**
      * perform a query on the database
      *
-     * This method allows only read-only statements (SELECT, SHOW, DESCRIBE, EXPLAIN) for safety.
+     * When allowWebChanges is false (GET requests), this method restricts
+     * to read-only statements (SELECT, SHOW, DESCRIBE, EXPLAIN).
+     * On POST/other requests, all statements are permitted.
      *
      * @param string $sql   a valid MySQL query
      * @param int    $limit number of records to return
