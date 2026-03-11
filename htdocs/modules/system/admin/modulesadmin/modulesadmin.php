@@ -160,6 +160,7 @@ function xoops_module_install($dirname)
                     }
                     if (!$db->exec('SET FOREIGN_KEY_CHECKS = 1')) {
                         $errs[] = 'Failed to restore FOREIGN_KEY_CHECKS after table creation: ' . htmlspecialchars($db->error(), ENT_QUOTES | ENT_HTML5, 'UTF-8');
+                        $error = true;
                     }
                     // if there was an error, delete the tables created so far, so the next installation will not fail
                     if ($error === true) {

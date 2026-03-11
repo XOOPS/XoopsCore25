@@ -108,10 +108,14 @@ if ($action !== '') {
         exit;
     } elseif ($action === 'delete' && Request::hasVar('ids', 'POST')) {
         $ids = Request::getArray('ids', [], 'POST');
-        // remove selected records
-        foreach ($ids as $lid) {
-            $lid = (int) $lid;
-            $db->exec("DELETE FROM $log_table WHERE lid='$lid'");
+        if (!empty($ids)) {
+            // remove selected records
+            foreach ($ids as $lid) {
+                $lid = (int) $lid;
+                if (!$db->exec("DELETE FROM $log_table WHERE lid='$lid'")) {
+                    trigger_error('Failed to delete log entry: ' . $db->error(), E_USER_WARNING);
+                }
+            }
         }
         redirect_header('center.php?page=center', 2, _AM_MSG_REMOVED);
         exit;

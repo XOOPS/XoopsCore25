@@ -327,19 +327,25 @@ switch ($op) {
             exit();
         }
         $file = $avatar->getVar('avatar_file');
-        // Delete file
-        $avatarPath = XOOPS_UPLOAD_PATH . '/' . $file;
-        if (is_file($avatarPath) && !unlink($avatarPath)) {
-            trigger_error('Failed to delete avatar file: ' . basename($avatarPath), E_USER_WARNING);
+        // Delete file — validate path stays within upload directory
+        $avatarPath = realpath(XOOPS_UPLOAD_PATH . '/' . $file);
+        if ($avatarPath !== false && strpos($avatarPath, realpath(XOOPS_UPLOAD_PATH)) === 0) {
+            if (is_file($avatarPath) && !unlink($avatarPath)) {
+                trigger_error('Failed to delete avatar file: ' . basename($avatarPath), E_USER_WARNING);
+            }
         }
         // Update member profile — reset avatar to blank for affected users
         $user_id = Request::getInt('user_id', 0, 'POST');
         if ($user_id > 0 && $avatar->getVar('avatar_type') === 'C') {
-            $xoopsDB->exec('UPDATE ' . $xoopsDB->prefix('users')
-                . " SET user_avatar='blank.gif' WHERE uid=" . $user_id);
+            if (!$xoopsDB->exec('UPDATE ' . $xoopsDB->prefix('users')
+                . " SET user_avatar='blank.gif' WHERE uid=" . $user_id)) {
+                trigger_error('Failed to reset user avatar: ' . $xoopsDB->error(), E_USER_WARNING);
+            }
         } else {
-            $xoopsDB->exec('UPDATE ' . $xoopsDB->prefix('users')
-                . " SET user_avatar='blank.gif' WHERE user_avatar=" . $xoopsDB->quote($file));
+            if (!$xoopsDB->exec('UPDATE ' . $xoopsDB->prefix('users')
+                . " SET user_avatar='blank.gif' WHERE user_avatar=" . $xoopsDB->quote($file))) {
+                trigger_error('Failed to reset user avatars: ' . $xoopsDB->error(), E_USER_WARNING);
+            }
         }
         redirect_header('admin.php?fct=avatars', 2, _AM_SYSTEM_DBUPDATED);
         break;

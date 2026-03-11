@@ -290,7 +290,7 @@ function emailStats($cid, $bid)
             [$name, $email, $passwd] = $row;
             if (hash_equals((string) $passwd, $banner_pass)) {
                 if ($email == '') {
-                    redirect_header('banners.php', 3, sprintf(_BANNERS_MAIL_ERROR, $name));
+                    redirect_header('banners.php', 3, sprintf(_BANNERS_MAIL_ERROR, htmlspecialchars($name, ENT_QUOTES | ENT_HTML5, 'UTF-8')));
                 } else {
                     $sql    = 'SELECT bid, imptotal, impmade, clicks, imageurl, clickurl, date FROM ' . $xoopsDB->prefix('banner') . " WHERE bid={$bid} AND cid={$cid}";
                     $result = $xoopsDB->query($sql);

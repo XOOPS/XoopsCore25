@@ -283,15 +283,15 @@ class Db_manager
      */
     public function deleteTables($tables)
     {
-        $deleted = [];
+        $failedTables = [];
         $this->db->connect();
         foreach ($tables as $key => $val) {
             if (!$this->db->exec('DROP TABLE ' . $this->db->prefix($key))) {
-                $deleted[] = $ct;
+                $failedTables[] = $this->db->prefix($key);
             }
         }
 
-        return $deleted;
+        return $failedTables;
     }
 
     /**
