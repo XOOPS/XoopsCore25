@@ -317,19 +317,23 @@ switch ($op) {
         if (!is_object($avatar)) {
             redirect_header('admin.php?fct=avatars', 1, _AM_SYSTEM_DBERROR);
         }
-        $file = $avatar->getVar('avatar_file');
-        // Reset user profiles first — before deleting the avatar record or file
+        $file = $avatar->getVar('avatar_file', 'n');
+        // Reset user profiles first — abort if reset fails to avoid orphaned references
         $user_id = Request::getInt('user_id', 0, 'POST');
-        if ($user_id > 0 && $avatar->getVar('avatar_type') === 'C') {
+        $resetOk = true;
+        if ($user_id > 0 && $avatar->getVar('avatar_type', 'n') === 'C') {
             if (!$xoopsDB->exec('UPDATE ' . $xoopsDB->prefix('users')
                 . " SET user_avatar='blank.gif' WHERE uid=" . $user_id)) {
-                trigger_error('Failed to reset user avatar: ' . $xoopsDB->error(), E_USER_WARNING);
+                $resetOk = false;
             }
         } else {
             if (!$xoopsDB->exec('UPDATE ' . $xoopsDB->prefix('users')
                 . " SET user_avatar='blank.gif' WHERE user_avatar=" . $xoopsDB->quote($file))) {
-                trigger_error('Failed to reset user avatars: ' . $xoopsDB->error(), E_USER_WARNING);
+                $resetOk = false;
             }
+        }
+        if (!$resetOk) {
+            redirect_header('admin.php?fct=avatars', 2, _AM_SYSTEM_DBERROR);
         }
         // Delete the avatar record
         if (!$avt_handler->delete($avatar)) {
