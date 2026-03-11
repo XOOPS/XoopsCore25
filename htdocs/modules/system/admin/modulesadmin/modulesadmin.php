@@ -106,6 +106,7 @@ function xoops_module_install($dirname)
             }
         }
 
+        $created_tables = [];
         if ($error === false) {
             $sqlfile = $module->getInfo('sqlfile');
             if (is_array($sqlfile) && !empty($sqlfile[XOOPS_DB_TYPE])) {

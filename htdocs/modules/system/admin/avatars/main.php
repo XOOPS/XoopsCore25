@@ -329,7 +329,8 @@ switch ($op) {
         $file = $avatar->getVar('avatar_file');
         // Delete file — validate path stays within upload directory
         $avatarPath = realpath(XOOPS_UPLOAD_PATH . '/' . $file);
-        if ($avatarPath !== false && strpos($avatarPath, realpath(XOOPS_UPLOAD_PATH)) === 0) {
+        $uploadRoot = realpath(XOOPS_UPLOAD_PATH) . DIRECTORY_SEPARATOR;
+        if ($avatarPath !== false && strpos($avatarPath, $uploadRoot) === 0) {
             if (is_file($avatarPath) && !unlink($avatarPath)) {
                 trigger_error('Failed to delete avatar file: ' . basename($avatarPath), E_USER_WARNING);
             }

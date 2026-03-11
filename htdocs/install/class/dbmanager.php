@@ -285,7 +285,7 @@ class Db_manager
     {
         $failedTables = [];
         $this->db->connect();
-        foreach ($tables as $key => $val) {
+        foreach (array_keys($tables) as $key) {
             if (!$this->db->exec('DROP TABLE ' . $this->db->prefix($key))) {
                 $failedTables[] = $this->db->prefix($key);
             }
