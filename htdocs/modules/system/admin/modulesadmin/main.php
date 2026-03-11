@@ -350,6 +350,7 @@ switch ($op) {
         break;
 
     case 'install_ok':
+        $module = Request::getString('module', '');
         $ret   = [];
         $ret[] = xoops_module_install($module);
         // Flush cache files for cpanel GUIs
