@@ -197,14 +197,14 @@ function bannerstats()
                     echo "<p>" ._BANNERS_NO_FLASH  ."</p>";
                 } elseif (in_array($extension, ['.mp4', '.webm', '.ogg'])) {
                     // Handle actual video files
-                    $imageurl = htmlspecialchars($imageurl, ENT_QUOTES | ENT_HTML5);
-                    echo "<video width='468' height='60' controls>
-                <source src='{$imageurl}' type='video/" . substr($extension, 1) . "'>
+                    $imageurl = htmlspecialchars($imageurl, ENT_QUOTES | ENT_HTML5, ‘UTF-8’);
+                    echo "<video width=’468’ height=’60’ controls>
+                <source src=’{$imageurl}’ type=’video/" . substr($extension, 1) . "’>
                 Your browser does not support the video tag.
               </video>";
                 } else {
                     // Assume it’s an image otherwise
-                    $imageurl = htmlspecialchars($imageurl, ENT_QUOTES | ENT_HTML5);
+                    $imageurl = htmlspecialchars($imageurl, ENT_QUOTES | ENT_HTML5, ‘UTF-8’);
                     echo "<img src='{$imageurl}' alt='' />";
                 }
             }

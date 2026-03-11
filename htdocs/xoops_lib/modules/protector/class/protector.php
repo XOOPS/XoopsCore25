@@ -266,7 +266,11 @@ class Protector
             /** @var XoopsMemberHandler */
             $userHandler = xoops_getHandler('user');
             $xoopsUser->setVar('level', 0);
-            $actkey = bin2hex(random_bytes(4));
+            try {
+                $actkey = bin2hex(random_bytes(4));
+            } catch (\Throwable $e) {
+                $actkey = substr(uniqid('', true), -8);
+            }
             $xoopsUser->setVar('actkey', $actkey);
             $userHandler->insert($xoopsUser);
         }

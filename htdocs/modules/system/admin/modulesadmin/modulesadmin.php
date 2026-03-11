@@ -120,7 +120,9 @@ function xoops_module_install($dirname)
                     $sql_query = trim($sql_query);
                     SqlUtility::splitMySqlFile($pieces, $sql_query);
                     $created_tables = [];
-                    $db->exec('SET FOREIGN_KEY_CHECKS = 0');
+                    if (!$db->exec('SET FOREIGN_KEY_CHECKS = 0')) {
+                        $errs[] = 'Failed to disable FOREIGN_KEY_CHECKS before table creation';
+                    }
                     foreach ($pieces as $piece) {
                         // Skip SET statements
                         if (preg_match('/^SET\s+/i', $piece)) {
