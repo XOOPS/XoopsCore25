@@ -121,7 +121,7 @@ function xoops_module_install($dirname)
                     SqlUtility::splitMySqlFile($pieces, $sql_query);
                     $created_tables = [];
                     if (!$db->exec('SET FOREIGN_KEY_CHECKS = 0')) {
-                        $errs[] = 'Failed to disable FOREIGN_KEY_CHECKS before table creation';
+                        $errs[] = 'Failed to disable FOREIGN_KEY_CHECKS before table creation: ' . $db->error();
                     }
                     foreach ($pieces as $piece) {
                         // Skip SET statements
@@ -159,20 +159,20 @@ function xoops_module_install($dirname)
                         }
                     }
                     if (!$db->exec('SET FOREIGN_KEY_CHECKS = 1')) {
-                        $errs[] = 'Failed to restore FOREIGN_KEY_CHECKS after table creation';
+                        $errs[] = 'Failed to restore FOREIGN_KEY_CHECKS after table creation: ' . $db->error();
                     }
                     // if there was an error, delete the tables created so far, so the next installation will not fail
                     if ($error === true) {
                         if (!$db->exec('SET FOREIGN_KEY_CHECKS = 0')) {
-                            $errs[] = 'Failed to disable FOREIGN_KEY_CHECKS before cleanup';
+                            $errs[] = 'Failed to disable FOREIGN_KEY_CHECKS before cleanup: ' . $db->error();
                         }
                         foreach ($created_tables as $ct) {
                             if (!$db->exec('DROP TABLE IF EXISTS ' . $db->prefix($ct))) {
-                                $errs[] = 'Failed to drop table ' . $db->prefix($ct) . ' during cleanup';
+                                $errs[] = 'Failed to drop table ' . $db->prefix($ct) . ' during cleanup: ' . $db->error();
                             }
                         }
                         if (!$db->exec('SET FOREIGN_KEY_CHECKS = 1')) {
-                            $errs[] = 'Failed to restore FOREIGN_KEY_CHECKS after cleanup';
+                            $errs[] = 'Failed to restore FOREIGN_KEY_CHECKS after cleanup: ' . $db->error();
                         }
                     }
                 }
@@ -183,15 +183,15 @@ function xoops_module_install($dirname)
             if (!$module_handler->insert($module)) {
                 $errs[] = '<p>' . sprintf(_AM_SYSTEM_MODULES_INSERT_DATA_FAILD, '<strong>' . $module->getVar('name') . '</strong>');
                 if (!$db->exec('SET FOREIGN_KEY_CHECKS = 0')) {
-                    $errs[] = 'Failed to disable FOREIGN_KEY_CHECKS before cleanup';
+                    $errs[] = 'Failed to disable FOREIGN_KEY_CHECKS before cleanup: ' . $db->error();
                 }
                 foreach ($created_tables as $ct) {
                     if (!$db->exec('DROP TABLE IF EXISTS ' . $db->prefix($ct))) {
-                        $errs[] = 'Failed to drop table ' . $db->prefix($ct) . ' during cleanup';
+                        $errs[] = 'Failed to drop table ' . $db->prefix($ct) . ' during cleanup: ' . $db->error();
                     }
                 }
                 if (!$db->exec('SET FOREIGN_KEY_CHECKS = 1')) {
-                    $errs[] = 'Failed to restore FOREIGN_KEY_CHECKS after failed module insert';
+                    $errs[] = 'Failed to restore FOREIGN_KEY_CHECKS after failed module insert: ' . $db->error();
                 }
                 $ret = '<p>' . sprintf(_AM_SYSTEM_MODULES_FAILINS, '<strong>' . $module->name() . '</strong>') . '&nbsp;' . _AM_SYSTEM_MODULES_ERRORSC . '<br>';
                 foreach ($errs as $err) {
@@ -733,7 +733,9 @@ function xoops_module_uninstall($dirname)
             $modtables = $module->getInfo('tables');
             if ($modtables !== false && \is_array($modtables)) {
                 $msgs[] = _AM_SYSTEM_MODULES_DELETE_MOD_TABLES;
-                $db->exec('SET FOREIGN_KEY_CHECKS = 0');
+                if (!$db->exec('SET FOREIGN_KEY_CHECKS = 0')) {
+                    $msgs[] = '&nbsp;&nbsp;<span style="color:#ff0000;">Failed to disable FOREIGN_KEY_CHECKS before table deletion: ' . $db->error() . '</span>';
+                }
                 foreach ($modtables as $table) {
                     // prevent deletion of reserved core tables!
                     if (!in_array($table, $reservedTables)) {
@@ -748,7 +750,7 @@ function xoops_module_uninstall($dirname)
                     }
                 }
                 if (!$db->exec('SET FOREIGN_KEY_CHECKS = 1')) {
-                    $msgs[] = '&nbsp;&nbsp;<span style="color:#ff0000;">Failed to restore FOREIGN_KEY_CHECKS after table deletion</span>';
+                    $msgs[] = '&nbsp;&nbsp;<span style="color:#ff0000;">Failed to restore FOREIGN_KEY_CHECKS after table deletion: ' . $db->error() . '</span>';
                 }
             }
 

@@ -269,8 +269,8 @@ class Protector
             try {
                 $actkey = bin2hex(random_bytes(4));
             } catch (\Throwable $e) {
-                trigger_error('random_bytes() unavailable: ' . $e->getMessage(), E_USER_WARNING);
-                $actkey = substr(hash('sha256', uniqid((string) mt_rand(), true) . microtime()), 0, 8);
+                trigger_error('CSPRNG unavailable for activation key generation', E_USER_WARNING);
+                $actkey = '00000000'; // fail closed — account stays deactivated
             }
             $xoopsUser->setVar('actkey', $actkey);
             $userHandler->insert($xoopsUser);
