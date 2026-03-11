@@ -94,8 +94,9 @@ class Smarty4TemplateRepair extends ScannerProcess
     {
         // Match foreach where item name is identical to the from variable name
         $pattern = '/<\{\s*foreach\s+item=([a-zA-Z0-9_]+)\s+from=\$\1\s*\}>/';
+        $searchOffset = 0;
 
-        while (preg_match($pattern, $content, $match, PREG_OFFSET_CAPTURE)) {
+        while (preg_match($pattern, $content, $match, PREG_OFFSET_CAPTURE, $searchOffset)) {
             $varName = $match[1][0];
             $newItem = $varName . '_item';
             $foreachTagStart = $match[0][1];
@@ -129,20 +130,17 @@ class Smarty4TemplateRepair extends ScannerProcess
             }
 
             if ($closingTagStart === false) {
-                // Could not find matching close tag — skip entirely, leave for manual review
-                break;
+                // Could not find matching close tag — skip this one, try the next
+                $searchOffset = $foreachTagEnd;
+                continue;
             }
 
             // Extract the block between opening and closing foreach tags
             $blockContent = substr($content, $foreachTagEnd, $closingTagStart - $foreachTagEnd);
 
-            // Replace all Smarty references to $varName inside the block:
-            // $varName.property, $varName|modifier, $varName[key], $varName}, bare $varName
-            $fixedBlock = preg_replace(
-                '/\$' . preg_quote($varName, '/') . '(?=[.\|\[\}\)\s]|$)/',
-                '$' . $newItem,
-                $blockContent
-            );
+            // Replace $varName references, but skip nested foreach blocks that
+            // redefine the same item name (they have their own scope)
+            $fixedBlock = $this->replaceVarInBlock($varName, $newItem, $blockContent);
 
             // Build new opening tag
             $newTag = '<{foreach item=' . $newItem . ' from=$' . $varName . '}>';
@@ -157,6 +155,76 @@ class Smarty4TemplateRepair extends ScannerProcess
         }
 
         return $content;
+    }
+
+    /**
+     * Replace $varName with $newItem in a foreach block, respecting nested scope.
+     *
+     * Skips content inside nested foreach blocks that redefine the same item name,
+     * since those have their own scope for that variable.
+     *
+     * @param string $varName  original variable name
+     * @param string $newItem  replacement variable name
+     * @param string $block    block content between foreach tags
+     *
+     * @return string block with replacements applied
+     */
+    protected function replaceVarInBlock(string $varName, string $newItem, string $block): string
+    {
+        $replacePattern = '/\$' . preg_quote($varName, '/') . '(?![a-zA-Z0-9_])/';
+
+        // Find nested foreach blocks that redefine item=$varName
+        $nestedPattern = '/<\{\s*foreach\s+item=' . preg_quote($varName, '/') . '\b/';
+        if (!preg_match($nestedPattern, $block)) {
+            // No nested scope conflict — safe to replace the entire block
+            return preg_replace($replacePattern, '$' . $newItem, $block);
+        }
+
+        // Process segments between nested foreach blocks that shadow $varName
+        $result = '';
+        $pos = 0;
+        while (preg_match($nestedPattern, $block, $m, PREG_OFFSET_CAPTURE, $pos)) {
+            $nestedStart = $m[0][1];
+            // Replace in the segment before the nested foreach
+            $segment = substr($block, $pos, $nestedStart - $pos);
+            $result .= preg_replace($replacePattern, '$' . $newItem, $segment);
+
+            // Find the matching closing tag for this nested foreach
+            $depth = 1;
+            $scanPos = strpos($block, '}>', $nestedStart);
+            if ($scanPos === false) {
+                // Malformed — append rest unchanged
+                $result .= substr($block, $nestedStart);
+                return $result;
+            }
+            $scanPos += 2;
+
+            while ($depth > 0) {
+                if (!preg_match('/<\{\s*(\/?)foreach\b/', $block, $inner, PREG_OFFSET_CAPTURE, $scanPos)) {
+                    break;
+                }
+                $tagEnd = strpos($block, '}>', $inner[0][1]);
+                if ($tagEnd === false) {
+                    break;
+                }
+                $tagEnd += 2;
+                if ($inner[1][0] === '/') {
+                    $depth--;
+                } else {
+                    $depth++;
+                }
+                $scanPos = $tagEnd;
+            }
+
+            // Append the entire nested block unchanged (it has its own scope)
+            $result .= substr($block, $nestedStart, $scanPos - $nestedStart);
+            $pos = $scanPos;
+        }
+
+        // Replace in the remaining segment after the last nested block
+        $result .= preg_replace($replacePattern, '$' . $newItem, substr($block, $pos));
+
+        return $result;
     }
 
     /**
