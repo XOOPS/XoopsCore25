@@ -99,7 +99,7 @@ function clientlogin()
 function bannerstats()
 {
     /** @var \XoopsMySQLDatabase $xoopsDB */
-    global $xoopsDB, $xoopsConfig, $xoopsLogger, $myts;
+    global $xoopsDB, $xoopsConfig, $myts;
     $banner_login = isset($_SESSION['banner_login']) ? (string) $_SESSION['banner_login'] : '';
     $banner_pass  = isset($_SESSION['banner_pass']) ? (string) $_SESSION['banner_pass'] : '';
     if ($banner_login == '' || $banner_pass == '') {
@@ -282,7 +282,7 @@ function emailStats($cid, $bid)
         $bid     = (int) $bid;
         $sql     = sprintf('SELECT name, email, passwd FROM %s WHERE cid=%u AND login=%s', $xoopsDB->prefix('bannerclient'), $cid, $xoopsDB->quote($banner_login));
         $result2 = $xoopsDB->query($sql);
-        if $xoopsDB->isResultSet($result2) && $result2 instanceof \mysqli_result {
+        if ($xoopsDB->isResultSet($result2) && $result2 instanceof \mysqli_result) {
             $row = $xoopsDB->fetchRow($result2);
             if (false === $row) {
                 redirect_header('banners.php', 2);
@@ -294,7 +294,7 @@ function emailStats($cid, $bid)
                 } else {
                     $sql    = 'SELECT bid, imptotal, impmade, clicks, imageurl, clickurl, date FROM ' . $xoopsDB->prefix('banner') . " WHERE bid={$bid} AND cid={$cid}";
                     $result = $xoopsDB->query($sql);
-                    if $xoopsDB->isResultSet($result) && $result instanceof \mysqli_result {
+                    if ($xoopsDB->isResultSet($result) && $result instanceof \mysqli_result) {
                         $row = $xoopsDB->fetchRow($result);
                         if (false === $row) {
                             redirect_header('banners.php', 2);
@@ -349,7 +349,7 @@ function change_banner_url_by_client($cid, $bid, $url)
         $bid    = (int) $bid;
         $sql    = sprintf('SELECT passwd FROM %s WHERE cid=%u AND login=%s', $xoopsDB->prefix('bannerclient'), $cid, $xoopsDB->quote($banner_login));
         $result = $xoopsDB->query($sql);
-        if $xoopsDB->isResultSet($result) && $result instanceof \mysqli_result {
+        if ($xoopsDB->isResultSet($result) && $result instanceof \mysqli_result) {
             $row = $xoopsDB->fetchRow($result);
             if (false === $row) {
                 redirect_header('banners.php', 2);
