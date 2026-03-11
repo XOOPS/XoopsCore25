@@ -638,8 +638,7 @@ class XoopsMySQLDatabaseProxy extends XoopsMySQLDatabase
     public function query(string $sql, ?int $limit = null, ?int $start = null)
     {
         $sql = ltrim($sql);
-        if (!$this->allowWebChanges && !preg_match('/^\s*(SELECT|SHOW|DESCRIBE|EXPLAIN)\b/i', $sql)
-            && !preg_match('/^\s*WITH\b.+\bSELECT\b/is', $sql)) {
+        if (!$this->allowWebChanges && !preg_match('/^\s*(SELECT|SHOW|DESCRIBE|EXPLAIN)\b/i', $sql)) {
             trigger_error('Database updates are not allowed during processing of a GET request', E_USER_WARNING);
 
             return false;

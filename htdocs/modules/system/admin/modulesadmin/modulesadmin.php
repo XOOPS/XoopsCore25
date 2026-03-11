@@ -140,7 +140,7 @@ function xoops_module_install($dirname)
                         if (!in_array($prefixed_query[4], $reservedTables)) {
                             // not reserved, so try to create one
                             if (!$db->exec($prefixed_query[0])) {
-                                $errs[] = $db->error();
+                                $errs[] = htmlspecialchars($db->error(), ENT_QUOTES | ENT_HTML5);
                                 $error  = true;
                                 break;
                             } else {
