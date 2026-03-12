@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace modulesprofile;
 
-use PHPUnit\Framework\Attributes\CoversFunction;
 use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\TestCase;
 
@@ -204,11 +203,19 @@ class ProfileVisibilityCsrfTest extends TestCase
         $source = file_get_contents(
             XOOPS_ROOT_PATH . '/modules/profile/admin/visibility.php'
         );
-        $this->assertStringContainsString(
-            "xoopsSecurity']->check()",
-            $source,
-            'visibility.php must contain CSRF token check'
-        );
+
+        // Locate the submit handler block
+        $submitPos = strpos($source, "if (Request::hasVar('submit', 'POST'))");
+        $this->assertNotFalse($submitPos, "visibility.php must contain a submit handler");
+
+        // CSRF check must appear before insert within the submit handler
+        $checkPos = strpos($source, "xoopsSecurity']->check()", $submitPos);
+        $this->assertNotFalse($checkPos, "Submit handler must perform a CSRF token check");
+
+        $insertPos = strpos($source, 'visibility_handler->insert(', $submitPos);
+        $this->assertNotFalse($insertPos, "Submit handler must perform an insert operation");
+
+        $this->assertLessThan($insertPos, $checkPos, 'CSRF token check must run before insert in submit handler');
     }
 
     #[Test]

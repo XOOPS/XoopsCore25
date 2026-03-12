@@ -19,45 +19,35 @@ class SystemMaintenanceTest extends KernelTestCase
             if (!isset($GLOBALS['xoopsLogger'])) {
                 $GLOBALS['xoopsLogger'] = \XoopsLogger::getInstance();
             }
-            // Define constants needed by maintenance class
-            if (!defined('_AM_SYSTEM_MAINTENANCE_TABLES1')) {
-                define('_AM_SYSTEM_MAINTENANCE_TABLES1', 'Table');
-            }
-            if (!defined('_AM_SYSTEM_MAINTENANCE_TABLES_OPTIMIZE')) {
-                define('_AM_SYSTEM_MAINTENANCE_TABLES_OPTIMIZE', 'Optimize');
-            }
-            if (!defined('_AM_SYSTEM_MAINTENANCE_TABLES_CHECK')) {
-                define('_AM_SYSTEM_MAINTENANCE_TABLES_CHECK', 'Check');
-            }
-            if (!defined('_AM_SYSTEM_MAINTENANCE_TABLES_REPAIR')) {
-                define('_AM_SYSTEM_MAINTENANCE_TABLES_REPAIR', 'Repair');
-            }
-            if (!defined('_AM_SYSTEM_MAINTENANCE_TABLES_ANALYZE')) {
-                define('_AM_SYSTEM_MAINTENANCE_TABLES_ANALYZE', 'Analyze');
-            }
-            if (!defined('_AM_SYSTEM_MAINTENANCE_DUMP_TABLES')) {
-                define('_AM_SYSTEM_MAINTENANCE_DUMP_TABLES', 'Tables');
-            }
-            if (!defined('_AM_SYSTEM_MAINTENANCE_DUMP_STRUCTURES')) {
-                define('_AM_SYSTEM_MAINTENANCE_DUMP_STRUCTURES', 'Structures');
-            }
-            if (!defined('_AM_SYSTEM_MAINTENANCE_DUMP_NB_RECORDS')) {
-                define('_AM_SYSTEM_MAINTENANCE_DUMP_NB_RECORDS', 'Records');
-            }
-            if (!defined('_AM_SYSTEM_MAINTENANCE_DUMP_RECORDS')) {
-                define('_AM_SYSTEM_MAINTENANCE_DUMP_RECORDS', 'records');
-            }
-            if (!defined('_AM_SYSTEM_MAINTENANCE_DUMP_FILE_CREATED')) {
-                define('_AM_SYSTEM_MAINTENANCE_DUMP_FILE_CREATED', 'File created');
-            }
-            if (!defined('_AM_SYSTEM_MAINTENANCE_DUMP_RESULT')) {
-                define('_AM_SYSTEM_MAINTENANCE_DUMP_RESULT', 'Result');
-            }
-            if (!defined('_AM_SYSTEM_MAINTENANCE_DUMP_NO_TABLES')) {
-                define('_AM_SYSTEM_MAINTENANCE_DUMP_NO_TABLES', 'No tables');
-            }
+            self::ensureMaintenanceConstants();
             require_once XOOPS_ROOT_PATH . '/modules/system/class/maintenance.php';
             self::$loaded = true;
+        }
+    }
+
+    /**
+     * Define language constants required by the SystemMaintenance class.
+     */
+    private static function ensureMaintenanceConstants(): void
+    {
+        $constants = [
+            '_AM_SYSTEM_MAINTENANCE_TABLES1'            => 'Table',
+            '_AM_SYSTEM_MAINTENANCE_TABLES_OPTIMIZE'    => 'Optimize',
+            '_AM_SYSTEM_MAINTENANCE_TABLES_CHECK'       => 'Check',
+            '_AM_SYSTEM_MAINTENANCE_TABLES_REPAIR'      => 'Repair',
+            '_AM_SYSTEM_MAINTENANCE_TABLES_ANALYZE'     => 'Analyze',
+            '_AM_SYSTEM_MAINTENANCE_DUMP_TABLES'        => 'Tables',
+            '_AM_SYSTEM_MAINTENANCE_DUMP_STRUCTURES'    => 'Structures',
+            '_AM_SYSTEM_MAINTENANCE_DUMP_NB_RECORDS'    => 'Records',
+            '_AM_SYSTEM_MAINTENANCE_DUMP_RECORDS'       => 'records',
+            '_AM_SYSTEM_MAINTENANCE_DUMP_FILE_CREATED'  => 'File created',
+            '_AM_SYSTEM_MAINTENANCE_DUMP_RESULT'        => 'Result',
+            '_AM_SYSTEM_MAINTENANCE_DUMP_NO_TABLES'     => 'No tables',
+        ];
+        foreach ($constants as $name => $value) {
+            if (!defined($name)) {
+                define($name, $value);
+            }
         }
     }
 

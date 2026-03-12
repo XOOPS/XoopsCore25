@@ -60,6 +60,10 @@ class SystemMaintenance
      */
     private function isValidTable($table)
     {
+        if (!is_string($table)) {
+            return false;
+        }
+
         if ($this->validTables === null) {
             $this->validTables = $this->displayTables(true);
         }
