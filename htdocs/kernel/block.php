@@ -555,8 +555,7 @@ class XoopsBlock extends XoopsObject
             }
             static $legacyWarningLogged = false;
             if (!$legacyWarningLogged) {
-                $logger = XoopsLogger::getInstance();
-                $logger->addDeprecated(
+                $this->logBlockWarning(
                     'Legacy PHP block detected. Migrate to file-based format '
                     . '(filename.php|function_name in custom_blocks/) or set '
                     . 'XOOPS_ALLOW_PHP_BLOCKS to true in mainfile.php.'
@@ -591,6 +590,8 @@ class XoopsBlock extends XoopsObject
      * Log a block warning via XoopsLogger extra entries.
      *
      * @param string $message warning message
+     *
+     * @return void
      */
     private function logBlockWarning(string $message): void
     {

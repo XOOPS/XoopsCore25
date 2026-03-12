@@ -2,6 +2,13 @@
 /**
  * Example Custom Block: Site Statistics
  *
+ * You may not change or alter any portion of this comment or credits
+ * of supporting developers from this source code or any supporting source code
+ * which is considered copyrighted (c) material of the original comment or credit authors.
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ *
  * Demonstrates a custom block that performs multiple database queries
  * to display site-wide statistics (total users, total posts, newest member).
  *
@@ -12,7 +19,9 @@
  *   4. Save the block
  *
  * @copyright       (c) 2000-2026 XOOPS Project (https://xoops.org)
- * @license             GNU GPL 2.0 or later (https://www.gnu.org/licenses/gpl-2.0.html)
+ * @license             GNU GPL 2 (https://www.gnu.org/licenses/gpl-2.0.html)
+ * @package             custom_blocks
+ * @since               2.5.12
  */
 defined('XOOPS_ROOT_PATH') || exit('Restricted access');
 
