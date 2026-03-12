@@ -43,5 +43,19 @@
   "support": {
     "issues": "https://github.com/XOOPS/XoopsCore25/issues",
     "source": "https://github.com/XOOPS/XoopsCore25"
-  }
+  },
+  "funding": [
+    {
+      "type": "github",
+      "url": "https://github.com/sponsors/XOOPS"
+    },
+    {
+      "type": "opencollective",
+      "url": "https://opencollective.com/xoops"
+    },
+    {
+      "type": "custom",
+      "url": "https://xoops.org/modules/donations/"
+    }
+  ]
 }

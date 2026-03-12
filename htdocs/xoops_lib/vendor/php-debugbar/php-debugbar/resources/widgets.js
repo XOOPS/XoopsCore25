@@ -18,21 +18,70 @@
     };
 
     /**
-     * Returns a string representation of value, using JSON.stringify
-     * if it's an object.
+     * Renders any value as a DOM element. Handles dump objects (with "_sd"
+     * marker), and plain HTML/scalar strings.
      *
-     * @param {object} value
-     * @param {boolean} prettify Uses htmlize() if true
-     * @return {string}
+     * @param {string|object} value
+     * @return {HTMLElement|string}
      */
+    let dumpRenderer;
     const renderValue = PhpDebugBar.Widgets.renderValue = function (value, prettify) {
+        // Dump object (from JsonDataFormatter)
+        if (value && typeof value === 'object' && '_sd' in value) {
+            if (!dumpRenderer) {
+                dumpRenderer = new PhpDebugBar.Widgets.VarDumpRenderer();
+            }
+            return dumpRenderer.render(value);
+        }
+
         if (typeof value !== 'string') {
             if (prettify) {
                 return htmlize(JSON.stringify(value, undefined, 2));
             }
             return JSON.stringify(value);
         }
+
         return value;
+    };
+
+    PhpDebugBar.Widgets.renderValueInto = function (el, value, prettify) {
+        const rendered = renderValue(value, prettify);
+        if (rendered instanceof Node) {
+            el.append(rendered);
+        } else {
+            el.insertAdjacentHTML('beforeend', rendered);
+        }
+    };
+
+    /**
+     * Creates html editor link span
+     *
+     * @param  {Object} value
+     * @return {HTMLElement}
+     */
+    const editorLink = PhpDebugBar.Widgets.editorLink = function (value) {
+        const linkWrapper = document.createElement('span'), line = value.line ? `#${value.line}` : '';
+        linkWrapper.classList.add(csscls('filename'));
+        linkWrapper.textContent = value.filename + line;
+        if (value.path) {
+            linkWrapper.setAttribute('title', value.path + line);
+        }
+
+        if (value.url) {
+            const link = document.createElement('a');
+            link.classList.add(csscls('editor-link'));
+            link.setAttribute(link.ajax ? 'title' : 'href', value.url);
+            link.addEventListener('click', (event) => {
+                event.stopPropagation();
+                if (value.ajax) {
+                    fetch(stmt.xdebug_link.url);
+                    event.preventDefault();
+                }
+            });
+            linkWrapper.append(link);
+        }
+
+        return linkWrapper;
     };
 
     /**
@@ -283,26 +332,8 @@
 
             dd.innerHTML = value && value.value || value;
 
-            if (value && value.xdebug_link) {
-                const header = document.createElement('span');
-                header.classList.add(csscls('filename'));
-                header.textContent = value.xdebug_link.filename + (value.xdebug_link.line ? `#${value.xdebug_link.line}` : '');
-
-                if (value.xdebug_link) {
-                    const link = document.createElement('a');
-                    link.classList.add(csscls('editor-link'));
-
-                    if (value.xdebug_link.ajax) {
-                        link.setAttribute('title', value.xdebug_link.url);
-                        link.addEventListener('click', () => {
-                            fetch(value.xdebug_link.url);
-                        });
-                    } else {
-                        link.setAttribute('href', value.xdebug_link.url);
-                    }
-                    header.append(link);
-                }
-                dd.append(header);
+            if (value?.xdebug_link) {
+                dd.append(editorLink(value.xdebug_link));
             }
         }
     }
@@ -398,24 +429,8 @@
                     if (values.xdebug_link) {
                         const editorCell = document.createElement('td');
                         editorCell.classList.add(csscls('editor'));
+                        editorCell.append(editorLink(values.xdebug_link));
                         tr.append(editorCell);
-
-                        const filename = document.createElement('span');
-                        filename.classList.add(csscls('filename'));
-                        filename.textContent = values.xdebug_link.filename + (values.xdebug_link.line ? `#${values.xdebug_link.line}` : '');
-                        editorCell.append(filename);
-
-                        const link = document.createElement('a');
-                        link.classList.add(csscls('editor-link'));
-                        if (values.xdebug_link.ajax) {
-                            link.setAttribute('title', values.xdebug_link.url);
-                            link.addEventListener('click', () => {
-                                fetch(values.xdebug_link.url);
-                            });
-                        } else {
-                            link.setAttribute('href', values.xdebug_link.url);
-                        }
-                        filename.append(link);
 
                         if (!hasXdebuglinks) {
                             hasXdebuglinks = true;
@@ -510,7 +525,12 @@
 
             this.list = new ListWidget({ itemRenderer(li, value) {
                 let val;
-                if (value.message_html) {
+                if (value.message_json) {
+                    val = document.createElement('span');
+                    val.classList.add(csscls('value'));
+                    PhpDebugBar.Widgets.renderValueInto(val, value.message_json);
+                    li.append(val);
+                } else if (value.message_html) {
                     val = document.createElement('span');
                     val.classList.add(csscls('value'));
                     val.innerHTML = value.message_html;
@@ -548,27 +568,6 @@
                         });
                     }
                 }
-                if (value.xdebug_link) {
-                    const header = document.createElement('span');
-                    header.classList.add(csscls('filename'));
-                    header.textContent = value.xdebug_link.filename + (value.xdebug_link.line ? `#${value.xdebug_link.line}` : '');
-
-                    if (value.xdebug_link) {
-                        const link = document.createElement('a');
-                        link.classList.add(csscls('editor-link'));
-
-                        if (value.xdebug_link.ajax) {
-                            link.setAttribute('title', value.xdebug_link.url);
-                            link.addEventListener('click', () => {
-                                fetch(value.xdebug_link.url);
-                            });
-                        } else {
-                            link.setAttribute('href', value.xdebug_link.url);
-                        }
-                        header.append(link);
-                    }
-                    li.prepend(header);
-                }
                 if (value.collector) {
                     const collector = document.createElement('span');
                     collector.classList.add(csscls('collector'));
@@ -594,6 +593,7 @@
                     contextTable.hidden = true;
                     contextTable.innerHTML = '<tr><th colspan="2">Context</th></tr>';
 
+                    const contextJsonData = value.context_json || {};
                     for (const key in value.context) {
                         if (typeof value.context[key] !== 'function') {
                             const tr = document.createElement('tr');
@@ -604,7 +604,11 @@
 
                             const td2 = document.createElement('td');
                             td2.classList.add(csscls('value'));
-                            td2.innerHTML = value.context[key];
+                            if (contextJsonData[key]) {
+                                PhpDebugBar.Widgets.renderValueInto(td2, contextJsonData[key]);
+                            } else {
+                                td2.innerHTML = value.context[key];
+                            }
                             tr.append(td2);
 
                             contextTable.append(tr);
@@ -619,6 +623,9 @@
                         }
                         contextTable.hidden = !contextTable.hidden;
                     });
+                }
+                if (value.xdebug_link) {
+                    li.prepend(editorLink(value.xdebug_link));
                 }
             } });
 
@@ -831,14 +838,22 @@
                             for (const key in measure.params) {
                                 if (typeof measure.params[key] !== 'function') {
                                     const tr = document.createElement('tr');
-                                    tr.innerHTML = `<td class="${csscls('name')}">${key}</td><td class="${csscls('value')}"><pre><code>${measure.params[key]}</code></pre></td>`;
+                                    const nameTd = document.createElement('td');
+                                    nameTd.className = csscls('name');
+                                    nameTd.textContent = key;
+                                    tr.append(nameTd);
+
+                                    const valueTd = document.createElement('td');
+                                    valueTd.className = csscls('value');
+                                    PhpDebugBar.Widgets.renderValueInto(valueTd, measure.params[key]);
+                                    tr.append(valueTd);
                                     table.append(tr);
                                 }
                             }
                             li.append(table);
 
                             li.style.cursor = 'pointer';
-                            li.addEventListener('click', function () {
+                            li.addEventListener('click', function (event) {
                                 if (window.getSelection().type === 'Range' || event.target.closest('.sf-dump')) {
                                     return '';
                                 }
@@ -846,11 +861,6 @@
                                 table.hidden = !table.hidden;
                             });
 
-                            li.addEventListener('click', (event) => {
-                                if (event.target.closest('.sf-dump')) {
-                                    event.stopPropagation();
-                                }
-                            });
                         }
                     }
 
@@ -923,25 +933,7 @@
                 li.append(messageSpan);
 
                 if (e.file) {
-                    const header = document.createElement('span');
-                    header.classList.add(csscls('filename'));
-                    header.textContent = `${e.file}#${e.line}`;
-
-                    if (e.xdebug_link) {
-                        const link = document.createElement('a');
-                        link.classList.add(csscls('editor-link'));
-
-                        if (e.xdebug_link.ajax) {
-                            link.setAttribute('title', e.xdebug_link.url);
-                            link.addEventListener('click', () => {
-                                fetch(e.xdebug_link.url);
-                            });
-                        } else {
-                            link.setAttribute('href', e.xdebug_link.url);
-                        }
-                        header.append(link);
-                    }
-                    li.append(header);
+                    li.append(editorLink(e.xdebug_link || {filename: e.file, line: e.line}));
                 }
 
                 if (e.type) {
