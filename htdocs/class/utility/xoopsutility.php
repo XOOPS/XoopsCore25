@@ -48,9 +48,12 @@ class XoopsUtility
                 return self::recursive($handler, $item);
             }, $data);
         }
+        if (null === $data) {
+            return $data;
+        }
         // single function
         if (is_string($handler)) {
-            return function_exists((string) $handler) ? $handler($data) : $data;
+            return function_exists($handler) ? $handler($data) : $data;
         }
         // Method of a class
         if (is_array($handler)) {
