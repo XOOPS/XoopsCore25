@@ -65,7 +65,8 @@ class SystemMaintenance
         }
 
         if ($this->validTables === null) {
-            $this->validTables = $this->displayTables(true);
+            $tables = $this->displayTables(true);
+            $this->validTables = is_array($tables) ? $tables : [];
         }
 
         return isset($this->validTables[$table]);
