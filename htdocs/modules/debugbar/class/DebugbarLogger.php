@@ -165,6 +165,7 @@ class DebugbarLogger
             try {
                 $this->debugbar = new StandardDebugBar();
                 $this->renderer = $this->debugbar->getJavascriptRenderer();
+                $this->renderer->setUseDistFiles(false);
 
                 // Add custom collectors for XOOPS channels
                 $this->debugbar->addCollector(new MessagesCollector('Deprecated'));

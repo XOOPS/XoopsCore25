@@ -16,9 +16,18 @@
         onFilterClick(el) {
             el.classList.toggle(csscls('excluded'));
             const connection = el.getAttribute('rel');
+            const isExcluded = el.classList.contains(csscls('excluded'));
             const items = this.list.el.querySelectorAll(`li[connection="${connection}"]`);
             for (const item of items) {
-                item.hidden = !item.hidden;
+                if (!item._activeFilters) {
+                    item._activeFilters = new Set();
+                }
+                if (isExcluded) {
+                    item._activeFilters.add('connection:' + connection);
+                } else {
+                    item._activeFilters.delete('connection:' + connection);
+                }
+                item.hidden = item._activeFilters.size > 0;
             }
         }
 
@@ -358,12 +367,21 @@
                     toggleLink.textContent = duplicatedText;
                     toggleLink.addEventListener('click', () => {
                         toggleLink.classList.toggle('shown-duplicated');
-                        toggleLink.textContent = toggleLink.classList.contains('shown-duplicated') ? 'Show All' : duplicatedText;
+                        const showDuplicatesOnly = toggleLink.classList.contains('shown-duplicated');
+                        toggleLink.textContent = showDuplicatesOnly ? 'Show All' : duplicatedText;
 
                         const selector = `.${this.className} .${csscls('list-item')}:not(.${csscls('sql-duplicate')})`;
                         const items = document.querySelectorAll(selector);
                         for (const item of items) {
-                            item.hidden = !item.hidden;
+                            if (!item._activeFilters) {
+                                item._activeFilters = new Set();
+                            }
+                            if (showDuplicatesOnly) {
+                                item._activeFilters.add('duplicate');
+                            } else {
+                                item._activeFilters.delete('duplicate');
+                            }
+                            item.hidden = item._activeFilters.size > 0;
                         }
                     });
                     t.append(toggleLink);
