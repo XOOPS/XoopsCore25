@@ -59,8 +59,8 @@
             this.showonlycurrentbtn.textContent = 'Show only current URL';
             this.actions.append(this.showonlycurrentbtn);
             this.showonlycurrentbtn.addEventListener('click', () => {
-                self.table.innerHTML = '';
-                self.find({ uri: window.location.pathname }, 0, self.handleFind.bind(self));
+                self.uriInput.value = window.location.pathname;
+                self.searchBtn.click();
             });
 
             this.refreshbtn = document.createElement('a');
@@ -99,7 +99,7 @@
         addSearch() {
             const self = this;
 
-            const searchBtn = document.createElement('button');
+            const searchBtn = this.searchBtn = document.createElement('button');
             searchBtn.textContent = 'Search';
             searchBtn.type = 'submit';
             searchBtn.addEventListener('click', function (e) {
@@ -118,21 +118,29 @@
 
             const form = document.createElement('form');
             form.innerHTML = '<br/><b>Filter results</b><br/>'
-                + '<select name="method"><option selected>(Method)</option><option>GET</option><option>POST</option><option>PUT</option><option>DELETE</option></select>';
+                + '<select name="method"><option selected value="">(Method)</option><option>GET</option><option>POST</option><option>PUT</option><option>DELETE</option></select>';
 
-            const uriInput = document.createElement('input');
-            uriInput.type = 'text';
-            uriInput.name = 'uri';
-            uriInput.placeholder = 'URI';
-            form.append(uriInput);
+            this.uriInput = document.createElement('input');
+            this.uriInput.type = 'text';
+            this.uriInput.name = 'uri';
+            this.uriInput.placeholder = "URI, eg '/user/*'";
+            form.append(this.uriInput);
 
-            const ipInput = document.createElement('input');
-            ipInput.type = 'text';
-            ipInput.name = 'ip';
-            ipInput.placeholder = 'IP';
-            form.append(ipInput);
+            this.ipInput = document.createElement('input');
+            this.ipInput.type = 'text';
+            this.ipInput.name = 'ip';
+            this.ipInput.placeholder = 'IP';
+            form.append(this.ipInput);
 
+            const resetBtn = document.createElement('button');
+            resetBtn.textContent = 'Reset';
+            resetBtn.type = 'button';
+            resetBtn.addEventListener('click', () => {
+                form.reset();
+                searchBtn.click();
+            });
             form.append(searchBtn);
+            form.append(resetBtn);
             this.actions.append(form);
         },
 
@@ -170,16 +178,16 @@
                 const ipLink = document.createElement('a');
                 ipLink.textContent = meta.ip;
                 ipLink.addEventListener('click', (e) => {
-                    self.table.innerHTML = '';
-                    self.find({ ip: meta.ip }, 0, self.handleFind.bind(self));
+                    self.ipInput.value = meta.ip;
+                    self.searchBtn.click();
                     e.preventDefault();
                 });
 
                 const searchLink = document.createElement('a');
                 searchLink.textContent = 'Show URL';
                 searchLink.addEventListener('click', (e) => {
-                    self.table.innerHTML = '';
-                    self.find({ uri: meta.uri }, 0, self.handleFind.bind(self));
+                    self.uriInput.value = meta.uri;
+                    self.searchBtn.click();
                     e.preventDefault();
                 });
 
