@@ -162,6 +162,11 @@ define('_AM_SYSTEM_MODULES_TIPS', '<ul>
 define('_AM_SYSTEM_MODULES_CONFIRM_TIPS', '<ul>
 <li>Check all modifications for validate.</li>
 </ul>');
+// 2.5.12
+define('_AM_SYSTEM_MODULES_FK_DISABLE', 'Failed to disable foreign key checks');
+define('_AM_SYSTEM_MODULES_FK_ENABLE', 'Failed to enable foreign key checks');
+define('_AM_SYSTEM_MODULES_DROP_FAIL', 'Failed to drop table: %s');
+define('_AM_SYSTEM_MODULES_DROP_OK', 'Dropped table: %s');
 // 2.5.7
 define('_AM_SYSTEM_MODULES_INSTALL_TESTDATA', 'Add Test Data');
 // 2.5.8

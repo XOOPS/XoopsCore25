@@ -318,29 +318,30 @@ switch ($op) {
             redirect_header('admin.php?fct=avatars', 1, _AM_SYSTEM_DBERROR);
         }
         $file = $avatar->getVar('avatar_file', 'n');
-        // Reset user profiles first — abort if reset fails to avoid orphaned references
+        // Wrap reset + delete in a transaction to prevent orphaned references
+        $xoopsDB->exec('START TRANSACTION');
         $user_id = Request::getInt('user_id', 0, 'POST');
-        $resetOk = true;
+        $success = true;
         if ($user_id > 0 && $avatar->getVar('avatar_type', 'n') === 'C') {
             if (!$xoopsDB->exec('UPDATE ' . $xoopsDB->prefix('users')
                 . " SET user_avatar='blank.gif' WHERE uid=" . $user_id)) {
-                $resetOk = false;
+                $success = false;
             }
         } else {
             if (!$xoopsDB->exec('UPDATE ' . $xoopsDB->prefix('users')
                 . " SET user_avatar='blank.gif' WHERE user_avatar=" . $xoopsDB->quote($file))) {
-                $resetOk = false;
+                $success = false;
             }
         }
-        if (!$resetOk) {
-            redirect_header('admin.php?fct=avatars', 2, _AM_SYSTEM_DBERROR);
-        }
         // Delete the avatar record
-        if (!$avt_handler->delete($avatar)) {
-            xoops_cp_header();
-            xoops_error(sprintf(_AM_SYSTEM_AVATAR_FAILDEL, $avatar->getVar('avatar_id')));
-            xoops_cp_footer();
-            exit();
+        if ($success && !$avt_handler->delete($avatar)) {
+            $success = false;
+        }
+        if ($success) {
+            $xoopsDB->exec('COMMIT');
+        } else {
+            $xoopsDB->exec('ROLLBACK');
+            redirect_header('admin.php?fct=avatars', 2, _AM_SYSTEM_DBERROR);
         }
         // Delete file — validate path stays within upload directory
         $avatarPath = realpath(XOOPS_UPLOAD_PATH . '/' . $file);
