@@ -16,7 +16,7 @@
         onFilterClick(el) {
             el.classList.toggle(csscls('excluded'));
             const connection = el.getAttribute('rel');
-            const items = this.list.el.querySelectorAll(`li[connection="${CSS.escape(connection)}"]`);
+            const items = this.list.el.querySelectorAll(`li[connection="${connection}"]`);
             for (const item of items) {
                 item.hidden = !item.hidden;
             }
@@ -54,15 +54,19 @@
         }
 
         renderList(table, caption, data) {
-            const tbody = document.createElement('tbody');
+            const thead = document.createElement('thead');
 
-            const headerTr = document.createElement('tr');
+            const tr = document.createElement('tr');
             const nameTh = document.createElement('th');
             nameTh.colSpan = 2;
             nameTh.classList.add(csscls('name'));
-            nameTh.textContent = caption;
-            headerTr.append(nameTh);
-            tbody.append(headerTr);
+            nameTh.innerHTML = caption;
+            tr.append(nameTh);
+            thead.append(tr);
+
+            table.append(thead);
+
+            const tbody = document.createElement('tbody');
 
             for (const key in data) {
                 const value = typeof data[key] === 'function' ? `${data[key].name} {}` : data[key];
@@ -87,7 +91,6 @@
                         lineSpan.textContent = `:${value.line}`;
                         valueTd.append(lineSpan);
                     }
-                    tr.append(valueTd);
                 } else {
                     const keyTd = document.createElement('td');
                     keyTd.classList.add('phpdebugbar-text-muted');
@@ -292,20 +295,11 @@
             this.el.append(this.list.el);
 
             this.bindAttr('data', function (data) {
-                // Reset sort state for the new dataset
-                sortState = 'none';
-                originalData = null;
-                this.filters = [];
-
                 // the PDO collector maybe is empty
                 if (data.length <= 0 || !data.statements) {
-                    this.toolbar.hidden = true;
-                    const oldFilters = this.toolbar.querySelectorAll(`.${csscls('filter')}`);
-                    for (const f of oldFilters) { f.remove(); }
-                    this.list.set('data', []);
-                    this.status.innerHTML = '';
                     return false;
                 }
+                this.filters = [];
                 this.toolbar.hidden = true;
                 const toolbarFilters = this.toolbar.querySelectorAll(`.${csscls('filter')}`);
                 for (const filter of toolbarFilters) {

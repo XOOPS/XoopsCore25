@@ -77,7 +77,7 @@ $modversion['config'][] = [
     'description' => '_MI_DEBUGBAR_FILESDEBUG_DSC',
     'formtype'    => 'yesno',
     'valuetype'   => 'int',
-    'default'     => 1,
+    'default'     => 0,
 ];
 
 $modversion['config'][] = [
@@ -105,5 +105,5 @@ $modversion['config'][] = [
     'description' => '_MI_DEBUGBAR_RAY_ENABLE_DSC',
     'formtype'    => 'yesno',
     'valuetype'   => 'int',
-    'default'     => 1,
+    'default'     => 0,
 ];

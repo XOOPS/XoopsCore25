@@ -107,7 +107,7 @@
                 const search = {};
                 const formData = new FormData(this.parentElement);
                 for (const [name, value] of formData.entries()) {
-                    if (value && !(name === 'method' && value.startsWith('('))) {
+                    if (value) {
                         search[name] = value;
                     }
                 }
@@ -139,6 +139,16 @@
         handleFind(data) {
             const self = this;
             for (const meta of data) {
+                const loadLink = document.createElement('a');
+                loadLink.textContent = 'Load dataset';
+                loadLink.addEventListener('click', (e) => {
+                    self.hide();
+                    self.load(meta.id, (data) => {
+                        self.callback(meta.id, data);
+                    });
+                    e.preventDefault();
+                });
+
                 const methodLink = document.createElement('a');
                 methodLink.textContent = meta.method;
                 methodLink.addEventListener('click', (e) => {
@@ -179,7 +189,7 @@
                 tr.append(datetimeTd);
 
                 const methodTd = document.createElement('td');
-                methodTd.append(methodLink);
+                methodTd.textContent = meta.method;
                 tr.append(methodTd);
 
                 const uriTd = document.createElement('td');
@@ -214,11 +224,7 @@
         },
 
         find(filters, offset, callback) {
-            const pageOffset = offset || 0;
-            if (pageOffset === 0) {
-                this.loadmorebtn.style.display = '';
-            }
-            const data = Object.assign({ op: 'find' }, filters, { max: this.get('items_per_page'), offset: pageOffset });
+            const data = Object.assign({ op: 'find' }, filters, { max: this.get('items_per_page'), offset: offset || 0 });
             this.last_find_request = data;
             this.ajax(data, callback);
         },
@@ -245,8 +251,8 @@
             })
                 .then(data => data.json())
                 .then(callback)
-                .catch(() => {
-                    callback([]);
+                .catch((err) => {
+                    callback(null, err);
                 });
         }
 

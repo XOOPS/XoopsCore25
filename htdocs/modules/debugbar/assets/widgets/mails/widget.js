@@ -33,12 +33,8 @@
                     link.setAttribute('title', 'Mail Preview');
                     link.textContent = 'View Mail';
                     link.classList.add(csscls('editor-link'));
-                    link.addEventListener('click', (event) => {
-                        event.stopPropagation();
+                    link.addEventListener('click', () => {
                         const popup = window.open('about:blank', 'Mail Preview', 'width=650,height=440,scrollbars=yes');
-                        if (!popup) {
-                            return;
-                        }
                         const documentToWriteTo = popup.document;
 
                         let headersHTML = '';
@@ -52,27 +48,21 @@
                             headersHTML = headersPre.outerHTML;
                         }
 
-                        let bodyHTML = '';
-                        if (mail.body) {
-                            const bodyPre = document.createElement('pre');
-                            bodyPre.style.border = '1px solid #ddd';
-                            bodyPre.style.padding = '5px';
-                            bodyPre.textContent = mail.body;
+                        const bodyPre = document.createElement('pre');
+                        bodyPre.style.border = '1px solid #ddd';
+                        bodyPre.style.padding = '5px';
+                        bodyPre.textContent = mail.body;
 
-                            if (mail.html) {
-                                const details = document.createElement('details');
-                                const summary = document.createElement('summary');
-                                summary.textContent = 'Text version';
-                                details.append(summary);
-                                details.append(bodyPre);
-                                bodyHTML = details.outerHTML;
-                            } else {
-                                bodyHTML = bodyPre.outerHTML;
-                            }
-                        }
-
+                        let bodyHTML = bodyPre.outerHTML;
                         let htmlIframeHTML = '';
                         if (mail.html) {
+                            const details = document.createElement('details');
+                            const summary = document.createElement('summary');
+                            summary.textContent = 'Text version';
+                            details.append(summary);
+                            details.append(bodyPre);
+                            bodyHTML = details.outerHTML;
+
                             const htmlIframe = document.createElement('iframe');
                             htmlIframe.setAttribute('width', '100%');
                             htmlIframe.setAttribute('height', '400px');
