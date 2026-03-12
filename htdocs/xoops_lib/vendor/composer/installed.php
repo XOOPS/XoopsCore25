@@ -3,11 +3,11 @@
         'name' => 'xoopscore25/libraries',
         'pretty_version' => 'dev-master',
         'version' => 'dev-master',
-        'reference' => '68a66063fcbb05c47da34c69a8d193b1e5280081',
+        'reference' => '7708950ef73164e13f2367ede0ec98bb18145123',
         'type' => 'metapackage',
         'install_path' => __DIR__ . '/../../',
         'aliases' => array(),
-        'dev' => false,
+        'dev' => true,
     ),
     'versions' => array(
         'boenrobot/money_format_polyfill' => array(
@@ -179,9 +179,9 @@
             'dev_requirement' => false,
         ),
         'symfony/var-dumper' => array(
-            'pretty_version' => 'v8.0.6',
-            'version' => '8.0.6.0',
-            'reference' => '2e14f7e0bf5ff02c6e63bd31cb8e4855a13d6209',
+            'pretty_version' => 'v7.4.6',
+            'version' => '7.4.6.0',
+            'reference' => '045321c440ac18347b136c63d2e9bf28a2dc0291',
             'type' => 'library',
             'install_path' => __DIR__ . '/../symfony/var-dumper',
             'aliases' => array(),
@@ -235,7 +235,7 @@
         'xoopscore25/libraries' => array(
             'pretty_version' => 'dev-master',
             'version' => 'dev-master',
-            'reference' => '68a66063fcbb05c47da34c69a8d193b1e5280081',
+            'reference' => '7708950ef73164e13f2367ede0ec98bb18145123',
             'type' => 'metapackage',
             'install_path' => __DIR__ . '/../../',
             'aliases' => array(),
