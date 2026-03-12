@@ -94,7 +94,7 @@ class DebugbarLogger
     /**
      * @var int Query logging mode: 0 = all queries, 1 = slow & errors only
      */
-    private int $queryLogMode = 0;
+    private int $queryLogMode = 1;
 
     /**
      * Constructor — registers this logger with XoopsLogger composite.
