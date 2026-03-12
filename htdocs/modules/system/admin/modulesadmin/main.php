@@ -350,11 +350,10 @@ switch ($op) {
         break;
 
     case 'install_ok':
-        $module = trim(Request::getString('module', '', 'POST'));
-        $installable = XoopsLists::getModulesList();
-        if (!in_array($module, $installable, true)) {
-            trigger_error('Invalid module install request: ' . basename($module), E_USER_WARNING);
-            break;
+        $module     = trim(Request::getString('module', '', 'POST'));
+        $moduleDirs = XoopsLists::getModulesList();
+        if (!in_array($module, $moduleDirs, true)) {
+            redirect_header('admin.php?fct=modulesadmin', 3, 'Invalid module install request.');
         }
         $ret   = [];
         $ret[] = xoops_module_install($module);
@@ -414,10 +413,10 @@ switch ($op) {
 
     case 'uninstall_ok':
         $module = trim(Request::getString('module', '', 'POST'));
-        $installable = XoopsLists::getModulesList();
-        if (!in_array($module, $installable, true)) {
-            trigger_error('Invalid module uninstall request: ' . basename($module), E_USER_WARNING);
-            break;
+        /** @var XoopsModuleHandler $module_handler */
+        $module_handler = xoops_getHandler('module');
+        if (!is_object($module_handler->getByDirname($module))) {
+            redirect_header('admin.php?fct=modulesadmin', 3, 'Invalid module uninstall request.');
         }
         $ret   = [];
         $ret[] = xoops_module_uninstall($module);
@@ -476,10 +475,10 @@ switch ($op) {
 
     case 'update_ok':
         $module = trim(Request::getString('module', '', 'POST'));
-        $installable = XoopsLists::getModulesList();
-        if (!in_array($module, $installable, true)) {
-            trigger_error('Invalid module update request: ' . basename($module), E_USER_WARNING);
-            break;
+        /** @var XoopsModuleHandler $module_handler */
+        $module_handler = xoops_getHandler('module');
+        if (!is_object($module_handler->getByDirname($module))) {
+            redirect_header('admin.php?fct=modulesadmin', 3, 'Invalid module update request.');
         }
         $ret   = [];
         $ret[] = xoops_module_update($module);
