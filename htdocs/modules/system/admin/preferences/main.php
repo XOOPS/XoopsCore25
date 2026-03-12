@@ -25,9 +25,9 @@ if (!is_object($xoopsUser) || !is_object($xoopsModule) || !$xoopsUser->isAdmin($
 
 // POST config values are fetched on-demand in the 'save' handler using Request::getVar()
 // Get Action type
-$op = Request::getString('op', 'list');
+$op = Request::hasVar('op', 'POST') ? Request::getString('op', 'list', 'POST') : Request::getString('op', 'list', 'GET');
 // Setting type
-$confcat_id = Request::getInt('confcat_id', 0);
+$confcat_id = Request::getInt('confcat_id', 0, 'GET');
 
 // Define main template
 $GLOBALS['xoopsOption']['template_main'] = 'system_preferences.tpl';

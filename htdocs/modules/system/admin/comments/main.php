@@ -30,7 +30,7 @@ if (!xoops_getModuleOption('active_comments', 'system')) {
 }
 
 // Get Action type
-$op = Request::getString('op', 'list');
+$op = Request::hasVar('op', 'POST') ? Request::getString('op', 'list', 'POST') : Request::getString('op', 'list', 'GET');
 // Define main template
 $GLOBALS['xoopsOption']['template_main'] = 'system_comments.tpl';
 xoops_cp_header();
@@ -79,7 +79,7 @@ if ('list' === $op) {
 switch ($op) {
 
     case 'comments_jump':
-        $com_id = Request::getInt('com_id', 0);
+        $com_id = Request::hasVar('com_id', 'POST') ? Request::getInt('com_id', 0, 'POST') : Request::getInt('com_id', 0, 'GET');
         if ($com_id > 0) {
             $comment = $comment_handler->get($com_id);
             if (is_object($comment)) {
@@ -235,8 +235,8 @@ switch ($op) {
         $xoopsTpl->assign('comments_count', $comments_count);
 
         if ($comments_count > 0) {
-            $comments_start = Request::getInt('comments_start', 0);
-            $comments_limit = Request::getInt('comments_limit', 0);
+            $comments_start = Request::getInt('comments_start', 0, 'GET');
+            $comments_limit = Request::getInt('comments_limit', 0, 'GET');
             if (!in_array($comments_limit, $limit_array)) {
                 $comments_limit = xoops_getModuleOption('comments_pager', 'system');
             }

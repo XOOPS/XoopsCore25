@@ -22,7 +22,7 @@ use Xmf\Request;
 include __DIR__ . '/header.php';
 
 $limit_default    = 20;
-$op               = Request::getCmd('op', '', 'GET') ?: Request::getCmd('op', 'search', 'POST');
+$op               = Request::hasVar('op', 'GET') ? Request::getCmd('op', 'search', 'GET') : Request::getCmd('op', 'search', 'POST');
 $groups           = $GLOBALS['xoopsUser'] ? $GLOBALS['xoopsUser']->getGroups() : [XOOPS_GROUP_ANONYMOUS];
 $searchable_types = [
     'textbox',
@@ -183,7 +183,7 @@ switch ($op) {
 
         $criteria = new CriteriaCompo(new Criteria('level', 0, '>'));
 
-        $uname = Request::getString('uname', '', 'GET') ?: Request::getString('uname', '', 'POST');
+        $uname = Request::hasVar('uname', 'GET') ? Request::getString('uname', '', 'GET') : Request::getString('uname', '', 'POST');
         $uname_match = Request::hasVar('uname_match', 'GET') ? Request::getInt('uname_match', 0, 'GET') : Request::getInt('uname_match', 0, 'POST');
         if ($uname !== '') {
             $uname = trim($uname);
@@ -237,7 +237,7 @@ switch ($op) {
             // You might render a page or redirect the user based on these results
         }
 
-        $email = Request::getString('email', '', 'GET') ?: Request::getString('email', '', 'POST');
+        $email = Request::hasVar('email', 'GET') ? Request::getString('email', '', 'GET') : Request::getString('email', '', 'POST');
         $email_match = Request::hasVar('email_match', 'GET') ? Request::getInt('email_match', 0, 'GET') : Request::getInt('email_match', 0, 'POST');
         if ($email !== '') {
             $string = $xoopsDB->escape(trim($email));
@@ -268,7 +268,7 @@ switch ($op) {
                 continue;
             }
             $fieldname = $fields[$i]->getVar('field_name');
-            $fieldValues = Request::getArray($fieldname, [], 'GET') ?: Request::getArray($fieldname, [], 'POST');
+            $fieldValues = Request::hasVar($fieldname, 'GET') ? Request::getArray($fieldname, [], 'GET') : Request::getArray($fieldname, [], 'POST');
             if (in_array($fields[$i]->getVar('field_type'), ['select', 'radio', 'timezone'])) {
                 if (empty($fieldValues)) {
                     continue;
@@ -299,8 +299,8 @@ switch ($op) {
                 switch ($fields[$i]->getVar('field_valuetype')) {
                     case XOBJ_DTYPE_OTHER:
                     case XOBJ_DTYPE_INT:
-                        $largerVal  = Request::getString($fieldname . '_larger', '', 'GET') ?: Request::getString($fieldname . '_larger', '', 'POST');
-                        $smallerVal = Request::getString($fieldname . '_smaller', '', 'GET') ?: Request::getString($fieldname . '_smaller', '', 'POST');
+                        $largerVal  = Request::hasVar($fieldname . '_larger', 'GET') ? Request::getString($fieldname . '_larger', '', 'GET') : Request::getString($fieldname . '_larger', '', 'POST');
+                        $smallerVal = Request::hasVar($fieldname . '_smaller', 'GET') ? Request::getString($fieldname . '_smaller', '', 'GET') : Request::getString($fieldname . '_smaller', '', 'POST');
                         switch ($fields[$i]->getVar('field_type')) {
                             case 'date':
                             case 'datetime':
@@ -362,7 +362,7 @@ switch ($op) {
                     case XOBJ_DTYPE_URL:
                     case XOBJ_DTYPE_TXTBOX:
                     case XOBJ_DTYPE_TXTAREA:
-                        $textFieldVal = Request::getString($fieldname, '', 'GET') ?: Request::getString($fieldname, '', 'POST');
+                        $textFieldVal = Request::hasVar($fieldname, 'GET') ? Request::getString($fieldname, '', 'GET') : Request::getString($fieldname, '', 'POST');
                         $textFieldMatch = Request::hasVar($fieldname . '_match', 'GET') ? Request::getInt($fieldname . '_match', 0, 'GET') : Request::getInt($fieldname . '_match', 0, 'POST');
                         if ($textFieldVal !== '') {
                             $value = $xoopsDB->escape(trim($textFieldVal));
@@ -402,7 +402,7 @@ switch ($op) {
 
         // change by zyspec:
         $sortby = 'uname';
-        $sortbyInput = Request::getCmd('sortby', '', 'GET') ?: Request::getCmd('sortby', '', 'POST');
+        $sortbyInput = Request::hasVar('sortby', 'GET') ? Request::getCmd('sortby', '', 'GET') : Request::getCmd('sortby', '', 'POST');
         if ($sortbyInput !== '') {
             switch ($sortbyInput) {
                 case 'name':
@@ -422,7 +422,7 @@ switch ($op) {
         // add search groups , only for Webmasters
         $searchgroups = [];
         if ($GLOBALS['xoopsUser'] && $GLOBALS['xoopsUser']->isAdmin()) {
-            $selgroups = Request::getArray('selgroups', [], 'GET') ?: Request::getArray('selgroups', [], 'POST');
+            $selgroups = Request::hasVar('selgroups', 'GET') ? Request::getArray('selgroups', [], 'GET') : Request::getArray('selgroups', [], 'POST');
             $searchgroups = empty($selgroups) ? [] : array_map('intval', $selgroups);
             foreach ($searchgroups as $group) {
                 $search_url[] = 'selgroups[]=' . $group;
@@ -436,7 +436,7 @@ switch ($op) {
         $order = $orderInt === 0 ? 'ASC' : 'DESC';
         $criteria->setOrder($order);
 
-        $limit = Request::getInt('limit', 0, 'GET') ?: Request::getInt('limit', $limit_default, 'POST');
+        $limit = Request::hasVar('limit', 'GET') ? Request::getInt('limit', $limit_default, 'GET') : Request::getInt('limit', $limit_default, 'POST');
         $criteria->setLimit($limit);
 
         $start = Request::hasVar('start', 'GET') ? Request::getInt('start', 0, 'GET') : Request::getInt('start', 0, 'POST');

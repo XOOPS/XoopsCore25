@@ -32,7 +32,7 @@ $nb_smilies  = xoops_getModuleOption('smilies_pager', 'system');
 $mimetypes   = ['image/gif', 'image/jpeg', 'image/pjpeg', 'image/x-png', 'image/png'];
 $upload_size = 500000;
 // Get Action type
-$op = Request::getString('op', 'list');
+$op = Request::hasVar('op', 'POST') ? Request::getString('op', 'list', 'POST') : Request::getString('op', 'list', 'GET');
 // Get smilies handler
 /** @var  SystemsmiliesHandler $smilies_Handler */
 $smilies_Handler = xoops_getModuleHandler('smilies', 'system');
@@ -65,7 +65,7 @@ switch ($op) {
         $xoBreadCrumb->addHelp(system_adminVersion('smilies', 'help'));
         $xoBreadCrumb->render();
         // Get start pager
-        $start = Request::getInt('start', 0);
+        $start = Request::getInt('start', 0, 'GET');
         // Criteria
         $criteria = new CriteriaCompo();
         $criteria->setSort('id');
@@ -156,11 +156,11 @@ switch ($op) {
         }
         // error
         $err = [];
-        $obj->setVar('code', Request::getString('code', ''));
+        $obj->setVar('code', Request::getString('code', '', 'POST'));
 
-        $obj->setVar('emotion', Request::getString('emotion', ''));
-        $obj->setVar('display', Request::getInt('display', 0));
-        if (Request::getString('code', '') == '' || Request::getString('emotion', '') == '') {
+        $obj->setVar('emotion', Request::getString('emotion', '', 'POST'));
+        $obj->setVar('display', Request::getInt('display', 0, 'POST'));
+        if (Request::getString('code', '', 'POST') == '' || Request::getString('emotion', '', 'POST') == '') {
             $err[] = 'the code or description are empty';
         }
 
@@ -242,7 +242,7 @@ switch ($op) {
 
     case 'smilies_update_display':
         // Get smilies id
-        $smilies_id = Request::getInt('smilies_id', 0);
+        $smilies_id = Request::getInt('smilies_id', 0, 'GET');
         if ($smilies_id > 0) {
             $obj = $smilies_Handler->get($smilies_id);
             $old = $obj->getVar('display');

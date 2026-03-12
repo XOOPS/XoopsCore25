@@ -89,7 +89,7 @@ switch ($op) {
         break;
 
     case 'delete':
-        $categoryId = Request::getInt('id', 0, 'POST') ?: Request::getInt('id', 0, 'GET');
+        $categoryId = Request::hasVar('id', 'POST') ? Request::getInt('id', 0, 'POST') : Request::getInt('id', 0, 'GET');
         $obj = $handler->get($categoryId);
         if (!$obj) {
             redirect_header('category.php', 3, _TAKINGBACK);
