@@ -118,7 +118,7 @@
 
             const form = document.createElement('form');
             form.innerHTML = '<br/><b>Filter results</b><br/>'
-                + '<select name="method"><option selected>(Method)</option><option>GET</option><option>POST</option><option>PUT</option><option>DELETE</option></select>';
+                + '<select name="method"><option value="" selected>(Method)</option><option>GET</option><option>POST</option><option>PUT</option><option>DELETE</option></select>';
 
             const uriInput = document.createElement('input');
             uriInput.type = 'text';
@@ -146,14 +146,6 @@
                     self.load(meta.id, (data) => {
                         self.callback(meta.id, data);
                     });
-                    e.preventDefault();
-                });
-
-                const methodLink = document.createElement('a');
-                methodLink.textContent = meta.method;
-                methodLink.addEventListener('click', (e) => {
-                    self.table.innerHTML = '';
-                    self.find({ method: meta.method }, 0, self.handleFind.bind(self));
                     e.preventDefault();
                 });
 
