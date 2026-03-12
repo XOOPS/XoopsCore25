@@ -3,11 +3,11 @@
         'name' => 'xoopscore25/libraries',
         'pretty_version' => 'dev-master',
         'version' => 'dev-master',
-        'reference' => '7708950ef73164e13f2367ede0ec98bb18145123',
+        'reference' => '59c7412cf8ecf8b3496c08dcfc85d0e637f18cc4',
         'type' => 'metapackage',
         'install_path' => __DIR__ . '/../../',
         'aliases' => array(),
-        'dev' => true,
+        'dev' => false,
     ),
     'versions' => array(
         'boenrobot/money_format_polyfill' => array(
@@ -235,7 +235,7 @@
         'xoopscore25/libraries' => array(
             'pretty_version' => 'dev-master',
             'version' => 'dev-master',
-            'reference' => '7708950ef73164e13f2367ede0ec98bb18145123',
+            'reference' => '59c7412cf8ecf8b3496c08dcfc85d0e637f18cc4',
             'type' => 'metapackage',
             'install_path' => __DIR__ . '/../../',
             'aliases' => array(),

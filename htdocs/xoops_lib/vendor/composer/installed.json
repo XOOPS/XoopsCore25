@@ -1641,6 +1641,6 @@
             "install-path": "../xoops/xmf"
         }
     ],
-    "dev": true,
+    "dev": false,
     "dev-package-names": []
 }
