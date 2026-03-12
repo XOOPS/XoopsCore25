@@ -466,9 +466,8 @@ class XoopsMemberHandler
         }
         $user->setVar('level', 1);
 
-        // Generate more secure activation key
-        $actkey = $this->generateSecureToken(8);
-        $user->setVar('actkey', $actkey);
+        // Clear activation key to make the activation link one-time-use
+        $user->setVar('actkey', '');
 
         return $this->userHandler->insert($user, true);
     }
