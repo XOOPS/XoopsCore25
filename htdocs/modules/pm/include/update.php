@@ -51,7 +51,10 @@ function xoops_module_update_pm(XoopsModule $module, $oldversion = null)
         foreach ($template_list as $k => $v) {
             $fileinfo = new SplFileInfo($templateDirectory . $v);
             if ($fileinfo->getExtension() === 'html' && $fileinfo->getFilename() !== 'index.html') {
-                @unlink($templateDirectory . $v);
+                $filePath = $templateDirectory . $v;
+                if (is_file($filePath)) {
+                    unlink($filePath);
+                }
             }
         }
 

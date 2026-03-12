@@ -78,7 +78,8 @@ function update_system_v211($module)
         }
     }
     $sql = 'SHOW INDEX FROM ' . $xoopsDB->prefix('tplfile') . " WHERE KEY_NAME = 'tpl_refid_module_set_file_type'";
-    if (!$result = $xoopsDB->query($sql)) {
+    $result = $xoopsDB->query($sql);
+    if (!$xoopsDB->isResultSet($result) || !$result instanceof \mysqli_result) {
         xoops_error($xoopsDB->error() . '<br>' . $sql);
 
         return false;
