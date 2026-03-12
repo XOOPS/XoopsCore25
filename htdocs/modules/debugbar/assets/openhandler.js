@@ -1,4 +1,8 @@
 (function () {
+    if (typeof PhpDebugBar === 'undefined') {
+        return;
+    }
+
     const csscls = function (cls) {
         return PhpDebugBar.utils.csscls(cls, 'phpdebugbar-openhandler-');
     };

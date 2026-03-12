@@ -63,19 +63,15 @@
         }
 
         renderList(table, caption, data) {
-            const thead = document.createElement('thead');
-
-            const tr = document.createElement('tr');
-            const nameTh = document.createElement('th');
-            nameTh.colSpan = 2;
-            nameTh.classList.add(csscls('name'));
-            nameTh.textContent = caption;
-            tr.append(nameTh);
-            thead.append(tr);
-
-            table.append(thead);
-
             const tbody = document.createElement('tbody');
+
+            const headerRow = document.createElement('tr');
+            const headerTd = document.createElement('td');
+            headerTd.colSpan = 2;
+            headerTd.classList.add(csscls('name'));
+            headerTd.textContent = caption;
+            headerRow.append(headerTd);
+            tbody.append(headerRow);
 
             for (const key in data) {
                 const value = typeof data[key] === 'function' ? `${data[key].name} {}` : data[key];
