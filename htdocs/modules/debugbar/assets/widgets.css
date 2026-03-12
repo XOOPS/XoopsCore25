@@ -155,6 +155,7 @@ div.phpdebugbar-widgets-messages {
     color: #cbcf38;
   }
   div.phpdebugbar-widgets-messages li.phpdebugbar-widgets-list-item span.phpdebugbar-widgets-value.phpdebugbar-widgets-debug:before {
+    content: "⚙";
     color: #78d79a;
   }
   div.phpdebugbar-widgets-messages li.phpdebugbar-widgets-list-item span.phpdebugbar-widgets-value.phpdebugbar-widgets-warning:before,

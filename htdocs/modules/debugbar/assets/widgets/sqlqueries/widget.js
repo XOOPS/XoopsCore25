@@ -246,7 +246,7 @@
             }
             if (stmt.backtrace && Object.keys(stmt.backtrace).length > 0) {
                 const values = [];
-                for (const trace of stmt.backtrace.values()) {
+                for (const trace of Object.values(stmt.backtrace)) {
                     let text = trace.name || trace.file;
                     if (trace.line) {
                         text = `${text}:${trace.line}`;
@@ -262,7 +262,7 @@
             li.style.cursor = 'pointer';
             li.addEventListener('click', () => {
                 if (window.getSelection().type === 'Range') {
-                    return '';
+                    return;
                 }
                 table.hidden = !table.hidden;
                 const code = li.querySelector('code');
@@ -299,6 +299,8 @@
                 if (data.length <= 0 || !data.statements) {
                     return false;
                 }
+                sortState = 'none';
+                originalData = null;
                 this.filters = [];
                 this.toolbar.hidden = true;
                 const toolbarFilters = this.toolbar.querySelectorAll(`.${csscls('filter')}`);
@@ -326,11 +328,11 @@
                     sql[stmt].keys.push(i);
                 }
                 // Add classes to all duplicate SQL statements.
+                const listItems = this.list.el.querySelectorAll(`.${csscls('list-item')}`);
                 for (const stmt in sql) {
                     if (sql[stmt].keys.length > 1) {
                         duplicate += sql[stmt].keys.length;
                         for (let i = 0; i < sql[stmt].keys.length; i++) {
-                            const listItems = this.list.el.querySelectorAll(`.${csscls('list-item')}`);
                             if (listItems[sql[stmt].keys[i]]) {
                                 listItems[sql[stmt].keys[i]].classList.add(csscls('sql-duplicate'));
                             }
@@ -383,7 +385,9 @@
                         if (sortState === 'none') {
                             sortState = 'desc';
                             sortIcon.textContent = '↓';
-                            originalData = [...data.statements];
+                            if (!originalData) {
+                                originalData = [...data.statements];
+                            }
                             data.statements.sort((a, b) => (b.duration || 0) - (a.duration || 0));
                         } else if (sortState === 'desc') {
                             sortState = 'asc';

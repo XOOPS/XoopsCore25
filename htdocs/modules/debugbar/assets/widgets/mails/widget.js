@@ -35,6 +35,9 @@
                     link.classList.add(csscls('editor-link'));
                     link.addEventListener('click', () => {
                         const popup = window.open('about:blank', 'Mail Preview', 'width=650,height=440,scrollbars=yes');
+                        if (!popup) {
+                            return;
+                        }
                         const documentToWriteTo = popup.document;
 
                         let headersHTML = '';
