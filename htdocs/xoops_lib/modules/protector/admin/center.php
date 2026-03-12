@@ -142,8 +142,11 @@ if ($action !== '') {
         exit;
     } elseif ($action === 'deleteall') {
         // remove all records
-        $db->exec("DELETE FROM $log_table");
-        redirect_header('center.php?page=center', 2, _AM_MSG_REMOVED);
+        if ($db->exec("DELETE FROM $log_table")) {
+            redirect_header('center.php?page=center', 2, _AM_MSG_REMOVED);
+        } else {
+            redirect_header('center.php?page=center', 3, _AM_MSG_DELFAILED);
+        }
         exit;
     } elseif ($action === 'compactlog') {
         // compact records (remove duplicated records (ip,type)
@@ -166,7 +169,10 @@ if ($action !== '') {
             }
         }
         if (!empty($ids)) {
-            $db->exec("DELETE FROM $log_table WHERE lid IN (" . implode(',', $ids) . ')');
+            if (!$db->exec("DELETE FROM $log_table WHERE lid IN (" . implode(',', $ids) . ')')) {
+                redirect_header('center.php?page=center', 3, _AM_MSG_DELFAILED);
+                exit;
+            }
         }
         redirect_header('center.php?page=center', 2, _AM_MSG_REMOVED);
         exit;

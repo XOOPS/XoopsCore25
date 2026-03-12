@@ -25,6 +25,7 @@ define('_AM_MSG_IPFILESUPDATED', 'Files for IPs have been updated');
 define('_AM_MSG_BADIPSCANTOPEN', 'The file for bad IP cannot be opened');
 define('_AM_MSG_GROUP1IPSCANTOPEN', 'The file for allowing group=1 cannot be opened');
 define('_AM_MSG_REMOVED', 'Records are removed');
+define('_AM_MSG_DELFAILED', 'Failed to delete records');
 define('_AM_FMT_CONFIGSNOTWRITABLE', 'Turn the configs directory writable: %s');
 // prefix_manager.php
 define('_AM_H3_PREFIXMAN', 'Prefix Manager');
