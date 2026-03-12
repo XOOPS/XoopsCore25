@@ -362,14 +362,14 @@ class XoopsBlock extends XoopsObject
     }
 
     /**
-     * Execute a PHP block — file-based or legacy eval fallback.
+     * Execute a PHP block — file-based only (eval removed in 2.5.12).
      *
      * The content field should contain: filename.php|function_name
      * The file must exist in XOOPS_ROOT_PATH/custom_blocks/
      * The function must exist after including the file and return an HTML string.
      *
-     * For backward compatibility, if XOOPS_ALLOW_PHP_BLOCKS is true and the
-     * content does not match the file|function format, legacy eval() is used.
+     * Legacy eval()-based blocks are no longer executed; a deprecation warning
+     * is logged and empty content is returned.
      *
      * @return string rendered block content
      *
@@ -527,63 +527,29 @@ class XoopsBlock extends XoopsObject
     }
 
     /**
-     * Execute a legacy eval()-based PHP block (backward compatibility).
+     * Legacy eval()-based PHP block execution — permanently removed.
      *
-     * Requires XOOPS_ALLOW_PHP_BLOCKS to be defined as true. Without it,
-     * logs a deprecation warning and returns empty output.
+     * eval() of database-stored PHP has been removed in XOOPS 2.5.12 for security.
+     * Blocks using the file-based format (filename.php|function_name) still work.
+     * Convert legacy P-type blocks to file-based, S (Smarty), or H (HTML) type.
      *
-     * Deprecation roadmap:
-     *   2.5.12  — eval() disabled by default; opt-in via XOOPS_ALLOW_PHP_BLOCKS.
-     *   next minor — hard-disable in production unless explicit override.
-     *   next major — remove eval() fallback entirely.
+     * @param string $raw raw PHP code from the block content field (ignored)
      *
-     * @param string $raw raw PHP code from the block content field
-     *
-     * @return string rendered block content
+     * @return string always empty
      */
     private function executeLegacyBlock(string $raw): string
     {
-        if (!(defined('XOOPS_ALLOW_PHP_BLOCKS') && constant('XOOPS_ALLOW_PHP_BLOCKS') === true)) {
-            // Warn about content that looks like a malformed file-based reference
-            // (e.g. "file.php|bad-func") but don't flag legitimate PHP operators like || or |
-            if (preg_match('/\.php\s*\|/', $raw)) {
-                $this->logBlockWarning(
-                    'PHP block content contains ".php|" but did not match file-based format. '
-                    . 'Check the content field syntax: filename.php|function_name'
-                );
-                return '';
-            }
-            static $legacyWarningLogged = false;
-            if (!$legacyWarningLogged) {
-                $this->logBlockWarning(
-                    'Legacy PHP block detected. Migrate to file-based format '
-                    . '(filename.php|function_name in custom_blocks/) or set '
-                    . 'XOOPS_ALLOW_PHP_BLOCKS to true in mainfile.php.'
-                );
-                $legacyWarningLogged = true;
-            }
-            return '';
+        static $warningLogged = false;
+        if (!$warningLogged) {
+            $this->logBlockWarning(
+                'PHP block eval() execution has been permanently removed in XOOPS 2.5.12. '
+                . 'Convert block to file-based format (filename.php|function_name in custom_blocks/), '
+                . 'S (Smarty), or H (HTML) type.'
+            );
+            $warningLogged = true;
         }
 
-        $obLevel = ob_get_level();
-        ob_start();
-        try {
-            echo eval($raw); // NOSONAR — legacy fallback, gated by XOOPS_ALLOW_PHP_BLOCKS
-            $content = ob_get_clean();
-
-            return str_replace('{X_SITEURL}', XOOPS_URL . '/', $content);
-        } catch (\Throwable $e) {
-            $msg = 'Legacy PHP block execution error';
-            if (defined('XOOPS_DEBUGMODE') && XOOPS_DEBUGMODE > 0) {
-                $msg .= ': [' . get_class($e) . '] ' . $e->getMessage();
-            }
-            $this->logBlockWarning($msg);
-            return '';
-        } finally {
-            while (ob_get_level() > $obLevel) {
-                ob_end_clean();
-            }
-        }
+        return '';
     }
 
     /**

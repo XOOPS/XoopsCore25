@@ -732,63 +732,28 @@ class XoopsBlockPhpBlockTest extends KernelTestCase
 
     /**
      * Verify that content containing a pipe but not matching file-based format
-     * is blocked with a pipe-specific warning when legacy mode is disabled.
+     * falls to the legacy path and returns empty (eval permanently removed).
      */
     #[Test]
-    public function malformedPipeContentIsBlockedWithSpecificWarning(): void
+    public function malformedPipeContentIsBlockedAndReturnsEmpty(): void
     {
-        $logger = \XoopsLogger::getInstance();
-        $extraBefore = count($logger->extra);
-
         $block = $this->createPhpBlock('file.php|func-name');
         $result = $block->getContent('S', 'P');
 
-        $this->assertSame('', $result);
-
-        // Should have the pipe-specific warning (not generic legacy deprecation)
-        $newExtras = array_slice($logger->extra, $extraBefore);
-        $messages = array_column($newExtras, 'msg');
-        $hasPipeWarning = false;
-        foreach ($messages as $msg) {
-            if (str_contains($msg, 'contains ".php|"')) {
-                $hasPipeWarning = true;
-                break;
-            }
-        }
-        $this->assertTrue($hasPipeWarning, 'Should warn about malformed pipe content');
+        $this->assertSame('', $result, 'Malformed pipe content should return empty (eval removed)');
     }
 
     /**
-     * Verify that the pipe guard only applies when legacy mode is disabled.
-     *
-     * Content with "|" gets a pipe-specific extra warning.
-     * Content without "|" does NOT get a pipe warning (different branch).
-     * This proves the two code paths are distinct.
+     * Verify that legacy eval content (non file-based) always returns empty
+     * and logs a removal warning regardless of content pattern.
      */
     #[Test]
-    public function pipeGuardAndLegacyPathAreSeparateBranches(): void
+    public function legacyEvalContentAlwaysReturnsEmpty(): void
     {
-        $logger = \XoopsLogger::getInstance();
+        // Content WITHOUT pipe — should still be blocked
+        $block = $this->createPhpBlock('echo "hello";');
+        $result = $block->getContent('S', 'P');
 
-        // Content WITH pipe — should get pipe-specific extra warning
-        $extraBefore = count($logger->extra);
-        $block = $this->createPhpBlock('file.php|func-name');
-        $block->getContent('S', 'P');
-
-        $newExtras = array_slice($logger->extra, $extraBefore);
-        $pipeMessages = array_column($newExtras, 'msg');
-        $this->assertNotEmpty(array_filter($pipeMessages, fn($m) => str_contains($m, 'contains ".php|"')),
-            'Pipe content should produce pipe-specific warning');
-
-        // Content WITHOUT pipe — should NOT produce a pipe-specific warning
-        $extraBefore2 = count($logger->extra);
-        $block2 = $this->createPhpBlock('echo "hello";');
-        $result2 = $block2->getContent('S', 'P');
-
-        $this->assertSame('', $result2);
-
-        $newExtras2 = array_slice($logger->extra, $extraBefore2);
-        $legacyPipeWarnings = array_filter(array_column($newExtras2, 'msg'), fn($m) => str_contains($m, 'contains ".php|"'));
-        $this->assertEmpty($legacyPipeWarnings, 'Non-pipe content should not trigger pipe warning');
+        $this->assertSame('', $result);
     }
 }
