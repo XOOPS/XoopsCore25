@@ -195,7 +195,7 @@ window.PhpDebugBar = window.PhpDebugBar || {};
             }
             if (cb instanceof HTMLElement) {
                 const el = cb;
-                cb = value => el.textContent = value || '';
+                cb = value => el.textContent = value ?? '';
             }
             this._boundAttributes[attr].push(cb);
             if (this.has(attr)) {

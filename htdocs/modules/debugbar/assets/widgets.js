@@ -242,7 +242,7 @@
             dd.textContent = v;
             dd.addEventListener('click', () => {
                 if (window.getSelection().type === 'Range') {
-                    return '';
+                    return;
                 }
                 if (dd.classList.contains(csscls('pretty'))) {
                     dd.textContent = v;
@@ -274,11 +274,9 @@
         }
 
         itemRenderer(dt, dd, key, value) {
-            const tempElement = document.createElement('i');
-            tempElement.innerHTML = key ?? '';
             const span = document.createElement('span');
-            span.setAttribute('title', tempElement.textContent);
-            span.innerHTML = key ?? '';
+            span.setAttribute('title', key ?? '');
+            span.textContent = key ?? '';
             dt.append(span);
 
             dd.innerHTML = value && value.value || value;
@@ -532,7 +530,7 @@
                         li.style.cursor = 'pointer';
                         li.addEventListener('click', () => {
                             if (window.getSelection().type === 'Range') {
-                                return '';
+                                return;
                             }
                             if (val.classList.contains(csscls('pretty'))) {
                                 val.textContent = m;
@@ -840,7 +838,7 @@
                             li.style.cursor = 'pointer';
                             li.addEventListener('click', function () {
                                 if (window.getSelection().type === 'Range' || event.target.closest('.sf-dump')) {
-                                    return '';
+                                    return;
                                 }
                                 const table = this.querySelector('table');
                                 table.hidden = !table.hidden;
