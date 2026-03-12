@@ -41,18 +41,29 @@ function xoops_module_update_debugbar($module, $previousVersion)
  */
 function _debugbar_copy_assets()
 {
-    // Source: vendor debugbar resources — check both possible vendor locations
+    // Source: vendor debugbar resources — check all possible vendor locations
     $vendorBases = [];
     if (defined('XOOPS_LIB_PATH')) {
         $vendorBases[] = XOOPS_LIB_PATH . '/vendor';
     }
+    if (defined('XOOPS_PATH')) {
+        $vendorBases[] = XOOPS_PATH . '/vendor';
+    }
+    $vendorBases[] = XOOPS_ROOT_PATH . '/xoops_lib/vendor';
     $vendorBases[] = XOOPS_ROOT_PATH . '/class/libraries/vendor';
     $vendorBases   = array_unique($vendorBases);
 
+    // Check multiple possible resource layouts (newest first, then legacy paths)
+    $resourceSuffixes = [
+        '/php-debugbar/php-debugbar/resources',
+        '/php-debugbar/php-debugbar/src/DebugBar/Resources',
+        '/maximebf/debugbar/src/DebugBar/Resources',
+    ];
     $vendorPaths = [];
     foreach ($vendorBases as $vendorBase) {
-        $vendorPaths[] = $vendorBase . '/maximebf/debugbar/src/DebugBar/Resources';
-        $vendorPaths[] = $vendorBase . '/php-debugbar/php-debugbar/src/DebugBar/Resources';
+        foreach ($resourceSuffixes as $suffix) {
+            $vendorPaths[] = $vendorBase . $suffix;
+        }
     }
 
     $srcDir = false;
@@ -66,7 +77,7 @@ function _debugbar_copy_assets()
     if (!$srcDir) {
         $checkedDirs = [];
         foreach ($vendorPaths as $path) {
-            $checkedDirs[] = basename(dirname(dirname(dirname(dirname($path))))) . '/…/' . basename($path);
+            $checkedDirs[] = basename(dirname($path, 4)) . '/…/' . basename($path);
         }
         trigger_error(
             'DebugBar installation: assets not found in vendor directories ('

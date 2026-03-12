@@ -77,7 +77,7 @@ $modversion['config'][] = [
     'description' => '_MI_DEBUGBAR_FILESDEBUG_DSC',
     'formtype'    => 'yesno',
     'valuetype'   => 'int',
-    'default'     => 1,
+    'default'     => 0,
 ];
 
 $modversion['config'][] = [
@@ -90,10 +90,20 @@ $modversion['config'][] = [
 ];
 
 $modversion['config'][] = [
+    'name'        => 'query_log_mode',
+    'title'       => '_MI_DEBUGBAR_QUERYMODE',
+    'description' => '_MI_DEBUGBAR_QUERYMODE_DSC',
+    'formtype'    => 'select',
+    'valuetype'   => 'int',
+    'default'     => 1,
+    'options'     => [_MI_DEBUGBAR_QUERYMODE_ALL => 0, _MI_DEBUGBAR_QUERYMODE_SLOW => 1],
+];
+
+$modversion['config'][] = [
     'name'        => 'ray_enable',
     'title'       => '_MI_DEBUGBAR_RAY_ENABLE',
     'description' => '_MI_DEBUGBAR_RAY_ENABLE_DSC',
     'formtype'    => 'yesno',
     'valuetype'   => 'int',
-    'default'     => 1,
+    'default'     => 0,
 ];

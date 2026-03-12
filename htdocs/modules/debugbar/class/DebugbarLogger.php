@@ -92,6 +92,11 @@ class DebugbarLogger
     private $showIncludedFiles = true;
 
     /**
+     * @var int Query logging mode: 0 = all queries, 1 = slow & errors only
+     */
+    private int $queryLogMode = 1;
+
+    /**
      * Constructor — registers this logger with XoopsLogger composite.
      */
     public function __construct()
@@ -160,6 +165,7 @@ class DebugbarLogger
             try {
                 $this->debugbar = new StandardDebugBar();
                 $this->renderer = $this->debugbar->getJavascriptRenderer();
+                $this->renderer->setUseDistFiles(false);
 
                 // Add custom collectors for XOOPS channels
                 $this->debugbar->addCollector(new MessagesCollector('Deprecated'));
@@ -401,6 +407,17 @@ class DebugbarLogger
     }
 
     /**
+     * Set the query logging mode.
+     *
+     * @param int $mode 0 = all queries, 1 = slow & errors only
+     * @return void
+     */
+    public function setQueryLogMode(int $mode): void
+    {
+        $this->queryLogMode = $mode;
+    }
+
+    /**
      * Add included files list to a ConfigCollector tab.
      *
      * @return void
@@ -616,6 +633,13 @@ class DebugbarLogger
                         } elseif ($isDuplicate) {
                             $level = LogLevel::WARNING;  // yellow — duplicate
                         }
+                    }
+
+                    // In "slow & errors only" mode, queryCount/duplicateCount are still
+                    // tracked above for the summary, but fast normal queries are not
+                    // added to the Queries collector — this is the main performance gain.
+                    if ($this->queryLogMode === 1 && $level !== LogLevel::ERROR) {
+                        return;
                     }
 
                     break;

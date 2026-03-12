@@ -108,6 +108,11 @@ class DebugbarCorePreload extends XoopsPreloadItem
             }
         }
 
+        // Apply query logging mode (0 = all, 1 = slow & errors only)
+        if (is_array($moduleConfig) && isset($moduleConfig['query_log_mode'])) {
+            $logger->setQueryLogMode((int) $moduleConfig['query_log_mode']);
+        }
+
         // Check Ray-specific config (disable Ray independently of DebugBar)
         if (RayLogger::getInstance()->isEnabled()) {
             if (is_array($moduleConfig) && isset($moduleConfig['ray_enable']) && !$moduleConfig['ray_enable']) {
@@ -144,6 +149,12 @@ class DebugbarCorePreload extends XoopsPreloadItem
         if (empty($GLOBALS['xoopsUserIsAdmin'])) {
             $logger->disable();
             self::disableRay();
+        }
+
+        // Load language constants now that common.php (and xoops_loadLanguage)
+        // is fully available. Only needed when the debugbar is actually active.
+        if ($logger->isEnabled()) {
+            xoops_loadLanguage('main', 'debugbar');
         }
 
         $logger->stopTime('XOOPS Boot');
