@@ -53,9 +53,17 @@ function _debugbar_copy_assets()
     $vendorBases[] = XOOPS_ROOT_PATH . '/class/libraries/vendor';
     $vendorBases   = array_unique($vendorBases);
 
+    // Check multiple possible resource layouts (newest first, then legacy paths)
+    $resourceSuffixes = [
+        '/php-debugbar/php-debugbar/resources',
+        '/php-debugbar/php-debugbar/src/DebugBar/Resources',
+        '/maximebf/debugbar/src/DebugBar/Resources',
+    ];
     $vendorPaths = [];
     foreach ($vendorBases as $vendorBase) {
-        $vendorPaths[] = $vendorBase . '/php-debugbar/php-debugbar/resources';
+        foreach ($resourceSuffixes as $suffix) {
+            $vendorPaths[] = $vendorBase . $suffix;
+        }
     }
 
     $srcDir = false;
