@@ -430,9 +430,25 @@ if (!function_exists('formatTimestamp')) {
 if (!class_exists('XoopsSecurity')) {
     class XoopsSecurity
     {
+        /** @var bool Whether check() should return true (for test control) */
+        public bool $testCheckResult = true;
+
+        /** @var string[] Errors to return from getErrors() */
+        public array $testErrors = [];
+
         public function createToken($timeout = 0, $name = 'XOOPS_TOKEN')
         {
             return 'test_token_' . $name;
+        }
+
+        public function check($clearIfValid = true, $token = false, $name = 'XOOPS_TOKEN')
+        {
+            return $this->testCheckResult;
+        }
+
+        public function getErrors()
+        {
+            return $this->testErrors;
         }
     }
 }
