@@ -1,0 +1,74 @@
+<?php
+/**
+ * Example Custom Block: Recent Members with Avatars
+ *
+ * You may not change or alter any portion of this comment or credits
+ * of supporting developers from this source code or any supporting source code
+ * which is considered copyrighted (c) material of the original comment or credit authors.
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ *
+ * Demonstrates a custom block that queries the database using
+ * XOOPS handlers to display recent members with their avatars.
+ *
+ * To use this block:
+ *   1. Go to System Admin > Blocks > Add New Block
+ *   2. Select content type "PHP Script (file-based)"
+ *   3. Enter in the content field: example_recent_members.php|b_custom_recent_members_show
+ *   4. Save the block
+ *
+ * @copyright       (c) 2000-2026 XOOPS Project (https://xoops.org)
+ * @license             GNU GPL 2 (https://www.gnu.org/licenses/gpl-2.0.html)
+ * @package             custom_blocks
+ * @since               2.5.12
+ */
+defined('XOOPS_ROOT_PATH') || exit('Restricted access');
+
+/**
+ * Display a list of the 5 most recent members with avatars
+ *
+ * @return string HTML content for the block
+ */
+function b_custom_recent_members_show()
+{
+    /** @var XoopsMemberHandler $member_handler */
+    $member_handler = xoops_getHandler('member');
+
+    $criteria = new CriteriaCompo();
+    $criteria->add(new Criteria('level', 0, '>'));
+    $criteria->setSort('user_regdate');
+    $criteria->setOrder('DESC');
+    $criteria->setLimit(5);
+
+    $users = $member_handler->getUsers($criteria);
+
+    if (empty($users)) {
+        return '<p>No members found.</p>';
+    }
+
+    $html = '<ul class="custom-recent-members" style="list-style:none; padding:0;">';
+    foreach ($users as $user) {
+        $uid    = (int) $user->getVar('uid');
+        $uname  = htmlspecialchars($user->getVar('uname', 'n'), ENT_QUOTES | ENT_HTML5, 'UTF-8');
+        $avatar = $user->getVar('user_avatar', 'n');
+        $date   = date('M j', (int) $user->getVar('user_regdate'));
+
+        $avatarUrl = XOOPS_UPLOAD_URL . '/avatars/blank.gif';
+        if (!empty($avatar) && basename($avatar) !== 'blank.gif'
+            && !str_contains($avatar, '..') && !str_contains($avatar, '\\')
+        ) {
+            $avatarUrl = XOOPS_UPLOAD_URL . '/' . ltrim((string) $avatar, '/');
+        }
+
+        $html .= '<li style="margin-bottom:8px; display:flex; align-items:center; gap:8px;">';
+        $html .= '<img src="' . htmlspecialchars($avatarUrl, ENT_QUOTES | ENT_HTML5, 'UTF-8') . '" alt="' . $uname . '" '
+              . 'style="width:32px; height:32px; border-radius:50%;" />';
+        $html .= '<a href="' . XOOPS_URL . '/userinfo.php?uid=' . $uid . '">' . $uname . '</a>';
+        $html .= ' <small style="color:#888;">(' . $date . ')</small>';
+        $html .= '</li>';
+    }
+    $html .= '</ul>';
+
+    return $html;
+}

@@ -30,6 +30,9 @@ defined('XOOPS_ROOT_PATH') || exit('Restricted access');
  */
 class XoopsBlock extends XoopsObject
 {
+    /** @var string Logger category for block warnings */
+    private const BLOCK_WARNING = 'Block Warning';
+
     //PHP 8.2 Dynamic properties deprecated
     public $bid;
     public $mid;
@@ -338,17 +341,7 @@ class XoopsBlock extends XoopsObject
                 if ($c_type === 'H') {
                     return str_replace('{X_SITEURL}', XOOPS_URL . '/', $this->getVar('content', 'n'));
                 } elseif ($c_type === 'P') {
-                    if (!(defined('XOOPS_ALLOW_PHP_BLOCKS') && constant('XOOPS_ALLOW_PHP_BLOCKS') === true)) {
-                        $logger = XoopsLogger::getInstance();
-                        $logger->addWarning('PHP block execution is disabled. Set XOOPS_ALLOW_PHP_BLOCKS to true in mainfile.php to enable.');
-                        return '';
-                    }
-                    ob_start();
-                    echo eval($this->getVar('content', 'n'));
-                    $content = ob_get_contents();
-                    ob_end_clean();
-
-                    return str_replace('{X_SITEURL}', XOOPS_URL . '/', $content);
+                    return $this->executePhpBlock();
                 } elseif ($c_type === 'S') {
                     $myts    = \MyTextSanitizer::getInstance();
                     $content = str_replace('{X_SITEURL}', XOOPS_URL . '/', $this->getVar('content', 'n'));
@@ -366,6 +359,243 @@ class XoopsBlock extends XoopsObject
             default:
                 return $this->getVar('content', 'n');
         }
+    }
+
+    /**
+     * Execute a PHP block — file-based or legacy eval fallback.
+     *
+     * The content field should contain: filename.php|function_name
+     * The file must exist in XOOPS_ROOT_PATH/custom_blocks/
+     * The function must exist after including the file and return an HTML string.
+     *
+     * For backward compatibility, if XOOPS_ALLOW_PHP_BLOCKS is true and the
+     * content does not match the file|function format, legacy eval() is used.
+     *
+     * @return string rendered block content
+     *
+     * Note: no return type declaration to preserve BC for subclasses that override this method.
+     */
+    protected function executePhpBlock()
+    {
+        $raw = (string) $this->getVar('content', 'n');
+
+        // New file-based format: "filename.php|function_name"
+        if (preg_match('/^([\w\-]+\.php)\|([a-zA-Z_]\w*)$/', trim($raw), $matches)) {
+            return $this->executeFileBasedBlock($matches[1], $matches[2]);
+        }
+
+        return $this->executeLegacyBlock($raw);
+    }
+
+    /**
+     * Get the directory path for custom block files.
+     *
+     * Subclasses or tests may override this to point to a different directory.
+     *
+     * @return string absolute path to the custom_blocks directory (no trailing slash)
+     */
+    protected static function getCustomBlocksDir(): string
+    {
+        return XOOPS_ROOT_PATH . '/custom_blocks';
+    }
+
+    /**
+     * Execute a file-based PHP block (no eval).
+     *
+     * Validates the file path, includes it, verifies function origin via
+     * ReflectionFunction, and captures both returned and echoed output.
+     *
+     * @param string $funcFile filename in custom_blocks/
+     * @param string $showFunc function name to call
+     *
+     * @return string rendered block content
+     */
+    private function executeFileBasedBlock(string $funcFile, string $showFunc): string
+    {
+        // Cache verified (file, function) pairs to avoid repeated realpath/reflection on re-render
+        static $verifiedCallbacks = [];
+        static $blocksRootCache = [];
+        static $warnedFiles = [];
+
+        $blocksDir = static::getCustomBlocksDir();
+        $cacheKey = $blocksDir . '/' . $funcFile . '|' . $showFunc;
+
+        // Fast path: already verified in this request
+        if (isset($verifiedCallbacks[$cacheKey])) {
+            return $this->executeVerifiedBlock($verifiedCallbacks[$cacheKey], $showFunc);
+        }
+
+        $filePath = $blocksDir . '/' . $funcFile;
+
+        if (!is_file($filePath) || !is_readable($filePath)) {
+            if (!isset($warnedFiles[$cacheKey])) {
+                $this->logBlockWarning("PHP block file not found or not readable: custom_blocks/{$funcFile}");
+                $warnedFiles[$cacheKey] = true;
+            }
+            return '';
+        }
+
+        // Cache the resolved custom_blocks root across calls (scoped by directory)
+        if (!isset($blocksRootCache[$blocksDir])) {
+            $blocksRootCache[$blocksDir] = realpath($blocksDir);
+        }
+        $resolvedRoot = $blocksRootCache[$blocksDir];
+
+        // Verify the resolved path stays within custom_blocks/ (symlink traversal prevention)
+        $realPath = realpath($filePath);
+        if ($resolvedRoot === false || $realPath === false
+            || !str_starts_with($realPath, $resolvedRoot . DIRECTORY_SEPARATOR)
+        ) {
+            $this->logBlockWarning("PHP block file path resolves outside custom_blocks/: {$funcFile}");
+            return '';
+        }
+
+        $obLevel = ob_get_level();
+        ob_start();
+        try {
+            include_once $realPath;
+
+            if (!function_exists($showFunc)) {
+                $this->logBlockWarning("PHP block function not found: {$showFunc} in custom_blocks/{$funcFile}");
+                return '';
+            }
+
+            // Verify the function originates from the included file (prevents calling arbitrary globals)
+            try {
+                $ref = new \ReflectionFunction($showFunc);
+                if ($ref->getFileName() !== $realPath) {
+                    $this->logBlockWarning("PHP block function {$showFunc} not defined in custom_blocks/{$funcFile}");
+                    return '';
+                }
+            } catch (\ReflectionException $e) {
+                $this->logBlockWarning("PHP block function {$showFunc} cannot be reflected");
+                return '';
+            }
+
+            // Cache for subsequent renders in this request
+            $verifiedCallbacks[$cacheKey] = $realPath;
+
+            $content  = $showFunc();
+            $buffered = ob_get_clean();
+            $combined = $buffered . (string) $content;
+
+            return str_replace('{X_SITEURL}', XOOPS_URL . '/', $combined);
+        } catch (\Throwable $e) {
+            $msg = "PHP block error in custom_blocks/{$funcFile}";
+            if (defined('XOOPS_DEBUGMODE') && XOOPS_DEBUGMODE > 0) {
+                $msg .= ': [' . get_class($e) . '] ' . $e->getMessage();
+            }
+            $this->logBlockWarning($msg);
+            return '';
+        } finally {
+            while (ob_get_level() > $obLevel) {
+                ob_end_clean();
+            }
+        }
+    }
+
+    /**
+     * Execute a previously verified file-based block (fast path, skips validation).
+     *
+     * @param string $realPath  resolved file path (already included)
+     * @param string $showFunc  verified function name
+     *
+     * @return string rendered block content
+     */
+    private function executeVerifiedBlock(string $realPath, string $showFunc): string
+    {
+        $obLevel = ob_get_level();
+        ob_start();
+        try {
+            $content  = $showFunc();
+            $buffered = ob_get_clean();
+            $combined = $buffered . (string) $content;
+
+            return str_replace('{X_SITEURL}', XOOPS_URL . '/', $combined);
+        } catch (\Throwable $e) {
+            $msg = 'PHP block error in ' . basename($realPath);
+            if (defined('XOOPS_DEBUGMODE') && XOOPS_DEBUGMODE > 0) {
+                $msg .= ': [' . get_class($e) . '] ' . $e->getMessage();
+            }
+            $this->logBlockWarning($msg);
+            return '';
+        } finally {
+            while (ob_get_level() > $obLevel) {
+                ob_end_clean();
+            }
+        }
+    }
+
+    /**
+     * Execute a legacy eval()-based PHP block (backward compatibility).
+     *
+     * Requires XOOPS_ALLOW_PHP_BLOCKS to be defined as true. Without it,
+     * logs a deprecation warning and returns empty output.
+     *
+     * Deprecation roadmap:
+     *   2.5.12  — eval() disabled by default; opt-in via XOOPS_ALLOW_PHP_BLOCKS.
+     *   next minor — hard-disable in production unless explicit override.
+     *   next major — remove eval() fallback entirely.
+     *
+     * @param string $raw raw PHP code from the block content field
+     *
+     * @return string rendered block content
+     */
+    private function executeLegacyBlock(string $raw): string
+    {
+        if (!(defined('XOOPS_ALLOW_PHP_BLOCKS') && constant('XOOPS_ALLOW_PHP_BLOCKS') === true)) {
+            // Warn about content that looks like a malformed file-based reference
+            // (e.g. "file.php|bad-func") but don't flag legitimate PHP operators like || or |
+            if (preg_match('/\.php\s*\|/', $raw)) {
+                $this->logBlockWarning(
+                    'PHP block content contains ".php|" but did not match file-based format. '
+                    . 'Check the content field syntax: filename.php|function_name'
+                );
+                return '';
+            }
+            static $legacyWarningLogged = false;
+            if (!$legacyWarningLogged) {
+                $this->logBlockWarning(
+                    'Legacy PHP block detected. Migrate to file-based format '
+                    . '(filename.php|function_name in custom_blocks/) or set '
+                    . 'XOOPS_ALLOW_PHP_BLOCKS to true in mainfile.php.'
+                );
+                $legacyWarningLogged = true;
+            }
+            return '';
+        }
+
+        $obLevel = ob_get_level();
+        ob_start();
+        try {
+            echo eval($raw); // NOSONAR — legacy fallback, gated by XOOPS_ALLOW_PHP_BLOCKS
+            $content = ob_get_clean();
+
+            return str_replace('{X_SITEURL}', XOOPS_URL . '/', $content);
+        } catch (\Throwable $e) {
+            $msg = 'Legacy PHP block execution error';
+            if (defined('XOOPS_DEBUGMODE') && XOOPS_DEBUGMODE > 0) {
+                $msg .= ': [' . get_class($e) . '] ' . $e->getMessage();
+            }
+            $this->logBlockWarning($msg);
+            return '';
+        } finally {
+            while (ob_get_level() > $obLevel) {
+                ob_end_clean();
+            }
+        }
+    }
+
+    /**
+     * Log a block warning via XoopsLogger extra entries.
+     *
+     * @param string $message warning message
+     *
+     * @return void
+     */
+    private function logBlockWarning(string $message): void
+    {
+        XoopsLogger::getInstance()->addExtra(self::BLOCK_WARNING, $message);
     }
 
     /**

@@ -273,17 +273,7 @@ class SystemBlock extends XoopsBlock
                 if ($c_type === 'H') {
                     return str_replace('{X_SITEURL}', XOOPS_URL . '/', (string) $this->getVar('content', 'n'));
                 } elseif ($c_type === 'P') {
-                    if (!(defined('XOOPS_ALLOW_PHP_BLOCKS') && constant('XOOPS_ALLOW_PHP_BLOCKS') === true)) {
-                        $logger = XoopsLogger::getInstance();
-                        $logger->addWarning('PHP block execution is disabled. Set XOOPS_ALLOW_PHP_BLOCKS to true in mainfile.php to enable.');
-                        return '';
-                    }
-                    ob_start();
-                    echo eval($this->getVar('content', 'n'));
-                    $content = ob_get_contents();
-                    ob_end_clean();
-
-                    return str_replace('{X_SITEURL}', XOOPS_URL . '/', $content);
+                    return $this->executePhpBlock();
                 } elseif ($c_type === 'S') {
                     $myts    = \MyTextSanitizer::getInstance();
                     $content = str_replace('{X_SITEURL}', XOOPS_URL . '/', (string) $this->getVar('content', 'n'));
