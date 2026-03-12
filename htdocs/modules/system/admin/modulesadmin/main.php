@@ -350,6 +350,11 @@ switch ($op) {
         break;
 
     case 'install_ok':
+        $module     = trim(Request::getString('module', '', 'POST'));
+        $moduleDirs = XoopsLists::getModulesList();
+        if (!in_array($module, $moduleDirs, true)) {
+            redirect_header('admin.php?fct=modulesadmin', 3, sprintf(_AM_SYSTEM_MODULES_FAILINS, $module));
+        }
         $ret   = [];
         $ret[] = xoops_module_install($module);
         // Flush cache files for cpanel GUIs
@@ -407,7 +412,12 @@ switch ($op) {
         break;
 
     case 'uninstall_ok':
-        $module = Request::getString('module', '');
+        $module = trim(Request::getString('module', '', 'POST'));
+        /** @var XoopsModuleHandler $module_handler */
+        $module_handler = xoops_getHandler('module');
+        if (!is_object($module_handler->getByDirname($module))) {
+            redirect_header('admin.php?fct=modulesadmin', 3, sprintf(_AM_SYSTEM_MODULES_DELETE_ERROR, $module));
+        }
         $ret   = [];
         $ret[] = xoops_module_uninstall($module);
         // Flush cache files for cpanel GUIs
@@ -464,7 +474,12 @@ switch ($op) {
         break;
 
     case 'update_ok':
-        $module = Request::getString('module', '');
+        $module = trim(Request::getString('module', '', 'POST'));
+        /** @var XoopsModuleHandler $module_handler */
+        $module_handler = xoops_getHandler('module');
+        if (!is_object($module_handler->getByDirname($module))) {
+            redirect_header('admin.php?fct=modulesadmin', 3, sprintf(_AM_SYSTEM_MODULES_UPDATE_ERROR, $module));
+        }
         $ret   = [];
         $ret[] = xoops_module_update($module);
         // Flush cache files for cpanel GUIs
