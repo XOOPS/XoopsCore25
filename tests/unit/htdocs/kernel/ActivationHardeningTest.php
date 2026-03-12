@@ -8,7 +8,6 @@ use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\TestCase;
 use XoopsMemberHandler;
-use XoopsMySQLDatabase;
 use XoopsUser;
 use XoopsUserHandler;
 use ReflectionClass;
@@ -37,7 +36,10 @@ class ActivationHardeningTest extends TestCase
     {
         $fullPath = $this->htdocsPath . '/' . ltrim($relativePath, '/');
         $this->assertFileExists($fullPath, "Source file not found: {$fullPath}");
-        return file_get_contents($fullPath);
+        $contents = file_get_contents($fullPath);
+        $this->assertNotFalse($contents, 'Failed to read source file: ' . basename($fullPath));
+
+        return $contents;
     }
 
     // ---------------------------------------------------------------
@@ -180,11 +182,32 @@ class ActivationHardeningTest extends TestCase
     {
         $source = $this->readSource('kernel/member.php');
 
-        // Extract the activateUser method body
-        preg_match('/function\s+activateUser\b[^{]*\{(.*?)^\s{4}\}/ms', $source, $matches);
-        $this->assertNotEmpty($matches, 'Could not find activateUser method');
+        // Extract the activateUser method body using brace balancing
+        $functionPos = strpos($source, 'function activateUser');
+        $this->assertNotFalse($functionPos, 'Could not find activateUser function declaration');
 
-        $methodBody = $matches[1];
+        $openBracePos = strpos($source, '{', (int) $functionPos);
+        $this->assertNotFalse($openBracePos, 'Could not find opening brace for activateUser method');
+
+        $length = strlen($source);
+        $depth = 0;
+        $endBracePos = null;
+
+        for ($i = (int) $openBracePos; $i < $length; $i++) {
+            if ($source[$i] === '{') {
+                $depth++;
+            } elseif ($source[$i] === '}') {
+                $depth--;
+                if ($depth === 0) {
+                    $endBracePos = $i;
+                    break;
+                }
+            }
+        }
+
+        $this->assertNotNull($endBracePos, 'Could not find matching closing brace for activateUser method');
+
+        $methodBody = substr($source, (int) $openBracePos + 1, (int) $endBracePos - (int) $openBracePos - 1);
 
         // It should NOT generate a new token
         $this->assertStringNotContainsString(
@@ -202,37 +225,27 @@ class ActivationHardeningTest extends TestCase
         require_once XOOPS_ROOT_PATH . '/kernel/group.php';
         require_once XOOPS_ROOT_PATH . '/kernel/member.php';
 
-        $db = $this->createMock(XoopsMySQLDatabase::class);
-
         $handler = (new ReflectionClass(XoopsMemberHandler::class))
             ->newInstanceWithoutConstructor();
 
-        // Inject the mock DB
         $ref = new ReflectionClass($handler);
-        $current = $ref;
-        while ($current) {
-            if ($current->hasProperty('db')) {
-                $prop = $current->getProperty('db');
-                $prop->setAccessible(true);
-                $prop->setValue($handler, $db);
-                break;
-            }
-            $current = $current->getParentClass();
-        }
-
-        // Create mock user handler
-        $userHandler = $this->createMock(XoopsUserHandler::class);
-        $userHandler->method('insert')->willReturn(true);
-
-        // Inject userHandler via reflection
-        $userHandlerProp = $ref->getProperty('userHandler');
-        $userHandlerProp->setAccessible(true);
-        $userHandlerProp->setValue($handler, $userHandler);
 
         // Create a user with level=0 and a non-empty actkey
         $user = new XoopsUser();
         $user->setVar('level', 0);
         $user->setVar('actkey', 'abc12345');
+
+        // Create mock user handler and assert insert is called with force=true
+        $userHandler = $this->createMock(XoopsUserHandler::class);
+        $userHandler->expects($this->once())
+            ->method('insert')
+            ->with($user, true)
+            ->willReturn(true);
+
+        // Inject userHandler via reflection
+        $userHandlerProp = $ref->getProperty('userHandler');
+        $userHandlerProp->setAccessible(true);
+        $userHandlerProp->setValue($handler, $userHandler);
 
         $result = $handler->activateUser($user);
 
@@ -263,7 +276,7 @@ class ActivationHardeningTest extends TestCase
             $this->assertStringContainsString(
                 "'allowed_classes' => false",
                 $line,
-                "Line {$lineNum}: unserialize() must include ['allowed_classes' => false]: " . trim($line)
+                'Line ' . ($lineNum + 1) . ": unserialize() must include ['allowed_classes' => false]: " . trim($line)
             );
         }
     }

@@ -929,8 +929,7 @@ class XoopsMemberHandlerTest extends TestCase
         $this->assertSame('level', $setVarCalls[0][0]);
         $this->assertSame(1, $setVarCalls[0][1]);
         $this->assertSame('actkey', $setVarCalls[1][0]);
-        $this->assertIsString($setVarCalls[1][1]);
-        $this->assertGreaterThanOrEqual(8, strlen($setVarCalls[1][1]));
+        $this->assertSame('', $setVarCalls[1][1]);
     }
 
     public function testActivateUserAlreadyActiveReturnsTrue(): void
