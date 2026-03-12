@@ -21,6 +21,18 @@ use PHPUnit\Framework\TestCase;
 class ProfileVisibilityCsrfTest extends TestCase
 {
     // ---------------------------------------------------------------
+    // Helper methods
+    // ---------------------------------------------------------------
+
+    private function readSourceFile(string $relativePath): string
+    {
+        $path = XOOPS_ROOT_PATH . $relativePath;
+        $source = file_get_contents($path);
+        $this->assertNotFalse($source, 'Unable to read source file: ' . $path);
+        return $source;
+    }
+
+    // ---------------------------------------------------------------
     // XoopsSecurity::check() contract tests
     // ---------------------------------------------------------------
 
@@ -56,20 +68,19 @@ class ProfileVisibilityCsrfTest extends TestCase
     #[Test]
     public function requestGetMethodReturnsCurrentMethod(): void
     {
-        // Save original
-        $origMethod = $_SERVER['REQUEST_METHOD'] ?? null;
+        $original = $_SERVER['REQUEST_METHOD'] ?? null;
+        try {
+            $_SERVER['REQUEST_METHOD'] = 'POST';
+            $this->assertSame('POST', \Xmf\Request::getMethod());
 
-        $_SERVER['REQUEST_METHOD'] = 'POST';
-        $this->assertSame('POST', \Xmf\Request::getMethod());
-
-        $_SERVER['REQUEST_METHOD'] = 'GET';
-        $this->assertSame('GET', \Xmf\Request::getMethod());
-
-        // Restore
-        if ($origMethod !== null) {
-            $_SERVER['REQUEST_METHOD'] = $origMethod;
-        } else {
-            unset($_SERVER['REQUEST_METHOD']);
+            $_SERVER['REQUEST_METHOD'] = 'GET';
+            $this->assertSame('GET', \Xmf\Request::getMethod());
+        } finally {
+            if ($original === null) {
+                unset($_SERVER['REQUEST_METHOD']);
+            } else {
+                $_SERVER['REQUEST_METHOD'] = $original;
+            }
         }
     }
 
@@ -80,53 +91,53 @@ class ProfileVisibilityCsrfTest extends TestCase
     #[Test]
     public function deleteOperationOnGetRequestTriggersRedirect(): void
     {
-        // Save original
-        $origMethod = $_SERVER['REQUEST_METHOD'] ?? null;
-        $_SERVER['REQUEST_METHOD'] = 'GET';
+        $original = $_SERVER['REQUEST_METHOD'] ?? null;
+        try {
+            $_SERVER['REQUEST_METHOD'] = 'GET';
 
-        // Simulate the guard logic from visibility.php
-        $op = 'del';
-        $redirected = false;
+            // Simulate the guard logic from visibility.php
+            $op = 'del';
+            $redirected = false;
 
-        if ($op === 'del') {
-            if ('POST' !== \Xmf\Request::getMethod()) {
-                $redirected = true; // Would call redirect_header()
+            if ($op === 'del') {
+                if ('POST' !== \Xmf\Request::getMethod()) {
+                    $redirected = true; // Would call redirect_header()
+                }
             }
-        }
 
-        $this->assertTrue($redirected, 'DELETE via GET should trigger redirect');
-
-        // Restore
-        if ($origMethod !== null) {
-            $_SERVER['REQUEST_METHOD'] = $origMethod;
-        } else {
-            unset($_SERVER['REQUEST_METHOD']);
+            $this->assertTrue($redirected, 'DELETE via GET should trigger redirect');
+        } finally {
+            if ($original === null) {
+                unset($_SERVER['REQUEST_METHOD']);
+            } else {
+                $_SERVER['REQUEST_METHOD'] = $original;
+            }
         }
     }
 
     #[Test]
     public function deleteOperationOnPostRequestPassesMethodCheck(): void
     {
-        // Save original
-        $origMethod = $_SERVER['REQUEST_METHOD'] ?? null;
-        $_SERVER['REQUEST_METHOD'] = 'POST';
+        $original = $_SERVER['REQUEST_METHOD'] ?? null;
+        try {
+            $_SERVER['REQUEST_METHOD'] = 'POST';
 
-        $op = 'del';
-        $redirected = false;
+            $op = 'del';
+            $redirected = false;
 
-        if ($op === 'del') {
-            if ('POST' !== \Xmf\Request::getMethod()) {
-                $redirected = true;
+            if ($op === 'del') {
+                if ('POST' !== \Xmf\Request::getMethod()) {
+                    $redirected = true;
+                }
             }
-        }
 
-        $this->assertFalse($redirected, 'DELETE via POST should pass method check');
-
-        // Restore
-        if ($origMethod !== null) {
-            $_SERVER['REQUEST_METHOD'] = $origMethod;
-        } else {
-            unset($_SERVER['REQUEST_METHOD']);
+            $this->assertFalse($redirected, 'DELETE via POST should pass method check');
+        } finally {
+            if ($original === null) {
+                unset($_SERVER['REQUEST_METHOD']);
+            } else {
+                $_SERVER['REQUEST_METHOD'] = $original;
+            }
         }
     }
 
@@ -167,29 +178,29 @@ class ProfileVisibilityCsrfTest extends TestCase
         $security->testCheckResult = false;
         $security->testErrors = ['Token mismatch'];
 
-        // Save original
-        $origMethod = $_SERVER['REQUEST_METHOD'] ?? null;
-        $_SERVER['REQUEST_METHOD'] = 'POST';
+        $original = $_SERVER['REQUEST_METHOD'] ?? null;
+        try {
+            $_SERVER['REQUEST_METHOD'] = 'POST';
 
-        // Simulate both guards
-        $methodBlocked = false;
-        $tokenBlocked = false;
+            // Simulate both guards
+            $methodBlocked = false;
+            $tokenBlocked = false;
 
-        if ('POST' !== \Xmf\Request::getMethod()) {
-            $methodBlocked = true;
-        }
-        if (!$security->check()) {
-            $tokenBlocked = true;
-        }
+            if ('POST' !== \Xmf\Request::getMethod()) {
+                $methodBlocked = true;
+            }
+            if (!$security->check()) {
+                $tokenBlocked = true;
+            }
 
-        $this->assertFalse($methodBlocked, 'POST request should pass method check');
-        $this->assertTrue($tokenBlocked, 'Invalid token should block delete');
-
-        // Restore
-        if ($origMethod !== null) {
-            $_SERVER['REQUEST_METHOD'] = $origMethod;
-        } else {
-            unset($_SERVER['REQUEST_METHOD']);
+            $this->assertFalse($methodBlocked, 'POST request should pass method check');
+            $this->assertTrue($tokenBlocked, 'Invalid token should block delete');
+        } finally {
+            if ($original === null) {
+                unset($_SERVER['REQUEST_METHOD']);
+            } else {
+                $_SERVER['REQUEST_METHOD'] = $original;
+            }
         }
     }
 
@@ -200,9 +211,7 @@ class ProfileVisibilityCsrfTest extends TestCase
     #[Test]
     public function visibilityFileContainsCsrfCheckForInsert(): void
     {
-        $source = file_get_contents(
-            XOOPS_ROOT_PATH . '/modules/profile/admin/visibility.php'
-        );
+        $source = $this->readSourceFile('/modules/profile/admin/visibility.php');
 
         // Locate the submit handler block
         $submitPos = strpos($source, "if (Request::hasVar('submit', 'POST'))");
@@ -221,9 +230,7 @@ class ProfileVisibilityCsrfTest extends TestCase
     #[Test]
     public function visibilityFileContainsPostOnlyCheckForDelete(): void
     {
-        $source = file_get_contents(
-            XOOPS_ROOT_PATH . '/modules/profile/admin/visibility.php'
-        );
+        $source = $this->readSourceFile('/modules/profile/admin/visibility.php');
         $this->assertStringContainsString(
             "Request::getMethod()",
             $source,
@@ -234,9 +241,7 @@ class ProfileVisibilityCsrfTest extends TestCase
     #[Test]
     public function visibilityFileReadsDeleteParamsFromPost(): void
     {
-        $source = file_get_contents(
-            XOOPS_ROOT_PATH . '/modules/profile/admin/visibility.php'
-        );
+        $source = $this->readSourceFile('/modules/profile/admin/visibility.php');
         // After the del operation, parameters should come from POST, not GET
         // Check that field_id in del block uses 'POST'
         $delBlock = strstr($source, "if (\$op === 'del')");
@@ -251,9 +256,7 @@ class ProfileVisibilityCsrfTest extends TestCase
     #[Test]
     public function visibilityFileRequiresPostForDelete(): void
     {
-        $source = file_get_contents(
-            XOOPS_ROOT_PATH . '/modules/profile/admin/visibility.php'
-        );
+        $source = $this->readSourceFile('/modules/profile/admin/visibility.php');
         // The delete block must enforce POST method
         $delBlock = strstr($source, "if (\$op === 'del')");
         $this->assertNotFalse($delBlock, 'Delete block must exist');
@@ -276,8 +279,8 @@ class ProfileVisibilityCsrfTest extends TestCase
     #[Test]
     public function templateUsesPostFormForDelete(): void
     {
-        $tplSource = file_get_contents(
-            XOOPS_ROOT_PATH . '/modules/profile/templates/profile_admin_visibility.tpl'
+        $tplSource = $this->readSourceFile(
+            '/modules/profile/templates/profile_admin_visibility.tpl'
         );
         // Must NOT use GET links for delete
         $this->assertStringNotContainsString(

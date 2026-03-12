@@ -81,6 +81,10 @@ class SystemMaintenance
      */
     private function isValidPrefixedTable($prefixedTable)
     {
+        if (!is_string($prefixedTable)) {
+            return false;
+        }
+
         $prefixLen = strlen($this->prefix);
 
         // Verify the table actually starts with the expected prefix
