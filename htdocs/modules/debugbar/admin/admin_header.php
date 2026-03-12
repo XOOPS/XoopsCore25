@@ -24,9 +24,9 @@ use XoopsModules\Debugbar\{
 /** @var Admin $adminObject */
 /** @var Helper $helper */
 
-require \dirname(__DIR__) . '/preloads/autoloader.php';
+require_once \dirname(__DIR__) . '/preloads/autoloader.php';
 
-require \dirname(__DIR__, 3) . '/include/cp_header.php';
+require_once \dirname(__DIR__, 3) . '/include/cp_header.php';
 
 $moduleDirName = \basename(\dirname(__DIR__));
 $moduleDirNameUpper = mb_strtoupper($moduleDirName);
