@@ -76,7 +76,10 @@
                         }
 
                         documentToWriteTo.open();
-                        documentToWriteTo.write(headersHTML + bodyHTML + htmlIframeHTML);
+                        documentToWriteTo.write(
+                            '<meta http-equiv="Content-Security-Policy" content="default-src \'none\'; style-src \'unsafe-inline\'; img-src data:;">'
+                            + headersHTML + bodyHTML + htmlIframeHTML
+                        );
                         documentToWriteTo.close();
                     });
                     header.append(link);

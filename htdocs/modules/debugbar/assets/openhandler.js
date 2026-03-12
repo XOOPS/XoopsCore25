@@ -137,18 +137,9 @@
         },
 
         handleFind(data) {
+            if (!data) return;
             const self = this;
             for (const meta of data) {
-                const loadLink = document.createElement('a');
-                loadLink.textContent = 'Load dataset';
-                loadLink.addEventListener('click', (e) => {
-                    self.hide();
-                    self.load(meta.id, (data) => {
-                        self.callback(meta.id, data);
-                    });
-                    e.preventDefault();
-                });
-
                 const uriLink = document.createElement('a');
                 uriLink.textContent = meta.uri;
                 uriLink.addEventListener('click', (e) => {
@@ -226,7 +217,20 @@
         },
 
         clear(callback) {
-            this.ajax({ op: 'clear' }, callback);
+            const url = this.get('url');
+            fetch(url, {
+                method: 'POST',
+                headers: {
+                    Accept: 'application/json',
+                    'Content-Type': 'application/x-www-form-urlencoded'
+                },
+                body: new URLSearchParams({ op: 'clear' })
+            })
+                .then(data => data.json())
+                .then(callback)
+                .catch(() => {
+                    if (callback) callback([]);
+                });
         },
 
         ajax(data, callback) {
@@ -243,8 +247,8 @@
             })
                 .then(data => data.json())
                 .then(callback)
-                .catch((err) => {
-                    callback(null, err);
+                .catch(() => {
+                    if (callback) callback([]);
                 });
         }
 
