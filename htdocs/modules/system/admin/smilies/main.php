@@ -245,6 +245,9 @@ switch ($op) {
         $smilies_id = Request::getInt('smilies_id', 0);
         if ($smilies_id > 0) {
             $obj = $smilies_Handler->get($smilies_id);
+            if (!is_object($obj)) {
+                redirect_header('admin.php?fct=smilies', 2, _AM_SYSTEM_DBERROR);
+            }
             $old = $obj->getVar('display');
             $obj->setVar('display', !$old);
             if ($smilies_Handler->insert($obj)) {
