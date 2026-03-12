@@ -50,6 +50,9 @@ class XoopsUtility
         }
         // single function
         if (is_string($handler)) {
+            if (null === $data) {
+                return $data;
+            }
             return function_exists((string) $handler) ? $handler($data) : $data;
         }
         // Method of a class
