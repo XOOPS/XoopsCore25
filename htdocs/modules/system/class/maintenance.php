@@ -76,8 +76,20 @@ class SystemMaintenance
      */
     private function isValidPrefixedTable($prefixedTable)
     {
+        $prefixLen = strlen($this->prefix);
+
+        // Verify the table actually starts with the expected prefix
+        if (strncmp($prefixedTable, $this->prefix, $prefixLen) !== 0) {
+            return false;
+        }
+
         // Strip the prefix to get the unprefixed name
-        $unprefixed = substr($prefixedTable, strlen($this->prefix));
+        $unprefixed = substr($prefixedTable, $prefixLen);
+
+        // Ensure the unprefixed remainder is non-empty
+        if ($unprefixed === '' || $unprefixed === false) {
+            return false;
+        }
 
         return $this->isValidTable($unprefixed);
     }

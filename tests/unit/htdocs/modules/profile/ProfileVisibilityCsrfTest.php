@@ -242,16 +242,58 @@ class ProfileVisibilityCsrfTest extends TestCase
     }
 
     #[Test]
-    public function visibilityFileDoesNotReadOpFromGet(): void
+    public function visibilityFileRequiresPostForDelete(): void
     {
         $source = file_get_contents(
             XOOPS_ROOT_PATH . '/modules/profile/admin/visibility.php'
         );
-        // The $op variable should no longer fall back to GET
+        // The delete block must enforce POST method
+        $delBlock = strstr($source, "if (\$op === 'del')");
+        $this->assertNotFalse($delBlock, 'Delete block must exist');
+        $this->assertStringContainsString(
+            "Request::getMethod()",
+            $delBlock,
+            'Delete block must check request method'
+        );
+        $this->assertStringContainsString(
+            "'POST'",
+            $delBlock,
+            'Delete block must require POST'
+        );
+    }
+
+    // ---------------------------------------------------------------
+    // Template verification tests
+    // ---------------------------------------------------------------
+
+    #[Test]
+    public function templateUsesPostFormForDelete(): void
+    {
+        $tplSource = file_get_contents(
+            XOOPS_ROOT_PATH . '/modules/profile/templates/profile_admin_visibility.tpl'
+        );
+        // Must NOT use GET links for delete
         $this->assertStringNotContainsString(
-            "getCmd('op', 'visibility', 'GET')",
-            $source,
-            'visibility.php must not read op from GET'
+            'href="visibility.php?op=del',
+            $tplSource,
+            'Template must not use GET links for delete'
+        );
+        // Must use POST form for delete
+        $this->assertStringContainsString(
+            'method="post"',
+            $tplSource,
+            'Template must use POST form for delete'
+        );
+        $this->assertStringContainsString(
+            'name="op" value="del"',
+            $tplSource,
+            'Template must include hidden op=del field'
+        );
+        // Must include CSRF security token
+        $this->assertStringContainsString(
+            '{securityToken}',
+            $tplSource,
+            'Template must include securityToken in delete form'
         );
     }
 }

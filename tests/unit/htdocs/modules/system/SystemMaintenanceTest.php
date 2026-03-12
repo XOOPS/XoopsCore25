@@ -56,13 +56,6 @@ class SystemMaintenanceTest extends KernelTestCase
             if (!defined('_AM_SYSTEM_MAINTENANCE_DUMP_NO_TABLES')) {
                 define('_AM_SYSTEM_MAINTENANCE_DUMP_NO_TABLES', 'No tables');
             }
-            // Stub system_AdminIcons if not defined
-            if (!function_exists('system_AdminIcons')) {
-                function system_AdminIcons(string $icon): string
-                {
-                    return 'images/' . $icon;
-                }
-            }
             require_once XOOPS_ROOT_PATH . '/modules/system/class/maintenance.php';
             self::$loaded = true;
         }
@@ -253,7 +246,19 @@ class SystemMaintenanceTest extends KernelTestCase
     public function isValidTableCachesResults(): void
     {
         $db = $this->createMockDatabase();
-        $this->stubShowTables($db, ['users']);
+
+        // Build the rows that SHOW TABLES would return
+        $rows = [
+            ['Tables_in_test' => XOOPS_DB_PREFIX . '_users'],
+            false, // End of result set
+        ];
+
+        // query() must be called exactly once — subsequent isValidTable()
+        // calls must use the cached result, not issue another query.
+        $db->expects($this->once())->method('query')->willReturn('mock_result');
+        $db->method('isResultSet')->willReturn(true);
+        $db->method('fetchArray')->willReturnOnConsecutiveCalls(...$rows);
+
         $maintenance = $this->createMaintenance($db);
 
         $method = new \ReflectionMethod($maintenance, 'isValidTable');

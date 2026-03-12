@@ -27,7 +27,7 @@ $_SERVER['REQUEST_URI'] = 'admin/permissions.php';
 
 xoops_cp_header();
 
-$op = Request::getCmd('op', 'visibility', 'POST');
+$op = Request::getCmd('op', 'visibility');
 
 $visibility_handler = xoops_getModuleHandler('visibility');
 $field_handler      = xoops_getModuleHandler('field');
@@ -46,7 +46,7 @@ if (Request::hasVar('submit', 'POST')) {
 }
 if ($op === 'del') {
     if ('POST' !== Request::getMethod()) {
-        redirect_header('visibility.php', 3, 'Access denied');
+        redirect_header('visibility.php', 3, _NOPERM);
     }
     if (!$GLOBALS['xoopsSecurity']->check()) {
         redirect_header('visibility.php', 3, implode('<br>', $GLOBALS['xoopsSecurity']->getErrors()));

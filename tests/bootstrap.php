@@ -159,6 +159,11 @@ if (!defined('_MA_USER_MORE')) {
     define('_MA_USER_MORE', 'Find more users');
 }
 
+// Permission / access constants
+if (!defined('_NOPERM')) {
+    define('_NOPERM', "Sorry, you don't have the permission to access this area.");
+}
+
 // Renderer constants — used by XoopsFormRendererLegacy
 if (!defined('_DELETE')) {
     define('_DELETE', 'Delete');
@@ -446,8 +451,12 @@ if (!class_exists('XoopsSecurity')) {
             return $this->testCheckResult;
         }
 
-        public function getErrors()
+        public function &getErrors($ashtml = false)
         {
+            if ($ashtml) {
+                $ret = implode('<br>', $this->testErrors);
+                return $ret;
+            }
             return $this->testErrors;
         }
     }
@@ -708,6 +717,14 @@ if (!defined('_AM_MODULEADMIN_ABOUT_AMOUNT_PATTERN')) {
 }
 if (!defined('_AM_MODULEADMIN_ABOUT_DONATE_IMG_ALT')) {
     define('_AM_MODULEADMIN_ABOUT_DONATE_IMG_ALT', 'Donate');
+}
+
+// Stub system_AdminIcons() for SystemMaintenance tests
+if (!function_exists('system_AdminIcons')) {
+    function system_AdminIcons(string $icon): string
+    {
+        return 'images/' . $icon;
+    }
 }
 
 // Stub checkEmail() for ModuleAdmin renderAbout

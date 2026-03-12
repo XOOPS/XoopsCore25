@@ -20,10 +20,16 @@
                             <li>
                                 <{$smarty.const._PROFILE_AM_FIELDVISIBLEFOR}> <{$groups.$user_gid}>
                                 <{$smarty.const._PROFILE_AM_FIELDVISIBLEON}> <{$groups.$profile_gid}>
-                                <a href="visibility.php?op=del&amp;field_id=<{$field_id}>&amp;ug=<{$user_gid}>&amp;pg=<{$profile_gid}>"
-                                   title="<{$smarty.const._DELETE}>">
-                                    <img src="<{$xoops_url}>/modules/profile/assets/images/no.png" alt="<{$smarty.const._DELETE}>"/>
-                                </a>
+                                <form method="post" action="visibility.php" style="display:inline;">
+                                    <input type="hidden" name="op" value="del">
+                                    <input type="hidden" name="field_id" value="<{$field_id}>">
+                                    <input type="hidden" name="ug" value="<{$user_gid}>">
+                                    <input type="hidden" name="pg" value="<{$profile_gid}>">
+                                    <{securityToken}>
+                                    <button type="submit" title="<{$smarty.const._DELETE}>" style="border:none;background:none;cursor:pointer;padding:0;">
+                                        <img src="<{$xoops_url}>/modules/profile/assets/images/no.png" alt="<{$smarty.const._DELETE}>"/>
+                                    </button>
+                                </form>
                             </li>
                         <{/foreach}>
                     </ul>
