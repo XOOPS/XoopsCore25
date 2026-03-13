@@ -50,13 +50,13 @@ class ActivationHardeningTest extends TestCase
     public function registerPhpUsesCsprngForActkey(): void
     {
         $source = $this->readSource('register.php');
-        $this->assertStringContainsString(
-            "bin2hex(random_bytes(4))",
+        $this->assertMatchesRegularExpression(
+            '/bin2hex\s*\(\s*random_bytes\s*\(\s*4\s*\)\s*\)/',
             $source,
             'htdocs/register.php must use bin2hex(random_bytes(4)) for actkey generation'
         );
-        $this->assertStringNotContainsString(
-            'md5(uniqid(mt_rand',
+        $this->assertDoesNotMatchRegularExpression(
+            '/md5\s*\(\s*uniqid\s*\(\s*mt_rand/',
             $source,
             'htdocs/register.php must not use weak md5(uniqid(mt_rand())) for actkey'
         );
@@ -66,13 +66,13 @@ class ActivationHardeningTest extends TestCase
     public function profileRegisterPhpUsesCsprngForActkey(): void
     {
         $source = $this->readSource('modules/profile/register.php');
-        $this->assertStringContainsString(
-            "bin2hex(random_bytes(4))",
+        $this->assertMatchesRegularExpression(
+            '/bin2hex\s*\(\s*random_bytes\s*\(\s*4\s*\)\s*\)/',
             $source,
             'profile/register.php must use bin2hex(random_bytes(4)) for actkey generation'
         );
-        $this->assertStringNotContainsString(
-            'md5(uniqid(mt_rand',
+        $this->assertDoesNotMatchRegularExpression(
+            '/md5\s*\(\s*uniqid\s*\(\s*mt_rand/',
             $source,
             'profile/register.php must not use weak md5(uniqid(mt_rand())) for actkey'
         );
@@ -82,13 +82,13 @@ class ActivationHardeningTest extends TestCase
     public function profileDeactivatePhpUsesCsprngForActkey(): void
     {
         $source = $this->readSource('modules/profile/admin/deactivate.php');
-        $this->assertStringContainsString(
-            "bin2hex(random_bytes(4))",
+        $this->assertMatchesRegularExpression(
+            '/bin2hex\s*\(\s*random_bytes\s*\(\s*4\s*\)\s*\)/',
             $source,
             'profile/admin/deactivate.php must use bin2hex(random_bytes(4)) for actkey generation'
         );
-        $this->assertStringNotContainsString(
-            'md5(uniqid(mt_rand',
+        $this->assertDoesNotMatchRegularExpression(
+            '/md5\s*\(\s*uniqid\s*\(\s*mt_rand/',
             $source,
             'profile/admin/deactivate.php must not use weak md5(uniqid(mt_rand())) for actkey'
         );
@@ -98,13 +98,13 @@ class ActivationHardeningTest extends TestCase
     public function protectorUsesCsprngForActkey(): void
     {
         $source = $this->readSource('xoops_lib/modules/protector/class/protector.php');
-        $this->assertStringContainsString(
-            "bin2hex(random_bytes(4))",
+        $this->assertMatchesRegularExpression(
+            '/bin2hex\s*\(\s*random_bytes\s*\(\s*4\s*\)\s*\)/',
             $source,
             'protector.php must use bin2hex(random_bytes(4)) for actkey generation'
         );
-        $this->assertStringNotContainsString(
-            'md5(uniqid(mt_rand',
+        $this->assertDoesNotMatchRegularExpression(
+            '/md5\s*\(\s*uniqid\s*\(\s*mt_rand/',
             $source,
             'protector.php must not use weak md5(uniqid(mt_rand())) for actkey'
         );
@@ -131,8 +131,8 @@ class ActivationHardeningTest extends TestCase
     public function registerPhpUsesHashEqualsForActkeyComparison(): void
     {
         $source = $this->readSource('register.php');
-        $this->assertStringContainsString(
-            'hash_equals(',
+        $this->assertMatchesRegularExpression(
+            '/hash_equals\s*\(/',
             $source,
             'htdocs/register.php must use hash_equals() for actkey comparison'
         );
@@ -148,8 +148,8 @@ class ActivationHardeningTest extends TestCase
     public function profileActivatePhpUsesHashEqualsForActkeyComparison(): void
     {
         $source = $this->readSource('modules/profile/activate.php');
-        $this->assertStringContainsString(
-            'hash_equals(',
+        $this->assertMatchesRegularExpression(
+            '/hash_equals\s*\(/',
             $source,
             'profile/activate.php must use hash_equals() for actkey comparison'
         );
@@ -263,37 +263,16 @@ class ActivationHardeningTest extends TestCase
     {
         $source = $this->readSource('modules/profile/include/forms.php');
 
-        // Every unserialize call must include allowed_classes => false
-        // Find lines containing unserialize
-        $lines = explode("\n", $source);
-        $unserializeLines = array_filter($lines, static function ($line) {
-            return str_contains($line, 'unserialize(');
-        });
-
-        $this->assertNotEmpty($unserializeLines, 'Should find unserialize() calls in profile forms.php');
-
-        foreach ($unserializeLines as $lineNum => $line) {
-            $this->assertStringContainsString(
-                "'allowed_classes' => false",
-                $line,
-                'Line ' . ($lineNum + 1) . ": unserialize() must include ['allowed_classes' => false]: " . trim($line)
-            );
-        }
-    }
-
-    #[Test]
-    public function profileFormsPhpHasNoUnrestrictedUnserialize(): void
-    {
-        $source = $this->readSource('modules/profile/include/forms.php');
-
-        // Count unserialize calls vs calls with allowed_classes
+        // Count unserialize calls vs calls with allowed_classes (whitespace-tolerant)
         preg_match_all('/\bunserialize\s*\(/', $source, $allCalls);
-        preg_match_all('/\bunserialize\s*\([^;]*allowed_classes/', $source, $safeCalls);
+        $this->assertNotEmpty($allCalls[0], 'Should find unserialize() calls in profile forms.php');
+
+        preg_match_all('/\bunserialize\s*\([^;]*allowed_classes\s*[\'"]?\s*=>\s*false/', $source, $safeCalls);
 
         $this->assertSame(
             count($allCalls[0]),
             count($safeCalls[0]),
-            'All unserialize() calls must have allowed_classes restriction'
+            'All unserialize() calls must have allowed_classes => false restriction'
         );
     }
 }
