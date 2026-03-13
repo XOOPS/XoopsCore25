@@ -201,7 +201,7 @@ class EvalRemovalVerificationTest extends TestCase
     }
 
     // =========================================================================
-    // M-11c: Protector lifecycle — eval() retained for D3 clone support
+    // M-11c: Protector lifecycle — eval() removed, literal functions used
     // =========================================================================
 
     /**
@@ -221,65 +221,61 @@ class EvalRemovalVerificationTest extends TestCase
     }
 
     /**
-     * Verify protector lifecycle files use var_export() for safe eval
-     * and define the expected base functions.
+     * Verify protector oninstall.php contains no eval() and defines the base function.
      */
     #[Test]
-    public function protectorOninstallUsesVarExportAndDefinesBase(): void
+    public function protectorOninstallHasNoEvalAndDefinesBase(): void
     {
         $file = $this->resolveProtectorFile('oninstall.php');
-        $this->assertFileExists($file);
-
         $content = file_get_contents($file);
         $this->assertNotFalse($content);
 
-        $this->assertStringContainsString('var_export($mydirname', $content,
-            'protector/oninstall.php should use var_export() for safe dirname embedding');
+        $this->assertNoEvalTokens($content, 'protector/oninstall.php should not contain eval()');
         $this->assertStringContainsString('protector_oninstall_base', $content,
             'protector/oninstall.php should define the base install function');
     }
 
+    /**
+     * Verify protector onuninstall.php contains no eval() and defines the base function.
+     */
     #[Test]
-    public function protectorOnuninstallUsesVarExportAndDefinesBase(): void
+    public function protectorOnuninstallHasNoEvalAndDefinesBase(): void
     {
         $file = $this->resolveProtectorFile('onuninstall.php');
-        $this->assertFileExists($file);
-
         $content = file_get_contents($file);
         $this->assertNotFalse($content);
 
-        $this->assertStringContainsString('var_export($mydirname', $content,
-            'protector/onuninstall.php should use var_export() for safe dirname embedding');
+        $this->assertNoEvalTokens($content, 'protector/onuninstall.php should not contain eval()');
         $this->assertStringContainsString('protector_onuninstall_base', $content,
             'protector/onuninstall.php should define the base uninstall function');
     }
 
+    /**
+     * Verify protector onupdate.php contains no eval() and defines the base function.
+     */
     #[Test]
-    public function protectorOnupdateUsesVarExportAndDefinesBase(): void
+    public function protectorOnupdateHasNoEvalAndDefinesBase(): void
     {
         $file = $this->resolveProtectorFile('onupdate.php');
-        $this->assertFileExists($file);
-
         $content = file_get_contents($file);
         $this->assertNotFalse($content);
 
-        $this->assertStringContainsString('var_export($mydirname', $content,
-            'protector/onupdate.php should use var_export() for safe dirname embedding');
+        $this->assertNoEvalTokens($content, 'protector/onupdate.php should not contain eval()');
         $this->assertStringContainsString('protector_onupdate_base', $content,
             'protector/onupdate.php should define the base update function');
     }
 
+    /**
+     * Verify protector notification.php contains no eval() and defines the base function.
+     */
     #[Test]
-    public function protectorNotificationUsesVarExportAndDefinesBase(): void
+    public function protectorNotificationHasNoEvalAndDefinesBase(): void
     {
         $file = $this->resolveProtectorFile('notification.php');
-        $this->assertFileExists($file);
-
         $content = file_get_contents($file);
         $this->assertNotFalse($content);
 
-        $this->assertStringContainsString('var_export($mydirname', $content,
-            'protector/notification.php should use var_export() for safe dirname embedding');
+        $this->assertNoEvalTokens($content, 'protector/notification.php should not contain eval()');
         $this->assertStringContainsString('protector_notify_base', $content,
             'protector/notification.php should define the base notify function');
     }

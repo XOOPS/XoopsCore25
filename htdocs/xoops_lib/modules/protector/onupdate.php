@@ -11,10 +11,14 @@ $mydirpath = $registry->getEntry('mydirpath');
 $language  = $registry->getEntry('language');
 // end hack by Trabis
 
-// Dynamic function name is required for D3-style cloned installs.
-// $mydirname comes from basename(__DIR__) via ProtectorRegistry, not user input.
-if (!function_exists('xoops_module_update_' . $mydirname)) {
-    eval('function xoops_module_update_' . $mydirname . '($module) { return protector_onupdate_base($module, ' . var_export($mydirname, true) . '); }');
+// In the core distribution $mydirname is always 'protector' (from basename(__DIR__) via
+// ProtectorRegistry).  Define the XOOPS lifecycle callback with a literal name so that
+// no eval() is needed.
+if (!function_exists('xoops_module_update_protector')) {
+    function xoops_module_update_protector($module)
+    {
+        return protector_onupdate_base($module, 'protector');
+    }
 }
 
 if (!function_exists('protector_onupdate_base')) {
