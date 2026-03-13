@@ -9,128 +9,153 @@ use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 
 /**
- * Tests for M-3: getCmd() lowercases case-sensitive DB prefix values (prefix_manager.php).
+ * Tests for M-3: prefix_manager.php prefix validation.
  *
- * The protector prefix manager previously used getCmd() which lowercases output,
- * but DB table prefixes can contain uppercase letters. The fix uses getString()
- * with manual sanitization via preg_replace(PREFIX_INVALID_CHAR_PATTERN, '', $value).
+ * The protector prefix manager validates DB prefix input using
+ * validatePrefix() which rejects (dies) on invalid characters
+ * rather than silently stripping them. This prevents destructive
+ * operations from targeting the wrong table set.
  */
 class PrefixManagerSanitizationTest extends TestCase
 {
+    /** Same pattern used in prefix_manager.php */
+    private const INVALID_CHAR_PATTERN = '/[^0-9A-Za-z_-]/';
+
     /**
-     * Apply the same sanitization used in the fixed prefix_manager.php.
+     * Simulate validatePrefix(): return value if valid, null if it would die.
      */
-    private function sanitizePrefix(string $value): string
+    private function isValidPrefix(string $value): bool
     {
-        return preg_replace('/[^a-zA-Z0-9_\-]/', '', $value);
+        return !preg_match(self::INVALID_CHAR_PATTERN, $value);
     }
 
     #[Test]
-    public function preservesUppercaseLetters(): void
+    public function acceptsUppercaseLetters(): void
     {
-        $this->assertSame('MyPrefix', $this->sanitizePrefix('MyPrefix'));
+        $this->assertTrue($this->isValidPrefix('MyPrefix'));
     }
 
     #[Test]
-    public function preservesLowercaseLetters(): void
+    public function acceptsLowercaseLetters(): void
     {
-        $this->assertSame('xoops', $this->sanitizePrefix('xoops'));
+        $this->assertTrue($this->isValidPrefix('xoops'));
     }
 
     #[Test]
-    public function preservesMixedCase(): void
+    public function acceptsMixedCase(): void
     {
-        $this->assertSame('XoOps_Test', $this->sanitizePrefix('XoOps_Test'));
+        $this->assertTrue($this->isValidPrefix('XoOps_Test'));
     }
 
     #[Test]
-    public function preservesUnderscores(): void
+    public function acceptsUnderscores(): void
     {
-        $this->assertSame('my_prefix_2', $this->sanitizePrefix('my_prefix_2'));
+        $this->assertTrue($this->isValidPrefix('my_prefix_2'));
     }
 
     #[Test]
-    public function preservesNumbers(): void
+    public function acceptsNumbers(): void
     {
-        $this->assertSame('prefix123', $this->sanitizePrefix('prefix123'));
+        $this->assertTrue($this->isValidPrefix('prefix123'));
     }
 
     #[Test]
-    public function stripsSpecialCharacters(): void
+    public function acceptsHyphens(): void
     {
-        $this->assertSame('prefix', $this->sanitizePrefix('pre!fix'));
+        $this->assertTrue($this->isValidPrefix('my-prefix'));
     }
 
     #[Test]
-    public function stripsSpaces(): void
+    public function rejectsSpecialCharacters(): void
     {
-        $this->assertSame('myprefix', $this->sanitizePrefix('my prefix'));
+        $this->assertFalse($this->isValidPrefix('pre!fix'));
     }
 
     #[Test]
-    public function stripsSqlInjectionChars(): void
+    public function rejectsSpaces(): void
     {
-        // Letters, numbers, and hyphens are preserved; other special chars are stripped
-        $this->assertSame('xoopsDROPTABLE--', $this->sanitizePrefix("xoops'; DROP TABLE --"));
+        $this->assertFalse($this->isValidPrefix('my prefix'));
     }
 
     #[Test]
-    public function preservesHyphens(): void
+    public function rejectsSqlInjectionChars(): void
     {
-        // Hyphens are valid in MySQL table prefixes and are allowed by
-        // PREFIX_INVALID_CHAR_PATTERN, so the sanitization must preserve them.
-        $this->assertSame('my-prefix', $this->sanitizePrefix('my-prefix'));
+        $this->assertFalse($this->isValidPrefix("xoops'; DROP TABLE --"));
     }
 
     #[Test]
-    public function emptyStringRemainsEmpty(): void
+    public function acceptsEmptyString(): void
     {
-        $this->assertSame('', $this->sanitizePrefix(''));
+        // Empty prefix is valid at the pattern level (copy action generates a random one)
+        $this->assertTrue($this->isValidPrefix(''));
     }
 
     public static function validPrefixProvider(): array
     {
         return [
-            'simple lowercase'     => ['xoops', 'xoops'],
-            'with underscore'      => ['xoops_test', 'xoops_test'],
-            'uppercase'            => ['XOOPS', 'XOOPS'],
-            'mixed case'           => ['XoopsDB', 'XoopsDB'],
-            'numbers'              => ['x2prefix3', 'x2prefix3'],
-            'underscore separated' => ['my_Db_prefix', 'my_Db_prefix'],
+            'simple lowercase'     => ['xoops'],
+            'with underscore'      => ['xoops_test'],
+            'uppercase'            => ['XOOPS'],
+            'mixed case'           => ['XoopsDB'],
+            'numbers'              => ['x2prefix3'],
+            'underscore separated' => ['my_Db_prefix'],
+            'with hyphens'         => ['my-prefix-2'],
         ];
     }
 
     #[Test]
     #[DataProvider('validPrefixProvider')]
-    public function preservesValidPrefixes(string $input, string $expected): void
+    public function acceptsValidPrefixes(string $input): void
     {
-        $this->assertSame($expected, $this->sanitizePrefix($input));
+        $this->assertTrue($this->isValidPrefix($input));
+    }
+
+    public static function invalidPrefixProvider(): array
+    {
+        return [
+            'exclamation'   => ['prod!old'],
+            'semicolon'     => ["xoops';"],
+            'space'         => ['my prefix'],
+            'dot'           => ['xoops.test'],
+            'at sign'       => ['prefix@db'],
+            'backtick'      => ['prefix`test'],
+        ];
     }
 
     #[Test]
-    public function sourceFileUsesPregReplaceNotGetCmd(): void
+    #[DataProvider('invalidPrefixProvider')]
+    public function rejectsInvalidPrefixes(string $input): void
+    {
+        $this->assertFalse($this->isValidPrefix($input));
+    }
+
+    #[Test]
+    public function sourceFileUsesValidatePrefixNotPregReplace(): void
     {
         $source = file_get_contents(
             XOOPS_PATH . '/modules/protector/admin/prefix_manager.php'
         );
-        // The file should use PREFIX_INVALID_CHAR_PATTERN constant for sanitization, not getCmd
-        $this->assertStringContainsString('preg_replace(PREFIX_INVALID_CHAR_PATTERN,', $source,
-            'prefix_manager.php must use PREFIX_INVALID_CHAR_PATTERN for case-preserving sanitization');
+        $this->assertNotFalse($source, 'Failed to read prefix_manager.php');
+
+        // The file should use validatePrefix() helper, not inline preg_replace for prefix values
+        $this->assertStringContainsString('validatePrefix(', $source,
+            'prefix_manager.php must use validatePrefix() to reject invalid input');
         // Verify getCmd is NOT used for prefix values
         $this->assertStringNotContainsString('getCmd', $source,
             'prefix_manager.php must not use getCmd() which lowercases values');
+        // Verify no inline preg_replace sanitization of prefix values remains
+        $this->assertStringNotContainsString('preg_replace(PREFIX_INVALID_CHAR_PATTERN,', $source,
+            'prefix_manager.php must not silently strip characters — use validatePrefix() to reject');
     }
 
     #[Test]
-    public function getCmdWouldLowercaseButSanitizeDoesNot(): void
+    public function getCmdWouldLowercaseButValidateDoesNot(): void
     {
-        // Demonstrate the problem: strtolower (what getCmd does) vs our fix
+        // Demonstrate the problem: strtolower (what getCmd does) loses case
         $input = 'MyPrefix_Test';
-        $getCmdResult = strtolower($input); // what getCmd would do
-        $fixedResult = $this->sanitizePrefix($input);
+        $getCmdResult = strtolower($input);
 
         $this->assertSame('myprefix_test', $getCmdResult, 'getCmd lowercases');
-        $this->assertSame('MyPrefix_Test', $fixedResult, 'Our fix preserves case');
-        $this->assertNotSame($getCmdResult, $fixedResult, 'Results must differ for mixed case');
+        $this->assertTrue($this->isValidPrefix($input), 'validatePrefix accepts mixed case');
     }
 }

@@ -4,6 +4,18 @@ use Xmf\Request;
 
 const PREFIX_INVALID_CHAR_PATTERN = '/[^0-9A-Za-z_-]/';
 
+/**
+ * Validate a DB prefix: reject (die) if it contains characters outside [A-Za-z0-9_-].
+ * Returns the validated prefix unchanged.
+ */
+function validatePrefix(string $raw): string
+{
+    if (preg_match(PREFIX_INVALID_CHAR_PATTERN, $raw)) {
+        die('wrong prefix');
+    }
+    return $raw;
+}
+
 include XOOPS_ROOT_PATH . '/include/cp_header.php';
 include __DIR__ . '/admin_header.php';
 require_once dirname(__DIR__) . '/class/gtickets.php';
@@ -11,11 +23,8 @@ $db = XoopsDatabaseFactory::getDatabaseConnection();
 
 // COPY TABLES
 if (Request::hasVar('copy', 'POST') && Request::hasVar('old_prefix', 'POST')) {
-    $new_prefix = preg_replace(PREFIX_INVALID_CHAR_PATTERN, '', Request::getString('new_prefix', '', 'POST'));
-    $old_prefix = preg_replace(PREFIX_INVALID_CHAR_PATTERN, '', Request::getString('old_prefix', '', 'POST'));
-    if (preg_match(PREFIX_INVALID_CHAR_PATTERN, $new_prefix)) {
-        die('wrong prefix');
-    }
+    $new_prefix = validatePrefix(Request::getString('new_prefix', '', 'POST'));
+    $old_prefix = validatePrefix(Request::getString('old_prefix', '', 'POST'));
 
     // Ticket check
     if (!$xoopsGTicket->check(true, 'protector_admin')) {
@@ -83,10 +92,7 @@ if (Request::hasVar('copy', 'POST') && Request::hasVar('old_prefix', 'POST')) {
 
     // DUMP INTO A LOCAL FILE
 } elseif (Request::hasVar('backup', 'POST') && Request::hasVar('prefix', 'POST')) {
-    $prefix = preg_replace(PREFIX_INVALID_CHAR_PATTERN, '', Request::getString('prefix', '', 'POST'));
-    if (preg_match(PREFIX_INVALID_CHAR_PATTERN, $prefix)) {
-        die('wrong prefix');
-    }
+    $prefix = validatePrefix(Request::getString('prefix', '', 'POST'));
 
     // Ticket check
     if (!$xoopsGTicket->check(true, 'protector_admin')) {
@@ -205,10 +211,7 @@ if (Request::hasVar('copy', 'POST') && Request::hasVar('old_prefix', 'POST')) {
 
     // DROP TABLES
 } elseif (Request::hasVar('delete', 'POST') && Request::hasVar('prefix', 'POST')) {
-    $prefix = preg_replace(PREFIX_INVALID_CHAR_PATTERN, '', Request::getString('prefix', '', 'POST'));
-    if (preg_match(PREFIX_INVALID_CHAR_PATTERN, $prefix)) {
-        die('wrong prefix');
-    }
+    $prefix = validatePrefix(Request::getString('prefix', '', 'POST'));
 
     // Ticket check
     if (!$xoopsGTicket->check(true, 'protector_admin')) {
