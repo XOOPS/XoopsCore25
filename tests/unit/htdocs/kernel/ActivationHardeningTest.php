@@ -132,7 +132,7 @@ class ActivationHardeningTest extends TestCase
     {
         $source = $this->readSource('register.php');
         $this->assertMatchesRegularExpression(
-            '/hash_equals\s*\(/',
+            '/hash_equals\s*\([^)]*actkey/',
             $source,
             'htdocs/register.php must use hash_equals() for actkey comparison'
         );
@@ -149,7 +149,7 @@ class ActivationHardeningTest extends TestCase
     {
         $source = $this->readSource('modules/profile/activate.php');
         $this->assertMatchesRegularExpression(
-            '/hash_equals\s*\(/',
+            '/hash_equals\s*\([^)]*actkey/',
             $source,
             'profile/activate.php must use hash_equals() for actkey comparison'
         );
