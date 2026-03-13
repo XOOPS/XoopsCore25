@@ -60,6 +60,7 @@ class RequestHashPinningTest extends TestCase
         }
 
         $source = file_get_contents($filePath);
+        self::assertNotFalse($source, "Failed to read file: {$filePath}");
         $lines  = explode("\n", $source);
         $violations = [];
 
@@ -113,6 +114,7 @@ class RequestHashPinningTest extends TestCase
         }
 
         $source = file_get_contents($filePath);
+        self::assertNotFalse($source, "Failed to read file: {$filePath}");
         $lines  = explode("\n", $source);
         $violations = [];
 

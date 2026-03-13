@@ -437,6 +437,9 @@ switch ($op) {
         $criteria->setOrder($order);
 
         $limit = Request::hasVar('limit', 'GET') ? Request::getInt('limit', $limit_default, 'GET') : Request::getInt('limit', $limit_default, 'POST');
+        if ($limit < 1) {
+            $limit = $limit_default;
+        }
         $criteria->setLimit($limit);
 
         $start = Request::hasVar('start', 'GET') ? Request::getInt('start', 0, 'GET') : Request::getInt('start', 0, 'POST');
