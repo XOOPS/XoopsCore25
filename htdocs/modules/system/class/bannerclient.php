@@ -75,7 +75,7 @@ class SystemBannerclient extends XoopsObject
         $form->addElement(new XoopsFormText(_AM_SYSTEM_BANNERS_CONTNAMET, 'contact', 50, 255, $this->getVar('contact')));
         $form->addElement(new XoopsFormText(_AM_SYSTEM_BANNERS_CONTMAILT, 'email', 50, 255, $this->getVar('email')));
         $form->addElement(new XoopsFormText(_AM_SYSTEM_BANNERS_CLILOGINT, 'login', 50, 255, $this->getVar('login')));
-        $form->addElement(new XoopsFormText(_AM_SYSTEM_BANNERS_CLIPASST, 'passwd', 50, 255, $this->getVar('passwd')));
+        $form->addElement(new XoopsFormPassword(_AM_SYSTEM_BANNERS_CLIPASST, 'passwd', 50, 255));
 
         $form->addElement(new xoopsFormTextArea(_AM_SYSTEM_BANNERS_EXTINFO, 'extrainfo', $this->getVar('extrainfo'), 5, 50), false);
 

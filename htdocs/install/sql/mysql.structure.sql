@@ -58,7 +58,7 @@ CREATE TABLE bannerclient (
   contact varchar(60) NOT NULL default '',
   email varchar(60) NOT NULL default '',
   login varchar(10) NOT NULL default '',
-  passwd varchar(10) NOT NULL default '',
+  passwd varchar(255) NOT NULL default '',
   extrainfo text,
   PRIMARY KEY  (cid),
   KEY login (login)

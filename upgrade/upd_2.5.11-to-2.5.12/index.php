@@ -23,6 +23,7 @@ class Upgrade_2512 extends XoopsUpgrade
             'deletepurifier',
             'deletephpmailer',
             'createtokenstable',
+            'widenbannerclientpasswd',
         ];
         $this->usedFiles    = [];
         $this->pathsToCheck = [
@@ -122,6 +123,47 @@ class Upgrade_2512 extends XoopsUpgrade
             $errno = $GLOBALS['xoopsDB']->errno();
             $error = $GLOBALS['xoopsDB']->error();
             $this->logs[] = sprintf('Failed to create tokens table. Error: %s - %s', $errno, $error);
+            return false;
+        }
+        return true;
+    }
+
+    /**
+     * Check if bannerclient.passwd column is wide enough for password hashes.
+     *
+     * @return bool true if column is already wide enough
+     */
+    public function check_widenbannerclientpasswd()
+    {
+        $table  = $GLOBALS['xoopsDB']->prefix('bannerclient');
+        $sql    = "SELECT CHARACTER_MAXIMUM_LENGTH FROM `information_schema`.`COLUMNS`"
+                . " WHERE `TABLE_SCHEMA` = DATABASE()"
+                . " AND `TABLE_NAME` = " . $GLOBALS['xoopsDB']->quote($table)
+                . " AND `COLUMN_NAME` = 'passwd' LIMIT 1";
+        $result = $GLOBALS['xoopsDB']->query($sql);
+        if (!$GLOBALS['xoopsDB']->isResultSet($result) || !$result instanceof \mysqli_result) {
+            return false;
+        }
+        $row = $GLOBALS['xoopsDB']->fetchRow($result);
+        return $row && (int) $row[0] >= 255;
+    }
+
+    /**
+     * Widen bannerclient.passwd column to accommodate password hashes.
+     *
+     * @return bool true on success
+     */
+    public function apply_widenbannerclientpasswd()
+    {
+        $table  = $GLOBALS['xoopsDB']->prefix('bannerclient');
+        $sql    = "ALTER TABLE `{$table}` MODIFY `passwd` varchar(255) NOT NULL DEFAULT ''";
+        $result = $GLOBALS['xoopsDB']->exec($sql);
+        if (!$result) {
+            $this->logs[] = sprintf(
+                'Failed to widen bannerclient.passwd column. Error: %s - %s',
+                $GLOBALS['xoopsDB']->errno(),
+                $GLOBALS['xoopsDB']->error()
+            );
             return false;
         }
         return true;

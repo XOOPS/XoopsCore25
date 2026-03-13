@@ -25,6 +25,33 @@ $xoopsOption['pagetype'] = 'banners';
 include __DIR__ . '/mainfile.php';
 
 /**
+ * Get the character maximum length of bannerclient.passwd column.
+ *
+ * @param XoopsMySQLDatabase $xoopsDB
+ * @return int column length, or 0 if unknown
+ */
+function bannerClientPasswdColumnLength($xoopsDB)
+{
+    static $length = null;
+    if ($length !== null) {
+        return $length;
+    }
+    $table  = $xoopsDB->prefix('bannerclient');
+    $sql    = "SELECT CHARACTER_MAXIMUM_LENGTH FROM `information_schema`.`COLUMNS`"
+            . " WHERE `TABLE_SCHEMA` = DATABASE()"
+            . " AND `TABLE_NAME` = " . $xoopsDB->quote($table)
+            . " AND `COLUMN_NAME` = 'passwd' LIMIT 1";
+    $result = $xoopsDB->query($sql);
+    if (!$xoopsDB->isResultSet($result) || !$result instanceof \mysqli_result) {
+        $length = 0;
+        return $length;
+    }
+    $row = $xoopsDB->fetchRow($result);
+    $length = $row ? (int) $row[0] : 0;
+    return $length;
+}
+
+/**
  * Function to let your client login to see the stats
  * @return void
  */
@@ -465,24 +492,30 @@ switch ($op) {
                 // Rehash if algorithm or cost has changed
                 if ($authenticated && password_needs_rehash($storedHash, PASSWORD_DEFAULT)) {
                     $newHash = password_hash($clean_pass, PASSWORD_DEFAULT);
-                    $xoopsDB->exec(sprintf(
-                        'UPDATE %s SET passwd=%s WHERE cid=%u',
-                        $xoopsDB->prefix('bannerclient'),
-                        $xoopsDB->quote($newHash),
-                        (int) $clientId
-                    ));
+                    // Only store if column is wide enough for the hash
+                    if (bannerClientPasswdColumnLength($xoopsDB) >= strlen($newHash)) {
+                        $xoopsDB->exec(sprintf(
+                            'UPDATE %s SET passwd=%s WHERE cid=%u',
+                            $xoopsDB->prefix('bannerclient'),
+                            $xoopsDB->quote($newHash),
+                            (int) $clientId
+                        ));
+                    }
                 }
             } else {
                 // Legacy plaintext password — verify and upgrade
                 if (hash_equals((string) $storedHash, $clean_pass)) {
                     $authenticated = true;
                     $newHash = password_hash($clean_pass, PASSWORD_DEFAULT);
-                    $xoopsDB->exec(sprintf(
-                        'UPDATE %s SET passwd=%s WHERE cid=%u',
-                        $xoopsDB->prefix('bannerclient'),
-                        $xoopsDB->quote($newHash),
-                        (int) $clientId
-                    ));
+                    // Only store if column is wide enough for the hash
+                    if (bannerClientPasswdColumnLength($xoopsDB) >= strlen($newHash)) {
+                        $xoopsDB->exec(sprintf(
+                            'UPDATE %s SET passwd=%s WHERE cid=%u',
+                            $xoopsDB->prefix('bannerclient'),
+                            $xoopsDB->quote($newHash),
+                            (int) $clientId
+                        ));
+                    }
                 }
             }
 
@@ -490,6 +523,7 @@ switch ($op) {
                 redirect_header('banners.php', 2, _BANNERS_NO_LOGIN_DATA);
             }
 
+            $GLOBALS['sess_handler']->regenerate_id(true);
             $_SESSION['banner_client_id'] = (int) $clientId;
         }
         bannerstats();

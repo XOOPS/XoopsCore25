@@ -187,7 +187,10 @@ switch ($op) {
         $obj->setVar('contact', Request::getString('contact', ''));
         $obj->setVar('email', Request::getEmail('email', ''));
         $obj->setVar('login', Request::getString('login', ''));
-        $obj->setVar('passwd ', Request::getString('passwd ', ''));
+        $newPasswd = trim(Request::getString('passwd', ''));
+        if ($newPasswd !== '') {
+            $obj->setVar('passwd', password_hash($newPasswd, PASSWORD_DEFAULT));
+        }
         $obj->setVar('extrainfo', Request::getText('extrainfo', ''));
 
         if ($banner_client_Handler->insert($obj)) {
