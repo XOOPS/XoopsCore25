@@ -385,7 +385,7 @@ class XoopsBlock extends XoopsObject
         }
 
         // Detect near-miss: content looks like file-based format but has invalid syntax
-        if (stripos(trim($raw), '.php|') !== false) {
+        if (preg_match('/\.php\s*\|/i', $raw)) {
             $this->logBlockWarning(
                 'Block content looks like file-based format but has invalid syntax. '
                 . 'Expected: filename.php|function_name (filename may contain letters, digits, hyphens, '
