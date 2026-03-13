@@ -1,19 +1,32 @@
 <?php
+/*
+ You may not change or alter any portion of this comment or credits
+ of supporting developers from this source code or any supporting source code
+ which is considered copyrighted (c) material of the original comment or credit authors.
 
-declare(strict_types=1);
-
-use PHPUnit\Framework\Attributes\CoversFunction;
-use PHPUnit\Framework\Attributes\Test;
-use PHPUnit\Framework\TestCase;
+ This program is distributed in the hope that it will be useful,
+ but WITHOUT ANY WARRANTY; without even the implied warranty of
+ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+*/
 
 /**
  * Tests for banner security fixes in htdocs/banners.php.
  *
  * Covers password hashing logic (C-2) and XSS escaping (C-3).
+ *
+ * @category   Test
+ * @package    XOOPS
+ * @author     XOOPS Development Team
+ * @copyright  (c) 2000-2026 XOOPS Project (https://xoops.org)
+ * @license    GNU GPL 2.0 or later (https://www.gnu.org/licenses/gpl-2.0.html)
+ * @link       https://xoops.org
  */
-#[CoversFunction('bannerstats')]
-#[CoversFunction('emailStats')]
-#[CoversFunction('change_banner_url_by_client')]
+
+declare(strict_types=1);
+
+use PHPUnit\Framework\Attributes\Test;
+use PHPUnit\Framework\TestCase;
+
 class BannersSecurityTest extends TestCase
 {
     // ---------------------------------------------------------------
@@ -208,7 +221,7 @@ class BannersSecurityTest extends TestCase
         $banner_client_id = (int) $_SESSION['banner_client_id'];
         $cid = 5;
 
-        $this->assertSame($banner_client_id, $cid);
+        $this->assertSame($cid, $banner_client_id);
     }
 
     #[Test]
@@ -218,7 +231,7 @@ class BannersSecurityTest extends TestCase
         $banner_client_id = (int) $_SESSION['banner_client_id'];
         $cid = 99;
 
-        $this->assertNotSame($banner_client_id, $cid);
+        $this->assertNotSame($cid, $banner_client_id);
     }
 
     protected function tearDown(): void

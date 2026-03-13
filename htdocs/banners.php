@@ -303,7 +303,7 @@ function emailStats($cid, $bid)
         $cid     = (int) $cid;
         $bid     = (int) $bid;
         if ($cid !== $banner_client_id) {
-            redirect_header('banners.php', 2);
+            redirect_header('banners.php', 2, _BANNERS_NO_LOGIN_DATA);
         }
         $sql     = sprintf('SELECT name, email FROM %s WHERE cid=%u', $xoopsDB->prefix('bannerclient'), $cid);
         $result2 = $xoopsDB->query($sql);
@@ -370,7 +370,7 @@ function change_banner_url_by_client($cid, $bid, $url)
         $cid    = (int) $cid;
         $bid    = (int) $bid;
         if ($cid !== $banner_client_id) {
-            redirect_header('banners.php', 2);
+            redirect_header('banners.php', 2, _BANNERS_NO_LOGIN_DATA);
         }
         $sql = sprintf('UPDATE %s SET clickurl=%s WHERE bid=%u AND cid=%u', $xoopsDB->prefix('banner'), $xoopsDB->quote($url), $bid, $cid);
         if ($xoopsDB->exec($sql)) {
