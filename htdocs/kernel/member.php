@@ -466,9 +466,8 @@ class XoopsMemberHandler
         }
         $user->setVar('level', 1);
 
-        // Generate more secure activation key
-        $actkey = $this->generateSecureToken(8);
-        $user->setVar('actkey', $actkey);
+        // Clear activation key to make the activation link one-time-use
+        $user->setVar('actkey', '');
 
         return $this->userHandler->insert($user, true);
     }
@@ -692,30 +691,6 @@ class XoopsMemberHandler
         return hash_equals($expected, $actual);
     }
 
-    /**
-     * Generate a secure random token (hex-encoded).
-     * @param int $length Desired token length in HEX characters (4 bits per char). Clamped to [8, 32].
-     * @return string Random token
-     */
-    private function generateSecureToken(int $length = 32): string
-    {
-        $length = max(8, min(128, $length));
-        $bytes  = intdiv($length + 1, 2); // ceil($length/2)
-
-        try {
-            $raw = random_bytes($bytes);
-        } catch (\Throwable $e) {
-            $msg = '[CRITICAL] No CSPRNG available to generate a secure token in ' . __METHOD__;
-            if (class_exists('XoopsLogger')) {
-                \XoopsLogger::getInstance()->handleError(E_USER_ERROR, $msg, __FILE__, __LINE__);
-            } else {
-                error_log($msg);
-            }
-            throw new \RuntimeException('No CSPRNG available to generate a secure token.', 0, $e);
-        }
-
-        return substr(bin2hex($raw), 0, $length);
-    }
 
     /**
      * Check if debug output is allowed
