@@ -187,7 +187,29 @@ switch ($op) {
         $obj->setVar('contact', Request::getString('contact', ''));
         $obj->setVar('email', Request::getEmail('email', ''));
         $obj->setVar('login', Request::getString('login', ''));
-        $obj->setVar('passwd ', Request::getString('passwd ', ''));
+        $newPasswd = trim(Request::getString('passwd', ''));
+        if ($newPasswd !== '') {
+            $hashedPasswd = password_hash($newPasswd, PASSWORD_DEFAULT);
+            // Check column width before storing hash to avoid truncation
+            $table  = $xoopsDB->prefix('bannerclient');
+            $sql    = "SELECT CHARACTER_MAXIMUM_LENGTH FROM `information_schema`.`COLUMNS`"
+                    . " WHERE `TABLE_SCHEMA` = DATABASE()"
+                    . " AND `TABLE_NAME` = " . $xoopsDB->quote($table)
+                    . " AND `COLUMN_NAME` = 'passwd' LIMIT 1";
+            $colResult = $xoopsDB->query($sql);
+            $colLen = 0;
+            if ($xoopsDB->isResultSet($colResult) && $colResult instanceof \mysqli_result) {
+                $colRow = $xoopsDB->fetchRow($colResult);
+                $colLen = $colRow ? (int) $colRow[0] : 0;
+            }
+            if ($colLen >= strlen($hashedPasswd)) {
+                $obj->setVar('passwd', $hashedPasswd);
+            } else {
+                redirect_header('admin.php?fct=banners', 5, 'Cannot save hashed password: bannerclient.passwd column is too small. Please run the upgrade from Administration &rarr; System &rarr; Maintenance &rarr; Upgrade first.');
+            }
+        } elseif ($obj->isNew()) {
+            redirect_header('admin.php?fct=banners', 3, 'Password is required for new banner clients.');
+        }
         $obj->setVar('extrainfo', Request::getText('extrainfo', ''));
 
         if ($banner_client_Handler->insert($obj)) {

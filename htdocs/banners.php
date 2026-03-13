@@ -18,10 +18,38 @@
  * @author              Kris <kris@frxoops.org>
  */
 
+use RuntimeException;
 use Xmf\Request;
 
 $xoopsOption['pagetype'] = 'banners';
 include __DIR__ . '/mainfile.php';
+
+/**
+ * Get the character maximum length of bannerclient.passwd column.
+ *
+ * @param XoopsMySQLDatabase $xoopsDB
+ * @return int column length, or 0 if unknown
+ */
+function bannerClientPasswdColumnLength($xoopsDB)
+{
+    static $length = null;
+    if ($length !== null) {
+        return $length;
+    }
+    $table  = $xoopsDB->prefix('bannerclient');
+    $sql    = "SELECT CHARACTER_MAXIMUM_LENGTH FROM `information_schema`.`COLUMNS`"
+            . " WHERE `TABLE_SCHEMA` = DATABASE()"
+            . " AND `TABLE_NAME` = " . $xoopsDB->quote($table)
+            . " AND `COLUMN_NAME` = 'passwd' LIMIT 1";
+    $result = $xoopsDB->query($sql);
+    if (!$xoopsDB->isResultSet($result) || !($result instanceof \mysqli_result)) {
+        $length = 0;
+        return $length;
+    }
+    $row = $xoopsDB->fetchRow($result);
+    $length = $row ? (int) $row[0] : 0;
+    return $length;
+}
 
 /**
  * Function to let your client login to see the stats
@@ -100,16 +128,15 @@ function bannerstats()
 {
     /** @var \XoopsMySQLDatabase $xoopsDB */
     global $xoopsDB, $xoopsConfig, $myts;
-    $banner_login = isset($_SESSION['banner_login']) ? (string) $_SESSION['banner_login'] : '';
-    $banner_pass  = isset($_SESSION['banner_pass']) ? (string) $_SESSION['banner_pass'] : '';
-    if ($banner_login == '' || $banner_pass == '') {
+    $banner_client_id = isset($_SESSION['banner_client_id']) ? (int) $_SESSION['banner_client_id'] : 0;
+    if ($banner_client_id <= 0) {
         redirect_header('banners.php', 2, _BANNERS_NO_LOGIN_DATA);
     }
-    $sql    = sprintf('SELECT cid, name, passwd FROM %s WHERE login=%s', $xoopsDB->prefix('bannerclient'), $xoopsDB->quote($banner_login));
+    $sql    = sprintf('SELECT cid, name FROM %s WHERE cid=%u', $xoopsDB->prefix('bannerclient'), $banner_client_id);
     $result = $xoopsDB->query($sql);
     if (!$xoopsDB->isResultSet($result) || !($result instanceof \mysqli_result)) {
-        throw new \RuntimeException(
-            \sprintf(_DB_QUERY_ERROR, $sql) . $xoopsDB->error(),
+        throw new RuntimeException(
+            sprintf(_DB_QUERY_ERROR, $sql) . $xoopsDB->error(),
             E_USER_ERROR,
         );
     }
@@ -117,10 +144,9 @@ function bannerstats()
     if (false === $row) {
         redirect_header('banners.php', 2, _BANNERS_NO_LOGIN_DATA);
     }
-    [$cid, $name, $passwd] = $row;
-    if (hash_equals((string) $passwd, $banner_pass)) {
-        include $GLOBALS['xoops']->path('header.php');
-        $cid = (int) $cid;
+    [$cid, $name] = $row;
+    $cid = (int) $cid;
+    include $GLOBALS['xoops']->path('header.php');
         $GLOBALS['xoTheme']->addStylesheet(null, null, '
             #bannerstats {}
             #bannerstats td {
@@ -128,9 +154,9 @@ function bannerstats()
             }
         ');
         echo "<div id='bannerstats'>
-              <h4 class='content_title'>" . sprintf(_BANNERS_TITLE, $name) . "</h4><hr />
+              <h4 class='content_title'>" . sprintf(_BANNERS_TITLE, htmlspecialchars($name, ENT_QUOTES, 'UTF-8')) . "</h4><hr />
               <table summary=''>
-              <caption>" . sprintf(_BANNERS_TITLE, $name) . '</caption>
+              <caption>" . sprintf(_BANNERS_TITLE, htmlspecialchars($name, ENT_QUOTES, 'UTF-8')) . '</caption>
               <thead><tr>
               <td>ID</td>
               <td>' . _BANNERS_IMP_MADE . '</td>
@@ -144,8 +170,8 @@ function bannerstats()
         $sql = 'SELECT bid, imptotal, impmade, clicks, date FROM ' . $xoopsDB->prefix('banner') . " WHERE cid={$cid}";
         $result = $xoopsDB->query($sql);
         if (!$xoopsDB->isResultSet($result) || !($result instanceof \mysqli_result)) {
-            throw new \RuntimeException(
-                \sprintf(_DB_QUERY_ERROR, $sql) . $xoopsDB->error(),
+            throw new RuntimeException(
+                sprintf(_DB_QUERY_ERROR, $sql) . $xoopsDB->error(),
                 E_USER_ERROR,
             );
         }
@@ -180,8 +206,8 @@ function bannerstats()
         $sql = 'SELECT bid, imageurl, clickurl, htmlbanner, htmlcode FROM ' . $xoopsDB->prefix('banner') . " WHERE cid={$cid}";
         $result = $xoopsDB->query($sql);
         if (!$xoopsDB->isResultSet($result) || !($result instanceof \mysqli_result)) {
-            throw new \RuntimeException(
-                \sprintf(_DB_QUERY_ERROR, $sql) . $xoopsDB->error(),
+            throw new RuntimeException(
+                sprintf(_DB_QUERY_ERROR, $sql) . $xoopsDB->error(),
                 E_USER_ERROR,
             );
         }
@@ -228,9 +254,9 @@ function bannerstats()
         $sql    = 'SELECT bid, impressions, clicks, datestart, dateend FROM ' . $xoopsDB->prefix('bannerfinish') . " WHERE cid={$cid}";
         $result = $xoopsDB->query($sql);
         if ($xoopsDB->isResultSet($result)) {
-            echo "<h4 class='content_title'>" . sprintf(_BANNERS_FINISHED, $name) . "</h4><hr />
+            echo "<h4 class='content_title'>" . sprintf(_BANNERS_FINISHED, htmlspecialchars($name, ENT_QUOTES, 'UTF-8')) . "</h4><hr />
                   <table summary=''>
-                  <caption>" . sprintf(_BANNERS_FINISHED, $name) . '</caption>
+                  <caption>" . sprintf(_BANNERS_FINISHED, htmlspecialchars($name, ENT_QUOTES, 'UTF-8')) . '</caption>
                   <thead><tr>
                   <td>ID</td>
                   <td>' . _BANNERS_IMP_MADE . '</td>
@@ -260,9 +286,6 @@ function bannerstats()
             echo '</table></div>';
         }
         include $GLOBALS['xoops']->path('footer.php');
-    } else {
-        redirect_header('banners.php', 2);
-    }
 }
 
 /**
@@ -275,55 +298,55 @@ function emailStats($cid, $bid)
 {
     /** @var \XoopsMySQLDatabase $xoopsDB */
     global $xoopsDB, $xoopsConfig;
-    $banner_login = isset($_SESSION['banner_login']) ? (string) $_SESSION['banner_login'] : '';
-    $banner_pass  = isset($_SESSION['banner_pass']) ? (string) $_SESSION['banner_pass'] : '';
-    if ($banner_login != '' && $banner_pass != '') {
+    $banner_client_id = isset($_SESSION['banner_client_id']) ? (int) $_SESSION['banner_client_id'] : 0;
+    if ($banner_client_id > 0) {
         $cid     = (int) $cid;
         $bid     = (int) $bid;
-        $sql     = sprintf('SELECT name, email, passwd FROM %s WHERE cid=%u AND login=%s', $xoopsDB->prefix('bannerclient'), $cid, $xoopsDB->quote($banner_login));
+        if ($cid !== $banner_client_id) {
+            redirect_header('banners.php', 2, _BANNERS_NO_LOGIN_DATA);
+        }
+        $sql     = sprintf('SELECT name, email FROM %s WHERE cid=%u', $xoopsDB->prefix('bannerclient'), $cid);
         $result2 = $xoopsDB->query($sql);
         if ($xoopsDB->isResultSet($result2) && $result2 instanceof \mysqli_result) {
             $row = $xoopsDB->fetchRow($result2);
             if (false === $row) {
                 redirect_header('banners.php', 2);
             }
-            [$name, $email, $passwd] = $row;
-            if (hash_equals((string) $passwd, $banner_pass)) {
-                if ($email == '') {
-                    redirect_header('banners.php', 3, sprintf(_BANNERS_MAIL_ERROR, htmlspecialchars($name, ENT_QUOTES | ENT_HTML5, 'UTF-8')));
-                } else {
-                    $sql    = 'SELECT bid, imptotal, impmade, clicks, imageurl, clickurl, date FROM ' . $xoopsDB->prefix('banner') . " WHERE bid={$bid} AND cid={$cid}";
-                    $result = $xoopsDB->query($sql);
-                    if ($xoopsDB->isResultSet($result) && $result instanceof \mysqli_result) {
-                        $row = $xoopsDB->fetchRow($result);
-                        if (false === $row) {
-                            redirect_header('banners.php', 2);
-                        }
-                        [$bid, $imptotal, $impmade, $clicks, $imageurl, $clickurl] = $row;
-                        if ($impmade == 0) {
-                            $percent = 0;
-                        } else {
-                            $percent = substr(100 * $clicks / $impmade, 0, 5);
-                        }
-                        if ($imptotal == 0) {
-                            $left     = _BANNERS_UNLIMITED;
-                            $imptotal = _BANNERS_UNLIMITED;
-                        } else {
-                            $left = $imptotal - $impmade;
-                        }
-                        $fecha       = date('F jS Y, h:iA.');
-                        $subject     = sprintf(_BANNERS_MAIL_SUBJECT, $xoopsConfig['sitename']);
-                        $message     = sprintf(_BANNERS_MAIL_MESSAGE, $xoopsConfig['sitename'], $name, $bid, $imageurl, $clickurl, $imptotal, $impmade, $left, $clicks, $percent, $fecha);
-                        $xoopsMailer = xoops_getMailer();
-                        $xoopsMailer->useMail();
-                        $xoopsMailer->setToEmails($email);
-                        $xoopsMailer->setFromEmail($xoopsConfig['adminmail']);
-                        $xoopsMailer->setFromName($xoopsConfig['sitename']);
-                        $xoopsMailer->setSubject($subject);
-                        $xoopsMailer->setBody($message);
-                        $xoopsMailer->send();
-                        redirect_header('banners.php?op=Ok', 3, _BANNERS_MAIL_OK);
+            [$name, $email] = $row;
+            if ($email == '') {
+                redirect_header('banners.php', 3, sprintf(_BANNERS_MAIL_ERROR, htmlspecialchars($name, ENT_QUOTES | ENT_HTML5, 'UTF-8')));
+            } else {
+                $sql    = 'SELECT bid, imptotal, impmade, clicks, imageurl, clickurl, date FROM ' . $xoopsDB->prefix('banner') . " WHERE bid={$bid} AND cid={$cid}";
+                $result = $xoopsDB->query($sql);
+                if ($xoopsDB->isResultSet($result) && $result instanceof \mysqli_result) {
+                    $row = $xoopsDB->fetchRow($result);
+                    if (false === $row) {
+                        redirect_header('banners.php', 2);
                     }
+                    [$bid, $imptotal, $impmade, $clicks, $imageurl, $clickurl] = $row;
+                    if ($impmade == 0) {
+                        $percent = 0;
+                    } else {
+                        $percent = substr(100 * $clicks / $impmade, 0, 5);
+                    }
+                    if ($imptotal == 0) {
+                        $left     = _BANNERS_UNLIMITED;
+                        $imptotal = _BANNERS_UNLIMITED;
+                    } else {
+                        $left = $imptotal - $impmade;
+                    }
+                    $fecha       = date('F jS Y, h:iA.');
+                    $subject     = sprintf(_BANNERS_MAIL_SUBJECT, $xoopsConfig['sitename']);
+                    $message     = sprintf(_BANNERS_MAIL_MESSAGE, $xoopsConfig['sitename'], $name, $bid, $imageurl, $clickurl, $imptotal, $impmade, $left, $clicks, $percent, $fecha);
+                    $xoopsMailer = xoops_getMailer();
+                    $xoopsMailer->useMail();
+                    $xoopsMailer->setToEmails($email);
+                    $xoopsMailer->setFromEmail($xoopsConfig['adminmail']);
+                    $xoopsMailer->setFromName($xoopsConfig['sitename']);
+                    $xoopsMailer->setSubject($subject);
+                    $xoopsMailer->setBody($message);
+                    $xoopsMailer->send();
+                    redirect_header('banners.php?op=Ok', 3, _BANNERS_MAIL_OK);
                 }
             }
         }
@@ -342,25 +365,16 @@ function change_banner_url_by_client($cid, $bid, $url)
 {
     /** @var \XoopsMySQLDatabase $xoopsDB */
     global $xoopsDB;
-    $banner_login = isset($_SESSION['banner_login']) ? (string) $_SESSION['banner_login'] : '';
-    $banner_pass  = isset($_SESSION['banner_pass']) ? (string) $_SESSION['banner_pass'] : '';
-    if ($banner_login != '' && $banner_pass != '' && $url != '') {
+    $banner_client_id = isset($_SESSION['banner_client_id']) ? (int) $_SESSION['banner_client_id'] : 0;
+    if ($banner_client_id > 0 && $url != '') {
         $cid    = (int) $cid;
         $bid    = (int) $bid;
-        $sql    = sprintf('SELECT passwd FROM %s WHERE cid=%u AND login=%s', $xoopsDB->prefix('bannerclient'), $cid, $xoopsDB->quote($banner_login));
-        $result = $xoopsDB->query($sql);
-        if ($xoopsDB->isResultSet($result) && $result instanceof \mysqli_result) {
-            $row = $xoopsDB->fetchRow($result);
-            if (false === $row) {
-                redirect_header('banners.php', 2);
-            }
-            [$passwd] = $row;
-            if (hash_equals((string) $passwd, $banner_pass)) {
-                $sql = sprintf('UPDATE %s SET clickurl=%s WHERE bid=%u AND cid=%u', $xoopsDB->prefix('banner'), $xoopsDB->quote($url), $bid, $cid);
-                if ($xoopsDB->exec($sql)) {
-                    redirect_header('banners.php?op=Ok', 3, _BANNERS_DBUPDATED);
-                }
-            }
+        if ($cid !== $banner_client_id) {
+            redirect_header('banners.php', 2, _BANNERS_NO_LOGIN_DATA);
+        }
+        $sql = sprintf('UPDATE %s SET clickurl=%s WHERE bid=%u AND cid=%u', $xoopsDB->prefix('banner'), $xoopsDB->quote($url), $bid, $cid);
+        if ($xoopsDB->exec($sql)) {
+            redirect_header('banners.php?op=Ok', 3, _BANNERS_DBUPDATED);
         }
     }
     redirect_header('banners.php', 2);
@@ -379,8 +393,8 @@ function clickbanner($bid)
         $sql = 'SELECT clickurl FROM ' . $xoopsDB->prefix('banner') . " WHERE bid={$bid}";
         $result = $xoopsDB->query($sql);
         if (!$xoopsDB->isResultSet($result) || !($result instanceof \mysqli_result)) {
-            throw new \RuntimeException(
-                \sprintf(_DB_QUERY_ERROR, $sql) . $xoopsDB->error(),
+            throw new RuntimeException(
+                sprintf(_DB_QUERY_ERROR, $sql) . $xoopsDB->error(),
                 E_USER_ERROR,
             );
         }
@@ -454,8 +468,64 @@ switch ($op) {
                 redirect_header('banners.php', 3, implode('<br>', $GLOBALS['xoopsSecurity']->getErrors()));
             }
 
-            $_SESSION['banner_login'] = $clean_login;
-            $_SESSION['banner_pass']  = $clean_pass;
+            /** @var \XoopsMySQLDatabase $xoopsDB */
+            $sql = sprintf(
+                'SELECT cid, passwd FROM %s WHERE login=%s',
+                $xoopsDB->prefix('bannerclient'),
+                $xoopsDB->quote($clean_login)
+            );
+            $result = $xoopsDB->query($sql);
+            if (!$xoopsDB->isResultSet($result) || !($result instanceof \mysqli_result)) {
+                redirect_header('banners.php', 2, _BANNERS_NO_LOGIN_DATA);
+            }
+            $row = $xoopsDB->fetchRow($result);
+            if (false === $row) {
+                redirect_header('banners.php', 2, _BANNERS_NO_LOGIN_DATA);
+            }
+            [$clientId, $storedHash] = $row;
+
+            // Verify password: support both bcrypt hashes and legacy plaintext
+            $authenticated = false;
+            $algo = password_get_info($storedHash)['algo'];
+            if ($algo !== null && $algo !== 0) {
+                // Modern hashed password
+                $authenticated = password_verify($clean_pass, $storedHash);
+                // Rehash if algorithm or cost has changed
+                if ($authenticated && password_needs_rehash($storedHash, PASSWORD_DEFAULT)) {
+                    $newHash = password_hash($clean_pass, PASSWORD_DEFAULT);
+                    // Only store if column is wide enough for the hash
+                    if (bannerClientPasswdColumnLength($xoopsDB) >= strlen($newHash)) {
+                        $xoopsDB->exec(sprintf(
+                            'UPDATE %s SET passwd=%s WHERE cid=%u',
+                            $xoopsDB->prefix('bannerclient'),
+                            $xoopsDB->quote($newHash),
+                            (int) $clientId
+                        ));
+                    }
+                }
+            } else {
+                // Legacy plaintext password — verify and upgrade
+                if (hash_equals((string) $storedHash, $clean_pass)) {
+                    $authenticated = true;
+                    $newHash = password_hash($clean_pass, PASSWORD_DEFAULT);
+                    // Only store if column is wide enough for the hash
+                    if (bannerClientPasswdColumnLength($xoopsDB) >= strlen($newHash)) {
+                        $xoopsDB->exec(sprintf(
+                            'UPDATE %s SET passwd=%s WHERE cid=%u',
+                            $xoopsDB->prefix('bannerclient'),
+                            $xoopsDB->quote($newHash),
+                            (int) $clientId
+                        ));
+                    }
+                }
+            }
+
+            if (!$authenticated) {
+                redirect_header('banners.php', 2, _BANNERS_NO_LOGIN_DATA);
+            }
+
+            $GLOBALS['sess_handler']->regenerate_id(true);
+            $_SESSION['banner_client_id'] = (int) $clientId;
         }
         bannerstats();
         break;
