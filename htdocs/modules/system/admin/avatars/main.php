@@ -14,8 +14,6 @@ use Xmf\Request;
 /**
  * @copyright    2000-2026 XOOPS Project (https://xoops.org)
  * @license      GNU GPL 2.0 or later (https://www.gnu.org/licenses/gpl-2.0.html)
- * @package
- * @since
  * @author       XOOPS Development Team, Kazumi Ono (AKA onokazu)
  */
 
@@ -322,15 +320,23 @@ switch ($op) {
         // NOTE: tables are MyISAM so real transactions are not available;
         // we use a sequential approach with compensating restore instead.
         $user_id = Request::getInt('user_id', 0, 'POST');
-        $resetOk = true;
+        // Capture affected UIDs before reset so compensating restore is exact
+        $affectedUids = [];
         if ($user_id > 0 && $avatar->getVar('avatar_type', 'n') === 'C') {
-            if (!$xoopsDB->exec('UPDATE ' . $xoopsDB->prefix('users')
-                . " SET user_avatar='blank.gif' WHERE uid=" . $user_id)) {
-                $resetOk = false;
-            }
+            $affectedUids = [$user_id];
         } else {
+            $result = $xoopsDB->query('SELECT uid FROM ' . $xoopsDB->prefix('users')
+                . ' WHERE user_avatar=' . $xoopsDB->quote($file));
+            if ($xoopsDB->isResultSet($result) && $result instanceof \mysqli_result) {
+                while ($row = $xoopsDB->fetchArray($result)) {
+                    $affectedUids[] = (int) $row['uid'];
+                }
+            }
+        }
+        $resetOk = true;
+        if (!empty($affectedUids)) {
             if (!$xoopsDB->exec('UPDATE ' . $xoopsDB->prefix('users')
-                . " SET user_avatar='blank.gif' WHERE user_avatar=" . $xoopsDB->quote($file))) {
+                . " SET user_avatar='blank.gif' WHERE uid IN (" . implode(',', $affectedUids) . ')')) {
                 $resetOk = false;
             }
         }
@@ -339,13 +345,11 @@ switch ($op) {
         }
         // Delete the avatar record; restore avatar references on failure
         if (!$avt_handler->delete($avatar)) {
-            // Compensating restore — put the avatar filename back on affected users
-            if ($user_id > 0) {
+            // Compensating restore — put the avatar filename back on exactly the affected users
+            if (!empty($affectedUids)) {
                 $xoopsDB->exec('UPDATE ' . $xoopsDB->prefix('users')
-                    . ' SET user_avatar=' . $xoopsDB->quote($file) . ' WHERE uid=' . $user_id);
-            } else {
-                $xoopsDB->exec('UPDATE ' . $xoopsDB->prefix('users')
-                    . ' SET user_avatar=' . $xoopsDB->quote($file) . " WHERE user_avatar='blank.gif'");
+                    . ' SET user_avatar=' . $xoopsDB->quote($file)
+                    . ' WHERE uid IN (' . implode(',', $affectedUids) . ')');
             }
             redirect_header('admin.php?fct=avatars', 2, sprintf(_AM_SYSTEM_AVATAR_FAILDEL, $avatar_id));
         }

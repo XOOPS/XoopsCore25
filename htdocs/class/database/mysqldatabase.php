@@ -11,8 +11,6 @@
  *
  * @copyright       (c) 2000-2026 XOOPS Project (https://xoops.org)
  * @license             GNU GPL 2 (https://www.gnu.org/licenses/gpl-2.0.html)
- * @package             class
- * @subpackage          database
  * @since               1.0.0
  * @author              Kazumi Ono <onokazu@xoops.org>
  * @author              Rodney Fulk <redheadedrod@hotmail.com>
@@ -617,9 +615,6 @@ class XoopsMySQLDatabaseSafe extends XoopsMySQLDatabase
  * {@link query()} to read-only statements (SELECT, SHOW, DESCRIBE, EXPLAIN).
  * Write operations should use {@link exec()} which is not subject to this guard.
  *
- * @category            Class
- * @package             class
- * @subpackage          database
  * @author              Kazumi Ono <onokazu@xoops.org>
  * @copyright       (c) 2000-2026 XOOPS Project (https://xoops.org)
  * @license             GNU GPL 2 (https://www.gnu.org/licenses/gpl-2.0.html)

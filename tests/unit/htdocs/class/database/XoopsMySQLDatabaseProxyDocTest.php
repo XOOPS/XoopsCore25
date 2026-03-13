@@ -12,7 +12,8 @@ use XoopsMySQLDatabaseProxy;
 /**
  * Tests for XoopsMySQLDatabaseProxy PHPDoc metadata (M-7).
  *
- * Verifies that the class docblock contains all required XOOPS PHPDoc tags.
+ * Verifies that the class docblock contains all required PSR-12 PHPDoc tags
+ * and does not contain legacy tags removed under PSR-12 (@package, @subpackage, @category).
  */
 #[CoversClass(XoopsMySQLDatabaseProxy::class)]
 class XoopsMySQLDatabaseProxyDocTest extends TestCase
@@ -24,21 +25,6 @@ class XoopsMySQLDatabaseProxyDocTest extends TestCase
         $this->source = file_get_contents(
             XOOPS_ROOT_PATH . '/class/database/mysqldatabase.php'
         );
-    }
-
-    #[Test]
-    public function proxyClassDocblockContainsCategoryTag(): void
-    {
-        // Extract the docblock preceding XoopsMySQLDatabaseProxy
-        $docblock = $this->extractProxyDocblock();
-        $this->assertStringContainsString('@category', $docblock);
-    }
-
-    #[Test]
-    public function proxyClassDocblockContainsPackageTag(): void
-    {
-        $docblock = $this->extractProxyDocblock();
-        $this->assertStringContainsString('@package', $docblock);
     }
 
     #[Test]
@@ -67,6 +53,15 @@ class XoopsMySQLDatabaseProxyDocTest extends TestCase
     {
         $docblock = $this->extractProxyDocblock();
         $this->assertStringContainsString('@copyright', $docblock);
+    }
+
+    #[Test]
+    public function proxyClassDocblockDoesNotContainLegacyTags(): void
+    {
+        $docblock = $this->extractProxyDocblock();
+        $this->assertStringNotContainsString('@package', $docblock, '@package is not used in PSR-12');
+        $this->assertStringNotContainsString('@subpackage', $docblock, '@subpackage is not used in PSR-12');
+        $this->assertStringNotContainsString('@category', $docblock, '@category is not used in PSR-12');
     }
 
     /**

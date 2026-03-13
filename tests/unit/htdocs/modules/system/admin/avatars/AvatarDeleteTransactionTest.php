@@ -69,17 +69,37 @@ class AvatarDeleteTransactionTest extends TestCase
     }
 
     #[Test]
-    public function compensatingRestoreOnDeleteFailure(): void
+    public function capturesAffectedUidsBeforeReset(): void
     {
-        // After a failed delete, the code should restore the original avatar filename
+        // Must collect affected UIDs before the reset to avoid corrupting unrelated users
+        $capturePos = strpos($this->source, '$affectedUids');
+        $resetPos   = strpos($this->source, "SET user_avatar='blank.gif'");
+        $this->assertNotFalse($capturePos, 'Should capture affected UIDs before reset');
+        $this->assertNotFalse($resetPos);
+        $this->assertLessThan(
+            $resetPos,
+            $capturePos,
+            'Affected UID capture must happen before the avatar reset'
+        );
+    }
+
+    #[Test]
+    public function compensatingRestoreUsesExactUids(): void
+    {
+        // After a failed delete, restore must target exact UIDs, not WHERE user_avatar='blank.gif'
         $deletePos = strpos($this->source, '$avt_handler->delete($avatar)');
         $this->assertNotFalse($deletePos);
 
         $afterDelete = substr($this->source, $deletePos, 800);
         $this->assertStringContainsString(
-            'SET user_avatar=',
+            '$affectedUids',
             $afterDelete,
-            'After failed delete, should restore original avatar filename on affected users'
+            'Compensating restore must use captured $affectedUids, not a broad WHERE clause'
+        );
+        $this->assertStringNotContainsString(
+            "WHERE user_avatar='blank.gif'",
+            $afterDelete,
+            'Restore must NOT use WHERE user_avatar=blank.gif — it would corrupt unrelated users'
         );
     }
 
