@@ -388,7 +388,8 @@ class XoopsBlock extends XoopsObject
         if (stripos(trim($raw), '.php|') !== false) {
             $this->logBlockWarning(
                 'Block content looks like file-based format but has invalid syntax. '
-                . 'Expected: filename.php|function_name (alphanumeric, hyphens, and underscores only).'
+                . 'Expected: filename.php|function_name (filename may contain letters, digits, hyphens, '
+                . 'underscores; function_name must be a valid PHP identifier).'
             );
             trigger_error(
                 'XOOPS block has malformed file-based content — check filename.php|function_name syntax.',
