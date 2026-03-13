@@ -334,11 +334,9 @@ switch ($op) {
             }
         }
         $resetOk = true;
-        if (!empty($affectedUids)) {
-            if (!$xoopsDB->exec('UPDATE ' . $xoopsDB->prefix('users')
+        if (!empty($affectedUids) && !$xoopsDB->exec('UPDATE ' . $xoopsDB->prefix('users')
                 . " SET user_avatar='blank.gif' WHERE uid IN (" . implode(',', $affectedUids) . ')')) {
-                $resetOk = false;
-            }
+            $resetOk = false;
         }
         if (!$resetOk) {
             redirect_header('admin.php?fct=avatars', 2, _AM_SYSTEM_DBERROR);
@@ -346,12 +344,10 @@ switch ($op) {
         // Delete the avatar record; restore avatar references on failure
         if (!$avt_handler->delete($avatar)) {
             // Compensating restore — put the avatar filename back on exactly the affected users
-            if (!empty($affectedUids)) {
-                if (!$xoopsDB->exec('UPDATE ' . $xoopsDB->prefix('users')
+            if (!empty($affectedUids) && !$xoopsDB->exec('UPDATE ' . $xoopsDB->prefix('users')
                     . ' SET user_avatar=' . $xoopsDB->quote($file)
                     . ' WHERE uid IN (' . implode(',', $affectedUids) . ')')) {
-                    trigger_error('Compensating avatar restore failed for UIDs: ' . implode(',', $affectedUids), E_USER_WARNING);
-                }
+                trigger_error('Compensating avatar restore failed for UIDs: ' . implode(',', $affectedUids), E_USER_WARNING);
             }
             redirect_header('admin.php?fct=avatars', 2, sprintf(_AM_SYSTEM_AVATAR_FAILDEL, $avatar_id));
         }
