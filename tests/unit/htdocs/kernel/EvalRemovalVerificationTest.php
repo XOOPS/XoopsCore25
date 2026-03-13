@@ -14,6 +14,13 @@ use XoopsBlock;
  *
  * These tests scan source files to confirm that eval() calls have been
  * removed from security-critical paths.
+ *
+ * @category  XoopsCore
+ * @package   Tests\Kernel
+ * @author    XOOPS Development Team
+ * @copyright XOOPS Project (https://xoops.org)
+ * @license   GNU GPL 2.0 or later (https://www.gnu.org/licenses/gpl-2.0.html)
+ * @link      https://xoops.org
  */
 #[CoversClass(XoopsBlock::class)]
 class EvalRemovalVerificationTest extends TestCase
