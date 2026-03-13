@@ -13,7 +13,7 @@ use PHPUnit\Framework\TestCase;
  *
  * The protector prefix manager previously used getCmd() which lowercases output,
  * but DB table prefixes can contain uppercase letters. The fix uses getString()
- * with manual sanitization via preg_replace('/[^a-zA-Z0-9_]/', '', $value).
+ * with manual sanitization via preg_replace('/[^a-zA-Z0-9_\-]/', '', $value).
  */
 class PrefixManagerSanitizationTest extends TestCase
 {
@@ -22,7 +22,7 @@ class PrefixManagerSanitizationTest extends TestCase
      */
     private function sanitizePrefix(string $value): string
     {
-        return preg_replace('/[^a-zA-Z0-9_]/', '', $value);
+        return preg_replace('/[^a-zA-Z0-9_\-]/', '', $value);
     }
 
     #[Test]
@@ -70,17 +70,16 @@ class PrefixManagerSanitizationTest extends TestCase
     #[Test]
     public function stripsSqlInjectionChars(): void
     {
-        // Letters and numbers are preserved, but special chars are stripped
-        $this->assertSame('xoopsDROPTABLE', $this->sanitizePrefix("xoops'; DROP TABLE --"));
+        // Letters, numbers, and hyphens are preserved; other special chars are stripped
+        $this->assertSame('xoopsDROPTABLE--', $this->sanitizePrefix("xoops'; DROP TABLE --"));
     }
 
     #[Test]
-    public function stripsHyphens(): void
+    public function preservesHyphens(): void
     {
-        // Note: the sanitization pattern does NOT allow hyphens, unlike
-        // the original PREFIX_INVALID_CHAR_PATTERN which did allow them.
-        // This is intentional — MySQL identifiers should use underscores.
-        $this->assertSame('myprefix', $this->sanitizePrefix('my-prefix'));
+        // Hyphens are valid in MySQL table prefixes and are allowed by
+        // PREFIX_INVALID_CHAR_PATTERN, so the sanitization must preserve them.
+        $this->assertSame('my-prefix', $this->sanitizePrefix('my-prefix'));
     }
 
     #[Test]
@@ -115,7 +114,7 @@ class PrefixManagerSanitizationTest extends TestCase
             XOOPS_PATH . '/modules/protector/admin/prefix_manager.php'
         );
         // The file should use preg_replace for sanitization, not getCmd
-        $this->assertStringContainsString("preg_replace('/[^a-zA-Z0-9_]/', ''", $source,
+        $this->assertStringContainsString("preg_replace('/[^a-zA-Z0-9_\\-]/', ''", $source,
             'prefix_manager.php must use preg_replace for case-preserving sanitization');
         // Verify getCmd is NOT used for prefix values
         $this->assertStringNotContainsString('getCmd', $source,
