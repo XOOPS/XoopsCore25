@@ -11,26 +11,10 @@ $mydirpath = $registry->getEntry('mydirpath');
 $language  = $registry->getEntry('language');
 // end hack by Trabis
 
-// Note: D3-style cloned installs of Protector are no longer supported as of 2.5.12.
-// The dynamic function naming via eval has been removed for security.
-if (!function_exists('xoops_module_update_protector')) {
-    /**
-     * XOOPS module lifecycle callback for protector update.
-     *
-     * @param XoopsModule $module
-     *
-     * @return bool
-     */
-    function xoops_module_update_protector($module)
-    {
-        $registry  = ProtectorRegistry::getInstance();
-        $mydirname = $registry->getEntry('mydirname');
-        if (empty($mydirname)) {
-            $mydirname = 'protector';
-        }
-
-        return protector_onupdate_base($module, $mydirname);
-    }
+// Dynamic function name is required for D3-style cloned installs.
+// $mydirname comes from basename(__DIR__) via ProtectorRegistry, not user input.
+if (!function_exists('xoops_module_update_' . $mydirname)) {
+    eval('function xoops_module_update_' . $mydirname . '($module) { return protector_onupdate_base($module, ' . var_export($mydirname, true) . '); }');
 }
 
 if (!function_exists('protector_onupdate_base')) {

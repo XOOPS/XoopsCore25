@@ -531,9 +531,9 @@ class XoopsBlock extends XoopsObject
      *
      * eval() of database-stored PHP has been removed in XOOPS 2.5.12 for security.
      * Blocks using the file-based format (filename.php|function_name) still work.
-     * Convert legacy P-type blocks to file-based, S (Smarty), or H (HTML) type.
+     * Convert legacy P-type blocks to file-based, H (HTML), or S/T (sanitized text) type.
      *
-     * @param string $raw raw PHP code from the block content field (ignored)
+     * @param string $raw raw PHP code from the block content field (retained for call-site compatibility)
      *
      * @return string always empty
      */

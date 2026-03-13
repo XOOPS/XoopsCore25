@@ -745,7 +745,7 @@ class XoopsBlockPhpBlockTest extends KernelTestCase
 
     /**
      * Verify that legacy eval content (non file-based) always returns empty
-     * and logs a removal warning regardless of content pattern.
+     * regardless of content pattern.
      */
     #[Test]
     public function legacyEvalContentAlwaysReturnsEmpty(): void

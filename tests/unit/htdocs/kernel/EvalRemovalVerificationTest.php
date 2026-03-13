@@ -199,124 +199,83 @@ class EvalRemovalVerificationTest extends TestCase
     }
 
     // =========================================================================
-    // M-11c: Protector lifecycle eval() removal
+    // M-11c: Protector lifecycle — eval() retained for D3 clone support
     // =========================================================================
 
     /**
-     * Verify that protector/oninstall.php has no eval() and defines the callback literally.
+     * Resolve a protector trust-path file across different path structures.
      */
-    #[Test]
-    public function protectorOninstallHasNoEval(): void
+    private function resolveProtectorFile(string $basename): string
     {
-        $file = XOOPS_ROOT_PATH . '/../xoops_lib/modules/protector/oninstall.php';
-        // Normalize for different path structures
+        $file = XOOPS_ROOT_PATH . '/../xoops_lib/modules/protector/' . $basename;
         if (!file_exists($file)) {
-            $file = XOOPS_PATH . '/modules/protector/oninstall.php';
+            $file = XOOPS_PATH . '/modules/protector/' . $basename;
         }
-        $this->assertFileExists($file);
 
-        $content = file_get_contents($file);
-        $this->assertNotFalse($content);
-
-        $this->assertNoEvalTokens($content, 'protector/oninstall.php should not contain eval()');
-        $this->assertStringContainsString(
-            'function xoops_module_install_protector',
-            $content,
-            'protector/oninstall.php should define the callback function literally'
-        );
-        $this->assertStringContainsString(
-            'D3-style cloned installs',
-            $content,
-            'protector/oninstall.php should document D3 clone deprecation'
-        );
-        $this->assertStringContainsString(
-            "getEntry('mydirname')",
-            $content,
-            'protector/oninstall.php should use registry mydirname, not hard-coded string'
-        );
+        return $file;
     }
 
     /**
-     * Verify that protector/onuninstall.php has no eval() and defines the callback literally.
+     * Verify protector lifecycle files use var_export() for safe eval
+     * and define the expected base functions.
      */
     #[Test]
-    public function protectorOnuninstallHasNoEval(): void
+    public function protectorOninstallUsesVarExportAndDefinesBase(): void
     {
-        $file = XOOPS_ROOT_PATH . '/../xoops_lib/modules/protector/onuninstall.php';
-        if (!file_exists($file)) {
-            $file = XOOPS_PATH . '/modules/protector/onuninstall.php';
-        }
+        $file = $this->resolveProtectorFile('oninstall.php');
         $this->assertFileExists($file);
 
         $content = file_get_contents($file);
         $this->assertNotFalse($content);
 
-        $this->assertNoEvalTokens($content, 'protector/onuninstall.php should not contain eval()');
-        $this->assertStringContainsString(
-            'function xoops_module_uninstall_protector',
-            $content,
-            'protector/onuninstall.php should define the callback function literally'
-        );
-        $this->assertStringContainsString(
-            'D3-style cloned installs',
-            $content,
-            'protector/onuninstall.php should document D3 clone deprecation'
-        );
+        $this->assertStringContainsString('var_export($mydirname', $content,
+            'protector/oninstall.php should use var_export() for safe dirname embedding');
+        $this->assertStringContainsString('protector_oninstall_base', $content,
+            'protector/oninstall.php should define the base install function');
     }
 
-    /**
-     * Verify that protector/onupdate.php has no eval() and defines the callback literally.
-     */
     #[Test]
-    public function protectorOnupdateHasNoEval(): void
+    public function protectorOnuninstallUsesVarExportAndDefinesBase(): void
     {
-        $file = XOOPS_ROOT_PATH . '/../xoops_lib/modules/protector/onupdate.php';
-        if (!file_exists($file)) {
-            $file = XOOPS_PATH . '/modules/protector/onupdate.php';
-        }
+        $file = $this->resolveProtectorFile('onuninstall.php');
         $this->assertFileExists($file);
 
         $content = file_get_contents($file);
         $this->assertNotFalse($content);
 
-        $this->assertNoEvalTokens($content, 'protector/onupdate.php should not contain eval()');
-        $this->assertStringContainsString(
-            'function xoops_module_update_protector',
-            $content,
-            'protector/onupdate.php should define the callback function literally'
-        );
-        $this->assertStringContainsString(
-            'D3-style cloned installs',
-            $content,
-            'protector/onupdate.php should document D3 clone deprecation'
-        );
+        $this->assertStringContainsString('var_export($mydirname', $content,
+            'protector/onuninstall.php should use var_export() for safe dirname embedding');
+        $this->assertStringContainsString('protector_onuninstall_base', $content,
+            'protector/onuninstall.php should define the base uninstall function');
     }
 
-    /**
-     * Verify that protector/notification.php has no eval() and defines the callback literally.
-     */
     #[Test]
-    public function protectorNotificationHasNoEval(): void
+    public function protectorOnupdateUsesVarExportAndDefinesBase(): void
     {
-        $file = XOOPS_ROOT_PATH . '/../xoops_lib/modules/protector/notification.php';
-        if (!file_exists($file)) {
-            $file = XOOPS_PATH . '/modules/protector/notification.php';
-        }
+        $file = $this->resolveProtectorFile('onupdate.php');
         $this->assertFileExists($file);
 
         $content = file_get_contents($file);
         $this->assertNotFalse($content);
 
-        $this->assertNoEvalTokens($content, 'protector/notification.php should not contain eval()');
-        $this->assertStringContainsString(
-            'function protector_notify_iteminfo',
-            $content,
-            'protector/notification.php should define the callback function literally'
-        );
-        $this->assertStringContainsString(
-            'D3-style cloned installs',
-            $content,
-            'protector/notification.php should document D3 clone deprecation'
-        );
+        $this->assertStringContainsString('var_export($mydirname', $content,
+            'protector/onupdate.php should use var_export() for safe dirname embedding');
+        $this->assertStringContainsString('protector_onupdate_base', $content,
+            'protector/onupdate.php should define the base update function');
+    }
+
+    #[Test]
+    public function protectorNotificationUsesVarExportAndDefinesBase(): void
+    {
+        $file = $this->resolveProtectorFile('notification.php');
+        $this->assertFileExists($file);
+
+        $content = file_get_contents($file);
+        $this->assertNotFalse($content);
+
+        $this->assertStringContainsString('var_export($mydirname', $content,
+            'protector/notification.php should use var_export() for safe dirname embedding');
+        $this->assertStringContainsString('protector_notify_base', $content,
+            'protector/notification.php should define the base notify function');
     }
 }
