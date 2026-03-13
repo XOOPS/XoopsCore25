@@ -27,13 +27,16 @@ $_SERVER['REQUEST_URI'] = 'admin/permissions.php';
 
 xoops_cp_header();
 
-$op = Request::hasVar('op', 'POST') ? Request::getCmd('op', 'visibility', 'POST') : Request::getCmd('op', 'visibility', 'GET');
+$op = Request::getCmd('op', 'visibility');
 
 $visibility_handler = xoops_getModuleHandler('visibility');
 $field_handler      = xoops_getModuleHandler('field');
 $fields             = $field_handler->getList();
 
 if (Request::hasVar('submit', 'POST')) {
+    if (!$GLOBALS['xoopsSecurity']->check()) {
+        redirect_header('visibility.php', 3, implode('<br>', $GLOBALS['xoopsSecurity']->getErrors()));
+    }
     $visibility = $visibility_handler->create();
     $visibility->setVar('field_id', Request::getInt('field_id', 0, 'POST'));
     $visibility->setVar('user_group', Request::getInt('ug', 0, 'POST'));
@@ -42,9 +45,15 @@ if (Request::hasVar('submit', 'POST')) {
     redirect_header('visibility.php', 2, sprintf(_PROFILE_AM_SAVEDSUCCESS, _PROFILE_AM_PROF_VISIBLE));
 }
 if ($op === 'del') {
-    $criteria = new CriteriaCompo(new Criteria('field_id', Request::getInt('field_id', 0, 'GET')));
-    $criteria->add(new Criteria('user_group', Request::getInt('ug', 0, 'GET')));
-    $criteria->add(new Criteria('profile_group', Request::getInt('pg', 0, 'GET')));
+    if ('POST' !== Request::getMethod()) {
+        redirect_header('visibility.php', 3, _NOPERM);
+    }
+    if (!$GLOBALS['xoopsSecurity']->check()) {
+        redirect_header('visibility.php', 3, implode('<br>', $GLOBALS['xoopsSecurity']->getErrors()));
+    }
+    $criteria = new CriteriaCompo(new Criteria('field_id', Request::getInt('field_id', 0, 'POST')));
+    $criteria->add(new Criteria('user_group', Request::getInt('ug', 0, 'POST')));
+    $criteria->add(new Criteria('profile_group', Request::getInt('pg', 0, 'POST')));
     $visibility_handler->deleteAll($criteria, true);
     redirect_header('visibility.php', 2, sprintf(_PROFILE_AM_DELETEDSUCCESS, _PROFILE_AM_PROF_VISIBLE));
 }

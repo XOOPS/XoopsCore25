@@ -31,6 +31,13 @@ class SystemMaintenance
     public $prefix;
 
     /**
+     * Cached list of valid table names (without prefix).
+     *
+     * @var array|null
+     */
+    private $validTables = null;
+
+    /**
      * Constructor
      */
     public function __construct()
@@ -39,6 +46,61 @@ class SystemMaintenance
         $db           = XoopsDatabaseFactory::getDatabaseConnection();
         $this->db     = $db;
         $this->prefix = $this->db->prefix . '_';
+    }
+
+    /**
+     * Validate that a table name (without prefix) exists in the database.
+     *
+     * Prevents SQL injection by checking the user-supplied table name
+     * against the actual list of tables returned by SHOW TABLES.
+     *
+     * @param string $table Table name without prefix
+     *
+     * @return bool True if the table exists in the database
+     */
+    private function isValidTable($table)
+    {
+        if (!is_string($table)) {
+            return false;
+        }
+
+        if ($this->validTables === null) {
+            $tables = $this->displayTables(true);
+            $this->validTables = is_array($tables) ? $tables : [];
+        }
+
+        return isset($this->validTables[$table]);
+    }
+
+    /**
+     * Validate that a prefixed table name exists in the database.
+     *
+     * @param string $prefixedTable Full table name including prefix
+     *
+     * @return bool True if the table exists in the database
+     */
+    private function isValidPrefixedTable($prefixedTable)
+    {
+        if (!is_string($prefixedTable)) {
+            return false;
+        }
+
+        $prefixLen = strlen($this->prefix);
+
+        // Verify the table actually starts with the expected prefix
+        if (strncmp($prefixedTable, $this->prefix, $prefixLen) !== 0) {
+            return false;
+        }
+
+        // Strip the prefix to get the unprefixed name
+        $unprefixed = substr($prefixedTable, $prefixLen);
+
+        // Ensure the unprefixed remainder is non-empty
+        if ($unprefixed === '' || $unprefixed === false) {
+            return false;
+        }
+
+        return $this->isValidTable($unprefixed);
     }
 
     /**
@@ -195,6 +257,9 @@ class SystemMaintenance
         $class       = 'odd';
         $tablesCount = count($tables);
         for ($i = 0; $i < $tablesCount; ++$i) {
+            if (!$this->isValidTable($tables[$i])) {
+                continue;
+            }
             $ret .= '<tr class="' . $class . '"><td align="center">' . $this->prefix . $tables[$i] . '</td>';
             for ($j = 0; $j < 4; ++$j) {
                 if ($tab1[$j] == 1) {
@@ -258,6 +323,9 @@ class SystemMaintenance
         $class       = 'odd';
         $tablesCount = count($tables);
         for ($i = 0; $i < $tablesCount; ++$i) {
+            if (!$this->isValidTable($tables[$i])) {
+                continue;
+            }
             //structure
             $ret = $this->dump_table_structure($ret, $this->prefix . $tables[$i], $drop, $class);
             //data
@@ -295,6 +363,9 @@ class SystemMaintenance
             $modtables = $module->getInfo('tables');
             if ($modtables !== false && \is_array($modtables)) {
                 foreach ($modtables as $table) {
+                    if (!$this->isValidTable($table)) {
+                        continue;
+                    }
                     //structure
                     $ret = $this->dump_table_structure($ret, $this->prefix . $table, $drop, $class);
                     //data
@@ -322,6 +393,9 @@ class SystemMaintenance
      */
     public function dump_table_structure($ret, $table, $drop, $class)
     {
+        if (!$this->isValidPrefixedTable($table)) {
+            return $ret;
+        }
         $verif  = false;
         $sql = 'SHOW create table `' . $table . '`;';
         $result = $this->db->query($sql);
@@ -355,6 +429,9 @@ class SystemMaintenance
      */
     public function dump_table_datas($ret, $table)
     {
+        if (!$this->isValidPrefixedTable($table)) {
+            return $ret;
+        }
         $count  = 0;
         $sql = 'SELECT * FROM ' . $table . ';';
         $result = $this->db->query($sql);
