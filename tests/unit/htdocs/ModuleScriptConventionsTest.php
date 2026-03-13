@@ -56,9 +56,9 @@ class ModuleScriptConventionsTest extends TestCase
     {
         $source = $this->readScript($script);
         $this->assertDoesNotMatchRegularExpression(
-            '/@\s*(unlink|fopen|file_get_contents|mkdir|rmdir)\s*\(/',
+            '/(?<!\* )@[a-zA-Z_]\w*\s*\(/',
             $source,
-            "$script must not use @ error suppression"
+            "$script must not use @ error suppression on function calls"
         );
     }
 
@@ -109,7 +109,7 @@ class ModuleScriptConventionsTest extends TestCase
 
         // Accept flexible guard forms: isResultSet() combined with instanceof \mysqli_result
         $this->assertMatchesRegularExpression(
-            '/isResultSet\s*\(\s*\$result\s*\).*\$result\s+instanceof\s+\\\\mysqli_result/s',
+            '/isResultSet\s*\(\s*\$result\s*\).*!\s*\(\s*\$result\s+instanceof\s+\\\\mysqli_result\s*\)/s',
             $source,
             "$script must combine isResultSet() with instanceof \\mysqli_result"
         );
