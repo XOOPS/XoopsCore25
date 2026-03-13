@@ -318,30 +318,36 @@ switch ($op) {
             redirect_header('admin.php?fct=avatars', 1, _AM_SYSTEM_DBERROR);
         }
         $file = $avatar->getVar('avatar_file', 'n');
-        // Wrap reset + delete in a transaction to prevent orphaned references
-        $xoopsDB->exec('START TRANSACTION');
+        // Reset user avatars first, then delete the record.
+        // NOTE: tables are MyISAM so real transactions are not available;
+        // we use a sequential approach with compensating restore instead.
         $user_id = Request::getInt('user_id', 0, 'POST');
-        $success = true;
+        $resetOk = true;
         if ($user_id > 0 && $avatar->getVar('avatar_type', 'n') === 'C') {
             if (!$xoopsDB->exec('UPDATE ' . $xoopsDB->prefix('users')
                 . " SET user_avatar='blank.gif' WHERE uid=" . $user_id)) {
-                $success = false;
+                $resetOk = false;
             }
         } else {
             if (!$xoopsDB->exec('UPDATE ' . $xoopsDB->prefix('users')
                 . " SET user_avatar='blank.gif' WHERE user_avatar=" . $xoopsDB->quote($file))) {
-                $success = false;
+                $resetOk = false;
             }
         }
-        // Delete the avatar record
-        if ($success && !$avt_handler->delete($avatar)) {
-            $success = false;
-        }
-        if ($success) {
-            $xoopsDB->exec('COMMIT');
-        } else {
-            $xoopsDB->exec('ROLLBACK');
+        if (!$resetOk) {
             redirect_header('admin.php?fct=avatars', 2, _AM_SYSTEM_DBERROR);
+        }
+        // Delete the avatar record; restore avatar references on failure
+        if (!$avt_handler->delete($avatar)) {
+            // Compensating restore — put the avatar filename back on affected users
+            if ($user_id > 0) {
+                $xoopsDB->exec('UPDATE ' . $xoopsDB->prefix('users')
+                    . ' SET user_avatar=' . $xoopsDB->quote($file) . ' WHERE uid=' . $user_id);
+            } else {
+                $xoopsDB->exec('UPDATE ' . $xoopsDB->prefix('users')
+                    . ' SET user_avatar=' . $xoopsDB->quote($file) . " WHERE user_avatar='blank.gif'");
+            }
+            redirect_header('admin.php?fct=avatars', 2, sprintf(_AM_SYSTEM_AVATAR_FAILDEL, $avatar_id));
         }
         // Delete file — validate path stays within upload directory
         $avatarPath = realpath(XOOPS_UPLOAD_PATH . '/' . $file);
