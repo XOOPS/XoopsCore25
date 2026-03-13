@@ -196,6 +196,7 @@ class ProtectorMySQLDatabase extends XoopsMySQLDatabaseProxy
      * @param string $sql SQL statement to execute
      *
      * @return bool TRUE on success, FALSE on failure
+     * @throws \mysqli_sql_exception
      */
     public function exec(string $sql): bool
     {

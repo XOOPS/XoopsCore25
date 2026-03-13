@@ -4,10 +4,8 @@ declare(strict_types=1);
 
 namespace modulesprotector;
 
-use PHPUnit\Framework\Attributes\CoversFunction;
 use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\TestCase;
-use RedirectHeaderException;
 
 /**
  * Tests for Protector admin center.php exec() error handling.

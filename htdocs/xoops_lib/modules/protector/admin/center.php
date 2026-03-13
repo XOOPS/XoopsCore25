@@ -145,6 +145,7 @@ if ($action !== '') {
         if ($db->exec("DELETE FROM $log_table")) {
             redirect_header('center.php?page=center', 2, _AM_MSG_REMOVED);
         } else {
+            trigger_error('Protector: failed to delete log records: ' . $db->error(), E_USER_WARNING);
             redirect_header('center.php?page=center', 3, _AM_MSG_DELFAILED);
         }
         exit;
@@ -170,6 +171,7 @@ if ($action !== '') {
         }
         if (!empty($ids)) {
             if (!$db->exec("DELETE FROM $log_table WHERE lid IN (" . implode(',', $ids) . ')')) {
+                trigger_error('Protector: failed to compact log: ' . $db->error(), E_USER_WARNING);
                 redirect_header('center.php?page=center', 3, _AM_MSG_DELFAILED);
                 exit;
             }

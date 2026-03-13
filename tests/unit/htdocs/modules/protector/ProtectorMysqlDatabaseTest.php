@@ -269,7 +269,6 @@ class ProtectorMysqlDatabaseTest extends TestCase
     public function execCallsCheckSqlOnDoubtfulNeedle(): void
     {
         // Create a partial mock to verify checkSql is called
-        $ref = new \ReflectionClass(\ProtectorMySQLDatabase::class);
         $db = $this->getMockBuilder(\ProtectorMySQLDatabase::class)
             ->disableOriginalConstructor()
             ->onlyMethods(['checkSql', 'injectionFound'])
@@ -282,19 +281,23 @@ class ProtectorMysqlDatabaseTest extends TestCase
 
         $db->expects($this->once())->method('checkSql')->with($sql);
 
-        // exec will fail because no real DB connection, but checkSql should be called
-        // We suppress the parent::exec error
+        // Suppress warning from parent::exec() due to no real DB connection
+        $previousHandler = set_error_handler(function ($errno, $errstr) {
+            if ($errno === E_USER_WARNING && strpos($errstr, 'mysqli') !== false) {
+                return true;
+            }
+            return false;
+        });
         try {
             $db->exec($sql);
-        } catch (\Throwable $e) {
-            // Expected — no real DB connection
+        } finally {
+            restore_error_handler();
         }
     }
 
     #[Test]
     public function execSkipsCheckSqlWhenNoNeedleMatch(): void
     {
-        $ref = new \ReflectionClass(\ProtectorMySQLDatabase::class);
         $db = $this->getMockBuilder(\ProtectorMySQLDatabase::class)
             ->disableOriginalConstructor()
             ->onlyMethods(['checkSql', 'injectionFound'])
@@ -307,10 +310,17 @@ class ProtectorMysqlDatabaseTest extends TestCase
 
         $db->expects($this->never())->method('checkSql');
 
+        // Suppress warning from parent::exec() due to no real DB connection
+        $previousHandler = set_error_handler(function ($errno, $errstr) {
+            if ($errno === E_USER_WARNING && strpos($errstr, 'mysqli') !== false) {
+                return true;
+            }
+            return false;
+        });
         try {
             $db->exec($sql);
-        } catch (\Throwable $e) {
-            // Expected — no real DB connection
+        } finally {
+            restore_error_handler();
         }
     }
 }
