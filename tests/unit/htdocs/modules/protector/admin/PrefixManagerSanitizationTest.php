@@ -13,7 +13,7 @@ use PHPUnit\Framework\TestCase;
  *
  * The protector prefix manager previously used getCmd() which lowercases output,
  * but DB table prefixes can contain uppercase letters. The fix uses getString()
- * with manual sanitization via preg_replace('/[^a-zA-Z0-9_\-]/', '', $value).
+ * with manual sanitization via preg_replace(PREFIX_INVALID_CHAR_PATTERN, '', $value).
  */
 class PrefixManagerSanitizationTest extends TestCase
 {
@@ -113,9 +113,9 @@ class PrefixManagerSanitizationTest extends TestCase
         $source = file_get_contents(
             XOOPS_PATH . '/modules/protector/admin/prefix_manager.php'
         );
-        // The file should use preg_replace for sanitization, not getCmd
-        $this->assertStringContainsString("preg_replace('/[^a-zA-Z0-9_\\-]/', ''", $source,
-            'prefix_manager.php must use preg_replace for case-preserving sanitization');
+        // The file should use PREFIX_INVALID_CHAR_PATTERN constant for sanitization, not getCmd
+        $this->assertStringContainsString('preg_replace(PREFIX_INVALID_CHAR_PATTERN,', $source,
+            'prefix_manager.php must use PREFIX_INVALID_CHAR_PATTERN for case-preserving sanitization');
         // Verify getCmd is NOT used for prefix values
         $this->assertStringNotContainsString('getCmd', $source,
             'prefix_manager.php must not use getCmd() which lowercases values');
