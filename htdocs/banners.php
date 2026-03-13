@@ -42,7 +42,7 @@ function bannerClientPasswdColumnLength($xoopsDB)
             . " AND `TABLE_NAME` = " . $xoopsDB->quote($table)
             . " AND `COLUMN_NAME` = 'passwd' LIMIT 1";
     $result = $xoopsDB->query($sql);
-    if (!$xoopsDB->isResultSet($result) || !$result instanceof \mysqli_result) {
+    if (!$xoopsDB->isResultSet($result) || !($result instanceof \mysqli_result)) {
         $length = 0;
         return $length;
     }
