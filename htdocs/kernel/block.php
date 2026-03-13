@@ -384,6 +384,16 @@ class XoopsBlock extends XoopsObject
             return $this->executeFileBasedBlock($matches[1], $matches[2]);
         }
 
+        // Detect near-miss: content looks like file-based format but has invalid syntax
+        if (strpos($raw, '.php|') !== false) {
+            $this->logBlockWarning(
+                'Block content looks like file-based format but has invalid syntax. '
+                . 'Expected: filename.php|function_name (alphanumeric and underscores only).'
+            );
+
+            return '';
+        }
+
         return $this->executeLegacyBlock($raw);
     }
 
@@ -536,6 +546,8 @@ class XoopsBlock extends XoopsObject
      * @param string $raw raw PHP code from the block content field (retained for call-site compatibility)
      *
      * @return string always empty
+     *
+     * @SuppressWarnings(PHPMD.UnusedFormalParameter)
      */
     private function executeLegacyBlock(string $raw): string
     {

@@ -92,11 +92,6 @@ class EvalRemovalVerificationTest extends TestCase
     {
         require_once XOOPS_ROOT_PATH . '/kernel/block.php';
 
-        // Ensure logger is initialized
-        if (!isset($GLOBALS['xoopsLogger'])) {
-            $GLOBALS['xoopsLogger'] = \XoopsLogger::getInstance();
-        }
-
         $block = new XoopsBlock();
         $block->setVar('block_type', 'C');
         $block->setVar('c_type', 'P');
@@ -210,6 +205,9 @@ class EvalRemovalVerificationTest extends TestCase
         $file = XOOPS_ROOT_PATH . '/../xoops_lib/modules/protector/' . $basename;
         if (!file_exists($file)) {
             $file = XOOPS_PATH . '/modules/protector/' . $basename;
+        }
+        if (!file_exists($file)) {
+            $this->markTestSkipped("Protector trust-path file not found: {$basename}");
         }
 
         return $file;
