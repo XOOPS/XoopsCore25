@@ -195,7 +195,7 @@ final class XoopsTokenHandler
             $since
         ));
 
-        if (!$this->db->isResultSet($result) || !$result instanceof \mysqli_result) {
+        if (!$this->db->isResultSet($result) || !($result instanceof \mysqli_result)) {
             return 0;
         }
 
