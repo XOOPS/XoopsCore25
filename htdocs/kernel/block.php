@@ -544,7 +544,7 @@ class XoopsBlock extends XoopsObject
             $this->logBlockWarning(
                 'PHP block eval() execution has been permanently removed in XOOPS 2.5.12. '
                 . 'Convert block to file-based format (filename.php|function_name in custom_blocks/), '
-                . 'S (Smarty), or H (HTML) type.'
+                . 'H (HTML), or S/T (sanitized text) type.'
             );
             $warningLogged = true;
         }

@@ -29,6 +29,24 @@ class EvalRemovalVerificationTest extends TestCase
         }
     }
 
+    /**
+     * Assert that PHP source code contains no T_EVAL tokens.
+     *
+     * Uses token_get_all() for reliable detection that ignores comments and strings.
+     */
+    private function assertNoEvalTokens(string $phpSource, string $message): void
+    {
+        $tokens = token_get_all($phpSource);
+        $evalFound = false;
+        foreach ($tokens as $token) {
+            if (is_array($token) && $token[0] === T_EVAL) {
+                $evalFound = true;
+                break;
+            }
+        }
+        $this->assertFalse($evalFound, $message);
+    }
+
     // =========================================================================
     // H-0: Block PHP eval() removal
     // =========================================================================
@@ -46,40 +64,9 @@ class EvalRemovalVerificationTest extends TestCase
         $content = file_get_contents($file);
         $this->assertNotFalse($content);
 
-        // Remove all comments (single-line and multi-line) and strings
-        // to check only actual code for eval()
-        $lines = explode("\n", $content);
-        $executableEvalFound = false;
-        foreach ($lines as $lineNum => $line) {
-            $trimmed = trim($line);
-            // Skip comment-only lines
-            if (str_starts_with($trimmed, '//') || str_starts_with($trimmed, '*') || str_starts_with($trimmed, '/*')) {
-                continue;
-            }
-            // Check for eval( in non-comment parts of the line
-            $codePart = $trimmed;
-            // Strip inline comments
-            $commentPos = strpos($codePart, '//');
-            if ($commentPos !== false) {
-                $codePart = substr($codePart, 0, $commentPos);
-            }
-            // Strip string literals (simple approach: check for eval( outside of quotes)
-            if (preg_match('/\beval\s*\(/', $codePart)) {
-                // Check it's not inside a string
-                $beforeEval = substr($codePart, 0, strpos($codePart, 'eval'));
-                $singleQuotes = substr_count($beforeEval, "'") - substr_count($beforeEval, "\\'");
-                $doubleQuotes = substr_count($beforeEval, '"') - substr_count($beforeEval, '\\"');
-                if ($singleQuotes % 2 === 0 && $doubleQuotes % 2 === 0) {
-                    $executableEvalFound = true;
-                    break;
-                }
-            }
-        }
-
-        $this->assertFalse(
-            $executableEvalFound,
-            'kernel/block.php should not contain any executable eval() calls'
-        );
+        // Use PHP's tokenizer to reliably detect eval() in executable code.
+        // T_EVAL tokens only appear for actual eval() calls, not in comments or strings.
+        $this->assertNoEvalTokens($content, 'kernel/block.php should not contain any executable eval() calls');
     }
 
     /**
@@ -94,11 +81,7 @@ class EvalRemovalVerificationTest extends TestCase
         $content = file_get_contents($file);
         $this->assertNotFalse($content);
 
-        $this->assertDoesNotMatchRegularExpression(
-            '/\beval\s*\(/',
-            $content,
-            'system/class/block.php should not contain any eval() calls'
-        );
+        $this->assertNoEvalTokens($content, 'system/class/block.php should not contain any eval() calls');
     }
 
     /**
@@ -193,11 +176,7 @@ class EvalRemovalVerificationTest extends TestCase
         $content = file_get_contents($file);
         $this->assertNotFalse($content);
 
-        $this->assertDoesNotMatchRegularExpression(
-            '/\beval\s*\(/',
-            $content,
-            'class.zipfile.php should not contain eval()'
-        );
+        $this->assertNoEvalTokens($content, 'class.zipfile.php should not contain eval()');
     }
 
     // =========================================================================
@@ -216,11 +195,7 @@ class EvalRemovalVerificationTest extends TestCase
         $content = file_get_contents($file);
         $this->assertNotFalse($content);
 
-        $this->assertDoesNotMatchRegularExpression(
-            '/\beval\s*\(/',
-            $content,
-            'art/functions.ini.php should not contain eval()'
-        );
+        $this->assertNoEvalTokens($content, 'art/functions.ini.php should not contain eval()');
     }
 
     // =========================================================================
@@ -243,15 +218,21 @@ class EvalRemovalVerificationTest extends TestCase
         $content = file_get_contents($file);
         $this->assertNotFalse($content);
 
-        $this->assertDoesNotMatchRegularExpression(
-            '/\beval\s*\(/',
-            $content,
-            'protector/oninstall.php should not contain eval()'
-        );
+        $this->assertNoEvalTokens($content, 'protector/oninstall.php should not contain eval()');
         $this->assertStringContainsString(
             'function xoops_module_install_protector',
             $content,
             'protector/oninstall.php should define the callback function literally'
+        );
+        $this->assertStringContainsString(
+            'D3-style cloned installs',
+            $content,
+            'protector/oninstall.php should document D3 clone deprecation'
+        );
+        $this->assertStringContainsString(
+            "getEntry('mydirname')",
+            $content,
+            'protector/oninstall.php should use registry mydirname, not hard-coded string'
         );
     }
 
@@ -270,15 +251,16 @@ class EvalRemovalVerificationTest extends TestCase
         $content = file_get_contents($file);
         $this->assertNotFalse($content);
 
-        $this->assertDoesNotMatchRegularExpression(
-            '/\beval\s*\(/',
-            $content,
-            'protector/onuninstall.php should not contain eval()'
-        );
+        $this->assertNoEvalTokens($content, 'protector/onuninstall.php should not contain eval()');
         $this->assertStringContainsString(
             'function xoops_module_uninstall_protector',
             $content,
             'protector/onuninstall.php should define the callback function literally'
+        );
+        $this->assertStringContainsString(
+            'D3-style cloned installs',
+            $content,
+            'protector/onuninstall.php should document D3 clone deprecation'
         );
     }
 
@@ -297,15 +279,16 @@ class EvalRemovalVerificationTest extends TestCase
         $content = file_get_contents($file);
         $this->assertNotFalse($content);
 
-        $this->assertDoesNotMatchRegularExpression(
-            '/\beval\s*\(/',
-            $content,
-            'protector/onupdate.php should not contain eval()'
-        );
+        $this->assertNoEvalTokens($content, 'protector/onupdate.php should not contain eval()');
         $this->assertStringContainsString(
             'function xoops_module_update_protector',
             $content,
             'protector/onupdate.php should define the callback function literally'
+        );
+        $this->assertStringContainsString(
+            'D3-style cloned installs',
+            $content,
+            'protector/onupdate.php should document D3 clone deprecation'
         );
     }
 
@@ -324,15 +307,16 @@ class EvalRemovalVerificationTest extends TestCase
         $content = file_get_contents($file);
         $this->assertNotFalse($content);
 
-        $this->assertDoesNotMatchRegularExpression(
-            '/\beval\s*\(/',
-            $content,
-            'protector/notification.php should not contain eval()'
-        );
+        $this->assertNoEvalTokens($content, 'protector/notification.php should not contain eval()');
         $this->assertStringContainsString(
             'function protector_notify_iteminfo',
             $content,
             'protector/notification.php should define the callback function literally'
+        );
+        $this->assertStringContainsString(
+            'D3-style cloned installs',
+            $content,
+            'protector/notification.php should document D3 clone deprecation'
         );
     }
 }

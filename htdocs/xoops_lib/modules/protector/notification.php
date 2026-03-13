@@ -10,6 +10,8 @@ $mydirpath = $registry->getEntry('mydirpath');
 $language  = $registry->getEntry('language');
 // end hack by Trabis
 
+// Note: D3-style cloned installs of Protector are no longer supported as of 2.5.12.
+// The dynamic function naming via eval has been removed for security.
 if (!function_exists('protector_notify_iteminfo')) {
     /**
      * XOOPS notification callback for protector module.
@@ -21,7 +23,13 @@ if (!function_exists('protector_notify_iteminfo')) {
      */
     function protector_notify_iteminfo($category, $item_id)
     {
-        return protector_notify_base('protector', $category, $item_id);
+        $registry  = ProtectorRegistry::getInstance();
+        $mydirname = $registry->getEntry('mydirname');
+        if (empty($mydirname)) {
+            $mydirname = 'protector';
+        }
+
+        return protector_notify_base($mydirname, $category, $item_id);
     }
 }
 
