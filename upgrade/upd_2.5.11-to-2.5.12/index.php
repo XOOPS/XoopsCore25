@@ -89,7 +89,7 @@ class Upgrade_2512 extends XoopsUpgrade
                 . " WHERE `TABLE_SCHEMA` = DATABASE() AND `TABLE_NAME` = " . $GLOBALS['xoopsDB']->quote($table)
                 . " LIMIT 1";
         $result = $GLOBALS['xoopsDB']->query($sql);
-        if (!$GLOBALS['xoopsDB']->isResultSet($result) || !$result instanceof \mysqli_result) {
+        if (!$GLOBALS['xoopsDB']->isResultSet($result) || !($result instanceof \mysqli_result)) {
             return false;
         }
         return (bool)$GLOBALS['xoopsDB']->fetchArray($result);
