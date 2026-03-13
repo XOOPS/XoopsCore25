@@ -209,11 +209,21 @@ class ActivationHardeningTest extends TestCase
 
         $methodBody = substr($source, (int) $openBracePos + 1, (int) $endBracePos - (int) $openBracePos - 1);
 
-        // It should NOT generate a new token
+        // It should NOT generate a new token (neither via helper nor direct CSPRNG)
         $this->assertStringNotContainsString(
             'generateSecureToken',
             $methodBody,
             'activateUser() should not generate a new token; it should clear actkey'
+        );
+        $this->assertStringNotContainsString(
+            'random_bytes',
+            $methodBody,
+            'activateUser() must not regenerate activation tokens via random_bytes()'
+        );
+        $this->assertStringNotContainsString(
+            'bin2hex',
+            $methodBody,
+            'activateUser() must not regenerate activation tokens via bin2hex()'
         );
     }
 
