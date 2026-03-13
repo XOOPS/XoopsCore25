@@ -40,11 +40,16 @@ class BannersSecurityTest extends TestCase
     #[Test]
     public function legacyPlaintextPasswordDetectedAsNonHashed(): void
     {
-        // A plaintext password will have algo = null from password_get_info()
+        // password_get_info() returns null (PHP 8.4+) or 0 (PHP 8.2-8.3)
+        // for unrecognized/plaintext strings — either way, not a valid algo
         $plaintext = 'oldPlainPassword';
         $info = password_get_info($plaintext);
+        $algo = $info['algo'];
 
-        $this->assertNull($info['algo']);
+        $this->assertTrue(
+            $algo === null || $algo === 0,
+            'Expected algo to be null or 0 for plaintext, got: ' . var_export($algo, true)
+        );
     }
 
     #[Test]
@@ -52,8 +57,12 @@ class BannersSecurityTest extends TestCase
     {
         $hash = password_hash('somePass', PASSWORD_DEFAULT);
         $info = password_get_info($hash);
+        $algo = $info['algo'];
 
-        $this->assertNotNull($info['algo']);
+        $this->assertTrue(
+            $algo !== null && $algo !== 0,
+            'Expected algo to be a valid identifier for bcrypt hash'
+        );
     }
 
     #[Test]

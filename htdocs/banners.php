@@ -486,7 +486,8 @@ switch ($op) {
 
             // Verify password: support both bcrypt hashes and legacy plaintext
             $authenticated = false;
-            if (password_get_info($storedHash)['algo'] !== null) {
+            $algo = password_get_info($storedHash)['algo'];
+            if ($algo !== null && $algo !== 0) {
                 // Modern hashed password
                 $authenticated = password_verify($clean_pass, $storedHash);
                 // Rehash if algorithm or cost has changed
