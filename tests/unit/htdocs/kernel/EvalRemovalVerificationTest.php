@@ -256,6 +256,8 @@ class EvalRemovalVerificationTest extends TestCase
         }
 
         $this->markTestSkipped("Protector trust-path file not found: {$basename}");
+
+        return ''; // unreachable — markTestSkipped() throws, but satisfies return type
     }
 
     /**
