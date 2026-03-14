@@ -11,7 +11,6 @@
  *
  * @copyright (c) 2000-2026 XOOPS Project (https://xoops.org)
  * @license   GNU GPL 2 (https://www.gnu.org/licenses/gpl-2.0.html)
- * @package   core
  * @since     2.5.12
  */
 
@@ -29,8 +28,6 @@ defined('XOOPS_ROOT_PATH') || exit('Restricted access');
  *
  * Requires PHP 8.2+ (readonly properties, union return types).
  *
- * @category  Xoops
- * @package   Core
  * @author    XOOPS Team
  * @copyright (c) 2000-2026 XOOPS Project (https://xoops.org)
  * @license   GNU GPL 2 (https://www.gnu.org/licenses/gpl-2.0.html)

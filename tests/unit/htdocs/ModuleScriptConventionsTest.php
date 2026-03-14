@@ -10,16 +10,21 @@ use PHPUnit\Framework\TestCase;
 
 /**
  * Verify that module update/install scripts follow XOOPS 2.5.12 conventions:
- * - No deprecated queryF() calls
+ * - No deprecated queryF() or quoteString() calls
  * - No @ error suppression
- * - No deprecated quoteString() calls
- * - isResultSet() guard before fetchArray/fetchRow/fetchBoth
+ * - isResultSet() + instanceof guard before fetchArray/fetchRow/fetchBoth
  * - is_file() guard before every unlink()
- * - instanceof \mysqli_result used with isResultSet()
  */
 #[CoversNothing]
 class ModuleScriptConventionsTest extends TestCase
 {
+    /** Patterns that must not appear in any module script. */
+    private const FORBIDDEN_PATTERNS = [
+        '/->queryF\s*\(/'                 => 'must not use deprecated queryF()',
+        '/(?<!\* )@[a-zA-Z_]\w*\s*\(/'   => 'must not use @ error suppression on function calls',
+        '/->quoteString\s*\(/'            => 'must not use deprecated quoteString()',
+    ];
+
     public static function scriptProvider(): array
     {
         return [
@@ -40,74 +45,36 @@ class ModuleScriptConventionsTest extends TestCase
 
     #[Test]
     #[DataProvider('scriptProvider')]
-    public function noDeprecatedQueryF(string $script): void
+    public function noForbiddenPatterns(string $script): void
     {
         $source = $this->readScript($script);
-        $this->assertDoesNotMatchRegularExpression(
-            '/->queryF\s*\(/',
-            $source,
-            "$script must not use deprecated queryF()"
-        );
+
+        foreach (self::FORBIDDEN_PATTERNS as $pattern => $message) {
+            $this->assertDoesNotMatchRegularExpression($pattern, $source, "$script $message");
+        }
     }
 
     #[Test]
     #[DataProvider('scriptProvider')]
-    public function noErrorSuppression(string $script): void
-    {
-        $source = $this->readScript($script);
-        $this->assertDoesNotMatchRegularExpression(
-            '/(?<!\* )@[a-zA-Z_]\w*\s*\(/',
-            $source,
-            "$script must not use @ error suppression on function calls"
-        );
-    }
-
-    #[Test]
-    #[DataProvider('scriptProvider')]
-    public function noDeprecatedQuoteString(string $script): void
-    {
-        $source = $this->readScript($script);
-        $this->assertDoesNotMatchRegularExpression(
-            '/->quoteString\s*\(/',
-            $source,
-            "$script must not use deprecated quoteString()"
-        );
-    }
-
-    #[Test]
-    #[DataProvider('scriptProvider')]
-    public function everyFetchHasResultSetGuard(string $script): void
+    public function fetchCallsHaveProperResultSetGuards(string $script): void
     {
         $source = $this->readScript($script);
 
-        // Count fetch calls
         $fetchCount = preg_match_all('/->fetch(Array|Row|Both)\s*\(/', $source);
         if ($fetchCount === 0) {
             $this->assertTrue(true, 'No fetch calls found');
             return;
         }
 
-        // Count isResultSet guards
+        // Every fetch block must be preceded by an isResultSet() guard
         $guardCount = preg_match_all('/isResultSet\s*\(\s*\$result\s*\)/', $source);
         $this->assertGreaterThanOrEqual(
             $fetchCount,
             $guardCount,
             "$script must have at least one isResultSet() guard per fetch block"
         );
-    }
 
-    #[Test]
-    #[DataProvider('scriptProvider')]
-    public function resultSetGuardIncludesInstanceof(string $script): void
-    {
-        $source = $this->readScript($script);
-
-        if (!str_contains($source, 'isResultSet(')) {
-            $this->assertTrue(true, 'No isResultSet() calls found');
-            return;
-        }
-
-        // Accept flexible guard forms: isResultSet() combined with instanceof \mysqli_result
+        // Guard must also include instanceof \mysqli_result for Scrutinizer
         $this->assertMatchesRegularExpression(
             '/isResultSet\s*\(\s*\$result\s*\).*!\s*\(\s*\$result\s+instanceof\s+\\\\mysqli_result\s*\)/s',
             $source,
