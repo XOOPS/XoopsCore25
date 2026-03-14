@@ -732,7 +732,7 @@ class XoopsBlockPhpBlockTest extends KernelTestCase
 
     /**
      * Verify that content containing a pipe but not matching file-based format
-     * falls to the legacy path and returns empty (eval permanently removed).
+     * is caught by the near-miss guard and returns empty (eval permanently removed).
      */
     #[Test]
     public function malformedPipeContentIsBlockedAndReturnsEmpty(): void

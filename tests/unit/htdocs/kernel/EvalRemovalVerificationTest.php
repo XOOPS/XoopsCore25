@@ -201,7 +201,7 @@ class EvalRemovalVerificationTest extends TestCase
     }
 
     // =========================================================================
-    // M-11c: Protector lifecycle — eval() removed, literal functions used
+    // M-11c: Protector lifecycle — eval() retained for D3 clone support
     // =========================================================================
 
     /**
