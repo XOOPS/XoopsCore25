@@ -106,8 +106,6 @@ class XoopsLogger
         foreach ($this->loggers as $logger) {
             try {
                 $logger->log($level, $message, $context);
-            } catch (\Exception $e) {
-                // Silently ignore logger errors to prevent cascading failures
             } catch (\Throwable $e) {
                 // Silently ignore logger errors to prevent cascading failures
             }
@@ -124,7 +122,11 @@ class XoopsLogger
     {
         foreach ($this->loggers as $logger) {
             if (method_exists($logger, 'quiet')) {
-                $logger->quiet();
+                try {
+                    $logger->quiet();
+                } catch (\Throwable $e) {
+                    // Silently ignore logger errors to prevent cascading failures
+                }
             }
         }
     }
@@ -219,17 +221,15 @@ class XoopsLogger
     {
         if ($this->activated) {
             $this->queries[] = ['sql' => $sql, 'error' => $error, 'errno' => $errno, 'query_time' => $query_time];
+            // Dispatch to registered loggers
+            $this->log($error ? 'error' : 'debug', $sql, [
+                'channel'    => 'Queries',
+                'sql'        => $sql,
+                'error'      => $error,
+                'errno'      => $errno,
+                'query_time' => $query_time,
+            ]);
         }
-        // Dispatch to registered loggers
-        $level = $error ? 'error' : 'debug';
-        $msg = $error ? "Query Error [{$errno}]: {$error} - {$sql}" : $sql;
-        $this->log($level, $msg, [
-            'channel'    => 'Queries',
-            'sql'        => $sql,
-            'error'      => $error,
-            'errno'      => $errno,
-            'query_time' => $query_time,
-        ]);
     }
 
     /**
@@ -243,15 +243,14 @@ class XoopsLogger
     {
         if ($this->activated) {
             $this->blocks[] = ['name' => $name, 'cached' => $cached, 'cachetime' => $cachetime];
+            // Dispatch to registered loggers
+            $this->log('debug', $name, [
+                'channel'   => 'Blocks',
+                'name'      => $name,
+                'cached'    => $cached,
+                'cachetime' => $cachetime,
+            ]);
         }
-        // Dispatch to registered loggers
-        $msg = $cached ? "{$name}: Cached (regenerates every {$cachetime}s)" : "{$name}: Not cached";
-        $this->log('debug', $msg, [
-            'channel'   => 'Blocks',
-            'name'      => $name,
-            'cached'    => $cached,
-            'cachetime' => $cachetime,
-        ]);
     }
 
     /**
@@ -264,12 +263,12 @@ class XoopsLogger
     {
         if ($this->activated) {
             $this->extra[] = ['name' => $name, 'msg' => $msg];
+            // Dispatch to registered loggers
+            $this->log('debug', $msg, [
+                'channel' => 'Extra',
+                'name'    => $name,
+            ]);
         }
-        // Dispatch to registered loggers
-        $this->log('debug', "{$name}: {$msg}", [
-            'channel' => 'Extra',
-            'name'    => $name,
-        ]);
     }
 
     /**
@@ -315,23 +314,25 @@ class XoopsLogger
         if ($this->activated && ($errno & error_reporting())) {
             // NOTE: we only store relative pathnames
             $this->errors[] = compact('errno', 'errstr', 'errfile', 'errline');
+
+            // Dispatch to registered loggers with appropriate PSR-3 level
+            $levelMap = [
+                E_USER_ERROR        => 'error',
+                E_USER_WARNING      => 'warning',
+                E_USER_NOTICE       => 'notice',
+                E_USER_DEPRECATED   => 'notice',
+                E_WARNING           => 'warning',
+                E_NOTICE            => 'notice',
+                E_DEPRECATED        => 'notice',
+            ];
+            $psrLevel = $levelMap[$errno] ?? 'error';
+            $this->log($psrLevel, $errstr, [
+                'channel' => 'messages',
+                'errno'   => $errno,
+                'errfile' => $errfile,
+                'errline' => $errline,
+            ]);
         }
-        // Dispatch to registered loggers with appropriate PSR-3 level
-        $levelMap = [
-            E_USER_ERROR   => 'error',
-            E_USER_WARNING => 'warning',
-            E_USER_NOTICE  => 'notice',
-            E_WARNING      => 'warning',
-            E_NOTICE       => 'notice',
-            E_DEPRECATED   => 'notice',
-        ];
-        $psrLevel = isset($levelMap[$errno]) ? $levelMap[$errno] : 'error';
-        $this->log($psrLevel, $errstr, [
-            'channel' => 'messages',
-            'errno'   => $errno,
-            'errfile' => $errfile,
-            'errline' => $errline,
-        ]);
 
         if ($errno == E_USER_ERROR) {
             $includeTrace = true;

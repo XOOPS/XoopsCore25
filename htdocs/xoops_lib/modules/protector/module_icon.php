@@ -21,9 +21,14 @@ header('Last-Modified: ' . date('r', (int)(time() / $icon_cache_limit) * $icon_c
 header('Content-type: image/png');
 
 // file name
+// Note: Direct $_GET access required because Xmf\Request is unavailable
+// in the nocommon boot path (no autoloader). Input is sanitized below.
 $file_base = 'module_icon';
-if (!empty($_GET['file'])) {
-    $file_base = preg_replace('/[^0-9a-z_]/', '', $_GET['file']);
+if (!empty($_GET['file']) && is_string($_GET['file'])) {
+    $sanitized = preg_replace('/[^0-9a-z_]/', '', $_GET['file']);
+    if ('' !== $sanitized) {
+        $file_base = $sanitized;
+    }
 }
 
 $draw_dirname = true;
@@ -34,7 +39,7 @@ $file = $file_base . '.png';
 // custom icon
 if (file_exists($mydirpath . '/' . $file)) {
     $draw_dirname  = false;
-    $icon_fullpath = $mydirpath . '/module_icon.png';
+    $icon_fullpath = $mydirpath . '/' . $file;
 } else {
     $icon_fullpath = __DIR__ . '/images/' . $file;
 }
