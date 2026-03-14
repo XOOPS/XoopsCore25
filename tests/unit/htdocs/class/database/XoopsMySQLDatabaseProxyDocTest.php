@@ -12,8 +12,9 @@ use XoopsMySQLDatabaseProxy;
 /**
  * Tests for XoopsMySQLDatabaseProxy PHPDoc metadata (M-7).
  *
- * Verifies that the class docblock contains all required XOOPS PHPDoc tags
- * including @category, @package, @author, @copyright, @license, and @link.
+ * Verifies that the class docblock follows PSR-12 conventions:
+ * required tags (@author, @copyright, @license, @link) are present,
+ * and legacy tags (@package, @subpackage, @category) are absent.
  */
 #[CoversClass(XoopsMySQLDatabaseProxy::class)]
 class XoopsMySQLDatabaseProxyDocTest extends TestCase
@@ -56,19 +57,19 @@ class XoopsMySQLDatabaseProxyDocTest extends TestCase
     }
 
     #[Test]
-    public function proxyClassDocblockContainsCategoryTag(): void
+    public function proxyClassDocblockDoesNotContainLegacyPackageTag(): void
     {
         $docblock = $this->extractProxyDocblock();
-        $this->assertStringContainsString('@category', $docblock,
-            'Proxy class docblock must include @category per XOOPS conventions');
+        $this->assertStringNotContainsString('@package', $docblock,
+            'Proxy class docblock must not include legacy @package tag (PSR-12)');
     }
 
     #[Test]
-    public function proxyClassDocblockContainsPackageTag(): void
+    public function proxyClassDocblockDoesNotContainLegacyCategoryTag(): void
     {
         $docblock = $this->extractProxyDocblock();
-        $this->assertStringContainsString('@package', $docblock,
-            'Proxy class docblock must include @package per XOOPS conventions');
+        $this->assertStringNotContainsString('@category', $docblock,
+            'Proxy class docblock must not include legacy @category tag (PSR-12)');
     }
 
     /**
