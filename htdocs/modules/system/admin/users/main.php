@@ -281,16 +281,21 @@ case 'users_save':
             break;
         }
 
-        // Password match (if confirm provided)
-        if ('' !== Request::getVar('pass2', '', 'POST', 'string', Request::MASK_ALLOW_RAW | Request::MASK_NO_TRIM) &&
-            Request::getVar('password', '', 'POST', 'string', Request::MASK_ALLOW_RAW | Request::MASK_NO_TRIM) != Request::getVar('pass2', '', 'POST', 'string', Request::MASK_ALLOW_RAW | Request::MASK_NO_TRIM)) {
+        // Password confirmation is required for new users
+        $pass1 = Request::getVar('password', '', 'POST', 'string', Request::MASK_ALLOW_RAW | Request::MASK_NO_TRIM);
+        $pass2 = Request::getVar('pass2', '', 'POST', 'string', Request::MASK_ALLOW_RAW | Request::MASK_NO_TRIM);
+
+        if ('' === $pass2) {
             xoops_error(_AM_SYSTEM_USERS_STNPDNM);
             break;
         }
 
-        if ('' !== Request::getVar('pass2', '', 'POST', 'string', Request::MASK_ALLOW_RAW | Request::MASK_NO_TRIM) &&
-            '' !== Request::getVar('password', '', 'POST', 'string', Request::MASK_ALLOW_RAW | Request::MASK_NO_TRIM) &&
-            mb_strtolower(Request::getVar('password', '', 'POST', 'string', Request::MASK_ALLOW_RAW | Request::MASK_NO_TRIM), 'UTF-8') === mb_strtolower(Request::getString('uname'), 'UTF-8')) {
+        if ($pass1 !== $pass2) {
+            xoops_error(_AM_SYSTEM_USERS_STNPDNM);
+            break;
+        }
+
+        if (mb_strtolower($pass1, 'UTF-8') === mb_strtolower(Request::getString('uname', '', 'POST'), 'UTF-8')) {
             xoops_error(_AM_SYSTEM_USERS_PWDEQUALSUNAME);
             break;
         }
@@ -310,9 +315,7 @@ case 'users_save':
         $newuser->setVar('user_aim', Request::getString('user_aim'));
         $newuser->setVar('user_yim', Request::getString('user_yim'));
         $newuser->setVar('user_msnm', Request::getString('user_msnm'));
-        if ('' !== Request::getVar('pass2', '', 'POST', 'string', Request::MASK_ALLOW_RAW | Request::MASK_NO_TRIM)) {
-            $newuser->setVar('pass', password_hash(Request::getVar('password', '', 'POST', 'string', Request::MASK_ALLOW_RAW | Request::MASK_NO_TRIM), PASSWORD_DEFAULT));
-        }
+        $newuser->setVar('pass', password_hash($pass1, PASSWORD_DEFAULT));
         $newuser->setVar('timezone_offset', Request::getString('timezone_offset'));
         $newuser->setVar('uorder', Request::getString('uorder'));
         $newuser->setVar('umode', Request::getString('umode'));

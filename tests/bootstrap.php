@@ -483,9 +483,13 @@ spl_autoload_register(function ($class) {
         'frameworksmoduleclasses\\' => __DIR__ . '/unit/htdocs/Frameworks/moduleclasses/',
         'frameworkstextsanitizer\\' => __DIR__ . '/unit/htdocs/Frameworks/textsanitizer/',
         'modulessystem\\'       => __DIR__ . '/unit/htdocs/modules/system/',
+        'modulessystem\\admin\\smilies\\'      => __DIR__ . '/unit/htdocs/modules/system/admin/smilies/',
+        'modulessystem\\admin\\users\\'        => __DIR__ . '/unit/htdocs/modules/system/admin/users/',
+        'modulessystem\\admin\\preferences\\'  => __DIR__ . '/unit/htdocs/modules/system/admin/preferences/',
         'modulespm\\'           => __DIR__ . '/unit/htdocs/modules/pm/',
         'modulesprofile\\'      => __DIR__ . '/unit/htdocs/modules/profile/',
         'modulesprotector\\'    => __DIR__ . '/unit/htdocs/modules/protector/',
+        'modulesprotector\\admin\\' => __DIR__ . '/unit/htdocs/modules/protector/admin/',
     ];
     foreach ($map as $prefix => $dir) {
         $len = strlen($prefix);

@@ -432,7 +432,17 @@ switch ($op) {
             for ($i = 0; $i < $count; ++$i) {
                 $config    = $config_handler->getConfig($conf_ids[$i]);
                 $confName  = $config->getVar('conf_name');
-                $new_value = Request::getVar($confName, $config->getVar('conf_value'), 'POST');
+                $formType  = $config->getVar('conf_formtype');
+                // For multi-select form types, when nothing is selected the key
+                // is absent from POST.  Request::getVar() would then fall back
+                // to the old value, silently preserving the previous selection.
+                // Detect this and explicitly set an empty array instead.
+                $multiFormTypes = ['select_multi', 'group_multi', 'user_multi', 'theme_multi'];
+                if (in_array($formType, $multiFormTypes, true) && !Request::hasVar($confName, 'POST')) {
+                    $new_value = [];
+                } else {
+                    $new_value = Request::getVar($confName, $config->getVar('conf_value'), 'POST');
+                }
                 if (is_array($new_value) || $new_value != $config->getVar('conf_value')) {
                     // if language has been changed
                     if (!$lang_updated && $config->getVar('conf_catid') == XOOPS_CONF && $config->getVar('conf_name') === 'language') {
