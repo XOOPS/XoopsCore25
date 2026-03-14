@@ -327,10 +327,12 @@ switch ($op) {
         } else {
             $result = $xoopsDB->query('SELECT uid FROM ' . $xoopsDB->prefix('users')
                 . ' WHERE user_avatar=' . $xoopsDB->quote($file));
-            if ($xoopsDB->isResultSet($result) && $result instanceof \mysqli_result) {
-                while ($row = $xoopsDB->fetchArray($result)) {
-                    $affectedUids[] = (int) $row['uid'];
-                }
+            if (!$xoopsDB->isResultSet($result) || !($result instanceof \mysqli_result)) {
+                // Cannot determine affected users — abort to prevent orphaned references
+                redirect_header('admin.php?fct=avatars', 2, _AM_SYSTEM_DBERROR);
+            }
+            while ($row = $xoopsDB->fetchArray($result)) {
+                $affectedUids[] = (int) $row['uid'];
             }
         }
         $resetOk = true;
