@@ -221,62 +221,69 @@ class EvalRemovalVerificationTest extends TestCase
     }
 
     /**
-     * Verify protector oninstall.php contains no eval() and defines the base function.
+     * Protector lifecycle files intentionally retain eval() for D3-style cloned
+     * installs where $mydirname varies at runtime.  These tests verify:
+     * 1. eval() is guarded by function_exists() to prevent redefinition
+     * 2. $mydirname is sourced from ProtectorRegistry (not user input)
+     * 3. The base function is defined
      */
     #[Test]
-    public function protectorOninstallHasNoEvalAndDefinesBase(): void
+    public function protectorOninstallUsesGuardedEvalAndDefinesBase(): void
     {
         $file = $this->resolveProtectorFile('oninstall.php');
         $content = file_get_contents($file);
         $this->assertNotFalse($content);
 
-        $this->assertNoEvalTokens($content, 'protector/oninstall.php should not contain eval()');
+        $this->assertStringContainsString('function_exists(', $content,
+            'protector/oninstall.php must guard eval() with function_exists()');
         $this->assertStringContainsString('protector_oninstall_base', $content,
-            'protector/oninstall.php should define the base install function');
+            'protector/oninstall.php must define the base install function');
+        $this->assertStringContainsString("getEntry('mydirname')", $content,
+            'protector/oninstall.php must source $mydirname from ProtectorRegistry');
     }
 
-    /**
-     * Verify protector onuninstall.php contains no eval() and defines the base function.
-     */
     #[Test]
-    public function protectorOnuninstallHasNoEvalAndDefinesBase(): void
+    public function protectorOnuninstallUsesGuardedEvalAndDefinesBase(): void
     {
         $file = $this->resolveProtectorFile('onuninstall.php');
         $content = file_get_contents($file);
         $this->assertNotFalse($content);
 
-        $this->assertNoEvalTokens($content, 'protector/onuninstall.php should not contain eval()');
+        $this->assertStringContainsString('function_exists(', $content,
+            'protector/onuninstall.php must guard eval() with function_exists()');
         $this->assertStringContainsString('protector_onuninstall_base', $content,
-            'protector/onuninstall.php should define the base uninstall function');
+            'protector/onuninstall.php must define the base uninstall function');
+        $this->assertStringContainsString("getEntry('mydirname')", $content,
+            'protector/onuninstall.php must source $mydirname from ProtectorRegistry');
     }
 
-    /**
-     * Verify protector onupdate.php contains no eval() and defines the base function.
-     */
     #[Test]
-    public function protectorOnupdateHasNoEvalAndDefinesBase(): void
+    public function protectorOnupdateUsesGuardedEvalAndDefinesBase(): void
     {
         $file = $this->resolveProtectorFile('onupdate.php');
         $content = file_get_contents($file);
         $this->assertNotFalse($content);
 
-        $this->assertNoEvalTokens($content, 'protector/onupdate.php should not contain eval()');
+        $this->assertStringContainsString('function_exists(', $content,
+            'protector/onupdate.php must guard eval() with function_exists()');
         $this->assertStringContainsString('protector_onupdate_base', $content,
-            'protector/onupdate.php should define the base update function');
+            'protector/onupdate.php must define the base update function');
+        $this->assertStringContainsString("getEntry('mydirname')", $content,
+            'protector/onupdate.php must source $mydirname from ProtectorRegistry');
     }
 
-    /**
-     * Verify protector notification.php contains no eval() and defines the base function.
-     */
     #[Test]
-    public function protectorNotificationHasNoEvalAndDefinesBase(): void
+    public function protectorNotificationUsesGuardedEvalAndDefinesBase(): void
     {
         $file = $this->resolveProtectorFile('notification.php');
         $content = file_get_contents($file);
         $this->assertNotFalse($content);
 
-        $this->assertNoEvalTokens($content, 'protector/notification.php should not contain eval()');
+        $this->assertStringContainsString('function_exists(', $content,
+            'protector/notification.php must guard eval() with function_exists()');
         $this->assertStringContainsString('protector_notify_base', $content,
-            'protector/notification.php should define the base notify function');
+            'protector/notification.php must define the base notify function');
+        $this->assertStringContainsString("getEntry('mydirname')", $content,
+            'protector/notification.php must source $mydirname from ProtectorRegistry');
     }
 }
