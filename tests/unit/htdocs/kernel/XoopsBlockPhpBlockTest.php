@@ -737,10 +737,24 @@ class XoopsBlockPhpBlockTest extends KernelTestCase
     #[Test]
     public function malformedPipeContentIsBlockedAndReturnsEmpty(): void
     {
-        $block = $this->createPhpBlock('file.php|func-name');
-        $result = $block->getContent('S', 'P');
+        $deprecations = [];
+        set_error_handler(function (int $errno, string $errstr) use (&$deprecations) {
+            if ($errno === E_USER_DEPRECATED) {
+                $deprecations[] = $errstr;
+                return true;
+            }
+            return false;
+        });
+        try {
+            $block = $this->createPhpBlock('file.php|func-name');
+            $result = $block->getContent('S', 'P');
+        } finally {
+            restore_error_handler();
+        }
 
         $this->assertSame('', $result, 'Malformed pipe content should return empty (eval removed)');
+        $this->assertNotEmpty($deprecations, 'Should emit E_USER_DEPRECATED for malformed content');
+        $this->assertStringContainsString('malformed', $deprecations[0]);
     }
 
     /**
@@ -750,10 +764,23 @@ class XoopsBlockPhpBlockTest extends KernelTestCase
     #[Test]
     public function legacyEvalContentAlwaysReturnsEmpty(): void
     {
-        // Content WITHOUT pipe — should still be blocked
-        $block = $this->createPhpBlock('echo "hello";');
-        $result = $block->getContent('S', 'P');
+        $deprecations = [];
+        set_error_handler(function (int $errno, string $errstr) use (&$deprecations) {
+            if ($errno === E_USER_DEPRECATED) {
+                $deprecations[] = $errstr;
+                return true;
+            }
+            return false;
+        });
+        try {
+            $block = $this->createPhpBlock('echo "hello";');
+            $result = $block->getContent('S', 'P');
+        } finally {
+            restore_error_handler();
+        }
 
         $this->assertSame('', $result);
+        $this->assertNotEmpty($deprecations, 'Should emit E_USER_DEPRECATED for legacy eval content');
+        $this->assertStringContainsString('removed', $deprecations[0]);
     }
 }

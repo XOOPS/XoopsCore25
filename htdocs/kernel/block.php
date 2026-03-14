@@ -393,7 +393,7 @@ class XoopsBlock extends XoopsObject
             );
             trigger_error(
                 'XOOPS block has malformed file-based content — check filename.php|function_name syntax.',
-                E_USER_WARNING
+                E_USER_DEPRECATED
             );
 
             return '';
@@ -565,7 +565,7 @@ class XoopsBlock extends XoopsObject
             );
             trigger_error(
                 'XOOPS: PHP block eval() has been removed in 2.5.12. Convert to file-based format.',
-                E_USER_WARNING
+                E_USER_DEPRECATED
             );
             $warningLogged = true;
         }

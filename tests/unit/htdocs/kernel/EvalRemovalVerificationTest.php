@@ -92,20 +92,35 @@ class EvalRemovalVerificationTest extends TestCase
     }
 
     /**
-     * Verify that the legacy block path returns empty content for raw PHP code.
+     * Verify that the legacy block path returns empty content for raw PHP code
+     * and emits an E_USER_DEPRECATED signal.
      */
     #[Test]
     public function legacyPhpBlockReturnsEmptyContent(): void
     {
         require_once XOOPS_ROOT_PATH . '/kernel/block.php';
 
-        $block = new XoopsBlock();
-        $block->setVar('block_type', 'C');
-        $block->setVar('c_type', 'P');
-        $block->setVar('content', 'echo "This should never execute";');
+        $deprecations = [];
+        set_error_handler(function (int $errno, string $errstr) use (&$deprecations) {
+            if ($errno === E_USER_DEPRECATED) {
+                $deprecations[] = $errstr;
+                return true;
+            }
+            return false;
+        });
+        try {
+            $block = new XoopsBlock();
+            $block->setVar('block_type', 'C');
+            $block->setVar('c_type', 'P');
+            $block->setVar('content', 'echo "This should never execute";');
 
-        $result = $block->getContent('S', 'P');
+            $result = $block->getContent('S', 'P');
+        } finally {
+            restore_error_handler();
+        }
+
         $this->assertSame('', $result, 'Legacy PHP block content must return empty string');
+        $this->assertNotEmpty($deprecations, 'Should emit E_USER_DEPRECATED for legacy eval content');
     }
 
     // =========================================================================
