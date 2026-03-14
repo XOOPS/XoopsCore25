@@ -11,7 +11,6 @@
  *
  * @copyright       (c) 2000-2026 XOOPS Project (https://xoops.org)
  * @license             GNU GPL 2 (https://www.gnu.org/licenses/gpl-2.0.html)
- * @package             pm
  * @since               2.3.0
  * @author              Taiwen Jiang <phppp@users.sourceforge.net>
  */
@@ -31,7 +30,7 @@ function xoops_module_update_pm(XoopsModule $module, $oldversion = null)
         // Check pm table version
         $sql = 'SHOW COLUMNS FROM ' . $xoopsDB->prefix('priv_msgs');
         $result = $xoopsDB->query($sql);
-        if (!$xoopsDB->isResultSet($result)) {
+        if (!$xoopsDB->isResultSet($result) || !($result instanceof \mysqli_result)) {
             return false;
         }
         // Migrate from existent pm module
@@ -51,7 +50,10 @@ function xoops_module_update_pm(XoopsModule $module, $oldversion = null)
         foreach ($template_list as $k => $v) {
             $fileinfo = new SplFileInfo($templateDirectory . $v);
             if ($fileinfo->getExtension() === 'html' && $fileinfo->getFilename() !== 'index.html') {
-                @unlink($templateDirectory . $v);
+                $filePath = $templateDirectory . $v;
+                if (is_file($filePath)) {
+                    unlink($filePath);
+                }
             }
         }
 

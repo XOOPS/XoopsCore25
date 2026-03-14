@@ -42,12 +42,13 @@ trait SourceFileTestTrait
             $skipMessage = basename($relativePath) . ' not found in expected locations';
         }
 
-        // Locate the repository root by looking for the .git directory,
-        // then build candidate paths only within that boundary.
+        // Locate the repository root by looking for the .git directory
+        // (or .git file in worktrees), then build candidate paths only
+        // within that boundary.
         $repoRoot = null;
         for ($level = 3; $level <= 8; ++$level) {
             $base = dirname(__DIR__, $level);
-            if (is_dir($base . '/.git')) {
+            if (is_dir($base . '/.git') || is_file($base . '/.git')) {
                 $repoRoot = realpath($base);
                 break;
             }

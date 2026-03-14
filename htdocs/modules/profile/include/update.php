@@ -11,7 +11,6 @@
  *
  * @copyright       (c) 2000-2026 XOOPS Project (https://xoops.org)
  * @license             GNU GPL 2 (https://www.gnu.org/licenses/gpl-2.0.html)
- * @package             profile
  * @since               2.3.0
  * @author              Taiwen Jiang <phppp@users.sourceforge.net>
  */
@@ -54,7 +53,7 @@ function xoops_module_update_profile(XoopsModule $module, $oldversion = null)
         $skip_fields[] = 'pm_link';
         $sql           = 'SELECT * FROM `' . $GLOBALS['xoopsDB']->prefix('user_profile_field') . "` WHERE `field_name` NOT IN ('" . implode("', '", $skip_fields) . "')";
         $result = $GLOBALS['xoopsDB']->query($sql);
-        if (!$GLOBALS['xoopsDB']->isResultSet($result)) {
+        if (!$GLOBALS['xoopsDB']->isResultSet($result) || !($result instanceof \mysqli_result)) {
             throw new \RuntimeException(
                 \sprintf(_DB_QUERY_ERROR, $sql) . $GLOBALS['xoopsDB']->error(),
                 E_USER_ERROR,
@@ -120,7 +119,10 @@ function xoops_module_update_profile(XoopsModule $module, $oldversion = null)
         foreach ($template_list as $k => $v) {
             $fileinfo = new SplFileInfo($templateDirectory . $v);
             if ($fileinfo->getExtension() === 'html' && $fileinfo->getFilename() !== 'index.html') {
-                @unlink($templateDirectory . $v);
+                $filePath = $templateDirectory . $v;
+                if (is_file($filePath)) {
+                    unlink($filePath);
+                }
             }
         }
 

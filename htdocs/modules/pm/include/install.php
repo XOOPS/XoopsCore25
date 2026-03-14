@@ -11,7 +11,6 @@
  *
  * @copyright       (c) 2000-2026 XOOPS Project (https://xoops.org)
  * @license             GNU GPL 2 (https://www.gnu.org/licenses/gpl-2.0.html)
- * @package             pm
  * @since               2.3.0
  * @author              Taiwen Jiang <phppp@users.sourceforge.net>
  * @param $module
@@ -26,7 +25,7 @@ function xoops_module_install_pm(XoopsModule $module)
     // Check pm table version
     $sql = 'SHOW COLUMNS FROM ' . $xoopsDB->prefix('priv_msgs');
     $result = $xoopsDB->query($sql);
-    if (!$xoopsDB->isResultSet($result)) {
+    if (!$xoopsDB->isResultSet($result) || !($result instanceof \mysqli_result)) {
         return false;
     }
 

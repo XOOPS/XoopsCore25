@@ -12,8 +12,6 @@
 /**
  * @copyright    2000-2026 XOOPS Project (https://xoops.org)
  * @license      GNU GPL 2.0 or later (https://www.gnu.org/licenses/gpl-2.0.html)
- * @package
- * @since
  * @author       XOOPS Development Team, Kazumi Ono (AKA onokazu)
  */
 
@@ -56,7 +54,7 @@ function update_system_v211($module)
     global $xoopsDB;
     $sql = 'SELECT t1.tpl_id FROM ' . $xoopsDB->prefix('tplfile') . ' t1, ' . $xoopsDB->prefix('tplfile') . ' t2 WHERE t1.tpl_refid = t2.tpl_refid AND t1.tpl_module = t2.tpl_module AND t1.tpl_tplset=t2.tpl_tplset AND t1.tpl_file = t2.tpl_file AND t1.tpl_type = t2.tpl_type AND t1.tpl_id > t2.tpl_id';
     $result = $xoopsDB->query($sql);
-    if (!$xoopsDB->isResultSet($result)) {
+    if (!$xoopsDB->isResultSet($result) || !($result instanceof \mysqli_result)) {
         throw new \RuntimeException(
             \sprintf(_DB_QUERY_ERROR, $sql) . $xoopsDB->error(),
             E_USER_ERROR,
@@ -78,7 +76,8 @@ function update_system_v211($module)
         }
     }
     $sql = 'SHOW INDEX FROM ' . $xoopsDB->prefix('tplfile') . " WHERE KEY_NAME = 'tpl_refid_module_set_file_type'";
-    if (!$result = $xoopsDB->query($sql)) {
+    $result = $xoopsDB->query($sql);
+    if (!$xoopsDB->isResultSet($result) || !($result instanceof \mysqli_result)) {
         xoops_error($xoopsDB->error() . '<br>' . $sql);
 
         return false;
