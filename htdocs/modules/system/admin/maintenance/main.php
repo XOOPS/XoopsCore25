@@ -28,7 +28,7 @@ if (!xoops_getModuleOption('active_maintenance', 'system')) {
 }
 
 // Get Action type
-$op = Request::getString('op', 'list');
+$op = Request::hasVar('op', 'POST') ? Request::getString('op', 'list', 'POST') : Request::getString('op', 'list', 'GET');
 
 // Define main template
 $GLOBALS['xoopsOption']['template_main'] = 'system_maintenance.tpl';
@@ -136,11 +136,11 @@ switch ($op) {
         //Define Breadcrumb and tips
         $xoBreadCrumb->render();
 
-        $session            = Request::getInt('session', 1);
-        $cache              = Request::getArray('cache', []);
-        $tables             = Request::getArray('tables', []);
-        $avatar             = Request::getInt('avatar', 1);
-        $tables_op          = Request::getArray('maintenance', []);
+        $session            = Request::getInt('session', 1, 'POST');
+        $cache              = Request::getArray('cache', [], 'POST');
+        $tables             = Request::getArray('tables', [], 'POST');
+        $avatar             = Request::getInt('avatar', 1, 'POST');
+        $tables_op          = Request::getArray('maintenance', [], 'POST');
         $verif_cache        = false;
         $verif_session      = false;
         $verif_avatar       = false;

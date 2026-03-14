@@ -27,7 +27,7 @@ if (!is_object($xoopsUser) || !is_object($xoopsModule) || !$xoopsUser->isAdmin($
 // Parameters
 $nb_group = xoops_getModuleOption('groups_pager', 'system');
 // Get Action type
-$op = Request::getString('op', 'list');
+$op = Request::hasVar('op', 'POST') ? Request::getString('op', 'list', 'POST') : Request::getString('op', 'list', 'GET');
 // Get groups handler
 /** @var SystemGroupHandler $groups_Handler */
 $groups_Handler = xoops_getModuleHandler('group', 'system');
