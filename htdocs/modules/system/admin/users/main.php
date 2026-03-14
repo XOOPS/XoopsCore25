@@ -290,12 +290,12 @@ case 'users_save':
             break;
         }
 
-        if ($pass1 != $pass2) {
+        if ($pass1 !== $pass2) {
             xoops_error(_AM_SYSTEM_USERS_STNPDNM);
             break;
         }
 
-        if (mb_strtolower($pass1, 'UTF-8') === mb_strtolower(Request::getString('uname'), 'UTF-8')) {
+        if (mb_strtolower($pass1, 'UTF-8') === mb_strtolower(Request::getString('uname', '', 'POST'), 'UTF-8')) {
             xoops_error(_AM_SYSTEM_USERS_PWDEQUALSUNAME);
             break;
         }
