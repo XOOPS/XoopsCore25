@@ -224,4 +224,103 @@ class ProtectorMysqlDatabaseTest extends TestCase
         $this->db->doubtful_requests = ['test_request'];
         $this->assertSame(['test_request'], $this->db->doubtful_requests);
     }
+
+    // ---------------------------------------------------------------
+    // exec() override — dblayertrap SQL inspection
+    // ---------------------------------------------------------------
+
+    #[Test]
+    public function execMethodExists(): void
+    {
+        $this->assertTrue(method_exists($this->db, 'exec'));
+    }
+
+    #[Test]
+    public function execMethodIsDeclaredOnProtectorClass(): void
+    {
+        $ref = new \ReflectionMethod(\ProtectorMySQLDatabase::class, 'exec');
+        $this->assertSame(
+            \ProtectorMySQLDatabase::class,
+            $ref->getDeclaringClass()->getName(),
+            'exec() must be declared on ProtectorMySQLDatabase, not inherited'
+        );
+    }
+
+    #[Test]
+    public function execAcceptsStringParameter(): void
+    {
+        $ref = new \ReflectionMethod(\ProtectorMySQLDatabase::class, 'exec');
+        $params = $ref->getParameters();
+        $this->assertCount(1, $params);
+        $this->assertSame('sql', $params[0]->getName());
+        $this->assertSame('string', $params[0]->getType()->getName());
+    }
+
+    #[Test]
+    public function execReturnsBool(): void
+    {
+        $ref = new \ReflectionMethod(\ProtectorMySQLDatabase::class, 'exec');
+        $returnType = $ref->getReturnType();
+        $this->assertNotNull($returnType);
+        $this->assertSame('bool', $returnType->getName());
+    }
+
+    #[Test]
+    public function execCallsCheckSqlOnDoubtfulNeedle(): void
+    {
+        // Create a partial mock to verify checkSql is called
+        $db = $this->getMockBuilder(\ProtectorMySQLDatabase::class)
+            ->disableOriginalConstructor()
+            ->onlyMethods(['checkSql', 'injectionFound'])
+            ->getMock();
+        $db->doubtful_requests = [];
+        $db->doubtful_needles = ['select', 'union', 'concat'];
+
+        // SQL containing 'union' (a doubtful needle) after char 7
+        $sql = "DELETE FROM users WHERE id IN (SELECT id FROM temp UNION SELECT 1)";
+
+        $db->expects($this->once())->method('checkSql')->with($sql);
+
+        // Suppress warning from parent::exec() due to no real DB connection
+        set_error_handler(function ($errno, $errstr) {
+            if ($errno === E_USER_WARNING && strpos($errstr, 'mysqli') !== false) {
+                return true;
+            }
+            return false;
+        });
+        try {
+            $db->exec($sql);
+        } finally {
+            restore_error_handler();
+        }
+    }
+
+    #[Test]
+    public function execSkipsCheckSqlWhenNoNeedleMatch(): void
+    {
+        $db = $this->getMockBuilder(\ProtectorMySQLDatabase::class)
+            ->disableOriginalConstructor()
+            ->onlyMethods(['checkSql', 'injectionFound'])
+            ->getMock();
+        $db->doubtful_requests = [];
+        $db->doubtful_needles = ['select', 'union', 'concat'];
+
+        // Simple DELETE with no doubtful needles after char 7
+        $sql = "DELETE FROM logs WHERE lid = 5";
+
+        $db->expects($this->never())->method('checkSql');
+
+        // Suppress warning from parent::exec() due to no real DB connection
+        set_error_handler(function ($errno, $errstr) {
+            if ($errno === E_USER_WARNING && strpos($errstr, 'mysqli') !== false) {
+                return true;
+            }
+            return false;
+        });
+        try {
+            $db->exec($sql);
+        } finally {
+            restore_error_handler();
+        }
+    }
 }

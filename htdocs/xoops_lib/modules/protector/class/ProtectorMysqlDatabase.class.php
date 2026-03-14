@@ -185,4 +185,29 @@ class ProtectorMySQLDatabase extends XoopsMySQLDatabaseProxy
 
         return $ret;
     }
+
+    /**
+     * Execute a write statement with dblayertrap SQL inspection.
+     *
+     * Mirrors the same SQL inspection logic applied in query() so that
+     * statements routed through exec() are not able to bypass dblayertrap
+     * checks when XOOPS_DB_ALTERNATIVE is active.
+     *
+     * @param string $sql SQL statement to execute
+     *
+     * @return bool TRUE on success, FALSE on failure
+     * @throws \mysqli_sql_exception
+     */
+    public function exec(string $sql): bool
+    {
+        $sql4check = substr($sql, 7);
+        foreach ($this->doubtful_needles as $needle) {
+            if (false !== stripos($sql4check, (string) $needle)) {
+                $this->checkSql($sql);
+                break;
+            }
+        }
+
+        return parent::exec($sql);
+    }
 }
