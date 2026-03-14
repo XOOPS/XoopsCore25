@@ -11,8 +11,6 @@
  *
  * @copyright       (c) 2000-2026 XOOPS Project (https://xoops.org)
  * @license             GNU GPL 2 (https://www.gnu.org/licenses/gpl-2.0.html)
- * @package             class
- * @subpackage          database
  * @since               1.0.0
  * @author              Kazumi Ono <onokazu@xoops.org>
  * @author              Rodney Fulk <redheadedrod@hotmail.com>
@@ -619,8 +617,8 @@ class XoopsMySQLDatabaseSafe extends XoopsMySQLDatabase
  *
  * @author              Kazumi Ono <onokazu@xoops.org>
  * @copyright       (c) 2000-2026 XOOPS Project (https://xoops.org)
- * @package             class
- * @subpackage          database
+ * @license             GNU GPL 2 (https://www.gnu.org/licenses/gpl-2.0.html)
+ * @link                https://xoops.org
  */
 class XoopsMySQLDatabaseProxy extends XoopsMySQLDatabase
 {
