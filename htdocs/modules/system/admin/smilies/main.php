@@ -241,8 +241,8 @@ switch ($op) {
         break;
 
     case 'smilies_update_display':
-        // Get smilies id
-        $smilies_id = Request::getInt('smilies_id', 0, 'GET');
+        // Get smilies id — sent via $.post() from system_setStatus() in admin.js
+        $smilies_id = Request::getInt('smilies_id', 0, 'POST');
         if ($smilies_id > 0) {
             $obj = $smilies_Handler->get($smilies_id);
             $old = $obj->getVar('display');

@@ -241,8 +241,8 @@ switch ($op) {
 
         // Update userrank status
     case 'userrank_update_special':
-        // Get rank id
-        $rank_id = Request::getInt('rank_id', 0, 'GET');
+        // Get rank id — sent via $.post() from system_setStatus() in admin.js
+        $rank_id = Request::getInt('rank_id', 0, 'POST');
         if ($rank_id > 0) {
             $obj = $userrank_Handler->get($rank_id);
             $old = $obj->getVar('rank_special');
