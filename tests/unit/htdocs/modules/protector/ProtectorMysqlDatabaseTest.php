@@ -282,7 +282,7 @@ class ProtectorMysqlDatabaseTest extends TestCase
         $db->expects($this->once())->method('checkSql')->with($sql);
 
         // Suppress warning from parent::exec() due to no real DB connection
-        $previousHandler = set_error_handler(function ($errno, $errstr) {
+        set_error_handler(function ($errno, $errstr) {
             if ($errno === E_USER_WARNING && strpos($errstr, 'mysqli') !== false) {
                 return true;
             }
@@ -311,7 +311,7 @@ class ProtectorMysqlDatabaseTest extends TestCase
         $db->expects($this->never())->method('checkSql');
 
         // Suppress warning from parent::exec() due to no real DB connection
-        $previousHandler = set_error_handler(function ($errno, $errstr) {
+        set_error_handler(function ($errno, $errstr) {
             if ($errno === E_USER_WARNING && strpos($errstr, 'mysqli') !== false) {
                 return true;
             }
