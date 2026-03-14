@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace kernel;
 
+require_once XOOPS_ROOT_PATH . '/kernel/block.php';
+
 use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\TestCase;
@@ -15,8 +17,6 @@ use XoopsBlock;
  * These tests scan source files to confirm that eval() calls have been
  * removed from security-critical paths.
  *
- * @category  XoopsCore
- * @package   Tests\Kernel
  * @author    XOOPS Development Team
  * @copyright XOOPS Project (https://xoops.org)
  * @license   GNU GPL 2.0 or later (https://www.gnu.org/licenses/gpl-2.0.html)
@@ -52,6 +52,22 @@ class EvalRemovalVerificationTest extends TestCase
             }
         }
         $this->assertFalse($evalFound, $message);
+    }
+
+    /**
+     * Assert that PHP source code contains at least one T_EVAL token.
+     */
+    private function assertHasEvalTokens(string $phpSource, string $message): void
+    {
+        $tokens = token_get_all($phpSource);
+        $evalFound = false;
+        foreach ($tokens as $token) {
+            if (is_array($token) && $token[0] === T_EVAL) {
+                $evalFound = true;
+                break;
+            }
+        }
+        $this->assertTrue($evalFound, $message);
     }
 
     // =========================================================================
@@ -98,16 +114,11 @@ class EvalRemovalVerificationTest extends TestCase
     #[Test]
     public function legacyPhpBlockReturnsEmptyContent(): void
     {
-        require_once XOOPS_ROOT_PATH . '/kernel/block.php';
-
         $deprecations = [];
         set_error_handler(function (int $errno, string $errstr) use (&$deprecations) {
-            if ($errno === E_USER_DEPRECATED) {
-                $deprecations[] = $errstr;
-                return true;
-            }
-            return false;
-        });
+            $deprecations[] = $errstr;
+            return true;
+        }, E_USER_DEPRECATED);
         try {
             $block = new XoopsBlock();
             $block->setVar('block_type', 'C');
@@ -224,23 +235,36 @@ class EvalRemovalVerificationTest extends TestCase
      */
     private function resolveProtectorFile(string $basename): string
     {
-        $file = XOOPS_ROOT_PATH . '/../xoops_lib/modules/protector/' . $basename;
-        if (!file_exists($file)) {
-            $file = XOOPS_PATH . '/modules/protector/' . $basename;
+        // Prefer XOOPS_TRUST_PATH if defined (standard XOOPS trust-path convention)
+        if (defined('XOOPS_TRUST_PATH')) {
+            $file = XOOPS_TRUST_PATH . '/modules/protector/' . $basename;
+            if (file_exists($file)) {
+                return $file;
+            }
         }
-        if (!file_exists($file)) {
-            $this->markTestSkipped("Protector trust-path file not found: {$basename}");
+        // Fallback to XOOPS_PATH
+        if (defined('XOOPS_PATH')) {
+            $file = XOOPS_PATH . '/modules/protector/' . $basename;
+            if (file_exists($file)) {
+                return $file;
+            }
+        }
+        // Last resort: relative path from XOOPS_ROOT_PATH
+        $file = XOOPS_ROOT_PATH . '/../xoops_lib/modules/protector/' . $basename;
+        if (file_exists($file)) {
+            return $file;
         }
 
-        return $file;
+        $this->markTestSkipped("Protector trust-path file not found: {$basename}");
     }
 
     /**
      * Protector lifecycle files intentionally retain eval() for D3-style cloned
      * installs where $mydirname varies at runtime.  These tests verify:
-     * 1. eval() is guarded by function_exists() to prevent redefinition
-     * 2. $mydirname is sourced from ProtectorRegistry (not user input)
-     * 3. The base function is defined
+     * 1. eval() exists (via T_EVAL token scan) for dynamic function name creation
+     * 2. eval() is guarded by function_exists() to prevent redefinition
+     * 3. $mydirname is sourced from ProtectorRegistry (not user input)
+     * 4. The base function is defined
      */
     #[Test]
     public function protectorOninstallUsesGuardedEvalAndDefinesBase(): void
@@ -249,6 +273,8 @@ class EvalRemovalVerificationTest extends TestCase
         $content = file_get_contents($file);
         $this->assertNotFalse($content);
 
+        $this->assertHasEvalTokens($content,
+            'protector/oninstall.php must contain eval() for D3 clone dynamic function names');
         $this->assertStringContainsString('function_exists(', $content,
             'protector/oninstall.php must guard eval() with function_exists()');
         $this->assertStringContainsString('protector_oninstall_base', $content,
@@ -264,6 +290,8 @@ class EvalRemovalVerificationTest extends TestCase
         $content = file_get_contents($file);
         $this->assertNotFalse($content);
 
+        $this->assertHasEvalTokens($content,
+            'protector/onuninstall.php must contain eval() for D3 clone dynamic function names');
         $this->assertStringContainsString('function_exists(', $content,
             'protector/onuninstall.php must guard eval() with function_exists()');
         $this->assertStringContainsString('protector_onuninstall_base', $content,
@@ -279,6 +307,8 @@ class EvalRemovalVerificationTest extends TestCase
         $content = file_get_contents($file);
         $this->assertNotFalse($content);
 
+        $this->assertHasEvalTokens($content,
+            'protector/onupdate.php must contain eval() for D3 clone dynamic function names');
         $this->assertStringContainsString('function_exists(', $content,
             'protector/onupdate.php must guard eval() with function_exists()');
         $this->assertStringContainsString('protector_onupdate_base', $content,
@@ -294,6 +324,8 @@ class EvalRemovalVerificationTest extends TestCase
         $content = file_get_contents($file);
         $this->assertNotFalse($content);
 
+        $this->assertHasEvalTokens($content,
+            'protector/notification.php must contain eval() for D3 clone dynamic function names');
         $this->assertStringContainsString('function_exists(', $content,
             'protector/notification.php must guard eval() with function_exists()');
         $this->assertStringContainsString('protector_notify_base', $content,

@@ -556,19 +556,15 @@ class XoopsBlock extends XoopsObject
      */
     private function executeLegacyBlock(string $raw): string
     {
-        static $warningLogged = false;
-        if (!$warningLogged) {
-            $this->logBlockWarning(
-                'PHP block eval() execution has been permanently removed in XOOPS 2.5.12. '
-                . 'Convert block to file-based format (filename.php|function_name in custom_blocks/), '
-                . 'H (HTML), or S/T (sanitized text) type.'
-            );
-            trigger_error(
-                'XOOPS: PHP block eval() has been removed in 2.5.12. Convert to file-based format.',
-                E_USER_DEPRECATED
-            );
-            $warningLogged = true;
-        }
+        $this->logBlockWarning(
+            'PHP block eval() execution has been permanently removed in XOOPS 2.5.12. '
+            . 'Convert block to file-based format (filename.php|function_name in custom_blocks/), '
+            . 'H (HTML), or S/T (sanitized text) type.'
+        );
+        trigger_error(
+            'XOOPS: PHP block eval() has been removed in 2.5.12. Convert to file-based format.',
+            E_USER_DEPRECATED
+        );
 
         return '';
     }

@@ -739,12 +739,9 @@ class XoopsBlockPhpBlockTest extends KernelTestCase
     {
         $deprecations = [];
         set_error_handler(function (int $errno, string $errstr) use (&$deprecations) {
-            if ($errno === E_USER_DEPRECATED) {
-                $deprecations[] = $errstr;
-                return true;
-            }
-            return false;
-        });
+            $deprecations[] = $errstr;
+            return true;
+        }, E_USER_DEPRECATED);
         try {
             $block = $this->createPhpBlock('file.php|func-name');
             $result = $block->getContent('S', 'P');
@@ -754,7 +751,10 @@ class XoopsBlockPhpBlockTest extends KernelTestCase
 
         $this->assertSame('', $result, 'Malformed pipe content should return empty (eval removed)');
         $this->assertNotEmpty($deprecations, 'Should emit E_USER_DEPRECATED for malformed content');
-        $this->assertStringContainsString('malformed', $deprecations[0]);
+        $this->assertTrue(
+            (bool) array_filter($deprecations, static fn(string $m): bool => str_contains($m, 'malformed')),
+            'Expected malformed-content deprecation was not emitted'
+        );
     }
 
     /**
@@ -766,12 +766,9 @@ class XoopsBlockPhpBlockTest extends KernelTestCase
     {
         $deprecations = [];
         set_error_handler(function (int $errno, string $errstr) use (&$deprecations) {
-            if ($errno === E_USER_DEPRECATED) {
-                $deprecations[] = $errstr;
-                return true;
-            }
-            return false;
-        });
+            $deprecations[] = $errstr;
+            return true;
+        }, E_USER_DEPRECATED);
         try {
             $block = $this->createPhpBlock('echo "hello";');
             $result = $block->getContent('S', 'P');
@@ -781,6 +778,9 @@ class XoopsBlockPhpBlockTest extends KernelTestCase
 
         $this->assertSame('', $result);
         $this->assertNotEmpty($deprecations, 'Should emit E_USER_DEPRECATED for legacy eval content');
-        $this->assertStringContainsString('removed', $deprecations[0]);
+        $this->assertTrue(
+            (bool) array_filter($deprecations, static fn(string $m): bool => str_contains($m, 'removed')),
+            'Expected eval-removed deprecation was not emitted'
+        );
     }
 }
