@@ -40,8 +40,11 @@ $file = $file_base . '.png';
 if (file_exists($mydirpath . '/' . $file)) {
     $draw_dirname  = false;
     $icon_fullpath = $mydirpath . '/' . $file;
-} else {
+} elseif (file_exists(__DIR__ . '/images/' . $file)) {
     $icon_fullpath = __DIR__ . '/images/' . $file;
+} else {
+    // Fallback to default icon when requested file does not exist
+    $icon_fullpath = __DIR__ . '/images/module_icon.png';
 }
 
 if ($draw_dirname && function_exists('imagecreatefrompng') && function_exists('imagecolorallocate') && function_exists('imagestring') && function_exists('imagepng')) {
