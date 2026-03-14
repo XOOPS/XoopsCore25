@@ -312,7 +312,8 @@ class XoopsLogger
     public function handleError($errno, $errstr, $errfile, $errline, $trace = null)
     {
         if ($this->activated && ($errno & error_reporting())) {
-            // NOTE: we only store relative pathnames
+            // Sanitize to relative pathnames before storing or dispatching
+            $errfile = $this->sanitizePath($errfile);
             $this->errors[] = compact('errno', 'errstr', 'errfile', 'errline');
 
             // Dispatch to registered loggers with appropriate PSR-3 level
