@@ -182,7 +182,7 @@ preg_match('/(^[a-z\s]*)([0-9\.]*)/i', XOOPS_VERSION, $versionParts);
 
                                 <div class="text-end mt-4">
                                     <button class="btn btn-lg btn-success" type="<?php echo !empty($pageHasForm) ? 'submit' : 'button'; ?>"
-                                            <?php if (empty($pageHasForm)): ?>onclick="location.href='<?php echo htmlspecialchars($wizard->pageURI('+1'), ENT_QUOTES | ENT_HTML5); ?>'"<?php endif; ?>>
+                                            <?php if (empty($pageHasForm)): ?>onclick="location.href=<?php echo json_encode($wizard->pageURI('+1')); ?>"<?php endif; ?>>
                                         <?php echo BUTTON_NEXT; ?> <i class="fa-solid fa-caret-right"></i>
                                     </button>
                                 </div>

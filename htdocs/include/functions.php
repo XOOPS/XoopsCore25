@@ -423,7 +423,7 @@ function xoops_confirm($hiddens, $action, $msg, $submit = '', $addtoken = true)
     require_once $GLOBALS['xoops']->path('/class/template.php');
     $confirmTpl = new \XoopsTpl();
     $confirmTpl->assign('msg', $msg);
-    $confirmTpl->assign('action', $action);
+    $confirmTpl->assign('action', htmlspecialchars($action, ENT_QUOTES | ENT_HTML5));
     $tempHiddens = '';
     foreach ($hiddens as $name => $value) {
         if (is_array($value)) {
