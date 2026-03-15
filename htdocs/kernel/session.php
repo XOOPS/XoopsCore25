@@ -72,8 +72,11 @@ class XoopsSessionHandler implements
         $sameSite = isset($xoopsConfig['session_cookie_samesite']) ? (string) $xoopsConfig['session_cookie_samesite'] : 'Lax';
         $sameSite = in_array($sameSite, ['Lax', 'Strict', 'None'], true) ? $sameSite : 'Lax';
 
-        $secureFromConfig = isset($xoopsConfig['session_cookie_secure']) ? (bool) $xoopsConfig['session_cookie_secure'] : null;
-        $secure = is_bool($secureFromConfig) ? $secureFromConfig : (XOOPS_PROT === 'https://');
+        // Auto-detect Secure from protocol; preference can only force it ON, never OFF
+        $secure = (XOOPS_PROT === 'https://');
+        if (!empty($xoopsConfig['session_cookie_secure'])) {
+            $secure = true;
+        }
 
         // Browsers require Secure when SameSite=None
         if ($sameSite === 'None') {

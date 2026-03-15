@@ -170,24 +170,40 @@ class Upgrade_2512 extends XoopsUpgrade
     }
 
     /**
-     * Check if session cookie preferences already exist.
+     * Check if session cookie preferences already exist (config rows + options).
      *
-     * @return bool true if already present (no action needed)
+     * @return bool true if fully present (no action needed)
      */
     public function check_addsessioncookieprefs()
     {
-        $sql = 'SELECT COUNT(*) FROM `' . $GLOBALS['xoopsDB']->prefix('config')
+        $db = $GLOBALS['xoopsDB'];
+
+        // Check both config rows exist
+        $sql = 'SELECT COUNT(*) FROM `' . $db->prefix('config')
             . "` WHERE `conf_name` IN ('session_cookie_samesite', 'session_cookie_secure')";
-        $result = $GLOBALS['xoopsDB']->query($sql);
-        if (!$GLOBALS['xoopsDB']->isResultSet($result) || !($result instanceof \mysqli_result)) {
+        $result = $db->query($sql);
+        if (!$db->isResultSet($result) || !($result instanceof \mysqli_result)) {
             return false;
         }
-        $row = $GLOBALS['xoopsDB']->fetchRow($result);
-        return $row && (int) $row[0] >= 2;
+        $row = $db->fetchRow($result);
+        if (!$row || (int) $row[0] < 2) {
+            return false;
+        }
+
+        // Check SameSite options exist (Lax, Strict, None)
+        $sql = "SELECT COUNT(*) FROM `" . $db->prefix('configoption') . "` co"
+            . " INNER JOIN `" . $db->prefix('config') . "` c ON co.conf_id = c.conf_id"
+            . " WHERE c.conf_name = 'session_cookie_samesite'";
+        $result = $db->query($sql);
+        if (!$db->isResultSet($result) || !($result instanceof \mysqli_result)) {
+            return false;
+        }
+        $row = $db->fetchRow($result);
+        return $row && (int) $row[0] >= 3;
     }
 
     /**
-     * Add session cookie SameSite and Secure preferences.
+     * Add session cookie SameSite and Secure preferences (idempotent).
      *
      * @return bool true on success
      */
@@ -197,22 +213,44 @@ class Upgrade_2512 extends XoopsUpgrade
         $configTable = $db->prefix('config');
         $optionTable = $db->prefix('configoption');
 
-        // Insert SameSite preference
-        $db->exec("INSERT INTO `{$configTable}` (conf_modid, conf_catid, conf_name, conf_title, conf_value, conf_desc, conf_formtype, conf_valuetype, conf_order) VALUES (0, 1, 'session_cookie_samesite', '_MD_AM_SESSSAMESITE', 'Lax', '_MD_AM_SESSSAMESITE_DSC', 'select', 'text', 43)");
-
-        // Insert Secure preference
-        $db->exec("INSERT INTO `{$configTable}` (conf_modid, conf_catid, conf_name, conf_title, conf_value, conf_desc, conf_formtype, conf_valuetype, conf_order) VALUES (0, 1, 'session_cookie_secure', '_MD_AM_SESSSECURE', '0', '_MD_AM_SESSSECURE_DSC', 'yesno', 'int', 44)");
-
-        // Add select options for SameSite preference
+        // Insert SameSite preference (skip if exists)
         $sql = "SELECT conf_id FROM `{$configTable}` WHERE conf_name = 'session_cookie_samesite'";
         $result = $db->query($sql);
-        if ($db->isResultSet($result) && ($result instanceof \mysqli_result)) {
-            $row = $db->fetchRow($result);
-            if ($row) {
-                $confId = (int) $row[0];
-                $db->exec("INSERT INTO `{$optionTable}` (confop_name, confop_value, conf_id) VALUES ('Lax', 'Lax', {$confId})");
-                $db->exec("INSERT INTO `{$optionTable}` (confop_name, confop_value, conf_id) VALUES ('Strict', 'Strict', {$confId})");
-                $db->exec("INSERT INTO `{$optionTable}` (confop_name, confop_value, conf_id) VALUES ('None', 'None', {$confId})");
+        $sameSiteRow = ($db->isResultSet($result) && ($result instanceof \mysqli_result)) ? $db->fetchRow($result) : false;
+
+        if (!$sameSiteRow) {
+            if (!$db->exec("INSERT INTO `{$configTable}` (conf_modid, conf_catid, conf_name, conf_title, conf_value, conf_desc, conf_formtype, conf_valuetype, conf_order) VALUES (0, 1, 'session_cookie_samesite', '_MD_AM_SESSSAMESITE', 'Lax', '_MD_AM_SESSSAMESITE_DSC', 'select', 'text', 43)")) {
+                $this->logs[] = 'Failed to insert session_cookie_samesite config: ' . $db->error();
+                return false;
+            }
+            // Re-fetch the conf_id
+            $result = $db->query($sql);
+            $sameSiteRow = ($db->isResultSet($result) && ($result instanceof \mysqli_result)) ? $db->fetchRow($result) : false;
+        }
+
+        // Insert Secure preference (skip if exists)
+        $sql = "SELECT conf_id FROM `{$configTable}` WHERE conf_name = 'session_cookie_secure'";
+        $result = $db->query($sql);
+        $secureRow = ($db->isResultSet($result) && ($result instanceof \mysqli_result)) ? $db->fetchRow($result) : false;
+
+        if (!$secureRow) {
+            if (!$db->exec("INSERT INTO `{$configTable}` (conf_modid, conf_catid, conf_name, conf_title, conf_value, conf_desc, conf_formtype, conf_valuetype, conf_order) VALUES (0, 1, 'session_cookie_secure', '_MD_AM_SESSSECURE', '0', '_MD_AM_SESSSECURE_DSC', 'yesno', 'int', 44)")) {
+                $this->logs[] = 'Failed to insert session_cookie_secure config: ' . $db->error();
+                return false;
+            }
+        }
+
+        // Add select options for SameSite (skip if already present)
+        if ($sameSiteRow) {
+            $confId = (int) $sameSiteRow[0];
+            $sql = "SELECT COUNT(*) FROM `{$optionTable}` WHERE conf_id = {$confId}";
+            $result = $db->query($sql);
+            $optRow = ($db->isResultSet($result) && ($result instanceof \mysqli_result)) ? $db->fetchRow($result) : false;
+
+            if (!$optRow || (int) $optRow[0] < 3) {
+                foreach (['Lax', 'Strict', 'None'] as $opt) {
+                    $db->exec("INSERT IGNORE INTO `{$optionTable}` (confop_name, confop_value, conf_id) VALUES ('{$opt}', '{$opt}', {$confId})");
+                }
             }
         }
 
