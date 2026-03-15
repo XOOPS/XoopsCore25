@@ -23,6 +23,7 @@ class Upgrade_2512 extends XoopsUpgrade
             'deletephpmailer',
             'createtokenstable',
             'widenbannerclientpasswd',
+            'addsessioncookieprefs',
         ];
         $this->usedFiles    = [];
         $this->pathsToCheck = [
@@ -165,6 +166,56 @@ class Upgrade_2512 extends XoopsUpgrade
             );
             return false;
         }
+        return true;
+    }
+
+    /**
+     * Check if session cookie preferences already exist.
+     *
+     * @return bool true if already present (no action needed)
+     */
+    public function check_addsessioncookieprefs()
+    {
+        $sql = 'SELECT COUNT(*) FROM `' . $GLOBALS['xoopsDB']->prefix('config')
+            . "` WHERE `conf_name` IN ('session_cookie_samesite', 'session_cookie_secure')";
+        $result = $GLOBALS['xoopsDB']->query($sql);
+        if (!$GLOBALS['xoopsDB']->isResultSet($result) || !($result instanceof \mysqli_result)) {
+            return false;
+        }
+        $row = $GLOBALS['xoopsDB']->fetchRow($result);
+        return $row && (int) $row[0] >= 2;
+    }
+
+    /**
+     * Add session cookie SameSite and Secure preferences.
+     *
+     * @return bool true on success
+     */
+    public function apply_addsessioncookieprefs()
+    {
+        $db = $GLOBALS['xoopsDB'];
+        $configTable = $db->prefix('config');
+        $optionTable = $db->prefix('configoption');
+
+        // Insert SameSite preference
+        $db->exec("INSERT INTO `{$configTable}` (conf_modid, conf_catid, conf_name, conf_title, conf_value, conf_desc, conf_formtype, conf_valuetype, conf_order) VALUES (0, 1, 'session_cookie_samesite', '_MD_AM_SESSSAMESITE', 'Lax', '_MD_AM_SESSSAMESITE_DSC', 'select', 'text', 43)");
+
+        // Insert Secure preference
+        $db->exec("INSERT INTO `{$configTable}` (conf_modid, conf_catid, conf_name, conf_title, conf_value, conf_desc, conf_formtype, conf_valuetype, conf_order) VALUES (0, 1, 'session_cookie_secure', '_MD_AM_SESSSECURE', '0', '_MD_AM_SESSSECURE_DSC', 'yesno', 'int', 44)");
+
+        // Add select options for SameSite preference
+        $sql = "SELECT conf_id FROM `{$configTable}` WHERE conf_name = 'session_cookie_samesite'";
+        $result = $db->query($sql);
+        if ($db->isResultSet($result) && ($result instanceof \mysqli_result)) {
+            $row = $db->fetchRow($result);
+            if ($row) {
+                $confId = (int) $row[0];
+                $db->exec("INSERT INTO `{$optionTable}` (confop_name, confop_value, conf_id) VALUES ('Lax', 'Lax', {$confId})");
+                $db->exec("INSERT INTO `{$optionTable}` (confop_name, confop_value, conf_id) VALUES ('Strict', 'Strict', {$confId})");
+                $db->exec("INSERT INTO `{$optionTable}` (confop_name, confop_value, conf_id) VALUES ('None', 'None', {$confId})");
+            }
+        }
+
         return true;
     }
 

@@ -68,13 +68,25 @@ class XoopsSessionHandler implements
             }
         }
 
+        // Resolve SameSite and Secure from XOOPS config preferences
+        $sameSite = isset($xoopsConfig['session_cookie_samesite']) ? (string) $xoopsConfig['session_cookie_samesite'] : 'Lax';
+        $sameSite = in_array($sameSite, ['Lax', 'Strict', 'None'], true) ? $sameSite : 'Lax';
+
+        $secureFromConfig = isset($xoopsConfig['session_cookie_secure']) ? (bool) $xoopsConfig['session_cookie_secure'] : null;
+        $secure = is_bool($secureFromConfig) ? $secureFromConfig : (XOOPS_PROT === 'https://');
+
+        // Browsers require Secure when SameSite=None
+        if ($sameSite === 'None') {
+            $secure = true;
+        }
+
         $options = [
             'lifetime' => $lifetime,
             'path'     => '/',
             'domain'   => $cookieDomain,
             'secure'   => $secure,
             'httponly' => true,
-            'samesite' => 'Lax',
+            'samesite' => $sameSite,
         ];
         session_set_cookie_params($options);
     }
