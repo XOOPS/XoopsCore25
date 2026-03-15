@@ -55,8 +55,6 @@ class XoopsSessionHandler implements
             ? $xoopsConfig['session_expire'] * 60
             : ini_get('session.cookie_lifetime');
 
-        $secure = (XOOPS_PROT === 'https://');
-
         $host = parse_url(XOOPS_URL, PHP_URL_HOST);
         if (!is_string($host)) {
             $host = '';

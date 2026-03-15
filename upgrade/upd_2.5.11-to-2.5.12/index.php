@@ -178,9 +178,10 @@ class Upgrade_2512 extends XoopsUpgrade
     {
         $db = $GLOBALS['xoopsDB'];
 
-        // Check both config rows exist
-        $sql = 'SELECT COUNT(*) FROM `' . $db->prefix('config')
-            . "` WHERE `conf_name` IN ('session_cookie_samesite', 'session_cookie_secure')";
+        // Check both core config rows exist (scoped to conf_modid=0, conf_catid=1)
+        $sql = 'SELECT COUNT(DISTINCT conf_name) FROM `' . $db->prefix('config')
+            . "` WHERE conf_modid = 0 AND conf_catid = 1"
+            . " AND `conf_name` IN ('session_cookie_samesite', 'session_cookie_secure')";
         $result = $db->query($sql);
         if (!$db->isResultSet($result) || !($result instanceof \mysqli_result)) {
             return false;
@@ -193,7 +194,7 @@ class Upgrade_2512 extends XoopsUpgrade
         // Check SameSite options exist (Lax, Strict, None)
         $sql = "SELECT COUNT(*) FROM `" . $db->prefix('configoption') . "` co"
             . " INNER JOIN `" . $db->prefix('config') . "` c ON co.conf_id = c.conf_id"
-            . " WHERE c.conf_name = 'session_cookie_samesite'";
+            . " WHERE c.conf_name = 'session_cookie_samesite' AND c.conf_modid = 0";
         $result = $db->query($sql);
         if (!$db->isResultSet($result) || !($result instanceof \mysqli_result)) {
             return false;
@@ -214,7 +215,7 @@ class Upgrade_2512 extends XoopsUpgrade
         $optionTable = $db->prefix('configoption');
 
         // Insert SameSite preference (skip if exists)
-        $sql = "SELECT conf_id FROM `{$configTable}` WHERE conf_name = 'session_cookie_samesite'";
+        $sql = "SELECT conf_id FROM `{$configTable}` WHERE conf_name = 'session_cookie_samesite' AND conf_modid = 0";
         $result = $db->query($sql);
         $sameSiteRow = ($db->isResultSet($result) && ($result instanceof \mysqli_result)) ? $db->fetchRow($result) : false;
 
@@ -226,10 +227,14 @@ class Upgrade_2512 extends XoopsUpgrade
             // Re-fetch the conf_id
             $result = $db->query($sql);
             $sameSiteRow = ($db->isResultSet($result) && ($result instanceof \mysqli_result)) ? $db->fetchRow($result) : false;
+            if (!$sameSiteRow) {
+                $this->logs[] = 'Failed to retrieve session_cookie_samesite conf_id after insert';
+                return false;
+            }
         }
 
         // Insert Secure preference (skip if exists)
-        $sql = "SELECT conf_id FROM `{$configTable}` WHERE conf_name = 'session_cookie_secure'";
+        $sql = "SELECT conf_id FROM `{$configTable}` WHERE conf_name = 'session_cookie_secure' AND conf_modid = 0";
         $result = $db->query($sql);
         $secureRow = ($db->isResultSet($result) && ($result instanceof \mysqli_result)) ? $db->fetchRow($result) : false;
 
@@ -240,17 +245,13 @@ class Upgrade_2512 extends XoopsUpgrade
             }
         }
 
-        // Add select options for SameSite (skip if already present)
-        if ($sameSiteRow) {
-            $confId = (int) $sameSiteRow[0];
-            $sql = "SELECT COUNT(*) FROM `{$optionTable}` WHERE conf_id = {$confId}";
-            $result = $db->query($sql);
-            $optRow = ($db->isResultSet($result) && ($result instanceof \mysqli_result)) ? $db->fetchRow($result) : false;
-
-            if (!$optRow || (int) $optRow[0] < 3) {
-                foreach (['Lax', 'Strict', 'None'] as $opt) {
-                    $db->exec("INSERT IGNORE INTO `{$optionTable}` (confop_name, confop_value, conf_id) VALUES ('{$opt}', '{$opt}', {$confId})");
-                }
+        // Add select options for SameSite — delete and recreate to avoid duplicates
+        $confId = (int) $sameSiteRow[0];
+        $db->exec("DELETE FROM `{$optionTable}` WHERE conf_id = {$confId}");
+        foreach (['Lax', 'Strict', 'None'] as $opt) {
+            if (!$db->exec("INSERT INTO `{$optionTable}` (confop_name, confop_value, conf_id) VALUES ('{$opt}', '{$opt}', {$confId})")) {
+                $this->logs[] = "Failed to insert SameSite option '{$opt}': " . $db->error();
+                return false;
             }
         }
 
