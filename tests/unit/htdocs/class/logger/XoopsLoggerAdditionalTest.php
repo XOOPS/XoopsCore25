@@ -585,7 +585,7 @@ class XoopsLoggerAdditionalTest extends TestCase
     }
 
     #[Test]
-    public function addBlockFormatsMessageForCachedBlock(): void
+    public function addBlockDispatchesRawNameAsMessage(): void
     {
         $collector = new \stdClass();
         $collector->received = [];
@@ -593,14 +593,13 @@ class XoopsLoggerAdditionalTest extends TestCase
 
         $this->logger->addBlock('menu_block', true, 1800);
 
-        $msg = $collector->received[0]['message'];
-        self::assertStringContainsString('menu_block', $msg);
-        self::assertStringContainsString('Cached', $msg);
-        self::assertStringContainsString('1800', $msg);
+        self::assertSame('menu_block', $collector->received[0]['message']);
+        self::assertTrue($collector->received[0]['context']['cached']);
+        self::assertSame(1800, $collector->received[0]['context']['cachetime']);
     }
 
     #[Test]
-    public function addBlockFormatsMessageForNonCachedBlock(): void
+    public function addBlockDispatchesRawNameForNonCachedBlock(): void
     {
         $collector = new \stdClass();
         $collector->received = [];
@@ -608,9 +607,8 @@ class XoopsLoggerAdditionalTest extends TestCase
 
         $this->logger->addBlock('footer_block', false, 0);
 
-        $msg = $collector->received[0]['message'];
-        self::assertStringContainsString('footer_block', $msg);
-        self::assertStringContainsString('Not cached', $msg);
+        self::assertSame('footer_block', $collector->received[0]['message']);
+        self::assertFalse($collector->received[0]['context']['cached']);
     }
 
     #[Test]
@@ -648,7 +646,7 @@ class XoopsLoggerAdditionalTest extends TestCase
     }
 
     #[Test]
-    public function addExtraFormatsMessageCorrectly(): void
+    public function addExtraDispatchesRawMsgAsMessage(): void
     {
         $collector = new \stdClass();
         $collector->received = [];
@@ -656,8 +654,9 @@ class XoopsLoggerAdditionalTest extends TestCase
 
         $this->logger->addExtra('Session', 'user authenticated');
 
-        $msg = $collector->received[0]['message'];
-        self::assertSame('Session: user authenticated', $msg);
+        self::assertSame('user authenticated', $collector->received[0]['message']);
+        self::assertSame('Session', $collector->received[0]['context']['name']);
+        self::assertSame('user authenticated', $collector->received[0]['context']['msg']);
     }
 
     #[Test]
@@ -737,7 +736,7 @@ class XoopsLoggerAdditionalTest extends TestCase
     }
 
     #[Test]
-    public function addQueryFormatsErrorMessageWithErrnoAndSql(): void
+    public function addQueryDispatchesRawSqlWithErrorInContext(): void
     {
         $collector = new \stdClass();
         $collector->received = [];
@@ -745,10 +744,11 @@ class XoopsLoggerAdditionalTest extends TestCase
 
         $this->logger->addQuery('BAD SQL', 'Syntax error near BAD', 1064);
 
-        $msg = $collector->received[0]['message'];
-        self::assertStringContainsString('1064', $msg);
-        self::assertStringContainsString('Syntax error near BAD', $msg);
-        self::assertStringContainsString('BAD SQL', $msg);
+        // Message is raw SQL; error details are in context for sub-loggers to format
+        self::assertSame('BAD SQL', $collector->received[0]['message']);
+        self::assertSame('error', $collector->received[0]['level']);
+        self::assertSame(1064, $collector->received[0]['context']['errno']);
+        self::assertSame('Syntax error near BAD', $collector->received[0]['context']['error']);
     }
 
     #[Test]

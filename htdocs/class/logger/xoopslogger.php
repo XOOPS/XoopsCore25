@@ -57,9 +57,79 @@ class XoopsLogger
     public $renderingEnabled = false;
 
     /**
+     * Registered sub-loggers (composite pattern, ported from XOOPS 2.6)
+     * @var object[]
+     */
+    private $loggers = [];
+
+    /**
      * XoopsLogger::__construct()
      */
     public function __construct() {}
+
+    /**
+     * Register a sub-logger to receive dispatched log entries.
+     * Ported from XOOPS 2.6 Logger::addLogger() composite pattern.
+     *
+     * The logger must be an object with a log($level, $message, $context) method.
+     *
+     * @param object $logger  a PSR-3 compatible logger instance
+     * @return void
+     */
+    public function addLogger($logger)
+    {
+        if (is_object($logger) && method_exists($logger, 'log')) {
+            $this->loggers[] = $logger;
+        }
+    }
+
+    /**
+     * Get all registered loggers
+     *
+     * @return object[]
+     */
+    public function getLoggers()
+    {
+        return $this->loggers;
+    }
+
+    /**
+     * PSR-3 compatible log method. Dispatches to all registered loggers.
+     *
+     * @param mixed  $level    PSR-3 log level
+     * @param string $message  log message
+     * @param array  $context  context array, may include 'channel' key for routing
+     * @return void
+     */
+    public function log($level, $message, array $context = [])
+    {
+        foreach ($this->loggers as $logger) {
+            try {
+                $logger->log($level, $message, $context);
+            } catch (\Throwable $e) {
+                // Silently ignore logger errors to prevent cascading failures
+            }
+        }
+    }
+
+    /**
+     * Suppress output from registered loggers (e.g. during AJAX requests).
+     * Calls quiet() on each logger that supports it.
+     *
+     * @return void
+     */
+    public function quiet()
+    {
+        foreach ($this->loggers as $logger) {
+            if (method_exists($logger, 'quiet')) {
+                try {
+                    $logger->quiet();
+                } catch (\Throwable $e) {
+                    // Silently ignore logger errors to prevent cascading failures
+                }
+            }
+        }
+    }
 
     /**
      * Deprecated, use getInstance() instead
@@ -152,6 +222,14 @@ class XoopsLogger
         if ($this->activated) {
             $this->queries[] = ['sql' => $sql, 'error' => $error, 'errno' => $errno, 'query_time' => $query_time];
         }
+        // Dispatch raw SQL to registered loggers; sub-loggers format from context
+        $this->log($error ? 'error' : 'debug', $sql, [
+            'channel'    => 'Queries',
+            'sql'        => $sql,
+            'error'      => $error,
+            'errno'      => $errno,
+            'query_time' => $query_time,
+        ]);
     }
 
     /**
@@ -166,6 +244,13 @@ class XoopsLogger
         if ($this->activated) {
             $this->blocks[] = ['name' => $name, 'cached' => $cached, 'cachetime' => $cachetime];
         }
+        // Dispatch raw block name to registered loggers; sub-loggers format from context
+        $this->log('debug', $name, [
+            'channel'   => 'Blocks',
+            'name'      => $name,
+            'cached'    => $cached,
+            'cachetime' => $cachetime,
+        ]);
     }
 
     /**
@@ -179,6 +264,12 @@ class XoopsLogger
         if ($this->activated) {
             $this->extra[] = ['name' => $name, 'msg' => $msg];
         }
+        // Dispatch raw msg to registered loggers; sub-loggers format from context
+        $this->log('debug', $msg, [
+            'channel' => 'Extra',
+            'name'    => $name,
+            'msg'     => $msg,
+        ]);
     }
 
     /**
@@ -204,6 +295,9 @@ class XoopsLogger
             $miniTrace = str_replace([XOOPS_VAR_PATH, XOOPS_PATH, XOOPS_ROOT_PATH], '', $miniTrace);
 
             $this->deprecated[] = $msg . $miniTrace;
+
+            // Dispatch to registered loggers
+            $this->log('warning', $msg, ['channel' => 'Deprecated']);
         }
     }
 
@@ -218,10 +312,33 @@ class XoopsLogger
      */
     public function handleError($errno, $errstr, $errfile, $errline, $trace = null)
     {
-        if ($this->activated && ($errno & error_reporting())) {
-            // NOTE: we only store relative pathnames
-            $this->errors[] = compact('errno', 'errstr', 'errfile', 'errline');
+        if ($errno & error_reporting()) {
+            // Sanitize to relative pathnames before storing or dispatching
+            $errfile = $this->sanitizePath($errfile);
+
+            if ($this->activated) {
+                $this->errors[] = compact('errno', 'errstr', 'errfile', 'errline');
+            }
+
+            // Dispatch to registered loggers with appropriate PSR-3 level
+            $levelMap = [
+                E_USER_ERROR        => 'error',
+                E_USER_WARNING      => 'warning',
+                E_USER_NOTICE       => 'notice',
+                E_USER_DEPRECATED   => 'notice',
+                E_WARNING           => 'warning',
+                E_NOTICE            => 'notice',
+                E_DEPRECATED        => 'notice',
+            ];
+            $psrLevel = $levelMap[$errno] ?? 'error';
+            $this->log($psrLevel, $errstr, [
+                'channel' => 'messages',
+                'errno'   => $errno,
+                'errfile' => $errfile,
+                'errline' => $errline,
+            ]);
         }
+
         if ($errno == E_USER_ERROR) {
             $includeTrace = true;
             if (substr($errstr, 0, '8') === 'notrace:') {

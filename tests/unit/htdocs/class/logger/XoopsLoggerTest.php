@@ -412,7 +412,9 @@ class XoopsLoggerTest extends TestCase
         $this->logger->addLogger($mock);
         $this->logger->addQuery('BAD SQL', 'Error msg', 1064);
         $this->assertSame('error', $collector->received[0]['level']);
-        $this->assertStringContainsString('Error msg', $collector->received[0]['message']);
+        // Message is raw SQL; error details are in context for sub-loggers to format
+        $this->assertSame('BAD SQL', $collector->received[0]['message']);
+        $this->assertSame('Error msg', $collector->received[0]['context']['error']);
     }
 
     #[Test]
