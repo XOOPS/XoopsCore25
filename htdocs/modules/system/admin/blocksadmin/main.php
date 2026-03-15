@@ -264,7 +264,7 @@ switch ($op) {
             'side'       => Request::getInt('side', 0, 'POST'),
             'weight'     => Request::getInt('weight', 0, 'POST'),
             'visible'    => Request::getInt('visible', 0, 'POST'),
-            'c_type'     => Request::getCmd('c_type', '', 'POST'),
+            'c_type'     => strtoupper(Request::getCmd('c_type', '', 'POST')),
             'block_type' => Request::getString('block_type', '', 'POST'),
             'bcachetime' => Request::getInt('bcachetime', 0, 'POST'),
         ];
@@ -296,7 +296,7 @@ switch ($op) {
             'side'       => Request::getInt('side', 0, 'POST'),
             'weight'     => Request::getInt('weight', 0, 'POST'),
             'visible'    => Request::getInt('visible', 0, 'POST'),
-            'c_type'     => Request::getCmd('c_type', '', 'POST'),
+            'c_type'     => strtoupper(Request::getCmd('c_type', '', 'POST')),
             'bcachetime' => Request::getInt('bcachetime', 0, 'POST'),
         ];
         if (!$block->isCustom()) {
