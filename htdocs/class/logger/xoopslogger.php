@@ -222,9 +222,8 @@ class XoopsLogger
         if ($this->activated) {
             $this->queries[] = ['sql' => $sql, 'error' => $error, 'errno' => $errno, 'query_time' => $query_time];
         }
-        // Dispatch to registered loggers regardless of activated state
-        $message = $error ? sprintf('[%s] %s - %s', $errno, $error, $sql) : $sql;
-        $this->log($error ? 'error' : 'debug', $message, [
+        // Dispatch raw SQL to registered loggers; sub-loggers format from context
+        $this->log($error ? 'error' : 'debug', $sql, [
             'channel'    => 'Queries',
             'sql'        => $sql,
             'error'      => $error,
@@ -245,9 +244,8 @@ class XoopsLogger
         if ($this->activated) {
             $this->blocks[] = ['name' => $name, 'cached' => $cached, 'cachetime' => $cachetime];
         }
-        // Dispatch to registered loggers regardless of activated state
-        $blockMsg = $cached ? sprintf('%s: Cached (cachetime: %d)', $name, $cachetime) : sprintf('%s: Not cached', $name);
-        $this->log('debug', $blockMsg, [
+        // Dispatch raw block name to registered loggers; sub-loggers format from context
+        $this->log('debug', $name, [
             'channel'   => 'Blocks',
             'name'      => $name,
             'cached'    => $cached,
@@ -266,10 +264,11 @@ class XoopsLogger
         if ($this->activated) {
             $this->extra[] = ['name' => $name, 'msg' => $msg];
         }
-        // Dispatch to registered loggers regardless of activated state
-        $this->log('debug', $name . ': ' . $msg, [
+        // Dispatch raw msg to registered loggers; sub-loggers format from context
+        $this->log('debug', $msg, [
             'channel' => 'Extra',
             'name'    => $name,
+            'msg'     => $msg,
         ]);
     }
 
