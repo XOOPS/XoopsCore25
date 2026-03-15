@@ -27,15 +27,22 @@ if (!defined('XOOPS_ROOT_PATH')) {
 class XoopsFormTextDateSelect extends XoopsFormText
 {
     /**
-     * @param string $caption
-     * @param string $name
-     * @param int $size
-     * @param int $value
+     * @param string     $caption
+     * @param string     $name
+     * @param int        $size
+     * @param int|string|null $value  Unix timestamp, empty string for blank, or null for current time
      */
-    public function __construct($caption, $name, $size = 15, $value = 0)
+    public function __construct($caption, $name, $size = 15, $value = null)
     {
-        $value = !is_numeric($value) ? time() : (int)$value;
-        $value = ($value == 0) ? time() : $value;
+        if ($value === null) {
+            // No value provided — default to current time (original behavior)
+            $value = time();
+        } elseif ($value === '' || $value === 0 || $value === '0') {
+            // Explicitly empty — allow blank date
+            $value = 0;
+        } else {
+            $value = is_numeric($value) ? (int) $value : time();
+        }
         parent::__construct($caption, $name, $size, 25, $value);
     }
 

@@ -507,6 +507,10 @@ EOJS;
         if (is_string($ele_value)) {
             $display_value = $ele_value;
             $ele_value     = time();
+        } elseif ($ele_value === 0) {
+            // Blank date: show empty field, use current time for calendar popup seed
+            $display_value = '';
+            $ele_value     = time();
         } else {
             $display_value = date(_SHORTDATESTRING, $ele_value);
         }
