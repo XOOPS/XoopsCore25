@@ -55,8 +55,6 @@ class XoopsSessionHandler implements
             ? $xoopsConfig['session_expire'] * 60
             : ini_get('session.cookie_lifetime');
 
-        $secure = (XOOPS_PROT === 'https://');
-
         $host = parse_url(XOOPS_URL, PHP_URL_HOST);
         if (!is_string($host)) {
             $host = '';
@@ -68,13 +66,28 @@ class XoopsSessionHandler implements
             }
         }
 
+        // Resolve SameSite and Secure from XOOPS config preferences
+        $sameSite = isset($xoopsConfig['session_cookie_samesite']) ? (string) $xoopsConfig['session_cookie_samesite'] : 'Lax';
+        $sameSite = in_array($sameSite, ['Lax', 'Strict', 'None'], true) ? $sameSite : 'Lax';
+
+        // Auto-detect Secure from protocol; preference can only force it ON, never OFF
+        $secure = (XOOPS_PROT === 'https://');
+        if (!empty($xoopsConfig['session_cookie_secure'])) {
+            $secure = true;
+        }
+
+        // Browsers require Secure when SameSite=None
+        if ($sameSite === 'None') {
+            $secure = true;
+        }
+
         $options = [
             'lifetime' => $lifetime,
             'path'     => '/',
             'domain'   => $cookieDomain,
             'secure'   => $secure,
             'httponly' => true,
-            'samesite' => 'Lax',
+            'samesite' => $sameSite,
         ];
         session_set_cookie_params($options);
     }

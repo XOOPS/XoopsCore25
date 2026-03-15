@@ -313,6 +313,9 @@ function make_data($dbm, $adminname, $hashedAdminPass, $adminmail, $language, $g
     $dbm->insert('config', " VALUES (134, 0, 1, 'redirect_message_ajax', '_MD_AM_CUSTOM_REDIRECT', '1', '_MD_AM_CUSTOM_REDIRECT_DESC', 'yesno', 'int', 12)");
     //notification method
     $dbm->insert('config', " VALUES (135, 0, 2, 'default_notification', '_MD_AM_DEFAULT_NOTIFICATION_METHOD', '1', '_MD_AM_DEFAULT_NOTIFICATION_METHOD_DESC', 'select', 'int', 3)");
+    // Session cookie preferences (2.5.12)
+    $dbm->insert('config', " VALUES (136, 0, 1, 'session_cookie_samesite', '_MD_AM_SESSSAMESITE', 'Lax', '_MD_AM_SESSSAMESITE_DSC', 'select', 'text', 43)");
+    $dbm->insert('config', " VALUES (137, 0, 1, 'session_cookie_secure', '_MD_AM_SESSSECURE', '0', '_MD_AM_SESSSECURE_DSC', 'yesno', 'int', 44)");
 
     require_once XOOPS_ROOT_PATH . '/class/xoopslists.php';
     $editors = XoopsLists::getDirListAsArray(XOOPS_ROOT_PATH . '/class/xoopseditor');
@@ -350,6 +353,13 @@ function make_data($dbm, $adminname, $hashedAdminPass, $adminmail, $language, $g
     $dbm->insert('configoption', " VALUES ($conf, '_MI_DEFAULT_NOTIFICATION_METHOD_PM', '1', 135)");
     ++$conf;
     $dbm->insert('configoption', " VALUES ($conf, '_MI_DEFAULT_NOTIFICATION_METHOD_EMAIL', '2', 135)");
+    ++$conf;
+    // Session cookie SameSite options (conf_id 136)
+    $dbm->insert('configoption', " VALUES ($conf, 'Lax', 'Lax', 136)");
+    ++$conf;
+    $dbm->insert('configoption', " VALUES ($conf, 'Strict', 'Strict', 136)");
+    ++$conf;
+    $dbm->insert('configoption', " VALUES ($conf, 'None', 'None', 136)");
     ++$conf;
 
     return $groups;

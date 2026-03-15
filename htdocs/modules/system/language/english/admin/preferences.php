@@ -55,6 +55,11 @@ define('_MD_AM_SESSNAME', 'Session name');
 define('_MD_AM_SESSNAMEDSC', "The name of session (Valid only when 'use custom session' is enabled)");
 define('_MD_AM_SESSEXPIRE', 'Session expiration');
 define('_MD_AM_SESSEXPIREDSC', "Maximum duration of session idle time in minutes (Valid only when 'use custom session' is enabled.)");
+// 2.5.12
+define('_MD_AM_SESSSAMESITE', 'Session cookie SameSite');
+define('_MD_AM_SESSSAMESITE_DSC', 'SameSite attribute for the session cookie. Use "None" only when needed; it requires Secure=true in modern browsers.');
+define('_MD_AM_SESSSECURE', 'Session cookie Secure');
+define('_MD_AM_SESSSECURE_DSC', 'When enabled, the session cookie is only sent over HTTPS. If SameSite=None is selected, this will be forced on.');
 define('_MD_AM_BANNERS', 'Activate Banners?');
 define('_MD_AM_BANNERSDSC', '');
 define('_MD_AM_MYIP', 'Your IP address');
