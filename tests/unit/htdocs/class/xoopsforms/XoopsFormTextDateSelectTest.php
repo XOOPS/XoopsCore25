@@ -20,18 +20,13 @@ class XoopsFormTextDateSelectTest extends TestCase
     }
 
     /**
-     * Constructor with value=0 should set value to current timestamp.
+     * Constructor with value=0 should preserve zero (blank date).
      */
-    public function testZeroValueUsesCurrentTime(): void
+    public function testZeroValuePreservesBlankDate(): void
     {
-        $before = time();
         $element = new \XoopsFormTextDateSelect('Date', 'date_field', 15, 0);
-        $after = time();
 
-        $value = (int) $element->getValue();
-
-        $this->assertGreaterThanOrEqual($before, $value);
-        $this->assertLessThanOrEqual($after, $value);
+        $this->assertEquals(0, $element->getValue());
     }
 
     /**
@@ -190,19 +185,13 @@ class XoopsFormTextDateSelectTest extends TestCase
     }
 
     /**
-     * An empty string value should use current time (non-numeric).
+     * An empty string value should preserve blank date (value=0).
      */
-    public function testEmptyStringUsesCurrentTime(): void
+    public function testEmptyStringPreservesBlankDate(): void
     {
-        $before = time();
         $element = new \XoopsFormTextDateSelect('Date', 'date_field', 15, '');
-        $after = time();
 
-        $value = (int) $element->getValue();
-
-        // Empty string is non-numeric, so time() is used
-        $this->assertGreaterThanOrEqual($before, $value);
-        $this->assertLessThanOrEqual($after, $value);
+        $this->assertEquals(0, $element->getValue());
     }
 
     /**
@@ -223,7 +212,7 @@ class XoopsFormTextDateSelectTest extends TestCase
     public static function valueProvider(): array
     {
         return [
-            'zero uses current time'     => [0, true],
+            'zero preserves blank'       => [0, false],
             'positive timestamp kept'    => [1609459200, false],
             'negative timestamp kept'    => [-86400, false],
             'string non-numeric uses time' => ['abc', true],
@@ -248,6 +237,21 @@ class XoopsFormTextDateSelectTest extends TestCase
         } else {
             $this->assertEquals((int) $inputValue, $value);
         }
+    }
+
+    /**
+     * Constructor with explicit null should use current time.
+     */
+    public function testExplicitNullUsesCurrentTime(): void
+    {
+        $before = time();
+        $element = new \XoopsFormTextDateSelect('Date', 'date_field', 15, null);
+        $after = time();
+
+        $value = (int) $element->getValue();
+
+        $this->assertGreaterThanOrEqual($before, $value);
+        $this->assertLessThanOrEqual($after, $value);
     }
 
     /**
