@@ -448,7 +448,7 @@ function xoops_confirm($hiddens, $action, $msg, $submit = '', $addtoken = true)
     } else {
         $submit = ($submit != '') ? trim($submit) : _SUBMIT;
         echo '<div class="confirmMsg">' . $msg . '<br>
-			  <form method="post" action="' . $action . '">';
+			  <form method="post" action="' . htmlspecialchars($action, ENT_QUOTES | ENT_HTML5) . '">';
         foreach ($hiddens as $name => $value) {
             if (is_array($value)) {
                 foreach ($value as $caption => $newvalue) {

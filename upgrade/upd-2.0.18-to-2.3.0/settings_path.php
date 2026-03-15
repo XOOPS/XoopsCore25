@@ -71,7 +71,7 @@ $myts = \MyTextSanitizer::getInstance();
 
 ?>
 
-<form action='<?php echo $_SERVER['PHP_SELF']; ?>' method='post'>
+<form action='<?php echo htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES | ENT_HTML5); ?>' method='post'>
 
     <fieldset>
         <legend><?php echo LEGEND_XOOPS_PATHS; ?></legend>

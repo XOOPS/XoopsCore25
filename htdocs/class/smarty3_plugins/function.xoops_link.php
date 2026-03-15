@@ -92,8 +92,8 @@ function smarty_function_xoops_link($params, &$smarty)
     }
     // Now, return entire link URL :-)
     if (empty($module)) {
-        echo XOOPS_URL . "/{$page}" . $urlstr;
+        echo htmlspecialchars(XOOPS_URL . "/{$page}" . $urlstr, ENT_QUOTES | ENT_HTML5);
     } else {
-        echo XOOPS_URL . "/modules/{$module}/{$page}" . $urlstr;
+        echo htmlspecialchars(XOOPS_URL . "/modules/{$module}/{$page}" . $urlstr, ENT_QUOTES | ENT_HTML5);
     }
 }
