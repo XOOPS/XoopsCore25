@@ -221,15 +221,16 @@ class XoopsLogger
     {
         if ($this->activated) {
             $this->queries[] = ['sql' => $sql, 'error' => $error, 'errno' => $errno, 'query_time' => $query_time];
-            // Dispatch to registered loggers
-            $this->log($error ? 'error' : 'debug', $sql, [
-                'channel'    => 'Queries',
-                'sql'        => $sql,
-                'error'      => $error,
-                'errno'      => $errno,
-                'query_time' => $query_time,
-            ]);
         }
+        // Dispatch to registered loggers regardless of activated state
+        $message = $error ? sprintf('[%s] %s - %s', $errno, $error, $sql) : $sql;
+        $this->log($error ? 'error' : 'debug', $message, [
+            'channel'    => 'Queries',
+            'sql'        => $sql,
+            'error'      => $error,
+            'errno'      => $errno,
+            'query_time' => $query_time,
+        ]);
     }
 
     /**
@@ -243,14 +244,15 @@ class XoopsLogger
     {
         if ($this->activated) {
             $this->blocks[] = ['name' => $name, 'cached' => $cached, 'cachetime' => $cachetime];
-            // Dispatch to registered loggers
-            $this->log('debug', $name, [
-                'channel'   => 'Blocks',
-                'name'      => $name,
-                'cached'    => $cached,
-                'cachetime' => $cachetime,
-            ]);
         }
+        // Dispatch to registered loggers regardless of activated state
+        $blockMsg = $cached ? sprintf('%s: Cached (cachetime: %d)', $name, $cachetime) : sprintf('%s: Not cached', $name);
+        $this->log('debug', $blockMsg, [
+            'channel'   => 'Blocks',
+            'name'      => $name,
+            'cached'    => $cached,
+            'cachetime' => $cachetime,
+        ]);
     }
 
     /**
@@ -263,12 +265,12 @@ class XoopsLogger
     {
         if ($this->activated) {
             $this->extra[] = ['name' => $name, 'msg' => $msg];
-            // Dispatch to registered loggers
-            $this->log('debug', $msg, [
-                'channel' => 'Extra',
-                'name'    => $name,
-            ]);
         }
+        // Dispatch to registered loggers regardless of activated state
+        $this->log('debug', $name . ': ' . $msg, [
+            'channel' => 'Extra',
+            'name'    => $name,
+        ]);
     }
 
     /**
@@ -311,10 +313,13 @@ class XoopsLogger
      */
     public function handleError($errno, $errstr, $errfile, $errline, $trace = null)
     {
-        if ($this->activated && ($errno & error_reporting())) {
+        if ($errno & error_reporting()) {
             // Sanitize to relative pathnames before storing or dispatching
             $errfile = $this->sanitizePath($errfile);
-            $this->errors[] = compact('errno', 'errstr', 'errfile', 'errline');
+
+            if ($this->activated) {
+                $this->errors[] = compact('errno', 'errstr', 'errfile', 'errline');
+            }
 
             // Dispatch to registered loggers with appropriate PSR-3 level
             $levelMap = [
