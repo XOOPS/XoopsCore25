@@ -60,9 +60,10 @@ function xoopsCodeImg(id, enterImgUrlPhrase, enterImgPosPhrase, imgPosRorLPhrase
             text2 = "";
         }
 
-        var text3 = prompt(enterImgWidthPhrase, "300");
-        if (text3.length > 0) {
-            text3 = " width=" + text3;
+        var text3 = prompt(enterImgWidthPhrase, "");
+        text3 = (text3 || "").trim();
+        if (text3.length > 0 && parseInt(text3, 10) > 0) {
+            text3 = " width=" + parseInt(text3, 10);
         } else {
             text3 = "";
         }
