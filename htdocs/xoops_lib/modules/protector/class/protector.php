@@ -434,7 +434,8 @@ class Protector
                 [$bad_ips_serialized] = $filepath4badips;
             }
         }
-        $bad_ips = empty($bad_ips_serialized) ? [] : unserialize($bad_ips_serialized, ['allowed_classes' => false]);
+        // trim() required: write_file_badips() appends "\n" after the serialized payload
+        $bad_ips = empty($bad_ips_serialized) ? [] : unserialize(trim($bad_ips_serialized), ['allowed_classes' => false]);
         if (!is_array($bad_ips) || isset($bad_ips[0])) {
             $bad_ips = [];
         }

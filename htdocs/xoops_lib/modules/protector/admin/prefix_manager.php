@@ -25,8 +25,12 @@ $db = XoopsDatabaseFactory::getDatabaseConnection();
 
 // COPY TABLES
 if (Request::hasVar('copy', 'POST') && Request::hasVar('old_prefix', 'POST')) {
-    $new_prefix = validatePrefix(Request::getString('new_prefix', '', 'POST'));
-    $old_prefix = validatePrefix(Request::getString('old_prefix', '', 'POST'));
+    try {
+        $new_prefix = validatePrefix(Request::getString('new_prefix', '', 'POST'));
+        $old_prefix = validatePrefix(Request::getString('old_prefix', '', 'POST'));
+    } catch (\InvalidArgumentException $e) {
+        redirect_header(XOOPS_URL . '/modules/protector/admin/prefix_manager.php', 3, $e->getMessage());
+    }
 
     // Ticket check
     if (!$xoopsGTicket->check(true, 'protector_admin')) {
@@ -94,7 +98,11 @@ if (Request::hasVar('copy', 'POST') && Request::hasVar('old_prefix', 'POST')) {
 
     // DUMP INTO A LOCAL FILE
 } elseif (Request::hasVar('backup', 'POST') && Request::hasVar('prefix', 'POST')) {
-    $prefix = validatePrefix(Request::getString('prefix', '', 'POST'));
+    try {
+        $prefix = validatePrefix(Request::getString('prefix', '', 'POST'));
+    } catch (\InvalidArgumentException $e) {
+        redirect_header(XOOPS_URL . '/modules/protector/admin/prefix_manager.php', 3, $e->getMessage());
+    }
 
     // Ticket check
     if (!$xoopsGTicket->check(true, 'protector_admin')) {
@@ -213,7 +221,11 @@ if (Request::hasVar('copy', 'POST') && Request::hasVar('old_prefix', 'POST')) {
 
     // DROP TABLES
 } elseif (Request::hasVar('delete', 'POST') && Request::hasVar('prefix', 'POST')) {
-    $prefix = validatePrefix(Request::getString('prefix', '', 'POST'));
+    try {
+        $prefix = validatePrefix(Request::getString('prefix', '', 'POST'));
+    } catch (\InvalidArgumentException $e) {
+        redirect_header(XOOPS_URL . '/modules/protector/admin/prefix_manager.php', 3, $e->getMessage());
+    }
 
     // Ticket check
     if (!$xoopsGTicket->check(true, 'protector_admin')) {
