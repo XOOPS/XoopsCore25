@@ -5,13 +5,15 @@ use Xmf\Request;
 const PREFIX_INVALID_CHAR_PATTERN = '/[^0-9A-Za-z_-]/';
 
 /**
- * Validate a DB prefix: reject (die) if it contains characters outside [A-Za-z0-9_-].
+ * Validate a DB prefix: reject if it contains characters outside [A-Za-z0-9_-].
  * Returns the validated prefix unchanged.
+ *
+ * @throws \InvalidArgumentException if the prefix contains invalid characters
  */
 function validatePrefix(string $raw): string
 {
     if (preg_match(PREFIX_INVALID_CHAR_PATTERN, $raw)) {
-        die('wrong prefix');
+        throw new \InvalidArgumentException('Invalid prefix: contains disallowed characters');
     }
     return $raw;
 }

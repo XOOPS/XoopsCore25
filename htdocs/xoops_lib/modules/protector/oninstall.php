@@ -82,6 +82,20 @@ if (!function_exists('protector_oninstall_base')) {
             }
         }
 
+        // DATA FILES (badips, bwlimit, etc.)
+        $protector_data_dir = XOOPS_VAR_PATH . '/protector';
+        if (!is_dir($protector_data_dir)) {
+            mkdir($protector_data_dir, 0755, true);
+        }
+        if (class_exists('Protector')) {
+            $protector = Protector::getInstance();
+            $badips_file = Protector::get_filepath4badips();
+            if (!file_exists($badips_file)) {
+                $protector->write_file_badips([]);
+                $ret[] = 'Created bad IPs data file: <b>' . htmlspecialchars(basename($badips_file), ENT_QUOTES | ENT_HTML5) . '</b><br>';
+            }
+        }
+
         // TEMPLATES
         /** @var XoopsTplfileHandler $tplfile_handler */
         $tplfile_handler = xoops_getHandler('tplfile');
