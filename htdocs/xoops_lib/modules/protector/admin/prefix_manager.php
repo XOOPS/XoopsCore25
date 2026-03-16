@@ -1,6 +1,7 @@
 <?php
 
 use InvalidArgumentException;
+use RuntimeException;
 use Xmf\Request;
 
 const PREFIX_INVALID_CHAR_PATTERN = '/[^0-9A-Za-z_-]/';
@@ -43,7 +44,7 @@ if (Request::hasVar('copy', 'POST') && Request::hasVar('old_prefix', 'POST')) {
     $sql = 'SHOW TABLE STATUS FROM `' . XOOPS_DB_NAME . '`';
     $srs = $db->query($sql);
     if (!$db->isResultSet($srs)) {
-        throw new \RuntimeException(
+        throw new RuntimeException(
             \sprintf(_DB_QUERY_ERROR, $sql) . $db->error(),
             E_USER_ERROR,
         );
@@ -66,7 +67,7 @@ if (Request::hasVar('copy', 'POST') && Request::hasVar('old_prefix', 'POST')) {
         $sql = 'SHOW CREATE TABLE ' . $old_table;
         $crs = $db->query($sql);
         if (!$db->isResultSet($crs)) {
-            throw new \RuntimeException(
+            throw new RuntimeException(
                 \sprintf(_DB_QUERY_ERROR, $sql) . $db->error(),
                 E_USER_ERROR,
             );
@@ -114,7 +115,7 @@ if (Request::hasVar('copy', 'POST') && Request::hasVar('old_prefix', 'POST')) {
     $sql = 'SHOW TABLE STATUS FROM `' . XOOPS_DB_NAME . '`';
     $srs = $db->query($sql);
     if (!$db->isResultSet($srs)) {
-        throw new \RuntimeException(
+        throw new RuntimeException(
             \sprintf(_DB_QUERY_ERROR, $sql) . $db->error(),
             E_USER_ERROR,
         );
@@ -134,7 +135,7 @@ if (Request::hasVar('copy', 'POST') && Request::hasVar('old_prefix', 'POST')) {
         $sql = "SHOW CREATE TABLE `$table`";
         $drawCreate = $db->query($sql);
         if (!$db->isResultSet($drawCreate)) {
-            throw new \RuntimeException(
+            throw new RuntimeException(
                 \sprintf(_DB_QUERY_ERROR, $sql) . $db->error(),
                 E_USER_ERROR,
             );
@@ -147,7 +148,7 @@ if (Request::hasVar('copy', 'POST') && Request::hasVar('old_prefix', 'POST')) {
         $sql      = "SELECT * FROM `$table`";
         $result = $db->query($sql);
         if (!$db->isResultSet($result)) {
-            throw new \RuntimeException(
+            throw new RuntimeException(
                 \sprintf(_DB_QUERY_ERROR, $sql) . $db->error(),
                 E_USER_ERROR,
             );
@@ -249,7 +250,7 @@ if (Request::hasVar('copy', 'POST') && Request::hasVar('old_prefix', 'POST')) {
     $sql = 'SHOW TABLE STATUS FROM `' . XOOPS_DB_NAME . '`';
     $srs = $db->query($sql);
     if (!$db->isResultSet($srs)) {
-        throw new \RuntimeException(
+        throw new RuntimeException(
             \sprintf(_DB_QUERY_ERROR, $sql) . $db->error(),
             E_USER_ERROR,
         );
@@ -280,7 +281,7 @@ include __DIR__ . '/mymenu.php';
 $sql = 'SHOW TABLE STATUS FROM `' . XOOPS_DB_NAME . '`';
 $srs = $db->query($sql);
 if (!$db->isResultSet($srs)) {
-    throw new \RuntimeException(
+    throw new RuntimeException(
         \sprintf(_DB_QUERY_ERROR, $sql) . $db->error(),
         E_USER_ERROR,
     );
