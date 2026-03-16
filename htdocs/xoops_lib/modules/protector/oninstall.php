@@ -86,7 +86,8 @@ if (!function_exists('protector_oninstall_base')) {
         $protector_data_dir = XOOPS_VAR_PATH . '/protector';
         if (!is_dir($protector_data_dir)) {
             if (!mkdir($protector_data_dir, 0755, true) && !is_dir($protector_data_dir)) {
-                $ret[] = '<span style="color:#ff0000;">ERROR: Could not create protector data directory: <b>' . htmlspecialchars($protector_data_dir, ENT_QUOTES | ENT_HTML5) . '</b></span><br>';
+                $ret[] = '<span style="color:#ff0000;">ERROR: Could not create protector data directory: <b>' . htmlspecialchars(basename($protector_data_dir), ENT_QUOTES | ENT_HTML5) . '</b></span><br>';
+                trigger_error('Protector install: failed to create directory ' . $protector_data_dir, E_USER_WARNING);
                 return false;
             }
         }

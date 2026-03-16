@@ -1,5 +1,6 @@
 <?php
 
+use InvalidArgumentException;
 use Xmf\Request;
 
 const PREFIX_INVALID_CHAR_PATTERN = '/[^0-9A-Za-z_-]/';
@@ -8,12 +9,12 @@ const PREFIX_INVALID_CHAR_PATTERN = '/[^0-9A-Za-z_-]/';
  * Validate a DB prefix: reject if it contains characters outside [A-Za-z0-9_-].
  * Returns the validated prefix unchanged.
  *
- * @throws \InvalidArgumentException if the prefix contains invalid characters
+ * @throws InvalidArgumentException if the prefix contains invalid characters
  */
 function validatePrefix(string $raw): string
 {
     if (preg_match(PREFIX_INVALID_CHAR_PATTERN, $raw)) {
-        throw new \InvalidArgumentException('Invalid prefix: contains disallowed characters');
+        throw new InvalidArgumentException('Invalid prefix: contains disallowed characters');
     }
     return $raw;
 }
@@ -28,7 +29,7 @@ if (Request::hasVar('copy', 'POST') && Request::hasVar('old_prefix', 'POST')) {
     try {
         $new_prefix = validatePrefix(Request::getString('new_prefix', '', 'POST'));
         $old_prefix = validatePrefix(Request::getString('old_prefix', '', 'POST'));
-    } catch (\InvalidArgumentException $e) {
+    } catch (InvalidArgumentException $e) {
         redirect_header(XOOPS_URL . '/modules/protector/admin/prefix_manager.php', 3, $e->getMessage());
     }
 
@@ -100,7 +101,7 @@ if (Request::hasVar('copy', 'POST') && Request::hasVar('old_prefix', 'POST')) {
 } elseif (Request::hasVar('backup', 'POST') && Request::hasVar('prefix', 'POST')) {
     try {
         $prefix = validatePrefix(Request::getString('prefix', '', 'POST'));
-    } catch (\InvalidArgumentException $e) {
+    } catch (InvalidArgumentException $e) {
         redirect_header(XOOPS_URL . '/modules/protector/admin/prefix_manager.php', 3, $e->getMessage());
     }
 
@@ -223,7 +224,7 @@ if (Request::hasVar('copy', 'POST') && Request::hasVar('old_prefix', 'POST')) {
 } elseif (Request::hasVar('delete', 'POST') && Request::hasVar('prefix', 'POST')) {
     try {
         $prefix = validatePrefix(Request::getString('prefix', '', 'POST'));
-    } catch (\InvalidArgumentException $e) {
+    } catch (InvalidArgumentException $e) {
         redirect_header(XOOPS_URL . '/modules/protector/admin/prefix_manager.php', 3, $e->getMessage());
     }
 
