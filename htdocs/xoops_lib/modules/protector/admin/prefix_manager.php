@@ -1,7 +1,5 @@
 <?php
 
-use InvalidArgumentException;
-use RuntimeException;
 use Xmf\Request;
 
 const PREFIX_INVALID_CHAR_PATTERN = '/[^0-9A-Za-z_-]/';
