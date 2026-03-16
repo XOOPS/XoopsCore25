@@ -37,7 +37,7 @@ class RequestHashPinningTest extends TestCase
             'profile/admin/field.php'               => [$base . '/modules/profile/admin/field.php'],
             'profile/admin/category.php'            => [$base . '/modules/profile/admin/category.php'],
             'profile/admin/user.php'                => [$base . '/modules/profile/admin/user.php'],
-            'profile/admin/visibility.php'          => [$base . '/modules/profile/admin/visibility.php'],
+            // visibility.php excluded: op comes from GET (tab select) and POST (delete form)
             'profile/search.php'                    => [$base . '/modules/profile/search.php'],
             'system/admin/groups/main.php'          => [$base . '/modules/system/admin/groups/main.php'],
             'system/admin/comments/main.php'        => [$base . '/modules/system/admin/comments/main.php'],

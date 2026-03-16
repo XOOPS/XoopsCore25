@@ -27,7 +27,7 @@ $_SERVER['REQUEST_URI'] = 'admin/permissions.php';
 
 xoops_cp_header();
 
-$op = Request::getCmd('op', 'visibility', 'GET');
+$op = Request::getCmd('op', 'visibility');
 
 $visibility_handler = xoops_getModuleHandler('visibility');
 $field_handler      = xoops_getModuleHandler('field');

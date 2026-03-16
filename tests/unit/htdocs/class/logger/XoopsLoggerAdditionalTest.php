@@ -378,26 +378,16 @@ class XoopsLoggerAdditionalTest extends TestCase
     }
 
     // ---------------------------------------------------------------
-    // writeLog — static file logging
+    // writeLog — static file logging (not yet implemented)
     // ---------------------------------------------------------------
 
     #[Test]
-    public function writeLogCreatesDirectoryAndFile(): void
+    public function writeLogIsNotImplemented(): void
     {
-        // writeLog() does not exist in XoopsLogger — skip until implemented
-        self::markTestSkipped('XoopsLogger::writeLog() is not implemented');
-    }
-
-    #[Test]
-    public function writeLogAppendsToExistingFile(): void
-    {
-        self::markTestSkipped('XoopsLogger::writeLog() is not implemented');
-    }
-
-    #[Test]
-    public function writeLogHandlesEmptyMessage(): void
-    {
-        self::markTestSkipped('XoopsLogger::writeLog() is not implemented');
+        self::assertFalse(
+            method_exists(\XoopsLogger::class, 'writeLog'),
+            'XoopsLogger::writeLog() does not exist yet — remove this guard and restore the writeLog tests when implemented'
+        );
     }
 
     // ---------------------------------------------------------------
@@ -684,10 +674,13 @@ class XoopsLoggerAdditionalTest extends TestCase
     }
 
     #[Test]
-    public function addDeprecatedCallsWriteLog(): void
+    public function addDeprecatedDoesNotWriteToLogFile(): void
     {
-        // writeLog() does not exist in XoopsLogger — skip until implemented
-        self::markTestSkipped('XoopsLogger::writeLog() is not implemented');
+        // addDeprecated() stores in memory only — no disk writes without writeLog()
+        $this->logger->addDeprecated('test deprecation');
+        self::assertNotEmpty($this->logger->deprecated, 'addDeprecated should store in memory');
+        $logFile = XOOPS_ROOT_PATH . '/log/log.txt';
+        self::assertFileDoesNotExist($logFile, 'No log file should be created without writeLog()');
     }
 
     // ---------------------------------------------------------------
@@ -1141,17 +1134,17 @@ class XoopsLoggerAdditionalTest extends TestCase
     // ---------------------------------------------------------------
 
     #[Test]
-    public function handleErrorWritesToLogFile(): void
+    public function handleErrorDoesNotWriteToLogFile(): void
     {
-        // writeLog() does not exist in XoopsLogger — skip until implemented
-        self::markTestSkipped('XoopsLogger::writeLog() is not implemented');
-    }
-
-    #[Test]
-    public function handleErrorLogsErrnoAndErrfileToFile(): void
-    {
-        // writeLog() does not exist in XoopsLogger — skip until implemented
-        self::markTestSkipped('XoopsLogger::writeLog() is not implemented');
+        // handleError() stores errors in memory only — no disk writes without writeLog()
+        $oldLevel = error_reporting(E_ALL);
+        try {
+            $this->logger->handleError(E_WARNING, 'test error', '/test/file.php', '100');
+        } finally {
+            error_reporting($oldLevel);
+        }
+        $logFile = XOOPS_ROOT_PATH . '/log/log.txt';
+        self::assertFileDoesNotExist($logFile, 'No log file should be created without writeLog()');
     }
 
     // ---------------------------------------------------------------

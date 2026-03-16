@@ -182,7 +182,7 @@ class XoopsOnlineHandlerTest extends KernelTestCase
         $this->assertStringContainsString('INSERT', $execCalls[1]);
     }
 
-    public function testWriteDbFailOnQueryFThrowsException(): void
+    public function testWriteDbFailOnQueryThrowsException(): void
     {
         // query returns non-result-set -- throws RuntimeException
         $this->db->expects($this->once())

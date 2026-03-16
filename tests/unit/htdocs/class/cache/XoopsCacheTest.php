@@ -393,15 +393,6 @@ class XoopsCacheTest extends TestCase
         $this->assertTrue($result, 'Garbage collection should return true');
     }
 
-    public function testGarbageCollectionWithInitializedEngine()
-    {
-        // The singleton engine is already initialized from setUp
-        $result = $this->cache->gc();
-
-        // gc() returns true when engine is initialized
-        $this->assertTrue($result);
-    }
-
     public function testWriteWithComplexDataStructure()
     {
         $this->cache->config('default', ['engine' => 'file', 'path' => sys_get_temp_dir()]);
@@ -440,16 +431,12 @@ class XoopsCacheTest extends TestCase
         $this->cache->config('default', ['engine' => 'file', 'path' => sys_get_temp_dir()]);
         $this->cache->engine('file', ['path' => sys_get_temp_dir()]);
 
+        // XoopsCacheFile::write() rejects null via isset() check, returns false
         $writeResult = XoopsCache::write('null_value', null, 3600);
-        $result = XoopsCache::read('null_value');
+        $this->assertFalse($writeResult);
 
-        // XoopsCacheFile serializes null; read returns the deserialized value
-        // If write failed, read returns false
-        if ($writeResult) {
-            $this->assertNull($result);
-        } else {
-            $this->assertFalse($result);
-        }
+        $result = XoopsCache::read('null_value');
+        $this->assertFalse($result);
     }
 
     public function testWriteWithNumericValue()
@@ -669,10 +656,14 @@ class XoopsCacheTest extends TestCase
 
     public function testConfigWithMultipleEngines()
     {
-        // Configure multiple engines — both use sys_get_temp_dir() to ensure
-        // the path exists on CI
+        // Configure multiple engines with distinct paths
+        $secondPath = sys_get_temp_dir() . '/xoops_cache2_test';
+        if (!is_dir($secondPath)) {
+            mkdir($secondPath, 0777, true);
+        }
+
         $this->cache->config('file_cache', ['engine' => 'file', 'path' => sys_get_temp_dir()]);
-        $this->cache->config('second_cache', ['engine' => 'file', 'path' => sys_get_temp_dir()]);
+        $this->cache->config('second_cache', ['engine' => 'file', 'path' => $secondPath]);
 
         $config1 = $this->cache->config('file_cache');
         $config2 = $this->cache->config('second_cache');
@@ -681,6 +672,8 @@ class XoopsCacheTest extends TestCase
         $this->assertIsArray($config2);
         $this->assertEquals('file', $config1['engine']);
         $this->assertEquals('file', $config2['engine']);
+
+        @rmdir($secondPath);
     }
 
     public function testWriteRejectsInvalidDurationFormats()
