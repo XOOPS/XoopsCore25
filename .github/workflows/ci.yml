@@ -55,10 +55,8 @@ jobs:
           restore-keys: |
             composer-${{ runner.os }}-${{ matrix.php }}-
 
-      - name: Create composer.json
+      - name: Install XMF library dependencies
         working-directory: htdocs/class/libraries
-        env:
-          PHP_VERSION: ${{ matrix.php }}
         run: |
           cat > composer.json << EOL
           {
@@ -68,32 +66,30 @@ jobs:
             "description": "Libraries for XOOPS 2.5.12",
             "config": {
               "platform": {
-                "php": "$PHP_VERSION"
+                "php": "${{ matrix.php }}"
               },
               "allow-plugins": {
                 "composer/installers": true
               }
             },
             "require": {
-              "php": "^${PHP_VERSION}",
+              "php": "^${{ matrix.php }}",
               "xoops/base-requires25": "^1.1.10@beta"
-            },
-            "require-dev": {
-              "phpunit/phpunit": "^11.2"
             },
             "minimum-stability": "beta",
             "prefer-stable": true
           }
           EOL
-
-      - name: Install dependencies
-        working-directory: htdocs/class/libraries
-        run: |
           if [ "${{ matrix.deps }}" = "lowest" ]; then
             composer update --prefer-lowest --prefer-stable --no-interaction --prefer-dist --no-progress
           else
             composer update --prefer-stable --no-interaction --prefer-dist --no-progress
           fi
+
+      - name: Install PHPUnit
+        run: |
+          composer global require phpunit/phpunit:^11.2 --no-interaction --prefer-dist --no-progress
+          echo "$(composer global config bin-dir --absolute)" >> $GITHUB_PATH
 
       - name: Check platform requirements
         working-directory: htdocs/class/libraries
@@ -102,74 +98,16 @@ jobs:
       - name: Ensure build directory exists
         run: mkdir -p build/logs
 
-      - name: Create PHPUnit Config
-        working-directory: htdocs/class/libraries
-        run: |
-          cat > phpunit.xml << EOL
-          <?xml version="1.0" encoding="UTF-8"?>
-          <phpunit xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-                   xsi:noNamespaceSchemaLocation="vendor/phpunit/phpunit/phpunit.xsd"
-                   bootstrap="vendor/autoload.php"
-                   colors="true"
-                   failOnRisky="true"
-                   failOnWarning="true"
-                   testdox="true">
-              <testsuites>
-                  <testsuite name="XOOPS Test Suite">
-                      <directory>tests</directory>
-                  </testsuite>
-              </testsuites>
-              <source>
-                  <include>
-                      <directory>src</directory>
-                  </include>
-              </source>
-              <php>
-                  <ini name="error_reporting" value="-1"/>
-                  <ini name="display_errors" value="On"/>
-                  <ini name="display_startup_errors" value="On"/>
-              </php>
-          </phpunit>
-          EOL
-
-      - name: Create Test Directory and Sample Test
-        working-directory: htdocs/class/libraries
-        run: |
-          mkdir -p tests src
-          cat > src/Placeholder.php << EOL
-          <?php
-          namespace XoopsCore25;
-
-          class Placeholder
-          {
-              public function isReady(): bool
-              {
-                  return true;
-              }
-          }
-          EOL
-          cat > tests/SampleTest.php << EOL
-          <?php
-          use PHPUnit\Framework\TestCase;
-
-          class SampleTest extends TestCase
-          {
-              public function testTrue(): void
-              {
-                  \$this->assertTrue(true);
-              }
-          }
-          EOL
-
-      - name: Run tests
+      - name: Run XOOPS tests
         if: ${{ !matrix.coverage }}
-        working-directory: htdocs/class/libraries
-        run: vendor/bin/phpunit --configuration phpunit.xml --stderr
+        run: phpunit --bootstrap tests/bootstrap.php --stderr tests/unit/
 
-      - name: Run tests with coverage
+      - name: Run XOOPS tests with coverage
         if: ${{ matrix.coverage }}
-        working-directory: htdocs/class/libraries
-        run: vendor/bin/phpunit --configuration phpunit.xml --stderr --coverage-clover ../../../build/logs/clover.xml
+        run: |
+          phpunit --bootstrap tests/bootstrap.php --stderr \
+            --coverage-clover build/logs/clover.xml \
+            tests/unit/
 
       - name: Upload coverage to Codecov
         if: ${{ matrix.coverage }}
