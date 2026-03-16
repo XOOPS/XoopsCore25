@@ -77,7 +77,7 @@ preg_match('/(^[a-z\s]*)([0-9\.]*)/i', XOOPS_VERSION, $versionParts);
                             <?php elseif ($k > $wizard->pageIndex): ?>
                                 <a class="nav-link disabled"><i class="<?php echo str_replace('fa fa-', 'fa-solid fa-', $wizard->pages[$page]['icon']); ?>"></i> <?php echo $wizard->pages[$page]['name']; ?></a>
                             <?php else: ?>
-                                <a class="nav-link" href="<?php echo $wizard->pageURI($page); ?>"><i class="<?php echo str_replace('fa fa-', 'fa-solid fa-', $wizard->pages[$page]['icon']); ?> text-success"></i> <?php echo $wizard->pages[$page]['name']; ?></a>
+                                <a class="nav-link" href="<?php echo htmlspecialchars($wizard->pageURI($page), ENT_QUOTES | ENT_HTML5); ?>"><i class="<?php echo str_replace('fa fa-', 'fa-solid fa-', $wizard->pages[$page]['icon']); ?> text-success"></i> <?php echo $wizard->pages[$page]['name']; ?></a>
                             <?php endif; ?>
                         </li>
                     <?php endforeach; ?>
@@ -176,13 +176,13 @@ preg_match('/(^[a-z\s]*)([0-9\.]*)/i', XOOPS_VERSION, $versionParts);
                 <div class="col-12">
                     <div class="card">
                         <div class="card-body">
-                            <form id="<?php echo $wizard->pages[$wizard->currentPage]['name']; ?>" action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post">
+                            <form id="<?php echo $wizard->pages[$wizard->currentPage]['name']; ?>" action="<?php echo htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES | ENT_HTML5); ?>" method="post">
                                 <h2><?php echo $wizard->pages[$wizard->currentPage]['title']; ?></h2>
                                 <?php echo $content; ?>
 
                                 <div class="text-end mt-4">
                                     <button class="btn btn-lg btn-success" type="<?php echo !empty($pageHasForm) ? 'submit' : 'button'; ?>"
-                                            <?php if (empty($pageHasForm)): ?>onclick="location.href='<?php echo $wizard->pageURI('+1'); ?>'"<?php endif; ?>>
+                                            <?php if (empty($pageHasForm)): ?>onclick="location.href=<?php echo json_encode($wizard->pageURI('+1')); ?>"<?php endif; ?>>
                                         <?php echo BUTTON_NEXT; ?> <i class="fa-solid fa-caret-right"></i>
                                     </button>
                                 </div>

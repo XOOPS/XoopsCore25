@@ -235,7 +235,7 @@ ob_start();
             val = removeTrailing(key, val);
 
             // Perform AJAX request to validate the path
-            $.get("<?php echo $_SERVER['PHP_SELF']; ?>", { action: "checkpath", var: key, path: val })
+            $.get(<?php echo json_encode($_SERVER['PHP_SELF']); ?>, { action: "checkpath", var: key, path: val })
                 .done(function(data) {
                     // Update the path check result
                     $("#" + key + 'pathimg').html(data);

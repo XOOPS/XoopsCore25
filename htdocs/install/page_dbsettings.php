@@ -104,7 +104,7 @@ ob_start();
 
     <script type="text/javascript">
         function setFormFieldCollation(id, val) {
-            $.get('<?php echo $_SERVER['PHP_SELF']; ?>', { action: 'updateCollation', charset: val } )
+            $.get(<?php echo json_encode($_SERVER['PHP_SELF']); ?>, { action: 'updateCollation', charset: val } )
                 .done(function( data ) {
                     $('#'+id).html(data);
                 });
