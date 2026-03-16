@@ -12,7 +12,7 @@ use XoopsMySQLDatabase;
 require_once XOOPS_ROOT_PATH . '/kernel/session.php';
 
 /**
- * Unit tests for XoopsSessionHandler (session80.php).
+ * Unit tests for XoopsSessionHandler (session.php).
  *
  * Uses reflection to bypass the constructor (which depends on globals
  * and session_set_cookie_params) and injects a mock database.
