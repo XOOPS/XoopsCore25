@@ -1004,13 +1004,13 @@ class MainControllerTest extends TestCase
      */
     public function testHandlesEmptyModuleArrays(): void
     {
-        // In confirm operation, should handle empty module array
+        // In confirm operation, should handle empty module array via Request helper
         $confirmSection = $this->extractOperationSection('confirm');
 
         $this->assertStringContainsString(
-            "empty(\$_POST['module']) ? [] : \$_POST['module']",
+            "Request::getArray('module', [], 'POST')",
             $confirmSection,
-            'Should provide empty array default for missing module POST data'
+            'Should retrieve module array via Request::getArray with empty default'
         );
     }
 
