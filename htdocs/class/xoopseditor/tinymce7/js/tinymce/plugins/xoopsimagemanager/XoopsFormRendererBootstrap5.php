@@ -587,6 +587,9 @@ class XoopsFormRendererBootstrap5 implements XoopsFormRendererInterface
         if (is_string($ele_value)) {
             $display_value = $ele_value;
             $ele_value     = time();
+        } elseif ($ele_value === 0) {
+            $display_value = '';
+            $ele_value     = time();
         } else {
             $display_value = date(_SHORTDATESTRING, $ele_value);
         }
