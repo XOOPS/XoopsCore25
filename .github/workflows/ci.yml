@@ -100,14 +100,11 @@ jobs:
 
       - name: Run XOOPS tests
         if: ${{ !matrix.coverage }}
-        run: phpunit --bootstrap tests/bootstrap.php --stderr tests/unit/
+        run: phpunit --configuration tests/phpunit.xml --stderr
 
       - name: Run XOOPS tests with coverage
         if: ${{ matrix.coverage }}
-        run: |
-          phpunit --bootstrap tests/bootstrap.php --stderr \
-            --coverage-clover build/logs/clover.xml \
-            tests/unit/
+        run: phpunit --configuration tests/phpunit.xml --stderr --coverage-clover build/logs/clover.xml
 
       - name: Upload coverage to Codecov
         if: ${{ matrix.coverage }}

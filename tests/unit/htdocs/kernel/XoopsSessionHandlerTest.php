@@ -9,7 +9,7 @@ use ReflectionClass;
 use ReflectionMethod;
 use XoopsMySQLDatabase;
 
-require_once XOOPS_ROOT_PATH . '/kernel/session80.php';
+require_once XOOPS_ROOT_PATH . '/kernel/session.php';
 
 /**
  * Unit tests for XoopsSessionHandler (session80.php).
