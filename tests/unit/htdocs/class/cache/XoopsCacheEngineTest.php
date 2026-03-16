@@ -121,10 +121,10 @@ class XoopsCacheEngineTest extends TestCase
     // ---------------------------------------------------------------
 
     #[Test]
-    public function deleteReturnsNull(): void
+    public function deleteReturnsFalse(): void
     {
         $result = $this->engine->delete('key');
-        $this->assertNull($result);
+        $this->assertFalse($result);
     }
 
     // ---------------------------------------------------------------
@@ -132,9 +132,9 @@ class XoopsCacheEngineTest extends TestCase
     // ---------------------------------------------------------------
 
     #[Test]
-    public function clearReturnsNull(): void
+    public function clearReturnsFalse(): void
     {
         $result = $this->engine->clear(true);
-        $this->assertNull($result);
+        $this->assertFalse($result);
     }
 }

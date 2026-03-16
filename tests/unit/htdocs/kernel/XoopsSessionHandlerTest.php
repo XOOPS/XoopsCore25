@@ -799,7 +799,7 @@ class XoopsSessionHandlerTest extends KernelTestCase
     {
         $sqlCaptured = null;
         $this->db->expects($this->once())
-            ->method('queryF')
+            ->method('query')
             ->willReturnCallback(function ($sql) use (&$sqlCaptured) {
                 $sqlCaptured = $sql;
                 return 'mock_result';
@@ -822,7 +822,7 @@ class XoopsSessionHandlerTest extends KernelTestCase
     {
         $sqlCaptured = null;
         $this->db->expects($this->once())
-            ->method('queryF')
+            ->method('query')
             ->willReturnCallback(function ($sql) use (&$sqlCaptured) {
                 $sqlCaptured = $sql;
                 return 'mock_result';

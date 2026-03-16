@@ -782,13 +782,13 @@ class MainControllerTest extends TestCase
         $this->assertNotEmpty($orderSection, 'Order operation should exist');
 
         $this->assertStringContainsString(
-            "if (isset(\$_POST['mod']))",
+            "Request::hasVar('mod', 'POST')",
             $orderSection,
             'Should check for mod POST data'
         );
 
         $this->assertStringContainsString(
-            "foreach (\$_POST['mod'] as \$order)",
+            "Request::getArray('mod', [], 'POST')",
             $orderSection,
             'Should iterate over module order array'
         );
@@ -945,36 +945,29 @@ class MainControllerTest extends TestCase
     }
 
     /**
-     * Verify that POST data extraction loop exists (legacy pattern).
+     * Verify that POST data is retrieved via safe Request helpers.
      *
-     * WARNING: The `${$k} = $v` variable-variable pattern is insecure and
-     * should be replaced with explicit Request::get*() calls in a future
-     * refactor. This test documents the existing behaviour; it does NOT
-     * endorse it.
-     *
-     * @see https://owasp.org/www-community/vulnerabilities/Variable_Manipulation
+     * The legacy `$_POST` / `${$k} = $v` pattern has been replaced
+     * with explicit Request::getArray() / Request::getString() calls.
      */
-    public function testDocumentsLegacyPostExtractionPattern(): void
+    public function testUsesRequestHelpersForPostData(): void
     {
         $this->assertStringContainsString(
-            'if (isset($_POST))',
+            "Request::getArray('oldname', [], 'POST')",
             $this->sourceCode,
-            'Should check if POST data exists'
+            'Should retrieve oldname via Request::getArray'
         );
 
         $this->assertStringContainsString(
-            'foreach ($_POST as $k => $v)',
+            "Request::getArray('newname', [], 'POST')",
             $this->sourceCode,
-            'Should iterate over POST data'
+            'Should retrieve newname via Request::getArray'
         );
 
-        // The pattern ${$k} = $v is a known-insecure legacy approach;
-        // we assert its presence to detect accidental removal before a
-        // proper refactor replaces it with safe Request helpers.
         $this->assertStringContainsString(
-            '${$k} = $v;',
+            "Request::getString('op', 'list')",
             $this->sourceCode,
-            'Should extract POST variables (legacy pattern — needs refactor)'
+            'Should retrieve op via Request::getString'
         );
     }
 

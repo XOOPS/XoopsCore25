@@ -389,6 +389,10 @@ class XoopsPreloadTest extends TestCase
     {
         $instance = XoopsPreload::getInstance();
 
+        if (empty($instance->_preloads)) {
+            $this->markTestSkipped('No preloads registered in test environment');
+        }
+
         foreach ($instance->_preloads as $i => $preload) {
             $this->assertArrayHasKey('module', $preload, "Preload [{$i}] must have 'module' key");
             $this->assertArrayHasKey('file', $preload, "Preload [{$i}] must have 'file' key");

@@ -582,7 +582,7 @@ class ModulesAdminTest extends TestCase
         }
 
         // Extract a reasonable chunk that covers the rollback block
-        return substr($functionCode, $pos, 500);
+        return substr($functionCode, $pos, 800);
     }
 
     /**

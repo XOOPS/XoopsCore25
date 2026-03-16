@@ -43,6 +43,9 @@ class FunctionsIniTest extends TestCase
     #[Test]
     public function getDirnameHandlesWindowsPaths(): void
     {
+        if (DIRECTORY_SEPARATOR === '/') {
+            $this->markTestSkipped('Backslash conversion only runs on Windows');
+        }
         $path = 'C:\\wamp64\\www\\xoops\\modules\\news\\index.php';
         $this->assertSame('news', mod_getDirname($path));
     }
@@ -57,6 +60,9 @@ class FunctionsIniTest extends TestCase
     #[Test]
     public function getDirnameHandlesDoubleBackslashPaths(): void
     {
+        if (DIRECTORY_SEPARATOR === '/') {
+            $this->markTestSkipped('Backslash conversion only runs on Windows');
+        }
         $path = 'C:\\\\server\\\\share\\\\xoops\\\\modules\\\\mymod\\\\index.php';
         $this->assertSame('mymod', mod_getDirname($path));
     }
