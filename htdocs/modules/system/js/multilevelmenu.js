@@ -20,4 +20,14 @@ document.addEventListener('DOMContentLoaded', function() {
             if (sub) sub.classList.toggle('show');
         });
     });
+
+    // Hook anchor-based actions (e.g. toolbar toggle seeded as #xswatch-toolbar-toggle)
+    document.querySelectorAll('a[href="#xswatch-toolbar-toggle"]').forEach(function(el) {
+        el.addEventListener('click', function (e) {
+            e.preventDefault();
+            if (typeof xswatchToolbarToggle === 'function') {
+                xswatchToolbarToggle();
+            }
+        });
+    });
 });

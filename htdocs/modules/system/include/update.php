@@ -209,7 +209,8 @@ function update_system_v219_menus(XoopsModule $module)
     }
     $permTable = $xoopsDB->prefix('group_permission');
     $result = $xoopsDB->query("SELECT COUNT(*) FROM {$permTable}"
-        . " WHERE gperm_name IN ('menus_category_view','menus_items_view')");
+        . " WHERE gperm_name IN ('menus_category_view','menus_items_view')"
+        . " AND gperm_modid = " . (int)$mid);
     if ($xoopsDB->isResultSet($result) && $result instanceof \mysqli_result) {
         [$permCount] = $xoopsDB->fetchRow($result);
     }
@@ -219,6 +220,10 @@ function update_system_v219_menus(XoopsModule $module)
         $xoopsDB->exec("UPDATE " . $xoopsDB->prefix('menuscategory')
             . " SET category_url = 'index.php'"
             . " WHERE category_url = '/' AND category_protected = 1");
+        // Migrate toolbar item from javascript: URL to safe anchor
+        $xoopsDB->exec("UPDATE " . $xoopsDB->prefix('menusitems')
+            . " SET items_url = '#xswatch-toolbar-toggle'"
+            . " WHERE items_url LIKE 'javascript:%' AND items_protected = 1");
         return;
     }
 
@@ -229,7 +234,8 @@ function update_system_v219_menus(XoopsModule $module)
     }
     if ((int)$permCount > 0) {
         $xoopsDB->exec("DELETE FROM {$permTable}"
-            . " WHERE gperm_name IN ('menus_category_view','menus_items_view')");
+            . " WHERE gperm_name IN ('menus_category_view','menus_items_view')"
+            . " AND gperm_modid = " . (int)$mid);
     }
 
     // Seed default categories
@@ -276,7 +282,7 @@ function update_system_v219_menus(XoopsModule $module)
 
     $xoopsDB->exec("INSERT INTO " . $xoopsDB->prefix('menusitems')
         . " (items_pid, items_cid, items_title, items_prefix, items_suffix, items_url, items_target, items_position, items_protected, items_active)"
-        . " VALUES (0, {$catAccountId}, 'MENUS_ACCOUNT_TOOLBAR', '<span class=\"fa fa-wrench fa-fw\"></span>', '<span id=\"xswatch-toolbar-ind\"></span>', 'javascript:xswatchToolbarToggle();', 0, 6, 1, 1)");
+        . " VALUES (0, {$catAccountId}, 'MENUS_ACCOUNT_TOOLBAR', '<span class=\"fa fa-wrench fa-fw\"></span>', '<span id=\"xswatch-toolbar-ind\"></span>', '#xswatch-toolbar-toggle', 0, 6, 1, 1)");
     $itemToolbarId = $xoopsDB->getInsertId();
 
     $xoopsDB->exec("INSERT INTO " . $xoopsDB->prefix('menusitems')

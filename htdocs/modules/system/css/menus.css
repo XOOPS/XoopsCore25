@@ -353,6 +353,5 @@ ol.xo-menus-sortable .xo-menus-sortable-row.inactive {
 ol.xo-menus-tree .item-active-toggle.disabled,
 ol.xo-menus-tree .category-active-toggle.disabled {
     opacity: 0.5;
-    pointer-events: none;
     cursor: not-allowed;
 }

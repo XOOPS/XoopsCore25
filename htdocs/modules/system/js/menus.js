@@ -142,7 +142,7 @@ jQuery(function($){
             var active = parseInt($toggle.attr('data-active'), 10) ? 1 : 0;
             updateRowState($toggle, active);
             if (hasInactiveAncestor($li)) {
-                $toggle.addClass('disabled').css('cursor', 'not-allowed').attr('title', 'Parent inactive');
+                $toggle.addClass('disabled').css('cursor', 'not-allowed').attr('title', window.XOOPS_MENUS.messages.parentInactive || 'Parent inactive');
             } else {
                 $toggle.removeClass('disabled').css('cursor', '').removeAttr('title');
             }

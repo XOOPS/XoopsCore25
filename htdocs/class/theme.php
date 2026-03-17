@@ -449,7 +449,8 @@ class xos_opal_Theme
             // Verify table exists before querying
             $tableExists = false;
             try {
-                $sql = "SHOW TABLES LIKE '" . $GLOBALS['xoopsDB']->prefix('menuscategory') . "'";
+                $tableName = str_replace(['_', '%'], ['\\_', '\\%'], $GLOBALS['xoopsDB']->prefix('menuscategory'));
+                $sql = "SHOW TABLES LIKE '" . $tableName . "'";
                 $result = $GLOBALS['xoopsDB']->queryF($sql);
                 if (false !== $result) {
                     $tableExists = $GLOBALS['xoopsDB']->getRowsNum($result) > 0;
