@@ -560,8 +560,12 @@ class xos_opal_Theme
             return $value;
         }
 
-        // Sanitize: only allow safe inline HTML tags
+        // Sanitize: only allow safe inline HTML tags, strip event handlers and javascript: URLs
         $value = strip_tags($value, '<span><i><b><em><strong><img>');
+        $value = preg_replace('/\s+on\w+\s*=\s*"[^"]*"/i', '', $value);
+        $value = preg_replace('/\s+on\w+\s*=\s*\'[^\']*\'/i', '', $value);
+        $value = preg_replace('/\s+on\w+\s*=\s*[^\s>]+/i', '', $value);
+        $value = preg_replace('/\b(href|src)\s*=\s*["\']?\s*javascript:[^"\'>\s]*/i', '', $value);
 
         if (false === stripos($value, 'xoInboxCount')) {
             return $value;

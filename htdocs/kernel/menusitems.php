@@ -145,6 +145,10 @@ class XoopsMenusItems extends XoopsObject
         // category
         $menuscategoryHandler = xoops_getHandler('menuscategory');
         $category = $menuscategoryHandler->get($category_id);
+        if (!is_object($category)) {
+            $form->addElement(new XoopsFormLabel(_AM_SYSTEM_MENUS_TITLECAT, _AM_SYSTEM_MENUS_ERROR_NOCATEGORY));
+            return $form;
+        }
         $form->addElement(new XoopsFormLabel(_AM_SYSTEM_MENUS_TITLECAT, (string)$category->getVar('category_title')));
         $form->addElement(new XoopsFormHidden('items_cid', $category_id));
 
