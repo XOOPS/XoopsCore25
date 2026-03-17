@@ -182,7 +182,7 @@ class XoopsMenusItems extends XoopsObject
         // prefix
         $editor_configs = array(
             'name' => 'items_prefix',
-            'value' => $this->getVar('items_prefix', 'e'),
+            'value' => $this->getVar('items_prefix', 'n'),
             'rows' => 1,
             'cols' => 50,
             'width' => '100%',
@@ -201,7 +201,7 @@ class XoopsMenusItems extends XoopsObject
         // suffix
         $editor_configs = array(
             'name' => 'items_suffix',
-            'value' => $this->getVar('items_suffix', 'e'),
+            'value' => $this->getVar('items_suffix', 'n'),
             'rows' => 1,
             'cols' => 50,
             'width' => '100%',

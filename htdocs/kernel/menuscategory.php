@@ -153,7 +153,7 @@ class XoopsMenusCategory extends XoopsObject
         // prefix
         $editor_configs = array(
             'name' => 'category_prefix',
-            'value' => $this->getVar('category_prefix', 'e'),
+            'value' => $this->getVar('category_prefix', 'n'),
             'rows' => 1,
             'cols' => 50,
             'width' => '100%',
@@ -172,7 +172,7 @@ class XoopsMenusCategory extends XoopsObject
         // suffix
         $editor_configs = array(
             'name' => 'category_suffix',
-            'value' => $this->getVar('category_suffix', 'e'),
+            'value' => $this->getVar('category_suffix', 'n'),
             'rows' => 1,
             'cols' => 50,
             'width' => '100%',

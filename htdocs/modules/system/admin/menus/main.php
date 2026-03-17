@@ -248,13 +248,13 @@ switch ($op) {
                 $items_arr = $menusitemsHandler->getall($criteria);
                 $items = '<br>';
                 foreach (array_keys($items_arr) as $i) {
-                        $items .= '#' . $items_arr[$i]->getVar('items_id') . ': ' . $items_arr[$i]->getVar('items_title') . '<br>';
+                        $items .= '#' . $items_arr[$i]->getVar('items_id') . ': ' . htmlspecialchars((string)$items_arr[$i]->getVar('items_title'), ENT_QUOTES, 'UTF-8') . '<br>';
                 }
                 xoops_confirm([
                     'surdel'      => true,
                     'category_id' => $category_id,
                     'op'          => 'delcat'
-                ], $_SERVER['REQUEST_URI'], sprintf(_AM_SYSTEM_MENUS_SUREDELCAT, (string)$obj->getVar('category_title')) . $items);
+                ], $_SERVER['REQUEST_URI'], sprintf(_AM_SYSTEM_MENUS_SUREDELCAT, htmlspecialchars((string)$obj->getVar('category_title'), ENT_QUOTES, 'UTF-8')) . $items);
             }
         }
         break;
@@ -313,14 +313,14 @@ switch ($op) {
                 $items_arr = $myTree->getAllChild($item_id);
                 $items = '<br>';
                 foreach (array_keys($items_arr) as $i) {
-                        $items .= '#' . $items_arr[$i]->getVar('items_id') . ': ' . $items_arr[$i]->getVar('items_title') . '<br>';
+                        $items .= '#' . $items_arr[$i]->getVar('items_id') . ': ' . htmlspecialchars((string)$items_arr[$i]->getVar('items_title'), ENT_QUOTES, 'UTF-8') . '<br>';
                 }
                 xoops_confirm([
                     'surdel'      => true,
                     'item_id'     => $item_id,
                     'category_id' => $objCid,
                     'op'          => 'delitem'
-                ], $_SERVER['REQUEST_URI'], sprintf(_AM_SYSTEM_MENUS_SUREDELITEM, (string)$obj->getVar('items_title')) . $items);
+                ], $_SERVER['REQUEST_URI'], sprintf(_AM_SYSTEM_MENUS_SUREDELITEM, htmlspecialchars((string)$obj->getVar('items_title'), ENT_QUOTES, 'UTF-8')) . $items);
             }
         }
         break;
