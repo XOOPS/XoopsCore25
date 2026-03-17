@@ -112,7 +112,7 @@ class XoopsMenusItems extends XoopsObject
     /**
      * @return mixed
      */
-    public function get_new_enreg()
+    public function getNewEnreg()
     {
         global $xoopsDB;
         $new_enreg = $xoopsDB->getInsertId();

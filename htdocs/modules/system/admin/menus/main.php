@@ -50,7 +50,7 @@ if ($op !== 'saveorder' && $op !== 'saveorderitems' && $op !== 'toggleactivecat'
 }
 
 $helper = Helper::getHelper('system');
-$nb_limit = $helper->getConfig('avatars_pager', 15);
+$nb_limit = $helper->getConfig('menus_pager', 15);
 
 switch ($op) {
     case 'list':
@@ -78,8 +78,8 @@ switch ($op) {
                 $category = array();
                 $category['id']              = $cid;
                 $category['title']           = $category_arr[$i]->getAdminTitle();
-                $category['prefix']          = $category_arr[$i]->getVar('category_prefix');
-                $category['suffix']          = $category_arr[$i]->getVar('category_suffix');
+                $category['prefix']          = $category_arr[$i]->getVar('category_prefix', 'n');
+                $category['suffix']          = $category_arr[$i]->getVar('category_suffix', 'n');
                 $category['url']             = $category_arr[$i]->getVar('category_url');
                 $category['target']          = ($category_arr[$i]->getVar('category_target') == 1) ? '_blank' : '_self';
                 $category['position']        = $category_arr[$i]->getVar('category_position');
@@ -99,8 +99,8 @@ switch ($op) {
                         $item = [];
                         $item['id']        = $items_arr[$j]->getVar('items_id');
                         $item['title']     = $items_arr[$j]->getAdminTitle();
-                        $item['prefix']    = $items_arr[$j]->getVar('items_prefix');
-                        $item['suffix']    = $items_arr[$j]->getVar('items_suffix');
+                        $item['prefix']    = $items_arr[$j]->getVar('items_prefix', 'n');
+                        $item['suffix']    = $items_arr[$j]->getVar('items_suffix', 'n');
                         $item['url']       = $items_arr[$j]->getVar('items_url');
                         $item['target']    = ($items_arr[$j]->getVar('items_target') == 1) ? '_blank' : '_self';
                         $item['active']    = $items_arr[$j]->getVar('items_active');
@@ -190,10 +190,10 @@ switch ($op) {
         /** @var \XoopsMenusCategory $obj */
         if ($menuscategoryHandler->insert($obj)) {
             // permissions
-            if ($obj->get_new_enreg() == 0) {
+            if ($obj->getNewEnreg() == 0) {
                 $perm_id = $obj->getVar('category_id');
             } else {
-                $perm_id = $obj->get_new_enreg();
+                $perm_id = $obj->getNewEnreg();
             }
             $permHelper = new \Xmf\Module\Helper\Permission();
             // permission view
@@ -545,8 +545,8 @@ switch ($op) {
                     $item = [];
                     $item['id']        = $items_arr[$i]->getVar('items_id');
                     $item['title']     = $items_arr[$i]->getAdminTitle();
-                    $item['prefix']    = $items_arr[$i]->getVar('items_prefix');
-                    $item['suffix']    = $items_arr[$i]->getVar('items_suffix');
+                    $item['prefix']    = $items_arr[$i]->getVar('items_prefix', 'n');
+                    $item['suffix']    = $items_arr[$i]->getVar('items_suffix', 'n');
                     $item['url']       = $items_arr[$i]->getVar('items_url');
                     $item['target']    = ($items_arr[$i]->getVar('items_target') == 1) ? '_blank' : '_self';
                     $item['active']    = $items_arr[$i]->getVar('items_active');
@@ -665,10 +665,10 @@ switch ($op) {
         if ($error_message == '') {
             if ($menusitemsHandler->insert($obj)) {
                 // permissions
-                if ($obj->get_new_enreg() == 0) {
+                if ($obj->getNewEnreg() == 0) {
                     $perm_id = $obj->getVar('items_id');
                 } else {
-                    $perm_id = $obj->get_new_enreg();
+                    $perm_id = $obj->getNewEnreg();
                 }
                 $permHelper = new \Xmf\Module\Helper\Permission();
                 $groups_view = Request::getArray('menus_items_view_perms', [], 'POST');
