@@ -32,6 +32,10 @@ function xoops_module_update_system(XoopsModule $module, $prev_version = null)
     if ($prev_version < '2.1.8') {
         update_system_remove_legacy_html_templates($module);
     }
+    // Create menu management tables and seed default data
+    if ($prev_version < '2.1.9') {
+        update_system_v219_menus($module);
+    }
     $errors = $module->getErrors();
     if (!empty($errors)) {
         print_r($errors);
@@ -131,4 +135,157 @@ function update_system_remove_legacy_html_templates(XoopsModule $module)
          . " AND t2.tpl_file LIKE '%.tpl'";
 
     $xoopsDB->exec($sql);
+}
+
+/**
+ * Create menu management tables and seed default data.
+ *
+ * @param XoopsModule $module
+ */
+function update_system_v219_menus(XoopsModule $module)
+{
+    global $xoopsDB;
+
+    $mid = $module->getVar('mid');
+
+    // Create menuscategory table
+    $sql = "CREATE TABLE IF NOT EXISTS " . $xoopsDB->prefix('menuscategory') . " (
+        category_id INT AUTO_INCREMENT PRIMARY KEY,
+        category_title VARCHAR(100) NOT NULL,
+        category_prefix VARCHAR(100) NOT NULL DEFAULT '',
+        category_suffix VARCHAR(100) NOT NULL DEFAULT '',
+        category_url VARCHAR(255) NULL,
+        category_target TINYINT(1) DEFAULT 0,
+        category_position INT DEFAULT 0,
+        category_protected INT DEFAULT 0,
+        category_active TINYINT(1) DEFAULT 1
+    ) ENGINE=InnoDB";
+    $xoopsDB->query($sql);
+
+    // Create menusitems table
+    $sql = "CREATE TABLE IF NOT EXISTS " . $xoopsDB->prefix('menusitems') . " (
+        items_id INT AUTO_INCREMENT PRIMARY KEY,
+        items_pid INT NULL,
+        items_cid INT NULL,
+        items_title VARCHAR(100) NOT NULL,
+        items_prefix VARCHAR(100) NOT NULL DEFAULT '',
+        items_suffix VARCHAR(100) NOT NULL DEFAULT '',
+        items_url VARCHAR(255) NULL,
+        items_target TINYINT(1) DEFAULT 0,
+        items_position INT DEFAULT 0,
+        items_protected INT DEFAULT 0,
+        items_active TINYINT(1) DEFAULT 1,
+        FOREIGN KEY (items_cid) REFERENCES " . $xoopsDB->prefix('menuscategory') . "(category_id) ON DELETE CASCADE
+    ) ENGINE=InnoDB";
+    $xoopsDB->query($sql);
+
+    // Drop self-referencing FK on items_pid if it exists (XOOPS uses 0 for "no parent")
+    $table = $xoopsDB->prefix('menusitems');
+    $result = $xoopsDB->query("SELECT CONSTRAINT_NAME FROM information_schema.KEY_COLUMN_USAGE"
+        . " WHERE TABLE_SCHEMA = DATABASE() AND TABLE_NAME = '{$table}'"
+        . " AND COLUMN_NAME = 'items_pid' AND REFERENCED_TABLE_NAME IS NOT NULL");
+    if ($xoopsDB->isResultSet($result) && $result instanceof \mysqli_result) {
+        while (false !== ($row = $xoopsDB->fetchArray($result))) {
+            $xoopsDB->query("ALTER TABLE {$table} DROP FOREIGN KEY `{$row['CONSTRAINT_NAME']}`");
+        }
+    }
+
+    // Only seed data if tables are empty
+    $result = $xoopsDB->query("SELECT COUNT(*) FROM " . $xoopsDB->prefix('menuscategory'));
+    if ($result) {
+        [$count] = $xoopsDB->fetchRow($result);
+        if ((int)$count > 0) {
+            return; // already seeded
+        }
+    }
+
+    // Seed default categories
+    $xoopsDB->query("INSERT INTO " . $xoopsDB->prefix('menuscategory')
+        . " (category_title, category_prefix, category_suffix, category_url, category_target, category_position, category_protected, category_active)"
+        . " VALUES ('MENUS_HOME', '<span class=\"fa fa-home\"></span>', '', '/', 0, 0, 1, 1)");
+    $catHomeId = $xoopsDB->getInsertId();
+
+    $xoopsDB->query("INSERT INTO " . $xoopsDB->prefix('menuscategory')
+        . " (category_title, category_prefix, category_suffix, category_url, category_target, category_position, category_protected, category_active)"
+        . " VALUES ('MENUS_ADMIN', '<span class=\"fa fa-wrench fa-fw\"></span>', '', 'admin.php', 0, 10, 1, 1)");
+    $catAdminId = $xoopsDB->getInsertId();
+
+    $xoopsDB->query("INSERT INTO " . $xoopsDB->prefix('menuscategory')
+        . " (category_title, category_prefix, category_suffix, category_url, category_target, category_position, category_protected, category_active)"
+        . " VALUES ('MENUS_ACCOUNT', '<span class=\"fa fa-user fa-fw\"></span>', '', '', 0, 20, 1, 1)");
+    $catAccountId = $xoopsDB->getInsertId();
+
+    // Seed default items under Account category
+    $xoopsDB->query("INSERT INTO " . $xoopsDB->prefix('menusitems')
+        . " (items_pid, items_cid, items_title, items_prefix, items_suffix, items_url, items_target, items_position, items_protected, items_active)"
+        . " VALUES (0, {$catAccountId}, 'MENUS_ACCOUNT_EDIT', '<span class=\"fa fa-edit fa-fw\"></span>', '', 'user.php', 0, 1, 1, 1)");
+    $itemEditId = $xoopsDB->getInsertId();
+
+    $xoopsDB->query("INSERT INTO " . $xoopsDB->prefix('menusitems')
+        . " (items_pid, items_cid, items_title, items_prefix, items_suffix, items_url, items_target, items_position, items_protected, items_active)"
+        . " VALUES (0, {$catAccountId}, 'MENUS_ACCOUNT_LOGIN', '<span class=\"fa fa-sign-in fa-fw\"></span>', '', 'user.php', 0, 2, 1, 1)");
+    $itemLoginId = $xoopsDB->getInsertId();
+
+    $xoopsDB->query("INSERT INTO " . $xoopsDB->prefix('menusitems')
+        . " (items_pid, items_cid, items_title, items_prefix, items_suffix, items_url, items_target, items_position, items_protected, items_active)"
+        . " VALUES (0, {$catAccountId}, 'MENUS_ACCOUNT_REGISTER', '<span class=\"fa fa-sign-in fa-fw\"></span>', '', 'register.php', 0, 3, 1, 1)");
+    $itemRegisterId = $xoopsDB->getInsertId();
+
+    $xoopsDB->query("INSERT INTO " . $xoopsDB->prefix('menusitems')
+        . " (items_pid, items_cid, items_title, items_prefix, items_suffix, items_url, items_target, items_position, items_protected, items_active)"
+        . " VALUES (0, {$catAccountId}, 'MENUS_ACCOUNT_MESSAGES', '<span class=\"fa fa-envelope fa-fw\"></span>', '<span class=\"badge bg-primary rounded-pill\"><{xoInboxCount}></span>', 'viewpmsg.php', 0, 4, 1, 1)");
+    $itemMessagesId = $xoopsDB->getInsertId();
+
+    $xoopsDB->query("INSERT INTO " . $xoopsDB->prefix('menusitems')
+        . " (items_pid, items_cid, items_title, items_prefix, items_suffix, items_url, items_target, items_position, items_protected, items_active)"
+        . " VALUES (0, {$catAccountId}, 'MENUS_ACCOUNT_NOTIFICATIONS', '<span class=\"fa fa-info-circle fa-fw\"></span>', '', 'notifications.php', 0, 5, 1, 1)");
+    $itemNotifId = $xoopsDB->getInsertId();
+
+    $xoopsDB->query("INSERT INTO " . $xoopsDB->prefix('menusitems')
+        . " (items_pid, items_cid, items_title, items_prefix, items_suffix, items_url, items_target, items_position, items_protected, items_active)"
+        . " VALUES (0, {$catAccountId}, 'MENUS_ACCOUNT_TOOLBAR', '<span class=\"fa fa-wrench fa-fw\"></span>', '<span id=\"xswatch-toolbar-ind\"></span>', 'javascript:xswatchToolbarToggle();', 0, 6, 1, 1)");
+    $itemToolbarId = $xoopsDB->getInsertId();
+
+    $xoopsDB->query("INSERT INTO " . $xoopsDB->prefix('menusitems')
+        . " (items_pid, items_cid, items_title, items_prefix, items_suffix, items_url, items_target, items_position, items_protected, items_active)"
+        . " VALUES (0, {$catAccountId}, 'MENUS_ACCOUNT_LOGOUT', '<span class=\"fa fa-sign-out fa-fw\"></span>', '', 'user.php?op=logout', 0, 7, 1, 1)");
+    $itemLogoutId = $xoopsDB->getInsertId();
+
+    // Seed permissions using the actual module ID
+    $permTable = $xoopsDB->prefix('group_permission');
+
+    // Category permissions: Home visible to all groups (1=admin, 2=registered, 3=anonymous)
+    foreach ([1, 2, 3] as $gid) {
+        $xoopsDB->query("INSERT INTO {$permTable} (gperm_groupid, gperm_itemid, gperm_modid, gperm_name) VALUES ({$gid}, {$catHomeId}, {$mid}, 'menus_category_view')");
+    }
+    // Admin category visible to admin only
+    $xoopsDB->query("INSERT INTO {$permTable} (gperm_groupid, gperm_itemid, gperm_modid, gperm_name) VALUES (1, {$catAdminId}, {$mid}, 'menus_category_view')");
+    // Account category visible to all groups
+    foreach ([1, 2, 3] as $gid) {
+        $xoopsDB->query("INSERT INTO {$permTable} (gperm_groupid, gperm_itemid, gperm_modid, gperm_name) VALUES ({$gid}, {$catAccountId}, {$mid}, 'menus_category_view')");
+    }
+
+    // Item permissions
+    // Edit Account: admin + registered
+    foreach ([1, 2] as $gid) {
+        $xoopsDB->query("INSERT INTO {$permTable} (gperm_groupid, gperm_itemid, gperm_modid, gperm_name) VALUES ({$gid}, {$itemEditId}, {$mid}, 'menus_items_view')");
+    }
+    // Login: anonymous only
+    $xoopsDB->query("INSERT INTO {$permTable} (gperm_groupid, gperm_itemid, gperm_modid, gperm_name) VALUES (3, {$itemLoginId}, {$mid}, 'menus_items_view')");
+    // Register: anonymous only
+    $xoopsDB->query("INSERT INTO {$permTable} (gperm_groupid, gperm_itemid, gperm_modid, gperm_name) VALUES (3, {$itemRegisterId}, {$mid}, 'menus_items_view')");
+    // Messages: admin + registered
+    foreach ([1, 2] as $gid) {
+        $xoopsDB->query("INSERT INTO {$permTable} (gperm_groupid, gperm_itemid, gperm_modid, gperm_name) VALUES ({$gid}, {$itemMessagesId}, {$mid}, 'menus_items_view')");
+    }
+    // Notifications: admin + registered
+    foreach ([1, 2] as $gid) {
+        $xoopsDB->query("INSERT INTO {$permTable} (gperm_groupid, gperm_itemid, gperm_modid, gperm_name) VALUES ({$gid}, {$itemNotifId}, {$mid}, 'menus_items_view')");
+    }
+    // Toolbar: admin only
+    $xoopsDB->query("INSERT INTO {$permTable} (gperm_groupid, gperm_itemid, gperm_modid, gperm_name) VALUES (1, {$itemToolbarId}, {$mid}, 'menus_items_view')");
+    // Logout: admin + registered
+    foreach ([1, 2] as $gid) {
+        $xoopsDB->query("INSERT INTO {$permTable} (gperm_groupid, gperm_itemid, gperm_modid, gperm_name) VALUES ({$gid}, {$itemLogoutId}, {$mid}, 'menus_items_view')");
+    }
 }

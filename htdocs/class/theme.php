@@ -406,7 +406,214 @@ class xos_opal_Theme
             }
         }
 
+        // Load menu categories and their nested items so themes can render navigation
+        if (xoops_getModuleOption('active_menus', 'system')) {
+            $this->template->assign('xoMenuCategories', $this->loadMenus());
+        }
+
         return true;
+    }
+
+    /**
+     * Load active menu categories with their nested items.
+     *
+     * @return array
+     */
+    protected function loadMenus()
+    {
+        // Include shared CSS for multilevel menus
+        $css = 'multilevelmenu.css';
+        $path = XOOPS_ROOT_PATH . '/modules/system/css/' . $css;
+        if (file_exists($path)) {
+            $this->addStylesheet(XOOPS_URL . '/modules/system/css/' . $css);
+        }
+
+        // Include shared JS for multilevel menus
+        $js = 'multilevelmenu.js';
+        $jsPath = XOOPS_ROOT_PATH . '/modules/system/js/' . $js;
+        if (file_exists($jsPath)) {
+            $this->addScript(XOOPS_URL . '/modules/system/js/' . $js);
+        }
+
+        $menus = [];
+        $menuscategoryHandler = xoops_getHandler('menuscategory');
+        if (!is_object($menuscategoryHandler) && class_exists('XoopsMenusCategoryHandler')) {
+            $menuscategoryHandler = new XoopsMenusCategoryHandler($GLOBALS['xoopsDB']);
+        }
+
+        $category_arr = [];
+        $viewPermissionItem = [];
+
+        if (is_object($menuscategoryHandler)) {
+            // Verify table exists before querying
+            $tableExists = false;
+            try {
+                $sql = "SHOW TABLES LIKE '" . $GLOBALS['xoopsDB']->prefix('menuscategory') . "'";
+                $result = $GLOBALS['xoopsDB']->queryF($sql);
+                if (false !== $result) {
+                    $tableExists = $GLOBALS['xoopsDB']->getRowsNum($result) > 0;
+                }
+            } catch (Exception $e) {
+                $tableExists = false;
+            }
+            if ($tableExists) {
+                $helper            = Xmf\Module\Helper::getHelper('system');
+                $moduleHandler     = $helper->getModule();
+                $groups            = is_object($GLOBALS['xoopsUser']) ? $GLOBALS['xoopsUser']->getGroups() : (array) XOOPS_GROUP_ANONYMOUS;
+                $gpermHandler      = xoops_getHandler('groupperm');
+                $viewPermissionCat = $gpermHandler->getItemIds('menus_category_view', $groups, $moduleHandler->getVar('mid'));
+                $viewPermissionItem = $gpermHandler->getItemIds('menus_items_view', $groups, $moduleHandler->getVar('mid'));
+                if (!empty($viewPermissionCat)) {
+                    $criteria = new CriteriaCompo();
+                    $criteria->add(new Criteria('category_active', 1));
+                    $criteria->add(new Criteria('category_id', '(' . implode(',', $viewPermissionCat) . ')', 'IN'));
+                    $criteria->setSort('category_position');
+                    $criteria->setOrder('ASC');
+                    $category_arr = $menuscategoryHandler->getAll($criteria);
+                }
+            }
+        }
+
+        if (!empty($category_arr)) {
+            $menusitemsHandler = xoops_getHandler('menusitems');
+            if (!is_object($menusitemsHandler) && class_exists('XoopsMenusItemsHandler')) {
+                $menusitemsHandler = new XoopsMenusItemsHandler($GLOBALS['xoopsDB']);
+            }
+
+            // Normalize relative URLs to absolute
+            $normalizeUrl = function ($url) {
+                if (!is_string($url) || $url === '') {
+                    return $url;
+                }
+                if (preg_match('#^(https?://|/|\#|javascript:)#i', $url)) {
+                    return $url;
+                }
+                return XOOPS_URL . '/' . ltrim($url, '/');
+            };
+
+            foreach ($category_arr as $cat) {
+                try {
+                    $cid = $cat->getVar('category_id');
+                    $item_list = [];
+                    if (!empty($viewPermissionItem)) {
+                        $crit = new CriteriaCompo();
+                        $crit->add(new Criteria('items_id', '(' . implode(',', $viewPermissionItem) . ')', 'IN'));
+                        $crit->add(new Criteria('items_cid', $cid));
+                        $crit->add(new Criteria('items_active', 1));
+                        $crit->setSort('items_position');
+                        $crit->setOrder('ASC');
+                        $items_arr = $menusitemsHandler->getAll($crit);
+                        xoops_load('SystemMenusTree', 'system');
+                        $myTree = new SystemMenusTree($items_arr, 'items_id', 'items_pid');
+                        // Recursive closure to build nested structure
+                        $buildNested = function ($treeObj, $parentId = 0) use (&$buildNested, $normalizeUrl) {
+                            $nodes = [];
+                            $children = $treeObj->getFirstChild($parentId);
+                            foreach ($children as $child) {
+                                $cid2 = $child->getVar('items_id');
+                                $entry = [
+                                    'id'       => $cid2,
+                                    'title'    => $child->getResolvedTitle(),
+                                    'prefix'   => $this->renderMenuAffix($child->getVar('items_prefix')),
+                                    'suffix'   => $this->renderMenuAffix($child->getVar('items_suffix')),
+                                    'url'      => $normalizeUrl($child->getVar('items_url')),
+                                    'target'   => ($child->getVar('items_target') == 1) ? '_blank' : '_self',
+                                    'active'   => $child->getVar('items_active'),
+                                    'children' => $buildNested($treeObj, $cid2),
+                                ];
+                                $nodes[] = $entry;
+                            }
+                            return $nodes;
+                        };
+                        $item_list = $buildNested($myTree, 0);
+                    }
+                    $menus[] = [
+                        'category_id'     => $cid,
+                        'category_title'  => $cat->getResolvedTitle(),
+                        'category_prefix' => $this->renderMenuAffix($cat->getVar('category_prefix')),
+                        'category_suffix' => $this->renderMenuAffix($cat->getVar('category_suffix')),
+                        'category_url'    => $normalizeUrl($cat->getVar('category_url')),
+                        'category_target' => ($cat->getVar('category_target') == 1) ? '_blank' : '_self',
+                        'items'           => $item_list,
+                    ];
+                } catch (Exception $e) {
+                    continue;
+                }
+            }
+        }
+        return $menus;
+    }
+
+    /**
+     * Render a menu prefix/suffix that may contain the xoInboxCount Smarty tag.
+     *
+     * @param string $value
+     * @return string
+     */
+    protected function renderMenuAffix($value)
+    {
+        $value = (string)$value;
+        if ('' === $value) {
+            return $value;
+        }
+
+        $decodedSuffix = htmlspecialchars_decode($value, ENT_QUOTES | ENT_HTML5);
+        if (false === stripos($decodedSuffix, 'xoInboxCount')) {
+            return $value;
+        }
+
+        try {
+            $unread = $this->getInboxUnreadCount();
+            $replacement = null === $unread ? '' : (string)$unread;
+            $rendered = preg_replace('/<{\s*xoInboxCount(?:\s+[^}]*)?\s*}>/i', $replacement, $decodedSuffix);
+
+            return null !== $rendered ? $rendered : $decodedSuffix;
+        } catch (Exception $e) {
+            return $decodedSuffix;
+        }
+    }
+
+    /**
+     * Get unread private message count for current user.
+     *
+     * @return int|null
+     */
+    protected function getInboxUnreadCount()
+    {
+        global $xoopsUser;
+
+        if (!isset($xoopsUser) || !is_object($xoopsUser)) {
+            return null;
+        }
+
+        $freshRead = isset($GLOBALS['xoInboxCountFresh']);
+        $pmScripts = ['pmlite', 'readpmsg', 'viewpmsg'];
+        if (in_array(basename($_SERVER['SCRIPT_FILENAME'], '.php'), $pmScripts)) {
+            if (!$freshRead) {
+                unset($_SESSION['xoops_inbox_count'], $_SESSION['xoops_inbox_total'], $_SESSION['xoops_inbox_count_expire']);
+                $GLOBALS['xoInboxCountFresh'] = true;
+            }
+        }
+
+        $time = time();
+        if (isset($_SESSION['xoops_inbox_count']) && (isset($_SESSION['xoops_inbox_count_expire']) && $_SESSION['xoops_inbox_count_expire'] > $time)) {
+            return (int)$_SESSION['xoops_inbox_count'];
+        }
+
+        /** @var \XoopsPrivmessageHandler $pm_handler */
+        $pm_handler = xoops_getHandler('privmessage');
+
+        $xoopsPreload = XoopsPreload::getInstance();
+        $xoopsPreload->triggerEvent('core.class.smarty.xoops_plugins.xoinboxcount', [$pm_handler]);
+
+        $criteria = new CriteriaCompo(new Criteria('to_userid', $xoopsUser->getVar('uid')));
+        $_SESSION['xoops_inbox_total'] = $pm_handler->getCount($criteria);
+
+        $criteria->add(new Criteria('read_msg', 0));
+        $_SESSION['xoops_inbox_count'] = $pm_handler->getCount($criteria);
+        $_SESSION['xoops_inbox_count_expire'] = $time + 60;
+
+        return (int)$_SESSION['xoops_inbox_count'];
     }
 
     /**
