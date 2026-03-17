@@ -183,6 +183,7 @@ switch ($op) {
         $obj->setVar('category_target', Request::getInt('category_target', 0));
         $obj->setVar('category_position', Request::getInt('category_position', 0));
         $obj->setVar('category_active', Request::getInt('category_active', 1));
+        /** @var \XoopsMenusCategory $obj */
         if ($menuscategoryHandler->insert($obj)) {
             // permissions
             if ($obj->get_new_enreg() == 0) {
@@ -253,7 +254,7 @@ switch ($op) {
                     'surdel'      => true,
                     'category_id' => $category_id,
                     'op'          => 'delcat'
-                ], $_SERVER['REQUEST_URI'], sprintf(_AM_SYSTEM_MENUS_SUREDELCAT, $obj->getVar('category_title')) . $items);
+                ], $_SERVER['REQUEST_URI'], sprintf(_AM_SYSTEM_MENUS_SUREDELCAT, (string)$obj->getVar('category_title')) . $items);
             }
         }
         break;
@@ -408,42 +409,86 @@ switch ($op) {
 
         /** @var \XoopsMenusItemsHandler $menusitemsHandler */
         $menusitemsHandler = xoops_getHandler('menusitems');
-        $pos = 1;
+
+        // Build proposed parent map and validate items exist with same category
+        $parentMap = [];
+        $itemObjects = [];
         $errors = [];
+        $referenceCid = null;
         foreach ($itemOrder as $id => $parentId) {
             $id = (int)$id;
             if ($id <= 0) continue;
             $obj = $menusitemsHandler->get($id);
-            if (is_object($obj)) {
-                $newPid = !empty($parentId) ? (int)$parentId : 0;
-                // Server-side validation of parent
-                if ($newPid > 0) {
-                    if ($newPid === $id) {
-                        $errors[] = "Item {$id} cannot be its own parent";
-                        $pos++;
-                        continue;
+            if (!is_object($obj)) {
+                $errors[] = "Item not found id {$id}";
+                continue;
+            }
+            $itemObjects[$id] = $obj;
+            $newPid = !empty($parentId) ? (int)$parentId : 0;
+            if ($newPid === $id) {
+                $errors[] = "Item {$id} cannot be its own parent";
+                continue;
+            }
+            if ($newPid > 0 && !isset($itemOrder[$newPid])) {
+                // Parent not in payload — check it exists in DB with same category
+                $parentObj = $menusitemsHandler->get($newPid);
+                if (!is_object($parentObj)) {
+                    $errors[] = "Parent {$newPid} not found for item {$id}";
+                    continue;
+                }
+                if ((int)$parentObj->getVar('items_cid') !== (int)$obj->getVar('items_cid')) {
+                    $errors[] = "Parent {$newPid} belongs to a different category than item {$id}";
+                    continue;
+                }
+            }
+            $parentMap[$id] = $newPid;
+        }
+
+        // Validate full graph: no cycles, depth <= 3
+        if (empty($errors)) {
+            foreach ($parentMap as $id => $pid) {
+                $visited = [$id];
+                $current = $pid;
+                $depth = 0;
+                while ($current > 0) {
+                    if (in_array($current, $visited)) {
+                        $errors[] = "Cycle detected involving item {$id}";
+                        break;
                     }
-                    $parentObj = $menusitemsHandler->get($newPid);
-                    if (!is_object($parentObj)) {
-                        $errors[] = "Parent {$newPid} not found for item {$id}";
-                        $pos++;
-                        continue;
+                    $visited[] = $current;
+                    // Use proposed parent if in map, otherwise fall back to DB
+                    if (isset($parentMap[$current])) {
+                        $current = $parentMap[$current];
+                    } else {
+                        $dbObj = $menusitemsHandler->get($current);
+                        $current = is_object($dbObj) ? (int)$dbObj->getVar('items_pid') : 0;
                     }
-                    if ((int)$parentObj->getVar('items_cid') !== (int)$obj->getVar('items_cid')) {
-                        $errors[] = "Parent {$newPid} belongs to a different category than item {$id}";
-                        $pos++;
-                        continue;
+                    $depth++;
+                    if ($depth > 3) {
+                        $errors[] = "Depth limit exceeded for item {$id}";
+                        break;
                     }
                 }
+            }
+        }
+
+        // Only write if all validations passed
+        if (empty($errors)) {
+            $pos = 1;
+            foreach ($itemOrder as $id => $parentId) {
+                $id = (int)$id;
+                if ($id <= 0 || !isset($itemObjects[$id]) || !isset($parentMap[$id])) {
+                    $pos++;
+                    continue;
+                }
+                $obj = $itemObjects[$id];
                 $obj->setVar('items_position', $pos);
-                $obj->setVar('items_pid', $newPid);
+                $obj->setVar('items_pid', $parentMap[$id]);
                 if (!$menusitemsHandler->insert($obj, true)) {
                     $errors[] = "Failed to update item id {$id}";
                 }
-            } else {
-                $errors[] = "Item not found id {$id}";
+                $pos++;
             }
-            $pos++;
         }
 
         header('Content-Type: application/json');
@@ -541,41 +586,49 @@ switch ($op) {
         } else {
             $obj = $menusitemsHandler->create();
         }
+        $items_cid = Request::getInt('items_cid', 0);
+        $obj->setVar('items_cid', $items_cid);
         $error_message = '';
         if (!$isProtected) {
             $itempid = Request::getInt('items_pid', 0);
             if ($itempid != 0 && $itempid == $id) {
                 $error_message .= _AM_SYSTEM_MENUS_ERROR_ITEMPARENT;
             } elseif ($itempid != 0) {
-                // Walk ancestor chain to detect cycles and enforce depth limit
-                $depth = 1;
-                $ancestorId = $itempid;
-                $isCycle = false;
-                while ($ancestorId > 0) {
-                    $ancestor = $menusitemsHandler->get($ancestorId);
-                    if (!is_object($ancestor)) {
-                        break;
-                    }
-                    $ancestorId = (int)$ancestor->getVar('items_pid');
-                    if ($id > 0 && $ancestorId === $id) {
-                        $isCycle = true;
-                        break;
-                    }
-                    $depth++;
-                }
-                if ($isCycle) {
-                    $error_message .= _AM_SYSTEM_MENUS_ERROR_ITEMCYCLE;
-                } elseif ($depth > 3) {
-                    $error_message .= _AM_SYSTEM_MENUS_ERROR_ITEMDEPTH;
+                // Verify parent exists and belongs to same category
+                $parentItem = $menusitemsHandler->get($itempid);
+                if (!is_object($parentItem)) {
+                    $error_message .= _AM_SYSTEM_MENUS_ERROR_ITEMPARENT;
+                } elseif ((int)$parentItem->getVar('items_cid') !== $items_cid) {
+                    $error_message .= _AM_SYSTEM_MENUS_ERROR_ITEMPARENT;
                 } else {
-                    $obj->setVar('items_pid', $itempid);
+                    // Walk ancestor chain to detect cycles and enforce depth limit
+                    $depth = 1;
+                    $ancestorId = (int)$parentItem->getVar('items_pid');
+                    $isCycle = false;
+                    while ($ancestorId > 0) {
+                        if ($id > 0 && $ancestorId === $id) {
+                            $isCycle = true;
+                            break;
+                        }
+                        $ancestor = $menusitemsHandler->get($ancestorId);
+                        if (!is_object($ancestor)) {
+                            break;
+                        }
+                        $ancestorId = (int)$ancestor->getVar('items_pid');
+                        $depth++;
+                    }
+                    if ($isCycle) {
+                        $error_message .= _AM_SYSTEM_MENUS_ERROR_ITEMCYCLE;
+                    } elseif ($depth > 3) {
+                        $error_message .= _AM_SYSTEM_MENUS_ERROR_ITEMDEPTH;
+                    } else {
+                        $obj->setVar('items_pid', $itempid);
+                    }
                 }
             } else {
                 $obj->setVar('items_pid', 0);
             }
         }
-        $items_cid = Request::getInt('items_cid', 0);
-        $obj->setVar('items_cid', $items_cid);
         if (!$isProtected) {
             $obj->setVar('items_title', Request::getString('items_title', ''));
             $obj->setVar('items_prefix', Request::getText('items_prefix', ''));
@@ -604,6 +657,7 @@ switch ($op) {
                     $htmlErrors = $GLOBALS['xoopsDB']->error();
                 }
                 $xoopsTpl->assign('error_message', $htmlErrors);
+                /** @var \XoopsMenusItems $obj */
                 $form = $obj->getFormItems($items_cid);
                 $xoopsTpl->assign('form', $form->render());
             }
@@ -751,8 +805,20 @@ switch ($op) {
 
         $current = (int)$obj->getVar('items_active');
         $new = $current ? 0 : 1;
-        // if activating, ensure ancestors are active
+        // if activating, ensure owning category and ancestors are active
         if ($new) {
+            /** @var \XoopsMenusCategoryHandler $menuscategoryHandler */
+            $menuscategoryHandler = xoops_getHandler('menuscategory');
+            $ownerCat = $menuscategoryHandler->get((int)$obj->getVar('items_cid'));
+            if (is_object($ownerCat) && (int)$ownerCat->getVar('category_active') === 0) {
+                header('Content-Type: application/json');
+                echo json_encode([
+                    'success' => false,
+                    'message' => _AM_SYSTEM_MENUS_ERROR_PARENTINACTIVE,
+                    'token'   => $GLOBALS['xoopsSecurity']->getTokenHTML()
+                ]);
+                exit;
+            }
             $parentId = (int)$obj->getVar('items_pid');
             while ($parentId > 0) {
                 $parentObj = $menusitemsHandler->get($parentId);
