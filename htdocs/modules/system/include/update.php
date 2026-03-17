@@ -152,8 +152,8 @@ function update_system_v219_menus(XoopsModule $module)
     $sql = "CREATE TABLE IF NOT EXISTS " . $xoopsDB->prefix('menuscategory') . " (
         category_id INT AUTO_INCREMENT PRIMARY KEY,
         category_title VARCHAR(100) NOT NULL,
-        category_prefix VARCHAR(100) NOT NULL DEFAULT '',
-        category_suffix VARCHAR(100) NOT NULL DEFAULT '',
+        category_prefix TEXT NOT NULL,
+        category_suffix TEXT NOT NULL,
         category_url VARCHAR(255) NULL,
         category_target TINYINT(1) DEFAULT 0,
         category_position INT DEFAULT 0,
@@ -168,8 +168,8 @@ function update_system_v219_menus(XoopsModule $module)
         items_pid INT NULL,
         items_cid INT NULL,
         items_title VARCHAR(100) NOT NULL,
-        items_prefix VARCHAR(100) NOT NULL DEFAULT '',
-        items_suffix VARCHAR(100) NOT NULL DEFAULT '',
+        items_prefix TEXT NOT NULL,
+        items_suffix TEXT NOT NULL,
         items_url VARCHAR(255) NULL,
         items_target TINYINT(1) DEFAULT 0,
         items_position INT DEFAULT 0,
@@ -189,6 +189,13 @@ function update_system_v219_menus(XoopsModule $module)
             $xoopsDB->exec("ALTER TABLE {$table} DROP FOREIGN KEY `{$row['CONSTRAINT_NAME']}`");
         }
     }
+
+    // Widen affix columns from VARCHAR(100) to TEXT for existing installs
+    $catTable = $xoopsDB->prefix('menuscategory');
+    $xoopsDB->exec("ALTER TABLE {$catTable} MODIFY category_prefix TEXT NOT NULL");
+    $xoopsDB->exec("ALTER TABLE {$catTable} MODIFY category_suffix TEXT NOT NULL");
+    $xoopsDB->exec("ALTER TABLE {$table} MODIFY items_prefix TEXT NOT NULL");
+    $xoopsDB->exec("ALTER TABLE {$table} MODIFY items_suffix TEXT NOT NULL");
 
     // Only seed data if tables are empty
     $result = $xoopsDB->query("SELECT COUNT(*) FROM " . $xoopsDB->prefix('menuscategory'));
