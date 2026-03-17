@@ -678,7 +678,7 @@ class XoopsLoggerAdditionalTest extends TestCase
     {
         // Ensure clean precondition — remove residual log file from prior runs
         $logFile = XOOPS_ROOT_PATH . '/log/log.txt';
-        if (file_exists($logFile)) {
+        if (is_file($logFile)) {
             unlink($logFile);
         }
         self::assertFileDoesNotExist($logFile, 'Precondition: log file must not exist');
@@ -1144,7 +1144,7 @@ class XoopsLoggerAdditionalTest extends TestCase
     {
         // Ensure clean precondition — remove residual log file from prior runs
         $logFile = XOOPS_ROOT_PATH . '/log/log.txt';
-        if (file_exists($logFile)) {
+        if (is_file($logFile)) {
             unlink($logFile);
         }
         self::assertFileDoesNotExist($logFile, 'Precondition: log file must not exist');

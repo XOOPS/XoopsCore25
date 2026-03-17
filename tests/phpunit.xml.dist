@@ -14,6 +14,9 @@
             <directory suffix=".php">../htdocs/kernel</directory>
             <directory suffix=".php">../htdocs/include</directory>
             <directory suffix=".php">../htdocs/modules/system</directory>
+            <directory suffix=".php">../htdocs/modules/pm</directory>
+            <directory suffix=".php">../htdocs/modules/profile</directory>
+            <directory suffix=".php">../htdocs/modules/protector</directory>
         </include>
         <exclude>
             <directory>../htdocs/class/libraries/vendor</directory>
