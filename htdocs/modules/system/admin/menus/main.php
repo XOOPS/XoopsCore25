@@ -225,18 +225,20 @@ switch ($op) {
                 if (!$GLOBALS['xoopsSecurity']->check()) {
                     redirect_header('admin.php?fct=menus', 3, implode('<br>', $GLOBALS['xoopsSecurity']->getErrors()));
                 }
+                // Collect item IDs before delete — FK CASCADE will remove the rows
+                $criteria = new CriteriaCompo();
+                $criteria->add(new Criteria('items_cid', $category_id));
+                $items_arr = $menusitemsHandler->getall($criteria);
+                $itemIds = [];
+                foreach (array_keys($items_arr) as $i) {
+                    $itemIds[] = $items_arr[$i]->getVar('items_id');
+                }
                 if ($menuscategoryHandler->delete($obj)) {
-                    // Del permissions category
+                    // Clean up permissions for category and its items
                     $permHelper = new \Xmf\Module\Helper\Permission();
                     $permHelper->deletePermissionForItem('menus_category_view', $category_id);
-                    // delete items in this category
-                    $criteria = new CriteriaCompo();
-                    $criteria->add(new Criteria('items_cid', $category_id));
-                    $items_arr = $menusitemsHandler->getall($criteria);
-                    foreach (array_keys($items_arr) as $i) {
-                        $permHelper = new \Xmf\Module\Helper\Permission();
-                        $permHelper->deletePermissionForItem('menus_items_view', $items_arr[$i]->getVar('items_id'));
-                        $menusitemsHandler->delete($items_arr[$i]);
+                    foreach ($itemIds as $iid) {
+                        $permHelper->deletePermissionForItem('menus_items_view', $iid);
                     }
                     redirect_header('admin.php?fct=menus', 2, _AM_SYSTEM_DBUPDATED);
                 } else {
@@ -592,6 +594,12 @@ switch ($op) {
             $obj = $menusitemsHandler->create();
         }
         $items_cid = Request::getInt('items_cid', 0);
+        /** @var \XoopsMenusCategoryHandler $menuscategoryHandlerCheck */
+        $menuscategoryHandlerCheck = xoops_getHandler('menuscategory');
+        $cidObj = $menuscategoryHandlerCheck->get($items_cid);
+        if (!is_object($cidObj)) {
+            redirect_header('admin.php?fct=menus', 3, _AM_SYSTEM_MENUS_ERROR_NOCATEGORY);
+        }
         $obj->setVar('items_cid', $items_cid);
         $error_message = '';
         if (!$isProtected) {
