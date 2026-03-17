@@ -291,7 +291,7 @@ switch ($op) {
                     $permHelper->deletePermissionForItem('menus_items_view', $item_id);
                     // delete subitems of this item
                     $criteria = new CriteriaCompo();
-                    $criteria->add(new Criteria('items_cid', $category_id));
+                    $criteria->add(new Criteria('items_cid', (int)$obj->getVar('items_cid')));
                     $items_arr = $menusitemsHandler->getall($criteria);
                     $myTree = new XoopsObjectTree($items_arr, 'items_id', 'items_pid');
                     $items_arr = $myTree->getAllChild($item_id);
@@ -305,8 +305,9 @@ switch ($op) {
                     $xoopsTpl->assign('error_message', $obj->getHtmlErrors());
                 }
             } else {
+                $objCid = (int)$obj->getVar('items_cid');
                 $criteria = new CriteriaCompo();
-                $criteria->add(new Criteria('items_cid', $category_id));
+                $criteria->add(new Criteria('items_cid', $objCid));
                 $items_arr = $menusitemsHandler->getall($criteria);
                 $myTree = new XoopsObjectTree($items_arr, 'items_id', 'items_pid');
                 $items_arr = $myTree->getAllChild($item_id);
@@ -317,9 +318,9 @@ switch ($op) {
                 xoops_confirm([
                     'surdel'      => true,
                     'item_id'     => $item_id,
-                    'category_id' => $category_id,
+                    'category_id' => $objCid,
                     'op'          => 'delitem'
-                ], $_SERVER['REQUEST_URI'], sprintf(_AM_SYSTEM_MENUS_SUREDELITEM, $obj->getVar('items_title')) . $items);
+                ], $_SERVER['REQUEST_URI'], sprintf(_AM_SYSTEM_MENUS_SUREDELITEM, (string)$obj->getVar('items_title')) . $items);
             }
         }
         break;
@@ -464,7 +465,7 @@ switch ($op) {
                         $current = is_object($dbObj) ? (int)$dbObj->getVar('items_pid') : 0;
                     }
                     $depth++;
-                    if ($depth > 3) {
+                    if ($depth >= 3) {
                         $errors[] = "Depth limit exceeded for item {$id}";
                         break;
                     }
@@ -619,7 +620,7 @@ switch ($op) {
                     }
                     if ($isCycle) {
                         $error_message .= _AM_SYSTEM_MENUS_ERROR_ITEMCYCLE;
-                    } elseif ($depth > 3) {
+                    } elseif ($depth >= 3) {
                         $error_message .= _AM_SYSTEM_MENUS_ERROR_ITEMDEPTH;
                     } else {
                         $obj->setVar('items_pid', $itempid);
@@ -638,6 +639,7 @@ switch ($op) {
         $obj->setVar('items_position', Request::getInt('items_position', 0));
         $obj->setVar('items_target', Request::getInt('items_target', 0));
         $obj->setVar('items_active', Request::getInt('items_active', 1));
+        /** @var \XoopsMenusItems $obj */
         if ($error_message == '') {
             if ($menusitemsHandler->insert($obj)) {
                 // permissions
