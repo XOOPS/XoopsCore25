@@ -214,7 +214,10 @@ switch ($op) {
             $menusitemsHandler = xoops_getHandler('menusitems');
             /** @var \XoopsMenusCategory $obj */
             $obj = $menuscategoryHandler->get($category_id);
-            if (is_object($obj) && (int)$obj->getVar('category_protected') === 1) {
+            if (!is_object($obj)) {
+                redirect_header('admin.php?fct=menus', 3, _AM_SYSTEM_MENUS_ERROR_NOCATEGORY);
+            }
+            if ((int)$obj->getVar('category_protected') === 1) {
                 redirect_header('admin.php?fct=menus', 3, _AM_SYSTEM_MENUS_ERROR_CATPROTECTED);
             }
             if ($surdel === true) {
@@ -269,10 +272,13 @@ switch ($op) {
             $menusitemsHandler = xoops_getHandler('menusitems');
             /** @var \XoopsMenusItems $obj */
             $obj = $menusitemsHandler->get($item_id);
-            if (is_object($obj) && (int)$obj->getVar('items_protected') === 1) {
+            if (!is_object($obj)) {
+                redirect_header('admin.php?fct=menus&op=viewcat&category_id=' . $category_id, 3, _AM_SYSTEM_MENUS_ERROR_NOITEM);
+            }
+            if ((int)$obj->getVar('items_protected') === 1) {
                 redirect_header('admin.php?fct=menus&op=viewcat&category_id=' . $category_id, 5, _AM_SYSTEM_MENUS_ERROR_ITEMPROTECTED);
             }
-            if (is_object($obj) && $obj->getVar('items_active') == 0) {
+            if ($obj->getVar('items_active') == 0) {
                 redirect_header('admin.php?fct=menus&op=viewcat&category_id=' . $category_id, 5, _AM_SYSTEM_MENUS_ERROR_ITEMDISABLE);
             }
             if ($surdel === true) {
@@ -538,10 +544,34 @@ switch ($op) {
         $error_message = '';
         if (!$isProtected) {
             $itempid = Request::getInt('items_pid', 0);
-            if ($itempid == $id && $itempid != 0) {
+            if ($itempid != 0 && $itempid == $id) {
                 $error_message .= _AM_SYSTEM_MENUS_ERROR_ITEMPARENT;
+            } elseif ($itempid != 0) {
+                // Walk ancestor chain to detect cycles and enforce depth limit
+                $depth = 1;
+                $ancestorId = $itempid;
+                $isCycle = false;
+                while ($ancestorId > 0) {
+                    $ancestor = $menusitemsHandler->get($ancestorId);
+                    if (!is_object($ancestor)) {
+                        break;
+                    }
+                    $ancestorId = (int)$ancestor->getVar('items_pid');
+                    if ($id > 0 && $ancestorId === $id) {
+                        $isCycle = true;
+                        break;
+                    }
+                    $depth++;
+                }
+                if ($isCycle) {
+                    $error_message .= _AM_SYSTEM_MENUS_ERROR_ITEMCYCLE;
+                } elseif ($depth > 3) {
+                    $error_message .= _AM_SYSTEM_MENUS_ERROR_ITEMDEPTH;
+                } else {
+                    $obj->setVar('items_pid', $itempid);
+                }
             } else {
-                $obj->setVar('items_pid', $itempid);
+                $obj->setVar('items_pid', 0);
             }
         }
         $items_cid = Request::getInt('items_cid', 0);

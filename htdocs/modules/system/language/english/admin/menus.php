@@ -33,6 +33,8 @@ define('_AM_SYSTEM_MENUS_ERROR_ITEMDISABLE', 'You cannot delete a menu that is d
 define('_AM_SYSTEM_MENUS_ERROR_ITEMEDIT', 'You cannot edit a menu that is disabled. Please enable the menu first, then try editing it again.');
 define('_AM_SYSTEM_MENUS_ERROR_ITEMPROTECTED', 'You cannot delete a protected menu item.');
 define('_AM_SYSTEM_MENUS_ERROR_ITEMPARENT', 'You cannot select a menu as its own parent.');
+define('_AM_SYSTEM_MENUS_ERROR_ITEMCYCLE', 'You cannot select a descendant as the parent — this would create a cycle.');
+define('_AM_SYSTEM_MENUS_ERROR_ITEMDEPTH', 'Maximum nesting depth (3 levels) exceeded.');
 define('_AM_SYSTEM_MENUS_ERROR_CATPROTECTED', 'You cannot delete a protected menu category.');
 define('_AM_SYSTEM_MENUS_ERROR_NOCATEGORY', 'There are no menu categories. You must create one before adding menus.');
 define('_AM_SYSTEM_MENUS_ERROR_NOITEM', 'There are no submenu items.');

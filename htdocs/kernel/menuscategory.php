@@ -189,7 +189,7 @@ class XoopsMenusCategory extends XoopsObject
         $suffix->setDescription(_AM_SYSTEM_MENUS_SUFFIXCAT_DESC);
         $form->addElement($suffix, false);
         // url
-        $url = new XoopsFormText(_AM_SYSTEM_MENUS_URLCAT, 'category_url', 50, 255, $this->getVar('category_url'));
+        $url = new XoopsFormText(_AM_SYSTEM_MENUS_URLCAT, 'category_url', 50, 255, (string)$this->getVar('category_url'));
         if ($isProtected) {
             $url->setExtra('readonly="readonly"');
         }

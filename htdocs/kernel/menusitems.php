@@ -218,7 +218,7 @@ class XoopsMenusItems extends XoopsObject
         $suffix->setDescription(_AM_SYSTEM_MENUS_SUFFIXITEM_DESC);
         $form->addElement($suffix, false);
         // url
-        $url = new XoopsFormText(_AM_SYSTEM_MENUS_URLITEM, 'items_url', 50, 255, $this->getVar('items_url'));
+        $url = new XoopsFormText(_AM_SYSTEM_MENUS_URLITEM, 'items_url', 50, 255, (string)$this->getVar('items_url'));
         if ($isProtected) {
             $url->setExtra('readonly="readonly"');
         }
