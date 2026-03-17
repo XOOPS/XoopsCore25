@@ -279,8 +279,9 @@ class XoopsCacheTest extends TestCase
 
         $result = XoopsCache::write('zero_duration', 'value', 0);
 
-        // XoopsCache::write() returns false when duration < 1 (line 422 of xoopscache.php)
-        $this->assertFalse($result, 'Zero duration write should return false');
+        // Duration 0 is falsy, so line 417 replaces it with $settings['duration']
+        // (the configured default, e.g. 31556926). The write succeeds.
+        $this->assertTrue($result, 'Zero duration falls back to settings default and succeeds');
     }
 
     public function testWriteWithNegativeDuration()
