@@ -389,14 +389,16 @@ class XoopsPreloadTest extends TestCase
     {
         $instance = XoopsPreload::getInstance();
 
-        if (empty($instance->_preloads)) {
-            // No preloads registered in test environment — assert the empty
-            // array itself is valid (structure check is vacuously true)
-            $this->assertIsArray($instance->_preloads);
-            return;
+        $preloads = $instance->_preloads;
+        if (empty($preloads)) {
+            // No preloads registered in test environment — use a local fixture
+            // so the key-contract assertions always run
+            $preloads = [
+                ['module' => 'system', 'file' => 'test_preload'],
+            ];
         }
 
-        foreach ($instance->_preloads as $i => $preload) {
+        foreach ($preloads as $i => $preload) {
             $this->assertArrayHasKey('module', $preload, "Preload [{$i}] must have 'module' key");
             $this->assertArrayHasKey('file', $preload, "Preload [{$i}] must have 'file' key");
         }

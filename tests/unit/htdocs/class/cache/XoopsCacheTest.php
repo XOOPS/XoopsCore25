@@ -528,9 +528,9 @@ class XoopsCacheTest extends TestCase
     {
         $this->initFileEngine();
 
-        // 500-char keys may exceed filesystem path limits; XoopsCache hashes
-        // the key via md5 prefix + key, but the resulting filename can be
-        // too long on some systems. Test with a reasonable long key instead.
+        // 500-char keys may exceed filesystem path limits; XoopsCache prefixes
+        // with substr(md5(XOOPS_URL), 0, 8) then appends the key as-is, so
+        // long keys produce long filenames. Test with a reasonable length.
         $longKey = str_repeat('a', 100);
         $result = XoopsCache::write($longKey, 'value', 3600);
 
@@ -660,7 +660,15 @@ class XoopsCacheTest extends TestCase
                 'Two engine configs should have distinct paths'
             );
         } finally {
+            // Recursively remove test directory and any cache files created by the engine
+            $files = glob($secondPath . '/*');
+            if ($files !== false) {
+                foreach ($files as $file) {
+                    unlink($file);
+                }
+            }
             rmdir($secondPath);
+            $this->assertDirectoryDoesNotExist($secondPath, 'Temp directory should be cleaned up');
         }
     }
 

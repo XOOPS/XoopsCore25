@@ -681,6 +681,7 @@ class XoopsLoggerAdditionalTest extends TestCase
         if (file_exists($logFile)) {
             unlink($logFile);
         }
+        self::assertFileDoesNotExist($logFile, 'Precondition: log file must not exist');
 
         // addDeprecated() stores in memory only — no disk writes without writeLog()
         $this->logger->addDeprecated('test deprecation');
@@ -1146,6 +1147,7 @@ class XoopsLoggerAdditionalTest extends TestCase
         if (file_exists($logFile)) {
             unlink($logFile);
         }
+        self::assertFileDoesNotExist($logFile, 'Precondition: log file must not exist');
 
         // handleError() stores errors in memory only — no disk writes without writeLog()
         $oldLevel = error_reporting(E_ALL);
