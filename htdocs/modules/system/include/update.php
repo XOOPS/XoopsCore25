@@ -197,17 +197,39 @@ function update_system_v219_menus(XoopsModule $module)
     $xoopsDB->exec("ALTER TABLE {$table} MODIFY items_prefix TEXT NOT NULL");
     $xoopsDB->exec("ALTER TABLE {$table} MODIFY items_suffix TEXT NOT NULL");
 
-    // Only seed data if tables are empty
+    // Only seed data if all three targets have expected rows
+    $catCount = $itemCount = $permCount = 0;
     $result = $xoopsDB->query("SELECT COUNT(*) FROM " . $xoopsDB->prefix('menuscategory'));
-    if ($result) {
-        [$count] = $xoopsDB->fetchRow($result);
-        if ((int)$count > 0) {
-            // Migrate Home URL from '/' to 'index.php' for subdirectory installs
-            $xoopsDB->exec("UPDATE " . $xoopsDB->prefix('menuscategory')
-                . " SET category_url = 'index.php'"
-                . " WHERE category_url = '/' AND category_protected = 1");
-            return; // already seeded
-        }
+    if ($xoopsDB->isResultSet($result) && $result instanceof \mysqli_result) {
+        [$catCount] = $xoopsDB->fetchRow($result);
+    }
+    $result = $xoopsDB->query("SELECT COUNT(*) FROM " . $xoopsDB->prefix('menusitems'));
+    if ($xoopsDB->isResultSet($result) && $result instanceof \mysqli_result) {
+        [$itemCount] = $xoopsDB->fetchRow($result);
+    }
+    $permTable = $xoopsDB->prefix('group_permission');
+    $result = $xoopsDB->query("SELECT COUNT(*) FROM {$permTable}"
+        . " WHERE gperm_name IN ('menus_category_view','menus_items_view')");
+    if ($xoopsDB->isResultSet($result) && $result instanceof \mysqli_result) {
+        [$permCount] = $xoopsDB->fetchRow($result);
+    }
+
+    if ((int)$catCount > 0 && (int)$itemCount > 0 && (int)$permCount > 0) {
+        // Fully seeded — only run migrations
+        $xoopsDB->exec("UPDATE " . $xoopsDB->prefix('menuscategory')
+            . " SET category_url = 'index.php'"
+            . " WHERE category_url = '/' AND category_protected = 1");
+        return;
+    }
+
+    // Partial or empty state — clean up before re-seeding
+    if ((int)$catCount > 0 || (int)$itemCount > 0) {
+        $xoopsDB->exec("DELETE FROM " . $xoopsDB->prefix('menusitems'));
+        $xoopsDB->exec("DELETE FROM " . $xoopsDB->prefix('menuscategory'));
+    }
+    if ((int)$permCount > 0) {
+        $xoopsDB->exec("DELETE FROM {$permTable}"
+            . " WHERE gperm_name IN ('menus_category_view','menus_items_view')");
     }
 
     // Seed default categories
@@ -263,8 +285,6 @@ function update_system_v219_menus(XoopsModule $module)
     $itemLogoutId = $xoopsDB->getInsertId();
 
     // Seed permissions using the actual module ID
-    $permTable = $xoopsDB->prefix('group_permission');
-
     // Category permissions: Home visible to all groups (1=admin, 2=registered, 3=anonymous)
     foreach ([1, 2, 3] as $gid) {
         $xoopsDB->exec("INSERT INTO {$permTable} (gperm_groupid, gperm_itemid, gperm_modid, gperm_name) VALUES ({$gid}, {$catHomeId}, {$mid}, 'menus_category_view')");
