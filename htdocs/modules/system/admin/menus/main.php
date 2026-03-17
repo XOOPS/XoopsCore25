@@ -59,7 +59,7 @@ switch ($op) {
         $xoBreadCrumb->addTips(sprintf(_AM_SYSTEM_MENUS_NAV_TIPS, $GLOBALS['xoopsConfig']['language']));
         $xoBreadCrumb->render();
         $start = Request::getInt('start', 0);
-        /** @var \XoopsPersistableObjectHandler $menuscategoryHandler */
+        /** @var \XoopsMenusCategoryHandler $menuscategoryHandler */
         $menuscategoryHandler = xoops_getHandler('menuscategory');
         $criteria = new CriteriaCompo();
         $criteria->setSort('category_position');
@@ -70,6 +70,7 @@ switch ($op) {
         $category_count = $menuscategoryHandler->getCount($criteria);
         $xoopsTpl->assign('category_count', $category_count);
         if ($category_count > 0) {
+            /** @var \XoopsMenusItemsHandler $menusitemsHandler */
             $menusitemsHandler = xoops_getHandler('menusitems');
             xoops_load('SystemMenusTree', 'system');
             foreach (array_keys($category_arr) as $i) {
@@ -125,6 +126,7 @@ switch ($op) {
         $xoBreadCrumb->addLink(_AM_SYSTEM_MENUS_NAV_MAIN, system_adminVersion('menus', 'adminpath'));
         $xoBreadCrumb->render();
         // Form
+        /** @var \XoopsMenusCategoryHandler $menuscategoryHandler */
         $menuscategoryHandler = xoops_getHandler('menuscategory');
         /** @var \XoopsMenusCategory $obj */
         $obj                  = $menuscategoryHandler->create();
@@ -140,6 +142,7 @@ switch ($op) {
         if ($category_id == 0) {
             $xoopsTpl->assign('error_message', _AM_SYSTEM_MENUS_ERROR_NOCATEGORY);
         } else {
+            /** @var \XoopsMenusCategoryHandler $menuscategoryHandler */
             $menuscategoryHandler = xoops_getHandler('menuscategory');
             /** @var \XoopsMenusCategory $obj */
             $obj = $menuscategoryHandler->get($category_id);
@@ -156,9 +159,11 @@ switch ($op) {
         if (!$GLOBALS['xoopsSecurity']->check()) {
             redirect_header('admin.php?fct=menus', 3, implode('<br>', $GLOBALS['xoopsSecurity']->getErrors()));
         }
+        /** @var \XoopsMenusCategoryHandler $menuscategoryHandler */
         $menuscategoryHandler = xoops_getHandler('menuscategory');
         $id = Request::getInt('category_id', 0);
         $isProtected = false;
+        /** @var \XoopsMenusCategory $obj */
         if ($id > 0) {
             $obj = $menuscategoryHandler->get($id);
             if (!is_object($obj)) {
@@ -203,7 +208,9 @@ switch ($op) {
             $xoBreadCrumb->addLink(_AM_SYSTEM_MENUS_NAV_MAIN, system_adminVersion('menus', 'adminpath'));
             $xoBreadCrumb->render();
             $surdel = Request::getBool('surdel', false);
+            /** @var \XoopsMenusCategoryHandler $menuscategoryHandler */
             $menuscategoryHandler = xoops_getHandler('menuscategory');
+            /** @var \XoopsMenusItemsHandler $menusitemsHandler */
             $menusitemsHandler = xoops_getHandler('menusitems');
             /** @var \XoopsMenusCategory $obj */
             $obj = $menuscategoryHandler->get($category_id);
@@ -258,6 +265,7 @@ switch ($op) {
             $xoBreadCrumb->render();
             include_once $GLOBALS['xoops']->path('class/tree.php');
             $surdel = Request::getBool('surdel', false);
+            /** @var \XoopsMenusItemsHandler $menusitemsHandler */
             $menusitemsHandler = xoops_getHandler('menusitems');
             /** @var \XoopsMenusItems $obj */
             $obj = $menusitemsHandler->get($item_id);
@@ -314,7 +322,7 @@ switch ($op) {
             $GLOBALS['xoopsLogger']->activated = false;
         }
         while (ob_get_level()) {
-            @ob_end_clean();
+            ob_end_clean();
         }
         if (!$GLOBALS['xoopsSecurity']->check()) {
             header('Content-Type: application/json');
@@ -328,12 +336,13 @@ switch ($op) {
         }
 
         $order = Request::getArray('order', []);
-        if (!is_array($order) || count($order) === 0) {
+        if (count($order) === 0) {
             header('Content-Type: application/json');
             echo json_encode(['success' => false, 'message' => 'No order provided', 'token' => $GLOBALS['xoopsSecurity']->getTokenHTML()]);
             exit;
         }
 
+        /** @var \XoopsMenusCategoryHandler $menuscategoryHandler */
         $menuscategoryHandler = xoops_getHandler('menuscategory');
 
         $pos = 1;
@@ -367,7 +376,7 @@ switch ($op) {
             $GLOBALS['xoopsLogger']->activated = false;
         }
         while (ob_get_level()) {
-            @ob_end_clean();
+            ob_end_clean();
         }
         if (!$GLOBALS['xoopsSecurity']->check()) {
             header('Content-Type: application/json');
@@ -391,6 +400,7 @@ switch ($op) {
         parse_str($serialized, $parsed);
         $itemOrder = $parsed['item'] ?? [];
 
+        /** @var \XoopsMenusItemsHandler $menusitemsHandler */
         $menusitemsHandler = xoops_getHandler('menusitems');
         $pos = 1;
         $errors = [];
@@ -399,8 +409,28 @@ switch ($op) {
             if ($id <= 0) continue;
             $obj = $menusitemsHandler->get($id);
             if (is_object($obj)) {
+                $newPid = !empty($parentId) ? (int)$parentId : 0;
+                // Server-side validation of parent
+                if ($newPid > 0) {
+                    if ($newPid === $id) {
+                        $errors[] = "Item {$id} cannot be its own parent";
+                        $pos++;
+                        continue;
+                    }
+                    $parentObj = $menusitemsHandler->get($newPid);
+                    if (!is_object($parentObj)) {
+                        $errors[] = "Parent {$newPid} not found for item {$id}";
+                        $pos++;
+                        continue;
+                    }
+                    if ((int)$parentObj->getVar('items_cid') !== (int)$obj->getVar('items_cid')) {
+                        $errors[] = "Parent {$newPid} belongs to a different category than item {$id}";
+                        $pos++;
+                        continue;
+                    }
+                }
                 $obj->setVar('items_position', $pos);
-                $obj->setVar('items_pid', !empty($parentId) ? (int)$parentId : 0);
+                $obj->setVar('items_pid', $newPid);
                 if (!$menusitemsHandler->insert($obj, true)) {
                     $errors[] = "Failed to update item id {$id}";
                 }
@@ -428,7 +458,9 @@ switch ($op) {
         if ($category_id == 0) {
             $xoopsTpl->assign('error_message', _AM_SYSTEM_MENUS_ERROR_NOCATEGORY);
         } else {
+            /** @var \XoopsMenusCategoryHandler $menuscategoryHandler */
             $menuscategoryHandler = xoops_getHandler('menuscategory');
+            /** @var \XoopsMenusCategory $category */
             $category = $menuscategoryHandler->get($category_id);
             if (!is_object($category)) {
                 $xoopsTpl->assign('error_message', _AM_SYSTEM_MENUS_ERROR_NOCATEGORY);
@@ -437,6 +469,7 @@ switch ($op) {
             $xoopsTpl->assign('category_id', $category->getVar('category_id'));
             $xoopsTpl->assign('cat_title', $category->getAdminTitle());
 
+            /** @var \XoopsMenusItemsHandler $menusitemsHandler */
             $menusitemsHandler = xoops_getHandler('menusitems');
             $criteria = new CriteriaCompo();
             $criteria->add(new Criteria('items_cid', $category_id));
@@ -472,6 +505,7 @@ switch ($op) {
         $category_id = Request::getInt('category_id', 0);
         $xoopsTpl->assign('category_id', $category_id);
         // Form
+        /** @var \XoopsMenusItemsHandler $menusitemsHandler */
         $menusitemsHandler = xoops_getHandler('menusitems');
         /** @var \XoopsMenusItems $obj */
         $obj = $menusitemsHandler->create();
@@ -487,6 +521,7 @@ switch ($op) {
         $xoBreadCrumb->addLink(_AM_SYSTEM_MENUS_NAV_CATEGORY);
         $xoBreadCrumb->render();
 
+        /** @var \XoopsMenusItemsHandler $menusitemsHandler */
         $menusitemsHandler = xoops_getHandler('menusitems');
         $id = Request::getInt('items_id', 0);
         $isProtected = false;
@@ -565,6 +600,7 @@ switch ($op) {
                 $xoopsTpl->assign('error_message', _AM_SYSTEM_MENUS_ERROR_NOCATEGORY);
             }
         } else {
+            /** @var \XoopsMenusItemsHandler $menusitemsHandler */
             $menusitemsHandler = xoops_getHandler('menusitems');
             /** @var \XoopsMenusItems $obj */
             $obj = $menusitemsHandler->get($item_id);
@@ -584,7 +620,7 @@ switch ($op) {
             $GLOBALS['xoopsLogger']->activated = false;
         }
         while (ob_get_level()) {
-            @ob_end_clean();
+            ob_end_clean();
         }
         if (!$GLOBALS['xoopsSecurity']->check()) {
             header('Content-Type: application/json');
@@ -603,8 +639,10 @@ switch ($op) {
             exit;
         }
 
+        /** @var \XoopsMenusCategoryHandler $menuscategoryHandler */
         $menuscategoryHandler = xoops_getHandler('menuscategory');
 
+        /** @var \XoopsMenusCategory $obj */
         $obj = $menuscategoryHandler->get($category_id);
         if (!is_object($obj)) {
             header('Content-Type: application/json');
@@ -615,35 +653,20 @@ switch ($op) {
         $obj->setVar('category_active', $new);
         $res = $menuscategoryHandler->insert($obj, true);
 
-        // cascade to all items of this category
+        // Only cascade on deactivation; preserve child state on activation
         $updatedItems = [];
-        if ($res) {
+        if ($res && $new === 0) {
+            /** @var \XoopsMenusItemsHandler $menusitemsHandler */
             $menusitemsHandler = xoops_getHandler('menusitems');
-            $recursiveUpdate = function ($handler, $parentId, $state, array &$updated) use (&$recursiveUpdate) {
-                $crit = new Criteria('items_pid', (int)$parentId);
-                $children = $handler->getAll($crit);
-                foreach ($children as $child) {
-                    $cid = $child->getVar('items_id');
-                    if ((int)$child->getVar('items_active') !== $state) {
-                        $child->setVar('items_active', $state);
-                        if ($handler->insert($child, true)) {
-                            $updated[] = $cid;
-                        }
-                    }
-                    $recursiveUpdate($handler, $cid, $state, $updated);
-                }
-            };
             $critCat = new Criteria('items_cid', $category_id);
             $allItems = $menusitemsHandler->getAll($critCat);
             foreach ($allItems as $itm) {
-                $idtmp = $itm->getVar('items_id');
-                if ((int)$itm->getVar('items_active') !== $new) {
-                    $itm->setVar('items_active', $new);
+                if ((int)$itm->getVar('items_active') !== 0) {
+                    $itm->setVar('items_active', 0);
                     if ($menusitemsHandler->insert($itm, true)) {
-                        $updatedItems[] = $idtmp;
+                        $updatedItems[] = $itm->getVar('items_id');
                     }
                 }
-                $recursiveUpdate($menusitemsHandler, $idtmp, $new, $updatedItems);
             }
         }
 
@@ -665,7 +688,7 @@ switch ($op) {
             $GLOBALS['xoopsLogger']->activated = false;
         }
         while (ob_get_level()) {
-            @ob_end_clean();
+            ob_end_clean();
         }
 
         if (!$GLOBALS['xoopsSecurity']->check()) {
@@ -685,8 +708,10 @@ switch ($op) {
             exit;
         }
 
+        /** @var \XoopsMenusItemsHandler $menusitemsHandler */
         $menusitemsHandler = xoops_getHandler('menusitems');
 
+        /** @var \XoopsMenusItems $obj */
         $obj = $menusitemsHandler->get($item_id);
         if (!is_object($obj)) {
             header('Content-Type: application/json');
@@ -719,25 +744,25 @@ switch ($op) {
         $obj->setVar('items_active', $new);
         $res = $menusitemsHandler->insert($obj, true);
 
-        // propagate to children
+        // Only cascade on deactivation; preserve child state on activation
         $updatedChildren = [];
-        if ($res) {
-            $propagateActiveState = function ($handler, $parentId, $state, array &$updated) use (&$propagateActiveState) {
+        if ($res && $new === 0) {
+            $propagateDeactivation = function ($handler, $parentId, array &$updated) use (&$propagateDeactivation) {
                 $criteria = new Criteria('items_pid', (int)$parentId);
                 $children = $handler->getAll($criteria);
                 foreach ($children as $child) {
                     $childId = $child->getVar('items_id');
-                    if ((int)$child->getVar('items_active') !== $state) {
-                        $child->setVar('items_active', $state);
+                    if ((int)$child->getVar('items_active') !== 0) {
+                        $child->setVar('items_active', 0);
                         if ($handler->insert($child, true)) {
                             $updated[] = $childId;
                         }
                     }
-                    $propagateActiveState($handler, $childId, $state, $updated);
+                    $propagateDeactivation($handler, $childId, $updated);
                 }
             };
 
-            $propagateActiveState($menusitemsHandler, $item_id, $new, $updatedChildren);
+            $propagateDeactivation($menusitemsHandler, $item_id, $updatedChildren);
         }
 
         header('Content-Type: application/json');

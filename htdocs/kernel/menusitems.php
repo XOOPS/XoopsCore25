@@ -89,7 +89,7 @@ class XoopsMenusItems extends XoopsObject
     public function getResolvedTitle()
     {
         $title = $this->getVar('items_title');
-        return defined($title) ? constant($title) : $title;
+        return defined($title) ? (string)constant($title) : (string)$title;
     }
 
     /**
@@ -103,7 +103,7 @@ class XoopsMenusItems extends XoopsObject
         if (defined($title)) {
             return constant($title) . ' (' . $title . ')';
         } else {
-            return $title;
+            return (string)$title;
         }
     }
 
@@ -133,7 +133,7 @@ class XoopsMenusItems extends XoopsObject
 
         $isProtected = false;
         if (!$this->isNew()) {
-            $form->addElement(new XoopsFormHidden('items_id', $this->getVar('items_id')));
+            $form->addElement(new XoopsFormHidden('items_id', (string)$this->getVar('items_id')));
             $position = $this->getVar('items_position');
             $active = $this->getVar('items_active');
             $isProtected = (int)$this->getVar('items_protected') === 1;
@@ -145,7 +145,7 @@ class XoopsMenusItems extends XoopsObject
         // category
         $menuscategoryHandler = xoops_getHandler('menuscategory');
         $category = $menuscategoryHandler->get($category_id);
-        $form->addElement(new XoopsFormLabel(_AM_SYSTEM_MENUS_TITLECAT, $category->getVar('category_title')));
+        $form->addElement(new XoopsFormLabel(_AM_SYSTEM_MENUS_TITLECAT, (string)$category->getVar('category_title')));
         $form->addElement(new XoopsFormHidden('items_cid', $category_id));
 
         // Tree
@@ -154,6 +154,7 @@ class XoopsMenusItems extends XoopsObject
         $criteria->add(new Criteria('items_active', 1));
         $criteria->setSort('items_position');
         $criteria->setOrder('ASC');
+        /** @var \XoopsMenusItemsHandler $menusitemsHandler */
         $menusitemsHandler = xoops_getHandler('menusitems');
         $item_arr = $menusitemsHandler->getall($criteria);
         // Use admin-friendly title for select labels
@@ -165,14 +166,14 @@ class XoopsMenusItems extends XoopsObject
         }
         include_once $GLOBALS['xoops']->path('class/tree.php');
         $myTree = new XoopsObjectTree($item_arr, 'items_id', 'items_pid');
-        $suparticle = $myTree->makeSelectElement('items_pid', 'items_title', '--', $this->getVar('items_pid'), true, 0, '', _AM_SYSTEM_MENUS_PID);
+        $suparticle = $myTree->makeSelectElement('items_pid', 'items_title', '--', (string)$this->getVar('items_pid'), true, 0, '', _AM_SYSTEM_MENUS_PID);
         if ($isProtected) {
             $suparticle->setExtra('disabled="disabled"');
         }
         $form->addElement($suparticle, false);
 
         // title
-        $title = new XoopsFormText(_AM_SYSTEM_MENUS_TITLEITEM, 'items_title', 50, 255, $this->getVar('items_title'));
+        $title = new XoopsFormText(_AM_SYSTEM_MENUS_TITLEITEM, 'items_title', 50, 255, (string)$this->getVar('items_title'));
         if ($isProtected) {
             $title->setExtra('readonly="readonly"');
         }
@@ -181,7 +182,7 @@ class XoopsMenusItems extends XoopsObject
         // prefix
         $editor_configs = array(
             'name' => 'items_prefix',
-            'value' => $this->getVar('items_prefix'),
+            'value' => $this->getVar('items_prefix', 'e'),
             'rows' => 1,
             'cols' => 50,
             'width' => '100%',
@@ -200,7 +201,7 @@ class XoopsMenusItems extends XoopsObject
         // suffix
         $editor_configs = array(
             'name' => 'items_suffix',
-            'value' => $this->getVar('items_suffix'),
+            'value' => $this->getVar('items_suffix', 'e'),
             'rows' => 1,
             'cols' => 50,
             'width' => '100%',
@@ -223,7 +224,7 @@ class XoopsMenusItems extends XoopsObject
         }
         $form->addElement($url, false);
         // target
-        $radio = new XoopsFormRadio(_AM_SYSTEM_MENUS_TARGET, 'items_target', $this->getVar('items_target'));
+        $radio = new XoopsFormRadio(_AM_SYSTEM_MENUS_TARGET, 'items_target', (string)$this->getVar('items_target'));
         $radio->addOption(0, _AM_SYSTEM_MENUS_TARGET_SELF);
         $radio->addOption(1, _AM_SYSTEM_MENUS_TARGET_BLANK);
         $form->addElement($radio, false);

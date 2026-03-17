@@ -195,6 +195,10 @@ function update_system_v219_menus(XoopsModule $module)
     if ($result) {
         [$count] = $xoopsDB->fetchRow($result);
         if ((int)$count > 0) {
+            // Migrate Home URL from '/' to 'index.php' for subdirectory installs
+            $xoopsDB->query("UPDATE " . $xoopsDB->prefix('menuscategory')
+                . " SET category_url = 'index.php'"
+                . " WHERE category_url = '/' AND category_protected = 1");
             return; // already seeded
         }
     }
@@ -202,7 +206,7 @@ function update_system_v219_menus(XoopsModule $module)
     // Seed default categories
     $xoopsDB->query("INSERT INTO " . $xoopsDB->prefix('menuscategory')
         . " (category_title, category_prefix, category_suffix, category_url, category_target, category_position, category_protected, category_active)"
-        . " VALUES ('MENUS_HOME', '<span class=\"fa fa-home\"></span>', '', '/', 0, 0, 1, 1)");
+        . " VALUES ('MENUS_HOME', '<span class=\"fa fa-home\"></span>', '', 'index.php', 0, 0, 1, 1)");
     $catHomeId = $xoopsDB->getInsertId();
 
     $xoopsDB->query("INSERT INTO " . $xoopsDB->prefix('menuscategory')

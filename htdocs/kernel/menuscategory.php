@@ -90,7 +90,7 @@ class XoopsMenusCategory extends XoopsObject
     public function getResolvedTitle()
     {
         $title = $this->getVar('category_title');
-        return defined($title) ? constant($title) : $title;
+        return defined($title) ? (string)constant($title) : (string)$title;
     }
 
     /**
@@ -104,7 +104,7 @@ class XoopsMenusCategory extends XoopsObject
         if (defined($title)) {
             return constant($title) . ' (' . $title . ')';
         } else {
-            return $title;
+            return (string)$title;
         }
     }
 
@@ -134,7 +134,7 @@ class XoopsMenusCategory extends XoopsObject
 
         $isProtected = false;
         if (!$this->isNew()) {
-            $form->addElement(new XoopsFormHidden('category_id', $this->getVar('category_id')));
+            $form->addElement(new XoopsFormHidden('category_id', (string)$this->getVar('category_id')));
             $position = $this->getVar('category_position');
             $active = $this->getVar('category_active');
             $isProtected = (int)$this->getVar('category_protected') === 1;
@@ -144,7 +144,7 @@ class XoopsMenusCategory extends XoopsObject
         }
 
         // title
-        $title = new XoopsFormText(_AM_SYSTEM_MENUS_TITLECAT, 'category_title', 50, 255, $this->getVar('category_title'));
+        $title = new XoopsFormText(_AM_SYSTEM_MENUS_TITLECAT, 'category_title', 50, 255, (string)$this->getVar('category_title'));
         if ($isProtected) {
             $title->setExtra('readonly="readonly"');
         }
@@ -153,7 +153,7 @@ class XoopsMenusCategory extends XoopsObject
         // prefix
         $editor_configs = array(
             'name' => 'category_prefix',
-            'value' => $this->getVar('category_prefix'),
+            'value' => $this->getVar('category_prefix', 'e'),
             'rows' => 1,
             'cols' => 50,
             'width' => '100%',
@@ -172,7 +172,7 @@ class XoopsMenusCategory extends XoopsObject
         // suffix
         $editor_configs = array(
             'name' => 'category_suffix',
-            'value' => $this->getVar('category_suffix'),
+            'value' => $this->getVar('category_suffix', 'e'),
             'rows' => 1,
             'cols' => 50,
             'width' => '100%',
@@ -196,7 +196,7 @@ class XoopsMenusCategory extends XoopsObject
         $url->setDescription(_AM_SYSTEM_MENUS_URLCATDESC);
         $form->addElement($url, false);
         // target
-        $radio = new XoopsFormRadio(_AM_SYSTEM_MENUS_TARGET, 'category_target', $this->getVar('category_target'));
+        $radio = new XoopsFormRadio(_AM_SYSTEM_MENUS_TARGET, 'category_target', (string)$this->getVar('category_target'));
         $radio->addOption(0, _AM_SYSTEM_MENUS_TARGET_SELF);
         $radio->addOption(1, _AM_SYSTEM_MENUS_TARGET_BLANK);
         $form->addElement($radio, false);

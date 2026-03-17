@@ -407,7 +407,7 @@ class xos_opal_Theme
         }
 
         // Load menu categories and their nested items so themes can render navigation
-        if (xoops_getModuleOption('active_menus', 'system')) {
+        if (\Xmf\Module\Helper::getHelper('system')->getConfig('active_menus')) {
             $this->template->assign('xoMenuCategories', $this->loadMenus());
         }
 
@@ -436,6 +436,7 @@ class xos_opal_Theme
         }
 
         $menus = [];
+        /** @var \XoopsMenusCategoryHandler $menuscategoryHandler */
         $menuscategoryHandler = xoops_getHandler('menuscategory');
         if (!is_object($menuscategoryHandler) && class_exists('XoopsMenusCategoryHandler')) {
             $menuscategoryHandler = new XoopsMenusCategoryHandler($GLOBALS['xoopsDB']);
@@ -460,6 +461,7 @@ class xos_opal_Theme
                 $helper            = Xmf\Module\Helper::getHelper('system');
                 $moduleHandler     = $helper->getModule();
                 $groups            = is_object($GLOBALS['xoopsUser']) ? $GLOBALS['xoopsUser']->getGroups() : (array) XOOPS_GROUP_ANONYMOUS;
+                /** @var \XoopsGroupPermHandler $gpermHandler */
                 $gpermHandler      = xoops_getHandler('groupperm');
                 $viewPermissionCat = $gpermHandler->getItemIds('menus_category_view', $groups, $moduleHandler->getVar('mid'));
                 $viewPermissionItem = $gpermHandler->getItemIds('menus_items_view', $groups, $moduleHandler->getVar('mid'));
@@ -475,6 +477,7 @@ class xos_opal_Theme
         }
 
         if (!empty($category_arr)) {
+            /** @var \XoopsMenusItemsHandler $menusitemsHandler */
             $menusitemsHandler = xoops_getHandler('menusitems');
             if (!is_object($menusitemsHandler) && class_exists('XoopsMenusItemsHandler')) {
                 $menusitemsHandler = new XoopsMenusItemsHandler($GLOBALS['xoopsDB']);
@@ -514,8 +517,8 @@ class xos_opal_Theme
                                 $entry = [
                                     'id'       => $cid2,
                                     'title'    => $child->getResolvedTitle(),
-                                    'prefix'   => $this->renderMenuAffix($child->getVar('items_prefix')),
-                                    'suffix'   => $this->renderMenuAffix($child->getVar('items_suffix')),
+                                    'prefix'   => $this->renderMenuAffix($child->getVar('items_prefix', 'n')),
+                                    'suffix'   => $this->renderMenuAffix($child->getVar('items_suffix', 'n')),
                                     'url'      => $normalizeUrl($child->getVar('items_url')),
                                     'target'   => ($child->getVar('items_target') == 1) ? '_blank' : '_self',
                                     'active'   => $child->getVar('items_active'),
@@ -530,8 +533,8 @@ class xos_opal_Theme
                     $menus[] = [
                         'category_id'     => $cid,
                         'category_title'  => $cat->getResolvedTitle(),
-                        'category_prefix' => $this->renderMenuAffix($cat->getVar('category_prefix')),
-                        'category_suffix' => $this->renderMenuAffix($cat->getVar('category_suffix')),
+                        'category_prefix' => $this->renderMenuAffix($cat->getVar('category_prefix', 'n')),
+                        'category_suffix' => $this->renderMenuAffix($cat->getVar('category_suffix', 'n')),
                         'category_url'    => $normalizeUrl($cat->getVar('category_url')),
                         'category_target' => ($cat->getVar('category_target') == 1) ? '_blank' : '_self',
                         'items'           => $item_list,
@@ -557,19 +560,21 @@ class xos_opal_Theme
             return $value;
         }
 
-        $decodedSuffix = htmlspecialchars_decode($value, ENT_QUOTES | ENT_HTML5);
-        if (false === stripos($decodedSuffix, 'xoInboxCount')) {
+        // Sanitize: only allow safe inline HTML tags
+        $value = strip_tags($value, '<span><i><b><em><strong><img>');
+
+        if (false === stripos($value, 'xoInboxCount')) {
             return $value;
         }
 
         try {
             $unread = $this->getInboxUnreadCount();
             $replacement = null === $unread ? '' : (string)$unread;
-            $rendered = preg_replace('/<{\s*xoInboxCount(?:\s+[^}]*)?\s*}>/i', $replacement, $decodedSuffix);
+            $rendered = preg_replace('/<{\s*xoInboxCount(?:\s+[^}]*)?\s*}>/i', $replacement, $value);
 
-            return null !== $rendered ? $rendered : $decodedSuffix;
+            return null !== $rendered ? $rendered : $value;
         } catch (Exception $e) {
-            return $decodedSuffix;
+            return $value;
         }
     }
 
