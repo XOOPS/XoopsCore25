@@ -407,6 +407,11 @@ switch ($op) {
         $parsed = [];
         parse_str($serialized, $parsed);
         $itemOrder = $parsed['item'] ?? [];
+        if (!is_array($itemOrder) || count($itemOrder) === 0) {
+            header('Content-Type: application/json');
+            echo json_encode(['success' => false, 'message' => 'Invalid order data', 'token' => $GLOBALS['xoopsSecurity']->getTokenHTML()]);
+            exit;
+        }
 
         /** @var \XoopsMenusItemsHandler $menusitemsHandler */
         $menusitemsHandler = xoops_getHandler('menusitems');
@@ -415,7 +420,6 @@ switch ($op) {
         $parentMap = [];
         $itemObjects = [];
         $errors = [];
-        $referenceCid = null;
         foreach ($itemOrder as $id => $parentId) {
             $id = (int)$id;
             if ($id <= 0) continue;
@@ -430,9 +434,9 @@ switch ($op) {
                 $errors[] = "Item {$id} cannot be its own parent";
                 continue;
             }
-            if ($newPid > 0 && !isset($itemOrder[$newPid])) {
-                // Parent not in payload — check it exists in DB with same category
-                $parentObj = $menusitemsHandler->get($newPid);
+            if ($newPid > 0) {
+                // Resolve parent from already-loaded objects or DB
+                $parentObj = $itemObjects[$newPid] ?? $menusitemsHandler->get($newPid);
                 if (!is_object($parentObj)) {
                     $errors[] = "Parent {$newPid} not found for item {$id}";
                     continue;
@@ -606,11 +610,13 @@ switch ($op) {
                     $depth = 1;
                     $ancestorId = (int)$parentItem->getVar('items_pid');
                     $isCycle = false;
+                    $visitedAncestors = [$itempid];
                     while ($ancestorId > 0) {
-                        if ($id > 0 && $ancestorId === $id) {
+                        if (($id > 0 && $ancestorId === $id) || in_array($ancestorId, $visitedAncestors)) {
                             $isCycle = true;
                             break;
                         }
+                        $visitedAncestors[] = $ancestorId;
                         $ancestor = $menusitemsHandler->get($ancestorId);
                         if (!is_object($ancestor)) {
                             break;
