@@ -48,10 +48,20 @@
                         </li>
                     <{/foreach}>
                     <{else}>
-                    <{* Fallback: static menus when menu system is not yet installed *}>
+                    <{* Fallback: static nav when menu system is not active *}>
                     <li class="nav-item">
                         <a class="nav-link" href="<{$xoops_url}>"><{$smarty.const.THEME_HOME}></a>
                     </li>
+                    <{if $xoops_isadmin|default:false}>
+                    <li class="nav-item"><a class="nav-link" href="<{$xoops_url}>/admin.php"><{$smarty.const._ADMINISTRATION|default:'Administration'}></a></li>
+                    <{/if}>
+                    <{if $xoops_isuser|default:false}>
+                    <li class="nav-item"><a class="nav-link" href="<{$xoops_url}>/user.php"><{$smarty.const._PROFILE|default:'Account'}></a></li>
+                    <li class="nav-item"><a class="nav-link" href="<{$xoops_url}>/user.php?op=logout"><{$smarty.const._LOGOUT}></a></li>
+                    <{else}>
+                    <li class="nav-item"><a class="nav-link" href="<{$xoops_url}>/user.php"><{$smarty.const._LOGIN}></a></li>
+                    <li class="nav-item"><a class="nav-link" href="<{$xoops_url}>/register.php"><{$smarty.const._REGISTER}></a></li>
+                    <{/if}>
                     <{/if}>
                 </ul>
                 <{if !empty($xoops_search)}>

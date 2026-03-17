@@ -25,15 +25,15 @@ function xoops_module_update_system(XoopsModule $module, $prev_version = null)
 {
     // irmtfan bug fix: solve templates duplicate issue
     $ret = null;
-    if ($prev_version < '2.1.1') {
+    if (null === $prev_version || version_compare($prev_version, '2.1.1', '<')) {
         $ret = update_system_v211($module);
     }
     // Clean up legacy .html template rows replaced by .tpl equivalents
-    if ($prev_version < '2.1.8') {
+    if (null === $prev_version || version_compare($prev_version, '2.1.8', '<')) {
         update_system_remove_legacy_html_templates($module);
     }
     // Create menu management tables and seed default data
-    if ($prev_version < '2.1.9') {
+    if (null === $prev_version || version_compare($prev_version, '2.1.9', '<')) {
         update_system_v219_menus($module);
     }
     $errors = $module->getErrors();
@@ -285,38 +285,44 @@ function update_system_v219_menus(XoopsModule $module)
     $itemLogoutId = $xoopsDB->getInsertId();
 
     // Seed permissions using the actual module ID
-    // Category permissions: Home visible to all groups (1=admin, 2=registered, 3=anonymous)
-    foreach ([1, 2, 3] as $gid) {
+    $grpAdmin = defined('XOOPS_GROUP_ADMIN') ? (int)XOOPS_GROUP_ADMIN : 1;
+    $grpUsers = defined('XOOPS_GROUP_USERS') ? (int)XOOPS_GROUP_USERS : 2;
+    $grpAnon  = defined('XOOPS_GROUP_ANONYMOUS') ? (int)XOOPS_GROUP_ANONYMOUS : 3;
+    $allGroups      = [$grpAdmin, $grpUsers, $grpAnon];
+    $loggedInGroups = [$grpAdmin, $grpUsers];
+
+    // Category permissions: Home visible to all groups
+    foreach ($allGroups as $gid) {
         $xoopsDB->exec("INSERT INTO {$permTable} (gperm_groupid, gperm_itemid, gperm_modid, gperm_name) VALUES ({$gid}, {$catHomeId}, {$mid}, 'menus_category_view')");
     }
     // Admin category visible to admin only
-    $xoopsDB->exec("INSERT INTO {$permTable} (gperm_groupid, gperm_itemid, gperm_modid, gperm_name) VALUES (1, {$catAdminId}, {$mid}, 'menus_category_view')");
+    $xoopsDB->exec("INSERT INTO {$permTable} (gperm_groupid, gperm_itemid, gperm_modid, gperm_name) VALUES ({$grpAdmin}, {$catAdminId}, {$mid}, 'menus_category_view')");
     // Account category visible to all groups
-    foreach ([1, 2, 3] as $gid) {
+    foreach ($allGroups as $gid) {
         $xoopsDB->exec("INSERT INTO {$permTable} (gperm_groupid, gperm_itemid, gperm_modid, gperm_name) VALUES ({$gid}, {$catAccountId}, {$mid}, 'menus_category_view')");
     }
 
     // Item permissions
     // Edit Account: admin + registered
-    foreach ([1, 2] as $gid) {
+    foreach ($loggedInGroups as $gid) {
         $xoopsDB->exec("INSERT INTO {$permTable} (gperm_groupid, gperm_itemid, gperm_modid, gperm_name) VALUES ({$gid}, {$itemEditId}, {$mid}, 'menus_items_view')");
     }
     // Login: anonymous only
-    $xoopsDB->exec("INSERT INTO {$permTable} (gperm_groupid, gperm_itemid, gperm_modid, gperm_name) VALUES (3, {$itemLoginId}, {$mid}, 'menus_items_view')");
+    $xoopsDB->exec("INSERT INTO {$permTable} (gperm_groupid, gperm_itemid, gperm_modid, gperm_name) VALUES ({$grpAnon}, {$itemLoginId}, {$mid}, 'menus_items_view')");
     // Register: anonymous only
-    $xoopsDB->exec("INSERT INTO {$permTable} (gperm_groupid, gperm_itemid, gperm_modid, gperm_name) VALUES (3, {$itemRegisterId}, {$mid}, 'menus_items_view')");
+    $xoopsDB->exec("INSERT INTO {$permTable} (gperm_groupid, gperm_itemid, gperm_modid, gperm_name) VALUES ({$grpAnon}, {$itemRegisterId}, {$mid}, 'menus_items_view')");
     // Messages: admin + registered
-    foreach ([1, 2] as $gid) {
+    foreach ($loggedInGroups as $gid) {
         $xoopsDB->exec("INSERT INTO {$permTable} (gperm_groupid, gperm_itemid, gperm_modid, gperm_name) VALUES ({$gid}, {$itemMessagesId}, {$mid}, 'menus_items_view')");
     }
     // Notifications: admin + registered
-    foreach ([1, 2] as $gid) {
+    foreach ($loggedInGroups as $gid) {
         $xoopsDB->exec("INSERT INTO {$permTable} (gperm_groupid, gperm_itemid, gperm_modid, gperm_name) VALUES ({$gid}, {$itemNotifId}, {$mid}, 'menus_items_view')");
     }
     // Toolbar: admin only
-    $xoopsDB->exec("INSERT INTO {$permTable} (gperm_groupid, gperm_itemid, gperm_modid, gperm_name) VALUES (1, {$itemToolbarId}, {$mid}, 'menus_items_view')");
+    $xoopsDB->exec("INSERT INTO {$permTable} (gperm_groupid, gperm_itemid, gperm_modid, gperm_name) VALUES ({$grpAdmin}, {$itemToolbarId}, {$mid}, 'menus_items_view')");
     // Logout: admin + registered
-    foreach ([1, 2] as $gid) {
+    foreach ($loggedInGroups as $gid) {
         $xoopsDB->exec("INSERT INTO {$permTable} (gperm_groupid, gperm_itemid, gperm_modid, gperm_name) VALUES ({$gid}, {$itemLogoutId}, {$mid}, 'menus_items_view')");
     }
 }

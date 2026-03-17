@@ -260,7 +260,7 @@ switch ($op) {
                     'surdel'      => true,
                     'category_id' => $category_id,
                     'op'          => 'delcat'
-                ], $_SERVER['REQUEST_URI'], sprintf(_AM_SYSTEM_MENUS_SUREDELCAT, htmlspecialchars((string)$obj->getVar('category_title'), ENT_QUOTES, 'UTF-8')) . $items);
+                ], Request::getString('REQUEST_URI', '', 'SERVER'), sprintf(_AM_SYSTEM_MENUS_SUREDELCAT, htmlspecialchars((string)$obj->getVar('category_title'), ENT_QUOTES, 'UTF-8')) . $items);
             }
         }
         break;
@@ -326,7 +326,7 @@ switch ($op) {
                     'item_id'     => $item_id,
                     'category_id' => $objCid,
                     'op'          => 'delitem'
-                ], $_SERVER['REQUEST_URI'], sprintf(_AM_SYSTEM_MENUS_SUREDELITEM, htmlspecialchars((string)$obj->getVar('items_title'), ENT_QUOTES, 'UTF-8')) . $items);
+                ], Request::getString('REQUEST_URI', '', 'SERVER'), sprintf(_AM_SYSTEM_MENUS_SUREDELITEM, htmlspecialchars((string)$obj->getVar('items_title'), ENT_QUOTES, 'UTF-8')) . $items);
             }
         }
         break;

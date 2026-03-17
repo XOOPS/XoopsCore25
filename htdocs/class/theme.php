@@ -454,7 +454,7 @@ class xos_opal_Theme
                 if (false !== $result) {
                     $tableExists = $GLOBALS['xoopsDB']->getRowsNum($result) > 0;
                 }
-            } catch (Exception $e) {
+            } catch (\Throwable $e) {
                 $tableExists = false;
             }
             if ($tableExists) {
@@ -488,46 +488,60 @@ class xos_opal_Theme
                 if (!is_string($url) || $url === '') {
                     return $url;
                 }
-                if (preg_match('#^(https?://|/|\#|javascript:)#i', $url)) {
+                // Block javascript: scheme (stored XSS)
+                if (preg_match('#^\s*javascript:#i', $url)) {
+                    return '';
+                }
+                // Pass through absolute URLs and common schemes
+                if (preg_match('#^(https?://|mailto:|tel:|ftp://|/|\#)#i', $url)) {
                     return $url;
                 }
                 return XOOPS_URL . '/' . ltrim($url, '/');
+            };
+
+            // Batch-fetch all permitted active items in one query (avoids N+1)
+            $allItemsByCid = [];
+            if (!empty($viewPermissionItem)) {
+                $crit = new CriteriaCompo();
+                $crit->add(new Criteria('items_id', '(' . implode(',', $viewPermissionItem) . ')', 'IN'));
+                $crit->add(new Criteria('items_active', 1));
+                $crit->setSort('items_position');
+                $crit->setOrder('ASC');
+                $allItems = $menusitemsHandler->getAll($crit);
+                foreach ($allItems as $item) {
+                    $itemCid = $item->getVar('items_cid');
+                    $allItemsByCid[$itemCid][$item->getVar('items_id')] = $item;
+                }
+            }
+
+            xoops_load('SystemMenusTree', 'system');
+            // Recursive closure to build nested structure
+            $buildNested = function ($treeObj, $parentId = 0) use (&$buildNested, $normalizeUrl) {
+                $nodes = [];
+                $children = $treeObj->getFirstChild($parentId);
+                foreach ($children as $child) {
+                    $cid2 = $child->getVar('items_id');
+                    $entry = [
+                        'id'       => $cid2,
+                        'title'    => $child->getResolvedTitle(),
+                        'prefix'   => $this->renderMenuAffix($child->getVar('items_prefix', 'n')),
+                        'suffix'   => $this->renderMenuAffix($child->getVar('items_suffix', 'n')),
+                        'url'      => $normalizeUrl($child->getVar('items_url')),
+                        'target'   => ($child->getVar('items_target') == 1) ? '_blank' : '_self',
+                        'active'   => $child->getVar('items_active'),
+                        'children' => $buildNested($treeObj, $cid2),
+                    ];
+                    $nodes[] = $entry;
+                }
+                return $nodes;
             };
 
             foreach ($category_arr as $cat) {
                 try {
                     $cid = $cat->getVar('category_id');
                     $item_list = [];
-                    if (!empty($viewPermissionItem)) {
-                        $crit = new CriteriaCompo();
-                        $crit->add(new Criteria('items_id', '(' . implode(',', $viewPermissionItem) . ')', 'IN'));
-                        $crit->add(new Criteria('items_cid', $cid));
-                        $crit->add(new Criteria('items_active', 1));
-                        $crit->setSort('items_position');
-                        $crit->setOrder('ASC');
-                        $items_arr = $menusitemsHandler->getAll($crit);
-                        xoops_load('SystemMenusTree', 'system');
-                        $myTree = new SystemMenusTree($items_arr, 'items_id', 'items_pid');
-                        // Recursive closure to build nested structure
-                        $buildNested = function ($treeObj, $parentId = 0) use (&$buildNested, $normalizeUrl) {
-                            $nodes = [];
-                            $children = $treeObj->getFirstChild($parentId);
-                            foreach ($children as $child) {
-                                $cid2 = $child->getVar('items_id');
-                                $entry = [
-                                    'id'       => $cid2,
-                                    'title'    => $child->getResolvedTitle(),
-                                    'prefix'   => $this->renderMenuAffix($child->getVar('items_prefix', 'n')),
-                                    'suffix'   => $this->renderMenuAffix($child->getVar('items_suffix', 'n')),
-                                    'url'      => $normalizeUrl($child->getVar('items_url')),
-                                    'target'   => ($child->getVar('items_target') == 1) ? '_blank' : '_self',
-                                    'active'   => $child->getVar('items_active'),
-                                    'children' => $buildNested($treeObj, $cid2),
-                                ];
-                                $nodes[] = $entry;
-                            }
-                            return $nodes;
-                        };
+                    if (!empty($allItemsByCid[$cid])) {
+                        $myTree = new SystemMenusTree($allItemsByCid[$cid], 'items_id', 'items_pid');
                         $item_list = $buildNested($myTree, 0);
                     }
                     $menus[] = [
@@ -539,7 +553,7 @@ class xos_opal_Theme
                         'category_target' => ($cat->getVar('category_target') == 1) ? '_blank' : '_self',
                         'items'           => $item_list,
                     ];
-                } catch (Exception $e) {
+                } catch (\Throwable $e) {
                     continue;
                 }
             }

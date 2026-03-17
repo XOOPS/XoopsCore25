@@ -88,8 +88,11 @@ class XoopsMenusItems extends XoopsObject
      */
     public function getResolvedTitle()
     {
-        $title = $this->getVar('items_title');
-        return defined($title) ? (string)constant($title) : (string)$title;
+        $title = (string)$this->getVar('items_title');
+        if (0 === strpos($title, 'MENUS_') && defined($title)) {
+            return (string)constant($title);
+        }
+        return $title;
     }
 
     /**
@@ -99,12 +102,11 @@ class XoopsMenusItems extends XoopsObject
      */
     public function getAdminTitle()
     {
-        $title = $this->getVar('items_title');
-        if (defined($title)) {
+        $title = (string)$this->getVar('items_title');
+        if (0 === strpos($title, 'MENUS_') && defined($title)) {
             return constant($title) . ' (' . $title . ')';
-        } else {
-            return (string)$title;
         }
+        return $title;
     }
 
     /**
@@ -121,7 +123,7 @@ class XoopsMenusItems extends XoopsObject
     public function getFormItems($category_id, $action = false)
     {
         if ($action === false) {
-            $action = $_SERVER['REQUEST_URI'];
+            $action = \Xmf\Request::getString('REQUEST_URI', '', 'SERVER');
         }
         include_once XOOPS_ROOT_PATH . '/class/xoopsformloader.php';
 
@@ -263,6 +265,6 @@ class XoopsMenusItemsHandler extends XoopsPersistableObjectHandler
      */
     public function __construct($db)
     {
-        parent::__construct($db, 'menusitems', 'XoopsMenusItems', 'items_id', 'items_pid');
+        parent::__construct($db, 'menusitems', 'XoopsMenusItems', 'items_id', 'items_title');
     }
 }

@@ -125,9 +125,9 @@ window.XOOPS_MENUS.messages = {
                             </span>
                         </div>
                         <!-- level 1 children -->
+                        <ol>
                         <{foreach item=sub from=$itemcategory.items}>
                             <{if $sub.pid != 0 && $sub.pid == $item.id}>
-                            <ol>
                                 <li id="item_<{$sub.id|escape}>" class="ui-state-default" data-pid="<{$sub.pid|escape}>">
                                     <div class="xo-menus-sortable-row">
                                         <span class="xo-menus-disclose"><span></span></span>
@@ -152,9 +152,9 @@ window.XOOPS_MENUS.messages = {
                                         </span>
                                     </div>
                                     <!-- level 2 children -->
+                                    <ol>
                                     <{foreach item=subsub from=$itemcategory.items}>
                                         <{if $subsub.pid != 0 && $subsub.pid == $sub.id}>
-                                        <ol>
                                             <li id="item_<{$subsub.id|escape}>" class="ui-state-default mjs-nestedSortable-no-nesting" data-pid="<{$subsub.pid|escape}>">
                                                 <div class="xo-menus-sortable-row">
                                                     <span class="xo-menus-sortable-title">
@@ -178,13 +178,13 @@ window.XOOPS_MENUS.messages = {
                                                     </span>
                                                 </div>
                                             </li>
-                                        </ol>
                                         <{/if}>
                                     <{/foreach}>
+                                    </ol>
                                 </li>
-                            </ol>
                             <{/if}>
                         <{/foreach}>
+                        </ol>
                     </li>
                     <{/if}>
                 <{/foreach}>
@@ -231,9 +231,9 @@ window.XOOPS_MENUS.messages = {
                         </span>
                     </div>
                     <!-- level 1 children -->
+                    <ol>
                     <{foreach item=sub from=$items}>
                         <{if $sub.pid != 0 && $sub.pid == $item.id}>
-                        <ol>
                             <li id="item_<{$sub.id|escape}>" class="ui-state-default" data-pid="<{$sub.pid|escape}>">
                                 <div class="xo-menus-sortable-row">
                                     <span class="xo-menus-drag-handle" title="Drag to reorder">&#x2195;</span>
@@ -259,9 +259,9 @@ window.XOOPS_MENUS.messages = {
                                     </span>
                                 </div>
                                 <!-- level 2 children -->
+                                <ol>
                                 <{foreach item=subsub from=$items}>
                                     <{if $subsub.pid != 0 && $subsub.pid == $sub.id}>
-                                    <ol>
                                         <li id="item_<{$subsub.id|escape}>" class="ui-state-default mjs-nestedSortable-no-nesting" data-pid="<{$subsub.pid|escape}>">
                                             <div class="xo-menus-sortable-row">
                                                 <span class="xo-menus-drag-handle" title="Drag to reorder">&#x2195;</span>
@@ -286,13 +286,13 @@ window.XOOPS_MENUS.messages = {
                                                 </span>
                                             </div>
                                         </li>
-                                    </ol>
                                     <{/if}>
                                 <{/foreach}>
+                                </ol>
                             </li>
-                        </ol>
                         <{/if}>
                     <{/foreach}>
+                    </ol>
                 </li>
                 <{/if}>
             <{/foreach}>

@@ -53,8 +53,18 @@
                             </li>
                         <{/foreach}>
                         <{else}>
-                        <{* Fallback: static menus when menu system is not yet installed *}>
+                        <{* Fallback: static nav when menu system is not active *}>
                         <li class="nav-item active"><a href="<{$xoops_url}>" class="nav-link"><{$smarty.const.THEME_HOME}></a></li>
+                        <{if $xoops_isadmin|default:false}>
+                        <li class="nav-item"><a href="<{$xoops_url}>/admin.php" class="nav-link"><{$smarty.const._ADMINISTRATION|default:'Administration'}></a></li>
+                        <{/if}>
+                        <{if $xoops_isuser|default:false}>
+                        <li class="nav-item"><a href="<{$xoops_url}>/user.php" class="nav-link"><{$smarty.const._PROFILE|default:'Account'}></a></li>
+                        <li class="nav-item"><a href="<{$xoops_url}>/user.php?op=logout" class="nav-link"><{$smarty.const._LOGOUT}></a></li>
+                        <{else}>
+                        <li class="nav-item"><a href="<{$xoops_url}>/user.php" class="nav-link"><{$smarty.const._LOGIN}></a></li>
+                        <li class="nav-item"><a href="<{$xoops_url}>/register.php" class="nav-link"><{$smarty.const._REGISTER}></a></li>
+                        <{/if}>
                         <{/if}>
                     </ul>
 
