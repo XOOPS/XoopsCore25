@@ -382,7 +382,7 @@ class XoopsLoggerAdditionalTest extends TestCase
     // ---------------------------------------------------------------
 
     #[Test]
-    public function writeLogIsNotImplemented(): void
+    public function testWriteLogIsNotImplemented(): void
     {
         self::assertFalse(
             method_exists(\XoopsLogger::class, 'writeLog'),
@@ -674,12 +674,17 @@ class XoopsLoggerAdditionalTest extends TestCase
     }
 
     #[Test]
-    public function addDeprecatedDoesNotWriteToLogFile(): void
+    public function testAddDeprecatedDoesNotWriteToLogFile(): void
     {
+        // Ensure clean precondition — remove residual log file from prior runs
+        $logFile = XOOPS_ROOT_PATH . '/log/log.txt';
+        if (file_exists($logFile)) {
+            unlink($logFile);
+        }
+
         // addDeprecated() stores in memory only — no disk writes without writeLog()
         $this->logger->addDeprecated('test deprecation');
         self::assertNotEmpty($this->logger->deprecated, 'addDeprecated should store in memory');
-        $logFile = XOOPS_ROOT_PATH . '/log/log.txt';
         self::assertFileDoesNotExist($logFile, 'No log file should be created without writeLog()');
     }
 
@@ -1134,8 +1139,14 @@ class XoopsLoggerAdditionalTest extends TestCase
     // ---------------------------------------------------------------
 
     #[Test]
-    public function handleErrorDoesNotWriteToLogFile(): void
+    public function testHandleErrorDoesNotWriteToLogFile(): void
     {
+        // Ensure clean precondition — remove residual log file from prior runs
+        $logFile = XOOPS_ROOT_PATH . '/log/log.txt';
+        if (file_exists($logFile)) {
+            unlink($logFile);
+        }
+
         // handleError() stores errors in memory only — no disk writes without writeLog()
         $oldLevel = error_reporting(E_ALL);
         try {
@@ -1143,7 +1154,6 @@ class XoopsLoggerAdditionalTest extends TestCase
         } finally {
             error_reporting($oldLevel);
         }
-        $logFile = XOOPS_ROOT_PATH . '/log/log.txt';
         self::assertFileDoesNotExist($logFile, 'No log file should be created without writeLog()');
     }
 

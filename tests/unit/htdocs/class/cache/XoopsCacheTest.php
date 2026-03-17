@@ -26,6 +26,18 @@ class XoopsCacheTest extends TestCase
         }
     }
 
+    /**
+     * Configure and initialize the default file cache engine.
+     *
+     * Extracted to eliminate the repeated two-line setup across 25+ test methods.
+     */
+    private function initFileEngine(string $configName = 'default', array $extraSettings = []): void
+    {
+        $settings = array_merge(['engine' => 'file', 'path' => sys_get_temp_dir()], $extraSettings);
+        $this->cache->config($configName, $settings);
+        $this->cache->engine('file', ['path' => $settings['path']]);
+    }
+
     public function testGetInstanceReturnsSameInstance()
     {
         $instance1 = XoopsCache::getInstance();
@@ -176,7 +188,6 @@ class XoopsCacheTest extends TestCase
 
     public function testIsInitializedWithFileEngine()
     {
-        // Initialize file engine
         $this->cache->engine('file', ['path' => sys_get_temp_dir()]);
 
         $result = $this->cache->isInitialized('file');
@@ -186,7 +197,6 @@ class XoopsCacheTest extends TestCase
 
     public function testIsInitializedWithNullEngine()
     {
-        // Configure default engine
         $this->cache->config('default', ['engine' => 'file']);
         $this->cache->engine('file', ['path' => sys_get_temp_dir()]);
 
@@ -204,7 +214,6 @@ class XoopsCacheTest extends TestCase
 
     public function testSettingsWithInitializedEngine()
     {
-        // Initialize file engine
         $this->cache->engine('file', ['path' => sys_get_temp_dir(), 'duration' => 3600]);
 
         $settings = $this->cache->settings('file');
@@ -223,7 +232,6 @@ class XoopsCacheTest extends TestCase
 
     public function testSettingsWithNullEngine()
     {
-        // Configure and initialize default engine
         $this->cache->config('default', ['engine' => 'file']);
         $this->cache->engine('file', ['path' => sys_get_temp_dir()]);
 
@@ -234,9 +242,7 @@ class XoopsCacheTest extends TestCase
 
     public function testWriteWithValidData()
     {
-        // Configure file engine
-        $this->cache->config('default', ['engine' => 'file', 'path' => sys_get_temp_dir()]);
-        $this->cache->engine('file', ['path' => sys_get_temp_dir()]);
+        $this->initFileEngine();
 
         $result = XoopsCache::write('test_key', 'test_value', 3600);
 
@@ -245,9 +251,7 @@ class XoopsCacheTest extends TestCase
 
     public function testWriteAndReadCycle()
     {
-        // Configure file engine
-        $this->cache->config('default', ['engine' => 'file', 'path' => sys_get_temp_dir()]);
-        $this->cache->engine('file', ['path' => sys_get_temp_dir()]);
+        $this->initFileEngine();
 
         $key = 'cycle_test_key';
         $value = 'cycle_test_value';
@@ -260,8 +264,7 @@ class XoopsCacheTest extends TestCase
 
     public function testWriteWithResourceValue()
     {
-        $this->cache->config('default', ['engine' => 'file', 'path' => sys_get_temp_dir()]);
-        $this->cache->engine('file', ['path' => sys_get_temp_dir()]);
+        $this->initFileEngine();
 
         $resource = fopen('php://memory', 'r');
         $result = XoopsCache::write('resource_key', $resource, 3600);
@@ -272,19 +275,17 @@ class XoopsCacheTest extends TestCase
 
     public function testWriteWithZeroDuration()
     {
-        $this->cache->config('default', ['engine' => 'file', 'path' => sys_get_temp_dir()]);
-        $this->cache->engine('file', ['path' => sys_get_temp_dir()]);
+        $this->initFileEngine();
 
         $result = XoopsCache::write('zero_duration', 'value', 0);
 
-        // XoopsCacheFile treats 0 duration as "no expiry" and writes successfully
-        $this->assertTrue($result, 'Zero duration write should succeed');
+        // XoopsCache::write() returns false when duration < 1 (line 422 of xoopscache.php)
+        $this->assertFalse($result, 'Zero duration write should return false');
     }
 
     public function testWriteWithNegativeDuration()
     {
-        $this->cache->config('default', ['engine' => 'file', 'path' => sys_get_temp_dir()]);
-        $this->cache->engine('file', ['path' => sys_get_temp_dir()]);
+        $this->initFileEngine();
 
         $result = XoopsCache::write('negative_duration', 'value', -100);
 
@@ -293,8 +294,7 @@ class XoopsCacheTest extends TestCase
 
     public function testWriteWithStringDuration()
     {
-        $this->cache->config('default', ['engine' => 'file', 'path' => sys_get_temp_dir()]);
-        $this->cache->engine('file', ['path' => sys_get_temp_dir()]);
+        $this->initFileEngine();
 
         $result = XoopsCache::write('string_duration', 'value', '+1 hour');
 
@@ -303,8 +303,7 @@ class XoopsCacheTest extends TestCase
 
     public function testWriteWithArrayDurationConfig()
     {
-        $this->cache->config('custom', ['engine' => 'file', 'path' => sys_get_temp_dir()]);
-        $this->cache->engine('file', ['path' => sys_get_temp_dir()]);
+        $this->initFileEngine('custom');
 
         $result = XoopsCache::write('array_duration', 'value', ['config' => 'custom', 'duration' => 3600]);
 
@@ -313,8 +312,7 @@ class XoopsCacheTest extends TestCase
 
     public function testWriteWithConfigNameAsDuration()
     {
-        $this->cache->config('named_config', ['engine' => 'file', 'path' => sys_get_temp_dir(), 'duration' => 7200]);
-        $this->cache->engine('file', ['path' => sys_get_temp_dir()]);
+        $this->initFileEngine('named_config', ['duration' => 7200]);
 
         $result = XoopsCache::write('config_duration', 'value', 'named_config');
 
@@ -323,8 +321,7 @@ class XoopsCacheTest extends TestCase
 
     public function testReadNonExistentKey()
     {
-        $this->cache->config('default', ['engine' => 'file', 'path' => sys_get_temp_dir()]);
-        $this->cache->engine('file', ['path' => sys_get_temp_dir()]);
+        $this->initFileEngine();
 
         $result = XoopsCache::read('nonexistent_key_12345');
 
@@ -333,8 +330,7 @@ class XoopsCacheTest extends TestCase
 
     public function testDeleteExistingKey()
     {
-        $this->cache->config('default', ['engine' => 'file', 'path' => sys_get_temp_dir()]);
-        $this->cache->engine('file', ['path' => sys_get_temp_dir()]);
+        $this->initFileEngine();
 
         $key = 'delete_test_key';
         XoopsCache::write($key, 'value', 3600);
@@ -350,8 +346,7 @@ class XoopsCacheTest extends TestCase
 
     public function testDeleteNonExistentKey()
     {
-        $this->cache->config('default', ['engine' => 'file', 'path' => sys_get_temp_dir()]);
-        $this->cache->engine('file', ['path' => sys_get_temp_dir()]);
+        $this->initFileEngine();
 
         $result = XoopsCache::delete('nonexistent_delete_key');
 
@@ -361,8 +356,7 @@ class XoopsCacheTest extends TestCase
 
     public function testClearCache()
     {
-        $this->cache->config('default', ['engine' => 'file', 'path' => sys_get_temp_dir()]);
-        $this->cache->engine('file', ['path' => sys_get_temp_dir()]);
+        $this->initFileEngine();
 
         // Write some data
         XoopsCache::write('clear_test_1', 'value1', 3600);
@@ -375,8 +369,7 @@ class XoopsCacheTest extends TestCase
 
     public function testClearCacheWithCheck()
     {
-        $this->cache->config('default', ['engine' => 'file', 'path' => sys_get_temp_dir()]);
-        $this->cache->engine('file', ['path' => sys_get_temp_dir()]);
+        $this->initFileEngine();
 
         $result = $this->cache->clear(true);
 
@@ -385,8 +378,7 @@ class XoopsCacheTest extends TestCase
 
     public function testGarbageCollection()
     {
-        $this->cache->config('default', ['engine' => 'file', 'path' => sys_get_temp_dir()]);
-        $this->cache->engine('file', ['path' => sys_get_temp_dir()]);
+        $this->initFileEngine();
 
         $result = $this->cache->gc();
 
@@ -395,8 +387,7 @@ class XoopsCacheTest extends TestCase
 
     public function testWriteWithComplexDataStructure()
     {
-        $this->cache->config('default', ['engine' => 'file', 'path' => sys_get_temp_dir()]);
-        $this->cache->engine('file', ['path' => sys_get_temp_dir()]);
+        $this->initFileEngine();
 
         $complexData = [
             'string' => 'test',
@@ -413,8 +404,7 @@ class XoopsCacheTest extends TestCase
 
     public function testWriteWithBooleanValue()
     {
-        $this->cache->config('default', ['engine' => 'file', 'path' => sys_get_temp_dir()]);
-        $this->cache->engine('file', ['path' => sys_get_temp_dir()]);
+        $this->initFileEngine();
 
         XoopsCache::write('bool_true', true, 3600);
         XoopsCache::write('bool_false', false, 3600);
@@ -428,21 +418,20 @@ class XoopsCacheTest extends TestCase
 
     public function testWriteWithNullValue()
     {
-        $this->cache->config('default', ['engine' => 'file', 'path' => sys_get_temp_dir()]);
-        $this->cache->engine('file', ['path' => sys_get_temp_dir()]);
+        $this->initFileEngine();
 
-        // XoopsCacheFile::write() rejects null via isset() check, returns false
+        // XoopsCacheFile::write() rejects null via isset() check — returns false
         $writeResult = XoopsCache::write('null_value', null, 3600);
-        $this->assertFalse($writeResult);
+        $this->assertFalse($writeResult, 'Writing null should fail (isset check in XoopsCacheFile)');
 
+        // Since write failed, read should also return false
         $result = XoopsCache::read('null_value');
-        $this->assertFalse($result);
+        $this->assertFalse($result, 'Reading a key that was never written should return false');
     }
 
     public function testWriteWithNumericValue()
     {
-        $this->cache->config('default', ['engine' => 'file', 'path' => sys_get_temp_dir()]);
-        $this->cache->engine('file', ['path' => sys_get_temp_dir()]);
+        $this->initFileEngine();
 
         XoopsCache::write('int_value', 42, 3600);
         XoopsCache::write('float_value', 3.14, 3600);
@@ -456,9 +445,7 @@ class XoopsCacheTest extends TestCase
 
     public function testKeyPrefixingWithXoopsUrl()
     {
-        // The write method prefixes keys with substr(md5(XOOPS_URL), 0, 8)
-        $this->cache->config('default', ['engine' => 'file', 'path' => sys_get_temp_dir()]);
-        $this->cache->engine('file', ['path' => sys_get_temp_dir()]);
+        $this->initFileEngine();
 
         $result = XoopsCache::write('prefix_test', 'value', 3600);
         $this->assertTrue($result);
@@ -489,8 +476,7 @@ class XoopsCacheTest extends TestCase
 
     public function testMultipleWritesAndReads()
     {
-        $this->cache->config('default', ['engine' => 'file', 'path' => sys_get_temp_dir()]);
-        $this->cache->engine('file', ['path' => sys_get_temp_dir()]);
+        $this->initFileEngine();
 
         $testData = [
             'key1' => 'value1',
@@ -512,8 +498,7 @@ class XoopsCacheTest extends TestCase
 
     public function testWriteOverwritesExistingKey()
     {
-        $this->cache->config('default', ['engine' => 'file', 'path' => sys_get_temp_dir()]);
-        $this->cache->engine('file', ['path' => sys_get_temp_dir()]);
+        $this->initFileEngine();
 
         $key = 'overwrite_test';
 
@@ -540,8 +525,7 @@ class XoopsCacheTest extends TestCase
 
     public function testWriteWithVeryLongKey()
     {
-        $this->cache->config('default', ['engine' => 'file', 'path' => sys_get_temp_dir()]);
-        $this->cache->engine('file', ['path' => sys_get_temp_dir()]);
+        $this->initFileEngine();
 
         // 500-char keys may exceed filesystem path limits; XoopsCache hashes
         // the key via md5 prefix + key, but the resulting filename can be
@@ -555,8 +539,7 @@ class XoopsCacheTest extends TestCase
 
     public function testWriteWithSpecialCharactersInValue()
     {
-        $this->cache->config('default', ['engine' => 'file', 'path' => sys_get_temp_dir()]);
-        $this->cache->engine('file', ['path' => sys_get_temp_dir()]);
+        $this->initFileEngine();
 
         $specialValue = "Line1\nLine2\tTab\r\n'quotes\"double";
         XoopsCache::write('special_chars', $specialValue, 3600);
@@ -567,8 +550,7 @@ class XoopsCacheTest extends TestCase
 
     public function testConcurrentReadAfterWrite()
     {
-        $this->cache->config('default', ['engine' => 'file', 'path' => sys_get_temp_dir()]);
-        $this->cache->engine('file', ['path' => sys_get_temp_dir()]);
+        $this->initFileEngine();
 
         XoopsCache::write('concurrent', 'data', 3600);
 
@@ -584,8 +566,7 @@ class XoopsCacheTest extends TestCase
 
     public function testDeleteReturnsCorrectType()
     {
-        $this->cache->config('default', ['engine' => 'file', 'path' => sys_get_temp_dir()]);
-        $this->cache->engine('file', ['path' => sys_get_temp_dir()]);
+        $this->initFileEngine();
 
         $result = XoopsCache::delete('any_key');
 
@@ -609,8 +590,7 @@ class XoopsCacheTest extends TestCase
 
     public function testReadWriteDeleteCycle()
     {
-        $this->cache->config('default', ['engine' => 'file', 'path' => sys_get_temp_dir()]);
-        $this->cache->engine('file', ['path' => sys_get_temp_dir()]);
+        $this->initFileEngine();
 
         $key = 'lifecycle_test';
 
@@ -633,8 +613,7 @@ class XoopsCacheTest extends TestCase
 
     public function testWriteWithLargeDataStructure()
     {
-        $this->cache->config('default', ['engine' => 'file', 'path' => sys_get_temp_dir()]);
-        $this->cache->engine('file', ['path' => sys_get_temp_dir()]);
+        $this->initFileEngine();
 
         // Create a large nested array
         $largeData = [];
@@ -656,30 +635,37 @@ class XoopsCacheTest extends TestCase
 
     public function testConfigWithMultipleEngines()
     {
-        // Configure multiple engines with distinct paths
-        $secondPath = sys_get_temp_dir() . '/xoops_cache2_test';
-        if (!is_dir($secondPath)) {
-            mkdir($secondPath, 0777, true);
+        // Configure multiple engines with distinct paths (unique per run to avoid state leaks)
+        $secondPath = sys_get_temp_dir() . '/xoops_cache2_test_' . uniqid('', true);
+        $this->assertTrue(
+            mkdir($secondPath, 0777, true) || is_dir($secondPath),
+            'Failed to create isolated temp directory for second cache engine'
+        );
+
+        try {
+            $this->cache->config('file_cache', ['engine' => 'file', 'path' => sys_get_temp_dir()]);
+            $this->cache->config('second_cache', ['engine' => 'file', 'path' => $secondPath]);
+
+            $config1 = $this->cache->config('file_cache');
+            $config2 = $this->cache->config('second_cache');
+
+            $this->assertIsArray($config1);
+            $this->assertIsArray($config2);
+            $this->assertEquals('file', $config1['engine']);
+            $this->assertEquals('file', $config2['engine']);
+            $this->assertNotEquals(
+                $config1['settings']['path'] ?? null,
+                $config2['settings']['path'] ?? null,
+                'Two engine configs should have distinct paths'
+            );
+        } finally {
+            rmdir($secondPath);
         }
-
-        $this->cache->config('file_cache', ['engine' => 'file', 'path' => sys_get_temp_dir()]);
-        $this->cache->config('second_cache', ['engine' => 'file', 'path' => $secondPath]);
-
-        $config1 = $this->cache->config('file_cache');
-        $config2 = $this->cache->config('second_cache');
-
-        $this->assertIsArray($config1);
-        $this->assertIsArray($config2);
-        $this->assertEquals('file', $config1['engine']);
-        $this->assertEquals('file', $config2['engine']);
-
-        @rmdir($secondPath);
     }
 
     public function testWriteRejectsInvalidDurationFormats()
     {
-        $this->cache->config('default', ['engine' => 'file', 'path' => sys_get_temp_dir()]);
-        $this->cache->engine('file', ['path' => sys_get_temp_dir()]);
+        $this->initFileEngine();
 
         // Invalid duration string that can't be parsed
         $result = XoopsCache::write('invalid_duration', 'value', 'not a valid time string');
