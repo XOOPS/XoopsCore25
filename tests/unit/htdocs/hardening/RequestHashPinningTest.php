@@ -22,6 +22,15 @@ class RequestHashPinningTest extends TestCase
     private const CALL_START_PATTERN = '/Request::(getString|getInt|getCmd|getWord|getFloat|getArray|getVar|getBool|getEmail|getUrl|getText)\s*\(/';
 
     /**
+     * Files known to have hashless calls that need refactoring.
+     * These are tracked via markTestIncomplete() so CI stays aware.
+     */
+    private const KNOWN_NONCOMPLIANT = [
+        // TODO: 'op' uses dual-source default hash — needs explicit GET pin
+        'profile/admin/visibility.php',
+    ];
+
+    /**
      * Files that have been hardened and must not contain hashless calls.
      *
      * @return array<string, array{string}>
@@ -37,8 +46,7 @@ class RequestHashPinningTest extends TestCase
             'profile/admin/field.php'               => [$base . '/modules/profile/admin/field.php'],
             'profile/admin/category.php'            => [$base . '/modules/profile/admin/category.php'],
             'profile/admin/user.php'                => [$base . '/modules/profile/admin/user.php'],
-            // visibility.php excluded: Request::getCmd('op', 'visibility') uses the
-            // default (dual-source) hash — needs explicit GET pin before hash-pinning
+            'profile/admin/visibility.php'          => [$base . '/modules/profile/admin/visibility.php'],
             'profile/search.php'                    => [$base . '/modules/profile/search.php'],
             'system/admin/groups/main.php'          => [$base . '/modules/system/admin/groups/main.php'],
             'system/admin/comments/main.php'        => [$base . '/modules/system/admin/comments/main.php'],
@@ -91,6 +99,22 @@ class RequestHashPinningTest extends TestCase
                         $callText = substr($line, $offset, strlen($fullMatch) + strlen($inner) + 1);
                         $violations[] = sprintf('  Line %d: %s', $lineNum + 1, trim($callText));
                     }
+                }
+            }
+        }
+
+        if (!empty($violations)) {
+            // Known-noncompliant files are tracked as incomplete, not failures
+            foreach (self::KNOWN_NONCOMPLIANT as $knownFile) {
+                if (str_ends_with($filePath, $knownFile)) {
+                    self::markTestIncomplete(
+                        sprintf(
+                            "Known noncompliant — %d hashless call(s) in %s need refactoring:\n%s",
+                            count($violations),
+                            basename($filePath),
+                            implode("\n", $violations),
+                        ),
+                    );
                 }
             }
         }

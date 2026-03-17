@@ -575,14 +575,33 @@ class ModulesAdminTest extends TestCase
      */
     private function extractErrorRollbackBlock(string $functionCode): string
     {
-        // Find: if ($error === true) { ... foreach ($created_tables ...
+        // Find: if ($error === true) { ...
         $pos = strpos($functionCode, 'if ($error === true)');
         if ($pos === false) {
             return '';
         }
 
-        // Extract a reasonable chunk that covers the rollback block
-        return substr($functionCode, $pos, 800);
+        // Extract the full brace-balanced block instead of a fixed-length substr
+        $braceStart = strpos($functionCode, '{', $pos);
+        if ($braceStart === false) {
+            return '';
+        }
+
+        $depth = 0;
+        $len = strlen($functionCode);
+        for ($i = $braceStart; $i < $len; $i++) {
+            if ($functionCode[$i] === '{') {
+                $depth++;
+            } elseif ($functionCode[$i] === '}') {
+                $depth--;
+                if ($depth === 0) {
+                    return substr($functionCode, $pos, $i - $pos + 1);
+                }
+            }
+        }
+
+        // Unbalanced braces — return what we have from the start
+        return substr($functionCode, $pos);
     }
 
     /**

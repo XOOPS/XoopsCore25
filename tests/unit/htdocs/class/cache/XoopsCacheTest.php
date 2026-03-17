@@ -17,7 +17,7 @@ class XoopsCacheTest extends TestCase
     {
         self::$cachePath = sys_get_temp_dir() . '/xoops_cache_test_' . uniqid('', true);
         if (!mkdir(self::$cachePath, 0777, true) && !is_dir(self::$cachePath)) {
-            self::fail('Failed to create cache test directory: ' . self::$cachePath);
+            self::fail('Failed to create cache test directory: ' . basename(self::$cachePath));
         }
     }
 
@@ -58,11 +58,12 @@ class XoopsCacheTest extends TestCase
      *
      * Extracted to eliminate the repeated two-line setup across 25+ test methods.
      */
-    private function initFileEngine(string $configName = 'default', array $extraSettings = []): void
+    private function initFileEngine(?string $configName = null, array $extraSettings = []): void
     {
+        $configName ??= 'cache_test_' . uniqid('', true);
         $settings = array_merge(['engine' => 'file', 'path' => self::$cachePath], $extraSettings);
         $this->cache->config($configName, $settings);
-        $this->cache->engine('file', ['path' => $settings['path']]);
+        $this->cache->engine('file', $settings);
     }
 
     public function testGetInstanceReturnsSameInstance()
