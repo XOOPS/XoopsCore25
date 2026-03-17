@@ -65,7 +65,7 @@ class RequestHashPinningTest extends TestCase
     public function noHashlessRequestCalls(string $filePath): void
     {
         if (!file_exists($filePath)) {
-            self::markTestSkipped("File not found: {$filePath}");
+            $this->markTestSkipped("File not found: {$filePath}");
         }
 
         $source = file_get_contents($filePath);
@@ -107,7 +107,7 @@ class RequestHashPinningTest extends TestCase
             // Known-noncompliant files are tracked as incomplete, not failures
             foreach (self::KNOWN_NONCOMPLIANT as $knownFile) {
                 if (str_ends_with($filePath, $knownFile)) {
-                    self::markTestIncomplete(
+                    $this->markTestIncomplete(
                         sprintf(
                             "Known noncompliant — %d hashless call(s) in %s need refactoring:\n%s",
                             count($violations),
@@ -135,7 +135,7 @@ class RequestHashPinningTest extends TestCase
     public function noElvisOperatorOnDualSourceRequestCalls(string $filePath): void
     {
         if (!file_exists($filePath)) {
-            self::markTestSkipped("File not found: {$filePath}");
+            $this->markTestSkipped("File not found: {$filePath}");
         }
 
         $source = file_get_contents($filePath);
