@@ -560,6 +560,21 @@ class xos_opal_Theme
             return $value;
         }
 
+        // Replace <{xoInboxCount}> BEFORE strip_tags (it looks like an HTML tag)
+        if (false !== stripos($value, 'xoInboxCount')) {
+            try {
+                $unread = $this->getInboxUnreadCount();
+                $replacement = null === $unread ? '' : (string)$unread;
+                $value = preg_replace('/<{\s*xoInboxCount(?:\s+[^}]*)?\s*}>/i', $replacement, $value);
+                if (null === $value) {
+                    return '';
+                }
+            } catch (\Throwable $e) {
+                // Remove the tag so strip_tags doesn't mangle it
+                $value = preg_replace('/<{\s*xoInboxCount(?:\s+[^}]*)?\s*}>/i', '', $value);
+            }
+        }
+
         // Sanitize: only allow safe inline HTML tags, strip event handlers and javascript: URLs
         $value = strip_tags($value, '<span><i><b><em><strong><img>');
         $value = preg_replace('/\s+on\w+\s*=\s*"[^"]*"/i', '', $value);
@@ -567,19 +582,7 @@ class xos_opal_Theme
         $value = preg_replace('/\s+on\w+\s*=\s*[^\s>]+/i', '', $value);
         $value = preg_replace('/\b(href|src)\s*=\s*["\']?\s*javascript:[^"\'>\s]*/i', '', $value);
 
-        if (false === stripos($value, 'xoInboxCount')) {
-            return $value;
-        }
-
-        try {
-            $unread = $this->getInboxUnreadCount();
-            $replacement = null === $unread ? '' : (string)$unread;
-            $rendered = preg_replace('/<{\s*xoInboxCount(?:\s+[^}]*)?\s*}>/i', $replacement, $value);
-
-            return null !== $rendered ? $rendered : $value;
-        } catch (Exception $e) {
-            return $value;
-        }
+        return $value;
     }
 
     /**

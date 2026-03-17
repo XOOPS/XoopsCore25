@@ -178,7 +178,11 @@ switch ($op) {
             $obj->setVar('category_title', Request::getString('category_title', ''));
             $obj->setVar('category_prefix', Request::getText('category_prefix', ''));
             $obj->setVar('category_suffix', Request::getText('category_suffix', ''));
-            $obj->setVar('category_url', Request::getString('category_url', ''));
+            $catUrl = Request::getString('category_url', '');
+            if (preg_match('/^\s*javascript:/i', $catUrl)) {
+                $catUrl = '';
+            }
+            $obj->setVar('category_url', $catUrl);
         }
         $obj->setVar('category_target', Request::getInt('category_target', 0));
         $obj->setVar('category_position', Request::getInt('category_position', 0));
@@ -648,7 +652,11 @@ switch ($op) {
             $obj->setVar('items_title', Request::getString('items_title', ''));
             $obj->setVar('items_prefix', Request::getText('items_prefix', ''));
             $obj->setVar('items_suffix', Request::getText('items_suffix', ''));
-            $obj->setVar('items_url', Request::getString('items_url', ''));
+            $itemUrl = Request::getString('items_url', '');
+            if (preg_match('/^\s*javascript:/i', $itemUrl)) {
+                $itemUrl = '';
+            }
+            $obj->setVar('items_url', $itemUrl);
         }
         $obj->setVar('items_position', Request::getInt('items_position', 0));
         $obj->setVar('items_target', Request::getInt('items_target', 0));

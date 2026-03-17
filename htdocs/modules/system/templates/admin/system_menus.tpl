@@ -3,11 +3,11 @@
 /* expose labels for the external JS */
 window.XOOPS_MENUS = window.XOOPS_MENUS || {};
 window.XOOPS_MENUS.labels = {
-    activeYes: "<{$smarty.const._AM_SYSTEM_MENUS_ACTIVE_YES}>",
-    activeNo:  "<{$smarty.const._AM_SYSTEM_MENUS_ACTIVE_NO}>"
+    activeYes: "<{$smarty.const._AM_SYSTEM_MENUS_ACTIVE_YES|escape:'javascript'}>",
+    activeNo:  "<{$smarty.const._AM_SYSTEM_MENUS_ACTIVE_NO|escape:'javascript'}>"
 };
 window.XOOPS_MENUS.messages = {
-    parentInactive: "<{$smarty.const._AM_SYSTEM_MENUS_ERROR_PARENTINACTIVE}>"
+    parentInactive: "<{$smarty.const._AM_SYSTEM_MENUS_ERROR_PARENTINACTIVE|escape:'javascript'}>"
 };
 </script>
 <!-- Buttons -->
