@@ -10,6 +10,33 @@ class XoopsCacheTest extends TestCase
 {
     protected XoopsCache $cache;
 
+    /** Dedicated temp directory for cache tests — avoids polluting /tmp. */
+    private static string $cachePath;
+
+    public static function setUpBeforeClass(): void
+    {
+        self::$cachePath = sys_get_temp_dir() . '/xoops_cache_test_' . uniqid('', true);
+        if (!mkdir(self::$cachePath, 0777, true) && !is_dir(self::$cachePath)) {
+            self::fail('Failed to create cache test directory: ' . self::$cachePath);
+        }
+    }
+
+    public static function tearDownAfterClass(): void
+    {
+        if (!is_dir(self::$cachePath)) {
+            return;
+        }
+        // Recursively remove all cache artifacts
+        $files = new \RecursiveIteratorIterator(
+            new \RecursiveDirectoryIterator(self::$cachePath, \FilesystemIterator::SKIP_DOTS),
+            \RecursiveIteratorIterator::CHILD_FIRST
+        );
+        foreach ($files as $file) {
+            $file->isDir() ? rmdir($file->getPathname()) : unlink($file->getPathname());
+        }
+        rmdir(self::$cachePath);
+    }
+
     protected function setUp(): void
     {
         // Get singleton instance
@@ -33,7 +60,7 @@ class XoopsCacheTest extends TestCase
      */
     private function initFileEngine(string $configName = 'default', array $extraSettings = []): void
     {
-        $settings = array_merge(['engine' => 'file', 'path' => sys_get_temp_dir()], $extraSettings);
+        $settings = array_merge(['engine' => 'file', 'path' => self::$cachePath], $extraSettings);
         $this->cache->config($configName, $settings);
         $this->cache->engine('file', ['path' => $settings['path']]);
     }
@@ -67,7 +94,7 @@ class XoopsCacheTest extends TestCase
     {
         $settings = [
             'engine' => 'file',
-            'path' => sys_get_temp_dir(),
+            'path' => self::$cachePath,
             'duration' => 3600,
         ];
 
@@ -112,7 +139,7 @@ class XoopsCacheTest extends TestCase
 
     public function testEngineWithValidEngine()
     {
-        $result = $this->cache->engine('file', ['path' => sys_get_temp_dir()]);
+        $result = $this->cache->engine('file', ['path' => self::$cachePath]);
 
         $this->assertTrue($result, 'File engine should initialize successfully');
     }
@@ -188,7 +215,7 @@ class XoopsCacheTest extends TestCase
 
     public function testIsInitializedWithFileEngine()
     {
-        $this->cache->engine('file', ['path' => sys_get_temp_dir()]);
+        $this->cache->engine('file', ['path' => self::$cachePath]);
 
         $result = $this->cache->isInitialized('file');
 
@@ -198,7 +225,7 @@ class XoopsCacheTest extends TestCase
     public function testIsInitializedWithNullEngine()
     {
         $this->cache->config('default', ['engine' => 'file']);
-        $this->cache->engine('file', ['path' => sys_get_temp_dir()]);
+        $this->cache->engine('file', ['path' => self::$cachePath]);
 
         $result = $this->cache->isInitialized(null);
 
@@ -214,7 +241,7 @@ class XoopsCacheTest extends TestCase
 
     public function testSettingsWithInitializedEngine()
     {
-        $this->cache->engine('file', ['path' => sys_get_temp_dir(), 'duration' => 3600]);
+        $this->cache->engine('file', ['path' => self::$cachePath, 'duration' => 3600]);
 
         $settings = $this->cache->settings('file');
 
@@ -233,7 +260,7 @@ class XoopsCacheTest extends TestCase
     public function testSettingsWithNullEngine()
     {
         $this->cache->config('default', ['engine' => 'file']);
-        $this->cache->engine('file', ['path' => sys_get_temp_dir()]);
+        $this->cache->engine('file', ['path' => self::$cachePath]);
 
         $settings = $this->cache->settings(null);
 
@@ -513,7 +540,7 @@ class XoopsCacheTest extends TestCase
 
     public function testConfigPersistsBetweenCalls()
     {
-        $this->cache->config('persistent', ['engine' => 'file', 'path' => sys_get_temp_dir()]);
+        $this->cache->config('persistent', ['engine' => 'file', 'path' => self::$cachePath]);
 
         // Call config again without settings
         $result = $this->cache->config('persistent');
@@ -637,14 +664,14 @@ class XoopsCacheTest extends TestCase
     public function testConfigWithMultipleEngines()
     {
         // Configure multiple engines with distinct paths (unique per run to avoid state leaks)
-        $secondPath = sys_get_temp_dir() . '/xoops_cache2_test_' . uniqid('', true);
+        $secondPath = self::$cachePath . '/cache2_' . uniqid('', true);
         $this->assertTrue(
             mkdir($secondPath, 0777, true) || is_dir($secondPath),
             'Failed to create isolated temp directory for second cache engine'
         );
 
         try {
-            $this->cache->config('file_cache', ['engine' => 'file', 'path' => sys_get_temp_dir()]);
+            $this->cache->config('file_cache', ['engine' => 'file', 'path' => self::$cachePath]);
             $this->cache->config('second_cache', ['engine' => 'file', 'path' => $secondPath]);
 
             $config1 = $this->cache->config('file_cache');
