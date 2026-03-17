@@ -121,6 +121,13 @@ class XoopsMenusCategory extends XoopsObject
         return $new_enreg;
     }
 
+    /**
+     * Build and return the category edit/create form.
+     *
+     * @param string|false $action Form action URL, defaults to REQUEST_URI
+     *
+     * @return \XoopsThemeForm
+     */
     public function getFormCat($action = false)
     {
         if ($action === false) {

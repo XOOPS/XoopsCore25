@@ -19,6 +19,13 @@ include_once $GLOBALS['xoops']->path('class/tree.php');
 
 /**
  * SystemMenusTree : extension of XoopsObjectTree for menus
+ *
+ * @category   Xoops
+ * @author     XOOPS Development Team, Grégory Mage (AKA GregMage)
+ * @copyright  XOOPS Project https://xoops.org/
+ * @license    GNU GPL 2.0 or later (https://www.gnu.org/licenses/gpl-2.0.html)
+ * @link       https://xoops.org
+ * @since      2.5.12
  */
 class SystemMenusTree extends XoopsObjectTree
 {
@@ -36,7 +43,7 @@ class SystemMenusTree extends XoopsObjectTree
      * @param string $parentId  field name of parent object ID
      * @param string $rootId    field name of root object ID
      */
-    public function __construct(&$objectArr, $myId, $parentId, $rootId = null)
+    public function __construct($objectArr, $myId, $parentId, $rootId = null)
     {
         $this->cpt = 0;
         parent::__construct($objectArr, $myId, $parentId, $rootId);

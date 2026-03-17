@@ -21,6 +21,22 @@
 use Xmf\Request;
 use Xmf\Module\Helper;
 
+/**
+ * Send a JSON response with a fresh XOOPS security token and exit.
+ *
+ * @param bool  $success Whether the operation succeeded
+ * @param array $extra   Additional key/value pairs to merge into the response
+ */
+function menus_json_response($success, array $extra = [])
+{
+    header('Content-Type: application/json');
+    echo json_encode(array_merge(
+        ['success' => $success, 'token' => $GLOBALS['xoopsSecurity']->getTokenHTML()],
+        $extra
+    ));
+    exit;
+}
+
 // Check users rights
 if (!is_object($xoopsUser) || !is_object($xoopsModule) || !$xoopsUser->isAdmin($xoopsModule->mid())) {
     exit(_NOPERM);
@@ -339,21 +355,12 @@ switch ($op) {
             ob_end_clean();
         }
         if (!$GLOBALS['xoopsSecurity']->check()) {
-            header('Content-Type: application/json');
-            $errors = $GLOBALS['xoopsSecurity']->getErrors();
-            echo json_encode([
-                'success' => false,
-                'message' => implode(' ', $errors),
-                'token'   => $GLOBALS['xoopsSecurity']->getTokenHTML()
-            ]);
-            exit;
+            menus_json_response(false, ['message' => implode(' ', $GLOBALS['xoopsSecurity']->getErrors())]);
         }
 
         $order = Request::getArray('order', []);
         if (count($order) === 0) {
-            header('Content-Type: application/json');
-            echo json_encode(['success' => false, 'message' => 'No order provided', 'token' => $GLOBALS['xoopsSecurity']->getTokenHTML()]);
-            exit;
+            menus_json_response(false, ['message' => 'No order provided']);
         }
 
         /** @var \XoopsMenusCategoryHandler $menuscategoryHandler */
@@ -376,13 +383,11 @@ switch ($op) {
             $pos++;
         }
 
-        header('Content-Type: application/json');
         if (empty($errors)) {
-            echo json_encode(['success' => true, 'token' => $GLOBALS['xoopsSecurity']->getTokenHTML()]);
+            menus_json_response(true);
         } else {
-            echo json_encode(['success' => false, 'message' => implode('; ', $errors), 'token' => $GLOBALS['xoopsSecurity']->getTokenHTML()]);
+            menus_json_response(false, ['message' => implode('; ', $errors)]);
         }
-        exit;
         break;
 
     case 'saveorderitems':
@@ -393,30 +398,20 @@ switch ($op) {
             ob_end_clean();
         }
         if (!$GLOBALS['xoopsSecurity']->check()) {
-            header('Content-Type: application/json');
-            echo json_encode([
-                'success' => false,
-                'message' => implode(' ', $GLOBALS['xoopsSecurity']->getErrors()),
-                'token'   => $GLOBALS['xoopsSecurity']->getTokenHTML()
-            ]);
-            exit;
+            menus_json_response(false, ['message' => implode(' ', $GLOBALS['xoopsSecurity']->getErrors())]);
         }
 
         // nestedSortable sends serialized data: item[id]=parentId (or null for root)
         $serialized = Request::getString('item', '', 'POST');
         if (empty($serialized)) {
-            header('Content-Type: application/json');
-            echo json_encode(['success' => false, 'message' => 'No order provided', 'token' => $GLOBALS['xoopsSecurity']->getTokenHTML()]);
-            exit;
+            menus_json_response(false, ['message' => 'No order provided']);
         }
 
         $parsed = [];
         parse_str($serialized, $parsed);
         $itemOrder = $parsed['item'] ?? [];
         if (!is_array($itemOrder) || count($itemOrder) === 0) {
-            header('Content-Type: application/json');
-            echo json_encode(['success' => false, 'message' => 'Invalid order data', 'token' => $GLOBALS['xoopsSecurity']->getTokenHTML()]);
-            exit;
+            menus_json_response(false, ['message' => 'Invalid order data']);
         }
 
         /** @var \XoopsMenusItemsHandler $menusitemsHandler */
@@ -502,13 +497,11 @@ switch ($op) {
             }
         }
 
-        header('Content-Type: application/json');
         if (empty($errors)) {
-            echo json_encode(['success' => true, 'token' => $GLOBALS['xoopsSecurity']->getTokenHTML()]);
+            menus_json_response(true);
         } else {
-            echo json_encode(['success' => false, 'message' => implode('; ', $errors), 'token' => $GLOBALS['xoopsSecurity']->getTokenHTML()]);
+            menus_json_response(false, ['message' => implode('; ', $errors)]);
         }
-        exit;
         break;
 
     case 'viewcat':
@@ -731,20 +724,12 @@ switch ($op) {
             ob_end_clean();
         }
         if (!$GLOBALS['xoopsSecurity']->check()) {
-            header('Content-Type: application/json');
-            echo json_encode([
-                'success' => false,
-                'message' => implode(' ', $GLOBALS['xoopsSecurity']->getErrors()),
-                'token'   => $GLOBALS['xoopsSecurity']->getTokenHTML()
-            ]);
-            exit;
+            menus_json_response(false, ['message' => implode(' ', $GLOBALS['xoopsSecurity']->getErrors())]);
         }
 
         $category_id = Request::getInt('category_id', 0);
         if ($category_id <= 0) {
-            header('Content-Type: application/json');
-            echo json_encode(['success' => false, 'message' => 'Invalid id', 'token' => $GLOBALS['xoopsSecurity']->getTokenHTML()]);
-            exit;
+            menus_json_response(false, ['message' => 'Invalid id']);
         }
 
         /** @var \XoopsMenusCategoryHandler $menuscategoryHandler */
@@ -753,9 +738,7 @@ switch ($op) {
         /** @var \XoopsMenusCategory $obj */
         $obj = $menuscategoryHandler->get($category_id);
         if (!is_object($obj)) {
-            header('Content-Type: application/json');
-            echo json_encode(['success' => false, 'message' => 'Not found', 'token' => $GLOBALS['xoopsSecurity']->getTokenHTML()]);
-            exit;
+            menus_json_response(false, ['message' => 'Not found']);
         }
         $new = $obj->getVar('category_active') ? 0 : 1;
         $obj->setVar('category_active', $new);
@@ -778,17 +761,15 @@ switch ($op) {
             }
         }
 
-        header('Content-Type: application/json');
         if ($res) {
-            $response = ['success' => true, 'active' => (int)$new, 'token' => $GLOBALS['xoopsSecurity']->getTokenHTML()];
+            $extra = ['active' => (int)$new];
             if (!empty($updatedItems)) {
-                $response['updated'] = array_values($updatedItems);
+                $extra['updated'] = array_values($updatedItems);
             }
-            echo json_encode($response);
+            menus_json_response(true, $extra);
         } else {
-            echo json_encode(['success' => false, 'message' => 'Save failed', 'token' => $GLOBALS['xoopsSecurity']->getTokenHTML()]);
+            menus_json_response(false, ['message' => 'Save failed']);
         }
-        exit;
         break;
 
     case 'toggleactiveitem':
@@ -800,20 +781,12 @@ switch ($op) {
         }
 
         if (!$GLOBALS['xoopsSecurity']->check()) {
-            header('Content-Type: application/json');
-            echo json_encode([
-                'success' => false,
-                'message' => implode(' ', $GLOBALS['xoopsSecurity']->getErrors()),
-                'token'   => $GLOBALS['xoopsSecurity']->getTokenHTML()
-            ]);
-            exit;
+            menus_json_response(false, ['message' => implode(' ', $GLOBALS['xoopsSecurity']->getErrors())]);
         }
 
         $item_id = Request::getInt('item_id', 0);
         if ($item_id <= 0) {
-            header('Content-Type: application/json');
-            echo json_encode(['success' => false, 'message' => 'Invalid id', 'token' => $GLOBALS['xoopsSecurity']->getTokenHTML()]);
-            exit;
+            menus_json_response(false, ['message' => 'Invalid id']);
         }
 
         /** @var \XoopsMenusItemsHandler $menusitemsHandler */
@@ -822,9 +795,7 @@ switch ($op) {
         /** @var \XoopsMenusItems $obj */
         $obj = $menusitemsHandler->get($item_id);
         if (!is_object($obj)) {
-            header('Content-Type: application/json');
-            echo json_encode(['success' => false, 'message' => 'Not found', 'token' => $GLOBALS['xoopsSecurity']->getTokenHTML()]);
-            exit;
+            menus_json_response(false, ['message' => 'Not found']);
         }
 
         $current = (int)$obj->getVar('items_active');
@@ -835,13 +806,7 @@ switch ($op) {
             $menuscategoryHandler = xoops_getHandler('menuscategory');
             $ownerCat = $menuscategoryHandler->get((int)$obj->getVar('items_cid'));
             if (is_object($ownerCat) && (int)$ownerCat->getVar('category_active') === 0) {
-                header('Content-Type: application/json');
-                echo json_encode([
-                    'success' => false,
-                    'message' => _AM_SYSTEM_MENUS_ERROR_PARENTINACTIVE,
-                    'token'   => $GLOBALS['xoopsSecurity']->getTokenHTML()
-                ]);
-                exit;
+                menus_json_response(false, ['message' => _AM_SYSTEM_MENUS_ERROR_PARENTINACTIVE]);
             }
             $parentId = (int)$obj->getVar('items_pid');
             while ($parentId > 0) {
@@ -850,13 +815,7 @@ switch ($op) {
                     break;
                 }
                 if ((int)$parentObj->getVar('items_active') === 0) {
-                    header('Content-Type: application/json');
-                    echo json_encode([
-                        'success' => false,
-                        'message' => _AM_SYSTEM_MENUS_ERROR_PARENTINACTIVE,
-                        'token'   => $GLOBALS['xoopsSecurity']->getTokenHTML()
-                    ]);
-                    exit;
+                    menus_json_response(false, ['message' => _AM_SYSTEM_MENUS_ERROR_PARENTINACTIVE]);
                 }
                 $parentId = (int)$parentObj->getVar('items_pid');
             }
@@ -885,17 +844,15 @@ switch ($op) {
             $propagateDeactivation($menusitemsHandler, $item_id, $updatedChildren);
         }
 
-        header('Content-Type: application/json');
         if ($res) {
-            $response = ['success' => true, 'active' => (int)$new, 'token' => $GLOBALS['xoopsSecurity']->getTokenHTML()];
+            $extra = ['active' => (int)$new];
             if (!empty($updatedChildren)) {
-                $response['updated'] = array_values($updatedChildren);
+                $extra['updated'] = array_values($updatedChildren);
             }
-            echo json_encode($response);
+            menus_json_response(true, $extra);
         } else {
-            echo json_encode(['success' => false, 'message' => 'Save failed', 'token' => $GLOBALS['xoopsSecurity']->getTokenHTML()]);
+            menus_json_response(false, ['message' => 'Save failed']);
         }
-        exit;
         break;
 
 }

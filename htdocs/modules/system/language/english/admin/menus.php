@@ -16,7 +16,7 @@ define('_AM_SYSTEM_MENUS_NAV_TIPS', '
     <li>You can create categories to organize your menus, and add submenu items under each category.</li>
     <li>For each menu item, you can specify a title, URL, position, and whether it is active or not.</li>
     <li>You can also use language constants for the menu titles. If a constant is used, its value will be displayed in parentheses next to the title.</li>
-    <li>File used for the basic menus. If you wish to add language constants, you must add them to the menus.dist.php file, which must be renamed menus.php.</li>
+    <li>To add custom menu title constants, copy menus.dist.php to menus.php and add your definitions there.</li>
     <li>The file is located here: "modules/system/language/%s/menus/menus.php".</li>
 </ul>');
 // Main

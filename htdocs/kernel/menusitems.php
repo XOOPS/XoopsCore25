@@ -120,6 +120,14 @@ class XoopsMenusItems extends XoopsObject
         return $new_enreg;
     }
 
+    /**
+     * Build and return the item edit/create form.
+     *
+     * @param int          $category_id Category ID for this item
+     * @param string|false $action      Form action URL, defaults to REQUEST_URI
+     *
+     * @return \XoopsThemeForm
+     */
     public function getFormItems($category_id, $action = false)
     {
         if ($action === false) {

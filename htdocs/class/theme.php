@@ -451,7 +451,7 @@ class xos_opal_Theme
             try {
                 $tableName = str_replace(['_', '%'], ['\\_', '\\%'], $GLOBALS['xoopsDB']->prefix('menuscategory'));
                 $sql = "SHOW TABLES LIKE '" . $tableName . "'";
-                $result = $GLOBALS['xoopsDB']->queryF($sql);
+                $result = $GLOBALS['xoopsDB']->query($sql);
                 if (false !== $result) {
                     $tableExists = $GLOBALS['xoopsDB']->getRowsNum($result) > 0;
                 }
@@ -591,7 +591,7 @@ class xos_opal_Theme
         }
 
         // Sanitize: only allow safe inline HTML tags, strip event handlers and javascript: URLs
-        $value = strip_tags($value, '<span><i><b><em><strong><img>');
+        $value = strip_tags($value, '<span><i><b><em><strong>');
         $value = preg_replace('/\s+on\w+\s*=\s*"[^"]*"/i', '', $value);
         $value = preg_replace('/\s+on\w+\s*=\s*\'[^\']*\'/i', '', $value);
         $value = preg_replace('/\s+on\w+\s*=\s*[^\s>]+/i', '', $value);
