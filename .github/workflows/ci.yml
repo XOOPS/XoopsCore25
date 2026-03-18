@@ -59,10 +59,11 @@ jobs:
         working-directory: htdocs/xoops_lib
         run: |
           cp composer.dist.json composer.json
+          cp composer.dist.lock composer.lock
           if [ "${{ matrix.deps }}" = "lowest" ]; then
             composer update --prefer-lowest --prefer-stable --no-interaction --prefer-dist --no-progress
           else
-            composer update --prefer-stable --no-interaction --prefer-dist --no-progress
+            composer install --no-interaction --prefer-dist --no-progress
           fi
 
       - name: Install PHPUnit

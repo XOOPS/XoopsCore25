@@ -307,8 +307,8 @@ class XoopsCacheTest extends TestCase
 
         $result = XoopsCache::write('zero_duration', 'value', 0);
 
-        // Duration 0 is falsy, so line 417 replaces it with $settings['duration']
-        // (the configured default, e.g. 31556926). The write succeeds.
+        // Duration 0 is falsy, so XoopsCache::write() treats it as "not provided"
+        // and substitutes the configured settings['duration'] default. The write succeeds.
         $this->assertTrue($result, 'Zero duration falls back to settings default and succeeds');
     }
 
