@@ -32,9 +32,12 @@ class XoopsCacheTest extends TestCase
             \RecursiveIteratorIterator::CHILD_FIRST
         );
         foreach ($files as $file) {
-            $file->isDir() ? rmdir($file->getPathname()) : unlink($file->getPathname());
+            $ok = $file->isDir()
+                ? rmdir($file->getPathname())
+                : unlink($file->getPathname());
+            assert($ok, 'Failed to remove cache artifact: ' . basename($file->getPathname()));
         }
-        rmdir(self::$cachePath);
+        assert(rmdir(self::$cachePath), 'Failed to remove cache test directory: ' . basename(self::$cachePath));
     }
 
     protected function setUp(): void
@@ -689,11 +692,12 @@ class XoopsCacheTest extends TestCase
             );
         } finally {
             // Recursively remove test directory and any cache files created by the engine
-            $files = glob($secondPath . '/*');
-            if ($files !== false) {
-                foreach ($files as $file) {
-                    unlink($file);
-                }
+            $entries = new \RecursiveIteratorIterator(
+                new \RecursiveDirectoryIterator($secondPath, \FilesystemIterator::SKIP_DOTS),
+                \RecursiveIteratorIterator::CHILD_FIRST
+            );
+            foreach ($entries as $entry) {
+                $entry->isDir() ? rmdir($entry->getPathname()) : unlink($entry->getPathname());
             }
             rmdir($secondPath);
             $this->assertDirectoryDoesNotExist($secondPath, 'Temp directory should be cleaned up');
