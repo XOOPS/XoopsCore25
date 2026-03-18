@@ -35,9 +35,9 @@ class XoopsCacheTest extends TestCase
             $ok = $file->isDir()
                 ? rmdir($file->getPathname())
                 : unlink($file->getPathname());
-            assert($ok, 'Failed to remove cache artifact: ' . basename($file->getPathname()));
+            self::assertTrue($ok, 'Failed to remove cache artifact: ' . basename($file->getPathname()));
         }
-        assert(rmdir(self::$cachePath), 'Failed to remove cache test directory: ' . basename(self::$cachePath));
+        self::assertTrue(rmdir(self::$cachePath), 'Failed to remove cache test directory: ' . basename(self::$cachePath));
     }
 
     protected function setUp(): void
@@ -697,9 +697,12 @@ class XoopsCacheTest extends TestCase
                 \RecursiveIteratorIterator::CHILD_FIRST
             );
             foreach ($entries as $entry) {
-                $entry->isDir() ? rmdir($entry->getPathname()) : unlink($entry->getPathname());
+                $removed = $entry->isDir()
+                    ? rmdir($entry->getPathname())
+                    : unlink($entry->getPathname());
+                $this->assertTrue($removed, 'Failed to remove temp artifact: ' . basename($entry->getPathname()));
             }
-            rmdir($secondPath);
+            $this->assertTrue(rmdir($secondPath), 'Failed to remove second temp cache directory');
             $this->assertDirectoryDoesNotExist($secondPath, 'Temp directory should be cleaned up');
         }
     }
