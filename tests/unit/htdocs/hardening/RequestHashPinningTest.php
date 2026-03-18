@@ -26,7 +26,7 @@ class RequestHashPinningTest extends TestCase
      * These are tracked via markTestIncomplete() so CI stays aware.
      */
     private const KNOWN_NONCOMPLIANT = [
-        // TODO: 'op' uses dual-source default hash — needs explicit GET pin
+        // 'op' uses dual-source default hash — needs explicit GET pin
         'modules/profile/admin/visibility.php',
     ];
 
