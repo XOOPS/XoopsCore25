@@ -102,15 +102,21 @@ class XoopsPreloadTest extends TestCase
      * @var array
      */
     private $originalEvents;
+    private $originalPreloads;
 
     protected function setUp(): void
     {
-        // Save original events
         $instance = XoopsPreload::getInstance();
         $ref  = new ReflectionClass($instance);
-        $prop = $ref->getProperty('_events');
-        $prop->setAccessible(true);
-        $this->originalEvents = $prop->getValue($instance);
+
+        // Save original events and preloads
+        $eventsProp = $ref->getProperty('_events');
+        $eventsProp->setAccessible(true);
+        $this->originalEvents = $eventsProp->getValue($instance);
+
+        $preloadsProp = $ref->getProperty('_preloads');
+        $preloadsProp->setAccessible(true);
+        $this->originalPreloads = $preloadsProp->getValue($instance);
 
         // Reset test preload state
         TestEventPreload::reset();
@@ -119,12 +125,17 @@ class XoopsPreloadTest extends TestCase
 
     protected function tearDown(): void
     {
-        // Restore original events to avoid polluting other tests
+        // Restore original events and preloads to avoid polluting other tests
         $instance = XoopsPreload::getInstance();
         $ref  = new ReflectionClass($instance);
-        $prop = $ref->getProperty('_events');
-        $prop->setAccessible(true);
-        $prop->setValue($instance, $this->originalEvents);
+
+        $eventsProp = $ref->getProperty('_events');
+        $eventsProp->setAccessible(true);
+        $eventsProp->setValue($instance, $this->originalEvents);
+
+        $preloadsProp = $ref->getProperty('_preloads');
+        $preloadsProp->setAccessible(true);
+        $preloadsProp->setValue($instance, $this->originalPreloads);
     }
 
     // ---------------------------------------------------------------
@@ -388,6 +399,17 @@ class XoopsPreloadTest extends TestCase
     public function testPreloadsArrayEntriesHaveModuleAndFileKeys(): void
     {
         $instance = XoopsPreload::getInstance();
+
+        // If no preloads were discovered at boot, inject one via reflection
+        // so we test the real _preloads array contract, not a local fixture
+        if (empty($instance->_preloads)) {
+            $ref  = new ReflectionClass($instance);
+            $prop = $ref->getProperty('_preloads');
+            $prop->setAccessible(true);
+            $prop->setValue($instance, [
+                ['module' => 'system', 'file' => 'test_preload'],
+            ]);
+        }
 
         foreach ($instance->_preloads as $i => $preload) {
             $this->assertArrayHasKey('module', $preload, "Preload [{$i}] must have 'module' key");

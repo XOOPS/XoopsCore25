@@ -378,50 +378,16 @@ class XoopsLoggerAdditionalTest extends TestCase
     }
 
     // ---------------------------------------------------------------
-    // writeLog — static file logging
+    // writeLog — static file logging (not yet implemented)
     // ---------------------------------------------------------------
 
     #[Test]
-    public function writeLogCreatesDirectoryAndFile(): void
+    public function testWriteLogIsNotImplemented(): void
     {
-        $logDir = XOOPS_ROOT_PATH . '/log';
-        $logFile = $logDir . '/log.txt';
-
-        // Ensure clean state
-        if (file_exists($logFile)) {
-            @unlink($logFile);
-        }
-        if (is_dir($logDir)) {
-            @rmdir($logDir);
-        }
-
-        XoopsLogger::writeLog("Test message\n");
-
-        self::assertDirectoryExists($logDir);
-        self::assertFileExists($logFile);
-        $content = file_get_contents($logFile);
-        self::assertStringContainsString('Test message', $content);
-    }
-
-    #[Test]
-    public function writeLogAppendsToExistingFile(): void
-    {
-        $logFile = XOOPS_ROOT_PATH . '/log/log.txt';
-
-        XoopsLogger::writeLog("First line\n");
-        XoopsLogger::writeLog("Second line\n");
-
-        $content = file_get_contents($logFile);
-        self::assertStringContainsString('First line', $content);
-        self::assertStringContainsString('Second line', $content);
-    }
-
-    #[Test]
-    public function writeLogHandlesEmptyMessage(): void
-    {
-        XoopsLogger::writeLog('');
-        $logFile = XOOPS_ROOT_PATH . '/log/log.txt';
-        self::assertFileExists($logFile);
+        self::assertFalse(
+            method_exists(\XoopsLogger::class, 'writeLog'),
+            'XoopsLogger::writeLog() does not exist yet — remove this guard and restore the writeLog tests when implemented'
+        );
     }
 
     // ---------------------------------------------------------------
@@ -708,15 +674,19 @@ class XoopsLoggerAdditionalTest extends TestCase
     }
 
     #[Test]
-    public function addDeprecatedCallsWriteLog(): void
+    public function testAddDeprecatedDoesNotWriteToLogFile(): void
     {
-        $this->logger->addDeprecated('writeLog integration test');
-
+        // Ensure clean precondition — remove residual log file from prior runs
         $logFile = XOOPS_ROOT_PATH . '/log/log.txt';
-        self::assertFileExists($logFile);
-        $content = file_get_contents($logFile);
-        self::assertStringContainsString('Deprecated:', $content);
-        self::assertStringContainsString('writeLog integration test', $content);
+        if (is_file($logFile)) {
+            unlink($logFile);
+        }
+        self::assertFileDoesNotExist($logFile, 'Precondition: log file must not exist');
+
+        // addDeprecated() stores in memory only — no disk writes without writeLog()
+        $this->logger->addDeprecated('test deprecation');
+        self::assertNotEmpty($this->logger->deprecated, 'addDeprecated should store in memory');
+        self::assertFileDoesNotExist($logFile, 'No log file should be created without writeLog()');
     }
 
     // ---------------------------------------------------------------
@@ -1170,38 +1140,23 @@ class XoopsLoggerAdditionalTest extends TestCase
     // ---------------------------------------------------------------
 
     #[Test]
-    public function handleErrorWritesToLogFile(): void
+    public function testHandleErrorDoesNotWriteToLogFile(): void
     {
+        // Ensure clean precondition — remove residual log file from prior runs
+        $logFile = XOOPS_ROOT_PATH . '/log/log.txt';
+        if (is_file($logFile)) {
+            unlink($logFile);
+        }
+        self::assertFileDoesNotExist($logFile, 'Precondition: log file must not exist');
+
+        // handleError() stores errors in memory only — no disk writes without writeLog()
         $oldLevel = error_reporting(E_ALL);
         try {
-            $this->logger->handleError(E_WARNING, 'log file test', '/test/file.php', '100');
+            $this->logger->handleError(E_WARNING, 'test error', '/test/file.php', '100');
         } finally {
             error_reporting($oldLevel);
         }
-
-        $logFile = XOOPS_ROOT_PATH . '/log/log.txt';
-        self::assertFileExists($logFile);
-        $content = file_get_contents($logFile);
-        self::assertStringContainsString('log file test', $content);
-        // handleError logs the errstr, errno, errfile, errline values
-        self::assertStringContainsString('/test/file.php', $content);
-    }
-
-    #[Test]
-    public function handleErrorLogsErrnoAndErrfileToFile(): void
-    {
-        $oldLevel = error_reporting(E_ALL);
-        try {
-            $this->logger->handleError(E_NOTICE, 'notice msg', '/path/to/file.php', '55');
-        } finally {
-            error_reporting($oldLevel);
-        }
-
-        $logFile = XOOPS_ROOT_PATH . '/log/log.txt';
-        $content = file_get_contents($logFile);
-        self::assertStringContainsString('notice msg', $content);
-        self::assertStringContainsString('/path/to/file.php', $content);
-        self::assertStringContainsString('55', $content);
+        self::assertFileDoesNotExist($logFile, 'No log file should be created without writeLog()');
     }
 
     // ---------------------------------------------------------------

@@ -9,10 +9,10 @@ use ReflectionClass;
 use ReflectionMethod;
 use XoopsMySQLDatabase;
 
-require_once XOOPS_ROOT_PATH . '/kernel/session80.php';
+require_once XOOPS_ROOT_PATH . '/kernel/session.php';
 
 /**
- * Unit tests for XoopsSessionHandler (session80.php).
+ * Unit tests for XoopsSessionHandler (session.php).
  *
  * Uses reflection to bypass the constructor (which depends on globals
  * and session_set_cookie_params) and injects a mock database.
@@ -799,7 +799,7 @@ class XoopsSessionHandlerTest extends KernelTestCase
     {
         $sqlCaptured = null;
         $this->db->expects($this->once())
-            ->method('queryF')
+            ->method('query')
             ->willReturnCallback(function ($sql) use (&$sqlCaptured) {
                 $sqlCaptured = $sql;
                 return 'mock_result';
@@ -822,7 +822,7 @@ class XoopsSessionHandlerTest extends KernelTestCase
     {
         $sqlCaptured = null;
         $this->db->expects($this->once())
-            ->method('queryF')
+            ->method('query')
             ->willReturnCallback(function ($sql) use (&$sqlCaptured) {
                 $sqlCaptured = $sql;
                 return 'mock_result';

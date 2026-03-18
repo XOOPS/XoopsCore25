@@ -48,10 +48,10 @@ class XoopsOnlineHandlerTest extends KernelTestCase
         $module = 1;
         $ip = '192.168.1.1';
 
-        // queryF for the COUNT(*) check -- user not found
+        // query for the COUNT(*) check -- user not found
         $countResult = 'count_result';
         $this->db->expects($this->once())
-                 ->method('queryF')
+                 ->method('query')
                  ->willReturn($countResult);
         $this->db->method('isResultSet')
                  ->willReturn(true);
@@ -75,10 +75,10 @@ class XoopsOnlineHandlerTest extends KernelTestCase
         $module = 2;
         $ip = '192.168.1.1';
 
-        // queryF returns count > 0 -- user already online
+        // query returns count > 0 -- user already online
         $countResult = 'count_result';
         $this->db->expects($this->once())
-                 ->method('queryF')
+                 ->method('query')
                  ->willReturn($countResult);
         $this->db->method('isResultSet')
                  ->willReturn(true);
@@ -102,9 +102,9 @@ class XoopsOnlineHandlerTest extends KernelTestCase
         $module = 1;
         $ip = '10.0.0.1';
 
-        // queryF for COUNT(*) with uid=0 AND ip -- not found
+        // query for COUNT(*) with uid=0 AND ip -- not found
         $this->db->expects($this->once())
-                 ->method('queryF')
+                 ->method('query')
                  ->willReturn('count_result');
         $this->db->method('isResultSet')
                  ->willReturn(true);
@@ -128,9 +128,9 @@ class XoopsOnlineHandlerTest extends KernelTestCase
         $module = 1;
         $ip = '10.0.0.1';
 
-        // queryF for COUNT(*) with uid=0 AND ip -- found
+        // query for COUNT(*) with uid=0 AND ip -- found
         $this->db->expects($this->once())
-                 ->method('queryF')
+                 ->method('query')
                  ->willReturn('count_result');
         $this->db->method('isResultSet')
                  ->willReturn(true);
@@ -154,9 +154,9 @@ class XoopsOnlineHandlerTest extends KernelTestCase
         $module = 1;
         $ip = '192.168.1.50';
 
-        // queryF for COUNT(*) -- user not found (new sign-in)
+        // query for COUNT(*) -- user not found (new sign-in)
         $this->db->expects($this->once())
-                 ->method('queryF')
+                 ->method('query')
                  ->willReturn('count_result');
         $this->db->method('isResultSet')
                  ->willReturn(true);
@@ -182,11 +182,11 @@ class XoopsOnlineHandlerTest extends KernelTestCase
         $this->assertStringContainsString('INSERT', $execCalls[1]);
     }
 
-    public function testWriteDbFailOnQueryFThrowsException(): void
+    public function testWriteDbFailOnQueryThrowsException(): void
     {
-        // queryF returns non-result-set -- throws RuntimeException
+        // query returns non-result-set -- throws RuntimeException
         $this->db->expects($this->once())
-                 ->method('queryF')
+                 ->method('query')
                  ->willReturn(false);
         $this->db->method('isResultSet')
                  ->willReturn(false);
@@ -200,9 +200,9 @@ class XoopsOnlineHandlerTest extends KernelTestCase
 
     public function testWriteDbFailOnExecReturnsFalse(): void
     {
-        // queryF succeeds, count=0, but INSERT exec fails
+        // query succeeds, count=0, but INSERT exec fails
         $this->db->expects($this->once())
-                 ->method('queryF')
+                 ->method('query')
                  ->willReturn('count_result');
         $this->db->method('isResultSet')
                  ->willReturn(true);
