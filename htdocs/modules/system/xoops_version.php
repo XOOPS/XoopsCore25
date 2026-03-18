@@ -19,7 +19,7 @@
 xoops_loadLanguage('modinfo', 'system');
 
 $modversion['name']        = _MI_SYSTEM_NAME;
-$modversion['version']     = '2.1.8-Stable';
+$modversion['version']     = '2.1.9-Stable';
 $modversion['description'] = _MI_SYSTEM_DESC;
 $modversion['author']      = '';
 $modversion['credits']     = 'The XOOPS Project; MusS, Kraven30, Mage';
@@ -89,6 +89,7 @@ $modversion['templates'][] = ['file' => 'system_templates.tpl', 'description' =>
 $modversion['templates'][] = ['file' => 'system_index.tpl', 'description' => '', 'type' => 'admin'];
 $modversion['templates'][] = ['file' => 'system_maintenance.tpl', 'description' => '', 'type' => 'admin'];
 $modversion['templates'][] = ['file' => 'system_help.tpl', 'description' => '', 'type' => 'admin'];
+$modversion['templates'][] = ['file' => 'system_menus.tpl', 'description' => '', 'type' => 'admin'];
 
 // Blocks
 $modversion['blocks'][] = [
@@ -292,6 +293,13 @@ $modversion['config'][$i]['default']     = '1';
 ++$i;
 $modversion['config'][$i]['name']        = 'active_maintenance';
 $modversion['config'][$i]['title']       = '_MI_SYSTEM_PREFERENCE_ACTIVE_MAINTENANCE';
+$modversion['config'][$i]['description'] = '';
+$modversion['config'][$i]['formtype']    = 'yesno';
+$modversion['config'][$i]['valuetype']   = 'int';
+$modversion['config'][$i]['default']     = '1';
+++$i;
+$modversion['config'][$i]['name']        = 'active_menus';
+$modversion['config'][$i]['title']       = '_MI_SYSTEM_PREFERENCE_ACTIVE_MENUS';
 $modversion['config'][$i]['description'] = '';
 $modversion['config'][$i]['formtype']    = 'yesno';
 $modversion['config'][$i]['valuetype']   = 'int';

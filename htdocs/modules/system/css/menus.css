@@ -1,0 +1,357 @@
+/* Menus admin - tree structure */
+
+/* Reset list styles for tree */
+ol.xo-menus-tree,
+ol.xo-menus-tree ol.xo-menus-children {
+    margin: 0;
+    padding: 0;
+    list-style: none !important;
+}
+
+ol.xo-menus-tree {
+    margin: 0.5em 0 2em 0;
+}
+
+ol.xo-menus-tree li {
+    list-style: none !important;
+    margin: 0;
+    padding: 0;
+}
+
+/* Indentation for child items */
+ol.xo-menus-tree ol.xo-menus-children {
+    margin-left: 25px;
+}
+
+/* Tree nodes (both categories and items) */
+ol.xo-menus-tree .xo-menus-node {
+    border: 1px solid #d4d4d4;
+    border-color: #d4d4d4 #d4d4d4 #bcbcbc;
+    border-radius: 3px;
+    padding: 6px 8px;
+    margin: 4px 0;
+    line-height: 18px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+/* Category nodes */
+ol.xo-menus-tree .xo-menus-cat-node {
+    background: linear-gradient(to bottom, #ffffff 0%, #f6f6f6 47%, #f0ece9 100%);
+    font-weight: bold;
+    cursor: move;
+}
+
+/* Item nodes */
+ol.xo-menus-tree .xo-menus-item-node {
+    background: linear-gradient(to bottom, #ffffff 0%, #f6f6f6 47%, #ededed 100%);
+    font-weight: normal;
+}
+
+/* Expand/collapse toggle */
+ol.xo-menus-tree .xo-menus-disclose {
+    cursor: pointer;
+    display: inline-block;
+    width: 16px;
+    text-align: center;
+    font-weight: bold;
+    font-size: 14px;
+    color: #555;
+    flex-shrink: 0;
+    line-height: 1;
+}
+
+ol.xo-menus-tree .xo-menus-disclose:hover {
+    color: #000;
+}
+
+ol.xo-menus-tree .xo-menus-no-toggle {
+    cursor: default;
+    color: #bbb;
+}
+
+/* +/- indicators */
+ol.xo-menus-tree li.xo-menus-collapsed > div > .xo-menus-disclose > span:before {
+    content: '+';
+}
+
+ol.xo-menus-tree li.xo-menus-expanded > div > .xo-menus-disclose > span:before {
+    content: '\2212'; /* minus sign */
+}
+
+/* Hide children when collapsed */
+ol.xo-menus-tree li.xo-menus-collapsed > ol.xo-menus-children {
+    display: none;
+}
+
+ol.xo-menus-tree li.xo-menus-expanded > ol.xo-menus-children {
+    display: block;
+}
+
+/* Title */
+ol.xo-menus-tree .xo-menus-title {
+    flex: 1;
+    min-width: 0;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+/* URL display */
+ol.xo-menus-tree .xo-menus-url {
+    color: #999;
+    font-weight: normal;
+    font-size: 11px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    width: 200px;
+    min-width: 200px;
+    text-align: right;
+}
+
+ol.xo-menus-tree .xo-menus-url a {
+    color: #999;
+    text-decoration: none;
+}
+
+ol.xo-menus-tree .xo-menus-url a:hover {
+    color: #35acc5;
+}
+
+/* Sub-item indent marker */
+ol.xo-menus-tree .xo-menus-indent {
+    color: #999;
+    margin-right: 2px;
+}
+
+/* Item count badge */
+ol.xo-menus-tree .xo-menus-badge {
+    display: inline-block;
+    background: #6c757d;
+    color: #fff;
+    font-size: 10px;
+    font-weight: bold;
+    line-height: 1;
+    padding: 3px 6px;
+    border-radius: 10px;
+    min-width: 18px;
+    text-align: center;
+    flex-shrink: 0;
+}
+
+/* Status toggle */
+ol.xo-menus-tree .xo-menus-status {
+    flex-shrink: 0;
+    width: 20px;
+    text-align: center;
+}
+
+ol.xo-menus-tree .xo-menus-active,
+ol.xo-menus-tree .xo-menus-inactive {
+    cursor: pointer;
+}
+
+ol.xo-menus-tree .xo-menus-status img,
+ol.xo-menus-tree .xo-menus-actions img,
+ol.xo-menus-tree .item-active-toggle img,
+ol.xo-menus-tree .category-active-toggle img {
+    width: 16px;
+    height: 16px;
+    vertical-align: middle;
+    border: none;
+}
+
+/* Action icons */
+ol.xo-menus-tree .xo-menus-actions {
+    flex-shrink: 0;
+    white-space: nowrap;
+    width: 80px;
+    text-align: right;
+}
+
+ol.xo-menus-tree .xo-menus-actions a {
+    padding: 0 2px;
+}
+
+ol.xo-menus-tree .xo-menus-actions img {
+    width: 16px;
+    height: 16px;
+    border: none;
+    vertical-align: middle;
+}
+
+/* ===== Nested sortable items (viewcat page) ===== */
+ol.xo-menus-sortable,
+ol.xo-menus-sortable ol {
+    margin: 0 0 0 25px;
+    padding: 0;
+    list-style-type: none !important;
+}
+
+ol.xo-menus-sortable {
+    margin: 0.5em 0 2em 0;
+}
+
+ol.xo-menus-sortable li {
+    margin: 5px 0 0 0;
+    padding: 0;
+    list-style: none !important;
+}
+
+ol.xo-menus-sortable li > div.xo-menus-sortable-row {
+    border: 1px solid #d4d4d4;
+    border-color: #d4d4d4 #d4d4d4 #bcbcbc;
+    border-radius: 3px;
+    padding: 6px 8px;
+    line-height: 18px;
+    cursor: move;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    background: linear-gradient(to bottom, #ffffff 0%, #f6f6f6 47%, #ededed 100%);
+}
+
+/* Branch nodes (have children) get a different tint */
+ol.xo-menus-sortable li.mjs-nestedSortable-branch > div.xo-menus-sortable-row {
+    background: linear-gradient(to bottom, #ffffff 0%, #f6f6f6 47%, #f0ece9 100%);
+}
+
+/* Leaf nodes */
+ol.xo-menus-sortable li.mjs-nestedSortable-leaf > div.xo-menus-sortable-row {
+    background: linear-gradient(to bottom, #ffffff 0%, #f6f6f6 47%, #bcccbc 100%);
+}
+
+/* Drag handle for sortable items */
+ol.xo-menus-sortable .xo-menus-drag-handle {
+    cursor: move;
+    color: #999;
+    font-size: 14px;
+    flex-shrink: 0;
+    width: 16px;
+    text-align: center;
+    user-select: none;
+}
+
+ol.xo-menus-sortable .xo-menus-drag-handle:hover {
+    color: #333;
+}
+
+/* Expand/collapse toggle for sortable items */
+ol.xo-menus-sortable .xo-menus-disclose {
+    cursor: pointer;
+    width: 16px;
+    text-align: center;
+    font-weight: bold;
+    font-size: 14px;
+    color: #555;
+    flex-shrink: 0;
+    display: none;
+}
+
+ol.xo-menus-sortable li.mjs-nestedSortable-branch > div > .xo-menus-disclose {
+    display: inline-block;
+}
+
+ol.xo-menus-sortable li.mjs-nestedSortable-collapsed > ol {
+    display: none;
+}
+
+ol.xo-menus-sortable li.mjs-nestedSortable-collapsed > div > .xo-menus-disclose > span:before {
+    content: '+';
+}
+
+ol.xo-menus-sortable li.mjs-nestedSortable-expanded > div > .xo-menus-disclose > span:before {
+    content: '\2212';
+}
+
+/* Item title */
+ol.xo-menus-sortable .xo-menus-sortable-title {
+    flex: 1;
+    min-width: 0;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+/* Item URL */
+ol.xo-menus-sortable .xo-menus-sortable-url {
+    color: #9d9d9d;
+    font-size: 11px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    width: 200px;
+    min-width: 200px;
+    text-align: right;
+}
+
+/* Action icons */
+ol.xo-menus-sortable .xo-menus-sortable-actions {
+    flex-shrink: 0;
+    white-space: nowrap;
+    width: 80px;
+    text-align: right;
+}
+
+ol.xo-menus-sortable .xo-menus-sortable-actions a {
+    padding: 0 2px;
+}
+
+ol.xo-menus-sortable .xo-menus-sortable-actions img,
+ol.xo-menus-sortable .item-active-toggle img {
+    width: 16px;
+    height: 16px;
+    border: none;
+    vertical-align: middle;
+}
+
+/* Drag placeholder */
+ol.xo-menus-sortable .ui-state-highlight {
+    height: 2.2em;
+    line-height: 1.7em;
+    border: 2px dashed #ccc;
+    margin: 5px 0;
+    list-style: none !important;
+}
+
+/* Hovering over collapsed branch */
+ol.xo-menus-sortable li.mjs-nestedSortable-collapsed.mjs-nestedSortable-hovering > div {
+    border-color: #999;
+    background: #fafafa;
+}
+
+li.ui-state-default {
+    list-style: none outside none !important;
+}
+
+li.ui-state-default > div {
+    overflow: hidden;
+}
+
+/* Sortable drag placeholder */
+#menus-row > li.ui-sortable-placeholder {
+    border: 2px dashed #ccc;
+    height: 32px;
+    margin: 4px 0;
+    visibility: visible !important;
+    list-style: none !important;
+}
+
+#menus-row > li.ui-sortable-placeholder * {
+    visibility: hidden;
+}
+
+/* Dim inactive rows */
+ol.xo-menus-tree .xo-menus-node.inactive,
+ol.xo-menus-sortable .xo-menus-sortable-row.inactive {
+    opacity: 0.5;
+}
+
+/* Disabled toggle (parent inactive) */
+ol.xo-menus-tree .item-active-toggle.disabled,
+ol.xo-menus-tree .category-active-toggle.disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
