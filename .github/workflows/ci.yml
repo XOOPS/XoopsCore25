@@ -55,31 +55,10 @@ jobs:
           restore-keys: |
             composer-${{ runner.os }}-${{ matrix.php }}-
 
-      - name: Install XMF library dependencies
-        working-directory: htdocs/class/libraries
+      - name: Install XOOPS vendor dependencies
+        working-directory: htdocs/xoops_lib
         run: |
-          cat > composer.json << EOL
-          {
-            "name": "xoopscore25/libraries",
-            "license": "GPL-2.0-or-later",
-            "type": "project",
-            "description": "Libraries for XOOPS 2.5.12",
-            "config": {
-              "platform": {
-                "php": "${{ matrix.php }}"
-              },
-              "allow-plugins": {
-                "composer/installers": true
-              }
-            },
-            "require": {
-              "php": "^${{ matrix.php }}",
-              "xoops/base-requires25": "^1.1.10@beta"
-            },
-            "minimum-stability": "beta",
-            "prefer-stable": true
-          }
-          EOL
+          cp composer.dist.json composer.json
           if [ "${{ matrix.deps }}" = "lowest" ]; then
             composer update --prefer-lowest --prefer-stable --no-interaction --prefer-dist --no-progress
           else
@@ -92,7 +71,7 @@ jobs:
           echo "$(composer global config bin-dir --absolute)" >> $GITHUB_PATH
 
       - name: Check platform requirements
-        working-directory: htdocs/class/libraries
+        working-directory: htdocs/xoops_lib
         run: composer check-platform-reqs
 
       - name: Ensure build directory exists
