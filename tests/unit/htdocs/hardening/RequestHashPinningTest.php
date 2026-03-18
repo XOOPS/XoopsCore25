@@ -27,7 +27,7 @@ class RequestHashPinningTest extends TestCase
      */
     private const KNOWN_NONCOMPLIANT = [
         // TODO: 'op' uses dual-source default hash — needs explicit GET pin
-        'profile/admin/visibility.php',
+        'modules/profile/admin/visibility.php',
     ];
 
     /**
