@@ -31,9 +31,13 @@ define('_AM_SYSTEM_MENUS_ADDCAT', 'Add Category');
 define('_AM_SYSTEM_MENUS_EDITCAT', 'Edit Category');
 define('_AM_SYSTEM_MENUS_DELCAT', 'Delete Category');
 define('_AM_SYSTEM_MENUS_CATTITLE', 'Category Title');
+define('_AM_SYSTEM_MENUS_CATTITLE_DESC', 'A language constant name (e.g. MENUS_HOME) can be used here so the label is translatable.');
 define('_AM_SYSTEM_MENUS_CATPREFIX', 'Prefix (HTML)');
+define('_AM_SYSTEM_MENUS_CATPREFIX_DESC', 'Optional markup shown before the category title, such as a Font Awesome icon.');
 define('_AM_SYSTEM_MENUS_CATSUFFIX', 'Suffix (HTML)');
+define('_AM_SYSTEM_MENUS_CATSUFFIX_DESC', 'Optional markup shown after the category title.');
 define('_AM_SYSTEM_MENUS_CATURL', 'URL');
+define('_AM_SYSTEM_MENUS_CATURL_DESC', 'Link for the category itself, such as "index.php" or an absolute URL.');
 define('_AM_SYSTEM_MENUS_CATTARGET', 'Link Target');
 define('_AM_SYSTEM_MENUS_CATPOSITION', 'Position');
 define('_AM_SYSTEM_MENUS_DELCAT_CONFIRM', 'Are you sure you want to delete the category "%s" and all its items?');
@@ -43,8 +47,11 @@ define('_AM_SYSTEM_MENUS_ADDITEM', 'Add Item');
 define('_AM_SYSTEM_MENUS_EDITITEM', 'Edit Item');
 define('_AM_SYSTEM_MENUS_DELITEM', 'Delete Item');
 define('_AM_SYSTEM_MENUS_ITEMTITLE', 'Item Title');
+define('_AM_SYSTEM_MENUS_ITEMTITLE_DESC', 'A language constant name can be used here so the label is translatable.');
 define('_AM_SYSTEM_MENUS_ITEMPREFIX', 'Prefix (HTML)');
+define('_AM_SYSTEM_MENUS_ITEMPREFIX_DESC', 'Optional markup shown before the item title, such as a Font Awesome icon.');
 define('_AM_SYSTEM_MENUS_ITEMSUFFIX', 'Suffix (HTML)');
+define('_AM_SYSTEM_MENUS_ITEMSUFFIX_DESC', 'Optional markup shown after the item title. Supports the <{xoInboxCount}> placeholder.');
 define('_AM_SYSTEM_MENUS_ITEMURL', 'URL');
 define('_AM_SYSTEM_MENUS_ITEMTARGET', 'Link Target');
 define('_AM_SYSTEM_MENUS_ITEMPOSITION', 'Position');
@@ -58,7 +65,9 @@ define('_AM_SYSTEM_MENUS_TARGET_BLANK', 'New window');
 
 // Permissions
 define('_AM_SYSTEM_MENUS_PERMISSION_VIEW_CATEGORY', 'Groups that can see this category');
+define('_AM_SYSTEM_MENUS_PERMISSION_VIEW_CATEGORY_DESC', 'Users must have category access before any of its items become visible.');
 define('_AM_SYSTEM_MENUS_PERMISSION_VIEW_ITEM', 'Groups that can see this item');
+define('_AM_SYSTEM_MENUS_PERMISSION_VIEW_ITEM_DESC', 'Item permissions are checked after the parent category permission.');
 
 // Errors
 define('_AM_SYSTEM_MENUS_ERROR_CATNOTFOUND', 'Category not found');
@@ -70,6 +79,8 @@ define('_AM_SYSTEM_MENUS_ERROR_ITEMPARENT', 'Invalid parent item selected');
 define('_AM_SYSTEM_MENUS_ERROR_ITEMCYCLE', 'Cannot set parent: it would create a circular reference');
 define('_AM_SYSTEM_MENUS_ERROR_ITEMDEPTH', 'Maximum nesting depth (3 levels) exceeded');
 define('_AM_SYSTEM_MENUS_ERROR_PARENTINACTIVE', 'Cannot activate: the parent item is inactive');
+define('_AM_SYSTEM_MENUS_ERROR_ITEMEDIT', 'Enable this item before editing it');
+define('_AM_SYSTEM_MENUS_ERROR_ITEMDISABLE', 'Enable this item before deleting it');
 
 // Menu content constants (used in seeded data)
 define('MENUS_HOME', 'Home');
