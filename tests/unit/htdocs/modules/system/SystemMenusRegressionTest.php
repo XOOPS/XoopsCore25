@@ -60,14 +60,19 @@ class SystemMenusRegressionTest extends TestCase
     }
 
     #[Test]
-    public function updateScriptScopesPermissionCleanupToSystemModule(): void
+    public function updateScriptUsesIdempotentPermissionSeeding(): void
     {
         $source = $this->readSourceFile('modules/system/include/update.php');
 
-        $this->assertStringContainsString(
-            "gperm_name` IN ('menus_category_view', 'menus_items_view')",
+        $this->assertStringNotContainsString(
+            "DELETE FROM",
             $source,
-            'Permission cleanup must be scoped by name to menu permissions only'
+            'Permission seeding must be idempotent — no blanket DELETE of user permissions'
+        );
+        $this->assertStringContainsString(
+            'getCount($criteria)',
+            $source,
+            'Permission seeding must check for existing permissions before inserting'
         );
     }
 
