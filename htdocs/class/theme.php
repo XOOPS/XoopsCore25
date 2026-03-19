@@ -406,6 +406,11 @@ class xos_opal_Theme
             }
         }
 
+        // Load system menus if enabled
+        if (\Xmf\Module\Helper::getHelper('system') && \Xmf\Module\Helper::getHelper('system')->getConfig('active_menus')) {
+            $this->template->assign('xoMenuCategories', $this->loadMenus());
+        }
+
         return true;
     }
 
@@ -911,5 +916,246 @@ class xos_opal_Theme
         }
 
         return $path;
+    }
+
+    /**
+     * Load menu CSS and JS assets into the theme.
+     */
+    private function loadMenuAssets(): void
+    {
+        $cssFile = 'modules/system/css/multilevelmenu.css';
+        $jsFile  = 'modules/system/js/multilevelmenu.js';
+        if (file_exists(XOOPS_ROOT_PATH . '/' . $cssFile)) {
+            $this->addStylesheet($cssFile);
+        }
+        if (file_exists(XOOPS_ROOT_PATH . '/' . $jsFile)) {
+            $this->addScript($jsFile);
+        }
+    }
+
+    /**
+     * Load all visible menu categories and items for the current user.
+     *
+     * @return array<int, array<string, mixed>>
+     */
+    private function loadMenus(): array
+    {
+        $this->loadMenuAssets();
+
+        $db = \XoopsDatabaseFactory::getDatabaseConnection();
+        $result = $db->query("SHOW TABLES LIKE '" . $db->prefix('menuscategory') . "'");
+        if (!$db->isResultSet($result) || !($result instanceof \mysqli_result) || $db->getRowsNum($result) === 0) {
+            return [];
+        }
+
+        $permHandler = xoops_getHandler('groupperm');
+        $groups = is_object($GLOBALS['xoopsUser'] ?? null)
+            ? $GLOBALS['xoopsUser']->getGroups()
+            : [XOOPS_GROUP_ANONYMOUS];
+        $moduleId = (int) \Xmf\Module\Helper::getHelper('system')->getModule()->getVar('mid');
+
+        $visibleCatIds = $permHandler->getItemIds('menus_category_view', $groups, $moduleId);
+        if (empty($visibleCatIds)) {
+            return [];
+        }
+
+        $visibleItemIds = $permHandler->getItemIds('menus_items_view', $groups, $moduleId);
+
+        $catHandler = xoops_getHandler('menuscategory');
+        $criteria = new \CriteriaCompo(new \Criteria('category_active', '1'));
+        $criteria->add(new \Criteria('category_id', $visibleCatIds, 'IN'));
+        $criteria->setSort('category_position');
+        $criteria->setOrder('ASC');
+        $categories = $catHandler->getObjects($criteria);
+
+        $itemHandler = xoops_getHandler('menusitems');
+        $itemCriteria = new \CriteriaCompo(new \Criteria('items_active', '1'));
+        if (!empty($visibleItemIds)) {
+            $itemCriteria->add(new \Criteria('items_id', $visibleItemIds, 'IN'));
+        } else {
+            return $this->buildCategoryOutput($categories, []);
+        }
+        $itemCriteria->setSort('items_position');
+        $itemCriteria->setOrder('ASC');
+        $allItems = $itemHandler->getObjects($itemCriteria);
+
+        $itemsByCat = [];
+        foreach ($allItems as $item) {
+            $cid = (int) $item->getVar('items_cid');
+            $itemsByCat[$cid][] = $item;
+        }
+
+        return $this->buildCategoryOutput($categories, $itemsByCat);
+    }
+
+    /**
+     * Build the output array for categories with their item trees.
+     *
+     * @param array $categories Array of XoopsMenusCategory objects
+     * @param array $itemsByCat Items grouped by category ID
+     *
+     * @return array<int, array<string, mixed>>
+     */
+    private function buildCategoryOutput(array $categories, array $itemsByCat): array
+    {
+        $output = [];
+        foreach ($categories as $cat) {
+            $cid = (int) $cat->getVar('category_id');
+            $catItems = $itemsByCat[$cid] ?? [];
+            $itemTree = $this->buildMenuItemTree($catItems);
+
+            $output[] = [
+                'category_id'     => $cid,
+                'category_title'  => $cat->getResolvedTitle(),
+                'category_prefix' => $this->renderMenuAffix($cat->getVar('category_prefix', 'n')),
+                'category_suffix' => $this->renderMenuAffix($cat->getVar('category_suffix', 'n')),
+                'category_url'    => $this->normalizeMenuUrl($cat->getVar('category_url', 'n')),
+                'category_target' => (int) $cat->getVar('category_target'),
+                'items'           => $itemTree,
+            ];
+        }
+        return $output;
+    }
+
+    /**
+     * Build a nested tree from a flat list of menu items.
+     *
+     * @param array $items Flat list of XoopsMenusItems sorted by position
+     *
+     * @return array<int, array<string, mixed>>
+     */
+    private function buildMenuItemTree(array $items): array
+    {
+        $indexed = [];
+        foreach ($items as $item) {
+            $id = (int) $item->getVar('items_id');
+            $indexed[$id] = [
+                'id'       => $id,
+                'title'    => $item->getResolvedTitle(),
+                'prefix'   => $this->renderMenuAffix($item->getVar('items_prefix', 'n')),
+                'suffix'   => $this->renderMenuAffix($item->getVar('items_suffix', 'n')),
+                'url'      => $this->normalizeMenuUrl($item->getVar('items_url', 'n')),
+                'target'   => (int) $item->getVar('items_target'),
+                'active'   => (int) $item->getVar('items_active'),
+                'pid'      => (int) $item->getVar('items_pid'),
+                'children' => [],
+            ];
+        }
+
+        $tree = [];
+        foreach ($indexed as $id => &$node) {
+            $pid = $node['pid'];
+            unset($node['pid']);
+            if ($pid === 0 || !isset($indexed[$pid])) {
+                $tree[] = &$node;
+            } else {
+                $indexed[$pid]['children'][] = &$node;
+            }
+        }
+        unset($node);
+
+        return $tree;
+    }
+
+    /**
+     * Normalize a menu URL for safe rendering.
+     *
+     * @param string $url The raw URL from the database
+     *
+     * @return string Safe URL
+     */
+    private function normalizeMenuUrl(string $url): string
+    {
+        $url = trim($url);
+        if ($url === '') {
+            return '#';
+        }
+
+        if (preg_match('/^\s*javascript\s*:/i', $url)) {
+            return '#';
+        }
+
+        if (preg_match('#^(https?://|mailto:|tel:|ftp://|/|#)#i', $url)) {
+            return $url;
+        }
+
+        return XOOPS_URL . '/' . ltrim($url, '/');
+    }
+
+    /**
+     * Sanitize and render a prefix/suffix HTML fragment.
+     *
+     * @param string $value Raw affix value from database
+     *
+     * @return string Safe HTML fragment
+     */
+    private function renderMenuAffix(string $value): string
+    {
+        if ($value === '') {
+            return '';
+        }
+
+        if (str_contains($value, '<{xoInboxCount}>')) {
+            $count = $this->getInboxUnreadCount();
+            $badge = $count !== null && $count > 0
+                ? '<span class="badge badge-danger badge-pill">' . (int)$count . '</span>'
+                : '';
+            $value = str_replace('<{xoInboxCount}>', $badge, $value);
+        }
+
+        $value = strip_tags($value, '<span><i><b><em><strong>');
+        $value = preg_replace('/\s+on\w+\s*=\s*["\'][^"\']*["\']/i', '', $value);
+        $value = preg_replace('/\s+on\w+\s*=\s*\S+/i', '', $value);
+        $value = preg_replace('/\s+style\s*=\s*["\'][^"\']*["\']/i', '', $value);
+        $value = preg_replace('/\s+style\s*=\s*\S+/i', '', $value);
+        $value = preg_replace('/javascript\s*:/i', '', $value);
+
+        return $value;
+    }
+
+    /**
+     * Get the unread private message count for the current user.
+     * Cached in session for 60 seconds.
+     *
+     * @return int|null Count, or null if not logged in
+     */
+    private function getInboxUnreadCount(): ?int
+    {
+        if (!is_object($GLOBALS['xoopsUser'] ?? null)) {
+            return null;
+        }
+
+        $uid = (int) $GLOBALS['xoopsUser']->getVar('uid');
+        $cacheKey = 'xo_inbox_count_' . $uid;
+        $cacheTime = 'xo_inbox_count_time_' . $uid;
+
+        $currentScript = basename($_SERVER['SCRIPT_NAME'] ?? '');
+        if ($currentScript === 'viewpmsg.php' || $currentScript === 'readpmsg.php') {
+            unset($_SESSION[$cacheKey], $_SESSION[$cacheTime]);
+        }
+
+        if (isset($_SESSION[$cacheKey], $_SESSION[$cacheTime])
+            && (time() - (int)$_SESSION[$cacheTime]) < 60
+        ) {
+            return (int) $_SESSION[$cacheKey];
+        }
+
+        $db = \XoopsDatabaseFactory::getDatabaseConnection();
+        $table = $db->prefix('priv_msgs');
+        $result = $db->query(
+            "SELECT COUNT(*) AS cnt FROM `{$table}` WHERE `to_userid` = " . $db->quote((string) $uid) . " AND `read_msg` = 0"
+        );
+        $count = 0;
+        if ($db->isResultSet($result) && ($result instanceof \mysqli_result) && ($row = $db->fetchArray($result))) {
+            $count = (int) $row['cnt'];
+        }
+
+        $preload = \XoopsPreload::getInstance();
+        $preload->triggerEvent('core.theme.inboxcount', [&$count, $uid]);
+
+        $_SESSION[$cacheKey] = $count;
+        $_SESSION[$cacheTime] = time();
+
+        return $count;
     }
 }
