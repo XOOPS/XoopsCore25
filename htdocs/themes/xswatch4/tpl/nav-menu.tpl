@@ -7,62 +7,55 @@
                 <span class="navbar-toggler-icon"></span>
             </button>
             <div class="collapse navbar-collapse" id="navbarResponsive">
-                <{* Recursive function for rendering nested dropdown items (BS4) *}>
-                <{function name=renderMenu}>
-                    <{assign var="level" value=$level|default:0}>
-                    <div class="dropdown-menu">
-                    <{foreach $items as $item}>
-                        <{if $item.children}>
-                            <div class="dropdown-submenu">
-                                <a class="dropdown-item dropdown-toggle"
-                                   href="<{if $item.url neq ''}><{$item.url|escape}><{else}>#<{/if}>"
-                                   target="<{$item.target}>"<{if $item.target == '_blank'}> rel="noopener noreferrer"<{/if}>>
-                                    <{$item.prefix}> <{$item.title|escape}> <{$item.suffix}>
-                                </a>
-                                <{call name=renderMenu items=$item.children level=$level+1}>
-                            </div>
-                        <{else}>
-                            <a class="dropdown-item"
-                               href="<{if $item.url neq ''}><{$item.url|escape}><{else}>#<{/if}>"
-                               target="<{$item.target}>"<{if $item.target == '_blank'}> rel="noopener noreferrer"<{/if}>>
-                                <{$item.prefix}> <{$item.title|escape}> <{$item.suffix}>
-                            </a>
-                        <{/if}>
-                    <{/foreach}>
-                    </div>
-                <{/function}>
-
                 <ul class="navbar-nav mr-auto">
-                    <{if isset($xoMenuCategories) && $xoMenuCategories}>
-                    <{foreach $xoMenuCategories as $cat}>
-                        <li class="nav-item<{if $cat.items}> dropdown<{/if}>">
-                            <a class="nav-link<{if $cat.items}> dropdown-toggle<{/if}>"
-                               href="<{$cat.category_url|escape|default:'#'}>"
-                               <{if $cat.items}>role="button" data-toggle="dropdown" aria-expanded="false"<{/if}>
-                               target="<{$cat.category_target}>"<{if $cat.category_target == '_blank'}> rel="noopener noreferrer"<{/if}>>
-                                <{$cat.category_prefix}> <{$cat.category_title|escape}> <{$cat.category_suffix}>
-                            </a>
-                            <{if $cat.items}>
-                                <{call name=renderMenu items=$cat.items level=0}>
-                            <{/if}>
-                        </li>
-                    <{/foreach}>
-                    <{else}>
-                    <{* Fallback: static nav when menu system is not active *}>
+
                     <li class="nav-item">
                         <a class="nav-link" href="<{$xoops_url}>"><{$smarty.const.THEME_HOME}></a>
                     </li>
-                    <{if $xoops_isadmin|default:false}>
-                    <li class="nav-item"><a class="nav-link" href="<{$xoops_url}>/admin.php"><{$smarty.const._ADMINISTRATION|default:'Administration'}></a></li>
-                    <{/if}>
-                    <{if $xoops_isuser|default:false}>
-                    <li class="nav-item"><a class="nav-link" href="<{$xoops_url}>/user.php"><{$smarty.const._PROFILE|default:'Account'}></a></li>
-                    <li class="nav-item"><a class="nav-link" href="<{$xoops_url}>/user.php?op=logout"><{$smarty.const._LOGOUT}></a></li>
-                    <{else}>
-                    <li class="nav-item"><a class="nav-link" href="<{$xoops_url}>/user.php"><{$smarty.const._LOGIN}></a></li>
-                    <li class="nav-item"><a class="nav-link" href="<{$xoops_url}>/register.php"><{$smarty.const._REGISTER}></a></li>
-                    <{/if}>
-                    <{/if}>
+
+                    <{xoInboxCount assign='unread_count'}>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" id="xswatch-account-menu"><{$smarty.const.THEME_ACCOUNT}> <span class="caret"></span></a>
+                        <div class="dropdown-menu" aria-labelledby="xswatch-account-menu">
+                            <{if !empty($xoops_isuser)}>
+                            <a class="dropdown-item" href="<{$xoops_url}>/user.php"><{$smarty.const.THEME_ACCOUNT_EDIT}></a>
+                            <a class="dropdown-item" href="<{$xoops_url}>/viewpmsg.php"><{$smarty.const.THEME_ACCOUNT_MESSAGES}> <span class="badge badge-primary badge-pill"><{xoInboxCount}></span></a>
+                            <a class="dropdown-item" href="<{$xoops_url}>/notifications.php"><{$smarty.const.THEME_ACCOUNT_NOTIFICATIONS}></a>
+                            <a class="dropdown-item" href="<{$xoops_url}>/user.php?op=logout"><{$smarty.const.THEME_ACCOUNT_LOGOUT}></a>
+                            <{if !empty($xoops_isadmin)}>
+                            <a class="dropdown-item" href="javascript:xswatchToolbarToggle();"><{$smarty.const.THEME_ACCOUNT_TOOLBAR}> <span id="xswatch-toolbar-ind"></span></a>
+                            <{/if}>
+                            <{else}>
+                            <a class="dropdown-item" href="<{$xoops_url}>/user.php"><{$smarty.const.THEME_ACCOUNT_LOGIN}></a>
+                            <a class="dropdown-item" href="<{$xoops_url}>/register.php"><{$smarty.const.THEME_ACCOUNT_REGISTER}></a>
+                            <{/if}>
+                        </div>
+                    </li>
+
+                    <!-- begin custom menus - customize these for your system -->
+                    <li class="nav-item">
+                        <a class="nav-link" href="javascript:;"><{$smarty.const.THEME_MODULE1}></a>
+                    </li>
+
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" id="xswatch-custom-menu"><{$smarty.const.THEME_MODULE2}> <span class="caret"></span></a>
+                        <div class="dropdown-menu" aria-labelledby="xswatch-custom-menu">
+                            <a class="dropdown-item" href="javascript:;">Topic 1</a>
+                            <a class="dropdown-item" href="javascript:;">Topic 2</a>
+                            <a class="dropdown-item" href="javascript:;">Topic 3</a>
+                            <a class="dropdown-item" href="javascript:;">Topic 4</a>
+                            <a class="dropdown-item" href="javascript:;">Topic 5</a>
+                        </div>
+                    </li>
+
+                    <li class="nav-item">
+                        <a class="nav-link" href="<{$xoops_url}>/modules/newbb"><{$smarty.const.THEME_MODULE3}></a>
+                    </li>
+
+                    <li class="nav-item">
+                        <a class="nav-link" href="<{$xoops_url}>/modules/contact"><{$smarty.const.THEME_MODULE4}></a>
+                    </li>
+                    <!-- end custom menus -->
                 </ul>
                 <{if !empty($xoops_search)}>
                 <ul class="navbar-nav ml-auto">

@@ -59,7 +59,6 @@ define('_MI_SYSTEM_PREFERENCE_ACTIVE_TPLSETS', '');
 define('_MI_SYSTEM_PREFERENCE_ACTIVE_USERRANK', 'Active User Ranks');
 define('_MI_SYSTEM_PREFERENCE_ACTIVE_USERS', 'Active Users');
 define('_MI_SYSTEM_PREFERENCE_ACTIVE_MAINTENANCE', 'Active Maintenance');
-define('_MI_SYSTEM_PREFERENCE_ACTIVE_MENUS', 'Active Menus');
 define('_MI_SYSTEM_PREFERENCE_BREAK_PAGER', 'Number of rows to display in the administration');
 define('_MI_SYSTEM_PREFERENCE_AVATARS_PAGER', 'Number of avatars to display per page');
 define('_MI_SYSTEM_PREFERENCE_BANNERS_PAGER', 'Number of banners to display per page');
