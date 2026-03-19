@@ -3,7 +3,6 @@
  * System Menu Tree Utilities
  *
  * @category  System
- * @package   XoopsCore25
  * @author    XOOPS Core Team
  * @copyright 2001-2026 XOOPS Project (https://xoops.org)
  * @license   GNU GPL 2+ (https://www.gnu.org/licenses/gpl-2.0.html)
