@@ -392,12 +392,16 @@ switch ($op) {
             $permHelper = new \Xmf\Module\Helper\Permission();
             foreach ($items as $item) {
                 $permHelper->deletePermissionForItem('menus_items_view', (int) $item->getVar('items_id'));
-                $itemHandler->delete($item);
+                if (!$itemHandler->delete($item)) {
+                    redirect_header(MENUS_ADMIN_URL, 3, 'Failed to delete item: ' . $item->getVar('items_id'));
+                }
             }
 
-            // Delete category permissions
+            // Delete category permissions and category
             $permHelper->deletePermissionForItem('menus_category_view', $catId);
-            menus_cat_handler()->delete($cat);
+            if (!menus_cat_handler()->delete($cat)) {
+                redirect_header(MENUS_ADMIN_URL, 3, 'Failed to delete category');
+            }
 
             redirect_header(MENUS_ADMIN_URL, 2, _AM_SYSTEM_MENUS_DELETED);
         } else {
@@ -633,13 +637,17 @@ switch ($op) {
                 $descItem = $itemHandler->get($descId);
                 if (is_object($descItem)) {
                     $permHelper->deletePermissionForItem('menus_items_view', $descId);
-                    $itemHandler->delete($descItem);
+                    if (!$itemHandler->delete($descItem)) {
+                        redirect_header(MENUS_ADMIN_URL . '#cat_' . $catId, 3, 'Failed to delete descendant item: ' . $descId);
+                    }
                 }
             }
 
             // Delete the item itself
             $permHelper->deletePermissionForItem('menus_items_view', $itemId);
-            $itemHandler->delete($item);
+            if (!$itemHandler->delete($item)) {
+                redirect_header(MENUS_ADMIN_URL . '#cat_' . $catId, 3, 'Failed to delete item');
+            }
 
             redirect_header(MENUS_ADMIN_URL . '#cat_' . $catId, 2, _AM_SYSTEM_MENUS_DELETED);
         } else {
@@ -689,37 +697,52 @@ switch ($op) {
             menus_send_json(false, ['message' => 'Invalid JSON']);
         }
 
+        // Validate node shape, collect IDs, reject duplicates
+        $seenIds = [];
+        $validateNodes = function (array $nodes) use (&$validateNodes, &$seenIds): bool {
+            foreach ($nodes as $node) {
+                if (!is_array($node) || !isset($node['id'])) {
+                    return false; // Malformed node
+                }
+                $id = (int) $node['id'];
+                if ($id <= 0) {
+                    return false;
+                }
+                if (isset($seenIds[$id])) {
+                    return false; // Duplicate
+                }
+                $seenIds[$id] = true;
+                if (isset($node['children'])) {
+                    if (!is_array($node['children'])) {
+                        return false; // children must be array
+                    }
+                    if (!$validateNodes($node['children'])) {
+                        return false;
+                    }
+                }
+            }
+            return true;
+        };
+        if (!$validateNodes($tree)) {
+            menus_send_json(false, ['message' => 'Invalid or duplicate item IDs in tree']);
+        }
+
+        // Verify posted IDs match the category's current item set exactly
+        $itemHandler = menus_item_handler();
+        $currentCriteria = new CriteriaCompo(new Criteria('items_cid', (string) $catId));
+        $currentCount = $itemHandler->getCount($currentCriteria);
+        if (count($seenIds) !== $currentCount) {
+            menus_send_json(false, ['message' => 'Tree does not match current item set']);
+        }
+
         // Validate depth
         $depth = SystemMenusTree::computeDepth($tree);
         if ($depth > MENUS_MAX_DEPTH) {
             menus_send_json(false, ['message' => _AM_SYSTEM_MENUS_ERROR_ITEMDEPTH]);
         }
 
-        // Collect all IDs from the tree and reject duplicates
-        $seenIds = [];
-        $collectIds = function (array $nodes) use (&$collectIds, &$seenIds): bool {
-            foreach ($nodes as $node) {
-                $id = (int) ($node['id'] ?? 0);
-                if ($id <= 0) {
-                    continue;
-                }
-                if (isset($seenIds[$id])) {
-                    return false; // Duplicate — reject entire payload
-                }
-                $seenIds[$id] = true;
-                if (!empty($node['children']) && !$collectIds($node['children'])) {
-                    return false;
-                }
-            }
-            return true;
-        };
-        if (!$collectIds($tree)) {
-            menus_send_json(false, ['message' => 'Duplicate item IDs in tree']);
-        }
-
         // Walk the tree and update positions
-        $itemHandler = menus_item_handler();
-        $position    = 0;
+        $position = 0;
 
         $failed = false;
         $walkTree = function (array $nodes, int $parentId) use (&$walkTree, $itemHandler, $catId, &$position, &$failed): void {
