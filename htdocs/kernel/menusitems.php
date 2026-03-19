@@ -36,7 +36,21 @@ class XoopsMenusItems extends XoopsObject
     }
 
     /**
-     * Load the menu language file if not already loaded.
+     * Return the auto-generated primary key from the most recent insert.
+     *
+     * @return int Newly assigned item id
+     */
+    public function getNewEnreg(): int
+    {
+        return (int) \XoopsDatabaseFactory::getDatabaseConnection()->getInsertId();
+    }
+
+    /**
+     * Load menu language files if not already loaded.
+     *
+     * Loads both the custom menus language file and the admin menus
+     * language file, falling back to English when a translation is
+     * not available.
      *
      * @return void
      */
@@ -46,9 +60,20 @@ class XoopsMenusItems extends XoopsObject
             return;
         }
         $lang = $GLOBALS['xoopsConfig']['language'] ?? 'english';
-        $path = XOOPS_ROOT_PATH . '/modules/system/language/' . $lang . '/admin/menus.php';
-        if (is_readable($path)) {
-            include_once $path;
+        $files = [
+            XOOPS_ROOT_PATH . '/modules/system/language/' . $lang . '/menus/menus.php',
+            XOOPS_ROOT_PATH . '/modules/system/language/' . $lang . '/admin/menus.php',
+        ];
+        $fallbacks = [
+            XOOPS_ROOT_PATH . '/modules/system/language/english/menus/menus.php',
+            XOOPS_ROOT_PATH . '/modules/system/language/english/admin/menus.php',
+        ];
+        foreach ($files as $i => $path) {
+            if (is_readable($path)) {
+                include_once $path;
+            } elseif (is_readable($fallbacks[$i])) {
+                include_once $fallbacks[$i];
+            }
         }
         self::$langLoaded = true;
     }
@@ -122,13 +147,19 @@ class XoopsMenusItems extends XoopsObject
             100,
             $this->getVar('items_title', 'e')
         );
+        $titleEl->setDescription(_AM_SYSTEM_MENUS_ITEMTITLE_DESC);
         if ($isProtected) {
             $titleEl->setExtra('readonly="readonly"');
         }
         $form->addElement($titleEl, true);
 
-        $form->addElement($this->buildAffixField('items_prefix', _AM_SYSTEM_MENUS_ITEMPREFIX, $isProtected));
-        $form->addElement($this->buildAffixField('items_suffix', _AM_SYSTEM_MENUS_ITEMSUFFIX, $isProtected));
+        $prefixEl = $this->buildAffixField('items_prefix', _AM_SYSTEM_MENUS_ITEMPREFIX, $isProtected);
+        $prefixEl->setDescription(_AM_SYSTEM_MENUS_ITEMPREFIX_DESC);
+        $form->addElement($prefixEl);
+
+        $suffixEl = $this->buildAffixField('items_suffix', _AM_SYSTEM_MENUS_ITEMSUFFIX, $isProtected);
+        $suffixEl->setDescription(_AM_SYSTEM_MENUS_ITEMSUFFIX_DESC);
+        $form->addElement($suffixEl);
 
         $urlEl = new \XoopsFormText(
             _AM_SYSTEM_MENUS_ITEMURL,
@@ -166,6 +197,7 @@ class XoopsMenusItems extends XoopsObject
 
         $permEl = new \XoopsGroupPermForm('', $GLOBALS['xoopsModule']->getVar('mid'), 'menus_items_view', '');
         $permEl->addItem((int) $this->getVar('items_id'), _AM_SYSTEM_MENUS_PERMISSION_VIEW_ITEM);
+        $permEl->setDescription(_AM_SYSTEM_MENUS_PERMISSION_VIEW_ITEM_DESC);
         $form->addElement($permEl);
 
         $form->addElement(new \XoopsFormHidden('op', 'saveitem'));
@@ -247,5 +279,49 @@ class XoopsMenusItemsHandler extends \XoopsPersistableObjectHandler
     public function __construct(\XoopsDatabase $db)
     {
         parent::__construct($db, 'menusitems', 'XoopsMenusItems', 'items_id', 'items_title');
+    }
+
+    /**
+     * Fetch active items from a set of allowed IDs, sorted by position.
+     *
+     * Used by the theme loader after permission filtering to retrieve
+     * only the items visible to the current user.
+     *
+     * @param int[] $itemIds Item IDs the current user may see
+     *
+     * @return array<int, XoopsMenusItems>
+     */
+    public function getActiveItemsByIds(array $itemIds): array
+    {
+        $itemIds = array_values(array_filter(array_map('intval', $itemIds)));
+        if ([] === $itemIds) {
+            return [];
+        }
+
+        $criteria = new \CriteriaCompo();
+        $criteria->add(new \Criteria('items_active', '1'));
+        $criteria->add(new \Criteria('items_id', $itemIds, 'IN'));
+        $criteria->setSort('items_position');
+        $criteria->setOrder('ASC');
+
+        return $this->getAll($criteria);
+    }
+
+    /**
+     * Fetch all active items belonging to a single category, sorted by position.
+     *
+     * @param int $categoryId The parent category ID
+     *
+     * @return array<int, XoopsMenusItems>
+     */
+    public function getActiveItemsByCategory(int $categoryId): array
+    {
+        $criteria = new \CriteriaCompo();
+        $criteria->add(new \Criteria('items_active', '1'));
+        $criteria->add(new \Criteria('items_cid', (string) $categoryId));
+        $criteria->setSort('items_position');
+        $criteria->setOrder('ASC');
+
+        return $this->getAll($criteria);
     }
 }

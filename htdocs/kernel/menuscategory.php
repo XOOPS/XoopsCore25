@@ -34,7 +34,21 @@ class XoopsMenusCategory extends XoopsObject
     }
 
     /**
-     * Load the menu language file if not already loaded.
+     * Return the auto-generated primary key from the most recent insert.
+     *
+     * @return int Newly assigned category id
+     */
+    public function getNewEnreg(): int
+    {
+        return (int) \XoopsDatabaseFactory::getDatabaseConnection()->getInsertId();
+    }
+
+    /**
+     * Load menu language files if not already loaded.
+     *
+     * Loads both the custom menus language file and the admin menus
+     * language file, falling back to English when a translation is
+     * not available.
      *
      * @return void
      */
@@ -44,9 +58,20 @@ class XoopsMenusCategory extends XoopsObject
             return;
         }
         $lang = $GLOBALS['xoopsConfig']['language'] ?? 'english';
-        $path = XOOPS_ROOT_PATH . '/modules/system/language/' . $lang . '/admin/menus.php';
-        if (is_readable($path)) {
-            include_once $path;
+        $files = [
+            XOOPS_ROOT_PATH . '/modules/system/language/' . $lang . '/menus/menus.php',
+            XOOPS_ROOT_PATH . '/modules/system/language/' . $lang . '/admin/menus.php',
+        ];
+        $fallbacks = [
+            XOOPS_ROOT_PATH . '/modules/system/language/english/menus/menus.php',
+            XOOPS_ROOT_PATH . '/modules/system/language/english/admin/menus.php',
+        ];
+        foreach ($files as $i => $path) {
+            if (is_readable($path)) {
+                include_once $path;
+            } elseif (is_readable($fallbacks[$i])) {
+                include_once $fallbacks[$i];
+            }
         }
         self::$langLoaded = true;
     }
@@ -107,13 +132,19 @@ class XoopsMenusCategory extends XoopsObject
             100,
             $this->getVar('category_title', 'e')
         );
+        $titleEl->setDescription(_AM_SYSTEM_MENUS_CATTITLE_DESC);
         if ($isProtected) {
             $titleEl->setExtra('readonly="readonly"');
         }
         $form->addElement($titleEl, true);
 
-        $form->addElement($this->buildAffixField('category_prefix', _AM_SYSTEM_MENUS_CATPREFIX, $isProtected));
-        $form->addElement($this->buildAffixField('category_suffix', _AM_SYSTEM_MENUS_CATSUFFIX, $isProtected));
+        $prefixEl = $this->buildAffixField('category_prefix', _AM_SYSTEM_MENUS_CATPREFIX, $isProtected);
+        $prefixEl->setDescription(_AM_SYSTEM_MENUS_CATPREFIX_DESC);
+        $form->addElement($prefixEl);
+
+        $suffixEl = $this->buildAffixField('category_suffix', _AM_SYSTEM_MENUS_CATSUFFIX, $isProtected);
+        $suffixEl->setDescription(_AM_SYSTEM_MENUS_CATSUFFIX_DESC);
+        $form->addElement($suffixEl);
 
         $urlEl = new \XoopsFormText(
             _AM_SYSTEM_MENUS_CATURL,
@@ -122,6 +153,7 @@ class XoopsMenusCategory extends XoopsObject
             255,
             $this->getVar('category_url', 'e')
         );
+        $urlEl->setDescription(_AM_SYSTEM_MENUS_CATURL_DESC);
         if ($isProtected) {
             $urlEl->setExtra('readonly="readonly"');
         }
@@ -151,6 +183,7 @@ class XoopsMenusCategory extends XoopsObject
 
         $permEl = new \XoopsGroupPermForm('', $GLOBALS['xoopsModule']->getVar('mid'), 'menus_category_view', '');
         $permEl->addItem((int) $this->getVar('category_id'), _AM_SYSTEM_MENUS_PERMISSION_VIEW_CATEGORY);
+        $permEl->setDescription(_AM_SYSTEM_MENUS_PERMISSION_VIEW_CATEGORY_DESC);
         $form->addElement($permEl);
 
         $form->addElement(new \XoopsFormHidden('op', 'savecat'));
@@ -193,5 +226,31 @@ class XoopsMenusCategoryHandler extends \XoopsPersistableObjectHandler
     public function __construct(\XoopsDatabase $db)
     {
         parent::__construct($db, 'menuscategory', 'XoopsMenusCategory', 'category_id', 'category_title');
+    }
+
+    /**
+     * Fetch active categories from a set of allowed IDs, sorted by position.
+     *
+     * Used by the theme loader after permission filtering to retrieve
+     * only the categories visible to the current user.
+     *
+     * @param int[] $categoryIds Category IDs the current user may see
+     *
+     * @return array<int, XoopsMenusCategory>
+     */
+    public function getActiveCategoriesByIds(array $categoryIds): array
+    {
+        $categoryIds = array_values(array_filter(array_map('intval', $categoryIds)));
+        if ([] === $categoryIds) {
+            return [];
+        }
+
+        $criteria = new \CriteriaCompo();
+        $criteria->add(new \Criteria('category_active', '1'));
+        $criteria->add(new \Criteria('category_id', $categoryIds, 'IN'));
+        $criteria->setSort('category_position');
+        $criteria->setOrder('ASC');
+
+        return $this->getAll($criteria);
     }
 }
