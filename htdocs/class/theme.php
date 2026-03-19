@@ -934,6 +934,23 @@ class xos_opal_Theme
     }
 
     /**
+     * Verify that both menu database tables exist.
+     *
+     * @return bool True if both menuscategory and menusitems tables are present
+     */
+    private function hasMenuTables(): bool
+    {
+        $db = \XoopsDatabaseFactory::getDatabaseConnection();
+        foreach (['menuscategory', 'menusitems'] as $tableName) {
+            $result = $db->query('SHOW TABLES LIKE ' . $db->quote($db->prefix($tableName)));
+            if (!$db->isResultSet($result) || !($result instanceof \mysqli_result) || 0 === $db->getRowsNum($result)) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    /**
      * Load all visible menu categories and items for the current user.
      *
      * @return array<int, array<string, mixed>>
@@ -942,9 +959,7 @@ class xos_opal_Theme
     {
         $this->loadMenuAssets();
 
-        $db = \XoopsDatabaseFactory::getDatabaseConnection();
-        $result = $db->query("SHOW TABLES LIKE '" . $db->prefix('menuscategory') . "'");
-        if (!$db->isResultSet($result) || !($result instanceof \mysqli_result) || $db->getRowsNum($result) === 0) {
+        if (!$this->hasMenuTables()) {
             return [];
         }
 
@@ -962,22 +977,13 @@ class xos_opal_Theme
         $visibleItemIds = $permHandler->getItemIds('menus_items_view', $groups, $moduleId);
 
         $catHandler = xoops_getHandler('menuscategory');
-        $criteria = new \CriteriaCompo(new \Criteria('category_active', '1'));
-        $criteria->add(new \Criteria('category_id', $visibleCatIds, 'IN'));
-        $criteria->setSort('category_position');
-        $criteria->setOrder('ASC');
-        $categories = $catHandler->getObjects($criteria);
+        $categories = $catHandler->getActiveCategoriesByIds($visibleCatIds);
 
         $itemHandler = xoops_getHandler('menusitems');
-        $itemCriteria = new \CriteriaCompo(new \Criteria('items_active', '1'));
-        if (!empty($visibleItemIds)) {
-            $itemCriteria->add(new \Criteria('items_id', $visibleItemIds, 'IN'));
-        } else {
+        if (empty($visibleItemIds)) {
             return $this->buildCategoryOutput($categories, []);
         }
-        $itemCriteria->setSort('items_position');
-        $itemCriteria->setOrder('ASC');
-        $allItems = $itemHandler->getObjects($itemCriteria);
+        $allItems = $itemHandler->getActiveItemsByIds($visibleItemIds);
 
         $itemsByCat = [];
         foreach ($allItems as $item) {
@@ -1010,7 +1016,7 @@ class xos_opal_Theme
                 'category_prefix' => $this->renderMenuAffix($cat->getVar('category_prefix', 'n')),
                 'category_suffix' => $this->renderMenuAffix($cat->getVar('category_suffix', 'n')),
                 'category_url'    => $this->normalizeMenuUrl($cat->getVar('category_url', 'n')),
-                'category_target' => (int) $cat->getVar('category_target'),
+                'category_target' => (1 === (int) $cat->getVar('category_target')) ? '_blank' : '_self',
                 'items'           => $itemTree,
             ];
         }
@@ -1035,7 +1041,7 @@ class xos_opal_Theme
                 'prefix'   => $this->renderMenuAffix($item->getVar('items_prefix', 'n')),
                 'suffix'   => $this->renderMenuAffix($item->getVar('items_suffix', 'n')),
                 'url'      => $this->normalizeMenuUrl($item->getVar('items_url', 'n')),
-                'target'   => (int) $item->getVar('items_target'),
+                'target'   => (1 === (int) $item->getVar('items_target')) ? '_blank' : '_self',
                 'active'   => (int) $item->getVar('items_active'),
                 'pid'      => (int) $item->getVar('items_pid'),
                 'children' => [],
@@ -1095,15 +1101,14 @@ class xos_opal_Theme
             return '';
         }
 
-        if (str_contains($value, '<{xoInboxCount}>')) {
+        // Replace xoInboxCount BEFORE strip_tags since the placeholder looks like an HTML tag
+        if (false !== stripos($value, 'xoInboxCount')) {
             $count = $this->getInboxUnreadCount();
-            $badge = $count !== null && $count > 0
-                ? '<span class="badge badge-danger badge-pill">' . (int)$count . '</span>'
-                : '';
-            $value = str_replace('<{xoInboxCount}>', $badge, $value);
+            $replacement = ($count !== null && $count > 0) ? (string) $count : '';
+            $value = preg_replace('/<\{\s*xoInboxCount(?:\s+[^}]*)?\s*\}>/i', $replacement, $value) ?? $value;
         }
 
-        $value = strip_tags($value, '<span><i><b><em><strong>');
+        $value = strip_tags($value, '<span><i><b><em><strong><small>');
         $value = preg_replace('/\s+on\w+\s*=\s*["\'][^"\']*["\']/i', '', $value);
         $value = preg_replace('/\s+on\w+\s*=\s*\S+/i', '', $value);
         $value = preg_replace('/\s+style\s*=\s*["\'][^"\']*["\']/i', '', $value);
@@ -1140,18 +1145,15 @@ class xos_opal_Theme
             return (int) $_SESSION[$cacheKey];
         }
 
-        $db = \XoopsDatabaseFactory::getDatabaseConnection();
-        $table = $db->prefix('priv_msgs');
-        $result = $db->query(
-            "SELECT COUNT(*) AS cnt FROM `{$table}` WHERE `to_userid` = " . $db->quote((string) $uid) . " AND `read_msg` = 0"
-        );
-        $count = 0;
-        if ($db->isResultSet($result) && ($result instanceof \mysqli_result) && ($row = $db->fetchArray($result))) {
-            $count = (int) $row['cnt'];
-        }
+        /** @var \XoopsPrivmessageHandler $pmHandler */
+        $pmHandler = xoops_getHandler('privmessage');
+
+        $criteria = new \CriteriaCompo(new \Criteria('to_userid', (string) $uid));
+        $criteria->add(new \Criteria('read_msg', '0'));
+        $count = $pmHandler->getCount($criteria);
 
         $preload = \XoopsPreload::getInstance();
-        $preload->triggerEvent('core.theme.inboxcount', [&$count, $uid]);
+        $preload->triggerEvent('core.class.smarty.xoops_plugins.xoinboxcount', [$pmHandler]);
 
         $_SESSION[$cacheKey] = $count;
         $_SESSION[$cacheTime] = time();
