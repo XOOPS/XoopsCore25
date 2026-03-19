@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace modules\system;
+namespace modulessystem;
 
 use PHPUnit\Framework\Attributes\CoversNothing;
 use PHPUnit\Framework\Attributes\Test;
