@@ -239,7 +239,7 @@ window.XOOPS_MENUS.messages = {
                         <{if $item.url|default:'' != ''}>
                             <span class="xo-menus-sortable-url"><{$item.url|escape}></span>
                         <{/if}>
-                        <span class="xo-menus-sortable-actions">
+                        <span class="xo-menus-status">
                             <{if $item.active}>
                                 <span class="item-active-toggle xo-menus-active" data-id="<{$item.id|escape}>" data-active="1">
                                     <img src="<{xoAdminIcons 'success.png'}>" alt="<{$smarty.const._AM_SYSTEM_MENUS_ACTIVE_YES}>" title="<{$smarty.const._AM_SYSTEM_MENUS_ACTIVE_YES}>"/></span>
@@ -247,7 +247,11 @@ window.XOOPS_MENUS.messages = {
                                 <span class="item-active-toggle xo-menus-inactive" data-id="<{$item.id|escape}>" data-active="0">
                                     <img src="<{xoAdminIcons 'cancel.png'}>" alt="<{$smarty.const._AM_SYSTEM_MENUS_ACTIVE_NO}>" title="<{$smarty.const._AM_SYSTEM_MENUS_ACTIVE_NO}>"/></span>
                             <{/if}>
+                        </span>
+                        <span class="xo-menus-action">
                             <a class="tooltip" href="admin.php?fct=menus&amp;op=edititem&amp;item_id=<{$item.id|escape}>&amp;category_id=<{$category_id|escape}>" title="<{$smarty.const._AM_SYSTEM_MENUS_EDITITEM}>"><img src="<{xoAdminIcons 'edit.png'}>" alt="<{$smarty.const._AM_SYSTEM_MENUS_EDITITEM}>"/></a>
+                        </span>
+                        <span class="xo-menus-action">
                             <{if $item.protected|default:0 == 0}>
                             <a class="tooltip" href="admin.php?fct=menus&amp;op=delitem&amp;item_id=<{$item.id|escape}>&amp;category_id=<{$category_id|escape}>" title="<{$smarty.const._AM_SYSTEM_MENUS_DELITEM}>"><img src="<{xoAdminIcons 'delete.png'}>" alt="<{$smarty.const._AM_SYSTEM_MENUS_DELITEM}>"/></a>
                             <{/if}>
@@ -267,7 +271,7 @@ window.XOOPS_MENUS.messages = {
                                     <{if $sub.url|default:'' != ''}>
                                         <span class="xo-menus-sortable-url"><{$sub.url|escape}></span>
                                     <{/if}>
-                                    <span class="xo-menus-sortable-actions">
+                                    <span class="xo-menus-status">
                                         <{if $sub.active}>
                                             <span class="item-active-toggle xo-menus-active" data-id="<{$sub.id|escape}>" data-active="1">
                                                 <img src="<{xoAdminIcons 'success.png'}>" alt="<{$smarty.const._AM_SYSTEM_MENUS_ACTIVE_YES}>" title="<{$smarty.const._AM_SYSTEM_MENUS_ACTIVE_YES}>"/></span>
@@ -275,7 +279,11 @@ window.XOOPS_MENUS.messages = {
                                             <span class="item-active-toggle xo-menus-inactive" data-id="<{$sub.id|escape}>" data-active="0">
                                                 <img src="<{xoAdminIcons 'cancel.png'}>" alt="<{$smarty.const._AM_SYSTEM_MENUS_ACTIVE_NO}>" title="<{$smarty.const._AM_SYSTEM_MENUS_ACTIVE_NO}>"/></span>
                                         <{/if}>
+                                    </span>
+                                    <span class="xo-menus-action">
                                         <a class="tooltip" href="admin.php?fct=menus&amp;op=edititem&amp;item_id=<{$sub.id|escape}>&amp;category_id=<{$category_id|escape}>" title="<{$smarty.const._AM_SYSTEM_MENUS_EDITITEM}>"><img src="<{xoAdminIcons 'edit.png'}>" alt="<{$smarty.const._AM_SYSTEM_MENUS_EDITITEM}>"/></a>
+                                    </span>
+                                    <span class="xo-menus-action">
                                         <{if $sub.protected|default:0 == 0}>
                                         <a class="tooltip" href="admin.php?fct=menus&amp;op=delitem&amp;item_id=<{$sub.id|escape}>&amp;category_id=<{$category_id|escape}>" title="<{$smarty.const._AM_SYSTEM_MENUS_DELITEM}>"><img src="<{xoAdminIcons 'delete.png'}>" alt="<{$smarty.const._AM_SYSTEM_MENUS_DELITEM}>"/></a>
                                         <{/if}>
@@ -294,7 +302,7 @@ window.XOOPS_MENUS.messages = {
                                                 <{if $subsub.url|default:'' != ''}>
                                                     <span class="xo-menus-sortable-url"><{$subsub.url|escape}></span>
                                                 <{/if}>
-                                                <span class="xo-menus-sortable-actions">
+                                                <span class="xo-menus-status">
                                                     <{if $subsub.active}>
                                                         <span class="item-active-toggle xo-menus-active" data-id="<{$subsub.id|escape}>" data-active="1">
                                                             <img src="<{xoAdminIcons 'success.png'}>" alt="<{$smarty.const._AM_SYSTEM_MENUS_ACTIVE_YES}>" title="<{$smarty.const._AM_SYSTEM_MENUS_ACTIVE_YES}>"/></span>
@@ -302,7 +310,11 @@ window.XOOPS_MENUS.messages = {
                                                         <span class="item-active-toggle xo-menus-inactive" data-id="<{$subsub.id|escape}>" data-active="0">
                                                             <img src="<{xoAdminIcons 'cancel.png'}>" alt="<{$smarty.const._AM_SYSTEM_MENUS_ACTIVE_NO}>" title="<{$smarty.const._AM_SYSTEM_MENUS_ACTIVE_NO}>"/></span>
                                                     <{/if}>
+                                                </span>
+                                                <span class="xo-menus-action">
                                                     <a class="tooltip" href="admin.php?fct=menus&amp;op=edititem&amp;item_id=<{$subsub.id|escape}>&amp;category_id=<{$category_id|escape}>" title="<{$smarty.const._AM_SYSTEM_MENUS_EDITITEM}>"><img src="<{xoAdminIcons 'edit.png'}>" alt="<{$smarty.const._AM_SYSTEM_MENUS_EDITITEM}>"/></a>
+                                                </span>
+                                                <span class="xo-menus-action">
                                                     <{if $subsub.protected|default:0 == 0}>
                                                     <a class="tooltip" href="admin.php?fct=menus&amp;op=delitem&amp;item_id=<{$subsub.id|escape}>&amp;category_id=<{$category_id|escape}>" title="<{$smarty.const._AM_SYSTEM_MENUS_DELITEM}>"><img src="<{xoAdminIcons 'delete.png'}>" alt="<{$smarty.const._AM_SYSTEM_MENUS_DELITEM}>"/></a>
                                                     <{/if}>

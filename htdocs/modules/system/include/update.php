@@ -33,12 +33,15 @@ function xoops_module_update_system(XoopsModule $module, $prev_version = null)
         update_system_remove_legacy_html_templates($module);
     }
     // Create/upgrade menu tables and seed defaults (added in 2.5.12)
-    system_menu_update($module);
+    if (!system_menu_update($module)) {
+        $ret = false;
+    }
 
     $errors = $module->getErrors();
     if (!empty($errors)) {
         print_r($errors);
-    } else {
+        $ret = false;
+    } elseif ($ret !== false) {
         $ret = true;
     }
 
@@ -144,7 +147,7 @@ function update_system_remove_legacy_html_templates(XoopsModule $module)
  *
  * @param XoopsModule $module System module reference
  */
-function system_menu_update(XoopsModule $module): void
+function system_menu_update(XoopsModule $module): bool
 {
     $db = \XoopsDatabaseFactory::getDatabaseConnection();
     $mid = (int) $module->getVar('mid');
@@ -156,7 +159,10 @@ function system_menu_update(XoopsModule $module): void
         system_menu_seed_defaults($db, $mid);
     } catch (\Throwable $e) {
         $module->setErrors('Menu migration failed: ' . $e->getMessage());
+        return false;
     }
+
+    return true;
 }
 
 /**
@@ -222,6 +228,21 @@ function system_menu_create_tables(XoopsMySQLDatabase $db): void
             ON DELETE CASCADE
     ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;";
     $db->exec($sql);
+
+    // Re-add FK if it was dropped on an existing table (CREATE TABLE IF NOT EXISTS is a no-op)
+    $fkCheck = $db->query(
+        "SELECT 1 FROM INFORMATION_SCHEMA.TABLE_CONSTRAINTS"
+        . " WHERE CONSTRAINT_NAME = 'fk_items_category'"
+        . " AND TABLE_NAME = " . $db->quote($prefix)
+        . " AND TABLE_SCHEMA = DATABASE()"
+    );
+    if ($db->isResultSet($fkCheck) && ($fkCheck instanceof \mysqli_result) && 0 === $db->getRowsNum($fkCheck)) {
+        $db->exec(
+            "ALTER TABLE `{$prefix}` ADD CONSTRAINT `fk_items_category`"
+            . " FOREIGN KEY (`items_cid`) REFERENCES `{$db->prefix('menuscategory')}` (`category_id`)"
+            . " ON DELETE CASCADE"
+        );
+    }
 }
 
 /**
@@ -290,18 +311,15 @@ function system_menu_ensure_category(XoopsMySQLDatabase $db, array $definition):
         . " ORDER BY `category_id` ASC"
     );
     if ($db->isResultSet($result) && ($result instanceof \mysqli_result) && ($row = $db->fetchArray($result))) {
-        $active = (int) ($row['category_active'] ?? $definition['active']);
+        // Existing row: only sync seed-owned content fields (prefix, suffix, url).
+        // Preserve admin-maintained layout fields (position, target, active).
         $db->exec(sprintf(
-            "UPDATE `%s` SET `category_prefix` = %s, `category_suffix` = %s, `category_url` = %s,"
-            . " `category_target` = %d, `category_position` = %d, `category_active` = %d"
+            "UPDATE `%s` SET `category_prefix` = %s, `category_suffix` = %s, `category_url` = %s"
             . " WHERE `category_id` = %d",
             $table,
             $db->quote($definition['prefix']),
             $db->quote($definition['suffix']),
             $db->quote($definition['url']),
-            (int) $definition['target'],
-            (int) $definition['position'],
-            $active,
             (int) $row['category_id']
         ));
         return (int) $row['category_id'];
@@ -349,19 +367,15 @@ function system_menu_ensure_item(XoopsMySQLDatabase $db, int $categoryId, array 
         (int) $definition['protected']
     ));
     if ($db->isResultSet($result) && ($result instanceof \mysqli_result) && ($row = $db->fetchArray($result))) {
-        $active = (int) ($row['items_active'] ?? $definition['active']);
+        // Existing row: only sync seed-owned content fields (prefix, suffix, url).
+        // Preserve admin-maintained layout fields (pid, position, target, active).
         $db->exec(sprintf(
-            "UPDATE `%s` SET `items_pid` = %d, `items_prefix` = %s, `items_suffix` = %s,"
-            . " `items_url` = %s, `items_target` = %d, `items_position` = %d, `items_active` = %d"
+            "UPDATE `%s` SET `items_prefix` = %s, `items_suffix` = %s, `items_url` = %s"
             . " WHERE `items_id` = %d",
             $table,
-            (int) $definition['pid'],
             $db->quote($definition['prefix']),
             $db->quote($definition['suffix']),
             $db->quote($definition['url']),
-            (int) $definition['target'],
-            (int) $definition['position'],
-            $active,
             (int) $row['items_id']
         ));
         return (int) $row['items_id'];
@@ -591,6 +605,6 @@ function system_menu_migrate_unsafe_urls(XoopsMySQLDatabase $db): void
     $catTable = $db->prefix('menuscategory');
     $itemTable = $db->prefix('menusitems');
 
-    $db->exec("UPDATE `{$catTable}` SET `category_url` = '#' WHERE `category_url` LIKE 'javascript:%'");
-    $db->exec("UPDATE `{$itemTable}` SET `items_url` = '#' WHERE `items_url` LIKE 'javascript:%'");
+    $db->exec("UPDATE `{$catTable}` SET `category_url` = '#' WHERE TRIM(`category_url`) LIKE 'javascript:%'");
+    $db->exec("UPDATE `{$itemTable}` SET `items_url` = '#' WHERE TRIM(`items_url`) LIKE 'javascript:%'");
 }

@@ -153,9 +153,12 @@ function menus_item_handler(): XoopsMenusItemsHandler
  */
 function menus_item_can_be_enabled(XoopsMenusItemsHandler $itemHandler, XoopsMenusItems $item): bool
 {
-    // Category must be active
+    // Category must exist and be active
     $cat = menus_cat_handler()->get((int) $item->getVar('items_cid'));
-    if (is_object($cat) && 0 === (int) $cat->getVar('category_active')) {
+    if (!is_object($cat)) {
+        return false; // Missing category — corrupted data
+    }
+    if (0 === (int) $cat->getVar('category_active')) {
         return false;
     }
 
@@ -164,12 +167,12 @@ function menus_item_can_be_enabled(XoopsMenusItemsHandler $itemHandler, XoopsMen
     $visited  = [];
     while ($parentId > 0) {
         if (isset($visited[$parentId])) {
-            break; // Cycle detected — stop walking
+            return false; // Cycle detected — treat as invalid
         }
         $visited[$parentId] = true;
         $parent = $itemHandler->get($parentId);
         if (!is_object($parent)) {
-            break;
+            return false; // Missing parent — corrupted data
         }
         if (0 === (int) $parent->getVar('items_active')) {
             return false;
@@ -254,10 +257,10 @@ switch ($op) {
                 $flatItems[] = [
                     'id'        => (int) $item->getVar('items_id'),
                     'pid'       => (int) $item->getVar('items_pid'),
-                    'title'     => htmlspecialchars($item->getAdminTitle(), ENT_QUOTES, 'UTF-8'),
+                    'title'     => $item->getAdminTitle(),
                     'prefix'    => $item->getVar('items_prefix', 'n'),
                     'suffix'    => $item->getVar('items_suffix', 'n'),
-                    'url'       => htmlspecialchars((string) $item->getVar('items_url', 'n'), ENT_QUOTES, 'UTF-8'),
+                    'url'       => (string) $item->getVar('items_url', 'n'),
                     'active'    => (int) $item->getVar('items_active'),
                     'protected' => (int) $item->getVar('items_protected'),
                 ];
@@ -265,10 +268,10 @@ switch ($op) {
 
             $catData[] = [
                 'id'          => $cid,
-                'title'       => htmlspecialchars($cat->getAdminTitle(), ENT_QUOTES, 'UTF-8'),
+                'title'       => $cat->getAdminTitle(),
                 'prefix'      => $cat->getVar('category_prefix', 'n'),
                 'suffix'      => $cat->getVar('category_suffix', 'n'),
-                'url'         => htmlspecialchars((string) $cat->getVar('category_url', 'n'), ENT_QUOTES, 'UTF-8'),
+                'url'         => (string) $cat->getVar('category_url', 'n'),
                 'target'      => (int) $cat->getVar('category_target') === 1 ? '_blank' : '_self',
                 'active'      => (int) $cat->getVar('category_active'),
                 'protected'   => (int) $cat->getVar('category_protected'),
@@ -386,13 +389,6 @@ switch ($op) {
 
             redirect_header(MENUS_ADMIN_URL, 2, _AM_SYSTEM_MENUS_DELETED);
         } else {
-            // Show confirmation with list of items that will be deleted
-            $itemHandler  = menus_item_handler();
-            $itemCriteria = new CriteriaCompo(new Criteria('items_cid', (string) $catId));
-            $itemCriteria->setSort('items_position');
-            $allItems = $itemHandler->getObjects($itemCriteria);
-            $flatList = SystemMenusTree::flattenForDisplay($allItems);
-
             xoops_confirm(
                 [
                     'op'          => 'delcat',
@@ -429,17 +425,17 @@ switch ($op) {
             $itemData[] = [
                 'id'        => (int) $item->getVar('items_id'),
                 'pid'       => (int) $item->getVar('items_pid'),
-                'title'     => htmlspecialchars($item->getAdminTitle(), ENT_QUOTES, 'UTF-8'),
+                'title'     => $item->getAdminTitle(),
                 'prefix'    => $item->getVar('items_prefix', 'n'),
                 'suffix'    => $item->getVar('items_suffix', 'n'),
-                'url'       => htmlspecialchars((string) $item->getVar('items_url', 'n'), ENT_QUOTES, 'UTF-8'),
+                'url'       => (string) $item->getVar('items_url', 'n'),
                 'active'    => (int) $item->getVar('items_active'),
                 'protected' => (int) $item->getVar('items_protected'),
             ];
         }
 
         $xoopsTpl->assign('category_id', $catId);
-        $xoopsTpl->assign('cat_title', htmlspecialchars($cat->getAdminTitle(), ENT_QUOTES, 'UTF-8'));
+        $xoopsTpl->assign('cat_title', $cat->getAdminTitle());
         $xoopsTpl->assign('items_count', count($itemData));
         $xoopsTpl->assign('items', $itemData);
         $xoopsTpl->assign('token', $GLOBALS['xoopsSecurity']->createToken());
@@ -656,7 +652,7 @@ switch ($op) {
         foreach ($order as $position => $catId) {
             $cat = $catHandler->get((int) $catId);
             if (is_object($cat) && !$cat->isNew()) {
-                $cat->setVar('category_position', $position);
+                $cat->setVar('category_position', $position + 1);
                 $catHandler->insert($cat);
             }
         }
