@@ -12,14 +12,12 @@
 /**
  * @copyright    2000-2026 XOOPS Project (https://xoops.org)
  * @license      GNU GPL 2.0 or later (https://www.gnu.org/licenses/gpl-2.0.html)
- * @package
- * @since
  * @author       XOOPS Development Team, Kazumi Ono (AKA onokazu)
  */
 xoops_loadLanguage('modinfo', 'system');
 
 $modversion['name']        = _MI_SYSTEM_NAME;
-$modversion['version']     = '2.1.8-Stable';
+$modversion['version']     = '2.1.9-Stable';
 $modversion['description'] = _MI_SYSTEM_DESC;
 $modversion['author']      = '';
 $modversion['credits']     = 'The XOOPS Project; MusS, Kraven30, Mage';
@@ -89,7 +87,7 @@ $modversion['templates'][] = ['file' => 'system_templates.tpl', 'description' =>
 $modversion['templates'][] = ['file' => 'system_index.tpl', 'description' => '', 'type' => 'admin'];
 $modversion['templates'][] = ['file' => 'system_maintenance.tpl', 'description' => '', 'type' => 'admin'];
 $modversion['templates'][] = ['file' => 'system_help.tpl', 'description' => '', 'type' => 'admin'];
-$modversion['templates'][] = ['file' => 'system_menus.tpl', 'description' => '', 'type' => 'admin'];
+$modversion['templates'][] = ['file' => 'system_menus.tpl', 'description' => 'Manage front-end navigation menus.', 'type' => 'admin'];
 
 // Blocks
 $modversion['blocks'][] = [
@@ -460,6 +458,7 @@ $modversion['config'][$i]['formtype']    = 'select';
 $modversion['config'][$i]['valuetype']   = 'int';
 $modversion['config'][$i]['default']     = 3;
 $modversion['config'][$i]['options']     = [_MI_DEFAULT_NOTIFICATION_METHOD_DISABLE => 0, _MI_DEFAULT_NOTIFICATION_METHOD_PM => 1, _MI_DEFAULT_NOTIFICATION_METHOD_EMAIL => 2];
+//2.5.12
 ++$i;
 $modversion['config'][$i]['name']        = 'active_menus';
 $modversion['config'][$i]['title']       = '_MI_SYSTEM_MENUS_ACTIVE';

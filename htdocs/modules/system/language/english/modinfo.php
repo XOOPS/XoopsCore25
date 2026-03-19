@@ -1,8 +1,12 @@
 <?php
-//
-// _LANGCODE: en
-// _CHARSET : UTF-8
-// Translator: XOOPS Translation Team
+/**
+ * @copyright    2000-2026 XOOPS Project https://xoops.org/
+ * @license      GNU GPL 2.0 or later (https://www.gnu.org/licenses/gpl-2.0.html)
+ * @author       XOOPS Development Team
+ * _LANGCODE    en
+ * _CHARSET     UTF-8
+ */
+
 // Module Info
 // The name of this module
 define('_MI_SYSTEM_NAME', 'System');

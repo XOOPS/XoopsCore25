@@ -1,12 +1,10 @@
 <?php
 /**
- * System Menu Admin Language Constants
- *
- * @category  Language
- * @author    XOOPS Core Team
- * @copyright 2001-2026 XOOPS Project (https://xoops.org)
- * @license   GNU GPL 2+ (https://www.gnu.org/licenses/gpl-2.0.html)
- * @link      https://xoops.org
+ * @copyright    2000-2026 XOOPS Project https://xoops.org/
+ * @license      GNU GPL 2.0 or later (https://www.gnu.org/licenses/gpl-2.0.html)
+ * @author       XOOPS Development Team
+ * _LANGCODE    en
+ * _CHARSET     UTF-8
  */
 
 defined('XOOPS_ROOT_PATH') || exit('Restricted access');
