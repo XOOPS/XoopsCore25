@@ -208,7 +208,6 @@ class XoopsMenusItems extends XoopsObject
 
         $permField = new \XoopsGroupPermForm('', $GLOBALS['xoopsModule']->getVar('mid'), 'menus_items_view', '');
         $permField->addItem((int) $this->getVar('items_id'), _AM_SYSTEM_MENUS_PERMISSION_VIEW_ITEM);
-        $permField->setDescription(_AM_SYSTEM_MENUS_PERMISSION_VIEW_ITEM_DESC);
         $form->addElement($permField);
 
         $form->addElement(new \XoopsFormHidden('op', 'saveitem'));

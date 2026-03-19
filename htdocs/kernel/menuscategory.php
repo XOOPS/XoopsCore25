@@ -194,7 +194,6 @@ class XoopsMenusCategory extends XoopsObject
 
         $permField = new \XoopsGroupPermForm('', $GLOBALS['xoopsModule']->getVar('mid'), 'menus_category_view', '');
         $permField->addItem((int) $this->getVar('category_id'), _AM_SYSTEM_MENUS_PERMISSION_VIEW_CATEGORY);
-        $permField->setDescription(_AM_SYSTEM_MENUS_PERMISSION_VIEW_CATEGORY_DESC);
         $form->addElement($permField);
 
         $form->addElement(new \XoopsFormHidden('op', 'savecat'));
