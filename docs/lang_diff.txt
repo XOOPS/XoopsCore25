@@ -17,6 +17,7 @@ Below are language differences from a version to next version.
 /htdocs/modules/system/language/english/admin/menus.php (NEW FILE)
 - added define('_AM_SYSTEM_MENUS_NAV_MAIN', 'Menu Manager');
 - added define('_AM_SYSTEM_MENUS_NAV_BACK', 'Back to Menu List');
+- added define('_AM_SYSTEM_MENUS_NAV_CATEGORY', 'Category View');
 - added define('_AM_SYSTEM_MENUS_NAV_TIPS', '<strong>Tips:</strong><ul>...');
 - added define('_AM_SYSTEM_MENUS_ACTIVE', 'Active');
 - added define('_AM_SYSTEM_MENUS_SAVED', 'Saved successfully');
