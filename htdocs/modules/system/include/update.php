@@ -25,11 +25,11 @@ function xoops_module_update_system(XoopsModule $module, $prev_version = null)
 {
     // irmtfan bug fix: solve templates duplicate issue
     $ret = null;
-    if ($prev_version < '2.1.1') {
+    if (version_compare((string) $prev_version, '2.1.1', '<')) {
         $ret = update_system_v211($module);
     }
     // Clean up legacy .html template rows replaced by .tpl equivalents
-    if ($prev_version < '2.1.8') {
+    if (version_compare((string) $prev_version, '2.1.8', '<')) {
         update_system_remove_legacy_html_templates($module);
     }
     // Create/upgrade menu tables and seed defaults (added in 2.5.12)
@@ -398,6 +398,15 @@ function system_menu_seed_permissions(
 ): void {
     $handler = xoops_getHandler('groupperm');
     foreach ($groupIds as $gid) {
+        // Idempotent: skip if this exact permission already exists
+        $criteria = new \CriteriaCompo();
+        $criteria->add(new \Criteria('gperm_groupid', (int) $gid));
+        $criteria->add(new \Criteria('gperm_itemid', $itemId));
+        $criteria->add(new \Criteria('gperm_name', $permName));
+        $criteria->add(new \Criteria('gperm_modid', $moduleId));
+        if ($handler->getCount($criteria) > 0) {
+            continue;
+        }
         $perm = $handler->create();
         $perm->setVar('gperm_groupid', (int) $gid);
         $perm->setVar('gperm_itemid', $itemId);
@@ -557,14 +566,7 @@ function system_menu_seed_defaults(XoopsMySQLDatabase $db, int $moduleId): void
         $itemIds[] = system_menu_ensure_item($db, $categoryIds['account'], $itemDef);
     }
 
-    // --- Clean stale permissions before reseeding ---
-    $permTable = $db->prefix('group_permission');
-    $db->exec(
-        "DELETE FROM `{$permTable}` WHERE `gperm_modid` = " . $moduleId
-        . " AND `gperm_name` IN ('menus_category_view', 'menus_items_view')"
-    );
-
-    // --- Seed category permissions ---
+    // --- Seed category permissions (idempotent — skips existing) ---
     foreach ($categories as $key => $catDef) {
         system_menu_seed_permissions($db, $moduleId, 'menus_category_view', $categoryIds[$key], $catDef['groups']);
     }

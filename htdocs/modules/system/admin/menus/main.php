@@ -541,7 +541,12 @@ switch ($op) {
         }
         $item->setVar('items_target', Request::getInt('items_target', 0, 'POST'));
         $item->setVar('items_position', Request::getInt('items_position', 0, 'POST'));
-        $item->setVar('items_active', Request::getInt('items_active', 1, 'POST'));
+
+        $wantActive = Request::getInt('items_active', 1, 'POST');
+        if ($wantActive === 1 && !menus_item_can_be_enabled(menus_item_handler(), $item)) {
+            $wantActive = 0;
+        }
+        $item->setVar('items_active', $wantActive);
 
         if (!$itemHandler->insert($item)) {
             $xoopsTpl->assign('error_message', $item->getHtmlErrors());
@@ -595,12 +600,20 @@ switch ($op) {
             }
             $descendantIds = SystemMenusTree::collectDescendantIds($allRows, $itemId);
 
+            // Abort if any descendant is protected — would leave orphaned records
+            foreach ($descendantIds as $descId) {
+                $descItem = $itemHandler->get($descId);
+                if (is_object($descItem) && (int) $descItem->getVar('items_protected') === 1) {
+                    redirect_header(MENUS_ADMIN_URL . '#cat_' . $catId, 3, _AM_SYSTEM_MENUS_ERROR_ITEMPROTECTED);
+                }
+            }
+
             $permHelper = new \Xmf\Module\Helper\Permission();
 
             // Delete descendants
             foreach ($descendantIds as $descId) {
                 $descItem = $itemHandler->get($descId);
-                if (is_object($descItem) && !(int) $descItem->getVar('items_protected')) {
+                if (is_object($descItem)) {
                     $permHelper->deletePermissionForItem('menus_items_view', $descId);
                     $itemHandler->delete($descItem);
                 }
