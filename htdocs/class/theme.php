@@ -1081,7 +1081,7 @@ class xos_opal_Theme
             return '#';
         }
 
-        if (preg_match('#^(https?://|mailto:|tel:|ftp://|/|#)#i', $url)) {
+        if (preg_match('~^(https?://|mailto:|tel:|ftp://|/|#)~i', $url)) {
             return $url;
         }
 
