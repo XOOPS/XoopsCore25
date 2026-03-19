@@ -170,7 +170,7 @@ function system_menu_drop_parent_foreign_keys(XoopsMySQLDatabase $db, string $ta
         return;
     }
     while ($row = $db->fetchArray($result)) {
-        $db->query("ALTER TABLE `{$row['TABLE_NAME']}` DROP FOREIGN KEY `{$row['CONSTRAINT_NAME']}`");
+        $db->exec("ALTER TABLE `{$row['TABLE_NAME']}` DROP FOREIGN KEY `{$row['CONSTRAINT_NAME']}`");
     }
 }
 
@@ -192,7 +192,7 @@ function system_menu_create_tables(XoopsMySQLDatabase $db): void
         `category_active`    TINYINT(1)   NOT NULL DEFAULT 1,
         PRIMARY KEY (`category_id`)
     ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;";
-    $db->query($sql);
+    $db->exec($sql);
 
     // Drop orphan FKs before (re-)creating the items table
     system_menu_drop_parent_foreign_keys($db, 'menuscategory');
@@ -217,7 +217,7 @@ function system_menu_create_tables(XoopsMySQLDatabase $db): void
             REFERENCES `{$db->prefix('menuscategory')}` (`category_id`)
             ON DELETE CASCADE
     ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;";
-    $db->query($sql);
+    $db->exec($sql);
 }
 
 /**
@@ -244,22 +244,22 @@ function system_menu_normalize_schema(XoopsMySQLDatabase $db): void
     );
     if ($db->isResultSet($result) && ($result instanceof \mysqli_result)) {
         while ($row = $db->fetchArray($result)) {
-            $db->query("ALTER TABLE `{$itemTable}` DROP FOREIGN KEY `{$row['CONSTRAINT_NAME']}`");
+            $db->exec("ALTER TABLE `{$itemTable}` DROP FOREIGN KEY `{$row['CONSTRAINT_NAME']}`");
         }
     }
 
     // Normalize NULL parent IDs to 0
-    $db->query("UPDATE `{$itemTable}` SET `items_pid` = 0 WHERE `items_pid` IS NULL");
-    $db->query("ALTER TABLE `{$itemTable}` MODIFY `items_pid` INT NOT NULL DEFAULT 0");
+    $db->exec("UPDATE `{$itemTable}` SET `items_pid` = 0 WHERE `items_pid` IS NULL");
+    $db->exec("ALTER TABLE `{$itemTable}` MODIFY `items_pid` INT NOT NULL DEFAULT 0");
 
     // Enforce NOT NULL on affix columns
-    $db->query("ALTER TABLE `{$catTable}` MODIFY `category_prefix` TEXT NOT NULL");
-    $db->query("ALTER TABLE `{$catTable}` MODIFY `category_suffix` TEXT NOT NULL");
-    $db->query("ALTER TABLE `{$itemTable}` MODIFY `items_prefix` TEXT NOT NULL");
-    $db->query("ALTER TABLE `{$itemTable}` MODIFY `items_suffix` TEXT NOT NULL");
+    $db->exec("ALTER TABLE `{$catTable}` MODIFY `category_prefix` TEXT NOT NULL");
+    $db->exec("ALTER TABLE `{$catTable}` MODIFY `category_suffix` TEXT NOT NULL");
+    $db->exec("ALTER TABLE `{$itemTable}` MODIFY `items_prefix` TEXT NOT NULL");
+    $db->exec("ALTER TABLE `{$itemTable}` MODIFY `items_suffix` TEXT NOT NULL");
 
     // Migrate root-relative '/' to 'index.php' (safe for subdirectory installs)
-    $db->query(
+    $db->exec(
         "UPDATE `{$catTable}` SET `category_url` = " . $db->quote('index.php')
         . " WHERE `category_protected` = 1 AND `category_url` = " . $db->quote('/')
     );
@@ -287,7 +287,7 @@ function system_menu_ensure_category(XoopsMySQLDatabase $db, array $definition):
     );
     if ($db->isResultSet($result) && ($result instanceof \mysqli_result) && ($row = $db->fetchArray($result))) {
         $active = (int) ($row['category_active'] ?? $definition['active']);
-        $db->query(sprintf(
+        $db->exec(sprintf(
             "UPDATE `%s` SET `category_prefix` = %s, `category_suffix` = %s, `category_url` = %s,"
             . " `category_target` = %d, `category_position` = %d, `category_active` = %d"
             . " WHERE `category_id` = %d",
@@ -303,7 +303,7 @@ function system_menu_ensure_category(XoopsMySQLDatabase $db, array $definition):
         return (int) $row['category_id'];
     }
 
-    $db->query(sprintf(
+    $db->exec(sprintf(
         "INSERT INTO `%s` (`category_title`,`category_prefix`,`category_suffix`,`category_url`,"
         . "`category_target`,`category_position`,`category_protected`,`category_active`)"
         . " VALUES (%s, %s, %s, %s, %d, %d, %d, %d)",
@@ -344,7 +344,7 @@ function system_menu_ensure_item(XoopsMySQLDatabase $db, int $categoryId, array 
     ));
     if ($db->isResultSet($result) && ($result instanceof \mysqli_result) && ($row = $db->fetchArray($result))) {
         $active = (int) ($row['items_active'] ?? $definition['active']);
-        $db->query(sprintf(
+        $db->exec(sprintf(
             "UPDATE `%s` SET `items_pid` = %d, `items_prefix` = %s, `items_suffix` = %s,"
             . " `items_url` = %s, `items_target` = %d, `items_position` = %d, `items_active` = %d"
             . " WHERE `items_id` = %d",
@@ -361,7 +361,7 @@ function system_menu_ensure_item(XoopsMySQLDatabase $db, int $categoryId, array 
         return (int) $row['items_id'];
     }
 
-    $db->query(sprintf(
+    $db->exec(sprintf(
         "INSERT INTO `%s` (`items_cid`,`items_pid`,`items_title`,`items_prefix`,`items_suffix`,"
         . "`items_url`,`items_target`,`items_position`,`items_protected`,`items_active`)"
         . " VALUES (%d, %d, %s, %s, %s, %s, %d, %d, %d, %d)",
@@ -559,7 +559,7 @@ function system_menu_seed_defaults(XoopsMySQLDatabase $db, int $moduleId): void
 
     // --- Clean stale permissions before reseeding ---
     $permTable = $db->prefix('group_permission');
-    $db->query(
+    $db->exec(
         "DELETE FROM `{$permTable}` WHERE `gperm_modid` = " . $moduleId
         . " AND `gperm_name` IN ('menus_category_view', 'menus_items_view')"
     );
@@ -583,6 +583,6 @@ function system_menu_migrate_unsafe_urls(XoopsMySQLDatabase $db): void
     $catTable = $db->prefix('menuscategory');
     $itemTable = $db->prefix('menusitems');
 
-    $db->query("UPDATE `{$catTable}` SET `category_url` = '#' WHERE `category_url` LIKE 'javascript:%'");
-    $db->query("UPDATE `{$itemTable}` SET `items_url` = '#' WHERE `items_url` LIKE 'javascript:%'");
+    $db->exec("UPDATE `{$catTable}` SET `category_url` = '#' WHERE `category_url` LIKE 'javascript:%'");
+    $db->exec("UPDATE `{$itemTable}` SET `items_url` = '#' WHERE `items_url` LIKE 'javascript:%'");
 }
