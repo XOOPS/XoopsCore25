@@ -99,21 +99,50 @@
 
 <script>
 /* Touch-friendly dropdown: first tap opens submenu, second tap follows link.
-   Covers both top-level categories and nested .dropdown-submenu items. */
+   Covers both top-level categories and nested .dropdown-submenu items.
+   Only closes peer menus at the same depth, never ancestors. */
 (function() {
-    var opened = null;
+    var openedByDepth = {};
     document.addEventListener('click', function(e) {
         var link = e.target.closest('.xo-hover-dropdown > a.dropdown-toggle, .dropdown-submenu > a');
-        if (!link) { opened = null; return; }
+        if (!link) {
+            openedByDepth = {};
+            return;
+        }
         var li = link.closest('.xo-hover-dropdown, .dropdown-submenu');
         if (!li) { return; }
-        if (opened === li) { return; } /* second tap — follow href */
+
+        /* Compute depth: 0 = top-level, 1+ = nested submenus */
+        var depth = 0;
+        var parent = li.parentElement;
+        while (parent) {
+            if (parent.matches && parent.matches('.dropdown-submenu, .xo-hover-dropdown')) { depth++; }
+            parent = parent.parentElement;
+        }
+
+        if (openedByDepth[depth] === li) { return; } /* second tap — follow href */
         e.preventDefault();
-        if (opened) { opened.classList.remove('show'); var prev = opened.querySelector('.dropdown-menu'); if (prev) prev.classList.remove('show'); }
+
+        /* Close peer at same depth (not ancestor) */
+        var peer = openedByDepth[depth];
+        if (peer) {
+            peer.classList.remove('show');
+            var peerMenu = peer.querySelector(':scope > .dropdown-menu');
+            if (peerMenu) peerMenu.classList.remove('show');
+        }
+        /* Close any deeper levels */
+        Object.keys(openedByDepth).forEach(function(d) {
+            if (parseInt(d) > depth) {
+                var deep = openedByDepth[d];
+                if (deep) { deep.classList.remove('show'); var dm = deep.querySelector(':scope > .dropdown-menu'); if (dm) dm.classList.remove('show'); }
+                delete openedByDepth[d];
+            }
+        });
+
         li.classList.add('show');
         var menu = li.querySelector(':scope > .dropdown-menu');
         if (menu) menu.classList.add('show');
-        opened = li;
+        openedByDepth[depth] = li;
     });
 })();
 </script>
