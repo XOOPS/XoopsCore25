@@ -167,7 +167,7 @@ function menus_item_can_be_enabled(XoopsMenusItemsHandler $itemHandler, XoopsMen
 {
     // Category must exist and be active
     $cat = menus_cat_handler()->get((int) $item->getVar('items_cid'));
-    if (!is_object($cat)) {
+    if (!is_object($cat) || $cat->isNew()) {
         return false; // Missing category — corrupted data
     }
     if (0 === (int) $cat->getVar('category_active')) {
@@ -183,7 +183,7 @@ function menus_item_can_be_enabled(XoopsMenusItemsHandler $itemHandler, XoopsMen
         }
         $visited[$parentId] = true;
         $parent = $itemHandler->get($parentId);
-        if (!is_object($parent)) {
+        if (!is_object($parent) || $parent->isNew()) {
             return false; // Missing parent — corrupted data
         }
         if (0 === (int) $parent->getVar('items_active')) {
@@ -346,8 +346,8 @@ switch ($op) {
             $cat->setVar('category_prefix', Request::getText('category_prefix', '', 'POST'));
             $cat->setVar('category_suffix', Request::getText('category_suffix', '', 'POST'));
             $cat->setVar('category_url', menus_sanitize_url(Request::getString('category_url', '', 'POST')));
+            $cat->setVar('category_target', Request::getInt('category_target', 0, 'POST'));
         }
-        $cat->setVar('category_target', Request::getInt('category_target', 0, 'POST'));
         $cat->setVar('category_position', Request::getInt('category_position', 0, 'POST'));
         $cat->setVar('category_active', Request::getInt('category_active', 1, 'POST'));
 
@@ -559,8 +559,8 @@ switch ($op) {
             $item->setVar('items_prefix', Request::getText('items_prefix', '', 'POST'));
             $item->setVar('items_suffix', Request::getText('items_suffix', '', 'POST'));
             $item->setVar('items_url', menus_sanitize_url(Request::getString('items_url', '', 'POST')));
+            $item->setVar('items_target', Request::getInt('items_target', 0, 'POST'));
         }
-        $item->setVar('items_target', Request::getInt('items_target', 0, 'POST'));
         $item->setVar('items_position', Request::getInt('items_position', 0, 'POST'));
 
         $wantActive = Request::getInt('items_active', 1, 'POST');

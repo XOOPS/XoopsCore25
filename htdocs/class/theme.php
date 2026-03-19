@@ -1062,8 +1062,11 @@ class xos_opal_Theme
         foreach ($indexed as $id => &$node) {
             $pid = $node['pid'];
             unset($node['pid']);
-            if ($pid === 0 || !isset($indexed[$pid])) {
+            if ($pid === 0) {
                 $tree[] = &$node;
+            } elseif (!isset($indexed[$pid])) {
+                // Parent hidden by permissions — drop this orphaned subtree
+                continue;
             } else {
                 $indexed[$pid]['children'][] = &$node;
             }
