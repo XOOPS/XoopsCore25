@@ -123,28 +123,28 @@ class XoopsMenusItems extends XoopsObject
 
         $form->addElement($this->buildParentSelector($categoryId, $isProtected));
 
-        $titleEl = new \XoopsFormText(
+        $titleField = new \XoopsFormText(
             _AM_SYSTEM_MENUS_ITEMTITLE,
             'items_title',
             60,
             100,
             $this->getVar('items_title', 'e')
         );
-        $titleEl->setDescription(_AM_SYSTEM_MENUS_ITEMTITLE_DESC);
+        $titleField->setDescription(_AM_SYSTEM_MENUS_ITEMTITLE_DESC);
         if ($isProtected) {
-            $titleEl->setExtra('readonly="readonly"');
+            $titleField->setExtra('readonly="readonly"');
         }
-        $form->addElement($titleEl, true);
+        $form->addElement($titleField, true);
 
-        $prefixEl = $this->buildAffixField('items_prefix', _AM_SYSTEM_MENUS_ITEMPREFIX, $isProtected);
-        $prefixEl->setDescription(_AM_SYSTEM_MENUS_ITEMPREFIX_DESC);
-        $form->addElement($prefixEl);
+        $prefixField = $this->buildAffixField('items_prefix', _AM_SYSTEM_MENUS_ITEMPREFIX, $isProtected);
+        $prefixField->setDescription(_AM_SYSTEM_MENUS_ITEMPREFIX_DESC);
+        $form->addElement($prefixField);
 
-        $suffixEl = $this->buildAffixField('items_suffix', _AM_SYSTEM_MENUS_ITEMSUFFIX, $isProtected);
-        $suffixEl->setDescription(_AM_SYSTEM_MENUS_ITEMSUFFIX_DESC);
-        $form->addElement($suffixEl);
+        $suffixField = $this->buildAffixField('items_suffix', _AM_SYSTEM_MENUS_ITEMSUFFIX, $isProtected);
+        $suffixField->setDescription(_AM_SYSTEM_MENUS_ITEMSUFFIX_DESC);
+        $form->addElement($suffixField);
 
-        $urlEl = new \XoopsFormText(
+        $urlField = new \XoopsFormText(
             _AM_SYSTEM_MENUS_ITEMURL,
             'items_url',
             60,
@@ -152,18 +152,18 @@ class XoopsMenusItems extends XoopsObject
             $this->getVar('items_url', 'e')
         );
         if ($isProtected) {
-            $urlEl->setExtra('readonly="readonly"');
+            $urlField->setExtra('readonly="readonly"');
         }
-        $form->addElement($urlEl);
+        $form->addElement($urlField);
 
-        $targetEl = new \XoopsFormRadio(
+        $targetField = new \XoopsFormRadio(
             _AM_SYSTEM_MENUS_ITEMTARGET,
             'items_target',
             (string) $this->getVar('items_target')
         );
-        $targetEl->addOption('0', _AM_SYSTEM_MENUS_TARGET_SELF);
-        $targetEl->addOption('1', _AM_SYSTEM_MENUS_TARGET_BLANK);
-        $form->addElement($targetEl);
+        $targetField->addOption('0', _AM_SYSTEM_MENUS_TARGET_SELF);
+        $targetField->addOption('1', _AM_SYSTEM_MENUS_TARGET_BLANK);
+        $form->addElement($targetField);
 
         $form->addElement(new \XoopsFormText(
             _AM_SYSTEM_MENUS_ITEMPOSITION,
@@ -178,10 +178,10 @@ class XoopsMenusItems extends XoopsObject
             (int) $this->getVar('items_active')
         ));
 
-        $permEl = new \XoopsGroupPermForm('', $GLOBALS['xoopsModule']->getVar('mid'), 'menus_items_view', '');
-        $permEl->addItem((int) $this->getVar('items_id'), _AM_SYSTEM_MENUS_PERMISSION_VIEW_ITEM);
-        $permEl->setDescription(_AM_SYSTEM_MENUS_PERMISSION_VIEW_ITEM_DESC);
-        $form->addElement($permEl);
+        $permField = new \XoopsGroupPermForm('', $GLOBALS['xoopsModule']->getVar('mid'), 'menus_items_view', '');
+        $permField->addItem((int) $this->getVar('items_id'), _AM_SYSTEM_MENUS_PERMISSION_VIEW_ITEM);
+        $permField->setDescription(_AM_SYSTEM_MENUS_PERMISSION_VIEW_ITEM_DESC);
+        $form->addElement($permField);
 
         $form->addElement(new \XoopsFormHidden('op', 'saveitem'));
         $form->addElement(new \XoopsFormButton('', 'submit', _SUBMIT, 'submit'));
@@ -214,18 +214,18 @@ class XoopsMenusItems extends XoopsObject
             }
         }
 
-        $el = new \XoopsFormSelect(
+        $field = new \XoopsFormSelect(
             _AM_SYSTEM_MENUS_ITEMPARENT,
             'items_pid',
             (string) $this->getVar('items_pid'),
             1,
             false
         );
-        $el->addOptionArray($options);
+        $field->addOptionArray($options);
         if ($isProtected) {
-            $el->setExtra('disabled="disabled"');
+            $field->setExtra('disabled="disabled"');
         }
-        return $el;
+        return $field;
     }
 
     /**
@@ -240,11 +240,11 @@ class XoopsMenusItems extends XoopsObject
     private function buildAffixField(string $varName, string $label, bool $isProtected): \XoopsFormTextArea
     {
         $value = (string) $this->getVar($varName, 'n');
-        $el    = new \XoopsFormTextArea($label, $varName, $value, 3, 60);
+        $field   = new \XoopsFormTextArea($label, $varName, $value, 3, 60);
         if ($isProtected) {
-            $el->setExtra('readonly="readonly"');
+            $field->setExtra('readonly="readonly"');
         }
-        return $el;
+        return $field;
     }
 }
 
