@@ -139,13 +139,59 @@ function menus_item_handler(): XoopsMenusItemsHandler
     return $handler ??= xoops_getHandler('menusitems');
 }
 
-// --- Asset Registration ---
-$GLOBALS['xoTheme']->addStylesheet(XOOPS_URL . '/modules/system/css/admin.css');
-$GLOBALS['xoTheme']->addStylesheet(XOOPS_URL . '/modules/system/css/menus.css');
-$GLOBALS['xoTheme']->addScript(XOOPS_URL . '/modules/system/js/menus.js');
+/**
+ * Check whether an item can be enabled by walking its full parent chain.
+ *
+ * Both the owning category and every ancestor item must be active before
+ * an item may be toggled on.
+ *
+ * @param XoopsMenusItemsHandler $itemHandler Item handler
+ * @param XoopsMenusItems        $item        The item to check
+ *
+ * @return bool True when every ancestor is active
+ */
+function menus_item_can_be_enabled(XoopsMenusItemsHandler $itemHandler, XoopsMenusItems $item): bool
+{
+    // Category must be active
+    $cat = menus_cat_handler()->get((int) $item->getVar('items_cid'));
+    if (is_object($cat) && 0 === (int) $cat->getVar('category_active')) {
+        return false;
+    }
 
-// SortableJS from CDN (MIT license)
-$GLOBALS['xoTheme']->addScript('https://cdn.jsdelivr.net/npm/sortablejs@1.15.6/Sortable.min.js');
+    // Walk the full parent chain
+    $parentId = (int) $item->getVar('items_pid');
+    while ($parentId > 0) {
+        $parent = $itemHandler->get($parentId);
+        if (!is_object($parent)) {
+            break;
+        }
+        if (0 === (int) $parent->getVar('items_active')) {
+            return false;
+        }
+        $parentId = (int) $parent->getVar('items_pid');
+    }
+
+    return true;
+}
+
+/**
+ * Initialize all template variables to safe defaults.
+ *
+ * @param XoopsTpl $tpl The template engine
+ * @param string   $op  Current operation name
+ */
+function menus_assign_template_defaults(\XoopsTpl $tpl, string $op): void
+{
+    $tpl->assign('op', $op);
+    $tpl->assign('admin_url', MENUS_ADMIN_URL);
+    $tpl->assign('xoops_token', $GLOBALS['xoopsSecurity']->getTokenHTML());
+    $tpl->assign('categories', []);
+    $tpl->assign('category', null);
+    $tpl->assign('items', []);
+    $tpl->assign('form', '');
+    $tpl->assign('error_message', '');
+    $tpl->assign('token', '');
+}
 
 // --- Operation Dispatch ---
 $op = Request::getCmd('op', 'list', 'REQUEST');
@@ -153,17 +199,31 @@ $isAjax = menus_is_ajax($op);
 
 if ($isAjax) {
     menus_prepare_ajax();
-}
+} else {
+    // Standard admin page chrome — header, assets, breadcrumb
+    xoops_cp_header();
+    menus_assign_template_defaults($xoopsTpl, $op);
 
-// Get the template engine
-$xoopsTpl = $GLOBALS['xoopsTpl'];
-$xoopsTpl->assign('op', $op);
-$xoopsTpl->assign('admin_url', MENUS_ADMIN_URL);
+    $xoTheme->addStylesheet(XOOPS_URL . '/modules/system/css/admin.css');
+    $xoTheme->addStylesheet(XOOPS_URL . '/modules/system/css/menus.css');
+    $xoTheme->addScript('browse.php?Frameworks/jquery/jquery.js');
+    $xoTheme->addScript('browse.php?Frameworks/jquery/plugins/jquery.ui.js');
+    $xoTheme->addScript('modules/system/js/admin.js');
+    $xoTheme->addScript('modules/system/js/menus.js');
+    // SortableJS from CDN (MIT license)
+    $xoTheme->addScript('https://cdn.jsdelivr.net/npm/sortablejs@1.15.6/Sortable.min.js');
+
+    $xoBreadCrumb->addLink(_AM_SYSTEM_CONFIG, XOOPS_URL . '/modules/system/admin.php');
+}
 
 switch ($op) {
     // --- LIST ALL CATEGORIES ---
     case 'list':
     default:
+        $xoBreadCrumb->addLink(_AM_SYSTEM_MENUS_NAV_MAIN);
+        $xoBreadCrumb->addTips(_AM_SYSTEM_MENUS_NAV_TIPS);
+        $xoBreadCrumb->render();
+
         $catHandler  = menus_cat_handler();
         $itemHandler = menus_item_handler();
 
@@ -195,6 +255,10 @@ switch ($op) {
 
     // --- ADD CATEGORY FORM ---
     case 'addcat':
+        $xoBreadCrumb->addLink(_AM_SYSTEM_MENUS_NAV_MAIN, system_adminVersion('menus', 'adminpath'));
+        $xoBreadCrumb->addLink(_AM_SYSTEM_MENUS_ADDCAT);
+        $xoBreadCrumb->render();
+
         $cat  = new XoopsMenusCategory();
         $form = $cat->getFormCat(MENUS_ADMIN_URL);
         $xoopsTpl->assign('form', $form->render());
@@ -202,6 +266,10 @@ switch ($op) {
 
     // --- EDIT CATEGORY FORM ---
     case 'editcat':
+        $xoBreadCrumb->addLink(_AM_SYSTEM_MENUS_NAV_MAIN, system_adminVersion('menus', 'adminpath'));
+        $xoBreadCrumb->addLink(_AM_SYSTEM_MENUS_EDITCAT);
+        $xoBreadCrumb->render();
+
         $catId = Request::getInt('category_id', 0, 'GET');
         $cat   = menus_cat_handler()->get($catId);
         if (!is_object($cat) || $cat->isNew()) {
@@ -321,6 +389,10 @@ switch ($op) {
 
     // --- VIEW CATEGORY (show items) ---
     case 'viewcat':
+        $xoBreadCrumb->addLink(_AM_SYSTEM_MENUS_NAV_MAIN, system_adminVersion('menus', 'adminpath'));
+        $xoBreadCrumb->addLink(_AM_SYSTEM_MENUS_NAV_CATEGORY);
+        $xoBreadCrumb->render();
+
         $catId = Request::getInt('category_id', 0, 'GET');
         $cat   = menus_cat_handler()->get($catId);
         if (!is_object($cat) || $cat->isNew()) {
@@ -356,6 +428,10 @@ switch ($op) {
 
     // --- ADD ITEM FORM ---
     case 'additem':
+        $xoBreadCrumb->addLink(_AM_SYSTEM_MENUS_NAV_MAIN, system_adminVersion('menus', 'adminpath'));
+        $xoBreadCrumb->addLink(_AM_SYSTEM_MENUS_ADDITEM);
+        $xoBreadCrumb->render();
+
         $catId = Request::getInt('category_id', 0, 'GET');
         $item  = new XoopsMenusItems();
         $item->setVar('items_cid', $catId);
@@ -365,6 +441,10 @@ switch ($op) {
 
     // --- EDIT ITEM FORM ---
     case 'edititem':
+        $xoBreadCrumb->addLink(_AM_SYSTEM_MENUS_NAV_MAIN, system_adminVersion('menus', 'adminpath'));
+        $xoBreadCrumb->addLink(_AM_SYSTEM_MENUS_NAV_CATEGORY);
+        $xoBreadCrumb->render();
+
         $itemId = Request::getInt('items_id', 0, 'GET');
         $item   = menus_item_handler()->get($itemId);
         if (!is_object($item) || $item->isNew()) {
@@ -644,20 +724,9 @@ switch ($op) {
 
         $newActive = $item->getVar('items_active') ? 0 : 1;
 
-        // If activating, check parent is active
-        if ($newActive === 1) {
-            $parentId = (int) $item->getVar('items_pid');
-            if ($parentId > 0) {
-                $parent = menus_item_handler()->get($parentId);
-                if (is_object($parent) && !(int) $parent->getVar('items_active')) {
-                    menus_send_json(false, ['message' => _AM_SYSTEM_MENUS_ERROR_PARENTINACTIVE]);
-                }
-            }
-            // Also check category is active
-            $cat = menus_cat_handler()->get((int) $item->getVar('items_cid'));
-            if (is_object($cat) && !(int) $cat->getVar('category_active')) {
-                menus_send_json(false, ['message' => _AM_SYSTEM_MENUS_ERROR_CATINACTIVE]);
-            }
+        // If activating, check the full parent chain (category + all ancestor items)
+        if ($newActive === 1 && !menus_item_can_be_enabled(menus_item_handler(), $item)) {
+            menus_send_json(false, ['message' => _AM_SYSTEM_MENUS_ERROR_PARENTINACTIVE]);
         }
 
         $item->setVar('items_active', $newActive);
@@ -688,3 +757,7 @@ switch ($op) {
         menus_send_json(true, ['active' => $newActive]);
         break;
 } // end switch
+
+if (!menus_is_ajax($op)) {
+    xoops_cp_footer();
+}

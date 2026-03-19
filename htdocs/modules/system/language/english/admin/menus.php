@@ -14,6 +14,7 @@ defined('XOOPS_ROOT_PATH') || exit('Restricted access');
 // Navigation
 define('_AM_SYSTEM_MENUS_NAV_MAIN', 'Menu Manager');
 define('_AM_SYSTEM_MENUS_NAV_BACK', 'Back to Menu List');
+define('_AM_SYSTEM_MENUS_NAV_CATEGORY', 'Category View');
 define('_AM_SYSTEM_MENUS_NAV_TIPS', '<strong>Tips:</strong><ul>'
     . '<li>Use language constants (e.g. MENUS_HOME) as titles so they can be translated.</li>'
     . '<li>Create a custom menus.php in your language folder to override constant values.</li>'

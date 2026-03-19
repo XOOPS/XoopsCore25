@@ -1,21 +1,23 @@
-<{* System Menu Administration Template *}>
+<{include file="db:system_header.tpl"}>
 
 <{* ─── Action Bar ─── *}>
 <div class="sm-actionbar">
     <{if $op == 'list'}>
         <a href="<{$admin_url}>&op=addcat" class="btn btn-success">
-            <i class="fa fa-plus"></i> <{$smarty.const._AM_SYSTEM_MENUS_ADDCAT}>
+            <img src="<{xoAdminIcons 'add.png'}>" alt="<{$smarty.const._AM_SYSTEM_MENUS_ADDCAT}>">
+            <{$smarty.const._AM_SYSTEM_MENUS_ADDCAT}>
         </a>
     <{elseif $op == 'viewcat'}>
         <a href="<{$admin_url}>" class="btn btn-default">
-            <i class="fa fa-arrow-left"></i> <{$smarty.const._AM_SYSTEM_MENUS_NAV_BACK}>
+            <{$smarty.const._AM_SYSTEM_MENUS_NAV_BACK}>
         </a>
         <a href="<{$admin_url}>&op=additem&category_id=<{$category.id}>" class="btn btn-success">
-            <i class="fa fa-plus"></i> <{$smarty.const._AM_SYSTEM_MENUS_ADDITEM}>
+            <img src="<{xoAdminIcons 'add.png'}>" alt="<{$smarty.const._AM_SYSTEM_MENUS_ADDITEM}>">
+            <{$smarty.const._AM_SYSTEM_MENUS_ADDITEM}>
         </a>
     <{elseif $op == 'addcat' || $op == 'editcat' || $op == 'additem' || $op == 'edititem'}>
         <a href="<{$admin_url}>" class="btn btn-default">
-            <i class="fa fa-arrow-left"></i> <{$smarty.const._AM_SYSTEM_MENUS_NAV_BACK}>
+            <{$smarty.const._AM_SYSTEM_MENUS_NAV_BACK}>
         </a>
     <{/if}>
 </div>
@@ -27,17 +29,11 @@
 
 <{* ─── Category List ─── *}>
 <{if $op == 'list'}>
-    <div class="sm-tips alert alert-info">
-        <{$smarty.const._AM_SYSTEM_MENUS_NAV_TIPS|default:''}>
-    </div>
-
     <ul id="sm-cat-list" class="sm-list">
         <{foreach from=$categories item=cat}>
             <li class="sm-list__item<{if !$cat.active}> sm-list__item--inactive<{/if}>"
                 data-id="<{$cat.id}>">
-                <span class="sm-list__handle" title="Drag to reorder">
-                    <i class="fa fa-arrows-v"></i>
-                </span>
+                <span class="sm-list__handle" title="Drag to reorder">&#x2630;</span>
                 <span class="sm-list__title">
                     <a href="<{$admin_url}>&op=viewcat&category_id=<{$cat.id}>">
                         <{$cat.title}>
@@ -50,16 +46,20 @@
                        data-id="<{$cat.id}>"
                        data-active="<{$cat.active}>"
                        title="<{$smarty.const._AM_SYSTEM_MENUS_ACTIVE}>">
-                        <i class="fa fa-<{if $cat.active}>check-circle text-success<{else}>times-circle text-danger<{/if}>"></i>
+                        <{if $cat.active}>
+                            <img src="<{xoAdminIcons 'success.png'}>" alt="<{$smarty.const._AM_SYSTEM_MENUS_ACTIVE}>">
+                        <{else}>
+                            <img src="<{xoAdminIcons 'cancel.png'}>" alt="<{$smarty.const._AM_SYSTEM_MENUS_ACTIVE}>">
+                        <{/if}>
                     </a>
                     <a href="<{$admin_url}>&op=editcat&category_id=<{$cat.id}>"
                        title="<{$smarty.const._AM_SYSTEM_MENUS_EDITCAT}>">
-                        <i class="fa fa-pencil"></i>
+                        <img src="<{xoAdminIcons 'edit.png'}>" alt="<{$smarty.const._AM_SYSTEM_MENUS_EDITCAT}>">
                     </a>
                     <{if !$cat.protected}>
                         <a href="<{$admin_url}>&op=delcat&category_id=<{$cat.id}>"
                            title="<{$smarty.const._AM_SYSTEM_MENUS_DELCAT}>">
-                            <i class="fa fa-trash text-danger"></i>
+                            <img src="<{xoAdminIcons 'delete.png'}>" alt="<{$smarty.const._AM_SYSTEM_MENUS_DELCAT}>">
                         </a>
                     <{/if}>
                 </span>
