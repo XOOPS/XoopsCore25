@@ -112,9 +112,23 @@ function menus_require_token(bool $isAjax): void
 function menus_sanitize_url(string $url): string
 {
     $url = trim($url);
-    if (preg_match('/^\s*javascript\s*:/i', $url)) {
-        return '';
+    if ($url === '' || $url === '#') {
+        return $url;
     }
+
+    // Relative URLs and fragment-only are safe
+    if ($url[0] === '/' || $url[0] === '.' || $url[0] === '?' || $url[0] === '#') {
+        return $url;
+    }
+
+    // Absolute URLs must use an allowed scheme
+    if (preg_match('#^([a-zA-Z][a-zA-Z0-9+.-]*):#', $url, $m)) {
+        $scheme = strtolower($m[1]);
+        if (!in_array($scheme, ['http', 'https', 'ftp', 'mailto'], true)) {
+            return '';
+        }
+    }
+
     return $url;
 }
 
@@ -730,8 +744,12 @@ switch ($op) {
         // Verify posted IDs match the category's current item set exactly
         $itemHandler = menus_item_handler();
         $currentCriteria = new CriteriaCompo(new Criteria('items_cid', (string) $catId));
-        $currentCount = $itemHandler->getCount($currentCriteria);
-        if (count($seenIds) !== $currentCount) {
+        $currentItems = $itemHandler->getObjects($currentCriteria);
+        $currentIds = [];
+        foreach ($currentItems as $ci) {
+            $currentIds[(int) $ci->getVar('items_id')] = true;
+        }
+        if ($seenIds !== $currentIds) {
             menus_send_json(false, ['message' => 'Tree does not match current item set']);
         }
 
