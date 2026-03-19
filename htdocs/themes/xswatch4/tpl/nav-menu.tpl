@@ -1,13 +1,16 @@
 <{* Bootstrap 4 Navigation Menu *}>
+<{* Renders from xoMenuCategories when available, falls back to static links *}>
 
 <{function name=renderBs4SubMenu}>
     <{foreach from=$menuItems item=subItem}>
         <{if $subItem.children}>
             <li class="dropdown-submenu">
                 <a class="dropdown-item dropdown-toggle"
-                   href="<{$subItem.url}>"
-                   <{if $subItem.target}> target="_blank" rel="noopener noreferrer"<{/if}>>
-                    <{$subItem.prefix|default:''}><{$subItem.title|escape}><{$subItem.suffix|default:''}>
+                   href="<{if $subItem.url|default:'' neq ''}><{$subItem.url|escape}><{else}>#<{/if}>"
+                   target="<{$subItem.target}>"
+                   <{if $subItem.target == '_blank'}> rel="noopener noreferrer"<{/if}>
+                   aria-expanded="false">
+                    <{$subItem.prefix|default:''}> <{$subItem.title|escape}> <{$subItem.suffix|default:''}>
                 </a>
                 <ul class="dropdown-menu">
                     <{call name=renderBs4SubMenu menuItems=$subItem.children}>
@@ -16,9 +19,10 @@
         <{else}>
             <li>
                 <a class="dropdown-item"
-                   href="<{$subItem.url}>"
-                   <{if $subItem.target}> target="_blank" rel="noopener noreferrer"<{/if}>>
-                    <{$subItem.prefix|default:''}><{$subItem.title|escape}><{$subItem.suffix|default:''}>
+                   href="<{if $subItem.url|default:'' neq ''}><{$subItem.url|escape}><{else}>#<{/if}>"
+                   target="<{$subItem.target}>"
+                   <{if $subItem.target == '_blank'}> rel="noopener noreferrer"<{/if}>>
+                    <{$subItem.prefix|default:''}> <{$subItem.title|escape}> <{$subItem.suffix|default:''}>
                 </a>
             </li>
         <{/if}>
@@ -26,16 +30,16 @@
 <{/function}>
 
 <ul class="nav navbar-nav mr-auto">
-    <{if $xoMenuCategories|default:false}>
+    <{if isset($xoMenuCategories) && $xoMenuCategories}>
         <{foreach from=$xoMenuCategories item=cat}>
             <{if $cat.items}>
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle"
-                       href="<{$cat.category_url}>"
-                       data-toggle="dropdown"
-                       aria-expanded="false"
-                       <{if $cat.category_target}> target="_blank" rel="noopener noreferrer"<{/if}>>
-                        <{$cat.category_prefix|default:''}><{$cat.category_title|escape}><{$cat.category_suffix|default:''}>
+                       href="<{if $cat.category_url|default:'' neq ''}><{$cat.category_url|escape}><{else}>#<{/if}>"
+                       target="<{$cat.category_target}>"
+                       <{if $cat.category_target == '_blank'}> rel="noopener noreferrer"<{/if}>
+                       role="button" data-toggle="dropdown" aria-expanded="false">
+                        <{$cat.category_prefix|default:''}> <{$cat.category_title|escape}> <{$cat.category_suffix|default:''}>
                     </a>
                     <ul class="dropdown-menu">
                         <{call name=renderBs4SubMenu menuItems=$cat.items}>
@@ -44,24 +48,26 @@
             <{else}>
                 <li class="nav-item">
                     <a class="nav-link"
-                       href="<{$cat.category_url}>"
-                       <{if $cat.category_target}> target="_blank" rel="noopener noreferrer"<{/if}>>
-                        <{$cat.category_prefix|default:''}><{$cat.category_title|escape}><{$cat.category_suffix|default:''}>
+                       href="<{if $cat.category_url|default:'' neq ''}><{$cat.category_url|escape}><{else}>#<{/if}>"
+                       target="<{$cat.category_target}>"
+                       <{if $cat.category_target == '_blank'}> rel="noopener noreferrer"<{/if}>>
+                        <{$cat.category_prefix|default:''}> <{$cat.category_title|escape}> <{$cat.category_suffix|default:''}>
                     </a>
                 </li>
             <{/if}>
         <{/foreach}>
     <{else}>
-        <li class="nav-item"><a class="nav-link" href="<{xoAppUrl}>">Home</a></li>
-        <{if $xoops_isadmin}>
-            <li class="nav-item"><a class="nav-link" href="<{xoAppUrl admin.php}>">Admin</a></li>
+        <{* Fallback navigation when menu system is disabled or not yet populated *}>
+        <li class="nav-item"><a class="nav-link" href="<{$xoops_url}>"><{$smarty.const._YOURHOME|default:'Home'}></a></li>
+        <{if $xoops_isadmin|default:false}>
+            <li class="nav-item"><a class="nav-link" href="<{$xoops_url}>/admin.php"><{$smarty.const._ADMINISTRATION|default:'Administration'}></a></li>
         <{/if}>
-        <{if $xoops_isuser}>
-            <li class="nav-item"><a class="nav-link" href="<{xoAppUrl edituser.php}>">Profile</a></li>
-            <li class="nav-item"><a class="nav-link" href="<{xoAppUrl user.php?op=logout}>">Logout</a></li>
+        <{if $xoops_isuser|default:false}>
+            <li class="nav-item"><a class="nav-link" href="<{$xoops_url}>/edituser.php"><{$smarty.const._PROFILE|default:'Account'}></a></li>
+            <li class="nav-item"><a class="nav-link" href="<{$xoops_url}>/user.php?op=logout"><{$smarty.const._LOGOUT}></a></li>
         <{else}>
-            <li class="nav-item"><a class="nav-link" href="<{xoAppUrl user.php}>">Login</a></li>
-            <li class="nav-item"><a class="nav-link" href="<{xoAppUrl register.php}>">Register</a></li>
+            <li class="nav-item"><a class="nav-link" href="<{$xoops_url}>/user.php"><{$smarty.const._LOGIN}></a></li>
+            <li class="nav-item"><a class="nav-link" href="<{$xoops_url}>/register.php"><{$smarty.const._REGISTER}></a></li>
         <{/if}>
     <{/if}>
 </ul>
