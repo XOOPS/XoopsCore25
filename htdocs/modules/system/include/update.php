@@ -32,12 +32,8 @@ function xoops_module_update_system(XoopsModule $module, $prev_version = null)
     if ($prev_version < '2.1.8') {
         update_system_remove_legacy_html_templates($module);
     }
-    // Create menu tables and seed defaults
-    global $xoopsDB;
-    system_menu_create_tables($xoopsDB);
-    system_menu_migrate_unsafe_urls($xoopsDB);
-    $systemModuleId = $module->getVar('mid');
-    system_menu_seed_defaults($xoopsDB, (int) $systemModuleId);
+    // Create/upgrade menu tables and seed defaults (added in 2.5.12)
+    system_menu_update($module);
 
     $errors = $module->getErrors();
     if (!empty($errors)) {
@@ -141,6 +137,25 @@ function update_system_remove_legacy_html_templates(XoopsModule $module)
 }
 
 /**
+ * Create or upgrade the menu management tables and seed protected defaults.
+ *
+ * Standardizes the root parent sentinel to 0 (matching XOOPS convention)
+ * and enforces NOT NULL on affix columns.
+ *
+ * @param XoopsModule $module System module reference
+ */
+function system_menu_update(XoopsModule $module): void
+{
+    $db = \XoopsDatabaseFactory::getDatabaseConnection();
+    $mid = (int) $module->getVar('mid');
+
+    system_menu_create_tables($db);
+    system_menu_normalize_schema($db);
+    system_menu_migrate_unsafe_urls($db);
+    system_menu_seed_defaults($db, $mid);
+}
+
+/**
  * Drop foreign key constraints referencing a given parent table.
  */
 function system_menu_drop_parent_foreign_keys(XoopsMySQLDatabase $db, string $tableName): void
@@ -151,7 +166,7 @@ function system_menu_drop_parent_foreign_keys(XoopsMySQLDatabase $db, string $ta
          WHERE REFERENCED_TABLE_NAME = " . $db->quote($db->prefix($tableName)) . "
            AND TABLE_SCHEMA = DATABASE()"
     );
-    if (!($result instanceof \mysqli_result)) {
+    if (!$db->isResultSet($result) || !($result instanceof \mysqli_result)) {
         return;
     }
     while ($row = $db->fetchArray($result)) {
@@ -168,8 +183,8 @@ function system_menu_create_tables(XoopsMySQLDatabase $db): void
     $sql = "CREATE TABLE IF NOT EXISTS `{$prefix}` (
         `category_id`        INT          NOT NULL AUTO_INCREMENT,
         `category_title`     VARCHAR(100) NOT NULL DEFAULT '',
-        `category_prefix`    TEXT,
-        `category_suffix`    TEXT,
+        `category_prefix`    TEXT         NOT NULL,
+        `category_suffix`    TEXT         NOT NULL,
         `category_url`       VARCHAR(255) NOT NULL DEFAULT '',
         `category_target`    TINYINT(1)   NOT NULL DEFAULT 0,
         `category_position`  INT          NOT NULL DEFAULT 0,
@@ -188,8 +203,8 @@ function system_menu_create_tables(XoopsMySQLDatabase $db): void
         `items_pid`       INT          NOT NULL DEFAULT 0,
         `items_cid`       INT          NOT NULL DEFAULT 0,
         `items_title`     VARCHAR(100) NOT NULL DEFAULT '',
-        `items_prefix`    TEXT,
-        `items_suffix`    TEXT,
+        `items_prefix`    TEXT         NOT NULL,
+        `items_suffix`    TEXT         NOT NULL,
         `items_url`       VARCHAR(255) NOT NULL DEFAULT '',
         `items_target`    TINYINT(1)   NOT NULL DEFAULT 0,
         `items_position`  INT          NOT NULL DEFAULT 0,
@@ -206,93 +221,185 @@ function system_menu_create_tables(XoopsMySQLDatabase $db): void
 }
 
 /**
- * Insert a category row only if it does not already exist (by title).
+ * Normalize the menu schema for XOOPS conventions.
  *
- * @return int The category_id of the existing or newly inserted row.
+ * - Converts any NULL items_pid values to 0 (root sentinel)
+ * - Drops legacy self-referencing FK on items_pid
+ * - Enforces NOT NULL on items_pid
+ * - Enforces NOT NULL on all prefix/suffix TEXT columns
+ * - Migrates root-relative '/' category URLs to 'index.php' for subdirectory safety
  */
-function system_menu_ensure_category(
-    XoopsMySQLDatabase $db,
-    string $title,
-    string $url,
-    int $position,
-    int $protected = 0,
-    int $active = 1
-): int {
+function system_menu_normalize_schema(XoopsMySQLDatabase $db): void
+{
+    $catTable = $db->prefix('menuscategory');
+    $itemTable = $db->prefix('menusitems');
+
+    // Drop self-referencing FK on items_pid (incompatible with 0-as-root convention)
+    $result = $db->query(
+        "SELECT CONSTRAINT_NAME FROM INFORMATION_SCHEMA.KEY_COLUMN_USAGE"
+        . " WHERE TABLE_SCHEMA = DATABASE()"
+        . " AND TABLE_NAME = " . $db->quote($itemTable)
+        . " AND COLUMN_NAME = 'items_pid'"
+        . " AND REFERENCED_TABLE_NAME IS NOT NULL"
+    );
+    if ($db->isResultSet($result) && ($result instanceof \mysqli_result)) {
+        while ($row = $db->fetchArray($result)) {
+            $db->query("ALTER TABLE `{$itemTable}` DROP FOREIGN KEY `{$row['CONSTRAINT_NAME']}`");
+        }
+    }
+
+    // Normalize NULL parent IDs to 0
+    $db->query("UPDATE `{$itemTable}` SET `items_pid` = 0 WHERE `items_pid` IS NULL");
+    $db->query("ALTER TABLE `{$itemTable}` MODIFY `items_pid` INT NOT NULL DEFAULT 0");
+
+    // Enforce NOT NULL on affix columns
+    $db->query("ALTER TABLE `{$catTable}` MODIFY `category_prefix` TEXT NOT NULL");
+    $db->query("ALTER TABLE `{$catTable}` MODIFY `category_suffix` TEXT NOT NULL");
+    $db->query("ALTER TABLE `{$itemTable}` MODIFY `items_prefix` TEXT NOT NULL");
+    $db->query("ALTER TABLE `{$itemTable}` MODIFY `items_suffix` TEXT NOT NULL");
+
+    // Migrate root-relative '/' to 'index.php' (safe for subdirectory installs)
+    $db->query(
+        "UPDATE `{$catTable}` SET `category_url` = " . $db->quote('index.php')
+        . " WHERE `category_protected` = 1 AND `category_url` = " . $db->quote('/')
+    );
+}
+
+/**
+ * Ensure a protected category exists and matches the current seed definition.
+ *
+ * On upgrade, existing categories keep their active state so administrators
+ * do not lose local enable/disable decisions.
+ *
+ * @param XoopsMySQLDatabase    $db         Database connection
+ * @param array<string, mixed>  $definition Category seed definition
+ *
+ * @return int Persisted category id
+ */
+function system_menu_ensure_category(XoopsMySQLDatabase $db, array $definition): int
+{
     $table = $db->prefix('menuscategory');
     $result = $db->query(
-        "SELECT `category_id` FROM `{$table}` WHERE `category_title` = " . $db->quote($title)
+        "SELECT `category_id`, `category_active` FROM `{$table}`"
+        . " WHERE `category_title` = " . $db->quote($definition['title'])
+        . " AND `category_protected` = " . (int) $definition['protected']
+        . " ORDER BY `category_id` ASC"
     );
     if ($db->isResultSet($result) && ($result instanceof \mysqli_result) && ($row = $db->fetchArray($result))) {
+        $active = (int) ($row['category_active'] ?? $definition['active']);
+        $db->query(sprintf(
+            "UPDATE `%s` SET `category_prefix` = %s, `category_suffix` = %s, `category_url` = %s,"
+            . " `category_target` = %d, `category_position` = %d, `category_active` = %d"
+            . " WHERE `category_id` = %d",
+            $table,
+            $db->quote($definition['prefix']),
+            $db->quote($definition['suffix']),
+            $db->quote($definition['url']),
+            (int) $definition['target'],
+            (int) $definition['position'],
+            $active,
+            (int) $row['category_id']
+        ));
         return (int) $row['category_id'];
     }
+
     $db->query(sprintf(
-        "INSERT INTO `%s` (`category_title`,`category_url`,`category_position`,`category_protected`,`category_active`)
-         VALUES (%s, %s, %d, %d, %d)",
+        "INSERT INTO `%s` (`category_title`,`category_prefix`,`category_suffix`,`category_url`,"
+        . "`category_target`,`category_position`,`category_protected`,`category_active`)"
+        . " VALUES (%s, %s, %s, %s, %d, %d, %d, %d)",
         $table,
-        $db->quote($title),
-        $db->quote($url),
-        $position,
-        $protected,
-        $active
+        $db->quote($definition['title']),
+        $db->quote($definition['prefix']),
+        $db->quote($definition['suffix']),
+        $db->quote($definition['url']),
+        (int) $definition['target'],
+        (int) $definition['position'],
+        (int) $definition['protected'],
+        (int) $definition['active']
     ));
     return (int) $db->getInsertId();
 }
 
 /**
- * Insert an item row only if no item with the same title exists under the same category.
+ * Ensure an item exists under its category and matches the current seed definition.
+ *
+ * On upgrade, existing items keep their active state so administrators
+ * do not lose local enable/disable decisions.
+ *
+ * @param XoopsMySQLDatabase    $db         Database connection
+ * @param int                   $categoryId Parent category id
+ * @param array<string, mixed>  $definition Item seed definition
+ *
+ * @return int Persisted item id
  */
-function system_menu_ensure_item(
-    XoopsMySQLDatabase $db,
-    int $categoryId,
-    string $title,
-    string $url,
-    int $position,
-    int $parentId = 0,
-    int $protected = 0,
-    int $active = 1,
-    string $prefix = '',
-    string $suffix = ''
-): void {
+function system_menu_ensure_item(XoopsMySQLDatabase $db, int $categoryId, array $definition): int
+{
     $table = $db->prefix('menusitems');
     $result = $db->query(sprintf(
-        "SELECT `items_id` FROM `%s` WHERE `items_cid` = %d AND `items_title` = %s",
+        "SELECT `items_id`, `items_active` FROM `%s` WHERE `items_cid` = %d AND `items_title` = %s"
+        . " ORDER BY `items_id` ASC",
         $table,
         $categoryId,
-        $db->quote($title)
+        $db->quote($definition['title'])
     ));
-    if ($db->isResultSet($result) && ($result instanceof \mysqli_result) && $db->fetchArray($result)) {
-        return;
+    if ($db->isResultSet($result) && ($result instanceof \mysqli_result) && ($row = $db->fetchArray($result))) {
+        $active = (int) ($row['items_active'] ?? $definition['active']);
+        $db->query(sprintf(
+            "UPDATE `%s` SET `items_pid` = %d, `items_prefix` = %s, `items_suffix` = %s,"
+            . " `items_url` = %s, `items_target` = %d, `items_position` = %d, `items_active` = %d"
+            . " WHERE `items_id` = %d",
+            $table,
+            (int) $definition['pid'],
+            $db->quote($definition['prefix']),
+            $db->quote($definition['suffix']),
+            $db->quote($definition['url']),
+            (int) $definition['target'],
+            (int) $definition['position'],
+            $active,
+            (int) $row['items_id']
+        ));
+        return (int) $row['items_id'];
     }
+
     $db->query(sprintf(
-        "INSERT INTO `%s` (`items_cid`,`items_pid`,`items_title`,`items_prefix`,`items_suffix`,`items_url`,`items_position`,`items_protected`,`items_active`)
-         VALUES (%d, %d, %s, %s, %s, %s, %d, %d, %d)",
+        "INSERT INTO `%s` (`items_cid`,`items_pid`,`items_title`,`items_prefix`,`items_suffix`,"
+        . "`items_url`,`items_target`,`items_position`,`items_protected`,`items_active`)"
+        . " VALUES (%d, %d, %s, %s, %s, %s, %d, %d, %d, %d)",
         $table,
         $categoryId,
-        $parentId,
-        $db->quote($title),
-        $db->quote($prefix),
-        $db->quote($suffix),
-        $db->quote($url),
-        $position,
-        $protected,
-        $active
+        (int) $definition['pid'],
+        $db->quote($definition['title']),
+        $db->quote($definition['prefix']),
+        $db->quote($definition['suffix']),
+        $db->quote($definition['url']),
+        (int) $definition['target'],
+        (int) $definition['position'],
+        (int) $definition['protected'],
+        (int) $definition['active']
     ));
+    return (int) $db->getInsertId();
 }
 
 /**
- * Grant a permission if it does not already exist.
+ * Seed menu permissions for a set of groups.
+ *
+ * @param XoopsMySQLDatabase $db        Database connection
+ * @param int                $moduleId  System module id
+ * @param string             $permName  Permission name
+ * @param int                $itemId    Item or category id
+ * @param int[]              $groupIds  Group ids to grant
  */
-function system_menu_ensure_permission(
+function system_menu_seed_permissions(
     XoopsMySQLDatabase $db,
+    int $moduleId,
     string $permName,
     int $itemId,
-    int $groupId,
-    int $moduleId
+    array $groupIds
 ): void {
     $handler = xoops_getHandler('groupperm');
-    if (!$handler->checkRight($permName, $itemId, $groupId, $moduleId)) {
+    foreach ($groupIds as $gid) {
         $perm = $handler->create();
-        $perm->setVar('gperm_groupid', $groupId);
+        $perm->setVar('gperm_groupid', (int) $gid);
         $perm->setVar('gperm_itemid', $itemId);
         $perm->setVar('gperm_name', $permName);
         $perm->setVar('gperm_modid', $moduleId);
@@ -301,57 +408,170 @@ function system_menu_ensure_permission(
 }
 
 /**
- * Seed default menu categories and items.
+ * Seed default menu categories, items, and permissions.
  */
 function system_menu_seed_defaults(XoopsMySQLDatabase $db, int $moduleId): void
 {
-    $allGroups   = [1, 2, 3];
-    $authGroups  = [1, 2];
-    $adminGroups = [1];
+    $adminGroup = defined('XOOPS_GROUP_ADMIN') ? (int) XOOPS_GROUP_ADMIN : 1;
+    $usersGroup = defined('XOOPS_GROUP_USERS') ? (int) XOOPS_GROUP_USERS : 2;
+    $anonGroup  = defined('XOOPS_GROUP_ANONYMOUS') ? (int) XOOPS_GROUP_ANONYMOUS : 3;
 
-    $homeId    = system_menu_ensure_category($db, 'MENUS_HOME', 'index.php', 1, 1, 1);
-    $adminId   = system_menu_ensure_category($db, 'MENUS_ADMIN', 'admin.php', 2, 1, 1);
-    $accountId = system_menu_ensure_category($db, 'MENUS_ACCOUNT', 'user.php', 3, 1, 1);
+    $allGroups   = [$adminGroup, $usersGroup, $anonGroup];
+    $authGroups  = [$adminGroup, $usersGroup];
+    $adminGroups = [$adminGroup];
 
-    foreach ($allGroups as $gid) {
-        system_menu_ensure_permission($db, 'menus_category_view', $homeId, $gid, $moduleId);
-    }
-    foreach ($adminGroups as $gid) {
-        system_menu_ensure_permission($db, 'menus_category_view', $adminId, $gid, $moduleId);
-    }
-    foreach ($allGroups as $gid) {
-        system_menu_ensure_permission($db, 'menus_category_view', $accountId, $gid, $moduleId);
-    }
-
-    $items = [
-        ['MENUS_ACCOUNT_EDIT',          'edituser.php',            1, 0, 1, 1],
-        ['MENUS_ACCOUNT_LOGIN',         'user.php',                2, 0, 1, 1],
-        ['MENUS_ACCOUNT_REGISTER',      'register.php',            3, 0, 1, 1],
-        ['MENUS_ACCOUNT_MESSAGES',      'modules/pm/index.php',    4, 0, 1, 1, '', '<{xoInboxCount}>'],
-        ['MENUS_ACCOUNT_NOTIFICATIONS', 'notifications.php',       5, 0, 1, 1],
-        ['MENUS_ACCOUNT_TOOLBAR',       '#toolbar',                6, 0, 1, 1],
-        ['MENUS_ACCOUNT_LOGOUT',        'user.php?op=logout',      7, 0, 1, 1],
+    // --- Category definitions ---
+    $categories = [
+        'home' => [
+            'title'     => 'MENUS_HOME',
+            'prefix'    => '<span class="fa fa-home"></span>',
+            'suffix'    => '',
+            'url'       => 'index.php',
+            'target'    => 0,
+            'position'  => 1,
+            'protected' => 1,
+            'active'    => 1,
+            'groups'    => $allGroups,
+        ],
+        'admin' => [
+            'title'     => 'MENUS_ADMIN',
+            'prefix'    => '<span class="fa fa-wrench fa-fw"></span>',
+            'suffix'    => '',
+            'url'       => 'admin.php',
+            'target'    => 0,
+            'position'  => 2,
+            'protected' => 1,
+            'active'    => 1,
+            'groups'    => $adminGroups,
+        ],
+        'account' => [
+            'title'     => 'MENUS_ACCOUNT',
+            'prefix'    => '<span class="fa fa-user fa-fw"></span>',
+            'suffix'    => '',
+            'url'       => '',
+            'target'    => 0,
+            'position'  => 3,
+            'protected' => 1,
+            'active'    => 1,
+            'groups'    => $allGroups,
+        ],
     ];
-    foreach ($items as $item) {
-        $pfx = $item[6] ?? '';
-        $sfx = $item[7] ?? '';
-        system_menu_ensure_item($db, $accountId, $item[0], $item[1], $item[2], $item[3], $item[4], $item[5], $pfx, $sfx);
+
+    // --- Item definitions (under Account) ---
+    $items = [
+        [
+            'title'     => 'MENUS_ACCOUNT_EDIT',
+            'prefix'    => '<span class="fa fa-edit fa-fw"></span>',
+            'suffix'    => '',
+            'url'       => 'user.php',
+            'target'    => 0,
+            'position'  => 1,
+            'pid'       => 0,
+            'protected' => 1,
+            'active'    => 1,
+            'groups'    => $authGroups,
+        ],
+        [
+            'title'     => 'MENUS_ACCOUNT_LOGIN',
+            'prefix'    => '<span class="fa fa-sign-in fa-fw"></span>',
+            'suffix'    => '',
+            'url'       => 'user.php',
+            'target'    => 0,
+            'position'  => 2,
+            'pid'       => 0,
+            'protected' => 1,
+            'active'    => 1,
+            'groups'    => [$anonGroup],
+        ],
+        [
+            'title'     => 'MENUS_ACCOUNT_REGISTER',
+            'prefix'    => '<span class="fa fa-sign-in fa-fw"></span>',
+            'suffix'    => '',
+            'url'       => 'register.php',
+            'target'    => 0,
+            'position'  => 3,
+            'pid'       => 0,
+            'protected' => 1,
+            'active'    => 1,
+            'groups'    => [$anonGroup],
+        ],
+        [
+            'title'     => 'MENUS_ACCOUNT_MESSAGES',
+            'prefix'    => '<span class="fa fa-envelope fa-fw"></span>',
+            'suffix'    => '<span class="badge bg-primary rounded-pill"><{xoInboxCount}></span>',
+            'url'       => 'viewpmsg.php',
+            'target'    => 0,
+            'position'  => 4,
+            'pid'       => 0,
+            'protected' => 1,
+            'active'    => 1,
+            'groups'    => $authGroups,
+        ],
+        [
+            'title'     => 'MENUS_ACCOUNT_NOTIFICATIONS',
+            'prefix'    => '<span class="fa fa-info-circle fa-fw"></span>',
+            'suffix'    => '',
+            'url'       => 'notifications.php',
+            'target'    => 0,
+            'position'  => 5,
+            'pid'       => 0,
+            'protected' => 1,
+            'active'    => 1,
+            'groups'    => $authGroups,
+        ],
+        [
+            'title'     => 'MENUS_ACCOUNT_TOOLBAR',
+            'prefix'    => '<span class="fa fa-wrench fa-fw"></span>',
+            'suffix'    => '<span id="xswatch-toolbar-ind"></span>',
+            'url'       => '#xswatch-toolbar-toggle',
+            'target'    => 0,
+            'position'  => 6,
+            'pid'       => 0,
+            'protected' => 1,
+            'active'    => 1,
+            'groups'    => $authGroups,
+        ],
+        [
+            'title'     => 'MENUS_ACCOUNT_LOGOUT',
+            'prefix'    => '<span class="fa fa-sign-out fa-fw"></span>',
+            'suffix'    => '',
+            'url'       => 'user.php?op=logout',
+            'target'    => 0,
+            'position'  => 7,
+            'pid'       => 0,
+            'protected' => 1,
+            'active'    => 1,
+            'groups'    => $authGroups,
+        ],
+    ];
+
+    // --- Persist categories ---
+    $categoryIds = [];
+    foreach ($categories as $key => $catDef) {
+        $categoryIds[$key] = system_menu_ensure_category($db, $catDef);
     }
 
-    $itemTable = $db->prefix('menusitems');
-    $result = $db->query(
-        "SELECT `items_id`, `items_title` FROM `{$itemTable}` WHERE `items_cid` = " . $db->quote((string) $accountId)
+    // --- Persist items (all under Account) ---
+    $itemIds = [];
+    foreach ($items as $itemDef) {
+        $itemIds[] = system_menu_ensure_item($db, $categoryIds['account'], $itemDef);
+    }
+
+    // --- Clean stale permissions before reseeding ---
+    $permTable = $db->prefix('group_permission');
+    $db->query(
+        "DELETE FROM `{$permTable}` WHERE `gperm_modid` = " . $moduleId
+        . " AND `gperm_name` IN ('menus_category_view', 'menus_items_view')"
     );
-    if ($db->isResultSet($result) && ($result instanceof \mysqli_result)) {
-        while ($row = $db->fetchArray($result)) {
-            $groups = match ($row['items_title']) {
-                'MENUS_ACCOUNT_LOGIN', 'MENUS_ACCOUNT_REGISTER' => [3],
-                default => $authGroups,
-            };
-            foreach ($groups as $gid) {
-                system_menu_ensure_permission($db, 'menus_items_view', (int)$row['items_id'], $gid, $moduleId);
-            }
-        }
+
+    // --- Seed category permissions ---
+    foreach ($categories as $key => $catDef) {
+        system_menu_seed_permissions($db, $moduleId, 'menus_category_view', $categoryIds[$key], $catDef['groups']);
+    }
+
+    // --- Seed item permissions ---
+    foreach ($items as $idx => $itemDef) {
+        system_menu_seed_permissions($db, $moduleId, 'menus_items_view', $itemIds[$idx], $itemDef['groups']);
     }
 }
 
