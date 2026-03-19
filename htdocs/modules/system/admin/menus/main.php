@@ -497,6 +497,12 @@ switch ($op) {
             $item     = $itemHandler->create();
             $catId    = Request::getInt('items_cid', 0, 'POST');
             $parentId = Request::getInt('items_pid', 0, 'POST');
+
+            // Verify the category exists before creating a new item
+            $catCheck = menus_cat_handler()->get($catId);
+            if (!is_object($catCheck) || $catCheck->isNew()) {
+                redirect_header(MENUS_ADMIN_URL, 3, _AM_SYSTEM_MENUS_ERROR_CATNOTFOUND);
+            }
         }
         $xoopsTpl->assign('category_id', $catId);
 
@@ -584,9 +590,6 @@ switch ($op) {
         if ((int) $item->getVar('items_protected') === 1) {
             redirect_header(MENUS_ADMIN_URL . '#cat_' . $catId, 3, _AM_SYSTEM_MENUS_ERROR_ITEMPROTECTED);
         }
-        if (0 === (int) $item->getVar('items_active')) {
-            redirect_header(MENUS_ADMIN_URL . '#cat_' . $catId, 5, _AM_SYSTEM_MENUS_ERROR_ITEMDISABLE);
-        }
 
         if ($confirm) {
             menus_require_token(false);
@@ -653,7 +656,9 @@ switch ($op) {
             $cat = $catHandler->get((int) $catId);
             if (is_object($cat) && !$cat->isNew()) {
                 $cat->setVar('category_position', $position + 1);
-                $catHandler->insert($cat);
+                if (!$catHandler->insert($cat)) {
+                    menus_send_json(false, ['message' => 'Failed to save category order']);
+                }
             }
         }
 
@@ -707,7 +712,8 @@ switch ($op) {
         $itemHandler = menus_item_handler();
         $position    = 0;
 
-        $walkTree = function (array $nodes, int $parentId) use (&$walkTree, $itemHandler, $catId, &$position): void {
+        $failed = false;
+        $walkTree = function (array $nodes, int $parentId) use (&$walkTree, $itemHandler, $catId, &$position, &$failed): void {
             foreach ($nodes as $node) {
                 $nodeItemId = (int) ($node['id'] ?? 0);
                 if ($nodeItemId <= 0) {
@@ -723,7 +729,10 @@ switch ($op) {
                 }
                 $nodeItem->setVar('items_pid', $parentId);
                 $nodeItem->setVar('items_position', $position++);
-                $itemHandler->insert($nodeItem);
+                if (!$itemHandler->insert($nodeItem)) {
+                    $failed = true;
+                    return;
+                }
 
                 if (!empty($node['children'])) {
                     $walkTree($node['children'], $nodeItemId);
@@ -732,6 +741,9 @@ switch ($op) {
         };
 
         $walkTree($tree, 0);
+        if ($failed) {
+            menus_send_json(false, ['message' => 'Failed to save item order']);
+        }
         menus_send_json(true, ['message' => _AM_SYSTEM_MENUS_ORDER_SAVED]);
         break;
 
@@ -747,7 +759,9 @@ switch ($op) {
 
         $newActive = $cat->getVar('category_active') ? 0 : 1;
         $cat->setVar('category_active', $newActive);
-        menus_cat_handler()->insert($cat);
+        if (!menus_cat_handler()->insert($cat)) {
+            menus_send_json(false, ['message' => 'Failed to update category']);
+        }
 
         // If deactivating, cascade to all items
         if ($newActive === 0) {
@@ -756,7 +770,9 @@ switch ($op) {
             $items       = $itemHandler->getObjects($criteria);
             foreach ($items as $item) {
                 $item->setVar('items_active', 0);
-                $itemHandler->insert($item);
+                if (!$itemHandler->insert($item)) {
+                    menus_send_json(false, ['message' => 'Failed to cascade deactivation']);
+                }
             }
         }
 
@@ -781,7 +797,9 @@ switch ($op) {
         }
 
         $item->setVar('items_active', $newActive);
-        menus_item_handler()->insert($item);
+        if (!menus_item_handler()->insert($item)) {
+            menus_send_json(false, ['message' => 'Failed to update item']);
+        }
 
         // If deactivating, cascade to descendants
         if ($newActive === 0) {
@@ -800,7 +818,9 @@ switch ($op) {
                 $descItem = menus_item_handler()->get($descId);
                 if (is_object($descItem)) {
                     $descItem->setVar('items_active', 0);
-                    menus_item_handler()->insert($descItem);
+                    if (!menus_item_handler()->insert($descItem)) {
+                        menus_send_json(false, ['message' => 'Failed to cascade deactivation']);
+                    }
                 }
             }
         }

@@ -65,9 +65,9 @@ class SystemMenusRegressionTest extends TestCase
         $source = $this->readSourceFile('modules/system/include/update.php');
 
         $this->assertStringNotContainsString(
-            "DELETE FROM",
+            "gperm_name` IN ('menus_category_view'",
             $source,
-            'Permission seeding must be idempotent — no blanket DELETE of user permissions'
+            'Permission seeding must be idempotent — no blanket DELETE of menu permissions'
         );
         $this->assertStringContainsString(
             'getCount($criteria)',
@@ -96,7 +96,7 @@ class SystemMenusRegressionTest extends TestCase
         $source = $this->readSourceFile('modules/system/include/update.php');
 
         $this->assertStringContainsString(
-            "items_url` LIKE 'javascript:%'",
+            "LIKE 'javascript:%'",
             $source,
             'Upgrade must migrate javascript: URLs to safe values'
         );

@@ -37,9 +37,7 @@ function xoops_module_update_system(XoopsModule $module, $prev_version = null)
         $ret = false;
     }
 
-    $errors = $module->getErrors();
-    if (!empty($errors)) {
-        print_r($errors);
+    if (!empty($module->getErrors())) {
         $ret = false;
     } elseif ($ret !== false) {
         $ret = true;
