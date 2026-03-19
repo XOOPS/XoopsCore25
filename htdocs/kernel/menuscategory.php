@@ -124,6 +124,7 @@ class XoopsMenusCategory extends XoopsObject
     public function getFormCat(string $action): \XoopsThemeForm
     {
         include_once XOOPS_ROOT_PATH . '/class/xoopsformloader.php';
+        include_once XOOPS_ROOT_PATH . '/class/xoopsform/grouppermform.php';
 
         $isEdit      = (bool) $this->getVar('category_id');
         $isProtected = (bool) $this->getVar('category_protected');
