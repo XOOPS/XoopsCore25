@@ -312,24 +312,13 @@ switch ($op) {
             break;
         }
 
-        // Save permissions
-        $permHandler = xoops_getHandler('groupperm');
-        $mid         = (int) $xoopsModule->getVar('mid');
-        $newCatId    = (int) $cat->getVar('category_id');
-
-        // Delete old permissions for this category
-        $permHandler->deleteByModule($mid, 'menus_category_view', $newCatId);
-
-        // Insert new permissions
-        $groups = Request::getArray('menus_category_view', [], 'POST');
-        foreach ($groups as $groupId) {
-            $perm = $permHandler->create();
-            $perm->setVar('gperm_groupid', (int) $groupId);
-            $perm->setVar('gperm_itemid', $newCatId);
-            $perm->setVar('gperm_name', 'menus_category_view');
-            $perm->setVar('gperm_modid', $mid);
-            $permHandler->insert($perm);
-        }
+        // Save permissions using XMF helper
+        $permHelper = new \Xmf\Module\Helper\Permission();
+        $permHelper->savePermissionForItem(
+            'menus_category_view',
+            (int) $cat->getVar('category_id'),
+            Request::getArray('menus_category_view_perms', [], 'POST')
+        );
 
         redirect_header(MENUS_ADMIN_URL, 2, _AM_SYSTEM_MENUS_SAVED);
         break;
@@ -355,16 +344,15 @@ switch ($op) {
             $itemCriteria = new CriteriaCompo(new Criteria('items_cid', (string) $catId));
             $items        = $itemHandler->getObjects($itemCriteria);
 
-            // Delete item permissions
-            $permHandler = xoops_getHandler('groupperm');
-            $mid         = (int) $xoopsModule->getVar('mid');
+            // Delete item permissions and items
+            $permHelper = new \Xmf\Module\Helper\Permission();
             foreach ($items as $item) {
-                $permHandler->deleteByModule($mid, 'menus_items_view', (int) $item->getVar('items_id'));
+                $permHelper->deletePermissionForItem('menus_items_view', (int) $item->getVar('items_id'));
                 $itemHandler->delete($item);
             }
 
             // Delete category permissions
-            $permHandler->deleteByModule($mid, 'menus_category_view', $catId);
+            $permHelper->deletePermissionForItem('menus_category_view', $catId);
             menus_cat_handler()->delete($cat);
 
             redirect_header(MENUS_ADMIN_URL, 2, _AM_SYSTEM_MENUS_DELETED);
@@ -530,21 +518,13 @@ switch ($op) {
             break;
         }
 
-        // Save permissions
-        $permHandler = xoops_getHandler('groupperm');
-        $mid         = (int) $xoopsModule->getVar('mid');
-        $newItemId   = (int) $item->getVar('items_id');
-        $permHandler->deleteByModule($mid, 'menus_items_view', $newItemId);
-
-        $groups = Request::getArray('menus_items_view', [], 'POST');
-        foreach ($groups as $groupId) {
-            $perm = $permHandler->create();
-            $perm->setVar('gperm_groupid', (int) $groupId);
-            $perm->setVar('gperm_itemid', $newItemId);
-            $perm->setVar('gperm_name', 'menus_items_view');
-            $perm->setVar('gperm_modid', $mid);
-            $permHandler->insert($perm);
-        }
+        // Save permissions using XMF helper
+        $permHelper = new \Xmf\Module\Helper\Permission();
+        $permHelper->savePermissionForItem(
+            'menus_items_view',
+            (int) $item->getVar('items_id'),
+            Request::getArray('menus_items_view_perms', [], 'POST')
+        );
 
         redirect_header(MENUS_ADMIN_URL . '&op=viewcat&category_id=' . $catId, 2, _AM_SYSTEM_MENUS_SAVED);
         break;
@@ -585,20 +565,19 @@ switch ($op) {
             }
             $descendantIds = SystemMenusTree::collectDescendantIds($allRows, $itemId);
 
-            $permHandler = xoops_getHandler('groupperm');
-            $mid         = (int) $xoopsModule->getVar('mid');
+            $permHelper = new \Xmf\Module\Helper\Permission();
 
             // Delete descendants
             foreach ($descendantIds as $descId) {
                 $descItem = $itemHandler->get($descId);
                 if (is_object($descItem) && !(int) $descItem->getVar('items_protected')) {
-                    $permHandler->deleteByModule($mid, 'menus_items_view', $descId);
+                    $permHelper->deletePermissionForItem('menus_items_view', $descId);
                     $itemHandler->delete($descItem);
                 }
             }
 
             // Delete the item itself
-            $permHandler->deleteByModule($mid, 'menus_items_view', $itemId);
+            $permHelper->deletePermissionForItem('menus_items_view', $itemId);
             $itemHandler->delete($item);
 
             redirect_header(MENUS_ADMIN_URL . '&op=viewcat&category_id=' . $catId, 2, _AM_SYSTEM_MENUS_DELETED);

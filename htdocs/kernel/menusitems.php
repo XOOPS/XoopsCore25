@@ -127,7 +127,6 @@ class XoopsMenusItems extends XoopsObject
     public function getFormItems(int $categoryId, string $action): \XoopsThemeForm
     {
         include_once XOOPS_ROOT_PATH . '/class/xoopsformloader.php';
-        include_once XOOPS_ROOT_PATH . '/class/xoopsform/grouppermform.php';
 
         $isEdit      = (bool) $this->getVar('items_id');
         $isProtected = (bool) $this->getVar('items_protected');
@@ -206,9 +205,15 @@ class XoopsMenusItems extends XoopsObject
             (int) $this->getVar('items_active')
         ));
 
-        $permField = new \XoopsGroupPermForm('', $GLOBALS['xoopsModule']->getVar('mid'), 'menus_items_view', '');
-        $permField->addItem((int) $this->getVar('items_id'), _AM_SYSTEM_MENUS_PERMISSION_VIEW_ITEM);
-        $form->addElement($permField);
+        $permHelper = new \Xmf\Module\Helper\Permission();
+        $permField = $permHelper->getGroupSelectFormForItem(
+            'menus_items_view',
+            (int) $this->getVar('items_id'),
+            _AM_SYSTEM_MENUS_PERMISSION_VIEW_ITEM,
+            'menus_items_view_perms',
+            true
+        );
+        $form->addElement($permField, false);
 
         $form->addElement(new \XoopsFormHidden('op', 'saveitem'));
         $form->addElement(new \XoopsFormButton('', 'submit', _SUBMIT, 'submit'));
