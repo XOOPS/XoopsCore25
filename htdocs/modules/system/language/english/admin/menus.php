@@ -11,6 +11,8 @@
 
 defined('XOOPS_ROOT_PATH') || exit('Restricted access');
 
+//2.5.12
+
 // Navigation
 define('_AM_SYSTEM_MENUS_NAV_MAIN', 'Menu Manager');
 define('_AM_SYSTEM_MENUS_NAV_BACK', 'Back to Menu List');

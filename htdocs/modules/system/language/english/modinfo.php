@@ -82,5 +82,8 @@ define('_MI_SYSTEM_PREFERENCE_JQUERY_THEME', 'jQuery theme');
 define('_MI_DEFAULT_NOTIFICATION_METHOD_DISABLE', 'Temporarily disable');
 define('_MI_DEFAULT_NOTIFICATION_METHOD_EMAIL', 'Email');
 define('_MI_DEFAULT_NOTIFICATION_METHOD_PM', 'Private message');
+
+//2.5.12
+// Menus
 define('_MI_SYSTEM_MENUS_ACTIVE', 'Enable Menu System');
 define('_MI_SYSTEM_MENUS_ACTIVE_DESC', 'Enable the built-in menu management system for site navigation');

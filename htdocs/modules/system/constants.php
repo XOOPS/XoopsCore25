@@ -44,4 +44,7 @@ define('SYSTEM_CAT_MAIL', 5);
 define('SYSTEM_CAT_AUTH', 6);
 
 //define("XOOPS_SYSTEM_THEME1", 19);
+
+//2.5.12
+// Menus
 define('XOOPS_SYSTEM_MENUS', 19);

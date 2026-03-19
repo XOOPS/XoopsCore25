@@ -6,6 +6,82 @@ Below are language differences from a version to next version.
 ================================
 2025/03/30: Version 2.5.12-Betas
 ================================
+/htdocs/modules/system/language/english/admin.php
+- added define('_AM_SYSTEM_MENUS', 'Menus');
+- added define('_AM_SYSTEM_MENUS_DESC', 'Manage site navigation menus');
+
+/htdocs/modules/system/language/english/modinfo.php
+- added define('_MI_SYSTEM_MENUS_ACTIVE', 'Enable Menu System');
+- added define('_MI_SYSTEM_MENUS_ACTIVE_DESC', 'Enable the built-in menu management system for site navigation');
+
+/htdocs/modules/system/language/english/admin/menus.php (NEW FILE)
+- added define('_AM_SYSTEM_MENUS_NAV_MAIN', 'Menu Manager');
+- added define('_AM_SYSTEM_MENUS_NAV_BACK', 'Back to Menu List');
+- added define('_AM_SYSTEM_MENUS_NAV_TIPS', '<strong>Tips:</strong><ul>...');
+- added define('_AM_SYSTEM_MENUS_ACTIVE', 'Active');
+- added define('_AM_SYSTEM_MENUS_SAVED', 'Saved successfully');
+- added define('_AM_SYSTEM_MENUS_DELETED', 'Deleted successfully');
+- added define('_AM_SYSTEM_MENUS_ORDER_SAVED', 'Order saved');
+- added define('_AM_SYSTEM_MENUS_ADDCAT', 'Add Category');
+- added define('_AM_SYSTEM_MENUS_EDITCAT', 'Edit Category');
+- added define('_AM_SYSTEM_MENUS_DELCAT', 'Delete Category');
+- added define('_AM_SYSTEM_MENUS_CATTITLE', 'Category Title');
+- added define('_AM_SYSTEM_MENUS_CATTITLE_DESC', 'A language constant name (e.g. MENUS_HOME) can be used here so the label is translatable.');
+- added define('_AM_SYSTEM_MENUS_CATPREFIX', 'Prefix (HTML)');
+- added define('_AM_SYSTEM_MENUS_CATPREFIX_DESC', 'Optional markup shown before the category title, such as a Font Awesome icon.');
+- added define('_AM_SYSTEM_MENUS_CATSUFFIX', 'Suffix (HTML)');
+- added define('_AM_SYSTEM_MENUS_CATSUFFIX_DESC', 'Optional markup shown after the category title.');
+- added define('_AM_SYSTEM_MENUS_CATURL', 'URL');
+- added define('_AM_SYSTEM_MENUS_CATURL_DESC', 'Link for the category itself, such as "index.php" or an absolute URL.');
+- added define('_AM_SYSTEM_MENUS_CATTARGET', 'Link Target');
+- added define('_AM_SYSTEM_MENUS_CATPOSITION', 'Position');
+- added define('_AM_SYSTEM_MENUS_DELCAT_CONFIRM', 'Are you sure you want to delete the category "%s" and all its items?');
+- added define('_AM_SYSTEM_MENUS_ADDITEM', 'Add Item');
+- added define('_AM_SYSTEM_MENUS_EDITITEM', 'Edit Item');
+- added define('_AM_SYSTEM_MENUS_DELITEM', 'Delete Item');
+- added define('_AM_SYSTEM_MENUS_ITEMTITLE', 'Item Title');
+- added define('_AM_SYSTEM_MENUS_ITEMTITLE_DESC', 'A language constant name can be used here so the label is translatable.');
+- added define('_AM_SYSTEM_MENUS_ITEMPREFIX', 'Prefix (HTML)');
+- added define('_AM_SYSTEM_MENUS_ITEMPREFIX_DESC', 'Optional markup shown before the item title, such as a Font Awesome icon.');
+- added define('_AM_SYSTEM_MENUS_ITEMSUFFIX', 'Suffix (HTML)');
+- added define('_AM_SYSTEM_MENUS_ITEMSUFFIX_DESC', 'Optional markup shown after the item title. Supports the <{xoInboxCount}> placeholder.');
+- added define('_AM_SYSTEM_MENUS_ITEMURL', 'URL');
+- added define('_AM_SYSTEM_MENUS_ITEMTARGET', 'Link Target');
+- added define('_AM_SYSTEM_MENUS_ITEMPOSITION', 'Position');
+- added define('_AM_SYSTEM_MENUS_ITEMPARENT', 'Parent Item');
+- added define('_AM_SYSTEM_MENUS_ITEMCATEGORY', 'Category');
+- added define('_AM_SYSTEM_MENUS_DELITEM_CONFIRM', 'Are you sure you want to delete the item "%s" and its sub-items?');
+- added define('_AM_SYSTEM_MENUS_TARGET_SELF', 'Same window');
+- added define('_AM_SYSTEM_MENUS_TARGET_BLANK', 'New window');
+- added define('_AM_SYSTEM_MENUS_PERMISSION_VIEW_CATEGORY', 'Groups that can see this category');
+- added define('_AM_SYSTEM_MENUS_PERMISSION_VIEW_CATEGORY_DESC', 'Users must have category access before any of its items become visible.');
+- added define('_AM_SYSTEM_MENUS_PERMISSION_VIEW_ITEM', 'Groups that can see this item');
+- added define('_AM_SYSTEM_MENUS_PERMISSION_VIEW_ITEM_DESC', 'Item permissions are checked after the parent category permission.');
+- added define('_AM_SYSTEM_MENUS_ERROR_CATNOTFOUND', 'Category not found');
+- added define('_AM_SYSTEM_MENUS_ERROR_CATPROTECTED', 'Cannot delete a protected category');
+- added define('_AM_SYSTEM_MENUS_ERROR_CATINACTIVE', 'Cannot activate: the category is inactive');
+- added define('_AM_SYSTEM_MENUS_ERROR_ITEMNOTFOUND', 'Item not found');
+- added define('_AM_SYSTEM_MENUS_ERROR_ITEMPROTECTED', 'Cannot delete a protected item');
+- added define('_AM_SYSTEM_MENUS_ERROR_ITEMPARENT', 'Invalid parent item selected');
+- added define('_AM_SYSTEM_MENUS_ERROR_ITEMCYCLE', 'Cannot set parent: it would create a circular reference');
+- added define('_AM_SYSTEM_MENUS_ERROR_ITEMDEPTH', 'Maximum nesting depth (3 levels) exceeded');
+- added define('_AM_SYSTEM_MENUS_ERROR_PARENTINACTIVE', 'Cannot activate: the parent item is inactive');
+- added define('_AM_SYSTEM_MENUS_ERROR_ITEMEDIT', 'Enable this item before editing it');
+- added define('_AM_SYSTEM_MENUS_ERROR_ITEMDISABLE', 'Enable this item before deleting it');
+- added define('MENUS_HOME', 'Home');
+- added define('MENUS_ADMIN', 'Administration');
+- added define('MENUS_ACCOUNT', 'Account');
+- added define('MENUS_ACCOUNT_EDIT', 'Edit Account');
+- added define('MENUS_ACCOUNT_LOGIN', 'Login');
+- added define('MENUS_ACCOUNT_LOGOUT', 'Logout');
+- added define('MENUS_ACCOUNT_REGISTER', 'Sign Up');
+- added define('MENUS_ACCOUNT_MESSAGES', 'Messages');
+- added define('MENUS_ACCOUNT_NOTIFICATIONS', 'Notifications');
+- added define('MENUS_ACCOUNT_TOOLBAR', 'Toolbar');
+
+/htdocs/modules/system/constants.php
+- added define('XOOPS_SYSTEM_MENUS', 19);
+
 /htdocs/modules/system/language/english/blocks.php
 -added define('_MB_SYSTEM_WAITING_CONTENT_DEPRECATED', "Block 'Waiting Contents' is deprecated since XOOPS 2.5.11, please use Waiting module");
 

@@ -74,5 +74,8 @@ define('_AM_SYSTEM_UNINSTALL', 'Uninstall');
 //2.5.7
 define('_AM_SYSTEM_USAGE', 'Usage');
 define('_AM_SYSTEM_ACTIVE', 'Active');
+
+//2.5.12
+// Menus
 define('_AM_SYSTEM_MENUS', 'Menus');
 define('_AM_SYSTEM_MENUS_DESC', 'Manage site navigation menus');
