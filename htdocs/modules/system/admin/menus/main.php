@@ -49,8 +49,8 @@ if (!is_object($xoopsUser) || !is_object($xoopsModule)
  */
 function menus_send_json(bool $success, array $extra = []): void
 {
-    // Refresh token for next request
-    $token = $GLOBALS['xoopsSecurity']->createToken();
+    // Refresh token as HTML input so JS can extract name+value for next request
+    $token = $GLOBALS['xoopsSecurity']->getTokenHTML();
     header('Content-Type: application/json; charset=UTF-8');
     echo json_encode(array_merge(
         ['success' => $success, 'token' => $token],
@@ -94,10 +94,11 @@ function menus_prepare_ajax(): void
 function menus_require_token(bool $isAjax): void
 {
     if (!$GLOBALS['xoopsSecurity']->check()) {
+        $message = defined('_BADTOKEN') ? _BADTOKEN : 'Security token mismatch';
         if ($isAjax) {
-            menus_send_json(false, ['message' => _BADTOKEN]);
+            menus_send_json(false, ['message' => $message]);
         }
-        redirect_header(MENUS_ADMIN_URL, 3, _BADTOKEN);
+        redirect_header(MENUS_ADMIN_URL, 3, $message);
     }
 }
 
@@ -183,11 +184,14 @@ function menus_item_can_be_enabled(XoopsMenusItemsHandler $itemHandler, XoopsMen
 function menus_assign_template_defaults(\XoopsTpl $tpl, string $op): void
 {
     $tpl->assign('op', $op);
-    $tpl->assign('admin_url', MENUS_ADMIN_URL);
     $tpl->assign('xoops_token', $GLOBALS['xoopsSecurity']->getTokenHTML());
-    $tpl->assign('categories', []);
-    $tpl->assign('category', null);
+    $tpl->assign('category', []);
+    $tpl->assign('category_count', 0);
+    $tpl->assign('category_id', 0);
+    $tpl->assign('cat_title', '');
     $tpl->assign('items', []);
+    $tpl->assign('items_count', 0);
+    $tpl->assign('nav_menu', '');
     $tpl->assign('form', '');
     $tpl->assign('error_message', '');
     $tpl->assign('token', '');
@@ -210,9 +214,8 @@ if ($isAjax) {
     $xoTheme->addScript('browse.php?Frameworks/jquery/jquery.js');
     $xoTheme->addScript('browse.php?Frameworks/jquery/plugins/jquery.ui.js');
     $xoTheme->addScript('modules/system/js/admin.js');
+    $xoTheme->addScript('modules/system/js/nestedSortable.js');
     $xoTheme->addScript('modules/system/js/menus.js');
-    // SortableJS from CDN (MIT license)
-    $xoTheme->addScript('https://cdn.jsdelivr.net/npm/sortablejs@1.15.6/Sortable.min.js');
 
     $xoBreadCrumb->addLink(_AM_SYSTEM_CONFIG, XOOPS_URL . '/modules/system/admin.php');
 }
@@ -237,20 +240,41 @@ switch ($op) {
         foreach ($categories as $cat) {
             $cid          = (int) $cat->getVar('category_id');
             $itemCriteria = new CriteriaCompo(new Criteria('items_cid', (string) $cid));
-            $itemCount    = $itemHandler->getCount($itemCriteria);
+            $itemCriteria->setSort('items_position');
+            $itemCriteria->setOrder('ASC');
+            $items = $itemHandler->getObjects($itemCriteria);
+
+            $flatItems = [];
+            foreach ($items as $item) {
+                $flatItems[] = [
+                    'id'        => (int) $item->getVar('items_id'),
+                    'pid'       => (int) $item->getVar('items_pid'),
+                    'title'     => htmlspecialchars($item->getAdminTitle(), ENT_QUOTES, 'UTF-8'),
+                    'prefix'    => $item->getVar('items_prefix', 'n'),
+                    'suffix'    => $item->getVar('items_suffix', 'n'),
+                    'url'       => htmlspecialchars((string) $item->getVar('items_url', 'n'), ENT_QUOTES, 'UTF-8'),
+                    'active'    => (int) $item->getVar('items_active'),
+                    'protected' => (int) $item->getVar('items_protected'),
+                ];
+            }
 
             $catData[] = [
-                'id'        => $cid,
-                'title'     => htmlspecialchars($cat->getAdminTitle(), ENT_QUOTES, 'UTF-8'),
-                'url'       => htmlspecialchars((string) $cat->getVar('category_url', 'n'), ENT_QUOTES, 'UTF-8'),
-                'active'    => (int) $cat->getVar('category_active'),
-                'protected' => (int) $cat->getVar('category_protected'),
-                'position'  => (int) $cat->getVar('category_position'),
-                'itemCount' => $itemCount,
+                'id'          => $cid,
+                'title'       => htmlspecialchars($cat->getAdminTitle(), ENT_QUOTES, 'UTF-8'),
+                'prefix'      => $cat->getVar('category_prefix', 'n'),
+                'suffix'      => $cat->getVar('category_suffix', 'n'),
+                'url'         => htmlspecialchars((string) $cat->getVar('category_url', 'n'), ENT_QUOTES, 'UTF-8'),
+                'target'      => (int) $cat->getVar('category_target') === 1 ? '_blank' : '_self',
+                'active'      => (int) $cat->getVar('category_active'),
+                'protected'   => (int) $cat->getVar('category_protected'),
+                'position'    => (int) $cat->getVar('category_position'),
+                'items_count' => count($flatItems),
+                'items'       => $flatItems,
             ];
         }
 
-        $xoopsTpl->assign('categories', $catData);
+        $xoopsTpl->assign('category', $catData);
+        $xoopsTpl->assign('category_count', count($catData));
         $xoopsTpl->assign('token', $GLOBALS['xoopsSecurity']->createToken());
         break;
 
@@ -394,23 +418,24 @@ switch ($op) {
         $itemCriteria->setOrder('ASC');
         $items = $itemHandler->getObjects($itemCriteria);
 
-        // Build tree data for template
+        // Build flat item data for template
         $itemData = [];
         foreach ($items as $item) {
             $itemData[] = [
                 'id'        => (int) $item->getVar('items_id'),
                 'pid'       => (int) $item->getVar('items_pid'),
                 'title'     => htmlspecialchars($item->getAdminTitle(), ENT_QUOTES, 'UTF-8'),
+                'prefix'    => $item->getVar('items_prefix', 'n'),
+                'suffix'    => $item->getVar('items_suffix', 'n'),
                 'url'       => htmlspecialchars((string) $item->getVar('items_url', 'n'), ENT_QUOTES, 'UTF-8'),
                 'active'    => (int) $item->getVar('items_active'),
                 'protected' => (int) $item->getVar('items_protected'),
             ];
         }
 
-        $xoopsTpl->assign('category', [
-            'id'    => $catId,
-            'title' => htmlspecialchars($cat->getAdminTitle(), ENT_QUOTES, 'UTF-8'),
-        ]);
+        $xoopsTpl->assign('category_id', $catId);
+        $xoopsTpl->assign('cat_title', htmlspecialchars($cat->getAdminTitle(), ENT_QUOTES, 'UTF-8'));
+        $xoopsTpl->assign('items_count', count($itemData));
         $xoopsTpl->assign('items', $itemData);
         $xoopsTpl->assign('token', $GLOBALS['xoopsSecurity']->createToken());
         break;
@@ -421,9 +446,12 @@ switch ($op) {
         $xoBreadCrumb->addLink(_AM_SYSTEM_MENUS_ADDITEM);
         $xoBreadCrumb->render();
 
-        $catId = Request::getInt('category_id', 0, 'GET');
+        $catId    = Request::getInt('category_id', 0, 'GET');
+        $parentId = Request::getInt('items_pid', 0, 'GET');
+        $xoopsTpl->assign('category_id', $catId);
         $item  = new XoopsMenusItems();
         $item->setVar('items_cid', $catId);
+        $item->setVar('items_pid', $parentId);
         $form = $item->getFormItems($catId, MENUS_ADMIN_URL);
         $xoopsTpl->assign('form', $form->render());
         break;
@@ -440,8 +468,9 @@ switch ($op) {
             redirect_header(MENUS_ADMIN_URL, 3, _AM_SYSTEM_MENUS_ERROR_ITEMNOTFOUND);
         }
         $catId = (int) $item->getVar('items_cid');
+        $xoopsTpl->assign('category_id', $catId);
         if (0 === (int) $item->getVar('items_active')) {
-            redirect_header(MENUS_ADMIN_URL . '&op=viewcat&category_id=' . $catId, 5, _AM_SYSTEM_MENUS_ERROR_ITEMEDIT);
+            redirect_header(MENUS_ADMIN_URL . '#cat_' . $catId, 5, _AM_SYSTEM_MENUS_ERROR_ITEMEDIT);
         }
         $form = $item->getFormItems($catId, MENUS_ADMIN_URL);
         $xoopsTpl->assign('form', $form->render());
@@ -453,6 +482,7 @@ switch ($op) {
         $itemHandler = menus_item_handler();
         $itemId      = Request::getInt('items_id', 0, 'POST');
         $catId       = Request::getInt('items_cid', 0, 'POST');
+        $xoopsTpl->assign('category_id', $catId);
 
         if ($itemId > 0) {
             $item = $itemHandler->get($itemId);
@@ -496,7 +526,7 @@ switch ($op) {
                     'max_depth'        => _AM_SYSTEM_MENUS_ERROR_ITEMDEPTH,
                 ];
                 $msg = $errorMap[$validation] ?? _AM_SYSTEM_MENUS_ERROR_ITEMPARENT;
-                redirect_header(MENUS_ADMIN_URL . '&op=viewcat&category_id=' . $catId, 3, $msg);
+                redirect_header(MENUS_ADMIN_URL . '#cat_' . $catId, 3, $msg);
             }
         }
 
@@ -526,7 +556,7 @@ switch ($op) {
             Request::getArray('menus_items_view_perms', [], 'POST')
         );
 
-        redirect_header(MENUS_ADMIN_URL . '&op=viewcat&category_id=' . $catId, 2, _AM_SYSTEM_MENUS_SAVED);
+        redirect_header(MENUS_ADMIN_URL . '#cat_' . $catId, 2, _AM_SYSTEM_MENUS_SAVED);
         break;
 
     // --- DELETE ITEM ---
@@ -541,10 +571,10 @@ switch ($op) {
         $catId = (int) $item->getVar('items_cid');
 
         if ((int) $item->getVar('items_protected') === 1) {
-            redirect_header(MENUS_ADMIN_URL . '&op=viewcat&category_id=' . $catId, 3, _AM_SYSTEM_MENUS_ERROR_ITEMPROTECTED);
+            redirect_header(MENUS_ADMIN_URL . '#cat_' . $catId, 3, _AM_SYSTEM_MENUS_ERROR_ITEMPROTECTED);
         }
         if (0 === (int) $item->getVar('items_active')) {
-            redirect_header(MENUS_ADMIN_URL . '&op=viewcat&category_id=' . $catId, 5, _AM_SYSTEM_MENUS_ERROR_ITEMDISABLE);
+            redirect_header(MENUS_ADMIN_URL . '#cat_' . $catId, 5, _AM_SYSTEM_MENUS_ERROR_ITEMDISABLE);
         }
 
         if ($confirm) {
@@ -580,12 +610,12 @@ switch ($op) {
             $permHelper->deletePermissionForItem('menus_items_view', $itemId);
             $itemHandler->delete($item);
 
-            redirect_header(MENUS_ADMIN_URL . '&op=viewcat&category_id=' . $catId, 2, _AM_SYSTEM_MENUS_DELETED);
+            redirect_header(MENUS_ADMIN_URL . '#cat_' . $catId, 2, _AM_SYSTEM_MENUS_DELETED);
         } else {
             xoops_confirm(
                 [
                     'op'       => 'delitem',
-                    'items_id' => $itemId,
+                    'item_id' => $itemId,
                     'confirm'  => 1,
                 ],
                 MENUS_ADMIN_URL,

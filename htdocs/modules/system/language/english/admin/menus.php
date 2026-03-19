@@ -23,9 +23,13 @@ define('_AM_SYSTEM_MENUS_NAV_TIPS', '<strong>Tips:</strong><ul>'
 
 // Common
 define('_AM_SYSTEM_MENUS_ACTIVE', 'Active');
+define('_AM_SYSTEM_MENUS_ACTIVE_YES', 'Enabled');
+define('_AM_SYSTEM_MENUS_ACTIVE_NO', 'Disabled');
 define('_AM_SYSTEM_MENUS_SAVED', 'Saved successfully');
 define('_AM_SYSTEM_MENUS_DELETED', 'Deleted successfully');
 define('_AM_SYSTEM_MENUS_ORDER_SAVED', 'Order saved');
+define('_AM_SYSTEM_MENUS_LISTCAT', 'List Categories');
+define('_AM_SYSTEM_MENUS_LISTITEM', 'List Items');
 
 // Category
 define('_AM_SYSTEM_MENUS_ADDCAT', 'Add Category');
@@ -80,6 +84,7 @@ define('_AM_SYSTEM_MENUS_ERROR_ITEMPARENT', 'Invalid parent item selected');
 define('_AM_SYSTEM_MENUS_ERROR_ITEMCYCLE', 'Cannot set parent: it would create a circular reference');
 define('_AM_SYSTEM_MENUS_ERROR_ITEMDEPTH', 'Maximum nesting depth (3 levels) exceeded');
 define('_AM_SYSTEM_MENUS_ERROR_PARENTINACTIVE', 'Cannot activate: the parent item is inactive');
+define('_AM_SYSTEM_MENUS_ERROR_NOITEMS', 'There are no submenu items in this category.');
 define('_AM_SYSTEM_MENUS_ERROR_ITEMEDIT', 'Enable this item before editing it');
 define('_AM_SYSTEM_MENUS_ERROR_ITEMDISABLE', 'Enable this item before deleting it');
 
