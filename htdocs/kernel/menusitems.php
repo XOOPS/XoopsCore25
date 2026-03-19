@@ -86,7 +86,7 @@ class XoopsMenusItems extends XoopsObject
     {
         self::ensureLanguageLoaded();
         $raw = $this->getVar('items_title', 'n');
-        if ($raw !== '' && defined($raw)) {
+        if ($raw !== '' && str_starts_with((string) $raw, 'MENUS_') && defined($raw)) {
             return constant($raw);
         }
         return (string) $raw;
@@ -176,7 +176,7 @@ class XoopsMenusItems extends XoopsObject
             'items_url',
             60,
             255,
-            $this->getVar('items_url', 'e')
+            (string) $this->getVar('items_url', 'e')
         );
         if ($isProtected) {
             $urlField->setExtra('readonly="readonly"');

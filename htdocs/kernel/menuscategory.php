@@ -84,7 +84,7 @@ class XoopsMenusCategory extends XoopsObject
     {
         self::ensureLanguageLoaded();
         $raw = $this->getVar('category_title', 'n');
-        if ($raw !== '' && defined($raw)) {
+        if ($raw !== '' && str_starts_with((string) $raw, 'MENUS_') && defined($raw)) {
             return constant($raw);
         }
         return (string) $raw;
@@ -161,7 +161,7 @@ class XoopsMenusCategory extends XoopsObject
             'category_url',
             60,
             255,
-            $this->getVar('category_url', 'e')
+            (string) $this->getVar('category_url', 'e')
         );
         $urlField->setDescription(_AM_SYSTEM_MENUS_CATURL_DESC);
         if ($isProtected) {

@@ -940,6 +940,7 @@ class xos_opal_Theme
      */
     private function hasMenuTables(): bool
     {
+        /** @var \XoopsMySQLDatabase $db */
         $db = \XoopsDatabaseFactory::getDatabaseConnection();
         foreach (['menuscategory', 'menusitems'] as $tableName) {
             $result = $db->query('SHOW TABLES LIKE ' . $db->quote($db->prefix($tableName)));

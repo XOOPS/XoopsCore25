@@ -724,6 +724,9 @@ switch ($op) {
         $failed = false;
         $walkTree = function (array $nodes, int $parentId) use (&$walkTree, $itemHandler, $catId, &$position, &$failed): void {
             foreach ($nodes as $node) {
+                if ($failed) {
+                    return;
+                }
                 $nodeItemId = (int) ($node['id'] ?? 0);
                 if ($nodeItemId <= 0) {
                     continue;
