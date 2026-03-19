@@ -48,33 +48,16 @@ class XoopsMenusItems extends XoopsObject
     /**
      * Load menu language files if not already loaded.
      *
-     * Loads both the custom menus language file and the admin menus
-     * language file, falling back to English when a translation is
-     * not available.
-     *
-     * @return void
+     * Uses the standard xoops_loadLanguage() helper, which automatically
+     * falls back to English when a translation is not available.
      */
     private static function ensureLanguageLoaded(): void
     {
         if (self::$langLoaded) {
             return;
         }
-        $lang = $GLOBALS['xoopsConfig']['language'] ?? 'english';
-        $files = [
-            XOOPS_ROOT_PATH . '/modules/system/language/' . $lang . '/menus/menus.php',
-            XOOPS_ROOT_PATH . '/modules/system/language/' . $lang . '/admin/menus.php',
-        ];
-        $fallbacks = [
-            XOOPS_ROOT_PATH . '/modules/system/language/english/menus/menus.php',
-            XOOPS_ROOT_PATH . '/modules/system/language/english/admin/menus.php',
-        ];
-        foreach ($files as $i => $path) {
-            if (is_readable($path)) {
-                include_once $path;
-            } elseif (is_readable($fallbacks[$i])) {
-                include_once $fallbacks[$i];
-            }
-        }
+        xoops_loadLanguage('menus/menus', 'system');
+        xoops_loadLanguage('admin/menus', 'system');
         self::$langLoaded = true;
     }
 
