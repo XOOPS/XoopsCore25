@@ -159,9 +159,14 @@ function menus_item_can_be_enabled(XoopsMenusItemsHandler $itemHandler, XoopsMen
         return false;
     }
 
-    // Walk the full parent chain
+    // Walk the full parent chain (with visited-set guard against cycles)
     $parentId = (int) $item->getVar('items_pid');
+    $visited  = [];
     while ($parentId > 0) {
+        if (isset($visited[$parentId])) {
+            break; // Cycle detected — stop walking
+        }
+        $visited[$parentId] = true;
         $parent = $itemHandler->get($parentId);
         if (!is_object($parent)) {
             break;
@@ -481,20 +486,25 @@ switch ($op) {
         menus_require_token(false);
         $itemHandler = menus_item_handler();
         $itemId      = Request::getInt('items_id', 0, 'POST');
-        $catId       = Request::getInt('items_cid', 0, 'POST');
-        $xoopsTpl->assign('category_id', $catId);
 
         if ($itemId > 0) {
             $item = $itemHandler->get($itemId);
             if (!is_object($item) || $item->isNew()) {
                 redirect_header(MENUS_ADMIN_URL, 3, _AM_SYSTEM_MENUS_ERROR_ITEMNOTFOUND);
             }
+            // Existing item: derive category from DB, not POST (prevents cross-category moves via tampered form)
+            $catId    = (int) $item->getVar('items_cid');
+            $parentId = (int) $item->getVar('items_protected')
+                ? (int) $item->getVar('items_pid')   // Protected items keep their parent
+                : Request::getInt('items_pid', 0, 'POST');
         } else {
-            $item = $itemHandler->create();
+            $item     = $itemHandler->create();
+            $catId    = Request::getInt('items_cid', 0, 'POST');
+            $parentId = Request::getInt('items_pid', 0, 'POST');
         }
+        $xoopsTpl->assign('category_id', $catId);
 
         $isProtected = (bool) $item->getVar('items_protected');
-        $parentId    = Request::getInt('items_pid', 0, 'POST');
 
         // Validate parent
         if ($parentId > 0) {
@@ -673,6 +683,28 @@ switch ($op) {
         $depth = SystemMenusTree::computeDepth($tree);
         if ($depth > MENUS_MAX_DEPTH) {
             menus_send_json(false, ['message' => _AM_SYSTEM_MENUS_ERROR_ITEMDEPTH]);
+        }
+
+        // Collect all IDs from the tree and reject duplicates
+        $seenIds = [];
+        $collectIds = function (array $nodes) use (&$collectIds, &$seenIds): bool {
+            foreach ($nodes as $node) {
+                $id = (int) ($node['id'] ?? 0);
+                if ($id <= 0) {
+                    continue;
+                }
+                if (isset($seenIds[$id])) {
+                    return false; // Duplicate — reject entire payload
+                }
+                $seenIds[$id] = true;
+                if (!empty($node['children']) && !$collectIds($node['children'])) {
+                    return false;
+                }
+            }
+            return true;
+        };
+        if (!$collectIds($tree)) {
+            menus_send_json(false, ['message' => 'Duplicate item IDs in tree']);
         }
 
         // Walk the tree and update positions

@@ -149,10 +149,14 @@ function system_menu_update(XoopsModule $module): void
     $db = \XoopsDatabaseFactory::getDatabaseConnection();
     $mid = (int) $module->getVar('mid');
 
-    system_menu_create_tables($db);
-    system_menu_normalize_schema($db);
-    system_menu_migrate_unsafe_urls($db);
-    system_menu_seed_defaults($db, $mid);
+    try {
+        system_menu_create_tables($db);
+        system_menu_normalize_schema($db);
+        system_menu_migrate_unsafe_urls($db);
+        system_menu_seed_defaults($db, $mid);
+    } catch (\Throwable $e) {
+        $module->setErrors('Menu migration failed: ' . $e->getMessage());
+    }
 }
 
 /**
@@ -336,11 +340,13 @@ function system_menu_ensure_item(XoopsMySQLDatabase $db, int $categoryId, array 
 {
     $table = $db->prefix('menusitems');
     $result = $db->query(sprintf(
-        "SELECT `items_id`, `items_active` FROM `%s` WHERE `items_cid` = %d AND `items_title` = %s"
+        "SELECT `items_id`, `items_active` FROM `%s`"
+        . " WHERE `items_cid` = %d AND `items_title` = %s AND `items_protected` = %d"
         . " ORDER BY `items_id` ASC",
         $table,
         $categoryId,
-        $db->quote($definition['title'])
+        $db->quote($definition['title']),
+        (int) $definition['protected']
     ));
     if ($db->isResultSet($result) && ($result instanceof \mysqli_result) && ($row = $db->fetchArray($result))) {
         $active = (int) ($row['items_active'] ?? $definition['active']);
