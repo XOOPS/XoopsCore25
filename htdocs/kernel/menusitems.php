@@ -141,7 +141,7 @@ class XoopsMenusItems extends XoopsObject
 
         $catHandler = xoops_getHandler('menuscategory');
         $catObj     = $catHandler->get($categoryId);
-        if ($catObj) {
+        if ($catObj instanceof \XoopsMenusCategory && !$catObj->isNew()) {
             $form->addElement(new \XoopsFormLabel(
                 _AM_SYSTEM_MENUS_ITEMCATEGORY,
                 htmlspecialchars($catObj->getAdminTitle(), ENT_QUOTES, 'UTF-8')
@@ -155,7 +155,7 @@ class XoopsMenusItems extends XoopsObject
             'items_title',
             60,
             100,
-            $this->getVar('items_title', 'e')
+            (string) $this->getVar('items_title', 'e')
         );
         $titleField->setDescription(_AM_SYSTEM_MENUS_ITEMTITLE_DESC);
         if ($isProtected) {

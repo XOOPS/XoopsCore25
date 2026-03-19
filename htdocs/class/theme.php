@@ -964,6 +964,9 @@ class xos_opal_Theme
         }
 
         $permHandler = xoops_getHandler('groupperm');
+        if (!$permHandler instanceof \XoopsGroupPermHandler) {
+            return [];
+        }
         $groups = is_object($GLOBALS['xoopsUser'] ?? null)
             ? $GLOBALS['xoopsUser']->getGroups()
             : [XOOPS_GROUP_ANONYMOUS];
@@ -977,9 +980,15 @@ class xos_opal_Theme
         $visibleItemIds = $permHandler->getItemIds('menus_items_view', $groups, $moduleId);
 
         $catHandler = xoops_getHandler('menuscategory');
+        if (!$catHandler instanceof \XoopsMenusCategoryHandler) {
+            return [];
+        }
         $categories = $catHandler->getActiveCategoriesByIds($visibleCatIds);
 
         $itemHandler = xoops_getHandler('menusitems');
+        if (!$itemHandler instanceof \XoopsMenusItemsHandler) {
+            return [];
+        }
         if (empty($visibleItemIds)) {
             return $this->buildCategoryOutput($categories, []);
         }

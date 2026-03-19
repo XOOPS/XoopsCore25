@@ -34,7 +34,7 @@ class SystemMenusTree
      * @param array $allItems   Flat array of item records with items_id, items_pid, items_cid
      * @param int   $maxDepth   Maximum allowed tree depth
      *
-     * @return true|string True if valid, or error key string
+     * @return bool|string True if valid, or error key string
      */
     public static function validateParent(
         int $itemId,
@@ -42,7 +42,7 @@ class SystemMenusTree
         int $parentId,
         array $allItems,
         int $maxDepth
-    ): true|string {
+    ): bool|string {
         if ($parentId === 0) {
             return true;
         }

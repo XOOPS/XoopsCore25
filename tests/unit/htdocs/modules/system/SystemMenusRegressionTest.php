@@ -147,29 +147,22 @@ class SystemMenusRegressionTest extends TestCase
         );
     }
 
-    // ── Disabled item guards ──
+    // ── Admin recovery: inactive items are editable and deletable ──
 
     #[Test]
-    public function adminControllerBlocksEditingInactiveItems(): void
+    public function adminControllerAllowsEditingAndDeletingInactiveItems(): void
     {
         $source = $this->readSourceFile('modules/system/admin/menus/main.php');
 
-        $this->assertStringContainsString(
-            '_AM_SYSTEM_MENUS_ERROR_ITEMEDIT',
-            $source,
-            'Admin controller must block editing inactive items'
-        );
-    }
-
-    #[Test]
-    public function adminControllerBlocksDeletingInactiveItems(): void
-    {
-        $source = $this->readSourceFile('modules/system/admin/menus/main.php');
-
-        $this->assertStringContainsString(
+        $this->assertStringNotContainsString(
             '_AM_SYSTEM_MENUS_ERROR_ITEMDISABLE',
             $source,
-            'Admin controller must block deleting inactive items'
+            'Admin controller must allow deleting inactive items for recovery'
+        );
+        $this->assertStringContainsString(
+            '_AM_SYSTEM_MENUS_ERROR_ITEMPROTECTED',
+            $source,
+            'Admin controller must still block deleting protected items'
         );
     }
 }

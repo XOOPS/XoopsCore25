@@ -140,7 +140,7 @@ class XoopsMenusCategory extends XoopsObject
             'category_title',
             60,
             100,
-            $this->getVar('category_title', 'e')
+            (string) $this->getVar('category_title', 'e')
         );
         $titleField->setDescription(_AM_SYSTEM_MENUS_CATTITLE_DESC);
         if ($isProtected) {

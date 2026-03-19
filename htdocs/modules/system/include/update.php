@@ -401,14 +401,12 @@ function system_menu_ensure_item(XoopsMySQLDatabase $db, int $categoryId, array 
 /**
  * Seed menu permissions for a set of groups.
  *
- * @param XoopsMySQLDatabase $db        Database connection
  * @param int                $moduleId  System module id
  * @param string             $permName  Permission name
  * @param int                $itemId    Item or category id
  * @param int[]              $groupIds  Group ids to grant
  */
 function system_menu_seed_permissions(
-    XoopsMySQLDatabase $db,
     int $moduleId,
     string $permName,
     int $itemId,
@@ -586,12 +584,12 @@ function system_menu_seed_defaults(XoopsMySQLDatabase $db, int $moduleId): void
 
     // --- Seed category permissions (idempotent — skips existing) ---
     foreach ($categories as $key => $catDef) {
-        system_menu_seed_permissions($db, $moduleId, 'menus_category_view', $categoryIds[$key], $catDef['groups']);
+        system_menu_seed_permissions($moduleId, 'menus_category_view', $categoryIds[$key], $catDef['groups']);
     }
 
     // --- Seed item permissions ---
     foreach ($items as $idx => $itemDef) {
-        system_menu_seed_permissions($db, $moduleId, 'menus_items_view', $itemIds[$idx], $itemDef['groups']);
+        system_menu_seed_permissions($moduleId, 'menus_items_view', $itemIds[$idx], $itemDef['groups']);
     }
 }
 

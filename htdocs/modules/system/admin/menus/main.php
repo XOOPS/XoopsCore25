@@ -126,7 +126,13 @@ function menus_sanitize_url(string $url): string
 function menus_cat_handler(): XoopsMenusCategoryHandler
 {
     static $handler = null;
-    return $handler ??= xoops_getHandler('menuscategory');
+    if (!$handler instanceof XoopsMenusCategoryHandler) {
+        $handler = xoops_getHandler('menuscategory');
+        if (!$handler instanceof XoopsMenusCategoryHandler) {
+            throw new \RuntimeException('menuscategory handler unavailable');
+        }
+    }
+    return $handler;
 }
 
 /**
@@ -137,7 +143,13 @@ function menus_cat_handler(): XoopsMenusCategoryHandler
 function menus_item_handler(): XoopsMenusItemsHandler
 {
     static $handler = null;
-    return $handler ??= xoops_getHandler('menusitems');
+    if (!$handler instanceof XoopsMenusItemsHandler) {
+        $handler = xoops_getHandler('menusitems');
+        if (!$handler instanceof XoopsMenusItemsHandler) {
+            throw new \RuntimeException('menusitems handler unavailable');
+        }
+    }
+    return $handler;
 }
 
 /**
@@ -470,9 +482,6 @@ switch ($op) {
         }
         $catId = (int) $item->getVar('items_cid');
         $xoopsTpl->assign('category_id', $catId);
-        if (0 === (int) $item->getVar('items_active')) {
-            redirect_header(MENUS_ADMIN_URL . '#cat_' . $catId, 5, _AM_SYSTEM_MENUS_ERROR_ITEMEDIT);
-        }
         $form = $item->getFormItems($catId, MENUS_ADMIN_URL);
         $xoopsTpl->assign('form', $form->render());
         break;
