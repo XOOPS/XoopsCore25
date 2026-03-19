@@ -52,13 +52,15 @@
                             <{foreach from=$xoMenuCategories item=cat}>
                                 <{if $cat.items}>
                                     <li class="nav-item dropdown">
-                                        <a class="nav-link"
-                                           href="<{if $cat.category_url|default:'' neq ''}><{$cat.category_url|escape}><{else}>#<{/if}>"
-                                           target="<{$cat.category_target}>"
-                                           <{if $cat.category_target == '_blank'}> rel="noopener noreferrer"<{/if}>>
-                                            <{$cat.category_prefix|default:''}> <{$cat.category_title|escape}> <{$cat.category_suffix|default:''}>
-                                        </a><a class="nav-link dropdown-toggle dropdown-toggle-split" href="#"
-                                           role="button" data-bs-toggle="dropdown" aria-expanded="false"><span class="visually-hidden">Toggle</span></a>
+                                        <div class="d-flex align-items-center">
+                                            <a class="nav-link"
+                                               href="<{if $cat.category_url|default:'' neq ''}><{$cat.category_url|escape}><{else}>#<{/if}>"
+                                               target="<{$cat.category_target}>"
+                                               <{if $cat.category_target == '_blank'}> rel="noopener noreferrer"<{/if}>>
+                                                <{$cat.category_prefix|default:''}> <{$cat.category_title|escape}> <{$cat.category_suffix|default:''}>
+                                            </a><a class="dropdown-toggle p-0" href="#"
+                                               role="button" data-bs-toggle="dropdown" aria-expanded="false"><span class="visually-hidden">Toggle</span></a>
+                                        </div>
                                         <ul class="dropdown-menu">
                                             <{call name=renderBs5SubMenu menuItems=$cat.items}>
                                         </ul>

@@ -847,6 +847,11 @@ body {
     margin: 0;
 }
 
+.dropdown-item:hover, .dropdown-item:focus {
+    color: #fff;
+    background-color: #007bff;
+}
+
 .form-check .form-check-input:checked {
     background-color: var(--primary-color);
     border-color: var(--primary-color);

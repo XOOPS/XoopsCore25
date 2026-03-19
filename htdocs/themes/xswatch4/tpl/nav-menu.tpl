@@ -5,11 +5,10 @@
     <{foreach from=$menuItems item=subItem}>
         <{if $subItem.children}>
             <li class="dropdown-submenu">
-                <a class="dropdown-item dropdown-toggle"
+                <a class="dropdown-item"
                    href="<{if $subItem.url|default:'' neq ''}><{$subItem.url|escape}><{else}>#<{/if}>"
                    target="<{$subItem.target}>"
-                   <{if $subItem.target == '_blank'}> rel="noopener noreferrer"<{/if}>
-                   aria-expanded="false">
+                   <{if $subItem.target == '_blank'}> rel="noopener noreferrer"<{/if}>>
                     <{$subItem.prefix|default:''}> <{$subItem.title|escape}> <{$subItem.suffix|default:''}>
                 </a>
                 <ul class="dropdown-menu">
@@ -42,14 +41,13 @@
                     <{if isset($xoMenuCategories) && $xoMenuCategories}>
                         <{foreach from=$xoMenuCategories item=cat}>
                             <{if $cat.items}>
-                                <li class="nav-item dropdown">
-                                    <a class="nav-link"
+                                <li class="nav-item dropdown xo-hover-dropdown">
+                                    <a class="nav-link dropdown-toggle"
                                        href="<{if $cat.category_url|default:'' neq ''}><{$cat.category_url|escape}><{else}>#<{/if}>"
                                        target="<{$cat.category_target}>"
                                        <{if $cat.category_target == '_blank'}> rel="noopener noreferrer"<{/if}>>
                                         <{$cat.category_prefix|default:''}> <{$cat.category_title|escape}> <{$cat.category_suffix|default:''}>
-                                    </a><a class="nav-link dropdown-toggle dropdown-toggle-split" href="#"
-                                       role="button" data-toggle="dropdown" aria-expanded="false"><span class="sr-only">Toggle</span></a>
+                                    </a>
                                     <ul class="dropdown-menu">
                                         <{call name=renderBs4SubMenu menuItems=$cat.items}>
                                     </ul>
