@@ -89,6 +89,7 @@ $modversion['templates'][] = ['file' => 'system_templates.tpl', 'description' =>
 $modversion['templates'][] = ['file' => 'system_index.tpl', 'description' => '', 'type' => 'admin'];
 $modversion['templates'][] = ['file' => 'system_maintenance.tpl', 'description' => '', 'type' => 'admin'];
 $modversion['templates'][] = ['file' => 'system_help.tpl', 'description' => '', 'type' => 'admin'];
+$modversion['templates'][] = ['file' => 'system_menus.tpl', 'description' => '', 'type' => 'admin'];
 
 // Blocks
 $modversion['blocks'][] = [
@@ -459,3 +460,11 @@ $modversion['config'][$i]['formtype']    = 'select';
 $modversion['config'][$i]['valuetype']   = 'int';
 $modversion['config'][$i]['default']     = 3;
 $modversion['config'][$i]['options']     = [_MI_DEFAULT_NOTIFICATION_METHOD_DISABLE => 0, _MI_DEFAULT_NOTIFICATION_METHOD_PM => 1, _MI_DEFAULT_NOTIFICATION_METHOD_EMAIL => 2];
+++$i;
+$modversion['config'][$i]['name']        = 'active_menus';
+$modversion['config'][$i]['title']       = '_MI_SYSTEM_MENUS_ACTIVE';
+$modversion['config'][$i]['description'] = '_MI_SYSTEM_MENUS_ACTIVE_DESC';
+$modversion['config'][$i]['formtype']    = 'yesno';
+$modversion['config'][$i]['valuetype']   = 'int';
+$modversion['config'][$i]['default']     = 1;
+$modversion['config'][$i]['category']    = 'general';
