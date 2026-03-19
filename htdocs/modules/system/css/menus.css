@@ -1,0 +1,152 @@
+/* System Menu Admin — BEM naming convention */
+
+/* ─── Action Bar ─── */
+.sm-actionbar {
+    margin-bottom: 15px;
+}
+.sm-actionbar .btn {
+    margin-right: 5px;
+}
+
+/* ─── List (category list) ─── */
+.sm-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+.sm-list__item {
+    display: flex;
+    align-items: center;
+    padding: 10px 12px;
+    margin-bottom: 2px;
+    background: #f7f8f9;
+    border: 1px solid #dde0e4;
+    border-radius: 3px;
+    transition: opacity 0.2s;
+}
+.sm-list__item--inactive {
+    opacity: 0.5;
+}
+.sm-list__handle {
+    cursor: grab;
+    padding: 0 10px 0 0;
+    color: #999;
+}
+.sm-list__handle:active {
+    cursor: grabbing;
+}
+.sm-list__title {
+    flex: 1;
+    font-weight: 600;
+}
+.sm-list__title a {
+    color: #333;
+    text-decoration: none;
+}
+.sm-list__title a:hover {
+    color: #0275d8;
+}
+.sm-list__badge {
+    display: inline-block;
+    min-width: 20px;
+    padding: 2px 6px;
+    font-size: 11px;
+    font-weight: 700;
+    text-align: center;
+    background: #5bc0de;
+    color: #fff;
+    border-radius: 10px;
+    margin-left: 8px;
+}
+.sm-list__url {
+    flex: 0 0 200px;
+    color: #888;
+    font-size: 12px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    padding: 0 15px;
+}
+.sm-list__actions {
+    flex: 0 0 auto;
+    white-space: nowrap;
+}
+.sm-list__actions a {
+    margin-left: 8px;
+    font-size: 14px;
+    color: #666;
+}
+.sm-list__actions a:hover {
+    color: #333;
+}
+
+/* ─── Tree (item tree) ─── */
+.sm-tree {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+.sm-tree__children {
+    list-style: none;
+    padding-left: 30px;
+    margin: 0;
+}
+.sm-tree__node {
+    margin-bottom: 2px;
+}
+.sm-tree__node--inactive {
+    opacity: 0.5;
+}
+.sm-tree__row {
+    display: flex;
+    align-items: center;
+    padding: 8px 10px;
+    background: #fff;
+    border: 1px solid #e0e3e6;
+    border-radius: 3px;
+}
+.sm-tree__handle {
+    cursor: grab;
+    padding: 0 10px 0 0;
+    color: #bbb;
+}
+.sm-tree__title {
+    flex: 1;
+}
+.sm-tree__url {
+    flex: 0 0 180px;
+    color: #999;
+    font-size: 12px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    padding: 0 10px;
+}
+.sm-tree__actions {
+    flex: 0 0 auto;
+    white-space: nowrap;
+}
+.sm-tree__actions a {
+    margin-left: 6px;
+    font-size: 13px;
+    color: #777;
+}
+
+/* ─── SortableJS ghost/chosen states ─── */
+.sortable-ghost {
+    opacity: 0.3;
+    background: #e8f0fe;
+}
+.sortable-chosen {
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+}
+
+/* ─── Toggle ─── */
+.sm-toggle {
+    cursor: pointer;
+}
+
+/* ─── Tips ─── */
+.sm-tips {
+    font-size: 13px;
+}
