@@ -126,6 +126,8 @@ class XoopsMenusItems extends XoopsObject
      */
     public function getFormItems(int $categoryId, string $action): \XoopsThemeForm
     {
+        include_once XOOPS_ROOT_PATH . '/class/xoopsformloader.php';
+
         $isEdit      = (bool) $this->getVar('items_id');
         $isProtected = (bool) $this->getVar('items_protected');
         $title       = $isEdit ? _AM_SYSTEM_MENUS_EDITITEM : _AM_SYSTEM_MENUS_ADDITEM;
