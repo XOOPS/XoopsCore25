@@ -111,7 +111,8 @@ function menus_require_token(bool $isAjax): void
  */
 function menus_sanitize_url(string $url): string
 {
-    $url = trim($url);
+    // Decode HTML entities so encoded schemes (&#106;avascript:) don't bypass the check
+    $url = trim(html_entity_decode($url, ENT_QUOTES | ENT_HTML5, 'UTF-8'));
     if ($url === '' || $url === '#') {
         return $url;
     }
@@ -749,6 +750,8 @@ switch ($op) {
         foreach ($currentItems as $ci) {
             $currentIds[(int) $ci->getVar('items_id')] = true;
         }
+        ksort($seenIds);
+        ksort($currentIds);
         if ($seenIds !== $currentIds) {
             menus_send_json(false, ['message' => 'Tree does not match current item set']);
         }
