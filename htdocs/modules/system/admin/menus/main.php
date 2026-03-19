@@ -434,7 +434,7 @@ switch ($op) {
         $xoBreadCrumb->addLink(_AM_SYSTEM_MENUS_NAV_CATEGORY);
         $xoBreadCrumb->render();
 
-        $itemId = Request::getInt('items_id', 0, 'GET');
+        $itemId = Request::getInt('item_id', 0, 'GET');
         $item   = menus_item_handler()->get($itemId);
         if (!is_object($item) || $item->isNew()) {
             redirect_header(MENUS_ADMIN_URL, 3, _AM_SYSTEM_MENUS_ERROR_ITEMNOTFOUND);
@@ -531,7 +531,7 @@ switch ($op) {
 
     // --- DELETE ITEM ---
     case 'delitem':
-        $itemId  = Request::getInt('items_id', 0, 'REQUEST');
+        $itemId  = Request::getInt('item_id', 0, 'REQUEST');
         $confirm = Request::getInt('confirm', 0, 'POST');
         $item    = menus_item_handler()->get($itemId);
 
@@ -695,7 +695,7 @@ switch ($op) {
     // --- TOGGLE ITEM ACTIVE (AJAX) ---
     case 'toggleactiveitem':
         menus_require_token(true);
-        $itemId = Request::getInt('items_id', 0, 'POST');
+        $itemId = Request::getInt('item_id', 0, 'POST');
         $item   = menus_item_handler()->get($itemId);
 
         if (!is_object($item) || $item->isNew()) {

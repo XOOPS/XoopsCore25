@@ -300,8 +300,11 @@
             var active = target.getAttribute('data-active');
             var isCat  = target.classList.contains('sm-toggle--cat');
             var op     = isCat ? 'toggleactivecat' : 'toggleactiveitem';
+            var param  = isCat ? 'category_id' : 'item_id';
+            var data   = {};
+            data[param] = id;
 
-            postJson(op, { id: id, active: active }, function (resp) {
+            postJson(op, data, function (resp) {
                 if (!resp.success) {
                     console.error('Toggle failed', resp.message);
                     return;
