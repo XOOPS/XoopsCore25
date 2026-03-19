@@ -164,6 +164,25 @@ function system_menu_update(XoopsModule $module): bool
 }
 
 /**
+ * Execute a DDL/DML statement and throw on failure.
+ *
+ * XOOPS DB layer returns false on error instead of throwing. This wrapper
+ * converts false returns into exceptions so the caller's try/catch works.
+ *
+ * @param XoopsMySQLDatabase $db  Database connection
+ * @param string             $sql SQL statement
+ *
+ * @throws \RuntimeException When the statement fails
+ */
+function system_menu_exec_or_throw(XoopsMySQLDatabase $db, string $sql): void
+{
+    $result = $db->exec($sql);
+    if ($result === false) {
+        throw new \RuntimeException('SQL failed: ' . mb_substr($sql, 0, 200));
+    }
+}
+
+/**
  * Drop foreign key constraints referencing a given parent table.
  */
 function system_menu_drop_parent_foreign_keys(XoopsMySQLDatabase $db, string $tableName): void
@@ -200,7 +219,7 @@ function system_menu_create_tables(XoopsMySQLDatabase $db): void
         `category_active`    TINYINT(1)   NOT NULL DEFAULT 1,
         PRIMARY KEY (`category_id`)
     ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;";
-    $db->exec($sql);
+    system_menu_exec_or_throw($db, $sql);
 
     // Drop orphan FKs before (re-)creating the items table
     system_menu_drop_parent_foreign_keys($db, 'menuscategory');
@@ -225,7 +244,7 @@ function system_menu_create_tables(XoopsMySQLDatabase $db): void
             REFERENCES `{$db->prefix('menuscategory')}` (`category_id`)
             ON DELETE CASCADE
     ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;";
-    $db->exec($sql);
+    system_menu_exec_or_throw($db, $sql);
 
     // Re-add FK if it was dropped on an existing table (CREATE TABLE IF NOT EXISTS is a no-op)
     $fkCheck = $db->query(
@@ -235,7 +254,8 @@ function system_menu_create_tables(XoopsMySQLDatabase $db): void
         . " AND TABLE_SCHEMA = DATABASE()"
     );
     if ($db->isResultSet($fkCheck) && ($fkCheck instanceof \mysqli_result) && 0 === $db->getRowsNum($fkCheck)) {
-        $db->exec(
+        system_menu_exec_or_throw(
+            $db,
             "ALTER TABLE `{$prefix}` ADD CONSTRAINT `fk_items_category`"
             . " FOREIGN KEY (`items_cid`) REFERENCES `{$db->prefix('menuscategory')}` (`category_id`)"
             . " ON DELETE CASCADE"
@@ -272,17 +292,18 @@ function system_menu_normalize_schema(XoopsMySQLDatabase $db): void
     }
 
     // Normalize NULL parent IDs to 0
-    $db->exec("UPDATE `{$itemTable}` SET `items_pid` = 0 WHERE `items_pid` IS NULL");
-    $db->exec("ALTER TABLE `{$itemTable}` MODIFY `items_pid` INT NOT NULL DEFAULT 0");
+    system_menu_exec_or_throw($db, "UPDATE `{$itemTable}` SET `items_pid` = 0 WHERE `items_pid` IS NULL");
+    system_menu_exec_or_throw($db, "ALTER TABLE `{$itemTable}` MODIFY `items_pid` INT NOT NULL DEFAULT 0");
 
     // Enforce NOT NULL on affix columns
-    $db->exec("ALTER TABLE `{$catTable}` MODIFY `category_prefix` TEXT NOT NULL");
-    $db->exec("ALTER TABLE `{$catTable}` MODIFY `category_suffix` TEXT NOT NULL");
-    $db->exec("ALTER TABLE `{$itemTable}` MODIFY `items_prefix` TEXT NOT NULL");
-    $db->exec("ALTER TABLE `{$itemTable}` MODIFY `items_suffix` TEXT NOT NULL");
+    system_menu_exec_or_throw($db, "ALTER TABLE `{$catTable}` MODIFY `category_prefix` TEXT NOT NULL");
+    system_menu_exec_or_throw($db, "ALTER TABLE `{$catTable}` MODIFY `category_suffix` TEXT NOT NULL");
+    system_menu_exec_or_throw($db, "ALTER TABLE `{$itemTable}` MODIFY `items_prefix` TEXT NOT NULL");
+    system_menu_exec_or_throw($db, "ALTER TABLE `{$itemTable}` MODIFY `items_suffix` TEXT NOT NULL");
 
     // Migrate root-relative '/' to 'index.php' (safe for subdirectory installs)
-    $db->exec(
+    system_menu_exec_or_throw(
+        $db,
         "UPDATE `{$catTable}` SET `category_url` = " . $db->quote('index.php')
         . " WHERE `category_protected` = 1 AND `category_url` = " . $db->quote('/')
     );
@@ -311,7 +332,7 @@ function system_menu_ensure_category(XoopsMySQLDatabase $db, array $definition):
     if ($db->isResultSet($result) && ($result instanceof \mysqli_result) && ($row = $db->fetchArray($result))) {
         // Existing row: only sync seed-owned content fields (prefix, suffix, url).
         // Preserve admin-maintained layout fields (position, target, active).
-        $db->exec(sprintf(
+        system_menu_exec_or_throw($db, sprintf(
             "UPDATE `%s` SET `category_prefix` = %s, `category_suffix` = %s, `category_url` = %s"
             . " WHERE `category_id` = %d",
             $table,
@@ -323,7 +344,7 @@ function system_menu_ensure_category(XoopsMySQLDatabase $db, array $definition):
         return (int) $row['category_id'];
     }
 
-    $db->exec(sprintf(
+    system_menu_exec_or_throw($db, sprintf(
         "INSERT INTO `%s` (`category_title`,`category_prefix`,`category_suffix`,`category_url`,"
         . "`category_target`,`category_position`,`category_protected`,`category_active`)"
         . " VALUES (%s, %s, %s, %s, %d, %d, %d, %d)",
@@ -367,7 +388,7 @@ function system_menu_ensure_item(XoopsMySQLDatabase $db, int $categoryId, array 
     if ($db->isResultSet($result) && ($result instanceof \mysqli_result) && ($row = $db->fetchArray($result))) {
         // Existing row: only sync seed-owned content fields (prefix, suffix, url).
         // Preserve admin-maintained layout fields (pid, position, target, active).
-        $db->exec(sprintf(
+        system_menu_exec_or_throw($db, sprintf(
             "UPDATE `%s` SET `items_prefix` = %s, `items_suffix` = %s, `items_url` = %s"
             . " WHERE `items_id` = %d",
             $table,
@@ -379,7 +400,7 @@ function system_menu_ensure_item(XoopsMySQLDatabase $db, int $categoryId, array 
         return (int) $row['items_id'];
     }
 
-    $db->exec(sprintf(
+    system_menu_exec_or_throw($db, sprintf(
         "INSERT INTO `%s` (`items_cid`,`items_pid`,`items_title`,`items_prefix`,`items_suffix`,"
         . "`items_url`,`items_target`,`items_position`,`items_protected`,`items_active`)"
         . " VALUES (%d, %d, %s, %s, %s, %s, %d, %d, %d, %d)",
@@ -601,6 +622,6 @@ function system_menu_migrate_unsafe_urls(XoopsMySQLDatabase $db): void
     $catTable = $db->prefix('menuscategory');
     $itemTable = $db->prefix('menusitems');
 
-    $db->exec("UPDATE `{$catTable}` SET `category_url` = '#' WHERE TRIM(`category_url`) LIKE 'javascript:%'");
-    $db->exec("UPDATE `{$itemTable}` SET `items_url` = '#' WHERE TRIM(`items_url`) LIKE 'javascript:%'");
+    system_menu_exec_or_throw($db, "UPDATE `{$catTable}` SET `category_url` = '#' WHERE TRIM(`category_url`) LIKE 'javascript:%'");
+    system_menu_exec_or_throw($db, "UPDATE `{$itemTable}` SET `items_url` = '#' WHERE TRIM(`items_url`) LIKE 'javascript:%'");
 }

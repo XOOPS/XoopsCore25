@@ -737,7 +737,7 @@ switch ($op) {
                     continue;
                 }
                 $nodeItem->setVar('items_pid', $parentId);
-                $nodeItem->setVar('items_position', $position++);
+                $nodeItem->setVar('items_position', ++$position);
                 if (!$itemHandler->insert($nodeItem)) {
                     $failed = true;
                     return;
