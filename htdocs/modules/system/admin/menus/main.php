@@ -200,7 +200,8 @@ $isAjax = menus_is_ajax($op);
 if ($isAjax) {
     menus_prepare_ajax();
 } else {
-    // Standard admin page chrome — header, assets, breadcrumb
+    // Tell XOOPS which template to render before opening the admin page
+    $GLOBALS['xoopsOption']['template_main'] = 'system_menus.tpl';
     xoops_cp_header();
     menus_assign_template_defaults($xoopsTpl, $op);
 
