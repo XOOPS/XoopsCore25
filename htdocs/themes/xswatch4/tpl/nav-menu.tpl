@@ -96,3 +96,21 @@
             </div>
         </div>
     </div>
+
+<script>
+/* Touch-friendly dropdown: first tap opens submenu, second tap follows link */
+(function() {
+    var opened = null;
+    document.addEventListener('click', function(e) {
+        var link = e.target.closest('.xo-hover-dropdown > a.dropdown-toggle');
+        if (!link) { opened = null; return; }
+        var li = link.parentElement;
+        if (opened === li) { return; } /* second tap — follow href */
+        e.preventDefault();
+        if (opened) { opened.classList.remove('show'); opened.querySelector('.dropdown-menu').classList.remove('show'); }
+        li.classList.add('show');
+        li.querySelector('.dropdown-menu').classList.add('show');
+        opened = li;
+    });
+})();
+</script>
