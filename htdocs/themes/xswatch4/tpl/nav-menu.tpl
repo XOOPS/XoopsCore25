@@ -98,18 +98,21 @@
     </div>
 
 <script>
-/* Touch-friendly dropdown: first tap opens submenu, second tap follows link */
+/* Touch-friendly dropdown: first tap opens submenu, second tap follows link.
+   Covers both top-level categories and nested .dropdown-submenu items. */
 (function() {
     var opened = null;
     document.addEventListener('click', function(e) {
-        var link = e.target.closest('.xo-hover-dropdown > a.dropdown-toggle');
+        var link = e.target.closest('.xo-hover-dropdown > a.dropdown-toggle, .dropdown-submenu > a');
         if (!link) { opened = null; return; }
-        var li = link.parentElement;
+        var li = link.closest('.xo-hover-dropdown, .dropdown-submenu');
+        if (!li) { return; }
         if (opened === li) { return; } /* second tap — follow href */
         e.preventDefault();
-        if (opened) { opened.classList.remove('show'); opened.querySelector('.dropdown-menu').classList.remove('show'); }
+        if (opened) { opened.classList.remove('show'); var prev = opened.querySelector('.dropdown-menu'); if (prev) prev.classList.remove('show'); }
         li.classList.add('show');
-        li.querySelector('.dropdown-menu').classList.add('show');
+        var menu = li.querySelector(':scope > .dropdown-menu');
+        if (menu) menu.classList.add('show');
         opened = li;
     });
 })();
