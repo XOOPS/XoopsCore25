@@ -362,7 +362,10 @@ switch ($op) {
             redirect_header(MENUS_ADMIN_URL, 3, _AM_SYSTEM_MENUS_ERROR_ITEMNOTFOUND);
         }
         $catId = (int) $item->getVar('items_cid');
-        $form  = $item->getFormItems($catId, MENUS_ADMIN_URL);
+        if (0 === (int) $item->getVar('items_active')) {
+            redirect_header(MENUS_ADMIN_URL . '&op=viewcat&category_id=' . $catId, 5, _AM_SYSTEM_MENUS_ERROR_ITEMEDIT);
+        }
+        $form = $item->getFormItems($catId, MENUS_ADMIN_URL);
         $xoopsTpl->assign('form', $form->render());
         break;
 
@@ -469,6 +472,9 @@ switch ($op) {
 
         if ((int) $item->getVar('items_protected') === 1) {
             redirect_header(MENUS_ADMIN_URL . '&op=viewcat&category_id=' . $catId, 3, _AM_SYSTEM_MENUS_ERROR_ITEMPROTECTED);
+        }
+        if (0 === (int) $item->getVar('items_active')) {
+            redirect_header(MENUS_ADMIN_URL . '&op=viewcat&category_id=' . $catId, 5, _AM_SYSTEM_MENUS_ERROR_ITEMDISABLE);
         }
 
         if ($confirm) {
