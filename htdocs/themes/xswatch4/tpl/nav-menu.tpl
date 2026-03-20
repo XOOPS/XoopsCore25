@@ -106,6 +106,10 @@
     document.addEventListener('click', function(e) {
         var link = e.target.closest('.xo-hover-dropdown > a.dropdown-toggle, .dropdown-submenu > a');
         if (!link) {
+            Object.keys(openedByDepth).forEach(function(d) {
+                var node = openedByDepth[d];
+                if (node) { node.classList.remove('show'); var m = node.querySelector(':scope > .dropdown-menu'); if (m) m.classList.remove('show'); }
+            });
             openedByDepth = {};
             return;
         }
