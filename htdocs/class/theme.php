@@ -1,21 +1,21 @@
 <?php
 /**
- * xos_opal_Theme component class file
- *
  * You may not change or alter any portion of this comment or credits
  * of supporting developers from this source code or any supporting source code
  * which is considered copyrighted (c) material of the original comment or credit authors.
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ */
+
+/**
+ * xos_opal_Theme component class file
  *
  * @copyright       (c) 2000-2026 XOOPS Project (https://xoops.org)
  * @license             GNU GPL 2 (https://www.gnu.org/licenses/gpl-2.0.html)
  * @author              Skalpa Keo <skalpa@xoops.org>
  * @author              Taiwen Jiang <phppp@users.sourceforge.net>
  * @since               2.3.0
- * @package             kernel
- * @subpackage          xos_opal_Theme
  */
 
 use Xmf\Request;
@@ -406,241 +406,12 @@ class xos_opal_Theme
             }
         }
 
-        // Load menu categories and their nested items so themes can render navigation
-        if (\Xmf\Module\Helper::getHelper('system')->getConfig('active_menus')) {
+        // Load system menus if enabled
+        if (\Xmf\Module\Helper::getHelper('system') && \Xmf\Module\Helper::getHelper('system')->getConfig('active_menus')) {
             $this->template->assign('xoMenuCategories', $this->loadMenus());
         }
 
         return true;
-    }
-
-    /**
-     * Load active menu categories with their nested items.
-     *
-     * @return array
-     */
-    protected function loadMenus()
-    {
-        // Include shared CSS for multilevel menus
-        $css = 'multilevelmenu.css';
-        $path = XOOPS_ROOT_PATH . '/modules/system/css/' . $css;
-        if (file_exists($path)) {
-            $this->addStylesheet(XOOPS_URL . '/modules/system/css/' . $css);
-        }
-
-        // Include shared JS for multilevel menus
-        $js = 'multilevelmenu.js';
-        $jsPath = XOOPS_ROOT_PATH . '/modules/system/js/' . $js;
-        if (file_exists($jsPath)) {
-            $this->addScript(XOOPS_URL . '/modules/system/js/' . $js);
-        }
-
-        $menus = [];
-        /** @var \XoopsMenusCategoryHandler $menuscategoryHandler */
-        $menuscategoryHandler = xoops_getHandler('menuscategory');
-        if (!is_object($menuscategoryHandler) && class_exists('XoopsMenusCategoryHandler')) {
-            $menuscategoryHandler = new XoopsMenusCategoryHandler($GLOBALS['xoopsDB']);
-        }
-
-        $category_arr = [];
-        $viewPermissionItem = [];
-
-        if (is_object($menuscategoryHandler)) {
-            // Verify table exists before querying
-            $tableExists = false;
-            try {
-                $tableName = str_replace(['_', '%'], ['\\_', '\\%'], $GLOBALS['xoopsDB']->prefix('menuscategory'));
-                $sql = "SHOW TABLES LIKE '" . $tableName . "'";
-                $result = $GLOBALS['xoopsDB']->query($sql);
-                if (false !== $result) {
-                    $tableExists = $GLOBALS['xoopsDB']->getRowsNum($result) > 0;
-                }
-            } catch (\Throwable $e) {
-                $tableExists = false;
-            }
-            if ($tableExists) {
-                $helper            = Xmf\Module\Helper::getHelper('system');
-                $moduleHandler     = $helper->getModule();
-                $groups            = is_object($GLOBALS['xoopsUser']) ? $GLOBALS['xoopsUser']->getGroups() : (array) XOOPS_GROUP_ANONYMOUS;
-                /** @var \XoopsGroupPermHandler $gpermHandler */
-                $gpermHandler      = xoops_getHandler('groupperm');
-                $viewPermissionCat = $gpermHandler->getItemIds('menus_category_view', $groups, $moduleHandler->getVar('mid'));
-                $viewPermissionItem = $gpermHandler->getItemIds('menus_items_view', $groups, $moduleHandler->getVar('mid'));
-                if (!empty($viewPermissionCat)) {
-                    $criteria = new CriteriaCompo();
-                    $criteria->add(new Criteria('category_active', 1));
-                    $criteria->add(new Criteria('category_id', '(' . implode(',', $viewPermissionCat) . ')', 'IN'));
-                    $criteria->setSort('category_position');
-                    $criteria->setOrder('ASC');
-                    $category_arr = $menuscategoryHandler->getAll($criteria);
-                }
-            }
-        }
-
-        if (!empty($category_arr)) {
-            /** @var \XoopsMenusItemsHandler $menusitemsHandler */
-            $menusitemsHandler = xoops_getHandler('menusitems');
-            if (!is_object($menusitemsHandler) && class_exists('XoopsMenusItemsHandler')) {
-                $menusitemsHandler = new XoopsMenusItemsHandler($GLOBALS['xoopsDB']);
-            }
-
-            // Normalize relative URLs to absolute
-            $normalizeUrl = function ($url) {
-                if (!is_string($url) || $url === '') {
-                    return $url;
-                }
-                // Block javascript: scheme (stored XSS)
-                if (preg_match('#^\s*javascript:#i', $url)) {
-                    return '';
-                }
-                // Pass through absolute URLs and common schemes
-                if (preg_match('#^(https?://|mailto:|tel:|ftp://|/|\#)#i', $url)) {
-                    return $url;
-                }
-                return XOOPS_URL . '/' . ltrim($url, '/');
-            };
-
-            // Batch-fetch all permitted active items in one query (avoids N+1)
-            $allItemsByCid = [];
-            if (!empty($viewPermissionItem)) {
-                $crit = new CriteriaCompo();
-                $crit->add(new Criteria('items_id', '(' . implode(',', $viewPermissionItem) . ')', 'IN'));
-                $crit->add(new Criteria('items_active', 1));
-                $crit->setSort('items_position');
-                $crit->setOrder('ASC');
-                $allItems = $menusitemsHandler->getAll($crit);
-                foreach ($allItems as $item) {
-                    $itemCid = $item->getVar('items_cid');
-                    $allItemsByCid[$itemCid][$item->getVar('items_id')] = $item;
-                }
-            }
-
-            xoops_load('SystemMenusTree', 'system');
-            // Recursive closure to build nested structure
-            $buildNested = function ($treeObj, $parentId = 0) use (&$buildNested, $normalizeUrl) {
-                $nodes = [];
-                $children = $treeObj->getFirstChild($parentId);
-                foreach ($children as $child) {
-                    $cid2 = $child->getVar('items_id');
-                    $entry = [
-                        'id'       => $cid2,
-                        'title'    => $child->getResolvedTitle(),
-                        'prefix'   => $this->renderMenuAffix($child->getVar('items_prefix', 'n')),
-                        'suffix'   => $this->renderMenuAffix($child->getVar('items_suffix', 'n')),
-                        'url'      => $normalizeUrl($child->getVar('items_url')),
-                        'target'   => ($child->getVar('items_target') == 1) ? '_blank' : '_self',
-                        'active'   => $child->getVar('items_active'),
-                        'children' => $buildNested($treeObj, $cid2),
-                    ];
-                    $nodes[] = $entry;
-                }
-                return $nodes;
-            };
-
-            foreach ($category_arr as $cat) {
-                try {
-                    $cid = $cat->getVar('category_id');
-                    $item_list = [];
-                    if (!empty($allItemsByCid[$cid])) {
-                        $myTree = new SystemMenusTree($allItemsByCid[$cid], 'items_id', 'items_pid');
-                        $item_list = $buildNested($myTree, 0);
-                    }
-                    $menus[] = [
-                        'category_id'     => $cid,
-                        'category_title'  => $cat->getResolvedTitle(),
-                        'category_prefix' => $this->renderMenuAffix($cat->getVar('category_prefix', 'n')),
-                        'category_suffix' => $this->renderMenuAffix($cat->getVar('category_suffix', 'n')),
-                        'category_url'    => $normalizeUrl($cat->getVar('category_url')),
-                        'category_target' => ($cat->getVar('category_target') == 1) ? '_blank' : '_self',
-                        'items'           => $item_list,
-                    ];
-                } catch (\Throwable $e) {
-                    continue;
-                }
-            }
-        }
-        return $menus;
-    }
-
-    /**
-     * Render a menu prefix/suffix that may contain the xoInboxCount Smarty tag.
-     *
-     * @param string $value
-     * @return string
-     */
-    protected function renderMenuAffix($value)
-    {
-        $value = (string)$value;
-        if ('' === $value) {
-            return $value;
-        }
-
-        // Replace <{xoInboxCount}> BEFORE strip_tags (it looks like an HTML tag)
-        if (false !== stripos($value, 'xoInboxCount')) {
-            try {
-                $unread = $this->getInboxUnreadCount();
-                $replacement = null === $unread ? '' : (string)$unread;
-                $value = preg_replace('/<{\s*xoInboxCount(?:\s+[^}]*)?\s*}>/i', $replacement, $value);
-                if (null === $value) {
-                    return '';
-                }
-            } catch (\Throwable $e) {
-                // Remove the tag so strip_tags doesn't mangle it
-                $value = preg_replace('/<{\s*xoInboxCount(?:\s+[^}]*)?\s*}>/i', '', $value);
-            }
-        }
-
-        // Sanitize: only allow safe inline HTML tags, strip event handlers and javascript: URLs
-        $value = strip_tags($value, '<span><i><b><em><strong>');
-        $value = preg_replace('/\s+on\w+\s*=\s*"[^"]*"/i', '', $value);
-        $value = preg_replace('/\s+on\w+\s*=\s*\'[^\']*\'/i', '', $value);
-        $value = preg_replace('/\s+on\w+\s*=\s*[^\s>]+/i', '', $value);
-        $value = preg_replace('/\b(href|src)\s*=\s*["\']?\s*javascript:[^"\'>\s]*/i', '', $value);
-
-        return $value;
-    }
-
-    /**
-     * Get unread private message count for current user.
-     *
-     * @return int|null
-     */
-    protected function getInboxUnreadCount()
-    {
-        global $xoopsUser;
-
-        if (!isset($xoopsUser) || !is_object($xoopsUser)) {
-            return null;
-        }
-
-        $freshRead = isset($GLOBALS['xoInboxCountFresh']);
-        $pmScripts = ['pmlite', 'readpmsg', 'viewpmsg'];
-        if (in_array(basename($_SERVER['SCRIPT_FILENAME'], '.php'), $pmScripts)) {
-            if (!$freshRead) {
-                unset($_SESSION['xoops_inbox_count'], $_SESSION['xoops_inbox_total'], $_SESSION['xoops_inbox_count_expire']);
-                $GLOBALS['xoInboxCountFresh'] = true;
-            }
-        }
-
-        $time = time();
-        if (isset($_SESSION['xoops_inbox_count']) && (isset($_SESSION['xoops_inbox_count_expire']) && $_SESSION['xoops_inbox_count_expire'] > $time)) {
-            return (int)$_SESSION['xoops_inbox_count'];
-        }
-
-        /** @var \XoopsPrivmessageHandler $pm_handler */
-        $pm_handler = xoops_getHandler('privmessage');
-
-        $xoopsPreload = XoopsPreload::getInstance();
-        $xoopsPreload->triggerEvent('core.class.smarty.xoops_plugins.xoinboxcount', [$pm_handler]);
-
-        $criteria = new CriteriaCompo(new Criteria('to_userid', $xoopsUser->getVar('uid')));
-        $_SESSION['xoops_inbox_total'] = $pm_handler->getCount($criteria);
-
-        $criteria->add(new Criteria('read_msg', 0));
-        $_SESSION['xoops_inbox_count'] = $pm_handler->getCount($criteria);
-        $_SESSION['xoops_inbox_count_expire'] = $time + 60;
-
-        return (int)$_SESSION['xoops_inbox_count'];
     }
 
     /**
@@ -1145,5 +916,261 @@ class xos_opal_Theme
         }
 
         return $path;
+    }
+
+    /**
+     * Load menu CSS and JS assets into the theme.
+     */
+    private function loadMenuAssets(): void
+    {
+        $cssFile = 'modules/system/css/multilevelmenu.css';
+        $jsFile  = 'modules/system/js/multilevelmenu.js';
+        if (file_exists(XOOPS_ROOT_PATH . '/' . $cssFile)) {
+            $this->addStylesheet($cssFile);
+        }
+        if (file_exists(XOOPS_ROOT_PATH . '/' . $jsFile)) {
+            $this->addScript($jsFile);
+        }
+    }
+
+    /**
+     * Verify that both menu database tables exist.
+     *
+     * @return bool True if both menuscategory and menusitems tables are present
+     */
+    private function hasMenuTables(): bool
+    {
+        /** @var \XoopsMySQLDatabase $db */
+        $db = \XoopsDatabaseFactory::getDatabaseConnection();
+        foreach (['menuscategory', 'menusitems'] as $tableName) {
+            $result = $db->query('SHOW TABLES LIKE ' . $db->quote($db->prefix($tableName)));
+            if (!$db->isResultSet($result) || !($result instanceof \mysqli_result) || 0 === $db->getRowsNum($result)) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    /**
+     * Load all visible menu categories and items for the current user.
+     *
+     * @return array<int, array<string, mixed>>
+     */
+    private function loadMenus(): array
+    {
+        $this->loadMenuAssets();
+
+        if (!$this->hasMenuTables()) {
+            return [];
+        }
+
+        $permHandler = xoops_getHandler('groupperm');
+        if (!$permHandler instanceof \XoopsGroupPermHandler) {
+            return [];
+        }
+        $groups = is_object($GLOBALS['xoopsUser'] ?? null)
+            ? $GLOBALS['xoopsUser']->getGroups()
+            : [XOOPS_GROUP_ANONYMOUS];
+        $moduleId = (int) \Xmf\Module\Helper::getHelper('system')->getModule()->getVar('mid');
+
+        $visibleCatIds = $permHandler->getItemIds('menus_category_view', $groups, $moduleId);
+        if (empty($visibleCatIds)) {
+            return [];
+        }
+
+        $visibleItemIds = $permHandler->getItemIds('menus_items_view', $groups, $moduleId);
+
+        $catHandler = xoops_getHandler('menuscategory');
+        if (!$catHandler instanceof \XoopsMenusCategoryHandler) {
+            return [];
+        }
+        $categories = $catHandler->getActiveCategoriesByIds($visibleCatIds);
+
+        $itemHandler = xoops_getHandler('menusitems');
+        if (!$itemHandler instanceof \XoopsMenusItemsHandler) {
+            return [];
+        }
+        if (empty($visibleItemIds)) {
+            return $this->buildCategoryOutput($categories, []);
+        }
+        $allItems = $itemHandler->getActiveItemsByIds($visibleItemIds);
+
+        $itemsByCat = [];
+        foreach ($allItems as $item) {
+            $cid = (int) $item->getVar('items_cid');
+            $itemsByCat[$cid][] = $item;
+        }
+
+        return $this->buildCategoryOutput($categories, $itemsByCat);
+    }
+
+    /**
+     * Build the output array for categories with their item trees.
+     *
+     * @param array $categories Array of XoopsMenusCategory objects
+     * @param array $itemsByCat Items grouped by category ID
+     *
+     * @return array<int, array<string, mixed>>
+     */
+    private function buildCategoryOutput(array $categories, array $itemsByCat): array
+    {
+        $output = [];
+        foreach ($categories as $cat) {
+            $cid = (int) $cat->getVar('category_id');
+            $catItems = $itemsByCat[$cid] ?? [];
+            $itemTree = $this->buildMenuItemTree($catItems);
+
+            $output[] = [
+                'category_id'     => $cid,
+                'category_title'  => $cat->getResolvedTitle(),
+                'category_prefix' => $this->renderMenuAffix($cat->getVar('category_prefix', 'n')),
+                'category_suffix' => $this->renderMenuAffix($cat->getVar('category_suffix', 'n')),
+                'category_url'    => $this->normalizeMenuUrl($cat->getVar('category_url', 'n')),
+                'category_target' => (1 === (int) $cat->getVar('category_target')) ? '_blank' : '_self',
+                'items'           => $itemTree,
+            ];
+        }
+        return $output;
+    }
+
+    /**
+     * Build a nested tree from a flat list of menu items.
+     *
+     * @param array $items Flat list of XoopsMenusItems sorted by position
+     *
+     * @return array<int, array<string, mixed>>
+     */
+    private function buildMenuItemTree(array $items): array
+    {
+        $indexed = [];
+        foreach ($items as $item) {
+            $id = (int) $item->getVar('items_id');
+            $indexed[$id] = [
+                'id'       => $id,
+                'title'    => $item->getResolvedTitle(),
+                'prefix'   => $this->renderMenuAffix($item->getVar('items_prefix', 'n')),
+                'suffix'   => $this->renderMenuAffix($item->getVar('items_suffix', 'n')),
+                'url'      => $this->normalizeMenuUrl($item->getVar('items_url', 'n')),
+                'target'   => (1 === (int) $item->getVar('items_target')) ? '_blank' : '_self',
+                'active'   => (int) $item->getVar('items_active'),
+                'pid'      => (int) $item->getVar('items_pid'),
+                'children' => [],
+            ];
+        }
+
+        $tree = [];
+        foreach ($indexed as $id => &$node) {
+            $pid = $node['pid'];
+            unset($node['pid']);
+            if ($pid === 0) {
+                $tree[] = &$node;
+            } elseif (!isset($indexed[$pid])) {
+                // Parent hidden by permissions — drop this orphaned subtree
+                continue;
+            } else {
+                $indexed[$pid]['children'][] = &$node;
+            }
+        }
+        unset($node);
+
+        return $tree;
+    }
+
+    /**
+     * Normalize a menu URL for safe rendering.
+     *
+     * @param string $url The raw URL from the database
+     *
+     * @return string Safe URL
+     */
+    private function normalizeMenuUrl(string $url): string
+    {
+        $url = trim($url);
+        if ($url === '') {
+            return '#';
+        }
+
+        if (preg_match('/^\s*javascript\s*:/i', $url)) {
+            return '#';
+        }
+
+        if (preg_match('~^(https?://|mailto:|tel:|ftp://|/|#)~i', $url)) {
+            return $url;
+        }
+
+        return XOOPS_URL . '/' . ltrim($url, '/');
+    }
+
+    /**
+     * Sanitize and render a prefix/suffix HTML fragment.
+     *
+     * @param string $value Raw affix value from database
+     *
+     * @return string Safe HTML fragment
+     */
+    private function renderMenuAffix(string $value): string
+    {
+        if ($value === '') {
+            return '';
+        }
+
+        // Replace xoInboxCount BEFORE strip_tags since the placeholder looks like an HTML tag
+        if (false !== stripos($value, 'xoInboxCount')) {
+            $count = $this->getInboxUnreadCount();
+            $replacement = ($count !== null && $count > 0) ? (string) $count : '';
+            $value = preg_replace('/<\{\s*xoInboxCount(?:\s+[^}]*)?\s*\}>/i', $replacement, $value) ?? $value;
+        }
+
+        $value = strip_tags($value, '<span><i><b><em><strong><small>');
+        $value = preg_replace('/\s+on\w+\s*=\s*["\'][^"\']*["\']/i', '', $value);
+        $value = preg_replace('/\s+on\w+\s*=\s*\S+/i', '', $value);
+        $value = preg_replace('/\s+style\s*=\s*["\'][^"\']*["\']/i', '', $value);
+        $value = preg_replace('/\s+style\s*=\s*\S+/i', '', $value);
+        $value = preg_replace('/javascript\s*:/i', '', $value);
+
+        return $value;
+    }
+
+    /**
+     * Get the unread private message count for the current user.
+     * Cached in session for 60 seconds.
+     *
+     * @return int|null Count, or null if not logged in
+     */
+    private function getInboxUnreadCount(): ?int
+    {
+        if (!is_object($GLOBALS['xoopsUser'] ?? null)) {
+            return null;
+        }
+
+        $uid = (int) $GLOBALS['xoopsUser']->getVar('uid');
+        $cacheKey = 'xo_inbox_count_' . $uid;
+        $cacheTime = 'xo_inbox_count_time_' . $uid;
+
+        $currentScript = basename($_SERVER['SCRIPT_NAME'] ?? '');
+        if ($currentScript === 'viewpmsg.php' || $currentScript === 'readpmsg.php') {
+            unset($_SESSION[$cacheKey], $_SESSION[$cacheTime]);
+        }
+
+        if (isset($_SESSION[$cacheKey], $_SESSION[$cacheTime])
+            && (time() - (int)$_SESSION[$cacheTime]) < 60
+        ) {
+            return (int) $_SESSION[$cacheKey];
+        }
+
+        /** @var \XoopsPrivmessageHandler $pmHandler */
+        $pmHandler = xoops_getHandler('privmessage');
+
+        $criteria = new \CriteriaCompo(new \Criteria('to_userid', (string) $uid));
+        $criteria->add(new \Criteria('read_msg', '0'));
+        $count = $pmHandler->getCount($criteria);
+
+        $preload = \XoopsPreload::getInstance();
+        $preload->triggerEvent('core.class.smarty.xoops_plugins.xoinboxcount', [$pmHandler]);
+
+        $_SESSION[$cacheKey] = $count;
+        $_SESSION[$cacheTime] = time();
+
+        return $count;
     }
 }

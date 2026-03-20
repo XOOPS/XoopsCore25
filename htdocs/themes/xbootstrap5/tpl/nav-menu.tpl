@@ -1,12 +1,42 @@
-<{* enable adhesive menus by setting value to 'yes', disable using 'no' *}>
+<{* Bootstrap 5 Navigation — xbootstrap5 theme *}>
+<{* Renders from xoMenuCategories when the menu system is active, otherwise falls back to static links *}>
+
+<{function name=renderBs5SubMenu}>
+    <{foreach from=$menuItems item=subItem}>
+        <{if $subItem.children}>
+            <li class="dropdown-submenu">
+                <a class="dropdown-item dropdown-toggle"
+                   href="<{if $subItem.url|default:'' neq ''}><{$subItem.url|escape}><{else}>#<{/if}>"
+                   target="<{$subItem.target}>"
+                   <{if $subItem.target == '_blank'}> rel="noopener noreferrer"<{/if}>
+                   aria-expanded="false">
+                    <{$subItem.prefix|default:''}> <{$subItem.title|escape}> <{$subItem.suffix|default:''}>
+                </a>
+                <ul class="dropdown-menu">
+                    <{call name=renderBs5SubMenu menuItems=$subItem.children}>
+                </ul>
+            </li>
+        <{else}>
+            <li>
+                <a class="dropdown-item"
+                   href="<{if $subItem.url|default:'' neq ''}><{$subItem.url|escape}><{else}>#<{/if}>"
+                   target="<{$subItem.target}>"
+                   <{if $subItem.target == '_blank'}> rel="noopener noreferrer"<{/if}>>
+                    <{$subItem.prefix|default:''}> <{$subItem.title|escape}> <{$subItem.suffix|default:''}>
+                </a>
+            </li>
+        <{/if}>
+    <{/foreach}>
+<{/function}>
+
+<{* Enable sticky header by setting value to 'yes' *}>
 <{assign var='stickyHeader' value='yes'}>
 <{if $stickyHeader === 'yes'}>
 <header class="navbar navbar-expand-lg navbar-dark bg-dark adhesiveHeader">
-    <{/if}>
+<{/if}>
     <div class="navbar-wrapper">
         <div class="navbar navbar-dark bg-dark navbar-static-top global-nav navbar-expand-sm">
             <div class="container">
-
                 <div class="navbar-header">
                     <button data-bs-target=".navbar-collapse" data-bs-toggle="collapse" class="navbar-toggler" type="button">
                         <span class="navbar-toggler-icon"></span>
@@ -17,54 +47,48 @@
                 </div>
 
                 <div class="navbar-collapse collapse">
-                    <{* Recursive function for rendering nested dropdown items (BS5) *}>
-                    <{function name=renderMenu}>
-                        <{assign var="level" value=$level|default:0}>
-                        <ul class="dropdown-menu">
-                        <{foreach $items as $item}>
-                            <li<{if $item.children}> class="dropdown-submenu"<{/if}>>
-                                <a class="dropdown-item<{if $item.children}> dropdown-toggle<{/if}>"
-                                   href="<{if $item.url neq ''}><{$item.url|escape}><{else}>#<{/if}>"
-                                   <{if $item.children}>role="button" data-bs-toggle="dropdown" aria-expanded="false"<{/if}>
-                                   target="<{$item.target}>"<{if $item.target == '_blank'}> rel="noopener noreferrer"<{/if}>>
-                                    <{$item.prefix}> <{$item.title|escape}> <{$item.suffix}>
-                                </a>
-                                <{if $item.children}>
-                                    <{call name=renderMenu items=$item.children level=$level+1}>
-                                <{/if}>
-                            </li>
-                        <{/foreach}>
-                        </ul>
-                    <{/function}>
-
                     <ul class="nav navbar-nav">
                         <{if isset($xoMenuCategories) && $xoMenuCategories}>
-                        <{foreach $xoMenuCategories as $cat}>
-                            <li class="nav-item<{if $cat.items}> dropdown<{/if}>">
-                                <a class="nav-link<{if $cat.items}> dropdown-toggle<{/if}>"
-                                   href="<{$cat.category_url|escape|default:'#'}>"
-                                   <{if $cat.items}>role="button" data-bs-toggle="dropdown" aria-expanded="false"<{/if}>
-                                   target="<{$cat.category_target}>"<{if $cat.category_target == '_blank'}> rel="noopener noreferrer"<{/if}>>
-                                    <{$cat.category_prefix}> <{$cat.category_title|escape}> <{$cat.category_suffix}>
-                                </a>
+                            <{foreach from=$xoMenuCategories item=cat}>
                                 <{if $cat.items}>
-                                    <{call name=renderMenu items=$cat.items level=0}>
+                                    <li class="nav-item dropdown">
+                                        <div class="d-flex align-items-center">
+                                            <a class="nav-link"
+                                               href="<{if $cat.category_url|default:'' neq ''}><{$cat.category_url|escape}><{else}>#<{/if}>"
+                                               target="<{$cat.category_target}>"
+                                               <{if $cat.category_target == '_blank'}> rel="noopener noreferrer"<{/if}>>
+                                                <{$cat.category_prefix|default:''}> <{$cat.category_title|escape}> <{$cat.category_suffix|default:''}>
+                                            </a><a class="dropdown-toggle p-0" href="#"
+                                               role="button" data-bs-toggle="dropdown" aria-expanded="false"><span class="visually-hidden">Toggle</span></a>
+                                        </div>
+                                        <ul class="dropdown-menu">
+                                            <{call name=renderBs5SubMenu menuItems=$cat.items}>
+                                        </ul>
+                                    </li>
+                                <{else}>
+                                    <li class="nav-item">
+                                        <a class="nav-link"
+                                           href="<{if $cat.category_url|default:'' neq ''}><{$cat.category_url|escape}><{else}>#<{/if}>"
+                                           target="<{$cat.category_target}>"
+                                           <{if $cat.category_target == '_blank'}> rel="noopener noreferrer"<{/if}>>
+                                            <{$cat.category_prefix|default:''}> <{$cat.category_title|escape}> <{$cat.category_suffix|default:''}>
+                                        </a>
+                                    </li>
                                 <{/if}>
-                            </li>
-                        <{/foreach}>
+                            <{/foreach}>
                         <{else}>
-                        <{* Fallback: static nav when menu system is not active *}>
-                        <li class="nav-item active"><a href="<{$xoops_url}>" class="nav-link"><{$smarty.const.THEME_HOME}></a></li>
-                        <{if $xoops_isadmin|default:false}>
-                        <li class="nav-item"><a href="<{$xoops_url}>/admin.php" class="nav-link"><{$smarty.const._ADMINISTRATION|default:'Administration'}></a></li>
-                        <{/if}>
-                        <{if $xoops_isuser|default:false}>
-                        <li class="nav-item"><a href="<{$xoops_url}>/user.php" class="nav-link"><{$smarty.const._PROFILE|default:'Account'}></a></li>
-                        <li class="nav-item"><a href="<{$xoops_url}>/user.php?op=logout" class="nav-link"><{$smarty.const._LOGOUT}></a></li>
-                        <{else}>
-                        <li class="nav-item"><a href="<{$xoops_url}>/user.php" class="nav-link"><{$smarty.const._LOGIN}></a></li>
-                        <li class="nav-item"><a href="<{$xoops_url}>/register.php" class="nav-link"><{$smarty.const._REGISTER}></a></li>
-                        <{/if}>
+                            <{* Fallback when menu system is disabled or not yet populated *}>
+                            <li class="nav-item active"><a class="nav-link" href="<{$xoops_url}>"><{$smarty.const._YOURHOME|default:'Home'}></a></li>
+                            <{if $xoops_isadmin|default:false}>
+                                <li class="nav-item"><a class="nav-link" href="<{$xoops_url}>/admin.php"><{$smarty.const._ADMINISTRATION|default:'Administration'}></a></li>
+                            <{/if}>
+                            <{if $xoops_isuser|default:false}>
+                                <li class="nav-item"><a class="nav-link" href="<{$xoops_url}>/edituser.php"><{$smarty.const._PROFILE|default:'Account'}></a></li>
+                                <li class="nav-item"><a class="nav-link" href="<{$xoops_url}>/user.php?op=logout"><{$smarty.const._LOGOUT}></a></li>
+                            <{else}>
+                                <li class="nav-item"><a class="nav-link" href="<{$xoops_url}>/user.php"><{$smarty.const._LOGIN}></a></li>
+                                <li class="nav-item"><a class="nav-link" href="<{$xoops_url}>/register.php"><{$smarty.const._REGISTER}></a></li>
+                            <{/if}>
                         <{/if}>
                     </ul>
 
@@ -76,12 +100,11 @@
                                 <button class="btn btn-primary" type="submit"><{$smarty.const.THEME_SEARCH_BUTTON}></button>
                             </div>
                         </form>
-
                     <{/if}>
                 </div>
             </div>
         </div>
-    </div><!-- .navbar-wrapper -->
-        <{if $stickyHeader === 'yes'}>
+    </div>
+<{if $stickyHeader === 'yes'}>
 </header>
 <{/if}>

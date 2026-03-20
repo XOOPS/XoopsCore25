@@ -76,32 +76,40 @@ jQuery(function($){
             }
         }).disableSelection();
 
-        // NESTED SORTABLE (items on viewcat page — allows nesting/reordering)
+        // NESTED SORTABLE (item lists — both inside accordion on list page and on viewcat page)
         if ($.fn.nestedSortable) {
-            $('ol.xo-menus-sortable').nestedSortable({
-                handle: 'div',
-                cancel: 'a, .item-active-toggle, .xo-menus-disclose',
-                items: 'li',
-                tolerance: 'pointer',
-                toleranceElement: '> div',
-                placeholder: 'ui-state-highlight',
-                helper: 'clone',
-                opacity: 0.6,
-                revert: 250,
-                tabSize: 25,
-                maxLevels: 3,
-                isTree: true,
-                expandOnHover: 700,
-                startCollapsed: false,
-                update: function() {
-                    var serialized = $(this).nestedSortable('serialize');
-                    var data = $.extend({ item: serialized }, getTokenData());
-                    ajaxJsonPost('admin.php?fct=menus&op=saveorderitems', data, function(response){
-                        if (!(response && response.success)) {
-                            alert(response && response.message ? response.message : 'Save failed');
-                        }
-                    });
-                }
+            $('ol.xo-menus-sortable').each(function() {
+                var $sortable = $(this);
+                $sortable.nestedSortable({
+                    handle: 'div',
+                    cancel: 'a, .item-active-toggle, .xo-menus-disclose',
+                    items: 'li',
+                    tolerance: 'pointer',
+                    toleranceElement: '> div',
+                    placeholder: 'ui-state-highlight',
+                    helper: 'clone',
+                    opacity: 0.6,
+                    revert: 250,
+                    tabSize: 25,
+                    maxLevels: 3,
+                    isTree: true,
+                    expandOnHover: 700,
+                    startCollapsed: false,
+                    update: function() {
+                        // data-category-id on viewcat, data-cid on list page accordions
+                        var categoryId = $sortable.data('category-id') || $sortable.data('cid');
+                        var tree = $sortable.nestedSortable('toHierarchy');
+                        var data = $.extend({
+                            category_id: categoryId,
+                            tree: JSON.stringify(tree)
+                        }, getTokenData());
+                        ajaxJsonPost('admin.php?fct=menus&op=saveorderitems', data, function(response){
+                            if (!(response && response.success)) {
+                                alert(response && response.message ? response.message : 'Save failed');
+                            }
+                        });
+                    }
+                });
             });
         }
     }
@@ -156,6 +164,14 @@ jQuery(function($){
 
     // initial state on page load
     refreshChildLocks();
+
+    // Auto-expand category from URL hash (e.g. #cat_4)
+    if (window.location.hash) {
+        var $target = $(window.location.hash);
+        if ($target.length && $target.hasClass('xo-menus-has-children')) {
+            $target.removeClass('xo-menus-collapsed').addClass('xo-menus-expanded');
+        }
+    }
 
     // TOGGLE ACTIVE (categories & items)
     $(document).on('click', '.category-active-toggle, .item-active-toggle', function(e){

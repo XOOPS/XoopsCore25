@@ -1,8 +1,12 @@
 <?php
-//
-// _LANGCODE: en
-// _CHARSET : UTF-8
-// Translator: XOOPS Translation Team
+/**
+ * @copyright    2000-2026 XOOPS Project https://xoops.org/
+ * @license      GNU GPL 2.0 or later (https://www.gnu.org/licenses/gpl-2.0.html)
+ * @author       XOOPS Development Team
+ * _LANGCODE    en
+ * _CHARSET     UTF-8
+ */
+
 // Module Info
 // The name of this module
 define('_MI_SYSTEM_NAME', 'System');
@@ -59,7 +63,6 @@ define('_MI_SYSTEM_PREFERENCE_ACTIVE_TPLSETS', '');
 define('_MI_SYSTEM_PREFERENCE_ACTIVE_USERRANK', 'Active User Ranks');
 define('_MI_SYSTEM_PREFERENCE_ACTIVE_USERS', 'Active Users');
 define('_MI_SYSTEM_PREFERENCE_ACTIVE_MAINTENANCE', 'Active Maintenance');
-define('_MI_SYSTEM_PREFERENCE_ACTIVE_MENUS', 'Active Menus');
 define('_MI_SYSTEM_PREFERENCE_BREAK_PAGER', 'Number of rows to display in the administration');
 define('_MI_SYSTEM_PREFERENCE_AVATARS_PAGER', 'Number of avatars to display per page');
 define('_MI_SYSTEM_PREFERENCE_BANNERS_PAGER', 'Number of banners to display per page');
@@ -83,3 +86,8 @@ define('_MI_SYSTEM_PREFERENCE_JQUERY_THEME', 'jQuery theme');
 define('_MI_DEFAULT_NOTIFICATION_METHOD_DISABLE', 'Temporarily disable');
 define('_MI_DEFAULT_NOTIFICATION_METHOD_EMAIL', 'Email');
 define('_MI_DEFAULT_NOTIFICATION_METHOD_PM', 'Private message');
+
+//2.5.12
+// Menus
+define('_MI_SYSTEM_MENUS_ACTIVE', 'Enable Menu System');
+define('_MI_SYSTEM_MENUS_ACTIVE_DESC', 'Enable the built-in menu management system for site navigation');

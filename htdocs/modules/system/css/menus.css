@@ -106,8 +106,7 @@ ol.xo-menus-tree .xo-menus-url {
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
-    width: 200px;
-    min-width: 200px;
+    flex: 0 0 200px;
     text-align: right;
 }
 
@@ -142,7 +141,8 @@ ol.xo-menus-tree .xo-menus-badge {
 }
 
 /* Status toggle */
-ol.xo-menus-tree .xo-menus-status {
+ol.xo-menus-tree .xo-menus-status,
+ol.xo-menus-sortable .xo-menus-status {
     flex-shrink: 0;
     width: 20px;
     text-align: center;
@@ -155,6 +155,7 @@ ol.xo-menus-tree .xo-menus-inactive {
 
 ol.xo-menus-tree .xo-menus-status img,
 ol.xo-menus-tree .xo-menus-actions img,
+ol.xo-menus-sortable .xo-menus-status img,
 ol.xo-menus-tree .item-active-toggle img,
 ol.xo-menus-tree .category-active-toggle img {
     width: 16px;
@@ -163,19 +164,16 @@ ol.xo-menus-tree .category-active-toggle img {
     border: none;
 }
 
-/* Action icons */
-ol.xo-menus-tree .xo-menus-actions {
+/* Individual action icon cells */
+ol.xo-menus-tree .xo-menus-action,
+ol.xo-menus-sortable .xo-menus-action {
     flex-shrink: 0;
-    white-space: nowrap;
-    width: 80px;
-    text-align: right;
+    width: 20px;
+    text-align: center;
 }
 
-ol.xo-menus-tree .xo-menus-actions a {
-    padding: 0 2px;
-}
-
-ol.xo-menus-tree .xo-menus-actions img {
+ol.xo-menus-tree .xo-menus-action img,
+ol.xo-menus-sortable .xo-menus-action img {
     width: 16px;
     height: 16px;
     border: none;
@@ -287,18 +285,7 @@ ol.xo-menus-sortable .xo-menus-sortable-url {
     text-align: right;
 }
 
-/* Action icons */
-ol.xo-menus-sortable .xo-menus-sortable-actions {
-    flex-shrink: 0;
-    white-space: nowrap;
-    width: 80px;
-    text-align: right;
-}
-
-ol.xo-menus-sortable .xo-menus-sortable-actions a {
-    padding: 0 2px;
-}
-
+/* Sortable action images */
 ol.xo-menus-sortable .xo-menus-sortable-actions img,
 ol.xo-menus-sortable .item-active-toggle img {
     width: 16px;

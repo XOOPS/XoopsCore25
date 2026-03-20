@@ -10,11 +10,9 @@
  */
 
 /**
- * @copyright      {@link https://xoops.org/ XOOPS Project}
- * @license        {@link https://www.gnu.org/licenses/gpl-2.0.html GNU GPL 2 or later}
- * @package
- * @since
- * @author         XOOPS Development Team
+ * @copyright    2000-2026 XOOPS Project https://xoops.org/
+ * @license      GNU GPL 2.0 or later (https://www.gnu.org/licenses/gpl-2.0.html)
+ * @author       XOOPS Development Team
  */
 
 define('XOOPS_SYSTEM_GROUP', 1);
@@ -33,7 +31,8 @@ define('XOOPS_SYSTEM_COMMENT', 14);
 define('XOOPS_SYSTEM_TPLSET', 15);
 define('XOOPS_SYSTEM_FILEMANAGER', 16);
 define('XOOPS_SYSTEM_MAINTENANCE', 17);
-define("XOOPS_SYSTEM_THEME1", 18);
+define('XOOPS_SYSTEM_THEME1', 18);
+
 // Configuration Category
 define('SYSTEM_CAT_MAIN', 0);
 define('SYSTEM_CAT_USER', 1);
@@ -43,4 +42,6 @@ define('SYSTEM_CAT_SEARCH', 4);
 define('SYSTEM_CAT_MAIL', 5);
 define('SYSTEM_CAT_AUTH', 6);
 
-define("XOOPS_SYSTEM_MENUS", 19);
+//2.5.12
+// Menus
+define('XOOPS_SYSTEM_MENUS', 19);

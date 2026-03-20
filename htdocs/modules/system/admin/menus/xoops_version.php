@@ -1,19 +1,19 @@
 <?php
 /**
- * @copyright    XOOPS Project https://xoops.org/
+ * @copyright    2000-2026 XOOPS Project https://xoops.org/
  * @license      GNU GPL 2.0 or later (https://www.gnu.org/licenses/gpl-2.0.html)
- * @package      system
- * @subpackage   menus
  * @since        2.5.12
- * @author       XOOPS Development Team, Grégory Mage (AKA GregMage)
+ * @author       XOOPS Development Team
  */
+ 
+defined('XOOPS_ROOT_PATH') || exit('Restricted access');
 
- $modversion = [
+$modversion = [
     'name'        => _AM_SYSTEM_MENUS,
     'version'     => '1.0',
     'description' => _AM_SYSTEM_MENUS_DESC,
     'author'      => '',
-    'credits'     => 'XOOPS Development Team, Grégory Mage (AKA GregMage)',
+    'credits'     => 'XOOPS Development Team',
     'help'        => 'page=menus',
     'license'     => 'GPL see LICENSE',
     'official'    => 1,
@@ -22,4 +22,4 @@
     'hasAdmin'    => 1,
     'adminpath'   => 'admin.php?fct=menus',
     'category'    => XOOPS_SYSTEM_MENUS,
- ];
+];
