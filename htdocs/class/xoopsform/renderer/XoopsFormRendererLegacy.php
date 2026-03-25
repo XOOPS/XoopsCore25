@@ -648,7 +648,9 @@ EOJS;
                     if (($caption = $ele->getCaption()) != '') {
                         $ret .= '<div class="xoops-form-element-caption' . ($ele->isRequired() ? '-required' : '') . '">';
                         $ret .= '<span class="caption-text">' . $caption . '</span>';
-                        $ret .= '<span class="caption-marker">*</span>';
+                        if ($ele->isRequired()) {
+                            $ret .= '<span class="caption-marker">*</span>';
+                        }
                         $ret .= '</div>';
                     }
                     if (($desc = $ele->getDescription()) != '') {
@@ -660,7 +662,9 @@ EOJS;
                     if (($caption = $ele->getCaption()) != '') {
                         $ret .= '<div class="xoops-form-element-caption' . ($ele->isRequired() ? '-required' : '') . '">';
                         $ret .= '<span class="caption-text">' . $caption . '</span>';
-                        $ret .= '<span class="caption-marker">*</span>';
+                        if ($ele->isRequired()) {
+                            $ret .= '<span class="caption-marker">*</span>';
+                        }
                         $ret .= '</div>';
                     }
                     $ret .= '</td></tr><tr valign="top" align="left"><td class="' . $class . '" colspan="2">' . $ele->render() . '</td></tr>';
