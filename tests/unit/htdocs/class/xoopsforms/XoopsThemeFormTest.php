@@ -162,6 +162,15 @@ class XoopsThemeFormTest extends TestCase
         $this->assertStringContainsString('xoops-form-element-caption-required', $result);
     }
 
+    public function testRenderRequiredElementHasCaptionMarker(): void
+    {
+        $text = new \XoopsFormText('Name', 'name', 25, 100);
+        $this->form->addElement($text, true);
+
+        $result = $this->form->render();
+        $this->assertStringContainsString('<span class="caption-marker">*</span>', $result);
+    }
+
     public function testRenderNonRequiredElementHasNormalCaptionClass(): void
     {
         $text = new \XoopsFormText('Name', 'name', 25, 100);
@@ -169,6 +178,15 @@ class XoopsThemeFormTest extends TestCase
 
         $result = $this->form->render();
         $this->assertStringContainsString('xoops-form-element-caption', $result);
+    }
+
+    public function testRenderNonRequiredElementHasNoCaptionMarker(): void
+    {
+        $text = new \XoopsFormText('Name', 'name', 25, 100);
+        $this->form->addElement($text, false);
+
+        $result = $this->form->render();
+        $this->assertStringNotContainsString('caption-marker', $result);
     }
 
     public function testRenderHiddenElementsAfterTable(): void
@@ -210,6 +228,26 @@ class XoopsThemeFormTest extends TestCase
 
         $result = $this->form->render();
         $this->assertStringContainsString('colspan="2"', $result);
+    }
+
+    public function testRenderNocolspanRequiredElementHasCaptionMarker(): void
+    {
+        $text = new \XoopsFormText('Editor', 'editor', 25, 100);
+        $text->setNocolspan(true);
+        $this->form->addElement($text, true);
+
+        $result = $this->form->render();
+        $this->assertStringContainsString('<span class="caption-marker">*</span>', $result);
+    }
+
+    public function testRenderNocolspanNonRequiredElementHasNoCaptionMarker(): void
+    {
+        $text = new \XoopsFormText('Editor', 'editor', 25, 100);
+        $text->setNocolspan(true);
+        $this->form->addElement($text, false);
+
+        $result = $this->form->render();
+        $this->assertStringNotContainsString('caption-marker', $result);
     }
 
     public function testRenderStringElement(): void
