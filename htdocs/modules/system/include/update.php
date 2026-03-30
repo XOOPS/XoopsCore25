@@ -224,7 +224,10 @@ function system_menu_create_tables(XoopsMySQLDatabase $db): void
     // Drop orphan FKs before (re-)creating the items table
     system_menu_drop_parent_foreign_keys($db, 'menuscategory');
 
+    // FK constraint name must include the table prefix to be unique per-database,
+    // since multiple XOOPS installs can share the same MySQL database.
     $prefix = $db->prefix('menusitems');
+    $fkName = $db->prefix('fk_items_category');
     $sql = "CREATE TABLE IF NOT EXISTS `{$prefix}` (
         `items_id`        INT          NOT NULL AUTO_INCREMENT,
         `items_pid`       INT          NOT NULL DEFAULT 0,
@@ -240,7 +243,7 @@ function system_menu_create_tables(XoopsMySQLDatabase $db): void
         PRIMARY KEY (`items_id`),
         KEY `idx_items_cid` (`items_cid`),
         KEY `idx_items_pid` (`items_pid`),
-        CONSTRAINT `fk_items_category` FOREIGN KEY (`items_cid`)
+        CONSTRAINT `{$fkName}` FOREIGN KEY (`items_cid`)
             REFERENCES `{$db->prefix('menuscategory')}` (`category_id`)
             ON DELETE CASCADE
     ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;";
@@ -249,14 +252,14 @@ function system_menu_create_tables(XoopsMySQLDatabase $db): void
     // Re-add FK if it was dropped on an existing table (CREATE TABLE IF NOT EXISTS is a no-op)
     $fkCheck = $db->query(
         "SELECT 1 FROM INFORMATION_SCHEMA.TABLE_CONSTRAINTS"
-        . " WHERE CONSTRAINT_NAME = 'fk_items_category'"
+        . " WHERE CONSTRAINT_NAME = " . $db->quote($fkName)
         . " AND TABLE_NAME = " . $db->quote($prefix)
         . " AND TABLE_SCHEMA = DATABASE()"
     );
     if ($db->isResultSet($fkCheck) && ($fkCheck instanceof \mysqli_result) && 0 === $db->getRowsNum($fkCheck)) {
         system_menu_exec_or_throw(
             $db,
-            "ALTER TABLE `{$prefix}` ADD CONSTRAINT `fk_items_category`"
+            "ALTER TABLE `{$prefix}` ADD CONSTRAINT `{$fkName}`"
             . " FOREIGN KEY (`items_cid`) REFERENCES `{$db->prefix('menuscategory')}` (`category_id`)"
             . " ON DELETE CASCADE"
         );
@@ -479,27 +482,27 @@ function system_menu_seed_defaults(XoopsMySQLDatabase $db, int $moduleId): void
             'active'    => 1,
             'groups'    => $allGroups,
         ],
-        'admin' => [
-            'title'     => 'MENUS_ADMIN',
-            'prefix'    => '<span class="fa fa-wrench fa-fw"></span>',
-            'suffix'    => '',
-            'url'       => 'admin.php',
-            'target'    => 0,
-            'position'  => 2,
-            'protected' => 1,
-            'active'    => 1,
-            'groups'    => $adminGroups,
-        ],
         'account' => [
             'title'     => 'MENUS_ACCOUNT',
             'prefix'    => '<span class="fa fa-user fa-fw"></span>',
             'suffix'    => '',
             'url'       => '',
             'target'    => 0,
-            'position'  => 3,
+            'position'  => 2,
             'protected' => 1,
             'active'    => 1,
             'groups'    => $allGroups,
+        ],
+        'admin' => [
+            'title'     => 'MENUS_ADMIN',
+            'prefix'    => '<span class="fa fa-wrench fa-fw"></span>',
+            'suffix'    => '',
+            'url'       => 'admin.php',
+            'target'    => 0,
+            'position'  => 3,
+            'protected' => 1,
+            'active'    => 1,
+            'groups'    => $adminGroups,
         ],
     ];
 
