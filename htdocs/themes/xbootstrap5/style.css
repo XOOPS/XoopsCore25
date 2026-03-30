@@ -889,8 +889,8 @@ body {
 
 
 .nav-item ul.dropdown-menu {
-    background-color: #fff;
-    border: 1px solid rgba(0, 0, 0, 0.15);
+    background-color: var(--bs-dropdown-bg, var(--bs-body-bg));
+    border: 1px solid var(--bs-dropdown-border-color, rgba(0, 0, 0, 0.15));
 }
 
 /* Highlight the active main menu item */
