@@ -749,23 +749,23 @@ class MainControllerTest extends TestCase
     }
 
     /**
-     * Verify that display_in_menu operation toggles weight.
+     * Verify that display_in_menu operation toggles show_in_menu.
      */
-    public function testDisplayInMenuOperationTogglesWeight(): void
+    public function testDisplayInMenuOperationTogglesShowInMenu(): void
     {
         $displayInMenuSection = $this->extractOperationSection('display_in_menu');
         $this->assertNotEmpty($displayInMenuSection, 'Display_in_menu operation should exist');
 
         $this->assertMatchesRegularExpression(
-            '/\$old\s+=\s+\$module->getVar\(\'weight\'\);/',
+            '/\$old\s+=\s+\(int\)\s*\$module->getVar\(\'show_in_menu\'\);/',
             $displayInMenuSection,
-            'Should get current weight'
+            'Should get current show_in_menu'
         );
 
         $this->assertStringContainsString(
-            "setVar('weight', !\$old)",
+            "setVar('show_in_menu',",
             $displayInMenuSection,
-            'Should toggle weight (0 or non-zero)'
+            'Should toggle show_in_menu'
         );
     }
 
@@ -793,11 +793,11 @@ class MainControllerTest extends TestCase
             'Should iterate over module order array'
         );
 
-        // Should only change order for visible modules (weight != 0)
+        // All modules get reordered (show_in_menu decoupled from weight)
         $this->assertStringContainsString(
-            "if (\$module->getVar('weight') != 0)",
+            "\$module->setVar('weight', \$i)",
             $orderSection,
-            'Should only reorder visible modules'
+            'Should set weight for all modules'
         );
     }
 
