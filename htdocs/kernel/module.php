@@ -840,6 +840,26 @@ class XoopsModuleHandler extends XoopsObjectHandler
     }
 
     /**
+     * Check whether the modules table has the show_in_menu column.
+     *
+     * Cached per-request so the SHOW COLUMNS query runs at most once.
+     *
+     * @param XoopsMySQLDatabase $db
+     *
+     * @return bool
+     */
+    private static function hasShowInMenuColumn($db): bool
+    {
+        static $result = null;
+        if ($result !== null) {
+            return $result;
+        }
+        $check = $db->query("SHOW COLUMNS FROM " . $db->prefix('modules') . " LIKE 'show_in_menu'");
+        $result = $db->isResultSet($check) && ($check instanceof \mysqli_result) && false !== $db->fetchArray($check);
+        return $result;
+    }
+
+    /**
      * Write a module to the database
      *
      * @param  XoopsObject|XoopsModule $module a XoopsModule object
@@ -861,11 +881,21 @@ class XoopsModuleHandler extends XoopsObjectHandler
         foreach ($module->cleanVars as $k => $v) {
             ${$k} = $v;
         }
+        // show_in_menu may not exist on pre-2.1.10 schemas; detect once per request
+        $hasMenuCol = self::hasShowInMenuColumn($this->db);
         if ($module->isNew()) {
             $mid = $this->db->genId('modules_mid_seq');
-            $sql = sprintf('INSERT INTO %s (mid, name, version, last_update, weight, show_in_menu, isactive, dirname, hasmain, hasadmin, hassearch, hasconfig, hascomments, hasnotification) VALUES (%u, %s, %s, %u, %u, %u, %u, %s, %u, %u, %u, %u, %u, %u)', $this->db->prefix('modules'), $mid, $this->db->quote($name), $this->db->quote($version), time(), $weight, $show_in_menu, 1, $this->db->quote($dirname), $hasmain, $hasadmin, $hassearch, $hasconfig, $hascomments, $hasnotification);
+            if ($hasMenuCol) {
+                $sql = sprintf('INSERT INTO %s (mid, name, version, last_update, weight, show_in_menu, isactive, dirname, hasmain, hasadmin, hassearch, hasconfig, hascomments, hasnotification) VALUES (%u, %s, %s, %u, %u, %u, %u, %s, %u, %u, %u, %u, %u, %u)', $this->db->prefix('modules'), $mid, $this->db->quote($name), $this->db->quote($version), time(), $weight, $show_in_menu, 1, $this->db->quote($dirname), $hasmain, $hasadmin, $hassearch, $hasconfig, $hascomments, $hasnotification);
+            } else {
+                $sql = sprintf('INSERT INTO %s (mid, name, version, last_update, weight, isactive, dirname, hasmain, hasadmin, hassearch, hasconfig, hascomments, hasnotification) VALUES (%u, %s, %s, %u, %u, %u, %s, %u, %u, %u, %u, %u, %u)', $this->db->prefix('modules'), $mid, $this->db->quote($name), $this->db->quote($version), time(), $weight, 1, $this->db->quote($dirname), $hasmain, $hasadmin, $hassearch, $hasconfig, $hascomments, $hasnotification);
+            }
         } else {
-            $sql = sprintf('UPDATE %s SET name = %s, dirname = %s, version = %s, last_update = %u, weight = %u, show_in_menu = %u, isactive = %u, hasmain = %u, hasadmin = %u, hassearch = %u, hasconfig = %u, hascomments = %u, hasnotification = %u WHERE mid = %u', $this->db->prefix('modules'), $this->db->quote($name), $this->db->quote($dirname), $this->db->quote($version), time(), $weight, $show_in_menu, $isactive, $hasmain, $hasadmin, $hassearch, $hasconfig, $hascomments, $hasnotification, $mid);
+            if ($hasMenuCol) {
+                $sql = sprintf('UPDATE %s SET name = %s, dirname = %s, version = %s, last_update = %u, weight = %u, show_in_menu = %u, isactive = %u, hasmain = %u, hasadmin = %u, hassearch = %u, hasconfig = %u, hascomments = %u, hasnotification = %u WHERE mid = %u', $this->db->prefix('modules'), $this->db->quote($name), $this->db->quote($dirname), $this->db->quote($version), time(), $weight, $show_in_menu, $isactive, $hasmain, $hasadmin, $hassearch, $hasconfig, $hascomments, $hasnotification, $mid);
+            } else {
+                $sql = sprintf('UPDATE %s SET name = %s, dirname = %s, version = %s, last_update = %u, weight = %u, isactive = %u, hasmain = %u, hasadmin = %u, hassearch = %u, hasconfig = %u, hascomments = %u, hasnotification = %u WHERE mid = %u', $this->db->prefix('modules'), $this->db->quote($name), $this->db->quote($dirname), $this->db->quote($version), time(), $weight, $isactive, $hasmain, $hasadmin, $hassearch, $hasconfig, $hascomments, $hasnotification, $mid);
+            }
         }
         if (!$result = $this->db->exec($sql)) {
             return false;
