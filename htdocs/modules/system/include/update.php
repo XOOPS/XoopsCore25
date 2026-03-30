@@ -86,6 +86,8 @@ function system_modules_add_menu_visibility(XoopsModule $module)
 
             return false;
         }
+        // Reset cached column check so insert() picks up the new column
+        XoopsModuleHandler::resetShowInMenuCache();
     }
 
     $sql = "UPDATE {$tableName} SET show_in_menu = CASE WHEN weight > 0 THEN 1 ELSE 0 END";

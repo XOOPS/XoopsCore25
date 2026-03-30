@@ -81,6 +81,20 @@ class XoopsModule extends XoopsObject
     }
 
     /**
+     * Assign DB row values, deriving show_in_menu from weight on pre-2.1.10 schemas.
+     *
+     * @param array $var_arr associative array of values from DB row
+     */
+    public function assignVars($var_arr)
+    {
+        parent::assignVars($var_arr);
+        // Pre-2.1.10 schemas lack show_in_menu; derive from legacy weight convention
+        if (is_array($var_arr) && !array_key_exists('show_in_menu', $var_arr)) {
+            $this->assignVar('show_in_menu', ($this->getVar('weight') > 0) ? 1 : 0);
+        }
+    }
+
+    /**
      * Load module info
      *
      * @param string  $dirname Directory Name
@@ -839,10 +853,14 @@ class XoopsModuleHandler extends XoopsObjectHandler
         }
     }
 
+    /** @var bool|null Cached column existence check; null = not yet probed */
+    private static $hasShowInMenu = null;
+
     /**
      * Check whether the modules table has the show_in_menu column.
      *
-     * Cached per-request so the SHOW COLUMNS query runs at most once.
+     * Cached per-request. Use resetShowInMenuCache() after ALTER TABLE
+     * to re-probe within the same process (e.g. during upgrade).
      *
      * @param XoopsMySQLDatabase $db
      *
@@ -850,13 +868,21 @@ class XoopsModuleHandler extends XoopsObjectHandler
      */
     private static function hasShowInMenuColumn($db): bool
     {
-        static $result = null;
-        if ($result !== null) {
-            return $result;
+        if (self::$hasShowInMenu !== null) {
+            return self::$hasShowInMenu;
         }
         $check = $db->query("SHOW COLUMNS FROM " . $db->prefix('modules') . " LIKE 'show_in_menu'");
-        $result = $db->isResultSet($check) && ($check instanceof \mysqli_result) && false !== $db->fetchArray($check);
-        return $result;
+        self::$hasShowInMenu = $db->isResultSet($check) && ($check instanceof \mysqli_result) && false !== $db->fetchArray($check);
+        return self::$hasShowInMenu;
+    }
+
+    /**
+     * Reset the cached column check so subsequent insert() calls
+     * pick up schema changes made during the same request.
+     */
+    public static function resetShowInMenuCache(): void
+    {
+        self::$hasShowInMenu = null;
     }
 
     /**
