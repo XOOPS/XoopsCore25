@@ -344,6 +344,7 @@ CREATE TABLE modules (
   version varchar(32) NOT NULL default '',
   last_update int(10) unsigned NOT NULL default '0',
   weight smallint(3) unsigned NOT NULL default '0',
+  show_in_menu tinyint(1) unsigned NOT NULL default '1',
   isactive tinyint(1) unsigned NOT NULL default '0',
   dirname varchar(25) NOT NULL default '',
   hasmain tinyint(1) unsigned NOT NULL default '0',

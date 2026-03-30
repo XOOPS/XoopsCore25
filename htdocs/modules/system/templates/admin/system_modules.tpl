@@ -124,9 +124,9 @@
                                  alt="<{$smarty.const._AM_SYSTEM_LOADING}>"/>
                             <img class="cursorpointer tooltip" id="menu<{$row.mid}>"
                                  onclick="system_setStatus( { fct: 'modulesadmin', op: 'display_in_menu', mid: <{$row.mid}> }, 'menu<{$row.mid}>', 'admin.php' )"
-                                 src="<{if $row.weight != 0}><{xoAdminIcons 'success.png'}><{else}><{xoAdminIcons 'cancel.png'}><{/if}>"
-                                 alt="<{if $row.weight != 0}><{$smarty.const._AM_SYSTEM_MODULES_HIDE}><{else}><{$smarty.const._AM_SYSTEM_MODULES_SHOW}><{/if}>"
-                                 title="<{if $row.weight != 0}><{$smarty.const._AM_SYSTEM_MODULES_HIDE}><{else}><{$smarty.const._AM_SYSTEM_MODULES_SHOW}><{/if}>"/>
+                                 src="<{if $row.show_in_menu != 0}><{xoAdminIcons 'success.png'}><{else}><{xoAdminIcons 'cancel.png'}><{/if}>"
+                                 alt="<{if $row.show_in_menu != 0}><{$smarty.const._AM_SYSTEM_MODULES_HIDE}><{else}><{$smarty.const._AM_SYSTEM_MODULES_SHOW}><{/if}>"
+                                 title="<{if $row.show_in_menu != 0}><{$smarty.const._AM_SYSTEM_MODULES_HIDE}><{else}><{$smarty.const._AM_SYSTEM_MODULES_SHOW}><{/if}>"/>
                         </td>
                         <td class="xo-modsimages">
                             <{if $row.isactive == 1}>

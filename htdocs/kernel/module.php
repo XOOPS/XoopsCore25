@@ -46,6 +46,7 @@ class XoopsModule extends XoopsObject
     public $version;
     public $last_update;
     public $weight;
+    public $show_in_menu;
     public $isactive;
     public $dirname;
     public $hasmain;
@@ -67,6 +68,7 @@ class XoopsModule extends XoopsObject
         $this->initVar('version', XOBJ_DTYPE_TXTBOX, null, false);
         $this->initVar('last_update', XOBJ_DTYPE_INT, null, false);
         $this->initVar('weight', XOBJ_DTYPE_INT, 0, false);
+        $this->initVar('show_in_menu', XOBJ_DTYPE_INT, 1, false);
         $this->initVar('isactive', XOBJ_DTYPE_INT, 1, false);
         $this->initVar('dirname', XOBJ_DTYPE_OTHER, null, true);
         $this->initVar('hasmain', XOBJ_DTYPE_INT, 0, false);
@@ -861,9 +863,9 @@ class XoopsModuleHandler extends XoopsObjectHandler
         }
         if ($module->isNew()) {
             $mid = $this->db->genId('modules_mid_seq');
-            $sql = sprintf('INSERT INTO %s (mid, name, version, last_update, weight, isactive, dirname, hasmain, hasadmin, hassearch, hasconfig, hascomments, hasnotification) VALUES (%u, %s, %s, %u, %u, %u, %s, %u, %u, %u, %u, %u, %u)', $this->db->prefix('modules'), $mid, $this->db->quote($name), $this->db->quote($version), time(), $weight, 1, $this->db->quote($dirname), $hasmain, $hasadmin, $hassearch, $hasconfig, $hascomments, $hasnotification);
+            $sql = sprintf('INSERT INTO %s (mid, name, version, last_update, weight, show_in_menu, isactive, dirname, hasmain, hasadmin, hassearch, hasconfig, hascomments, hasnotification) VALUES (%u, %s, %s, %u, %u, %u, %u, %s, %u, %u, %u, %u, %u, %u)', $this->db->prefix('modules'), $mid, $this->db->quote($name), $this->db->quote($version), time(), $weight, $show_in_menu, 1, $this->db->quote($dirname), $hasmain, $hasadmin, $hassearch, $hasconfig, $hascomments, $hasnotification);
         } else {
-            $sql = sprintf('UPDATE %s SET name = %s, dirname = %s, version = %s, last_update = %u, weight = %u, isactive = %u, hasmain = %u, hasadmin = %u, hassearch = %u, hasconfig = %u, hascomments = %u, hasnotification = %u WHERE mid = %u', $this->db->prefix('modules'), $this->db->quote($name), $this->db->quote($dirname), $this->db->quote($version), time(), $weight, $isactive, $hasmain, $hasadmin, $hassearch, $hasconfig, $hascomments, $hasnotification, $mid);
+            $sql = sprintf('UPDATE %s SET name = %s, dirname = %s, version = %s, last_update = %u, weight = %u, show_in_menu = %u, isactive = %u, hasmain = %u, hasadmin = %u, hassearch = %u, hasconfig = %u, hascomments = %u, hasnotification = %u WHERE mid = %u', $this->db->prefix('modules'), $this->db->quote($name), $this->db->quote($dirname), $this->db->quote($version), time(), $weight, $show_in_menu, $isactive, $hasmain, $hasadmin, $hassearch, $hasconfig, $hascomments, $hasnotification, $mid);
         }
         if (!$result = $this->db->exec($sql)) {
             return false;

@@ -17,7 +17,7 @@
 xoops_loadLanguage('modinfo', 'system');
 
 $modversion['name']        = _MI_SYSTEM_NAME;
-$modversion['version']     = '2.1.9-Stable';
+$modversion['version']     = '2.1.10-Stable';
 $modversion['description'] = _MI_SYSTEM_DESC;
 $modversion['author']      = '';
 $modversion['credits']     = 'The XOOPS Project; MusS, Kraven30, Mage';

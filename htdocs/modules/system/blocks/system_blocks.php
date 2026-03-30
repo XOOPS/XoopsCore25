@@ -121,7 +121,7 @@ function b_system_main_show()
     $module_handler      = xoops_getHandler('module');
     $criteria            = new CriteriaCompo(new Criteria('hasmain', 1));
     $criteria->add(new Criteria('isactive', 1));
-    $criteria->add(new Criteria('weight', 0, '>'));
+    $criteria->add(new Criteria('show_in_menu', 1));
     $modules            = $module_handler->getObjects($criteria, true);
 
     /** @var XoopsGroupPermHandler $moduleperm_handler */

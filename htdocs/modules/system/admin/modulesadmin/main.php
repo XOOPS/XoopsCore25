@@ -191,14 +191,11 @@ switch ($op) {
             foreach (Request::getArray('mod', [], 'POST') as $order) {
                 if ($order > 0) {
                     $module = $module_handler->get($order);
-                    //Change order only for visible modules
-                    if ($module->getVar('weight') != 0) {
-                        $module->setVar('weight', $i);
-                        if (!$module_handler->insert($module)) {
-                            $error = true;
-                        }
-                        ++$i;
+                    $module->setVar('weight', $i);
+                    if (!$module_handler->insert($module)) {
+                        $error = true;
                     }
+                    ++$i;
                 }
             }
         }
@@ -277,9 +274,8 @@ switch ($op) {
         $module_id      = Request::getInt('mid', 0);
         if ($module_id > 0) {
             $module = $module_handler->get($module_id);
-            $old    = $module->getVar('weight');
-            // Set value
-            $module->setVar('weight', !$old);
+            $old = (int) $module->getVar('show_in_menu');
+            $module->setVar('show_in_menu', $old ? 0 : 1);
             if (!$module_handler->insert($module)) {
                 $error = true;
             }

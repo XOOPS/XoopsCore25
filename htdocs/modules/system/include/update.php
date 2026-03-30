@@ -32,6 +32,11 @@ function xoops_module_update_system(XoopsModule $module, $prev_version = null)
     if (version_compare((string) $prev_version, '2.1.8', '<')) {
         update_system_remove_legacy_html_templates($module);
     }
+    if (version_compare((string) $prev_version, '2.1.10', '<')) {
+        if (!system_modules_add_menu_visibility($module)) {
+            $ret = false;
+        }
+    }
     // Create/upgrade menu tables and seed defaults (added in 2.5.12)
     if (!system_menu_update($module)) {
         $ret = false;
@@ -45,6 +50,74 @@ function xoops_module_update_system(XoopsModule $module, $prev_version = null)
 
     return $ret;
     // irmtfan bug fix: solve templates duplicate issue
+}
+
+/**
+ * Add a dedicated menu visibility flag and migrate existing module ordering.
+ *
+ * Hidden modules historically used weight=0, which prevented them from being
+ * reordered. This migration preserves the old admin list order, stores menu
+ * visibility separately, and gives all non-system modules a real weight.
+ *
+ * @param XoopsModule $module
+ *
+ * @return bool
+ */
+function system_modules_add_menu_visibility(XoopsModule $module)
+{
+    global $xoopsDB;
+
+    $tableName = $xoopsDB->prefix('modules');
+    $sql       = "SHOW COLUMNS FROM {$tableName} LIKE 'show_in_menu'";
+    $result    = $xoopsDB->query($sql);
+    if (!$xoopsDB->isResultSet($result) || !($result instanceof \mysqli_result)) {
+        xoops_error($xoopsDB->error() . '<br>' . $sql);
+        $module->setErrors('Unable to inspect modules schema for show_in_menu.');
+
+        return false;
+    }
+
+    $columnExists = false !== $xoopsDB->fetchArray($result);
+    if (!$columnExists) {
+        $sql = "ALTER TABLE {$tableName} ADD show_in_menu tinyint(1) unsigned NOT NULL default '1' AFTER weight";
+        if (!$xoopsDB->exec($sql)) {
+            xoops_error($xoopsDB->error() . '<br>' . $sql);
+            $module->setErrors('Unable to add show_in_menu to the modules table.');
+
+            return false;
+        }
+    }
+
+    $sql = "UPDATE {$tableName} SET show_in_menu = CASE WHEN weight > 0 THEN 1 ELSE 0 END";
+    if (!$xoopsDB->exec($sql)) {
+        xoops_error($xoopsDB->error() . '<br>' . $sql);
+        $module->setErrors('Unable to migrate module menu visibility.');
+
+        return false;
+    }
+
+    $sql    = "SELECT mid FROM {$tableName} WHERE dirname <> 'system' ORDER BY weight ASC, mid ASC";
+    $result = $xoopsDB->query($sql);
+    if (!$xoopsDB->isResultSet($result) || !($result instanceof \mysqli_result)) {
+        xoops_error($xoopsDB->error() . '<br>' . $sql);
+        $module->setErrors('Unable to load modules for weight migration.');
+
+        return false;
+    }
+
+    $weight = 1;
+    while (false !== ($row = $xoopsDB->fetchArray($result))) {
+        $sql = sprintf('UPDATE %s SET weight = %u WHERE mid = %u', $tableName, $weight, (int) $row['mid']);
+        if (!$xoopsDB->exec($sql)) {
+            xoops_error($xoopsDB->error() . '<br>' . $sql);
+            $module->setErrors('Unable to reassign module weights during migration.');
+
+            return false;
+        }
+        ++$weight;
+    }
+
+    return true;
 }
 
 // irmtfan bug fix: solve templates duplicate issue

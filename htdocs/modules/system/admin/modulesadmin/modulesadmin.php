@@ -70,6 +70,7 @@ function xoops_module_install($dirname)
         $module = $module_handler->create();
         $module->loadInfoAsVar($dirname);
         $module->setVar('weight', 1);
+        $module->setVar('show_in_menu', 1);
         $module->setVar('isactive', 1);
         $module->setVar('last_update', time());
         $error = false;
