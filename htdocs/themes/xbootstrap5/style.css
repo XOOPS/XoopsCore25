@@ -888,8 +888,9 @@ body {
 }
 
 
-.nav-item ul {
-    background-color: transparent; /* Ensure submenus have no background color */
+.nav-item ul.dropdown-menu {
+    background-color: #fff;
+    border: 1px solid rgba(0, 0, 0, 0.15);
 }
 
 /* Highlight the active main menu item */
