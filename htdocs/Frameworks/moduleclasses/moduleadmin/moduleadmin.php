@@ -588,12 +588,42 @@ class ModuleAdmin
               . "</td>\n"
               . "</tr>\n"
               . "</table>\n";
-        if ( true === $logo_xoops ) {
+        $ret .= $this->renderFooterInfo($logo_xoops);
+        return $ret;
+    }
+
+    /**
+     * Create HTML text to display the standard admin footer
+     *
+     * @param bool $logo_xoops true to display XOOPS logo and link
+     *
+     * @return string HTML to display
+     */
+    public function renderFooterInfo($logo_xoops = true)
+    {
+        $this->addAssets();
+        $path = XOOPS_URL . '/Frameworks/moduleclasses/icons/32/';
+        $ret  = '';
+        if (true === $logo_xoops) {
             $ret .= "<div class=\"center\">"
                   . "<a href=\"https://xoops.org\" target=\"_blank\"><img src=\"{$path}xoopsmicrobutton.gif\" alt=\"XOOPS\" title=\"XOOPS\"></a>"
                   . "</div>";
         }
+        $ret .= "<div class=\"center smallsmall italic pad5\">"
+              . _AM_MODULEADMIN_ADMIN_FOOTER
+              . '</div>';
+
         return $ret;
+    }
+
+    /**
+     * Display the standard admin footer
+     *
+     * @param bool $logo_xoops true to display XOOPS logo and link
+     */
+    public function displayFooterInfo($logo_xoops = true)
+    {
+        echo $this->renderFooterInfo($logo_xoops);
     }
 
     /**
