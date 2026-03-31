@@ -324,6 +324,28 @@ class XoUserHandler extends XoopsObjectHandler
 
 $rank_handler = new XoopsRankHandler($xoopsDB);
 $user_handler = new XoUserHandler($xoopsDB);
+$member_handler = xoops_getHandler('member');
+$moduleReadDirname = Request::getString('module_read', '', 'GET');
+if ($moduleReadDirname === '') {
+    $moduleReadDirname = Request::getString('module_read', '', 'POST');
+}
+$moduleReadGroups = [];
+$moduleReadUserIds = [];
+if ($moduleReadDirname !== '') {
+    $module_handler = xoops_getHandler('module');
+    $module         = $module_handler->getByDirname($moduleReadDirname);
+    if ($module instanceof XoopsModule) {
+        $moduleperm_handler = xoops_getHandler('groupperm');
+        $moduleReadGroups   = array_values(array_unique(array_map('intval', $moduleperm_handler->getGroupIds('module_read', $module->getVar('mid')))));
+        if (!in_array(XOOPS_GROUP_ADMIN, $moduleReadGroups, true)) {
+            $moduleReadGroups[] = XOOPS_GROUP_ADMIN;
+        }
+        $moduleReadUserIds = array_values(array_unique(array_map('intval', $member_handler->getUsersByGroupLink($moduleReadGroups, null, false))));
+    } else {
+        // Keep the filter active but force an empty result set for unknown modules.
+        $moduleReadGroups = [0];
+    }
+}
 
 $items_match = [
     'uname'     => _MA_USER_UNAME,
@@ -405,8 +427,6 @@ if (!Request::hasVar('user_submit', 'POST')) {
         ];
         $level_radio->addOptionArray($levels);
 
-        /** @var XoopsMemberHandler $member_handler */
-        $member_handler = xoops_getHandler('member');
         $groups         = $member_handler->getGroupList();
         $groups[0]      = _ALL;
         $group_select   = new XoopsFormSelect(_MA_USER_GROUP, 'groups', Request::getInt('groups', 0), 3, true);
@@ -463,10 +483,25 @@ if (!Request::hasVar('user_submit', 'POST')) {
     $form->addElement(new XoopsFormHidden('target', Request::getString('target', '', 'POST')));
     $form->addElement(new XoopsFormHidden('multiple', $multiple));
     $form->addElement(new XoopsFormHidden('token', $token));
+    $form->addElement(new XoopsFormHidden('module_read', $moduleReadDirname));
     $form->addElement(new XoopsFormButton('', 'user_submit', _SUBMIT, 'submit'));
 
-    $acttotal   = $user_handler->getCount(new Criteria('level', 0, '>'));
-    $inacttotal = $user_handler->getCount(new Criteria('level', 0, '<='));
+    if ($moduleReadDirname !== '') {
+        if (empty($moduleReadUserIds)) {
+            $acttotal = $inacttotal = 0;
+        } else {
+            $actCriteria = new CriteriaCompo(new Criteria('uid', '(' . implode(',', $moduleReadUserIds) . ')', 'IN'));
+            $actCriteria->add(new Criteria('level', 0, '>'));
+            $acttotal = $user_handler->getCount($actCriteria);
+
+            $inactCriteria = new CriteriaCompo(new Criteria('uid', '(' . implode(',', $moduleReadUserIds) . ')', 'IN'));
+            $inactCriteria->add(new Criteria('level', 0, '<='));
+            $inacttotal = $user_handler->getCount($inactCriteria);
+        }
+    } else {
+        $acttotal   = $user_handler->getCount(new Criteria('level', 0, '>'));
+        $inacttotal = $user_handler->getCount(new Criteria('level', 0, '<='));
+    }
     echo '</html><body>';
     echo "<h2 style='text-align:left;'>" . _MA_USER_FINDUS . ' - ' . $modes[$mode] . '</h2>';
     $modes_switch = [];
@@ -474,7 +509,7 @@ if (!Request::hasVar('user_submit', 'POST')) {
         if ($mode == $_mode) {
             continue;
         }
-        $modes_switch[] = "<a href='findusers.php?target=" . htmlspecialchars(Request::getString('target', ''), ENT_QUOTES | ENT_HTML5) . '&amp;multiple=' . (string) $multiple . '&amp;token=' . htmlspecialchars($token, ENT_QUOTES | ENT_HTML5) . "&amp;mode={$_mode}'>{$title}</a>";
+        $modes_switch[] = "<a href='findusers.php?target=" . htmlspecialchars(Request::getString('target', ''), ENT_QUOTES | ENT_HTML5) . '&amp;multiple=' . (string) $multiple . '&amp;token=' . htmlspecialchars($token, ENT_QUOTES | ENT_HTML5) . '&amp;module_read=' . htmlspecialchars($moduleReadDirname, ENT_QUOTES | ENT_HTML5) . "&amp;mode={$_mode}'>{$title}</a>";
     }
     echo '<h4>' . implode(' | ', $modes_switch) . '</h4>';
     echo '(' . sprintf(_MA_USER_ACTUS, "<span style='color:#ff0000;'>$acttotal</span>") . ' ' . sprintf(_MA_USER_INACTUS, "<span style='color:#ff0000;'>$inacttotal</span>") . ')';
@@ -582,7 +617,17 @@ if (!Request::hasVar('user_submit', 'POST')) {
             }
         }
     }
-    $total     = $user_handler->getCount($criteria, Request::getArray('groups', [], 'POST'));
+    if ($moduleReadDirname !== '') {
+        if (empty($moduleReadUserIds)) {
+            $total = 0;
+            $foundusers = [];
+        } else {
+            $criteria->add(new Criteria('uid', '(' . implode(',', $moduleReadUserIds) . ')', 'IN'));
+        }
+    }
+    if (!isset($total)) {
+        $total = $user_handler->getCount($criteria, Request::getArray('groups', [], 'POST'));
+    }
     $validsort = [
         'uname',
         'email',
@@ -599,7 +644,9 @@ if (!Request::hasVar('user_submit', 'POST')) {
     $criteria->setOrder($order);
     $criteria->setLimit($limit);
     $criteria->setStart($start);
-    $foundusers = $user_handler->getAll($criteria, Request::getArray('groups', [], 'POST'));
+    if (!isset($foundusers)) {
+        $foundusers = $user_handler->getAll($criteria, Request::getArray('groups', [], 'POST'));
+    }
 
     echo $js_adduser = '
         <script type="text/javascript">
@@ -635,7 +682,7 @@ if (!Request::hasVar('user_submit', 'POST')) {
     ';
 
     echo '</html><body>';
-    echo "<a href='findusers.php?target=" . htmlspecialchars(Request::getString('target', '', 'POST'), ENT_QUOTES | ENT_HTML5) . '&amp;multiple=' . (string) $multiple . '&amp;token=' . htmlspecialchars($token, ENT_QUOTES | ENT_HTML5) . "'>" . _MA_USER_FINDUS . "</a>&nbsp;<span style='font-weight:bold;'>&raquo;</span>&nbsp;" . _MA_USER_RESULTS . '<br><br>';
+    echo "<a href='findusers.php?target=" . htmlspecialchars(Request::getString('target', '', 'POST'), ENT_QUOTES | ENT_HTML5) . '&amp;multiple=' . (string) $multiple . '&amp;token=' . htmlspecialchars($token, ENT_QUOTES | ENT_HTML5) . '&amp;module_read=' . htmlspecialchars($moduleReadDirname, ENT_QUOTES | ENT_HTML5) . "'>" . _MA_USER_FINDUS . "</a>&nbsp;<span style='font-weight:bold;'>&raquo;</span>&nbsp;" . _MA_USER_RESULTS . '<br><br>';
     if (empty($start) && empty($foundusers)) {
         echo '<h4>' . _MA_USER_NOFOUND, '</h4>';
         $hiddenform = "<form name='findnext' action='findusers.php' method='post'>";

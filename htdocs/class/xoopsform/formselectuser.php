@@ -41,16 +41,16 @@ class XoopsFormSelectUser extends XoopsFormElementTray
      * @param int    $size             Number of rows. "1" makes a drop-down-list.
      * @param bool   $multiple         Allow multiple selections?
      */
-    public function __construct($caption, $name, $includeAnonymous = false, $value = null, $size = 1, $multiple = false)
+    public function __construct($caption, $name, $includeAnonymous = false, $value = null, $size = 1, $multiple = false, array $allowedGroups = [], array $extraQuery = [])
     {
         /**
-         * @var mixed array|false - cache any result for this session.
+         * @var array - cache any result for this session.
          *            Some modules use multiple copies of this element on a single page, so this call will
          *            be made multiple times. This is only used when $value is null.
          * @todo this should be replaced with better interface, with autocomplete style search
          * and user specific MRU cache
          */
-        static $queryCache = false;
+        static $queryCache = [];
 
         /**
          * @var int - limit to this many rows
@@ -65,7 +65,12 @@ class XoopsFormSelectUser extends XoopsFormElementTray
         /**
          * @var string - cache key
          */
+        $allowedGroups = array_values(array_unique(array_filter(array_map('intval', $allowedGroups))));
+        sort($allowedGroups);
         $cachekey = 'formselectuser';
+        if (!empty($allowedGroups)) {
+            $cachekey .= '_' . md5(implode(',', $allowedGroups));
+        }
 
         $select_element = new XoopsFormSelect('', $name, $value, $size, $multiple);
         if ($includeAnonymous) {
@@ -85,12 +90,15 @@ class XoopsFormSelectUser extends XoopsFormElementTray
 
         // get the full selection list
         // we will always cache this version to reduce expense
-        if (empty($queryCache)) {
+        if (!array_key_exists($cachekey, $queryCache)) {
             XoopsLoad::load('XoopsCache');
-            $queryCache = XoopsCache::read($cachekey);
-            if ($queryCache === false) {
+            $queryCache[$cachekey] = XoopsCache::read($cachekey);
+            if ($queryCache[$cachekey] === false) {
                 $criteria = new CriteriaCompo();
-                if ($limit <= $member_handler->getUserCount()) {
+                $userCount = !empty($allowedGroups)
+                    ? $member_handler->getUserCountByGroupLink($allowedGroups)
+                    : $member_handler->getUserCount();
+                if ($limit <= $userCount) {
                     // if we have more than $limit users, we will select who to show based on last_login
                     $criteria->setLimit($limit);
                     $criteria->setSort('last_login');
@@ -99,14 +107,22 @@ class XoopsFormSelectUser extends XoopsFormElementTray
                     $criteria->setSort('uname');
                     $criteria->setOrder('ASC');
                 }
-                $queryCache = $member_handler->getUserList($criteria);
-                asort($queryCache);
-                XoopsCache::write($cachekey, $queryCache, $cachettl); // won't do anything different if write fails
+                if (!empty($allowedGroups)) {
+                    $filteredUsers = $member_handler->getUsersByGroupLink($allowedGroups, $criteria, true, true);
+                    $queryCache[$cachekey] = [];
+                    foreach ($filteredUsers as $uid => $user) {
+                        $queryCache[$cachekey][$uid] = $user->getVar('uname');
+                    }
+                } else {
+                    $queryCache[$cachekey] = $member_handler->getUserList($criteria);
+                }
+                asort($queryCache[$cachekey]);
+                XoopsCache::write($cachekey, $queryCache[$cachekey], $cachettl); // won't do anything different if write fails
             }
         }
 
         // merge with selected
-        $users = $selectedUsers + $queryCache;
+        $users = $selectedUsers + $queryCache[$cachekey];
 
         $select_element->addOptionArray($users);
         if ($limit > count($users)) {
@@ -153,8 +169,13 @@ class XoopsFormSelectUser extends XoopsFormElementTray
         $removeUsers->setExtra(' onclick="var sel = xoopsGetElementById(\'' . $name . '\');for (var i = sel.options.length-1; i >= 0; i--) {if (!sel.options[i].selected) {sel.options[i] = null;}}; return false;" ');
         $action_tray->addElement($removeUsers);
 
+        $searchUrl = XOOPS_URL . '/include/findusers.php?' . http_build_query(array_merge([
+            'target' => $name,
+            'multiple' => (int)$multiple,
+            'token' => $token,
+        ], $extraQuery), '', '&amp;');
         $searchUsers = new XoopsFormButton('', 'srchusr_' . $name, _MA_USER_MORE, 'button');
-        $searchUsers->setExtra(' onclick="openWithSelfMain(\'' . XOOPS_URL . '/include/findusers.php?target=' . $name . '&amp;multiple=' . $multiple . '&amp;token=' . $token . '\', \'userselect\', 800, 600, null); return false;" ');
+        $searchUsers->setExtra(' onclick="openWithSelfMain(\'' . $searchUrl . '\', \'userselect\', 800, 600, null); return false;" ');
         $action_tray->addElement($searchUsers);
 
          if (isset($GLOBALS['xoTheme']) && is_object($GLOBALS['xoTheme'])) {

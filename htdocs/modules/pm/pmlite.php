@@ -28,6 +28,87 @@ XoopsLoad::load('XoopsRequest');
 
 $subject_icons = XoopsLists::getSubjectsList();
 
+/**
+ * Resolve the PM module object once per request.
+ *
+ * @return XoopsModule|false
+ */
+function pmGetModule()
+{
+    static $pmModule = null;
+    if ($pmModule === null) {
+        $moduleHandler = xoops_getHandler('module');
+        $module        = $moduleHandler->getByDirname('pm');
+        $pmModule      = ($module instanceof XoopsModule) ? $module : false;
+    }
+
+    return $pmModule;
+}
+
+/**
+ * Groups allowed to use the PM module.
+ *
+ * Mirrors module_read checks by always allowing the admin group.
+ *
+ * @return array
+ */
+function pmGetAllowedRecipientGroups()
+{
+    static $groups = null;
+    if ($groups === null) {
+        $groups = [];
+        $module = pmGetModule();
+        if ($module instanceof XoopsModule) {
+            $grouppermHandler = xoops_getHandler('groupperm');
+            $groups           = array_values(array_unique(array_map('intval', $grouppermHandler->getGroupIds('module_read', $module->getVar('mid')))));
+            if (!in_array(XOOPS_GROUP_ADMIN, $groups, true)) {
+                $groups[] = XOOPS_GROUP_ADMIN;
+            }
+        }
+    }
+
+    return $groups;
+}
+
+/**
+ * Check whether a user can access the PM module and receive PMs.
+ *
+ * @param int $uid
+ *
+ * @return bool
+ */
+function pmCanMessageUser($uid)
+{
+    $uid = (int) $uid;
+    if ($uid <= 0) {
+        return false;
+    }
+    $module = pmGetModule();
+    if (!$module instanceof XoopsModule) {
+        return false;
+    }
+    $memberHandler = xoops_getHandler('member');
+    $userGroups    = $memberHandler->getGroupsByUser($uid);
+    if (empty($userGroups)) {
+        return false;
+    }
+    $grouppermHandler = xoops_getHandler('groupperm');
+
+    return $grouppermHandler->checkRight('module_read', $module->getVar('mid'), $userGroups);
+}
+
+/**
+ * Render the standard invalid-recipient message.
+ *
+ * @return void
+ */
+function pmRenderInvalidRecipient()
+{
+    echo '<br><br><div><h4>' . _PM_USERNOPERM . '<br>';
+    echo _PM_PLZTRYAGAIN . '</h4><br>';
+    echo "[ <a href='javascript:history.go(-1)'>" . _PM_GOBACK . '</a> ]</div>';
+}
+
 $op = XoopsRequest::getCmd('op', '', 'POST');
 
 $reply     = XoopsRequest::getBool('reply', 0, 'GET');
@@ -58,13 +139,16 @@ xoops_header();
 
 $myts = \MyTextSanitizer::getInstance();
 if ($op === 'submit') {
+    $recipientId = XoopsRequest::getInt('to_userid', 0, 'POST');
     /** @var XoopsMemberHandler $member_handler */
     $member_handler = xoops_getHandler('member');
-    $count          = $member_handler->getUserCount(new Criteria('uid', XoopsRequest::getInt('to_userid', 0, 'POST')));
+    $count          = $member_handler->getUserCount(new Criteria('uid', $recipientId));
     if ($count != 1) {
         echo '<br><br><div><h4>' . _PM_USERNOEXIST . '<br>';
         echo _PM_PLZTRYAGAIN . '</h4><br>';
         echo "[ <a href='javascript:history.go(-1)'>" . _PM_GOBACK . '</a> ]</div>';
+    } elseif (!pmCanMessageUser($recipientId)) {
+        pmRenderInvalidRecipient();
     } elseif ($GLOBALS['xoopsSecurity']->check()) {
         $pm_handler = xoops_getModuleHandler('message', 'pm');
         $pm         = $pm_handler->create();
@@ -75,7 +159,7 @@ if ($op === 'submit') {
         }
         $pm->setVar('subject', XoopsRequest::getString('subject', null, 'POST'));
         $pm->setVar('msg_text', XoopsRequest::getString('message', null, 'POST'));
-        $pm->setVar('to_userid', XoopsRequest::getInt('to_userid', 0, 'POST'));
+        $pm->setVar('to_userid', $recipientId);
         $pm->setVar('from_userid', $GLOBALS['xoopsUser']->getVar('uid'));
         if (XoopsRequest::getBool('savecopy', 0)) {
             //PMs are by default not saved in outbox
@@ -104,6 +188,11 @@ if ($op === 'submit') {
             $message  = "[quote]\n";
             $message .= sprintf(_PM_USERWROTE, $pm_uname);
             $message .= "\n" . $pm->getVar('msg_text', 'E') . "\n[/quote]";
+            if (!pmCanMessageUser($pm->getVar('from_userid'))) {
+                pmRenderInvalidRecipient();
+                xoops_footer();
+                return;
+            }
         } else {
             unset($pm);
             $reply = $send2 = 0;
@@ -121,18 +210,29 @@ if ($op === 'submit') {
         $pmform->addElement(new XoopsFormLabel(_PM_TO, $pm_uname));
         $pmform->addElement(new XoopsFormHidden('to_userid', $pm->getVar('from_userid')));
     } elseif ($sendmod == 1) {
-        $tmpUname = XoopsUser::getUnameFromId(XoopsRequest::getInt('to_userid', 0, 'POST'));
+        $sendModRecipient = XoopsRequest::getInt('to_userid', 0, 'POST');
+        if (!pmCanMessageUser($sendModRecipient)) {
+            pmRenderInvalidRecipient();
+            xoops_footer();
+            return;
+        }
+        $tmpUname = XoopsUser::getUnameFromId($sendModRecipient);
         $pmform->addElement(new XoopsFormHidden('to_userid', XoopsRequest::getInt('to_userid', 0, 'POST')));
         $pmform->addElement(new XoopsFormLabel(_PM_TO, $tmpUname));
         $subject = $myts->htmlSpecialChars(XoopsRequest::getString('subject', '', 'POST'));
         $message = $myts->htmlSpecialChars(XoopsRequest::getString('message', '', 'POST'));
     } else {
         if ($send2 == 1) {
+            if (!pmCanMessageUser($to_userid)) {
+                pmRenderInvalidRecipient();
+                xoops_footer();
+                return;
+            }
             $tmpUname = XoopsUser::getUnameFromId($to_userid, false);
             $pmform->addElement(new XoopsFormLabel(_PM_TO, $tmpUname));
             $pmform->addElement(new XoopsFormHidden('to_userid', $to_userid));
         } else {
-            $to_username = new XoopsFormSelectUser(_PM_TO, 'to_userid');
+            $to_username = new XoopsFormSelectUser(_PM_TO, 'to_userid', false, null, 1, false, pmGetAllowedRecipientGroups(), ['module_read' => 'pm']);
             $pmform->addElement($to_username);
         }
     }
