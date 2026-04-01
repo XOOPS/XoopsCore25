@@ -59,10 +59,64 @@ if (!in_array($method, $safeMethods)) {
     }
 }
 
+/**
+ * Check if a user has PM module access (for the core pmlite entry point).
+ *
+ * @param int $uid
+ *
+ * @return bool
+ */
+function corePmCanMessageUser($uid)
+{
+    $uid = (int) $uid;
+    if ($uid <= 0) {
+        return false;
+    }
+    $moduleHandler = xoops_getHandler('module');
+    $pmModule = $moduleHandler->getByDirname('pm');
+    if (!$pmModule instanceof XoopsModule) {
+        return true; // PM module not installed — no filtering possible
+    }
+    $memberHandler = xoops_getHandler('member');
+    $userGroups = $memberHandler->getGroupsByUser($uid);
+    if (empty($userGroups)) {
+        return false;
+    }
+    $grouppermHandler = xoops_getHandler('groupperm');
+
+    return $grouppermHandler->checkRight('module_read', $pmModule->getVar('mid'), $userGroups);
+}
+
+/**
+ * Get group IDs allowed to use the PM module (for filtering the user selector).
+ *
+ * @return array
+ */
+function corePmGetAllowedGroups()
+{
+    static $groups = null;
+    if ($groups !== null) {
+        return $groups;
+    }
+    $groups = [];
+    $moduleHandler = xoops_getHandler('module');
+    $pmModule = $moduleHandler->getByDirname('pm');
+    if ($pmModule instanceof XoopsModule) {
+        $grouppermHandler = xoops_getHandler('groupperm');
+        $groups = array_values(array_unique(array_map('intval', $grouppermHandler->getGroupIds('module_read', $pmModule->getVar('mid')))));
+        if (!in_array(XOOPS_GROUP_ADMIN, $groups, true)) {
+            $groups[] = XOOPS_GROUP_ADMIN;
+        }
+    }
+
+    return $groups;
+}
+
 if (is_object($xoopsUser)) {
     $myts = \MyTextSanitizer::getInstance();
     if ('submit' === $op) {
-        $sql = 'SELECT COUNT(*) FROM ' . $xoopsDB->prefix('users') . ' WHERE uid=' . Request::getInt('to_userid', 0, 'POST') . '';
+        $recipientId = Request::getInt('to_userid', 0, 'POST');
+        $sql = 'SELECT COUNT(*) FROM ' . $xoopsDB->prefix('users') . ' WHERE uid=' . $recipientId;
         $result = $xoopsDB->query($sql);
         if (!$xoopsDB->isResultSet($result)) {
             throw new \RuntimeException(
@@ -73,6 +127,12 @@ if (is_object($xoopsUser)) {
         [$count] = $xoopsDB->fetchRow($result);
         if (1 != $count) {
             echo '<br><br><div><h4>' . _PM_USERNOEXIST . '<br>';
+            echo _PM_PLZTRYAGAIN . '</h4><br>';
+            echo "[ <a href='javascript:history.go(-1)' title=''>" . _PM_GOBACK . '</a> ]</div>';
+        } elseif (!corePmCanMessageUser($recipientId)) {
+            xoops_loadLanguage('main', 'pm');
+            $noPermMsg = defined('_PM_USERNOPERM') ? _PM_USERNOPERM : 'The selected user cannot receive private messages.';
+            echo '<br><br><div><h4>' . $noPermMsg . '<br>';
             echo _PM_PLZTRYAGAIN . '</h4><br>';
             echo "[ <a href='javascript:history.go(-1)' title=''>" . _PM_GOBACK . '</a> ]</div>';
         } else {
@@ -103,6 +163,15 @@ if (is_object($xoopsUser)) {
             $pm_handler = xoops_getHandler('privmessage');
             $pm         = $pm_handler->get($msg_id);
             if ($pm->getVar('to_userid') == $xoopsUser->getVar('uid')) {
+                if (!corePmCanMessageUser($pm->getVar('from_userid'))) {
+                    xoops_loadLanguage('main', 'pm');
+                    $noPermMsg = defined('_PM_USERNOPERM') ? _PM_USERNOPERM : 'The selected user cannot receive private messages.';
+                    echo '<br><br><div><h4>' . $noPermMsg . '<br>';
+                    echo _PM_PLZTRYAGAIN . '</h4><br>';
+                    echo "[ <a href='javascript:history.go(-1)' title=''>" . _PM_GOBACK . '</a> ]</div>';
+                    xoops_footer();
+                    exit;
+                }
                 $pm_uname = XoopsUser::getUnameFromId($pm->getVar('from_userid'));
                 $message  = "[quote]\n";
                 $message .= sprintf(_PM_USERWROTE, $pm_uname);
@@ -111,6 +180,15 @@ if (is_object($xoopsUser)) {
                 unset($pm);
                 $reply = $send2 = 0;
             }
+        }
+        if (1 == $send2 && !corePmCanMessageUser($to_userid)) {
+            xoops_loadLanguage('main', 'pm');
+            $noPermMsg = defined('_PM_USERNOPERM') ? _PM_USERNOPERM : 'The selected user cannot receive private messages.';
+            echo '<br><br><div><h4>' . $noPermMsg . '<br>';
+            echo _PM_PLZTRYAGAIN . '</h4><br>';
+            echo "[ <a href='javascript:history.go(-1)' title=''>" . _PM_GOBACK . '</a> ]</div>';
+            xoops_footer();
+            exit;
         }
         $pmform = new XoopsThemeForm('', 'coolsus', 'pmlite.php', 'post', true);
         if (1 == $reply) {
@@ -121,7 +199,7 @@ if (is_object($xoopsUser)) {
             $pmform->addElement(new XoopsFormHidden('to_userid', $to_userid));
             $pmform->addElement(new XoopsFormLabel(_PM_TO, $to_username));
         } else {
-            $pmform->addElement(new XoopsFormSelectUser(_PM_TO, 'to_userid', $to_userid));
+            $pmform->addElement(new XoopsFormSelectUser(_PM_TO, 'to_userid', false, $to_userid, 1, false, corePmGetAllowedGroups()));
         }
 
         if (1 == $reply) {
