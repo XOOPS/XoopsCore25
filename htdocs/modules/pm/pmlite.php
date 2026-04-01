@@ -79,9 +79,8 @@ function pmGetAllowedRecipientGroups(): array
  *
  * @return bool
  */
-function pmCanMessageUser($uid)
+function pmCanMessageUser(int $uid): bool
 {
-    $uid = (int) $uid;
     if ($uid <= 0) {
         return false;
     }
@@ -229,12 +228,19 @@ if ($op === 'submit') {
         $message = $myts->htmlSpecialChars(XoopsRequest::getString('message', '', 'POST'));
     } else {
         if ($send2 == 1) {
+            $tmpUname = XoopsUser::getUnameFromId($to_userid, false);
+            if (empty($tmpUname)) {
+                echo '<br><br><div><h4>' . _PM_USERNOEXIST . '<br>';
+                echo (defined('_PM_PLZTRYAGAIN') ? _PM_PLZTRYAGAIN : 'Please try again.') . '</h4><br>';
+                echo "[ <a href='javascript:history.go(-1)'>" . (defined('_PM_GOBACK') ? _PM_GOBACK : 'Go back') . '</a> ]</div>';
+                xoops_footer();
+                return;
+            }
             if (!pmCanMessageUser($to_userid)) {
                 pmRenderInvalidRecipient();
                 xoops_footer();
                 return;
             }
-            $tmpUname = XoopsUser::getUnameFromId($to_userid, false);
             $pmform->addElement(new XoopsFormLabel(_PM_TO, $tmpUname));
             $pmform->addElement(new XoopsFormHidden('to_userid', $to_userid));
         } else {

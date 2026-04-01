@@ -188,17 +188,26 @@ if (is_object($xoopsUser)) {
                 $reply = $send2 = 0;
             }
         }
-        if (1 == $send2 && !corePmCanMessageUser($to_userid)) {
-            corePmRenderInvalidRecipient();
-            xoops_footer();
-            exit;
+        if (1 == $send2) {
+            $to_username = XoopsUser::getUnameFromId($to_userid);
+            if (empty($to_username)) {
+                echo '<br><br><div><h4>' . _PM_USERNOEXIST . '<br>';
+                echo _PM_PLZTRYAGAIN . '</h4><br>';
+                echo "[ <a href='javascript:history.go(-1)' title=''>" . _PM_GOBACK . '</a> ]</div>';
+                xoops_footer();
+                exit;
+            }
+            if (!corePmCanMessageUser($to_userid)) {
+                corePmRenderInvalidRecipient();
+                xoops_footer();
+                exit;
+            }
         }
         $pmform = new XoopsThemeForm('', 'coolsus', 'pmlite.php', 'post', true);
         if (1 == $reply) {
             $pmform->addElement(new XoopsFormLabel(_PM_TO, $pm_uname));
             $pmform->addElement(new XoopsFormHidden('to_userid', $pm->getVar('from_userid')));
         } elseif (1 == $send2) {
-            $to_username = XoopsUser::getUnameFromId($to_userid);
             $pmform->addElement(new XoopsFormHidden('to_userid', $to_userid));
             $pmform->addElement(new XoopsFormLabel(_PM_TO, $to_username));
         } else {
