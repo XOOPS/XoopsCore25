@@ -87,6 +87,20 @@ function corePmCanMessageUser(int $uid): bool
 }
 
 /**
+ * Render the invalid-recipient error message for the core PM entry point.
+ */
+function corePmRenderInvalidRecipient(): void
+{
+    xoops_loadLanguage('main', 'pm');
+    $noPermMsg = defined('_PM_USERNOPERM') ? _PM_USERNOPERM : 'The selected user cannot receive private messages.';
+    $tryAgain  = defined('_PM_PLZTRYAGAIN') ? _PM_PLZTRYAGAIN : 'Please try again.';
+    $goBack    = defined('_PM_GOBACK') ? _PM_GOBACK : 'Go back';
+    echo '<br><br><div><h4>' . $noPermMsg . '<br>';
+    echo $tryAgain . '</h4><br>';
+    echo "[ <a href='javascript:history.go(-1)' title=''>" . $goBack . '</a> ]</div>';
+}
+
+/**
  * Get group IDs allowed to use the PM module (for filtering the user selector).
  *
  * @return array
@@ -131,11 +145,7 @@ if (is_object($xoopsUser)) {
             echo _PM_PLZTRYAGAIN . '</h4><br>';
             echo "[ <a href='javascript:history.go(-1)' title=''>" . _PM_GOBACK . '</a> ]</div>';
         } elseif (!corePmCanMessageUser($recipientId)) {
-            xoops_loadLanguage('main', 'pm');
-            $noPermMsg = defined('_PM_USERNOPERM') ? _PM_USERNOPERM : 'The selected user cannot receive private messages.';
-            echo '<br><br><div><h4>' . $noPermMsg . '<br>';
-            echo _PM_PLZTRYAGAIN . '</h4><br>';
-            echo "[ <a href='javascript:history.go(-1)' title=''>" . _PM_GOBACK . '</a> ]</div>';
+            corePmRenderInvalidRecipient();
         } else {
             $pm_handler = xoops_getHandler('privmessage');
             $pm         = $pm_handler->create();
@@ -165,11 +175,7 @@ if (is_object($xoopsUser)) {
             $pm         = $pm_handler->get($msg_id);
             if ($pm->getVar('to_userid') == $xoopsUser->getVar('uid')) {
                 if (!corePmCanMessageUser($pm->getVar('from_userid'))) {
-                    xoops_loadLanguage('main', 'pm');
-                    $noPermMsg = defined('_PM_USERNOPERM') ? _PM_USERNOPERM : 'The selected user cannot receive private messages.';
-                    echo '<br><br><div><h4>' . $noPermMsg . '<br>';
-                    echo _PM_PLZTRYAGAIN . '</h4><br>';
-                    echo "[ <a href='javascript:history.go(-1)' title=''>" . _PM_GOBACK . '</a> ]</div>';
+                    corePmRenderInvalidRecipient();
                     xoops_footer();
                     exit;
                 }
@@ -183,11 +189,7 @@ if (is_object($xoopsUser)) {
             }
         }
         if (1 == $send2 && !corePmCanMessageUser($to_userid)) {
-            xoops_loadLanguage('main', 'pm');
-            $noPermMsg = defined('_PM_USERNOPERM') ? _PM_USERNOPERM : 'The selected user cannot receive private messages.';
-            echo '<br><br><div><h4>' . $noPermMsg . '<br>';
-            echo _PM_PLZTRYAGAIN . '</h4><br>';
-            echo "[ <a href='javascript:history.go(-1)' title=''>" . _PM_GOBACK . '</a> ]</div>';
+            corePmRenderInvalidRecipient();
             xoops_footer();
             exit;
         }

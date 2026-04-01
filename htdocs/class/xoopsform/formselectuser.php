@@ -123,7 +123,12 @@ class XoopsFormSelectUser extends XoopsFormElementTray
             }
         }
 
-        // merge with selected
+        // Filter pre-selected users by allowed groups to prevent disallowed
+        // recipients from appearing when a value is prefilled via URL params
+        if (!empty($allowedGroups) && !empty($selectedUsers)) {
+            $allowedUids = $member_handler->getUsersByGroupLink($allowedGroups, new Criteria('uid', '(' . implode(',', array_keys($selectedUsers)) . ')', 'IN'), false);
+            $selectedUsers = array_intersect_key($selectedUsers, array_flip($allowedUids));
+        }
         $users = $selectedUsers + $queryCache[$cachekey];
 
         $select_element->addOptionArray($users);
