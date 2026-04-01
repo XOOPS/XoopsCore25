@@ -57,6 +57,7 @@ return [
     'php5'  => 'application/x-httpd-php',
     'phtml' => 'application/x-httpd-php',
     'js'    => 'application/x-javascript',
+    'map'   => 'application/json',
     'sh'    => 'application/x-sh',
 //    'swf'   => 'application/x-shockwave-flash',
     'sit'   => 'application/x-stuffit',

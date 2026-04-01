@@ -87,6 +87,30 @@ header('Pragma: public');
 header('Cache-Control: maxage=' . $expires);
 header('Expires: ' . gmdate('D, d M Y H:i:s', time() + $expires) . ' GMT');
 header('Content-type: ' . $types[$ext]);
+
+// Emit SourceMap header for JS/CSS files when a companion .map file exists.
+// Browsers cannot resolve relative sourceMappingURL references inside files
+// served through browse.php, so the SourceMap header provides the correct path.
+if (in_array($ext, ['js', 'css'], true)) {
+    $fileDir = dirname($file);
+    // Read last 512 bytes to find sourceMappingURL without loading the entire file
+    $fsize = filesize($file);
+    $tailSize = min(512, $fsize);
+    $fh = fopen($file, 'rb');
+    fseek($fh, $fsize - $tailSize);
+    $tail = fread($fh, $tailSize);
+    fclose($fh);
+    if (preg_match('/[#@]\s*sourceMappingURL=(\S+)/', $tail, $m)) {
+        $mapName = basename($m[1]);
+        if (file_exists($fileDir . '/' . $mapName)) {
+            // Use the original query string path (before XOOPS/ prefix was added)
+            $origPath = $_SERVER['QUERY_STRING'] ?? '';
+            $origPath = (substr($origPath, 0, 1) === '/') ? substr($origPath, 1) : $origPath;
+            $origDir = dirname($origPath);
+            header('SourceMap: ' . XOOPS_URL . '/browse.php?' . $origDir . '/' . $mapName);
+        }
+    }
+}
 $handle = fopen($file, 'rb');
 while (!feof($handle)) {
     $buffer = fread($handle, 4096);
