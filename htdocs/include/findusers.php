@@ -330,6 +330,7 @@ if ($moduleReadDirname === '') {
     $moduleReadDirname = Request::getCmd('module_read', '', 'POST');
 }
 $moduleReadGroups = [];
+$moduleReadFailClosed = false;
 if ($moduleReadDirname !== '') {
     $module_handler = xoops_getHandler('module');
     $module         = $module_handler->getByDirname($moduleReadDirname);
@@ -340,8 +341,8 @@ if ($moduleReadDirname !== '') {
             $moduleReadGroups[] = XOOPS_GROUP_ADMIN;
         }
     } else {
-        // Keep the filter active but force an empty result set for unknown modules.
-        $moduleReadGroups = [0];
+        // Unknown module: fail closed — no users should be shown
+        $moduleReadFailClosed = true;
     }
 }
 
@@ -484,7 +485,9 @@ if (!Request::hasVar('user_submit', 'POST')) {
     $form->addElement(new XoopsFormHidden('module_read', $moduleReadDirname));
     $form->addElement(new XoopsFormButton('', 'user_submit', _SUBMIT, 'submit'));
 
-    if (!empty($moduleReadGroups)) {
+    if ($moduleReadFailClosed) {
+        $acttotal = $inacttotal = 0;
+    } elseif (!empty($moduleReadGroups)) {
         $actCriteria = new Criteria('level', 0, '>');
         $acttotal = $member_handler->getUserCountByGroupLink($moduleReadGroups, $actCriteria);
 
@@ -616,12 +619,15 @@ if (!Request::hasVar('user_submit', 'POST')) {
             }
         }
     }
-    // Merge module-read groups with any explicitly selected groups
-    $searchGroups = Request::getArray('groups', [], 'POST');
-    if (!empty($moduleReadGroups)) {
-        // If specific groups were also selected, intersect with allowed groups
-        if (!empty($searchGroups)) {
-            $searchGroups = array_values(array_intersect(array_map('intval', $searchGroups), $moduleReadGroups));
+    // Normalize posted groups: strip the UI "All groups" sentinel (0)
+    $postedGroups = array_filter(array_map('intval', Request::getArray('groups', [], 'POST')), static function ($v) { return $v > 0; });
+    if ($moduleReadFailClosed) {
+        $total = 0;
+        $foundusers = [];
+    } elseif (!empty($moduleReadGroups)) {
+        // Intersect user-selected groups with module-permitted groups
+        if (!empty($postedGroups)) {
+            $searchGroups = array_values(array_intersect($postedGroups, $moduleReadGroups));
         } else {
             $searchGroups = $moduleReadGroups;
         }
@@ -629,9 +635,11 @@ if (!Request::hasVar('user_submit', 'POST')) {
             $total = 0;
             $foundusers = [];
         }
+    } else {
+        $searchGroups = $postedGroups;
     }
     if (!isset($total)) {
-        $total = $user_handler->getCount($criteria, $searchGroups);
+        $total = $user_handler->getCount($criteria, !empty($searchGroups) ? $searchGroups : []);
     }
     $validsort = [
         'uname',
@@ -650,7 +658,7 @@ if (!Request::hasVar('user_submit', 'POST')) {
     $criteria->setLimit($limit);
     $criteria->setStart($start);
     if (!isset($foundusers)) {
-        $foundusers = $user_handler->getAll($criteria, !empty($searchGroups) ? $searchGroups : Request::getArray('groups', [], 'POST'));
+        $foundusers = $user_handler->getAll($criteria, !empty($searchGroups) ? $searchGroups : []);
     }
 
     echo $js_adduser = '

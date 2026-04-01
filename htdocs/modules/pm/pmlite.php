@@ -216,12 +216,19 @@ if ($op === 'submit') {
         $pmform->addElement(new XoopsFormHidden('to_userid', $pm->getVar('from_userid')));
     } elseif ($sendmod == 1) {
         $sendModRecipient = XoopsRequest::getInt('to_userid', 0, 'POST');
+        $tmpUname = XoopsUser::getUnameFromId($sendModRecipient);
+        if (empty($tmpUname)) {
+            echo '<br><br><div><h4>' . _PM_USERNOEXIST . '<br>';
+            echo (defined('_PM_PLZTRYAGAIN') ? _PM_PLZTRYAGAIN : 'Please try again.') . '</h4><br>';
+            echo "[ <a href='javascript:history.go(-1)'>" . (defined('_PM_GOBACK') ? _PM_GOBACK : 'Go back') . '</a> ]</div>';
+            xoops_footer();
+            return;
+        }
         if (!pmCanMessageUser($sendModRecipient)) {
             pmRenderInvalidRecipient();
             xoops_footer();
             return;
         }
-        $tmpUname = XoopsUser::getUnameFromId($sendModRecipient);
         $pmform->addElement(new XoopsFormHidden('to_userid', $sendModRecipient));
         $pmform->addElement(new XoopsFormLabel(_PM_TO, $tmpUname));
         $subject = $myts->htmlSpecialChars(XoopsRequest::getString('subject', '', 'POST'));
