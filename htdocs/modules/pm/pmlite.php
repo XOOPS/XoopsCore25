@@ -104,11 +104,15 @@ function pmCanMessageUser($uid)
  *
  * @return void
  */
-function pmRenderInvalidRecipient()
+function pmRenderInvalidRecipient(): void
 {
-    echo '<br><br><div><h4>' . _PM_USERNOPERM . '<br>';
-    echo _PM_PLZTRYAGAIN . '</h4><br>';
-    echo "[ <a href='javascript:history.go(-1)'>" . _PM_GOBACK . '</a> ]</div>';
+    $noPermMsg  = defined('_PM_USERNOPERM') ? _PM_USERNOPERM : 'The selected user cannot receive private messages.';
+    $tryAgain   = defined('_PM_PLZTRYAGAIN') ? _PM_PLZTRYAGAIN : 'Please try again.';
+    $goBack     = defined('_PM_GOBACK') ? _PM_GOBACK : 'Go back';
+
+    echo '<br><br><div><h4>' . $noPermMsg . '<br>';
+    echo $tryAgain . '</h4><br>';
+    echo "[ <a href='javascript:history.go(-1)'>" . $goBack . '</a> ]</div>';
 }
 
 $op = XoopsRequest::getCmd('op', '', 'POST');
@@ -219,7 +223,7 @@ if ($op === 'submit') {
             return;
         }
         $tmpUname = XoopsUser::getUnameFromId($sendModRecipient);
-        $pmform->addElement(new XoopsFormHidden('to_userid', XoopsRequest::getInt('to_userid', 0, 'POST')));
+        $pmform->addElement(new XoopsFormHidden('to_userid', $sendModRecipient));
         $pmform->addElement(new XoopsFormLabel(_PM_TO, $tmpUname));
         $subject = $myts->htmlSpecialChars(XoopsRequest::getString('subject', '', 'POST'));
         $message = $myts->htmlSpecialChars(XoopsRequest::getString('message', '', 'POST'));

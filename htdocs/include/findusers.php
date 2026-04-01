@@ -643,7 +643,7 @@ if (!Request::hasVar('user_submit', 'POST')) {
     $criteria->setLimit($limit);
     $criteria->setStart($start);
     if (!isset($foundusers)) {
-        $foundusers = $user_handler->getAll($criteria, Request::getArray('groups', [], 'POST'));
+        $foundusers = $user_handler->getAll($criteria, !empty($searchGroups) ? $searchGroups : Request::getArray('groups', [], 'POST'));
     }
 
     echo $js_adduser = '

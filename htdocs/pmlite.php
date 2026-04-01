@@ -74,7 +74,7 @@ function corePmCanMessageUser(int $uid): bool
     $moduleHandler = xoops_getHandler('module');
     $pmModule = $moduleHandler->getByDirname('pm');
     if (!$pmModule instanceof XoopsModule) {
-        return true; // PM module not installed — no filtering possible
+        return false; // Fail closed: PM module not found
     }
     $memberHandler = xoops_getHandler('member');
     $userGroups = $memberHandler->getGroupsByUser($uid);
@@ -117,7 +117,7 @@ if (is_object($xoopsUser)) {
     $myts = \MyTextSanitizer::getInstance();
     if ('submit' === $op) {
         $recipientId = Request::getInt('to_userid', 0, 'POST');
-        $sql = 'SELECT COUNT(*) FROM ' . $xoopsDB->prefix('users') . ' WHERE uid=' . $recipientId;
+        $sql = 'SELECT COUNT(*) FROM ' . $xoopsDB->prefix('users') . ' WHERE uid=' . $xoopsDB->quote($recipientId);
         $result = $xoopsDB->query($sql);
         if (!$xoopsDB->isResultSet($result)) {
             throw new \RuntimeException(
@@ -200,7 +200,7 @@ if (is_object($xoopsUser)) {
             $pmform->addElement(new XoopsFormHidden('to_userid', $to_userid));
             $pmform->addElement(new XoopsFormLabel(_PM_TO, $to_username));
         } else {
-            $pmform->addElement(new XoopsFormSelectUser(_PM_TO, 'to_userid', false, $to_userid, 1, false, corePmGetAllowedGroups()));
+            $pmform->addElement(new XoopsFormSelectUser(_PM_TO, 'to_userid', false, $to_userid, 1, false, corePmGetAllowedGroups(), ['module_read' => 'pm']));
         }
 
         if (1 == $reply) {
