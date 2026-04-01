@@ -33,7 +33,7 @@ $subject_icons = XoopsLists::getSubjectsList();
  *
  * @return XoopsModule|false
  */
-function pmGetModule()
+function pmGetModule(): XoopsModule|false
 {
     static $pmModule = null;
     if ($pmModule === null) {

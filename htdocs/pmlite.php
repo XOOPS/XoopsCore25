@@ -145,7 +145,7 @@ if (is_object($xoopsUser)) {
             }
             $pm->setVar('subject', Request::getString('subject', null, 'POST'));
             $pm->setVar('msg_text', Request::getString('message', null, 'POST'));
-            $pm->setVar('to_userid', Request::getInt('to_userid', 0, 'POST'));
+            $pm->setVar('to_userid', $recipientId);
             $pm->setVar('from_userid', $xoopsUser->getVar('uid'));
             if (!$pm_handler->insert($pm)) {
                 echo $pm->getHtmlErrors();

@@ -95,7 +95,7 @@ class XoopsFormSelectUser extends XoopsFormElementTray
         if (!array_key_exists($cachekey, $queryCache)) {
             XoopsLoad::load('XoopsCache');
             $queryCache[$cachekey] = XoopsCache::read($cachekey);
-            if ($queryCache[$cachekey] === false) {
+            if (!is_array($queryCache[$cachekey])) {
                 $criteria = new CriteriaCompo();
                 $userCount = !empty($allowedGroups)
                     ? $member_handler->getUserCountByGroupLink($allowedGroups)
