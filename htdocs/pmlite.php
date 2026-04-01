@@ -66,9 +66,8 @@ if (!in_array($method, $safeMethods)) {
  *
  * @return bool
  */
-function corePmCanMessageUser($uid)
+function corePmCanMessageUser(int $uid): bool
 {
-    $uid = (int) $uid;
     if ($uid <= 0) {
         return false;
     }
@@ -92,13 +91,12 @@ function corePmCanMessageUser($uid)
  *
  * @return array
  */
-function corePmGetAllowedGroups()
+function corePmGetAllowedGroups(): array
 {
     static $groups = null;
     if ($groups !== null) {
         return $groups;
     }
-    $groups = [];
     $moduleHandler = xoops_getHandler('module');
     $pmModule = $moduleHandler->getByDirname('pm');
     if ($pmModule instanceof XoopsModule) {
@@ -107,6 +105,9 @@ function corePmGetAllowedGroups()
         if (!in_array(XOOPS_GROUP_ADMIN, $groups, true)) {
             $groups[] = XOOPS_GROUP_ADMIN;
         }
+    } else {
+        // Fail closed: only admin can send if PM module lookup fails
+        $groups = [defined('XOOPS_GROUP_ADMIN') ? (int) XOOPS_GROUP_ADMIN : 1];
     }
 
     return $groups;

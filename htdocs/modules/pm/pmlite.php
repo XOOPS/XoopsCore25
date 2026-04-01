@@ -52,11 +52,10 @@ function pmGetModule()
  *
  * @return array
  */
-function pmGetAllowedRecipientGroups()
+function pmGetAllowedRecipientGroups(): array
 {
     static $groups = null;
     if ($groups === null) {
-        $groups = [];
         $module = pmGetModule();
         if ($module instanceof XoopsModule) {
             $grouppermHandler = xoops_getHandler('groupperm');
@@ -64,6 +63,9 @@ function pmGetAllowedRecipientGroups()
             if (!in_array(XOOPS_GROUP_ADMIN, $groups, true)) {
                 $groups[] = XOOPS_GROUP_ADMIN;
             }
+        } else {
+            // Fail closed: only admin can send if PM module lookup fails
+            $groups = [defined('XOOPS_GROUP_ADMIN') ? (int) XOOPS_GROUP_ADMIN : 1];
         }
     }
 

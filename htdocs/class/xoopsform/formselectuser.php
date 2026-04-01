@@ -40,6 +40,8 @@ class XoopsFormSelectUser extends XoopsFormElementTray
      *                                 members of that item
      * @param int    $size             Number of rows. "1" makes a drop-down-list.
      * @param bool   $multiple         Allow multiple selections?
+     * @param array  $allowedGroups    Group IDs to restrict users to; empty means no restriction.
+     * @param array  $extraQuery       Extra query parameters appended to the findusers.php popup URL.
      */
     public function __construct($caption, $name, $includeAnonymous = false, $value = null, $size = 1, $multiple = false, array $allowedGroups = [], array $extraQuery = [])
     {
@@ -169,11 +171,11 @@ class XoopsFormSelectUser extends XoopsFormElementTray
         $removeUsers->setExtra(' onclick="var sel = xoopsGetElementById(\'' . $name . '\');for (var i = sel.options.length-1; i >= 0; i--) {if (!sel.options[i].selected) {sel.options[i] = null;}}; return false;" ');
         $action_tray->addElement($removeUsers);
 
-        $searchUrl = XOOPS_URL . '/include/findusers.php?' . http_build_query(array_merge([
+        $searchUrl = XOOPS_URL . '/include/findusers.php?' . http_build_query([
             'target' => $name,
-            'multiple' => (int)$multiple,
+            'multiple' => (int) $multiple,
             'token' => $token,
-        ], $extraQuery), '', '&amp;');
+        ] + $extraQuery, '', '&amp;');
         $searchUsers = new XoopsFormButton('', 'srchusr_' . $name, _MA_USER_MORE, 'button');
         $searchUsers->setExtra(' onclick="openWithSelfMain(\'' . $searchUrl . '\', \'userselect\', 800, 600, null); return false;" ');
         $action_tray->addElement($searchUsers);
