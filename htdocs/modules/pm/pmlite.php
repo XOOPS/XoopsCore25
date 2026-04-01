@@ -64,8 +64,8 @@ function pmGetAllowedRecipientGroups(): array
                 $groups[] = XOOPS_GROUP_ADMIN;
             }
         } else {
-            // Fail closed: only admin can send if PM module lookup fails
-            $groups = [defined('XOOPS_GROUP_ADMIN') ? (int) XOOPS_GROUP_ADMIN : 1];
+            // Fail closed: no users shown — matches pmCanMessageUser which rejects all
+            $groups = [0];
         }
     }
 
