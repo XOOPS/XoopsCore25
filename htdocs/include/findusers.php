@@ -325,9 +325,9 @@ class XoUserHandler extends XoopsObjectHandler
 $rank_handler = new XoopsRankHandler($xoopsDB);
 $user_handler = new XoUserHandler($xoopsDB);
 $member_handler = xoops_getHandler('member');
-$moduleReadDirname = Request::getString('module_read', '', 'GET');
+$moduleReadDirname = Request::getCmd('module_read', '', 'GET');
 if ($moduleReadDirname === '') {
-    $moduleReadDirname = Request::getString('module_read', '', 'POST');
+    $moduleReadDirname = Request::getCmd('module_read', '', 'POST');
 }
 $moduleReadGroups = [];
 if ($moduleReadDirname !== '') {
@@ -501,7 +501,14 @@ if (!Request::hasVar('user_submit', 'POST')) {
         if ($mode == $_mode) {
             continue;
         }
-        $modes_switch[] = "<a href='findusers.php?target=" . htmlspecialchars(Request::getString('target', ''), ENT_QUOTES | ENT_HTML5, 'UTF-8') . '&amp;multiple=' . (string) $multiple . '&amp;token=' . htmlspecialchars($token, ENT_QUOTES | ENT_HTML5, 'UTF-8') . '&amp;module_read=' . htmlspecialchars($moduleReadDirname, ENT_QUOTES | ENT_HTML5, 'UTF-8') . "&amp;mode={$_mode}'>{$title}</a>";
+        $modeSwitchUrl = 'findusers.php?' . http_build_query([
+            'target'      => Request::getString('target', ''),
+            'multiple'    => (int) $multiple,
+            'token'       => $token,
+            'module_read' => $moduleReadDirname,
+            'mode'        => $_mode,
+        ]);
+        $modes_switch[] = "<a href='" . htmlspecialchars($modeSwitchUrl, ENT_QUOTES | ENT_HTML5, 'UTF-8') . "'>{$title}</a>";
     }
     echo '<h4>' . implode(' | ', $modes_switch) . '</h4>';
     echo '(' . sprintf(_MA_USER_ACTUS, "<span style='color:#ff0000;'>$acttotal</span>") . ' ' . sprintf(_MA_USER_INACTUS, "<span style='color:#ff0000;'>$inacttotal</span>") . ')';
@@ -680,7 +687,13 @@ if (!Request::hasVar('user_submit', 'POST')) {
     ';
 
     echo '</html><body>';
-    echo "<a href='findusers.php?target=" . htmlspecialchars(Request::getString('target', '', 'POST'), ENT_QUOTES | ENT_HTML5, 'UTF-8') . '&amp;multiple=' . (string) $multiple . '&amp;token=' . htmlspecialchars($token, ENT_QUOTES | ENT_HTML5, 'UTF-8') . '&amp;module_read=' . htmlspecialchars($moduleReadDirname, ENT_QUOTES | ENT_HTML5, 'UTF-8') . "'>" . _MA_USER_FINDUS . "</a>&nbsp;<span style='font-weight:bold;'>&raquo;</span>&nbsp;" . _MA_USER_RESULTS . '<br><br>';
+    $breadcrumbUrl = 'findusers.php?' . http_build_query([
+        'target'      => Request::getString('target', '', 'POST'),
+        'multiple'    => (int) $multiple,
+        'token'       => $token,
+        'module_read' => $moduleReadDirname,
+    ]);
+    echo "<a href='" . htmlspecialchars($breadcrumbUrl, ENT_QUOTES | ENT_HTML5, 'UTF-8') . "'>" . _MA_USER_FINDUS . "</a>&nbsp;<span style='font-weight:bold;'>&raquo;</span>&nbsp;" . _MA_USER_RESULTS . '<br><br>';
     if (empty($start) && empty($foundusers)) {
         echo '<h4>' . _MA_USER_NOFOUND, '</h4>';
         $hiddenform = "<form name='findnext' action='findusers.php' method='post'>";

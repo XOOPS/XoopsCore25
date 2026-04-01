@@ -67,7 +67,17 @@ class XoopsFormSelectUser extends XoopsFormElementTray
         /**
          * @var string - cache key
          */
-        $allowedGroups = array_values(array_unique(array_filter(array_map('intval', $allowedGroups))));
+        // Filter to valid positive integer group IDs; reject non-numeric values.
+        // If caller passed a non-empty list that sanitizes to empty, fail closed
+        // with an impossible group ID so no users are shown.
+        $hadGroups = !empty($allowedGroups);
+        $allowedGroups = array_values(array_unique(array_filter(
+            array_map('intval', $allowedGroups),
+            static function ($v) { return $v > 0; }
+        )));
+        if ($hadGroups && empty($allowedGroups)) {
+            $allowedGroups = [0]; // impossible group — matches no users
+        }
         sort($allowedGroups);
         $cachekey = 'formselectuser';
         if (!empty($allowedGroups)) {
