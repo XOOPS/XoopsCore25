@@ -212,15 +212,15 @@ if ($op === 'submit') {
         $pm_handler = xoops_getModuleHandler('message', 'pm');
         $pm         = $pm_handler->get($msg_id);
         if ($pm->getVar('to_userid') == $GLOBALS['xoopsUser']->getVar('uid')) {
-            $pm_uname = XoopsUser::getUnameFromId($pm->getVar('from_userid'));
-            $message  = "[quote]\n";
-            $message .= sprintf(_PM_USERWROTE, $pm_uname);
-            $message .= "\n" . $pm->getVar('msg_text', 'E') . "\n[/quote]";
             if (!pmCanMessageUser($pm->getVar('from_userid'))) {
                 pmRenderInvalidRecipient();
                 xoops_footer();
                 return;
             }
+            $pm_uname = XoopsUser::getUnameFromId($pm->getVar('from_userid'));
+            $message  = "[quote]\n";
+            $message .= sprintf(_PM_USERWROTE, $pm_uname);
+            $message .= "\n" . $pm->getVar('msg_text', 'E') . "\n[/quote]";
         } else {
             unset($pm);
             $reply = $send2 = 0;
