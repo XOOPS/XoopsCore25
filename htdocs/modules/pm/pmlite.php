@@ -99,19 +99,38 @@ function pmCanMessageUser(int $uid): bool
 }
 
 /**
+ * Safe fallbacks for PM language constants that may not be loaded.
+ */
+function pmSafeTryAgain(): string
+{
+    return defined('_PM_PLZTRYAGAIN') ? _PM_PLZTRYAGAIN : 'Please try again.';
+}
+
+function pmSafeGoBack(): string
+{
+    return defined('_PM_GOBACK') ? _PM_GOBACK : 'Go back';
+}
+
+/**
+ * Render the "user does not exist" error block.
+ */
+function pmRenderUserNotFound(): void
+{
+    echo '<br><br><div><h4>' . _PM_USERNOEXIST . '<br>';
+    echo pmSafeTryAgain() . '</h4><br>';
+    echo "[ <a href='javascript:history.go(-1)'>" . pmSafeGoBack() . '</a> ]</div>';
+}
+
+/**
  * Render the standard invalid-recipient message.
- *
- * @return void
  */
 function pmRenderInvalidRecipient(): void
 {
-    $noPermMsg  = defined('_PM_USERNOPERM') ? _PM_USERNOPERM : 'The selected user cannot receive private messages.';
-    $tryAgain   = defined('_PM_PLZTRYAGAIN') ? _PM_PLZTRYAGAIN : 'Please try again.';
-    $goBack     = defined('_PM_GOBACK') ? _PM_GOBACK : 'Go back';
+    $noPermMsg = defined('_PM_USERNOPERM') ? _PM_USERNOPERM : 'The selected user cannot receive private messages.';
 
     echo '<br><br><div><h4>' . $noPermMsg . '<br>';
-    echo $tryAgain . '</h4><br>';
-    echo "[ <a href='javascript:history.go(-1)'>" . $goBack . '</a> ]</div>';
+    echo pmSafeTryAgain() . '</h4><br>';
+    echo "[ <a href='javascript:history.go(-1)'>" . pmSafeGoBack() . '</a> ]</div>';
 }
 
 $op = XoopsRequest::getCmd('op', '', 'POST');
@@ -144,7 +163,7 @@ xoops_header();
 
 $myts = \MyTextSanitizer::getInstance();
 if ($op === 'submit') {
-    $recipientId = XoopsRequest::getInt('to_userid', 0, 'POST');
+    $recipientId = \Xmf\Request::getInt('to_userid', 0, 'POST');
     /** @var XoopsMemberHandler $member_handler */
     $member_handler = xoops_getHandler('member');
     $count          = $member_handler->getUserCount(new Criteria('uid', $recipientId));
@@ -215,12 +234,10 @@ if ($op === 'submit') {
         $pmform->addElement(new XoopsFormLabel(_PM_TO, $pm_uname));
         $pmform->addElement(new XoopsFormHidden('to_userid', $pm->getVar('from_userid')));
     } elseif ($sendmod == 1) {
-        $sendModRecipient = XoopsRequest::getInt('to_userid', 0, 'POST');
+        $sendModRecipient = \Xmf\Request::getInt('to_userid', 0, 'POST');
         $tmpUname = XoopsUser::getUnameFromId($sendModRecipient);
         if (empty($tmpUname)) {
-            echo '<br><br><div><h4>' . _PM_USERNOEXIST . '<br>';
-            echo (defined('_PM_PLZTRYAGAIN') ? _PM_PLZTRYAGAIN : 'Please try again.') . '</h4><br>';
-            echo "[ <a href='javascript:history.go(-1)'>" . (defined('_PM_GOBACK') ? _PM_GOBACK : 'Go back') . '</a> ]</div>';
+            pmRenderUserNotFound();
             xoops_footer();
             return;
         }
@@ -237,9 +254,7 @@ if ($op === 'submit') {
         if ($send2 == 1) {
             $tmpUname = XoopsUser::getUnameFromId($to_userid, false);
             if (empty($tmpUname)) {
-                echo '<br><br><div><h4>' . _PM_USERNOEXIST . '<br>';
-                echo (defined('_PM_PLZTRYAGAIN') ? _PM_PLZTRYAGAIN : 'Please try again.') . '</h4><br>';
-                echo "[ <a href='javascript:history.go(-1)'>" . (defined('_PM_GOBACK') ? _PM_GOBACK : 'Go back') . '</a> ]</div>';
+                pmRenderUserNotFound();
                 xoops_footer();
                 return;
             }

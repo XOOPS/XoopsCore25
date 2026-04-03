@@ -73,7 +73,7 @@ class XoopsFormSelectUser extends XoopsFormElementTray
         $hadGroups = !empty($allowedGroups);
         $allowedGroups = array_values(array_unique(array_filter(
             array_map('intval', $allowedGroups),
-            static function ($v) { return $v > 0; }
+            static function ($groupId) { return $groupId > 0; }
         )));
         if ($hadGroups && empty($allowedGroups)) {
             $allowedGroups = [0]; // impossible group — matches no users
