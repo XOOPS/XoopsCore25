@@ -27,7 +27,7 @@ class ModuleAdmin
      */
     private $_obj;
 
-    /** @var string Relative path to the 32px icon directory */
+    /** @var string Web-root-relative path to the 32px icon directory */
     private static $iconPath32 = '/Frameworks/moduleclasses/icons/32/';
 
     /**
@@ -501,10 +501,12 @@ class ModuleAdmin
     }
 
     /**
-     * Create HTML text to display on Admin About page
+     * Create HTML text to display on Admin About page.
+     *
+     * The standard footer text is always appended via _AM_MODULEADMIN_ADMIN_FOOTER.
      *
      * @param string $business   the PAYPAL business email or Merchant Account ID
-     * @param bool   $logo_xoops true to display XOOPS logo and link in the footer
+     * @param bool   $logo_xoops true to prepend the XOOPS logo block above the footer text
      *
      * @return string HTML to display
      */
@@ -608,10 +610,11 @@ class ModuleAdmin
     /**
      * Create HTML text to display the standard admin footer.
      *
-     * Renders the XOOPS logo link (when enabled) followed by the
-     * standard footer text from _AM_MODULEADMIN_ADMIN_FOOTER.
+     * The standard footer text/link from _AM_MODULEADMIN_ADMIN_FOOTER
+     * is always included. When $logo_xoops is true, the XOOPS logo
+     * image block is prepended above the footer text.
      *
-     * @param bool $logo_xoops true to display XOOPS logo and link
+     * @param bool $logo_xoops true to prepend the XOOPS logo block
      *
      * @return string HTML to display
      */
@@ -635,7 +638,7 @@ class ModuleAdmin
      *
      * Echoes the same markup as renderFooterInfo().
      *
-     * @param bool $logo_xoops true to display XOOPS logo and link
+     * @param bool $logo_xoops true to prepend the XOOPS logo block
      *
      * @return void
      */
