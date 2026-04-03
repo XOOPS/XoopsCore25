@@ -33,8 +33,9 @@ $xoops = new xos_kernel_Xoops2();
 $xoops->pathTranslation();
 
 // Fetch path from query string if path is not set, i.e. through a direct request
-if (!isset($path) && !empty($_SERVER['QUERY_STRING'])) {
-    $path      = $_SERVER['QUERY_STRING'];
+$rawQueryString = $_SERVER['QUERY_STRING'] ?? '';
+if (!isset($path) && $rawQueryString !== '') {
+    $path      = $rawQueryString;
     $path      = (substr($path, 0, 1) === '/') ? substr($path, 1) : $path;
     $path_type = substr($path, 0, strpos($path, '/'));
     if (!isset($xoops->paths[$path_type])) {
@@ -93,21 +94,24 @@ header('Content-type: ' . $types[$ext]);
 // served through browse.php, so the SourceMap header provides the correct path.
 if (in_array($ext, ['js', 'css'], true)) {
     $fileDir = dirname($file);
-    // Read last 512 bytes to find sourceMappingURL without loading the entire file
     $fsize = filesize($file);
     $tailSize = min(512, $fsize);
+    $tail = '';
     $fh = fopen($file, 'rb');
-    fseek($fh, $fsize - $tailSize);
-    $tail = fread($fh, $tailSize);
-    fclose($fh);
-    if (preg_match('/[#@]\s*sourceMappingURL=(\S+)/', $tail, $m)) {
+    if ($fh !== false) {
+        fseek($fh, $fsize - $tailSize);
+        $tail = fread($fh, $tailSize);
+        fclose($fh);
+    }
+    if ($tail !== '' && preg_match('/[#@]\s*sourceMappingURL=(\S+)/', $tail, $m)) {
         $mapName = basename($m[1]);
         if (file_exists($fileDir . '/' . $mapName)) {
-            // Use the original query string path (before XOOPS/ prefix was added)
-            $origPath = $_SERVER['QUERY_STRING'] ?? '';
-            $origPath = (substr($origPath, 0, 1) === '/') ? substr($origPath, 1) : $origPath;
-            $origDir = dirname($origPath);
-            header('SourceMap: ' . XOOPS_URL . '/browse.php?' . $origDir . '/' . $mapName);
+            $origPath = (substr($rawQueryString, 0, 1) === '/') ? substr($rawQueryString, 1) : $rawQueryString;
+            // Reject CR/LF to prevent header injection
+            if (strpbrk($origPath, "\r\n") === false) {
+                $origDir = dirname($origPath);
+                header('SourceMap: ' . XOOPS_URL . '/browse.php?' . $origDir . '/' . $mapName);
+            }
         }
     }
 }
