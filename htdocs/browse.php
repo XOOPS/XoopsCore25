@@ -33,8 +33,9 @@ $xoops = new xos_kernel_Xoops2();
 $xoops->pathTranslation();
 
 // Fetch path from query string if path is not set, i.e. through a direct request
-if (!isset($path) && !empty($_SERVER['QUERY_STRING'])) {
-    $path      = $_SERVER['QUERY_STRING'];
+$rawQueryString = \Xmf\Request::getString('QUERY_STRING', '', 'SERVER', \Xmf\Request::MASK_ALLOW_RAW);
+if (!isset($path) && $rawQueryString !== '') {
+    $path      = $rawQueryString;
     $path      = (substr($path, 0, 1) === '/') ? substr($path, 1) : $path;
     $path_type = substr($path, 0, strpos($path, '/'));
     if (!isset($xoops->paths[$path_type])) {
@@ -87,6 +88,36 @@ header('Pragma: public');
 header('Cache-Control: maxage=' . $expires);
 header('Expires: ' . gmdate('D, d M Y H:i:s', time() + $expires) . ' GMT');
 header('Content-type: ' . $types[$ext]);
+
+// Emit SourceMap header for JS/CSS files when a companion .map file exists.
+// Browsers cannot resolve relative sourceMappingURL references inside files
+// served through browse.php, so the SourceMap header provides the correct path.
+if (in_array($ext, ['js', 'css'], true)) {
+    $fileDir = dirname($file);
+    $fsize = filesize($file);
+    $tailSize = min(512, $fsize);
+    $tail = '';
+    $fh = fopen($file, 'rb');
+    if ($fh !== false) {
+        fseek($fh, $fsize - $tailSize);
+        $tail = fread($fh, $tailSize);
+        fclose($fh);
+    }
+    if ($tail !== '' && preg_match('/[#@]\s*sourceMappingURL=(\S+)/', $tail, $m)) {
+        $mapName = basename($m[1]);
+        if (file_exists($fileDir . '/' . $mapName)) {
+            $origPath = (substr($rawQueryString, 0, 1) === '/') ? substr($rawQueryString, 1) : $rawQueryString;
+            // Reject CR/LF to prevent header injection
+            if (strpbrk($origPath, "\r\n") === false) {
+                $origDir = dirname($origPath);
+                $baseUrl = rtrim(XOOPS_URL, '/');
+                $mapPath = ($origDir === '.' ? $mapName : $origDir . '/' . $mapName);
+                $encodedMapPath = implode('/', array_map('rawurlencode', explode('/', $mapPath)));
+                header('SourceMap: ' . $baseUrl . '/browse.php?' . $encodedMapPath);
+            }
+        }
+    }
+}
 $handle = fopen($file, 'rb');
 while (!feof($handle)) {
     $buffer = fread($handle, 4096);
