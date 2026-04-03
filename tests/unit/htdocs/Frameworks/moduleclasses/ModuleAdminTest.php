@@ -370,6 +370,60 @@ class ModuleAdminTest extends TestCase
     // Helper: create mock XoopsModule
     // ---------------------------------------------------------------
 
+    // ---------------------------------------------------------------
+    // Footer Info tests
+    // ---------------------------------------------------------------
+
+    #[Test]
+    public function renderFooterInfoWithLogoContainsXoopsLinkAndFooterText(): void
+    {
+        $html = $this->admin->renderFooterInfo(true);
+
+        $this->assertStringContainsString('xoopsmicrobutton.gif', $html, 'Should contain XOOPS logo image');
+        $this->assertStringContainsString('href="https://xoops.org"', $html, 'Should contain XOOPS link');
+        $this->assertStringContainsString('target="_blank"', $html, 'Logo link should open in new window');
+        $this->assertStringContainsString('rel="external noopener noreferrer"', $html, 'Logo link should have noopener noreferrer');
+        $this->assertStringContainsString(_AM_MODULEADMIN_ADMIN_FOOTER, $html, 'Should contain footer text constant');
+    }
+
+    #[Test]
+    public function renderFooterInfoWithoutLogoOmitsImageButIncludesFooterText(): void
+    {
+        $html = $this->admin->renderFooterInfo(false);
+
+        $this->assertStringNotContainsString('xoopsmicrobutton.gif', $html, 'Should not contain XOOPS logo');
+        $this->assertStringNotContainsString('target="_blank"', $html, 'Should not contain logo link');
+        $this->assertStringContainsString(_AM_MODULEADMIN_ADMIN_FOOTER, $html, 'Should still contain footer text');
+    }
+
+    #[Test]
+    public function displayFooterInfoEchoesSameMarkupAsRender(): void
+    {
+        $expected = $this->admin->renderFooterInfo(true);
+
+        ob_start();
+        $this->admin->displayFooterInfo(true);
+        $actual = ob_get_clean();
+
+        $this->assertSame($expected, $actual, 'displayFooterInfo should echo exactly what renderFooterInfo returns');
+    }
+
+    #[Test]
+    public function displayFooterInfoWithoutLogoEchoesSameAsRenderWithoutLogo(): void
+    {
+        $expected = $this->admin->renderFooterInfo(false);
+
+        ob_start();
+        $this->admin->displayFooterInfo(false);
+        $actual = ob_get_clean();
+
+        $this->assertSame($expected, $actual, 'displayFooterInfo(false) should echo what renderFooterInfo(false) returns');
+    }
+
+    // ---------------------------------------------------------------
+    // Helper: mock XoopsModule
+    // ---------------------------------------------------------------
+
     private function createMockXoopsModule(): object
     {
         return new class {

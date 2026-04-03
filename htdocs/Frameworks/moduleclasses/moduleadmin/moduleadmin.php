@@ -588,7 +588,6 @@ class ModuleAdmin
               . "</td>\n"
               . "</tr>\n"
               . "</table>\n";
-        $ret .= $this->renderFooterInfo($logo_xoops);
         return $ret;
     }
 
@@ -606,12 +605,10 @@ class ModuleAdmin
         $ret  = '';
         if (true === $logo_xoops) {
             $ret .= "<div class=\"center\">"
-                  . "<a href=\"https://xoops.org\" target=\"_blank\"><img src=\"{$path}xoopsmicrobutton.gif\" alt=\"XOOPS\" title=\"XOOPS\"></a>"
+                  . "<a href=\"https://xoops.org\" target=\"_blank\" rel=\"external noopener noreferrer\"><img src=\"{$path}xoopsmicrobutton.gif\" alt=\"XOOPS\" title=\"XOOPS\"></a>"
                   . "</div>";
         }
-        $ret .= "<div class=\"center smallsmall italic pad5\">"
-              . _AM_MODULEADMIN_ADMIN_FOOTER
-              . '</div>';
+        $ret .= _AM_MODULEADMIN_ADMIN_FOOTER;
 
         return $ret;
     }
