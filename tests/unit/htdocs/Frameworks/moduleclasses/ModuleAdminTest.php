@@ -367,7 +367,78 @@ class ModuleAdminTest extends TestCase
     }
 
     // ---------------------------------------------------------------
-    // Helper: create mock XoopsModule
+    // Footer Info tests
+    // ---------------------------------------------------------------
+
+    #[Test]
+    public function testRenderFooterInfoWithLogoContainsXoopsLinkAndFooterText(): void
+    {
+        $html = $this->admin->renderFooterInfo(true);
+
+        $this->assertStringContainsString('xoopsmicrobutton.gif', $html, 'Should contain XOOPS logo image');
+        $this->assertStringContainsString('href="https://xoops.org"', $html, 'Should contain XOOPS link');
+        $this->assertStringContainsString('rel="external noopener noreferrer"', $html, 'Logo link should have noopener noreferrer');
+        $this->assertStringContainsString(_AM_MODULEADMIN_ADMIN_FOOTER, $html, 'Should contain footer text constant');
+    }
+
+    #[Test]
+    public function testRenderFooterInfoWithoutLogoOmitsImageButIncludesFooterText(): void
+    {
+        $html = $this->admin->renderFooterInfo(false);
+
+        $this->assertStringNotContainsString('xoopsmicrobutton.gif', $html, 'Should not contain XOOPS logo');
+        $this->assertStringNotContainsString('href="https://xoops.org"', $html, 'Should not contain XOOPS logo link');
+        $this->assertStringContainsString(_AM_MODULEADMIN_ADMIN_FOOTER, $html, 'Should still contain footer text');
+    }
+
+    #[Test]
+    public function testDisplayFooterInfoEchoesSameMarkupAsRender(): void
+    {
+        $expected = $this->admin->renderFooterInfo(true);
+
+        ob_start();
+        $this->admin->displayFooterInfo(true);
+        $actual = ob_get_clean();
+
+        $this->assertSame($expected, $actual, 'displayFooterInfo should echo exactly what renderFooterInfo returns');
+    }
+
+    #[Test]
+    public function testDisplayFooterInfoWithoutLogoEchoesSameAsRenderWithoutLogo(): void
+    {
+        $expected = $this->admin->renderFooterInfo(false);
+
+        ob_start();
+        $this->admin->displayFooterInfo(false);
+        $actual = ob_get_clean();
+
+        $this->assertSame($expected, $actual, 'displayFooterInfo(false) should echo what renderFooterInfo(false) returns');
+    }
+
+    // ---------------------------------------------------------------
+    // renderAbout integration tests
+    // ---------------------------------------------------------------
+
+    #[Test]
+    public function testRenderAboutIncludesFooterWithLogo(): void
+    {
+        $html = $this->admin->renderAbout('', true);
+
+        $this->assertStringContainsString('xoopsmicrobutton.gif', $html, 'About page should include XOOPS logo');
+        $this->assertStringContainsString(_AM_MODULEADMIN_ADMIN_FOOTER, $html, 'About page should include footer text');
+    }
+
+    #[Test]
+    public function testRenderAboutWithoutLogoOmitsLogoButIncludesFooter(): void
+    {
+        $html = $this->admin->renderAbout('', false);
+
+        $this->assertStringNotContainsString('xoopsmicrobutton.gif', $html, 'About page should not include XOOPS logo');
+        $this->assertStringContainsString(_AM_MODULEADMIN_ADMIN_FOOTER, $html, 'About page should still include footer text');
+    }
+
+    // ---------------------------------------------------------------
+    // Helper: mock XoopsModule
     // ---------------------------------------------------------------
 
     private function createMockXoopsModule(): object
