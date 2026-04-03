@@ -33,7 +33,7 @@ $xoops = new xos_kernel_Xoops2();
 $xoops->pathTranslation();
 
 // Fetch path from query string if path is not set, i.e. through a direct request
-$rawQueryString = $_SERVER['QUERY_STRING'] ?? '';
+$rawQueryString = \Xmf\Request::getString('QUERY_STRING', '', 'SERVER');
 if (!isset($path) && $rawQueryString !== '') {
     $path      = $rawQueryString;
     $path      = (substr($path, 0, 1) === '/') ? substr($path, 1) : $path;
@@ -110,7 +110,9 @@ if (in_array($ext, ['js', 'css'], true)) {
             // Reject CR/LF to prevent header injection
             if (strpbrk($origPath, "\r\n") === false) {
                 $origDir = dirname($origPath);
-                header('SourceMap: ' . XOOPS_URL . '/browse.php?' . $origDir . '/' . $mapName);
+                $baseUrl = rtrim(XOOPS_URL, '/');
+                $mapPath = ($origDir === '.' ? $mapName : $origDir . '/' . $mapName);
+                header('SourceMap: ' . $baseUrl . '/browse.php?' . $mapPath);
             }
         }
     }
