@@ -28,6 +28,108 @@ xoops_load('XoopsFormSelect');
  */
 class XoopsFormSelectUser extends XoopsFormElementTray
 {
+    /** @var int Maximum users to show in the dropdown */
+    private static $limit = 200;
+
+    /** @var string Cache TTL interpreted by strtotime() */
+    private static $cacheTtl = '+5 minutes';
+
+    /**
+     * Sanitize allowed group IDs to strict positive integers.
+     *
+     * Rejects non-digit values entirely (intval('1foo') would silently become 1).
+     * Fails closed with [0] (impossible group) when a non-empty input sanitizes to empty.
+     *
+     * @param array $allowedGroups Raw group ID values
+     *
+     * @return array Sanitized group IDs, sorted
+     */
+    private static function normalizeAllowedGroups(array $allowedGroups): array
+    {
+        $hadGroups = !empty($allowedGroups);
+        $allowedGroups = array_values(array_unique(array_filter(
+            array_map(
+                static function ($v) { return ctype_digit((string) $v) ? (int) $v : 0; },
+                $allowedGroups
+            ),
+            static function ($groupId) { return $groupId > 0; }
+        )));
+        if ($hadGroups && empty($allowedGroups)) {
+            $allowedGroups = [0]; // impossible group — matches no users
+        }
+        sort($allowedGroups);
+
+        return $allowedGroups;
+    }
+
+    /**
+     * Build the user option list, using cache when available.
+     *
+     * @param XoopsMemberHandler $memberHandler Member handler
+     * @param array              $allowedGroups Sanitized group IDs (empty = no restriction)
+     * @param string             $cachekey      Cache key for this group set
+     * @param array              $queryCache    Reference to static query cache
+     *
+     * @return array uid => uname pairs
+     */
+    private static function getUserOptions(XoopsMemberHandler $memberHandler, array $allowedGroups, string $cachekey, array &$queryCache): array
+    {
+        if (!array_key_exists($cachekey, $queryCache)) {
+            XoopsLoad::load('XoopsCache');
+            $queryCache[$cachekey] = XoopsCache::read($cachekey);
+            if (!is_array($queryCache[$cachekey])) {
+                $criteria = new CriteriaCompo();
+                $userCount = !empty($allowedGroups)
+                    ? $memberHandler->getUserCountByGroupLink($allowedGroups)
+                    : $memberHandler->getUserCount();
+                if (self::$limit <= $userCount) {
+                    $criteria->setLimit(self::$limit);
+                    $criteria->setSort('last_login');
+                    $criteria->setOrder('DESC');
+                } else {
+                    $criteria->setSort('uname');
+                    $criteria->setOrder('ASC');
+                }
+                if (!empty($allowedGroups)) {
+                    $filteredUsers = $memberHandler->getUsersByGroupLink($allowedGroups, $criteria, true, true);
+                    $queryCache[$cachekey] = [];
+                    foreach ($filteredUsers as $uid => $user) {
+                        $queryCache[$cachekey][$uid] = $user->getVar('uname');
+                    }
+                } else {
+                    $queryCache[$cachekey] = $memberHandler->getUserList($criteria);
+                }
+                asort($queryCache[$cachekey]);
+                XoopsCache::write($cachekey, $queryCache[$cachekey], self::$cacheTtl);
+            }
+        }
+
+        return $queryCache[$cachekey];
+    }
+
+    /**
+     * Filter pre-selected values to only include users in allowed groups.
+     *
+     * @param array              $selectedUsers uid => uname of pre-selected users
+     * @param array              $allowedGroups Sanitized group IDs
+     * @param XoopsMemberHandler $memberHandler Member handler
+     *
+     * @return array Filtered uid => uname pairs
+     */
+    private static function filterSelectedByGroups(array $selectedUsers, array $allowedGroups, XoopsMemberHandler $memberHandler): array
+    {
+        if (empty($allowedGroups) || empty($selectedUsers)) {
+            return $selectedUsers;
+        }
+        $allowedUids = $memberHandler->getUsersByGroupLink(
+            $allowedGroups,
+            new Criteria('uid', '(' . implode(',', array_keys($selectedUsers)) . ')', 'IN'),
+            false
+        );
+
+        return array_intersect_key($selectedUsers, array_flip($allowedUids));
+    }
+
     /**
      * Constructor
      *
@@ -40,32 +142,25 @@ class XoopsFormSelectUser extends XoopsFormElementTray
      *                                 members of that item
      * @param int    $size             Number of rows. "1" makes a drop-down-list.
      * @param bool   $multiple         Allow multiple selections?
+     * @param array  $allowedGroups    Group IDs to restrict users to; empty means no restriction.
+     * @param array  $extraQuery       Extra query parameters appended to the findusers.php popup URL.
      */
-    public function __construct($caption, $name, $includeAnonymous = false, $value = null, $size = 1, $multiple = false)
+    public function __construct($caption, $name, $includeAnonymous = false, $value = null, $size = 1, $multiple = false, array $allowedGroups = [], array $extraQuery = [])
     {
         /**
-         * @var mixed array|false - cache any result for this session.
+         * @var array - cache any result for this session.
          *            Some modules use multiple copies of this element on a single page, so this call will
          *            be made multiple times. This is only used when $value is null.
          * @todo this should be replaced with better interface, with autocomplete style search
          * and user specific MRU cache
          */
-        static $queryCache = false;
+        static $queryCache = [];
 
-        /**
-         * @var int - limit to this many rows
-         */
-        $limit = 200;
-
-        /**
-         * @var string - cache time to live - will be interpreted by strtotime()
-         */
-        $cachettl = '+5 minutes';
-
-        /**
-         * @var string - cache key
-         */
+        $allowedGroups = self::normalizeAllowedGroups($allowedGroups);
         $cachekey = 'formselectuser';
+        if (!empty($allowedGroups)) {
+            $cachekey .= '_' . md5(implode(',', $allowedGroups));
+        }
 
         $select_element = new XoopsFormSelect('', $name, $value, $size, $multiple);
         if ($includeAnonymous) {
@@ -76,40 +171,18 @@ class XoopsFormSelectUser extends XoopsFormElementTray
         $value          = is_array($value) ? $value : (empty($value) ? [] : [$value]);
         $selectedUsers = [];
         if (count($value) > 0) {
-            // fetch the set of uids in $value
             $criteria = new Criteria('uid', '(' . implode(',', $value) . ')', 'IN');
             $criteria->setSort('uname');
             $criteria->setOrder('ASC');
             $selectedUsers = $member_handler->getUserList($criteria);
         }
 
-        // get the full selection list
-        // we will always cache this version to reduce expense
-        if (empty($queryCache)) {
-            XoopsLoad::load('XoopsCache');
-            $queryCache = XoopsCache::read($cachekey);
-            if ($queryCache === false) {
-                $criteria = new CriteriaCompo();
-                if ($limit <= $member_handler->getUserCount()) {
-                    // if we have more than $limit users, we will select who to show based on last_login
-                    $criteria->setLimit($limit);
-                    $criteria->setSort('last_login');
-                    $criteria->setOrder('DESC');
-                } else {
-                    $criteria->setSort('uname');
-                    $criteria->setOrder('ASC');
-                }
-                $queryCache = $member_handler->getUserList($criteria);
-                asort($queryCache);
-                XoopsCache::write($cachekey, $queryCache, $cachettl); // won't do anything different if write fails
-            }
-        }
-
-        // merge with selected
-        $users = $selectedUsers + $queryCache;
+        $options = self::getUserOptions($member_handler, $allowedGroups, $cachekey, $queryCache);
+        $selectedUsers = self::filterSelectedByGroups($selectedUsers, $allowedGroups, $member_handler);
+        $users = $selectedUsers + $options;
 
         $select_element->addOptionArray($users);
-        if ($limit > count($users)) {
+        if (self::$limit > count($users)) {
             parent::__construct($caption, '', $name);
             $this->addElement($select_element);
 
@@ -153,8 +226,13 @@ class XoopsFormSelectUser extends XoopsFormElementTray
         $removeUsers->setExtra(' onclick="var sel = xoopsGetElementById(\'' . $name . '\');for (var i = sel.options.length-1; i >= 0; i--) {if (!sel.options[i].selected) {sel.options[i] = null;}}; return false;" ');
         $action_tray->addElement($removeUsers);
 
+        $searchUrl = XOOPS_URL . '/include/findusers.php?' . http_build_query([
+            'target' => $name,
+            'multiple' => (int) $multiple,
+            'token' => $token,
+        ] + $extraQuery, '', '&amp;');
         $searchUsers = new XoopsFormButton('', 'srchusr_' . $name, _MA_USER_MORE, 'button');
-        $searchUsers->setExtra(' onclick="openWithSelfMain(\'' . XOOPS_URL . '/include/findusers.php?target=' . $name . '&amp;multiple=' . $multiple . '&amp;token=' . $token . '\', \'userselect\', 800, 600, null); return false;" ');
+        $searchUsers->setExtra(' onclick="openWithSelfMain(\'' . $searchUrl . '\', \'userselect\', 800, 600, null); return false;" ');
         $action_tray->addElement($searchUsers);
 
          if (isset($GLOBALS['xoTheme']) && is_object($GLOBALS['xoTheme'])) {
