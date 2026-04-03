@@ -27,6 +27,19 @@ class ModuleAdmin
      */
     private $_obj;
 
+    /** @var string Relative path to the 32px icon directory */
+    private static $iconPath32 = '/Frameworks/moduleclasses/icons/32/';
+
+    /**
+     * Get the full URL to the 32px icon directory.
+     *
+     * @return string
+     */
+    private static function iconUrl32(): string
+    {
+        return XOOPS_URL . self::$iconPath32;
+    }
+
     /**
      * Constructor
      */
@@ -159,7 +172,7 @@ class ModuleAdmin
         if ($this->_obj->getInfo('help')) {
             if (substr(XOOPS_VERSION, 0, 9) >= 'XOOPS 2.5') {
                 $ret .= "<a href=\"" . $pathsystem . 'help.php?mid=' . $this->_obj->getVar('mid', 's') . '&amp;' . $this->_obj->getInfo('help') . "\" title=\"" . _AM_SYSTEM_HELP . "\">";
-                $ret .= "<img width=\"32px\" src=\"" . XOOPS_URL . "/Frameworks/moduleclasses/icons/32/help.png\" alt=\"" . _AM_SYSTEM_HELP . "\" /> ";
+                $ret .= "<img width=\"32px\" src=\"" . self::iconUrl32() . "help.png\" alt=\"" . _AM_SYSTEM_HELP . "\" /> ";
                 $ret .= '<span>' . _AM_SYSTEM_HELP . '</span>';
                 $ret .= '</a>';
             }
@@ -182,7 +195,7 @@ class ModuleAdmin
     public function renderButton($position = 'right', $delimeter = '&nbsp;')
     {
         $this->addAssets();
-        $path = XOOPS_URL . '/Frameworks/moduleclasses/icons/32/';
+        $path = self::iconUrl32();
         switch ($position) {
             default:
             case 'right':
@@ -490,15 +503,14 @@ class ModuleAdmin
     /**
      * Create HTML text to display on Admin About page
      *
-     * @param string $business the PAYPAL business email or Merchant Account ID
-     * @param bool   $logo_xoops true to display XOOPS logo and link on page
+     * @param string $business   the PAYPAL business email or Merchant Account ID
+     * @param bool   $logo_xoops true to display XOOPS logo and link in the footer
      *
      * @return string HTML to display
      */
     public function renderAbout($business = '', $logo_xoops = true)
     {
         $this->addAssets();
-        $path         = XOOPS_URL . '/Frameworks/moduleclasses/icons/32/';
         $date         = preg_replace('/-\\\/', '/', $this->_obj->getInfo('release_date')); // make format a little more forgiving
         $date         = explode('/', $date);
         $author       = explode(',', $this->_obj->getInfo('author'));
@@ -588,6 +600,8 @@ class ModuleAdmin
               . "</td>\n"
               . "</tr>\n"
               . "</table>\n";
+        $ret .= $this->renderFooterInfo($logo_xoops);
+
         return $ret;
     }
 
@@ -601,7 +615,7 @@ class ModuleAdmin
     public function renderFooterInfo($logo_xoops = true)
     {
         $this->addAssets();
-        $path = XOOPS_URL . '/Frameworks/moduleclasses/icons/32/';
+        $path = self::iconUrl32();
         $ret  = '';
         if (true === $logo_xoops) {
             $ret .= "<div class=\"center\">"
