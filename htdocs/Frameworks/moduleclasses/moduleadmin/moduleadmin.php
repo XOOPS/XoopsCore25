@@ -606,7 +606,10 @@ class ModuleAdmin
     }
 
     /**
-     * Create HTML text to display the standard admin footer
+     * Create HTML text to display the standard admin footer.
+     *
+     * Renders the XOOPS logo link (when enabled) followed by the
+     * standard footer text from _AM_MODULEADMIN_ADMIN_FOOTER.
      *
      * @param bool $logo_xoops true to display XOOPS logo and link
      *
@@ -628,9 +631,13 @@ class ModuleAdmin
     }
 
     /**
-     * Display the standard admin footer
+     * Display the standard admin footer.
+     *
+     * Echoes the same markup as renderFooterInfo().
      *
      * @param bool $logo_xoops true to display XOOPS logo and link
+     *
+     * @return void
      */
     public function displayFooterInfo($logo_xoops = true)
     {
