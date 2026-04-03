@@ -67,12 +67,16 @@ class XoopsFormSelectUser extends XoopsFormElementTray
         /**
          * @var string - cache key
          */
-        // Filter to valid positive integer group IDs; reject non-numeric values.
+        // Strictly filter to valid positive integer group IDs.
+        // Reject non-digit values entirely (intval('1foo') would silently become 1).
         // If caller passed a non-empty list that sanitizes to empty, fail closed
         // with an impossible group ID so no users are shown.
         $hadGroups = !empty($allowedGroups);
         $allowedGroups = array_values(array_unique(array_filter(
-            array_map('intval', $allowedGroups),
+            array_map(
+                static function ($v) { return ctype_digit((string) $v) ? (int) $v : 0; },
+                $allowedGroups
+            ),
             static function ($groupId) { return $groupId > 0; }
         )));
         if ($hadGroups && empty($allowedGroups)) {

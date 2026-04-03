@@ -324,6 +324,7 @@ class XoUserHandler extends XoopsObjectHandler
 
 $rank_handler = new XoopsRankHandler($xoopsDB);
 $user_handler = new XoUserHandler($xoopsDB);
+/** @var XoopsMemberHandler $member_handler */
 $member_handler = xoops_getHandler('member');
 $moduleReadDirname = Request::getCmd('module_read', '', 'GET');
 if ($moduleReadDirname === '') {
@@ -332,9 +333,11 @@ if ($moduleReadDirname === '') {
 $moduleReadGroups = [];
 $moduleReadFailClosed = false;
 if ($moduleReadDirname !== '') {
+    /** @var XoopsModuleHandler $module_handler */
     $module_handler = xoops_getHandler('module');
     $module         = $module_handler->getByDirname($moduleReadDirname);
     if ($module instanceof XoopsModule) {
+        /** @var XoopsGroupPermHandler $moduleperm_handler */
         $moduleperm_handler = xoops_getHandler('groupperm');
         $moduleReadGroups   = array_values(array_unique(array_map('intval', $moduleperm_handler->getGroupIds('module_read', $module->getVar('mid')))));
         if (!in_array(XOOPS_GROUP_ADMIN, $moduleReadGroups, true)) {

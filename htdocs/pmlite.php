@@ -71,16 +71,19 @@ function corePmCanMessageUser(int $uid): bool
     if ($uid <= 0) {
         return false;
     }
+    /** @var XoopsModuleHandler $moduleHandler */
     $moduleHandler = xoops_getHandler('module');
     $pmModule = $moduleHandler->getByDirname('pm');
     if (!$pmModule instanceof XoopsModule) {
         return false; // Fail closed: PM module not found
     }
+    /** @var XoopsMemberHandler $memberHandler */
     $memberHandler = xoops_getHandler('member');
     $userGroups = $memberHandler->getGroupsByUser($uid);
     if (empty($userGroups)) {
         return false;
     }
+    /** @var XoopsGroupPermHandler $grouppermHandler */
     $grouppermHandler = xoops_getHandler('groupperm');
 
     return $grouppermHandler->checkRight('module_read', $pmModule->getVar('mid'), $userGroups);
@@ -111,9 +114,11 @@ function corePmGetAllowedGroups(): array
     if ($groups !== null) {
         return $groups;
     }
+    /** @var XoopsModuleHandler $moduleHandler */
     $moduleHandler = xoops_getHandler('module');
     $pmModule = $moduleHandler->getByDirname('pm');
     if ($pmModule instanceof XoopsModule) {
+        /** @var XoopsGroupPermHandler $grouppermHandler */
         $grouppermHandler = xoops_getHandler('groupperm');
         $groups = array_values(array_unique(array_map('intval', $grouppermHandler->getGroupIds('module_read', $pmModule->getVar('mid')))));
         if (!in_array(XOOPS_GROUP_ADMIN, $groups, true)) {
