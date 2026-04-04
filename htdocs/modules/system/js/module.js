@@ -18,12 +18,29 @@
 
 $(document).ready(
     function(){
+        const $sortable = $('#xo-module-sort tbody.xo-module');
         // Controls Drag + Drop
-        $('#xo-module-sort tbody.xo-module').sortable({
+        $sortable.sortable({
                 placeholder: 'ui-state-highlight',
                 update: function(event, ui) {
                     var list = $(this).sortable( 'serialize');
-                    $.post( 'admin.php?fct=modulesadmin&op=order', list );
+                    const $form = $('form[name="moduleadmin"]');
+                    const $tokenInput = $form.find("input[name='XOOPS_TOKEN_REQUEST']").first();
+                    if ($tokenInput.length) {
+                        list += '&' + encodeURIComponent($tokenInput.attr('name')) + '=' + encodeURIComponent($tokenInput.val());
+                    }
+                    // Disable sortable during request to prevent token race
+                    $sortable.sortable('disable');
+                    $.post( 'admin.php?fct=modulesadmin&op=order', list)
+                        .done(function (response) {
+                            _refreshToken(response, $tokenInput);
+                        })
+                        .fail(function (jqXHR) {
+                            _refreshToken(jqXHR.responseText, $tokenInput);
+                        })
+                        .always(function () {
+                            $sortable.sortable('enable');
+                        });
                 }
             }
         );

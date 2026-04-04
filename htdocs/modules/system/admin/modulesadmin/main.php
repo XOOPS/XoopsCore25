@@ -38,6 +38,61 @@ if (in_array($op, ['confirm', 'submit', 'install_ok', 'update_ok', 'uninstall_ok
         $op = 'list';
     }
 }
+
+// Handle AJAX-only operations before headers are sent so HTTP status codes work
+if (in_array($op, ['order', 'display', 'display_in_menu'], true)) {
+    if (!$GLOBALS['xoopsSecurity']->check()) {
+        http_response_code(403);
+        echo $GLOBALS['xoopsSecurity']->getTokenHTML();
+        exit;
+    }
+    /** @var XoopsModuleHandler $module_handler */
+    $module_handler = xoops_getHandler('module');
+    switch ($op) {
+        case 'order':
+            if (Request::hasVar('mod', 'POST')) {
+                $i = 1;
+                foreach (Request::getArray('mod', [], 'POST') as $order) {
+                    if ($order > 0) {
+                        $module = $module_handler->get($order);
+                        $module->setVar('weight', $i);
+                        $module_handler->insert($module);
+                        ++$i;
+                    }
+                }
+            }
+            break;
+        case 'display':
+            $module_id = Request::getInt('mid', 0);
+            if ($module_id > 0) {
+                $module = $module_handler->get($module_id);
+                $old    = $module->getVar('isactive');
+                $module->setVar('isactive', !$old);
+                $module_handler->insert($module);
+                $blocks = XoopsBlock::getByModule($module_id);
+                foreach ($blocks as $block) {
+                    $block->setVar('isactive', !$old);
+                    $block->store();
+                }
+                xoops_setActiveModules();
+            }
+            break;
+        case 'display_in_menu':
+            $module_id = Request::getInt('mid', 0);
+            if ($module_id > 0) {
+                $module = $module_handler->get($module_id);
+                $old = (int) $module->getVar('show_in_menu');
+                $module->setVar('show_in_menu', $old ? 0 : 1);
+                $module_handler->insert($module);
+            }
+            break;
+        default:
+            break;
+    }
+    echo $GLOBALS['xoopsSecurity']->getTokenHTML();
+    exit;
+}
+
 $myts = \MyTextSanitizer::getInstance();
 
 // Define main template
@@ -182,26 +237,6 @@ switch ($op) {
         //xoops_module_list();
         break;
 
-    case 'order':
-        // Get Module Handler
-        /** @var XoopsModuleHandler $module_handler */
-        $module_handler = xoops_getHandler('module');
-        if (Request::hasVar('mod', 'POST')) {
-            $i = 1;
-            foreach (Request::getArray('mod', [], 'POST') as $order) {
-                if ($order > 0) {
-                    $module = $module_handler->get($order);
-                    $module->setVar('weight', $i);
-                    if (!$module_handler->insert($module)) {
-                        $error = true;
-                    }
-                    ++$i;
-                }
-            }
-        }
-        exit;
-        break;
-
     case 'confirm':
         // Define main template
         $GLOBALS['xoopsOption']['template_main'] = 'system_modules_confirm.tpl';
@@ -240,46 +275,6 @@ switch ($op) {
         $xoopsTpl->assign('input_security', $GLOBALS['xoopsSecurity']->getTokenHTML());
         // Call Footer
         xoops_cp_footer();
-        break;
-
-    case 'display':
-        // Get module handler
-        /** @var XoopsModuleHandler $module_handler */
-        $module_handler = xoops_getHandler('module');
-        $module_id      = Request::getInt('mid', 0);
-        if ($module_id > 0) {
-            /** @var XoopsModule $module */
-            $module = $module_handler->get($module_id);
-            $old    = $module->getVar('isactive');
-            // Set value
-            $module->setVar('isactive', !$old);
-            if (!$module_handler->insert($module)) {
-                $error = true;
-            }
-            $blocks = XoopsBlock::getByModule($module_id);
-            $bcount = count($blocks);
-            for ($i = 0; $i < $bcount; ++$i) {
-                $blocks[$i]->setVar('isactive', !$old);
-                $blocks[$i]->store();
-            }
-            //Set active modules in cache folder
-            xoops_setActiveModules();
-        }
-        break;
-
-    case 'display_in_menu':
-        // Get module handler
-
-        $module_handler = xoops_getHandler('module');
-        $module_id      = Request::getInt('mid', 0);
-        if ($module_id > 0) {
-            $module = $module_handler->get($module_id);
-            $old = (int) $module->getVar('show_in_menu');
-            $module->setVar('show_in_menu', $old ? 0 : 1);
-            if (!$module_handler->insert($module)) {
-                $error = true;
-            }
-        }
         break;
 
     case 'submit':
