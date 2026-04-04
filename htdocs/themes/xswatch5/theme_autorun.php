@@ -6,6 +6,17 @@ XoopsFormRenderer::getInstance()->set(new XoopsFormRendererBootstrap5());
 global $xoopsTpl;
 if(!empty($xoopsTpl)) {
     $xoopsTpl->addConfigDir(__DIR__);
+
+    /* Discover available Bootswatch variants from css-* directories */
+    $variants = [];
+    foreach (glob(__DIR__ . '/css-*', GLOB_ONLYDIR) as $dir) {
+        if (is_file($dir . '/bootstrap.min.css')) {
+            $dirName = basename($dir);
+            $label   = ucfirst(str_replace('css-', '', $dirName));
+            $variants[] = ['dir' => $dirName, 'label' => $label];
+        }
+    }
+    $xoopsTpl->assign('xswatchVariants', $variants);
 }
 
 /* Check if tinyMce 5 is selected in system configuration */

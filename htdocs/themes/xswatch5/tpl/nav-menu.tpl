@@ -93,9 +93,19 @@
                 <{/if}>
                 <ul class="navbar-nav ms-2">
                 <li class="nav-item">
-                    <button class="btn btn-link nav-link" type="button" onclick="xswatchToggleTheme()" aria-label="Toggle theme">
-                        <i id="xswatch-theme-icon" class="fa-solid fa-moon"></i>
+                    <button id="xswatch-mode-btn" class="btn btn-sm btn-outline-secondary" type="button" onclick="xswatchToggleTheme()">
+                        <i id="xswatch-theme-icon" class="fa-solid fa-moon"></i> <span id="xswatch-mode-label"><{$smarty.const.THEME_DARK_MODE}></span>
                     </button>
+                </li>
+                <li class="nav-item dropdown">
+                    <button class="btn btn-sm btn-outline-secondary dropdown-toggle ms-1" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        <{$smarty.const.THEME_SWITCHER}>
+                    </button>
+                    <ul id="xswatch-variant-menu" class="dropdown-menu dropdown-menu-end" style="max-height: 400px; overflow-y: auto;">
+                        <{foreach from=$xswatchVariants item=variant}>
+                        <li><a class="dropdown-item" href="#" data-variant="<{$variant.dir}>"><{$variant.label}></a></li>
+                        <{/foreach}>
+                    </ul>
                 </li>
                 </ul>
             </div>
@@ -156,20 +166,66 @@
 })();
 </script>
 <script>
+const XSWATCH_DARK_LABEL = '<{$smarty.const.THEME_DARK_MODE|escape:"javascript"}>';
+const XSWATCH_LIGHT_LABEL = '<{$smarty.const.THEME_LIGHT_MODE|escape:"javascript"}>';
+
+function xswatchUpdateModeUI(mode) {
+    const icon = document.getElementById('xswatch-theme-icon');
+    const label = document.getElementById('xswatch-mode-label');
+    if (icon) {
+        icon.className = mode === 'dark' ? 'fa-solid fa-sun' : 'fa-solid fa-moon';
+    }
+    if (label) {
+        label.textContent = mode === 'dark' ? XSWATCH_LIGHT_LABEL : XSWATCH_DARK_LABEL;
+    }
+}
+
 function xswatchToggleTheme() {
     const html = document.documentElement;
     const current = html.getAttribute('data-bs-theme');
     const next = current === 'dark' ? 'light' : 'dark';
     html.setAttribute('data-bs-theme', next);
     localStorage.setItem('xswatch-theme', next);
-    const icon = document.getElementById('xswatch-theme-icon');
-    icon.className = next === 'dark' ? 'fa-solid fa-sun' : 'fa-solid fa-moon';
+    xswatchUpdateModeUI(next);
 }
+
+function xswatchSwitchVariant(variant) {
+    const bsCss = document.getElementById('xswatch-bootstrap-css');
+    const xoCss = document.getElementById('xswatch-xoops-css');
+    const ccCss = document.getElementById('xswatch-consent-css');
+    if (bsCss) { bsCss.href = bsCss.href.replace(/css-[^/]+/, variant); }
+    if (xoCss) { xoCss.href = xoCss.href.replace(/css-[^/]+/, variant); }
+    if (ccCss) { ccCss.href = ccCss.href.replace(/css-[^/]+/, variant); }
+    localStorage.setItem('xswatch-variant', variant);
+    xswatchHighlightActiveVariant(variant);
+}
+
+function xswatchHighlightActiveVariant(variant) {
+    const menu = document.getElementById('xswatch-variant-menu');
+    if (!menu) { return; }
+    menu.querySelectorAll('.dropdown-item').forEach(function(item) {
+        item.classList.toggle('active', item.getAttribute('data-variant') === variant);
+    });
+}
+
 document.addEventListener('DOMContentLoaded', function() {
     const theme = document.documentElement.getAttribute('data-bs-theme');
-    const icon = document.getElementById('xswatch-theme-icon');
-    if (icon) {
-        icon.className = theme === 'dark' ? 'fa-solid fa-sun' : 'fa-solid fa-moon';
+    xswatchUpdateModeUI(theme);
+
+    const menu = document.getElementById('xswatch-variant-menu');
+    if (menu) {
+        menu.addEventListener('click', function(e) {
+            const item = e.target.closest('[data-variant]');
+            if (item) {
+                e.preventDefault();
+                xswatchSwitchVariant(item.getAttribute('data-variant'));
+            }
+        });
     }
+
+    const currentVariant = localStorage.getItem('xswatch-variant')
+        || document.getElementById('xswatch-bootstrap-css').href.match(/css-[^/]+/)?.[0]
+        || 'css-cerulean';
+    xswatchHighlightActiveVariant(currentVariant);
 });
 </script>

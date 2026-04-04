@@ -18,19 +18,27 @@
     <{config_load file="./xswatch5.conf"}>
 
     <{* Single CSS — Bootstrap 5 Color Modes handles light/dark via data-bs-theme attribute *}>
-    <link rel="stylesheet" type="text/css" href="<{xoImgUrl}><{#xswatchCss#}>/xoops.css">
-    <link rel="stylesheet" type="text/css" href="<{xoImgUrl}><{#xswatchCss#}>/bootstrap.min.css">
-    <link rel="stylesheet" type="text/css" href="<{xoImgUrl}><{#xswatchCss#}>/cookieconsent.css">
+    <link id="xswatch-xoops-css" rel="stylesheet" type="text/css" href="<{xoImgUrl}><{#xswatchCss#}>/xoops.css">
+    <link id="xswatch-bootstrap-css" rel="stylesheet" type="text/css" href="<{xoImgUrl}><{#xswatchCss#}>/bootstrap.min.css">
+    <link id="xswatch-consent-css" rel="stylesheet" type="text/css" href="<{xoImgUrl}><{#xswatchCss#}>/cookieconsent.css">
     <{* Edit css/my_xoops.css to customize — use [data-bs-theme="dark"] selectors for dark overrides *}>
     <link rel="stylesheet" type="text/css" href="<{xoImgUrl}>css/my_xoops.css">
 
-    <{* Theme preference: localStorage > OS preference > light *}>
+    <{* Color mode + variant: localStorage > OS preference > server default *}>
     <script>
     (function() {
         const stored = localStorage.getItem('xswatch-theme');
         const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
         const theme = stored || (prefersDark ? 'dark' : 'light');
         document.documentElement.setAttribute('data-bs-theme', theme);
+
+        const savedVariant = localStorage.getItem('xswatch-variant');
+        if (savedVariant) {
+            const base = document.getElementById('xswatch-bootstrap-css').href.replace(/css-[^/]+/, savedVariant);
+            document.getElementById('xswatch-bootstrap-css').href = base;
+            document.getElementById('xswatch-xoops-css').href = document.getElementById('xswatch-xoops-css').href.replace(/css-[^/]+/, savedVariant);
+            document.getElementById('xswatch-consent-css').href = document.getElementById('xswatch-consent-css').href.replace(/css-[^/]+/, savedVariant);
+        }
     })();
     </script>
 

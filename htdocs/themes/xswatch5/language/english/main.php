@@ -106,6 +106,11 @@ define('THEME_FILE_SIZE', 'Size');
 define('THEME_CONTROL_NEXT', 'Next');
 define('THEME_CONTROL_PREVIOUS', 'Previous');
 
+// Theme Switcher
+define('THEME_DARK_MODE', 'Dark');
+define('THEME_LIGHT_MODE', 'Light');
+define('THEME_SWITCHER', 'Theme');
+
 // Bloc online
 define('THEME_OL_MEMBERS', 'Members');
 define('THEME_OL_MEMBER', 'Member');
