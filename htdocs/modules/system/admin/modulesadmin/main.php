@@ -199,6 +199,8 @@ switch ($op) {
                 }
             }
         }
+        // Return refreshed CSRF token for the next AJAX request
+        echo $GLOBALS['xoopsSecurity']->getTokenHTML();
         exit;
         break;
 

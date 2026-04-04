@@ -93,16 +93,20 @@ function system_displayHelp() {
 }
 
 function system_setStatus(data, img, file) {
-    var $tokenInput = $("input[name='XOOPS_TOKEN_REQUEST']").first();
+    const $form = $('form[name="moduleadmin"]');
+    const $tokenInput = $form.find("input[name='XOOPS_TOKEN_REQUEST']").first();
     if ($tokenInput.length) {
         data[$tokenInput.attr('name')] = $tokenInput.val();
     }
     // Post request
     $.post(file, data,
         function (reponse, textStatus) {
-            if (textStatus == 'success') {
-                if (reponse && reponse.indexOf('<input') !== -1) {
-                    $('#modules-token').html(reponse);
+            if (textStatus === 'success') {
+                if (reponse && reponse.includes('<input')) {
+                    const $newToken = $(reponse).filter('input[name="XOOPS_TOKEN_REQUEST"]');
+                    if ($newToken.length && $tokenInput.length) {
+                        $tokenInput.val($newToken.val());
+                    }
                 }
                 $('img#' + img).hide();
                 $('#loading_' + img).show();

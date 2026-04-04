@@ -23,13 +23,18 @@ $(document).ready(
                 placeholder: 'ui-state-highlight',
                 update: function(event, ui) {
                     var list = $(this).sortable( 'serialize');
-                    var $tokenInput = $("input[name='XOOPS_TOKEN_REQUEST']").first();
+                    const $form = $('form[name="moduleadmin"]');
+                    const $tokenInput = $form.find("input[name='XOOPS_TOKEN_REQUEST']").first();
                     if ($tokenInput.length) {
                         list += '&' + encodeURIComponent($tokenInput.attr('name')) + '=' + encodeURIComponent($tokenInput.val());
                     }
-                    $.post( 'admin.php?fct=modulesadmin&op=order', list, function (response, textStatus) {
-                        if (textStatus == 'success' && response && response.indexOf('<input') !== -1) {
-                            $('#modules-token').html(response);
+                    $.post( 'admin.php?fct=modulesadmin&op=order', list, function (response) {
+                        if (response && response.includes('<input')) {
+                            // Extract the new token value from the returned HTML input element
+                            const $newToken = $(response).filter('input[name="XOOPS_TOKEN_REQUEST"]');
+                            if ($newToken.length && $tokenInput.length) {
+                                $tokenInput.val($newToken.val());
+                            }
                         }
                     });
                 }
