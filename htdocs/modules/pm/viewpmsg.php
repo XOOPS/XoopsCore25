@@ -45,14 +45,25 @@ if (Request::hasVar('delete_messages', 'POST') && (Request::hasVar('msg_id', 'PO
         $deleteIds = array_map('intval', Request::getArray('msg_id', [], 'POST'));
         // Build confirmation message listing the selected message subjects
         $confirmMsg = _PM_SURE_TO_DELETE;
+        $currentUid = (int) $xoopsUser->getVar('uid');
         if (!empty($deleteIds)) {
             $confirmMsg .= '<ul>';
             foreach ($deleteIds as $delId) {
                 $delPm = $pm_handler->get($delId);
-                if (is_object($delPm) && $delPm->getVar('to_userid') == $xoopsUser->getVar('uid')) {
-                    $confirmMsg .= '<li>' . htmlspecialchars($delPm->getVar('subject', 'n'), ENT_QUOTES | ENT_HTML5)
-                        . ' — <em>' . XoopsUser::getUnameFromId($delPm->getVar('from_userid')) . '</em></li>';
+                if (!is_object($delPm)) {
+                    continue;
                 }
+                $toUid   = (int) $delPm->getVar('to_userid');
+                $fromUid = (int) $delPm->getVar('from_userid');
+                // Allow if current user is recipient or sender (inbox, outbox, savebox)
+                if ($toUid !== $currentUid && $fromUid !== $currentUid) {
+                    continue;
+                }
+                // Show the counterpart user
+                $otherUid  = ($toUid === $currentUid) ? $fromUid : $toUid;
+                $otherName = htmlspecialchars((string) XoopsUser::getUnameFromId($otherUid), ENT_QUOTES | ENT_HTML5, 'UTF-8');
+                $subject   = htmlspecialchars($delPm->getVar('subject', 'n'), ENT_QUOTES | ENT_HTML5, 'UTF-8');
+                $confirmMsg .= '<li>' . $subject . ' — <em>' . $otherName . '</em></li>';
             }
             $confirmMsg .= '</ul>';
         }

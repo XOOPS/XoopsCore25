@@ -14,7 +14,7 @@
     </div>
 <{/if}>
 
-<{if isset($pmform)}>
+<{if $pmform|default:false}>
 
 <{if $pagenav|default:false}>
     <div class="mb-2 text-end"><{$pagenav}></div>
@@ -105,7 +105,7 @@
         </tbody>
     </table>
 
-    <{if isset($display)}>
+    <{if $display|default:false}>
     <div class="d-flex gap-2 mt-2">
         <{$pmform.elements.move_messages.body|replace:'formButton':'btn btn-outline-secondary'}>
         <{$pmform.elements.delete_messages.body|replace:'formButton':'btn btn-outline-danger'}>
@@ -124,4 +124,4 @@
     <div class="mt-2 text-end"><{$pagenav}></div>
 <{/if}>
 
-<{/if}><{* /isset($pmform) *}>
+<{/if}><{* /$pmform *}>
