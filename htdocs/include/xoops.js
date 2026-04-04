@@ -51,8 +51,10 @@ function openWithSelfMain(url, name, width, height, returnwindow) {
     const options = "width=" + width + ",height=" + height + ",left=" + left + ",top=" + top + ",toolbar=no,location=no,directories=no,status=no,menubar=no,scrollbars=yes,resizable=yes,copyhistory=no";
 
     const new_window = window.open(url, name, options);
-    window.self.name = "main";
-    new_window.focus();
+    if (new_window) {
+        window.self.name = "main";
+        new_window.focus();
+    }
     return (returnwindow != null ? new_window : void(0));
 }
 

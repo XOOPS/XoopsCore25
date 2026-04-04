@@ -28,19 +28,9 @@
 
     <div class="row mb-3">
         <div class="col-12 btn-group" role="group">
-            <{if $op == "in" || (!($op == "out") && !($op == "save"))}>
-                <a class="btn btn-primary" href="viewpmsg.php?op=in"><span class="fa-solid fa-inbox fa-fw"></span> <{$smarty.const._PM_INBOX}></a>
-                <a class="btn btn-outline-secondary" href="viewpmsg.php?op=out"><span class="fa-solid fa-paper-plane fa-fw"></span> <{$smarty.const._PM_OUTBOX}></a>
-                <a class="btn btn-outline-secondary" href="viewpmsg.php?op=save"><span class="fa-solid fa-box-archive fa-fw"></span> <{$smarty.const._PM_SAVEBOX}></a>
-            <{elseif $op == "out"}>
-                <a class="btn btn-outline-secondary" href="viewpmsg.php?op=in"><span class="fa-solid fa-inbox fa-fw"></span> <{$smarty.const._PM_INBOX}></a>
-                <a class="btn btn-primary" href="viewpmsg.php?op=out"><span class="fa-solid fa-paper-plane fa-fw"></span> <{$smarty.const._PM_OUTBOX}></a>
-                <a class="btn btn-outline-secondary" href="viewpmsg.php?op=save"><span class="fa-solid fa-box-archive fa-fw"></span> <{$smarty.const._PM_SAVEBOX}></a>
-            <{elseif $op == "save"}>
-                <a class="btn btn-outline-secondary" href="viewpmsg.php?op=in"><span class="fa-solid fa-inbox fa-fw"></span> <{$smarty.const._PM_INBOX}></a>
-                <a class="btn btn-outline-secondary" href="viewpmsg.php?op=out"><span class="fa-solid fa-paper-plane fa-fw"></span> <{$smarty.const._PM_OUTBOX}></a>
-                <a class="btn btn-primary" href="viewpmsg.php?op=save"><span class="fa-solid fa-box-archive fa-fw"></span> <{$smarty.const._PM_SAVEBOX}></a>
-            <{/if}>
+            <a class="btn <{if $op == 'in' || ($op != 'out' && $op != 'save')}>btn-primary<{else}>btn-outline-secondary<{/if}>" href="viewpmsg.php?op=in"><span class="fa-solid fa-inbox fa-fw"></span> <{$smarty.const._PM_INBOX}></a>
+            <a class="btn <{if $op == 'out'}>btn-primary<{else}>btn-outline-secondary<{/if}>" href="viewpmsg.php?op=out"><span class="fa-solid fa-paper-plane fa-fw"></span> <{$smarty.const._PM_OUTBOX}></a>
+            <a class="btn <{if $op == 'save'}>btn-primary<{else}>btn-outline-secondary<{/if}>" href="viewpmsg.php?op=save"><span class="fa-solid fa-box-archive fa-fw"></span> <{$smarty.const._PM_SAVEBOX}></a>
         </div>
     </div>
 
