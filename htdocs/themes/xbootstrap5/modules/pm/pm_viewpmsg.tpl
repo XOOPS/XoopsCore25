@@ -48,7 +48,7 @@
         <thead class="table-light">
             <tr>
                 <th class="text-center" style="width: 3rem;">
-                    <input name="allbox" id="allbox" onclick='xoopsCheckAll("<{$pmform.name}>", "allbox");' type="checkbox" value="Check All" class="form-check-input">
+                    <input name="allbox" id="allbox" onclick='xoopsCheckAll("<{$pmform.name}>", "allbox");' type="checkbox" value="Check All" class="form-check-input" aria-label="Select all messages">
                 </th>
                 <th class="text-center d-none d-sm-table-cell" style="width: 2.5rem;">
                     <span class="fa-solid fa-envelope text-primary"></span>
@@ -107,9 +107,9 @@
 
     <{if $display|default:false}>
     <div class="d-flex gap-2 mt-2">
-        <{$pmform.elements.move_messages.body|replace:'formButton':'btn btn-outline-secondary'}>
-        <{$pmform.elements.delete_messages.body|replace:'formButton':'btn btn-outline-danger'}>
-        <{$pmform.elements.empty_messages.body|replace:'formButton':'btn btn-outline-secondary'}>
+        <{$pmform.elements.move_messages.body|replace:'btn btn-secondary':'btn btn-outline-secondary'}>
+        <{$pmform.elements.delete_messages.body|replace:'btn btn-secondary':'btn btn-outline-danger'}>
+        <{$pmform.elements.empty_messages.body|replace:'btn btn-secondary':'btn btn-outline-secondary'}>
     </div>
     <{/if}>
 

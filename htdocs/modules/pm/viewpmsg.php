@@ -42,26 +42,27 @@ if (Request::hasVar('delete_messages', 'POST') && (Request::hasVar('msg_id', 'PO
     if (!$GLOBALS['xoopsSecurity']->check()) {
         $GLOBALS['xoopsTpl']->assign('errormsg', implode('<br>', $GLOBALS['xoopsSecurity']->getErrors()));
     } elseif (Request::getInt('ok', 0, 'POST') === 0) {
-        $deleteIds = array_map('intval', Request::getArray('msg_id', [], 'POST'));
-        // Build confirmation message listing the selected message subjects
-        $confirmMsg = _PM_SURE_TO_DELETE;
+        $postedIds  = array_map('intval', Request::getArray('msg_id', [], 'POST'));
         $currentUid = (int) $xoopsUser->getVar('uid');
-        if (!empty($deleteIds)) {
+        // Build confirmation list and filter to IDs the current user actually owns
+        $confirmMsg     = _PM_SURE_TO_DELETE;
+        $allowedIds     = [];
+        if (!empty($postedIds)) {
             $confirmMsg .= '<ul>';
-            foreach ($deleteIds as $delId) {
+            foreach ($postedIds as $delId) {
                 $delPm = $pm_handler->get($delId);
                 if (!is_object($delPm)) {
                     continue;
                 }
                 $toUid   = (int) $delPm->getVar('to_userid');
                 $fromUid = (int) $delPm->getVar('from_userid');
-                // Allow if current user is recipient or sender (inbox, outbox, savebox)
                 if ($toUid !== $currentUid && $fromUid !== $currentUid) {
                     continue;
                 }
-                // Show the counterpart user
+                $allowedIds[] = $delId;
                 $otherUid  = ($toUid === $currentUid) ? $fromUid : $toUid;
-                $otherName = htmlspecialchars((string) XoopsUser::getUnameFromId($otherUid), ENT_QUOTES | ENT_HTML5, 'UTF-8');
+                // getUnameFromId() already escapes — do not double-escape
+                $otherName = XoopsUser::getUnameFromId($otherUid);
                 $subject   = htmlspecialchars($delPm->getVar('subject', 'n'), ENT_QUOTES | ENT_HTML5, 'UTF-8');
                 $confirmMsg .= '<li>' . $subject . ' — <em>' . $otherName . '</em></li>';
             }
@@ -72,7 +73,7 @@ if (Request::hasVar('delete_messages', 'POST') && (Request::hasVar('msg_id', 'PO
                 'ok'              => 1,
                 'delete_messages' => 1,
                 'op'              => $op,
-                'msg_ids'         => json_encode($deleteIds),
+                'msg_ids'         => json_encode($allowedIds),
             ],
             $_SERVER['REQUEST_URI'],
             $confirmMsg,
