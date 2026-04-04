@@ -1134,9 +1134,16 @@ class MainControllerTest extends TestCase
         $startPos = $matches[0][1] + strlen($matches[0][0]);
 
         // Stop at the next case label so nested break; (e.g. CSRF early-exit)
-        // does not truncate the section prematurely
+        // does not truncate the section prematurely.
+        // For the last case in the switch, find the final break; before the closing brace.
         $nextCase = strpos($this->sourceCode, "\n    case ", $startPos);
-        $endPos = $nextCase !== false ? $nextCase : strpos($this->sourceCode, '}', $startPos);
+        if ($nextCase !== false) {
+            $endPos = $nextCase;
+        } else {
+            // Last case: find the last break; in the remaining source
+            $lastBreak = strrpos($this->sourceCode, "break;", $startPos);
+            $endPos = $lastBreak !== false ? $lastBreak + 6 : strlen($this->sourceCode);
+        }
 
         if ($endPos === false) {
             return '';
