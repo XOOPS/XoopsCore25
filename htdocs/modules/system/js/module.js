@@ -23,7 +23,15 @@ $(document).ready(
                 placeholder: 'ui-state-highlight',
                 update: function(event, ui) {
                     var list = $(this).sortable( 'serialize');
-                    $.post( 'admin.php?fct=modulesadmin&op=order', list );
+                    var $tokenInput = $("input[name='XOOPS_TOKEN_REQUEST']").first();
+                    if ($tokenInput.length) {
+                        list += '&' + encodeURIComponent($tokenInput.attr('name')) + '=' + encodeURIComponent($tokenInput.val());
+                    }
+                    $.post( 'admin.php?fct=modulesadmin&op=order', list, function (response, textStatus) {
+                        if (textStatus == 'success' && response && response.indexOf('<input') !== -1) {
+                            $('#modules-token').html(response);
+                        }
+                    });
                 }
             }
         );
