@@ -92,6 +92,15 @@ function system_displayHelp() {
     });
 }
 
+function _refreshToken(html, $tokenInput) {
+    if (html?.includes('<input') && $tokenInput.length) {
+        const $newToken = $('<div>').html(html).find('input[name="XOOPS_TOKEN_REQUEST"]').first();
+        if ($newToken.length) {
+            $tokenInput.val($newToken.val());
+        }
+    }
+}
+
 function system_setStatus(data, img, file) {
     const $form = $('form[name="moduleadmin"]');
     const $tokenInput = $form.length
@@ -101,28 +110,24 @@ function system_setStatus(data, img, file) {
         data[$tokenInput.attr('name')] = $tokenInput.val();
     }
     // Post request
-    $.post(file, data,
-        function (reponse, textStatus) {
-            if (textStatus === 'success') {
-                if (reponse?.includes('<input')) {
-                    const $newToken = $('<div>').html(reponse).find('input[name="XOOPS_TOKEN_REQUEST"]').first();
-                    if ($newToken.length && $tokenInput.length) {
-                        $tokenInput.val($newToken.val());
-                    }
-                }
-                $('img#' + img).hide();
-                $('#loading_' + img).show();
-                setTimeout(function () {
-                    $('#loading_' + img).hide();
-                    $('img#' + img).fadeIn('fast');
-                }, 500);
-                // Change image src
-                if ($('img#' + img).attr("src") == IMG_ON) {
-                    $('img#' + img).attr("src", IMG_OFF);
-                } else {
-                    $('img#' + img).attr("src", IMG_ON);
-                }
+    $.post(file, data)
+        .done(function (response) {
+            _refreshToken(response, $tokenInput);
+            $('img#' + img).hide();
+            $('#loading_' + img).show();
+            setTimeout(function () {
+                $('#loading_' + img).hide();
+                $('img#' + img).fadeIn('fast');
+            }, 500);
+            // Change image src
+            if ($('img#' + img).attr("src") == IMG_ON) {
+                $('img#' + img).attr("src", IMG_OFF);
+            } else {
+                $('img#' + img).attr("src", IMG_ON);
             }
+        })
+        .fail(function (jqXHR) {
+            _refreshToken(jqXHR.responseText, $tokenInput);
         });
 }
 
