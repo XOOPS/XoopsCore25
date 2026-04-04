@@ -98,6 +98,7 @@ Bootstrap 5 templates are included for the following modules:
 
 ## Credits
 
+- Richard Griffith (Geekwright) — original xSwatch theme concept and development
 - Angelo Rocha — [xBootStrap](https://github.com/angelorocha/xbootstrap) (original theme base)
 - Thomas Park — [Bootswatch](https://bootswatch.com/) (CSS variants)
 - Grégory Mage — [xm module templates](https://github.com/GregMage)
