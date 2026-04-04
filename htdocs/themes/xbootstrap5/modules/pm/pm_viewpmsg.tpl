@@ -2,14 +2,14 @@
 
 <{if $msg|default:''}>
     <div class="alert alert-success alert-dismissible fade show">
-        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="<{$smarty.const._CLOSE|escape:'htmlall':'UTF-8'}>"></button>
         <strong><{$msg}></strong>
     </div>
 <{/if}>
 
 <{if $errormsg|default:''}>
     <div class="alert alert-danger alert-dismissible fade show">
-        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="<{$smarty.const._CLOSE|escape:'htmlall':'UTF-8'}>"></button>
         <strong><{$errormsg}></strong>
     </div>
 <{/if}>
@@ -38,7 +38,7 @@
         <thead class="table-light">
             <tr>
                 <th class="text-center" style="width: 3rem;">
-                    <input name="allbox" id="allbox" onclick='xoopsCheckAll("<{$pmform.name}>", "allbox");' type="checkbox" value="Check All" class="form-check-input" aria-label="<{$smarty.const.THEME_SELECT_ALL|default:'Select all'}>">
+                    <input name="allbox" id="allbox" onclick='xoopsCheckAll("<{$pmform.name}>", "allbox");' type="checkbox" value="Check All" class="form-check-input" aria-label="<{$smarty.const.THEME_SELECT_ALL|default:'Select all'|escape:'htmlall':'UTF-8'}>">
                 </th>
                 <th class="text-center d-none d-sm-table-cell" style="width: 2.5rem;">
                     <span class="fa-solid fa-envelope text-primary"></span>
