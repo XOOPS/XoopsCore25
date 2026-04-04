@@ -447,8 +447,8 @@ ul.userblock > li span.badge {
 }
 
 .xoops-comment-form input[type=submit] {
-    background: #2196a8;
-    border: 1px solid #007a9e;
+    background: #0F6D7A;
+    border: 1px solid #0B5660;
     padding: 5px;
     color: #FFF;
     border-radius: 5px;
@@ -513,7 +513,7 @@ ul.profile-values > li.profile-category-title {
     font-weight: 600;
     border-bottom: 1px dashed #767676;
     margin-bottom: 0;
-    color: #007a9e;
+    color: #0B5660;
 }
 
 /* 4.7. Contact Module */
@@ -540,7 +540,7 @@ ul.profile-values > li.profile-category-title {
 }
 
 .contact-module input[type=submit] {
-    background: #2196a8;
+    background: #0F6D7A;
     color: #FFF;
     font-weight: bold;
 }
@@ -724,7 +724,7 @@ ul.form-send-e-card li {
 }
 
 ul.form-send-e-card input[type=submit] {
-    background: #007a9e;
+    background: #0B5660;
     min-width: 20%;
     color: #FFF;
 }
@@ -1047,7 +1047,7 @@ ul.tdm-new-download-block li:last-child {
 }
 
 .newbb-post-anchor {
-    background: #007a9e;
+    background: #0B5660;
     color: #FFF;
     position: absolute;
     right: 0;
@@ -1136,7 +1136,7 @@ ul.tdm-new-download-block li:last-child {
 }
 
 .generic-pagination .xo-pagact {
-    background: #007a9e;
+    background: #0B5660;
     color: #FFF;
     border: 1px solid #EEE;
     padding: 5px;
@@ -1315,7 +1315,7 @@ img.avatar {
 /* active */
 #xo-pagenav .xo-pagact {
     margin-right: -4px;
-    background-color: #4a7fb5;
+    background-color: #3F6E9D;
     color: #FFFFFF;
     padding: 4px 8px;
     border: 1px solid #dfdfdf;
@@ -1325,13 +1325,13 @@ img.avatar {
 #xo-pagenav a.xo-counterpage {
     margin-right: -9px;
     background-color: #f8f8f8;
-    color: #767676;
+    color: #666666;
     border: 1px solid #dfdfdf;
 }
 
 /* in-active-hover */
 #xo-pagenav a.xo-counterpage:hover {
-    background-color: #9c9c9c;
+    background-color: #6D6D6D;
     color: #ffffff;
 }
 
@@ -1345,7 +1345,7 @@ img.avatar {
 
 #xo-pagenav a.xo-pagarrow:hover {
     text-decoration: none;
-    background-color: #9c9c9c;
+    background-color: #6D6D6D;
     color: #ffffff;
 }
 
@@ -1359,7 +1359,7 @@ img.avatar {
 
 #xo-pagenav a.xo-pagarrow-left:hover {
     text-decoration: none;
-    background-color: #9c9c9c;
+    background-color: #6D6D6D;
     color: #ffffff;
 }
 
@@ -1373,7 +1373,7 @@ img.avatar {
 
 #xo-pagenav a.xo-pagarrow-right:hover {
     text-decoration: none;
-    background-color: #9c9c9c;
+    background-color: #6D6D6D;
     color: #ffffff;
 }
 
