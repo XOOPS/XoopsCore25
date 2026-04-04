@@ -132,8 +132,8 @@ div.center div.jGrowl-notification, div.center div.jGrowl-closer {
 }
 
 div.jGrowl div.jGrowl-notification, div.jGrowl div.jGrowl-closer {
-    background-color: #42b142;
-    color: #f0f0f0;
+    background-color: #1e7e1e;
+    color: #ffffff;
     width: 100%;
     padding: .5em;
     margin-top: .5em;
@@ -1223,11 +1223,6 @@ div.jGrowl div.jGrowl-closer {
     margin: 1em;
     background: linear-gradient(135deg, #191919 0%,#4c4c4c 93%,#919191 100%);
 }
-input[type=submit], input[type=reset], input[type=button], .xo-formbuttons, .formButton, button {
-    background-color: #3a3f44;
-    color: #eeeeee;
-    padding: 8px 12px;
-}
 a.xo-counterpage {
     color: #6ea8fe;
 }
@@ -1265,7 +1260,7 @@ div.newbb thead a {
 /* darken form entry areas */
 input[type=submit], input[type=reset], input[type=button], .xo-formbuttons, .formButton, button {
     background-color: #D3D2D6;
-    color: #668dc7;
+    color: #2d5f9e;
     padding: 3px;
 }
 

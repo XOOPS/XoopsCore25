@@ -16,7 +16,7 @@ Features:
 
 Customize xSwatch:
 
-- 21 themes in 1 theme (Preview : [Bootswatch](https://bootswatch.com/))
+- 21 themes in 1 theme (Preview: [Bootswatch](https://bootswatch.com/))
 - Edit _xswatch5.conf_ to pick your Bootswatch variant (e.g., css-cerulean, css-slate).
   Each variant includes both light and dark color modes in a single CSS file.
 - The navbar toggle button allows users to switch between light and dark modes.
@@ -31,7 +31,7 @@ Customize xSwatch:
 - Customize xmnews block : for column blocks, copy xmnews_block_colonnes.tpl to xmnews_block.tpl (copy xmnews_block_lignes.tpl to xmnews_block.tpl to return to initial state)
 - Customize _css/my_xoops.css_ to add your CSS definitions and override Bootstrap definitions. Use `[data-bs-theme="dark"]` selectors for dark mode overrides.
 
-In addition to templates for the modules included in XOOPS (pm, profile and system,) Bootstrap 5 templates are included for the following modules:
+In addition to templates for the modules included in XOOPS (pm, profile and system), Bootstrap 5 templates are included for the following modules:
 
 - contact - [XoopsModules25x/contact](https://github.com/XoopsModules25x/contact)
 - extcal - [XoopsModules25x/extcal](https://github.com/XoopsModules25x/extcal)

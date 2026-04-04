@@ -447,8 +447,8 @@ ul.userblock > li span.badge {
 }
 
 .xoops-comment-form input[type=submit] {
-    background: #5BC0DE;
-    border: 1px solid #09C;
+    background: #2196a8;
+    border: 1px solid #007a9e;
     padding: 5px;
     color: #FFF;
     border-radius: 5px;
@@ -511,9 +511,9 @@ ul.profile-values > li {
 ul.profile-values > li.profile-category-title {
     font-size: 1.2em;
     font-weight: 600;
-    border-bottom: 1px dashed #999;
+    border-bottom: 1px dashed #767676;
     margin-bottom: 0;
-    color: #09C;
+    color: #007a9e;
 }
 
 /* 4.7. Contact Module */
@@ -540,7 +540,7 @@ ul.profile-values > li.profile-category-title {
 }
 
 .contact-module input[type=submit] {
-    background: #5BC0DE;
+    background: #2196a8;
     color: #FFF;
     font-weight: bold;
 }
@@ -724,7 +724,7 @@ ul.form-send-e-card li {
 }
 
 ul.form-send-e-card input[type=submit] {
-    background: #09C;
+    background: #007a9e;
     min-width: 20%;
     color: #FFF;
 }
@@ -883,7 +883,7 @@ ul.tdm-new-download-block li:last-child {
 
 .xoopstube .xoopstube-navigation a:hover {
     background: #EBEBEB;
-    color: #979797;
+    color: #616161;
 }
 
 .xoopstube-loop {
@@ -1047,7 +1047,7 @@ ul.tdm-new-download-block li:last-child {
 }
 
 .newbb-post-anchor {
-    background: #09C;
+    background: #007a9e;
     color: #FFF;
     position: absolute;
     right: 0;
@@ -1136,7 +1136,7 @@ ul.tdm-new-download-block li:last-child {
 }
 
 .generic-pagination .xo-pagact {
-    background: #09C;
+    background: #007a9e;
     color: #FFF;
     border: 1px solid #EEE;
     padding: 5px;
@@ -1315,7 +1315,7 @@ img.avatar {
 /* active */
 #xo-pagenav .xo-pagact {
     margin-right: -4px;
-    background-color: lightsteelblue;
+    background-color: #4a7fb5;
     color: #FFFFFF;
     padding: 4px 8px;
     border: 1px solid #dfdfdf;
@@ -1339,7 +1339,7 @@ img.avatar {
 #xo-pagenav a.xo-pagarrow {
     border: 1px solid #dfdfdf;
     text-decoration: none;
-    color: #767676;
+    color: #555555;
     background-color: #dfdfdf
 }
 
@@ -1353,7 +1353,7 @@ img.avatar {
 #xo-pagenav a.xo-pagarrow-left {
     border: 1px solid #dfdfdf;
     text-decoration: none;
-    color: #767676;
+    color: #555555;
     background-color: #dfdfdf
 }
 
@@ -1367,7 +1367,7 @@ img.avatar {
 #xo-pagenav a.xo-pagarrow-right {
     border: 1px solid #dfdfdf;
     text-decoration: none;
-    color: #767676;
+    color: #555555;
     background-color: #dfdfdf
 }
 
