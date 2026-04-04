@@ -29,7 +29,7 @@ $(document).ready(
                         list += '&' + encodeURIComponent($tokenInput.attr('name')) + '=' + encodeURIComponent($tokenInput.val());
                     }
                     $.post( 'admin.php?fct=modulesadmin&op=order', list, function (response) {
-                        if (response && response.includes('<input')) {
+                        if (response?.includes('<input')) {
                             // Extract the new token value from the returned HTML input element
                             const $newToken = $(response).filter('input[name="XOOPS_TOKEN_REQUEST"]');
                             if ($newToken.length && $tokenInput.length) {
