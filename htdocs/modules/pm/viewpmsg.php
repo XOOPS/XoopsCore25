@@ -42,30 +42,58 @@ if (Request::hasVar('delete_messages', 'POST') && (Request::hasVar('msg_id', 'PO
     if (!$GLOBALS['xoopsSecurity']->check()) {
         $GLOBALS['xoopsTpl']->assign('errormsg', implode('<br>', $GLOBALS['xoopsSecurity']->getErrors()));
     } elseif (Request::getInt('ok', 0, 'POST') === 0) {
+        $postedIds  = array_values(array_unique(array_map('intval', Request::getArray('msg_id', [], 'POST'))));
+        $currentUid = (int) $xoopsUser->getVar('uid');
+        // Bulk-fetch selected PMs in one query instead of N+1
+        $confirmMsg = _PM_SURE_TO_DELETE;
+        $allowedIds = [];
+        if (!empty($postedIds)) {
+            $criteria = new Criteria('msg_id', '(' . implode(',', $postedIds) . ')', 'IN');
+            $pmObjects = $pm_handler->getObjects($criteria, true);
+            $confirmMsg .= '<ul>';
+            foreach ($postedIds as $delId) {
+                if (!isset($pmObjects[$delId])) {
+                    continue;
+                }
+                $delPm   = $pmObjects[$delId];
+                $toUid   = (int) $delPm->getVar('to_userid');
+                $fromUid = (int) $delPm->getVar('from_userid');
+                if ($toUid !== $currentUid && $fromUid !== $currentUid) {
+                    continue;
+                }
+                $allowedIds[] = $delId;
+                $otherUid  = ($toUid === $currentUid) ? $fromUid : $toUid;
+                // getUnameFromId() already escapes — do not double-escape
+                $otherName = XoopsUser::getUnameFromId($otherUid);
+                $subject   = htmlspecialchars($delPm->getVar('subject', 'n'), ENT_QUOTES | ENT_HTML5, 'UTF-8');
+                $confirmMsg .= '<li>' . $subject . ' — <em>' . $otherName . '</em></li>';
+            }
+            $confirmMsg .= '</ul>';
+        }
         xoops_confirm(
             [
                 'ok'              => 1,
                 'delete_messages' => 1,
                 'op'              => $op,
-                'msg_ids'         => json_encode(array_map('intval', Request::getArray('msg_id', [], 'POST'))),
+                'msg_ids'         => json_encode($allowedIds),
             ],
             $_SERVER['REQUEST_URI'],
-            _PM_SURE_TO_DELETE,
+            $confirmMsg,
         );
         include $GLOBALS['xoops']->path('footer.php');
         exit();
     } else {
-        $clean_msg_id = json_decode(Request::getString('msg_ids', '', 'POST'), true, 2);
-        if (!empty($clean_msg_id)) {
-            $clean_msg_id = array_map('intval', $clean_msg_id);
-        }
-        $size = count($clean_msg_id);
-        $msg  = & $clean_msg_id;
-        for ($i = 0; $i < $size; ++$i) {
-            $pm = $pm_handler->get($msg[$i]);
-            if ($pm->getVar('to_userid') == $GLOBALS['xoopsUser']->getVar('uid')) {
+        $decoded = json_decode(Request::getString('msg_ids', '', 'POST'), true, 2);
+        $clean_msg_id = is_array($decoded) ? array_map('intval', $decoded) : [];
+        $currentUid = (int) $GLOBALS['xoopsUser']->getVar('uid');
+        foreach ($clean_msg_id as $msgId) {
+            $pm = $pm_handler->get($msgId);
+            if (!is_object($pm)) {
+                continue;
+            }
+            if ((int) $pm->getVar('to_userid') === $currentUid) {
                 $pm_handler->setTodelete($pm);
-            } elseif ($pm->getVar('from_userid') == $GLOBALS['xoopsUser']->getVar('uid')) {
+            } elseif ((int) $pm->getVar('from_userid') === $currentUid) {
                 $pm_handler->setFromdelete($pm);
             }
             unset($pm);
