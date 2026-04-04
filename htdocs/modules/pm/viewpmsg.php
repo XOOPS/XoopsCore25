@@ -42,15 +42,29 @@ if (Request::hasVar('delete_messages', 'POST') && (Request::hasVar('msg_id', 'PO
     if (!$GLOBALS['xoopsSecurity']->check()) {
         $GLOBALS['xoopsTpl']->assign('errormsg', implode('<br>', $GLOBALS['xoopsSecurity']->getErrors()));
     } elseif (Request::getInt('ok', 0, 'POST') === 0) {
+        $deleteIds = array_map('intval', Request::getArray('msg_id', [], 'POST'));
+        // Build confirmation message listing the selected message subjects
+        $confirmMsg = _PM_SURE_TO_DELETE;
+        if (!empty($deleteIds)) {
+            $confirmMsg .= '<ul>';
+            foreach ($deleteIds as $delId) {
+                $delPm = $pm_handler->get($delId);
+                if (is_object($delPm) && $delPm->getVar('to_userid') == $xoopsUser->getVar('uid')) {
+                    $confirmMsg .= '<li>' . htmlspecialchars($delPm->getVar('subject', 'n'), ENT_QUOTES | ENT_HTML5)
+                        . ' — <em>' . XoopsUser::getUnameFromId($delPm->getVar('from_userid')) . '</em></li>';
+                }
+            }
+            $confirmMsg .= '</ul>';
+        }
         xoops_confirm(
             [
                 'ok'              => 1,
                 'delete_messages' => 1,
                 'op'              => $op,
-                'msg_ids'         => json_encode(array_map('intval', Request::getArray('msg_id', [], 'POST'))),
+                'msg_ids'         => json_encode($deleteIds),
             ],
             $_SERVER['REQUEST_URI'],
-            _PM_SURE_TO_DELETE,
+            $confirmMsg,
         );
         include $GLOBALS['xoops']->path('footer.php');
         exit();

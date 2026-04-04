@@ -1,147 +1,127 @@
 <h4><{$smarty.const._PM_PRIVATEMESSAGE}></h4>
-<div class="current-tab">
-    <div class="row">
-        <{if $op == "out"}>
-            <div class="col-6 col-md-6">
-                <a class="btn btn-info w-100" href="viewpmsg.php?op=in" title="<{$smarty.const._PM_INBOX}>"><{$smarty.const._PM_INBOX}></a>
-            </div>
-            <div class="col-6 col-md-6">
-                <a class="btn btn-info w-100" href="viewpmsg.php?op=save" title="<{$smarty.const._PM_SAVEBOX}>"><{$smarty.const._PM_SAVEBOX}></a>
-            </div>
-        <{elseif $op == "save"}>
-            <div class="col-6 col-md-6">
-                <a class="btn btn-info w-100" href="viewpmsg.php?op=in" title="<{$smarty.const._PM_INBOX}>"><{$smarty.const._PM_INBOX}></a>
-            </div>
-            <div class="col-6 col-md-6">
-                <a class="btn btn-info w-100" href="viewpmsg.php?op=out" title="<{$smarty.const._PM_OUTBOX}>"><{$smarty.const._PM_OUTBOX}></a>
-            </div>
-        <{elseif $op == "in"}>
-            <div class="col-6 col-md-6">
-                <a class="btn btn-info w-100" href="viewpmsg.php?op=out" title="<{$smarty.const._PM_OUTBOX}>"><{$smarty.const._PM_OUTBOX}></a>
-            </div>
-            <div class="col-6 col-md-6">
-                <a class="btn btn-info w-100" href="viewpmsg.php?op=save" title="<{$smarty.const._PM_SAVEBOX}>"><{$smarty.const._PM_SAVEBOX}></a>
-            </div>
-        <{/if}>
-    </div>
-</div><!-- .current-tab -->
-
-<div class="message-current-tab">
-    <{if $op == "out"}>
-        <div class="alert alert-success alert-dismissable">
-            <button type="button" class="close" data-bs-dismiss="alert" aria-hidden="true">×</button>
-            <strong><{$smarty.const._PM_OUTBOX}></strong>
-        </div>
-    <{elseif $op == "save"}>
-        <div class="alert alert-success alert-dismissable">
-            <button type="button" class="close" data-bs-dismiss="alert" aria-hidden="true">×</button>
-            <strong><{$smarty.const._PM_SAVEBOX}></strong>
-        </div>
-    <{else}>
-        <div class="alert alert-success alert-dismissable">
-            <button type="button" class="close" data-bs-dismiss="alert" aria-hidden="true">×</button>
-            <strong><{$smarty.const._PM_INBOX}></strong>
-        </div>
-    <{/if}>
-</div><!-- .message-current-tab -->
 
 <{if $msg|default:''}>
-    <div class="alert alert-info alert-dismissable">
-        <button type="button" class="close" data-bs-dismiss="alert" aria-hidden="true">×</button>
+    <div class="alert alert-success alert-dismissible fade show">
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
         <strong><{$msg}></strong>
     </div>
 <{/if}>
 
 <{if $errormsg|default:''}>
-    <div class="alert alert-danger alert-dismissable">
-        <button type="button" class="close" data-bs-dismiss="alert" aria-hidden="true">×</button>
+    <div class="alert alert-danger alert-dismissible fade show">
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
         <strong><{$errormsg}></strong>
     </div>
 <{/if}>
 
+<{if isset($pmform)}>
+
 <{if $pagenav|default:false}>
-    <{$pagenav}>
+    <div class="mb-2 text-end"><{$pagenav}></div>
 <{/if}>
 
-<form name="<{$pmform.name}>" id="<{$pmform.name}>" action="<{$pmform.action}>" method="<{$pmform.method}>" <{$pmform.extra}>="">
-<div class="row xoops-message-list">
-<div class="xoops-message-header">
-<div class="col-3 col-md-2">
-<input name="allbox" id="allbox" onclick="xoopsCheckAll(&quot;<{$pmform.name}>&quot;, &quot;allbox&quot;);" type="checkbox" value="Check All">
-&nbsp;
-<span class="fa-solid fa-circle-down btn btn-sm btn-primary"></span>
-</div>
+<form name="<{$pmform.name}>" id="<{$pmform.name}>" action="<{$pmform.action}>" method="<{$pmform.method}>" <{$pmform.extra}>>
 
-<{if $op == "out"}>
-<div class="col-2 col-md-2"><strong><{$smarty.const._PM_TO}></strong></div>
-<{else}>
-<div class="col-2 col-md-2"><strong><{$smarty.const._PM_FROM}></strong></div>
-<{/if}>
+    <div class="mb-3">
+        <{$pmform.elements.send.body}>
+    </div>
 
-<div class="col-4 col-md-5"><strong><{$smarty.const._PM_SUBJECT}></strong></div>
-
-<div class="col-3 col-md-3"><strong><{$smarty.const._PM_DATE}></strong></div>
-
-</div><!-- .xoops-message-header -->
-
-<{if $total_messages == 0}>
-    <div class="col-md-12">
-        <div class="alert alert-warning">
-            <{$smarty.const._PM_YOUDONTHAVE}>
+    <div class="row mb-3">
+        <div class="col-12 btn-group" role="group">
+            <{if $op == "in" || (!($op == "out") && !($op == "save"))}>
+                <a class="btn btn-primary" href="viewpmsg.php?op=in"><span class="fa-solid fa-inbox fa-fw"></span> <{$smarty.const._PM_INBOX}></a>
+                <a class="btn btn-outline-secondary" href="viewpmsg.php?op=out"><span class="fa-solid fa-paper-plane fa-fw"></span> <{$smarty.const._PM_OUTBOX}></a>
+                <a class="btn btn-outline-secondary" href="viewpmsg.php?op=save"><span class="fa-solid fa-box-archive fa-fw"></span> <{$smarty.const._PM_SAVEBOX}></a>
+            <{elseif $op == "out"}>
+                <a class="btn btn-outline-secondary" href="viewpmsg.php?op=in"><span class="fa-solid fa-inbox fa-fw"></span> <{$smarty.const._PM_INBOX}></a>
+                <a class="btn btn-primary" href="viewpmsg.php?op=out"><span class="fa-solid fa-paper-plane fa-fw"></span> <{$smarty.const._PM_OUTBOX}></a>
+                <a class="btn btn-outline-secondary" href="viewpmsg.php?op=save"><span class="fa-solid fa-box-archive fa-fw"></span> <{$smarty.const._PM_SAVEBOX}></a>
+            <{elseif $op == "save"}>
+                <a class="btn btn-outline-secondary" href="viewpmsg.php?op=in"><span class="fa-solid fa-inbox fa-fw"></span> <{$smarty.const._PM_INBOX}></a>
+                <a class="btn btn-outline-secondary" href="viewpmsg.php?op=out"><span class="fa-solid fa-paper-plane fa-fw"></span> <{$smarty.const._PM_OUTBOX}></a>
+                <a class="btn btn-primary" href="viewpmsg.php?op=save"><span class="fa-solid fa-box-archive fa-fw"></span> <{$smarty.const._PM_SAVEBOX}></a>
+            <{/if}>
         </div>
     </div>
-<{/if}>
-</div><!-- .xoops-message-list -->
 
-<{foreach item=message from=$messages|default:null}>
-    <div class="row xoops-message-list xoops-message-loop">
-        <div class="col-3 col-md-2">
-            <input type="checkbox" id="msg_id_<{$message.msg_id}>" name="msg_id[]" value="<{$message.msg_id}>">
-            &nbsp;
-            <{if $message.read_msg == 1}>
-                <span class="fa-solid fa-check btn btn-sm btn-success"></span>
-            <{else}>
-                <span class="fa-solid fa-envelope btn btn-sm btn-warning" title="<{$smarty.const._PM_NOTREAD}>"></span>
+    <table class="table table-hover">
+        <thead class="table-light">
+            <tr>
+                <th class="text-center" style="width: 3rem;">
+                    <input name="allbox" id="allbox" onclick='xoopsCheckAll("<{$pmform.name}>", "allbox");' type="checkbox" value="Check All" class="form-check-input">
+                </th>
+                <th class="text-center d-none d-sm-table-cell" style="width: 2.5rem;">
+                    <span class="fa-solid fa-envelope text-primary"></span>
+                </th>
+                <{if $op == "out"}>
+                    <th><{$smarty.const._PM_TO}></th>
+                <{else}>
+                    <th><{$smarty.const._PM_FROM}></th>
+                <{/if}>
+                <th><{$smarty.const._PM_SUBJECT}></th>
+                <th class="d-none d-md-table-cell"><{$smarty.const._PM_DATE}></th>
+            </tr>
+        </thead>
+        <tbody>
+            <{if $total_messages == 0}>
+                <tr>
+                    <td colspan="5" class="text-center text-muted py-3"><{$smarty.const._PM_YOUDONTHAVE}></td>
+                </tr>
             <{/if}>
-            <{if $message.msg_image|default:'' != ''}>
-                <img src="<{$xoops_url}>/images/subject/<{$message.msg_image}>" alt="">
-            <{/if}>
-        </div>
-        <div class="col-2 col-md-2">
-            <{if $message.postername|default:'' != ''}>
-                <a href="<{$xoops_url}>/userinfo.php?uid=<{$message.posteruid}>" title=""><{$message.postername}></a>
-            <{else}>
-                <{$anonymous}>
-            <{/if}>
-        </div>
 
-        <div class="col-4 col-md-5">
-            <a href="readpmsg.php?msg_id=<{$message.msg_id}>&start=<{$message.msg_no}>&total_messages=<{$total_messages}>&op=<{$op}>" title="">
-                <{$message.subject}>
-            </a>
-        </div>
+            <{foreach item=message from=$messages|default:null}>
+                <tr>
+                    <td class="text-center align-middle">
+                        <input type="checkbox" id="msg_id_<{$message.msg_id}>" name="msg_id[]" value="<{$message.msg_id}>" class="form-check-input">
+                    </td>
+                    <td class="text-center align-middle d-none d-sm-table-cell">
+                        <{if $message.read_msg == 1}>
+                            <span class="fa-solid fa-envelope-open text-secondary"></span>
+                        <{else}>
+                            <span class="fa-solid fa-envelope text-primary"></span>
+                        <{/if}>
+                    </td>
+                    <td class="align-middle">
+                        <{if $message.postername|default:'' != ''}>
+                            <a href="<{$xoops_url}>/userinfo.php?uid=<{$message.posteruid}>"><{$message.postername}></a>
+                        <{else}>
+                            <{$anonymous}>
+                        <{/if}>
+                    </td>
+                    <td class="align-middle">
+                        <{if $message.msg_image|default:'' != ''}>
+                            <img src="<{$xoops_url}>/images/subject/<{$message.msg_image}>" alt="">
+                        <{/if}>
+                        <a href="readpmsg.php?msg_id=<{$message.msg_id}>&amp;start=<{$message.msg_no}>&amp;total_messages=<{$total_messages}>&amp;op=<{$op}>">
+                            <{$message.subject}>
+                        </a>
+                        <div class="d-md-none text-muted small"><{$message.msg_time}></div>
+                    </td>
+                    <td class="align-middle d-none d-md-table-cell">
+                        <{$message.msg_time}>
+                    </td>
+                </tr>
+            <{/foreach}>
+        </tbody>
+    </table>
 
-        <div class="col-3 col-md-3">
-            <{$message.msg_time}>
-        </div>
+    <{if isset($display)}>
+    <div class="d-flex gap-2 mt-2">
+        <{$pmform.elements.move_messages.body|replace:'formButton':'btn btn-outline-secondary'}>
+        <{$pmform.elements.delete_messages.body|replace:'formButton':'btn btn-outline-danger'}>
+        <{$pmform.elements.empty_messages.body|replace:'formButton':'btn btn-outline-secondary'}>
     </div>
-    <!-- .xoops-message-list -->
-<{/foreach}>
-
-<{$pmform.elements.send.body}>
-<{if isset($display)}>
-    <{$pmform.elements.move_messages.body}>
-    <{$pmform.elements.delete_messages.body}>
-    <{$pmform.elements.empty_messages.body}>
-<{/if}>
-
-<{foreach item=element from=$pmform.elements|default:null}>
-    <{if $element.hidden == 1}>
-        <{$element.body}>
     <{/if}>
-<{/foreach}>
+
+    <{foreach item=element from=$pmform.elements|default:null}>
+        <{if $element.hidden == 1}>
+            <{$element.body}>
+        <{/if}>
+    <{/foreach}>
 </form>
 
 <{if $pagenav|default:false}>
-    <{$pagenav}>
+    <div class="mt-2 text-end"><{$pagenav}></div>
 <{/if}>
+
+<{/if}><{* /isset($pmform) *}>
