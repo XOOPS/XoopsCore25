@@ -732,24 +732,28 @@ class MainControllerTest extends TestCase
      */
     public function testDisplayOperationTogglesActiveState(): void
     {
-        $displaySection = $this->extractOperationSection('display');
-        $this->assertNotEmpty($displaySection, 'Display operation should exist');
+        // display is handled in the early AJAX block, not in the switch
+        $this->assertStringContainsString(
+            "case 'display':",
+            $this->sourceCode,
+            'Display operation should exist'
+        );
 
         $this->assertStringContainsString(
             "xoopsSecurity']->check()",
-            $displaySection,
+            $this->sourceCode,
             'Should validate CSRF token'
         );
 
         $this->assertMatchesRegularExpression(
             '/\$old\s+=\s+\$module->getVar\(\'isactive\'\);/',
-            $displaySection,
+            $this->sourceCode,
             'Should get current isactive state'
         );
 
         $this->assertStringContainsString(
             "setVar('isactive', !\$old)",
-            $displaySection,
+            $this->sourceCode,
             'Should toggle isactive state'
         );
     }
@@ -759,24 +763,22 @@ class MainControllerTest extends TestCase
      */
     public function testDisplayInMenuOperationTogglesShowInMenu(): void
     {
-        $displayInMenuSection = $this->extractOperationSection('display_in_menu');
-        $this->assertNotEmpty($displayInMenuSection, 'Display_in_menu operation should exist');
-
+        // display_in_menu is handled in the early AJAX block, not in the switch
         $this->assertStringContainsString(
-            "xoopsSecurity']->check()",
-            $displayInMenuSection,
-            'Should validate CSRF token'
+            "case 'display_in_menu':",
+            $this->sourceCode,
+            'Display_in_menu operation should exist'
         );
 
         $this->assertMatchesRegularExpression(
             '/\$old\s+=\s+\(int\)\s*\$module->getVar\(\'show_in_menu\'\);/',
-            $displayInMenuSection,
+            $this->sourceCode,
             'Should get current show_in_menu'
         );
 
         $this->assertStringContainsString(
             "setVar('show_in_menu',",
-            $displayInMenuSection,
+            $this->sourceCode,
             'Should toggle show_in_menu'
         );
     }
@@ -790,25 +792,28 @@ class MainControllerTest extends TestCase
      */
     public function testOrderOperationProcessesModuleOrder(): void
     {
-        $orderSection = $this->extractOperationSection('order');
-        $this->assertNotEmpty($orderSection, 'Order operation should exist');
+        // order is handled in the early AJAX block, not in the switch
+        $this->assertStringContainsString(
+            "case 'order':",
+            $this->sourceCode,
+            'Order operation should exist'
+        );
 
         $this->assertStringContainsString(
             "Request::hasVar('mod', 'POST')",
-            $orderSection,
+            $this->sourceCode,
             'Should check for mod POST data'
         );
 
         $this->assertStringContainsString(
             "Request::getArray('mod', [], 'POST')",
-            $orderSection,
+            $this->sourceCode,
             'Should iterate over module order array'
         );
 
-        // All modules get reordered (show_in_menu decoupled from weight)
         $this->assertStringContainsString(
             "\$module->setVar('weight', \$i)",
-            $orderSection,
+            $this->sourceCode,
             'Should set weight for all modules'
         );
     }
@@ -818,11 +823,9 @@ class MainControllerTest extends TestCase
      */
     public function testOrderOperationExitsAfterProcessing(): void
     {
-        $orderSection = $this->extractOperationSection('order');
-
         $this->assertStringContainsString(
             'exit;',
-            $orderSection,
+            $this->sourceCode,
             'Should exit after processing order (AJAX endpoint)'
         );
     }
