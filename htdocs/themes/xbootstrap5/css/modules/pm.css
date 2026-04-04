@@ -26,3 +26,25 @@
 .message-current-tab div.alert {
     padding: 10px 30px 10px 10px;
 }
+
+/* PM action buttons — styled via name attribute for renderer independence */
+.pm-actions [name="move_messages"],
+.pm-actions [name="empty_messages"] {
+    background-color: transparent;
+    border-color: var(--bs-secondary);
+    color: var(--bs-secondary);
+}
+.pm-actions [name="move_messages"]:hover,
+.pm-actions [name="empty_messages"]:hover {
+    background-color: var(--bs-secondary);
+    color: #fff;
+}
+.pm-actions [name="delete_messages"] {
+    background-color: transparent;
+    border-color: var(--bs-danger);
+    color: var(--bs-danger);
+}
+.pm-actions [name="delete_messages"]:hover {
+    background-color: var(--bs-danger);
+    color: #fff;
+}

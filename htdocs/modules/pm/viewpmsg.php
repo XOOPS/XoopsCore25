@@ -44,16 +44,18 @@ if (Request::hasVar('delete_messages', 'POST') && (Request::hasVar('msg_id', 'PO
     } elseif (Request::getInt('ok', 0, 'POST') === 0) {
         $postedIds  = array_map('intval', Request::getArray('msg_id', [], 'POST'));
         $currentUid = (int) $xoopsUser->getVar('uid');
-        // Build confirmation list and filter to IDs the current user actually owns
-        $confirmMsg     = _PM_SURE_TO_DELETE;
-        $allowedIds     = [];
+        // Bulk-fetch selected PMs in one query instead of N+1
+        $confirmMsg = _PM_SURE_TO_DELETE;
+        $allowedIds = [];
         if (!empty($postedIds)) {
+            $criteria = new Criteria('msg_id', '(' . implode(',', $postedIds) . ')', 'IN');
+            $pmObjects = $pm_handler->getObjects($criteria, true);
             $confirmMsg .= '<ul>';
             foreach ($postedIds as $delId) {
-                $delPm = $pm_handler->get($delId);
-                if (!is_object($delPm)) {
+                if (!isset($pmObjects[$delId])) {
                     continue;
                 }
+                $delPm   = $pmObjects[$delId];
                 $toUid   = (int) $delPm->getVar('to_userid');
                 $fromUid = (int) $delPm->getVar('from_userid');
                 if ($toUid !== $currentUid && $fromUid !== $currentUid) {

@@ -106,10 +106,10 @@
     </table>
 
     <{if $display|default:false}>
-    <div class="d-flex gap-2 mt-2">
-        <{$pmform.elements.move_messages.body|replace:'btn btn-secondary':'btn btn-outline-secondary'}>
-        <{$pmform.elements.delete_messages.body|replace:'btn btn-secondary':'btn btn-outline-danger'}>
-        <{$pmform.elements.empty_messages.body|replace:'btn btn-secondary':'btn btn-outline-secondary'}>
+    <div class="d-flex gap-2 mt-2 pm-actions">
+        <{$pmform.elements.move_messages.body}>
+        <{$pmform.elements.delete_messages.body}>
+        <{$pmform.elements.empty_messages.body}>
     </div>
     <{/if}>
 
