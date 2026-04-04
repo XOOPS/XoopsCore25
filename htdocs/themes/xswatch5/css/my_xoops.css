@@ -1,0 +1,66 @@
+/*
+Use this file - my_xoops.css
+- To customize and add CSS definitions for the light variant or for the unique variant,
+- To override the Bootstrap CSS file in order to change the default settings of this file.
+*/
+
+/* Hover-to-open dropdown for desktop */
+@media (min-width: 992px) {
+    .xo-hover-dropdown:hover > .dropdown-menu {
+        display: block;
+        margin-top: 0;
+    }
+    .xo-hover-dropdown > a.dropdown-toggle {
+        pointer-events: auto;
+    }
+}
+
+/* Multi-level dropdown submenu */
+.dropdown-submenu {
+    position: relative;
+}
+.dropdown-submenu > .dropdown-menu {
+    top: 0;
+    left: 100%;
+    margin-top: -6px;
+    margin-left: -1px;
+    border-radius: 0 6px 6px 6px;
+}
+.dropdown-submenu:hover > .dropdown-menu {
+    display: block;
+}
+.dropdown-submenu > a:after {
+    display: block;
+    content: " ";
+    float: right;
+    width: 0;
+    height: 0;
+    border-color: transparent;
+    border-style: solid;
+    border-width: 5px 0 5px 5px;
+    border-left-color: #ccc;
+    margin-top: 5px;
+    margin-right: -10px;
+}
+.dropdown-submenu:hover > a:after {
+    border-left-color: #fff;
+}
+
+/* RTL overrides for multi-level dropdown submenu */
+[dir="rtl"] .dropdown-submenu > .dropdown-menu {
+    left: auto;
+    right: 100%;
+    border-radius: 6px 0 6px 6px;
+}
+[dir="rtl"] .dropdown-submenu > a:after {
+    float: left;
+    border-width: 5px 5px 5px 0;
+    border-left-color: transparent;
+    border-right-color: #ccc;
+    margin-left: -10px;
+    margin-right: 0;
+}
+[dir="rtl"] .dropdown-submenu:hover > a:after {
+    border-left-color: transparent;
+    border-right-color: #fff;
+}
