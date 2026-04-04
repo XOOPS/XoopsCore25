@@ -38,7 +38,7 @@
         <thead class="table-light">
             <tr>
                 <th class="text-center" style="width: 3rem;">
-                    <input name="allbox" id="allbox" onclick='xoopsCheckAll("<{$pmform.name}>", "allbox");' type="checkbox" value="Check All" class="form-check-input" aria-label="Select all messages">
+                    <input name="allbox" id="allbox" onclick='xoopsCheckAll("<{$pmform.name}>", "allbox");' type="checkbox" value="Check All" class="form-check-input" aria-label="<{$smarty.const.THEME_SELECT_ALL|default:'Select all'}>">
                 </th>
                 <th class="text-center d-none d-sm-table-cell" style="width: 2.5rem;">
                     <span class="fa-solid fa-envelope text-primary"></span>
@@ -62,7 +62,7 @@
             <{foreach item=message from=$messages|default:null}>
                 <tr>
                     <td class="text-center align-middle">
-                        <input type="checkbox" id="msg_id_<{$message.msg_id}>" name="msg_id[]" value="<{$message.msg_id}>" class="form-check-input">
+                        <input type="checkbox" id="msg_id_<{$message.msg_id}>" name="msg_id[]" value="<{$message.msg_id}>" class="form-check-input" aria-label="<{$message.subject|escape}>">
                     </td>
                     <td class="text-center align-middle d-none d-sm-table-cell">
                         <{if $message.read_msg == 1}>
@@ -83,7 +83,7 @@
                             <img src="<{$xoops_url}>/images/subject/<{$message.msg_image}>" alt="">
                         <{/if}>
                         <a href="readpmsg.php?msg_id=<{$message.msg_id}>&amp;start=<{$message.msg_no}>&amp;total_messages=<{$total_messages}>&amp;op=<{$op}>">
-                            <{$message.subject}>
+                            <{$message.subject|escape}>
                         </a>
                         <div class="d-md-none text-muted small"><{$message.msg_time}></div>
                     </td>
