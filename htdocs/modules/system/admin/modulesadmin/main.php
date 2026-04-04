@@ -86,6 +86,8 @@ if (in_array($op, ['order', 'display', 'display_in_menu'], true)) {
                 $module_handler->insert($module);
             }
             break;
+        default:
+            break;
     }
     echo $GLOBALS['xoopsSecurity']->getTokenHTML();
     exit;
