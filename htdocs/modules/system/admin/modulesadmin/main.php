@@ -184,7 +184,10 @@ switch ($op) {
 
     case 'order':
         if (!$GLOBALS['xoopsSecurity']->check()) {
-            echo '';
+            if (!headers_sent()) {
+                http_response_code(403);
+            }
+            echo $GLOBALS['xoopsSecurity']->getTokenHTML();
             exit;
         }
         /** @var XoopsModuleHandler $module_handler */
@@ -247,7 +250,13 @@ switch ($op) {
         break;
 
     case 'display':
-        // Get module handler
+        if (!$GLOBALS['xoopsSecurity']->check()) {
+            if (!headers_sent()) {
+                http_response_code(403);
+            }
+            echo $GLOBALS['xoopsSecurity']->getTokenHTML();
+            break;
+        }
         /** @var XoopsModuleHandler $module_handler */
         $module_handler = xoops_getHandler('module');
         $module_id      = Request::getInt('mid', 0);
@@ -274,6 +283,13 @@ switch ($op) {
         break;
 
     case 'display_in_menu':
+        if (!$GLOBALS['xoopsSecurity']->check()) {
+            if (!headers_sent()) {
+                http_response_code(403);
+            }
+            echo $GLOBALS['xoopsSecurity']->getTokenHTML();
+            break;
+        }
         /** @var XoopsModuleHandler $module_handler */
         $module_handler = xoops_getHandler('module');
         $module_id      = Request::getInt('mid', 0);

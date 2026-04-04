@@ -105,7 +105,7 @@ function system_setStatus(data, img, file) {
         function (reponse, textStatus) {
             if (textStatus === 'success') {
                 if (reponse?.includes('<input')) {
-                    const $newToken = $(reponse).filter('input[name="XOOPS_TOKEN_REQUEST"]');
+                    const $newToken = $('<div>').html(reponse).find('input[name="XOOPS_TOKEN_REQUEST"]').first();
                     if ($newToken.length && $tokenInput.length) {
                         $tokenInput.val($newToken.val());
                     }

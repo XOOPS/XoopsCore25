@@ -30,8 +30,7 @@ $(document).ready(
                     }
                     $.post( 'admin.php?fct=modulesadmin&op=order', list, function (response) {
                         if (response?.includes('<input')) {
-                            // Extract the new token value from the returned HTML input element
-                            const $newToken = $(response).filter('input[name="XOOPS_TOKEN_REQUEST"]');
+                            const $newToken = $('<div>').html(response).find('input[name="XOOPS_TOKEN_REQUEST"]').first();
                             if ($newToken.length && $tokenInput.length) {
                                 $tokenInput.val($newToken.val());
                             }
