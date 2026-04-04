@@ -94,7 +94,9 @@ function system_displayHelp() {
 
 function system_setStatus(data, img, file) {
     const $form = $('form[name="moduleadmin"]');
-    const $tokenInput = $form.find("input[name='XOOPS_TOKEN_REQUEST']").first();
+    const $tokenInput = $form.length
+        ? $form.find("input[name='XOOPS_TOKEN_REQUEST']").first()
+        : $("input[name='XOOPS_TOKEN_REQUEST']").first();
     if ($tokenInput.length) {
         data[$tokenInput.attr('name')] = $tokenInput.val();
     }

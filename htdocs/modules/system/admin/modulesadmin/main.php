@@ -183,7 +183,10 @@ switch ($op) {
         break;
 
     case 'order':
-        // Get Module Handler
+        if (!$GLOBALS['xoopsSecurity']->check()) {
+            echo '';
+            exit;
+        }
         /** @var XoopsModuleHandler $module_handler */
         $module_handler = xoops_getHandler('module');
         if (Request::hasVar('mod', 'POST')) {
@@ -202,7 +205,6 @@ switch ($op) {
         // Return refreshed CSRF token for the next AJAX request
         echo $GLOBALS['xoopsSecurity']->getTokenHTML();
         exit;
-        break;
 
     case 'confirm':
         // Define main template
@@ -267,11 +269,12 @@ switch ($op) {
             //Set active modules in cache folder
             xoops_setActiveModules();
         }
+        // Return refreshed CSRF token for the next AJAX toggle
+        echo $GLOBALS['xoopsSecurity']->getTokenHTML();
         break;
 
     case 'display_in_menu':
-        // Get module handler
-
+        /** @var XoopsModuleHandler $module_handler */
         $module_handler = xoops_getHandler('module');
         $module_id      = Request::getInt('mid', 0);
         if ($module_id > 0) {
@@ -282,6 +285,8 @@ switch ($op) {
                 $error = true;
             }
         }
+        // Return refreshed CSRF token for the next AJAX toggle
+        echo $GLOBALS['xoopsSecurity']->getTokenHTML();
         break;
 
     case 'submit':
