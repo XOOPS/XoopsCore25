@@ -1,2 +1,6 @@
 <?php
-header('HTTP/1.0 404 Not Found');
+/*
+ * XOOPS - Directory listing protection
+ */
+http_response_code(404);
+exit;

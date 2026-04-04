@@ -9,14 +9,22 @@ if(!empty($xoopsTpl)) {
 }
 
 /* Check if tinyMce 5 is selected in system configuration */
-$editor = xoops_getModuleOption('blocks_editor', 'system');
-if ($editor != 'tinymce5') {
-    $editor = xoops_getModuleOption('comments_editor', 'system');
-    if ($editor != 'tinymce5') {
-        $editor = xoops_getModuleOption('general_editor', 'system');
+/** @var XoopsConfigHandler $configHandler */
+$configHandler = xoops_getHandler('config');
+/** @var XoopsModuleHandler $moduleHandler */
+$moduleHandler = xoops_getHandler('module');
+$systemModule  = $moduleHandler->getByDirname('system');
+$editor        = '';
+if (is_object($systemModule)) {
+    $systemConfig = $configHandler->getConfigsByCat(0, $systemModule->getVar('mid'));
+    foreach (['blocks_editor', 'comments_editor', 'general_editor'] as $key) {
+        if (isset($systemConfig[$key]) && $systemConfig[$key] === 'tinymce5') {
+            $editor = 'tinymce5';
+            break;
+        }
     }
 }
-if ($editor == 'tinymce5' && isset($GLOBALS['xoTheme'])) {
-    $GLOBALS['xoTheme']->addStylesheet( XOOPS_URL . '/class/xoopseditor/tinymce5/tinymce5/jscripts/tiny_mce/plugins/xoopscode/css/prism.css' );
-    $GLOBALS['xoTheme']->addScript( XOOPS_URL . '/class/xoopseditor/tinymce5/tinymce5/jscripts/tiny_mce/plugins/xoopscode/js/prism.js' );
+if ($editor === 'tinymce5' && isset($GLOBALS['xoTheme'])) {
+    $GLOBALS['xoTheme']->addStylesheet(XOOPS_URL . '/class/xoopseditor/tinymce5/tinymce5/jscripts/tiny_mce/plugins/xoopscode/css/prism.css');
+    $GLOBALS['xoTheme']->addScript(XOOPS_URL . '/class/xoopseditor/tinymce5/tinymce5/jscripts/tiny_mce/plugins/xoopscode/js/prism.js');
 }

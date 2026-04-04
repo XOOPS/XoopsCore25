@@ -497,6 +497,8 @@ div.jGrowl div.jGrowl-closer {
 
 .normal {
     font-size: 1em;
+    font-weight: normal;
+    font-style: normal;
 }
 
 .big {
@@ -519,10 +521,6 @@ div.jGrowl div.jGrowl-closer {
     font-weight: lighter;
 }
 
-.normal {
-    font-weight: normal;
-    font-style: normal;
-}
 
 .italic {
     font-style: italic;

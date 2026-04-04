@@ -502,6 +502,8 @@ div.jGrowl div.jGrowl-closer {
 
 .normal {
     font-size: 1em;
+    font-weight: normal;
+    font-style: normal;
 }
 
 .big {
@@ -524,10 +526,6 @@ div.jGrowl div.jGrowl-closer {
     font-weight: lighter;
 }
 
-.normal {
-    font-weight: normal;
-    font-style: normal;
-}
 
 .italic {
     font-style: italic;
@@ -1225,11 +1223,6 @@ div.jGrowl div.jGrowl-closer {
     margin: 1em;
     background: linear-gradient(135deg, #191919 0%,#4c4c4c 93%,#919191 100%);
 }
-/*
-.xoops-theme-select form select {
-    background-color: black;
-}
-*/
 input[type=submit], input[type=reset], input[type=button], .xo-formbuttons, .formButton, button {
     background-color: #3a3f44;
     color: #eeeeee;
@@ -1237,13 +1230,13 @@ input[type=submit], input[type=reset], input[type=button], .xo-formbuttons, .for
 }
 
 a.xo-counterpage {
-    color: blue;
+    color: #6ea8fe;
 }
 a.xo-pagarrow {
-    color: blue;
+    color: #6ea8fe;
 }
 .generic-pagination a:hover {
-    color: blue;
+    color: #6ea8fe;
     background: #333333;
 }
 a.read-topic {
