@@ -184,9 +184,6 @@ switch ($op) {
 
     case 'order':
         if (!$GLOBALS['xoopsSecurity']->check()) {
-            if (!headers_sent()) {
-                http_response_code(403);
-            }
             echo $GLOBALS['xoopsSecurity']->getTokenHTML();
             exit;
         }
@@ -251,9 +248,6 @@ switch ($op) {
 
     case 'display':
         if (!$GLOBALS['xoopsSecurity']->check()) {
-            if (!headers_sent()) {
-                http_response_code(403);
-            }
             echo $GLOBALS['xoopsSecurity']->getTokenHTML();
             break;
         }
@@ -284,9 +278,6 @@ switch ($op) {
 
     case 'display_in_menu':
         if (!$GLOBALS['xoopsSecurity']->check()) {
-            if (!headers_sent()) {
-                http_response_code(403);
-            }
             echo $GLOBALS['xoopsSecurity']->getTokenHTML();
             break;
         }

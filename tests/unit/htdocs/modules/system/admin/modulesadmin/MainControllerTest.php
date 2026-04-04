@@ -735,23 +735,21 @@ class MainControllerTest extends TestCase
         $displaySection = $this->extractOperationSection('display');
         $this->assertNotEmpty($displaySection, 'Display operation should exist');
 
-        // CSRF check is the first block (extractOperationSection stops at its break)
         $this->assertStringContainsString(
             "xoopsSecurity']->check()",
             $displaySection,
             'Should validate CSRF token'
         );
 
-        // Toggle logic follows the CSRF block in the full source
         $this->assertMatchesRegularExpression(
             '/\$old\s+=\s+\$module->getVar\(\'isactive\'\);/',
-            $this->sourceCode,
+            $displaySection,
             'Should get current isactive state'
         );
 
         $this->assertStringContainsString(
             "setVar('isactive', !\$old)",
-            $this->sourceCode,
+            $displaySection,
             'Should toggle isactive state'
         );
     }
@@ -764,23 +762,21 @@ class MainControllerTest extends TestCase
         $displayInMenuSection = $this->extractOperationSection('display_in_menu');
         $this->assertNotEmpty($displayInMenuSection, 'Display_in_menu operation should exist');
 
-        // CSRF check is the first block
         $this->assertStringContainsString(
             "xoopsSecurity']->check()",
             $displayInMenuSection,
             'Should validate CSRF token'
         );
 
-        // Toggle logic follows the CSRF block in the full source
         $this->assertMatchesRegularExpression(
             '/\$old\s+=\s+\(int\)\s*\$module->getVar\(\'show_in_menu\'\);/',
-            $this->sourceCode,
+            $displayInMenuSection,
             'Should get current show_in_menu'
         );
 
         $this->assertStringContainsString(
             "setVar('show_in_menu',",
-            $this->sourceCode,
+            $displayInMenuSection,
             'Should toggle show_in_menu'
         );
     }
@@ -1137,15 +1133,10 @@ class MainControllerTest extends TestCase
 
         $startPos = $matches[0][1] + strlen($matches[0][0]);
 
+        // Stop at the next case label so nested break; (e.g. CSRF early-exit)
+        // does not truncate the section prematurely
         $nextCase = strpos($this->sourceCode, "\n    case ", $startPos);
-        $nextBreak = strpos($this->sourceCode, "break;", $startPos);
-
-        $endPos = match (true) {
-            $nextCase !== false && $nextBreak !== false => min($nextCase, $nextBreak + 6),
-            $nextCase !== false => $nextCase,
-            $nextBreak !== false => $nextBreak + 6,
-            default => strpos($this->sourceCode, '}', $startPos),
-        };
+        $endPos = $nextCase !== false ? $nextCase : strpos($this->sourceCode, '}', $startPos);
 
         if ($endPos === false) {
             return '';
