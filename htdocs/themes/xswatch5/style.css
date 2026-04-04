@@ -94,10 +94,9 @@ a.navbar-brand.xlogo {
 
 .footer > h3 {
     font-size: 0.9em;
-    margin: 0;
     line-height: inherit;
     max-width: 960px;
-    margin: 0 auto 0 auto;
+    margin: 0 auto;
     padding: 10px 0 10px 0;
     text-align: center;
     position: relative;
@@ -1282,8 +1281,6 @@ div.order-by a {
 }
 
 #xo-logger-output {
-    padding-bottom: 96px;
-    padding-bottom: 96px;
     padding-bottom: 6rem;
 }
 
@@ -1323,8 +1320,6 @@ img.avatar {
 }
 
 .xo-jumbotron {
-    padding-bottom: 8px;
-    padding-bottom: 8px;
     padding-bottom: 0.5rem;
 }
 
