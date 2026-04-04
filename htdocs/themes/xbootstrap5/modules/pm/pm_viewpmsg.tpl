@@ -38,7 +38,7 @@
         <thead class="table-light">
             <tr>
                 <th class="text-center" style="width: 3rem;">
-                    <input name="allbox" id="allbox" onclick='xoopsCheckAll("<{$pmform.name}>", "allbox");' type="checkbox" value="Check All" class="form-check-input" aria-label="<{$smarty.const.THEME_SELECT_ALL|default:'Select all'|escape:'htmlall':'UTF-8'}>">
+                    <input name="allbox" id="allbox" onclick='xoopsCheckAll("<{$pmform.name}>", "allbox");' type="checkbox" value="Check All" class="form-check-input" aria-label="<{$smarty.const._ALL|escape:'htmlall':'UTF-8'}>">
                 </th>
                 <th class="text-center d-none d-sm-table-cell" style="width: 2.5rem;">
                     <span class="fa-solid fa-envelope text-primary"></span>
@@ -73,7 +73,7 @@
                     </td>
                     <td class="align-middle">
                         <{if $message.postername|default:'' != ''}>
-                            <a href="<{$xoops_url}>/userinfo.php?uid=<{$message.posteruid}>"><{$message.postername}></a>
+                            <a href="<{$xoops_url}>/userinfo.php?uid=<{$message.posteruid}>"><{$message.postername|escape:'htmlall':'UTF-8'}></a>
                         <{else}>
                             <{$anonymous}>
                         <{/if}>
