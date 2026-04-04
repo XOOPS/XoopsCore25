@@ -42,7 +42,7 @@ if (Request::hasVar('delete_messages', 'POST') && (Request::hasVar('msg_id', 'PO
     if (!$GLOBALS['xoopsSecurity']->check()) {
         $GLOBALS['xoopsTpl']->assign('errormsg', implode('<br>', $GLOBALS['xoopsSecurity']->getErrors()));
     } elseif (Request::getInt('ok', 0, 'POST') === 0) {
-        $postedIds  = array_map('intval', Request::getArray('msg_id', [], 'POST'));
+        $postedIds  = array_values(array_unique(array_map('intval', Request::getArray('msg_id', [], 'POST'))));
         $currentUid = (int) $xoopsUser->getVar('uid');
         // Bulk-fetch selected PMs in one query instead of N+1
         $confirmMsg = _PM_SURE_TO_DELETE;
