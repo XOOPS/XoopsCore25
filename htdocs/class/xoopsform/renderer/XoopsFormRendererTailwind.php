@@ -31,7 +31,13 @@ defined('XOOPS_ROOT_PATH') || exit('Restricted access');
  * error, info) and theme-aware base colors (base-100, base-200, base-content)
  * so rendered forms automatically match whichever DaisyUI theme is active.
  *
- * @see https://daisyui.com/components/
+ * @category  XoopsForm
+ * @package   XoopsFormRendererTailwind
+ * @author    XOOPS Project
+ * @copyright 2000-2026 XOOPS Project (https://xoops.org)
+ * @license   GNU GPL 2.0 or later (https://www.gnu.org/licenses/gpl-2.0.html)
+ * @link      https://xoops.org
+ * @see       https://daisyui.com/components/
  */
 class XoopsFormRendererTailwind implements XoopsFormRendererInterface
 {
@@ -40,6 +46,15 @@ class XoopsFormRendererTailwind implements XoopsFormRendererInterface
 
     /** @var string Reusable dropdown menu class string */
     private const DROPDOWN_MENU_CLS = 'dropdown-content menu bg-base-100 rounded-box z-50 p-2 shadow max-h-64 overflow-y-auto flex-nowrap';
+
+    /** HTML attribute fragments — extracted to satisfy SonarQube duplication rules */
+    private const ATTR_NAME       = ' name="';
+    private const ATTR_ID         = '" id="';
+    private const ATTR_TITLE      = '" title="';
+    private const ATTR_TITLE_LEAD = ' title="';
+    private const ATTR_VALUE      = ' value="';
+    private const ATTR_SIZE       = ' size="';
+    private const ATTR_MAXLENGTH  = ' maxlength="';
 
     /**
      * Escape a value for use inside an HTML attribute or as text content.
@@ -67,10 +82,11 @@ class XoopsFormRendererTailwind implements XoopsFormRendererInterface
     protected function renderElementHtml(XoopsFormElement $element): string
     {
         ob_start();
-        $rendered = (string) $element->render();
+        /** @var mixed $rendered */
+        $rendered = call_user_func([$element, 'render']);
         $echoed   = (string) ob_get_clean();
 
-        return $rendered . $echoed;
+        return ((string) $rendered) . $echoed;
     }
 
     /**
@@ -81,6 +97,11 @@ class XoopsFormRendererTailwind implements XoopsFormRendererInterface
      * legacy behaviour and cannot be fully safely escaped without breaking
      * existing modules. Sanitize by stripping any '>' or '<' characters to
      * prevent tag injection while preserving the attribute fragment format.
+     *
+     * LIMITATION: Stripping `<` and `>` will corrupt legitimate attribute
+     * values containing those characters (e.g. `onclick="if (x < 5) f()"`).
+     * Module developers should pre-encode such content as `&lt;` / `&gt;`
+     * in their getExtra() strings before passing them to the renderer.
      *
      * Accepts any object exposing getExtra() (XoopsFormElement, XoopsForm,
      * XoopsThemeForm, etc.) — enforced via method_exists rather than a
@@ -119,8 +140,8 @@ class XoopsFormRendererTailwind implements XoopsFormRendererInterface
         $type  = $this->esc($element->getType());
 
         return '<button type="' . $type . '" class="btn btn-neutral"'
-            . ' name="' . $name . '" id="' . $name . '"'
-            . ' title="' . $value . '" value="' . $value . '"'
+            . self::ATTR_NAME . $name . self::ATTR_ID . $name . '"'
+            . self::ATTR_TITLE_LEAD . $value . '" value="' . $value . '"'
             . $this->renderExtra($element) . '>' . $value . '</button>';
     }
 
@@ -146,7 +167,7 @@ class XoopsFormRendererTailwind implements XoopsFormRendererInterface
             . ' onClick="history.go(-1);return true;" value="' . $this->esc(_CANCEL) . '">'
             . '<button type="reset" class="btn btn-warning" name="reset" id="reset">' . _RESET . '</button>'
             . '<button type="' . $type . '" class="btn btn-success"'
-            . ' name="' . $name . '" id="' . $name . '"'
+            . self::ATTR_NAME . $name . self::ATTR_ID . $name . '"'
             . $this->renderExtra($element) . '>' . $value . '</button>'
             . '</div>';
 
@@ -218,10 +239,10 @@ class XoopsFormRendererTailwind implements XoopsFormRendererInterface
             $inputId = $this->esc($elementId . $idSuffix);
             $ret .= '<label class="' . $labelCls . '">'
                 . '<input class="' . $type . ' ' . $type . '-primary" type="' . $type . '"'
-                . ' name="' . $this->esc($elementName) . '"'
+                . self::ATTR_NAME . $this->esc($elementName) . '"'
                 . ' id="' . $inputId . '"'
-                . ' title="' . $this->esc(strip_tags((string) $name)) . '"'
-                . ' value="' . $this->esc($value) . '"'
+                . self::ATTR_TITLE_LEAD . $this->esc(strip_tags((string) $name)) . '"'
+                . self::ATTR_VALUE . $this->esc($value) . '"'
                 . $checked . $extra . '>'
                 . '<span class="label-text">' . $this->esc((string) $name) . $delimeter . '</span>'
                 . '</label>';
@@ -272,7 +293,7 @@ class XoopsFormRendererTailwind implements XoopsFormRendererInterface
         $value = $this->esc($element->getValue());
 
         return $assets . '<input class="input input-bordered w-24 h-10 p-1" type="color"'
-            . ' name="' . $name . '" id="' . $name . '" title="' . $title . '"'
+            . self::ATTR_NAME . $name . self::ATTR_ID . $name . self::ATTR_TITLE . $title . '"'
             . ' size="7" maxlength="7" value="' . $value . '"'
             . $this->renderExtra($element) . '>';
     }
@@ -294,7 +315,7 @@ class XoopsFormRendererTailwind implements XoopsFormRendererInterface
         $ret .= $this->renderFormDhtmlTATypography($element);
         $ret .= "<br>\n";
         $ret .= '<textarea class="textarea textarea-bordered w-full font-mono"'
-            . ' id="' . $name . '" name="' . $name . '" title="' . $title . '"'
+            . ' id="' . $name . '" name="' . $name . self::ATTR_TITLE . $title . '"'
             . ' onselect="xoopsSavePosition(\'' . $name . '\');"'
             . ' onclick="xoopsSavePosition(\'' . $name . '\');"'
             . ' onkeyup="xoopsSavePosition(\'' . $name . '\');"'
@@ -340,6 +361,33 @@ EOJS;
     }
 
     /**
+     * Render a single editor toolbar button with a JS onclick handler.
+     *
+     * Extracted from {@see renderFormDhtmlTAXoopsCode()} and
+     * {@see renderFormDhtmlTATypography()} to eliminate duplication of the
+     * `onclick='...'; title='...'` string fragment.
+     *
+     * @param string $class        button CSS classes (not escaped — caller supplies literal)
+     * @param string $onclickJs    JavaScript expression for the onclick handler
+     *                             (will be used inside a single-quoted HTML attribute,
+     *                             so the caller must ensure it is already safe for that context)
+     * @param string $title        tooltip text (caller must escape if user-sourced)
+     * @param string $iconClass    Font Awesome icon class string (e.g. 'fa-solid fa-link')
+     * @param string $trailingHtml optional HTML appended after the icon span
+     *
+     * @return string rendered `<button>` element
+     */
+    protected function renderEditorButton(string $class, string $onclickJs, string $title, string $iconClass, string $trailingHtml = ''): string
+    {
+        return "<button type='button' class='" . $class
+            . "' onclick='" . $onclickJs
+            . "' title='" . $title . "'>"
+            . "<span class='" . $iconClass . "' aria-hidden='true'></span>"
+            . $trailingHtml
+            . '</button>';
+    }
+
+    /**
      * Render xoopscode buttons for editor, include calling text sanitizer extensions
      *
      * @param XoopsFormDhtmlTextArea $element form element
@@ -351,11 +399,11 @@ EOJS;
         $textarea_id = $this->esc($element->getName(false));
         $btn         = self::BTN_NEUTRAL_SM;
         $code        = "<div class='flex flex-wrap gap-1'>";
-        $code .= "<button type='button' class='{$btn}' onclick='xoopsCodeUrl(\"{$textarea_id}\", \"" . $this->esc(_ENTERURL) . "\", \"" . $this->esc(_ENTERWEBTITLE) . "\");' title='" . $this->esc(_XOOPS_FORM_ALT_URL) . "'><span class='fa-solid fa-link' aria-hidden='true'></span></button>";
-        $code .= "<button type='button' class='{$btn}' onclick='xoopsCodeEmail(\"{$textarea_id}\", \"" . $this->esc(_ENTEREMAIL) . "\", \"" . $this->esc(_ENTERWEBTITLE) . "\");' title='" . $this->esc(_XOOPS_FORM_ALT_EMAIL) . "'><span class='fa-solid fa-envelope' aria-hidden='true'></span></button>";
-        $code .= "<button type='button' class='{$btn}' onclick='xoopsCodeImg(\"{$textarea_id}\", \"" . $this->esc(_ENTERIMGURL) . "\", \"" . $this->esc(_ENTERIMGPOS) . "\", \"" . $this->esc(_IMGPOSRORL) . "\", \"" . $this->esc(_ERRORIMGPOS) . "\", \"" . $this->esc(_XOOPS_FORM_ALT_ENTERWIDTH) . "\");' title='" . $this->esc(_XOOPS_FORM_ALT_IMG) . "'><span class='fa-solid fa-file-image' aria-hidden='true'></span></button>";
-        $code .= "<button type='button' class='{$btn}' onclick='openWithSelfMain(\"" . XOOPS_URL . "/imagemanager.php?target={$textarea_id}\",\"imgmanager\",400,430);' title='" . $this->esc(_XOOPS_FORM_ALT_IMAGE) . "'><span class='fa-solid fa-file-image' aria-hidden='true'></span><small> Manager</small></button>";
-        $code .= "<button type='button' class='{$btn}' onclick='openWithSelfMain(\"" . XOOPS_URL . "/misc.php?action=showpopups&amp;type=smilies&amp;target={$textarea_id}\",\"smilies\",300,475);' title='" . $this->esc(_XOOPS_FORM_ALT_SMILEY) . "'><span class='fa-solid fa-face-smile' aria-hidden='true'></span></button>";
+        $code .= $this->renderEditorButton($btn, 'xoopsCodeUrl("' . $textarea_id . '", "' . $this->esc(_ENTERURL) . '", "' . $this->esc(_ENTERWEBTITLE) . '")', $this->esc(_XOOPS_FORM_ALT_URL), 'fa-solid fa-link');
+        $code .= $this->renderEditorButton($btn, 'xoopsCodeEmail("' . $textarea_id . '", "' . $this->esc(_ENTEREMAIL) . '", "' . $this->esc(_ENTERWEBTITLE) . '")', $this->esc(_XOOPS_FORM_ALT_EMAIL), 'fa-solid fa-envelope');
+        $code .= $this->renderEditorButton($btn, 'xoopsCodeImg("' . $textarea_id . '", "' . $this->esc(_ENTERIMGURL) . '", "' . $this->esc(_ENTERIMGPOS) . '", "' . $this->esc(_IMGPOSRORL) . '", "' . $this->esc(_ERRORIMGPOS) . '", "' . $this->esc(_XOOPS_FORM_ALT_ENTERWIDTH) . '")', $this->esc(_XOOPS_FORM_ALT_IMG), 'fa-solid fa-file-image');
+        $code .= $this->renderEditorButton($btn, 'openWithSelfMain("' . XOOPS_URL . '/imagemanager.php?target=' . $textarea_id . '","imgmanager",400,430)', $this->esc(_XOOPS_FORM_ALT_IMAGE), 'fa-solid fa-file-image', '<small> Manager</small>');
+        $code .= $this->renderEditorButton($btn, 'openWithSelfMain("' . XOOPS_URL . '/misc.php?action=showpopups&amp;type=smilies&amp;target=' . $textarea_id . '","smilies",300,475)', $this->esc(_XOOPS_FORM_ALT_SMILEY), 'fa-solid fa-face-smile');
 
         $myts       = \MyTextSanitizer::getInstance();
         $extensions = array_filter($myts->config['extensions']);
@@ -374,8 +422,8 @@ EOJS;
                 $element->js .= $js;
             }
         }
-        $code .= "<button type='button' class='{$btn}' onclick='xoopsCodeCode(\"{$textarea_id}\", \"" . $this->esc(_ENTERCODE) . "\");' title='" . $this->esc(_XOOPS_FORM_ALT_CODE) . "'><span class='fa-solid fa-code' aria-hidden='true'></span></button>";
-        $code .= "<button type='button' class='{$btn}' onclick='xoopsCodeQuote(\"{$textarea_id}\", \"" . $this->esc(_ENTERQUOTE) . "\");' title='" . $this->esc(_XOOPS_FORM_ALT_QUOTE) . "'><span class='fa-solid fa-quote-right' aria-hidden='true'></span></button>";
+        $code .= $this->renderEditorButton($btn, 'xoopsCodeCode("' . $textarea_id . '", "' . $this->esc(_ENTERCODE) . '")', $this->esc(_XOOPS_FORM_ALT_CODE), 'fa-solid fa-code');
+        $code .= $this->renderEditorButton($btn, 'xoopsCodeQuote("' . $textarea_id . '", "' . $this->esc(_ENTERQUOTE) . '")', $this->esc(_XOOPS_FORM_ALT_QUOTE), 'fa-solid fa-quote-right');
         $code .= '</div>';
 
         $xoopsPreload = XoopsPreload::getInstance();
@@ -412,10 +460,11 @@ EOJS;
         $fontStr = "<div class='flex flex-wrap gap-1 mt-2'>";
 
         // Size dropdown
+        $sizes = $GLOBALS['formtextdhtml_sizes'] ?? [];
         $fontStr .= "<div class='dropdown'>"
             . "<div tabindex='0' role='button' class='{$btn}' title='" . _SIZE . "'><span class='fa-solid fa-text-height'></span></div>"
             . "<ul tabindex='0' class='{$menuCls}'>";
-        foreach ($GLOBALS['formtextdhtml_sizes'] as $value => $label) {
+        foreach ($sizes as $value => $label) {
             $fontStr .= "<li><a href=\"javascript:xoopsSetElementAttribute('size', '" . $this->esc($value) . "', '{$textarea_id}', '{$hiddentext}');\">" . $this->esc($label) . "</a></li>";
         }
         $fontStr .= '</ul></div>';
@@ -439,19 +488,19 @@ EOJS;
         $fontStr .= '</ul></div>';
 
         // Style buttons
-        $styleBtn = 'btn btn-neutral btn-sm join-item';
+        $styleBtn = self::BTN_NEUTRAL_SM . ' join-item';
         $fontStr .= "<div class='join'>";
-        $fontStr .= "<button type='button' class='{$styleBtn}' onclick='xoopsMakeBold(\"{$hiddentext}\", \"{$textarea_id}\");' title='" . _XOOPS_FORM_ALT_BOLD . "'><span class='fa-solid fa-bold'></span></button>";
-        $fontStr .= "<button type='button' class='{$styleBtn}' onclick='xoopsMakeItalic(\"{$hiddentext}\", \"{$textarea_id}\");' title='" . _XOOPS_FORM_ALT_ITALIC . "'><span class='fa-solid fa-italic'></span></button>";
-        $fontStr .= "<button type='button' class='{$styleBtn}' onclick='xoopsMakeUnderline(\"{$hiddentext}\", \"{$textarea_id}\");' title='" . _XOOPS_FORM_ALT_UNDERLINE . "'><span class='fa-solid fa-underline'></span></button>";
-        $fontStr .= "<button type='button' class='{$styleBtn}' onclick='xoopsMakeLineThrough(\"{$hiddentext}\", \"{$textarea_id}\");' title='" . _XOOPS_FORM_ALT_LINETHROUGH . "'><span class='fa-solid fa-strikethrough'></span></button>";
+        $fontStr .= $this->renderEditorButton($styleBtn, 'xoopsMakeBold("' . $hiddentext . '", "' . $textarea_id . '")', _XOOPS_FORM_ALT_BOLD, 'fa-solid fa-bold');
+        $fontStr .= $this->renderEditorButton($styleBtn, 'xoopsMakeItalic("' . $hiddentext . '", "' . $textarea_id . '")', _XOOPS_FORM_ALT_ITALIC, 'fa-solid fa-italic');
+        $fontStr .= $this->renderEditorButton($styleBtn, 'xoopsMakeUnderline("' . $hiddentext . '", "' . $textarea_id . '")', _XOOPS_FORM_ALT_UNDERLINE, 'fa-solid fa-underline');
+        $fontStr .= $this->renderEditorButton($styleBtn, 'xoopsMakeLineThrough("' . $hiddentext . '", "' . $textarea_id . '")', _XOOPS_FORM_ALT_LINETHROUGH, 'fa-solid fa-strikethrough');
         $fontStr .= '</div>';
 
         // Align buttons
         $fontStr .= "<div class='join'>";
-        $fontStr .= "<button type='button' class='{$styleBtn}' onclick='xoopsMakeLeft(\"{$hiddentext}\", \"{$textarea_id}\");' title='" . _XOOPS_FORM_ALT_LEFT . "'><span class='fa-solid fa-align-left'></span></button>";
-        $fontStr .= "<button type='button' class='{$styleBtn}' onclick='xoopsMakeCenter(\"{$hiddentext}\", \"{$textarea_id}\");' title='" . _XOOPS_FORM_ALT_CENTER . "'><span class='fa-solid fa-align-center'></span></button>";
-        $fontStr .= "<button type='button' class='{$styleBtn}' onclick='xoopsMakeRight(\"{$hiddentext}\", \"{$textarea_id}\");' title='" . _XOOPS_FORM_ALT_RIGHT . "'><span class='fa-solid fa-align-right'></span></button>";
+        $fontStr .= $this->renderEditorButton($styleBtn, 'xoopsMakeLeft("' . $hiddentext . '", "' . $textarea_id . '")', _XOOPS_FORM_ALT_LEFT, 'fa-solid fa-align-left');
+        $fontStr .= $this->renderEditorButton($styleBtn, 'xoopsMakeCenter("' . $hiddentext . '", "' . $textarea_id . '")', _XOOPS_FORM_ALT_CENTER, 'fa-solid fa-align-center');
+        $fontStr .= $this->renderEditorButton($styleBtn, 'xoopsMakeRight("' . $hiddentext . '", "' . $textarea_id . '")', _XOOPS_FORM_ALT_RIGHT, 'fa-solid fa-align-right');
         $fontStr .= '</div>';
 
         // Length check button — configs is a legacy dynamic property on some
@@ -528,7 +577,7 @@ EOJS;
 
         return '<input type="hidden" name="MAX_FILE_SIZE" value="' . (int) $element->getMaxFileSize() . '">'
             . '<input type="file" class="file-input file-input-bordered w-full"'
-            . ' name="' . $name . '" id="' . $name . '" title="' . $title . '"'
+            . self::ATTR_NAME . $name . self::ATTR_ID . $name . self::ATTR_TITLE . $title . '"'
             . $this->renderExtra($element) . '>'
             . '<input type="hidden" name="xoops_upload_file[]" id="xoops_upload_file[]" value="' . $name . '">';
     }
@@ -559,10 +608,10 @@ EOJS;
         $name = $this->esc($element->getName(false));
 
         return '<input class="input input-bordered w-full" type="password"'
-            . ' name="' . $name . '" id="' . $name . '"'
-            . ' size="' . (int) $element->getSize() . '"'
-            . ' maxlength="' . (int) $element->getMaxlength() . '"'
-            . ' value="' . $this->esc($element->getValue()) . '"'
+            . self::ATTR_NAME . $name . self::ATTR_ID . $name . '"'
+            . self::ATTR_SIZE . (int) $element->getSize() . '"'
+            . self::ATTR_MAXLENGTH . (int) $element->getMaxlength() . '"'
+            . self::ATTR_VALUE . $this->esc($element->getValue()) . '"'
             . $this->renderExtra($element)
             . ($element->autoComplete ? '' : ' autocomplete="off"')
             . '>';
@@ -597,12 +646,12 @@ EOJS;
         $options = $element->getOptions();
 
         $ret = '<select class="select select-bordered w-full"'
-            . ' size="' . (int) $element->getSize() . '"'
+            . self::ATTR_SIZE . (int) $element->getSize() . '"'
             . $this->renderExtra($element);
-        if ($element->isMultiple() !== false) {
-            $ret .= ' name="' . $name . '[]" id="' . $name . '" title="' . $title . '" multiple="multiple">';
+        if ($element->isMultiple()) {
+            $ret .= self::ATTR_NAME . $name . '[]" id="' . $name . self::ATTR_TITLE . $title . '" multiple="multiple">';
         } else {
-            $ret .= ' name="' . $name . '" id="' . $name . '" title="' . $title . '">';
+            $ret .= self::ATTR_NAME . $name . self::ATTR_ID . $name . self::ATTR_TITLE . $title . '">';
         }
         // XoopsFormSelect::getValue() always returns an array
         $valueStrings = array_map('strval', $value);
@@ -628,11 +677,11 @@ EOJS;
         $name = $this->esc($element->getName(false));
 
         return '<input class="input input-bordered w-full" type="text"'
-            . ' name="' . $name . '" id="' . $name . '"'
-            . ' title="' . $this->esc($element->getTitle(false)) . '"'
-            . ' size="' . (int) $element->getSize() . '"'
-            . ' maxlength="' . (int) $element->getMaxlength() . '"'
-            . ' value="' . $this->esc($element->getValue()) . '"'
+            . self::ATTR_NAME . $name . self::ATTR_ID . $name . '"'
+            . self::ATTR_TITLE_LEAD . $this->esc($element->getTitle(false)) . '"'
+            . self::ATTR_SIZE . (int) $element->getSize() . '"'
+            . self::ATTR_MAXLENGTH . (int) $element->getMaxlength() . '"'
+            . self::ATTR_VALUE . $this->esc($element->getValue()) . '"'
             . $this->renderExtra($element) . '>';
     }
 
@@ -648,8 +697,8 @@ EOJS;
         $name = $this->esc($element->getName(false));
 
         return '<textarea class="textarea textarea-bordered w-full"'
-            . ' name="' . $name . '" id="' . $name . '"'
-            . ' title="' . $this->esc($element->getTitle(false)) . '"'
+            . self::ATTR_NAME . $name . self::ATTR_ID . $name . '"'
+            . self::ATTR_TITLE_LEAD . $this->esc($element->getTitle(false)) . '"'
             . ' rows="' . (int) $element->getRows() . '"'
             . ' cols="' . (int) $element->getCols() . '"'
             . $this->renderExtra($element) . '>'
@@ -746,10 +795,10 @@ EOJS;
         }
         return '<div class="join w-full">'
             . '<input class="input input-bordered join-item w-full" type="text"'
-            . ' name="' . $name . '" id="' . $name . '"'
-            . ' size="' . (int) $element->getSize() . '"'
-            . ' maxlength="' . (int) $element->getMaxlength() . '"'
-            . ' value="' . $this->esc($display_value) . '"'
+            . self::ATTR_NAME . $name . self::ATTR_ID . $name . '"'
+            . self::ATTR_SIZE . (int) $element->getSize() . '"'
+            . self::ATTR_MAXLENGTH . (int) $element->getMaxlength() . '"'
+            . self::ATTR_VALUE . $this->esc($display_value) . '"'
             . $this->renderExtra($element) . '>'
             . '<button class="btn btn-neutral join-item" type="button"'
             . ' onclick="return showCalendar(\'' . $name . '\');">'
@@ -769,7 +818,7 @@ EOJS;
         $formName = $this->esc($form->getName(false));
 
         $ret  = '<div class="card bg-base-100 shadow">';
-        $ret .= '<form name="' . $formName . '" id="' . $formName . '"'
+        $ret .= '<form name="' . $formName . self::ATTR_ID . $formName . '"'
             . ' action="' . $this->esc($form->getAction(false)) . '"'
             . ' method="' . $this->esc($form->getMethod()) . '"'
             . ' onsubmit="return xoopsFormValidate_' . $formName . '();"'
@@ -787,25 +836,7 @@ EOJS;
                 $hidden .= $this->renderElementHtml($element);
                 continue;
             }
-
-            $ret .= '<div class="form-control w-full mb-4 grid grid-cols-1 md:grid-cols-12 gap-2 md:items-start">';
-            $caption = $element->getCaption();
-            if ($caption !== '') {
-                $ret .= '<label for="' . $this->esc($element->getName(false)) . '" class="label md:col-span-3 md:justify-end">'
-                    . '<span class="label-text">' . $this->esc($caption)
-                    . ($element->isRequired() ? '<span class="text-error ms-1">*</span>' : '')
-                    . '</span></label>';
-            } else {
-                $ret .= '<div class="md:col-span-3"></div>';
-            }
-            $ret .= '<div class="md:col-span-9">';
-            $ret .= $this->renderElementHtml($element);
-            $desc = $element->getDescription();
-            if ($desc !== '') {
-                $ret .= '<div class="label"><span class="label-text-alt text-base-content/60">' . $this->esc($desc) . '</span></div>';
-            }
-            $ret .= '</div>';
-            $ret .= '</div>';
+            $ret .= $this->renderThemeFormField($element);
         }
         if (count($form->getRequired()) > 0) {
             $ret .= NWLINE . '<div class="text-sm text-base-content/60 mt-2"><span class="text-error">*</span> = ' . _REQUIRED . '</div>' . NWLINE;
@@ -815,6 +846,42 @@ EOJS;
         $ret .= $form->renderValidationJS(true);
 
         return $ret;
+    }
+
+    /**
+     * Render a single visible form field row (label + input + description)
+     * for {@see renderThemeForm()}.
+     *
+     * Extracted from the main loop to keep cognitive complexity in check.
+     *
+     * @param XoopsFormElement $element form element to render
+     *
+     * @return string rendered field row HTML
+     */
+    protected function renderThemeFormField(XoopsFormElement $element): string
+    {
+        $caption = $element->getCaption();
+        if ($caption !== '') {
+            $required = $element->isRequired() ? '<span class="text-error ms-1">*</span>' : '';
+            $label    = '<label for="' . $this->esc($element->getName(false)) . '" class="label md:col-span-3 md:justify-end">'
+                . '<span class="label-text">' . $this->esc($caption) . $required
+                . '</span></label>';
+        } else {
+            $label = '<div class="md:col-span-3"></div>';
+        }
+
+        $desc     = $element->getDescription();
+        $descHtml = $desc !== ''
+            ? '<div class="label"><span class="label-text-alt text-base-content/60">' . $this->esc($desc) . '</span></div>'
+            : '';
+
+        return '<div class="form-control w-full mb-4 grid grid-cols-1 md:grid-cols-12 gap-2 md:items-start">'
+            . $label
+            . '<div class="md:col-span-9">'
+            . $this->renderElementHtml($element)
+            . $descHtml
+            . '</div>'
+            . '</div>';
     }
 
     /**
@@ -828,7 +895,7 @@ EOJS;
      */
     public function addThemeFormBreak(XoopsThemeForm $form, $extra, $class)
     {
-        $class = ($class != '') ? preg_replace('/[^A-Za-z0-9\s_-]/i', '', $class) : '';
+        $class = ($class != '') ? preg_replace('/[^A-Za-z0-9\s_-]/', '', $class) : '';
         $form->addElement('<div class="divider col-span-full ' . $class . '"><span class="font-semibold">' . $extra . '</span></div>');
     }
 }
