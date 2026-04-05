@@ -25,7 +25,6 @@ use XoopsFormButtonTray;
 use XoopsFormElementTray;
 use XoopsFormLabel;
 use XoopsFormRendererTailwind;
-use XoopsFormTextDateSelect;
 
 xoops_load('XoopsFormElement');
 xoops_load('XoopsFormButton');
@@ -37,8 +36,6 @@ xoops_load('XoopsFormLabel');
 xoops_load('XoopsFormRenderer');
 xoops_load('XoopsFormRendererInterface');
 xoops_load('XoopsFormRendererTailwind');
-xoops_load('XoopsFormText');
-xoops_load('XoopsFormTextDateSelect');
 
 /**
  * Unit tests for XoopsFormRendererTailwind.
@@ -261,6 +258,143 @@ class XoopsFormRendererTailwindTest extends TestCase
         // showCalendar() definition must still be present — the button onclick
         // handler references it, so removing it would leave a dead control
         $this->assertStringContainsString('function showCalendar(', $js);
+    }
+
+    public function testRenderElementHtmlClosesBufferOnException(): void
+    {
+        // Anonymous XoopsFormElement whose render() throws — the renderer must
+        // NOT leak its internal ob_start() buffer onto the global output stack
+        // when the exception propagates.
+        //
+        // XoopsFormElement's own constructor has an `exit()` guard preventing
+        // direct instantiation, so the subclass must override it with a no-op.
+        $throwing = new class extends \XoopsFormElement {
+            public function __construct()
+            {
+                // intentionally empty — bypass the base-class exit() guard
+            }
+
+            public function render()
+            {
+                throw new \RuntimeException('boom');
+            }
+        };
+
+        $renderer = new class extends XoopsFormRendererTailwind {
+            public function callRenderElementHtml(\XoopsFormElement $e): string
+            {
+                return $this->renderElementHtml($e);
+            }
+        };
+
+        $levelBefore = ob_get_level();
+        try {
+            $renderer->callRenderElementHtml($throwing);
+            $this->fail('Expected RuntimeException was not thrown');
+        } catch (\RuntimeException $e) {
+            $this->assertSame('boom', $e->getMessage());
+        }
+        $this->assertSame($levelBefore, ob_get_level(), 'renderElementHtml must not leak an output buffer on exception');
+    }
+
+    public function testRenderElementHtmlClosesExtraBuffersOnSuccess(): void
+    {
+        // Misbehaving XoopsFormElement whose render() opens an additional
+        // output buffer and returns normally without closing it. The single
+        // ob_get_clean() at the normal cleanup point only peels ONE level,
+        // so without the finally-loop backstop the outer buffer would leak.
+        //
+        // This test specifically catches the gap that a try/catch-only
+        // version of the fix would still leave open.
+        $leaking = new class extends \XoopsFormElement {
+            public function __construct()
+            {
+                // intentionally empty — bypass the base-class exit() guard
+            }
+
+            public function render()
+            {
+                ob_start();
+                echo 'inner';
+                // intentionally do not close the inner buffer
+
+                return 'outer';
+            }
+        };
+
+        $renderer = new class extends XoopsFormRendererTailwind {
+            public function callRenderElementHtml(\XoopsFormElement $e): string
+            {
+                return $this->renderElementHtml($e);
+            }
+        };
+
+        $levelBefore = ob_get_level();
+        $result      = $renderer->callRenderElementHtml($leaking);
+        $levelAfter  = ob_get_level();
+
+        $this->assertSame($levelBefore, $levelAfter, 'renderElementHtml must restore buffer level even when render() leaks a buffer');
+        // The returned string must at least include the render() return value;
+        // the inner echo may or may not be included depending on which buffer
+        // ob_get_clean() captures, but we do not assert on that here — buffer
+        // cleanup correctness is the contract under test.
+        $this->assertStringContainsString('outer', $result);
+    }
+
+    public function testBuildJsCallEncodesArguments(): void
+    {
+        // Expose the protected helper so we can assert the encoded form
+        // directly without threading payloads through a full render pipeline.
+        $renderer = new class extends XoopsFormRendererTailwind {
+            public function exposedBuildJsCall(string $fn, array $args): string
+            {
+                return $this->buildJsCall($fn, $args);
+            }
+        };
+
+        // Plain args
+        $this->assertSame(
+            'fn("hello", "world")',
+            $renderer->exposedBuildJsCall('fn', ['hello', 'world']),
+        );
+
+        // Double quote must be hex-escaped (JSON_HEX_QUOT)
+        $this->assertSame(
+            'fn("a\u0022b")',
+            $renderer->exposedBuildJsCall('fn', ['a"b']),
+        );
+
+        // Single quote must be hex-escaped (JSON_HEX_APOS) so the result sits
+        // safely inside a single-quoted HTML attribute
+        $this->assertSame(
+            "fn(\"it\u{005C}u0027s\")",
+            $renderer->exposedBuildJsCall('fn', ["it's"]),
+        );
+
+        // </script> must be hex-escaped (JSON_HEX_TAG) to prevent breakout
+        $this->assertSame(
+            'fn("\u003C\/script\u003E")',
+            $renderer->exposedBuildJsCall('fn', ['</script>']),
+        );
+
+        // Ampersand hex-escaped (JSON_HEX_AMP)
+        $this->assertSame(
+            'fn("a \u0026 b")',
+            $renderer->exposedBuildJsCall('fn', ['a & b']),
+        );
+
+        // Mixed int and string args — ints are coerced via (string) cast
+        $this->assertSame(
+            'fn("textarea_1", "42")',
+            $renderer->exposedBuildJsCall('fn', ['textarea_1', 42]),
+        );
+
+        // Unicode is preserved (JSON_UNESCAPED_UNICODE) so translations remain
+        // human-readable in source
+        $this->assertSame(
+            'fn("Übergröße")',
+            $renderer->exposedBuildJsCall('fn', ['Übergröße']),
+        );
     }
 
     public function testResolveCalendarLanguageFileRejectsTraversal(): void

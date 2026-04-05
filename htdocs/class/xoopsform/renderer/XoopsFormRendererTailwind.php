@@ -91,6 +91,34 @@ class XoopsFormRendererTailwind implements XoopsFormRendererInterface
     }
 
     /**
+     * Build a safe JavaScript function call expression, with each argument
+     * encoded through {@see esJs()}.
+     *
+     * Returns e.g. `xoopsCodeUrl("textarea_id", "Enter URL", "Enter title")`.
+     * The result is ready for embedding in a single-quoted HTML attribute
+     * (`onclick='...'` or `href='#' onclick='...; return false;'`) because
+     * `esJs()` hex-escapes both quote characters — so neither the inner JS
+     * quotes nor any locale-provided quote can break the attribute delimiters.
+     *
+     * Do NOT build `$fn` from user input — the function name is concatenated
+     * verbatim. It is intended to be a hard-coded JavaScript function literal.
+     *
+     * @param string               $fn   JavaScript function name (safe literal)
+     * @param array<int, int|string> $args arguments to encode, in order
+     *
+     * @return string JavaScript expression of the form `fn("a","b",…)`
+     */
+    protected function buildJsCall(string $fn, array $args): string
+    {
+        $encoded = [];
+        foreach ($args as $arg) {
+            $encoded[] = $this->esJs((string) $arg);
+        }
+
+        return $fn . '(' . implode(', ', $encoded) . ')';
+    }
+
+    /**
      * Capture a form element's render() output as a string.
      *
      * XoopsFormElement::render() is empty in the base class but all concrete
@@ -103,10 +131,28 @@ class XoopsFormRendererTailwind implements XoopsFormRendererInterface
      */
     protected function renderElementHtml(XoopsFormElement $element): string
     {
-        ob_start();
+        $bufferLevel = ob_get_level();
         /** @var mixed $rendered */
-        $rendered = call_user_func([$element, 'render']);
-        $echoed   = (string) ob_get_clean();
+        $rendered = '';
+        $echoed   = '';
+        ob_start();
+        try {
+            $rendered = call_user_func([$element, 'render']);
+            $echoed   = (string) ob_get_clean();
+        } finally {
+            // Peel any buffer levels that are still above the baseline. Covers
+            // two cases:
+            //   1. render() threw before ob_get_clean() ran — our buffer is
+            //      still open one level above the baseline.
+            //   2. render() opened its own buffer and returned normally
+            //      without closing it — ob_get_clean() only popped the top
+            //      level, leaving our outer buffer stranded.
+            // In either case the invariant we want is ob_get_level() ===
+            // $bufferLevel after the call completes.
+            while (ob_get_level() > $bufferLevel) {
+                ob_end_clean();
+            }
+        }
 
         return ((string) $rendered) . $echoed;
     }
@@ -330,17 +376,20 @@ class XoopsFormRendererTailwind implements XoopsFormRendererInterface
     public function renderFormDhtmlTextArea(XoopsFormDhtmlTextArea $element)
     {
         xoops_loadLanguage('formdhtmltextarea');
-        $name  = $this->esc($element->getName(false));
-        $title = $this->esc($element->getTitle(false));
+        $nameRaw = (string) $element->getName(false);
+        $name    = $this->esc($nameRaw);
+        $title   = $this->esc($element->getTitle(false));
+
+        $savePositionJs = $this->buildJsCall('xoopsSavePosition', [$nameRaw]);
 
         $ret  = $this->renderFormDhtmlTAXoopsCode($element) . "<br>\n";
         $ret .= $this->renderFormDhtmlTATypography($element);
         $ret .= "<br>\n";
         $ret .= '<textarea class="textarea textarea-bordered w-full font-mono"'
             . ' id="' . $name . '" name="' . $name . self::ATTR_TITLE . $title . '"'
-            . ' onselect="xoopsSavePosition(\'' . $name . '\');"'
-            . ' onclick="xoopsSavePosition(\'' . $name . '\');"'
-            . ' onkeyup="xoopsSavePosition(\'' . $name . '\');"'
+            . " onselect='" . $savePositionJs . "'"
+            . " onclick='" . $savePositionJs . "'"
+            . " onkeyup='" . $savePositionJs . "'"
             . ' cols="' . (int) $element->getCols() . '" rows="' . (int) $element->getRows() . '"'
             . $this->renderExtra($element) . '>' . $this->esc($element->getValue()) . "</textarea>\n";
 
@@ -353,14 +402,20 @@ class XoopsFormRendererTailwind implements XoopsFormRendererInterface
                     ['type' => 'text/javascript'],
                 );
             }
-            $button = "<button type='button' class='btn btn-primary btn-sm' onclick=\"form_instantPreview('" . XOOPS_URL
-                . "', '" . $name . "','" . XOOPS_URL . "/images', " . (int) $element->doHtml . ", '"
-                . $this->esc($GLOBALS['xoopsSecurity']->createToken()) . "')\" title='" . _PREVIEW . "'>" . _PREVIEW . "</button>";
+            $previewOnclick = $this->buildJsCall('form_instantPreview', [
+                XOOPS_URL,
+                $nameRaw,
+                XOOPS_URL . '/images',
+                (int) $element->doHtml,
+                (string) $GLOBALS['xoopsSecurity']->createToken(),
+            ]);
+            $button = "<button type='button' class='btn btn-primary btn-sm' onclick='" . $previewOnclick . "' title='"
+                . $this->esc(_PREVIEW) . "'>" . $this->esc(_PREVIEW) . '</button>';
 
             $ret .= '<br>' . "<div id='" . $name . "_hidden' class='card bg-base-200 mt-2'>"
                 . "<div class='card-body p-4'>"
                 . "<div class='card-title text-sm'>" . $button . "</div>"
-                . "<div id='" . $name . "_hidden_data'>" . _XOOPS_FORM_PREVIEW_CONTENT . '</div>'
+                . "<div id='" . $name . "_hidden_data'>" . $this->esc(_XOOPS_FORM_PREVIEW_CONTENT) . '</div>'
                 . '</div></div>';
         }
         $javascript_file         = XOOPS_URL . '/include/formdhtmltextarea.js';
@@ -418,14 +473,18 @@ EOJS;
      */
     protected function renderFormDhtmlTAXoopsCode(XoopsFormDhtmlTextArea $element)
     {
-        $textarea_id = $this->esc($element->getName(false));
-        $btn         = self::BTN_NEUTRAL_SM;
-        $code        = "<div class='flex flex-wrap gap-1'>";
-        $code .= $this->renderEditorButton($btn, 'xoopsCodeUrl("' . $textarea_id . '", "' . $this->esc(_ENTERURL) . '", "' . $this->esc(_ENTERWEBTITLE) . '")', _XOOPS_FORM_ALT_URL, 'fa-solid fa-link');
-        $code .= $this->renderEditorButton($btn, 'xoopsCodeEmail("' . $textarea_id . '", "' . $this->esc(_ENTEREMAIL) . '", "' . $this->esc(_ENTERWEBTITLE) . '")', _XOOPS_FORM_ALT_EMAIL, 'fa-solid fa-envelope');
-        $code .= $this->renderEditorButton($btn, 'xoopsCodeImg("' . $textarea_id . '", "' . $this->esc(_ENTERIMGURL) . '", "' . $this->esc(_ENTERIMGPOS) . '", "' . $this->esc(_IMGPOSRORL) . '", "' . $this->esc(_ERRORIMGPOS) . '", "' . $this->esc(_XOOPS_FORM_ALT_ENTERWIDTH) . '")', _XOOPS_FORM_ALT_IMG, 'fa-solid fa-file-image');
-        $code .= $this->renderEditorButton($btn, 'openWithSelfMain("' . XOOPS_URL . '/imagemanager.php?target=' . $textarea_id . '","imgmanager",400,430)', _XOOPS_FORM_ALT_IMAGE, 'fa-solid fa-file-image', '<small> Manager</small>');
-        $code .= $this->renderEditorButton($btn, 'openWithSelfMain("' . XOOPS_URL . '/misc.php?action=showpopups&amp;type=smilies&amp;target=' . $textarea_id . '","smilies",300,475)', _XOOPS_FORM_ALT_SMILEY, 'fa-solid fa-face-smile');
+        $textareaIdRaw = (string) $element->getName(false);
+        $textarea_id   = $this->esc($textareaIdRaw);
+        $urlImageMgr   = XOOPS_URL . '/imagemanager.php?target=' . $textareaIdRaw;
+        $urlSmilies    = XOOPS_URL . '/misc.php?action=showpopups&type=smilies&target=' . $textareaIdRaw;
+        $btn           = self::BTN_NEUTRAL_SM;
+
+        $code = "<div class='flex flex-wrap gap-1'>";
+        $code .= $this->renderEditorButton($btn, $this->buildJsCall('xoopsCodeUrl', [$textareaIdRaw, _ENTERURL, _ENTERWEBTITLE]), _XOOPS_FORM_ALT_URL, 'fa-solid fa-link');
+        $code .= $this->renderEditorButton($btn, $this->buildJsCall('xoopsCodeEmail', [$textareaIdRaw, _ENTEREMAIL, _ENTERWEBTITLE]), _XOOPS_FORM_ALT_EMAIL, 'fa-solid fa-envelope');
+        $code .= $this->renderEditorButton($btn, $this->buildJsCall('xoopsCodeImg', [$textareaIdRaw, _ENTERIMGURL, _ENTERIMGPOS, _IMGPOSRORL, _ERRORIMGPOS, _XOOPS_FORM_ALT_ENTERWIDTH]), _XOOPS_FORM_ALT_IMG, 'fa-solid fa-file-image');
+        $code .= $this->renderEditorButton($btn, $this->buildJsCall('openWithSelfMain', [$urlImageMgr, 'imgmanager', 400, 430]), _XOOPS_FORM_ALT_IMAGE, 'fa-solid fa-file-image', '<small> Manager</small>');
+        $code .= $this->renderEditorButton($btn, $this->buildJsCall('openWithSelfMain', [$urlSmilies, 'smilies', 300, 475]), _XOOPS_FORM_ALT_SMILEY, 'fa-solid fa-face-smile');
 
         $myts       = \MyTextSanitizer::getInstance();
         $extensions = array_filter($myts->config['extensions']);
@@ -444,8 +503,8 @@ EOJS;
                 $element->js .= $js;
             }
         }
-        $code .= $this->renderEditorButton($btn, 'xoopsCodeCode("' . $textarea_id . '", "' . $this->esc(_ENTERCODE) . '")', _XOOPS_FORM_ALT_CODE, 'fa-solid fa-code');
-        $code .= $this->renderEditorButton($btn, 'xoopsCodeQuote("' . $textarea_id . '", "' . $this->esc(_ENTERQUOTE) . '")', _XOOPS_FORM_ALT_QUOTE, 'fa-solid fa-quote-right');
+        $code .= $this->renderEditorButton($btn, $this->buildJsCall('xoopsCodeCode', [$textareaIdRaw, _ENTERCODE]), _XOOPS_FORM_ALT_CODE, 'fa-solid fa-code');
+        $code .= $this->renderEditorButton($btn, $this->buildJsCall('xoopsCodeQuote', [$textareaIdRaw, _ENTERQUOTE]), _XOOPS_FORM_ALT_QUOTE, 'fa-solid fa-quote-right');
         $code .= '</div>';
 
         $xoopsPreload = XoopsPreload::getInstance();
@@ -463,10 +522,12 @@ EOJS;
      */
     protected function renderFormDhtmlTATypography(XoopsFormDhtmlTextArea $element)
     {
-        $textarea_id = $this->esc($element->getName(false));
-        $hiddentext  = $this->esc($element->_hiddenText);
-        $btn         = self::BTN_NEUTRAL_SM;
-        $menuCls     = self::DROPDOWN_MENU_CLS;
+        $textareaIdRaw = (string) $element->getName(false);
+        $textarea_id   = $this->esc($textareaIdRaw);
+        $hiddentextRaw = (string) $element->_hiddenText;
+        $hiddentext    = $this->esc($hiddentextRaw);
+        $btn           = self::BTN_NEUTRAL_SM;
+        $menuCls       = self::DROPDOWN_MENU_CLS;
 
         $fontarray = !empty($GLOBALS['formtextdhtml_fonts']) ? $GLOBALS['formtextdhtml_fonts'] : [
             'Arial', 'Courier', 'Georgia', 'Helvetica', 'Impact', 'Verdana', 'Haettenschweiler',
@@ -481,48 +542,54 @@ EOJS;
 
         $fontStr = "<div class='flex flex-wrap gap-1 mt-2'>";
 
-        // Size dropdown
+        // Size dropdown — each link uses href='#' onclick='...; return false;'
+        // so the JavaScript runs through a real handler context instead of a
+        // `javascript:` URL (which adds URL decoding on top of HTML entity
+        // decoding before the JS engine sees it).
         $sizes = $GLOBALS['formtextdhtml_sizes'] ?? [];
         $fontStr .= "<div class='dropdown'>"
-            . "<div tabindex='0' role='button' class='{$btn}' title='" . _SIZE . "'><span class='fa-solid fa-text-height'></span></div>"
+            . "<div tabindex='0' role='button' class='{$btn}' title='" . $this->esc(_SIZE) . "'><span class='fa-solid fa-text-height'></span></div>"
             . "<ul tabindex='0' class='{$menuCls}'>";
         foreach ($sizes as $value => $label) {
-            $fontStr .= "<li><a href=\"javascript:xoopsSetElementAttribute('size', '" . $this->esc($value) . "', '{$textarea_id}', '{$hiddentext}');\">" . $this->esc($label) . "</a></li>";
+            $onclick = $this->buildJsCall('xoopsSetElementAttribute', ['size', (string) $value, $textareaIdRaw, $hiddentextRaw]);
+            $fontStr .= "<li><a href='#' onclick='" . $onclick . "; return false;'>" . $this->esc((string) $label) . '</a></li>';
         }
         $fontStr .= '</ul></div>';
 
         // Font dropdown
         $fontStr .= "<div class='dropdown'>"
-            . "<div tabindex='0' role='button' class='{$btn}' title='" . _FONT . "'><span class='fa-solid fa-font'></span></div>"
+            . "<div tabindex='0' role='button' class='{$btn}' title='" . $this->esc(_FONT) . "'><span class='fa-solid fa-font'></span></div>"
             . "<ul tabindex='0' class='{$menuCls}'>";
         foreach ($fontarray as $font) {
-            $fontStr .= "<li><a href=\"javascript:xoopsSetElementAttribute('font', '" . $this->esc($font) . "', '{$textarea_id}', '{$hiddentext}');\">" . $this->esc($font) . '</a></li>';
+            $onclick = $this->buildJsCall('xoopsSetElementAttribute', ['font', (string) $font, $textareaIdRaw, $hiddentextRaw]);
+            $fontStr .= "<li><a href='#' onclick='" . $onclick . "; return false;'>" . $this->esc((string) $font) . '</a></li>';
         }
         $fontStr .= '</ul></div>';
 
         // Color dropdown
         $fontStr .= "<div class='dropdown'>"
-            . "<div tabindex='0' role='button' class='{$btn}' title='" . _COLOR . "'><span class='fa-solid fa-palette'></span></div>"
+            . "<div tabindex='0' role='button' class='{$btn}' title='" . $this->esc(_COLOR) . "'><span class='fa-solid fa-palette'></span></div>"
             . "<ul tabindex='0' class='{$menuCls}'>";
         foreach ($colorArray as $color => $hex) {
-            $fontStr .= "<li><a href=\"javascript:xoopsSetElementAttribute('color', '{$hex}', '{$textarea_id}', '{$hiddentext}');\"><span style=\"color:#{$hex};\">" . $this->esc($color) . '</span></a></li>';
+            $onclick = $this->buildJsCall('xoopsSetElementAttribute', ['color', $hex, $textareaIdRaw, $hiddentextRaw]);
+            $fontStr .= "<li><a href='#' onclick='" . $onclick . "; return false;'><span style=\"color:#" . $this->esc($hex) . ";\">" . $this->esc($color) . '</span></a></li>';
         }
         $fontStr .= '</ul></div>';
 
         // Style buttons
         $styleBtn = self::BTN_NEUTRAL_SM . ' join-item';
         $fontStr .= "<div class='join'>";
-        $fontStr .= $this->renderEditorButton($styleBtn, 'xoopsMakeBold("' . $hiddentext . '", "' . $textarea_id . '")', _XOOPS_FORM_ALT_BOLD, 'fa-solid fa-bold');
-        $fontStr .= $this->renderEditorButton($styleBtn, 'xoopsMakeItalic("' . $hiddentext . '", "' . $textarea_id . '")', _XOOPS_FORM_ALT_ITALIC, 'fa-solid fa-italic');
-        $fontStr .= $this->renderEditorButton($styleBtn, 'xoopsMakeUnderline("' . $hiddentext . '", "' . $textarea_id . '")', _XOOPS_FORM_ALT_UNDERLINE, 'fa-solid fa-underline');
-        $fontStr .= $this->renderEditorButton($styleBtn, 'xoopsMakeLineThrough("' . $hiddentext . '", "' . $textarea_id . '")', _XOOPS_FORM_ALT_LINETHROUGH, 'fa-solid fa-strikethrough');
+        $fontStr .= $this->renderEditorButton($styleBtn, $this->buildJsCall('xoopsMakeBold', [$hiddentextRaw, $textareaIdRaw]), _XOOPS_FORM_ALT_BOLD, 'fa-solid fa-bold');
+        $fontStr .= $this->renderEditorButton($styleBtn, $this->buildJsCall('xoopsMakeItalic', [$hiddentextRaw, $textareaIdRaw]), _XOOPS_FORM_ALT_ITALIC, 'fa-solid fa-italic');
+        $fontStr .= $this->renderEditorButton($styleBtn, $this->buildJsCall('xoopsMakeUnderline', [$hiddentextRaw, $textareaIdRaw]), _XOOPS_FORM_ALT_UNDERLINE, 'fa-solid fa-underline');
+        $fontStr .= $this->renderEditorButton($styleBtn, $this->buildJsCall('xoopsMakeLineThrough', [$hiddentextRaw, $textareaIdRaw]), _XOOPS_FORM_ALT_LINETHROUGH, 'fa-solid fa-strikethrough');
         $fontStr .= '</div>';
 
         // Align buttons
         $fontStr .= "<div class='join'>";
-        $fontStr .= $this->renderEditorButton($styleBtn, 'xoopsMakeLeft("' . $hiddentext . '", "' . $textarea_id . '")', _XOOPS_FORM_ALT_LEFT, 'fa-solid fa-align-left');
-        $fontStr .= $this->renderEditorButton($styleBtn, 'xoopsMakeCenter("' . $hiddentext . '", "' . $textarea_id . '")', _XOOPS_FORM_ALT_CENTER, 'fa-solid fa-align-center');
-        $fontStr .= $this->renderEditorButton($styleBtn, 'xoopsMakeRight("' . $hiddentext . '", "' . $textarea_id . '")', _XOOPS_FORM_ALT_RIGHT, 'fa-solid fa-align-right');
+        $fontStr .= $this->renderEditorButton($styleBtn, $this->buildJsCall('xoopsMakeLeft', [$hiddentextRaw, $textareaIdRaw]), _XOOPS_FORM_ALT_LEFT, 'fa-solid fa-align-left');
+        $fontStr .= $this->renderEditorButton($styleBtn, $this->buildJsCall('xoopsMakeCenter', [$hiddentextRaw, $textareaIdRaw]), _XOOPS_FORM_ALT_CENTER, 'fa-solid fa-align-center');
+        $fontStr .= $this->renderEditorButton($styleBtn, $this->buildJsCall('xoopsMakeRight', [$hiddentextRaw, $textareaIdRaw]), _XOOPS_FORM_ALT_RIGHT, 'fa-solid fa-align-right');
         $fontStr .= '</div>';
 
         // Length check button — configs is a legacy dynamic property on some
@@ -531,9 +598,8 @@ EOJS;
         if (property_exists($element, 'configs') && is_array($element->configs) && isset($element->configs['maxlength'])) {
             $maxlength = (int) $element->configs['maxlength'];
         }
-        $fontStr .= "<button type='button' class='{$btn}' onclick=\"XoopsCheckLength('"
-            . $textarea_id . "', '" . $maxlength . "', '"
-            . $this->esc(_XOOPS_FORM_ALT_LENGTH) . "', '" . $this->esc(_XOOPS_FORM_ALT_LENGTH_MAX) . "');\" title='"
+        $lengthOnclick = $this->buildJsCall('XoopsCheckLength', [$textareaIdRaw, (string) $maxlength, _XOOPS_FORM_ALT_LENGTH, _XOOPS_FORM_ALT_LENGTH_MAX]);
+        $fontStr .= "<button type='button' class='{$btn}' onclick='" . $lengthOnclick . "' title='"
             . $this->esc(_XOOPS_FORM_ALT_CHECKLENGTH) . "'><span class='fa-solid fa-square-check'></span></button>";
         $fontStr .= '</div>';
 
