@@ -10,7 +10,7 @@ Shared Alpine.js runtime for XOOPS themes.
 
 Download the latest minified build from the [Alpine.js releases](https://github.com/alpinejs/alpine/releases) and place it here:
 
-```
+```text
 xoops_lib/Frameworks/alpine/alpine.min.js
 ```
 
