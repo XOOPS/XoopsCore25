@@ -56,10 +56,9 @@ class XoopsFormRendererTailwind implements XoopsFormRendererInterface
     /**
      * Capture a form element's render() output as a string.
      *
-     * XoopsFormElement::render() is empty in the base class but overridden by
-     * concrete subclasses to return a string. Static analyzers may still flag
-     * the base signature as returning null, so normalize non-string returns
-     * defensively. Any stray echoes are also captured via output buffering.
+     * XoopsFormElement::render() is empty in the base class but all concrete
+     * subclasses override it to return a string. Any stray echoes are also
+     * captured via output buffering.
      *
      * @param XoopsFormElement $element element to render
      *
@@ -68,11 +67,10 @@ class XoopsFormRendererTailwind implements XoopsFormRendererInterface
     protected function renderElementHtml(XoopsFormElement $element): string
     {
         ob_start();
-        $rendered = $element->render();
-        $echoed   = ob_get_clean();
-        $html     = is_string($rendered) ? $rendered : '';
+        $rendered = (string) $element->render();
+        $echoed   = (string) ob_get_clean();
 
-        return $html . (is_string($echoed) ? $echoed : '');
+        return $rendered . $echoed;
     }
 
     /**
