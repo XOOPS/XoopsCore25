@@ -56,8 +56,10 @@ class XoopsFormRendererTailwind implements XoopsFormRendererInterface
     /**
      * Capture a form element's render() output as a string.
      *
-     * Element render() methods delegate to the active renderer and return a
-     * string, but we wrap the call here so any stray echoes are captured too.
+     * XoopsFormElement::render() is empty in the base class but overridden by
+     * concrete subclasses to return a string. Static analyzers may still flag
+     * the base signature as returning null, so normalize non-string returns
+     * defensively. Any stray echoes are also captured via output buffering.
      *
      * @param XoopsFormElement $element element to render
      *
@@ -66,22 +68,27 @@ class XoopsFormRendererTailwind implements XoopsFormRendererInterface
     protected function renderElementHtml(XoopsFormElement $element): string
     {
         ob_start();
-        $html = (string) $element->render();
-        $echoed = ob_get_clean();
+        $rendered = $element->render();
+        $echoed   = ob_get_clean();
+        $html     = is_string($rendered) ? $rendered : '';
 
-        return $html . (string) $echoed;
+        return $html . (is_string($echoed) ? $echoed : '');
     }
 
     /**
      * Render an element's extra attribute string.
      *
-     * XoopsFormElement::getExtra() returns raw HTML that may contain attribute
-     * fragments like `onclick="..."`. This is legacy behaviour and cannot be
-     * fully safely escaped without breaking existing modules. Sanitize by
-     * stripping any '>' or '<' characters to prevent tag injection while
-     * preserving the attribute fragment format.
+     * Both XoopsFormElement::getExtra() and XoopsForm::getExtra() return raw
+     * HTML that may contain attribute fragments like `onclick="..."`. This is
+     * legacy behaviour and cannot be fully safely escaped without breaking
+     * existing modules. Sanitize by stripping any '>' or '<' characters to
+     * prevent tag injection while preserving the attribute fragment format.
      *
-     * @param XoopsFormElement $element element whose extra to render
+     * Accepts any object exposing getExtra() (XoopsFormElement, XoopsForm,
+     * XoopsThemeForm, etc.) — enforced via method_exists rather than a
+     * restrictive type hint.
+     *
+     * @param object $element element or form whose extra attributes to render
      *
      * @return string sanitized extra attribute string (leading space included)
      */
@@ -449,8 +456,12 @@ EOJS;
         $fontStr .= "<button type='button' class='{$styleBtn}' onclick='xoopsMakeRight(\"{$hiddentext}\", \"{$textarea_id}\");' title='" . _XOOPS_FORM_ALT_RIGHT . "'><span class='fa-solid fa-align-right'></span></button>";
         $fontStr .= '</div>';
 
-        // Length check button — read from configs like other renderers do
-        $maxlength = isset($element->configs['maxlength']) ? (int) $element->configs['maxlength'] : 0;
+        // Length check button — configs is a legacy dynamic property on some
+        // editor instances; guard the access to avoid PHP 8.2 dynamic property warnings
+        $maxlength = 0;
+        if (property_exists($element, 'configs') && is_array($element->configs) && isset($element->configs['maxlength'])) {
+            $maxlength = (int) $element->configs['maxlength'];
+        }
         $fontStr .= "<button type='button' class='{$btn}' onclick=\"XoopsCheckLength('"
             . $textarea_id . "', '" . $maxlength . "', '"
             . $this->esc(_XOOPS_FORM_ALT_LENGTH) . "', '" . $this->esc(_XOOPS_FORM_ALT_LENGTH_MAX) . "');\" title='"
@@ -595,7 +606,8 @@ EOJS;
         } else {
             $ret .= ' name="' . $name . '" id="' . $name . '" title="' . $title . '">';
         }
-        $valueStrings = is_array($value) ? array_map('strval', $value) : [];
+        // XoopsFormSelect::getValue() always returns an array
+        $valueStrings = array_map('strval', $value);
         foreach ($options as $optValue => $optName) {
             $selected = in_array((string) $optValue, $valueStrings, true) ? ' selected' : '';
             $ret .= '<option value="' . $this->esc($optValue) . '"' . $selected . '>'
@@ -662,17 +674,20 @@ EOJS;
             include_once XOOPS_ROOT_PATH . '/language/english/calendar.php';
         }
 
-        $name      = $this->esc($element->getName(false));
-        $rawValue  = $element->getValue(false);
-        if (is_numeric($rawValue) && (int) $rawValue === 0) {
+        $name     = $this->esc($element->getName(false));
+        $rawValue = $element->getValue(false);
+        // Blank: empty string or zero-valued timestamp → no display, open calendar at "today"
+        // Numeric timestamp → format as date
+        // Anything else → treat as a literal display string
+        if ($rawValue === '' || $rawValue === '0' || $rawValue === 0) {
             $display_value = '';
             $timestamp     = time();
-        } elseif (is_string($rawValue)) {
-            $display_value = $rawValue;
-            $timestamp     = time();
-        } else {
+        } elseif (is_numeric($rawValue)) {
             $timestamp     = (int) $rawValue;
             $display_value = date(_SHORTDATESTRING, $timestamp);
+        } else {
+            $display_value = (string) $rawValue;
+            $timestamp     = time();
         }
 
         $jstime = formatTimestamp($timestamp, 'm/d/Y');
