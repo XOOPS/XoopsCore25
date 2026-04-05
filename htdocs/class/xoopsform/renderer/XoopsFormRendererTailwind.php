@@ -132,11 +132,9 @@ class XoopsFormRendererTailwind implements XoopsFormRendererInterface
     protected function renderElementHtml(XoopsFormElement $element): string
     {
         $bufferLevel = ob_get_level();
-        /** @var mixed $rendered */
-        $rendered = '';
-        $echoed   = '';
         ob_start();
         try {
+            /** @var mixed $rendered */
             $rendered = call_user_func([$element, 'render']);
             $echoed   = (string) ob_get_clean();
         } finally {
@@ -523,9 +521,7 @@ EOJS;
     protected function renderFormDhtmlTATypography(XoopsFormDhtmlTextArea $element)
     {
         $textareaIdRaw = (string) $element->getName(false);
-        $textarea_id   = $this->esc($textareaIdRaw);
         $hiddentextRaw = (string) $element->_hiddenText;
-        $hiddentext    = $this->esc($hiddentextRaw);
         $btn           = self::BTN_NEUTRAL_SM;
         $menuCls       = self::DROPDOWN_MENU_CLS;
 
