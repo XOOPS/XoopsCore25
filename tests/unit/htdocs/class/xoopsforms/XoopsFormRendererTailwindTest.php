@@ -103,4 +103,29 @@ class XoopsFormRendererTailwindTest extends TestCase
         $this->assertStringContainsString('flex flex-wrap', $html);
         $this->assertStringContainsString('inline-flex', $html);
     }
+
+    public function testRenderFormCheckBoxEscapesOptionLabel(): void
+    {
+        xoops_load('XoopsFormCheckBox');
+        $element = new \XoopsFormCheckBox('Caption', 'name', '1');
+        $element->addOption('1', '<script>alert(1)</script>');
+        $html = $this->renderer->renderFormCheckBox($element);
+
+        $this->assertStringNotContainsString('<script>alert(1)</script>', $html);
+        $this->assertStringContainsString('&lt;script&gt;', $html);
+    }
+
+    public function testRenderThemeFormDoesNotThrowOnFormExtras(): void
+    {
+        xoops_load('XoopsThemeForm');
+        $form = new \XoopsThemeForm('Test Form', 'testform', 'action.php', 'post');
+        $form->addElement(new XoopsFormButton('Submit', 'submit', 'Go'));
+
+        // Must not throw TypeError — renderExtra previously only accepted XoopsFormElement
+        $html = $this->renderer->renderThemeForm($form);
+
+        $this->assertStringContainsString('<form', $html);
+        $this->assertStringContainsString('action="action.php"', $html);
+        $this->assertStringContainsString('</form>', $html);
+    }
 }

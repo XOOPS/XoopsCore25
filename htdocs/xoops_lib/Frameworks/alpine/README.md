@@ -8,13 +8,11 @@ Shared Alpine.js runtime for XOOPS themes.
 
 ## Installation
 
-Download the latest minified build from the [Alpine.js releases](https://github.com/alpinejs/alpine/releases) and place it here:
+Alpine.js is vendored in this directory — no manual download required. The file `alpine.min.js` ships with XOOPS and is ready to use.
 
-```text
-xoops_lib/Frameworks/alpine/alpine.min.js
-```
+### Updating the vendored copy
 
-Or via CDN download:
+To update Alpine.js to a newer version, replace `alpine.min.js` with the latest minified build from the [Alpine.js releases](https://github.com/alpinejs/alpine/releases), or via CDN:
 
 ```bash
 curl -sL "https://cdn.jsdelivr.net/npm/alpinejs@3/dist/cdn.min.js" -o alpine.min.js

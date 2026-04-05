@@ -85,8 +85,11 @@ class XoopsFormRendererTailwind implements XoopsFormRendererInterface
      *
      * @return string sanitized extra attribute string (leading space included)
      */
-    protected function renderExtra(XoopsFormElement $element): string
+    protected function renderExtra($element): string
     {
+        if (!is_object($element) || !method_exists($element, 'getExtra')) {
+            return '';
+        }
         $extra = (string) $element->getExtra();
         if ($extra === '') {
             return '';
@@ -106,7 +109,7 @@ class XoopsFormRendererTailwind implements XoopsFormRendererInterface
      */
     public function renderFormButton(XoopsFormButton $element)
     {
-        $name  = $this->esc($element->getName());
+        $name  = $this->esc($element->getName(false));
         $value = $this->esc($element->getValue());
         $type  = $this->esc($element->getType());
 
@@ -125,7 +128,7 @@ class XoopsFormRendererTailwind implements XoopsFormRendererInterface
      */
     public function renderFormButtonTray(XoopsFormButtonTray $element)
     {
-        $name  = $this->esc($element->getName());
+        $name  = $this->esc($element->getName(false));
         $type  = $this->esc($element->getType());
         $value = $this->esc($element->getValue());
 
@@ -154,8 +157,8 @@ class XoopsFormRendererTailwind implements XoopsFormRendererInterface
      */
     public function renderFormCheckBox(XoopsFormCheckBox $element)
     {
-        $elementName = $element->getName();
-        $elementId = $elementName;
+        $elementName    = $element->getName(false);
+        $elementId      = $elementName;
         $elementOptions = $element->getOptions();
         if (count($elementOptions) > 1 && substr($elementName, -2, 2) !== '[]') {
             $elementName .= '[]';
@@ -215,7 +218,7 @@ class XoopsFormRendererTailwind implements XoopsFormRendererInterface
                 . ' title="' . $this->esc(strip_tags((string) $name)) . '"'
                 . ' value="' . $this->esc($value) . '"'
                 . $checked . $extra . '>'
-                . '<span class="label-text">' . $name . $delimeter . '</span>'
+                . '<span class="label-text">' . $this->esc((string) $name) . $delimeter . '</span>'
                 . '</label>';
         }
         $ret .= '</div>';
@@ -234,7 +237,7 @@ class XoopsFormRendererTailwind implements XoopsFormRendererInterface
     private function isOptionChecked($optionValue, $current): bool
     {
         if (is_array($current)) {
-            return in_array($optionValue, $current);
+            return in_array((string) $optionValue, array_map('strval', $current), true);
         }
 
         return (string) $optionValue === (string) $current;
@@ -259,8 +262,8 @@ class XoopsFormRendererTailwind implements XoopsFormRendererInterface
             $assets = '<script type="text/javascript" src="' . XOOPS_URL . '/include/spectrum.js"></script>'
                 . '<link rel="stylesheet" type="text/css" href="' . XOOPS_URL . '/include/spectrum.css">';
         }
-        $name  = $this->esc($element->getName());
-        $title = $this->esc($element->getTitle());
+        $name  = $this->esc($element->getName(false));
+        $title = $this->esc($element->getTitle(false));
         $value = $this->esc($element->getValue());
 
         return $assets . '<input class="input input-bordered w-24 h-10 p-1" type="color"'
@@ -279,8 +282,8 @@ class XoopsFormRendererTailwind implements XoopsFormRendererInterface
     public function renderFormDhtmlTextArea(XoopsFormDhtmlTextArea $element)
     {
         xoops_loadLanguage('formdhtmltextarea');
-        $name  = $this->esc($element->getName());
-        $title = $this->esc($element->getTitle());
+        $name  = $this->esc($element->getName(false));
+        $title = $this->esc($element->getTitle(false));
 
         $ret  = $this->renderFormDhtmlTAXoopsCode($element) . "<br>\n";
         $ret .= $this->renderFormDhtmlTATypography($element);
@@ -340,7 +343,7 @@ EOJS;
      */
     protected function renderFormDhtmlTAXoopsCode(XoopsFormDhtmlTextArea $element)
     {
-        $textarea_id = $this->esc($element->getName());
+        $textarea_id = $this->esc($element->getName(false));
         $btn         = self::BTN_NEUTRAL_SM;
         $code        = "<div class='flex flex-wrap gap-1'>";
         $code .= "<button type='button' class='{$btn}' onclick='xoopsCodeUrl(\"{$textarea_id}\", \"" . $this->esc(_ENTERURL) . "\", \"" . $this->esc(_ENTERWEBTITLE) . "\");' title='" . $this->esc(_XOOPS_FORM_ALT_URL) . "'><span class='fa-solid fa-link' aria-hidden='true'></span></button>";
@@ -385,7 +388,7 @@ EOJS;
      */
     protected function renderFormDhtmlTATypography(XoopsFormDhtmlTextArea $element)
     {
-        $textarea_id = $this->esc($element->getName());
+        $textarea_id = $this->esc($element->getName(false));
         $hiddentext  = $this->esc($element->_hiddenText);
         $btn         = self::BTN_NEUTRAL_SM;
         $menuCls     = self::DROPDOWN_MENU_CLS;
@@ -478,13 +481,13 @@ EOJS;
         $count = 0;
         foreach ($element->getElements() as $ele) {
             if ($count > 0 && !$isVertical) {
-                $ret .= $this->esc($element->getDelimeter());
+                $ret .= $element->getDelimeter();
             }
             if (!$isVertical) {
                 $ret .= '<span class="inline-flex items-center gap-1">';
             }
             if ($ele->getCaption() != '') {
-                $ret .= '<label for="' . $this->esc($ele->getName()) . '" class="label-text">'
+                $ret .= '<label for="' . $this->esc($ele->getName(false)) . '" class="label-text">'
                     . $this->esc($ele->getCaption())
                     . ($ele->isRequired() ? '<span class="text-error ms-1">*</span>' : '')
                     . '</label>&nbsp;';
@@ -511,8 +514,8 @@ EOJS;
      */
     public function renderFormFile(XoopsFormFile $element)
     {
-        $name  = $this->esc($element->getName());
-        $title = $this->esc($element->getTitle());
+        $name  = $this->esc($element->getName(false));
+        $title = $this->esc($element->getTitle(false));
 
         return '<input type="hidden" name="MAX_FILE_SIZE" value="' . (int) $element->getMaxFileSize() . '">'
             . '<input type="file" class="file-input file-input-bordered w-full"'
@@ -530,7 +533,7 @@ EOJS;
      */
     public function renderFormLabel(XoopsFormLabel $element)
     {
-        return '<label class="label label-text" id="' . $this->esc($element->getName()) . '">'
+        return '<label class="label label-text" id="' . $this->esc($element->getName(false)) . '">'
             . $this->esc($element->getValue())
             . '</label>';
     }
@@ -544,7 +547,7 @@ EOJS;
      */
     public function renderFormPassword(XoopsFormPassword $element)
     {
-        $name = $this->esc($element->getName());
+        $name = $this->esc($element->getName(false));
 
         return '<input class="input input-bordered w-full" type="password"'
             . ' name="' . $name . '" id="' . $name . '"'
@@ -565,7 +568,7 @@ EOJS;
      */
     public function renderFormRadio(XoopsFormRadio $element)
     {
-        $elementName = $element->getName();
+        $elementName = $element->getName(false);
 
         return $this->renderChecked($element, 'radio', $elementName, $elementName);
     }
@@ -579,8 +582,8 @@ EOJS;
      */
     public function renderFormSelect(XoopsFormSelect $element)
     {
-        $name    = $this->esc($element->getName());
-        $title   = $this->esc($element->getTitle());
+        $name    = $this->esc($element->getName(false));
+        $title   = $this->esc($element->getTitle(false));
         $value   = $element->getValue();
         $options = $element->getOptions();
 
@@ -592,8 +595,9 @@ EOJS;
         } else {
             $ret .= ' name="' . $name . '" id="' . $name . '" title="' . $title . '">';
         }
+        $valueStrings = is_array($value) ? array_map('strval', $value) : [];
         foreach ($options as $optValue => $optName) {
-            $selected = (is_array($value) && count($value) > 0 && in_array($optValue, $value)) ? ' selected' : '';
+            $selected = in_array((string) $optValue, $valueStrings, true) ? ' selected' : '';
             $ret .= '<option value="' . $this->esc($optValue) . '"' . $selected . '>'
                 . $this->esc($optName) . '</option>';
         }
@@ -611,11 +615,11 @@ EOJS;
      */
     public function renderFormText(XoopsFormText $element)
     {
-        $name = $this->esc($element->getName());
+        $name = $this->esc($element->getName(false));
 
         return '<input class="input input-bordered w-full" type="text"'
             . ' name="' . $name . '" id="' . $name . '"'
-            . ' title="' . $this->esc($element->getTitle()) . '"'
+            . ' title="' . $this->esc($element->getTitle(false)) . '"'
             . ' size="' . (int) $element->getSize() . '"'
             . ' maxlength="' . (int) $element->getMaxlength() . '"'
             . ' value="' . $this->esc($element->getValue()) . '"'
@@ -631,11 +635,11 @@ EOJS;
      */
     public function renderFormTextArea(XoopsFormTextArea $element)
     {
-        $name = $this->esc($element->getName());
+        $name = $this->esc($element->getName(false));
 
         return '<textarea class="textarea textarea-bordered w-full"'
             . ' name="' . $name . '" id="' . $name . '"'
-            . ' title="' . $this->esc($element->getTitle()) . '"'
+            . ' title="' . $this->esc($element->getTitle(false)) . '"'
             . ' rows="' . (int) $element->getRows() . '"'
             . ' cols="' . (int) $element->getCols() . '"'
             . $this->renderExtra($element) . '>'
@@ -658,7 +662,7 @@ EOJS;
             include_once XOOPS_ROOT_PATH . '/language/english/calendar.php';
         }
 
-        $name      = $this->esc($element->getName());
+        $name      = $this->esc($element->getName(false));
         $rawValue  = $element->getValue(false);
         if (is_numeric($rawValue) && (int) $rawValue === 0) {
             $display_value = '';
@@ -749,16 +753,16 @@ EOJS;
      */
     public function renderThemeForm(XoopsThemeForm $form)
     {
-        $formName = $this->esc($form->getName());
+        $formName = $this->esc($form->getName(false));
 
         $ret  = '<div class="card bg-base-100 shadow">';
         $ret .= '<form name="' . $formName . '" id="' . $formName . '"'
-            . ' action="' . $this->esc($form->getAction()) . '"'
+            . ' action="' . $this->esc($form->getAction(false)) . '"'
             . ' method="' . $this->esc($form->getMethod()) . '"'
             . ' onsubmit="return xoopsFormValidate_' . $formName . '();"'
             . $this->renderExtra($form)
             . ' class="card-body">'
-            . '<h3 class="card-title">' . $this->esc($form->getTitle()) . '</h3>';
+            . '<h3 class="card-title">' . $this->esc($form->getTitle(false)) . '</h3>';
         $hidden = '';
 
         foreach ($form->getElements() as $element) {
@@ -774,7 +778,7 @@ EOJS;
             $ret .= '<div class="form-control w-full mb-4 grid grid-cols-1 md:grid-cols-12 gap-2 md:items-start">';
             $caption = $element->getCaption();
             if ($caption !== '') {
-                $ret .= '<label for="' . $this->esc($element->getName()) . '" class="label md:col-span-3 md:justify-end">'
+                $ret .= '<label for="' . $this->esc($element->getName(false)) . '" class="label md:col-span-3 md:justify-end">'
                     . '<span class="label-text">' . $this->esc($caption)
                     . ($element->isRequired() ? '<span class="text-error ms-1">*</span>' : '')
                     . '</span></label>';
@@ -785,7 +789,7 @@ EOJS;
             $ret .= $this->renderElementHtml($element);
             $desc = $element->getDescription();
             if ($desc !== '') {
-                $ret .= '<div class="label"><span class="label-text-alt text-base-content/60">' . $desc . '</span></div>';
+                $ret .= '<div class="label"><span class="label-text-alt text-base-content/60">' . $this->esc($desc) . '</span></div>';
             }
             $ret .= '</div>';
             $ret .= '</div>';
