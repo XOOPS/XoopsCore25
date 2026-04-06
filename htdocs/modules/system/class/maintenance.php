@@ -199,7 +199,7 @@ class SystemMaintenance
     }
 
     /**
-     * Write a file and warn on failure or short write.
+     * Write a file atomically and warn on failure or short write.
      *
      * @param string $filename
      * @param string $content
@@ -210,11 +210,21 @@ class SystemMaintenance
     {
         $label    = $this->getWarningPathLabel($filename);
         $expected = strlen($content);
-        $result   = file_put_contents($filename, $content, LOCK_EX);
+        $tempFile = tempnam(dirname($filename), 'mtn');
+
+        if ($tempFile === false) {
+            trigger_error(sprintf('Failed to create temp file for %s', $label), E_USER_WARNING);
+
+            return;
+        }
+
+        $result = file_put_contents($tempFile, $content, LOCK_EX);
 
         if ($result === false) {
+            @unlink($tempFile);
             trigger_error(sprintf('Failed to write guard file: %s', $label), E_USER_WARNING);
         } elseif ($result !== $expected) {
+            @unlink($tempFile);
             trigger_error(
                 sprintf(
                     'Short write for guard file %s: wrote %d of %d bytes',
@@ -224,6 +234,12 @@ class SystemMaintenance
                 ),
                 E_USER_WARNING
             );
+        } else {
+            @chmod($tempFile, 0644);
+            if (!@rename($tempFile, $filename)) {
+                @unlink($tempFile);
+                trigger_error(sprintf('Failed to replace guard file: %s', $label), E_USER_WARNING);
+            }
         }
     }
 
