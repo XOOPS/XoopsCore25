@@ -204,8 +204,11 @@ function xoops_module_write_admin_menu($content)
 
         return false;
     }
-    if (fwrite($file, $content) == -1) {
+    $bytesWritten = fwrite($file, $content);
+    if ($bytesWritten === false) {
         echo 'failed write file';
+
+        fclose($file);
 
         return false;
     }
@@ -243,9 +246,11 @@ function xoops_write_index_file($path = '')
 
         return false;
     }
-    if (fwrite($file, "<?php\nhttp_response_code(404);\n") == -1) {
-
+    $bytesWritten = fwrite($file, "<?php\nhttp_response_code(404);\n");
+    if ($bytesWritten === false) {
         echo 'failed write file';
+
+        fclose($file);
 
         return false;
     }
