@@ -244,7 +244,9 @@ function xoops_write_index_file($path = '')
 
     $path     = substr($path, -1) === '/' ? substr($path, 0, -1) : $path;
     $filename = $path . '/index.php';
-    $content  = "<?php\nhttp_response_code(404);\nexit;\n";
+    $content  = '<?php' . PHP_EOL
+        . 'http_response_code(404);' . PHP_EOL
+        . 'exit;' . PHP_EOL;
     if (file_exists($filename)) {
         return true;
     }
