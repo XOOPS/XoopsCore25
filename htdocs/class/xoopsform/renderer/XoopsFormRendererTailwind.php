@@ -1036,14 +1036,19 @@ EOJS;
      */
     public function renderThemeForm(XoopsThemeForm $form)
     {
-        $formNameRaw  = (string) $form->getName(false);
-        $formNameAttr = $this->esc($formNameRaw);
+        // Use getName() (default encoding) — not getName(false) — so the form
+        // name matches the function name that renderValidationJS() generates.
+        // This is the convention established by XoopsFormRendererBootstrap4 and
+        // XoopsForm::renderValidationJS() itself. XOOPS assumes form names are
+        // JS-identifier-safe; this renderer does not attempt to fix that broader
+        // core constraint.
+        $formName = (string) $form->getName();
 
         $ret  = '<div class="card bg-base-100 shadow">';
-        $ret .= '<form name="' . $formNameAttr . self::ATTR_ID . $formNameAttr . '"'
+        $ret .= '<form name="' . $formName . self::ATTR_ID . $formName . '"'
             . ' action="' . $this->esc($form->getAction(false)) . '"'
             . ' method="' . $this->esc($form->getMethod()) . '"'
-            . ' onsubmit="return xoopsFormValidate_' . $formNameRaw . '();"'
+            . ' onsubmit="return xoopsFormValidate_' . $formName . '();"'
             . $this->renderExtra($form)
             . ' class="card-body">'
             . '<h3 class="card-title">' . $this->esc($form->getTitle(false)) . '</h3>';
