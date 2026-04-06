@@ -198,10 +198,24 @@ function xoops_module_write_admin_menu($content)
     if (!xoopsfwrite()) {
         return false;
     }
-    $filename     = XOOPS_CACHE_PATH . '/adminmenu.php';
-    $bytesWritten = file_put_contents($filename, $content, LOCK_EX);
-    if ($bytesWritten !== strlen($content)) {
-        echo 'failed write file';
+    $filename      = XOOPS_CACHE_PATH . '/adminmenu.php';
+    $expectedBytes = strlen($content);
+    $bytesWritten  = file_put_contents($filename, $content, LOCK_EX);
+    if ($bytesWritten === false) {
+        trigger_error(sprintf('Failed to write file: %s', basename($filename)), E_USER_WARNING);
+
+        return false;
+    }
+    if ($bytesWritten !== $expectedBytes) {
+        trigger_error(
+            sprintf(
+                'Short write for %s: wrote %d of %d bytes',
+                basename($filename),
+                $bytesWritten,
+                $expectedBytes
+            ),
+            E_USER_WARNING
+        );
 
         return false;
     }
@@ -234,9 +248,23 @@ function xoops_write_index_file($path = '')
     if (file_exists($filename)) {
         return true;
     }
-    $bytesWritten = file_put_contents($filename, $content, LOCK_EX);
-    if ($bytesWritten !== strlen($content)) {
-        echo 'failed write file';
+    $expectedBytes = strlen($content);
+    $bytesWritten  = file_put_contents($filename, $content, LOCK_EX);
+    if ($bytesWritten === false) {
+        trigger_error(sprintf('Failed to write file: %s', basename($filename)), E_USER_WARNING);
+
+        return false;
+    }
+    if ($bytesWritten !== $expectedBytes) {
+        trigger_error(
+            sprintf(
+                'Short write for %s: wrote %d of %d bytes',
+                basename($filename),
+                $bytesWritten,
+                $expectedBytes
+            ),
+            E_USER_WARNING
+        );
 
         return false;
     }
