@@ -232,6 +232,49 @@ class XoopsFormRendererTailwindTest extends TestCase
         $this->assertSame('"Übergröße"', $renderer->exposedEsJs('Übergröße'));
     }
 
+    public function testEsJsHandlesInvalidUtf8(): void
+    {
+        $renderer = new class extends XoopsFormRendererTailwind {
+            public function exposedEsJs(string $value): string
+            {
+                return $this->esJs($value);
+            }
+        };
+
+        // Invalid UTF-8 byte sequence — json_encode returns false without
+        // JSON_THROW_ON_ERROR, which would silently produce malformed JS.
+        // With the fix, esJs() catches the JsonException and returns a safe
+        // empty JS string literal.
+        $result = @$renderer->exposedEsJs("\xC3\x28");
+        $this->assertSame('""', $result, 'Invalid UTF-8 must produce a safe empty JS string literal, not an empty string');
+    }
+
+    public function testRenderFormElementTrayHiddenChildSkipsWrappers(): void
+    {
+        // Build a horizontal tray: [visible A] [hidden H] [visible B]
+        // The hidden element must not inject a delimiter or <span> wrapper.
+        $tray = new XoopsFormElementTray('Tray', ' | ');
+        $tray->setOrientation(XoopsFormElementTray::ORIENTATION_HORIZONTAL);
+        $tray->addElement(new XoopsFormButton('A', 'a', 'A'));
+        $tray->addElement(new \XoopsFormHidden('h1', 'hval'));
+        $tray->addElement(new XoopsFormButton('B', 'b', 'B'));
+
+        $html = $this->renderer->renderFormElementTray($tray);
+
+        // Hidden element markup is present (rendered bare, not skipped entirely)
+        $this->assertStringContainsString('name="h1"', $html);
+
+        // Exactly one delimiter between the two visible elements — if the
+        // hidden child consumed a slot, there would be two ' | ' delimiters
+        // or a delimiter before A.
+        $this->assertSame(1, substr_count($html, ' | '), 'Hidden child must not inject a delimiter');
+
+        // The hidden element must NOT be wrapped in the inline-flex span
+        // that visible elements get in horizontal orientation.
+        // Count inline-flex spans: should be exactly 2 (one per visible element)
+        $this->assertSame(2, substr_count($html, 'inline-flex'), 'Hidden child must not be wrapped in inline-flex span');
+    }
+
     public function testBuildCalendarLocaleJsEncodesLocaleStrings(): void
     {
         // Anonymous subclass exposes the protected helper directly, so the test
@@ -410,42 +453,39 @@ class XoopsFormRendererTailwindTest extends TestCase
         };
 
         $previousLang = $GLOBALS['xoopsConfig']['language'] ?? null;
-        // Rejected inputs return the naive (non-canonicalized) english
-        // fallback path; the happy path below canonicalizes via realpath.
-        $englishFallback = XOOPS_ROOT_PATH . '/language/english/calendar.php';
-        $englishCanonical = realpath($englishFallback);
+        // All return paths are now canonicalized (the fallback itself is
+        // resolved via realpath early in the method), so every assertion
+        // expects the same canonical english path.
+        $englishCanonical = realpath(XOOPS_ROOT_PATH . '/language/english/calendar.php');
         $this->assertNotFalse($englishCanonical, 'english calendar.php must exist in the repo');
 
         try {
-            // Layer 1 — allowlist rejections all return the naive fallback
-            // path without ever touching the filesystem for the malicious
-            // input.
+            // Layer 1 — allowlist rejections
             $GLOBALS['xoopsConfig']['language'] = '../../../etc';
-            $this->assertSame($englishFallback, $renderer->exposedResolveCalendarLanguageFile(), 'traversal must be rejected');
+            $this->assertSame($englishCanonical, $renderer->exposedResolveCalendarLanguageFile(), 'traversal must be rejected');
 
             $GLOBALS['xoopsConfig']['language'] = '/etc/passwd';
-            $this->assertSame($englishFallback, $renderer->exposedResolveCalendarLanguageFile(), 'absolute path must be rejected');
+            $this->assertSame($englishCanonical, $renderer->exposedResolveCalendarLanguageFile(), 'absolute path must be rejected');
 
             $GLOBALS['xoopsConfig']['language'] = "english\x00/../../../etc";
-            $this->assertSame($englishFallback, $renderer->exposedResolveCalendarLanguageFile(), 'null byte injection must be rejected');
+            $this->assertSame($englishCanonical, $renderer->exposedResolveCalendarLanguageFile(), 'null byte injection must be rejected');
 
             $GLOBALS['xoopsConfig']['language'] = 'en us';
-            $this->assertSame($englishFallback, $renderer->exposedResolveCalendarLanguageFile(), 'space must be rejected');
+            $this->assertSame($englishCanonical, $renderer->exposedResolveCalendarLanguageFile(), 'space must be rejected');
 
             $GLOBALS['xoopsConfig']['language'] = '';
-            $this->assertSame($englishFallback, $renderer->exposedResolveCalendarLanguageFile(), 'empty string must be rejected');
+            $this->assertSame($englishCanonical, $renderer->exposedResolveCalendarLanguageFile(), 'empty string must be rejected');
 
             // Valid plain language name that does not ship a calendar.php —
             // regex passes but is_file() fails, so we hit the same fallback.
             $GLOBALS['xoopsConfig']['language'] = 'no_such_language';
-            $this->assertSame($englishFallback, $renderer->exposedResolveCalendarLanguageFile(), 'missing per-language calendar.php must fall back');
+            $this->assertSame($englishCanonical, $renderer->exposedResolveCalendarLanguageFile(), 'missing per-language calendar.php must fall back');
 
-            // Missing config entirely — default to english, which ships with
-            // core. Canonicalized via realpath (happy path).
+            // Missing config entirely — default to english
             unset($GLOBALS['xoopsConfig']['language']);
             $this->assertSame($englishCanonical, $renderer->exposedResolveCalendarLanguageFile(), 'missing config must resolve to english');
 
-            // Explicit english — same canonicalized result.
+            // Explicit english
             $GLOBALS['xoopsConfig']['language'] = 'english';
             $this->assertSame($englishCanonical, $renderer->exposedResolveCalendarLanguageFile(), 'explicit english must resolve');
         } finally {

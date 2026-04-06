@@ -52,6 +52,7 @@ class XoopsFormRendererTailwind implements XoopsFormRendererInterface
     private const ATTR_ID         = '" id="';
     private const ATTR_TITLE      = '" title="';
     private const ATTR_TITLE_LEAD = ' title="';
+    private const ATTR_TITLE_SQ   = "' title='";
     private const ATTR_VALUE      = ' value="';
     private const ATTR_SIZE       = ' size="';
     private const ATTR_MAXLENGTH  = ' maxlength="';
@@ -84,10 +85,20 @@ class XoopsFormRendererTailwind implements XoopsFormRendererInterface
      */
     protected function esJs(string $value): string
     {
-        return (string) json_encode(
-            $value,
-            JSON_HEX_TAG | JSON_HEX_QUOT | JSON_HEX_APOS | JSON_HEX_AMP | JSON_UNESCAPED_UNICODE,
-        );
+        try {
+            return json_encode(
+                $value,
+                JSON_HEX_TAG | JSON_HEX_QUOT | JSON_HEX_APOS | JSON_HEX_AMP
+                | JSON_UNESCAPED_UNICODE | JSON_THROW_ON_ERROR,
+            );
+        } catch (\JsonException $e) {
+            trigger_error(
+                'XoopsFormRendererTailwind::esJs: ' . $e->getMessage(),
+                E_USER_WARNING,
+            );
+
+            return '""';
+        }
     }
 
     /**
@@ -128,6 +139,8 @@ class XoopsFormRendererTailwind implements XoopsFormRendererInterface
      * @param XoopsFormElement $element element to render
      *
      * @return string rendered HTML
+     *
+     * @throws \Throwable if the element's render() method throws
      */
     protected function renderElementHtml(XoopsFormElement $element): string
     {
@@ -137,6 +150,8 @@ class XoopsFormRendererTailwind implements XoopsFormRendererInterface
             /** @var mixed $rendered */
             $rendered = call_user_func([$element, 'render']);
             $echoed   = (string) ob_get_clean();
+
+            return ((string) $rendered) . $echoed;
         } finally {
             // Peel any buffer levels that are still above the baseline. Covers
             // two cases:
@@ -151,8 +166,6 @@ class XoopsFormRendererTailwind implements XoopsFormRendererInterface
                 ob_end_clean();
             }
         }
-
-        return ((string) $rendered) . $echoed;
     }
 
     /**
@@ -344,14 +357,18 @@ class XoopsFormRendererTailwind implements XoopsFormRendererInterface
      */
     public function renderFormColorPicker(XoopsFormColorPicker $element)
     {
+        static $fallbackEmitted = false;
+
         $assets = '';
         if (isset($GLOBALS['xoTheme'])) {
             $GLOBALS['xoTheme']->addScript('include/spectrum.js');
             $GLOBALS['xoTheme']->addStylesheet('include/spectrum.css');
-        } else {
+        } elseif (!$fallbackEmitted) {
             // Prepend assets to the returned HTML instead of echoing directly,
-            // so renderers remain side-effect free.
-            $assets = '<script type="text/javascript" src="' . XOOPS_URL . '/include/spectrum.js"></script>'
+            // so renderers remain side-effect free. Emit exactly once per
+            // request so forms with multiple color pickers do not duplicate.
+            $fallbackEmitted = true;
+            $assets          = '<script type="text/javascript" src="' . XOOPS_URL . '/include/spectrum.js"></script>'
                 . '<link rel="stylesheet" type="text/css" href="' . XOOPS_URL . '/include/spectrum.css">';
         }
         $name  = $this->esc($element->getName(false));
@@ -370,6 +387,8 @@ class XoopsFormRendererTailwind implements XoopsFormRendererInterface
      * @param XoopsFormDhtmlTextArea $element form element
      *
      * @return string rendered form element
+     *
+     * @throws \Throwable if nested rendering, file I/O, or token generation throws
      */
     public function renderFormDhtmlTextArea(XoopsFormDhtmlTextArea $element)
     {
@@ -407,7 +426,7 @@ class XoopsFormRendererTailwind implements XoopsFormRendererInterface
                 (int) $element->doHtml,
                 (string) $GLOBALS['xoopsSecurity']->createToken(),
             ]);
-            $button = "<button type='button' class='btn btn-primary btn-sm' onclick='" . $previewOnclick . "' title='"
+            $button = "<button type='button' class='btn btn-primary btn-sm' onclick='" . $previewOnclick . self::ATTR_TITLE_SQ
                 . $this->esc(_PREVIEW) . "'>" . $this->esc(_PREVIEW) . '</button>';
 
             $ret .= '<br>' . "<div id='" . $name . "_hidden' class='card bg-base-200 mt-2'>"
@@ -456,7 +475,7 @@ EOJS;
     {
         return "<button type='button' class='" . $class
             . "' onclick='" . $onclickJs
-            . "' title='" . $this->esc($title) . "'>"
+            . self::ATTR_TITLE_SQ . $this->esc($title) . "'>"
             . "<span class='" . $iconClass . "' aria-hidden='true'></span>"
             . $trailingHtml
             . '</button>';
@@ -595,7 +614,7 @@ EOJS;
             $maxlength = (int) $element->configs['maxlength'];
         }
         $lengthOnclick = $this->buildJsCall('XoopsCheckLength', [$textareaIdRaw, (string) $maxlength, _XOOPS_FORM_ALT_LENGTH, _XOOPS_FORM_ALT_LENGTH_MAX]);
-        $fontStr .= "<button type='button' class='{$btn}' onclick='" . $lengthOnclick . "' title='"
+        $fontStr .= "<button type='button' class='{$btn}' onclick='" . $lengthOnclick . self::ATTR_TITLE_SQ
             . $this->esc(_XOOPS_FORM_ALT_CHECKLENGTH) . "'><span class='fa-solid fa-square-check'></span></button>";
         $fontStr .= '</div>';
 
@@ -622,6 +641,12 @@ EOJS;
         $ret   = $container;
         $count = 0;
         foreach ($element->getElements() as $ele) {
+            // Hidden elements must not consume delimiter/wrapper slots —
+            // emit them bare and skip the visible-element layout path.
+            if ($ele->isHidden()) {
+                $ret .= $this->renderElementHtml($ele) . NWLINE;
+                continue;
+            }
             if ($count > 0 && !$isVertical) {
                 $ret .= $element->getDelimeter();
             }
@@ -638,9 +663,7 @@ EOJS;
             if (!$isVertical) {
                 $ret .= '</span>';
             }
-            if (!$ele->isHidden()) {
-                ++$count;
-            }
+            ++$count;
         }
         $ret .= '</div>';
 
@@ -795,6 +818,8 @@ EOJS;
      * @param XoopsFormTextDateSelect $element form element
      *
      * @return string rendered form element
+     *
+     * @throws \Throwable if language file inclusion or formatting throws
      */
     public function renderFormTextDateSelect(XoopsFormTextDateSelect $element)
     {
@@ -803,7 +828,8 @@ EOJS;
 
         include_once $this->resolveCalendarLanguageFile();
 
-        $name     = $this->esc($element->getName(false));
+        $nameRaw  = (string) $element->getName(false);
+        $name     = $this->esc($nameRaw);
         $rawValue = $element->getValue(false);
         // Blank: empty string or zero-valued timestamp → no display, open calendar at "today"
         // Numeric timestamp → format as date
@@ -819,8 +845,7 @@ EOJS;
             $timestamp     = time();
         }
 
-        $jstime   = formatTimestamp($timestamp, 'm/d/Y');
-        $inlineJs = $this->buildCalendarLocaleJs($jstime);
+        $jstime = formatTimestamp($timestamp, 'm/d/Y');
 
         $assets = '';
         if (isset($GLOBALS['xoTheme']) && is_object($GLOBALS['xoTheme'])) {
@@ -828,7 +853,7 @@ EOJS;
             $GLOBALS['xoTheme']->addStylesheet('include/calendar-blue.css');
             if (!$included) {
                 $included = true;
-                $GLOBALS['xoTheme']->addScript('', '', $inlineJs);
+                $GLOBALS['xoTheme']->addScript('', '', $this->buildCalendarLocaleJs($jstime));
             }
         } elseif (!$fallbackEmitted) {
             // No theme object is available (e.g., standalone AJAX handler or
@@ -837,6 +862,7 @@ EOJS;
             // below references an undefined function. Emit exactly once per
             // request so forms with many date fields do not duplicate the JS.
             $fallbackEmitted = true;
+            $inlineJs        = $this->buildCalendarLocaleJs($jstime);
             $assets          = '<script type="text/javascript" src="' . XOOPS_URL . '/include/calendar.js"></script>'
                 . '<link rel="stylesheet" type="text/css" href="' . XOOPS_URL . '/include/calendar-blue.css">'
                 . '<script type="text/javascript">' . $inlineJs . '</script>';
@@ -849,8 +875,8 @@ EOJS;
             . self::ATTR_MAXLENGTH . (int) $element->getMaxlength() . '"'
             . self::ATTR_VALUE . $this->esc($display_value) . '"'
             . $this->renderExtra($element) . '>'
-            . '<button class="btn btn-neutral join-item" type="button"'
-            . ' onclick="return showCalendar(\'' . $name . '\');">'
+            . "<button class='btn btn-neutral join-item' type='button'"
+            . " onclick='return " . $this->buildJsCall('showCalendar', [$nameRaw]) . ";'>"
             . '<i class="fa-solid fa-calendar" aria-hidden="true"></i></button>'
             . '</div>';
     }
@@ -887,6 +913,16 @@ EOJS;
     {
         $baseDir  = XOOPS_ROOT_PATH . '/language';
         $fallback = $baseDir . '/english/calendar.php';
+
+        // Canonicalize the fallback so include_once keys match regardless of
+        // whether the caller arrives here via the happy path (which returns a
+        // realpath-canonicalized string) or a rejection path. Without this,
+        // a request that hits both paths would include calendar.php twice
+        // because include_once compares literal path strings.
+        $realFallback = realpath($fallback);
+        if ($realFallback !== false) {
+            $fallback = $realFallback;
+        }
 
         // Layer 1: allowlist filter on the configured language name
         $lang = (string) ($GLOBALS['xoopsConfig']['language'] ?? 'english');
@@ -989,6 +1025,8 @@ EOJS;
      * @param XoopsThemeForm $form form to render
      *
      * @return string rendered form
+     *
+     * @throws \Throwable if nested element rendering throws
      */
     public function renderThemeForm(XoopsThemeForm $form)
     {
