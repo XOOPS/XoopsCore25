@@ -310,7 +310,7 @@ class XoopsFormRendererTailwind implements XoopsFormRendererInterface
         $idSuffix     = 0;
         $elementValue = $element->getValue();
         $extra        = $this->renderExtra($element);
-        $delimeter    = $element->getDelimeter();
+        $delimiter    = $element->getDelimeter();
 
         foreach ($element->getOptions() as $value => $name) {
             ++$idSuffix;
@@ -323,7 +323,7 @@ class XoopsFormRendererTailwind implements XoopsFormRendererInterface
                 . self::ATTR_TITLE_LEAD . $this->esc(strip_tags((string) $name)) . '"'
                 . self::ATTR_VALUE . $this->esc($value) . '"'
                 . $checked . $extra . '>'
-                . '<span class="label-text">' . $this->esc((string) $name) . $delimeter . '</span>'
+                . '<span class="label-text">' . $this->esc((string) $name) . $delimiter . '</span>'
                 . '</label>';
         }
         $ret .= '</div>';
@@ -1033,13 +1033,14 @@ EOJS;
      */
     public function renderThemeForm(XoopsThemeForm $form)
     {
-        $formName = $this->esc($form->getName(false));
+        $formNameRaw  = (string) $form->getName(false);
+        $formNameAttr = $this->esc($formNameRaw);
 
         $ret  = '<div class="card bg-base-100 shadow">';
-        $ret .= '<form name="' . $formName . self::ATTR_ID . $formName . '"'
+        $ret .= '<form name="' . $formNameAttr . self::ATTR_ID . $formNameAttr . '"'
             . ' action="' . $this->esc($form->getAction(false)) . '"'
             . ' method="' . $this->esc($form->getMethod()) . '"'
-            . ' onsubmit="return xoopsFormValidate_' . $formName . '();"'
+            . ' onsubmit="return xoopsFormValidate_' . $formNameRaw . '();"'
             . $this->renderExtra($form)
             . ' class="card-body">'
             . '<h3 class="card-title">' . $this->esc($form->getTitle(false)) . '</h3>';
