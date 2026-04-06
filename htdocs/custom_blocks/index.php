@@ -9,5 +9,5 @@
  * @license             GNU GPL 2.0 or later (https://www.gnu.org/licenses/gpl-2.0.html)
  * @see                 docs/custom-blocks-tutorial.md
  */
-header('HTTP/1.0 404 Not Found');
+http_response_code(404);
 exit;

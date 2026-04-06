@@ -46,7 +46,7 @@ if (!isset($path) && $rawQueryString !== '') {
 
 //We are not allowing output of xoops_data
 if ($path_type === 'var') {
-    header('HTTP/1.0 404 Not Found');
+    http_response_code(404);
     exit();
 }
 
@@ -55,20 +55,20 @@ $dir  = realpath($xoops->paths[$path_type][0]);
 
 //We are not allowing directory traversal either
 if (false === strpos($file, (string) $dir)) {
-    header('HTTP/1.0 404 Not Found');
+    http_response_code(404);
     exit();
 }
 
 //We can't output empty files and php files do not output
 if (empty($file) || strpos($file, '.php') !== false) {
-    header('HTTP/1.0 404 Not Found');
+    http_response_code(404);
     exit();
 }
 
 $file = $xoops->path($path);
 // Is there really a file to output?
 if (!file_exists($file)) {
-    header('HTTP/1.0 404 Not Found');
+    http_response_code(404);
     exit();
 }
 
@@ -77,7 +77,7 @@ $types = include $xoops->path('include/mimetypes.inc.php');
 //$content_type = isset($types[$ext]) ? $types[$ext] : 'text/plain';
 //Do not output garbage
 if (!isset($types[$ext])) {
-    header('HTTP/1.0 404 Not Found');
+    http_response_code(404);
     exit();
 }
 

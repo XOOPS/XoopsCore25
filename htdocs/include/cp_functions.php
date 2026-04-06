@@ -243,7 +243,7 @@ function xoops_write_index_file($path = '')
 
         return false;
     }
-    if (fwrite($file, "<?php\nheader('HTTP/1.0 404 Not Found');\n") == -1) {
+    if (fwrite($file, "<?php\nhttp_response_code(404);\n") == -1) {
 
         echo 'failed write file';
 
