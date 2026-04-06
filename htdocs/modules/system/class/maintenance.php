@@ -235,7 +235,14 @@ class SystemMaintenance
                 E_USER_WARNING
             );
         } else {
-            @chmod($tempFile, 0644);
+            $targetPerms = 0644;
+            if (file_exists($filename)) {
+                $currentPerms = fileperms($filename);
+                if ($currentPerms !== false) {
+                    $targetPerms = $currentPerms & 0777;
+                }
+            }
+            @chmod($tempFile, $targetPerms);
             if (!@rename($tempFile, $filename)) {
                 @unlink($tempFile);
                 trigger_error(sprintf('Failed to replace guard file: %s', $label), E_USER_WARNING);

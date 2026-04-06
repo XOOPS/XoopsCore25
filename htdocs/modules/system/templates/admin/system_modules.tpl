@@ -15,6 +15,9 @@
             <a class="ui-corner-all tooltip" href="admin.php?fct=modulesadmin&amp;op=installlist" title="<{$smarty.const._AM_SYSTEM_MODULES_TOINSTALL}>">
                 <img src="<{xoAdminIcons 'install.png'}>" alt="<{$smarty.const._AM_SYSTEM_MODULES_TOINSTALL}>"/>
                 <{$smarty.const._AM_SYSTEM_MODULES_TOINSTALL}>&nbsp;<span class="red">(<{$toinstall_nb}>)</span></a>
+            <a class="ui-corner-all tooltip" href="admin.php?fct=modulesadmin&amp;op=registry" title="<{$smarty.const._AM_SYSTEM_MODULES_INSTALL_REGISTRY}>">
+                <img src="<{xoAdminIcons 'index.png'}>" alt="<{$smarty.const._AM_SYSTEM_MODULES_INSTALL_REGISTRY}>"/>
+                <{$smarty.const._AM_SYSTEM_MODULES_INSTALL_REGISTRY}></a>
         </div>
     </div>
     <div class="clear spacer"></div>

@@ -237,6 +237,45 @@ switch ($op) {
         //xoops_module_list();
         break;
 
+    case 'registry':
+        // Define Stylesheet
+        $xoTheme->addStylesheet(XOOPS_URL . '/modules/system/css/admin.css');
+        // Define Breadcrumb and tips
+        $xoBreadCrumb->addLink(_AM_SYSTEM_MODULES_INSTALL_REGISTRY);
+        $xoBreadCrumb->render();
+
+        // Registry URL
+        $registryUrl = 'https://acp.xoops.org/registry/modules.json';
+
+        $registry_mods = [];
+        try {
+            $options = [
+                'http' => [
+                    'header' => "User-Agent: XOOPS\r\n",
+                    'timeout' => 5,
+                ],
+            ];
+            $context = stream_context_create($options);
+            $content = @file_get_contents($registryUrl, false, $context);
+            if ($content !== false) {
+                $registry_mods = json_decode($content, true);
+            }
+        } catch (\Exception $e) {
+            // Silently fail or log error
+        }
+
+        $xoopsTpl->assign('registry_mods', $registry_mods);
+        $xoopsTpl->assign('registry_url', $registryUrl);
+
+        // Define main template
+        $GLOBALS['xoopsOption']['template_main'] = 'system_modules_registry.tpl';
+
+        // Call Header
+        xoops_cp_header();
+        // Call Footer
+        xoops_cp_footer();
+        break;
+
     case 'confirm':
         // Define main template
         $GLOBALS['xoopsOption']['template_main'] = 'system_modules_confirm.tpl';
