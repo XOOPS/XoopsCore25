@@ -243,9 +243,36 @@ class SystemMaintenance
                 }
             }
             @chmod($tempFile, $targetPerms);
+
+            $backupFile = null;
+            if (file_exists($filename)) {
+                $backupFile = tempnam(dirname($filename), 'mtb');
+                if ($backupFile === false) {
+                    @unlink($tempFile);
+                    trigger_error(sprintf('Failed to create backup file for %s', $label), E_USER_WARNING);
+
+                    return;
+                }
+                @unlink($backupFile);
+                if (!@rename($filename, $backupFile)) {
+                    @unlink($tempFile);
+                    trigger_error(sprintf('Failed to back up guard file: %s', $label), E_USER_WARNING);
+
+                    return;
+                }
+            }
+
             if (!@rename($tempFile, $filename)) {
                 @unlink($tempFile);
+                if ($backupFile !== null) {
+                    if (!@rename($backupFile, $filename)) {
+                        trigger_error(sprintf('Failed to restore original guard file: %s', $label), E_USER_WARNING);
+                    }
+                }
+
                 trigger_error(sprintf('Failed to replace guard file: %s', $label), E_USER_WARNING);
+            } elseif ($backupFile !== null && file_exists($backupFile) && !@unlink($backupFile)) {
+                trigger_error(sprintf('Failed to remove backup guard file: %s', $label), E_USER_WARNING);
             }
         }
     }
