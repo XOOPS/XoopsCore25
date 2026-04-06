@@ -9,9 +9,6 @@
  *
  * @copyright   2000-2026 XOOPS Project (https://xoops.org)
  * @license     GNU GPL 2.0 or later (https://www.gnu.org/licenses/gpl-2.0.html)
- * @package     tests
- * @subpackage  xoopsforms
- * @since       2.5.12
  * @author      XOOPS Project
  */
 
@@ -53,6 +50,16 @@ xoops_load('XoopsFormRendererTailwind');
  * @license   GNU GPL 2.0 or later (https://www.gnu.org/licenses/gpl-2.0.html)
  * @link      https://xoops.org
  */
+/**
+ * Dedicated exception for the buffer-leak test fixtures.
+ *
+ * SonarQube requires a non-generic exception class; this satisfies that
+ * rule without polluting the production namespace.
+ */
+class RenderTestException extends \RuntimeException
+{
+}
+
 class XoopsFormRendererTailwindTest extends TestCase
 {
     private XoopsFormRendererTailwind $renderer;
@@ -319,7 +326,7 @@ class XoopsFormRendererTailwindTest extends TestCase
 
             public function render()
             {
-                throw new \RuntimeException('boom');
+                throw new RenderTestException('boom');
             }
         };
 
@@ -333,8 +340,8 @@ class XoopsFormRendererTailwindTest extends TestCase
         $levelBefore = ob_get_level();
         try {
             $renderer->callRenderElementHtml($throwing);
-            $this->fail('Expected RuntimeException was not thrown');
-        } catch (\RuntimeException $e) {
+            $this->fail('Expected RenderTestException was not thrown');
+        } catch (RenderTestException $e) {
             $this->assertSame('boom', $e->getMessage());
         }
         $this->assertSame($levelBefore, ob_get_level(), 'renderElementHtml must not leak an output buffer on exception');

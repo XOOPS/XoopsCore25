@@ -53,6 +53,7 @@ class XoopsFormRendererTailwind implements XoopsFormRendererInterface
     private const ATTR_TITLE      = '" title="';
     private const ATTR_TITLE_LEAD = ' title="';
     private const ATTR_TITLE_SQ   = "' title='";
+    private const ATTR_ARIA_LABEL = "' aria-label='";
     private const ATTR_VALUE      = ' value="';
     private const ATTR_SIZE       = ' size="';
     private const ATTR_MAXLENGTH  = ' maxlength="';
@@ -477,7 +478,7 @@ EOJS;
 
         return "<button type='button' class='" . $class
             . "' onclick='" . $onclickJs
-            . self::ATTR_TITLE_SQ . $escapedTitle . "' aria-label='" . $escapedTitle . "'>"
+            . self::ATTR_TITLE_SQ . $escapedTitle . self::ATTR_ARIA_LABEL . $escapedTitle . "'>"
             . "<span class='" . $iconClass . "' aria-hidden='true'></span>"
             . $trailingHtml
             . '</button>';
@@ -565,7 +566,7 @@ EOJS;
         // decoding before the JS engine sees it).
         $sizes = $GLOBALS['formtextdhtml_sizes'] ?? [];
         $fontStr .= "<div class='dropdown'>"
-            . "<div tabindex='0' role='button' class='{$btn}' title='" . $this->esc(_SIZE) . "' aria-label='" . $this->esc(_SIZE) . "'><span class='fa-solid fa-text-height'></span></div>"
+            . "<div tabindex='0' role='button' class='{$btn}' title='" . $this->esc(_SIZE) . self::ATTR_ARIA_LABEL . $this->esc(_SIZE) . "'><span class='fa-solid fa-text-height'></span></div>"
             . "<ul tabindex='0' class='{$menuCls}'>";
         foreach ($sizes as $value => $label) {
             $onclick = $this->buildJsCall('xoopsSetElementAttribute', ['size', (string) $value, $textareaIdRaw, $hiddentextRaw]);
@@ -575,7 +576,7 @@ EOJS;
 
         // Font dropdown
         $fontStr .= "<div class='dropdown'>"
-            . "<div tabindex='0' role='button' class='{$btn}' title='" . $this->esc(_FONT) . "' aria-label='" . $this->esc(_FONT) . "'><span class='fa-solid fa-font'></span></div>"
+            . "<div tabindex='0' role='button' class='{$btn}' title='" . $this->esc(_FONT) . self::ATTR_ARIA_LABEL . $this->esc(_FONT) . "'><span class='fa-solid fa-font'></span></div>"
             . "<ul tabindex='0' class='{$menuCls}'>";
         foreach ($fontarray as $font) {
             $onclick = $this->buildJsCall('xoopsSetElementAttribute', ['font', (string) $font, $textareaIdRaw, $hiddentextRaw]);
@@ -585,7 +586,7 @@ EOJS;
 
         // Color dropdown
         $fontStr .= "<div class='dropdown'>"
-            . "<div tabindex='0' role='button' class='{$btn}' title='" . $this->esc(_COLOR) . "' aria-label='" . $this->esc(_COLOR) . "'><span class='fa-solid fa-palette'></span></div>"
+            . "<div tabindex='0' role='button' class='{$btn}' title='" . $this->esc(_COLOR) . self::ATTR_ARIA_LABEL . $this->esc(_COLOR) . "'><span class='fa-solid fa-palette'></span></div>"
             . "<ul tabindex='0' class='{$menuCls}'>";
         foreach ($colorArray as $color => $hex) {
             $onclick = $this->buildJsCall('xoopsSetElementAttribute', ['color', $hex, $textareaIdRaw, $hiddentextRaw]);
@@ -618,7 +619,7 @@ EOJS;
         $lengthOnclick = $this->buildJsCall('XoopsCheckLength', [$textareaIdRaw, (string) $maxlength, _XOOPS_FORM_ALT_LENGTH, _XOOPS_FORM_ALT_LENGTH_MAX]);
         $checkLengthLabel = $this->esc(_XOOPS_FORM_ALT_CHECKLENGTH);
         $fontStr .= "<button type='button' class='{$btn}' onclick='" . $lengthOnclick . self::ATTR_TITLE_SQ
-            . $checkLengthLabel . "' aria-label='" . $checkLengthLabel . "'><span class='fa-solid fa-square-check'></span></button>";
+            . $checkLengthLabel . self::ATTR_ARIA_LABEL . $checkLengthLabel . "'><span class='fa-solid fa-square-check'></span></button>";
         $fontStr .= '</div>';
 
         return $fontStr;
