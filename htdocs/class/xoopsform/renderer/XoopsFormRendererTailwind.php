@@ -1053,7 +1053,7 @@ EOJS;
             $ret .= $this->renderThemeFormField($element);
         }
         if (count($form->getRequired()) > 0) {
-            $ret .= NWLINE . '<div class="text-sm text-base-content/60 mt-2"><span class="text-error">*</span> = ' . _REQUIRED . '</div>' . NWLINE;
+            $ret .= NWLINE . '<div class="text-sm text-base-content/60 mt-2"><span class="text-error">*</span> = ' . $this->esc(_REQUIRED) . '</div>' . NWLINE;
         }
         $ret .= $hidden;
         $ret .= '</form></div>';
