@@ -177,7 +177,14 @@ function xoops_write_file_atomically($filename, $content)
             return false;
         }
 
-        $backupFile = $tempFile . '.bak';
+        $backupFile = tempnam($directory, 'xwb');
+        if ($backupFile === false) {
+            @unlink($tempFile);
+            trigger_error(sprintf(XOOPS_WRITE_FILE_REPLACE_ERROR, $label), E_USER_WARNING);
+
+            return false;
+        }
+        @unlink($backupFile);
         if (!@rename($filename, $backupFile)) {
             @unlink($tempFile);
             trigger_error(sprintf(XOOPS_WRITE_FILE_REPLACE_ERROR, $label), E_USER_WARNING);
