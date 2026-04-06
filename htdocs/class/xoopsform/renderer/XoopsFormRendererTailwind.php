@@ -565,7 +565,7 @@ EOJS;
         // decoding before the JS engine sees it).
         $sizes = $GLOBALS['formtextdhtml_sizes'] ?? [];
         $fontStr .= "<div class='dropdown'>"
-            . "<div tabindex='0' role='button' class='{$btn}' title='" . $this->esc(_SIZE) . "'><span class='fa-solid fa-text-height'></span></div>"
+            . "<div tabindex='0' role='button' class='{$btn}' title='" . $this->esc(_SIZE) . "' aria-label='" . $this->esc(_SIZE) . "'><span class='fa-solid fa-text-height'></span></div>"
             . "<ul tabindex='0' class='{$menuCls}'>";
         foreach ($sizes as $value => $label) {
             $onclick = $this->buildJsCall('xoopsSetElementAttribute', ['size', (string) $value, $textareaIdRaw, $hiddentextRaw]);
@@ -575,7 +575,7 @@ EOJS;
 
         // Font dropdown
         $fontStr .= "<div class='dropdown'>"
-            . "<div tabindex='0' role='button' class='{$btn}' title='" . $this->esc(_FONT) . "'><span class='fa-solid fa-font'></span></div>"
+            . "<div tabindex='0' role='button' class='{$btn}' title='" . $this->esc(_FONT) . "' aria-label='" . $this->esc(_FONT) . "'><span class='fa-solid fa-font'></span></div>"
             . "<ul tabindex='0' class='{$menuCls}'>";
         foreach ($fontarray as $font) {
             $onclick = $this->buildJsCall('xoopsSetElementAttribute', ['font', (string) $font, $textareaIdRaw, $hiddentextRaw]);
@@ -585,7 +585,7 @@ EOJS;
 
         // Color dropdown
         $fontStr .= "<div class='dropdown'>"
-            . "<div tabindex='0' role='button' class='{$btn}' title='" . $this->esc(_COLOR) . "'><span class='fa-solid fa-palette'></span></div>"
+            . "<div tabindex='0' role='button' class='{$btn}' title='" . $this->esc(_COLOR) . "' aria-label='" . $this->esc(_COLOR) . "'><span class='fa-solid fa-palette'></span></div>"
             . "<ul tabindex='0' class='{$menuCls}'>";
         foreach ($colorArray as $color => $hex) {
             $onclick = $this->buildJsCall('xoopsSetElementAttribute', ['color', $hex, $textareaIdRaw, $hiddentextRaw]);
@@ -616,8 +616,9 @@ EOJS;
             $maxlength = (int) $element->configs['maxlength'];
         }
         $lengthOnclick = $this->buildJsCall('XoopsCheckLength', [$textareaIdRaw, (string) $maxlength, _XOOPS_FORM_ALT_LENGTH, _XOOPS_FORM_ALT_LENGTH_MAX]);
+        $checkLengthLabel = $this->esc(_XOOPS_FORM_ALT_CHECKLENGTH);
         $fontStr .= "<button type='button' class='{$btn}' onclick='" . $lengthOnclick . self::ATTR_TITLE_SQ
-            . $this->esc(_XOOPS_FORM_ALT_CHECKLENGTH) . "'><span class='fa-solid fa-square-check'></span></button>";
+            . $checkLengthLabel . "' aria-label='" . $checkLengthLabel . "'><span class='fa-solid fa-square-check'></span></button>";
         $fontStr .= '</div>';
 
         return $fontStr;
@@ -632,6 +633,8 @@ EOJS;
      * @param XoopsFormElementTray $element form element
      *
      * @return string rendered form element
+     *
+     * @throws \Throwable if nested element rendering throws
      */
     public function renderFormElementTray(XoopsFormElementTray $element)
     {
@@ -1107,8 +1110,11 @@ EOJS;
      * Support for themed addBreak
      *
      * @param XoopsThemeForm $form  form being broken
-     * @param string         $extra pre-rendered content for break row
-     * @param string         $class class for row
+     * @param string         $extra pre-rendered HTML for the break row — rendered
+     *                              verbatim (not escaped) to match the convention
+     *                              established by all Bootstrap renderers; callers
+     *                              must ensure content is safe
+     * @param string         $class CSS class for the row (sanitized to alphanum/space/dash/underscore)
      *
      * @return void
      */
