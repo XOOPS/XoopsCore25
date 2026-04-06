@@ -159,6 +159,9 @@ function xoops_write_file_atomically($filename, $content)
 
         return false;
     }
+    $targetPerms = file_exists($filename) ? (fileperms($filename) & 0777) : 0644;
+    @chmod($tempFile, $targetPerms);
+
     if (!@rename($tempFile, $filename)) {
         if (!file_exists($filename)) {
             @unlink($tempFile);
