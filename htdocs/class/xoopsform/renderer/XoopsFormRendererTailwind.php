@@ -152,7 +152,7 @@ class XoopsFormRendererTailwind implements XoopsFormRendererInterface
             $rendered = call_user_func([$element, 'render']);
             $echoed   = (string) ob_get_clean();
 
-            return ((string) $rendered) . $echoed;
+            return $echoed . (string) $rendered;
         } finally {
             // Peel any buffer levels that are still above the baseline. Covers
             // two cases:
@@ -1098,9 +1098,12 @@ EOJS;
             $label = '<div class="md:col-span-3"></div>';
         }
 
+        // Render description raw (not escaped) to match Bootstrap4/Legacy
+        // renderers. Modules commonly use HTML in descriptions (links, <code>,
+        // <em>, etc.). Escaping would break that established contract.
         $desc     = $element->getDescription();
         $descHtml = $desc !== ''
-            ? '<div class="label"><span class="label-text-alt text-base-content/60">' . $this->esc($desc) . '</span></div>'
+            ? '<div class="label"><span class="label-text-alt text-base-content/60">' . $desc . '</span></div>'
             : '';
 
         return '<div class="form-control w-full mb-4 grid grid-cols-1 md:grid-cols-12 gap-2 md:items-start">'
