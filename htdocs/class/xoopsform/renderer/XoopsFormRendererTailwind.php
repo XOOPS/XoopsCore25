@@ -491,7 +491,6 @@ EOJS;
     protected function renderFormDhtmlTAXoopsCode(XoopsFormDhtmlTextArea $element)
     {
         $textareaIdRaw = (string) $element->getName(false);
-        $textarea_id   = $this->esc($textareaIdRaw);
         $urlImageMgr   = XOOPS_URL . '/imagemanager.php?target=' . $textareaIdRaw;
         $urlSmilies    = XOOPS_URL . '/misc.php?action=showpopups&type=smilies&target=' . $textareaIdRaw;
         $btn           = self::BTN_NEUTRAL_SM;
@@ -507,7 +506,7 @@ EOJS;
         $extensions = array_filter($myts->config['extensions']);
         foreach (array_keys($extensions) as $key) {
             $extension = $myts->loadExtension($key);
-            $result    = $extension->encode($textarea_id);
+            $result    = $extension->encode($textareaIdRaw);
             $encode    = $result[0] ?? '';
             $js        = $result[1] ?? '';
             if (empty($encode)) {
