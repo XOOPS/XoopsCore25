@@ -473,9 +473,11 @@ EOJS;
      */
     protected function renderEditorButton(string $class, string $onclickJs, string $title, string $iconClass, string $trailingHtml = ''): string
     {
+        $escapedTitle = $this->esc($title);
+
         return "<button type='button' class='" . $class
             . "' onclick='" . $onclickJs
-            . self::ATTR_TITLE_SQ . $this->esc($title) . "'>"
+            . self::ATTR_TITLE_SQ . $escapedTitle . "' aria-label='" . $escapedTitle . "'>"
             . "<span class='" . $iconClass . "' aria-hidden='true'></span>"
             . $trailingHtml
             . '</button>';
@@ -490,9 +492,10 @@ EOJS;
      */
     protected function renderFormDhtmlTAXoopsCode(XoopsFormDhtmlTextArea $element)
     {
-        $textareaIdRaw = (string) $element->getName(false);
-        $urlImageMgr   = XOOPS_URL . '/imagemanager.php?target=' . $textareaIdRaw;
-        $urlSmilies    = XOOPS_URL . '/misc.php?action=showpopups&type=smilies&target=' . $textareaIdRaw;
+        $textareaIdRaw   = (string) $element->getName(false);
+        $textareaIdParam = rawurlencode($textareaIdRaw);
+        $urlImageMgr     = XOOPS_URL . '/imagemanager.php?target=' . $textareaIdParam;
+        $urlSmilies      = XOOPS_URL . '/misc.php?action=showpopups&type=smilies&target=' . $textareaIdParam;
         $btn           = self::BTN_NEUTRAL_SM;
 
         $code = "<div class='flex flex-wrap gap-1'>";
@@ -875,7 +878,8 @@ EOJS;
             . self::ATTR_VALUE . $this->esc($display_value) . '"'
             . $this->renderExtra($element) . '>'
             . "<button class='btn btn-neutral join-item' type='button'"
-            . " onclick='return " . $this->buildJsCall('showCalendar', [$nameRaw]) . ";'>"
+            . " onclick='return " . $this->buildJsCall('showCalendar', [$nameRaw]) . ";'"
+            . " aria-label='" . $this->esc($element->getTitle(false)) . "'>"
             . '<i class="fa-solid fa-calendar" aria-hidden="true"></i></button>'
             . '</div>';
     }
