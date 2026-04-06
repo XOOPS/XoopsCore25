@@ -199,15 +199,17 @@ class SystemMaintenance
             }
             $guardFile = $dir . 'index.php';
             $content   = '<?php' . PHP_EOL . "http_response_code(404);" . PHP_EOL . 'exit;' . PHP_EOL;
+            $segments  = array_values(array_filter(explode('/', str_replace('\\', '/', $guardFile)), 'strlen'));
+            $guardLabel = implode('/', array_slice($segments, -3));
             $expected  = strlen($content);
             $result    = file_put_contents($guardFile, $content, LOCK_EX);
             if ($result === false) {
-                trigger_error(sprintf('Failed to write guard file: %s', basename($guardFile)), E_USER_WARNING);
+                trigger_error(sprintf('Failed to write guard file: %s', $guardLabel), E_USER_WARNING);
             } elseif ($result !== $expected) {
                 trigger_error(
                     sprintf(
                         'Short write for guard file %s: wrote %d of %d bytes',
-                        basename($guardFile),
+                        $guardLabel,
                         $result,
                         $expected
                     ),

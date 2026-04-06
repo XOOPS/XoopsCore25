@@ -102,6 +102,79 @@ function xoopsfwrite()
 }
 
 /**
+ * Create a short, non-sensitive file label for warnings.
+ *
+ * @param string $filename
+ * @return string
+ */
+function xoops_file_label($filename)
+{
+    $normalized = str_replace('\\', '/', $filename);
+    $segments   = array_values(array_filter(explode('/', $normalized), 'strlen'));
+    $tail       = array_slice($segments, -2);
+
+    return empty($tail) ? basename($filename) : implode('/', $tail);
+}
+
+/**
+ * Write a file through a temporary sibling and replace the target on success.
+ *
+ * @param string $filename
+ * @param string $content
+ * @return bool
+ */
+function xoops_write_file_atomically($filename, $content)
+{
+    $directory = dirname($filename);
+    $label     = xoops_file_label($filename);
+    $tempFile  = tempnam($directory, 'xwf');
+    if ($tempFile === false) {
+        trigger_error(sprintf('Failed to create temp file for %s', $label), E_USER_WARNING);
+
+        return false;
+    }
+
+    $expectedBytes = strlen($content);
+    $bytesWritten  = file_put_contents($tempFile, $content, LOCK_EX);
+    if ($bytesWritten === false) {
+        @unlink($tempFile);
+        trigger_error(sprintf('Failed to write file: %s', $label), E_USER_WARNING);
+
+        return false;
+    }
+    if ($bytesWritten !== $expectedBytes) {
+        @unlink($tempFile);
+        trigger_error(
+            sprintf(
+                'Short write for %s: wrote %d of %d bytes',
+                $label,
+                $bytesWritten,
+                $expectedBytes
+            ),
+            E_USER_WARNING
+        );
+
+        return false;
+    }
+    if (!@rename($tempFile, $filename)) {
+        if (file_exists($filename) && !@unlink($filename)) {
+            @unlink($tempFile);
+            trigger_error(sprintf('Failed to replace file: %s', $label), E_USER_WARNING);
+
+            return false;
+        }
+        if (!@rename($tempFile, $filename)) {
+            @unlink($tempFile);
+            trigger_error(sprintf('Failed to replace file: %s', $label), E_USER_WARNING);
+
+            return false;
+        }
+    }
+
+    return true;
+}
+
+/**
  * Xoops Module Menu
  * @deprecated
  * @return mixed
@@ -198,25 +271,8 @@ function xoops_module_write_admin_menu($content)
     if (!xoopsfwrite()) {
         return false;
     }
-    $filename      = XOOPS_CACHE_PATH . '/adminmenu.php';
-    $expectedBytes = strlen($content);
-    $bytesWritten  = file_put_contents($filename, $content, LOCK_EX);
-    if ($bytesWritten === false) {
-        trigger_error(sprintf('Failed to write file: %s', basename($filename)), E_USER_WARNING);
-
-        return false;
-    }
-    if ($bytesWritten !== $expectedBytes) {
-        trigger_error(
-            sprintf(
-                'Short write for %s: wrote %d of %d bytes',
-                basename($filename),
-                $bytesWritten,
-                $expectedBytes
-            ),
-            E_USER_WARNING
-        );
-
+    $filename = XOOPS_CACHE_PATH . '/adminmenu.php';
+    if (!xoops_write_file_atomically($filename, $content)) {
         return false;
     }
 
@@ -250,24 +306,7 @@ function xoops_write_index_file($path = '')
     if (file_exists($filename)) {
         return true;
     }
-    $expectedBytes = strlen($content);
-    $bytesWritten  = file_put_contents($filename, $content, LOCK_EX);
-    if ($bytesWritten === false) {
-        trigger_error(sprintf('Failed to write file: %s', basename($filename)), E_USER_WARNING);
-
-        return false;
-    }
-    if ($bytesWritten !== $expectedBytes) {
-        trigger_error(
-            sprintf(
-                'Short write for %s: wrote %d of %d bytes',
-                basename($filename),
-                $bytesWritten,
-                $expectedBytes
-            ),
-            E_USER_WARNING
-        );
-
+    if (!xoops_write_file_atomically($filename, $content)) {
         return false;
     }
 
