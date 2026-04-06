@@ -16,7 +16,7 @@
  */
 
 define('XOOPS_CPFUNC_LOADED', 1);
-define('XOOPS_WRITE_FILE_REPLACE_ERROR', 'Failed to replace file: %s');
+define('XOOPS_WRITE_FILE_WRITE_ERROR', 'Failed to write file: %s');
 
 /**
  * CP Header
@@ -172,7 +172,7 @@ function xoops_write_file_atomically($filename, $content)
     if (!@rename($tempFile, $filename)) {
         if (!file_exists($filename)) {
             @unlink($tempFile);
-            trigger_error(sprintf(XOOPS_WRITE_FILE_REPLACE_ERROR, $label), E_USER_WARNING);
+            trigger_error(sprintf(XOOPS_WRITE_FILE_WRITE_ERROR, $label), E_USER_WARNING);
 
             return false;
         }
@@ -180,14 +180,14 @@ function xoops_write_file_atomically($filename, $content)
         $backupFile = tempnam($directory, 'xwb');
         if ($backupFile === false) {
             @unlink($tempFile);
-            trigger_error(sprintf(XOOPS_WRITE_FILE_REPLACE_ERROR, $label), E_USER_WARNING);
+            trigger_error(sprintf(XOOPS_WRITE_FILE_WRITE_ERROR, $label), E_USER_WARNING);
 
             return false;
         }
         @unlink($backupFile);
         if (!@rename($filename, $backupFile)) {
             @unlink($tempFile);
-            trigger_error(sprintf(XOOPS_WRITE_FILE_REPLACE_ERROR, $label), E_USER_WARNING);
+            trigger_error(sprintf(XOOPS_WRITE_FILE_WRITE_ERROR, $label), E_USER_WARNING);
 
             return false;
         }
@@ -208,7 +208,7 @@ function xoops_write_file_atomically($filename, $content)
             }
 
             @unlink($tempFile);
-            trigger_error(sprintf(XOOPS_WRITE_FILE_REPLACE_ERROR, $label), E_USER_WARNING);
+            trigger_error(sprintf(XOOPS_WRITE_FILE_WRITE_ERROR, $label), E_USER_WARNING);
 
             return false;
         }
