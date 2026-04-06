@@ -180,6 +180,54 @@ class SystemMaintenance
     }
 
     /**
+     * Build a non-sensitive path label for warning messages.
+     *
+     * @param string $filename
+     *
+     * @return string
+     */
+    private function getWarningPathLabel($filename)
+    {
+        $normalized = str_replace('\\', '/', $filename);
+        $rootPrefix = rtrim(str_replace('\\', '/', XOOPS_ROOT_PATH), '/') . '/';
+
+        if (strncmp($normalized, $rootPrefix, strlen($rootPrefix)) === 0) {
+            return substr($normalized, strlen($rootPrefix));
+        }
+
+        return basename($filename);
+    }
+
+    /**
+     * Write a file and warn on failure or short write.
+     *
+     * @param string $filename
+     * @param string $content
+     *
+     * @return void
+     */
+    private function writeFileWithWarning($filename, $content)
+    {
+        $label    = $this->getWarningPathLabel($filename);
+        $expected = strlen($content);
+        $result   = file_put_contents($filename, $content, LOCK_EX);
+
+        if ($result === false) {
+            trigger_error(sprintf('Failed to write guard file: %s', $label), E_USER_WARNING);
+        } elseif ($result !== $expected) {
+            trigger_error(
+                sprintf(
+                    'Short write for guard file %s: wrote %d of %d bytes',
+                    $label,
+                    $result,
+                    $expected
+                ),
+                E_USER_WARNING
+            );
+        }
+    }
+
+    /**
      * Delete all files in a directory
      *
      * @param string $dir directory to clear
@@ -199,23 +247,7 @@ class SystemMaintenance
             }
             $guardFile = $dir . 'index.php';
             $content   = '<?php' . PHP_EOL . "http_response_code(404);" . PHP_EOL . 'exit;' . PHP_EOL;
-            $segments  = array_values(array_filter(explode('/', str_replace('\\', '/', $guardFile)), 'strlen'));
-            $guardLabel = implode('/', array_slice($segments, -3));
-            $expected  = strlen($content);
-            $result    = file_put_contents($guardFile, $content, LOCK_EX);
-            if ($result === false) {
-                trigger_error(sprintf('Failed to write guard file: %s', $guardLabel), E_USER_WARNING);
-            } elseif ($result !== $expected) {
-                trigger_error(
-                    sprintf(
-                        'Short write for guard file %s: wrote %d of %d bytes',
-                        $guardLabel,
-                        $result,
-                        $expected
-                    ),
-                    E_USER_WARNING
-                );
-            }
+            $this->writeFileWithWarning($guardFile, $content);
         }
     }
 
