@@ -110,10 +110,13 @@ function xoopsfwrite()
 function xoops_file_label($filename)
 {
     $normalized = str_replace('\\', '/', $filename);
-    $segments   = array_values(array_filter(explode('/', $normalized), 'strlen'));
-    $tail       = array_slice($segments, -2);
+    $rootPrefix = rtrim(str_replace('\\', '/', XOOPS_ROOT_PATH), '/') . '/';
 
-    return empty($tail) ? basename($filename) : implode('/', $tail);
+    if (strncmp($normalized, $rootPrefix, strlen($rootPrefix)) === 0) {
+        return substr($normalized, strlen($rootPrefix));
+    }
+
+    return basename($filename);
 }
 
 /**
@@ -157,18 +160,36 @@ function xoops_write_file_atomically($filename, $content)
         return false;
     }
     if (!@rename($tempFile, $filename)) {
-        if (file_exists($filename) && !@unlink($filename)) {
+        if (!file_exists($filename)) {
             @unlink($tempFile);
             trigger_error(sprintf('Failed to replace file: %s', $label), E_USER_WARNING);
 
             return false;
         }
+
+        $backupFile = $tempFile . '.bak';
+        if (!@rename($filename, $backupFile)) {
+            @unlink($tempFile);
+            trigger_error(sprintf('Failed to replace file: %s', $label), E_USER_WARNING);
+
+            return false;
+        }
+
         if (!@rename($tempFile, $filename)) {
+            if (!@rename($backupFile, $filename)) {
+                @unlink($tempFile);
+                trigger_error(sprintf('Failed to replace file and restore original: %s', $label), E_USER_WARNING);
+
+                return false;
+            }
+
             @unlink($tempFile);
             trigger_error(sprintf('Failed to replace file: %s', $label), E_USER_WARNING);
 
             return false;
         }
+
+        @unlink($backupFile);
     }
 
     return true;
