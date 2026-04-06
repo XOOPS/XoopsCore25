@@ -159,7 +159,13 @@ function xoops_write_file_atomically($filename, $content)
 
         return false;
     }
-    $targetPerms = file_exists($filename) ? (fileperms($filename) & 0777) : 0644;
+    $targetPerms = 0644;
+    if (file_exists($filename)) {
+        $currentPerms = fileperms($filename);
+        if ($currentPerms !== false) {
+            $targetPerms = $currentPerms & 0777;
+        }
+    }
     @chmod($tempFile, $targetPerms);
 
     if (!@rename($tempFile, $filename)) {
