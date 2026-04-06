@@ -178,7 +178,14 @@ function xoops_write_file_atomically($filename, $content)
         if (!@rename($tempFile, $filename)) {
             if (!@rename($backupFile, $filename)) {
                 @unlink($tempFile);
-                trigger_error(sprintf('Failed to replace file and restore original: %s', $label), E_USER_WARNING);
+                trigger_error(
+                    sprintf(
+                        'Failed to replace file and restore original: %s. Original content was left in backup file %s; manual restoration may be required.',
+                        $label,
+                        basename($backupFile)
+                    ),
+                    E_USER_WARNING
+                );
 
                 return false;
             }
