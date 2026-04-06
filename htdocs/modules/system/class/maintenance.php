@@ -197,7 +197,12 @@ class SystemMaintenance
                 }
                 closedir($dirHandle);
             }
-            file_put_contents($dir . 'index.php', '<?php' . PHP_EOL . "http_response_code(404);" . PHP_EOL);
+            $guardFile = $dir . 'index.php';
+            $content   = '<?php' . PHP_EOL . "http_response_code(404);" . PHP_EOL . 'exit;' . PHP_EOL;
+            $result    = file_put_contents($guardFile, $content, LOCK_EX);
+            if ($result !== strlen($content)) {
+                trigger_error(sprintf('Failed to write guard file: %s', basename($guardFile)), E_USER_WARNING);
+            }
         }
     }
 

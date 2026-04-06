@@ -198,21 +198,13 @@ function xoops_module_write_admin_menu($content)
     if (!xoopsfwrite()) {
         return false;
     }
-    $filename = XOOPS_CACHE_PATH . '/adminmenu.php';
-    if (!$file = fopen($filename, 'w')) {
-        echo 'failed open file';
-
-        return false;
-    }
-    $bytesWritten = fwrite($file, $content);
-    if ($bytesWritten === false) {
+    $filename     = XOOPS_CACHE_PATH . '/adminmenu.php';
+    $bytesWritten = file_put_contents($filename, $content, LOCK_EX);
+    if ($bytesWritten !== strlen($content)) {
         echo 'failed write file';
 
-        fclose($file);
-
         return false;
     }
-    fclose($file);
 
     // write index.php file in cache folder
     // file is delete after clear_cache (smarty)
@@ -238,23 +230,16 @@ function xoops_write_index_file($path = '')
 
     $path     = substr($path, -1) === '/' ? substr($path, 0, -1) : $path;
     $filename = $path . '/index.php';
+    $content  = "<?php\nhttp_response_code(404);\nexit;\n";
     if (file_exists($filename)) {
         return true;
     }
-    if (!$file = fopen($filename, 'w')) {
-        echo 'failed open file';
-
-        return false;
-    }
-    $bytesWritten = fwrite($file, "<?php\nhttp_response_code(404);\n");
-    if ($bytesWritten === false) {
+    $bytesWritten = file_put_contents($filename, $content, LOCK_EX);
+    if ($bytesWritten !== strlen($content)) {
         echo 'failed write file';
 
-        fclose($file);
-
         return false;
     }
-    fclose($file);
 
     return true;
 }
