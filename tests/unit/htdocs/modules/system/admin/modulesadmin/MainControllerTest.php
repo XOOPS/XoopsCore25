@@ -215,20 +215,19 @@ class MainControllerTest extends TestCase
     }
 
     /**
-     * Verify that htmlspecialchars is used for display output, but NOT for
-     * dirnames that feed into DB lookups and filesystem operations.
+     * Verify that htmlspecialchars is used for display output with proper flags,
+     * and that MyTextSanitizer is no longer used.
      */
     public function testUsesHtmlspecialcharsForDisplayOnly(): void
     {
-        // Display names (list operation) are escaped for HTML output
+        // Display names in the list/confirm operation must use proper flags
         $this->assertStringContainsString(
-            'htmlspecialchars(',
+            'ENT_QUOTES | ENT_HTML5',
             $this->sourceCode,
-            'Should use htmlspecialchars for display output'
+            'Should use ENT_QUOTES | ENT_HTML5 flags for output escaping'
         );
 
-        // MyTextSanitizer should no longer be used — dirnames and display
-        // names now use native htmlspecialchars where appropriate
+        // MyTextSanitizer should no longer be used
         $this->assertStringNotContainsString(
             '$myts->htmlSpecialChars',
             $this->sourceCode,
@@ -238,6 +237,39 @@ class MainControllerTest extends TestCase
             'MyTextSanitizer::getInstance()',
             $this->sourceCode,
             'Should not instantiate MyTextSanitizer'
+        );
+    }
+
+    /**
+     * Verify that dirnames used for DB/filesystem operations are NOT escaped.
+     */
+    public function testDirnamesNotEscapedBeforeDbLookup(): void
+    {
+        // In the install, uninstall, and update operations, $module is a dirname
+        // used for loadInfoAsVar() and getByDirname(). It must NOT be escaped
+        // before those calls — escaping would change the identifier.
+        $installSection = $this->extractOperationSection('install');
+        $this->assertNotEmpty($installSection, 'Install operation should exist');
+        $this->assertStringNotContainsString(
+            'htmlspecialchars($module',
+            $installSection,
+            'Install operation must not escape $module dirname before DB lookup'
+        );
+
+        $uninstallSection = $this->extractOperationSection('uninstall');
+        $this->assertNotEmpty($uninstallSection, 'Uninstall operation should exist');
+        $this->assertStringNotContainsString(
+            'htmlspecialchars($module',
+            $uninstallSection,
+            'Uninstall operation must not escape $module dirname before DB lookup'
+        );
+
+        $updateSection = $this->extractOperationSection('update');
+        $this->assertNotEmpty($updateSection, 'Update operation should exist');
+        $this->assertStringNotContainsString(
+            'htmlspecialchars($module',
+            $updateSection,
+            'Update operation must not escape $module dirname before DB lookup'
         );
     }
 
