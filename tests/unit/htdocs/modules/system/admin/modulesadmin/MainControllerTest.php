@@ -215,21 +215,18 @@ class MainControllerTest extends TestCase
     }
 
     /**
-     * Verify that MyTextSanitizer is used for HTML output sanitization.
+     * Verify that module dirnames and names are escaped for HTML output.
      */
-    public function testUsesTextSanitizerForOutput(): void
+    public function testUsesHtmlspecialcharsForOutput(): void
     {
+        // Module dirnames and display names are identifier-like values that
+        // use native htmlspecialchars() with ENT_QUOTES | ENT_HTML5 instead
+        // of the MyTextSanitizer wrapper (which preserves & for free-form
+        // text — not needed for dirnames).
         $this->assertStringContainsString(
-            '$myts = \MyTextSanitizer::getInstance();',
+            'htmlspecialchars(',
             $this->sourceCode,
-            'Should initialize MyTextSanitizer'
-        );
-
-        // Should use htmlSpecialChars for output
-        $this->assertStringContainsString(
-            '$myts->htmlSpecialChars',
-            $this->sourceCode,
-            'Should use htmlSpecialChars for output sanitization'
+            'Should use htmlspecialchars for output sanitization'
         );
     }
 

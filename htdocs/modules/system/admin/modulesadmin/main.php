@@ -93,8 +93,6 @@ if (in_array($op, ['order', 'display', 'display_in_menu'], true)) {
     exit;
 }
 
-$myts = \MyTextSanitizer::getInstance();
-
 // Define main template
 $GLOBALS['xoopsOption']['template_main'] = 'system_modules.tpl';
 // Call Header
@@ -267,8 +265,8 @@ switch ($op) {
             $mid                          = (int) $mid;
             $newname[$mid]                = trim((string) XoopsFilterInput::clean($newname[$mid], 'STRING'));
             $modifs_mods[$i]['mid']       = $mid;
-            $modifs_mods[$i]['oldname']   = $myts->htmlSpecialChars($oldname[$mid]);
-            $modifs_mods[$i]['newname']   = $myts->htmlSpecialChars(trim($newname[$mid]));
+            $modifs_mods[$i]['oldname']   = htmlspecialchars($oldname[$mid], ENT_QUOTES | ENT_HTML5, 'UTF-8');
+            $modifs_mods[$i]['newname']   = htmlspecialchars(trim($newname[$mid]), ENT_QUOTES | ENT_HTML5, 'UTF-8');
             ++$i;
         }
         $xoopsTpl->assign('modifs_mods', $modifs_mods);
@@ -315,7 +313,7 @@ switch ($op) {
 
     case 'install':
         $module = Request::getString('module', '');
-        $module = $myts->htmlSpecialChars($module);
+        $module = htmlspecialchars($module, ENT_QUOTES | ENT_HTML5, 'UTF-8');
         // Get module handler
         /** @var XoopsModuleHandler $module_handler */
         $module_handler = xoops_getHandler('module');
@@ -377,7 +375,7 @@ switch ($op) {
 
     case 'uninstall':
         $module = Request::getString('module', '');
-        $module = $myts->htmlSpecialChars($module);
+        $module = htmlspecialchars($module, ENT_QUOTES | ENT_HTML5, 'UTF-8');
         $msgs = '';
         // Get module handler
         /** @var XoopsModuleHandler $module_handler */
@@ -440,7 +438,7 @@ switch ($op) {
 
     case 'update':
         $module = Request::getString('module', '');
-        $module = $myts->htmlSpecialChars($module);
+        $module = htmlspecialchars($module, ENT_QUOTES | ENT_HTML5, 'UTF-8');
         // Get module handler
         /** @var XoopsModuleHandler $module_handler */
         $module_handler = xoops_getHandler('module');
