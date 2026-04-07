@@ -313,7 +313,6 @@ switch ($op) {
 
     case 'install':
         $module = Request::getString('module', '');
-        $module = htmlspecialchars($module, ENT_QUOTES | ENT_HTML5, 'UTF-8');
         // Get module handler
         /** @var XoopsModuleHandler $module_handler */
         $module_handler = xoops_getHandler('module');
@@ -375,7 +374,6 @@ switch ($op) {
 
     case 'uninstall':
         $module = Request::getString('module', '');
-        $module = htmlspecialchars($module, ENT_QUOTES | ENT_HTML5, 'UTF-8');
         $msgs = '';
         // Get module handler
         /** @var XoopsModuleHandler $module_handler */
@@ -438,7 +436,6 @@ switch ($op) {
 
     case 'update':
         $module = Request::getString('module', '');
-        $module = htmlspecialchars($module, ENT_QUOTES | ENT_HTML5, 'UTF-8');
         // Get module handler
         /** @var XoopsModuleHandler $module_handler */
         $module_handler = xoops_getHandler('module');

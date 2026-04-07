@@ -831,8 +831,6 @@ function xoops_module_update($dirname)
     global $xoopsUser, $xoopsConfig, $xoopsTpl;
     $dirname = trim((string) $dirname);
     $xoopsDB =& $GLOBALS['xoopsDB'];
-
-    $dirname        = htmlspecialchars(trim($dirname), ENT_QUOTES | ENT_HTML5, 'UTF-8');
     /** @var XoopsModuleHandler $module_handler */
     $module_handler = xoops_getHandler('module');
     $module         = $module_handler->getByDirname($dirname);

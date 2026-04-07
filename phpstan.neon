@@ -19,6 +19,6 @@ parameters:
             - htdocs/xoops_lib/vendor/
     scanFiles:
         - htdocs/xoops_lib/vendor/kint-php/kint/src/Kint.php
-    bootstrapFiles:
-        - constants.php
+    stubFiles:
+        - phpstan-constants.stub.php
     treatPhpDocTypesAsCertain: false

@@ -215,18 +215,29 @@ class MainControllerTest extends TestCase
     }
 
     /**
-     * Verify that module dirnames and names are escaped for HTML output.
+     * Verify that htmlspecialchars is used for display output, but NOT for
+     * dirnames that feed into DB lookups and filesystem operations.
      */
-    public function testUsesHtmlspecialcharsForOutput(): void
+    public function testUsesHtmlspecialcharsForDisplayOnly(): void
     {
-        // Module dirnames and display names are identifier-like values that
-        // use native htmlspecialchars() with ENT_QUOTES | ENT_HTML5 instead
-        // of the MyTextSanitizer wrapper (which preserves & for free-form
-        // text — not needed for dirnames).
+        // Display names (list operation) are escaped for HTML output
         $this->assertStringContainsString(
             'htmlspecialchars(',
             $this->sourceCode,
-            'Should use htmlspecialchars for output sanitization'
+            'Should use htmlspecialchars for display output'
+        );
+
+        // MyTextSanitizer should no longer be used — dirnames and display
+        // names now use native htmlspecialchars where appropriate
+        $this->assertStringNotContainsString(
+            '$myts->htmlSpecialChars',
+            $this->sourceCode,
+            'Should not use MyTextSanitizer htmlSpecialChars'
+        );
+        $this->assertStringNotContainsString(
+            'MyTextSanitizer::getInstance()',
+            $this->sourceCode,
+            'Should not instantiate MyTextSanitizer'
         );
     }
 
