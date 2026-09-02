@@ -137,8 +137,6 @@ class XoopsModelWrite extends XoopsModelAbstract
                     $cleanv = trim($cleanv);
                     if (!$v['not_gpc']) {
                         $cleanv = $myts->stripSlashesGPC($cleanv);
-                    } else {
-                        $cleanv = $cleanv;
                     }
                     $cleanv = str_replace('\\"', '"', $this->handler->db->quote($cleanv));
                     break;
