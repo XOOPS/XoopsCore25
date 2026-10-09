@@ -1,6 +1,15 @@
 XOOPS 2.5.x Changelog (Language changes: see: /docs/lang_diff.txt)
 
 ===================================
+2.5.11.1 Security        2026/10/08
+===================================
+
+* security: update the bundled Xmf\FilterInput to the XMF 1.2.32.1 fixes (also covers XoopsFilterInput)
+  - filtering always terminates; a value containing "<>" followed by more text exhausted the memory limit (GHSA-8j4x-8r8r-5jgw)
+  - tag and attribute names are anchored, on* handlers match case-insensitively, URL schemes are checked entity-decoded, and stripped text keeps no tag opener (GHSA-pf53-59r5-mhjv)
+  - backported in PHP 5.6-compatible form; no database or template changes
+
+===================================
 2.5.11 Final             2023/12/24
 ===================================
 
