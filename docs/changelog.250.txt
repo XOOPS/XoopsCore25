@@ -1,6 +1,18 @@
 XOOPS 2.5.x Changelog (Language changes: see: /docs/lang_diff.txt)
 
 ===================================
+2.5.11.2 Security        NOT RELEASED
+===================================
+
+* PHP 7.4.0 is now the minimum version (installer check, module min_php, documentation); PHP 5.6 to 7.3 are no longer supported
+* security: update the bundled XMF library to 1.2.33 (class/libraries/vendor/xoops/xmf)
+  - the proxy_env header is only honoured when the direct peer (REMOTE_ADDR) is listed in the new $xoopsConfig['proxy_trusted'] (addresses or CIDR ranges, documented in xoops_data/configs/xoopsconfig.dist.php). Sites that set proxy_env must add proxy_trusted; until then the peer address is used. Affects session binding, login tracking, Protector bans and reCAPTCHA checks, which all read the request address
+  - Forwarded headers are parsed per RFC 7239
+  - Xmf\Database\Tables keeps CURRENT_TIMESTAMP defaults reported as current_timestamp() and refuses tables with functional index parts; Xmf\Database\Migrate throws instead of treating an unreadable table as missing
+* libraries: XMF's dependencies follow (firebase/php-jwt 6.10, kint 6.1, symfony/yaml 5.4, webmozart/assert 1.12, paragonie/random_compat 9.99); Smarty, HTML Purifier and the rest of the 2.5.11 set are unchanged (class/libraries/composer.dist.json, class/libraries/vendor)
+* no database, template or language changes
+
+===================================
 2.5.11.1 Security        2026/10/08
 ===================================
 
