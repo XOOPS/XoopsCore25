@@ -1,0 +1,7 @@
+# CodeRabbit configuration for the 2.5.11 maintenance line.
+# Composer output is not reviewable code; leaving it in the file count makes
+# every library update exceed the 150-file review limit.
+reviews:
+  path_filters:
+    - "!htdocs/class/libraries/vendor/**"
+    - "!htdocs/class/libraries/composer.dist.lock"
