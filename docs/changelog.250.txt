@@ -10,7 +10,7 @@ XOOPS 2.5.x Changelog (Language changes: see: /docs/lang_diff.txt)
   - Forwarded headers are parsed per RFC 7239
   - Xmf\Database\Tables keeps CURRENT_TIMESTAMP defaults reported as current_timestamp() and refuses tables with functional index parts; Xmf\Database\Migrate throws instead of treating an unreadable table as missing
 * libraries: XMF's dependencies follow (firebase/php-jwt 6.10, kint 6.1, symfony/yaml 5.4, webmozart/assert 1.12, paragonie/random_compat 9.99); Smarty, HTML Purifier and the rest of the 2.5.11 set are unchanged (class/libraries/composer.dist.json, class/libraries/vendor)
-* no database, template or language changes
+* no database schema, template or language changes
 
 ===================================
 2.5.11.1 Security        2026/10/08
