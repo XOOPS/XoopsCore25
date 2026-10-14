@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /*
  * The MIT License (MIT)
  *
@@ -25,119 +27,70 @@
 
 namespace Kint\Parser;
 
-use Kint\Object\BasicObject;
-use Kint\Object\InstanceObject;
+use Kint\Value\AbstractValue;
+use Kint\Value\Context\ContextInterface;
+use Kint\Value\InstanceValue;
+use Psr\Container\ContainerInterface;
+use Psr\EventDispatcher\EventDispatcherInterface;
 
-class BlacklistPlugin extends Plugin
+class BlacklistPlugin extends AbstractPlugin implements PluginBeginInterface
 {
     /**
      * List of classes and interfaces to blacklist.
      *
-     * @var array
+     * @var class-string[]
      */
-    public static $blacklist = array();
+    public static array $blacklist = [];
 
     /**
      * List of classes and interfaces to blacklist except when dumped directly.
      *
-     * @var array
+     * @var class-string[]
      */
-    public static $shallow_blacklist = array();
+    public static array $shallow_blacklist = [
+        ContainerInterface::class,
+        EventDispatcherInterface::class,
+    ];
 
-    /**
-     * Maximum size of arrays before blacklisting.
-     *
-     * @var int
-     */
-    public static $array_limit = 10000;
-
-    /**
-     * Maximum size of arrays before blacklisting except when dumped directly.
-     *
-     * @var int
-     */
-    public static $shallow_array_limit = 1000;
-
-    public function getTypes()
+    public function getTypes(): array
     {
-        return array('object', 'array');
+        return ['object'];
     }
 
-    public function getTriggers()
+    public function getTriggers(): int
     {
         return Parser::TRIGGER_BEGIN;
     }
 
-    public function parse(&$var, BasicObject &$o, $trigger)
-    {
-        if (\is_object($var)) {
-            return $this->parseObject($var, $o);
-        }
-        if (\is_array($var)) {
-            return $this->parseArray($var, $o);
-        }
-    }
-
-    protected function parseObject(&$var, BasicObject &$o)
+    public function parseBegin(&$var, ContextInterface $c): ?AbstractValue
     {
         foreach (self::$blacklist as $class) {
             if ($var instanceof $class) {
-                return $this->blacklistObject($var, $o);
+                return $this->blacklistValue($var, $c);
             }
         }
 
-        if ($o->depth <= 0) {
-            return;
+        if ($c->getDepth() <= 0) {
+            return null;
         }
 
         foreach (self::$shallow_blacklist as $class) {
             if ($var instanceof $class) {
-                return $this->blacklistObject($var, $o);
+                return $this->blacklistValue($var, $c);
             }
         }
+
+        return null;
     }
 
-    protected function blacklistObject(&$var, BasicObject &$o)
+    /**
+     * @param object &$var
+     */
+    protected function blacklistValue(&$var, ContextInterface $c): InstanceValue
     {
-        $object = new InstanceObject();
-        $object->transplant($o);
-        $object->classname = \get_class($var);
-        $object->hash = \spl_object_hash($var);
-        $object->clearRepresentations();
-        $object->value = null;
-        $object->size = null;
-        $object->hints[] = 'blacklist';
+        $object = new InstanceValue($c, \get_class($var), \spl_object_hash($var), \spl_object_id($var));
+        $object->flags |= AbstractValue::FLAG_BLACKLIST;
 
-        $o = $object;
-
-        $this->parser->haltParse();
-    }
-
-    protected function parseArray(array &$var, BasicObject &$o)
-    {
-        if (\count($var) > self::$array_limit) {
-            return $this->blacklistArray($var, $o);
-        }
-
-        if ($o->depth <= 0) {
-            return;
-        }
-
-        if (\count($var) > self::$shallow_array_limit) {
-            return $this->blacklistArray($var, $o);
-        }
-    }
-
-    protected function blacklistArray(array &$var, BasicObject &$o)
-    {
-        $object = new BasicObject();
-        $object->transplant($o);
-        $object->value = null;
-        $object->size = \count($var);
-        $object->hints[] = 'blacklist';
-
-        $o = $object;
-
-        $this->parser->haltParse();
+        return $object;
     }
 }

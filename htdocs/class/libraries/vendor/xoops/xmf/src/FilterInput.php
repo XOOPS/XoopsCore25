@@ -38,7 +38,7 @@ class FilterInput
      * Passes remove() makes before it gives up on a value. Real input settles
      * in at most a few passes; this bounds any input that would not.
      */
-    const MAX_FILTER_PASSES = 10;
+    private const MAX_FILTER_PASSES = 10;
 
     protected $tagsArray;         // default is empty array
     protected $attrArray;         // default is empty array
@@ -215,8 +215,8 @@ class FilterInput
      */
     public function cleanVar($source, $type = 'string')
     {
-        // Handle the type constraint
-        switch (strtoupper($type)) {
+        // Handle the type constraint (null type, as Request::getHeader() passes, means string)
+        switch (strtoupper((string) $type)) {
             case 'INT':
             case 'INTEGER':
                 // Only use the first integer value
@@ -479,7 +479,7 @@ class FilterInput
      */
     protected function stripTagOpeners($text)
     {
-        return (string) preg_replace('#<(?=[a-z/!?])#i', '', $text);
+        return preg_replace('#<(?=[a-z/!?])#i', '', $text) ?? '';
     }
 
     /**
@@ -502,7 +502,7 @@ class FilterInput
             // split into attr name and value
             $attrSubSet = explode('=', trim($attrSet[$i]));
             list($attrSubSet[0]) = explode(' ', $attrSubSet[0]);
-            $attrSubSet[1] = isset($attrSubSet[1]) ? $attrSubSet[1] : '';
+            $attrSubSet[1] = $attrSubSet[1] ?? '';
             // removes all "non-regular" attr names AND also attr blacklisted
             if (
                 (!preg_match('/^[a-z][a-z0-9_:.-]*\z/i', $attrSubSet[0]))
@@ -534,7 +534,7 @@ class FilterInput
             // Check the value as a browser reads it: named entities decoded ("&colon;", "&Tab;")
             // and whitespace/control characters removed ("java\tscript:").
             $attrValue = strtolower(
-                (string) preg_replace('/[\x00-\x20]+/', '', html_entity_decode($attrSubSet[1], ENT_QUOTES | ENT_HTML5, 'UTF-8'))
+                preg_replace('/[\x00-\x20]+/', '', html_entity_decode($attrSubSet[1], ENT_QUOTES | ENT_HTML5, 'UTF-8')) ?? ''
             );
             if (
                 ((strpos($attrValue, 'expression') !== false)
