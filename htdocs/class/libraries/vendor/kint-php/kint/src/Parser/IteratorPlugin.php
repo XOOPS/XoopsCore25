@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /*
  * The MIT License (MIT)
  *
@@ -25,11 +27,25 @@
 
 namespace Kint\Parser;
 
-use Kint\Object\BasicObject;
-use Kint\Object\Representation\Representation;
+use Dom\NamedNodeMap;
+use Dom\NodeList;
+use DOMNamedNodeMap;
+use DOMNodeList;
+use Kint\Value\AbstractValue;
+use Kint\Value\ArrayValue;
+use Kint\Value\Context\BaseContext;
+use Kint\Value\InstanceValue;
+use Kint\Value\Representation\ContainerRepresentation;
+use Kint\Value\Representation\ValueRepresentation;
+use Kint\Value\UninitializedValue;
+use mysqli_result;
+use PDOStatement;
+use SimpleXMLElement;
+use SplFileObject;
+use Throwable;
 use Traversable;
 
-class IteratorPlugin extends Plugin
+class IteratorPlugin extends AbstractPlugin implements PluginCompleteInterface
 {
     /**
      * List of classes and interfaces to blacklist.
@@ -38,73 +54,89 @@ class IteratorPlugin extends Plugin
      * when traversed. Others are just huge. Either way, put them in here
      * and you won't have to worry about them being parsed.
      *
-     * @var array
+     * @psalm-var class-string[]
      */
-    public static $blacklist = array(
-        'DOMNamedNodeMap',
-        'DOMNodeList',
-        'mysqli_result',
-        'PDOStatement',
-        'SplFileObject',
-    );
+    public static array $blacklist = [
+        NamedNodeMap::class,
+        NodeList::class,
+        DOMNamedNodeMap::class,
+        DOMNodeList::class,
+        mysqli_result::class,
+        PDOStatement::class,
+        SimpleXMLElement::class,
+        SplFileObject::class,
+    ];
 
-    public function getTypes()
+    public function getTypes(): array
     {
-        return array('object');
+        return ['object'];
     }
 
-    public function getTriggers()
+    public function getTriggers(): int
     {
         return Parser::TRIGGER_SUCCESS;
     }
 
-    public function parse(&$var, BasicObject &$o, $trigger)
+    public function parseComplete(&$var, AbstractValue $v, int $trigger): AbstractValue
     {
-        if (!$var instanceof Traversable) {
-            return;
+        if (!$var instanceof Traversable || !$v instanceof InstanceValue || $v->getRepresentation('iterator')) {
+            return $v;
         }
+
+        $c = $v->getContext();
 
         foreach (self::$blacklist as $class) {
             if ($var instanceof $class) {
-                $b = new BasicObject();
-                $b->name = $class.' Iterator Contents';
-                $b->access_path = 'iterator_to_array('.$o->access_path.', true)';
-                $b->depth = $o->depth + 1;
-                $b->hints[] = 'blacklist';
+                $base = new BaseContext($class.' Iterator Contents');
+                $base->depth = $c->getDepth() + 1;
+                if (null !== ($ap = $c->getAccessPath())) {
+                    $base->access_path = 'iterator_to_array('.$ap.', false)';
+                }
 
-                $r = new Representation('Iterator');
-                $r->contents = array($b);
+                $b = new UninitializedValue($base);
+                $b->flags |= AbstractValue::FLAG_BLACKLIST;
 
-                $o->addRepresentation($r);
+                $v->addRepresentation(new ValueRepresentation('Iterator', $b));
 
-                return;
+                return $v;
             }
         }
 
-        /** @var array|false */
-        $data = \iterator_to_array($var);
-
-        if (false === $data) {
-            return;
+        try {
+            $data = \iterator_to_array($var, false);
+        } catch (Throwable $t) {
+            return $v;
         }
 
-        $base_obj = new BasicObject();
-        $base_obj->depth = $o->depth;
-
-        if ($o->access_path) {
-            $base_obj->access_path = 'iterator_to_array('.$o->access_path.')';
+        if (!\count($data)) {
+            return $v;
         }
 
-        $r = new Representation('Iterator');
-        $r->contents = $this->parser->parse($data, $base_obj);
-        $r->contents = $r->contents->value->contents;
+        $base = new BaseContext('Iterator Contents');
+        $base->depth = $c->getDepth();
+        if (null !== ($ap = $c->getAccessPath())) {
+            $base->access_path = 'iterator_to_array('.$ap.', false)';
+        }
 
-        $primary = $o->getRepresentations();
-        $primary = \reset($primary);
-        if ($primary && $primary === $o->value && $primary->contents === array()) {
-            $o->addRepresentation($r, 0);
+        $iter_val = $this->getParser()->parse($data, $base);
+
+        // Since we didn't get TRIGGER_DEPTH_LIMIT and set the iterator to the
+        // same depth we can assume at least 1 level deep will exist
+        if ($iter_val instanceof ArrayValue && $iterator_items = $iter_val->getContents()) {
+            $r = new ContainerRepresentation('Iterator', $iterator_items);
+            $iterator_items = \array_values($iterator_items);
         } else {
-            $o->addRepresentation($r);
+            $r = new ValueRepresentation('Iterator', $iter_val);
+            $iterator_items = [$iter_val];
         }
+
+        if ((bool) $v->getChildren()) {
+            $v->addRepresentation($r);
+        } else {
+            $v->setChildren($iterator_items);
+            $v->addRepresentation($r, 0);
+        }
+
+        return $v;
     }
 }

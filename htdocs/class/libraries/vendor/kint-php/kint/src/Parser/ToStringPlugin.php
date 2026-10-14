@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /*
  * The MIT License (MIT)
  *
@@ -25,43 +27,62 @@
 
 namespace Kint\Parser;
 
-use Kint\Object\BasicObject;
-use Kint\Object\Representation\Representation;
+use Kint\Value\AbstractValue;
+use Kint\Value\Context\BaseContext;
+use Kint\Value\Representation\ValueRepresentation;
 use ReflectionClass;
+use SimpleXMLElement;
+use SplFileInfo;
+use Throwable;
 
-class ToStringPlugin extends Plugin
+class ToStringPlugin extends AbstractPlugin implements PluginCompleteInterface
 {
-    public static $blacklist = array(
-        'SimpleXMLElement',
-        'SplFileObject',
-    );
+    public static array $blacklist = [
+        SimpleXMLElement::class,
+        SplFileInfo::class,
+    ];
 
-    public function getTypes()
+    public function getTypes(): array
     {
-        return array('object');
+        return ['object'];
     }
 
-    public function getTriggers()
+    public function getTriggers(): int
     {
         return Parser::TRIGGER_SUCCESS;
     }
 
-    public function parse(&$var, BasicObject &$o, $trigger)
+    public function parseComplete(&$var, AbstractValue $v, int $trigger): AbstractValue
     {
         $reflection = new ReflectionClass($var);
         if (!$reflection->hasMethod('__toString')) {
-            return;
+            return $v;
         }
 
         foreach (self::$blacklist as $class) {
             if ($var instanceof $class) {
-                return;
+                return $v;
             }
         }
 
-        $r = new Representation('toString');
-        $r->contents = (string) $var;
+        try {
+            $string = (string) $var;
+        } catch (Throwable $t) {
+            return $v;
+        }
 
-        $o->addRepresentation($r);
+        $c = $v->getContext();
+
+        $base = new BaseContext($c->getName());
+        $base->depth = $c->getDepth() + 1;
+        if (null !== ($ap = $c->getAccessPath())) {
+            $base->access_path = '(string) '.$ap;
+        }
+
+        $string = $this->getParser()->parse($string, $base);
+
+        $v->addRepresentation(new ValueRepresentation('toString', $string));
+
+        return $v;
     }
 }

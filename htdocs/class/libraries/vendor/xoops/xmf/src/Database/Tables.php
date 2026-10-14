@@ -807,11 +807,13 @@ class Tables
     /**
      * create default value clause for DDL
      *
-     * @param string|null $default the default value to be quoted
+     * @param string|null $default    the default value to be quoted
+     * @param string|null $columnType COLUMN_TYPE of the column; when given, CURRENT_TIMESTAMP
+     *                                is only treated as a function for TIMESTAMP and DATETIME
      *
      * @return string the correctly quoted default value
      */
-    protected function quoteDefaultClause($default)
+    protected function quoteDefaultClause($default, $columnType = null)
     {
         // . (($column['COLUMN_DEFAULT'] === null) ? '' : " DEFAULT '" . $column['COLUMN_DEFAULT'] . "' ")
         // no default specified
@@ -822,8 +824,14 @@ class Tables
         // functions should not be quoted
         // this section will need expanded when XOOPS minimum is no longer a mysql 5 version
         // Until mysql 8, only allowed function is CURRENT_TIMESTAMP
-        if ($default === 'CURRENT_TIMESTAMP') {
-            return ' DEFAULT CURRENT_TIMESTAMP ';
+        // MariaDB reports it as current_timestamp(), and either may carry a precision
+        // a string column can hold the literal text, so the column type decides
+        // Render the canonical CURRENT_TIMESTAMP form (empty parentheses dropped) so a
+        // Migrate comparison against a CURRENT_TIMESTAMP target does not churn on MariaDB
+        $temporal = $columnType === null || preg_match('/^(timestamp|datetime)\b/i', $columnType) === 1;
+        if ($temporal && preg_match('/^current_timestamp(?:\((\d*)\))?\z/i', $default, $matches)) {
+            $precision = isset($matches[1]) && $matches[1] !== '' ? '(' . $matches[1] . ')' : '';
+            return ' DEFAULT CURRENT_TIMESTAMP' . $precision . ' ';
         }
 
         // surround default with quotes
@@ -840,6 +848,9 @@ class Tables
      */
     protected function getTable($table)
     {
+        // errors describe this load only, so "missing" (true) has no error
+        $this->lastError = '';
+        $this->lastErrNo = 0;
         $tableDef = array();
 
         $sql  = 'SELECT TABLE_NAME, ENGINE, CHARACTER_SET_NAME ';
@@ -872,7 +883,10 @@ class Tables
         while ($column = $this->fetch($result)) {
             $attributes = ' ' . $column['COLUMN_TYPE'] . ' '
                 . (($column['IS_NULLABLE'] === 'NO') ? ' NOT NULL ' : '')
-                . $this->quoteDefaultClause($column['COLUMN_DEFAULT'])
+                . $this->quoteDefaultClause(
+                    $column['COLUMN_DEFAULT'],
+                    is_string($column['COLUMN_TYPE']) ? $column['COLUMN_TYPE'] : null
+                )
                 //. $column['EXTRA'];
                 . str_replace('DEFAULT_GENERATED ', '', $column['EXTRA']);
 
@@ -897,7 +911,23 @@ class Tables
         $keyCols = '';
         $keyUnique = false;
         while ($key = $this->fetch($result)) {
-            if ($lastKey != $key['INDEX_NAME']) {
+            $currentKey = $key['INDEX_NAME'];
+            if (!is_string($currentKey)) {
+                continue;
+            }
+            // a functional key part (MySQL 8.0.13+) has no COLUMN_NAME; dropping it
+            // would misdescribe the index, so refuse the table instead
+            if (!is_string($key['COLUMN_NAME'])) {
+                $this->lastError = sprintf(
+                    'Index %s on table %s has a functional key part, which is not supported',
+                    $currentKey,
+                    $this->name($table)
+                );
+                $this->lastErrNo = -1;
+                return false;
+            }
+
+            if ($lastKey != $currentKey) {
                 if (!empty($lastKey)) {
                     $tableDef['keys'][$lastKey]['columns'] = $keyCols;
                     $tableDef['keys'][$lastKey]['unique'] = $keyUnique;

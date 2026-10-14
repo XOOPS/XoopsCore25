@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /*
  * The MIT License (MIT)
  *
@@ -25,22 +27,23 @@
 
 namespace Kint\Renderer\Rich;
 
-use Kint\Object\Representation\Representation;
-use Kint\Object\Representation\SourceRepresentation;
+use Kint\Value\AbstractValue;
+use Kint\Value\Representation\RepresentationInterface;
+use Kint\Value\Representation\SourceRepresentation;
 
-class SourcePlugin extends Plugin implements TabPluginInterface
+class SourcePlugin extends AbstractPlugin implements TabPluginInterface
 {
-    public function renderTab(Representation $r)
+    public function renderTab(RepresentationInterface $r, AbstractValue $v): ?string
     {
-        if (!($r instanceof SourceRepresentation) || empty($r->source)) {
-            return false;
+        if (!$r instanceof SourceRepresentation) {
+            return null;
         }
 
-        $source = $r->source;
+        $source = $r->getSourceLines();
 
         // Trim empty lines from the start and end of the source
         foreach ($source as $linenum => $line) {
-            if (\strlen(\trim($line)) || $linenum === $r->line) {
+            if (\strlen(\trim($line)) || $linenum === $r->getLine()) {
                 break;
             }
 
@@ -48,7 +51,7 @@ class SourcePlugin extends Plugin implements TabPluginInterface
         }
 
         foreach (\array_reverse($source, true) as $linenum => $line) {
-            if (\strlen(\trim($line)) || $linenum === $r->line) {
+            if (\strlen(\trim($line)) || $linenum === $r->getLine()) {
                 break;
             }
 
@@ -58,7 +61,7 @@ class SourcePlugin extends Plugin implements TabPluginInterface
         $output = '';
 
         foreach ($source as $linenum => $line) {
-            if ($linenum === $r->line) {
+            if ($linenum === $r->getLine()) {
                 $output .= '<div class="kint-highlight">'.$this->renderer->escape($line)."\n".'</div>';
             } else {
                 $output .= '<div>'.$this->renderer->escape($line)."\n".'</div>';
@@ -66,14 +69,14 @@ class SourcePlugin extends Plugin implements TabPluginInterface
         }
 
         if ($output) {
-            \reset($source);
-
             $data = '';
-            if ($r->showfilename) {
-                $data = ' data-kint-filename="'.$this->renderer->escape($r->filename).'"';
+            if ($r->showFileName()) {
+                $data = ' data-kint-filename="'.$this->renderer->escape($r->getFileName()).'"';
             }
 
-            return '<div><pre class="kint-source"'.$data.' style="counter-reset: kint-l '.((int) \key($source) - 1).';">'.$output.'</pre></div><div></div>';
+            return '<div><pre class="kint-source"'.$data.' style="counter-reset: kint-l '.((int) \array_key_first($source) - 1).';">'.$output.'</pre></div><div></div>';
         }
+
+        return null;
     }
 }

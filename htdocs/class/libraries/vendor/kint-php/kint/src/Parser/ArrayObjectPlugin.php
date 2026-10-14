@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /*
  * The MIT License (MIT)
  *
@@ -26,38 +28,41 @@
 namespace Kint\Parser;
 
 use ArrayObject;
-use Kint\Object\BasicObject;
+use Kint\Value\AbstractValue;
+use Kint\Value\Context\ContextInterface;
 
-class ArrayObjectPlugin extends Plugin
+class ArrayObjectPlugin extends AbstractPlugin implements PluginBeginInterface
 {
-    public function getTypes()
+    public function getTypes(): array
     {
-        return array('object');
+        return ['object'];
     }
 
-    public function getTriggers()
+    public function getTriggers(): int
     {
         return Parser::TRIGGER_BEGIN;
     }
 
-    public function parse(&$var, BasicObject &$o, $trigger)
+    public function parseBegin(&$var, ContextInterface $c): ?AbstractValue
     {
         if (!$var instanceof ArrayObject) {
-            return;
+            return null;
         }
 
         $flags = $var->getFlags();
 
         if (ArrayObject::STD_PROP_LIST === $flags) {
-            return;
+            return null;
         }
+
+        $parser = $this->getParser();
 
         $var->setFlags(ArrayObject::STD_PROP_LIST);
 
-        $o = $this->parser->parse($var, $o);
+        $v = $parser->parse($var, $c);
 
         $var->setFlags($flags);
 
-        $this->parser->haltParse();
+        return $v;
     }
 }

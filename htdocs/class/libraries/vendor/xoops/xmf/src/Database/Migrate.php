@@ -92,6 +92,8 @@ class Migrate
      * @internal intended for module developers only
      *
      * @return int|false count of bytes written or false on error
+     *
+     * @throws \RuntimeException if a current table definition cannot be read
      */
     public function saveCurrentSchema()
     {
@@ -109,17 +111,41 @@ class Migrate
     /**
      * get the current definitions
      *
+     * Module tables that do not exist are left out.
+     *
      * @return array
+     *
+     * @throws \RuntimeException if a table definition cannot be read
      */
     public function getCurrentSchema()
     {
         foreach ($this->moduleTables as $tableName) {
-            if (false === $this->tableHandler->useTable($tableName)) {
-                $this->tableHandler->addTable($tableName);
-            }
+            $this->loadCurrentTable($tableName);
         }
 
         return $this->tableHandler->dumpTables();
+    }
+
+    /**
+     * Load the current definition of a module table into the table handler
+     *
+     * @param string $tableName table to load
+     *
+     * @return bool true if the table exists, false if it does not
+     *
+     * @throws \RuntimeException if the table definition cannot be read
+     */
+    protected function loadCurrentTable($tableName)
+    {
+        if ($this->tableHandler->useTable($tableName)) {
+            return true;
+        }
+        $error = $this->tableHandler->getLastError();
+        if (!empty($error)) {
+            throw new \RuntimeException(sprintf('Cannot read table %s: %s', $tableName, $error));
+        }
+
+        return false;
     }
 
     /**
@@ -146,6 +172,8 @@ class Migrate
      * @param bool $force true to force updates even if this is a 'GET' request
      *
      * @return bool true if no errors, false if errors encountered
+     *
+     * @throws \RuntimeException if a current table definition cannot be read
      */
     public function synchronizeSchema($force = true)
     {
@@ -158,13 +186,15 @@ class Migrate
      * Compare target and current schema, building work queue in $this->migrate to synchronized
      *
      * @return string[] array of DDL/SQL statements to transform current to target schema
+     *
+     * @throws \RuntimeException if a current table definition cannot be read
      */
     public function getSynchronizeDDL()
     {
         $this->getTargetDefinitions();
         $this->preSyncActions();
         foreach ($this->moduleTables as $tableName) {
-            if ($this->tableHandler->useTable($tableName)) {
+            if ($this->loadCurrentTable($tableName)) {
                 $this->synchronizeTable($tableName);
             } else {
                 $this->addMissingTable($tableName);

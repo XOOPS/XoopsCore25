@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /*
  * The MIT License (MIT)
  *
@@ -25,48 +27,54 @@
 
 namespace Kint\Parser;
 
-use Kint\Object\BasicObject;
-use Kint\Object\Representation\SplFileInfoRepresentation;
+use Kint\Value\AbstractValue;
+use Kint\Value\Representation\SplFileInfoRepresentation;
 use SplFileInfo;
+use TypeError;
 
-class FsPathPlugin extends Plugin
+class FsPathPlugin extends AbstractPlugin implements PluginCompleteInterface
 {
-    public static $blacklist = array('/', '.');
+    public static array $blacklist = ['/', '.'];
 
-    public function getTypes()
+    public function getTypes(): array
     {
-        return array('string');
+        return ['string'];
     }
 
-    public function getTriggers()
+    public function getTriggers(): int
     {
         return Parser::TRIGGER_SUCCESS;
     }
 
-    public function parse(&$var, BasicObject &$o, $trigger)
+    public function parseComplete(&$var, AbstractValue $v, int $trigger): AbstractValue
     {
         if (\strlen($var) > 2048) {
-            return;
+            return $v;
         }
 
         if (!\preg_match('/[\\/\\'.DIRECTORY_SEPARATOR.']/', $var)) {
-            return;
+            return $v;
         }
 
         if (\preg_match('/[?<>"*|]/', $var)) {
-            return;
+            return $v;
         }
 
-        if (!@\file_exists($var)) {
-            return;
+        try {
+            if (!@\file_exists($var)) {
+                return $v;
+            }
+        } catch (TypeError $e) {// @codeCoverageIgnore
+            // Only possible in PHP 7
+            return $v; // @codeCoverageIgnore
         }
 
         if (\in_array($var, self::$blacklist, true)) {
-            return;
+            return $v;
         }
 
-        $r = new SplFileInfoRepresentation(new SplFileInfo($var));
-        $r->hints[] = 'fspath';
-        $o->addRepresentation($r, 0);
+        $v->addRepresentation(new SplFileInfoRepresentation(new SplFileInfo($var)), 0);
+
+        return $v;
     }
 }

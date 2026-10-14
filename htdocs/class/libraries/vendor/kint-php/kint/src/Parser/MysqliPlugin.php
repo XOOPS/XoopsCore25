@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /*
  * The MIT License (MIT)
  *
@@ -25,33 +27,37 @@
 
 namespace Kint\Parser;
 
-use Kint\Object\BasicObject;
-use Mysqli;
+use Kint\Value\AbstractValue;
+use Kint\Value\Context\PropertyContext;
+use Kint\Value\InstanceValue;
+use Kint\Value\Representation\ContainerRepresentation;
+use mysqli;
+use Throwable;
 
 /**
- * Adds support for Mysqli object parsing.
+ * Adds support for mysqli object parsing.
  *
  * Due to the way mysqli is implemented in PHP, this will cause
- * warnings on certain Mysqli objects if screaming is enabled.
+ * warnings on certain mysqli objects if screaming is enabled.
  */
-class MysqliPlugin extends Plugin
+class MysqliPlugin extends AbstractPlugin implements PluginCompleteInterface
 {
     // These 'properties' are actually globals
-    protected $always_readable = array(
+    public const ALWAYS_READABLE = [
         'client_version' => true,
         'connect_errno' => true,
         'connect_error' => true,
-    );
+    ];
 
     // These are readable on empty mysqli objects, but not on failed connections
-    protected $empty_readable = array(
+    public const EMPTY_READABLE = [
         'client_info' => true,
         'errno' => true,
         'error' => true,
-    );
+    ];
 
     // These are only readable on connected mysqli objects
-    protected $connected_readable = array(
+    public const CONNECTED_READABLE = [
         'affected_rows' => true,
         'error_list' => true,
         'field_count' => true,
@@ -60,70 +66,111 @@ class MysqliPlugin extends Plugin
         'insert_id' => true,
         'server_info' => true,
         'server_version' => true,
-        'stat' => true,
         'sqlstate' => true,
         'protocol_version' => true,
         'thread_id' => true,
         'warning_count' => true,
-    );
+    ];
 
-    public function getTypes()
+    public function getTypes(): array
     {
-        return array('object');
+        return ['object'];
     }
 
-    public function getTriggers()
+    public function getTriggers(): int
     {
         return Parser::TRIGGER_COMPLETE;
     }
 
-    public function parse(&$var, BasicObject &$o, $trigger)
+    /**
+     * Before 8.1: Properties were nulls when cast to array
+     * After 8.1: Properties are readonly and uninitialized when cast to array (Aka missing).
+     */
+    public function parseComplete(&$var, AbstractValue $v, int $trigger): AbstractValue
     {
-        if (!$var instanceof Mysqli) {
-            return;
+        if (!$var instanceof mysqli || !$v instanceof InstanceValue) {
+            return $v;
         }
 
-        $connected = false;
-        $empty = false;
+        $props = $v->getRepresentation('properties');
 
-        if (\is_string(@$var->sqlstate)) {
-            $connected = true;
-        } elseif (\is_string(@$var->client_info)) {
-            $empty = true;
+        if (!$props instanceof ContainerRepresentation) {
+            return $v;
         }
 
-        foreach ($o->value->contents as $key => $obj) {
-            if (isset($this->connected_readable[$obj->name])) {
+        /**
+         * @psalm-var ?string $var->sqlstate
+         * @psalm-var ?string $var->client_info
+         * Psalm bug #4502
+         */
+        try {
+            $connected = \is_string(@$var->sqlstate);
+        } catch (Throwable $t) {
+            $connected = false;
+        }
+
+        try {
+            $empty = !$connected && \is_string(@$var->client_info);
+        } catch (Throwable $t) { // @codeCoverageIgnore
+            // Only possible in PHP 8.0. Before 8.0 there's no exception,
+            // after 8.1 there are no failed connection objects
+            $empty = false; // @codeCoverageIgnore
+        }
+
+        $parser = $this->getParser();
+
+        $new_contents = [];
+
+        foreach ($props->getContents() as $key => $obj) {
+            $new_contents[$key] = $obj;
+
+            $c = $obj->getContext();
+
+            if (!$c instanceof PropertyContext) {
+                continue;
+            }
+
+            if (isset(self::CONNECTED_READABLE[$c->getName()])) {
+                $c->readonly = KINT_PHP81;
                 if (!$connected) {
-                    continue;
+                    // No failed connections after PHP 8.1
+                    continue; // @codeCoverageIgnore
                 }
-            } elseif (isset($this->empty_readable[$obj->name])) {
-                if (!$connected && !$empty) {
-                    continue;
+            } elseif (isset(self::EMPTY_READABLE[$c->getName()])) {
+                $c->readonly = KINT_PHP81;
+                // No failed connections after PHP 8.1
+                if (!$connected && !$empty) { // @codeCoverageIgnore
+                    continue; // @codeCoverageIgnore
                 }
-            } elseif (!isset($this->always_readable[$obj->name])) {
+            } elseif (!isset(self::ALWAYS_READABLE[$c->getName()])) {
+                continue; // @codeCoverageIgnore
+            }
+
+            $c->readonly = KINT_PHP81;
+
+            // Only handle unparsed properties
+            if ((KINT_PHP81 ? 'uninitialized' : 'null') !== $obj->getType()) {
                 continue;
             }
 
-            if ('null' !== $obj->type) {
-                continue;
+            $param = $var->{$c->getName()};
+
+            // If it really was a null
+            if (!KINT_PHP81 && null === $param) {
+                continue; // @codeCoverageIgnore
             }
 
-            $param = $var->{$obj->name};
-
-            if (null === $param) {
-                continue;
-            }
-
-            $base = BasicObject::blank($obj->name, $obj->access_path);
-
-            $base->depth = $obj->depth;
-            $base->owner_class = $obj->owner_class;
-            $base->operator = $obj->operator;
-            $base->access = $obj->access;
-            $base->reference = $obj->reference;
-
-            $o->value->contents[$key] = $this->parser->parse($param, $base);
+            $new_contents[$key] = $parser->parse($param, $c);
         }
+
+        $new_contents = \array_values($new_contents);
+
+        $v->setChildren($new_contents);
+
+        if ($new_contents) {
+            $v->replaceRepresentation(new ContainerRepresentation('Properties', $new_contents));
+        }
+
+        return $v;
     }
 }

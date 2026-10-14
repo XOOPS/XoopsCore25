@@ -1,7 +1,7 @@
 {
     "name": "kint-php/kint",
-    "description": "Kint - debugging tool for PHP developers",
-    "keywords": ["kint", "php", "debug"],
+    "description": "Kint - Advanced PHP dumper",
+    "keywords": ["dump", "debug"],
     "type": "library",
     "homepage": "https://kint-php.github.io/kint/",
     "license": "MIT",
@@ -11,23 +11,19 @@
             "homepage": "https://github.com/jnvsor"
         },
         {
-            "name": "Rokas Šleinius",
-            "homepage": "https://github.com/raveren"
-        },
-        {
             "name": "Contributors",
             "homepage": "https://github.com/kint-php/kint/graphs/contributors"
         }
     ],
     "require": {
-        "php": ">=5.3.6"
+        "php": ">=7.4"
     },
     "require-dev": {
-        "friendsofphp/php-cs-fixer": "^2.0",
-        "phpunit/phpunit": "^4.0",
-        "symfony/finder": "^2.0 || ^3.0 || ^4.0",
-        "seld/phar-utils": "^1.0",
-        "vimeo/psalm": "^3.0"
+        "friendsofphp/php-cs-fixer": "^3",
+        "phpunit/phpunit": "^9",
+        "symfony/finder": ">=7",
+        "seld/phar-utils": "^1",
+        "vimeo/psalm": "^6"
     },
     "autoload": {
         "files": ["init.php"],
@@ -42,12 +38,10 @@
     },
     "config": {
         "platform": {
-            "php": "7.3"
+            "php": "8.3"
         }
     },
     "scripts": {
-        "post-update-cmd": "npm ci",
-        "post-install-cmd": "@post-update-cmd",
         "clean": [
             "rm -rf resources/compiled/",
             "rm -rf build/"
@@ -68,16 +62,15 @@
         "build:sass": "npm run build:sass",
         "build:js": "npm run build:js",
         "build:php": "php ./build.php",
-        "analyze": "psalm --show-info=false"
+        "analyze": [
+            "@analyze:php",
+            "@analyze:js"
+        ],
+        "analyze:php": "psalm --no-cache",
+        "analyze:js": "npm run analyze:js"
     },
     "suggest": {
-        "kint-php/kint-twig": "Provides d() and s() functions in twig templates",
-        "kint-php/kint-js": "Provides a simplified dump to console.log()",
-        "ext-mbstring": "Provides string encoding detection",
-        "ext-iconv": "Provides fallback detection for ambiguous legacy string encodings such as the Windows and ISO 8859 code pages",
-        "ext-ctype": "Simple data type tests",
-        "symfony/polyfill-mbstring": "Replacement for ext-mbstring if missing",
-        "symfony/polyfill-iconv": "Replacement for ext-iconv if missing",
-        "symfony/polyfill-ctype": "Replacement for ext-ctype if missing"
+        "kint-php/kint-helpers": "Provides extra helper functions",
+        "kint-php/kint-twig": "Provides d() and s() functions in twig templates"
     }
 }

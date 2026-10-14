@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /*
  * The MIT License (MIT)
  *
@@ -25,149 +27,78 @@
 
 namespace Kint\Renderer\Rich;
 
-use Kint\Object\BasicObject;
-use Kint\Object\BlobObject;
-use Kint\Object\ClosureObject;
-use Kint\Object\MethodObject;
 use Kint\Renderer\RichRenderer;
+use Kint\Utils;
+use Kint\Value\AbstractValue;
+use Kint\Value\Context\MethodContext;
+use Kint\Value\MethodValue;
 
-class CallablePlugin extends Plugin implements ObjectPluginInterface
+class CallablePlugin extends AbstractPlugin implements ValuePluginInterface
 {
-    protected static $method_cache = array();
+    protected static array $method_cache = [];
 
-    public function renderObject(BasicObject $o)
+    public function renderValue(AbstractValue $v): ?string
     {
-        if ($o instanceof MethodObject) {
-            return $this->renderMethod($o);
+        if (!$v instanceof MethodValue) {
+            return null;
         }
 
-        if ($o instanceof ClosureObject) {
-            return $this->renderClosure($o);
+        $c = $v->getContext();
+
+        if (!$c instanceof MethodContext) {
+            return null;
         }
 
-        return $this->renderCallable($o);
-    }
+        if (!isset(self::$method_cache[$c->owner_class][$c->name])) {
+            $children = $this->renderer->renderChildren($v);
 
-    protected function renderClosure(ClosureObject $o)
-    {
-        $children = $this->renderer->renderChildren($o);
+            $header = '<var>'.$c->getModifiers();
 
-        $header = '';
-
-        if (null !== ($s = $o->getModifiers())) {
-            $header .= '<var>'.$s.'</var> ';
-        }
-
-        if (null !== ($s = $o->getName())) {
-            $header .= '<dfn>'.$this->renderer->escape($s).'('.$this->renderer->escape($o->getParams()).')</dfn>';
-        }
-
-        if (null !== ($s = $o->getValueShort())) {
-            if (RichRenderer::$strlen_max && BlobObject::strlen($s) > RichRenderer::$strlen_max) {
-                $s = \substr($s, 0, RichRenderer::$strlen_max).'...';
-            }
-            $header .= ' '.$this->renderer->escape($s);
-        }
-
-        return '<dl>'.$this->renderer->renderHeaderWrapper($o, (bool) \strlen($children), $header).$children.'</dl>';
-    }
-
-    protected function renderCallable(BasicObject $o)
-    {
-        $children = $this->renderer->renderChildren($o);
-
-        $header = '';
-
-        if (null !== ($s = $o->getModifiers())) {
-            $header .= '<var>'.$s.'</var> ';
-        }
-
-        if (null !== ($s = $o->getName())) {
-            $header .= '<dfn>'.$this->renderer->escape($s).'</dfn>';
-        }
-
-        if (null !== ($s = $o->getValueShort())) {
-            if (RichRenderer::$strlen_max && BlobObject::strlen($s) > RichRenderer::$strlen_max) {
-                $s = \substr($s, 0, RichRenderer::$strlen_max).'...';
-            }
-            $header .= ' '.$this->renderer->escape($s);
-        }
-
-        return '<dl>'.$this->renderer->renderHeaderWrapper($o, (bool) \strlen($children), $header).$children.'</dl>';
-    }
-
-    protected function renderMethod(MethodObject $o)
-    {
-        if (!empty(self::$method_cache[$o->owner_class][$o->name])) {
-            $children = self::$method_cache[$o->owner_class][$o->name]['children'];
-
-            $header = $this->renderer->renderHeaderWrapper(
-                $o,
-                (bool) \strlen($children),
-                self::$method_cache[$o->owner_class][$o->name]['header']
-            );
-
-            return '<dl>'.$header.$children.'</dl>';
-        }
-
-        $children = $this->renderer->renderChildren($o);
-
-        $header = '';
-
-        if (null !== ($s = $o->getModifiers()) || $o->return_reference) {
-            $header .= '<var>'.$s;
-
-            if ($o->return_reference) {
-                if ($s) {
-                    $header .= ' ';
-                }
-                $header .= $this->renderer->escape('&');
+            if ($v->getCallableBag()->return_reference) {
+                $header .= ' &amp;';
             }
 
             $header .= '</var> ';
-        }
 
-        if (null !== ($s = $o->getName())) {
-            $function = $this->renderer->escape($s).'('.$this->renderer->escape($o->getParams()).')';
+            $function = $this->renderer->escape($v->getDisplayName());
 
-            if (null !== ($url = $o->getPhpDocUrl())) {
+            if (null !== ($url = $v->getPhpDocUrl())) {
                 $function = '<a href="'.$url.'" target=_blank>'.$function.'</a>';
             }
 
             $header .= '<dfn>'.$function.'</dfn>';
-        }
 
-        if (!empty($o->returntype)) {
-            $header .= ': <var>';
-
-            if ($o->return_reference) {
-                $header .= $this->renderer->escape('&');
-            }
-
-            $header .= $this->renderer->escape($o->returntype).'</var>';
-        } elseif ($o->docstring) {
-            if (\preg_match('/@return\\s+(.*)\\r?\\n/m', $o->docstring, $matches)) {
-                if (\trim($matches[1])) {
-                    $header .= ': <var>'.$this->renderer->escape(\trim($matches[1])).'</var>';
+            if (null !== ($rt = $v->getCallableBag()->returntype)) {
+                $header .= ': <var>';
+                $header .= $this->renderer->escape($rt).'</var>';
+            } elseif (null !== ($ds = $v->getCallableBag()->docstring)) {
+                if (\preg_match('/@return\\s+(.*)\\r?\\n/m', $ds, $matches)) {
+                    if (\trim($matches[1])) {
+                        $header .= ': <var>'.$this->renderer->escape(\trim($matches[1])).'</var>';
+                    }
                 }
             }
-        }
 
-        if (null !== ($s = $o->getValueShort())) {
-            if (RichRenderer::$strlen_max && BlobObject::strlen($s) > RichRenderer::$strlen_max) {
-                $s = \substr($s, 0, RichRenderer::$strlen_max).'...';
+            if (null !== ($s = $v->getDisplayValue())) {
+                if (RichRenderer::$strlen_max) {
+                    $s = Utils::truncateString($s, RichRenderer::$strlen_max);
+                }
+                $header .= ' '.$this->renderer->escape($s);
             }
-            $header .= ' '.$this->renderer->escape($s);
-        }
 
-        if (\strlen($o->owner_class) && \strlen($o->name)) {
-            self::$method_cache[$o->owner_class][$o->name] = array(
+            self::$method_cache[$c->owner_class][$c->name] = [
                 'header' => $header,
                 'children' => $children,
-            );
+            ];
         }
 
-        $header = $this->renderer->renderHeaderWrapper($o, (bool) \strlen($children), $header);
+        $children = self::$method_cache[$c->owner_class][$c->name]['children'];
+
+        $header = $this->renderer->renderHeaderWrapper(
+            $c,
+            (bool) \strlen($children),
+            self::$method_cache[$c->owner_class][$c->name]['header']
+        );
 
         return '<dl>'.$header.$children.'</dl>';
     }
