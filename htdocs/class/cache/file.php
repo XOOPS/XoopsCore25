@@ -258,8 +258,19 @@ class XoopsCacheFile extends XoopsCacheEngine
             $now       = time();
             $threshold = $now - $this->settings['duration'];
         }
+        $prefix    = (string) $this->settings['prefix'];
+        $extension = (string) $this->settings['extension'];
         while (($entry = $dir->read()) !== false) {
-            if ($this->setKey(str_replace($this->settings['prefix'], '', $entry)) === false) {
+            // Only this engine's files, turned back into their key: setKey()
+            // adds the prefix and extension again.
+            // The folder's guard files are never cache entries, whatever the prefix.
+            if (in_array($entry, array('index.php', 'index.html', '.htaccess', '.', '..'), true)
+                || ('' !== $prefix && 0 !== strpos($entry, $prefix))
+                || ('' !== $extension && substr($entry, -strlen($extension)) !== $extension)) {
+                continue;
+            }
+            $key = substr($entry, strlen($prefix), strlen($entry) - strlen($prefix) - strlen($extension));
+            if ($this->setKey($key) === false) {
                 continue;
             }
             if ($check) {
