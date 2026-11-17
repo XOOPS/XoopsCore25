@@ -1,6 +1,12 @@
 XOOPS 2.5.x Changelog (Language changes: see: /docs/lang_diff.txt)
 
 ===================================
+2.5.11.3                 NOT RELEASED
+===================================
+
+* fix: the file cache engine's clear() and gc() deleted nothing. They looked for <prefix><key>.php.php, so expired and cleared entries stayed on disk while clear() still reported success. Only files carrying the engine's prefix and extension are now matched, and the folder's index.php, index.html and .htaccess guards are never touched (class/cache/file.php)
+
+===================================
 2.5.11.2 Security        NOT RELEASED
 ===================================
 
