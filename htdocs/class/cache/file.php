@@ -254,10 +254,7 @@ class XoopsCacheFile extends XoopsCacheEngine
             return false;
         }
         $dir = dir($this->settings['path']);
-        if ($check) {
-            $now       = time();
-            $threshold = $now - $this->settings['duration'];
-        }
+        $now       = time();
         $prefix    = (string) $this->settings['prefix'];
         $extension = (string) $this->settings['extension'];
         while (($entry = $dir->read()) !== false) {
@@ -274,16 +271,12 @@ class XoopsCacheFile extends XoopsCacheEngine
                 continue;
             }
             if ($check) {
-                $mtime = $this->file->lastChange();
-
-                if ($mtime === false || $mtime > $threshold) {
-                    continue;
-                }
-
+                // Each entry stores its own expiry; write() accepts a per-entry
+                // duration, so the file's age says nothing about whether it expired.
                 $expires = $this->file->read(11);
                 $this->file->close();
 
-                if ($expires > $now) {
+                if ($expires === false || (int) $expires > $now) {
                     continue;
                 }
             }
