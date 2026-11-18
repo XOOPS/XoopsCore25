@@ -184,23 +184,25 @@ class XoopsFileHandler
     public function read($bytes = false, $mode = 'rb', $force = false)
     {
         $success = false;
-        if ($this->lock !== null) {
-            if (flock($this->handle, LOCK_SH) === false) {
-                return false;
-            }
+        // open() creates a missing file; a read must not. Open once: the lock
+        // needs the handle, and read() may be the first call on this file.
+        if (!$this->exists()
+            || (($this->lock !== null || $bytes !== false) && $this->open($mode, $force) !== true)) {
+            return false;
+        }
+        if ($this->lock !== null && flock($this->handle, LOCK_SH) === false) {
+            return false;
         }
         if ($bytes === false) {
             $success = file_get_contents($this->pwd());
-        } elseif ($this->open($mode, $force) === true) {
-            if (is_int($bytes)) {
-                $success = fread($this->handle, $bytes);
-            } else {
-                $data = '';
-                while (!feof($this->handle)) {
-                    $data .= fgets($this->handle, 4096);
-                }
-                $success = trim($data);
+        } elseif (is_int($bytes)) {
+            $success = fread($this->handle, $bytes);
+        } else {
+            $data = '';
+            while (!feof($this->handle)) {
+                $data .= fgets($this->handle, 4096);
             }
+            $success = trim($data);
         }
         if ($this->lock !== null) {
             flock($this->handle, LOCK_UN);
