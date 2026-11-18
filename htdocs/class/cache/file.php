@@ -276,7 +276,8 @@ class XoopsCacheFile extends XoopsCacheEngine
             if ($check) {
                 // Each entry stores its own expiry; write() accepts a per-entry
                 // duration, so the file's age says nothing about whether it expired.
-                $expires = $this->file->read(11);
+                // 24 bytes hold any integer expiry and its line end.
+                $expires = $this->file->read(24);
                 $this->file->close();
 
                 // Collect only on a complete expiry line that read() would also

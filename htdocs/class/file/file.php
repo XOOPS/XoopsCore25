@@ -184,12 +184,10 @@ class XoopsFileHandler
     public function read($bytes = false, $mode = 'rb', $force = false)
     {
         $success = false;
-        // open() creates a missing file; a read must not.
-        if (!$this->exists()) {
-            return false;
-        }
-        // Open once: the lock needs the handle, and read() may be the first call on this file.
-        if (($this->lock !== null || $bytes !== false) && $this->open($mode, $force) !== true) {
+        // open() creates a missing file; a read must not. Open once: the lock
+        // needs the handle, and read() may be the first call on this file.
+        if (!$this->exists()
+            || (($this->lock !== null || $bytes !== false) && $this->open($mode, $force) !== true)) {
             return false;
         }
         if ($this->lock !== null && flock($this->handle, LOCK_SH) === false) {
